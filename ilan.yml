@@ -1,0 +1,49 @@
+name: İlanları tara
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"   # yaklaşık 30 dakikada bir (GitHub gecikebilir)
+  workflow_dispatch: {}       # Actions sekmesinden elle çalıştır
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: ilan-tara
+  cancel-in-progress: false
+
+jobs:
+  tara:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Botu çalıştır
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python bot/ilan_bot.py
+      - name: Değişen veriyi kaydet
+        run: |
+          git config user.name "ilan-bot"
+          git config user.email "ilan-bot@users.noreply.github.com"
+          git add docs/ilanlar.json
+          git diff --cached --quiet || (git commit -m "ilanlar güncellendi" && git pull --rebase && git push)
+      - name: Pages yapılandır
+        uses: actions/configure-pages@v5
+      - name: Site dosyalarını hazırla
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: docs
+      - name: Siteyi yayınla
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kamu ilan takip</title>
+<meta name="description" content="Kariyer Kapısı resmi RSS akışından kamu ilanları. Başvuru şartları ve son tarihler için resmi ilanı inceleyin.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f3f6f9;
+    --surface: #ffffff;
+    --ink: #0f2238;
+    --muted: #55677b;
+    --rule: #d3dce6;
+    --accent: #0b5cad;
+    --accent-ink: #ffffff;
+    --urgent: #b42318;
+    --display: "Bricolage Grotesque", "IBM Plex Sans", system-ui, sans-serif;
+    --text: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #0d1722;
+      --surface: #142132;
+      --ink: #e7eef6;
+      --muted: #94a5b8;
+      --rule: #25374b;
+      --accent: #63adf2;
+      --accent-ink: #08213b;
+      --urgent: #ff8f78;
+    }
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 400 1rem/1.55 var(--text);
+    padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0) env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
+  }
+  .wrap { max-width: 44rem; margin: 0 auto; padding: 2.5rem 1.25rem 3rem; }
+
+  header h1 {
+    font: 700 clamp(1.9rem, 6vw, 2.6rem)/1.1 var(--display);
+    letter-spacing: -0.02em;
+    margin: 0 0 0.75rem;
+  }
+  header p { margin: 0 0 1.25rem; color: var(--muted); max-width: 34rem; }
+  .btn {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-weight: 600;
+    text-decoration: none;
+    padding: 0.7rem 1.1rem;
+    border-radius: 0.4rem;
+  }
+  .btn:hover { filter: brightness(1.08); }
+
+  .controls { margin: 2rem 0 0.5rem; display: grid; gap: 0.75rem; }
+  .controls input[type="search"] {
+    width: 100%;
+    font: inherit;
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 0.4rem;
+    padding: 0.7rem 0.85rem;
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .chip {
+    font: 500 0.875rem/1 var(--text);
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: 0.55rem 0.9rem;
+    cursor: pointer;
+  }
+  .chip[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+  .durum { color: var(--muted); font-size: 0.875rem; margin: 1rem 0 0; }
+
+  ol.liste { list-style: none; margin: 0.5rem 0 0; padding: 0; }
+  .satir {
+    position: relative;
+    display: grid;
+    grid-template-columns: 5.25rem 1fr;
+    gap: 1rem;
+    padding: 1.1rem 0;
+    border-top: 1px solid var(--rule);
+  }
+  .satir:last-child { border-bottom: 1px solid var(--rule); }
+  .satir:focus-within { outline: 3px solid var(--accent); outline-offset: -3px; }
+  .satir:hover .baslik { text-decoration: underline; text-underline-offset: 0.2em; }
+
+  .kalan .sayi { font: 700 1.75rem/1 var(--display); letter-spacing: -0.02em; }
+  .kalan .birim { font-size: 0.8125rem; color: var(--muted); margin-top: 0.2rem; }
+  .kalan .cubuk { height: 3px; background: var(--rule); margin-top: 0.5rem; border-radius: 2px; overflow: hidden; }
+  .kalan .cubuk span { display: block; height: 100%; background: var(--accent); }
+  .kalan .sayi.kelime { font-size: 1.25rem; padding-top: 0.2rem; }
+  .acil .sayi { color: var(--urgent); }
+  .acil .cubuk span { background: var(--urgent); }
+
+  .baslik { font-weight: 600; color: var(--ink); text-decoration: none; overflow-wrap: anywhere; }
+  .baslik::after { content: ""; position: absolute; inset: 0; }
+  .kurum { color: var(--ink); margin: 0.15rem 0 0; overflow-wrap: anywhere; }
+  .meta { color: var(--muted); font-size: 0.875rem; margin: 0.35rem 0 0; }
+  .yeni { color: var(--accent); font-weight: 600; }
+
+  footer { margin-top: 2.5rem; color: var(--muted); font-size: 0.875rem; max-width: 36rem; }
+  footer a { color: inherit; }
+
+  @media (max-width: 30rem) {
+    .satir { grid-template-columns: 4.25rem 1fr; gap: 0.85rem; }
+    .kalan .sayi { font-size: 1.5rem; }
+    .kalan .sayi.kelime { font-size: 1.125rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Kamu ilan takip</h1>
+    <p>Kariyer Kapısı'nın resmi RSS akışındaki ilanlar. RSS'te son başvuru tarihi bulunmayan ilanların hâlâ açık olduğunu doğrulayamıyoruz. Son tarihi ve başvuru koşullarını resmi ilan bağlantısından kontrol et.</p>
+    <a class="btn" id="telegram" href="#" hidden>Telegram kanalına katıl</a>
+  </header>
+
+  <section class="controls" aria-label="İlanları filtrele">
+    <input type="search" id="ara" placeholder="Kurum veya ilan başlığında ara" aria-label="Kurum veya ilan başlığında ara" autocomplete="off">
+    <div class="chips" id="chips" role="group" aria-label="Süre filtresi"></div>
+  </section>
+
+  <p class="durum" id="durum" aria-live="polite">Yükleniyor…</p>
+  <ol class="liste" id="liste"></ol>
+
+  <footer>
+    <p>Bu site resmi değildir. Veriler Kariyer Kapısı'ndan (<a href="https://kariyerkapisi.gov.tr/isealim" rel="noopener">kariyerkapisi.gov.tr</a>) alınır. Başvuru şartlarını, bölüm ve puan koşullarını ve son tarihi mutlaka ilan metninden kontrol et. Başvuru yalnızca Kariyer Kapısı üzerinden yapılır.</p>
+    <p id="guncelleme"></p>
+  </footer>
+</div>
+
+<script>
+  // Telegram kanal adresini buraya yaz. Boş bırakırsan buton görünmez. Örnek: "https://t.me/kanaladi"
+  const TELEGRAM_KANAL = "https://t.me/kamuilantakip";
+
+  const FILTRELER = [
+    { id: "tumu", ad: "Tümü", uygun: () => true },
+    { id: "hafta", ad: "7 gün içinde bitenler", uygun: (i) => i.kalan !== null && i.kalan <= 7 },
+    { id: "yeni", ad: "Son 2 günde eklenenler", uygun: (i) => i.yeni },
+  ];
+
+  let ilanlar = [];
+  let filtre = "tumu";
+  let sorgu = "";
+
+  const istanbulBugun = () => new Date().toLocaleDateString("sv-SE", { timeZone: "Europe/Istanbul" });
+  const gunFarki = (iso) => Math.round((Date.parse(iso + "T00:00:00Z") - Date.parse(istanbulBugun() + "T00:00:00Z")) / 86400000);
+  const tarihYaz = (iso) => new Date(iso + "T00:00:00Z").toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+  const guvenliLink = (u) => { try { const x = new URL(u); return x.protocol === "https:" ? x.href : "#"; } catch { return "#"; } };
+  const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e; };
+
+  function hazirla(ham) {
+    return ham
+      .map((i) => ({
+        ...i,
+        kalan: i.son_tarih ? gunFarki(i.son_tarih) : null,
+        yeni: i.ilk_gorulme ? Date.now() - Date.parse(i.ilk_gorulme) < 48 * 3600 * 1000 : false,
+      }))
+      .filter((i) => i.kalan === null || i.kalan >= 0)
+      .sort((a, b) => (a.kalan ?? 9999) - (b.kalan ?? 9999));
+  }
+
+  function kalanBlok(i) {
+    const k = el("div", "kalan");
+    let sayi, birim;
+    if (i.kalan === null) { sayi = "—"; birim = "tarih belirtilmemiş"; }
+    else if (i.kalan === 0) { sayi = "Bugün"; birim = "son gün"; }
+    else if (i.kalan === 1) { sayi = "Yarın"; birim = "son gün"; }
+    else { sayi = String(i.kalan); birim = "gün kaldı"; }
+    if (i.kalan !== null && i.kalan <= 3) k.classList.add("acil");
+    k.append(el("div", i.kalan === 0 || i.kalan === 1 ? "sayi kelime" : "sayi", sayi), el("div", "birim", birim));
+    if (i.kalan !== null) {
+      const c = el("div", "cubuk"); const s = el("span");
+      s.style.width = Math.max(6, Math.min(i.kalan, 14) / 14 * 100) + "%";
+      c.append(s); k.append(c);
+    }
+    return k;
+  }
+
+  function satir(i) {
+    const li = el("li", "satir");
+    const sag = el("div");
+    const a = el("a", "baslik", i.baslik);
+    a.href = guvenliLink(i.link); a.rel = "noopener"; a.target = "_blank";
+    sag.append(a);
+    if (i.kurum) sag.append(el("p", "kurum", i.kurum));
+    const meta = el("p", "meta");
+    if (i.yeni) meta.append(el("span", "yeni", "Yeni"), document.createTextNode(i.son_tarih ? " · " : ""));
+    if (i.son_tarih) meta.append(document.createTextNode("Son başvuru " + tarihYaz(i.son_tarih)));
+    if (meta.childNodes.length) sag.append(meta);
+    li.append(kalanBlok(i), sag);
+    return li;
+  }
+
+  function cizChips() {
+    const kap = document.getElementById("chips");
+    kap.replaceChildren();
+    for (const f of FILTRELER) {
+      const adet = ilanlar.filter(f.uygun).length;
+      const b = el("button", "chip", f.ad + " (" + adet + ")");
+      b.type = "button";
+      b.setAttribute("aria-pressed", String(f.id === filtre));
+      b.addEventListener("click", () => { filtre = f.id; ciz(); });
+      kap.append(b);
+    }
+  }
+
+  function ciz() {
+    cizChips();
+    const f = FILTRELER.find((x) => x.id === filtre);
+    const q = sorgu.trim().toLocaleLowerCase("tr");
+    const secili = ilanlar.filter(f.uygun).filter((i) => !q || (i.baslik + " " + (i.kurum || "")).toLocaleLowerCase("tr").includes(q));
+    const liste = document.getElementById("liste");
+    liste.replaceChildren(...secili.map(satir));
+    const durum = document.getElementById("durum");
+    if (!ilanlar.length) durum.textContent = "Listelenecek ilan bulunamadı. Güncel durum için Kariyer Kapısı'nı kontrol et.";
+    else if (!secili.length) durum.textContent = "Bu filtreyle eşleşen ilan yok. Aramayı veya süre filtresini değiştir.";
+    else durum.textContent = secili.length + " ilan listeleniyor.";
+  }
+
+  async function baslat() {
+    if (TELEGRAM_KANAL) { const t = document.getElementById("telegram"); t.href = TELEGRAM_KANAL; t.hidden = false; }
+    document.getElementById("ara").addEventListener("input", (e) => { sorgu = e.target.value; ciz(); });
+    try {
+      const r = await fetch("ilanlar.json", { cache: "no-store" });
+      if (!r.ok) throw new Error(r.status);
+      const veri = await r.json();
+      ilanlar = hazirla(veri.ilanlar || []);
+      if (veri.guncelleme) {
+        document.getElementById("guncelleme").textContent = "Son güncelleme: " +
+          new Date(veri.guncelleme).toLocaleString("tr-TR", { day: "numeric", month: "long", hour: "2-digit", minute: "2-digit", timeZone: "Europe/Istanbul" });
+      }
+      ciz();
+    } catch (e) {
+      document.getElementById("durum").textContent = "İlan listesi yüklenemedi. Sayfayı yenile. Sorun sürerse ilanlara doğrudan kariyerkapisi.gov.tr/isealim adresinden bak.";
+    }
+  }
+  baslat();
+</script>
+</body>
+</html>
