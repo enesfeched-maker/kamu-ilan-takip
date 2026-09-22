@@ -1,5 +1,6 @@
 name: İlanları tara
 
+
 on:
   schedule:
     - cron: "*/30 * * * *"   # yaklaşık 30 dakikada bir (GitHub gecikebilir)
@@ -7,14 +8,17 @@ on:
   push:
     branches: [main]
 
+
 permissions:
   contents: write
   pages: write
   id-token: write
 
+
 concurrency:
   group: ilan-tara
   cancel-in-progress: false
+
 
 jobs:
   tara:
@@ -31,7 +35,29 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: python bot/ilan_bot.py
+        run: |
+          python -m unittest discover -s bot -p 'test_*.py'
+          python - <<'PY'
+          import json, os, sys, urllib.parse, urllib.request
+          try:
+              token = os.environ['TELEGRAM_BOT_TOKEN']
+              chat = os.environ['TELEGRAM_CHAT_ID']
+              assert token and chat
+              base = 'https://api.telegram.org/bot' + token + '/'
+              def api(method, **params):
+                  req = urllib.request.Request(base + method, data=urllib.parse.urlencode(params).encode())
+                  with urllib.request.urlopen(req, timeout=30) as response:
+                      result = json.load(response)
+                  assert result['ok']
+                  return result['result']
+              me = api('getMe')
+              member = api('getChatMember', chat_id=chat, user_id=me['id'])
+              assert member.get('can_post_messages'), 'Mesaj gönderme yetkisi eksik'
+              print('Telegram botu ve kanal gönderim yetkisi doğrulandı.')
+          except Exception:
+              sys.exit('Telegram bağlantısı doğrulanamadı. Gizli değerleri ve botun kanal yetkisini kontrol edin.')
+          PY
+          python bot/ilan_bot.py
       - name: Değişen veriyi kaydet
         run: |
           git config user.name "ilan-bot"
@@ -47,3 +73,4 @@ jobs:
       - name: Siteyi yayınla
         id: deployment
         uses: actions/deploy-pages@v4
+
