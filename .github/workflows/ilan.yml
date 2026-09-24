@@ -1,24 +1,25 @@
 name: İlanları tara
 
-
 on:
   schedule:
     - cron: "*/30 * * * *"   # yaklaşık 30 dakikada bir (GitHub gecikebilir)
-  workflow_dispatch: {}       # Actions sekmesinden elle çalıştır
+  workflow_dispatch:
+    inputs:
+      duyur_mevcut:
+        description: Mevcut ilanları da Telegram'a gönder
+        type: boolean
+        default: false
   push:
     branches: [main]
-
 
 permissions:
   contents: write
   pages: write
   id-token: write
 
-
 concurrency:
   group: ilan-tara
   cancel-in-progress: false
-
 
 jobs:
   tara:
@@ -35,6 +36,7 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          DUYUR_MEVCUT: ${{ inputs.duyur_mevcut }}
         run: |
           python -m unittest discover -s bot -p 'test_*.py'
           python - <<'PY'
@@ -57,8 +59,13 @@ jobs:
           except Exception:
               sys.exit('Telegram bağlantısı doğrulanamadı. Gizli değerleri ve botun kanal yetkisini kontrol edin.')
           PY
-          python bot/ilan_bot.py
+          if [ "$DUYUR_MEVCUT" = "true" ]; then
+            python bot/ilan_bot.py --duyur-mevcut
+          else
+            python bot/ilan_bot.py
+          fi
       - name: Değişen veriyi kaydet
+        if: ${{ always() }}
         run: |
           git config user.name "ilan-bot"
           git config user.email "ilan-bot@users.noreply.github.com"
@@ -73,4 +80,3 @@ jobs:
       - name: Siteyi yayınla
         id: deployment
         uses: actions/deploy-pages@v4
-
