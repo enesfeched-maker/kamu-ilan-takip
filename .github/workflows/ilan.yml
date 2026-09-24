@@ -23,7 +23,7 @@ concurrency:
 
 jobs:
   tara:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
