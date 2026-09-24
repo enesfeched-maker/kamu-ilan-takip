@@ -95,6 +95,31 @@ class TelegramDeliveryTests(unittest.TestCase):
         self.assertEqual(self.run_bot('--duyur-mevcut', '--dry-run'), 0)
         self.assertEqual(self.data.read_bytes(), once)
 
+    def test_resmi_detay_hatasinda_eksik_mesaj_gondermez(self):
+        cfg = json.loads(self.cfg.read_text())
+        cfg['resmi_detaylari_oku'] = True
+        self.cfg.write_text(json.dumps(cfg))
+        with patch.object(ilan_bot, 'detay_oku', side_effect=ValueError('geçici hata')), \
+             contextlib.redirect_stderr(io.StringIO()):
+            with self.assertRaises(SystemExit):
+                self.run_bot('--duyur-mevcut')
+        state = json.loads(self.data.read_text())
+        self.assertEqual(state['telegram_gonderilen'], [])
+        self.assertEqual(len(state['telegram_bekleyen']), 25)
+
+    def test_rss_bos_tarih_resmi_tarihi_silmez(self):
+        cfg = json.loads(self.cfg.read_text())
+        cfg['resmi_detaylari_oku'] = True
+        self.cfg.write_text(json.dumps(cfg))
+        state = json.loads(self.data.read_text())
+        for i in state['ilanlar']:
+            i.update(son_tarih='2099-10-09', detay_guncelleme=ilan_bot.simdi().isoformat())
+        self.data.write_text(json.dumps(state))
+        with patch.object(ilan_bot, 'detay_oku') as fetch:
+            self.assertEqual(self.run_bot('--duyur-mevcut'), 15)
+            fetch.assert_not_called()
+        self.assertEqual(json.loads(self.data.read_text())['ilanlar'][0]['son_tarih'], '2099-10-09')
+
 
 if __name__ == '__main__':
     unittest.main()
