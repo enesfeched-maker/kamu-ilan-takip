@@ -99,6 +99,7 @@ def rss_coz(veri):
             "id": alan.get("guid") or link,
             "baslik": baslik,
             "kurum": kurum,
+            "ilan_turu": duz_metin(alan.get("category")),
             "aciklama": aciklama,
             "link": link,
             "son_tarih": tarih_bul(baslik + " " + aciklama),
@@ -126,31 +127,79 @@ def tarih_yaz(son_tarih):
     return f"{d.day} {ay} {d.year}"
 
 
+def okunakli_baslik(metin):
+    """Tamamı büyük harfli metni Türkçe karakterleri koruyarak düzenler."""
+    if not metin.isupper():
+        return metin
+    kisaltmalar = {"KPSS", "YDS", "YÖKDİL", "ALES", "İŞKUR", "TÜBİTAK", "TÜİK", "AFAD",
+                   "MEB", "MSB", "SGK", "DSİ", "T.C", "T.C.", "J.GN.K.LIĞININ"}
+    def kelime(m):
+        s = m.group()
+        if s in kisaltmalar or any(c.isdigit() for c in s):
+            return s
+        s = s.translate(str.maketrans("Iİ", "ıi")).lower()
+        if s in {"ve", "ile", "veya"}:
+            return s
+        return s[0].translate(str.maketrans("iı", "İI")).upper() + s[1:]
+    return re.sub(r"[\w./]+", kelime, metin)
+
+
+def kisalt(metin, sinir):
+    metin = re.sub(r"\s+", " ", metin).strip()
+    if len(metin) <= sinir:
+        return metin
+    return metin[:sinir - 1].rsplit(" ", 1)[0] + "…"
+
+
 def mesaj_olustur(ilan, site_url):
     e = html.escape
-    satirlar = [f"🆕 <b>{e(ilan['baslik'])}</b>"]
-    if ilan.get("kurum"):
-        satirlar.append(e(ilan["kurum"]))
+    kurum = ilan.get("kurum", "")
+    baslik = ilan['baslik']
+    if kurum and baslik.startswith(kurum + " - "):
+        baslik = baslik[len(kurum) + 3:]
+    satirlar = ["📣 <b>KAMU İLAN TAKİP</b>", "", f"<b>{e(kisalt(okunakli_baslik(baslik), 420))}</b>"]
+    if kurum:
+        satirlar.extend(["", f"🏛 <b>Kurum:</b> {e(kisalt(okunakli_baslik(kurum), 300))}"])
+    for alan, etiket, sinir in [("yer", "📍 Görev yeri", 200),
+                                 ("ilan_turu", "💼 İlan türü", 150),
+                                 ("kadro", "👥 Kadro / kontenjan", 400)]:
+        if ilan.get(alan):
+            satirlar.append(f"<b>{etiket}:</b> {e(kisalt(okunakli_baslik(ilan[alan]), sinir))}")
+    if ilan.get("ozet"):
+        satirlar.extend(["", "📝 <b>İlan metninden</b>", e(kisalt(ilan["ozet"], 1000)),
+                         "<i>Koşulların tamamı ve kadroya özel şartlar resmi ilandadır.</i>"])
     if ilan.get("son_tarih"):
-        satirlar.append(f"⏳ Son başvuru: {tarih_yaz(ilan['son_tarih'])} ({kalan_gun_metni(ilan['son_tarih'])})")
-    satirlar.append(f'🔗 <a href="{e(ilan["link"], quote=True)}">Kariyer Kapısı\'nda aç</a>')
-    if site_url:
-        satirlar.append(f'📋 <a href="{e(site_url, quote=True)}">Tüm açık ilanlar</a>')
+        satirlar.extend(["", f"📅 <b>Son başvuru:</b> {tarih_yaz(ilan['son_tarih'])}"])
+        kalan = (date.fromisoformat(ilan['son_tarih']) - simdi().date()).days
+        simge = "🔴" if kalan <= 3 else "⏳"
+        satirlar.append(f"{simge} <b>{kalan_gun_metni(ilan['son_tarih']).capitalize()}</b>")
+    else:
+        satirlar.extend(["", "⏳ <b>Son başvuru:</b> Resmi ilan üzerinden kontrol edin."])
+    satirlar.extend(["", f'🔗 <a href="{e(ilan["link"], quote=True)}"><b>İlan Detayı ve Başvuru</b></a>',
+                     "", "<i>Kaynak: Kariyer Kapısı • Resmi bir kanal değildir.</i>"])
     return "\n".join(satirlar)
 
 
-def telegram_gonder(token, chat_id, metin):
+def telegram_gonder(token, chat_id, metin, ilan_linki="", site_url=""):
     url = f"https://api.telegram.org/bot{token}/sendMessage"
-    govde = urllib.parse.urlencode({
+    alanlar = {
         "chat_id": chat_id,
         "text": metin,
         "parse_mode": "HTML",
         "disable_web_page_preview": "true",
-    }).encode()
+    }
+    dugmeler = []
+    if ilan_linki:
+        dugmeler.append([{"text": "🔎 İlanı incele ve başvur", "url": ilan_linki}])
+    if site_url:
+        dugmeler.append([{"text": "📋 Tüm kamu ilanları", "url": site_url}])
+    if dugmeler:
+        alanlar["reply_markup"] = json.dumps({"inline_keyboard": dugmeler}, ensure_ascii=False)
+    govde = urllib.parse.urlencode(alanlar).encode()
     for deneme in range(2):
         try:
-            with urllib.request.urlopen(urllib.request.Request(url, data=govde), timeout=30):
-                return True
+            with urllib.request.urlopen(urllib.request.Request(url, data=govde), timeout=30) as response:
+                return bool(json.load(response).get("ok"))
         except urllib.error.HTTPError as h:
             if h.code == 429 and deneme == 0:
                 try:
@@ -159,9 +208,32 @@ def telegram_gonder(token, chat_id, metin):
                     bekle = 5
                 time.sleep(min(int(bekle) + 1, 60))
                 continue
-            print(f"Telegram hatası {h.code}: {h.read()[:200]!r}", file=sys.stderr)
+            print(f"Telegram hatası {h.code}; ilan sırada tutuluyor.", file=sys.stderr)
+            return False
+        except (urllib.error.URLError, TimeoutError, OSError, ValueError):
+            print("Telegram bağlantısı doğrulanamadı; ilan sırada tutuluyor.", file=sys.stderr)
             return False
     return False
+
+
+def telegram_sirasi(mevcut, gelen, yeniler, gonderilen, bekleyen, ilk_calisma, duyur_mevcut, cfg):
+    """Yeni/mevcut ilanları sıraya ekler; başarıyla gönderilenleri tekrar eklemez."""
+    canli = {i['id'] for i in gelen}
+    adaylar = canli if duyur_mevcut else {i['id'] for i in yeniler}
+    if not (ilk_calisma and not duyur_mevcut):
+        bekleyen.update(adaylar - gonderilen)
+    dahil = cfg.get('telegram_kelimeler_dahil', [])
+    haric = cfg.get('telegram_kelimeler_haric', [])
+    uygun = []
+    for kimlik in sorted(bekleyen - gonderilen):
+        i = mevcut.get(kimlik)
+        if not i or kimlik not in canli:
+            continue
+        if i.get('son_tarih') and date.fromisoformat(i['son_tarih']) < simdi().date():
+            continue
+        if telegram_icin_uygun(i, dahil, haric):
+            uygun.append(i)
+    return sorted(uygun, key=lambda i: (i.get('son_tarih') or '9999', i.get('kurum', ''), i['baslik']))
 
 
 # ------------------------------------------------------------------- Ana akış
@@ -170,7 +242,7 @@ def yukle(yol):
         try:
             return json.loads(yol.read_text(encoding="utf-8"))
         except json.JSONDecodeError:
-            print("Uyarı: veri dosyası okunamadı, sıfırdan başlanıyor.", file=sys.stderr)
+            sys.exit("Veri dosyası bozuk. Tekrar mesaj göndermemek için tarama durduruldu.")
     return {"guncelleme": None, "ilanlar": []}
 
 
@@ -203,7 +275,7 @@ def main():
     p.add_argument("--cikti", default=str(VERI_YOLU), help="Veri dosyası yolu")
     p.add_argument("--dry-run", action="store_true", help="Telegram'a gönderme, ekrana yaz")
     p.add_argument("--duyur-mevcut", action="store_true",
-                   help="İlk çalıştırmada mevcut tüm ilanları da kanala gönder")
+                   help="Canlı RSS'teki henüz gönderilmemiş mevcut ilanları da sıraya al")
     p.add_argument("--dump", action="store_true", help="Ham ilanların ilk 3'ünü yazdır ve çık")
     a = p.parse_args()
 
@@ -241,31 +313,39 @@ def main():
     yeniler = []
     for i in gelen:
         if i["id"] in mevcut:
-            mevcut[i["id"]].update(baslik=i["baslik"], kurum=i["kurum"], son_tarih=i["son_tarih"])
+            mevcut[i["id"]].update(baslik=i["baslik"], kurum=i["kurum"],
+                                    ilan_turu=i.get("ilan_turu", ""), son_tarih=i["son_tarih"])
         else:
             i["ilk_gorulme"] = simdi().isoformat(timespec="seconds")
             mevcut[i["id"]] = i
             yeniler.append(i)
 
-    # 3) Telegram
-    if yeniler and not (ilk_calisma and not a.duyur_mevcut):
-        yeniler.sort(key=lambda x: x["son_tarih"] or "9999")
-        dahil = cfg.get("telegram_kelimeler_dahil", [])
-        haric = cfg.get("telegram_kelimeler_haric", [])
-        gonderilecek = [i for i in yeniler if telegram_icin_uygun(i, dahil, haric)]
-        limit = int(cfg.get("max_mesaj_per_calisma", 15))
-        for i in gonderilecek[:limit]:
-            metin = mesaj_olustur(i, cfg.get("site_url", ""))
-            if a.dry_run or not (token and chat_id):
-                print("--- (gönderilmedi) ---\n" + metin + "\n")
-            else:
-                telegram_gonder(token, chat_id, metin)
-                time.sleep(1.5)  # kanal hız sınırı
-        fazla = len(gonderilecek) - limit
-        if fazla > 0 and not a.dry_run and token and chat_id:
-            telegram_gonder(token, chat_id, f"➕ {fazla} yeni ilan daha var: {cfg.get('site_url', '')}")
-    elif ilk_calisma and yeniler:
+    # 3) Telegram: sınırı aşan ve başarısız olan gönderimleri sonraki taramaya sakla.
+    gonderilen = set(veri.get('telegram_gonderilen', []))
+    bekleyen = set(veri.get('telegram_bekleyen', []))
+    gonderilecek = telegram_sirasi(mevcut, gelen, yeniler, gonderilen, bekleyen,
+                                  ilk_calisma, a.duyur_mevcut, cfg)
+    limit = max(1, int(cfg.get('max_mesaj_per_calisma', 15)))
+    hata = False
+    adet = 0
+    for i in gonderilecek[:limit]:
+        metin = mesaj_olustur(i, cfg.get('site_url', ''))
+        if a.dry_run:
+            print('--- (önizleme, gönderilmedi) ---\n' + metin + '\n')
+            continue
+        if not (token and chat_id) or not telegram_gonder(token, chat_id, metin, i['link'], cfg.get('site_url', '')):
+            hata = True
+            break
+        gonderilen.add(i['id'])
+        bekleyen.discard(i['id'])
+        adet += 1
+        print(f"Telegram'a gönderildi: {i['baslik']}")
+        time.sleep(3.2)
+    if ilk_calisma and not a.duyur_mevcut:
         print(f"İlk çalıştırma: {len(yeniler)} mevcut ilan sessizce kaydedildi (kanala gönderilmedi).")
+    if a.dry_run:
+        print('Önizleme tamamlandı; veri dosyası değiştirilmedi.')
+        return
 
     # 4) Kaydet
     for i in mevcut.values():
@@ -273,10 +353,15 @@ def main():
     veri = {
         "guncelleme": simdi().isoformat(timespec="seconds"),
         "ilanlar": sorted(temizle(list(mevcut.values())), key=lambda x: x["son_tarih"] or "9999"),
+        "telegram_gonderilen": sorted(gonderilen),
+        "telegram_bekleyen": sorted(bekleyen - gonderilen),
     }
     cikti.parent.mkdir(parents=True, exist_ok=True)
     cikti.write_text(json.dumps(veri, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     print(f"Tamam: {len(gelen)} ilan okundu, {len(yeniler)} yeni, {len(veri['ilanlar'])} kayıtlı.")
+    print(f"Telegram: {adet} mesaj gönderildi, {len(bekleyen - gonderilen)} ilan bekliyor.")
+    if hata:
+        sys.exit('Telegram gönderimi tamamlanamadı. Gönderilmeyen ilanlar sonraki taramada tekrar denenecek.')
 
 
 if __name__ == "__main__":
