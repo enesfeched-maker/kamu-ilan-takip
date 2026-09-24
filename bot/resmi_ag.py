@@ -7,6 +7,10 @@ import urllib.parse
 import urllib.request
 
 RESMI_ALANLAR = {'kariyerkapisi.gov.tr', 'api.kariyerkapisi.gov.tr'}
+# 25 Eylül 2026: hem sistem DNS'i hem dns.google üzerinden doğrulandı.
+# Sadece DNS yanıtı kullanılamazsa denenir; TLS özgün alan adını doğrulamaya devam eder.
+SON_DOGRULANAN = {'kariyerkapisi.gov.tr': '94.55.123.141',
+                  'api.kariyerkapisi.gov.tr': '94.55.122.127'}
 ONBELLEK = {}
 
 
@@ -17,15 +21,20 @@ def adres_coz(host):
     if eski and eski[1] > time.monotonic():
         return eski[0]
     url = 'https://dns.google/resolve?' + urllib.parse.urlencode({'name': host, 'type': 'A'})
-    with urllib.request.urlopen(url, timeout=10) as response:
-        veri = json.load(response)
-    if veri.get('Status') != 0:
-        raise OSError('Resmi alan adı DNS kaydı bulunamadı')
-    for kayit in veri.get('Answer', []):
-        if kayit.get('type') == 1 and ipaddress.ip_address(kayit['data']).is_global:
-            ONBELLEK[host] = (kayit['data'], time.monotonic() + min(kayit.get('TTL', 300), 3600))
-            return kayit['data']
-    raise OSError('Resmi alan adı için genel IP adresi bulunamadı')
+    try:
+        with urllib.request.urlopen(url, timeout=10) as response:
+            veri = json.load(response)
+        if veri.get('Status') == 0:
+            for kayit in veri.get('Answer', []):
+                if kayit.get('type') == 1 and ipaddress.ip_address(kayit['data']).is_global:
+                    ONBELLEK[host] = (kayit['data'], time.monotonic() + min(kayit.get('TTL', 300), 3600))
+                    return kayit['data']
+        print(f'DNS yanıtı genel adres içermiyor: {host}: {json.dumps(veri)[:500]}')
+    except (OSError, ValueError):
+        print(f'DNS servisine ulaşılamadı: {host}')
+    ONBELLEK[host] = (SON_DOGRULANAN[host], time.monotonic() + 300)
+    print(f'Doğrulanmış yedek adres kullanılıyor: {host}; TLS alan adı doğrulaması açık.')
+    return SON_DOGRULANAN[host]
 
 
 class ResmiHTTPSBaglantisi(http.client.HTTPSConnection):
