@@ -353,15 +353,21 @@ def main():
     # Resmi sayfanın açık veri servisi: ayrıntıları 12 saat sakla, hata varsa eksik mesaj gönderme.
     detay_hatalari = set()
     if cfg.get('resmi_detaylari_oku', False):
+        ardisik_hata = 0
         for gelen_ilan in gelen:
             i = mevcut[gelen_ilan['id']]
             if detay_taze(i):
                 continue
             try:
                 i.update(detay_oku(i['link']))
-            except Exception:
+                ardisik_hata = 0
+            except Exception as h:
                 detay_hatalari.add(i['id'])
-                print(f"Resmi ayrıntılar alınamadı; daha sonra denenecek: {i['baslik']}", file=sys.stderr)
+                ardisik_hata += 1
+                print(f"Resmi ayrıntılar alınamadı ({type(h).__name__}: {str(h)[:180]}); daha sonra denenecek: {i['baslik']}", file=sys.stderr)
+                if ardisik_hata >= 3:
+                    print('Resmi veri servisi üst üste yanıt vermedi; ayrıntı taraması durduruldu.', file=sys.stderr)
+                    break
             time.sleep(0.25)
 
     # 3) Telegram: sınırı aşan ve başarısız olan gönderimleri sonraki taramaya sakla.

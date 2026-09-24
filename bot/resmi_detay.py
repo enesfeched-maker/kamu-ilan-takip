@@ -63,7 +63,7 @@ def api_oku(yol, kimlik):
     req = urllib.request.Request(API + yol,
         data=json.dumps({"ilanGuid": kimlik}).encode(),
         headers={"Content-Type": "application/json", "User-Agent": "kamu-ilan-takip/2.0"})
-    with urllib.request.urlopen(req, timeout=25) as response:
+    with urllib.request.urlopen(req, timeout=10) as response:
         if response.status == 204:
             raise ValueError("İlan ayrıntısı artık yayımlanmıyor")
         return json.load(response)
