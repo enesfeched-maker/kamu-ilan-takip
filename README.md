@@ -11,7 +11,7 @@ Kariyer Kapısı'ndaki yeni kamu ilanlarını Telegram kanalına gönderir ve he
    - `TELEGRAM_BOT_TOKEN` = BotFather token'ı
    - `TELEGRAM_CHAT_ID` = kanal adı, ör. `@kamuilan_takip`
 5. **Site.** Repo > Settings > Pages > Source: **GitHub Actions**. İş akışı `/docs` klasörünü her taramanın ardından yayınlar. Çıkan adresi `config.json` içindeki `site_url` alanına yaz. `docs/index.html` içindeki `TELEGRAM_KANAL` değerine kanal linkini yaz (`https://t.me/kamuilan_takip`).
-6. **Çalıştır.** Actions sekmesi > "İlanları tara" > Run workflow. İlk çalıştırma mevcut ilanları kanala göndermeden sessizce kaydeder. Sonraki çalıştırmalarda sadece yeni ilanlar gider. Mevcut ilanları da kanala göndermek istersen workflow'daki komutu `python bot/ilan_bot.py --duyur-mevcut` yap, bir kez çalıştır, geri al.
+6. **Çalıştır.** Actions sekmesi > "İlanları tara" > Run workflow. İlk çalıştırma mevcut ilanları kanala göndermeden sessizce kaydeder. Sonraki çalıştırmalarda yeni ilanlar gider. Mevcut ilanları da göndermek için "Mevcut ilanları da Telegram'a gönder" seçeneğini işaretle. Başarıyla gönderilenler tekrar gönderilmez; sınırı aşanlar ve başarısız gönderimler sonraki taramaya saklanır.
 
 Bundan sonra yaklaşık 30 dakikada bir kendi kendine çalışır.
 
@@ -20,10 +20,13 @@ Bundan sonra yaklaşık 30 dakikada bir kendi kendine çalışır.
 - `telegram_kelimeler_dahil`: doluysa kanala sadece başlığında bu kelimelerden biri geçen ilanlar gider.
 - `telegram_kelimeler_haric`: başlığında bu kelimeler geçen ilanlar kanala gitmez. Site hepsini gösterir.
 - `max_mesaj_per_calisma`: bir çalıştırmada en fazla kaç ilan mesajı atılacağı.
+- `resmi_detaylari_oku`: resmi ilan sayfasının kullandığı herkese açık Kariyer Kapısı veri servisinden şehir, kadro/kontenjan, şartlardan seçili alıntılar ve başvuru tarihlerini tamamlar. Bu projede kullanıcının izniyle açıktır. Ayrıntılar 12 saat saklanır. Ayrıntıya ulaşılamayan ilan eksik mesajla gönderilmez; tekrar denenir.
 
 ## İlk çalıştırmadan sonra kontrol
 
-21 Eylül 2026 tarihinde resmi sayfada tüm filtreler boş bırakılarak üretilen `https://kariyerkapisi.gov.tr/RSS` adresiyle 27 ilan doğrulandı. Kurum başlıktaki ` - ` ayracından alınır; `category` kurum değil, ilan türüdür. Canlı akışta son başvuru tarihi alanı bulunmuyor. `pubDate` veya başlıktaki rastgele bir tarih son başvuru tarihi kabul edilmez. Bu nedenle tarih sıralaması, kırmızı uyarılar ve 7 gün filtresi ancak açıkça son başvuru tarihi belirtilen kayıtlarda çalışır; tarihsiz kayıtlar için başvurunun açık olduğu garanti edilmez. Scraping yapılmaz.
+İlan keşfi resmi `https://kariyerkapisi.gov.tr/RSS` akışından yapılır. RSS'teki `category` ilan türüdür; `pubDate` son başvuru tarihi değildir. Ayrıntılar, resmi ilan sayfasındaki JavaScript'in çağırdığı `https://api.kariyerkapisi.gov.tr/api/ilan/GetIlanPreviewPublic` ve `altilan/GetAltIlanInfoByIlanIdPublic` servislerinden alınır. Yalnızca RSS'te bulunan resmi ilan kimlikleri sorgulanır; giriş gerektiren bilgiler okunmaz.
+
+Son başvuru, servisin `bitTarih` alanından saat bilgisiyle alınır. Şehir ve kontenjanlar kadro kayıtlarından gelir. Şartlar, kadro başlığı altında kaynaktan seçilen kısa alıntılardır; otomatik uygunluk değerlendirmesi değildir. Bazı kurumlar ayrıntıları bu alanlara koymadığı için her ilanda her alan bulunmayabilir. Eksik bilgiler tahmin edilmez. Tam koşullar ve güncel değişiklikler için resmi bağlantı esastır. Telegram mesajları HTML biçimlendirme ve yerel bağlantı düğmeleri kullanır.
 
 Alanları kontrol etmek için:
 
