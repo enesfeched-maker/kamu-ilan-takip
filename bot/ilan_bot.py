@@ -19,6 +19,7 @@ import xml.etree.ElementTree as ET
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from resmi_detay import detay_oku
+from resmi_ag import url_ac
 
 ROOT = Path(__file__).resolve().parent.parent
 CONFIG_YOLU = ROOT / "config.json"
@@ -40,7 +41,7 @@ def indir(url):
     istek = urllib.request.Request(
         url, headers={"User-Agent": "kamu-ilan-takip/1.0 (topluluk projesi)"}
     )
-    with urllib.request.urlopen(istek, timeout=30) as r:
+    with url_ac(istek, timeout=30) as r:
         return r.read()
 
 

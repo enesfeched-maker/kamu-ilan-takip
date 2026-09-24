@@ -6,6 +6,7 @@ import urllib.parse
 import urllib.request
 from collections import Counter
 from datetime import datetime, timedelta, timezone
+from resmi_ag import url_ac
 
 TR = timezone(timedelta(hours=3))
 API = "https://api.kariyerkapisi.gov.tr/api/"
@@ -63,7 +64,7 @@ def api_oku(yol, kimlik):
     req = urllib.request.Request(API + yol,
         data=json.dumps({"ilanGuid": kimlik}).encode(),
         headers={"Content-Type": "application/json", "User-Agent": "kamu-ilan-takip/2.0"})
-    with urllib.request.urlopen(req, timeout=10) as response:
+    with url_ac(req, timeout=10) as response:
         if response.status == 204:
             raise ValueError("İlan ayrıntısı artık yayımlanmıyor")
         return json.load(response)
