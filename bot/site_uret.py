@@ -31,7 +31,7 @@ def detail_page(item):
     if end and end.tzinfo is None:
         end = end.replace(tzinfo=TR, hour=23, minute=59, second=59)
     status = 'Başvuru sona erdi' if end and end <= datetime.now(TR) else 'Son tarihi resmî ilandan doğrula'
-    date = end.astimezone(TR).strftime('%d.%m.%Y · %H:%M TSİ') if end else 'Belirtilmemiş'
+    date = end.astimezone(TR).strftime('%d.%m.%Y · %H:%M TSİ' if item.get('son_zaman') else '%d.%m.%Y') if end else 'Belirtilmemiş'
     sections = ''
     for heading, value in [('Kadro ve kontenjan', item.get('kadro')), ('İlan özeti', item.get('ozet')), ('Başvuru notu', item.get('basvuru_notu'))]:
         if value:
