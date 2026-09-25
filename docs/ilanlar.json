@@ -1,5 +1,5 @@
 {
- "guncelleme": "2026-09-25T14:18:06+03:00",
+ "guncelleme": "2026-09-25T14:43:27+03:00",
  "ilanlar": [
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=9c82aab5-022e-43c8-b7f1-e6cf329d205b",
@@ -692,6 +692,15 @@
    "son_tarih": null,
    "ilk_gorulme": "2026-09-22T17:46:21+03:00",
    "ilan_turu": "Sözleşmeli Personel İlanları"
+  },
+  {
+   "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=eff11df8-6568-4b54-9deb-2865aa9ac767",
+   "baslik": "BATI AKDENİZ KALKINMA AJANSI - PERSONEL ALIM İLANI (3 UZMAN)",
+   "kurum": "BATI AKDENİZ KALKINMA AJANSI",
+   "ilan_turu": "Sözleşmeli Personel İlanları",
+   "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=eff11df8-6568-4b54-9deb-2865aa9ac767",
+   "son_tarih": null,
+   "ilk_gorulme": "2026-09-25T14:43:16+03:00"
   }
  ],
  "telegram_gonderilen": [
@@ -720,5 +729,7 @@
   "https://kariyerkapisi.gov.tr/IlanDetay?i=f4915f84-3749-4c5d-9272-bb194f2b938b",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=ffa0b738-bf8b-482b-9d36-93a3278496f4"
  ],
- "telegram_bekleyen": []
+ "telegram_bekleyen": [
+  "https://kariyerkapisi.gov.tr/IlanDetay?i=eff11df8-6568-4b54-9deb-2865aa9ac767"
+ ]
 }
