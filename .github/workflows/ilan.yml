@@ -71,12 +71,21 @@ jobs:
           git config user.email "ilan-bot@users.noreply.github.com"
           git add docs/ilanlar.json
           git diff --cached --quiet || (git commit -m "ilanlar güncellendi" && git pull --rebase && git push)
+      - name: İlan sayfalarını oluştur
+        id: portal
+        if: ${{ !cancelled() }}
+        run: |
+          python -m unittest discover -s bot -p 'test_site_uret.py'
+          python bot/site_uret.py
       - name: Pages yapılandır
+        if: ${{ !cancelled() && steps.portal.outcome == 'success' }}
         uses: actions/configure-pages@v5
       - name: Site dosyalarını hazırla
+        if: ${{ !cancelled() && steps.portal.outcome == 'success' }}
         uses: actions/upload-pages-artifact@v4
         with:
           path: docs
       - name: Siteyi yayınla
+        if: ${{ !cancelled() && steps.portal.outcome == 'success' }}
         id: deployment
         uses: actions/deploy-pages@v4
