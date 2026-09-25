@@ -6,6 +6,7 @@ import os
 import tempfile
 from pathlib import Path
 from unittest.mock import patch
+from datetime import timedelta
 
 import ilan_bot
 from ilan_bot import rss_coz, tarih_bul, mesaj_olustur
@@ -43,8 +44,9 @@ class RssTests(unittest.TestCase):
                 'yer': 'İSTANBUL ' * 100, 'kadro': 'Uzman ' * 200,
                 'ozet': 'Koşullar & belgeler ' * 1000, 'son_tarih': '2026-09-24'}
         mesaj = mesaj_olustur(ilan, '')
-        self.assertLess(len(ilan_bot.duz_metin(mesaj)), 4096)
-        self.assertIn('İlan metninden', mesaj)
+        self.assertLess(len(ilan_bot.duz_metin(mesaj).encode('utf-16-le')) // 2, 1024)
+        self.assertNotIn('İlan metninden', mesaj)
+        self.assertNotIn('KAMU İLAN TAKİP', mesaj)
         self.assertNotIn('<script', mesaj)
 
 
@@ -68,6 +70,7 @@ class TelegramDeliveryTests(unittest.TestCase):
              patch.object(ilan_bot, 'indir', return_value=b''), \
              patch.object(ilan_bot, 'rss_coz', return_value=[dict(i) for i in self.items]), \
              patch.object(ilan_bot, 'telegram_gonder', return_value=success) as send, \
+             patch.object(ilan_bot, 'gorsel_olustur', return_value=b'photo'), \
              patch.object(ilan_bot.time, 'sleep'), \
              patch.dict(os.environ, {'TELEGRAM_BOT_TOKEN': 'test', 'TELEGRAM_CHAT_ID': '@test', 'RSS_URLS': ''}), \
              patch('sys.argv', ['bot', '--cikti', str(self.data), *args]), \
@@ -119,6 +122,65 @@ class TelegramDeliveryTests(unittest.TestCase):
             self.assertEqual(self.run_bot('--duyur-mevcut'), 15)
             fetch.assert_not_called()
         self.assertEqual(json.loads(self.data.read_text())['ilanlar'][0]['son_tarih'], '2099-10-09')
+
+    def prepare_reminders(self, days=3):
+        deadline = (ilan_bot.simdi().date() + timedelta(days=days)).isoformat()
+        for i in self.items:
+            i['son_tarih'] = deadline
+        self.data.write_text(json.dumps({'guncelleme': ilan_bot.simdi().isoformat(),
+            'ilanlar': self.items, 'telegram_gonderilen': [i['id'] for i in self.items]}))
+
+    def test_hatirlatma_sinir_ve_tekrar(self):
+        self.prepare_reminders()
+        self.assertEqual(self.run_bot(), 15)
+        self.assertEqual(self.run_bot(), 10)
+        self.assertEqual(self.run_bot(), 0)
+        state = json.loads(self.data.read_text())
+        self.assertEqual(len(state['telegram_hatirlatilan']), 25)
+
+    def test_hatirlatma_basarisizsa_tekrar_denenir(self):
+        self.prepare_reminders()
+        with self.assertRaises(SystemExit):
+            self.run_bot(success=False)
+        self.assertEqual(json.loads(self.data.read_text())['telegram_hatirlatilan'], [])
+        self.assertEqual(self.run_bot(), 15)
+
+    def test_uzak_ve_suresi_dolan_hatirlatilmaz(self):
+        for days in (4, -1):
+            self.prepare_reminders(days)
+            self.assertEqual(self.run_bot(), 0)
+
+    def test_yeni_ilana_hemen_ikinci_hatirlatma_gitmez(self):
+        self.prepare_reminders(2)
+        state = json.loads(self.data.read_text())
+        state['telegram_gonderilen'] = []
+        self.data.write_text(json.dumps(state))
+        self.assertEqual(self.run_bot('--duyur-mevcut'), 15)
+        self.assertEqual(self.run_bot(), 10)
+        self.assertEqual(self.run_bot(), 0)
+
+    def test_son_saat_ve_uzatilan_tarih(self):
+        now = ilan_bot.simdi()
+        i = {'id': 'one', 'son_tarih': now.date().isoformat(),
+             'son_zaman': (now-timedelta(minutes=1)).isoformat()}
+        self.assertIsNone(ilan_bot.hatirlatma_anahtari(i))
+        i['son_zaman'] = (now+timedelta(minutes=1)).isoformat()
+        first = ilan_bot.hatirlatma_anahtari(i)
+        self.assertIsNotNone(first)
+        i['son_zaman'] = (now+timedelta(hours=1)).isoformat()
+        self.assertNotEqual(first, ilan_bot.hatirlatma_anahtari(i))
+
+    def test_fotograf_ve_dugmeler_tek_istekte(self):
+        response = io.BytesIO(b'{"ok": true}')
+        with patch.object(ilan_bot.urllib.request, 'urlopen', return_value=response) as api:
+            self.assertTrue(ilan_bot.telegram_gonder('test', '@test', '<b>İlan</b>',
+                             'https://example.com/apply', 'https://example.com', foto=b'PNGDATA'))
+        request = api.call_args.args[0]
+        self.assertTrue(request.full_url.endswith('/sendPhoto'))
+        self.assertIn(b'name="caption"', request.data)
+        self.assertIn(b'name="photo"', request.data)
+        self.assertIn(b'PNGDATA', request.data)
+        self.assertIn(b'inline_keyboard', request.data)
 
 
 if __name__ == '__main__':

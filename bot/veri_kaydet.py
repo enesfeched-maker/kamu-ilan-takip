@@ -20,7 +20,8 @@ def merge_registry(a, b):
     pending = (set(a.get('telegram_bekleyen', [])) | set(b.get('telegram_bekleyen', []))) - sent
     return {'guncelleme': max(a.get('guncelleme') or '', b.get('guncelleme') or ''),
             'ilanlar': sorted(merged.values(), key=lambda i: i.get('son_tarih') or '9999'),
-            'telegram_gonderilen': sorted(sent), 'telegram_bekleyen': sorted(pending)}
+            'telegram_gonderilen': sorted(sent), 'telegram_bekleyen': sorted(pending),
+            'telegram_hatirlatilan': sorted(set(a.get('telegram_hatirlatilan', [])) | set(b.get('telegram_hatirlatilan', [])))}
 
 
 def git(*args, check=True, capture=False):

@@ -12,6 +12,11 @@ class RegistryMergeTests(unittest.TestCase):
         self.assertEqual(r['ilanlar'][0]['yer'], 'Ankara')
         self.assertEqual(len(r['ilanlar']), 2)
 
+    def test_reminder_history_union(self):
+        r = merge_registry({'telegram_hatirlatilan': ['a', 'b']},
+                           {'telegram_hatirlatilan': ['b', 'c']})
+        self.assertEqual(r['telegram_hatirlatilan'], ['a', 'b', 'c'])
+
 
 if __name__ == '__main__':
     unittest.main()
