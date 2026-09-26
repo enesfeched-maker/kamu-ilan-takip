@@ -1,7 +1,6 @@
 {
-  "rss_urls": [
-    "https://kariyerkapisi.gov.tr/RSS"
-  ],
+  "rss_urls": ["https://kariyerkapisi.gov.tr/RSS"],
+  "ek_kaynaklar": ["sbb", "iskur"],
   "site_url": "https://enesfeched-maker.github.io/kamu-ilan-takip/",
   "resmi_detaylari_oku": true,
   "telegram_kelimeler_dahil": [],
