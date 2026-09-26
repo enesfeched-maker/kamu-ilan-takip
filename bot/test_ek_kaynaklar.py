@@ -32,6 +32,10 @@ class SourceTests(unittest.TestCase):
             self.assertEqual(ek.pdf_dates('24.09.2026','(24 Eylül - 9 Ekim)')['son_tarih'],'2026-10-09')
             self.assertEqual(ek.pdf_dates('20.12.2026','(20 Aralık - 4 Ocak)')['son_tarih'],'2027-01-04')
 
+    def test_institution_names(self):
+        for name in ['Türkiye İnsan Hakları ve Eşitlik Kurumu','Türkiye Belediyeler Birliği','Cumhurbaşkanlığı İletişim Başkanlığı','Gençlik ve Spor Bakanlığı']:
+            self.assertEqual(ek.institution(name+' Personel Alım İlanı'),name)
+
     def test_root_links_do_not_merge_unrelated_jobs(self):
         a={'id':'a','baslik':'A üniversitesi','kurum':'A','link':ek.SBB,'son_tarih':None}
         b={**a,'id':'b','baslik':'B üniversitesi','kurum':'B'}

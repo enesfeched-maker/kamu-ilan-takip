@@ -106,7 +106,7 @@ def total(item):
 
 def institution(title):
     # Keep the actual named institution; never infer a workplace from its city name.
-    m = re.match(r'(.+?(?:Belediye Başkanlığı|Belediyesi|Üniversitesi|Kurumu Başkanlığı|Kalkınma Ajansı))\b',title,re.I)
+    m = re.match(r'(.+?\b(?:Belediye Başkanlığı|Belediyesi|Üniversitesi|Kurumu Başkanlığı|Kalkınma Ajansı|Kurumu|Birliği|Bakanlığı|Genel Müdürlüğü|Başkanlığı))\b',title,re.I)
     return clean(m.group(1)) if m else ''
 
 
@@ -301,10 +301,13 @@ def merge_sources(records, previous):
     result={}
     for item in records:
         exact=previous.get(item['id'])
-        matches=[exact] if exact else [old for old in previous.values() if same_listing(item,old)]
+        matches=[old for old in previous.values() if same_listing(item,old)]
         if not matches:
             matches=[old for old in result.values() if same_listing(item,old)]
-        chosen=matches[0] if len(matches)==1 else item
+        rank=lambda obj: {'sbb':2,'iskur':1}.get(obj.get('kaynak_turu'),0)
+        best=min([rank(item)]+[rank(obj) for obj in matches])
+        preferred=[obj for obj in matches if rank(obj)==best and best<rank(item)]
+        chosen=preferred[0] if len(preferred)==1 else exact or (matches[0] if len(matches)==1 else item)
         ident=chosen['id']
         if ident==item['id']:
             merged={**chosen,**item}
