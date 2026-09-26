@@ -1,5 +1,5 @@
 {
- "guncelleme": "2026-09-26T20:28:44+03:00",
+ "guncelleme": "2026-09-26T20:29:54+03:00",
  "ilanlar": [
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=9c82aab5-022e-43c8-b7f1-e6cf329d205b",
@@ -31,7 +31,15 @@
    "sart_kadro_sayisi": 4,
    "basvuru_notu": "3) Kariyer Kapısı (https://kariyerkapisi.gov.tr/isealim) adresi üzerinden yapılmayan, posta yolu veya şahsen yapılan ve bu duyuruda belirtilen esaslara uygun olmayan başvurular kabul edilmeyecektir.",
    "detay_guncelleme": "2026-09-25T13:03:01+03:00",
-   "kaynak_kimlikleri": []
+   "kaynak_kimlikleri": [
+    "https://kariyerkapisi.gov.tr/IlanDetay?i=9c82aab5-022e-43c8-b7f1-e6cf329d205b"
+   ],
+   "kaynaklar": [
+    {
+     "ad": "Kariyer Kapısı",
+     "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=9c82aab5-022e-43c8-b7f1-e6cf329d205b"
+    }
+   ]
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=ebb1543d-afb7-4af2-98db-ba1f0b0bc0b5",
@@ -50,7 +58,15 @@
    "sart_kadro_sayisi": 0,
    "basvuru_notu": "",
    "detay_guncelleme": "2026-09-25T13:03:02+03:00",
-   "kaynak_kimlikleri": []
+   "kaynak_kimlikleri": [
+    "https://kariyerkapisi.gov.tr/IlanDetay?i=ebb1543d-afb7-4af2-98db-ba1f0b0bc0b5"
+   ],
+   "kaynaklar": [
+    {
+     "ad": "Kariyer Kapısı",
+     "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=ebb1543d-afb7-4af2-98db-ba1f0b0bc0b5"
+    }
+   ]
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=ffa0b738-bf8b-482b-9d36-93a3278496f4",
@@ -74,7 +90,15 @@
    "sart_kadro_sayisi": 1,
    "basvuru_notu": "Sadece elektronik ortamda yapılan başvurular geçerli olup ilanda belirtilen şartlara uygun olmayan başvurular ile elden, e-posta veya posta yoluyla yapılacak başvurular kabul edilmeyecektir.",
    "detay_guncelleme": "2026-09-25T13:03:02+03:00",
-   "kaynak_kimlikleri": []
+   "kaynak_kimlikleri": [
+    "https://kariyerkapisi.gov.tr/IlanDetay?i=ffa0b738-bf8b-482b-9d36-93a3278496f4"
+   ],
+   "kaynaklar": [
+    {
+     "ad": "Kariyer Kapısı",
+     "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=ffa0b738-bf8b-482b-9d36-93a3278496f4"
+    }
+   ]
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=8b47a7a4-2655-48fd-aec4-0df8dcdd88cc",
@@ -106,10 +130,15 @@
     {
      "ad": "Kariyer Kapısı",
      "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=8b47a7a4-2655-48fd-aec4-0df8dcdd88cc"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
    "kaynak_kimlikleri": [
-    "https://kariyerkapisi.gov.tr/IlanDetay?i=8b47a7a4-2655-48fd-aec4-0df8dcdd88cc"
+    "https://kariyerkapisi.gov.tr/IlanDetay?i=8b47a7a4-2655-48fd-aec4-0df8dcdd88cc",
+    "sbb-a06812de56384dd1c9dedc38"
    ]
   },
   {
@@ -129,7 +158,7 @@
      "link": "https://www.iskur.gov.tr/medya/dbhh2mmv/tuerkiye-insan-haklar%C4%B1-ve-e%C5%9Fitlik-kurumu-soezle%C5%9Fmeli-personel-al%C4%B1m-ilan%C4%B1-27092026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:26:58+03:00",
+   "detay_guncelleme": "2026-09-26T20:23:49+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-29750072db6431f74cc7e08f"
@@ -152,10 +181,145 @@
      "link": "https://www.iskur.gov.tr/medya/jmyhxntf/ni%C4%9Fde-azatl%C4%B1-belediyesi-memur-al%C4%B1m-ilan%C4%B1-28092026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:27:45+03:00",
+   "detay_guncelleme": "2026-09-26T20:24:54+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-ea73f06b730bbab8e9208ff8"
+   ]
+  },
+  {
+   "id": "sbb-a21e202aaaa4becb8c8abdd8",
+   "baslik": "BOĞAZİÇİ ÜNİVERSİTESİ - 4 ÖĞRETİM ELEMANI ALACAK",
+   "kurum": "BOĞAZİÇİ ÜNİVERSİTESİ",
+   "kadro": "4 ÖĞRETİM ELEMANI ALACAK",
+   "ilan_turu": "Öğretim Elemanı",
+   "son_tarih": "2026-09-28",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 14 Eylül - 28 Eylül)",
+   "baslangic_zaman": "2026-09-14T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:34+03:00",
+   "belge_ozeti": "ca10a33b20130606dcde8466c4c4a163fe1efd1a6d0dc9e3647602e874bec6b8",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-a21e202aaaa4becb8c8abdd8"
+   ]
+  },
+  {
+   "id": "sbb-48bec610e7cfef5ca996020b",
+   "baslik": "NEVŞEHİR HACI BEKTAŞ VELİ ÜNİVERSİTESİ - 1 ALACAK",
+   "kurum": "NEVŞEHİR HACI BEKTAŞ VELİ ÜNİVERSİTESİ",
+   "kadro": "1 ALACAK",
+   "ilan_turu": "Kamu Personeli",
+   "son_tarih": "2026-09-28",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 14 Eylül - 28 Eylül)",
+   "baslangic_zaman": "2026-09-14T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:34+03:00",
+   "belge_ozeti": "6e08fe4ecaa94ae7b54d4ae1b9778298bbcbb38444f8400c01195e8955920fab",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-48bec610e7cfef5ca996020b"
+   ]
+  },
+  {
+   "id": "sbb-1af8cf46e78ee947c84f2f8c",
+   "baslik": "AMASYA ÜNİVERSİTESİ - 13 ADET ÖĞRETİM ÜYESİ ALACAK",
+   "kurum": "AMASYA ÜNİVERSİTESİ",
+   "kadro": "13 ADET ÖĞRETİM ÜYESİ ALACAK",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": "2026-09-28",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 14 Eylül - 28 Eylül)",
+   "baslangic_zaman": "2026-09-14T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:35+03:00",
+   "belge_ozeti": "c2934832ac0d97ce8c0a0a37b44ba7d1bfc22bfa08fead9cea9c233ae6177bb0",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-1af8cf46e78ee947c84f2f8c"
+   ]
+  },
+  {
+   "id": "sbb-b7fc8c509966adc7c447b6ea",
+   "baslik": "KÜTAHYA SAĞLIK BİLİMLERİ ÜNİVERSİTESİ - 1 ÖĞRETİM ELEMANI ALACAK",
+   "kurum": "KÜTAHYA SAĞLIK BİLİMLERİ ÜNİVERSİTESİ",
+   "kadro": "1 ÖĞRETİM ELEMANI ALACAK",
+   "ilan_turu": "Öğretim Elemanı",
+   "son_tarih": "2026-09-28",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 14 Eylül - 28 Eylül)",
+   "baslangic_zaman": "2026-09-14T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:37+03:00",
+   "belge_ozeti": "6dcaa555f32e5755b5e56ead24925ad648cff107465aa93dc582cc818e3a8b20",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-b7fc8c509966adc7c447b6ea"
+   ]
+  },
+  {
+   "id": "sbb-a2adc236e2ba406c8da7647b",
+   "baslik": "AZATLI BELEDİYE BAŞKANLIĞI - 1 MUHASEBECİ ALACAK",
+   "kurum": "AZATLI BELEDİYE BAŞKANLIĞI",
+   "kadro": "1 MUHASEBECİ ALACAK",
+   "ilan_turu": "Kamu Personeli",
+   "son_tarih": "2026-09-28",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 21 Eylül - 28 Eylül)",
+   "baslangic_zaman": "2026-09-21T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:07:00+03:00",
+   "belge_ozeti": "83e223583775770e467a64076329f24c2c6c9eb40b2a7c7f8a98a4159db45ed1",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-a2adc236e2ba406c8da7647b"
    ]
   },
   {
@@ -232,10 +396,15 @@
     {
      "ad": "Kariyer Kapısı",
      "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=4c8c21d7-0131-486c-968c-375ecc3b9822"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
    "kaynak_kimlikleri": [
-    "https://kariyerkapisi.gov.tr/IlanDetay?i=4c8c21d7-0131-486c-968c-375ecc3b9822"
+    "https://kariyerkapisi.gov.tr/IlanDetay?i=4c8c21d7-0131-486c-968c-375ecc3b9822",
+    "sbb-7e7c889a2d66df6c454f9b4c"
    ]
   },
   {
@@ -272,10 +441,15 @@
     {
      "ad": "Kariyer Kapısı",
      "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=f4915f84-3749-4c5d-9272-bb194f2b938b"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
    "kaynak_kimlikleri": [
-    "https://kariyerkapisi.gov.tr/IlanDetay?i=f4915f84-3749-4c5d-9272-bb194f2b938b"
+    "https://kariyerkapisi.gov.tr/IlanDetay?i=f4915f84-3749-4c5d-9272-bb194f2b938b",
+    "sbb-dbbf75d195c1526bcab0918d"
    ]
   },
   {
@@ -312,10 +486,15 @@
     {
      "ad": "Kariyer Kapısı",
      "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=1f94b6b1-1143-4b0a-9d84-c7dcfa542586"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
    "kaynak_kimlikleri": [
-    "https://kariyerkapisi.gov.tr/IlanDetay?i=1f94b6b1-1143-4b0a-9d84-c7dcfa542586"
+    "https://kariyerkapisi.gov.tr/IlanDetay?i=1f94b6b1-1143-4b0a-9d84-c7dcfa542586",
+    "sbb-54d42e94165d8e6e50a37e20"
    ]
   },
   {
@@ -348,10 +527,15 @@
     {
      "ad": "Kariyer Kapısı",
      "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=c2122f16-3cd3-447f-8878-47f4b16a296c"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
    "kaynak_kimlikleri": [
-    "https://kariyerkapisi.gov.tr/IlanDetay?i=c2122f16-3cd3-447f-8878-47f4b16a296c"
+    "https://kariyerkapisi.gov.tr/IlanDetay?i=c2122f16-3cd3-447f-8878-47f4b16a296c",
+    "sbb-ae22add78ba493288364b38f"
    ]
   },
   {
@@ -380,10 +564,15 @@
     {
      "ad": "Kariyer Kapısı",
      "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=79f7e5c7-8baf-44a5-b056-57e332c66743"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
    "kaynak_kimlikleri": [
-    "https://kariyerkapisi.gov.tr/IlanDetay?i=79f7e5c7-8baf-44a5-b056-57e332c66743"
+    "https://kariyerkapisi.gov.tr/IlanDetay?i=79f7e5c7-8baf-44a5-b056-57e332c66743",
+    "sbb-b443504bddae1ed12a509802"
    ]
   },
   {
@@ -401,12 +590,17 @@
     {
      "ad": "İŞKUR",
      "link": "https://www.iskur.gov.tr/medya/5pzllogq/afyonkarahisar-tatarl-belediyesi-memur-al%C4%B1m-ilan%C4%B1-30092026.pdf"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:26:51+03:00",
+   "detay_guncelleme": "2026-09-26T20:23:40+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
-    "iskur-fc9b33928a57ae4db08d1056"
+    "iskur-fc9b33928a57ae4db08d1056",
+    "sbb-516cacf6c7ec30e8d74c57f0"
    ]
   },
   {
@@ -426,7 +620,7 @@
      "link": "https://www.iskur.gov.tr/medya/id4bvf5f/tuerkiye-belediyeler-birli%C4%9Fi-memur-al%C4%B1m-ilan%C4%B1-30092026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:26:58+03:00",
+   "detay_guncelleme": "2026-09-26T20:23:49+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-e10c5b869c0d24570326307d"
@@ -447,12 +641,17 @@
     {
      "ad": "İŞKUR",
      "link": "https://www.iskur.gov.tr/medya/gdcjxo3w/rize-belediyesi-soezle%C5%9Fmeli-personel-al%C4%B1m-ilan%C4%B1-30092026.pdf"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:27:48+03:00",
+   "detay_guncelleme": "2026-09-26T20:24:58+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
-    "iskur-8082163e4616cef4ddc75fc2"
+    "iskur-8082163e4616cef4ddc75fc2",
+    "sbb-aba6310a5aafef167605b487"
    ]
   },
   {
@@ -472,10 +671,172 @@
      "link": "https://www.iskur.gov.tr/medya/gorfnjbw/yozgat-sorgun-belediyesi-soezle%C5%9Fmeli-personel-al%C4%B1m-ilan%C4%B1-30092026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:27:55+03:00",
+   "detay_guncelleme": "2026-09-26T20:25:08+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-d6a1172b9cf9975dd8e715f5"
+   ]
+  },
+  {
+   "id": "sbb-c8c8a1015f2eea057e2a3bef",
+   "baslik": "ANADOLU ÜNİVERSİTESİ - 2 ÖĞRETİM ELEMANI ALACAK",
+   "kurum": "ANADOLU ÜNİVERSİTESİ",
+   "kadro": "2 ÖĞRETİM ELEMANI ALACAK",
+   "ilan_turu": "Öğretim Elemanı",
+   "son_tarih": "2026-09-30",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 16 Eylül - 30 Eylül)",
+   "baslangic_zaman": "2026-09-16T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:22+03:00",
+   "belge_ozeti": "4a6cd232bda394fc7d19eab6f0ac81f65dba53200c53824a05d2b61184235af0",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-c8c8a1015f2eea057e2a3bef"
+   ]
+  },
+  {
+   "id": "sbb-64af125b2e04ca2aeb62b563",
+   "baslik": "BİLECİK ŞEYH EDEBALİ ÜNİVERSİTESİ - 11 ÖĞRETİM ÜYESİ ALACAK",
+   "kurum": "BİLECİK ŞEYH EDEBALİ ÜNİVERSİTESİ",
+   "kadro": "11 ÖĞRETİM ÜYESİ ALACAK",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": "2026-09-30",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 16 Eylül - 30 Eylül)",
+   "baslangic_zaman": "2026-09-16T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:23+03:00",
+   "belge_ozeti": "6555922a43a4aa74d761d980b98a19ea1a78d073387d62cd84a6920f905cf2ef",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-64af125b2e04ca2aeb62b563"
+   ]
+  },
+  {
+   "id": "sbb-10d46826c12e582e53f7247b",
+   "baslik": "İNÖNÜ ÜNİVERSİTESİ - 15 ÖĞRETİM ÜYESİ ALACAK",
+   "kurum": "İNÖNÜ ÜNİVERSİTESİ",
+   "kadro": "15 ÖĞRETİM ÜYESİ ALACAK",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": "2026-09-30",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 16 Eylül - 30 Eylül)",
+   "baslangic_zaman": "2026-09-16T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:25+03:00",
+   "belge_ozeti": "650405f0fab1db27b65a0341f803e961929c3cc0a422b6a592e9a96ee8e28940",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-10d46826c12e582e53f7247b"
+   ]
+  },
+  {
+   "id": "sbb-ad7e8dd467d5e49bfbfebd87",
+   "baslik": "KAYSERİ ÜNİVERSİTESİ - 2 ÖĞRETİM ELEMANI ALACAK",
+   "kurum": "KAYSERİ ÜNİVERSİTESİ",
+   "kadro": "2 ÖĞRETİM ELEMANI ALACAK",
+   "ilan_turu": "Öğretim Elemanı",
+   "son_tarih": "2026-10-01",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 17 Eylül - 1 Ekim)",
+   "baslangic_zaman": "2026-09-17T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:15+03:00",
+   "belge_ozeti": "c15fe99093f3df3a7fa7c2678dc8522e139d39ae72b66e5735698e9892ac7bf9",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-ad7e8dd467d5e49bfbfebd87"
+   ]
+  },
+  {
+   "id": "sbb-49c53682c3586294e09e2669",
+   "baslik": "BOĞAZİÇİ ÜNİVERSİTESİ - 14 ARAŞTIRMA GÖREVLİSİ ALACAK",
+   "kurum": "BOĞAZİÇİ ÜNİVERSİTESİ",
+   "kadro": "14 ARAŞTIRMA GÖREVLİSİ ALACAK",
+   "ilan_turu": "Araştırma Görevlisi",
+   "son_tarih": "2026-10-01",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 17 Eylül - 1 Ekim)",
+   "baslangic_zaman": "2026-09-17T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:16+03:00",
+   "belge_ozeti": "4746d28c50afea30fdcabdea0caf0bfe4b0b863b96b26bee7c5aa55c2ba060fc",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-49c53682c3586294e09e2669"
+   ]
+  },
+  {
+   "id": "sbb-a5af58883b877a31fdf32b1f",
+   "baslik": "KAYSERİ ÜNİVERSİTESİ - 7 ÖĞRETİM ÜYESİ ALACAK",
+   "kurum": "KAYSERİ ÜNİVERSİTESİ",
+   "kadro": "7 ÖĞRETİM ÜYESİ ALACAK",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": "2026-10-01",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 17 Eylül - 1 Ekim)",
+   "baslangic_zaman": "2026-09-17T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:18+03:00",
+   "belge_ozeti": "6ae54964e4dd96243cd8dc46b7940f111a930a85724b3ead405d2d54301cc945",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-a5af58883b877a31fdf32b1f"
    ]
   },
   {
@@ -512,10 +873,15 @@
     {
      "ad": "Kariyer Kapısı",
      "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=a3fc2acb-8b4d-48c0-b273-1a68554b2772"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
    "kaynak_kimlikleri": [
-    "https://kariyerkapisi.gov.tr/IlanDetay?i=a3fc2acb-8b4d-48c0-b273-1a68554b2772"
+    "https://kariyerkapisi.gov.tr/IlanDetay?i=a3fc2acb-8b4d-48c0-b273-1a68554b2772",
+    "sbb-89fb96e8ad9706d74470a0a7"
    ]
   },
   {
@@ -552,10 +918,15 @@
     {
      "ad": "Kariyer Kapısı",
      "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=b06c870a-74b4-4292-aefd-99b0b4ea6263"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
    "kaynak_kimlikleri": [
-    "https://kariyerkapisi.gov.tr/IlanDetay?i=b06c870a-74b4-4292-aefd-99b0b4ea6263"
+    "https://kariyerkapisi.gov.tr/IlanDetay?i=b06c870a-74b4-4292-aefd-99b0b4ea6263",
+    "sbb-579f123a6d883e5f9ee5b864"
    ]
   },
   {
@@ -573,12 +944,17 @@
     {
      "ad": "İŞKUR",
      "link": "https://www.iskur.gov.tr/medya/ijkalmsx/bingoel-yayladere-belediyesi-memur-al%C4%B1m-ilan%C4%B1-02102026.pdf"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:27:04+03:00",
+   "detay_guncelleme": "2026-09-26T20:23:58+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
-    "iskur-570cf8fce5dc803a44fd5f84"
+    "iskur-570cf8fce5dc803a44fd5f84",
+    "sbb-b521542c21be3cb214b26952"
    ]
   },
   {
@@ -596,12 +972,17 @@
     {
      "ad": "İŞKUR",
      "link": "https://www.iskur.gov.tr/medya/ouclcbiy/edirne-ipsala-belediyesi-soezle%C5%9Fmeli-personel-al%C4%B1m-ilan%C4%B1-02102026.pdf"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:27:11+03:00",
+   "detay_guncelleme": "2026-09-26T20:24:08+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
-    "iskur-99382747cf844bf91f8d55d1"
+    "iskur-99382747cf844bf91f8d55d1",
+    "sbb-3b022bdbc525c829504f83c4"
    ]
   },
   {
@@ -619,12 +1000,17 @@
     {
      "ad": "İŞKUR",
      "link": "https://www.iskur.gov.tr/medya/vqecz40i/edirne-uzunkoeprue-belediyesi-memur-al%C4%B1m-ilan%C4%B1-02102026.pdf"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:27:11+03:00",
+   "detay_guncelleme": "2026-09-26T20:24:08+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
-    "iskur-0feeb0a9f78763daa20afbc0"
+    "iskur-0feeb0a9f78763daa20afbc0",
+    "sbb-560acc246dd091a65502a7c0"
    ]
   },
   {
@@ -642,12 +1028,17 @@
     {
      "ad": "İŞKUR",
      "link": "https://www.iskur.gov.tr/medya/zinbmzjr/eski%C5%9Fehir-han-belediyesi-soezle%C5%9Fmeli-personel-al%C4%B1m-ilan%C4%B1-02102026.pdf"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:27:15+03:00",
+   "detay_guncelleme": "2026-09-26T20:24:12+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
-    "iskur-7464f9a150b8173ce65b14e9"
+    "iskur-7464f9a150b8173ce65b14e9",
+    "sbb-ed422feb712a8ec606c41e55"
    ]
   },
   {
@@ -665,12 +1056,17 @@
     {
      "ad": "İŞKUR",
      "link": "https://www.iskur.gov.tr/medya/wgqfzjr2/izmir-bornova-belediyesi-zab%C4%B1ta-memuru-al%C4%B1m-ilan%C4%B1-02102026.pdf"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:27:25+03:00",
+   "detay_guncelleme": "2026-09-26T20:24:26+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
-    "iskur-fa28b4c0c3f9295cab08bcaf"
+    "iskur-fa28b4c0c3f9295cab08bcaf",
+    "sbb-87437928bfdc3b54d95c38ba"
    ]
   },
   {
@@ -690,7 +1086,7 @@
      "link": "https://www.iskur.gov.tr/medya/xt0fsrvg/nev%C5%9Fehir-ortahisar-belediyesi-memur-al%C4%B1m-ilan%C4%B1-02102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:27:42+03:00",
+   "detay_guncelleme": "2026-09-26T20:24:49+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-bb8e6aa8951d08b2725df442"
@@ -711,12 +1107,18 @@
     {
      "ad": "İŞKUR",
      "link": "https://www.iskur.gov.tr/medya/hffjz1bq/rize-belediye-ba%C5%9Fkanl%C4%B1%C4%9F%C4%B1-soezle%C5%9Fmeli-personel-al%C4%B1m-ilan%C4%B1-02102026.pdf"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:27:48+03:00",
+   "detay_guncelleme": "2026-09-26T20:24:58+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
-    "iskur-3677dcc131f29000f124a17e"
+    "iskur-3677dcc131f29000f124a17e",
+    "sbb-1b7e7272c7eb24e1eea3e33a",
+    "sbb-fb7502f5227a4c979b29a115"
    ]
   },
   {
@@ -734,12 +1136,17 @@
     {
      "ad": "İŞKUR",
      "link": "https://www.iskur.gov.tr/medya/goudeefj/siirt-be%C4%9Fendik-belediyesi-zab%C4%B1ta-memuru-al%C4%B1m-ilan%C4%B1-02102026.pdf"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:27:51+03:00",
+   "detay_guncelleme": "2026-09-26T20:25:03+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
-    "iskur-d99e2ddd28b8fb79339d9d20"
+    "iskur-d99e2ddd28b8fb79339d9d20",
+    "sbb-836d8d43ff9155399ee8314c"
    ]
   },
   {
@@ -757,12 +1164,17 @@
     {
      "ad": "İŞKUR",
      "link": "https://www.iskur.gov.tr/medya/eahpen42/k%C4%B1r%C4%B1kkale-bah%C5%9F%C4%B1l%C4%B1-belediyesi-memur-al%C4%B1m-ilan%C4%B1-02102026.pdf"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:27:58+03:00",
+   "detay_guncelleme": "2026-09-26T20:25:13+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
-    "iskur-bdd72d200fb73e41048a3a70"
+    "iskur-bdd72d200fb73e41048a3a70",
+    "sbb-640e0e72caad0b81d8aeb3a8"
    ]
   },
   {
@@ -782,10 +1194,229 @@
      "link": "https://www.iskur.gov.tr/medya/s0qis2rt/yalova-suba%C5%9F%C4%B1-belediyesi-memur-al%C4%B1m-ilan%C4%B1-02102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:28:09+03:00",
+   "detay_guncelleme": "2026-09-26T20:25:26+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-1c1015bfd1faeaea90028a12"
+   ]
+  },
+  {
+   "id": "sbb-1a8720ee52f99de292a259e0",
+   "baslik": "SUBAŞI (YALOVA) BELEDİYE BAŞKANLIĞI - DÜZELTME İLANI",
+   "kurum": "SUBAŞI (YALOVA) BELEDİYE BAŞKANLIĞI",
+   "kadro": "DÜZELTME İLANI",
+   "ilan_turu": "Kamu Personeli",
+   "son_tarih": "2026-10-02",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 28 Eylül - 2 Ekim)",
+   "baslangic_zaman": "2026-09-28T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:00+03:00",
+   "belge_ozeti": "d6499531599b75db3004a7705076c86f80b5e06a871879bd356dbc26732a7e37",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "duyuru_turu": "Düzeltme / süre değişikliği",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-1a8720ee52f99de292a259e0"
+   ]
+  },
+  {
+   "id": "sbb-e4f2debf180fbc0c6897a62b",
+   "baslik": "İZMİR DEMOKRASİ ÜNİVERSİTESİ - 20 ÖĞRETİM ÜYESİ ALACAK",
+   "kurum": "İZMİR DEMOKRASİ ÜNİVERSİTESİ",
+   "kadro": "20 ÖĞRETİM ÜYESİ ALACAK",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": "2026-10-02",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 18 Eylül - 2 Ekim)",
+   "baslangic_zaman": "2026-09-18T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:09+03:00",
+   "belge_ozeti": "a03b50b0fcedcf3852e0d05384a3d148056a097d4bc4a0e02155a41c393da4a1",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-e4f2debf180fbc0c6897a62b"
+   ]
+  },
+  {
+   "id": "sbb-798d30efe01c78ff391e4e26",
+   "baslik": "SİVAS BİLİM VE TEKNOLOJİ ÜNİVERSİTESİ - DÜZELTME İLANI",
+   "kurum": "SİVAS BİLİM VE TEKNOLOJİ ÜNİVERSİTESİ",
+   "kadro": "DÜZELTME İLANI",
+   "ilan_turu": "Kamu Personeli",
+   "son_tarih": "2026-10-02",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 18 Eylül - 2 Ekim)",
+   "baslangic_zaman": "2026-09-18T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:11+03:00",
+   "belge_ozeti": "cea2f51b0ce22e03c130323ed34021abf7066cfdf160def3026aa523d5d147ea",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "duyuru_turu": "Düzeltme / süre değişikliği",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-798d30efe01c78ff391e4e26"
+   ]
+  },
+  {
+   "id": "sbb-f18b0ff040aebffaaf4a702d",
+   "baslik": "İSTANBUL TEKNİK ÜNİVERSİTESİ - 44 ÖĞRETİM ÜYESİ ALACAK",
+   "kurum": "İSTANBUL TEKNİK ÜNİVERSİTESİ",
+   "kadro": "44 ÖĞRETİM ÜYESİ ALACAK",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": "2026-10-02",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 18 Eylül - 2 Ekim)",
+   "baslangic_zaman": "2026-09-18T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:13+03:00",
+   "belge_ozeti": "7025290075af972111e0736eb8aec6dd547dde8d363e4f6de471aba0a444ba1c",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-f18b0ff040aebffaaf4a702d"
+   ]
+  },
+  {
+   "id": "sbb-6e0a71f8eace06170d316eb5",
+   "baslik": "KARABÜK ÜNİVERSİTESİ - ÖĞRETİM ELEMANI DÜZELTME İLANI",
+   "kurum": "KARABÜK ÜNİVERSİTESİ",
+   "kadro": "ÖĞRETİM ELEMANI DÜZELTME İLANI",
+   "ilan_turu": "Öğretim Elemanı",
+   "son_tarih": "2026-10-02",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 18 Eylül - 2 Ekim)",
+   "baslangic_zaman": "2026-09-18T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:14+03:00",
+   "belge_ozeti": "ac25dbe923fad07dfa1482f0ceaeee45840b2246e8f08bba4e400e52e9f34419",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "duyuru_turu": "Düzeltme / süre değişikliği",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-6e0a71f8eace06170d316eb5"
+   ]
+  },
+  {
+   "id": "sbb-53d5d7eddcc0304e9046a8e2",
+   "baslik": "İZMİR DEMOKRASİ ÜNİVERSİTESİ - 4 öğretim elemanı alacak",
+   "kurum": "İZMİR DEMOKRASİ ÜNİVERSİTESİ",
+   "kadro": "4 öğretim elemanı alacak",
+   "ilan_turu": "Öğretim Elemanı",
+   "son_tarih": "2026-10-02",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 18 Eylül - 2 Ekim)",
+   "baslangic_zaman": "2026-09-18T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:14+03:00",
+   "belge_ozeti": "4bd577d7519ed8cb1be32a6e713ef69a864d1ac2fbc5f8fe441f21b624236c63",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-53d5d7eddcc0304e9046a8e2"
+   ]
+  },
+  {
+   "id": "sbb-6f51d37c2089a1c701085572",
+   "baslik": "SUBAŞI (YALOVA) BELEDİYE BAŞKANLIĞI - 1 MEMUR ALACAK",
+   "kurum": "SUBAŞI (YALOVA) BELEDİYE BAŞKANLIĞI",
+   "kadro": "1 MEMUR ALACAK",
+   "ilan_turu": "Memur",
+   "son_tarih": "2026-10-02",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 28 Eylül - 2 Ekim)",
+   "baslangic_zaman": "2026-09-28T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:53+03:00",
+   "belge_ozeti": "cb3e3dddfbab5eff81d282e5b5796a3add3d316f49ca419cdb15cc7505cc8e9b",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-6f51d37c2089a1c701085572"
+   ]
+  },
+  {
+   "id": "sbb-7c9c2f5b00dfc824df25ad19",
+   "baslik": "ZONGULDAK BELEDİYE BAŞKANLIĞI - 10 MEMUR ALACAK",
+   "kurum": "ZONGULDAK BELEDİYE BAŞKANLIĞI",
+   "kadro": "10 MEMUR ALACAK",
+   "ilan_turu": "Memur",
+   "son_tarih": "2026-10-02",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 30 Eylül - 2 Ekim)",
+   "baslangic_zaman": "2026-09-30T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:56+03:00",
+   "belge_ozeti": "4bd423a05541048b442d832292ed88966832fe78946975d3f52482021b012018",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-7c9c2f5b00dfc824df25ad19"
    ]
   },
   {
@@ -845,10 +1476,37 @@
      "link": "https://www.iskur.gov.tr/medya/nrubse1f/goe%C3%A7-idaresi-ba%C5%9Fkanl%C4%B1%C4%9F%C4%B1-soezle%C5%9Fmeli-bili%C5%9Fim-personeli-al%C4%B1m-ilan%C4%B1-04102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:26:58+03:00",
+   "detay_guncelleme": "2026-09-26T20:23:49+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-dcc9c932a3a1b069dc5aae84"
+   ]
+  },
+  {
+   "id": "sbb-76ee051d18b17469cccc3b55",
+   "baslik": "ADANA ALPARSLAN TÜRKEŞ BİLİM VE TEKNOLOJİ ÜNİVERSİTESİ - 25 ÖĞRETİM ELEMANI ALACAK",
+   "kurum": "ADANA ALPARSLAN TÜRKEŞ BİLİM VE TEKNOLOJİ ÜNİVERSİTESİ",
+   "kadro": "25 ÖĞRETİM ELEMANI ALACAK",
+   "ilan_turu": "Öğretim Elemanı",
+   "son_tarih": "2026-10-04",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 20 Eylül - 4 Ekim)",
+   "baslangic_zaman": "2026-09-20T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:06+03:00",
+   "belge_ozeti": "8831f45f8f0cb275145bb4337383fef622d1ce543ac3c217b24779bb79208f36",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-76ee051d18b17469cccc3b55"
    ]
   },
   {
@@ -877,10 +1535,15 @@
     {
      "ad": "Kariyer Kapısı",
      "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=5054018d-07da-4a99-8aa9-6ad471aa90b7"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
    "kaynak_kimlikleri": [
-    "https://kariyerkapisi.gov.tr/IlanDetay?i=5054018d-07da-4a99-8aa9-6ad471aa90b7"
+    "https://kariyerkapisi.gov.tr/IlanDetay?i=5054018d-07da-4a99-8aa9-6ad471aa90b7",
+    "sbb-d16bbf2f877f1cb3340c5b18"
    ]
   },
   {
@@ -917,10 +1580,15 @@
     {
      "ad": "Kariyer Kapısı",
      "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=ec8cb14d-917f-4d65-951b-281faac1f564"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
    "kaynak_kimlikleri": [
-    "https://kariyerkapisi.gov.tr/IlanDetay?i=ec8cb14d-917f-4d65-951b-281faac1f564"
+    "https://kariyerkapisi.gov.tr/IlanDetay?i=ec8cb14d-917f-4d65-951b-281faac1f564",
+    "sbb-2b06b1d29a527c4989469c9a"
    ]
   },
   {
@@ -940,10 +1608,255 @@
      "link": "https://www.iskur.gov.tr/medya/mgbpdb0p/ardahan-hanak-belediyesi-memur-al%C4%B1m-ilan%C4%B1-05102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:28:02+03:00",
+   "detay_guncelleme": "2026-09-26T20:25:17+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-90bc49ba5ab8723a8adb1001"
+   ]
+  },
+  {
+   "id": "sbb-7974821666d14f268a7ed436",
+   "baslik": "TÜRK-ALMAN ÜNİVERSİTESİ - 11 ÖĞRETİM ÜYESİ ALACAK",
+   "kurum": "TÜRK-ALMAN ÜNİVERSİTESİ",
+   "kadro": "11 ÖĞRETİM ÜYESİ ALACAK",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": "2026-10-05",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 21 Eylül - 5 Ekim)",
+   "baslangic_zaman": "2026-09-21T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:05:55+03:00",
+   "belge_ozeti": "78e87cc217317699e987e80af932991add884cd24bc2942dbc134c79c9f6a53a",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-7974821666d14f268a7ed436"
+   ]
+  },
+  {
+   "id": "sbb-3959495a3471bf5e62b5fac3",
+   "baslik": "OSMANİYE KORKUT ATA ÜNİVERSİTESİ - 27 ÖĞRETİM ÜYESİ ALACAK",
+   "kurum": "OSMANİYE KORKUT ATA ÜNİVERSİTESİ",
+   "kadro": "27 ÖĞRETİM ÜYESİ ALACAK",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": "2026-10-05",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 21 Eylül - 5 Ekim)",
+   "baslangic_zaman": "2026-09-21T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:05:56+03:00",
+   "belge_ozeti": "c260032fd0baa46f20a0e9c670cf0df41d1a54b685c51e3e230bc8055ec22589",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-3959495a3471bf5e62b5fac3"
+   ]
+  },
+  {
+   "id": "sbb-a69af1b197a461962692610d",
+   "baslik": "TEKİRDAĞ NAMIK KEMAL ÜNİVERSİTESİ - ÜNİVERSİTESİ SÖZLEŞMELİ PERSONEL DÜZELTME ALIM İLANI",
+   "kurum": "TEKİRDAĞ NAMIK KEMAL ÜNİVERSİTESİ",
+   "kadro": "ÜNİVERSİTESİ SÖZLEŞMELİ PERSONEL DÜZELTME ALIM İLANI",
+   "ilan_turu": "Sözleşmeli Personel",
+   "son_tarih": "2026-10-05",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 21 Eylül - 5 Ekim)",
+   "baslangic_zaman": "2026-09-21T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:05:58+03:00",
+   "belge_ozeti": "286694f24e3fbda35a4cf0091e131e2b83f436697ae0badb5f95a0a70d7a2209",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "duyuru_turu": "Düzeltme / süre değişikliği",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-a69af1b197a461962692610d"
+   ]
+  },
+  {
+   "id": "sbb-cf0ab108a51eb8616627b01b",
+   "baslik": "TÜRKİYE BİLİMSEL VE TEKNOLOJİK ARAŞTIRMA KURUMU (TÜBİTAK) - 647 PERSONEL ALACAK (SÜRE UZATIMI)",
+   "kurum": "TÜRKİYE BİLİMSEL VE TEKNOLOJİK ARAŞTIRMA KURUMU (TÜBİTAK)",
+   "kadro": "647 PERSONEL ALACAK (SÜRE UZATIMI)",
+   "ilan_turu": "Kamu Personeli",
+   "son_tarih": "2026-10-05",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 21 Eylül - 5 Ekim)",
+   "baslangic_zaman": "2026-09-21T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:05:59+03:00",
+   "belge_ozeti": "a4df96fcbb930bfdefc135a2244c182d0676559a513c6c07c693dbf139211ed0",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "duyuru_turu": "Düzeltme / süre değişikliği",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-cf0ab108a51eb8616627b01b"
+   ]
+  },
+  {
+   "id": "sbb-486f940153a3616ee11609f8",
+   "baslik": "AFYON KOCATEPE ÜNİVERSİTESİ - 44 ÖĞRETİM ÜYESİ ALACAK",
+   "kurum": "AFYON KOCATEPE ÜNİVERSİTESİ",
+   "kadro": "44 ÖĞRETİM ÜYESİ ALACAK",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": "2026-10-05",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 21 Eylül - 5 Ekim)",
+   "baslangic_zaman": "2026-09-21T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:01+03:00",
+   "belge_ozeti": "c1eb33e78922a498a368941c1de23c37ba83de3255d46b972845b40858f3a7bd",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-486f940153a3616ee11609f8"
+   ]
+  },
+  {
+   "id": "sbb-2244a2ef6d6890502149fd23",
+   "baslik": "OSMANİYE KORKUT ATA ÜNİVERSİTESİ - 6 ÖĞRETİM ELEMANI ALACAK",
+   "kurum": "OSMANİYE KORKUT ATA ÜNİVERSİTESİ",
+   "kadro": "6 ÖĞRETİM ELEMANI ALACAK",
+   "ilan_turu": "Öğretim Elemanı",
+   "son_tarih": "2026-10-05",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 21 Eylül - 5 Ekim)",
+   "baslangic_zaman": "2026-09-21T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:03+03:00",
+   "belge_ozeti": "27d4b2f37bcc403d76a36388103cfcb2cf15db8a2e73fa0cb9272949b32bb4da",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-2244a2ef6d6890502149fd23"
+   ]
+  },
+  {
+   "id": "sbb-1737626cafbe7dc415139775",
+   "baslik": "AFYON KOCATEPE ÜNİVERSİTESİ - 8 ÖĞRETİM ELEMANI ALACAK",
+   "kurum": "AFYON KOCATEPE ÜNİVERSİTESİ",
+   "kadro": "8 ÖĞRETİM ELEMANI ALACAK",
+   "ilan_turu": "Öğretim Elemanı",
+   "son_tarih": "2026-10-05",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 21 Eylül - 5 Ekim)",
+   "baslangic_zaman": "2026-09-21T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:04+03:00",
+   "belge_ozeti": "3cbc9517e31f5f52a76e5811f0ae944a54fd5b0fdeeff1f399a59acdfd61d9f7",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-1737626cafbe7dc415139775"
+   ]
+  },
+  {
+   "id": "sbb-342bbb3902ba01a2d059ed36",
+   "baslik": "TÜRK-ALMAN ÜNİVERSİTESİ - 3 ÖĞRETİM ELEMANI ALACAK",
+   "kurum": "TÜRK-ALMAN ÜNİVERSİTESİ",
+   "kadro": "3 ÖĞRETİM ELEMANI ALACAK",
+   "ilan_turu": "Öğretim Elemanı",
+   "son_tarih": "2026-10-05",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 21 Eylül - 5 Ekim)",
+   "baslangic_zaman": "2026-09-21T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:05+03:00",
+   "belge_ozeti": "bc175740ae1259c0318c57e406113b64551c3f2065d7fb1138a909230d4d856f",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-342bbb3902ba01a2d059ed36"
+   ]
+  },
+  {
+   "id": "sbb-2fd39eaa99a96bb423839821",
+   "baslik": "NİĞDE ÖMER HALİSDEMİR ÜNİVERSİTESİ - 120 ÖĞRETİM ÜYESİ ALACAK",
+   "kurum": "NİĞDE ÖMER HALİSDEMİR ÜNİVERSİTESİ",
+   "kadro": "120 ÖĞRETİM ÜYESİ ALACAK",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": "2026-10-05",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 18 Eylül - 5 Ekim)",
+   "baslangic_zaman": "2026-09-18T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:09+03:00",
+   "belge_ozeti": "0521c1d2a28c7ff02bed14256020212a6ff74f5e84c2fe9ef6efdb11d3bd105a",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-2fd39eaa99a96bb423839821"
    ]
   },
   {
@@ -976,10 +1889,15 @@
     {
      "ad": "Kariyer Kapısı",
      "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=adbf0488-1319-4ed1-911b-2f991cfb129a"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
    "kaynak_kimlikleri": [
-    "https://kariyerkapisi.gov.tr/IlanDetay?i=adbf0488-1319-4ed1-911b-2f991cfb129a"
+    "https://kariyerkapisi.gov.tr/IlanDetay?i=adbf0488-1319-4ed1-911b-2f991cfb129a",
+    "sbb-0f29ee6b4a3de11a404ed1d7"
    ]
   },
   {
@@ -997,12 +1915,17 @@
     {
      "ad": "İŞKUR",
      "link": "https://www.iskur.gov.tr/medya/zzean2q3/izmir-karaburun-belediyesi-zab%C4%B1ta-memuru-al%C4%B1m-ilan%C4%B1-06102026.pdf"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:27:25+03:00",
+   "detay_guncelleme": "2026-09-26T20:24:26+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
-    "iskur-8f2afcb0d71295c346c4b20d"
+    "iskur-8f2afcb0d71295c346c4b20d",
+    "sbb-ceeda30b160fbd9117d6f0cb"
    ]
   },
   {
@@ -1020,12 +1943,17 @@
     {
      "ad": "İŞKUR",
      "link": "https://www.iskur.gov.tr/medya/v3vpd1u2/ardahan-goele-belediyesi-memur-al%C4%B1m-ilan%C4%B1-06102026.pdf"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:28:02+03:00",
+   "detay_guncelleme": "2026-09-26T20:25:17+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
-    "iskur-46fd3ccae48ba3acd1a3e086"
+    "iskur-46fd3ccae48ba3acd1a3e086",
+    "sbb-42a7834aa4441e349d596e46"
    ]
   },
   {
@@ -1045,10 +1973,227 @@
      "link": "https://www.iskur.gov.tr/medya/ykdb03ym/osmaniye-bah%C3%A7e-belediyesi-memur-al%C4%B1m-ilan%C4%B1-06102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:28:12+03:00",
+   "detay_guncelleme": "2026-09-26T20:25:31+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-c87f9628d86934195c827cdb"
+   ]
+  },
+  {
+   "id": "sbb-578ca25c762bf229aefab260",
+   "baslik": "YOZGAT BOZOK ÜNİVERSİTESİ - 17 ÖĞRETİM ÜYESİ ALACAK",
+   "kurum": "YOZGAT BOZOK ÜNİVERSİTESİ",
+   "kadro": "17 ÖĞRETİM ÜYESİ ALACAK",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": "2026-10-06",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 22 Eylül - 6 Ekim)",
+   "baslangic_zaman": "2026-09-22T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:05:53+03:00",
+   "belge_ozeti": "42b6c02f423ed1b488f5a6251bf6a712539d2509a67c6b2d7f770d664797b0c7",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-578ca25c762bf229aefab260"
+   ]
+  },
+  {
+   "id": "sbb-bafee25cf4d0c6797b3006b1",
+   "baslik": "MALATYA TURGUT ÖZAL ÜNİVERSİTESİ - 36 ÖĞRETİM ÜYESİ ALACAK",
+   "kurum": "MALATYA TURGUT ÖZAL ÜNİVERSİTESİ",
+   "kadro": "36 ÖĞRETİM ÜYESİ ALACAK",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": "2026-10-06",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 22 Eylül - 6 Ekim)",
+   "baslangic_zaman": "2026-09-22T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:05:54+03:00",
+   "belge_ozeti": "157d91f31c36604f7b347e78a1e57bf833c4d4387c3a127e11599b7527847a54",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-bafee25cf4d0c6797b3006b1"
+   ]
+  },
+  {
+   "id": "sbb-e3cf06b41a8f98824b49c594",
+   "baslik": "TARSUS ÜNİVERSİTESİ - 9 ÖĞRETİM ÜYESİ ALACAK",
+   "kurum": "TARSUS ÜNİVERSİTESİ",
+   "kadro": "9 ÖĞRETİM ÜYESİ ALACAK",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": "2026-10-06",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 21 Eylül - 6 Ekim)",
+   "baslangic_zaman": "2026-09-21T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:05:55+03:00",
+   "belge_ozeti": "9e3d9db081aa176ea380c068e09c890b1d22eb27c7644d6621566e41c92a6c80",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-e3cf06b41a8f98824b49c594"
+   ]
+  },
+  {
+   "id": "sbb-93cc332f5c0251f47b070fe1",
+   "baslik": "YILDIZ TEKNİK ÜNİVERSİTESİ - 28 ÖĞRETİM ELEMANI ALACAK",
+   "kurum": "YILDIZ TEKNİK ÜNİVERSİTESİ",
+   "kadro": "28 ÖĞRETİM ELEMANI ALACAK",
+   "ilan_turu": "Öğretim Elemanı",
+   "son_tarih": "2026-10-07",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 23 Eylül - 7 Ekim)",
+   "baslangic_zaman": "2026-09-23T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:05:50+03:00",
+   "belge_ozeti": "39b03fa1d0b80c357f8d9d8b48d29f29d67234a9592ddd756132f8585f987c14",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-93cc332f5c0251f47b070fe1"
+   ]
+  },
+  {
+   "id": "sbb-b4156a2d20c3ff5ee1a5796f",
+   "baslik": "GEBZE TEKNİK ÜNİVERSİTESİ - 5 ADET ARAŞTIRMA GÖREVLİSİ ALACAK",
+   "kurum": "GEBZE TEKNİK ÜNİVERSİTESİ",
+   "kadro": "5 ADET ARAŞTIRMA GÖREVLİSİ ALACAK",
+   "ilan_turu": "Araştırma Görevlisi",
+   "son_tarih": "2026-10-07",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 23 Eylül - 7 Ekim)",
+   "baslangic_zaman": "2026-09-23T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:05:51+03:00",
+   "belge_ozeti": "fc4675f22c7baf9a38aec1d4ffd17bab8c9f01548c8164461f821ed6499a4fd9",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-b4156a2d20c3ff5ee1a5796f"
+   ]
+  },
+  {
+   "id": "sbb-90590b042f3d9058effaa9d4",
+   "baslik": "TARSUS ÜNİVERSİTESİ - 2 ÖĞRETİM ELEMANI ALACAK",
+   "kurum": "TARSUS ÜNİVERSİTESİ",
+   "kadro": "2 ÖĞRETİM ELEMANI ALACAK",
+   "ilan_turu": "Öğretim Elemanı",
+   "son_tarih": "2026-10-07",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 22 Eylül - 7 Ekim)",
+   "baslangic_zaman": "2026-09-22T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:05:51+03:00",
+   "belge_ozeti": "198c7a091e663fdfbed30c7b4c395bf3d7cea78389838423dea251e81d97dc1b",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-90590b042f3d9058effaa9d4"
+   ]
+  },
+  {
+   "id": "sbb-456705609dc40fbb2767174f",
+   "baslik": "MUCUR BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR VE İTFAİYE ERİ ALIMI DÜZELTME İLANI",
+   "kurum": "MUCUR BELEDİYE BAŞKANLIĞI",
+   "kadro": "İLK DEFA ATANMAK ÜZERE MEMUR VE İTFAİYE ERİ ALIMI DÜZELTME İLANI",
+   "ilan_turu": "Memur",
+   "son_tarih": "2026-10-07",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 5 Ekim - 7 Ekim)",
+   "baslangic_zaman": "2026-10-05T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:42+03:00",
+   "belge_ozeti": "2c503cfdb6c8bf58d0fb096ca0f2ca6607df072fcdf1ffeee11c1f766b9cf16b",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "duyuru_turu": "Düzeltme / süre değişikliği",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-456705609dc40fbb2767174f"
+   ]
+  },
+  {
+   "id": "sbb-c49d399e06ae4c205b04a173",
+   "baslik": "HANAK BELEDİYE BAŞKANLIĞI - 3 MEMUR ALACAK",
+   "kurum": "HANAK BELEDİYE BAŞKANLIĞI",
+   "kadro": "3 MEMUR ALACAK",
+   "ilan_turu": "Memur",
+   "son_tarih": "2026-10-07",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 5 Ekim - 7 Ekim)",
+   "baslangic_zaman": "2026-10-05T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:46+03:00",
+   "belge_ozeti": "a1331387f091252ed5bfb49a848f4126b3cfa842bb4feecd29487d2df97e3d81",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-c49d399e06ae4c205b04a173"
    ]
   },
   {
@@ -1068,10 +2213,64 @@
      "link": "https://www.iskur.gov.tr/medya/odhp4e4v/k%C4%B1r%C5%9Fehir-mucur-belediyesi-itfaiye-eri-al%C4%B1m-ilan%C4%B1-08102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:27:29+03:00",
+   "detay_guncelleme": "2026-09-26T20:24:31+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-ced29e58351712e81082b7e6"
+   ]
+  },
+  {
+   "id": "sbb-30ebc2e50588b1da8b58302f",
+   "baslik": "HİTİT ÜNİVERSİTESİ - 52 ÖĞRETİM ÜYESİ ALACAK",
+   "kurum": "HİTİT ÜNİVERSİTESİ",
+   "kadro": "52 ÖĞRETİM ÜYESİ ALACAK",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": "2026-10-08",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 24 Eylül - 8 Ekim)",
+   "baslangic_zaman": "2026-09-24T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:05:45+03:00",
+   "belge_ozeti": "2235a39c735561adbbc84b1d01703bc3240de367f2e18761d4912996cbb4008c",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-30ebc2e50588b1da8b58302f"
+   ]
+  },
+  {
+   "id": "sbb-866abc35896ad9d91ee671c5",
+   "baslik": "MUCUR BELEDİYE BAŞKANLIĞI - 2 MEMUR ALACAK",
+   "kurum": "MUCUR BELEDİYE BAŞKANLIĞI",
+   "kadro": "2 MEMUR ALACAK",
+   "ilan_turu": "Memur",
+   "son_tarih": "2026-10-08",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 5 Ekim - 8 Ekim)",
+   "baslangic_zaman": "2026-10-05T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:51+03:00",
+   "belge_ozeti": "ed8986d3ebd66662c9c6d82cb69a75284cac1aad3436f16b10f23596e9e36a3d",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-866abc35896ad9d91ee671c5"
    ]
   },
   {
@@ -1144,10 +2343,15 @@
     {
      "ad": "Kariyer Kapısı",
      "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=69465191-48a2-447c-8f55-edb2ecbeb45a"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
    "kaynak_kimlikleri": [
-    "https://kariyerkapisi.gov.tr/IlanDetay?i=69465191-48a2-447c-8f55-edb2ecbeb45a"
+    "https://kariyerkapisi.gov.tr/IlanDetay?i=69465191-48a2-447c-8f55-edb2ecbeb45a",
+    "sbb-3ede4acbc9f513975e208aab"
    ]
   },
   {
@@ -1184,10 +2388,15 @@
     {
      "ad": "Kariyer Kapısı",
      "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=89bd5bac-9eb0-4cd1-93f9-8b154a5189f5"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
    "kaynak_kimlikleri": [
-    "https://kariyerkapisi.gov.tr/IlanDetay?i=89bd5bac-9eb0-4cd1-93f9-8b154a5189f5"
+    "https://kariyerkapisi.gov.tr/IlanDetay?i=89bd5bac-9eb0-4cd1-93f9-8b154a5189f5",
+    "sbb-8aefee5ffa15c5bea8034be3"
    ]
   },
   {
@@ -1207,10 +2416,64 @@
      "link": "https://www.iskur.gov.tr/medya/ccubtphj/sigortac%C4%B1l%C4%B1k-ve-oezel-emeklilik-duezenleme-ve-denetleme-kurumu-personel-al%C4%B1m-ilan%C4%B1-09102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:26:58+03:00",
+   "detay_guncelleme": "2026-09-26T20:23:49+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-3bd8add3dfef4b37e1293996"
+   ]
+  },
+  {
+   "id": "sbb-381a33e4a04692c0757567e1",
+   "baslik": "GİRESUN ÜNİVERSİTESİ - 11 ÖĞRETİM ÜYESİ ALACAK",
+   "kurum": "GİRESUN ÜNİVERSİTESİ",
+   "kadro": "11 ÖĞRETİM ÜYESİ ALACAK",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": "2026-10-09",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 25 Eylül - 9 Ekim)",
+   "baslangic_zaman": "2026-09-25T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:05:41+03:00",
+   "belge_ozeti": "09e54e626dd7b6479f13c23a9cb9ecee4d634b47275f3212fa46e857343b9cb0",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-381a33e4a04692c0757567e1"
+   ]
+  },
+  {
+   "id": "sbb-d7db70a7cb9b757c071d228a",
+   "baslik": "KÜTAHYA DUMLUPINAR ÜNİVERSİTESİ - 11 ÖĞRETİM ELEMANI ALACAK",
+   "kurum": "KÜTAHYA DUMLUPINAR ÜNİVERSİTESİ",
+   "kadro": "11 ÖĞRETİM ELEMANI ALACAK",
+   "ilan_turu": "Öğretim Elemanı",
+   "son_tarih": "2026-10-09",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 25 Eylül - 9 Ekim)",
+   "baslangic_zaman": "2026-09-25T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:05:43+03:00",
+   "belge_ozeti": "1c4feb4e6946e0bc51150734dcf0f91aa3eb870f04376d99b734464451ee5ce1",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-d7db70a7cb9b757c071d228a"
    ]
   },
   {
@@ -1238,6 +2501,33 @@
    ],
    "kaynak_kimlikleri": [
     "https://kariyerkapisi.gov.tr/IlanDetay?i=5ed3d045-a188-46aa-ba1b-f2b4cbd21e48"
+   ]
+  },
+  {
+   "id": "sbb-7bfa7676cf5bffacef4fc307",
+   "baslik": "ESKİŞEHİR TEKNİK ÜNİVERSİTESİ - 2 ADET ÖĞRETİM ELEMANI ALIMI",
+   "kurum": "ESKİŞEHİR TEKNİK ÜNİVERSİTESİ",
+   "kadro": "2 ADET ÖĞRETİM ELEMANI ALIMI",
+   "ilan_turu": "Öğretim Elemanı",
+   "son_tarih": "2026-10-12",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 25 Eylül - 12 Ekim)",
+   "baslangic_zaman": "2026-09-25T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:05:42+03:00",
+   "belge_ozeti": "e1cfa1696f020cafb96b02e50cf5822df80f4724fff9ac996ed6a1e580459ae3",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-7bfa7676cf5bffacef4fc307"
    ]
   },
   {
@@ -1361,7 +2651,7 @@
      "link": "https://www.iskur.gov.tr/medya/auljiglt/istanbul-bankac%C4%B1l%C4%B1k-duezenleme-ve-denetleme-kurumu-meslek-personeli-sinav-ilan%C4%B1-19102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:27:22+03:00",
+   "detay_guncelleme": "2026-09-26T20:24:22+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-edc2d470694c21853b0687e1"
@@ -1384,7 +2674,7 @@
      "link": "https://www.iskur.gov.tr/medya/xhgeviwu/cumhurba%C5%9Fkanl%C4%B1%C4%9F%C4%B1-ileti%C5%9Fim-ba%C5%9Fkanl%C4%B1%C4%9F%C4%B1-ileti%C5%9Fim-uzman-yard%C4%B1mc%C4%B1s%C4%B1-s%C4%B1nav-ilan%C4%B1-20112026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:26:58+03:00",
+   "detay_guncelleme": "2026-09-26T20:23:49+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-372564423bd22d94fde88cb4"
@@ -1405,12 +2695,17 @@
     {
      "ad": "İŞKUR",
      "link": "https://www.iskur.gov.tr/medya/lfxpeqnk/bolu-ta%C5%9Fkesti-belediyesi-soezle%C5%9Fmeli-personel-al%C4%B1m-ilan%C4%B1-21102026.pdf"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:27:08+03:00",
+   "detay_guncelleme": "2026-09-26T20:24:03+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
-    "iskur-3b7504f32c379b237fe86abd"
+    "iskur-3b7504f32c379b237fe86abd",
+    "sbb-1f354f27ed7ce5d5e7121992"
    ]
   },
   {
@@ -1430,7 +2725,7 @@
      "link": "https://www.iskur.gov.tr/medya/0zyoftxs/mu%C5%9F-elmakaya-belediyesi-memur-al%C4%B1m-ilan%C4%B1-21102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:27:38+03:00",
+   "detay_guncelleme": "2026-09-26T20:24:44+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-3f593d9e3c71078c698a111a"
@@ -1453,10 +2748,64 @@
      "link": "https://www.iskur.gov.tr/medya/lntnwe1n/i%C4%9Fd%C4%B1r-aral%C4%B1k-belediyesi-itfaiye-eri-al%C4%B1m-ilan%C4%B1-21102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:28:05+03:00",
+   "detay_guncelleme": "2026-09-26T20:25:22+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-9d4d97ec470c2efcf5b3e55c"
+   ]
+  },
+  {
+   "id": "sbb-97e476fbb140b9951ef70fe8",
+   "baslik": "ELMAKAYA BELEDİYE BAŞKANLIĞI - 1 MÜHENDİS ALACAK",
+   "kurum": "ELMAKAYA BELEDİYE BAŞKANLIĞI",
+   "kadro": "1 MÜHENDİS ALACAK",
+   "ilan_turu": "Kamu Personeli",
+   "son_tarih": "2026-10-21",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 16 Ekim - 21 Ekim)",
+   "baslangic_zaman": "2026-10-16T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:27+03:00",
+   "belge_ozeti": "d22e3bd422bb1dd641fc80447fd0927b46aeb6ee94385991c497acd888dc42a3",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-97e476fbb140b9951ef70fe8"
+   ]
+  },
+  {
+   "id": "sbb-8a62442fbdabe75f3d80199d",
+   "baslik": "ARALIK BELEDİYE BAŞKANLIĞI - 3 MEMUR ALACAK",
+   "kurum": "ARALIK BELEDİYE BAŞKANLIĞI",
+   "kadro": "3 MEMUR ALACAK",
+   "ilan_turu": "Memur",
+   "son_tarih": "2026-10-21",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 19 Ekim - 21 Ekim)",
+   "baslangic_zaman": "2026-10-19T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:41+03:00",
+   "belge_ozeti": "070f7a71d58b1b4ff3f7edf239c33f1dff64eb36305a7accfee2fd3f2c460e50",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-8a62442fbdabe75f3d80199d"
    ]
   },
   {
@@ -1474,12 +2823,17 @@
     {
      "ad": "İŞKUR",
      "link": "https://www.iskur.gov.tr/medya/zk1n1a3c/bolu-gerede-belediyesi-soezle%C5%9Fmeli-personel-al%C4%B1m-ilan%C4%B1-22102026.pdf"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:27:08+03:00",
+   "detay_guncelleme": "2026-09-26T20:24:03+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
-    "iskur-d7f20bcc9ddeb5d62087e563"
+    "iskur-d7f20bcc9ddeb5d62087e563",
+    "sbb-0cd45f4e78a1e1d6fe48dd62"
    ]
   },
   {
@@ -1497,12 +2851,17 @@
     {
      "ad": "İŞKUR",
      "link": "https://www.iskur.gov.tr/medya/tfnpxax1/ankara-pursaklar-belediyesi-zab%C4%B1ta-memuru-al%C4%B1m-ilan%C4%B1-23102026.pdf"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:26:58+03:00",
+   "detay_guncelleme": "2026-09-26T20:23:49+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
-    "iskur-ce2ccce684a67cfe5ec42653"
+    "iskur-ce2ccce684a67cfe5ec42653",
+    "sbb-affb1a41187ebc15ed245f38"
    ]
   },
   {
@@ -1522,7 +2881,7 @@
      "link": "https://www.iskur.gov.tr/medya/4j0dwbbo/gelir-idaresi-ba%C5%9Fkanl%C4%B1%C4%9F%C4%B1-gelir-uzman-yard%C4%B1mc%C4%B1l%C4%B1%C4%9F%C4%B1-s%C4%B1nav-ilan%C4%B1-23102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:26:58+03:00",
+   "detay_guncelleme": "2026-09-26T20:23:49+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-ee701ad45d382400f44d53e1"
@@ -1543,12 +2902,17 @@
     {
      "ad": "İŞKUR",
      "link": "https://www.iskur.gov.tr/medya/3eaenzrg/ayd%C4%B1n-didim-belediyesi-zab%C4%B1ta-memuru-al%C4%B1m-ilan%C4%B1-23102026.pdf"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:27:01+03:00",
+   "detay_guncelleme": "2026-09-26T20:23:53+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
-    "iskur-55d194dea1dd698008c3081f"
+    "iskur-55d194dea1dd698008c3081f",
+    "sbb-97327153b77d520d565e86e0"
    ]
   },
   {
@@ -1568,7 +2932,7 @@
      "link": "https://www.iskur.gov.tr/medya/wx1p1ned/isparta-bat%C4%B1-akdeniz-kalk%C4%B1nma-ajans%C4%B1-personel-al%C4%B1m-ilan%C4%B1-23102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:27:18+03:00",
+   "detay_guncelleme": "2026-09-26T20:24:17+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-23bb5b4d65d3d7cab7bc3531"
@@ -1591,7 +2955,7 @@
      "link": "https://www.iskur.gov.tr/medya/caddauml/gen%C3%A7lik-ve-spor-bakanl%C4%B1%C4%9F%C4%B1-soezle%C5%9Fmeli-bili%C5%9Fim-personeli-al%C4%B1m-ilan%C4%B1-25102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:26:58+03:00",
+   "detay_guncelleme": "2026-09-26T20:23:49+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-2c1f6248f41bf93601b7b619"
@@ -1614,10 +2978,37 @@
      "link": "https://www.iskur.gov.tr/medya/0qthk0uu/oezelle%C5%9Ftirme-idaresi-ba%C5%9Fkanl%C4%B1%C4%9F%C4%B1-uzman-yard%C4%B1mc%C4%B1l%C4%B1%C4%9F%C4%B1-s%C4%B1nav-ilan%C4%B1-26102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:26:58+03:00",
+   "detay_guncelleme": "2026-09-26T20:23:49+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-a3cb1ee5cbc2ce41690368e7"
+   ]
+  },
+  {
+   "id": "sbb-ac031cd0da5d5d3b906184bf",
+   "baslik": "ÖZELLEŞTİRME İDARESİ BAŞKANLIĞI - 14 UZMAN YARDIMCISI ALACAK",
+   "kurum": "ÖZELLEŞTİRME İDARESİ BAŞKANLIĞI",
+   "kadro": "14 UZMAN YARDIMCISI ALACAK",
+   "ilan_turu": "Uzman",
+   "son_tarih": "2026-10-26",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 19 Ekim - 26 Ekim)",
+   "baslangic_zaman": "2026-10-19T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:28+03:00",
+   "belge_ozeti": "62d2f276606715c735662ac98423817b25899930b9629a697b01185f4e413b4f",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-ac031cd0da5d5d3b906184bf"
    ]
   },
   {
@@ -1673,7 +3064,7 @@
      "link": "https://www.iskur.gov.tr/medya/kqjkfztt/kocaeli-do%C4%9Fu-marmara-kalk%C4%B1nma-ajans%C4%B1-personel-al%C4%B1m-ilan%C4%B1-27102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:27:32+03:00",
+   "detay_guncelleme": "2026-09-26T20:24:35+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-427041e176b4b5fb14fbd125"
@@ -1696,7 +3087,7 @@
      "link": "https://www.iskur.gov.tr/medya/yypjt2y5/ni%C4%9Fde-%C3%A7ukurkuyu-belediyesi-zab%C4%B1ta-memuru-al%C4%B1m-ilan%C4%B1-27102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:27:45+03:00",
+   "detay_guncelleme": "2026-09-26T20:24:54+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-8a56d2bbc977a2e768de502d"
@@ -1717,12 +3108,71 @@
     {
      "ad": "İŞKUR",
      "link": "https://www.iskur.gov.tr/medya/x0emsn5d/osmaniye-atalan-belediyesi-soezle%C5%9Fmeli-personel-al%C4%B1m-ilan%C4%B1-27102026.pdf"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:28:12+03:00",
+   "detay_guncelleme": "2026-09-26T20:25:31+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
-    "iskur-e5a9e00c5b187107927c4403"
+    "iskur-e5a9e00c5b187107927c4403",
+    "sbb-cc1b21921fd00db5f3a6973a"
+   ]
+  },
+  {
+   "id": "sbb-0813fe0f6f1504f3ed9c2b85",
+   "baslik": "DOĞU MARMARA KALKINMA AJANSI - 3 UZMAN, 2 DESTEK PERSONEL ALACAK",
+   "kurum": "DOĞU MARMARA KALKINMA AJANSI",
+   "kadro": "3 UZMAN, 2 DESTEK PERSONEL ALACAK",
+   "ilan_turu": "Uzman",
+   "son_tarih": "2026-10-27",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 12 Ekim - 27 Ekim)",
+   "baslangic_zaman": "2026-10-12T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:03+03:00",
+   "belge_ozeti": "9ae7d1de0dc001b1bde139b1753727319a6a49a464f1fbd667ceb57b0eccc865",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-0813fe0f6f1504f3ed9c2b85"
+   ]
+  },
+  {
+   "id": "sbb-78ecc1544a503271d3a2cfe6",
+   "baslik": "ÇUKURKUYU (NİĞDE) BELEDİYE BAŞKANLIĞI - 1 MEMUR ALACAK",
+   "kurum": "ÇUKURKUYU (NİĞDE) BELEDİYE BAŞKANLIĞI",
+   "kadro": "1 MEMUR ALACAK",
+   "ilan_turu": "Memur",
+   "son_tarih": "2026-10-27",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 23 Ekim - 27 Ekim)",
+   "baslangic_zaman": "2026-10-23T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:21+03:00",
+   "belge_ozeti": "86edb1e5394e8dac579afa448b7121e1e12c766ee951318acd266c54d12e863a",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-78ecc1544a503271d3a2cfe6"
    ]
   },
   {
@@ -1740,12 +3190,17 @@
     {
      "ad": "İŞKUR",
      "link": "https://www.iskur.gov.tr/medya/ydsn15jl/k%C4%B1r%C5%9Fehir-mucur-belediyesi-memur-al%C4%B1m-ilan%C4%B1-28102026.pdf"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:27:29+03:00",
+   "detay_guncelleme": "2026-09-26T20:24:31+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
-    "iskur-82e1a52fc83cba2b4d8fa6ff"
+    "iskur-82e1a52fc83cba2b4d8fa6ff",
+    "sbb-e4c5a670d86fdc65b4c851ba"
    ]
   },
   {
@@ -1774,10 +3229,15 @@
     {
      "ad": "Kariyer Kapısı",
      "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=eff11df8-6568-4b54-9deb-2865aa9ac767"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
    "kaynak_kimlikleri": [
-    "https://kariyerkapisi.gov.tr/IlanDetay?i=eff11df8-6568-4b54-9deb-2865aa9ac767"
+    "https://kariyerkapisi.gov.tr/IlanDetay?i=eff11df8-6568-4b54-9deb-2865aa9ac767",
+    "sbb-689d254bb5b5269e60b957f7"
    ]
   },
   {
@@ -1797,10 +3257,37 @@
      "link": "https://www.iskur.gov.tr/medya/horguglp/istanbul-bueyuek%C5%9Fehir-belediyesi-iett-i%C5%9Fletmeleri-genel-mueduerlue%C4%9Fue-memur-al%C4%B1m-ilan%C4%B1-02112026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:27:22+03:00",
+   "detay_guncelleme": "2026-09-26T20:24:22+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-20df4e86aedf099d725ee262"
+   ]
+  },
+  {
+   "id": "sbb-390fd0065a5a1473b643ad5b",
+   "baslik": "İSTANBUL ELEKTRİK TRAMVAY VE TÜNEL İŞLETMELERİ GENEL MÜDÜRLÜĞÜ (İETT) - 44 MEMUR ALACAK",
+   "kurum": "İSTANBUL ELEKTRİK TRAMVAY VE TÜNEL İŞLETMELERİ GENEL MÜDÜRLÜĞÜ (İETT)",
+   "kadro": "44 MEMUR ALACAK",
+   "ilan_turu": "Memur",
+   "son_tarih": "2026-11-02",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 26 Ekim - 2 Kasım)",
+   "baslangic_zaman": "2026-10-26T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:06+03:00",
+   "belge_ozeti": "c9669c41f943f6e31e5b9b536c5e675c862bb17271923aa35c0d36c8ac5955e1",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-390fd0065a5a1473b643ad5b"
    ]
   },
   {
@@ -1820,7 +3307,7 @@
      "link": "https://www.iskur.gov.tr/medya/vldigvnk/a%C4%9Fr%C4%B1-ele%C5%9Fkirt-belediyesi-memur-al%C4%B1m-ilan%C4%B1-04112026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:26:55+03:00",
+   "detay_guncelleme": "2026-09-26T20:23:44+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-0ca1c1811f87d2184aafb65b"
@@ -1841,12 +3328,44 @@
     {
      "ad": "İŞKUR",
      "link": "https://www.iskur.gov.tr/medya/lyzbmo5p/mu%C5%9F-malazgirt-belediyesi-memur-al%C4%B1m-ilan%C4%B1-04112026.pdf"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:27:38+03:00",
+   "detay_guncelleme": "2026-09-26T20:24:44+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
-    "iskur-5a5a6b5acc24bdec945de41f"
+    "iskur-5a5a6b5acc24bdec945de41f",
+    "sbb-f0b11dbb77f56fee55391dd0"
+   ]
+  },
+  {
+   "id": "sbb-b79b5a2fa5f2a1036a2ea5bc",
+   "baslik": "ELEŞKİRT BELEDİYE BAŞKANLIĞI - 1 ÇÖZÜMLEYİCİ ALACAK",
+   "kurum": "ELEŞKİRT BELEDİYE BAŞKANLIĞI",
+   "kadro": "1 ÇÖZÜMLEYİCİ ALACAK",
+   "ilan_turu": "Kamu Personeli",
+   "son_tarih": "2026-11-04",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 2 Kasım - 4 Kasım)",
+   "baslangic_zaman": "2026-11-02T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:00+03:00",
+   "belge_ozeti": "95d6e48a8e3251af311893e0972895dffe2768d5350832cb960c024e6ac42aa0",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-b79b5a2fa5f2a1036a2ea5bc"
    ]
   },
   {
@@ -1864,12 +3383,44 @@
     {
      "ad": "İŞKUR",
      "link": "https://www.iskur.gov.tr/medya/foafw3fc/konya-%C3%A7eltik-belediyesi-memur-al%C4%B1m-ilan%C4%B1-06112026.pdf"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-09-26T20:27:35+03:00",
+   "detay_guncelleme": "2026-09-26T20:24:40+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
-    "iskur-c322e5601259e08082548c73"
+    "iskur-c322e5601259e08082548c73",
+    "sbb-ecf59ed7e2efa1568b9c5dc8"
+   ]
+  },
+  {
+   "id": "sbb-9c31b73e8bf1ca0dcd1af3df",
+   "baslik": "ESKİŞEHİR TEKNİK ÜNİVERSİTESİ - 3 ADET ÖĞRETİM ÜYESİ ALIMI",
+   "kurum": "ESKİŞEHİR TEKNİK ÜNİVERSİTESİ",
+   "kadro": "3 ADET ÖĞRETİM ÜYESİ ALIMI",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": "2026-12-08",
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 25 Eylül - 8 Aralık)",
+   "baslangic_zaman": "2026-09-25T00:00:00+03:00",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:05:36+03:00",
+   "belge_ozeti": "2124edb8bf3e093a1d7cb6498c95d20c19caf2058e9bae8c06df4c3fe0af4923",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-9c31b73e8bf1ca0dcd1af3df"
    ]
   },
   {
@@ -1879,7 +3430,15 @@
    "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=afe2204a-98dc-4572-b870-2456c53131d4",
    "son_tarih": null,
    "ilk_gorulme": "2026-09-22T17:46:21+03:00",
-   "kaynak_kimlikleri": []
+   "kaynak_kimlikleri": [
+    "https://kariyerkapisi.gov.tr/IlanDetay?i=afe2204a-98dc-4572-b870-2456c53131d4"
+   ],
+   "kaynaklar": [
+    {
+     "ad": "Kariyer Kapısı",
+     "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=afe2204a-98dc-4572-b870-2456c53131d4"
+    }
+   ]
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=b104039f-70dd-4c56-ba31-bf86838a3f86",
@@ -1888,7 +3447,15 @@
    "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=b104039f-70dd-4c56-ba31-bf86838a3f86",
    "son_tarih": null,
    "ilk_gorulme": "2026-09-22T17:46:21+03:00",
-   "kaynak_kimlikleri": []
+   "kaynak_kimlikleri": [
+    "https://kariyerkapisi.gov.tr/IlanDetay?i=b104039f-70dd-4c56-ba31-bf86838a3f86"
+   ],
+   "kaynaklar": [
+    {
+     "ad": "Kariyer Kapısı",
+     "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=b104039f-70dd-4c56-ba31-bf86838a3f86"
+    }
+   ]
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=697515e1-27c3-491f-acce-ea96ef827a40",
@@ -1898,7 +3465,15 @@
    "son_tarih": null,
    "ilk_gorulme": "2026-09-22T17:46:21+03:00",
    "ilan_turu": "Sözleşmeli Personel İlanları",
-   "kaynak_kimlikleri": []
+   "kaynak_kimlikleri": [
+    "https://kariyerkapisi.gov.tr/IlanDetay?i=697515e1-27c3-491f-acce-ea96ef827a40"
+   ],
+   "kaynaklar": [
+    {
+     "ad": "Kariyer Kapısı",
+     "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=697515e1-27c3-491f-acce-ea96ef827a40"
+    }
+   ]
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=bbb712a1-b716-42c9-b235-b8eee837643f",
@@ -1908,7 +3483,874 @@
    "son_tarih": null,
    "ilk_gorulme": "2026-09-22T17:46:21+03:00",
    "ilan_turu": "Sözleşmeli Personel İlanları",
-   "kaynak_kimlikleri": []
+   "kaynak_kimlikleri": [
+    "https://kariyerkapisi.gov.tr/IlanDetay?i=bbb712a1-b716-42c9-b235-b8eee837643f"
+   ],
+   "kaynaklar": [
+    {
+     "ad": "Kariyer Kapısı",
+     "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=bbb712a1-b716-42c9-b235-b8eee837643f"
+    }
+   ]
+  },
+  {
+   "id": "sbb-b411eade69d5ac65717b7b95",
+   "baslik": "GEBZE TEKNİK ÜNİVERSİTESİ - 13 ÖĞRETİM ÜYESİ ALACAK",
+   "kurum": "GEBZE TEKNİK ÜNİVERSİTESİ",
+   "kadro": "13 ÖĞRETİM ÜYESİ ALACAK",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 26 Eylül - 12 Ekim)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:05:35+03:00",
+   "belge_ozeti": "0a26711703e35691539e2a1016ed87eca25445d9119df2b72ef9f595eff1609f",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-b411eade69d5ac65717b7b95"
+   ]
+  },
+  {
+   "id": "sbb-809b134654a12117df3fdb91",
+   "baslik": "RECEP TAYYİP ERDOĞAN ÜNİVERSİTESİ - 25 ÖĞRETİM ÜYESİ ALACAK",
+   "kurum": "RECEP TAYYİP ERDOĞAN ÜNİVERSİTESİ",
+   "kadro": "25 ÖĞRETİM ÜYESİ ALACAK",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 25 Eylül - 9 Ekim)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:05:37+03:00",
+   "belge_ozeti": "7509fa7b14861af6dc5be04e4e6ba4dae9d0432d695a8c29599341ab0b02f0e1",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-809b134654a12117df3fdb91"
+   ]
+  },
+  {
+   "id": "sbb-31f674ea38e72d5752e547f3",
+   "baslik": "BOĞAZİÇİ ÜNİVERSİTESİ - 3 ÖĞRETİM ÜYESİ ALACAK",
+   "kurum": "BOĞAZİÇİ ÜNİVERSİTESİ",
+   "kadro": "3 ÖĞRETİM ÜYESİ ALACAK",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 25 Eylül - 9 Ekim)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:05:38+03:00",
+   "belge_ozeti": "cb06e5680517eee05dca0bb242aba273293925e1b64c09ec1a61151b45465f99",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-31f674ea38e72d5752e547f3"
+   ]
+  },
+  {
+   "id": "sbb-fefad4b939608db5c1d8a19c",
+   "baslik": "BARTIN ÜNİVERSİTESİ - 24 ÖĞRETİM ÜYESİ ALACAK",
+   "kurum": "BARTIN ÜNİVERSİTESİ",
+   "kadro": "24 ÖĞRETİM ÜYESİ ALACAK",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 25 Eylül - 9 Ekim)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:05:39+03:00",
+   "belge_ozeti": "efb18d853629cd1ae5baa96c3bf3fd097c7483737be3adb1dea7a894a023f054",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-fefad4b939608db5c1d8a19c"
+   ]
+  },
+  {
+   "id": "sbb-6c67df0d4cd5558212417209",
+   "baslik": "KIRKLARELİ ÜNİVERSİTESİ - 13 ÖĞRETİM ÜYESİ ALACAK",
+   "kurum": "KIRKLARELİ ÜNİVERSİTESİ",
+   "kadro": "13 ÖĞRETİM ÜYESİ ALACAK",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 25 Eylül - 9 Ekim)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:05:40+03:00",
+   "belge_ozeti": "a1c9e6d028c3a84b6c0f564959443155e31506c179665610f61add86fd978fc0",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-6c67df0d4cd5558212417209"
+   ]
+  },
+  {
+   "id": "sbb-a091d9586feae0e1ef32dab7",
+   "baslik": "MİMAR SİNAN GÜZEL SANATLAR ÜNİVERSİTESİ - 3 ÖĞRETİM ÜYESİ ALACAK",
+   "kurum": "MİMAR SİNAN GÜZEL SANATLAR ÜNİVERSİTESİ",
+   "kadro": "3 ÖĞRETİM ÜYESİ ALACAK",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 25 Eylül - 9 Ekim)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:05:40+03:00",
+   "belge_ozeti": "5d4300d5e5ab865cec12bb2cbfad3a6c02986f264f13f1371141a5ec0fd6b44a",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-a091d9586feae0e1ef32dab7"
+   ]
+  },
+  {
+   "id": "sbb-1def1b8d97a4370abc1083d3",
+   "baslik": "HACETTEPE ÜNİVERSİTESİ - 71 ÖĞRETİM ÜYESİ ALACAK",
+   "kurum": "HACETTEPE ÜNİVERSİTESİ",
+   "kadro": "71 ÖĞRETİM ÜYESİ ALACAK",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 25 Eylül - 9 Ekim)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:05:41+03:00",
+   "belge_ozeti": "a210d76080fa819e3c85af8719ba5fa5b2a31067470b103632b9804fd874060f",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-1def1b8d97a4370abc1083d3"
+   ]
+  },
+  {
+   "id": "sbb-36201de94c0c382c6da092f3",
+   "baslik": "HATAY MUSTAFA KEMAL ÜNİVERSİTESİ - 32 ÖĞRETİM ÜYESİ ALACAK",
+   "kurum": "HATAY MUSTAFA KEMAL ÜNİVERSİTESİ",
+   "kadro": "32 ÖĞRETİM ÜYESİ ALACAK",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 24 Eylül - 8 Ekim)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:05:44+03:00",
+   "belge_ozeti": "d93458dd22cce0178241fdcaadcb240218eda02c533f4c7661e489aa7e5ef736",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-36201de94c0c382c6da092f3"
+   ]
+  },
+  {
+   "id": "sbb-be88061acee759d21689ab48",
+   "baslik": "KOCAELİ ÜNİVERSİTESİ - 25 ÖĞRETİM ÜYESİ ALACAK",
+   "kurum": "KOCAELİ ÜNİVERSİTESİ",
+   "kadro": "25 ÖĞRETİM ÜYESİ ALACAK",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 24 Eylül - 8 Ekim)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:05:46+03:00",
+   "belge_ozeti": "c1ddb0148ce70ad1c6484395a71e5edfaa913d7fe06aca45fb6f8f0f9ffd8baa",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-be88061acee759d21689ab48"
+   ]
+  },
+  {
+   "id": "sbb-f09c844712a72cf2298488ed",
+   "baslik": "KARAMANOĞLU MEHMETBEY ÜNİVERSİTESİ - 34 ÖĞRETİM ÜYESİ ALACAK",
+   "kurum": "KARAMANOĞLU MEHMETBEY ÜNİVERSİTESİ",
+   "kadro": "34 ÖĞRETİM ÜYESİ ALACAK",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 24 Eylül - 8 Ekim)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:05:46+03:00",
+   "belge_ozeti": "16796b193e3044b167274fe8f0b70f684650bc086cacd6f0b766531b73745660",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-f09c844712a72cf2298488ed"
+   ]
+  },
+  {
+   "id": "sbb-66d7ba5846cebebda3352495",
+   "baslik": "JANDARMA GENEL KOMUTANLIĞI - 1 SÖZLEŞMELİ PİLOT (UÇAK) TEMİN EDECEKTİR",
+   "kurum": "JANDARMA GENEL KOMUTANLIĞI",
+   "kadro": "1 SÖZLEŞMELİ PİLOT (UÇAK) TEMİN EDECEKTİR",
+   "ilan_turu": "Pilot",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 24 Eylül - 11 Ekim)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:05:48+03:00",
+   "belge_ozeti": "a8304faed83fbdb57d0042929b7e3868f5472ca5779d17fb3b67158b83427f12",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-66d7ba5846cebebda3352495"
+   ]
+  },
+  {
+   "id": "sbb-bd9bab5d28cc8d462622e49f",
+   "baslik": "BİTLİS EREN ÜNİVERSİTESİ - 21 ÖĞRETİM ÜYESİ ALACAK",
+   "kurum": "BİTLİS EREN ÜNİVERSİTESİ",
+   "kadro": "21 ÖĞRETİM ÜYESİ ALACAK",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 22 Eylül - 6 Ekim)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:05:52+03:00",
+   "belge_ozeti": "c652b32187b179cea454d336f1aad2d138445715b1e8e6639c89af4878a5e826",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-bd9bab5d28cc8d462622e49f"
+   ]
+  },
+  {
+   "id": "sbb-6ff672310bc2c5b34ccf2da8",
+   "baslik": "BATMAN ÜNİVERSİTESİ - 13 ÖĞRETİM ÜYESİ ALACAK",
+   "kurum": "BATMAN ÜNİVERSİTESİ",
+   "kadro": "13 ÖĞRETİM ÜYESİ ALACAK",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 21 Eylül - 5 Ekim)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:02+03:00",
+   "belge_ozeti": "4756024942c70aaafef090a411aec70cd2a2b1ce36bddd710176566733fe5adc",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-6ff672310bc2c5b34ccf2da8"
+   ]
+  },
+  {
+   "id": "sbb-7d8996f63d7c91f6768fd310",
+   "baslik": "GÖÇ İDARESİ GENEL MÜDÜRLÜĞÜ - 3 SÖZLEŞMELİ PERSONEL ALACAK",
+   "kurum": "GÖÇ İDARESİ GENEL MÜDÜRLÜĞÜ",
+   "kadro": "3 SÖZLEŞMELİ PERSONEL ALACAK",
+   "ilan_turu": "Sözleşmeli Personel",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 28 Eylül - 4 Ekim)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:07+03:00",
+   "belge_ozeti": "37e2afa2ccc428da2a26cc251f329d5b2c8a57c11cd68f3ebf28cfa0d2dce897",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-7d8996f63d7c91f6768fd310"
+   ]
+  },
+  {
+   "id": "sbb-af90a8ab2404bc69c088d70b",
+   "baslik": "MUNZUR ÜNİVERSİTESİ - 1 ÖĞRETİM ÜYESİ İPTAL İLANI",
+   "kurum": "MUNZUR ÜNİVERSİTESİ",
+   "kadro": "1 ÖĞRETİM ÜYESİ İPTAL İLANI",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 29 Eylül - 29 Eylül)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:08+03:00",
+   "belge_ozeti": "f890290b0d99d272c7ea20c3e3aff97287d22584f50138aa78f4aea15c9afa1b",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "duyuru_turu": "İptal duyurusu",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-af90a8ab2404bc69c088d70b"
+   ]
+  },
+  {
+   "id": "sbb-2caf6c6d0c5408e4f309eb59",
+   "baslik": "AFYONKARAHİSAR SAĞLIK BİLİMLERİ ÜNİVERSİTESİ - 13 ÖĞRETİM ÜYESİ ALACAK",
+   "kurum": "AFYONKARAHİSAR SAĞLIK BİLİMLERİ ÜNİVERSİTESİ",
+   "kadro": "13 ÖĞRETİM ÜYESİ ALACAK",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 18 Eylül - 2 Ekim)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:10+03:00",
+   "belge_ozeti": "3d4520a7d09b4367e7739f98bfba6b8a6ac7bc9ff7846f0bb16a83bd896457af",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-2caf6c6d0c5408e4f309eb59"
+   ]
+  },
+  {
+   "id": "sbb-58513c38e2d2e6d7fdb32568",
+   "baslik": "İLETİŞİM BAŞKANLIĞI - 15 UZMAN YARDIMCISI ALACAK",
+   "kurum": "İLETİŞİM BAŞKANLIĞI",
+   "kadro": "15 UZMAN YARDIMCISI ALACAK",
+   "ilan_turu": "Uzman",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 5 Ekim - 20 Ekim)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:13+03:00",
+   "belge_ozeti": "60340c17dd8a1a57fe55f415d1bf919e6c27caf374c35d48d65032a0c684fb63",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-58513c38e2d2e6d7fdb32568"
+   ]
+  },
+  {
+   "id": "sbb-2be96cc2fa6bdded067b9816",
+   "baslik": "SERMAYE PİYASASI KURULU BAŞKANLIĞI - 40 UZMAN YARDIMCISI ALACAK",
+   "kurum": "SERMAYE PİYASASI KURULU BAŞKANLIĞI",
+   "kadro": "40 UZMAN YARDIMCISI ALACAK",
+   "ilan_turu": "Uzman",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 12 Ekim - 26 Ekim)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:16+03:00",
+   "belge_ozeti": "6150fc7dfad1b86c0f4e7dc5543ef196face108c3e12a8863e4dfd8ee9aa512d",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-2be96cc2fa6bdded067b9816"
+   ]
+  },
+  {
+   "id": "sbb-34824762de91ff933a840326",
+   "baslik": "BANKACILIK DÜZENLEME VE DENETLEME KURUMU BAŞKANLIĞI - 135 MESLEK PERSONELİ ALACAK",
+   "kurum": "BANKACILIK DÜZENLEME VE DENETLEME KURUMU BAŞKANLIĞI",
+   "kadro": "135 MESLEK PERSONELİ ALACAK",
+   "ilan_turu": "Kamu Personeli",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 12 Ekim - 19 Ekim)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:17+03:00",
+   "belge_ozeti": "224992e25ab89da68d323c4826a1b431f8f864c9beec961a616a47c4891395d9",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-34824762de91ff933a840326"
+   ]
+  },
+  {
+   "id": "sbb-beb04c0626513a466ec4cd5d",
+   "baslik": "TÜRKİYE ULUSLARARASI İSLAM, BİLİM VE TEKNOLOJİ ÜNİVERSİTESİ - 1 ÖĞRETİM ELEMANI ALACAK",
+   "kurum": "TÜRKİYE ULUSLARARASI İSLAM, BİLİM VE TEKNOLOJİ ÜNİVERSİTESİ",
+   "kadro": "1 ÖĞRETİM ELEMANI ALACAK",
+   "ilan_turu": "Öğretim Elemanı",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 16 Eylül - 30 Eylül)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:22+03:00",
+   "belge_ozeti": "b7bfa4dccd8ce072495a80eb6e7b7bae2c0bb328a8af422435f3dd1b23bd5a47",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-beb04c0626513a466ec4cd5d"
+   ]
+  },
+  {
+   "id": "sbb-465948883c02d0a012458ae5",
+   "baslik": "ANADOLU ÜNİVERSİTESİ - 34 ÖĞRETİM ÜYESİ ALACAK",
+   "kurum": "ANADOLU ÜNİVERSİTESİ",
+   "kadro": "34 ÖĞRETİM ÜYESİ ALACAK",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 16 Eylül - 30 Eylül)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:24+03:00",
+   "belge_ozeti": "8a57c7cfcb9789e0ca191b61677bbc16aa94c1c45a8a381c998f930c18c816f9",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-465948883c02d0a012458ae5"
+   ]
+  },
+  {
+   "id": "sbb-6295f6e0ec51fdf233636132",
+   "baslik": "BOLU ABANT İZZET BAYSAL ÜNİVERSİTESİ - 29 SÖZLEŞMELİ PERSONEL ALACAK",
+   "kurum": "BOLU ABANT İZZET BAYSAL ÜNİVERSİTESİ",
+   "kadro": "29 SÖZLEŞMELİ PERSONEL ALACAK",
+   "ilan_turu": "Sözleşmeli Personel",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 15 Eylül - 29 Eylül)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:29+03:00",
+   "belge_ozeti": "ec7759620064c99a13a5c589791a488650a8c68a1a69c9eb84e249eec5226f33",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-6295f6e0ec51fdf233636132"
+   ]
+  },
+  {
+   "id": "sbb-ecd985bd51bdd8601a168d62",
+   "baslik": "SİGORTACILIK VE ÖZEL EMEKLİLİK DÜZENLEME VE DENETLEME KURUMU - 10 MEMUR ALACAK",
+   "kurum": "SİGORTACILIK VE ÖZEL EMEKLİLİK DÜZENLEME VE DENETLEME KURUMU",
+   "kadro": "10 MEMUR ALACAK",
+   "ilan_turu": "Memur",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 30 Eylül - 9 Ekim)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:32+03:00",
+   "belge_ozeti": "79e4a80328f73ee9b5d0f31d7a0e63dfd4a0b1496b2b213d5de9a0251e82eeb4",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-ecd985bd51bdd8601a168d62"
+   ]
+  },
+  {
+   "id": "sbb-f7b2060bf52fc5832b235852",
+   "baslik": "KIRIKKALE ÜNİVERSİTESİ - 2 ÖĞRETİM ÜYESİ ALACAK",
+   "kurum": "KIRIKKALE ÜNİVERSİTESİ",
+   "kadro": "2 ÖĞRETİM ÜYESİ ALACAK",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 14 Eylül - 28 Eylül)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:35+03:00",
+   "belge_ozeti": "0efdc56c8cee1a9de840f2a81aedc8e7358138ad894c855a2f3f1d4c98ad067a",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-f7b2060bf52fc5832b235852"
+   ]
+  },
+  {
+   "id": "sbb-cc10be5230ae54b4d12a99fa",
+   "baslik": "KIRIKKALE ÜNİVERSİTESİ - 3 ÖĞRETİM ELEMANI ALACAK",
+   "kurum": "KIRIKKALE ÜNİVERSİTESİ",
+   "kadro": "3 ÖĞRETİM ELEMANI ALACAK",
+   "ilan_turu": "Öğretim Elemanı",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 14 Eylül - 28 Eylül)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:36+03:00",
+   "belge_ozeti": "32145b5f2f47b6fa6438d80f49faf0a04ba76bff87a4bef2a8c4e70ba472f12e",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-cc10be5230ae54b4d12a99fa"
+   ]
+  },
+  {
+   "id": "sbb-26172bbc5521a3597d438020",
+   "baslik": "HAKKARİ ÜNİVERSİTESİ - 14 ÖĞRETİM ELEMANI ALACAK",
+   "kurum": "HAKKARİ ÜNİVERSİTESİ",
+   "kadro": "14 ÖĞRETİM ELEMANI ALACAK",
+   "ilan_turu": "Öğretim Elemanı",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 14 Eylül - 28 Eylül)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:37+03:00",
+   "belge_ozeti": "f5f6a0efe2ce0429593e37963441c013f65de2e38896e66aacb0ec83558bee01",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-26172bbc5521a3597d438020"
+   ]
+  },
+  {
+   "id": "sbb-5fb58b9edd2d30431e1fbef6",
+   "baslik": "NECMETTİN ERBAKAN ÜNİVERSİTESİ - 7 ARAŞTIRMA GÖREVLİSİ ALACAK",
+   "kurum": "NECMETTİN ERBAKAN ÜNİVERSİTESİ",
+   "kadro": "7 ARAŞTIRMA GÖREVLİSİ ALACAK",
+   "ilan_turu": "Araştırma Görevlisi",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 14 Eylül - 29 Eylül)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:38+03:00",
+   "belge_ozeti": "52750fb771e331222187254a4ba72314bb978a4f3979a5d04d98c52fe15a145c",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-5fb58b9edd2d30431e1fbef6"
+   ]
+  },
+  {
+   "id": "sbb-226aeec96041e044b1a942c5",
+   "baslik": "NECMETTİN ERBAKAN ÜNİVERSİTESİ - 44 ÖĞRETİM ÜYESİ ALACAK",
+   "kurum": "NECMETTİN ERBAKAN ÜNİVERSİTESİ",
+   "kadro": "44 ÖĞRETİM ÜYESİ ALACAK",
+   "ilan_turu": "Öğretim Üyesi",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 11 Eylül - 28 Eylül)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:39+03:00",
+   "belge_ozeti": "18ceb40f2ce2307ba77545e324fe5a61df7904aa8fbb5e31a845f44076c76164",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-226aeec96041e044b1a942c5"
+   ]
+  },
+  {
+   "id": "sbb-3c310491631a302005de30bd",
+   "baslik": "MİLLİ SAVUNMA BAKANLIĞI - TÜRK SİLAHLI KUVVETLERİ 2026 YILI HUKUK SINIFI MUVAZZAF SUBAY ADAYI TEMİNİ",
+   "kurum": "MİLLİ SAVUNMA BAKANLIĞI",
+   "kadro": "TÜRK SİLAHLI KUVVETLERİ 2026 YILI HUKUK SINIFI MUVAZZAF SUBAY ADAYI TEMİNİ",
+   "ilan_turu": "Kamu Personeli",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 7 Eylül - 7 Ekim)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:44+03:00",
+   "belge_ozeti": "0a069b31a87c1ef143f5f41876b12d9adcc325b83799bd1a6eaeef65d63f4a6a",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-3c310491631a302005de30bd"
+   ]
+  },
+  {
+   "id": "sbb-7ed9ac6d7abfae3623ebc620",
+   "baslik": "BAHÇE (OSMANİYE) BELEDİYE BAŞKANLIĞI - 1 MEMUR ALACAK",
+   "kurum": "BAHÇE (OSMANİYE) BELEDİYE BAŞKANLIĞI",
+   "kadro": "1 MEMUR ALACAK",
+   "ilan_turu": "Memur",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 1 Ekim - 6 Ekim)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:51+03:00",
+   "belge_ozeti": "86d323910672c671ddf0331a8078fffae539a607ba7f3f8efcbaf3594a86e938",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-7ed9ac6d7abfae3623ebc620"
+   ]
+  },
+  {
+   "id": "sbb-a9fa876c2c8808fb5e6d4bc0",
+   "baslik": "ORTAHİSAR BELEDİYE BAŞKANLIĞI - 1 MEMUR ALACAK",
+   "kurum": "ORTAHİSAR BELEDİYE BAŞKANLIĞI",
+   "kadro": "1 MEMUR ALACAK",
+   "ilan_turu": "Memur",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 30 Eylül - 2 Ekim)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:54+03:00",
+   "belge_ozeti": "960d7609e72ac3ff8da5befa1466694f569479a699f580e321a6be20b3c17397",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-a9fa876c2c8808fb5e6d4bc0"
+   ]
+  },
+  {
+   "id": "sbb-88a9760a607c548d73c7b5c9",
+   "baslik": "SORGUN (YOZGAT) BELEDİYE BAŞKANLIĞI - 1 SÖZLEŞMELİ PERSONEL ALACAK",
+   "kurum": "SORGUN (YOZGAT) BELEDİYE BAŞKANLIĞI",
+   "kadro": "1 SÖZLEŞMELİ PERSONEL ALACAK",
+   "ilan_turu": "Sözleşmeli Personel",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 28 Eylül - 30 Eylül)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:06:59+03:00",
+   "belge_ozeti": "b528013eccad30b299e6977bd33a448a0c0724501a4b7036c9fe586f9026bf54",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-88a9760a607c548d73c7b5c9"
+   ]
+  },
+  {
+   "id": "sbb-430c26aecb5c9fc198f2999a",
+   "baslik": "GELİR İDARESİ BAŞKANLIĞI - 860 GELİR UZMAN YARDIMCISI ALACAK",
+   "kurum": "GELİR İDARESİ BAŞKANLIĞI",
+   "kadro": "860 GELİR UZMAN YARDIMCISI ALACAK",
+   "ilan_turu": "Uzman",
+   "son_tarih": null,
+   "kaynak": "SBB Kamu İlan",
+   "kaynak_turu": "sbb",
+   "donem": "( 20 Ekim - 22 Ekim)",
+   "link": "https://kamuilan.sbb.gov.tr/",
+   "detay_guncelleme": "2026-09-26T20:07:03+03:00",
+   "belge_ozeti": "e7c49299014417e4d7edee802786509ae99375c70c5d44c8b68bb15314b8c8e4",
+   "kaynaklar": [
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
+    }
+   ],
+   "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.",
+   "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+   "ilk_gorulme": "2026-09-26T20:29:52+03:00",
+   "kaynak_kimlikleri": [
+    "sbb-430c26aecb5c9fc198f2999a"
+   ]
   }
  ],
  "telegram_gonderilen": [
@@ -1946,15 +4388,18 @@
   "[\"https://kariyerkapisi.gov.tr/IlanDetay?i=f4915f84-3749-4c5d-9272-bb194f2b938b\", \"2026-09-29T23:59:00+03:00\"]"
  ],
  "kaynak_baslangiclari": [
-  "iskur"
+  "iskur",
+  "sbb"
  ],
  "kaynak_durumlari": {
   "sbb": {
-   "son_deneme": "2026-09-26T20:26:45+03:00",
-   "hata_sayisi": 1
+   "son_deneme": "2026-09-26T20:23:31+03:00",
+   "hata_sayisi": 1,
+   "yerel_kontrol": "2026-09-26T20:29:54+03:00",
+   "ilan_sayisi": 118
   },
   "iskur": {
-   "kontrol": "2026-09-26T20:28:13+03:00",
+   "kontrol": "2026-09-26T20:25:31+03:00",
    "ilan_sayisi": 43,
    "hata_sayisi": 0
   }
