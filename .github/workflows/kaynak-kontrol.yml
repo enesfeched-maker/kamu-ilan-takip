@@ -1,0 +1,35 @@
+name: Resmi kaynak erişim kontrolü
+on:
+  workflow_dispatch:
+  push:
+    paths: ['.github/workflows/kaynak-kontrol.yml']
+permissions:
+  contents: read
+jobs:
+  kontrol:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Resmi sayfalara erişimi doğrula
+        shell: bash
+        run: |
+          python - <<'PY'
+          import urllib.request, urllib.error
+          for name,url in [('SBB','https://kamuilan.sbb.gov.tr/'),('ISKUR','https://www.iskur.gov.tr/ilanlar/kamu-memur-alim-ilanlari/')]:
+              try:
+                  req=urllib.request.Request(url,headers={'User-Agent':'kamu-ilan-takip/1.0 (+https://enesfeched-maker.github.io/kamu-ilan-takip/)'})
+                  with urllib.request.urlopen(req,timeout=25) as r:
+                      data=r.read(1000000)
+                      marker=b'nav2' if name=='SBB' else b'svg-turkiye-haritasi'
+                      print(name,'HTTP',r.status,'LIST_FOUND',marker in data,flush=True)
+              except urllib.error.HTTPError as e:
+                  print(name,'HTTP',e.code,flush=True)
+              except Exception as e:
+                  print(name,type(e).__name__,flush=True)
+          PY
