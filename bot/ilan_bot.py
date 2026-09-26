@@ -23,6 +23,9 @@ from resmi_detay import detay_oku
 from resmi_ag import url_ac
 from ilan_gorsel import gorsel_olustur
 from ek_kaynaklar import read_sbb, read_iskur, merge_sources
+from ilan_baglanti import ilan_sayfasi
+from kurum_gorseli import kurum_logosu
+from yerel_kaynak import oku as yerel_oku, sbb_verisi
 
 ROOT = Path(__file__).resolve().parent.parent
 CONFIG_YOLU = ROOT / "config.json"
@@ -211,11 +214,9 @@ def mesaj_olustur(ilan, site_url, hatirlatma=False):
         satirlar.append(f"📅 <b>Son başvuru:</b> {tarih_yaz(ilan['son_tarih'])}{saat}")
     else:
         satirlar.extend(["", "⏳ <b>Son başvuru:</b> Resmi ilan üzerinden kontrol edin."])
-    satirlar.extend(["", "Şartlar ve başvuru ↓"])
+    satirlar.extend(["", "İlan ayrıntıları ve başvuru bilgileri sitemizde ↓"])
     if ilan.get('kaynak_turu') in ('sbb','iskur'):
         satirlar.append(f"<i>Kaynak: {e(ilan['kaynak'])}</i>")
-    if ilan.get('kaynak_turu')=='sbb':
-        satirlar.append('Belge için SBB’de kurum adıyla arayın.')
     return "\n".join(satirlar)
 
 
@@ -229,7 +230,7 @@ def telegram_gonder(token, chat_id, metin, ilan_linki="", site_url="", foto=None
     }
     dugmeler = []
     if ilan_linki:
-        label='🔎 SBB’de ilanı bul' if ilan_linki=='https://kamuilan.sbb.gov.tr/' else '🔎 Resmî ilanı incele'
+        label='🔎 İlanı incele'
         dugmeler.append([{"text": label, "url": ilan_linki}])
     if site_url:
         dugmeler.append([{"text": "📋 Tüm kamu ilanları", "url": site_url}])
@@ -342,6 +343,9 @@ def main():
     p.add_argument("--rss-dosya", help="Ağ yerine yerel RSS dosyası oku (test)")
     p.add_argument("--cikti", default=str(VERI_YOLU), help="Veri dosyası yolu")
     p.add_argument("--dry-run", action="store_true", help="Telegram'a gönderme, ekrana yaz")
+    phase=p.add_mutually_exclusive_group()
+    phase.add_argument('--prepare',action='store_true',help='Veriyi ve kuyruğu hazırla; site yayımlanana kadar gönderme')
+    phase.add_argument('--send-only',action='store_true',help='Yayımlanan kayıtların kuyruğunu gönder; yeni veri okuma')
     p.add_argument("--duyur-mevcut", action="store_true",
                    help="Canlı RSS'teki henüz gönderilmemiş mevcut ilanları da sıraya al")
     p.add_argument("--dump", action="store_true", help="Ham ilanların ilk 3'ünü yazdır ve çık")
@@ -358,10 +362,15 @@ def main():
     kaynak_durumlari = veri.get('kaynak_durumlari', {})
     sessiz_kimlikler = set()
     kaynak_hatalari = []
+    yerel = yerel_oku()
 
     # 1) Kaynaktan oku
     gelen, basarili = [], 0
-    if a.rss_dosya:
+    if a.send_only:
+        live=set(veri.get('canli_kimlikler',[]))
+        gelen=[dict(i) for i in veri['ilanlar'] if i['id'] in live]
+        basarili=1
+    elif a.rss_dosya:
         gelen = rss_coz(Path(a.rss_dosya).read_bytes())
         basarili = 1
     else:
@@ -377,7 +386,8 @@ def main():
             if kaynak not in cfg.get('ek_kaynaklar', []):
                 continue
             try:
-                eklenen, hatalar = okuyucu(onceki)
+                local_sbb=sbb_verisi(yerel) if kaynak=='sbb' else None
+                eklenen, hatalar = local_sbb[:2] if local_sbb else okuyucu(onceki)
                 gelen += eklenen
                 basarili += 1
                 if kaynak not in kaynak_baslangiclari and not a.duyur_mevcut:
@@ -386,6 +396,8 @@ def main():
                     kaynak_baslangiclari.add(kaynak)
                 kaynak_durumlari[kaynak] = {'kontrol':simdi().isoformat(timespec='seconds'),
                     'ilan_sayisi':len(eklenen),'hata_sayisi':hatalar}
+                if local_sbb:
+                    kaynak_durumlari[kaynak].update(yerel_kontrol=local_sbb[2],calisma_yeri='yerel')
                 if hatalar:
                     kaynak_hatalari.append(kaynak)
                 print(f'{kaynak}: {len(eklenen)} ilan, {hatalar} erişim hatası.')
@@ -422,12 +434,15 @@ def main():
 
     # Resmi sayfanın açık veri servisi: ayrıntıları 12 saat sakla, hata varsa eksik mesaj gönderme.
     detay_hatalari = set()
-    if cfg.get('resmi_detaylari_oku', False):
+    if cfg.get('resmi_detaylari_oku', False) and not a.send_only:
         ardisik_hata = 0
         for gelen_ilan in gelen:
             i = mevcut[gelen_ilan['id']]
             if i.get('kaynak_turu') in ('sbb','iskur'):
                 continue
+            local_detail=yerel.get('detaylar',{}).get(i['id'],{})
+            if detay_taze(local_detail) and (local_detail.get('detay_guncelleme','')>i.get('detay_guncelleme','')):
+                i.update(local_detail)
             if detay_taze(i):
                 continue
             try:
@@ -474,7 +489,7 @@ def main():
     limit = max(1, int(cfg.get('max_mesaj_per_calisma', 15)))
     hata = False
     adet = 0
-    for i, hatirlatma in kuyruk[:limit]:
+    for i, hatirlatma in ([] if a.prepare else kuyruk[:limit]):
         if cfg.get('resmi_detaylari_oku', False) and not detay_taze(i):
             hata = True
             continue
@@ -491,12 +506,18 @@ def main():
                 kadro_ozeti(i) or kisa_baslik(i),
                 okunakli_baslik(i.get('yer', '')), tarih,
                 kalan_gun_metni(i['son_tarih']).capitalize() if hatirlatma else '',
-                kaynak=i.get('kaynak','Kariyer Kapısı'))
+                kaynak=i.get('kaynak','Kariyer Kapısı'),logo=kurum_logosu(i))
         except Exception as exc:
             print(f'İlan görseli oluşturulamadı ({type(exc).__name__}); gönderim ertelendi.', file=sys.stderr)
             hata = True
             continue
-        if not (token and chat_id) or not telegram_gonder(token, chat_id, metin, i['link'], cfg.get('site_url', ''), foto=foto):
+        try:
+            hedef=ilan_sayfasi(i,cfg.get('site_url',''))
+        except ValueError:
+            print('Site ayrıntı bağlantısı hazırlanamadı; gönderim ertelendi.',file=sys.stderr)
+            hata=True
+            continue
+        if not (token and chat_id) or not telegram_gonder(token, chat_id, metin, hedef, cfg.get('site_url', ''), foto=foto):
             hata = True
             break
         gonderilen.add(i['id'])
@@ -525,6 +546,7 @@ def main():
         "telegram_hatirlatilan": sorted(hatirlatilan),
         "kaynak_baslangiclari": sorted(kaynak_baslangiclari),
         "kaynak_durumlari": kaynak_durumlari,
+        "canli_kimlikler": sorted({i['id'] for i in gelen}),
     }
     cikti.parent.mkdir(parents=True, exist_ok=True)
     cikti.write_text(json.dumps(veri, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")

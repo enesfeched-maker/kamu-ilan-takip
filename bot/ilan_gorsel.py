@@ -48,17 +48,17 @@ def lines(draw, text, face, width, maximum):
     return result
 
 
-def gorsel_olustur(kurum, kadro, yer, tarih, rozet='', kaynak='Kariyer Kapısı'):
+def gorsel_olustur(kurum, kadro, yer, tarih, rozet='', kaynak='Kariyer Kapısı', logo=None):
     im = Image.new('RGB', (1200, 760), '#102b35')
     d = ImageDraw.Draw(im)
     accent = '#ffd0be' if rozet else '#d9f59a'
     d.rectangle((0, 0, 16, 760), fill=accent)
-    # Abstract institution illustration, deliberately not an official seal/logo.
-    d.ellipse((895, -110, 1310, 310), fill='#173b44')
-    d.polygon([(1020, 68), (955, 110), (1085, 110)], fill=accent)
-    for x in (968, 1012, 1056):
-        d.rounded_rectangle((x, 123, x+16, 180), radius=3, fill=accent)
-    d.rounded_rectangle((948, 192, 1092, 201), radius=4, fill=accent)
+    if logo:
+        with Image.open(BytesIO(logo)) as mark:
+            mark=mark.convert('RGBA')
+            mark.thumbnail((136,136),Image.Resampling.LANCZOS)
+            d.rounded_rectangle((956,62,1136,242),radius=20,fill='white')
+            im.paste(mark,(1046-mark.width//2,152-mark.height//2),mark)
     titlefont = font(49, True)
     y = 66
     for line in lines(d, kurum, titlefont, 830, 3):
@@ -79,7 +79,7 @@ def gorsel_olustur(kurum, kadro, yer, tarih, rozet='', kaynak='Kariyer Kapısı'
         face = font(26, True)
         label = lines(d, rozet, face, 244, 1)[0]
         d.text((972-d.textlength(label, font=face)/2, 574), label, font=face, fill='white')
-    d.text((64, 704), kaynak + ' · Bağımsız ilan takibi', font=font(21), fill='#adc5c7')
+    d.text((64, 704), 'Kamu İlan Takip · Bağımsız ilan rehberi', font=font(21), fill='#adc5c7')
     out = BytesIO()
     im.save(out, format='PNG', optimize=True)
     return out.getvalue()

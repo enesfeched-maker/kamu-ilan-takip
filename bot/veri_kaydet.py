@@ -45,6 +45,7 @@ def merge_registry(a, b):
             'telegram_gonderilen': sorted(sent), 'telegram_bekleyen': sorted(pending),
             'telegram_hatirlatilan': merge_reminders(set(a.get('telegram_hatirlatilan', [])) | set(b.get('telegram_hatirlatilan', [])),aliases),
             'kaynak_baslangiclari': sorted(set(a.get('kaynak_baslangiclari',[])) | set(b.get('kaynak_baslangiclari',[]))),
+            'canli_kimlikler': sorted({aliases.get(x,x) for x in sorted([a,b],key=lambda s:s.get('guncelleme') or '')[-1].get('canli_kimlikler',[])}),
             'kaynak_durumlari': {**a.get('kaynak_durumlari',{}), **b.get('kaynak_durumlari',{})}}
 
 

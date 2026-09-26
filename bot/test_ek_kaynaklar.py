@@ -56,10 +56,10 @@ class SourceTests(unittest.TestCase):
     def test_silent_baseline_then_only_new_messages(self):
         with tempfile.TemporaryDirectory() as d:
             cfg=Path(d)/'config.json'; data=Path(d)/'ilanlar.json'
-            cfg.write_text(json.dumps({'rss_urls':[],'ek_kaynaklar':['sbb','iskur']}))
+            cfg.write_text(json.dumps({'site_url':'https://example.com/','rss_urls':[],'ek_kaynaklar':['sbb','iskur']}))
             data.write_text(json.dumps({'guncelleme':'2026-09-26','ilanlar':[]}))
             item={'id':'sbb-'+24*'a','baslik':'Örnek kurum alımı','kurum':'Örnek','link':ek.SBB,'son_tarih':None,'kaynak_turu':'sbb','kaynak':'SBB Kamu İlan'}
-            with patch.object(ilan_bot,'CONFIG_YOLU',cfg), patch.object(ilan_bot,'read_sbb',return_value=([item],0)) as source, patch.object(ilan_bot,'read_iskur',return_value=([],0)), patch.object(ilan_bot,'telegram_gonder',return_value=True) as send, patch.object(ilan_bot,'gorsel_olustur',return_value=b'PNG'), patch.object(ilan_bot.time,'sleep'), patch.dict('os.environ',{'RSS_URLS':'','TELEGRAM_BOT_TOKEN':'test','TELEGRAM_CHAT_ID':'test'}), patch('sys.argv',['bot','--cikti',str(data)]), contextlib.redirect_stdout(io.StringIO()):
+            with patch.object(ilan_bot,'yerel_oku',return_value={}), patch.object(ilan_bot,'CONFIG_YOLU',cfg), patch.object(ilan_bot,'read_sbb',return_value=([item],0)) as source, patch.object(ilan_bot,'read_iskur',return_value=([],0)), patch.object(ilan_bot,'telegram_gonder',return_value=True) as send, patch.object(ilan_bot,'gorsel_olustur',return_value=b'PNG'), patch.object(ilan_bot.time,'sleep'), patch.dict('os.environ',{'RSS_URLS':'','TELEGRAM_BOT_TOKEN':'test','TELEGRAM_CHAT_ID':'test'}), patch('sys.argv',['bot','--cikti',str(data)]), contextlib.redirect_stdout(io.StringIO()):
                 ilan_bot.main()
                 self.assertEqual(send.call_count,0)
                 self.assertEqual(json.loads(data.read_text())['kaynak_baslangiclari'],['iskur','sbb'])

@@ -100,7 +100,9 @@ def detay_coz(ana, alt):
     kadro = " • ".join(f"{n} {unvan}" for unvan, n in kadrolar.items())
     if len(kadrolar) > 1:
         kadro = f"Toplam {toplam} kişi — " + kadro
-    return {"son_tarih": bitis[:10] if bitis else None, "son_zaman": bitis,
+    logo=ana.get('logo_Path') or ''
+    logo='https://kariyerkapisi.gov.tr/UPS/'+logo if re.fullmatch(r'[a-zA-Z0-9_-]+\.(?:png|jpg|jpeg|webp)',logo,re.I) else None
+    return {"kurum_logo":logo,"son_tarih": bitis[:10] if bitis else None, "son_zaman": bitis,
             "baslangic_zaman": baslangic, "yer": " • ".join(sorted(yerler)),
             "kadro": kadro, "ilan_turu": (ana.get("ilanTuru") or "").rstrip(", "),
             "ozet": ozet, "sartlar": sartlar[:3], "sart_kadro_sayisi": len(alt),

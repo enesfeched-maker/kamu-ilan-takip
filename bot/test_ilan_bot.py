@@ -71,6 +71,9 @@ class TelegramDeliveryTests(unittest.TestCase):
              patch.object(ilan_bot, 'rss_coz', return_value=[dict(i) for i in self.items]), \
              patch.object(ilan_bot, 'telegram_gonder', return_value=success) as send, \
              patch.object(ilan_bot, 'gorsel_olustur', return_value=b'photo'), \
+             patch.object(ilan_bot, 'kurum_logosu', return_value=None), \
+             patch.object(ilan_bot, 'ilan_sayfasi', return_value='https://example.com/ilan/test/'), \
+             patch.object(ilan_bot, 'yerel_oku', return_value={}), \
              patch.object(ilan_bot.time, 'sleep'), \
              patch.dict(os.environ, {'TELEGRAM_BOT_TOKEN': 'test', 'TELEGRAM_CHAT_ID': '@test', 'RSS_URLS': ''}), \
              patch('sys.argv', ['bot', '--cikti', str(self.data), *args]), \
@@ -92,6 +95,16 @@ class TelegramDeliveryTests(unittest.TestCase):
         self.assertEqual(len(state['telegram_bekleyen']), 25)
         self.assertEqual(state['telegram_gonderilen'], [])
         self.assertEqual(self.run_bot(), 15)
+
+    def test_site_yayini_oncesi_sadece_hazirla_sonra_gonder(self):
+        self.assertEqual(self.run_bot('--prepare','--duyur-mevcut'),0)
+        state=json.loads(self.data.read_text())
+        self.assertEqual(len(state['telegram_bekleyen']),25)
+        self.assertEqual(len(state['canli_kimlikler']),25)
+        with patch.object(ilan_bot,'read_sbb',side_effect=AssertionError('Gönderim aşamasında tarama yapılmamalı')):
+            self.assertEqual(self.run_bot('--send-only'),15)
+            self.assertEqual(self.run_bot('--send-only'),10)
+            self.assertEqual(self.run_bot('--send-only'),0)
 
     def test_onizleme_veriyi_degistirmez(self):
         once = self.data.read_bytes()
