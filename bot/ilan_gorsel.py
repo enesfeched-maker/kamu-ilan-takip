@@ -48,7 +48,7 @@ def lines(draw, text, face, width, maximum):
     return result
 
 
-def gorsel_olustur(kurum, kadro, yer, tarih, rozet=''):
+def gorsel_olustur(kurum, kadro, yer, tarih, rozet='', kaynak='Kariyer Kapısı'):
     im = Image.new('RGB', (1200, 760), '#102b35')
     d = ImageDraw.Draw(im)
     accent = '#ffd0be' if rozet else '#d9f59a'
@@ -79,7 +79,7 @@ def gorsel_olustur(kurum, kadro, yer, tarih, rozet=''):
         face = font(26, True)
         label = lines(d, rozet, face, 244, 1)[0]
         d.text((972-d.textlength(label, font=face)/2, 574), label, font=face, fill='white')
-    d.text((64, 704), 'Kariyer Kapısı verileri · Bağımsız ilan takibi', font=font(21), fill='#adc5c7')
+    d.text((64, 704), kaynak + ' · Bağımsız ilan takibi', font=font(21), fill='#adc5c7')
     out = BytesIO()
     im.save(out, format='PNG', optimize=True)
     return out.getvalue()

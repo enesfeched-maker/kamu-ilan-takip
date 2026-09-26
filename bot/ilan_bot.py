@@ -22,6 +22,7 @@ from pathlib import Path
 from resmi_detay import detay_oku
 from resmi_ag import url_ac
 from ilan_gorsel import gorsel_olustur
+from ek_kaynaklar import read_sbb, read_iskur, merge_sources
 
 ROOT = Path(__file__).resolve().parent.parent
 CONFIG_YOLU = ROOT / "config.json"
@@ -160,12 +161,16 @@ def kisa_baslik(ilan):
     kurum = ilan.get('kurum', '')
     if kurum and baslik.startswith(kurum + ' - '):
         baslik = baslik[len(kurum) + 3:]
+    elif kurum and baslik.startswith(kurum):
+        baslik = baslik[len(kurum):].strip(' -–:')
     baslik = re.sub(r'\(\d{4}\)|\(\d{2}[./]\d{2}[./]\d{4}\)', '', baslik).strip()
     # Generic recruitment wording adds nothing when the actual positions are available.
     return kisalt(okunakli_baslik(baslik), 130)
 
 
 def hatirlatma_anahtari(ilan):
+    if ilan.get('duyuru_turu'):
+        return None
     if not ilan.get('son_tarih') or suresi_doldu(ilan):
         return None
     kalan = (date.fromisoformat(ilan['son_tarih']) - simdi().date()).days
@@ -186,6 +191,8 @@ def mesaj_olustur(ilan, site_url, hatirlatma=False):
     e = html.escape
     kurum = ilan.get("kurum", "")
     satirlar = []
+    if ilan.get('duyuru_turu'):
+        satirlar.append(f"📌 <b>{e(ilan['duyuru_turu'])}</b>\n")
     if hatirlatma:
         satirlar.append(f"🔴 <b>{kalan_gun_metni(ilan['son_tarih']).capitalize()}</b>\n")
     satirlar.append(f"<b>{e(kisalt(okunakli_baslik(kurum or ilan['baslik']), 180))}</b>")
@@ -205,6 +212,10 @@ def mesaj_olustur(ilan, site_url, hatirlatma=False):
     else:
         satirlar.extend(["", "⏳ <b>Son başvuru:</b> Resmi ilan üzerinden kontrol edin."])
     satirlar.extend(["", "Şartlar ve başvuru ↓"])
+    if ilan.get('kaynak_turu') in ('sbb','iskur'):
+        satirlar.append(f"<i>Kaynak: {e(ilan['kaynak'])}</i>")
+    if ilan.get('kaynak_turu')=='sbb':
+        satirlar.append('Belge için SBB’de kurum adıyla arayın.')
     return "\n".join(satirlar)
 
 
@@ -218,7 +229,8 @@ def telegram_gonder(token, chat_id, metin, ilan_linki="", site_url="", foto=None
     }
     dugmeler = []
     if ilan_linki:
-        dugmeler.append([{"text": "🔎 İlanı incele ve başvur", "url": ilan_linki}])
+        label='🔎 SBB’de ilanı bul' if ilan_linki=='https://kamuilan.sbb.gov.tr/' else '🔎 Resmî ilanı incele'
+        dugmeler.append([{"text": label, "url": ilan_linki}])
     if site_url:
         dugmeler.append([{"text": "📋 Tüm kamu ilanları", "url": site_url}])
     if dugmeler:
@@ -266,6 +278,8 @@ def telegram_sirasi(mevcut, gelen, yeniler, gonderilen, bekleyen, ilk_calisma, d
     uygun = []
     for kimlik in sorted(bekleyen - gonderilen):
         i = mevcut.get(kimlik)
+        if i and kimlik not in canli and i.get('kaynak_turu') in cfg.get('_basarisiz_kaynaklar', []):
+            continue
         if not i or kimlik not in canli:
             bekleyen.discard(kimlik)
             continue
@@ -337,6 +351,13 @@ def main():
     rss_listesi = [u for u in os.environ.get("RSS_URLS", "").split() if u] or cfg.get("rss_urls", [])
     token = os.environ.get("TELEGRAM_BOT_TOKEN", "")
     chat_id = os.environ.get("TELEGRAM_CHAT_ID", "")
+    cikti = Path(a.cikti)
+    veri = yukle(cikti)
+    onceki = {i['id']:i for i in veri['ilanlar']}
+    kaynak_baslangiclari = set(veri.get('kaynak_baslangiclari', []))
+    kaynak_durumlari = veri.get('kaynak_durumlari', {})
+    sessiz_kimlikler = set()
+    kaynak_hatalari = []
 
     # 1) Kaynaktan oku
     gelen, basarili = [], 0
@@ -344,7 +365,7 @@ def main():
         gelen = rss_coz(Path(a.rss_dosya).read_bytes())
         basarili = 1
     else:
-        if not rss_listesi:
+        if not rss_listesi and not cfg.get('ek_kaynaklar'):
             sys.exit("Hata: config.json içine 'rss_urls' ekle (README'ye bak).")
         for url in rss_listesi:
             try:
@@ -352,6 +373,28 @@ def main():
                 basarili += 1
             except Exception as h:  # ağ, XML vb.
                 print(f"Uyarı: {url[:60]}... okunamadı: {h}", file=sys.stderr)
+        for kaynak, okuyucu in [('sbb',read_sbb), ('iskur',read_iskur)]:
+            if kaynak not in cfg.get('ek_kaynaklar', []):
+                continue
+            try:
+                eklenen, hatalar = okuyucu(onceki)
+                gelen += eklenen
+                basarili += 1
+                if kaynak not in kaynak_baslangiclari and not a.duyur_mevcut:
+                    sessiz_kimlikler.update(i['id'] for i in eklenen)
+                if not hatalar:
+                    kaynak_baslangiclari.add(kaynak)
+                kaynak_durumlari[kaynak] = {'kontrol':simdi().isoformat(timespec='seconds'),
+                    'ilan_sayisi':len(eklenen),'hata_sayisi':hatalar}
+                if hatalar:
+                    kaynak_hatalari.append(kaynak)
+                print(f'{kaynak}: {len(eklenen)} ilan, {hatalar} erişim hatası.')
+            except Exception as exc:
+                kaynak_hatalari.append(kaynak)
+                kaynak_durumlari[kaynak] = {**kaynak_durumlari.get(kaynak,{}),
+                    'son_deneme':simdi().isoformat(timespec='seconds'),'hata_sayisi':1}
+                print(f'{kaynak} kaynağı okunamadı ({type(exc).__name__}); diğer kaynaklar devam ediyor.',file=sys.stderr)
+        cfg['_basarisiz_kaynaklar'] = kaynak_hatalari
     if not basarili:
         sys.exit("Hata: hiçbir RSS kaynağı okunamadı.")
 
@@ -360,8 +403,6 @@ def main():
         return
 
     # 2) Yeni ilanları bul
-    cikti = Path(a.cikti)
-    veri = yukle(cikti)
     ilk_calisma = not veri.get("guncelleme")
     mevcut = {i["id"]: i for i in veri["ilanlar"]}
     yeniler = []
@@ -371,10 +412,13 @@ def main():
                                     ilan_turu=i.get("ilan_turu", ""))
             if i.get('son_tarih'):
                 mevcut[i['id']]['son_tarih'] = i['son_tarih']
+            if i.get('kaynak_turu'):
+                mevcut[i['id']].update(i)
         else:
             i["ilk_gorulme"] = simdi().isoformat(timespec="seconds")
             mevcut[i["id"]] = i
-            yeniler.append(i)
+            if i['id'] not in sessiz_kimlikler:
+                yeniler.append(i)
 
     # Resmi sayfanın açık veri servisi: ayrıntıları 12 saat sakla, hata varsa eksik mesaj gönderme.
     detay_hatalari = set()
@@ -382,6 +426,8 @@ def main():
         ardisik_hata = 0
         for gelen_ilan in gelen:
             i = mevcut[gelen_ilan['id']]
+            if i.get('kaynak_turu') in ('sbb','iskur'):
+                continue
             if detay_taze(i):
                 continue
             try:
@@ -396,10 +442,24 @@ def main():
                     break
             time.sleep(0.25)
 
+    # Enrich Kariyer Kapısı first so date/quota comparisons use verified fields.
+    gelen = merge_sources([mevcut[i['id']] for i in gelen], onceki)
+    yeni_ids = {i['id'] for i in yeniler}
+    birlesik_ids = {i['id'] for i in gelen}
+    aliases = {alias:i['id'] for i in gelen for alias in i.get('kaynak_kimlikleri', [])}
+    for old_id in list(mevcut):
+        if old_id in aliases and aliases[old_id] != old_id:
+            del mevcut[old_id]
+    mevcut.update({i['id']:i for i in gelen})
+    yeniler = [i for i in gelen if i['id'] in yeni_ids and i['id'] in birlesik_ids]
+
     # 3) Telegram: sınırı aşan ve başarısız olan gönderimleri sonraki taramaya sakla.
     gonderilen = set(veri.get('telegram_gonderilen', []))
-    hatirlatilan = set(veri.get('telegram_hatirlatilan', []))
+    from veri_kaydet import merge_reminders
+    hatirlatilan = set(merge_reminders(veri.get('telegram_hatirlatilan', []),aliases))
     bekleyen = set(veri.get('telegram_bekleyen', []))
+    gonderilen.update(aliases[x] for x in list(gonderilen) if x in aliases)
+    bekleyen = {aliases.get(x,x) for x in bekleyen}
     gonderilecek = telegram_sirasi(mevcut, gelen, yeniler, gonderilen, bekleyen,
                                   ilk_calisma, a.duyur_mevcut, cfg)
     hatirlatmalar = []
@@ -430,7 +490,8 @@ def main():
                 okunakli_baslik(i.get('kurum') or i['baslik']),
                 kadro_ozeti(i) or kisa_baslik(i),
                 okunakli_baslik(i.get('yer', '')), tarih,
-                kalan_gun_metni(i['son_tarih']).capitalize() if hatirlatma else '')
+                kalan_gun_metni(i['son_tarih']).capitalize() if hatirlatma else '',
+                kaynak=i.get('kaynak','Kariyer Kapısı'))
         except Exception as exc:
             print(f'İlan görseli oluşturulamadı ({type(exc).__name__}); gönderim ertelendi.', file=sys.stderr)
             hata = True
@@ -462,6 +523,8 @@ def main():
         "telegram_gonderilen": sorted(gonderilen),
         "telegram_bekleyen": sorted(bekleyen - gonderilen),
         "telegram_hatirlatilan": sorted(hatirlatilan),
+        "kaynak_baslangiclari": sorted(kaynak_baslangiclari),
+        "kaynak_durumlari": kaynak_durumlari,
     }
     cikti.parent.mkdir(parents=True, exist_ok=True)
     cikti.write_text(json.dumps(veri, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
