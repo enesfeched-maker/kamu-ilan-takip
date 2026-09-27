@@ -1,5 +1,5 @@
 {
- "guncelleme": "2026-09-28T00:08:47+03:00",
+ "guncelleme": "2026-09-28T00:09:42+03:00",
  "ilanlar": [
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=9c82aab5-022e-43c8-b7f1-e6cf329d205b",
@@ -4630,7 +4630,10 @@
   "iskur-ee701ad45d382400f44d53e1",
   "iskur-fa28b4c0c3f9295cab08bcaf",
   "iskur-fc9b33928a57ae4db08d1056",
+  "sbb-06b9d460e79f56acda870c83",
   "sbb-0813fe0f6f1504f3ed9c2b85",
+  "sbb-0eedc1334b1a439324cd602b",
+  "sbb-0f3b5511cf9fef1e30449d42",
   "sbb-10d46826c12e582e53f7247b",
   "sbb-1737626cafbe7dc415139775",
   "sbb-1a8720ee52f99de292a259e0",
@@ -4657,17 +4660,21 @@
   "sbb-486f940153a3616ee11609f8",
   "sbb-48bec610e7cfef5ca996020b",
   "sbb-49c53682c3586294e09e2669",
+  "sbb-49c7fa65c13a199233b59d76",
   "sbb-53d5d7eddcc0304e9046a8e2",
   "sbb-578ca25c762bf229aefab260",
   "sbb-58513c38e2d2e6d7fdb32568",
   "sbb-5fb58b9edd2d30431e1fbef6",
+  "sbb-62430d5f2a1dbdb44993c711",
   "sbb-6295f6e0ec51fdf233636132",
   "sbb-64af125b2e04ca2aeb62b563",
   "sbb-66d7ba5846cebebda3352495",
   "sbb-6c67df0d4cd5558212417209",
   "sbb-6e0a71f8eace06170d316eb5",
   "sbb-6f51d37c2089a1c701085572",
+  "sbb-6fa41d0a346f8a294418a227",
   "sbb-6ff672310bc2c5b34ccf2da8",
+  "sbb-70672413818902ce34db6b69",
   "sbb-76ee051d18b17469cccc3b55",
   "sbb-78ecc1544a503271d3a2cfe6",
   "sbb-7974821666d14f268a7ed436",
@@ -4691,6 +4698,7 @@
   "sbb-a69af1b197a461962692610d",
   "sbb-a9fa876c2c8808fb5e6d4bc0",
   "sbb-ad7e8dd467d5e49bfbfebd87",
+  "sbb-af8b48f6cba75a72b79efb54",
   "sbb-af90a8ab2404bc69c088d70b",
   "sbb-b411eade69d5ac65717b7b95",
   "sbb-b4156a2d20c3ff5ee1a5796f",
@@ -4702,6 +4710,7 @@
   "sbb-beb04c0626513a466ec4cd5d",
   "sbb-c49d399e06ae4c205b04a173",
   "sbb-c8c8a1015f2eea057e2a3bef",
+  "sbb-c9d65b8f680562ecac4d0fb4",
   "sbb-cc10be5230ae54b4d12a99fa",
   "sbb-cf0ab108a51eb8616627b01b",
   "sbb-d7db70a7cb9b757c071d228a",
@@ -4711,21 +4720,10 @@
   "sbb-f09c844712a72cf2298488ed",
   "sbb-f18b0ff040aebffaaf4a702d",
   "sbb-f7b2060bf52fc5832b235852",
-  "sbb-fefad4b939608db5c1d8a19c"
- ],
- "telegram_bekleyen": [
-  "sbb-06b9d460e79f56acda870c83",
-  "sbb-0eedc1334b1a439324cd602b",
-  "sbb-0f3b5511cf9fef1e30449d42",
-  "sbb-49c7fa65c13a199233b59d76",
-  "sbb-62430d5f2a1dbdb44993c711",
-  "sbb-6fa41d0a346f8a294418a227",
-  "sbb-70672413818902ce34db6b69",
-  "sbb-af8b48f6cba75a72b79efb54",
-  "sbb-c9d65b8f680562ecac4d0fb4",
+  "sbb-fefad4b939608db5c1d8a19c",
   "sbb-ffbba5c3ef2b2c84c00bb8e2"
  ],
- "telegram_yayin_surumu": 2,
+ "telegram_bekleyen": [],
  "telegram_hatirlatilan": [
   "[\"https://kariyerkapisi.gov.tr/IlanDetay?i=1f94b6b1-1143-4b0a-9d84-c7dcfa542586\", \"2026-09-30T13:00:00+03:00\"]",
   "[\"https://kariyerkapisi.gov.tr/IlanDetay?i=27cf966f-b2b9-4671-a21a-731cb060436a\", \"2026-09-29T13:00:00+03:00\"]",
@@ -4750,10 +4748,25 @@
   "[\"sbb-b7fc8c509966adc7c447b6ea\", \"2026-09-28\"]",
   "[\"sbb-c8c8a1015f2eea057e2a3bef\", \"2026-09-30\"]"
  ],
+ "telegram_yayin_surumu": 2,
  "kaynak_baslangiclari": [
   "iskur",
   "sbb"
  ],
+ "kaynak_durumlari": {
+  "sbb": {
+   "kontrol": "2026-09-28T00:07:15+03:00",
+   "ilan_sayisi": 127,
+   "hata_sayisi": 0,
+   "yerel_kontrol": "2026-09-27T21:06:46.890818+00:00",
+   "calisma_yeri": "yerel"
+  },
+  "iskur": {
+   "kontrol": "2026-09-28T00:08:45+03:00",
+   "ilan_sayisi": 42,
+   "hata_sayisi": 0
+  }
+ },
  "canli_kimlikler": [
   "https://kariyerkapisi.gov.tr/IlanDetay?i=1559e356-a0e2-44e2-869b-beb38c5fdb7a",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=1f94b6b1-1143-4b0a-9d84-c7dcfa542586",
@@ -4908,19 +4921,5 @@
   "sbb-f7b2060bf52fc5832b235852",
   "sbb-fefad4b939608db5c1d8a19c",
   "sbb-ffbba5c3ef2b2c84c00bb8e2"
- ],
- "kaynak_durumlari": {
-  "sbb": {
-   "kontrol": "2026-09-28T00:07:15+03:00",
-   "ilan_sayisi": 127,
-   "hata_sayisi": 0,
-   "yerel_kontrol": "2026-09-27T21:06:46.890818+00:00",
-   "calisma_yeri": "yerel"
-  },
-  "iskur": {
-   "kontrol": "2026-09-28T00:08:45+03:00",
-   "ilan_sayisi": 42,
-   "hata_sayisi": 0
-  }
- }
+ ]
 }
