@@ -10,3 +10,11 @@ test-output-publish/
 test-output-refresh.py
 docs/ilan/
 docs/sitemap.xml
+.test-deps/
+.source-deps/
+local-data/
+.local-runtime/
+test-output*.html
+test-output*.py
+test-output*.png
+test-output-merge-history.py
