@@ -62,9 +62,9 @@ jobs:
               sys.exit('Telegram bağlantısı doğrulanamadı. Gizli değerleri ve botun kanal yetkisini kontrol edin.')
           PY
           if [ "$DUYUR_MEVCUT" = "true" ]; then
-            python bot/ilan_bot.py --duyur-mevcut
+            python bot/ilan_bot.py --prepare --duyur-mevcut
           else
-            python bot/ilan_bot.py
+            python bot/ilan_bot.py --prepare
           fi
       - name: Değişen veriyi kaydet
         if: ${{ always() }}
@@ -87,3 +87,13 @@ jobs:
         if: ${{ !cancelled() && steps.portal.outcome == 'success' }}
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Yayımlanan ilanları Telegram'a gönder
+        id: telegram
+        if: ${{ !cancelled() && steps.deployment.outcome == 'success' }}
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python bot/ilan_bot.py --send-only
+      - name: Telegram gönderim geçmişini kaydet
+        if: ${{ always() && steps.telegram.outcome != 'skipped' }}
+        run: python bot/veri_kaydet.py
