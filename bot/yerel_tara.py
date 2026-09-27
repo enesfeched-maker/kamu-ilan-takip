@@ -73,6 +73,18 @@ def collect(registry,old):
 
 def publish(snapshot,token):
     # Update only the collector file, never the bot's sent/reminder histories.
+    from sbb_detay import document_url
+    documents={}
+    for item in snapshot.get('kaynaklar',{}).get('sbb',{}).get('ilanlar',[]):
+        if document_url(item):
+            path='docs/belgeler/sbb/'+item['belge_sha256']+'.pdf'
+            local=ROOT/path
+            if local.exists():documents[path]=local.read_bytes()
+    if documents:
+        from github_yayin import publish_files
+        documents[REMOTE_PATH]=(json.dumps(snapshot,ensure_ascii=False,indent=1)+'\n').encode()
+        publish_files(documents,token,'SBB ilan ayrıntılarını ve kaynak belgelerini güncelle')
+        return
     for attempt in range(3):
         old=github(REMOTE_PATH,token=token)
         data={'message':'Yerel kaynak kontrolünü güncelle','branch':'main',

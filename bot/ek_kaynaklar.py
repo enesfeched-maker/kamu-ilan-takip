@@ -173,6 +173,7 @@ def sbb_rows(data):
 
 
 def read_sbb(previous):
+    from sbb_detay import VERSION
     op=session()
     data,_=get(op,SBB)
     records=[]
@@ -184,11 +185,10 @@ def read_sbb(previous):
         if len(older)==1:
             row['id']=older[0]['id']
         cached=cache.get(row['id'])
-        if cached and fresh(cached):
+        if cached and fresh(cached) and cached.get('sbb_detay_surumu')==VERSION and cached.get('belge_kopyasi'):
             cached=dict(cached)
             if cached.get('kaynak_turu')=='sbb':
-                cached.update(link=SBB,kaynaklar=[{'ad':'SBB Kamu İlan','link':SBB}],
-                    basvuru_notu='SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.')
+                cached.update(link=SBB,kaynaklar=[{'ad':'SBB Kamu İlan','link':SBB}])
                 if notice(cached['baslik']):
                     cached['duyuru_turu']='İptal duyurusu' if 'iptal' in norm(cached['baslik']) else 'Düzeltme / süre değişikliği'
             records.append(cached)
@@ -202,11 +202,10 @@ def read_sbb(previous):
             row.update(link=SBB,detay_guncelleme=now().isoformat(timespec='seconds'),
                        belge_ozeti=hashlib.sha256(data).hexdigest())
             row['kaynaklar']=[{'ad':row['kaynak'],'link':SBB}]
-            row['basvuru_notu']='SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.'
             if notice(row['baslik']):
                 row['duyuru_turu']='İptal duyurusu' if 'iptal' in norm(row['baslik']) else 'Düzeltme / süre değişikliği'
-            # Do not republish the PDF text or source imagery.
-            row['ozet']='Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin.'
+            from sbb_detay import summarize
+            row.update(summarize(data,row))
             records.append(row)
         except Exception as exc:
             errors+=1
