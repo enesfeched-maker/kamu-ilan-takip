@@ -86,6 +86,14 @@ def illustration(label, size=220):
         elif kind in ('technical','worker'):
             d.rounded_rectangle((72,166,146,227),7,fill=ink);d.rectangle((91,155,126,169),outline=ink,width=5)
             d.line((229,143,207,214),fill=ink,width=12);d.arc((218,116,253,151),0,300,fill=ink,width=9)
+            if 'teknisyen' in norm(label):
+                d.rounded_rectangle((68,146,151,228),9,fill='#f2c45e')
+                d.rounded_rectangle((79,157,140,180),4,fill=ink)
+                d.ellipse((95,189,126,220),fill=ink)
+            elif 'muhendis' in norm(label) or 'mimar' in norm(label):
+                d.rounded_rectangle((64,151,151,230),5,fill='#a1cfc5')
+                d.rectangle((76,167,139,212),outline=ink,width=3)
+                d.line((76,189,139,189),fill=ink,width=3)
         elif kind=='education':
             d.polygon([(77,157),(132,151),(165,165),(199,151),(254,157),(254,221),(199,215),(165,229),(132,215),(77,221)],fill=ink)
             d.polygon([(86,163),(132,160),(158,172),(158,217),(132,207),(86,212)],fill='white')

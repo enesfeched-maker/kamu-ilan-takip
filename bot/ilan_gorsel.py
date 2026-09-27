@@ -69,15 +69,17 @@ def gorsel_olustur(kurum, kadro, yer, tarih, rozet='', kaynak='Kariyer Kapısı'
             box=ImageChops.difference(white.convert('RGB'),Image.new('RGB',mark.size,'white')).getbbox()
             if box:
                 mark=mark.crop(box)
-            mark.thumbnail((228,228), Image.Resampling.LANCZOS)
+            scale=228/max(mark.size)
+            mark=mark.resize((max(1,round(mark.width*scale)),max(1,round(mark.height*scale))),Image.Resampling.LANCZOS)
             d.rounded_rectangle((882,36,1152,306),radius=24,fill='white')
             im.paste(mark,(1017-mark.width//2,171-mark.height//2),mark)
     titlefont=font(44,True)
     for n,line in enumerate(lines(d,kurum,titlefont,780,3)):
         d.text((52,46+n*55),line,font=titlefont,fill='white')
     if yer:
-        for n,line in enumerate(lines(d,yer,font(25),780,2)):
-            d.text((52,224+n*31),line,font=font(25),fill='#c9dadc')
+        cityfont=font(32,True)
+        for n,line in enumerate(lines(d,yer,cityfont,780,2)):
+            d.text((52,218+n*38),line,font=cityfont,fill='#d9f59a')
     d.text((52,309),'ALIM YAPILACAK KADROLAR',font=font(20,True),fill=accent)
     gap=16
     cellw=(1100-gap*(columns-1))//columns
@@ -97,7 +99,9 @@ def gorsel_olustur(kurum, kadro, yer, tarih, rozet='', kaynak='Kariyer Kapısı'
         d.rounded_rectangle((874,footer+40,1152,footer+107),radius=14,fill='#b93429')
         face=font(25,True);label=lines(d,rozet,face,250,1)[0]
         d.text((1013-d.textlength(label,font=face)/2,footer+60),label,font=face,fill='white')
-    d.text((52,footer+155),'Kamu İlan Takip',font=font(21,True),fill=accent)
-    d.text((820,footer+158),'Meslek görselleri temsilidir.',font=font(18),fill='#adc5c7')
+    d.text((52,footer+151),'Kamu İlan Takip',font=font(22,True),fill=accent)
+    channel='Telegram  @kamuilantakip'
+    channel_face=font(22,True)
+    d.text((1152-d.textlength(channel,font=channel_face),footer+151),channel,font=channel_face,fill='white')
     out=BytesIO();im.save(out,format='PNG',optimize=True)
     return out.getvalue()

@@ -34,3 +34,12 @@ class GorselTests(unittest.TestCase):
             wrapped = lines(d, text, face, 830, 3)
             self.assertLessEqual(len(wrapped), 3)
             self.assertTrue(all(d.textlength(line, font=face) <= 830 for line in wrapped))
+
+    def test_channel_branding_and_location_are_visible(self):
+        from PIL import ImageChops
+        image = Image.open(io.BytesIO(gorsel_olustur(
+            'Örnek Kurum', '1 Mühendis', 'Ankara / Çankaya', '30 Eylül 2026')))
+        background=Image.new('RGB',image.size,(16,43,53))
+        self.assertIsNotNone(ImageChops.difference(image.crop((45,210,800,280)),background.crop((45,210,800,280))).getbbox())
+        # Footer contains two separate, high-contrast brand areas.
+        self.assertIsNotNone(ImageChops.difference(image.crop((45,image.height-70,1155,image.height-25)),background.crop((45,image.height-70,1155,image.height-25))).getbbox())
