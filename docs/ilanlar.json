@@ -4340,20 +4340,6 @@
   "iskur",
   "sbb"
  ],
- "kaynak_durumlari": {
-  "sbb": {
-   "kontrol": "2026-09-27T12:36:02+03:00",
-   "ilan_sayisi": 118,
-   "hata_sayisi": 1,
-   "yerel_kontrol": "2026-09-27T09:35:08.623456+00:00",
-   "calisma_yeri": "yerel"
-  },
-  "iskur": {
-   "kontrol": "2026-09-27T12:37:29+03:00",
-   "ilan_sayisi": 43,
-   "hata_sayisi": 0
-  }
- },
  "canli_kimlikler": [
   "https://kariyerkapisi.gov.tr/IlanDetay?i=1559e356-a0e2-44e2-869b-beb38c5fdb7a",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=1f94b6b1-1143-4b0a-9d84-c7dcfa542586",
@@ -4499,5 +4485,19 @@
   "sbb-f18b0ff040aebffaaf4a702d",
   "sbb-f7b2060bf52fc5832b235852",
   "sbb-fefad4b939608db5c1d8a19c"
- ]
+ ],
+ "kaynak_durumlari": {
+  "sbb": {
+   "kontrol": "2026-09-27T12:36:02+03:00",
+   "ilan_sayisi": 118,
+   "hata_sayisi": 1,
+   "yerel_kontrol": "2026-09-27T09:35:08.623456+00:00",
+   "calisma_yeri": "yerel"
+  },
+  "iskur": {
+   "kontrol": "2026-09-27T12:37:29+03:00",
+   "ilan_sayisi": 43,
+   "hata_sayisi": 0
+  }
+ }
 }
