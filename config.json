@@ -1,10 +1,15 @@
 {
-  "rss_urls": ["https://kariyerkapisi.gov.tr/RSS"],
-  "ek_kaynaklar": ["sbb", "iskur"],
+  "rss_urls": [
+    "https://kariyerkapisi.gov.tr/RSS"
+  ],
+  "ek_kaynaklar": [
+    "sbb",
+    "iskur"
+  ],
   "site_url": "https://enesfeched-maker.github.io/kamu-ilan-takip/",
   "resmi_detaylari_oku": true,
   "telegram_kelimeler_dahil": [],
   "telegram_kelimeler_haric": [],
-  "max_mesaj_per_calisma": 200,
+  "max_mesaj_per_calisma": 15,
   "telegram_yayin_surumu": 2
 }
