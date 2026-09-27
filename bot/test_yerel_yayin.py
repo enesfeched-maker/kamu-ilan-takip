@@ -47,7 +47,7 @@ class LocalPublishingTests(unittest.TestCase):
         self.assertEqual(kurum_anahtari('BOĞAZİÇİ ÜNİVERSİTESİ REKTÖRLÜĞÜ'),kurum_anahtari('Boğaziçi Üniversitesi'))
         raw=io.BytesIO();Image.new('RGBA',(600,300),'red').save(raw,format='PNG')
         image=Image.open(io.BytesIO(gorsel_olustur('Örnek Kurum','10 memur','Ankara','30 Eylül 2026',logo=raw.getvalue())))
-        self.assertEqual(image.getpixel((1046,152)),(255,0,0))
-        self.assertEqual(image.getpixel((940,152)),(16,43,53))
+        self.assertEqual(image.getpixel((1017,171)),(255,0,0))
+        self.assertEqual(image.getpixel((870,171)),(16,43,53))
 
 if __name__=='__main__':unittest.main()

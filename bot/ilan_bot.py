@@ -473,6 +473,11 @@ def main():
     from veri_kaydet import merge_reminders
     hatirlatilan = set(merge_reminders(veri.get('telegram_hatirlatilan', []),aliases))
     bekleyen = set(veri.get('telegram_bekleyen', []))
+    yayin_surumu = int(cfg.get('telegram_yayin_surumu', 1))
+    if yayin_surumu > int(veri.get('telegram_yayin_surumu', 1)):
+        # Explicit channel refresh: reset only once; subsequent runs resume the queue.
+        gonderilen, hatirlatilan = set(), set()
+        bekleyen = {i['id'] for i in gelen}
     gonderilen.update(aliases[x] for x in list(gonderilen) if x in aliases)
     bekleyen = {aliases.get(x,x) for x in bekleyen}
     gonderilecek = telegram_sirasi(mevcut, gelen, yeniler, gonderilen, bekleyen,
@@ -503,7 +508,7 @@ def main():
         try:
             foto = gorsel_olustur(
                 okunakli_baslik(i.get('kurum') or i['baslik']),
-                kadro_ozeti(i) or kisa_baslik(i),
+                okunakli_baslik(i.get("kadro", "")) or kisa_baslik(i),
                 okunakli_baslik(i.get('yer', '')), tarih,
                 kalan_gun_metni(i['son_tarih']).capitalize() if hatirlatma else '',
                 kaynak=i.get('kaynak','Kariyer Kapısı'),logo=kurum_logosu(i))
@@ -544,6 +549,7 @@ def main():
         "telegram_gonderilen": sorted(gonderilen),
         "telegram_bekleyen": sorted(bekleyen - gonderilen),
         "telegram_hatirlatilan": sorted(hatirlatilan),
+        "telegram_yayin_surumu": yayin_surumu,
         "kaynak_baslangiclari": sorted(kaynak_baslangiclari),
         "kaynak_durumlari": kaynak_durumlari,
         "canli_kimlikler": sorted({i['id'] for i in gelen}),

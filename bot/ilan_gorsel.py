@@ -49,37 +49,55 @@ def lines(draw, text, face, width, maximum):
 
 
 def gorsel_olustur(kurum, kadro, yer, tarih, rozet='', kaynak='Kariyer Kapısı', logo=None):
-    im = Image.new('RGB', (1200, 760), '#102b35')
+    from meslek_gorseli import meslekler, illustration
+    import math
+    roles = meslekler(kadro) or ['İlan ayrıntıları']
+    columns = min(3, len(roles))
+    rows = math.ceil(len(roles)/columns)
+    rowheight = 268
+    footer = 346 + rows*rowheight
+    height = footer + 206
+    im = Image.new('RGB', (1200, height), '#102b35')
     d = ImageDraw.Draw(im)
     accent = '#ffd0be' if rozet else '#d9f59a'
-    d.rectangle((0, 0, 16, 760), fill=accent)
+    d.rectangle((0, 0, 13, height), fill=accent)
     if logo:
         with Image.open(BytesIO(logo)) as mark:
-            mark=mark.convert('RGBA')
-            mark.thumbnail((136,136),Image.Resampling.LANCZOS)
-            d.rounded_rectangle((956,62,1136,242),radius=20,fill='white')
-            im.paste(mark,(1046-mark.width//2,152-mark.height//2),mark)
-    titlefont = font(49, True)
-    y = 66
-    for line in lines(d, kurum, titlefont, 830, 3):
-        d.text((64, y), line, font=titlefont, fill='#ffffff')
-        y += 60
-    d.line((64, 284, 1136, 284), fill='#35515a', width=2)
-    bodyfont = font(38, True)
-    for n, line in enumerate(lines(d, kadro, bodyfont, 1060, 2)):
-        d.text((64, 313 + n*48), line, font=bodyfont, fill=accent)
+            mark = mark.convert('RGBA')
+            from PIL import ImageChops
+            white=Image.new('RGBA',mark.size,'white');white.alpha_composite(mark)
+            box=ImageChops.difference(white.convert('RGB'),Image.new('RGB',mark.size,'white')).getbbox()
+            if box:
+                mark=mark.crop(box)
+            mark.thumbnail((228,228), Image.Resampling.LANCZOS)
+            d.rounded_rectangle((882,36,1152,306),radius=24,fill='white')
+            im.paste(mark,(1017-mark.width//2,171-mark.height//2),mark)
+    titlefont=font(44,True)
+    for n,line in enumerate(lines(d,kurum,titlefont,780,3)):
+        d.text((52,46+n*55),line,font=titlefont,fill='white')
     if yer:
-        d.text((64, 431), lines(d, yer, font(30), 1050, 1)[0], font=font(30), fill='#c9dadc')
-    d.rounded_rectangle((64, 514, 1136, 665), radius=20, fill='#f2f6f0')
-    d.text((92, 534), 'SON BAŞVURU', font=font(22, True), fill='#526463')
-    for n, line in enumerate(lines(d, tarih, font(35, True), 660, 2)):
-        d.text((92, 571+n*39), line, font=font(35, True), fill='#163b40')
+        for n,line in enumerate(lines(d,yer,font(25),780,2)):
+            d.text((52,224+n*31),line,font=font(25),fill='#c9dadc')
+    d.text((52,309),'ALIM YAPILACAK KADROLAR',font=font(20,True),fill=accent)
+    gap=16
+    cellw=(1100-gap*(columns-1))//columns
+    for index,role in enumerate(roles):
+        x=52+(index%columns)*(cellw+gap); y=350+(index//columns)*rowheight
+        d.rounded_rectangle((x,y,x+cellw,y+rowheight-16),radius=19,fill='#f3f6f1')
+        art=illustration(role,206)
+        im.paste(art,(x+(cellw-art.width)//2,y+6),art)
+        face=font(25,True)
+        for n,line in enumerate(lines(d,role,face,cellw-24,3)):
+            d.text((x+(cellw-d.textlength(line,font=face))/2,y+167+n*27),line,font=face,fill='#173e48')
+    d.line((52,footer+12,1152,footer+12),fill='#35515a',width=2)
+    d.text((52,footer+34),'SON BAŞVURU',font=font(20,True),fill='#b6cbcc')
+    for n,line in enumerate(lines(d,tarih,font(31,True),780 if rozet else 1090,2)):
+        d.text((52,footer+65+n*36),line,font=font(31,True),fill='white')
     if rozet:
-        d.rounded_rectangle((836, 553, 1108, 624), radius=14, fill='#b93429')
-        face = font(26, True)
-        label = lines(d, rozet, face, 244, 1)[0]
-        d.text((972-d.textlength(label, font=face)/2, 574), label, font=face, fill='white')
-    d.text((64, 704), 'Kamu İlan Takip · Bağımsız ilan rehberi', font=font(21), fill='#adc5c7')
-    out = BytesIO()
-    im.save(out, format='PNG', optimize=True)
+        d.rounded_rectangle((874,footer+40,1152,footer+107),radius=14,fill='#b93429')
+        face=font(25,True);label=lines(d,rozet,face,250,1)[0]
+        d.text((1013-d.textlength(label,font=face)/2,footer+60),label,font=face,fill='white')
+    d.text((52,footer+155),'Kamu İlan Takip',font=font(21,True),fill=accent)
+    d.text((820,footer+158),'Meslek görselleri temsilidir.',font=font(18),fill='#adc5c7')
+    out=BytesIO();im.save(out,format='PNG',optimize=True)
     return out.getvalue()

@@ -21,6 +21,8 @@ def merge_reminders(values, aliases):
 
 def merge_registry(a, b):
     # Prefer the most recently checked detail per record; never forget a sent ID.
+    version = max(int(a.get('telegram_yayin_surumu',1)), int(b.get('telegram_yayin_surumu',1)))
+    histories = [s for s in (a,b) if int(s.get('telegram_yayin_surumu',1)) == version]
     merged = {}
     for state in sorted([a, b], key=lambda s: s.get('guncelleme') or ''):
         for item in state.get('ilanlar', []):
@@ -33,17 +35,18 @@ def merge_registry(a, b):
                 if refs:
                     item['kaynaklar']=list(refs.values())
             merged[item['id']] = item
-    sent = set(a.get('telegram_gonderilen', [])) | set(b.get('telegram_gonderilen', []))
+    sent = set().union(*(set(s.get('telegram_gonderilen',[])) for s in histories))
     aliases={alias:i['id'] for i in merged.values() for alias in i.get('kaynak_kimlikleri',[]) if alias!=i['id']}
     for alias in aliases:
         merged.pop(alias,None)
     sent.update(aliases[x] for x in list(sent) if x in aliases)
-    pending = (set(a.get('telegram_bekleyen', [])) | set(b.get('telegram_bekleyen', []))) - sent
+    pending = set().union(*(set(s.get('telegram_bekleyen',[])) for s in histories)) - sent
     pending={aliases.get(x,x) for x in pending}-sent
     return {'guncelleme': max(a.get('guncelleme') or '', b.get('guncelleme') or ''),
             'ilanlar': sorted(merged.values(), key=lambda i: i.get('son_tarih') or '9999'),
             'telegram_gonderilen': sorted(sent), 'telegram_bekleyen': sorted(pending),
-            'telegram_hatirlatilan': merge_reminders(set(a.get('telegram_hatirlatilan', [])) | set(b.get('telegram_hatirlatilan', [])),aliases),
+            'telegram_yayin_surumu': version,
+            'telegram_hatirlatilan': merge_reminders(set().union(*(set(s.get('telegram_hatirlatilan',[])) for s in histories)),aliases),
             'kaynak_baslangiclari': sorted(set(a.get('kaynak_baslangiclari',[])) | set(b.get('kaynak_baslangiclari',[]))),
             'canli_kimlikler': sorted({aliases.get(x,x) for x in sorted([a,b],key=lambda s:s.get('guncelleme') or '')[-1].get('canli_kimlikler',[])}),
             'kaynak_durumlari': {**a.get('kaynak_durumlari',{}), **b.get('kaynak_durumlari',{})}}

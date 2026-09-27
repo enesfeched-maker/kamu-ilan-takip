@@ -96,6 +96,22 @@ class TelegramDeliveryTests(unittest.TestCase):
         self.assertEqual(state['telegram_gonderilen'], [])
         self.assertEqual(self.run_bot(), 15)
 
+    def test_channel_refresh_is_once_and_merge_preserves_new_queue(self):
+        from veri_kaydet import merge_registry
+        self.run_bot('--duyur-mevcut');self.run_bot()
+        old=json.loads(self.data.read_text())
+        cfg=json.loads(self.cfg.read_text());cfg['telegram_yayin_surumu']=2
+        self.cfg.write_text(json.dumps(cfg))
+        self.assertEqual(self.run_bot('--prepare'),0)
+        fresh=json.loads(self.data.read_text())
+        merged=merge_registry(old,fresh)
+        self.assertEqual(merged['telegram_gonderilen'],[])
+        self.assertEqual(len(merged['telegram_bekleyen']),25)
+        self.data.write_text(json.dumps(merged))
+        self.assertEqual(self.run_bot('--send-only'),15)
+        self.assertEqual(self.run_bot('--send-only'),10)
+        self.assertEqual(self.run_bot('--send-only'),0)
+
     def test_site_yayini_oncesi_sadece_hazirla_sonra_gonder(self):
         self.assertEqual(self.run_bot('--prepare','--duyur-mevcut'),0)
         state=json.loads(self.data.read_text())

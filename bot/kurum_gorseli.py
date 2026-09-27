@@ -60,7 +60,7 @@ def kurum_logosu(ilan):
         with Image.open(io.BytesIO(raw)) as im:
             if im.width*im.height>8_000_000:
                 return None
-            im=im.convert('RGBA');im.thumbnail((180,180))
+            im=im.convert('RGBA');im.thumbnail((320,320))
             out=io.BytesIO();im.save(out,format='PNG')
             return out.getvalue()
     except Exception:
