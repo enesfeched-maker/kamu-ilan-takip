@@ -1,10 +1,10 @@
 {
  "schema": 1,
- "guncelleme": "2026-09-27T09:33:02.906228+00:00",
+ "guncelleme": "2026-09-27T09:35:39.165678+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-09-27T09:35:08.623456+00:00",
-   "hata_sayisi": 1,
+   "kontrol": "2026-09-27T09:35:40.947311+00:00",
+   "hata_sayisi": 0,
    "ilanlar": [
     {
      "id": "sbb-b411eade69d5ac65717b7b95",
@@ -1207,49 +1207,27 @@
      "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin."
     },
     {
-     "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=b06c870a-74b4-4292-aefd-99b0b4ea6263",
-     "baslik": "TOKAT GAZİOSMANPAŞA ÜNİVERSİTESİ REKTÖRLÜĞÜ - SÖZLEŞMELİ PERSONEL ALIM İLANI (2026/1) (18.09.2026-02.10.2026)",
-     "kurum": "TOKAT GAZİOSMANPAŞA ÜNİVERSİTESİ REKTÖRLÜĞÜ",
-     "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=b06c870a-74b4-4292-aefd-99b0b4ea6263",
+     "id": "sbb-579f123a6d883e5f9ee5b864",
+     "baslik": "TOKAT GAZİOSMANPAŞA ÜNİVERSİTESİ - 93 SÖZLEŞMELİ PERSONEL ALACAK",
+     "kurum": "TOKAT GAZİOSMANPAŞA ÜNİVERSİTESİ",
+     "kadro": "93 SÖZLEŞMELİ PERSONEL ALACAK",
+     "ilan_turu": "Sözleşmeli Personel",
      "son_tarih": "2026-10-02",
-     "ilk_gorulme": "2026-09-22T17:46:21+03:00",
-     "ilan_turu": "Sözleşmeli Personel İlanları",
-     "son_zaman": "2026-10-02T13:00:00+03:00",
-     "baslangic_zaman": "2026-09-18T09:00:00+03:00",
-     "yer": "TOKAT / MERKEZ",
-     "kadro": "Toplam 93 kişi — 30 HEMŞİRE • 12 SAĞLIK TEKNİKERİ • 10 BÜRO PERSONELİ • 38 DESTEK PERSONELİ • 3 TEKNİSYEN",
-     "ozet": "Üniversitemiz Hastanesi Başmüdürlüğü, Diş Hastanesi ve diğer birimlerinde 657 sayılı Devlet Memurları Kanununun 4/B maddesinin dördüncü paragrafına göre istihdam edilmek üzere 06.06.1978 tarihli ve 7/15754 sayılı Bakanlar Kurulu Kararı ile yürürlüğe konulan, 28.06.2007 tarih ve 26566 sayılı Resmi Gazetede yayımlanan Sözleşmeli Personel Çalıştırılmasına İlişkin Esasların Ek 2. maddesinin (b) fıkrasına göre eczacı pozisyonu hariç diğer pozisyonlarda 2024 dönemi KPSS puan sırası esas alınmak suretiyle aşağıda…",
-     "sartlar": [
-      {
-       "kadro": "H-1 Hemşire [1]",
-       "metin": "Hemşirelik lisans mezunu olmak."
-      },
-      {
-       "kadro": "ST-1\tSağlık Teknikeri (Tıbbi Görüntüleme Teknikleri) [1]",
-       "metin": "Tıbbi görüntüleme veya radyoloji ön lisans programı mezunu olmak."
-      },
-      {
-       "kadro": "BP-1 Büro Personeli [3]",
-       "metin": "Büro Yönetimi, Büro Yönetimi ve Sekreterlik, Büro Yönetimi ve Yönetici Asistanlığı, Ofis Teknolojileri ve Yönetimi, Büro Hizmetleri ve Yönetici Asistanlığı, Genel İşletme, İşletme, İşletmecilik, İşletme Yönetimi ön lisans programlarının birinden mezun olmak."
-      }
-     ],
-     "sart_kadro_sayisi": 22,
-     "basvuru_notu": "a) Başvuruda bulunacak adaylar, Resmi Gazete ilanı ile eş zamanlı olarak başvurularını Kariyer Kapısı (https://kariyerkapisi.gov.tr/isealim) üzerinden gerçekleştirecektir. Şahsen ve posta yolu ile yapılan başvurular kabul edilmeyecektir.",
-     "detay_guncelleme": "2026-09-26T01:07:28+03:00",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 18 Eylül - 2 Ekim)",
+     "baslangic_zaman": "2026-09-18T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-09-27T12:35:40+03:00",
+     "belge_ozeti": "100536ca499b13202afbd2ed83b286ad7606c15d6da1e1655c154db4ef4d579a",
      "kaynaklar": [
-      {
-       "ad": "Kariyer Kapısı",
-       "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=b06c870a-74b4-4292-aefd-99b0b4ea6263"
-      },
       {
        "ad": "SBB Kamu İlan",
        "link": "https://kamuilan.sbb.gov.tr/"
       }
      ],
-     "kaynak_kimlikleri": [
-      "https://kariyerkapisi.gov.tr/IlanDetay?i=b06c870a-74b4-4292-aefd-99b0b4ea6263",
-      "sbb-579f123a6d883e5f9ee5b864"
-     ]
+     "basvuru_notu": "SBB sayfasındaki arama alanına kurum adını yazıp ilgili ilan belgesini açın.",
+     "ozet": "Kadro ve başvuru koşulları için kaynağın ilan belgesini inceleyin."
     },
     {
      "id": "sbb-58513c38e2d2e6d7fdb32568",
