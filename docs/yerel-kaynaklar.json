@@ -1,10 +1,10 @@
 {
  "schema": 1,
- "guncelleme": "2026-09-27T21:36:39.126367+00:00",
+ "guncelleme": "2026-09-27T22:06:39.430976+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-09-27T21:40:50.648265+00:00",
-   "hata_sayisi": 2,
+   "kontrol": "2026-09-27T22:06:42.000059+00:00",
+   "hata_sayisi": 0,
    "ilanlar": [
     {
      "id": "sbb-c9d65b8f680562ecac4d0fb4",
@@ -4911,32 +4911,57 @@
      "sbb_detay_surumu": 4
     },
     {
-     "id": "iskur-46fd3ccae48ba3acd1a3e086",
-     "baslik": "Ardahan Göle Belediyesi Memur Alım İlanı",
-     "kurum": "Ardahan Göle Belediyesi",
-     "yer": "Ardahan",
+     "id": "sbb-42a7834aa4441e349d596e46",
+     "baslik": "GÖLE BELEDİYE BAŞKANLIĞI - 3 MEMUR ALACAK",
+     "kurum": "GÖLE BELEDİYE BAŞKANLIĞI",
+     "kadro": "3 MEMUR ALACAK",
      "ilan_turu": "Memur",
      "son_tarih": "2026-10-06",
-     "son_zaman": "2026-10-06T17:00:00+03:00",
-     "link": "https://www.iskur.gov.tr/medya/v3vpd1u2/ardahan-goele-belediyesi-memur-al%C4%B1m-ilan%C4%B1-06102026.pdf",
-     "kaynak": "İŞKUR",
-     "kaynak_turu": "iskur",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 2 Ekim - 6 Ekim)",
+     "baslangic_zaman": "2026-10-02T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-09-28T01:06:40+03:00",
+     "belge_ozeti": "10c013688648de54acfd3920a555e26b2fb7bbd98270cf7d6fbb467d3dcd39cd",
      "kaynaklar": [
-      {
-       "ad": "İŞKUR",
-       "link": "https://www.iskur.gov.tr/medya/v3vpd1u2/ardahan-goele-belediyesi-memur-al%C4%B1m-ilan%C4%B1-06102026.pdf"
-      },
       {
        "ad": "SBB Kamu İlan",
        "link": "https://kamuilan.sbb.gov.tr/"
       }
      ],
-     "detay_guncelleme": "2026-09-27T12:25:56+03:00",
-     "ilk_gorulme": "2026-09-26T20:25:31+03:00",
-     "kaynak_kimlikleri": [
-      "iskur-46fd3ccae48ba3acd1a3e086",
-      "sbb-42a7834aa4441e349d596e46"
-     ]
+     "ozet": "3 MEMUR alımı. Son başvuru: 06.10.2026. BAŞVURU YERİ, TARİHİ, ŞEKLİ VE SÜRESİ: Adaylar, sözlü sınava katılabilmek için; a) Elektronik ortamda başvurular, 02/10/2026-06/10/2026 tarihleri arasında istenilen belgeler eklenmek suretiyle Belediyemizin www.gole.bel.tr adresine yapılacaktır. b) Şahsen veya iadeli taahhütlü posta yolu ile yapılacak başvurular, yukarıdaki başvuru tarihleri arasında mesai bitimine kadar (mesai günlerinde saat 08.30-17.00 arasında) başvuru formu eksiksiz ve doğru şekilde doldurularak ve başvuru esnasında istenilen diğer belgeler eklenmek suretiyle Kazımkarabekir Mahallesi, Kars Caddesi No:1, 75700 Göle/ARDAHAN adresindeki Göle Belediye Başkanlığı Yazı İşleri Müdürlüğü birimine yapabileceklerdir. (Geciken postalardan Belediyemiz sorumlu olmayacaktır.) c) Eksik bilgi ve belgelerle ya da nitelikleri uygun olmadığı halde yapılan başvurular, Belediyemizce değerlendirmeye alınmayacaktır. d) Postadaki gecikmeler ve duyuruda belirtilen süre içinde yapılmayan başvurular dikkate alınmayacaktır. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "İlan no 2918 · kadro ve özel şartlar",
+       "metin": "a) İlan edilen kadrolar için mezun olunan okul itibarıyla öğrenim şartlarını taşımak ve bu öğrenimle ilgili olarak 2024 yılı Kamu Personeli Seçme Sınavından (KPSS (B) grubu) alım yapılacak kadroların karşısındaki puan türünden, belirtilen asgari KPSS puanını almış olmak, b) 13/10/1983 tarihli ve 2918 sayılı Karayolları Trafik Kanunu hükümlerince verilen ve tabloların nitelik kısmında belirtilen en az (B) sınıfı sürücü belgesine sahip olmak"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "Ardahan ili Göle Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadroya açıktan atama yoluyla memur alınacaktır."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "Sıra Kadro Hizmet Kadro Kadro KPSS KPSS No Unvanı Sınıfı Derecesi Adedi Niteliği Cinsiyeti Puan Taban Türü Puanı"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "-Lisans düzeyinde eğitim veren fakültelerin Ayniyat herhangi bir Kadın/ En az 1 Memuru GİH 10 1 programından mezun Erkek P3 75 olmak. Puan - En az (B) sınıfı sürücü belgesine sahip olmak -Lisans düzeyinde eğitim veren fakültelerin Anbar herhangi bir Kadın/ En az 2 Memuru GİH 10 1 programından mezun Erkek P3 70 olmak. Puan - En az (B) sınıfı sürücü belgesine sahip olmak -Herhangi bir ortaöğretim kurumundan (lise veya Kadın/ En az 3 Memur GİH 11 1 dengi okul) mezun Erkek P94 60 olmak. Puan -En az (B) sınıfı sürücü belgesi sahibi olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "a) İlan edilen kadrolar için mezun olunan okul itibarıyla öğrenim şartlarını taşımak ve bu öğrenimle ilgili olarak 2024 yılı Kamu Personeli Seçme Sınavından (KPSS (B) grubu) alım yapılacak kadroların karşısındaki puan türünden, belirtilen asgari KPSS puanını almış olmak,"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "b) Diploma veya mezuniyet belgesinin aslı, noter onaylı örneği veya e -devlet üzerinden alınmış barkodlu çıktısı (Aslı ibraz edilmek kaydıyla suretleri Belediyemizce tasdik edile cektir),"
+      }
+     ],
+     "basvuru_notu": "",
+     "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/10c013688648de54acfd3920a555e26b2fb7bbd98270cf7d6fbb467d3dcd39cd.pdf",
+     "belge_sha256": "10c013688648de54acfd3920a555e26b2fb7bbd98270cf7d6fbb467d3dcd39cd",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 4
     },
     {
      "id": "sbb-c49d399e06ae4c205b04a173",
@@ -5517,32 +5542,57 @@
      "sbb_detay_surumu": 4
     },
     {
-     "id": "iskur-99382747cf844bf91f8d55d1",
-     "baslik": "Edirne İpsala Belediyesi Sözleşmeli Personel Alım İlanı",
-     "kurum": "Edirne İpsala Belediyesi",
-     "yer": "Edirne",
+     "id": "sbb-3b022bdbc525c829504f83c4",
+     "baslik": "İPSALA BELEDİYE BAŞKANLIĞI - 1 SÖZLEŞMELİ PERSONEL ALACAK",
+     "kurum": "İPSALA BELEDİYE BAŞKANLIĞI",
+     "kadro": "1 SÖZLEŞMELİ PERSONEL ALACAK",
      "ilan_turu": "Sözleşmeli Personel",
      "son_tarih": "2026-10-02",
-     "son_zaman": "2026-10-02T17:00:00+03:00",
-     "link": "https://www.iskur.gov.tr/medya/ouclcbiy/edirne-ipsala-belediyesi-soezle%C5%9Fmeli-personel-al%C4%B1m-ilan%C4%B1-02102026.pdf",
-     "kaynak": "İŞKUR",
-     "kaynak_turu": "iskur",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 30 Eylül - 2 Ekim)",
+     "baslangic_zaman": "2026-09-30T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-09-28T01:06:41+03:00",
+     "belge_ozeti": "1c749e515880f10eba1de75b03bcdab7b402885091a4a45170632ecea848e993",
      "kaynaklar": [
-      {
-       "ad": "İŞKUR",
-       "link": "https://www.iskur.gov.tr/medya/ouclcbiy/edirne-ipsala-belediyesi-soezle%C5%9Fmeli-personel-al%C4%B1m-ilan%C4%B1-02102026.pdf"
-      },
       {
        "ad": "SBB Kamu İlan",
        "link": "https://kamuilan.sbb.gov.tr/"
       }
      ],
-     "detay_guncelleme": "2026-09-27T12:25:06+03:00",
-     "ilk_gorulme": "2026-09-26T20:25:31+03:00",
-     "kaynak_kimlikleri": [
-      "iskur-99382747cf844bf91f8d55d1",
-      "sbb-3b022bdbc525c829504f83c4"
-     ]
+     "ozet": "1 SÖZLEŞMELİ PERSONEL alımı. Son başvuru: 02.10.2026. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "EdirneiliİpsalaBelediyeBaşkanlığıbünyesinde5393sayılıBelediyeKanununun49uncu maddesiileMahalliİdarelereİlkDefaAtanacaklaraDairSınavveAtamaYönetmeliğihükümlerine göreaşağıdaunvanı,sınıfı,derecesi,adedi,nitelikleri,KPSSpuantürü,KPSStabanpuanıvediğer şartlarıtaşımakkaydıyla,belirtilenboşpozisyonatamzamanlısözleşmelipersonelalınacaktır."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "Sıra Pozisyon Hizmet Pozisyon Pozisyon KPSS KPSS No Unvanı Sınıfı Derecesi Adedi Niteliği Cinsiyeti Puan Taban Türü Puanı -Lisansdüzeyinde eğitimveren fakültelerininşaat mühendisliği Kadın/ Enaz60 1 Mühendis TH 8 1 programından Erkek P3 puan mezunolmak. -Enaz(B)Sınıfı sürücübelgesine sahipolmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "a) İlanedilenunvaniçin,mezunolunanokulitibarıylaöğrenimşartınıtaşımakvebuöğrenimle ilgiliolarak2024yılıKamuPersonelSeçmeSınavından(KPSS(B)grubu)alımyapılacakunvan karşısındakipuantüründen,belirtilenasgariKPSSpuanınıalmışolmak, b) 13/10/1983tarihlive2918sayılıKarayollarıTrafikKanunuhükümlerinceverilenvetablonun nitelikkısmındabelirtilenenaz(B)sınıfısürücübelgesinesahipolmak,"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "a) İlanedilenunvaniçin,mezunolunanokulitibarıylaöğrenimşartınıtaşımakvebuöğrenimle ilgiliolarak2024yılıKamuPersonelSeçmeSınavından(KPSS(B)grubu)alımyapılacakunvan karşısındakipuantüründen,belirtilenasgariKPSSpuanınıalmışolmak,"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "b) Diploma veya mezuniyet belgesinin aslı veya noter onaylı örneği veya e-devlet üzerinden alınacakbarkotlumezuniyetbelgesi,(AslıİbrazedilmekkaydıilesuretleriBelediyemizcetasdik edilebilir)"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "d) Yabancıokulmezunlarıiçindenklikbelgesininaslıveyanoteronaylıörneği,(Aslıibrazedilmek kaydıilesuretleriBelediyemizcetasdikedilebilir.)"
+      }
+     ],
+     "basvuru_notu": "",
+     "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/1c749e515880f10eba1de75b03bcdab7b402885091a4a45170632ecea848e993.pdf",
+     "belge_sha256": "1c749e515880f10eba1de75b03bcdab7b402885091a4a45170632ecea848e993",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 4
     },
     {
      "id": "sbb-ed422feb712a8ec606c41e55",
