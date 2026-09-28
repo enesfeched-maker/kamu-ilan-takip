@@ -1,5 +1,5 @@
 {
- "guncelleme": "2026-09-28T18:38:58+03:00",
+ "guncelleme": "2026-09-28T18:39:28+03:00",
  "ilanlar": [
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=9c82aab5-022e-43c8-b7f1-e6cf329d205b",
@@ -6920,7 +6920,6 @@
   "sbb-ffbba5c3ef2b2c84c00bb8e2"
  ],
  "telegram_bekleyen": [],
- "telegram_yayin_surumu": 2,
  "telegram_hatirlatilan": [
   "[\"https://kariyerkapisi.gov.tr/IlanDetay?i=1f94b6b1-1143-4b0a-9d84-c7dcfa542586\", \"2026-09-30T13:00:00+03:00\"]",
   "[\"https://kariyerkapisi.gov.tr/IlanDetay?i=27cf966f-b2b9-4671-a21a-731cb060436a\", \"2026-09-29T13:00:00+03:00\"]",
@@ -6945,10 +6944,25 @@
   "[\"sbb-b7fc8c509966adc7c447b6ea\", \"2026-09-28\"]",
   "[\"sbb-c8c8a1015f2eea057e2a3bef\", \"2026-09-30\"]"
  ],
+ "telegram_yayin_surumu": 2,
  "kaynak_baslangiclari": [
   "iskur",
   "sbb"
  ],
+ "kaynak_durumlari": {
+  "sbb": {
+   "kontrol": "2026-09-28T18:37:27+03:00",
+   "ilan_sayisi": 132,
+   "hata_sayisi": 0,
+   "yerel_kontrol": "2026-09-28T15:36:38.822050+00:00",
+   "calisma_yeri": "yerel"
+  },
+  "iskur": {
+   "kontrol": "2026-09-28T18:38:55+03:00",
+   "ilan_sayisi": 42,
+   "hata_sayisi": 0
+  }
+ },
  "canli_kimlikler": [
   "https://kariyerkapisi.gov.tr/IlanDetay?i=12c5b0ac-cd05-4316-9d7c-39ed4d06a358",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=1559e356-a0e2-44e2-869b-beb38c5fdb7a",
@@ -7110,19 +7124,5 @@
   "sbb-f18b0ff040aebffaaf4a702d",
   "sbb-f7b2060bf52fc5832b235852",
   "sbb-fefad4b939608db5c1d8a19c"
- ],
- "kaynak_durumlari": {
-  "sbb": {
-   "kontrol": "2026-09-28T18:37:27+03:00",
-   "ilan_sayisi": 132,
-   "hata_sayisi": 0,
-   "yerel_kontrol": "2026-09-28T15:36:38.822050+00:00",
-   "calisma_yeri": "yerel"
-  },
-  "iskur": {
-   "kontrol": "2026-09-28T18:38:55+03:00",
-   "ilan_sayisi": 42,
-   "hata_sayisi": 0
-  }
- }
+ ]
 }
