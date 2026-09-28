@@ -47,6 +47,13 @@ def logo_adresi(ilan):
     return logo_url(item['url']) if item else None
 
 
+def logo_surumu(url):
+    """Official 256px originals, not an interpolated thumbnail."""
+    if urllib.parse.urlsplit(url).hostname=='cdn.e-devlet.gov.tr':
+        return re.sub(r'/(?:64|128)(?:webp|px)/([^/]+)\.(?:webp|png)$',r'/256px/\1.png',url)
+    return url
+
+
 def kurum_logosu(ilan):
     try:
         # Official originals, reviewed and stored once with source attribution,
@@ -59,22 +66,31 @@ def kurum_logosu(ilan):
                 if path.parent==LIBRARY.resolve() and path.is_file():
                     with Image.open(path) as original:
                         original.verify()
+                    if entry.get('kesim'):
+                        with Image.open(path) as original:
+                            box=entry['kesim']
+                            if not (0<=box[0]<box[2]<=original.width and 0<=box[1]<box[3]<=original.height):
+                                raise ValueError('Logo kesim alanı geçersiz')
+                            out=io.BytesIO();original.crop(box).save(out,format='PNG')
+                            return out.getvalue()
                     return path.read_bytes()
         url=logo_adresi(ilan)
         if not url:
             return None
         op=urllib.request.build_opener(LogoRedirect())
-        with op.open(url,timeout=10) as response:
-            logo_url(response.geturl())
-            raw=response.read(2_000_001)
-        if len(raw)>2_000_000:
-            return None
-        with Image.open(io.BytesIO(raw)) as im:
-            if im.width*im.height>8_000_000:
-                return None
-            im=im.convert('RGBA');im.thumbnail((1024,1024),Image.Resampling.LANCZOS)
-            out=io.BytesIO();im.save(out,format='PNG')
-            return out.getvalue()
+        for candidate in dict.fromkeys([logo_surumu(url),url]):
+            try:
+                with op.open(candidate,timeout=10) as response:
+                    logo_url(response.geturl())
+                    raw=response.read(2_000_001)
+                if len(raw)>2_000_000:continue
+                with Image.open(io.BytesIO(raw)) as im:
+                    if im.width*im.height>8_000_000:continue
+                    im=im.convert('RGBA');im.thumbnail((1024,1024),Image.Resampling.LANCZOS)
+                    out=io.BytesIO();im.save(out,format='PNG')
+                    return out.getvalue()
+            except Exception:
+                continue
     except Exception:
         # Missing/unavailable logos must not stop an otherwise valid announcement.
         return None
