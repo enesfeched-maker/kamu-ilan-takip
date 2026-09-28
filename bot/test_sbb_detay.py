@@ -6,6 +6,36 @@ from sbb_detay import summarize,document_url,BASE
 from site_uret import detail_page
 
 class SbbDetailTests(unittest.TestCase):
+    def test_justified_column_starts_above_job_number(self):
+        text=('2547 sayılı kanuna göre başvuran doçentlerin lisans belgelerini sunması gerekir.\n\n'
+              '                                                      Doçentliğini    Turizm    Alanında    Almış\n'
+              '1001    Turizm Fakültesi       Profesör     1    1     Olmak. Gastronomi alanında çalışmış olmak.\n\n'
+              '- Öğretim görevlisi adaylarında lisans ve yüksek lisans derecesini birlikte veren programlardan')
+        page=MagicMock();page.extract_text.return_value=text
+        with TemporaryDirectory() as folder,patch('sbb_detay.ROOT',Path(folder)),patch('sbb_detay.PdfReader') as reader:
+            reader.return_value.pages=[page]
+            result=summarize(b'%PDF-test',{'kadro':'1 profesör'})
+        self.assertEqual(len(result['sartlar']),1)
+        self.assertTrue(result['sartlar'][0]['metin'].startswith('Doçentliğini Turizm'))
+        self.assertNotIn('programlardan',str(result['sartlar']))
+
+    def test_application_excludes_post_exam_preferences_and_reads_bullets(self):
+        text=('Yazılı sınavda başarılı olan adaylar tarafından yapılacak yer (ilçe) tercihi başvuruları '
+              'sınav sonuçları ilan edildikten sonra Online Sınav Sistemi üzerinden yapılacaktır.\n\n'
+              'III - SINAV BAŞVURU ŞARTLARI\n'
+              ' - En az dört yıllık lisans eğitimi veren hukuk fakültesini bitirmiş olmak,\n'
+              ' - KPSSP17 puan türünden 65 ve üzeri puan almış olmak,\n'
+              ' - 35 yaşını doldurmamış olmak,\n'
+              ' - Adaylar ön başvurularını ÖSYM internet adresinden T.C. kimlik numarası ile elektronik ortamda yapacaklardır.')
+        page=MagicMock();page.extract_text.return_value=text
+        with TemporaryDirectory() as folder,patch('sbb_detay.ROOT',Path(folder)),patch('sbb_detay.PdfReader') as reader:
+            reader.return_value.pages=[page]
+            result=summarize(b'%PDF-test',{'kadro':'860 uzman yardımcısı'})
+        self.assertIn('ÖSYM',result['ozet'])
+        self.assertNotIn('ilçe',result['ozet'])
+        self.assertIn('hukuk',str(result['sartlar']))
+        self.assertIn('KPSSP17',str(result['sartlar']))
+
     def test_table_columns_keep_requirements_with_correct_job(self):
         text=('1001    Öğretim Görevlisi       1                      Zootekni lisans mezunu olmak.\n'
               '                                                      Zootekni alanında doktora yapmış olmak.\n\n'

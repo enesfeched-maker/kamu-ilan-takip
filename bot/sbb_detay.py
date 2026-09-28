@@ -7,7 +7,7 @@ from pypdf import PdfReader
 
 ROOT=Path(__file__).resolve().parents[1]
 BASE='https://enesfeched-maker.github.io/kamu-ilan-takip/'
-VERSION=4
+VERSION=5
 
 
 def summarize(raw,row):
@@ -19,23 +19,34 @@ def summarize(raw,row):
         pages.append(plain if len(clean(layout))<len(clean(plain))*.6 else layout)
     rawblocks=[b for page in pages for b in re.split(r'\n\s*\n',page) if clean(b)]
     blocks=[clean(b) for b in rawblocks]
+    # Numbered eligibility lists often have no blank lines between bullets.
+    for page in pages:
+        bullets=re.split(r'\n\s*(?=(?:[-•]|[a-zçğıöşü]\)|\d{1,2}[)\-])\s)',page)
+        if len(bullets)>1:
+            blocks.extend(clean(b) for b in bullets[1:] if 40<len(clean(b))<700)
     # Keep each PDF table row/paragraph together: a degree or score must never
     # be detached from the job to which the source assigns it.
     conditions=[]
     table_blocks=set()
     for rawblock in rawblocks:
         block=clean(rawblock)
-        code=re.search(r'\b((?!19\d{2}\b|20\d{2}\b)\d{4})\b',block)
+        code=re.search(r'^\s*((?!19\d{2}\b|20\d{2}\b)\d{4})\s{3,}',rawblock,re.M)
+        if not code:continue
         if len(block)>1600 or not any(w in norm(block) for w in ('mezun','lisans','doktora','docent')):continue
         # Rightmost text column is read vertically, not interleaved with unit,
         # job title, grade and headcount columns on every physical PDF line.
         rows=[list(re.finditer(r'\S(?:.*?\S)?(?= {3,}|$)',line)) for line in rawblock.splitlines() if line.strip()]
         anchors=[parts[-1].start() for parts in rows if len(parts)>=3 and any(w in norm(parts[-1].group()) for w in ('mezun','lisans','doktora','docent'))]
+        # A wrapped requirement can start on a line above the numbered row.
+        # Its indentation identifies the full column even with justified gaps.
+        anchors.extend(len(line)-len(line.lstrip()) for line in rawblock.splitlines()
+                       if len(line)-len(line.lstrip())>=45 and re.match(r'(?:Doçentli|Lisans|Yüksek|Doktora|Mezun)',line.lstrip(),re.I))
         if not anchors:continue
         start=min(anchors)
         if start<45:continue
+        if any(len(line)>start and not line[start-1].isspace() and not line[start].isspace() for line in rawblock.splitlines()):continue
         requirement=clean(' '.join(line[start:] for line in rawblock.splitlines()))
-        if not requirement or len(requirement)>1100:continue
+        if not 40<len(requirement)<1100:continue
         left=clean(' '.join(line[:start] for line in rawblock.splitlines()))
         nleft=norm(left)
         role=next((title for needle,title in [('arastirma','Araştırma Görevlisi'),('profesor','Profesör'),('docent','Doçent'),('uyes','Öğretim Üyesi'),('gorevl','Öğretim Görevlisi')] if needle in nleft),'Kadro özel şartları')
@@ -46,10 +57,12 @@ def summarize(raw,row):
     for block in blocks:
         if block in table_blocks:continue
         n=norm(block)
-        if not any(w in n for w in ('mezun','yuksek lisans','doktora','docent','kpss','ales','yabanci dil','yasini')):
+        if not any(w in n for w in ('mezun','lisans','doktora','docent','kpss','ales','yabanci dil','yasini')):
             continue
-        if any(w in n for w in ('fotokopisi','transkript','istenen belgeler')):
+        if any(w in n for w in ('fotokopisi','transkript','istenen belgeler','mezuniyet belgelerinde','notunun hesaplanmas','basvuru sonuclari')):
             continue
+        if not re.search(r'(?:[.,;:)]|olmak)$',block):continue
+        if not any(w in n for w in ('olmak','aran','doldurmamis','puan al','mezun olmayan','basvurabil')):continue
         special=bool(re.search(r'\b(?!19\d{2}\b|20\d{2}\b)\d{4}\b',block) and ('mezun' in n or 'yuksek lisans' in n) and len(block)<1800)
         candidates.append((0 if special else 1,block))
     for _,block in sorted(candidates,key=lambda x:x[0]):
@@ -74,11 +87,24 @@ def summarize(raw,row):
         n=norm(sentence)
         if len(conditions)<6 and len(sentence)<450 and 'en az' in n and any(w in n for w in ('ales','kpss','yabanci dil')):
             conditions.append({'kadro':'Sınav puanı koşulu · kadroya göre muafiyetler için belgeyi inceleyin','metin':sentence})
-    for sentence in sentences:
+    # Prefer complete short paragraphs/bullets: initials such as T.C. can split
+    # a valid application sentence. Placement and appeals are later procedures.
+    application_candidates=[]
+    for sentence in blocks+sentences:
         n=norm(sentence)
-        if 'basvur' in n and any(w in n for w in ('sahsen','posta yol','elektronik','e devlet','basvuru adresi','online')):
-            if 40<len(sentence)<1000 and sentence not in application:application.append(sentence)
+        if any(w in n for w in ('sinavda basarili','sinav sonuclari','itiraz','ilce) tercihi','yedek aday','atamaya hak','sinava giris belgesi','mezuniyet belgelerinde')):
+            continue
+        if 'basvur' in n and any(w in n for w in ('sahsen','posta yol','elektronik','basvuru adresi','online','e devlet uzerinden')):
+            if 40<len(sentence)<700:
+                priority=0 if 'basvurularini' in n or 'basvurmalari' in n else 1
+                application_candidates.append((priority,sentence))
+    for _,sentence in sorted(application_candidates,key=lambda x:x[0]):
+        if not any(sentence in a or a in sentence for a in application):application.append(sentence)
         if len(application)==2:break
+    dates=next((b for b in blocks if 40<len(b)<650 and 'basvur' in norm(b) and 'tarihleri arasinda' in norm(b)
+                and not any(w in norm(b) for w in ('ucret','sonuc','itiraz','tercih'))),None)
+    if dates and application and dates not in application:
+        application=application[:1]+[dates]
     summary=[row['kadro'].rstrip('.').replace('ALACAK','alımı')+'.']
     if row.get('son_tarih'):summary.append('Son başvuru: '+'.'.join(reversed(row['son_tarih'].split('-')))+'.')
     if application:summary.append(application[0])
