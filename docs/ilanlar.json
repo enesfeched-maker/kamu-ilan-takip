@@ -4359,34 +4359,6 @@
    ]
   },
   {
-   "id": "iskur-828886729c8f730a273723b0",
-   "baslik": "Tapu ve Kadastro Genel Müdürlüğü Sözleşmeli Bilişim Personeli Alım İlanı",
-   "kurum": "Tapu ve Kadastro Genel Müdürlüğü",
-   "yer": "Ankara",
-   "ilan_turu": "Bilişim Personeli",
-   "son_tarih": "2026-10-19",
-   "son_zaman": "2026-10-19T17:00:00+03:00",
-   "link": "https://www.iskur.gov.tr/medya/lk5crcmz/tapu-ve-kadastro-genel-mueduerlue%C4%9Fue-soezle%C5%9Fmeli-bili%C5%9Fim-personeli-al%C4%B1m-ilan%C4%B1-19102026.pdf",
-   "kaynak": "İŞKUR",
-   "kaynak_turu": "iskur",
-   "kaynaklar": [
-    {
-     "ad": "İŞKUR",
-     "link": "https://www.iskur.gov.tr/medya/lk5crcmz/tapu-ve-kadastro-genel-mueduerlue%C4%9Fue-soezle%C5%9Fmeli-bili%C5%9Fim-personeli-al%C4%B1m-ilan%C4%B1-19102026.pdf"
-    },
-    {
-     "ad": "SBB Kamu İlan",
-     "link": "https://kamuilan.sbb.gov.tr/"
-    }
-   ],
-   "detay_guncelleme": "2026-09-28T12:08:03+03:00",
-   "ilk_gorulme": "2026-09-28T11:20:56+03:00",
-   "kaynak_kimlikleri": [
-    "iskur-828886729c8f730a273723b0",
-    "sbb-b2fb286c43de0cc8445bd632"
-   ]
-  },
-  {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=12c5b0ac-cd05-4316-9d7c-39ed4d06a358",
    "baslik": "TAPU VE KADASTRO GENEL MÜDÜRLÜĞÜ - SÖZLEŞMELİ BİLİŞİM PERSONELİ ALIM İLANI (2026)",
    "kurum": "TAPU VE KADASTRO GENEL MÜDÜRLÜĞÜ",
@@ -7062,6 +7034,7 @@
   }
  ],
  "telegram_gonderilen": [
+  "https://kariyerkapisi.gov.tr/IlanDetay?i=12c5b0ac-cd05-4316-9d7c-39ed4d06a358",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=1559e356-a0e2-44e2-869b-beb38c5fdb7a",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=1f94b6b1-1143-4b0a-9d84-c7dcfa542586",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=215c245e-8d5b-4b93-bc10-0c859069aefa",
@@ -7221,7 +7194,6 @@
   "sbb-ffbba5c3ef2b2c84c00bb8e2"
  ],
  "telegram_bekleyen": [
-  "https://kariyerkapisi.gov.tr/IlanDetay?i=12c5b0ac-cd05-4316-9d7c-39ed4d06a358",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=61dc4762-6ce3-483c-b629-eaaf6090fb88",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=f610d591-850c-4344-ae68-03e5e6c7a169",
   "sbb-2c60d66c73ecea798dced013",
@@ -7229,6 +7201,7 @@
   "sbb-b41b1cc08f87c2bbc13c8473",
   "sbb-dda3ce13537e7c6e5a9a5a62"
  ],
+ "telegram_yayin_surumu": 2,
  "telegram_hatirlatilan": [
   "[\"https://kariyerkapisi.gov.tr/IlanDetay?i=1f94b6b1-1143-4b0a-9d84-c7dcfa542586\", \"2026-09-30T13:00:00+03:00\"]",
   "[\"https://kariyerkapisi.gov.tr/IlanDetay?i=27cf966f-b2b9-4671-a21a-731cb060436a\", \"2026-09-29T13:00:00+03:00\"]",
@@ -7253,25 +7226,10 @@
   "[\"sbb-b7fc8c509966adc7c447b6ea\", \"2026-09-28\"]",
   "[\"sbb-c8c8a1015f2eea057e2a3bef\", \"2026-09-30\"]"
  ],
- "telegram_yayin_surumu": 2,
  "kaynak_baslangiclari": [
   "iskur",
   "sbb"
  ],
- "kaynak_durumlari": {
-  "sbb": {
-   "kontrol": "2026-09-28T12:07:48+03:00",
-   "ilan_sayisi": 132,
-   "hata_sayisi": 0,
-   "yerel_kontrol": "2026-09-28T09:06:59.363302+00:00",
-   "calisma_yeri": "yerel"
-  },
-  "iskur": {
-   "kontrol": "2026-09-28T12:09:28+03:00",
-   "ilan_sayisi": 43,
-   "hata_sayisi": 0
-  }
- },
  "canli_kimlikler": [
   "https://kariyerkapisi.gov.tr/IlanDetay?i=12c5b0ac-cd05-4316-9d7c-39ed4d06a358",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=1559e356-a0e2-44e2-869b-beb38c5fdb7a",
@@ -7317,7 +7275,6 @@
   "iskur-5a5a6b5acc24bdec945de41f",
   "iskur-7464f9a150b8173ce65b14e9",
   "iskur-8082163e4616cef4ddc75fc2",
-  "iskur-828886729c8f730a273723b0",
   "iskur-82e1a52fc83cba2b4d8fa6ff",
   "iskur-8a56d2bbc977a2e768de502d",
   "iskur-8f2afcb0d71295c346c4b20d",
@@ -7434,5 +7391,19 @@
   "sbb-f18b0ff040aebffaaf4a702d",
   "sbb-f7b2060bf52fc5832b235852",
   "sbb-fefad4b939608db5c1d8a19c"
- ]
+ ],
+ "kaynak_durumlari": {
+  "sbb": {
+   "kontrol": "2026-09-28T12:07:48+03:00",
+   "ilan_sayisi": 132,
+   "hata_sayisi": 0,
+   "yerel_kontrol": "2026-09-28T09:06:59.363302+00:00",
+   "calisma_yeri": "yerel"
+  },
+  "iskur": {
+   "kontrol": "2026-09-28T12:09:28+03:00",
+   "ilan_sayisi": 43,
+   "hata_sayisi": 0
+  }
+ }
 }
