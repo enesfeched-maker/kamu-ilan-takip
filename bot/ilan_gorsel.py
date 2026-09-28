@@ -69,7 +69,9 @@ def gorsel_olustur(kurum, kadro, yer, tarih, rozet='', kaynak='Kariyer Kapısı'
             box=ImageChops.difference(white.convert('RGB'),Image.new('RGB',mark.size,'white')).getbbox()
             if box:
                 mark=mark.crop(box)
-            scale=228/max(mark.size)
+            # Do not enlarge tiny directory logos: interpolation cannot restore
+            # missing lettering. Verified originals can fill the full logo area.
+            scale=min(1.0,228/max(mark.size))
             mark=mark.resize((max(1,round(mark.width*scale)),max(1,round(mark.height*scale))),Image.Resampling.LANCZOS)
             d.rounded_rectangle((882,36,1152,306),radius=24,fill='white')
             im.paste(mark,(1017-mark.width//2,171-mark.height//2),mark)

@@ -9,6 +9,7 @@ from PIL import Image
 from ek_kaynaklar import norm, clean
 
 CATALOG=Path(__file__).with_name('kurum_logolari.json')
+LIBRARY=Path(__file__).resolve().parents[1]/'docs/assets/kurum-logolari'
 HOSTS={'kariyerkapisi.gov.tr','cdn.e-devlet.gov.tr'}
 
 
@@ -48,6 +49,17 @@ def logo_adresi(ilan):
 
 def kurum_logosu(ilan):
     try:
+        # Official originals, reviewed and stored once with source attribution,
+        # take precedence over small directory thumbnails.
+        manifest=LIBRARY/'kaynaklar.json'
+        if manifest.exists():
+            entry=json.loads(manifest.read_text(encoding='utf-8')).get(kurum_anahtari(ilan.get('kurum','')))
+            if entry:
+                path=(LIBRARY/entry['dosya']).resolve()
+                if path.parent==LIBRARY.resolve() and path.is_file():
+                    with Image.open(path) as original:
+                        original.verify()
+                    return path.read_bytes()
         url=logo_adresi(ilan)
         if not url:
             return None
@@ -60,7 +72,7 @@ def kurum_logosu(ilan):
         with Image.open(io.BytesIO(raw)) as im:
             if im.width*im.height>8_000_000:
                 return None
-            im=im.convert('RGBA');im.thumbnail((320,320))
+            im=im.convert('RGBA');im.thumbnail((1024,1024),Image.Resampling.LANCZOS)
             out=io.BytesIO();im.save(out,format='PNG')
             return out.getvalue()
     except Exception:
