@@ -1,5 +1,5 @@
 {
- "guncelleme": "2026-09-28T12:09:29+03:00",
+ "guncelleme": "2026-09-28T12:10:20+03:00",
  "ilanlar": [
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=9c82aab5-022e-43c8-b7f1-e6cf329d205b",
@@ -7043,6 +7043,7 @@
   "https://kariyerkapisi.gov.tr/IlanDetay?i=4c8c21d7-0131-486c-968c-375ecc3b9822",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=5054018d-07da-4a99-8aa9-6ad471aa90b7",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=5ed3d045-a188-46aa-ba1b-f2b4cbd21e48",
+  "https://kariyerkapisi.gov.tr/IlanDetay?i=61dc4762-6ce3-483c-b629-eaaf6090fb88",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=69465191-48a2-447c-8f55-edb2ecbeb45a",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=72a90e54-4258-44d9-903d-295baf21f897",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=79f7e5c7-8baf-44a5-b056-57e332c66743",
@@ -7059,6 +7060,7 @@
   "https://kariyerkapisi.gov.tr/IlanDetay?i=ec8cb14d-917f-4d65-951b-281faac1f564",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=eff11df8-6568-4b54-9deb-2865aa9ac767",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=f4915f84-3749-4c5d-9272-bb194f2b938b",
+  "https://kariyerkapisi.gov.tr/IlanDetay?i=f610d591-850c-4344-ae68-03e5e6c7a169",
   "iskur-0ca1c1811f87d2184aafb65b",
   "iskur-0feeb0a9f78763daa20afbc0",
   "iskur-1c1015bfd1faeaea90028a12",
@@ -7113,6 +7115,7 @@
   "sbb-226aeec96041e044b1a942c5",
   "sbb-26172bbc5521a3597d438020",
   "sbb-2be96cc2fa6bdded067b9816",
+  "sbb-2c60d66c73ecea798dced013",
   "sbb-2caf6c6d0c5408e4f309eb59",
   "sbb-2fd39eaa99a96bb423839821",
   "sbb-30ebc2e50588b1da8b58302f",
@@ -7158,6 +7161,7 @@
   "sbb-88a9760a607c548d73c7b5c9",
   "sbb-8a62442fbdabe75f3d80199d",
   "sbb-90590b042f3d9058effaa9d4",
+  "sbb-92175a7cf7d3c024505448b2",
   "sbb-93cc332f5c0251f47b070fe1",
   "sbb-97e476fbb140b9951ef70fe8",
   "sbb-9c31b73e8bf1ca0dcd1af3df",
@@ -7172,6 +7176,7 @@
   "sbb-af90a8ab2404bc69c088d70b",
   "sbb-b411eade69d5ac65717b7b95",
   "sbb-b4156a2d20c3ff5ee1a5796f",
+  "sbb-b41b1cc08f87c2bbc13c8473",
   "sbb-b79b5a2fa5f2a1036a2ea5bc",
   "sbb-b7fc8c509966adc7c447b6ea",
   "sbb-bafee25cf4d0c6797b3006b1",
@@ -7184,6 +7189,7 @@
   "sbb-cc10be5230ae54b4d12a99fa",
   "sbb-cf0ab108a51eb8616627b01b",
   "sbb-d7db70a7cb9b757c071d228a",
+  "sbb-dda3ce13537e7c6e5a9a5a62",
   "sbb-e3cf06b41a8f98824b49c594",
   "sbb-e4f2debf180fbc0c6897a62b",
   "sbb-ecd985bd51bdd8601a168d62",
@@ -7193,15 +7199,7 @@
   "sbb-fefad4b939608db5c1d8a19c",
   "sbb-ffbba5c3ef2b2c84c00bb8e2"
  ],
- "telegram_bekleyen": [
-  "https://kariyerkapisi.gov.tr/IlanDetay?i=61dc4762-6ce3-483c-b629-eaaf6090fb88",
-  "https://kariyerkapisi.gov.tr/IlanDetay?i=f610d591-850c-4344-ae68-03e5e6c7a169",
-  "sbb-2c60d66c73ecea798dced013",
-  "sbb-92175a7cf7d3c024505448b2",
-  "sbb-b41b1cc08f87c2bbc13c8473",
-  "sbb-dda3ce13537e7c6e5a9a5a62"
- ],
- "telegram_yayin_surumu": 2,
+ "telegram_bekleyen": [],
  "telegram_hatirlatilan": [
   "[\"https://kariyerkapisi.gov.tr/IlanDetay?i=1f94b6b1-1143-4b0a-9d84-c7dcfa542586\", \"2026-09-30T13:00:00+03:00\"]",
   "[\"https://kariyerkapisi.gov.tr/IlanDetay?i=27cf966f-b2b9-4671-a21a-731cb060436a\", \"2026-09-29T13:00:00+03:00\"]",
@@ -7226,10 +7224,25 @@
   "[\"sbb-b7fc8c509966adc7c447b6ea\", \"2026-09-28\"]",
   "[\"sbb-c8c8a1015f2eea057e2a3bef\", \"2026-09-30\"]"
  ],
+ "telegram_yayin_surumu": 2,
  "kaynak_baslangiclari": [
   "iskur",
   "sbb"
  ],
+ "kaynak_durumlari": {
+  "sbb": {
+   "kontrol": "2026-09-28T12:07:48+03:00",
+   "ilan_sayisi": 132,
+   "hata_sayisi": 0,
+   "yerel_kontrol": "2026-09-28T09:06:59.363302+00:00",
+   "calisma_yeri": "yerel"
+  },
+  "iskur": {
+   "kontrol": "2026-09-28T12:09:28+03:00",
+   "ilan_sayisi": 43,
+   "hata_sayisi": 0
+  }
+ },
  "canli_kimlikler": [
   "https://kariyerkapisi.gov.tr/IlanDetay?i=12c5b0ac-cd05-4316-9d7c-39ed4d06a358",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=1559e356-a0e2-44e2-869b-beb38c5fdb7a",
@@ -7391,19 +7404,5 @@
   "sbb-f18b0ff040aebffaaf4a702d",
   "sbb-f7b2060bf52fc5832b235852",
   "sbb-fefad4b939608db5c1d8a19c"
- ],
- "kaynak_durumlari": {
-  "sbb": {
-   "kontrol": "2026-09-28T12:07:48+03:00",
-   "ilan_sayisi": 132,
-   "hata_sayisi": 0,
-   "yerel_kontrol": "2026-09-28T09:06:59.363302+00:00",
-   "calisma_yeri": "yerel"
-  },
-  "iskur": {
-   "kontrol": "2026-09-28T12:09:28+03:00",
-   "ilan_sayisi": 43,
-   "hata_sayisi": 0
-  }
- }
+ ]
 }
