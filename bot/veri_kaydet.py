@@ -27,7 +27,13 @@ def merge_registry(a, b):
     for state in sorted([a, b], key=lambda s: s.get('guncelleme') or ''):
         for item in state.get('ilanlar', []):
             old = merged.get(item['id'])
-            if old and (old.get('detay_guncelleme') or '') > (item.get('detay_guncelleme') or ''):
+            # A cached PDF can be reprocessed with a corrected parser without
+            # pretending that the original document was fetched more recently.
+            # Preserve that upgrade when merging with an older parser's output.
+            def detail_order(record):
+                version=int(record.get('sbb_detay_surumu',0)) if record.get('kaynak_turu')=='sbb' else 0
+                return version,record.get('detay_guncelleme') or ''
+            if old and detail_order(old) > detail_order(item):
                 item = {**item, **old}
             if old:
                 item={**item,'kaynak_kimlikleri':sorted(set(old.get('kaynak_kimlikleri',[])+item.get('kaynak_kimlikleri',[])))}
