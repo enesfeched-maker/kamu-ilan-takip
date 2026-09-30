@@ -1,10 +1,10 @@
 {
  "schema": 1,
- "guncelleme": "2026-09-30T11:30:05.274277+00:00",
+ "guncelleme": "2026-09-30T12:06:41.138389+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-09-30T11:33:07.381283+00:00",
-   "hata_sayisi": 1,
+   "kontrol": "2026-09-30T12:06:43.678734+00:00",
+   "hata_sayisi": 0,
    "ilanlar": [
     {
      "id": "sbb-da5daa8219d79d37ffcf3702",
@@ -1078,8 +1078,8 @@
      "donem": "( 28 Eylül - 12 Ekim)",
      "baslangic_zaman": "2026-09-28T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-09-29T17:11:21+03:00",
-     "belge_ozeti": "fe70b1eaa57bd501efb4747856d77d4d0a1a6dbcfa5d7a57c2c7a433e599badf",
+     "detay_guncelleme": "2026-09-30T15:06:42+03:00",
+     "belge_ozeti": "4a8b628d5e8a0a4211b3667dab44706825f26573b77abf5cb34144adfd5d2692",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1114,8 +1114,8 @@
       }
      ],
      "basvuru_notu": "BAŞVURU VE SINAV TAKVİMİ İlan Tarihi 28.09.2026 Son Başvuru Tarihi 12.10.2026 Mesai bitimi – 17:00’a kadar) Ön Değerlendirme İlan Tarihi 19.10.2026 Giriş Sınavı Tarihi 23.10.2026 Sonuç İlan Tarihi 02.11.2026 Sonuçların İlan Edileceği İnternet Sitesi www.mku.edu.tr Başvuru Şekli (Online) https://genelbasvuru.mku.edu.tr/",
-     "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/fe70b1eaa57bd501efb4747856d77d4d0a1a6dbcfa5d7a57c2c7a433e599badf.pdf",
-     "belge_sha256": "fe70b1eaa57bd501efb4747856d77d4d0a1a6dbcfa5d7a57c2c7a433e599badf",
+     "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/4a8b628d5e8a0a4211b3667dab44706825f26573b77abf5cb34144adfd5d2692.pdf",
+     "belge_sha256": "4a8b628d5e8a0a4211b3667dab44706825f26573b77abf5cb34144adfd5d2692",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 5
     },
