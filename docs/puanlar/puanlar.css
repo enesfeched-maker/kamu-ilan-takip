@@ -10,6 +10,7 @@
 .robot-liste{display:grid;gap:10px;margin:0;padding:0;list-style:none}
 .robot-liste li{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
 .robot-liste h3{font-size:1rem;margin:0}.robot-liste p{margin:2px 0 0;color:var(--muted);font-size:.85rem}
+.robot-liste p.bolum-not{color:#7a5200;font-weight:600}[data-theme=dark] .robot-liste p.bolum-not{color:#f4dc9c}
 .rozet{font-size:.75rem;font-weight:700;padding:4px 9px;border-radius:7px;white-space:nowrap}
 .rozet.guclu{background:#d9f2df;color:#1d5b33}.rozet.uygun{background:#e6f0fb;color:#1f4d7a}.rozet.sinirda{background:#fff3d6;color:#7a5200}
 [data-theme=dark] .rozet.guclu{background:#1f4430;color:#bfe8cb}[data-theme=dark] .rozet.uygun{background:#1f3550;color:#c4dcf5}[data-theme=dark] .rozet.sinirda{background:#4a3a14;color:#f4dc9c}

@@ -26,6 +26,8 @@ fayda + reklam/sponsor geliri. Sohbet dili Türkçe; kod adları Türkçe.
 - `docs/`: site (index.html, portal.js, portal.css), `site_uret.py` ilan sayfalarını üretir.
 - `bot/puan_ayikla.py`: ÖSYM "sayısal bilgiler" PDF'lerinden (en küçük/en büyük puan) `docs/puanlar/<düzey>.json`
   üretir; YERELDE elle çalıştırılır (ÖSYM yurt dışından kapalı). Site sayfası: `docs/puanlar/` (tablo + tercih robotu).
+- `bot/nitelik_ayikla.py`: kılavuz + nitelik kodları + program listesinden bölüm eşleştirmesi; kayıtlara `nit` ekler,
+  `docs/puanlar/<düzey>-bolum.json` yazar. Sıra: önce puan_ayikla, sonra nitelik_ayikla (ikinci betik JSON'u günceller).
 - Gönderim geçmişleri (`telegram_gonderilen`, `telegram_hatirlatilan`) asla silinmemeli.
 
 ## Bilinen kısıtlar
@@ -35,7 +37,7 @@ fayda + reklam/sponsor geliri. Sohbet dili Türkçe; kod adları Türkçe.
 
 ## Yol haritası (sırayla)
 1. [PR #2 açık] Öğrenim düzeyi filtresi + Telegram etiketleri.
-2. [Taban puanları 3 düzey 2022–2026 hazır; kaynak PDF'ler: C:\Users\Feched\Desktop\kamu-ilan\111lisans|111önlisans|111ortaöğretim. Sırada: nitelik koduyla bölüm eşleştirme] KPSS taban puanları (2022–2026 öncelikli; kullanıcının klasörü:
+2. [Taban puanları 3 düzey 2022–2026 hazır; kaynak PDF'ler: C:\Users\Feched\Desktop\kamu-ilan\111lisans|111önlisans|111ortaöğretim. bölüm eşleştirme hazır] KPSS taban puanları (2022–2026 öncelikli; kullanıcının klasörü:
    `C:\Users\Feched\Desktop\codex-ws\KPSS_Lisans_2010_2026`) → aranabilir tablo + tercih robotu.
    Sonra önlisans ve ortaöğretim.
 3. Kişisel bildirim botu: kullanıcı düzey/il/bölüm seçer, uygun ilanlar özelden gelir.
