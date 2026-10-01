@@ -94,5 +94,19 @@ class AkademikVeFakulteTests(unittest.TestCase):
         self.assertNotIn('lisans', ogrenim_seviyeleri(ilan))
 
 
+class DenetimDuzeltmeTests(unittest.TestCase):
+    def test_olumlu_kpss_sarti_kpsssiz_sayilmaz(self):
+        self.assertEqual(kpss_durumu({'ozet': '2024 KPSS P3 puanı en az 70 olma şartı aranmaktadır.'}), 'kpss')
+        self.assertEqual(kpss_durumu({'ozet': 'KPSS şartı aranmaz.'}), 'kpsssiz')
+
+    def test_ogrenci_kaydi_sarti_ogrenim_duzeyi_sayilmaz(self):
+        ilan = {'ozet': 'Örgün ön lisans eğitimi öğrencisi kaydı bulunmamak. Lise mezunu olmak.'}
+        self.assertEqual(ogrenim_seviyeleri(ilan), ['ortaogretim'])
+
+    def test_bozuk_tabloda_p93_lisans_sayilmaz(self):
+        ilan = {'ozet': 'ön kadın en az 1 memuru gih 10 1 lisans programlarının erkek p93 60'}
+        self.assertEqual(ogrenim_seviyeleri(ilan), ['onlisans'])
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -218,8 +218,9 @@ def mesaj_olustur(ilan, site_url, hatirlatma=False):
     satirlar.extend(["", "İlan ayrıntıları ve başvuru bilgileri sitemizde ↓"])
     if ilan.get('kaynak_turu') in ('sbb','iskur'):
         satirlar.append(f"<i>Kaynak: {e(ilan['kaynak'])}</i>")
-    if etiketler(ilan):
-        satirlar.extend(["", e(" ".join(etiketler(ilan)))])
+    etiket = " ".join(etiketler(ilan))
+    if etiket:
+        satirlar.extend(["", e(etiket)])
     return "\n".join(satirlar)
 
 

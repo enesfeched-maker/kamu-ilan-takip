@@ -23,17 +23,22 @@ OGRENIM = (
         SOL + r'(?<!yüksek )(?<!ön )lisans (?:mezun|diploma|derece|program|düzey|eğitim)'
         r'|fakültelerin|fakülte(?:si)? mezun|fakültesinden|dört yıllık|kpss ?p3' + r'(?!\d)')),
     ('onlisans', re.compile(
-        r'ön ?lisans|meslek yüksekokul|iki yıllık|kpss ?p93(?!\d)')),
+        r'ön ?lisans|meslek yüksekokul|iki yıllık|' + SOL + r'(?:kpss ?)?p93(?!\d)')),
     ('ortaogretim', re.compile(
-        r'ortaöğretim|' + SOL + r'(?:meslek )?lise(?:si|den|ler)?' + SAG + r'|kpss ?p94(?!\d)')),
+        r'ortaöğretim|' + SOL + r'(?:meslek )?lise(?:si|den|ler)?' + SAG + r'|' + SOL + r'(?:kpss ?)?p94(?!\d)')),
 )
 ETIKET_OGRENIM = {'lisans': '#lisans', 'onlisans': '#önlisans', 'ortaogretim': '#ortaöğretim'}
 ETIKET_KATEGORI = {
     'akademik': '#akademik', 'belediye': '#belediye', 'isci': '#işçi',
     'bilisim': '#bilişim', 'saglik': '#sağlık',
 }
-KPSSSIZ = re.compile(r'kpsssiz|kpss[^.;]{0,40}aranma|sınavsız')
+KPSSSIZ = re.compile(r'kpsssiz|kpss[^.;]{0,40}aranma(?:z|yacak|mamaktadır)|sınavsız')
 SAGLIK = re.compile(SOL + r'(?:hemşire|ebe' + SAG + r'|sağlık personeli|hastane)')
+
+
+P9X = re.compile(SOL + r'(?:kpss ?)?p9[34](?!\d)')
+P3 = re.compile(SOL + r'(?:kpss ?)?p3(?!\d)')
+LISANS_KESIN = re.compile(r'fakültelerin|dört yıllık|lisans mezun')
 
 
 def kucuk(metin):
@@ -72,7 +77,18 @@ def ogrenim_seviyeleri(ilan):
     if akademik_mi(ilan):
         return []
     metin = _tum_metin(ilan)
-    return [ad for ad, desen in OGRENIM if desen.search(metin)]
+    bulunan = [ad for ad, desen in OGRENIM if _sart_olarak_gecer(desen, metin)]
+    # Bozuk PDF tablolarında "ön" ile "lisans" ayrı hücreye düşer; puan türü
+    # yalnız P93/P94 ise "lisans program..." eşleşmesi önlisans/lise demektir.
+    if 'lisans' in bulunan and P9X.search(metin) and not P3.search(metin) \
+            and not LISANS_KESIN.search(metin):
+        bulunan.remove('lisans')
+    return bulunan
+
+
+def _sart_olarak_gecer(desen, metin):
+    """'... öğrenci kaydı bulunmamak' gibi dışlayıcı ifadeleri saymaz."""
+    return any('öğrenci' not in metin[m.end():m.end() + 40] for m in desen.finditer(metin))
 
 
 def kategori(ilan):

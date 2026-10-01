@@ -212,5 +212,19 @@ class TelegramDeliveryTests(unittest.TestCase):
         self.assertIn(b'inline_keyboard', request.data)
 
 
+class EtiketTests(unittest.TestCase):
+    def test_mesaj_etiket_satiri_icerir(self):
+        ilan = {'baslik': 'Ankara Pursaklar Belediyesi Zabıta Memuru Alım İlanı',
+                'kurum': 'Ankara Pursaklar Belediyesi', 'yer': 'Ankara', 'son_tarih': '2099-10-23'}
+        metin = ilan_bot.mesaj_olustur(ilan, 'https://ornek.example/')
+        self.assertTrue(metin.rstrip().endswith('#Ankara #belediye'))
+
+    def test_siniflandir_bos_alanlari_kaldirir(self):
+        ilan = {'baslik': 'Genel duyuru', 'ogrenim': ['lisans'], 'kategori': 'belediye'}
+        ilan_bot.siniflandir(ilan)
+        self.assertNotIn('ogrenim', ilan)
+        self.assertNotIn('kategori', ilan)
+
+
 if __name__ == '__main__':
     unittest.main()
