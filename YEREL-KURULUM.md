@@ -1,6 +1,6 @@
 # Yerel kaynak takibi
 
-Bilgisayar açık ve Windows oturumu açılmışken `Kamu Ilan Takip - Yerel Kaynaklar` görevi 30 dakikada bir çalışır. Açılışta da tetiklenir. Aynı anda iki kopya çalışmaz. Uyku/kapalı durumda tarama yapılmaz; sonraki uygun tetiklemede kontrol edilir.
+Bilgisayar açık ve Windows oturumu açılmışken `Kamu Ilan Takip - Yerel Kaynaklar` görevi 30 dakikada bir çalışır. Görev `C:\Users\Feched\Desktop\kamu-ilan\tarayici` klasöründeki ayrı kopyadan `bot/yerel_baslat.py` ile çalışır: her çalışmada önce kodu GitHub `main` ile eşitler (`git fetch` + `reset --hard`), sonra taramayı başlatır. Bu klasörde geliştirme yapılmaz. Açılışta da tetiklenir. Aynı anda iki kopya çalışmaz. Uyku/kapalı durumda tarama yapılmaz; sonraki uygun tetiklemede kontrol edilir.
 
 Program yalnızca bu projedeki `docs/yerel-kaynaklar.json` dosyasını günceller. Telegram anahtarı bilgisayara alınmaz. Gönderim geçmişi yerel program tarafından değiştirilmez. GitHub Actions önce ilanları/siteyi yayımlar, ardından Telegram'da ilgili site ayrıntı bağlantısıyla gönderir.
 
