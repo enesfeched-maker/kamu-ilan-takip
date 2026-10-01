@@ -19,12 +19,16 @@ const ilan = (n, ek = {}) => ({
 function kur() {
   const d = sahteDB();
   const c = {
-    ...d, ilanlar: [], gonderilen: [], secenekler: [], istek: 0, hatalar: {}, ozel: null, enCok: { sql: 0, istek: 0, cift: 0 },
+    ...d, ilanlar: [], gonderilen: [], tarama: 0, secenekler: [], istek: 0, hatalar: {}, ozel: null, enCok: { sql: 0, istek: 0, cift: 0 },
     env: { DB: d.DB, ILAN_URL: 'https://x/bot-ilanlar.json', SITE_URL: SITE },
   };
   c.bag = {
     bekle: async () => {},
-    fetch: async () => { c.istek++; return { ok: true, status: 200, json: async () => ({ ilanlar: c.ilanlar }) }; },
+    fetch: async (u) => {
+      c.istek++;
+      if (String(u).endsWith('gunluk.json')) return { ok: false, status: 404, json: async () => ({}) }; // sosyal paylaşım dosyası yok
+      c.tarama++;
+      return { ok: true, status: 200, json: async () => ({ ilanlar: c.ilanlar }) }; },
     tg: async (e, method, p, secenek) => {
       c.istek++;
       c.secenekler.push(secenek);
@@ -62,9 +66,9 @@ test('ilk çalıştırma: 192 ilan bile ≤40 ifade, kuyruk yok; hemen sonra tar
   assert.ok(say(c.raw, "SELECT deger FROM meta WHERE anahtar = 'son_tarama'"));
   assert.equal(say(c.raw, "SELECT COUNT(*) AS n FROM meta WHERE anahtar IN ('ilk_ofset','tarama_imleci')").n, 0);
   assert.equal(s.yeni, 0);
-  const onceki = c.istek;
+  const onceki = c.tarama;
   await c.calis(dk(GUN, 5));
-  assert.equal(c.istek, onceki); // 30 dk dolmadan fetch yok
+  assert.equal(c.tarama, onceki); // 30 dk dolmadan fetch yok
 });
 
 test('çok büyük ilk liste (100 KB JSON sınırı aşılır) bütçe içinde kalır, kimseye kuyruk yazmaz', async () => {
