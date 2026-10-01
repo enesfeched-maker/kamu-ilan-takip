@@ -2,6 +2,7 @@
 import json
 import os
 import subprocess
+from datetime import datetime, timedelta
 from pathlib import Path
 
 PATH = 'docs/ilanlar.json'
@@ -68,35 +69,49 @@ def write(state):
     Path(PATH).write_text(json.dumps(state, ensure_ascii=False, indent=1)+'\n', encoding='utf-8')
 
 
+# Her taramada değişen zaman damgaları; tek başına commit gerektirmez.
+OYNAK_ALANLAR = {'detay_guncelleme', 'kontrol', 'yerel_kontrol'}
+ZAMAN_YENILEME = timedelta(hours=3)
+
+
+def anlamli(state):
+    def temizle(obj):
+        if isinstance(obj, dict):
+            return {k: temizle(v) for k, v in obj.items() if k not in OYNAK_ALANLAR}
+        if isinstance(obj, list):
+            return [temizle(v) for v in obj]
+        return obj
+    return temizle({k: v for k, v in state.items() if k != 'guncelleme'})
+
+
+def commit_gerekli(remote, state):
+    """Gerçek veri değiştiyse ya da zaman damgaları 3 saatten eskiyse kaydet."""
+    if anlamli(remote) != anlamli(state):
+        return True
+    try:
+        eski = datetime.fromisoformat(remote['guncelleme'])
+        yeni = datetime.fromisoformat(state['guncelleme'])
+    except (KeyError, TypeError, ValueError):
+        return True
+    return yeni - eski >= ZAMAN_YENILEME
+
+
 def main():
     state = json.loads(Path(PATH).read_text(encoding='utf-8'))
     git('config', 'user.name', 'ilan-bot')
     git('config', 'user.email', 'ilan-bot@users.noreply.github.com')
-    git('add', PATH)
-    if git('diff', '--cached', '--quiet', check=False).returncode == 0:
-        return
-    git('commit', '-m', 'ilanlar güncellendi')
     for _ in range(3):
         git('fetch', 'origin', 'main')
         remote = json.loads(git('show', 'origin/main:'+PATH, capture=True).stdout)
         state = merge_registry(remote, state)
-        result = git('rebase', 'origin/main', check=False)
-        if result.returncode:
-            conflicts = git('diff', '--name-only', '--diff-filter=U', capture=True).stdout.splitlines()
-            if conflicts != [PATH]:
-                git('rebase', '--abort', check=False)
-                write(state)
-                raise RuntimeError('Unexpected conflict; publication data preserved, repository not overwritten.')
-            write(state)
-            git('add', PATH)
-            if git('rebase', '--continue', check=False).returncode:
-                git('rebase', '--abort', check=False)
-                write(state)
-                raise RuntimeError('Registry rebase could not complete.')
         write(state)
+        if not commit_gerekli(remote, state):
+            print('Yalnızca zaman damgaları değişti; commit atlanıyor.')
+            return
+        # Dizini uzak main'e eşitle: tek commit, rebase çakışması yok.
+        git('reset', '--mixed', '--quiet', 'origin/main')
         git('add', PATH)
-        if git('diff', '--cached', '--quiet', check=False).returncode:
-            git('commit', '-m', 'ilan gönderim geçmişlerini birleştir')
+        git('commit', '--quiet', '-m', 'ilanlar güncellendi')
         if git('push', 'origin', 'HEAD:main', check=False).returncode == 0:
             print('Registry saved; sent and pending histories preserved.')
             return
