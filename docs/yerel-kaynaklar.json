@@ -1,9 +1,9 @@
 {
  "schema": 1,
- "guncelleme": "2026-10-01T17:14:24.113270+00:00",
+ "guncelleme": "2026-10-01T17:33:32.187146+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-10-01T17:14:24.480205+00:00",
+   "kontrol": "2026-10-01T17:33:32.974653+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -5538,6 +5538,652 @@
      "belge_sha256": "e3aab9de3b0d738c6354efd35b2eda630a6726569930f30f2015f080ab31d799",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 5
+    }
+   ]
+  },
+  "csb": {
+   "kontrol": "2026-10-01T17:33:59.693434+00:00",
+   "hata_sayisi": 0,
+   "ilanlar": [
+    {
+     "id": "csb-478009",
+     "baslik": "RİZE BELEDİYESİ - İLK DEFA SÖZLEŞMELİ PERSONEL ( TEKNİKER ) ALIM İPTAL İLANI",
+     "kurum": "RİZE BELEDİYESİ",
+     "kadro": "",
+     "ilan_turu": "Sözleşmeli Personel",
+     "son_tarih": null,
+     "kaynak": "ÇŞB Yerel Yönetimler",
+     "kaynak_turu": "csb",
+     "link": "https://yerelyonetimler.csb.gov.tr/rize-belediyesi-ilk-defa-sozlesmeli-personel-tekniker-alim-iptal-ilani-duyuru-478009",
+     "kaynaklar": [
+      {
+       "ad": "ÇŞB Yerel Yönetimler",
+       "link": "https://yerelyonetimler.csb.gov.tr/rize-belediyesi-ilk-defa-sozlesmeli-personel-tekniker-alim-iptal-ilani-duyuru-478009"
+      }
+     ],
+     "yayim_tarihi": "2026-10-01",
+     "detay_guncelleme": "2026-10-01T20:33:35+03:00",
+     "csb_detay_surumu": 2,
+     "ozet": "Rize Belediyesinin 30/09/2026 tarihli ve 48847 sayılı yazısına istinaden ilk defa atanmak üzere sözleşmeli personel (tekniker) alım ilanı iptal edilmiştir",
+     "belgeler": [],
+     "yer": "Rize",
+     "duyuru_turu": "İptal duyurusu"
+    },
+    {
+     "id": "csb-477955",
+     "baslik": "RİZE BELEDİYESİ - İLK DEFA SÖZLEŞMELİ PERSONEL ( GIDA MÜHENDİSİ ) ALIM İPTAL İLANI",
+     "kurum": "RİZE BELEDİYESİ",
+     "kadro": "",
+     "ilan_turu": "Sözleşmeli Personel",
+     "son_tarih": null,
+     "kaynak": "ÇŞB Yerel Yönetimler",
+     "kaynak_turu": "csb",
+     "link": "https://yerelyonetimler.csb.gov.tr/rize-belediyesi-ilk-defa-sozlesmeli-personel-gida-muhendisi-alim-iptal-ilani-duyuru-477955",
+     "kaynaklar": [
+      {
+       "ad": "ÇŞB Yerel Yönetimler",
+       "link": "https://yerelyonetimler.csb.gov.tr/rize-belediyesi-ilk-defa-sozlesmeli-personel-gida-muhendisi-alim-iptal-ilani-duyuru-477955"
+      }
+     ],
+     "yayim_tarihi": "2026-09-29",
+     "detay_guncelleme": "2026-10-01T20:33:36+03:00",
+     "csb_detay_surumu": 2,
+     "ozet": "Rize Belediyesinin 23/09/2026 tarihli ve 48367 sayılı yazısına istinaden ilk defa atanmak üzere sözleşmeli personel (Gıda Mühendisi) alım ilanı iptal edilmiştir.",
+     "belgeler": [],
+     "yer": "Rize",
+     "duyuru_turu": "İptal duyurusu"
+    },
+    {
+     "id": "csb-477953",
+     "baslik": "ŞİLE BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR VE ZABITA MEMURU ALIM İLANI",
+     "kurum": "ŞİLE BELEDİYE BAŞKANLIĞI",
+     "kadro": "",
+     "ilan_turu": "Memur",
+     "son_tarih": null,
+     "kaynak": "ÇŞB Yerel Yönetimler",
+     "kaynak_turu": "csb",
+     "link": "https://yerelyonetimler.csb.gov.tr/istanbul-ili-sile-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-ve-zabita-memuru-alim-ilani-duyuru-477953",
+     "kaynaklar": [
+      {
+       "ad": "ÇŞB Yerel Yönetimler",
+       "link": "https://yerelyonetimler.csb.gov.tr/istanbul-ili-sile-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-ve-zabita-memuru-alim-ilani-duyuru-477953"
+      }
+     ],
+     "yayim_tarihi": "2026-09-29",
+     "detay_guncelleme": "2026-10-01T20:33:37+03:00",
+     "csb_detay_surumu": 2,
+     "ozet": "İstanbul ili Şile Belediye Başkanlığı bünyesinde 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği ile Belediye Zabıta Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla, belirtilen boş kadrolara açıktan atama yoluyla memur ve zabıta memuru alınacaktır.",
+     "belgeler": [
+      {
+       "ad": "2-ile-Belediyesi-lk-Defa-Atanmak-zere-Memur-ve-Zab-ta-Memuru-Al-m-lan-20260929101825.docx",
+       "link": "https://webdosya.csb.gov.tr/v2/yerelyonetimler/2026/09/2-ile-Belediyesi-lk-Defa-Atanmak-zere-Memur-ve-Zab-ta-Memuru-Al-m-lan-20260929101825.docx"
+      }
+     ],
+     "yer": "İstanbul"
+    },
+    {
+     "id": "csb-477952",
+     "baslik": "ŞİLE BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE ZABITA MEMURU ALIMI İLANI",
+     "kurum": "ŞİLE BELEDİYE BAŞKANLIĞI",
+     "kadro": "",
+     "ilan_turu": "Memur",
+     "son_tarih": null,
+     "kaynak": "ÇŞB Yerel Yönetimler",
+     "kaynak_turu": "csb",
+     "link": "https://yerelyonetimler.csb.gov.tr/istanbul-ili-sile-belediye-baskanligina-ilk-defa-atanmak-uzere-zabita-memuru-alimi-ilani-duyuru-477952",
+     "kaynaklar": [
+      {
+       "ad": "ÇŞB Yerel Yönetimler",
+       "link": "https://yerelyonetimler.csb.gov.tr/istanbul-ili-sile-belediye-baskanligina-ilk-defa-atanmak-uzere-zabita-memuru-alimi-ilani-duyuru-477952"
+      }
+     ],
+     "yayim_tarihi": "2026-09-29",
+     "detay_guncelleme": "2026-10-01T20:33:38+03:00",
+     "csb_detay_surumu": 2,
+     "ozet": "İstanbul ili Şile Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Belediye Zabıta Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla zabıta memuru alımı yapılacaktır.",
+     "belgeler": [
+      {
+       "ad": "29-09-2026-ile-Belediyesi-lk-Defa-Atanmak-zere-Zab-ta-Memuru-Al-m-lan-20260929101417.docx",
+       "link": "https://webdosya.csb.gov.tr/v2/yerelyonetimler/2026/09/29-09-2026-ile-Belediyesi-lk-Defa-Atanmak-zere-Zab-ta-Memuru-Al-m-lan-20260929101417.docx"
+      }
+     ],
+     "yer": "İstanbul"
+    },
+    {
+     "id": "csb-477951",
+     "baslik": "ÇUIKURKUYU BELEDİYESİ - İLK DEFA MEMUR (ZABITA) ALIM İPTAL İLANI",
+     "kurum": "ÇUIKURKUYU BELEDİYESİ",
+     "kadro": "",
+     "ilan_turu": "Memur",
+     "son_tarih": null,
+     "kaynak": "ÇŞB Yerel Yönetimler",
+     "kaynak_turu": "csb",
+     "link": "https://yerelyonetimler.csb.gov.tr/nigde-ili-cuikurkuyu-belediyesi-ilk-defa-memur-zabita-alim-iptal-ilani-duyuru-477951",
+     "kaynaklar": [
+      {
+       "ad": "ÇŞB Yerel Yönetimler",
+       "link": "https://yerelyonetimler.csb.gov.tr/nigde-ili-cuikurkuyu-belediyesi-ilk-defa-memur-zabita-alim-iptal-ilani-duyuru-477951"
+      }
+     ],
+     "yayim_tarihi": "2026-09-29",
+     "detay_guncelleme": "2026-10-01T20:33:39+03:00",
+     "csb_detay_surumu": 2,
+     "ozet": "Niğde ili Çukurkuyu Belediyesinin 21.09.2026 tarihli ve 5651 sayılı yazısına istinaden ilk defa zabıta memuru alımı ilanı iptal edildi.",
+     "belgeler": [],
+     "yer": "Niğde",
+     "duyuru_turu": "İptal duyurusu"
+    },
+    {
+     "id": "csb-477949",
+     "baslik": "ZONGULDAK BELEDİYESİ - ZABITA MEMUR ALIMI İPTAL İLANI",
+     "kurum": "ZONGULDAK BELEDİYESİ",
+     "kadro": "",
+     "ilan_turu": "Memur",
+     "son_tarih": null,
+     "kaynak": "ÇŞB Yerel Yönetimler",
+     "kaynak_turu": "csb",
+     "link": "https://yerelyonetimler.csb.gov.tr/zonguldak-belediyesi-zabita-memur-alimi-iptal-ilani-duyuru-477949",
+     "kaynaklar": [
+      {
+       "ad": "ÇŞB Yerel Yönetimler",
+       "link": "https://yerelyonetimler.csb.gov.tr/zonguldak-belediyesi-zabita-memur-alimi-iptal-ilani-duyuru-477949"
+      }
+     ],
+     "yayim_tarihi": "2026-09-29",
+     "detay_guncelleme": "2026-10-01T20:33:40+03:00",
+     "csb_detay_surumu": 2,
+     "ozet": "Zonguldak Belediyesinin 24.09.2026 tarihli ve 190079 sayılı yazısına istinaden ilk defa zabıta memuru alımı ilanı iptal edilmiştir.",
+     "belgeler": [],
+     "yer": "Zonguldak",
+     "duyuru_turu": "İptal duyurusu"
+    },
+    {
+     "id": "csb-477947",
+     "baslik": "POSOF BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE SÖZLEŞMELİ PERSONEL ALIM İLANI",
+     "kurum": "POSOF BELEDİYE BAŞKANLIĞI",
+     "kadro": "",
+     "ilan_turu": "Sözleşmeli Personel",
+     "son_tarih": null,
+     "kaynak": "ÇŞB Yerel Yönetimler",
+     "kaynak_turu": "csb",
+     "link": "https://yerelyonetimler.csb.gov.tr/ardahan-ili-posof-belediye-baskanligina-ilk-defa-atanmak-uzere-sozlesmeli-personel-alim-ilani-duyuru-477947",
+     "kaynaklar": [
+      {
+       "ad": "ÇŞB Yerel Yönetimler",
+       "link": "https://yerelyonetimler.csb.gov.tr/ardahan-ili-posof-belediye-baskanligina-ilk-defa-atanmak-uzere-sozlesmeli-personel-alim-ilani-duyuru-477947"
+      }
+     ],
+     "yayim_tarihi": "2026-09-29",
+     "detay_guncelleme": "2026-10-01T20:33:41+03:00",
+     "csb_detay_surumu": 2,
+     "ozet": "Ardahan ili Posof Belediye Başkanlığı bünyesinde 5393 sayılı Belediye Kanunu’nun 49 uncu maddesi ile Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla, belirtilen boş pozisyona tam zamanlı sözleşmeli personel alınacaktır.",
+     "belgeler": [
+      {
+       "ad": "29-09-2027-POSOF-BEL-ILAN-TEKNISYEN-1-20260929095930.docx",
+       "link": "https://webdosya.csb.gov.tr/v2/yerelyonetimler/2026/09/29-09-2027-POSOF-BEL-ILAN-TEKNISYEN-1-20260929095930.docx"
+      }
+     ],
+     "yer": "Ardahan"
+    },
+    {
+     "id": "csb-477826",
+     "baslik": "ATALAN BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE SÖZLEŞMELİ PERSONEL ALIM İLANI",
+     "kurum": "ATALAN BELEDİYE BAŞKANLIĞI",
+     "kadro": "",
+     "ilan_turu": "Sözleşmeli Personel",
+     "son_tarih": null,
+     "kaynak": "ÇŞB Yerel Yönetimler",
+     "kaynak_turu": "csb",
+     "link": "https://yerelyonetimler.csb.gov.tr/osmaniye-ili-atalan-belediye-baskanligina-ilk-defa-atanmak-uzere-sozlesmeli-personel-alim-ilani-duyuru-477826",
+     "kaynaklar": [
+      {
+       "ad": "ÇŞB Yerel Yönetimler",
+       "link": "https://yerelyonetimler.csb.gov.tr/osmaniye-ili-atalan-belediye-baskanligina-ilk-defa-atanmak-uzere-sozlesmeli-personel-alim-ilani-duyuru-477826"
+      }
+     ],
+     "yayim_tarihi": "2026-09-23",
+     "detay_guncelleme": "2026-10-01T20:33:42+03:00",
+     "csb_detay_surumu": 2,
+     "ozet": "Osmaniye ili Atalan Belediye Başkanlığı bünyesinde 5393 sayılı Belediye Kanununun 49 uncu maddesi ile Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla, belirtilen boş pozisyona tam zamanlı sözleşmeli personel alınacaktır",
+     "belgeler": [
+      {
+       "ad": "22-09-2026-Atalan-belediyesi-sozlesmeli-personel-alim-1-20260923102146.docx",
+       "link": "https://webdosya.csb.gov.tr/v2/yerelyonetimler/2026/09/22-09-2026-Atalan-belediyesi-sozlesmeli-personel-alim-1-20260923102146.docx"
+      }
+     ],
+     "yer": "Osmaniye"
+    },
+    {
+     "id": "csb-477790",
+     "baslik": "SUBAŞI BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIMI DÜZELTME İLANI",
+     "kurum": "SUBAŞI BELEDİYE BAŞKANLIĞI",
+     "kadro": "",
+     "ilan_turu": "Memur",
+     "son_tarih": null,
+     "kaynak": "ÇŞB Yerel Yönetimler",
+     "kaynak_turu": "csb",
+     "link": "https://yerelyonetimler.csb.gov.tr/yalova-ili-subasi-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alimi-duzeltme-ilani-duyuru-477790",
+     "kaynaklar": [
+      {
+       "ad": "ÇŞB Yerel Yönetimler",
+       "link": "https://yerelyonetimler.csb.gov.tr/yalova-ili-subasi-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alimi-duzeltme-ilani-duyuru-477790"
+      }
+     ],
+     "yayim_tarihi": "2026-09-21",
+     "detay_guncelleme": "2026-10-01T20:33:43+03:00",
+     "csb_detay_surumu": 2,
+     "ozet": "Yalova ili Subaşı Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadroya açıktan atama yoluyla memur alınacaktır.",
+     "belgeler": [
+      {
+       "ad": "21-09-2026-Suba-Belediyesi-lk-Defa-Atanmak-zere-Memur-Al-m-D-zeltme-lan-20260921165634.docx",
+       "link": "https://webdosya.csb.gov.tr/v2/yerelyonetimler/2026/09/21-09-2026-Suba-Belediyesi-lk-Defa-Atanmak-zere-Memur-Al-m-D-zeltme-lan-20260921165634.docx"
+      }
+     ],
+     "yer": "Yalova",
+     "duyuru_turu": "Düzeltme / süre değişikliği"
+    },
+    {
+     "id": "csb-477774",
+     "baslik": "RİZE BELEDİYESİ - İLK DEFA SÖZLEŞMELİ PERSONEL ( ÇEVRE MÜHENDİSİ ) ALIM İPTAL İLANI",
+     "kurum": "RİZE BELEDİYESİ",
+     "kadro": "",
+     "ilan_turu": "Sözleşmeli Personel",
+     "son_tarih": null,
+     "kaynak": "ÇŞB Yerel Yönetimler",
+     "kaynak_turu": "csb",
+     "link": "https://yerelyonetimler.csb.gov.tr/rize-belediyesi-ilk-defa-sozlesmeli-personel-cevre-muhendisi-alim-iptal-ilani-duyuru-477774",
+     "kaynaklar": [
+      {
+       "ad": "ÇŞB Yerel Yönetimler",
+       "link": "https://yerelyonetimler.csb.gov.tr/rize-belediyesi-ilk-defa-sozlesmeli-personel-cevre-muhendisi-alim-iptal-ilani-duyuru-477774"
+      }
+     ],
+     "yayim_tarihi": "2026-09-21",
+     "detay_guncelleme": "2026-10-01T20:33:43+03:00",
+     "csb_detay_surumu": 2,
+     "ozet": "Rize Belediyesinin 16.09.2026 tarihli ve 47818 sayılı yazısına istinaden ilk defa sözleşmeli personel (Çevre Mühendisi) alım ilanı iptal edilmiştir.",
+     "belgeler": [],
+     "yer": "Rize",
+     "duyuru_turu": "İptal duyurusu"
+    },
+    {
+     "id": "csb-477772",
+     "baslik": "ÇELTİK BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
+     "kurum": "ÇELTİK BELEDİYE BAŞKANLIĞI",
+     "kadro": "",
+     "ilan_turu": "Memur",
+     "son_tarih": null,
+     "kaynak": "ÇŞB Yerel Yönetimler",
+     "kaynak_turu": "csb",
+     "link": "https://yerelyonetimler.csb.gov.tr/konya-ili-celtik-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-477772",
+     "kaynaklar": [
+      {
+       "ad": "ÇŞB Yerel Yönetimler",
+       "link": "https://yerelyonetimler.csb.gov.tr/konya-ili-celtik-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-477772"
+      }
+     ],
+     "yayim_tarihi": "2026-09-21",
+     "detay_guncelleme": "2026-10-01T20:33:44+03:00",
+     "csb_detay_surumu": 2,
+     "ozet": "Konya ili Çeltik Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır.",
+     "belgeler": [
+      {
+       "ad": "21-09-2026-eltik-Bel-Memur-Alimi-Ilan-Metni-1-20260921114918.docx",
+       "link": "https://webdosya.csb.gov.tr/v2/yerelyonetimler/2026/09/21-09-2026-eltik-Bel-Memur-Alimi-Ilan-Metni-1-20260921114918.docx"
+      }
+     ],
+     "yer": "Konya"
+    },
+    {
+     "id": "csb-477764",
+     "baslik": "ELEŞKİRT BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
+     "kurum": "ELEŞKİRT BELEDİYE BAŞKANLIĞI",
+     "kadro": "",
+     "ilan_turu": "Memur",
+     "son_tarih": null,
+     "kaynak": "ÇŞB Yerel Yönetimler",
+     "kaynak_turu": "csb",
+     "link": "https://yerelyonetimler.csb.gov.tr/agri-ili-eleskirt-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-477764",
+     "kaynaklar": [
+      {
+       "ad": "ÇŞB Yerel Yönetimler",
+       "link": "https://yerelyonetimler.csb.gov.tr/agri-ili-eleskirt-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-477764"
+      }
+     ],
+     "yayim_tarihi": "2026-09-21",
+     "detay_guncelleme": "2026-10-01T20:33:45+03:00",
+     "csb_detay_surumu": 2,
+     "ozet": "Ağrı ili Eleşkirt Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır.",
+     "belgeler": [
+      {
+       "ad": "21-09-2026-Eleskirt-belediyesi-ilan-metni-1-20260921100959.docx",
+       "link": "https://webdosya.csb.gov.tr/v2/yerelyonetimler/2026/09/21-09-2026-Eleskirt-belediyesi-ilan-metni-1-20260921100959.docx"
+      }
+     ],
+     "yer": "Ağrı"
+    },
+    {
+     "id": "csb-477763",
+     "baslik": "MALAZGİRT BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
+     "kurum": "MALAZGİRT BELEDİYE BAŞKANLIĞI",
+     "kadro": "",
+     "ilan_turu": "Memur",
+     "son_tarih": null,
+     "kaynak": "ÇŞB Yerel Yönetimler",
+     "kaynak_turu": "csb",
+     "link": "https://yerelyonetimler.csb.gov.tr/mus-ili-malazgirt-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-477763",
+     "kaynaklar": [
+      {
+       "ad": "ÇŞB Yerel Yönetimler",
+       "link": "https://yerelyonetimler.csb.gov.tr/mus-ili-malazgirt-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-477763"
+      }
+     ],
+     "yayim_tarihi": "2026-09-21",
+     "detay_guncelleme": "2026-10-01T20:33:46+03:00",
+     "csb_detay_surumu": 2,
+     "ozet": "Muş ili Malazgirt Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır.",
+     "belgeler": [
+      {
+       "ad": "21-09-2026-MALAZGIRT-BELEDIYESI-PERSONEL-ALIMI-ILANI-1-1-20260921100702.docx",
+       "link": "https://webdosya.csb.gov.tr/v2/yerelyonetimler/2026/09/21-09-2026-MALAZGIRT-BELEDIYESI-PERSONEL-ALIMI-ILANI-1-1-20260921100702.docx"
+      }
+     ],
+     "yer": "Muş"
+    },
+    {
+     "id": "csb-477761",
+     "baslik": "İSTANBUL ELEKTRİK TRAMVAY VE TÜNEL İŞLETMELERİ GENEL MÜDÜRLÜĞÜ - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
+     "kurum": "İSTANBUL ELEKTRİK TRAMVAY VE TÜNEL İŞLETMELERİ GENEL MÜDÜRLÜĞÜ",
+     "kadro": "",
+     "ilan_turu": "Memur",
+     "son_tarih": null,
+     "kaynak": "ÇŞB Yerel Yönetimler",
+     "kaynak_turu": "csb",
+     "link": "https://yerelyonetimler.csb.gov.tr/istanbul-elektrik-tramvay-ve-tunel-isletmeleri-genel-mudurlugune-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-477761",
+     "kaynaklar": [
+      {
+       "ad": "ÇŞB Yerel Yönetimler",
+       "link": "https://yerelyonetimler.csb.gov.tr/istanbul-elektrik-tramvay-ve-tunel-isletmeleri-genel-mudurlugune-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-477761"
+      }
+     ],
+     "yayim_tarihi": "2026-09-21",
+     "detay_guncelleme": "2026-10-01T20:33:47+03:00",
+     "csb_detay_surumu": 2,
+     "ozet": "İstanbul Elektrik Tramvay ve Tünel İşletmeleri Genel Müdürlüğü bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır",
+     "belgeler": [
+      {
+       "ad": "21-06-2026-ETT-letmeleri-Genel-M-d-rl-lk-Defa-Atanmak-zere-Memur-Al-m-lan-20260921100418.docx",
+       "link": "https://webdosya.csb.gov.tr/v2/yerelyonetimler/2026/09/21-06-2026-ETT-letmeleri-Genel-M-d-rl-lk-Defa-Atanmak-zere-Memur-Al-m-lan-20260921100418.docx"
+      }
+     ]
+    },
+    {
+     "id": "csb-477610",
+     "baslik": "RİZE BELEDİYESİ - İLK DEFA SÖZLEŞMELİ PERSONEL ( MİMAR) ALIM İPTAL İLANI",
+     "kurum": "RİZE BELEDİYESİ",
+     "kadro": "",
+     "ilan_turu": "Sözleşmeli Personel",
+     "son_tarih": null,
+     "kaynak": "ÇŞB Yerel Yönetimler",
+     "kaynak_turu": "csb",
+     "link": "https://yerelyonetimler.csb.gov.tr/rize-belediyesi-ilk-defa-sozlesmeli-personel-mimar-alim-iptal-ilani-duyuru-477610",
+     "kaynaklar": [
+      {
+       "ad": "ÇŞB Yerel Yönetimler",
+       "link": "https://yerelyonetimler.csb.gov.tr/rize-belediyesi-ilk-defa-sozlesmeli-personel-mimar-alim-iptal-ilani-duyuru-477610"
+      }
+     ],
+     "yayim_tarihi": "2026-09-14",
+     "detay_guncelleme": "2026-10-01T20:33:48+03:00",
+     "csb_detay_surumu": 2,
+     "ozet": "Rize Belediyesinin 11/09/2026 tarihli ve 47570 sayılı yazısına istinaden ilk defa sözleşmeli personel (mimar) alım ilanı iptal edilmiştir",
+     "belgeler": [],
+     "yer": "Rize",
+     "duyuru_turu": "İptal duyurusu"
+    },
+    {
+     "id": "csb-477609",
+     "baslik": "RİZE BELEDİYESİ - İLK DEFA SÖZLEŞMELİ PERSONEL (PEYZAJ MİMARI) ALIM İPTAL İLANI",
+     "kurum": "RİZE BELEDİYESİ",
+     "kadro": "",
+     "ilan_turu": "Sözleşmeli Personel",
+     "son_tarih": null,
+     "kaynak": "ÇŞB Yerel Yönetimler",
+     "kaynak_turu": "csb",
+     "link": "https://yerelyonetimler.csb.gov.tr/rize-belediyesi-ilk-defa-sozlesmeli-personel-peyzaj-mimari-alim-iptal-ilani-duyuru-477609",
+     "kaynaklar": [
+      {
+       "ad": "ÇŞB Yerel Yönetimler",
+       "link": "https://yerelyonetimler.csb.gov.tr/rize-belediyesi-ilk-defa-sozlesmeli-personel-peyzaj-mimari-alim-iptal-ilani-duyuru-477609"
+      }
+     ],
+     "yayim_tarihi": "2026-09-14",
+     "detay_guncelleme": "2026-10-01T20:33:49+03:00",
+     "csb_detay_surumu": 2,
+     "ozet": "Rize Belediyesinin 09/09/2026 tarihli ve 47452 sayılı yazısına istinaden ilk defa sözleşmeli personel (peyzaj mimarı) alım ilanı iptal edilmiştir.",
+     "belgeler": [],
+     "yer": "Rize",
+     "duyuru_turu": "İptal duyurusu"
+    },
+    {
+     "id": "csb-477606",
+     "baslik": "ÜSKÜDAR BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İPTAL İLANI",
+     "kurum": "ÜSKÜDAR BELEDİYE BAŞKANLIĞI",
+     "kadro": "",
+     "ilan_turu": "Memur",
+     "son_tarih": null,
+     "kaynak": "ÇŞB Yerel Yönetimler",
+     "kaynak_turu": "csb",
+     "link": "https://yerelyonetimler.csb.gov.tr/istanbul-ili-uskudar-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-iptal-ilani-duyuru-477606",
+     "kaynaklar": [
+      {
+       "ad": "ÇŞB Yerel Yönetimler",
+       "link": "https://yerelyonetimler.csb.gov.tr/istanbul-ili-uskudar-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-iptal-ilani-duyuru-477606"
+      }
+     ],
+     "yayim_tarihi": "2026-09-14",
+     "detay_guncelleme": "2026-10-01T20:33:50+03:00",
+     "csb_detay_surumu": 2,
+     "ozet": "Üsküdar Belediyesinin 11/09/2026 tarihli ve 480167 sayılı yazısına istinaden ilk defa memur ve zabıta memuru alım ilanı iptal edilmiştir.",
+     "belgeler": [],
+     "yer": "İstanbul",
+     "duyuru_turu": "İptal duyurusu"
+    },
+    {
+     "id": "csb-477600",
+     "baslik": "GEREDE BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE SÖZLEŞMELİ PERSONEL ALIM İLANI",
+     "kurum": "GEREDE BELEDİYE BAŞKANLIĞI",
+     "kadro": "",
+     "ilan_turu": "Sözleşmeli Personel",
+     "son_tarih": null,
+     "kaynak": "ÇŞB Yerel Yönetimler",
+     "kaynak_turu": "csb",
+     "link": "https://yerelyonetimler.csb.gov.tr/bolu-ili-gerede-belediye-baskanligina-ilk-defa-atanmak-uzere-sozlesmeli-personel-alim-ilani-duyuru-477600",
+     "kaynaklar": [
+      {
+       "ad": "ÇŞB Yerel Yönetimler",
+       "link": "https://yerelyonetimler.csb.gov.tr/bolu-ili-gerede-belediye-baskanligina-ilk-defa-atanmak-uzere-sozlesmeli-personel-alim-ilani-duyuru-477600"
+      }
+     ],
+     "yayim_tarihi": "2026-09-14",
+     "detay_guncelleme": "2026-10-01T20:33:51+03:00",
+     "csb_detay_surumu": 2,
+     "ozet": "Bolu ili Gerede Belediye Başkanlığı bünyesinde 5393 sayılı Belediye Kanununun 49 uncu maddesi ile Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla, belirtilen boş pozisyona tam zamanlı sözleşmeli personel alınacaktır.",
+     "belgeler": [
+      {
+       "ad": "14-09-2026-Gerede-Bel-Sozlesmeli-Insaat-Muhendisi-alim-Ilani-son-20260914145544.docx",
+       "link": "https://webdosya.csb.gov.tr/v2/yerelyonetimler/2026/09/14-09-2026-Gerede-Bel-Sozlesmeli-Insaat-Muhendisi-alim-Ilani-son-20260914145544.docx"
+      }
+     ],
+     "yer": "Bolu"
+    },
+    {
+     "id": "csb-477599",
+     "baslik": "MUCUR BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
+     "kurum": "MUCUR BELEDİYE BAŞKANLIĞI",
+     "kadro": "",
+     "ilan_turu": "Memur",
+     "son_tarih": null,
+     "kaynak": "ÇŞB Yerel Yönetimler",
+     "kaynak_turu": "csb",
+     "link": "https://yerelyonetimler.csb.gov.tr/kirsehir-ili-mucur-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-477599",
+     "kaynaklar": [
+      {
+       "ad": "ÇŞB Yerel Yönetimler",
+       "link": "https://yerelyonetimler.csb.gov.tr/kirsehir-ili-mucur-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-477599"
+      }
+     ],
+     "yayim_tarihi": "2026-09-14",
+     "detay_guncelleme": "2026-10-01T20:33:52+03:00",
+     "csb_detay_surumu": 2,
+     "ozet": "Kırşehir ili Mucur Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır.",
+     "belgeler": [
+      {
+       "ad": "14-09-2026-Mucur-Bel-1-Memur-Alim-Ilani-lisans-son-20260914145247.docx",
+       "link": "https://webdosya.csb.gov.tr/v2/yerelyonetimler/2026/09/14-09-2026-Mucur-Bel-1-Memur-Alim-Ilani-lisans-son-20260914145247.docx"
+      }
+     ],
+     "yer": "Kırşehir"
+    },
+    {
+     "id": "csb-477598",
+     "baslik": "DİDİM BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE ZABITA MEMURU ALIMI İLANI",
+     "kurum": "DİDİM BELEDİYE BAŞKANLIĞI",
+     "kadro": "",
+     "ilan_turu": "Memur",
+     "son_tarih": null,
+     "kaynak": "ÇŞB Yerel Yönetimler",
+     "kaynak_turu": "csb",
+     "link": "https://yerelyonetimler.csb.gov.tr/aydin-ili-didim-belediye-baskanligina-ilk-defa-atanmak-uzere-zabita-memuru-alimi-ilani-duyuru-477598",
+     "kaynaklar": [
+      {
+       "ad": "ÇŞB Yerel Yönetimler",
+       "link": "https://yerelyonetimler.csb.gov.tr/aydin-ili-didim-belediye-baskanligina-ilk-defa-atanmak-uzere-zabita-memuru-alimi-ilani-duyuru-477598"
+      }
+     ],
+     "yayim_tarihi": "2026-09-14",
+     "detay_guncelleme": "2026-10-01T20:33:53+03:00",
+     "csb_detay_surumu": 2,
+     "ozet": "Aydın ili Didim Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanunu’na tabi olarak istihdam edilmek üzere; Belediye Zabıta Yönetmeliği hükümlerine göre aşağıda kadro unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla zabıta memuru alımı yapılacaktır.",
+     "belgeler": [
+      {
+       "ad": "14-09-2026-didim-belediyesi-ZABITA-MEMURU-ALIMI-ilan-metni-1-20260914144944.docx",
+       "link": "https://webdosya.csb.gov.tr/v2/yerelyonetimler/2026/09/14-09-2026-didim-belediyesi-ZABITA-MEMURU-ALIMI-ilan-metni-1-20260914144944.docx"
+      }
+     ],
+     "yer": "Aydın"
+    },
+    {
+     "id": "csb-477595",
+     "baslik": "ELMAKAYA BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
+     "kurum": "ELMAKAYA BELEDİYE BAŞKANLIĞI",
+     "kadro": "",
+     "ilan_turu": "Memur",
+     "son_tarih": null,
+     "kaynak": "ÇŞB Yerel Yönetimler",
+     "kaynak_turu": "csb",
+     "link": "https://yerelyonetimler.csb.gov.tr/mus-ili-elmakaya-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-477595",
+     "kaynaklar": [
+      {
+       "ad": "ÇŞB Yerel Yönetimler",
+       "link": "https://yerelyonetimler.csb.gov.tr/mus-ili-elmakaya-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-477595"
+      }
+     ],
+     "yayim_tarihi": "2026-09-14",
+     "detay_guncelleme": "2026-10-01T20:33:54+03:00",
+     "csb_detay_surumu": 2,
+     "ozet": "Muş ili Elmakaya Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır",
+     "belgeler": [
+      {
+       "ad": "14-09-2026-ELMAKAYA-BELEDIYESI-MEMUR-ALIM-ILANI-20260914144747.docx",
+       "link": "https://webdosya.csb.gov.tr/v2/yerelyonetimler/2026/09/14-09-2026-ELMAKAYA-BELEDIYESI-MEMUR-ALIM-ILANI-20260914144747.docx"
+      }
+     ],
+     "yer": "Muş"
+    },
+    {
+     "id": "csb-477502",
+     "baslik": "PURSAKLAR BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE ZABITA MEMURU ALIMI İLANI",
+     "kurum": "PURSAKLAR BELEDİYE BAŞKANLIĞI",
+     "kadro": "",
+     "ilan_turu": "Memur",
+     "son_tarih": null,
+     "kaynak": "ÇŞB Yerel Yönetimler",
+     "kaynak_turu": "csb",
+     "link": "https://yerelyonetimler.csb.gov.tr/ankara-illi-pursaklar-belediye-baskanligina-ilk-defa-atanmak-uzere-zabita-memuru-alimi-ilani-duyuru-477502",
+     "kaynaklar": [
+      {
+       "ad": "ÇŞB Yerel Yönetimler",
+       "link": "https://yerelyonetimler.csb.gov.tr/ankara-illi-pursaklar-belediye-baskanligina-ilk-defa-atanmak-uzere-zabita-memuru-alimi-ilani-duyuru-477502"
+      }
+     ],
+     "yayim_tarihi": "2026-09-10",
+     "detay_guncelleme": "2026-10-01T20:33:55+03:00",
+     "csb_detay_surumu": 2,
+     "ozet": "Ankara ili Pursaklar Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Belediye Zabıta Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla zabıta memuru alımı yapılacaktır.",
+     "belgeler": [
+      {
+       "ad": "09-09-2026-pursaklar-Ilan-metni-son-1-20260910095006.docx",
+       "link": "https://webdosya.csb.gov.tr/v2/yerelyonetimler/2026/09/09-09-2026-pursaklar-Ilan-metni-son-1-20260910095006.docx"
+      }
+     ],
+     "yer": "Ankara"
+    },
+    {
+     "id": "csb-477478",
+     "baslik": "TAŞKESTİ BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE SÖZLEŞMELİ PERSONEL ALIM İLANI",
+     "kurum": "TAŞKESTİ BELEDİYE BAŞKANLIĞI",
+     "kadro": "",
+     "ilan_turu": "Sözleşmeli Personel",
+     "son_tarih": null,
+     "kaynak": "ÇŞB Yerel Yönetimler",
+     "kaynak_turu": "csb",
+     "link": "https://yerelyonetimler.csb.gov.tr/bolu-ili-taskesti-belediye-baskanligina-ilk-defa-atanmak-uzere-sozlesmeli-personel-alim-ilani-duyuru-477478",
+     "kaynaklar": [
+      {
+       "ad": "ÇŞB Yerel Yönetimler",
+       "link": "https://yerelyonetimler.csb.gov.tr/bolu-ili-taskesti-belediye-baskanligina-ilk-defa-atanmak-uzere-sozlesmeli-personel-alim-ilani-duyuru-477478"
+      }
+     ],
+     "yayim_tarihi": "2026-09-09",
+     "detay_guncelleme": "2026-10-01T20:33:56+03:00",
+     "csb_detay_surumu": 2,
+     "ozet": "Bolu ili Taşkesti Belediye Başkanlığı bünyesinde 5393 sayılı Belediye Kanununun 49 uncu maddesi ile Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla, belirtilen boş pozisyona tam zamanlı sözleşmeli personel alınacaktır.",
+     "belgeler": [
+      {
+       "ad": "09-09-2026-Taskesti-Belediyesi-Ilk-Defa-Atanmak-Uzere-Sozlesmeli-Personel-Alim-Ilani-1-20260909100359.docx",
+       "link": "https://webdosya.csb.gov.tr/v2/yerelyonetimler/2026/09/09-09-2026-Taskesti-Belediyesi-Ilk-Defa-Atanmak-Uzere-Sozlesmeli-Personel-Alim-Ilani-1-20260909100359.docx"
+      }
+     ],
+     "yer": "Bolu"
+    },
+    {
+     "id": "csb-477477",
+     "baslik": "ARALIK BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE İTFAİYE ERİ ALIMI İLANI",
+     "kurum": "ARALIK BELEDİYE BAŞKANLIĞI",
+     "kadro": "",
+     "ilan_turu": "Kamu Personeli",
+     "son_tarih": null,
+     "kaynak": "ÇŞB Yerel Yönetimler",
+     "kaynak_turu": "csb",
+     "link": "https://yerelyonetimler.csb.gov.tr/igdir-ili-aralik-belediye-baskanligina-ilk-defa-atanmak-uzere-itfaiye-eri-alimi-ilani-duyuru-477477",
+     "kaynaklar": [
+      {
+       "ad": "ÇŞB Yerel Yönetimler",
+       "link": "https://yerelyonetimler.csb.gov.tr/igdir-ili-aralik-belediye-baskanligina-ilk-defa-atanmak-uzere-itfaiye-eri-alimi-ilani-duyuru-477477"
+      }
+     ],
+     "yayim_tarihi": "2026-09-09",
+     "detay_guncelleme": "2026-10-01T20:33:59+03:00",
+     "csb_detay_surumu": 2,
+     "ozet": "Iğdır ili Aralık Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanunu’na tabi olarak istihdam edilmek üzere; Belediye İtfaiye Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla itfaiye eri alımı yapılacaktır",
+     "belgeler": [
+      {
+       "ad": "09-09-2026-Aralik-Igdir-Belediyesi-2026-itfaiye-Eri-Alim-Ilani-son-hali-1-20260909100143.docx",
+       "link": "https://webdosya.csb.gov.tr/v2/yerelyonetimler/2026/09/09-09-2026-Aralik-Igdir-Belediyesi-2026-itfaiye-Eri-Alim-Ilani-son-hali-1-20260909100143.docx"
+      }
+     ],
+     "yer": "Iğdır"
     }
    ]
   }
