@@ -117,16 +117,46 @@ def kpss_durumu(ilan):
     return None
 
 
-def il_etiketi(ilan):
-    yer = str(ilan.get('yer') or '')
-    parca = re.split(r'[/•]', yer)[0]
+def _il_bul(parca):
     kelimeler = kucuk(parca).replace('-', ' ').split()
     if not kelimeler:
         return None
     for il in ILLER:
         if kucuk(il) == kelimeler[0]:
-            return '#' + il
+            return il
     return None
+
+
+def _kesin_il(parca):
+    """Parça yalnızca bir il adıysa (isteğe bağlı 'merkez' ekiyle) o ili döndürür; kurum/ilçe adında il üretmez."""
+    kelimeler = kucuk(parca).split()
+    if len(kelimeler) == 2 and kelimeler[1] == 'merkez':
+        kelimeler = kelimeler[:1]
+    return _il_bul(parca) if len(kelimeler) == 1 else None
+
+
+def il_adlari(ilan):
+    """Görev yeri il adları (ILLER yazımıyla). Yer '•', ',', ';' veya '-' ile bölümlenir; bölümlerde
+    parantez içi atılır ve '/' ile ayrılmış parçalardan kesin il olanların hepsi alınır
+    ('DENİZLİ / MANİSA' → ikisi, 'ANKARA / ÇANKAYA' → Ankara). Dolu bir bölümden il çıkarılamazsa
+    (ilçe/kurum olabilir) eksik liste yerine tüm sonuç boş döner (ilan herkese gider)."""
+    yer = re.sub(r'\([^)]*\)', ' ', str(ilan.get('yer') or ''))
+    sonuc = []
+    for bolum in re.split(r'[•,;-]', yer):
+        if not bolum.strip():
+            continue
+        bulunan = [il for il in map(_kesin_il, bolum.split('/')) if il]
+        if not bulunan:
+            return []
+        for il in bulunan:
+            if il not in sonuc:
+                sonuc.append(il)
+    return sonuc
+
+
+def il_etiketi(ilan):
+    il = _il_bul(re.split(r'[/•]', str(ilan.get('yer') or ''))[0])
+    return '#' + il if il else None
 
 
 def etiketler(ilan):
