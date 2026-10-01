@@ -1,4 +1,4 @@
-import json,unittest
+import copy,json,unittest
 from datetime import datetime,timedelta,timezone
 from pathlib import Path
 from unittest.mock import patch
@@ -166,7 +166,7 @@ class KayitTesti(unittest.TestCase):
     def gercek_kayit(self,numara,html_adi,docx=None,baslik=''):
         s=csb.liste_ayristir(oku('csb_liste.html'))
         s=next(x for x in s if x['numara']==numara)
-        def sahte(adres,sinir=0):
+        def sahte(adres,sinir=0,referer=None):
             return oku(html_adi) if adres==s['link'] else oku(docx)
         with patch.object(csb,'indir',side_effect=sahte):
             return csb.duyuru_oku(s)
@@ -205,7 +205,7 @@ class KayitTesti(unittest.TestCase):
 
 
 class TaramaTesti(unittest.TestCase):
-    def sahte_ag(self,adres,sinir=0):
+    def sahte_ag(self,adres,sinir=0,referer=None):
         liste=oku('csb_liste.html')
         if adres.startswith(csb.LISTE):
             return liste
@@ -228,7 +228,7 @@ class TaramaTesti(unittest.TestCase):
         with patch.object(csb,'indir',side_effect=self.sahte_ag),patch.object(csb.time,'sleep'):
             ilk,_=csb.csb_oku({})
         cagri=[]
-        def sadece_liste(adres,sinir=0):
+        def sadece_liste(adres,sinir=0,referer=None):
             cagri.append(adres)
             return self.sahte_ag(adres,sinir)
         with patch.object(csb,'indir',side_effect=sadece_liste),patch.object(csb.time,'sleep'):
@@ -257,7 +257,7 @@ class TaramaTesti(unittest.TestCase):
     def test_11_saatlik_ayrinti_yeniden_okunmaz(self):
         eski=self._eski_kayit_listesi(11)
         cagri=[]
-        def kaydet(adres,sinir=0):
+        def kaydet(adres,sinir=0,referer=None):
             cagri.append(adres)
             return self.sahte_ag(adres,sinir)
         with patch.object(csb,'indir',side_effect=kaydet),patch.object(csb.time,'sleep'):
@@ -268,7 +268,7 @@ class TaramaTesti(unittest.TestCase):
     def test_okuma_hatasinda_eski_kayit_ve_tarihi_korunur(self):
         eski=self._eski_kayit_listesi(13)
         damga={k['id']:k['detay_guncelleme'] for k in eski}
-        def hep_hata(adres,sinir=0):
+        def hep_hata(adres,sinir=0,referer=None):
             if adres.startswith(csb.LISTE):
                 return oku('csb_liste.html')
             raise OSError('zaman asimi')
@@ -293,7 +293,7 @@ class TaramaTesti(unittest.TestCase):
                 csb.csb_oku({})
 
     def test_ayrinti_hatasi_sayilir_digerleri_devam(self):
-        def kismen(adres,sinir=0):
+        def kismen(adres,sinir=0,referer=None):
             if adres.endswith('-duyuru-478009'):
                 raise OSError('zaman asimi')
             return self.sahte_ag(adres,sinir)
@@ -303,7 +303,7 @@ class TaramaTesti(unittest.TestCase):
         self.assertEqual(len(kayitlar),11)
 
     def test_ek_belge_hatasinda_kayit_tarihsiz_uretilir(self):
-        def kotu_ek(adres,sinir=0):
+        def kotu_ek(adres,sinir=0,referer=None):
             if adres.endswith('.docx'):
                 return b'bozuk'
             return self.sahte_ag(adres,sinir)
@@ -328,7 +328,7 @@ class TaramaTesti(unittest.TestCase):
 class AkisTesti(unittest.TestCase):
     def kayit(self):
         s=next(x for x in csb.liste_ayristir(oku('csb_liste.html')) if x['numara']=='477952')
-        with patch.object(csb,'indir',side_effect=lambda a,n=0:oku('csb_detay_alim.html') if a==s['link'] else oku('csb_alim.docx')):
+        with patch.object(csb,'indir',side_effect=lambda a,n=0,r=None:oku('csb_detay_alim.html') if a==s['link'] else oku('csb_alim.docx')):
             return csb.duyuru_oku(s)
 
     def test_yerel_kaynaklar_akisi(self):
@@ -521,6 +521,129 @@ class BirlesmeTesti(unittest.TestCase):
         iki=kayit('sbb-'+'b'*24,'ŞİLE BELEDİYE BAŞKANLIĞI','sbb',son_tarih='2026-11-06')
         sonuc=ek.merge_sources([self.csb],{self.sbb['id']:self.sbb,iki['id']:iki})
         self.assertIn('csb-477952',[i['id'] for i in sonuc])
+
+
+class AnaTaramaTesti(unittest.TestCase):
+    """2026-10-01 main verisinden küçültülmüş örnek: ÇŞB kayıtları son_tarih'siz kaydedilmişti (ek belge okunamamıştı)."""
+    def veri(self):
+        return json.loads((VERI/'csb_main_ornek.json').read_text(encoding='utf-8'))
+
+    TARIHLER={'csb-477952':'2026-11-06','csb-477953':'2026-11-13','csb-477947':'2026-11-04','csb-477502':'2026-10-23'}
+
+    def test_tarihsiz_csb_kayitlari_birlesmez_kok_neden(self):
+        v=self.veri()
+        onceki={i['id']:i for i in v['ilanlar']}
+        sonuc=ek.merge_sources([dict(i) for i in v['ilanlar']],onceki)
+        self.assertEqual(len([i for i in sonuc if i['id'].startswith('csb-')]),4)
+
+    def test_tarihler_dolunca_main_verisiyle_birlesir_ve_gecmis_korunur(self):
+        v=self.veri()
+        onceki={i['id']:i for i in v['ilanlar']}
+        gelen=[]
+        for i in v['ilanlar']:
+            i=dict(i)
+            if i['id'] in self.TARIHLER:
+                i['son_tarih']=self.TARIHLER[i['id']]
+            gelen.append(i)
+        sonuc=ek.merge_sources(gelen,onceki)
+        self.assertEqual([i['id'] for i in sonuc if i['id'].startswith('csb-')],[])
+        self.assertEqual(len(sonuc),4)
+        kimlikler={i['id']:set(i['kaynak_kimlikleri']) for i in sonuc}
+        self.assertIn('csb-477952',kimlikler['sbb-996152b017d1af5f445dfade'])
+        self.assertIn('csb-477953',kimlikler['sbb-ce3aeb16575b73442a9f8944'])
+        self.assertIn('csb-477947',kimlikler['sbb-e8ae93983bf6055ce4addbe1'])
+        self.assertIn('csb-477502',kimlikler['iskur-ce2ccce684a67cfe5ec42653'])
+        # ilan_bot akışı: eski ÇŞB kayıtları takma ad olarak silinir, gönderim geçmişi aynen kalır, kuyruğa bir şey girmez
+        gonderilen=set(v['telegram_gonderilen'])
+        oncekiler=set(gonderilen)
+        mevcut=dict(onceki)
+        aliases={a:i['id'] for i in sonuc for a in i.get('kaynak_kimlikleri',[])}
+        for eski in list(mevcut):
+            if eski in aliases and aliases[eski]!=eski:
+                del mevcut[eski]
+        mevcut.update({i['id']:i for i in sonuc})
+        yeni_ids=set()
+        yeniler=[i for i in sonuc if i['id'] in yeni_ids]
+        bekleyen=set()
+        sira=ilan_bot.telegram_sirasi(mevcut,sonuc,yeniler,gonderilen,bekleyen,False,False,{})
+        self.assertEqual(sira,[])
+        self.assertEqual(gonderilen,oncekiler)
+        self.assertEqual(bekleyen,set())
+
+    def test_bot_ilanlari_kimlikler_alaninda_csb_gorunur(self):
+        from site_uret import bot_ilani
+        v=self.veri()
+        onceki={i['id']:i for i in v['ilanlar']}
+        gelen=[dict(i,son_tarih=self.TARIHLER.get(i['id'],i.get('son_tarih'))) for i in v['ilanlar']]
+        sonuc={i['id']:i for i in ek.merge_sources(gelen,onceki)}
+        kayit=bot_ilani(sonuc['sbb-996152b017d1af5f445dfade'])
+        self.assertEqual(kayit['id'],'sbb-996152b017d1af5f445dfade')
+        self.assertIn('csb-477952',kayit['kimlikler'])
+        self.assertIn('sbb-996152b017d1af5f445dfade',kayit['kimlikler'])
+
+
+class EkBelgeHatasiTesti(unittest.TestCase):
+    def ag(self,docx_hatasi=0,cagri=None):
+        sayac={'docx':0}
+        def sahte(adres,sinir=0,referer=None):
+            if cagri is not None:
+                cagri.append((adres,referer))
+            if adres.startswith(csb.LISTE):
+                return oku('csb_liste.html')
+            if adres.endswith('.docx'):
+                sayac['docx']+=1
+                if sayac['docx']<=docx_hatasi:
+                    raise OSError('gecici ag hatasi')
+                return oku('csb_alim.docx')
+            return oku('csb_detay_alim.html')
+        return sahte
+
+    def satir(self):
+        return next(x for x in csb.liste_ayristir(oku('csb_liste.html')) if x['numara']=='477952')
+
+    def test_ek_basarisizsa_kayit_eksik_isaretlenir(self):
+        with patch.object(csb,'indir',side_effect=self.ag(docx_hatasi=99)),patch.object(csb.time,'sleep'):
+            k=csb.duyuru_oku(self.satir())
+        self.assertEqual(k['ek_okunamadi'],1)
+        self.assertIsNone(k['son_tarih'])
+
+    def test_gecici_hata_bir_kez_yeniden_denenir(self):
+        with patch.object(csb,'indir',side_effect=self.ag(docx_hatasi=1)),patch.object(csb.time,'sleep'):
+            k=csb.duyuru_oku(self.satir())
+        self.assertNotIn('ek_okunamadi',k)
+        self.assertEqual(k['son_tarih'],'2026-11-06')
+
+    def test_ek_istegi_referer_tasir(self):
+        cagri=[]
+        with patch.object(csb,'indir',side_effect=self.ag(cagri=cagri)),patch.object(csb.time,'sleep'):
+            csb.duyuru_oku(self.satir())
+        docx=[r for a,r in cagri if a.endswith('.docx')]
+        self.assertEqual(docx,[self.satir()['link']])
+
+    def test_eksik_kayit_taze_olsa_da_sonraki_taramada_yeniden_okunur(self):
+        with patch.object(csb,'indir',side_effect=self.ag(docx_hatasi=99)),patch.object(csb.time,'sleep'):
+            ilk,_=csb.csb_oku({})
+        eksik=[k for k in ilk if k.get('ek_okunamadi')]
+        self.assertTrue(eksik)
+        with patch.object(csb,'indir',side_effect=self.ag()),patch.object(csb.time,'sleep'):
+            ikinci,_=csb.csb_oku({k['id']:k for k in ilk})
+        self.assertFalse(any(k.get('ek_okunamadi') for k in ikinci))
+        self.assertTrue(any(k['son_tarih'] for k in ikinci))
+
+    def test_eski_surum_kayit_yeniden_okunur(self):
+        with patch.object(csb,'indir',side_effect=self.ag(docx_hatasi=99)),patch.object(csb.time,'sleep'):
+            ilk,_=csb.csb_oku({})
+        eski=[{k:v for k,v in i.items() if k!='ek_okunamadi'}|{'csb_detay_surumu':2} for i in ilk]
+        with patch.object(csb,'indir',side_effect=self.ag()),patch.object(csb.time,'sleep'):
+            yeni,_=csb.csb_oku({k['id']:k for k in eski})
+        self.assertTrue(any(k['son_tarih'] for k in yeni))
+        self.assertTrue(all(k['csb_detay_surumu']==csb.VERSIYON for k in yeni))
+
+    def test_cok_eski_eksik_kayit_surekli_denenmez(self):
+        k={'id':'csb-1','ek_okunamadi':1,'yayim_tarihi':'2020-01-01'}
+        self.assertFalse(csb.eksik_mi(k))
+        self.assertTrue(csb.eksik_mi({**k,'yayim_tarihi':csb.now().date().isoformat()}))
+        self.assertFalse(csb.eksik_mi({'id':'csb-2'}))
 
 
 class TekrarOnlemeTesti(unittest.TestCase):

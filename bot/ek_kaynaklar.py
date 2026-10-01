@@ -313,7 +313,9 @@ def merge_sources(records, previous):
         matches=[old for old in previous.values() if same_pair(item,old)]
         if not matches:
             matches=[old for old in result.values() if same_pair(item,old)]
-        rank=lambda obj: {'sbb':2,'iskur':1}.get(obj.get('kaynak_turu'),0)
+        # En düşük sıra kalıcı kimliği taşır. ÇŞB hiçbir zaman kalıcı kimlik olmaz: önceden kendi kimliğiyle
+        # kaydedilmiş ÇŞB kaydı (exact) bile varken eşleşen SBB/İŞKUR/Kariyer kaydına katılır.
+        rank=lambda obj: {'sbb':2,'iskur':1,'csb':3}.get(obj.get('kaynak_turu'),0)
         best=min([rank(item)]+[rank(obj) for obj in matches])
         preferred=[obj for obj in matches if rank(obj)==best and best<rank(item)]
         chosen=preferred[0] if len(preferred)==1 else exact or (matches[0] if len(matches)==1 else item)
