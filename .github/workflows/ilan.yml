@@ -11,6 +11,12 @@ on:
         default: false
   push:
     branches: [main]
+    # Yerel tarayıcının veri aktarımları ayrı bir tam tarama başlatmaz;
+    # bir sonraki zamanlanmış taramada kullanılır.
+    paths-ignore:
+      - docs/yerel-kaynaklar.json
+      - docs/belgeler/**
+      - docs/assets/**
 
 permissions:
   contents: write

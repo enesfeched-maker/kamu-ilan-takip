@@ -133,8 +133,8 @@ class TelegramDeliveryTests(unittest.TestCase):
         self.cfg.write_text(json.dumps(cfg))
         with patch.object(ilan_bot, 'detay_oku', side_effect=ValueError('geçici hata')), \
              contextlib.redirect_stderr(io.StringIO()):
-            with self.assertRaises(SystemExit):
-                self.run_bot('--duyur-mevcut')
+            # Geçici erişim sorunu işi kırmızıya düşürmez; ilanlar sırada bekler.
+            self.assertEqual(self.run_bot('--duyur-mevcut'), 0)
         state = json.loads(self.data.read_text())
         self.assertEqual(state['telegram_gonderilen'], [])
         self.assertEqual(len(state['telegram_bekleyen']), 25)

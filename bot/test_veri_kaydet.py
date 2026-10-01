@@ -1,5 +1,5 @@
 import unittest
-from veri_kaydet import merge_registry
+from veri_kaydet import commit_gerekli, merge_registry
 
 
 class RegistryMergeTests(unittest.TestCase):
@@ -24,6 +24,15 @@ class RegistryMergeTests(unittest.TestCase):
         r = merge_registry({'telegram_hatirlatilan': ['a', 'b']},
                            {'telegram_hatirlatilan': ['b', 'c']})
         self.assertEqual(r['telegram_hatirlatilan'], ['a', 'b', 'c'])
+
+    def test_yalniz_zaman_damgasi_degisirse_commit_atlanir(self):
+        eski = {'guncelleme': '2026-10-01T10:00:00+03:00', 'ilanlar': [{'id': 'a', 'detay_guncelleme': '1'}],
+                'kaynak_durumlari': {'iskur': {'kontrol': 'x', 'ilan_sayisi': 3}}}
+        yeni = {'guncelleme': '2026-10-01T10:30:00+03:00', 'ilanlar': [{'id': 'a', 'detay_guncelleme': '2'}],
+                'kaynak_durumlari': {'iskur': {'kontrol': 'y', 'ilan_sayisi': 3}}}
+        self.assertFalse(commit_gerekli(eski, yeni))
+        self.assertTrue(commit_gerekli(eski, {**yeni, 'guncelleme': '2026-10-01T13:00:00+03:00'}))
+        self.assertTrue(commit_gerekli(eski, {**yeni, 'telegram_gonderilen': ['a']}))
 
 
 if __name__ == '__main__':
