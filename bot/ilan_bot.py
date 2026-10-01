@@ -25,6 +25,7 @@ from ilan_gorsel import gorsel_olustur
 from ek_kaynaklar import read_sbb, read_iskur, merge_sources
 from ilan_baglanti import ilan_sayfasi
 from kurum_gorseli import kurum_logosu
+from siniflandir import etiketler, kategori, ogrenim_seviyeleri
 from yerel_kaynak import oku as yerel_oku, sbb_verisi
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -217,6 +218,8 @@ def mesaj_olustur(ilan, site_url, hatirlatma=False):
     satirlar.extend(["", "İlan ayrıntıları ve başvuru bilgileri sitemizde ↓"])
     if ilan.get('kaynak_turu') in ('sbb','iskur'):
         satirlar.append(f"<i>Kaynak: {e(ilan['kaynak'])}</i>")
+    if etiketler(ilan):
+        satirlar.extend(["", e(" ".join(etiketler(ilan)))])
     return "\n".join(satirlar)
 
 
@@ -320,6 +323,15 @@ def telegram_icin_uygun(ilan, dahil, haric):
     if dahil and not any(k.lower() in metin for k in dahil):
         return False
     return not any(k.lower() in metin for k in haric)
+
+
+def siniflandir(ilan):
+    """Site filtreleri için öğrenim düzeyi ve kategori alanlarını günceller."""
+    for alan, deger in (('ogrenim', ogrenim_seviyeleri(ilan)), ('kategori', kategori(ilan))):
+        if deger:
+            ilan[alan] = deger
+        else:
+            ilan.pop(alan, None)
 
 
 def temizle(ilanlar):
@@ -545,6 +557,7 @@ def main():
     # 4) Kaydet
     for i in mevcut.values():
         i.pop("aciklama", None)  # site için gerekli değil, dosyayı küçük tut
+        siniflandir(i)
     veri = {
         "guncelleme": simdi().isoformat(timespec="seconds"),
         "ilanlar": sorted(temizle(list(mevcut.values())), key=lambda x: x["son_tarih"] or "9999"),
