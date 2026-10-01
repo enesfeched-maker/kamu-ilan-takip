@@ -1,4 +1,5 @@
 import { updateIsle } from './komutlar.js';
+import { yoneticiTani } from './sosyal.js';
 
 // Sabit süreli karşılaştırma (uzunluk farkında da tüm baytlar dolaşılır).
 function esit(a, b) {
@@ -20,6 +21,7 @@ export default {
     }
     try {
       const update = await request.json();
+      try { await yoneticiTani(env, update); } catch { /* yönetici tanıma komut akışını bozmaz */ }
       await updateIsle(env, update);
     } catch (e) {
       // Telegram'a 500 dönülmez (tekrar denemesin); kişisel veri loglanmaz.

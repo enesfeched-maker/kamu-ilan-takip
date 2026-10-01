@@ -120,6 +120,11 @@ def main():
     (docs / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+esc(u)+'</loc></url>' for u in urls)+'</urlset>\n', encoding='utf-8')
     bot = bot_ilanlari(data.get('ilanlar', []))
     (docs / 'bot-ilanlar.json').write_text(json.dumps(bot, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
+    try:
+        from sosyal_paylasim import uret
+        uret(data.get('ilanlar', []), datetime.now(TR), docs, BASE)
+    except Exception as hata:
+        print(f'Uyarı: sosyal paylaşım içeriği üretilemedi: {hata}')
     print(f'{count} public detail pages and sitemap generated.')
 
 

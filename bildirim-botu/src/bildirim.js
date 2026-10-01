@@ -2,6 +2,7 @@
 import { tg as gercekTg } from './telegram.js';
 import { uygunMu, bugunIstanbul, sureDoldu, kelimelerKucult } from './eslestir.js';
 import { sponsorlariOku, sponsorSec } from './sponsor.js';
+import { sosyalIsle, sosyalZamaniGeldi } from './sosyal.js';
 
 const GERCEK_BEKLE = (ms) => new Promise((r) => setTimeout(r, ms));
 const SQL_BUTCE = 40; // çağrı başına D1 ifadesi
@@ -11,6 +12,7 @@ const JSON_BAYT_MAX = 90000; // ifade başına 100 KB sınırının altında kal
 const CIFT_MAX = 2000; // çağrı başına kullanıcı x ilan değerlendirmesi (10 ms CPU)
 const GUNLUK_MAX = 15; // kullanıcı başına günlük ilan iletisi
 const KILIT_MS = 55000;
+const KILIT_UZAT_MS = 5 * 60 * 1000;
 const BOSALTMA_MAX = 25;
 const KULLANICI_ILETI_MAX = 10;
 const SAYFA_BOYUTU = 200;
@@ -156,13 +158,15 @@ export async function cronCalistir(env, simdi = new Date(), bagimliliklar = {}) 
   // Süreli kilit: aynı anda iki çağrı çalışmasın (çift gönderimi önler).
   const simdiMs = simdi.getTime();
   await calis("INSERT OR IGNORE INTO meta (anahtar, deger) VALUES ('kilit', '0')");
-  const kilitSonuc = await calis("UPDATE meta SET deger = ? WHERE anahtar = 'kilit' AND CAST(deger AS INTEGER) < ?", String(simdiMs + KILIT_MS), simdiMs);
+  const kilitKimlik = crypto.randomUUID();
+  let kilitDeger = `${simdiMs + KILIT_MS}:${kilitKimlik}`; // sahip kimlikli: yalnız kendi kilidimizi bırakırız
+  const kilitSonuc = await calis("UPDATE meta SET deger = ? WHERE anahtar = 'kilit' AND CAST(deger AS INTEGER) < ?", kilitDeger, simdiMs);
   const degisen = kilitSonuc && kilitSonuc.meta && kilitSonuc.meta.changes !== undefined ? kilitSonuc.meta.changes : kilitSonuc && kilitSonuc.changes;
   if (!degisen) { sonuc.kilitli = true; return sonuc; }
   try {
     await isle();
   } finally {
-    try { await calis("UPDATE meta SET deger = '0' WHERE anahtar = 'kilit'"); } catch { /* süre dolunca kendiliğinden açılır */ }
+    try { await calis("UPDATE meta SET deger = '0' WHERE anahtar = 'kilit' AND deger = ?", kilitDeger); } catch { /* süre dolunca kendiliğinden açılır */ }
   }
   return sonuc;
 
@@ -179,6 +183,23 @@ export async function cronCalistir(env, simdi = new Date(), bagimliliklar = {}) 
       `INSERT OR REPLACE INTO meta (anahtar, deger) VALUES ${yerTutucu(ciftler.length, 2)}`,
       ...ciftler.flat(),
     );
+
+    // 0) Sosyal paylaşım: zamanı geldiyse yalnız onu çalıştır (istek bütçesi ona ayrılır).
+    if (sosyalZamaniGeldi(simdi, bugun, meta)) {
+      const bitti = await sosyalIsle({
+        env, simdi, bugun, meta, metaYaz,
+        fetch: (u, o) => { sonuc.istek++; return o ? fetchGercek(u, o) : fetchGercek(u); },
+        tg: tgSay, bekle,
+        kilitUzat: async () => { // sosyal adım için kilit 5 dakikaya uzar; kaybedildiyse false
+          const yeni = `${simdiMs + KILIT_UZAT_MS}:${kilitKimlik}`;
+          const r = await calis("UPDATE meta SET deger = ? WHERE anahtar = 'kilit' AND deger = ?", yeni, kilitDeger);
+          const n = r && r.meta && r.meta.changes !== undefined ? r.meta.changes : r && r.changes;
+          if (n) kilitDeger = yeni;
+          return !!n;
+        },
+      });
+      if (bitti) { sonuc.sosyal = true; return; }
+    }
 
     // 1) Boşaltma ----------------------------------------------------------
     if (saat >= 8 && saat <= 22) {
