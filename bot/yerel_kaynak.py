@@ -26,7 +26,15 @@ def taze(stamp,minutes=90):
 
 
 def sbb_verisi(data):
-    source=data.get('kaynaklar',{}).get('sbb',{})
+    return kaynak_verisi(data,'sbb')
+
+
+def csb_verisi(data):
+    return kaynak_verisi(data,'csb')
+
+
+def kaynak_verisi(data,ad):
+    source=data.get('kaynaklar',{}).get(ad,{})
     rows=source.get('ilanlar')
     if not taze(source.get('kontrol')) or not isinstance(rows,list) or not rows:
         return None

@@ -276,6 +276,9 @@ def same_listing(a,b):
         return True
     if notice(a['baslik']) or notice(b['baslik']):
         return False
+    # ÇŞB kayıtlarında kadro sayısı yok; kurum+tarih eşleşmesi farklı ilanları birleştirebilir.
+    if 'csb' in (a.get('kaynak_turu'),b.get('kaynak_turu')):
+        return False
     if a.get('kaynak_turu','kariyer')==b.get('kaynak_turu','kariyer'):
         return False
     if not a.get('son_tarih') or a.get('son_tarih')!=b.get('son_tarih'):
@@ -298,11 +301,18 @@ def same_listing(a,b):
 def merge_sources(records, previous):
     """Keep an existing public ID and sent history; attach alternative source references."""
     result={}
+    from csb_kaynak import eslesme_ciftleri
+    pairs=eslesme_ciftleri({**previous,**{i['id']:i for i in records}}.values())
+    def same_pair(a,b):
+        if same_listing(a,b) or frozenset((a['id'],b['id'])) in pairs:
+            return True
+        # Önceden birleşmiş ÇŞB kimliği: kalıcı takma ad.
+        return any(x.get('kaynak_turu')=='csb' and x['id'] in y.get('kaynak_kimlikleri',[]) for x,y in ((a,b),(b,a)))
     for item in records:
         exact=previous.get(item['id'])
-        matches=[old for old in previous.values() if same_listing(item,old)]
+        matches=[old for old in previous.values() if same_pair(item,old)]
         if not matches:
-            matches=[old for old in result.values() if same_listing(item,old)]
+            matches=[old for old in result.values() if same_pair(item,old)]
         rank=lambda obj: {'sbb':2,'iskur':1}.get(obj.get('kaynak_turu'),0)
         best=min([rank(item)]+[rank(obj) for obj in matches])
         preferred=[obj for obj in matches if rank(obj)==best and best<rank(item)]

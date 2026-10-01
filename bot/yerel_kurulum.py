@@ -24,7 +24,7 @@ def install_task(start=True):
     $logon=New-ScheduledTaskTrigger -AtLogOn -User $taskUser
     $principal=New-ScheduledTaskPrincipal -UserId $taskUser -LogonType Interactive -RunLevel Limited
     $settings=New-ScheduledTaskSettingsSet -StartWhenAvailable -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -MultipleInstances IgnoreNew -ExecutionTimeLimit (New-TimeSpan -Minutes 20)
-    Register-ScheduledTask -TaskName {quote(TASK)} -Action $action -Trigger @($repeat,$logon) -Principal $principal -Settings $settings -Description 'SBB ilanlarını 30 dakikada bir aktarır. Telegram anahtarı içermez.' -Force | Out-Null
+    Register-ScheduledTask -TaskName {quote(TASK)} -Action $action -Trigger @($repeat,$logon) -Principal $principal -Settings $settings -Description 'SBB ve ÇŞB ilanlarını 30 dakikada bir aktarır. Telegram anahtarı içermez.' -Force | Out-Null
     {'Enable-ScheduledTask -TaskName '+quote(TASK)+' | Out-Null; Start-ScheduledTask -TaskName '+quote(TASK) if start else 'Disable-ScheduledTask -TaskName '+quote(TASK)+' | Out-Null'}
     '''
     subprocess.run(['powershell.exe','-NoProfile','-NonInteractive','-Command',command],check=True,capture_output=True,creationflags=subprocess.CREATE_NO_WINDOW)
