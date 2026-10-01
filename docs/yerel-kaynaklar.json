@@ -1,10 +1,10 @@
 {
  "schema": 1,
- "guncelleme": "2026-10-01T09:10:13.584922+00:00",
+ "guncelleme": "2026-10-01T09:19:34.381453+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-10-01T09:13:20.176196+00:00",
-   "hata_sayisi": 2,
+   "kontrol": "2026-10-01T09:19:37.350864+00:00",
+   "hata_sayisi": 0,
    "ilanlar": [
     {
      "id": "sbb-83609f07f8861d5c98115fb7",
@@ -1145,8 +1145,8 @@
      "donem": "( 28 Eylül - 12 Ekim)",
      "baslangic_zaman": "2026-09-28T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-09-30T14:31:04+03:00",
-     "belge_ozeti": "7dac48d5e22bf010c4b82cf28e5524622e71b7ad07122caf8cc7c30f9aeaaff7",
+     "detay_guncelleme": "2026-10-01T12:19:35+03:00",
+     "belge_ozeti": "4b0a27f29db64fac9118e1e41099e69daa10c947d15fd0b022993e7dbe1a9e83",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1156,8 +1156,8 @@
      "ozet": "KAFKAS ÜNİVERSİTESİ 58 ÖĞRETİM ÜYESİ alımı. Son başvuru: 12.10.2026. Özel şartlar aşağıdaki ilan belgesinde yer alıyor.",
      "sartlar": [],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/7dac48d5e22bf010c4b82cf28e5524622e71b7ad07122caf8cc7c30f9aeaaff7.pdf",
-     "belge_sha256": "7dac48d5e22bf010c4b82cf28e5524622e71b7ad07122caf8cc7c30f9aeaaff7",
+     "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/4b0a27f29db64fac9118e1e41099e69daa10c947d15fd0b022993e7dbe1a9e83.pdf",
+     "belge_sha256": "4b0a27f29db64fac9118e1e41099e69daa10c947d15fd0b022993e7dbe1a9e83",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 5
     },
@@ -5335,8 +5335,8 @@
      "kaynak_turu": "sbb",
      "donem": "( 30 Eylül - 2 Ekim)",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-09-30T14:32:54+03:00",
-     "belge_ozeti": "169c86e2f97e4660bafc9762b0eea5e94aa690c1f651a60bf48878091294cead",
+     "detay_guncelleme": "2026-10-01T12:19:37+03:00",
+     "belge_ozeti": "7adbe91df2cb839a579318192d68f90020a3dc9fe851087bb230d7558a31cbe3",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -5363,8 +5363,8 @@
       }
      ],
      "basvuru_notu": "g) Sürücü belgesinin lotokopisi veya noter onaylı örneği veya barkodlu,/karekodlu geçici sürücü beIgesi. (Aslı ibraz edilmek kaydıyla suretleri Belediyemizce tasdik edilebilir) Belirtilen başvuru tarihlerinde elektronik oıtamda veya posta yoluyla yapılan başvurularda fotokopisi gönderilen belgelerin aslınrn sınav tarihine kadar Kurumumuza ibraz edilmesi gerekmektedir. (Aslı ibraz edilmek kaydıyla suretleri Belediyemizce tasdik edilecektir.) .l. BAşVURU YERi, TARiHi, ŞEKLİ vE sÜRESi: Adaylar. sözlü sınava katılabilmek için;",
-     "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/169c86e2f97e4660bafc9762b0eea5e94aa690c1f651a60bf48878091294cead.pdf",
-     "belge_sha256": "169c86e2f97e4660bafc9762b0eea5e94aa690c1f651a60bf48878091294cead",
+     "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/7adbe91df2cb839a579318192d68f90020a3dc9fe851087bb230d7558a31cbe3.pdf",
+     "belge_sha256": "7adbe91df2cb839a579318192d68f90020a3dc9fe851087bb230d7558a31cbe3",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 5
     },
