@@ -26,7 +26,7 @@ from ek_kaynaklar import read_sbb, read_iskur, merge_sources
 from ilan_baglanti import ilan_sayfasi
 from kurum_gorseli import kurum_logosu
 from siniflandir import etiketler, il_adlari, kategori, kpss_durumu, ogrenim_seviyeleri
-from yerel_kaynak import oku as yerel_oku, sbb_verisi
+from yerel_kaynak import oku as yerel_oku, sbb_verisi, csb_verisi
 
 ROOT = Path(__file__).resolve().parent.parent
 CONFIG_YOLU = ROOT / "config.json"
@@ -216,7 +216,7 @@ def mesaj_olustur(ilan, site_url, hatirlatma=False):
     else:
         satirlar.extend(["", "⏳ <b>Son başvuru:</b> Resmi ilan üzerinden kontrol edin."])
     satirlar.extend(["", "İlan ayrıntıları ve başvuru bilgileri sitemizde ↓"])
-    if ilan.get('kaynak_turu') in ('sbb','iskur'):
+    if ilan.get('kaynak_turu') in ('sbb','iskur','csb'):
         satirlar.append(f"<i>Kaynak: {e(ilan['kaynak'])}</i>")
     etiket = " ".join(etiketler(ilan))
     if etiket:
@@ -396,11 +396,13 @@ def main():
                 basarili += 1
             except Exception as h:  # ağ, XML vb.
                 print(f"Uyarı: {url[:60]}... okunamadı: {h}", file=sys.stderr)
-        for kaynak, okuyucu in [('sbb',read_sbb), ('iskur',read_iskur)]:
+        for kaynak, okuyucu in [('sbb',read_sbb), ('iskur',read_iskur), ('csb',None)]:
             if kaynak not in cfg.get('ek_kaynaklar', []):
                 continue
             try:
-                local_sbb=sbb_verisi(yerel) if kaynak=='sbb' else None
+                local_sbb={'sbb':sbb_verisi,'csb':csb_verisi}[kaynak](yerel) if kaynak in ('sbb','csb') else None
+                if kaynak=='csb' and not local_sbb:
+                    raise RuntimeError('ÇŞB yerel verisi yok ya da eski')  # GitHub'dan erişilemez; kayıtlar korunur
                 eklenen, hatalar = local_sbb[:2] if local_sbb else okuyucu(onceki)
                 gelen += eklenen
                 basarili += 1
@@ -452,7 +454,7 @@ def main():
         ardisik_hata = 0
         for gelen_ilan in gelen:
             i = mevcut[gelen_ilan['id']]
-            if i.get('kaynak_turu') in ('sbb','iskur'):
+            if i.get('kaynak_turu') in ('sbb','iskur','csb'):
                 continue
             local_detail=yerel.get('detaylar',{}).get(i['id'],{})
             if detay_taze(local_detail) and (local_detail.get('detay_guncelleme','')>i.get('detay_guncelleme','')):

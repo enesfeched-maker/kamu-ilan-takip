@@ -9,6 +9,7 @@ import urllib.request
 from datetime import datetime,timezone
 from pathlib import Path
 from ek_kaynaklar import read_sbb,fresh
+from csb_kaynak import csb_oku
 from resmi_detay import detay_oku
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -41,6 +42,7 @@ def decode(blob):
 def collect(registry,old):
     previous={i['id']:i for i in registry.get('ilanlar',[])}
     previous.update({i['id']:i for i in old.get('kaynaklar',{}).get('sbb',{}).get('ilanlar',[])})
+    previous.update({i['id']:i for i in old.get('kaynaklar',{}).get('csb',{}).get('ilanlar',[])})
     result={'schema':1,'guncelleme':datetime.now(timezone.utc).isoformat(),'kaynaklar':dict(old.get('kaynaklar',{})), 'detaylar':dict(old.get('detaylar',{}))}
     from kurum_gorseli import CATALOG
     if CATALOG.exists():
@@ -51,6 +53,12 @@ def collect(registry,old):
         print('SBB:',len(rows),'ilan;',errors,'okuma hatası.',flush=True)
     except Exception as exc:
         print('SBB kontrolü ertelendi:',type(exc).__name__,flush=True)
+    try:
+        rows,errors=csb_oku(previous)
+        result['kaynaklar']['csb']={'kontrol':datetime.now(timezone.utc).isoformat(),'hata_sayisi':errors,'ilanlar':rows}
+        print('ÇŞB Yerel Yönetimler:',len(rows),'duyuru;',errors,'okuma hatası.',flush=True)
+    except Exception as exc:
+        print('ÇŞB kontrolü ertelendi:',type(exc).__name__,flush=True)
     failures=0
     for item in registry.get('ilanlar',[]):
         if item.get('kaynak_turu') or not item.get('link','').startswith('https://kariyerkapisi.gov.tr/IlanDetay?'):

@@ -9,7 +9,7 @@ def ilan_anahtari(ilan):
         return str(uuid.UUID(raw))
     except ValueError:
         ident=ilan.get('id','')
-        if re.fullmatch(r'(?:sbb|iskur)-[a-f0-9]{24}',ident):
+        if re.fullmatch(r'(?:(?:sbb|iskur)-[a-f0-9]{24}|csb-\d{4,9})',ident):
             return ident
         raise ValueError('İlanın site bağlantısı oluşturulamadı')
 
