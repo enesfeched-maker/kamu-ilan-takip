@@ -30,7 +30,7 @@ test('81 il ve callback_data 64 baytı aşmaz', () => {
 test('/start onay düğmesi gösterir', async () => {
   await gonder(mesaj(1, '/start'));
   const c = tgs.son('sendMessage');
-  assert.match(c.params.text, /Sponsorlu/);
+  assert.doesNotMatch(c.params.text, /sponsor/i);
   assert.equal(butonlar(c)[0].callback_data, 'onay');
   assert.equal(await kullaniciGetir(env, 1), null);
 });
