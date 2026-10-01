@@ -1,5 +1,5 @@
 {
- "guncelleme": "2026-10-01T14:48:43+03:00",
+ "guncelleme": "2026-10-01T15:27:33+03:00",
  "ilanlar": [
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=9c82aab5-022e-43c8-b7f1-e6cf329d205b",
@@ -39,7 +39,11 @@
      "ad": "Kariyer Kapısı",
      "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=9c82aab5-022e-43c8-b7f1-e6cf329d205b"
     }
-   ]
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "kategori": "bilisim"
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=ebb1543d-afb7-4af2-98db-ba1f0b0bc0b5",
@@ -66,7 +70,8 @@
      "ad": "Kariyer Kapısı",
      "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=ebb1543d-afb7-4af2-98db-ba1f0b0bc0b5"
     }
-   ]
+   ],
+   "kategori": "isci"
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=ffa0b738-bf8b-482b-9d36-93a3278496f4",
@@ -98,6 +103,9 @@
      "ad": "Kariyer Kapısı",
      "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=ffa0b738-bf8b-482b-9d36-93a3278496f4"
     }
+   ],
+   "ogrenim": [
+    "lisans"
    ]
   },
   {
@@ -145,7 +153,10 @@
     "iskur-29750072db6431f74cc7e08f",
     "sbb-a06812de56384dd1c9dedc38"
    ],
-   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/7c73b105-0dfb-4e7a-8b5f-d6ac50810101.png"
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/7c73b105-0dfb-4e7a-8b5f-d6ac50810101.png",
+   "ogrenim": [
+    "onlisans"
+   ]
   },
   {
    "id": "iskur-ea73f06b730bbab8e9208ff8",
@@ -168,7 +179,8 @@
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-ea73f06b730bbab8e9208ff8"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "sbb-a21e202aaaa4becb8c8abdd8",
@@ -209,7 +221,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/91a92cc31d0e23db918fcd93ed38f84d94254ec584b5abee8ee3c50da5549143.pdf",
    "belge_sha256": "91a92cc31d0e23db918fcd93ed38f84d94254ec584b5abee8ee3c50da5549143",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-48bec610e7cfef5ca996020b",
@@ -258,7 +271,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/101f4adef1fb7fd61a8d2ed8d2f3fe25a0a6f19d4ed97c72c4e0bc9f50286e34.pdf",
    "belge_sha256": "101f4adef1fb7fd61a8d2ed8d2f3fe25a0a6f19d4ed97c72c4e0bc9f50286e34",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-1af8cf46e78ee947c84f2f8c",
@@ -295,7 +309,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/432687ebcdf7dac9a6930ee4838959ea0841c4375548c676e696e62f7de748fd.pdf",
    "belge_sha256": "432687ebcdf7dac9a6930ee4838959ea0841c4375548c676e696e62f7de748fd",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-b7fc8c509966adc7c447b6ea",
@@ -344,7 +359,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/11580da338b5f163ddff71ef8784628dfbf74efcea3d55c890824e03f3af803a.pdf",
    "belge_sha256": "11580da338b5f163ddff71ef8784628dfbf74efcea3d55c890824e03f3af803a",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-a2adc236e2ba406c8da7647b",
@@ -397,7 +413,11 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/2e2308d64b4e8c5326cddf644f8d4661c6cd8cd8c4fb798ab9b83451675fe383.pdf",
    "belge_sha256": "2e2308d64b4e8c5326cddf644f8d4661c6cd8cd8c4fb798ab9b83451675fe383",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=27cf966f-b2b9-4671-a21a-731cb060436a",
@@ -438,7 +458,11 @@
    "kaynak_kimlikleri": [
     "https://kariyerkapisi.gov.tr/IlanDetay?i=27cf966f-b2b9-4671-a21a-731cb060436a"
    ],
-   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/1f15c3b7-4229-49ae-abe5-ceaa01ef91b4.png"
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/1f15c3b7-4229-49ae-abe5-ceaa01ef91b4.png",
+   "ogrenim": [
+    "onlisans",
+    "ortaogretim"
+   ]
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=4c8c21d7-0131-486c-968c-375ecc3b9822",
@@ -484,7 +508,8 @@
     "https://kariyerkapisi.gov.tr/IlanDetay?i=4c8c21d7-0131-486c-968c-375ecc3b9822",
     "sbb-7e7c889a2d66df6c454f9b4c"
    ],
-   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/eaf82f9f-42b9-465f-a4b2-13c77ce65da2.png"
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/eaf82f9f-42b9-465f-a4b2-13c77ce65da2.png",
+   "kategori": "saglik"
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=f4915f84-3749-4c5d-9272-bb194f2b938b",
@@ -530,7 +555,8 @@
     "https://kariyerkapisi.gov.tr/IlanDetay?i=f4915f84-3749-4c5d-9272-bb194f2b938b",
     "sbb-dbbf75d195c1526bcab0918d"
    ],
-   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/d8976723-abbf-4519-a766-d4db061cb052.png"
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/d8976723-abbf-4519-a766-d4db061cb052.png",
+   "kategori": "bilisim"
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=1f94b6b1-1143-4b0a-9d84-c7dcfa542586",
@@ -576,7 +602,12 @@
     "https://kariyerkapisi.gov.tr/IlanDetay?i=1f94b6b1-1143-4b0a-9d84-c7dcfa542586",
     "sbb-54d42e94165d8e6e50a37e20"
    ],
-   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/37048d13-f15f-4132-9078-28a4f4d0b0a9.png"
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/37048d13-f15f-4132-9078-28a4f4d0b0a9.png",
+   "ogrenim": [
+    "lisans",
+    "onlisans",
+    "ortaogretim"
+   ]
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=c2122f16-3cd3-447f-8878-47f4b16a296c",
@@ -618,7 +649,10 @@
     "https://kariyerkapisi.gov.tr/IlanDetay?i=c2122f16-3cd3-447f-8878-47f4b16a296c",
     "sbb-ae22add78ba493288364b38f"
    ],
-   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/7589ee1c-8126-4445-84bc-1a4b989791ce.png"
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/7589ee1c-8126-4445-84bc-1a4b989791ce.png",
+   "ogrenim": [
+    "ortaogretim"
+   ]
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=79f7e5c7-8baf-44a5-b056-57e332c66743",
@@ -661,7 +695,11 @@
     "iskur-e10c5b869c0d24570326307d",
     "sbb-b443504bddae1ed12a509802"
    ],
-   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/76f199a6-c7ac-4cee-99c5-66c8ef371390.png"
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/76f199a6-c7ac-4cee-99c5-66c8ef371390.png",
+   "ogrenim": [
+    "lisans"
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "iskur-fc9b33928a57ae4db08d1056",
@@ -689,7 +727,8 @@
    "kaynak_kimlikleri": [
     "iskur-fc9b33928a57ae4db08d1056",
     "sbb-516cacf6c7ec30e8d74c57f0"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "iskur-8082163e4616cef4ddc75fc2",
@@ -717,7 +756,8 @@
    "kaynak_kimlikleri": [
     "iskur-8082163e4616cef4ddc75fc2",
     "sbb-aba6310a5aafef167605b487"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "iskur-d6a1172b9cf9975dd8e715f5",
@@ -740,7 +780,8 @@
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-d6a1172b9cf9975dd8e715f5"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "sbb-c8c8a1015f2eea057e2a3bef",
@@ -789,7 +830,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/a7f27462f3edd3d942097b674f3ccd4e5e9926d1155be2f9647937504d9f802b.pdf",
    "belge_sha256": "a7f27462f3edd3d942097b674f3ccd4e5e9926d1155be2f9647937504d9f802b",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-64af125b2e04ca2aeb62b563",
@@ -846,7 +888,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/be5a2b6e1e49889b9fbe3dfad1c739c3e706196e584e17e185969276af4f7a0d.pdf",
    "belge_sha256": "be5a2b6e1e49889b9fbe3dfad1c739c3e706196e584e17e185969276af4f7a0d",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-10d46826c12e582e53f7247b",
@@ -903,7 +946,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/51284910820b71a3db1baf732dd13e8fe10b6f7a2ad0b8f6d96aa3a560cfdf8f.pdf",
    "belge_sha256": "51284910820b71a3db1baf732dd13e8fe10b6f7a2ad0b8f6d96aa3a560cfdf8f",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-ad7e8dd467d5e49bfbfebd87",
@@ -956,7 +1000,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/d0afd9e3e6feacffaebd07eee6865b2297239dcf8185f09bd2429b90b7ef0085.pdf",
    "belge_sha256": "d0afd9e3e6feacffaebd07eee6865b2297239dcf8185f09bd2429b90b7ef0085",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-49c53682c3586294e09e2669",
@@ -1001,7 +1046,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/faa966a13525b1a87ac4fff64b13f59002b6bb33ae321a6289f758a083ae9031.pdf",
    "belge_sha256": "faa966a13525b1a87ac4fff64b13f59002b6bb33ae321a6289f758a083ae9031",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-a5af58883b877a31fdf32b1f",
@@ -1062,7 +1108,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/67fe1be0f7f2f36f40bacc88490a40589374c8fafcf1d6a4e39886fe227983c0.pdf",
    "belge_sha256": "67fe1be0f7f2f36f40bacc88490a40589374c8fafcf1d6a4e39886fe227983c0",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=a3fc2acb-8b4d-48c0-b273-1a68554b2772",
@@ -1108,7 +1155,12 @@
     "https://kariyerkapisi.gov.tr/IlanDetay?i=a3fc2acb-8b4d-48c0-b273-1a68554b2772",
     "sbb-89fb96e8ad9706d74470a0a7"
    ],
-   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/c3810d42-2a5b-437d-95d0-b04e71691aa8.png"
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/c3810d42-2a5b-437d-95d0-b04e71691aa8.png",
+   "ogrenim": [
+    "lisans",
+    "onlisans",
+    "ortaogretim"
+   ]
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=b06c870a-74b4-4292-aefd-99b0b4ea6263",
@@ -1154,7 +1206,12 @@
     "https://kariyerkapisi.gov.tr/IlanDetay?i=b06c870a-74b4-4292-aefd-99b0b4ea6263",
     "sbb-579f123a6d883e5f9ee5b864"
    ],
-   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/0ec137ff-8059-43b1-8e1f-fcd2f5ff135a.png"
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/0ec137ff-8059-43b1-8e1f-fcd2f5ff135a.png",
+   "ogrenim": [
+    "lisans",
+    "onlisans"
+   ],
+   "kategori": "saglik"
   },
   {
    "id": "iskur-570cf8fce5dc803a44fd5f84",
@@ -1177,12 +1234,13 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:46:32+03:00",
+   "detay_guncelleme": "2026-10-01T15:26:18+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-570cf8fce5dc803a44fd5f84",
     "sbb-b521542c21be3cb214b26952"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "iskur-99382747cf844bf91f8d55d1",
@@ -1205,12 +1263,13 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:46:42+03:00",
+   "detay_guncelleme": "2026-10-01T15:26:26+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-99382747cf844bf91f8d55d1",
     "sbb-3b022bdbc525c829504f83c4"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "iskur-0feeb0a9f78763daa20afbc0",
@@ -1233,12 +1292,13 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:46:42+03:00",
+   "detay_guncelleme": "2026-10-01T15:26:26+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-0feeb0a9f78763daa20afbc0",
     "sbb-560acc246dd091a65502a7c0"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "iskur-7464f9a150b8173ce65b14e9",
@@ -1261,12 +1321,13 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:46:46+03:00",
+   "detay_guncelleme": "2026-10-01T15:26:30+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-7464f9a150b8173ce65b14e9",
     "sbb-ed422feb712a8ec606c41e55"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "iskur-fa28b4c0c3f9295cab08bcaf",
@@ -1289,12 +1350,13 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:47:01+03:00",
+   "detay_guncelleme": "2026-10-01T15:26:42+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-fa28b4c0c3f9295cab08bcaf",
     "sbb-87437928bfdc3b54d95c38ba"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "iskur-bb8e6aa8951d08b2725df442",
@@ -1313,11 +1375,12 @@
      "link": "https://www.iskur.gov.tr/medya/xt0fsrvg/nev%C5%9Fehir-ortahisar-belediyesi-memur-al%C4%B1m-ilan%C4%B1-02102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:47:26+03:00",
+   "detay_guncelleme": "2026-10-01T15:27:02+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-bb8e6aa8951d08b2725df442"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "iskur-3677dcc131f29000f124a17e",
@@ -1340,13 +1403,14 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:47:31+03:00",
+   "detay_guncelleme": "2026-10-01T15:27:06+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-3677dcc131f29000f124a17e",
     "sbb-1b7e7272c7eb24e1eea3e33a",
     "sbb-fb7502f5227a4c979b29a115"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "iskur-d99e2ddd28b8fb79339d9d20",
@@ -1369,12 +1433,13 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:47:35+03:00",
+   "detay_guncelleme": "2026-10-01T15:27:10+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-d99e2ddd28b8fb79339d9d20",
     "sbb-836d8d43ff9155399ee8314c"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "iskur-bdd72d200fb73e41048a3a70",
@@ -1397,12 +1462,13 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:47:40+03:00",
+   "detay_guncelleme": "2026-10-01T15:27:14+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-bdd72d200fb73e41048a3a70",
     "sbb-640e0e72caad0b81d8aeb3a8"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "iskur-1c1015bfd1faeaea90028a12",
@@ -1421,11 +1487,12 @@
      "link": "https://www.iskur.gov.tr/medya/s0qis2rt/yalova-suba%C5%9F%C4%B1-belediyesi-memur-al%C4%B1m-ilan%C4%B1-02102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:47:55+03:00",
+   "detay_guncelleme": "2026-10-01T15:27:26+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-1c1015bfd1faeaea90028a12"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "sbb-1a8720ee52f99de292a259e0",
@@ -1458,7 +1525,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/8a7cb5d41c576930c5afe39ecc42510ae14a680cdccdb8863aa3f45ea45b1420.pdf",
    "belge_sha256": "8a7cb5d41c576930c5afe39ecc42510ae14a680cdccdb8863aa3f45ea45b1420",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "belediye"
   },
   {
    "id": "sbb-e4f2debf180fbc0c6897a62b",
@@ -1499,7 +1567,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/bb30644ab0cddd305adf12b1556e98f64d0be9decbfc73e926ca006fe4b88e29.pdf",
    "belge_sha256": "bb30644ab0cddd305adf12b1556e98f64d0be9decbfc73e926ca006fe4b88e29",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-798d30efe01c78ff391e4e26",
@@ -1557,7 +1626,10 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/4075e1d76197136e2f083b6d55994f0229115504cad83e680235d2b9210466b7.pdf",
    "belge_sha256": "4075e1d76197136e2f083b6d55994f0229115504cad83e680235d2b9210466b7",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "ogrenim": [
+    "onlisans"
+   ]
   },
   {
    "id": "sbb-f18b0ff040aebffaaf4a702d",
@@ -1614,7 +1686,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/37ac83fb275618563c0debcfef4f27a27ee77d8783e6fe3d570b0b6cc0ed7ee6.pdf",
    "belge_sha256": "37ac83fb275618563c0debcfef4f27a27ee77d8783e6fe3d570b0b6cc0ed7ee6",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-6e0a71f8eace06170d316eb5",
@@ -1647,7 +1720,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/5f5a16d61248d8ab6e288e1621cbcf6e1bbfe51a9af716f32eb427d85bdc5c0c.pdf",
    "belge_sha256": "5f5a16d61248d8ab6e288e1621cbcf6e1bbfe51a9af716f32eb427d85bdc5c0c",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-53d5d7eddcc0304e9046a8e2",
@@ -1704,7 +1778,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/8f5abfe2a3bb5dd5aa045d6c4657c93eff995ccf20bec2d9b30316015c337019.pdf",
    "belge_sha256": "8f5abfe2a3bb5dd5aa045d6c4657c93eff995ccf20bec2d9b30316015c337019",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-6f51d37c2089a1c701085572",
@@ -1753,7 +1828,11 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/dd7ce78f21180e0bd2a54fcf7f87396d77dba2984a901f48fc08429c7446078c.pdf",
    "belge_sha256": "dd7ce78f21180e0bd2a54fcf7f87396d77dba2984a901f48fc08429c7446078c",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "sbb-7c9c2f5b00dfc824df25ad19",
@@ -1802,7 +1881,12 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/bf23f780e4ff5f52bb8659b7ca887117f004162bae780bd8a0576c0af1610c2c.pdf",
    "belge_sha256": "bf23f780e4ff5f52bb8659b7ca887117f004162bae780bd8a0576c0af1610c2c",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "ogrenim": [
+    "onlisans",
+    "ortaogretim"
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=30329a62-04f3-445a-985f-f6a0b8c2e1b7",
@@ -1848,7 +1932,8 @@
     "https://kariyerkapisi.gov.tr/IlanDetay?i=30329a62-04f3-445a-985f-f6a0b8c2e1b7",
     "iskur-dcc9c932a3a1b069dc5aae84"
    ],
-   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/d013bbf2-3ba3-4385-a30f-99028ebcb6aa.png"
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/d013bbf2-3ba3-4385-a30f-99028ebcb6aa.png",
+   "kategori": "bilisim"
   },
   {
    "id": "sbb-76ee051d18b17469cccc3b55",
@@ -1905,7 +1990,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/f427cf0d9f67d4f08620787b9039f0089dccea7fa2eb1f0153a9b23f5a50e714.pdf",
    "belge_sha256": "f427cf0d9f67d4f08620787b9039f0089dccea7fa2eb1f0153a9b23f5a50e714",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=5054018d-07da-4a99-8aa9-6ad471aa90b7",
@@ -1943,7 +2029,10 @@
     "https://kariyerkapisi.gov.tr/IlanDetay?i=5054018d-07da-4a99-8aa9-6ad471aa90b7",
     "sbb-d16bbf2f877f1cb3340c5b18"
    ],
-   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/45f6e187-c8a6-4f0c-9d2b-cf94734124ee.png"
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/45f6e187-c8a6-4f0c-9d2b-cf94734124ee.png",
+   "ogrenim": [
+    "onlisans"
+   ]
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=ec8cb14d-917f-4d65-951b-281faac1f564",
@@ -1989,7 +2078,11 @@
     "https://kariyerkapisi.gov.tr/IlanDetay?i=ec8cb14d-917f-4d65-951b-281faac1f564",
     "sbb-2b06b1d29a527c4989469c9a"
    ],
-   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/34404895-c516-4302-ade7-e6c26f74c9fe.png"
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/34404895-c516-4302-ade7-e6c26f74c9fe.png",
+   "ogrenim": [
+    "lisans"
+   ],
+   "kategori": "saglik"
   },
   {
    "id": "iskur-90bc49ba5ab8723a8adb1001",
@@ -2008,11 +2101,12 @@
      "link": "https://www.iskur.gov.tr/medya/mgbpdb0p/ardahan-hanak-belediyesi-memur-al%C4%B1m-ilan%C4%B1-05102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:47:45+03:00",
+   "detay_guncelleme": "2026-10-01T15:27:19+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-90bc49ba5ab8723a8adb1001"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "sbb-7974821666d14f268a7ed436",
@@ -2069,7 +2163,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/20d5fa7fa624bfc0337908784da4e09a1e9fe33e16166438186f61ef0677b967.pdf",
    "belge_sha256": "20d5fa7fa624bfc0337908784da4e09a1e9fe33e16166438186f61ef0677b967",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-3959495a3471bf5e62b5fac3",
@@ -2126,7 +2221,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/6615601f90ca38c7dd1e1adb899930f619d344dd9855b55b5b3e323941ea7383.pdf",
    "belge_sha256": "6615601f90ca38c7dd1e1adb899930f619d344dd9855b55b5b3e323941ea7383",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-a69af1b197a461962692610d",
@@ -2184,7 +2280,12 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/72f162cff49adb929ad8a177a4da41c19bd64a8d21ab6d0894bd33db9b163838.pdf",
    "belge_sha256": "72f162cff49adb929ad8a177a4da41c19bd64a8d21ab6d0894bd33db9b163838",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "ogrenim": [
+    "lisans",
+    "onlisans",
+    "ortaogretim"
+   ]
   },
   {
    "id": "sbb-cf0ab108a51eb8616627b01b",
@@ -2274,7 +2375,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/9762948b2a4ce5c709465e3316c6a1ee88c1e530075d7a1d05ed7ca4dfad9cd6.pdf",
    "belge_sha256": "9762948b2a4ce5c709465e3316c6a1ee88c1e530075d7a1d05ed7ca4dfad9cd6",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-2244a2ef6d6890502149fd23",
@@ -2331,7 +2433,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/4d49ce0f0bfadfcdec385ff082f145880fef6ba453fa439efae7f12f86b35894.pdf",
    "belge_sha256": "4d49ce0f0bfadfcdec385ff082f145880fef6ba453fa439efae7f12f86b35894",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-1737626cafbe7dc415139775",
@@ -2388,7 +2491,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/dcb77c50f6d9d948eaadaf15e09c732e26c2f3473052ea8c1f5821bcb2e91d4a.pdf",
    "belge_sha256": "dcb77c50f6d9d948eaadaf15e09c732e26c2f3473052ea8c1f5821bcb2e91d4a",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-342bbb3902ba01a2d059ed36",
@@ -2445,7 +2549,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/9ee4ab07c948146f0830986b845e113e49849fa4f2e1c64ce861b8a09a54cc71.pdf",
    "belge_sha256": "9ee4ab07c948146f0830986b845e113e49849fa4f2e1c64ce861b8a09a54cc71",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-2fd39eaa99a96bb423839821",
@@ -2502,7 +2607,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/1ad106e4d399e9f43675736283ea17c0ac700e91b272b729845dc5fc3a155efc.pdf",
    "belge_sha256": "1ad106e4d399e9f43675736283ea17c0ac700e91b272b729845dc5fc3a155efc",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=adbf0488-1319-4ed1-911b-2f991cfb129a",
@@ -2544,7 +2650,11 @@
     "https://kariyerkapisi.gov.tr/IlanDetay?i=adbf0488-1319-4ed1-911b-2f991cfb129a",
     "sbb-0f29ee6b4a3de11a404ed1d7"
    ],
-   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/1b62a652-c0ba-4204-b68a-f66feeefe3cb.png"
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/1b62a652-c0ba-4204-b68a-f66feeefe3cb.png",
+   "ogrenim": [
+    "onlisans",
+    "ortaogretim"
+   ]
   },
   {
    "id": "iskur-8f2afcb0d71295c346c4b20d",
@@ -2567,12 +2677,13 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:47:01+03:00",
+   "detay_guncelleme": "2026-10-01T15:26:42+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-8f2afcb0d71295c346c4b20d",
     "sbb-ceeda30b160fbd9117d6f0cb"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "iskur-46fd3ccae48ba3acd1a3e086",
@@ -2595,12 +2706,13 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:47:45+03:00",
+   "detay_guncelleme": "2026-10-01T15:27:19+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-46fd3ccae48ba3acd1a3e086",
     "sbb-42a7834aa4441e349d596e46"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "iskur-c87f9628d86934195c827cdb",
@@ -2619,11 +2731,12 @@
      "link": "https://www.iskur.gov.tr/medya/ykdb03ym/osmaniye-bah%C3%A7e-belediyesi-memur-al%C4%B1m-ilan%C4%B1-06102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:48:01+03:00",
+   "detay_guncelleme": "2026-10-01T15:27:30+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-c87f9628d86934195c827cdb"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "sbb-578ca25c762bf229aefab260",
@@ -2655,7 +2768,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/32d374cccfecd852c4052e74a2bc8cf2004ba43f1baa7eb919d1077085e7291a.pdf",
    "belge_sha256": "32d374cccfecd852c4052e74a2bc8cf2004ba43f1baa7eb919d1077085e7291a",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-bafee25cf4d0c6797b3006b1",
@@ -2700,7 +2814,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/7ac51c1edb4c3899897d6e5c6f7de056155995b37368ba88d970de8e53613b5d.pdf",
    "belge_sha256": "7ac51c1edb4c3899897d6e5c6f7de056155995b37368ba88d970de8e53613b5d",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-e3cf06b41a8f98824b49c594",
@@ -2732,7 +2847,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/be064663a7f0cbcf132613f1324caa5d7c7323438700a91d4d62f1c3fa5102df.pdf",
    "belge_sha256": "be064663a7f0cbcf132613f1324caa5d7c7323438700a91d4d62f1c3fa5102df",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-93cc332f5c0251f47b070fe1",
@@ -2833,7 +2949,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/edfe6eb93c940993cda8d391b25a68ba1ff7c9e9f6cae83e92b8b1b3f98aec7e.pdf",
    "belge_sha256": "edfe6eb93c940993cda8d391b25a68ba1ff7c9e9f6cae83e92b8b1b3f98aec7e",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-b4156a2d20c3ff5ee1a5796f",
@@ -2890,7 +3007,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/d02c834f00b882fb920aa819de326688eaab27f030f1fd13f2aa63e3c3648663.pdf",
    "belge_sha256": "d02c834f00b882fb920aa819de326688eaab27f030f1fd13f2aa63e3c3648663",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-90590b042f3d9058effaa9d4",
@@ -2931,7 +3049,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/934bb9d7d71557e75df56a27e1b0f55bac282da01a4f0c158c78ecd3c4485353.pdf",
    "belge_sha256": "934bb9d7d71557e75df56a27e1b0f55bac282da01a4f0c158c78ecd3c4485353",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-456705609dc40fbb2767174f",
@@ -2985,7 +3104,11 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/f59d6dada3259ff3c629aa6b21af80ed70412a5983e5a895d6fc0783d05c9d25.pdf",
    "belge_sha256": "f59d6dada3259ff3c629aa6b21af80ed70412a5983e5a895d6fc0783d05c9d25",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "ogrenim": [
+    "ortaogretim"
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "sbb-c49d399e06ae4c205b04a173",
@@ -3038,7 +3161,11 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/227f2235302ce4191a97926070dc5979e3fce81ce34d49cf5dc3af1cb99c02f7.pdf",
    "belge_sha256": "227f2235302ce4191a97926070dc5979e3fce81ce34d49cf5dc3af1cb99c02f7",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "ogrenim": [
+    "onlisans"
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=b4372970-fdd6-4cf9-a92d-cc3f9865a634",
@@ -3085,11 +3212,12 @@
      "link": "https://www.iskur.gov.tr/medya/odhp4e4v/k%C4%B1r%C5%9Fehir-mucur-belediyesi-itfaiye-eri-al%C4%B1m-ilan%C4%B1-08102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:47:06+03:00",
+   "detay_guncelleme": "2026-10-01T15:26:45+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-ced29e58351712e81082b7e6"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "sbb-30ebc2e50588b1da8b58302f",
@@ -3121,7 +3249,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/4a5179954c46cc291d3cf575587da4e5d2c2b2006185f52f2c5f24b4466c1e93.pdf",
    "belge_sha256": "4a5179954c46cc291d3cf575587da4e5d2c2b2006185f52f2c5f24b4466c1e93",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-866abc35896ad9d91ee671c5",
@@ -3178,7 +3307,11 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/c75646243927303a166b1036f0cd3811268211f6f2c4ae32cdea975dece9e1ce.pdf",
    "belge_sha256": "c75646243927303a166b1036f0cd3811268211f6f2c4ae32cdea975dece9e1ce",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "ogrenim": [
+    "ortaogretim"
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=cb98ad26-9f19-467b-97f1-6c657b2c1593",
@@ -3219,7 +3352,11 @@
    "kaynak_kimlikleri": [
     "https://kariyerkapisi.gov.tr/IlanDetay?i=cb98ad26-9f19-467b-97f1-6c657b2c1593"
    ],
-   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/3f85ee60-9255-4130-ab0d-020df0a634ef.png"
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/3f85ee60-9255-4130-ab0d-020df0a634ef.png",
+   "ogrenim": [
+    "onlisans",
+    "ortaogretim"
+   ]
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=69465191-48a2-447c-8f55-edb2ecbeb45a",
@@ -3261,7 +3398,11 @@
     "https://kariyerkapisi.gov.tr/IlanDetay?i=69465191-48a2-447c-8f55-edb2ecbeb45a",
     "sbb-3ede4acbc9f513975e208aab"
    ],
-   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/b1885c7c-c018-43b9-84e9-c580cc2a833f.png"
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/b1885c7c-c018-43b9-84e9-c580cc2a833f.png",
+   "ogrenim": [
+    "onlisans",
+    "ortaogretim"
+   ]
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=89bd5bac-9eb0-4cd1-93f9-8b154a5189f5",
@@ -3307,7 +3448,11 @@
     "https://kariyerkapisi.gov.tr/IlanDetay?i=89bd5bac-9eb0-4cd1-93f9-8b154a5189f5",
     "sbb-8aefee5ffa15c5bea8034be3"
    ],
-   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/ea468867-d6d8-4242-bba3-ad0436687168.png"
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/ea468867-d6d8-4242-bba3-ad0436687168.png",
+   "ogrenim": [
+    "lisans",
+    "ortaogretim"
+   ]
   },
   {
    "id": "iskur-3bd8add3dfef4b37e1293996",
@@ -3326,7 +3471,7 @@
      "link": "https://www.iskur.gov.tr/medya/ccubtphj/sigortac%C4%B1l%C4%B1k-ve-oezel-emeklilik-duezenleme-ve-denetleme-kurumu-personel-al%C4%B1m-ilan%C4%B1-09102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:46:22+03:00",
+   "detay_guncelleme": "2026-10-01T15:26:09+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-3bd8add3dfef4b37e1293996"
@@ -3362,7 +3507,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/b92f76349ff549edfb8126ea48b79c954d9fd1af72368d2c9b7a705726fadf54.pdf",
    "belge_sha256": "b92f76349ff549edfb8126ea48b79c954d9fd1af72368d2c9b7a705726fadf54",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-d7db70a7cb9b757c071d228a",
@@ -3403,7 +3549,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/e0442b25ee73fe7c292856e4111f564d0403de9b2bca7b413cc242340cb4302f.pdf",
    "belge_sha256": "e0442b25ee73fe7c292856e4111f564d0403de9b2bca7b413cc242340cb4302f",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-da5daa8219d79d37ffcf3702",
@@ -3460,7 +3607,11 @@
    "ilk_gorulme": "2026-09-30T14:41:01+03:00",
    "kaynak_kimlikleri": [
     "sbb-da5daa8219d79d37ffcf3702"
-   ]
+   ],
+   "ogrenim": [
+    "ortaogretim"
+   ],
+   "kategori": "isci"
   },
   {
    "id": "sbb-d469b22dc5efde7f73c31a29",
@@ -3505,7 +3656,11 @@
    "ilk_gorulme": "2026-09-30T14:41:01+03:00",
    "kaynak_kimlikleri": [
     "sbb-d469b22dc5efde7f73c31a29"
-   ]
+   ],
+   "ogrenim": [
+    "ortaogretim"
+   ],
+   "kategori": "isci"
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=5ed3d045-a188-46aa-ba1b-f2b4cbd21e48",
@@ -3578,7 +3733,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/b9961d5db59395e2f96c98d74a8fdf8bbb89ed5316c26d0d627b338f130c2822.pdf",
    "belge_sha256": "b9961d5db59395e2f96c98d74a8fdf8bbb89ed5316c26d0d627b338f130c2822",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-70672413818902ce34db6b69",
@@ -3619,7 +3775,10 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/8b0747301aa92bf5b5056feea44a00390b637ee67b0ccd7d3a201a76263863df.pdf",
    "belge_sha256": "8b0747301aa92bf5b5056feea44a00390b637ee67b0ccd7d3a201a76263863df",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "ogrenim": [
+    "ortaogretim"
+   ]
   },
   {
    "id": "sbb-af8b48f6cba75a72b79efb54",
@@ -3656,7 +3815,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/6bb8743718b2150ed4876397b6f4cb8ae8f06db5639da4a6e68e5f3dddaf3bfa.pdf",
    "belge_sha256": "6bb8743718b2150ed4876397b6f4cb8ae8f06db5639da4a6e68e5f3dddaf3bfa",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-06b9d460e79f56acda870c83",
@@ -3693,7 +3853,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/684c4e99794c54b1356cade5c3f69e5d8e937645feeed33e16d3d92510c677ae.pdf",
    "belge_sha256": "684c4e99794c54b1356cade5c3f69e5d8e937645feeed33e16d3d92510c677ae",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-0eedc1334b1a439324cd602b",
@@ -3750,7 +3911,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/2750322793a15627875c8f3b6b0a478f4221ccc7e8b0f460782f63bf39e15a93.pdf",
    "belge_sha256": "2750322793a15627875c8f3b6b0a478f4221ccc7e8b0f460782f63bf39e15a93",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-0f3b5511cf9fef1e30449d42",
@@ -3807,7 +3969,10 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/3a37a1390224df5ff55025b854cc32d4a656e6a3202bfcd7199acee40823d45b.pdf",
    "belge_sha256": "3a37a1390224df5ff55025b854cc32d4a656e6a3202bfcd7199acee40823d45b",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "ogrenim": [
+    "lisans"
+   ]
   },
   {
    "id": "sbb-6fa41d0a346f8a294418a227",
@@ -3864,7 +4029,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/0861613187c76d7f1246add9f18d3676a4667f2be291f8711df9dfc4432fb55a.pdf",
    "belge_sha256": "0861613187c76d7f1246add9f18d3676a4667f2be291f8711df9dfc4432fb55a",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=90be2def-8597-49a5-a02e-e49b6649aaa4",
@@ -3906,7 +4072,10 @@
    ],
    "sart_kadro_sayisi": 2,
    "basvuru_notu": "2. Şahsen başvuru alınmayacak, posta veya diğer yollarla yapılan müracaatlar kabul edilmeyecektir.",
-   "detay_guncelleme": "2026-10-01T12:13:30+03:00"
+   "detay_guncelleme": "2026-10-01T12:13:30+03:00",
+   "ogrenim": [
+    "onlisans"
+   ]
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=61dc4762-6ce3-483c-b629-eaaf6090fb88",
@@ -3943,7 +4112,11 @@
    ],
    "sart_kadro_sayisi": 3,
    "basvuru_notu": "Başvuru Adresi: Başvurular, e-Devlet Kapısı “Ankara Hacı Bayram Veli Üniversitesi-Kariyer Kapısı Kamu İşe Alım” hizmeti veya “Kariyer Kapısı” (https://kariyerkapisi.gov.tr/isealim) internet adresi üzerinden yapılacaktır. Şahsen başvuru alınmayacak olup posta veya diğer yollarla yapılan müracaatlar kabul edilmeyecektir.",
-   "detay_guncelleme": "2026-10-01T12:13:30+03:00"
+   "detay_guncelleme": "2026-10-01T12:13:30+03:00",
+   "ogrenim": [
+    "onlisans",
+    "ortaogretim"
+   ]
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=f610d591-850c-4344-ae68-03e5e6c7a169",
@@ -3976,7 +4149,10 @@
    ],
    "sart_kadro_sayisi": 4,
    "basvuru_notu": "Elden Son Teslim Tarihi 14 Ekim 2026 (Mesai Bitimi)",
-   "detay_guncelleme": "2026-10-01T12:13:31+03:00"
+   "detay_guncelleme": "2026-10-01T12:13:31+03:00",
+   "ogrenim": [
+    "onlisans"
+   ]
   },
   {
    "id": "sbb-92175a7cf7d3c024505448b2",
@@ -4013,7 +4189,8 @@
    "ilk_gorulme": "2026-09-28T12:09:28+03:00",
    "kaynak_kimlikleri": [
     "sbb-92175a7cf7d3c024505448b2"
-   ]
+   ],
+   "kategori": "akademik"
   },
   {
    "id": "sbb-2c60d66c73ecea798dced013",
@@ -4045,7 +4222,8 @@
    "ilk_gorulme": "2026-09-28T12:09:28+03:00",
    "kaynak_kimlikleri": [
     "sbb-2c60d66c73ecea798dced013"
-   ]
+   ],
+   "kategori": "akademik"
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=215c245e-8d5b-4b93-bc10-0c859069aefa",
@@ -4083,7 +4261,10 @@
    ],
    "sart_kadro_sayisi": 2,
    "basvuru_notu": "2- Şahsen başvuru alınmayacak olup posta veya diğer yollarla yapılan müracaatlar da kabul edilmeyecektir.",
-   "detay_guncelleme": "2026-10-01T12:13:31+03:00"
+   "detay_guncelleme": "2026-10-01T12:13:31+03:00",
+   "ogrenim": [
+    "ortaogretim"
+   ]
   },
   {
    "id": "sbb-b41b1cc08f87c2bbc13c8473",
@@ -4140,7 +4321,8 @@
    "ilk_gorulme": "2026-09-28T12:09:28+03:00",
    "kaynak_kimlikleri": [
     "sbb-b41b1cc08f87c2bbc13c8473"
-   ]
+   ],
+   "kategori": "akademik"
   },
   {
    "id": "sbb-dda3ce13537e7c6e5a9a5a62",
@@ -4197,7 +4379,8 @@
    "ilk_gorulme": "2026-09-28T12:09:28+03:00",
    "kaynak_kimlikleri": [
     "sbb-dda3ce13537e7c6e5a9a5a62"
-   ]
+   ],
+   "kategori": "akademik"
   },
   {
    "id": "sbb-c504fd4e2be5f2b04af620d3",
@@ -4229,7 +4412,8 @@
    "ilk_gorulme": "2026-09-29T00:09:47+03:00",
    "kaynak_kimlikleri": [
     "sbb-c504fd4e2be5f2b04af620d3"
-   ]
+   ],
+   "kategori": "akademik"
   },
   {
    "id": "sbb-5e8caa7baa7bf182a6bc458e",
@@ -4286,7 +4470,8 @@
    "ilk_gorulme": "2026-09-29T00:09:47+03:00",
    "kaynak_kimlikleri": [
     "sbb-5e8caa7baa7bf182a6bc458e"
-   ]
+   ],
+   "kategori": "akademik"
   },
   {
    "id": "sbb-cbd741bfdacb09b22ac9930c",
@@ -4323,7 +4508,8 @@
    "ilk_gorulme": "2026-09-29T00:09:47+03:00",
    "kaynak_kimlikleri": [
     "sbb-cbd741bfdacb09b22ac9930c"
-   ]
+   ],
+   "kategori": "akademik"
   },
   {
    "id": "sbb-b5a0d1ee6981cc5d0c010bb2",
@@ -4364,7 +4550,8 @@
    "ilk_gorulme": "2026-09-29T00:09:47+03:00",
    "kaynak_kimlikleri": [
     "sbb-b5a0d1ee6981cc5d0c010bb2"
-   ]
+   ],
+   "kategori": "akademik"
   },
   {
    "id": "sbb-ec7e023f7f6a9694a76e3dfb",
@@ -4421,7 +4608,8 @@
    "ilk_gorulme": "2026-09-29T17:23:20+03:00",
    "kaynak_kimlikleri": [
     "sbb-ec7e023f7f6a9694a76e3dfb"
-   ]
+   ],
+   "kategori": "akademik"
   },
   {
    "id": "sbb-5e3e614f6e44ea2107361161",
@@ -4462,7 +4650,8 @@
    "ilk_gorulme": "2026-09-29T17:23:20+03:00",
    "kaynak_kimlikleri": [
     "sbb-5e3e614f6e44ea2107361161"
-   ]
+   ],
+   "kategori": "akademik"
   },
   {
    "id": "sbb-d8312b9581a2391ffacccc97",
@@ -4507,7 +4696,8 @@
    "ilk_gorulme": "2026-09-30T00:09:22+03:00",
    "kaynak_kimlikleri": [
     "sbb-d8312b9581a2391ffacccc97"
-   ]
+   ],
+   "kategori": "akademik"
   },
   {
    "id": "sbb-d9db77fd756f0d5e88d77995",
@@ -4552,7 +4742,8 @@
    "ilk_gorulme": "2026-10-01T12:23:43+03:00",
    "kaynak_kimlikleri": [
     "sbb-d9db77fd756f0d5e88d77995"
-   ]
+   ],
+   "kategori": "akademik"
   },
   {
    "id": "sbb-20fbbd22c15a3e2797a5153b",
@@ -4601,7 +4792,8 @@
    "ilk_gorulme": "2026-10-01T12:23:43+03:00",
    "kaynak_kimlikleri": [
     "sbb-20fbbd22c15a3e2797a5153b"
-   ]
+   ],
+   "kategori": "akademik"
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=72a90e54-4258-44d9-903d-295baf21f897",
@@ -4634,7 +4826,10 @@
    "kaynak_kimlikleri": [
     "https://kariyerkapisi.gov.tr/IlanDetay?i=72a90e54-4258-44d9-903d-295baf21f897"
    ],
-   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/8115c03a-d2e6-4183-9aa1-9ca9032eaeb6.png"
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/8115c03a-d2e6-4183-9aa1-9ca9032eaeb6.png",
+   "ogrenim": [
+    "lisans"
+   ]
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=bd035022-6f30-4150-8acc-a6061a5dd315",
@@ -4667,7 +4862,10 @@
    "kaynak_kimlikleri": [
     "https://kariyerkapisi.gov.tr/IlanDetay?i=bd035022-6f30-4150-8acc-a6061a5dd315"
    ],
-   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/8115c03a-d2e6-4183-9aa1-9ca9032eaeb6.png"
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/8115c03a-d2e6-4183-9aa1-9ca9032eaeb6.png",
+   "ogrenim": [
+    "lisans"
+   ]
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=1559e356-a0e2-44e2-869b-beb38c5fdb7a",
@@ -4727,7 +4925,7 @@
      "link": "https://www.iskur.gov.tr/medya/auljiglt/istanbul-bankac%C4%B1l%C4%B1k-duezenleme-ve-denetleme-kurumu-meslek-personeli-sinav-ilan%C4%B1-19102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:46:56+03:00",
+   "detay_guncelleme": "2026-10-01T15:26:38+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-edc2d470694c21853b0687e1"
@@ -4777,7 +4975,8 @@
    ],
    "sart_kadro_sayisi": 11,
    "basvuru_notu": "1.Başvurular, 12.10.2026 tarihinden 19.10.2026 tarihi saat 17:00’a kadar Cumhurbaşkanlığı Kariyer Kapısı (https://kariyerkapisi.gov.tr) adresinden yapılacak ve istenilen belgeler taranılarak elektronik ortama aktarılacaktır. Şahsen, kargo ya da posta yoluyla yapılan başvurular kabul edilmeyecektir.",
-   "detay_guncelleme": "2026-10-01T12:13:33+03:00"
+   "detay_guncelleme": "2026-10-01T12:13:33+03:00",
+   "kategori": "bilisim"
   },
   {
    "id": "sbb-b2fb286c43de0cc8445bd632",
@@ -4822,7 +5021,11 @@
    "ilk_gorulme": "2026-09-28T12:22:08+03:00",
    "kaynak_kimlikleri": [
     "sbb-b2fb286c43de0cc8445bd632"
-   ]
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "kategori": "bilisim"
   },
   {
    "id": "iskur-372564423bd22d94fde88cb4",
@@ -4841,7 +5044,7 @@
      "link": "https://www.iskur.gov.tr/medya/xhgeviwu/cumhurba%C5%9Fkanl%C4%B1%C4%9F%C4%B1-ileti%C5%9Fim-ba%C5%9Fkanl%C4%B1%C4%9F%C4%B1-ileti%C5%9Fim-uzman-yard%C4%B1mc%C4%B1s%C4%B1-s%C4%B1nav-ilan%C4%B1-20112026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:46:22+03:00",
+   "detay_guncelleme": "2026-10-01T15:26:09+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-372564423bd22d94fde88cb4"
@@ -4868,12 +5071,13 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:46:36+03:00",
+   "detay_guncelleme": "2026-10-01T15:26:22+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-3b7504f32c379b237fe86abd",
     "sbb-1f354f27ed7ce5d5e7121992"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "iskur-3f593d9e3c71078c698a111a",
@@ -4892,11 +5096,12 @@
      "link": "https://www.iskur.gov.tr/medya/0zyoftxs/mu%C5%9F-elmakaya-belediyesi-memur-al%C4%B1m-ilan%C4%B1-21102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:47:21+03:00",
+   "detay_guncelleme": "2026-10-01T15:26:58+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-3f593d9e3c71078c698a111a"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "iskur-9d4d97ec470c2efcf5b3e55c",
@@ -4915,11 +5120,12 @@
      "link": "https://www.iskur.gov.tr/medya/lntnwe1n/i%C4%9Fd%C4%B1r-aral%C4%B1k-belediyesi-itfaiye-eri-al%C4%B1m-ilan%C4%B1-21102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:47:50+03:00",
+   "detay_guncelleme": "2026-10-01T15:27:23+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-9d4d97ec470c2efcf5b3e55c"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "sbb-97e476fbb140b9951ef70fe8",
@@ -4960,7 +5166,11 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/26ce97b4d96d7a395f7dd1af9d3a6225a83ed3776b2841721978642749700d6a.pdf",
    "belge_sha256": "26ce97b4d96d7a395f7dd1af9d3a6225a83ed3776b2841721978642749700d6a",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "sbb-8a62442fbdabe75f3d80199d",
@@ -5017,7 +5227,12 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/d8fd1c7edd86245304e1066a3eae435980d534ed274167012f66bc521c3b4536.pdf",
    "belge_sha256": "d8fd1c7edd86245304e1066a3eae435980d534ed274167012f66bc521c3b4536",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "ogrenim": [
+    "onlisans",
+    "ortaogretim"
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "iskur-d7f20bcc9ddeb5d62087e563",
@@ -5040,12 +5255,13 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:46:36+03:00",
+   "detay_guncelleme": "2026-10-01T15:26:22+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-d7f20bcc9ddeb5d62087e563",
     "sbb-0cd45f4e78a1e1d6fe48dd62"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "iskur-ce2ccce684a67cfe5ec42653",
@@ -5068,12 +5284,13 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:46:22+03:00",
+   "detay_guncelleme": "2026-10-01T15:26:09+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-ce2ccce684a67cfe5ec42653",
     "sbb-affb1a41187ebc15ed245f38"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "iskur-ee701ad45d382400f44d53e1",
@@ -5092,7 +5309,7 @@
      "link": "https://www.iskur.gov.tr/medya/4j0dwbbo/gelir-idaresi-ba%C5%9Fkanl%C4%B1%C4%9F%C4%B1-gelir-uzman-yard%C4%B1mc%C4%B1l%C4%B1%C4%9F%C4%B1-s%C4%B1nav-ilan%C4%B1-23102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:46:22+03:00",
+   "detay_guncelleme": "2026-10-01T15:26:09+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-ee701ad45d382400f44d53e1"
@@ -5119,12 +5336,13 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:46:27+03:00",
+   "detay_guncelleme": "2026-10-01T15:26:14+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-55d194dea1dd698008c3081f",
     "sbb-97327153b77d520d565e86e0"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "iskur-23bb5b4d65d3d7cab7bc3531",
@@ -5143,7 +5361,7 @@
      "link": "https://www.iskur.gov.tr/medya/wx1p1ned/isparta-bat%C4%B1-akdeniz-kalk%C4%B1nma-ajans%C4%B1-personel-al%C4%B1m-ilan%C4%B1-23102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:46:51+03:00",
+   "detay_guncelleme": "2026-10-01T15:26:34+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-23bb5b4d65d3d7cab7bc3531"
@@ -5166,11 +5384,12 @@
      "link": "https://www.iskur.gov.tr/medya/caddauml/gen%C3%A7lik-ve-spor-bakanl%C4%B1%C4%9F%C4%B1-soezle%C5%9Fmeli-bili%C5%9Fim-personeli-al%C4%B1m-ilan%C4%B1-25102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:46:22+03:00",
+   "detay_guncelleme": "2026-10-01T15:26:09+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-2c1f6248f41bf93601b7b619"
-   ]
+   ],
+   "kategori": "bilisim"
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=826fbdb8-f082-4294-9ac6-cd0abd98a7c9",
@@ -5213,7 +5432,10 @@
    ],
    "sart_kadro_sayisi": 6,
    "basvuru_notu": "Başvurular elektronik ortamda 19.10.2026 tarihinde başlayacak olup, 26.10.2026 tarihi saat 18.00'e kadar alınacaktır. Sınava katılmak isteyen adaylar, e-Devlet üzerinden erişim sağlanan https://kariyerkapisi.gov.tr/isealim adresinden başvurularını gerçekleştirecektir. İlanda belirtilen şartlara uygun olmayan başvurular ile süresi içinde yapılmayan başvurular dikkate alınmayacaktır. Posta ile veya diğer şekillerde yapılan müracaatlar kabul…",
-   "detay_guncelleme": "2026-10-01T12:13:34+03:00"
+   "detay_guncelleme": "2026-10-01T12:13:34+03:00",
+   "ogrenim": [
+    "lisans"
+   ]
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=ac9395a0-1096-4384-abba-76719301f64a",
@@ -5250,7 +5472,10 @@
    "kaynak_kimlikleri": [
     "https://kariyerkapisi.gov.tr/IlanDetay?i=ac9395a0-1096-4384-abba-76719301f64a"
    ],
-   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/6004dd51-a2bf-4da8-ade8-62628c1253f7.png"
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/6004dd51-a2bf-4da8-ade8-62628c1253f7.png",
+   "ogrenim": [
+    "lisans"
+   ]
   },
   {
    "id": "iskur-427041e176b4b5fb14fbd125",
@@ -5269,7 +5494,7 @@
      "link": "https://www.iskur.gov.tr/medya/kqjkfztt/kocaeli-do%C4%9Fu-marmara-kalk%C4%B1nma-ajans%C4%B1-personel-al%C4%B1m-ilan%C4%B1-27102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:47:12+03:00",
+   "detay_guncelleme": "2026-10-01T15:26:50+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-427041e176b4b5fb14fbd125"
@@ -5296,7 +5521,8 @@
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-8a56d2bbc977a2e768de502d"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "iskur-e5a9e00c5b187107927c4403",
@@ -5319,12 +5545,13 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:48:01+03:00",
+   "detay_guncelleme": "2026-10-01T15:27:30+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-e5a9e00c5b187107927c4403",
     "sbb-cc1b21921fd00db5f3a6973a"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "sbb-0813fe0f6f1504f3ed9c2b85",
@@ -5369,7 +5596,10 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/f884cc864b3091db49821d4853ecd8775d9893aff55856605e149a2b5743ebf2.pdf",
    "belge_sha256": "f884cc864b3091db49821d4853ecd8775d9893aff55856605e149a2b5743ebf2",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "ogrenim": [
+    "lisans"
+   ]
   },
   {
    "id": "sbb-78ecc1544a503271d3a2cfe6",
@@ -5414,7 +5644,11 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/9df29492e88442306d52fd8bcb45dd1de09fd48bf3ec3777d4488525f6eacb91.pdf",
    "belge_sha256": "9df29492e88442306d52fd8bcb45dd1de09fd48bf3ec3777d4488525f6eacb91",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "ogrenim": [
+    "onlisans"
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "iskur-82e1a52fc83cba2b4d8fa6ff",
@@ -5437,12 +5671,13 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:47:06+03:00",
+   "detay_guncelleme": "2026-10-01T15:26:45+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-82e1a52fc83cba2b4d8fa6ff",
     "sbb-e4c5a670d86fdc65b4c851ba"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=eff11df8-6568-4b54-9deb-2865aa9ac767",
@@ -5480,7 +5715,10 @@
     "https://kariyerkapisi.gov.tr/IlanDetay?i=eff11df8-6568-4b54-9deb-2865aa9ac767",
     "sbb-689d254bb5b5269e60b957f7"
    ],
-   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/a0d7b5c9-fcd1-4aed-be0f-40de21fa6b5f.png"
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/a0d7b5c9-fcd1-4aed-be0f-40de21fa6b5f.png",
+   "ogrenim": [
+    "lisans"
+   ]
   },
   {
    "id": "iskur-20df4e86aedf099d725ee262",
@@ -5499,11 +5737,12 @@
      "link": "https://www.iskur.gov.tr/medya/horguglp/istanbul-bueyuek%C5%9Fehir-belediyesi-iett-i%C5%9Fletmeleri-genel-mueduerlue%C4%9Fue-memur-al%C4%B1m-ilan%C4%B1-02112026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:46:56+03:00",
+   "detay_guncelleme": "2026-10-01T15:26:38+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-20df4e86aedf099d725ee262"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "sbb-390fd0065a5a1473b643ad5b",
@@ -5560,7 +5799,10 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/0b6bcb0f9bd0b291f2116d833f4dc86dfdbed762096c92832af76291151a2ced.pdf",
    "belge_sha256": "0b6bcb0f9bd0b291f2116d833f4dc86dfdbed762096c92832af76291151a2ced",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "ogrenim": [
+    "lisans"
+   ]
   },
   {
    "id": "iskur-0ca1c1811f87d2184aafb65b",
@@ -5579,11 +5821,12 @@
      "link": "https://www.iskur.gov.tr/medya/vldigvnk/a%C4%9Fr%C4%B1-ele%C5%9Fkirt-belediyesi-memur-al%C4%B1m-ilan%C4%B1-04112026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:46:17+03:00",
+   "detay_guncelleme": "2026-10-01T15:26:06+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-0ca1c1811f87d2184aafb65b"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "iskur-5a5a6b5acc24bdec945de41f",
@@ -5606,12 +5849,13 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:47:21+03:00",
+   "detay_guncelleme": "2026-10-01T15:26:58+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-5a5a6b5acc24bdec945de41f",
     "sbb-f0b11dbb77f56fee55391dd0"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "sbb-b79b5a2fa5f2a1036a2ea5bc",
@@ -5660,7 +5904,11 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/e26d4346d3a54d511a9288d3f9fad374cc29ce518ad250d4daadf496a51e228b.pdf",
    "belge_sha256": "e26d4346d3a54d511a9288d3f9fad374cc29ce518ad250d4daadf496a51e228b",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "sbb-e8ae93983bf6055ce4addbe1",
@@ -5705,7 +5953,11 @@
    "ilk_gorulme": "2026-09-30T14:41:01+03:00",
    "kaynak_kimlikleri": [
     "sbb-e8ae93983bf6055ce4addbe1"
-   ]
+   ],
+   "ogrenim": [
+    "ortaogretim"
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "iskur-c322e5601259e08082548c73",
@@ -5728,12 +5980,13 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-01T14:47:16+03:00",
+   "detay_guncelleme": "2026-10-01T15:26:54+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-c322e5601259e08082548c73",
     "sbb-ecf59ed7e2efa1568b9c5dc8"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "sbb-996152b017d1af5f445dfade",
@@ -5782,7 +6035,11 @@
    "ilk_gorulme": "2026-09-30T14:41:01+03:00",
    "kaynak_kimlikleri": [
     "sbb-996152b017d1af5f445dfade"
-   ]
+   ],
+   "ogrenim": [
+    "ortaogretim"
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "sbb-ce3aeb16575b73442a9f8944",
@@ -5839,7 +6096,11 @@
    "ilk_gorulme": "2026-09-30T14:41:01+03:00",
    "kaynak_kimlikleri": [
     "sbb-ce3aeb16575b73442a9f8944"
-   ]
+   ],
+   "ogrenim": [
+    "onlisans"
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "sbb-9c31b73e8bf1ca0dcd1af3df",
@@ -5884,7 +6145,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/789e6bda796f49d1d19069cb5a37caee9032e249003235b9c0f8fe904d78e861.pdf",
    "belge_sha256": "789e6bda796f49d1d19069cb5a37caee9032e249003235b9c0f8fe904d78e861",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=afe2204a-98dc-4572-b870-2456c53131d4",
@@ -5954,7 +6216,8 @@
      "ad": "Kariyer Kapısı",
      "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=bbb712a1-b716-42c9-b235-b8eee837643f"
     }
-   ]
+   ],
+   "kategori": "bilisim"
   },
   {
    "id": "sbb-b411eade69d5ac65717b7b95",
@@ -6006,7 +6269,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/0efa2188aebefca7be7486f185f24ee2c6e69643897385bbd8c1f2501d452a8b.pdf",
    "belge_sha256": "0efa2188aebefca7be7486f185f24ee2c6e69643897385bbd8c1f2501d452a8b",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-809b134654a12117df3fdb91",
@@ -6062,7 +6326,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/1d7e3beef333a987c866c17f323e74297c4dc2d7fce0e76d53138dd6c8d5964d.pdf",
    "belge_sha256": "1d7e3beef333a987c866c17f323e74297c4dc2d7fce0e76d53138dd6c8d5964d",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-31f674ea38e72d5752e547f3",
@@ -6106,7 +6371,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/53374b53dfa2fc6c89b8e2d02f1ae3b771bc9f926524027aa0b77ce3b681f914.pdf",
    "belge_sha256": "53374b53dfa2fc6c89b8e2d02f1ae3b771bc9f926524027aa0b77ce3b681f914",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-fefad4b939608db5c1d8a19c",
@@ -6162,7 +6428,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/d47781b3ca8e97963036957ddc77cf2f52c396ebb132e8e9a51d008b6eaef3a4.pdf",
    "belge_sha256": "d47781b3ca8e97963036957ddc77cf2f52c396ebb132e8e9a51d008b6eaef3a4",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-6c67df0d4cd5558212417209",
@@ -6202,7 +6469,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/73f10c80292df5e7864d33a97d4b1a6deedb458e55cdbc3f4b04d408555dddfe.pdf",
    "belge_sha256": "73f10c80292df5e7864d33a97d4b1a6deedb458e55cdbc3f4b04d408555dddfe",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-a091d9586feae0e1ef32dab7",
@@ -6233,7 +6501,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/75020395740d3ed2eb6c089e9aee393df5b1adfe7e75c0460db44cc0193c8e90.pdf",
    "belge_sha256": "75020395740d3ed2eb6c089e9aee393df5b1adfe7e75c0460db44cc0193c8e90",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-1def1b8d97a4370abc1083d3",
@@ -6269,7 +6538,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/c9971953e71879587b342db1c71720daed58fd8bdf8f964b0f716e8c76b13ec8.pdf",
    "belge_sha256": "c9971953e71879587b342db1c71720daed58fd8bdf8f964b0f716e8c76b13ec8",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-36201de94c0c382c6da092f3",
@@ -6305,7 +6575,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/1bc07c0b2584681474de2e2359f67e38d904eb90fb2a3dbfbc2c7c6831e29143.pdf",
    "belge_sha256": "1bc07c0b2584681474de2e2359f67e38d904eb90fb2a3dbfbc2c7c6831e29143",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-be88061acee759d21689ab48",
@@ -6341,7 +6612,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/c12f303ac9c53d3670f70da390f20e9fd733bbb9793c9dcaf8aaec0e9f7d235e.pdf",
    "belge_sha256": "c12f303ac9c53d3670f70da390f20e9fd733bbb9793c9dcaf8aaec0e9f7d235e",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-f09c844712a72cf2298488ed",
@@ -6397,7 +6669,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/2d082070c18595ecbf8236880f9d9880b1de9ec65b5ddd2436bce788b885d6c2.pdf",
    "belge_sha256": "2d082070c18595ecbf8236880f9d9880b1de9ec65b5ddd2436bce788b885d6c2",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-66d7ba5846cebebda3352495",
@@ -6484,7 +6757,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/fe365eef72d915072518d784bab59164436983b9659a42f62ac5164beae3849b.pdf",
    "belge_sha256": "fe365eef72d915072518d784bab59164436983b9659a42f62ac5164beae3849b",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-6ff672310bc2c5b34ccf2da8",
@@ -6528,7 +6802,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/f291779f40481aff49645a7adb4942ce43e7f3902ba84072354c9d3705dd1944.pdf",
    "belge_sha256": "f291779f40481aff49645a7adb4942ce43e7f3902ba84072354c9d3705dd1944",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-7d8996f63d7c91f6768fd310",
@@ -6568,7 +6843,10 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/0beed51ad47506b2094c84173e463814856138fdec78dc331273869b516ca948.pdf",
    "belge_sha256": "0beed51ad47506b2094c84173e463814856138fdec78dc331273869b516ca948",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "ogrenim": [
+    "lisans"
+   ]
   },
   {
    "id": "sbb-af90a8ab2404bc69c088d70b",
@@ -6600,7 +6878,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/d5d1a0eeab9415c6b4a10cae880adf81378bcb40a19345b5598c6be6b698adc0.pdf",
    "belge_sha256": "d5d1a0eeab9415c6b4a10cae880adf81378bcb40a19345b5598c6be6b698adc0",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-2caf6c6d0c5408e4f309eb59",
@@ -6656,7 +6935,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/2759f2d6906b64a776431bae37da8b78f5975b972031f36d5b639b1fc754b3f8.pdf",
    "belge_sha256": "2759f2d6906b64a776431bae37da8b78f5975b972031f36d5b639b1fc754b3f8",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-58513c38e2d2e6d7fdb32568",
@@ -6736,7 +7016,10 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/2401a8ff1caeb83bb99aafe7d5aa768ef0eabe768d58f783efae99c6a84c1fef.pdf",
    "belge_sha256": "2401a8ff1caeb83bb99aafe7d5aa768ef0eabe768d58f783efae99c6a84c1fef",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "ogrenim": [
+    "lisans"
+   ]
   },
   {
    "id": "sbb-34824762de91ff933a840326",
@@ -6840,7 +7123,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/3c8d238d47f8ff91066d79026586bf1c0e166df1b3b03103af90a9f80db14c9b.pdf",
    "belge_sha256": "3c8d238d47f8ff91066d79026586bf1c0e166df1b3b03103af90a9f80db14c9b",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-465948883c02d0a012458ae5",
@@ -6888,7 +7172,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/997a21836109be1b2899b57fed92f3a577515bc09b4d44a45453c9c775dde48a.pdf",
    "belge_sha256": "997a21836109be1b2899b57fed92f3a577515bc09b4d44a45453c9c775dde48a",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-6295f6e0ec51fdf233636132",
@@ -6924,7 +7209,10 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/0e0ed2774685f63bb22de2b37f41c54a24da9f29fcf946a002d6b2aa92bfec9a.pdf",
    "belge_sha256": "0e0ed2774685f63bb22de2b37f41c54a24da9f29fcf946a002d6b2aa92bfec9a",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "ogrenim": [
+    "onlisans"
+   ]
   },
   {
    "id": "sbb-ecd985bd51bdd8601a168d62",
@@ -6991,7 +7279,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/04d0caff923f9d9d2238e4ad96c37e8ba665e888a4b643bd9aa1adf6062bd782.pdf",
    "belge_sha256": "04d0caff923f9d9d2238e4ad96c37e8ba665e888a4b643bd9aa1adf6062bd782",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-cc10be5230ae54b4d12a99fa",
@@ -7022,7 +7311,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/e068701f8481e238c9d6d8c52585af195359ef90214269433210593ed9e459ca.pdf",
    "belge_sha256": "e068701f8481e238c9d6d8c52585af195359ef90214269433210593ed9e459ca",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-26172bbc5521a3597d438020",
@@ -7078,7 +7368,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/5c097d191441612b06f66db6b2b3f347b5d063e8b7ebd294b4457a1938653417.pdf",
    "belge_sha256": "5c097d191441612b06f66db6b2b3f347b5d063e8b7ebd294b4457a1938653417",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-5fb58b9edd2d30431e1fbef6",
@@ -7109,7 +7400,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/4db3c6108937164c04353802ce550e82901dd6904c56042bea088a76bc3d549c.pdf",
    "belge_sha256": "4db3c6108937164c04353802ce550e82901dd6904c56042bea088a76bc3d549c",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-226aeec96041e044b1a942c5",
@@ -7140,7 +7432,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/e5a28acae71be0fe343be72717574a278d29ad34af3c502ead117092f90ab204.pdf",
    "belge_sha256": "e5a28acae71be0fe343be72717574a278d29ad34af3c502ead117092f90ab204",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-3c310491631a302005de30bd",
@@ -7202,7 +7495,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/db88baf64e48682a66d75dc5b6573ed98bbbb9980161d4fb95ad06e6239ceace.pdf",
    "belge_sha256": "db88baf64e48682a66d75dc5b6573ed98bbbb9980161d4fb95ad06e6239ceace",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "belediye"
   },
   {
    "id": "sbb-a9fa876c2c8808fb5e6d4bc0",
@@ -7250,7 +7544,11 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/7adbe91df2cb839a579318192d68f90020a3dc9fe851087bb230d7558a31cbe3.pdf",
    "belge_sha256": "7adbe91df2cb839a579318192d68f90020a3dc9fe851087bb230d7558a31cbe3",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "sbb-88a9760a607c548d73c7b5c9",
@@ -7302,7 +7600,11 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/e18b8974f818e184861b6d7e7ece16164f637603eb7b86e6a3200314acedb2a2.pdf",
    "belge_sha256": "e18b8974f818e184861b6d7e7ece16164f637603eb7b86e6a3200314acedb2a2",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "sbb-430c26aecb5c9fc198f2999a",
@@ -7350,7 +7652,10 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/e3aab9de3b0d738c6354efd35b2eda630a6726569930f30f2015f080ab31d799.pdf",
    "belge_sha256": "e3aab9de3b0d738c6354efd35b2eda630a6726569930f30f2015f080ab31d799",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "ogrenim": [
+    "lisans"
+   ]
   },
   {
    "id": "sbb-c9d65b8f680562ecac4d0fb4",
@@ -7398,7 +7703,12 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/f3be3b81cff7e5fdafb71ee23b50b9ef018c997a709abecd8940226f7de5d845.pdf",
    "belge_sha256": "f3be3b81cff7e5fdafb71ee23b50b9ef018c997a709abecd8940226f7de5d845",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "ogrenim": [
+    "lisans",
+    "onlisans",
+    "ortaogretim"
+   ]
   },
   {
    "id": "sbb-49c7fa65c13a199233b59d76",
@@ -7429,7 +7739,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/538cf2cc18f1c7d3e2d6ed7042eb4cd4fcb8d0d3340bf8ce4b50d72f9a17f483.pdf",
    "belge_sha256": "538cf2cc18f1c7d3e2d6ed7042eb4cd4fcb8d0d3340bf8ce4b50d72f9a17f483",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "kategori": "akademik"
   },
   {
    "id": "sbb-3f448fe766b534054afb6294",
@@ -7465,7 +7776,8 @@
    "ilk_gorulme": "2026-09-29T00:09:47+03:00",
    "kaynak_kimlikleri": [
     "sbb-3f448fe766b534054afb6294"
-   ]
+   ],
+   "kategori": "akademik"
   },
   {
    "id": "sbb-52dbd737dcdc57666bf5642b",
@@ -7497,7 +7809,8 @@
    "ilk_gorulme": "2026-09-29T17:23:20+03:00",
    "kaynak_kimlikleri": [
     "sbb-52dbd737dcdc57666bf5642b"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "sbb-649fc699f7ba30ddee6ff00f",
@@ -7529,7 +7842,8 @@
    "ilk_gorulme": "2026-09-29T17:23:20+03:00",
    "kaynak_kimlikleri": [
     "sbb-649fc699f7ba30ddee6ff00f"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "sbb-3333ec52c9cc10ff4e166307",
@@ -7561,7 +7875,8 @@
    "ilk_gorulme": "2026-09-29T17:23:20+03:00",
    "kaynak_kimlikleri": [
     "sbb-3333ec52c9cc10ff4e166307"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "sbb-a1c877c33f7b4889a05df648",
@@ -7602,6 +7917,9 @@
    "ilk_gorulme": "2026-09-30T14:41:01+03:00",
    "kaynak_kimlikleri": [
     "sbb-a1c877c33f7b4889a05df648"
+   ],
+   "ogrenim": [
+    "lisans"
    ]
   },
   {
@@ -7634,7 +7952,8 @@
    "ilk_gorulme": "2026-09-30T14:41:01+03:00",
    "kaynak_kimlikleri": [
     "sbb-0b7df8582c71ac4f134e4f42"
-   ]
+   ],
+   "kategori": "belediye"
   },
   {
    "id": "sbb-83609f07f8861d5c98115fb7",
@@ -7690,7 +8009,8 @@
    "ilk_gorulme": "2026-10-01T00:09:07+03:00",
    "kaynak_kimlikleri": [
     "sbb-83609f07f8861d5c98115fb7"
-   ]
+   ],
+   "kategori": "akademik"
   },
   {
    "id": "sbb-4b7f53f63fc6ad79ebc93137",
@@ -7722,7 +8042,8 @@
    "ilk_gorulme": "2026-10-01T00:09:07+03:00",
    "kaynak_kimlikleri": [
     "sbb-4b7f53f63fc6ad79ebc93137"
-   ]
+   ],
+   "kategori": "akademik"
   }
  ],
  "telegram_gonderilen": [
@@ -8123,14 +8444,14 @@
  ],
  "kaynak_durumlari": {
   "sbb": {
-   "kontrol": "2026-10-01T14:46:07+03:00",
+   "kontrol": "2026-10-01T15:25:58+03:00",
    "ilan_sayisi": 128,
    "hata_sayisi": 0,
-   "yerel_kontrol": "2026-10-01T11:36:39.183009+00:00",
+   "yerel_kontrol": "2026-10-01T12:06:39.196106+00:00",
    "calisma_yeri": "yerel"
   },
   "iskur": {
-   "kontrol": "2026-10-01T14:48:01+03:00",
+   "kontrol": "2026-10-01T15:27:30+03:00",
    "ilan_sayisi": 37,
    "hata_sayisi": 0
   }
