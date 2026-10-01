@@ -75,6 +75,15 @@ class PuanAyiklaTests(unittest.TestCase):
         self.assertEqual(kayitlar[1]['teskilat'], '')
         self.assertEqual(kayitlar[1]['max'], 84.83284)
 
+    def test_il_alanindaki_birim_kuruma_tasinir(self):
+        metin = ('402010101\nTİCARET BAKANLIĞI / ADANA-TİCARET İL MÜDÜRLÜĞÜ / TAŞRA\nTİCARET UZMAN YARDIMCISI\n'
+                 '1\n1\n0\n80,1 80,1\n402010108\nET VE SÜT KURUMU / YOZGAT (ET KOMBİNASI) / TAŞRA\nVETERİNER\n'
+                 '1\n1\n0\n70,2 70,2\n')
+        kayitlar, _ = metinden_ayikla([metin])
+        self.assertEqual([(k['kurum'], k['il']) for k in kayitlar], [
+            ('TİCARET BAKANLIĞI (TİCARET İL MÜDÜRLÜĞÜ)', 'ADANA'),
+            ('ET VE SÜT KURUMU (ET KOMBİNASI)', 'YOZGAT')])
+
     def test_tutarsiz_satir_hata_olarak_bildirilir(self):
         bozuk = '202010101\nKURUM / ANKARA / MERKEZ\nMEMUR\n3\n1\n0\n80,1 81,2\n'
         kayitlar, hatalar = metinden_ayikla([bozuk])

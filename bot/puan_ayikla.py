@@ -60,8 +60,14 @@ def blok_coz(kod, blok):
         return None
     if len(parcalar) == 2:  # Bazı belediyelerde teşkilat yazılmaz: 'KURUM / İL'.
         parcalar.append('')
+    kurum, il = ' / '.join(parcalar[:-2]), parcalar[-2]
+    # Bazı kurumlarda birim il alanına yazılır: 'ADANA-TİCARET İL MÜDÜRLÜĞÜ', 'YOZGAT (ET KOMBİNASI)'.
+    birim = re.match(r'^([^-(]+?)\s*(?:-\s*(.+)|\((.+)\))$', il)
+    if birim:
+        il = birim.group(1)
+        kurum += ' (' + (birim.group(2) or birim.group(3)).strip() + ')'
     kayit = {
-        'kod': kod, 'kurum': ' / '.join(parcalar[:-2]), 'il': parcalar[-2],
+        'kod': kod, 'kurum': kurum, 'il': il,
         'teskilat': parcalar[-1].capitalize(), 'unvan': unvan, 'kontenjan': kontenjan, 'yerlesen': yerlesen,
     }
     if puanlar:

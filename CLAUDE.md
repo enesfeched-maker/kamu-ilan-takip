@@ -35,7 +35,7 @@ fayda + reklam/sponsor geliri. Sohbet dili Türkçe; kod adları Türkçe.
 
 ## Yol haritası (sırayla)
 1. [PR #2 açık] Öğrenim düzeyi filtresi + Telegram etiketleri.
-2. [Önlisans + ortaöğretim 2022–2026 hazır; lisans "sayısal bilgiler" PDF'leri bekleniyor] KPSS LİSANS taban puanları (2022–2026 öncelikli; kullanıcının klasörü:
+2. [Taban puanları 3 düzey 2022–2026 hazır; kaynak PDF'ler: C:\Users\Feched\Desktop\kamu-ilan\111lisans|111önlisans|111ortaöğretim. Sırada: nitelik koduyla bölüm eşleştirme] KPSS taban puanları (2022–2026 öncelikli; kullanıcının klasörü:
    `C:\Users\Feched\Desktop\codex-ws\KPSS_Lisans_2010_2026`) → aranabilir tablo + tercih robotu.
    Sonra önlisans ve ortaöğretim.
 3. Kişisel bildirim botu: kullanıcı düzey/il/bölüm seçer, uygun ilanlar özelden gelir.

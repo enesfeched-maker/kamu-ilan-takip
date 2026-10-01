@@ -2,7 +2,7 @@
 const $=id=>document.getElementById(id);
 const PUAN_TURU={lisans:'P3',onlisans:'P93',ortaogretim:'P94'};
 const SAYFA=50,ROBOT_ILK=60,SINIR=2;
-const veriler={};let duzey='onlisans',kayitlar=[],sayfa=1,robotSinir=ROBOT_ILK;
+const veriler={};let duzey='lisans',kayitlar=[],sayfa=1,robotSinir=ROBOT_ILK;
 
 function E(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!=null)n.textContent=text;return n;}
 function kucuk(s){return String(s||'').toLocaleLowerCase('tr').replace(/\s+/g,' ').trim();}
@@ -112,4 +112,4 @@ for(const b of document.querySelectorAll('#duzeyler .tab'))b.onclick=()=>duzeyAc
 for(const id of ['donem','il','sirala'])$(id).onchange=()=>{sayfa=1;tabloCiz();};
 let bekle;$('ara').oninput=()=>{clearTimeout(bekle);bekle=setTimeout(()=>{sayfa=1;tabloCiz();},150);};
 $('robot-form').onsubmit=e=>{e.preventDefault();robotSinir=ROBOT_ILK;robot();};
-duzeyAc(PUAN_TURU[readStore('kit-puan-duzey','')]?readStore('kit-puan-duzey',''):'onlisans');
+duzeyAc(PUAN_TURU[readStore('kit-puan-duzey','')]?readStore('kit-puan-duzey',''):'lisans');
