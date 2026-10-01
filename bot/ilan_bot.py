@@ -494,9 +494,11 @@ def main():
     limit = max(1, int(cfg.get('max_mesaj_per_calisma', 15)))
     hata = False
     adet = 0
+    ertelenen = 0
     for i, hatirlatma in ([] if a.prepare else kuyruk[:limit]):
         if cfg.get('resmi_detaylari_oku', False) and not detay_taze(i):
-            hata = True
+            # Resmi servise geçici erişim sorunu: ilan sırada kalır, iş başarısız sayılmaz.
+            ertelenen += 1
             continue
         metin = mesaj_olustur(i, cfg.get('site_url', ''), hatirlatma)
         if a.dry_run:
@@ -560,6 +562,8 @@ def main():
     print(f"Telegram: {adet} mesaj gönderildi, {len(bekleyen - gonderilen)} ilan bekliyor.")
     if detay_hatalari:
         print(f"Ayrıntıları tekrar denenecek ilan: {len(detay_hatalari)}")
+    if ertelenen:
+        print(f"::warning::Resmi ayrıntısı güncel olmayan {ertelenen} ilanın gönderimi sonraki taramaya ertelendi.")
     if hata:
         sys.exit('Telegram gönderimi tamamlanamadı. Gönderilmeyen ilanlar sonraki taramada tekrar denenecek.')
 
