@@ -8,7 +8,6 @@ import {
 
 const ONAY_METNI =
   'Merhaba! Ben kamu ilanı takip botuyum. Öğrenim düzeyine, iline ve ilgi alanına göre uygun yeni ilanları sana özelden gönderir, son başvuru gününden önce hatırlatırım.\n\n' +
-  "Uygun ilanları sana özelden göndereceğim. İletilerde zaman zaman 'Sponsorlu' etiketli içerik bulunabilir. " +
   'Tercihlerini istediğin an /sil ile tamamen silebilirsin.';
 
 const YARDIM_METNI =
