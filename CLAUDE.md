@@ -40,7 +40,7 @@ fayda + reklam/sponsor geliri. Sohbet dili Türkçe; kod adları Türkçe.
 2. [Taban puanları 3 düzey 2022–2026 hazır; kaynak PDF'ler: C:\Users\Feched\Desktop\kamu-ilan\111lisans|111önlisans|111ortaöğretim. bölüm eşleştirme hazır] KPSS taban puanları (2022–2026 öncelikli; kullanıcının klasörü:
    `C:\Users\Feched\Desktop\codex-ws\KPSS_Lisans_2010_2026`) → aranabilir tablo + tercih robotu.
    Sonra önlisans ve ortaöğretim.
-3. Kişisel bildirim botu: kullanıcı düzey/il/bölüm seçer, uygun ilanlar özelden gelir.
+3. [Kod hazır: `bildirim-botu/` — Cloudflare Worker + D1, @kamuilanibot; tasarım ve ücretsiz plan sınırları bildirim-botu/TASARIM.md] Kişisel bildirim botu.
 4. ÇŞB yerel yönetimler kaynağı (İŞKUR'da olmayan belediye ilanları + iptal duyuruları) yerel tarayıcıya.
 5. Sonra: domain, AdSense (kullanıcı açacak), Instagram/X hesapları + otomatik paylaşım,
    Telegram sponsorlu gönderi / VIP kanal.

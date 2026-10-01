@@ -25,7 +25,7 @@ from ilan_gorsel import gorsel_olustur
 from ek_kaynaklar import read_sbb, read_iskur, merge_sources
 from ilan_baglanti import ilan_sayfasi
 from kurum_gorseli import kurum_logosu
-from siniflandir import etiketler, kategori, ogrenim_seviyeleri
+from siniflandir import etiketler, il_adlari, kategori, kpss_durumu, ogrenim_seviyeleri
 from yerel_kaynak import oku as yerel_oku, sbb_verisi
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -327,8 +327,9 @@ def telegram_icin_uygun(ilan, dahil, haric):
 
 
 def siniflandir(ilan):
-    """Site filtreleri için öğrenim düzeyi ve kategori alanlarını günceller."""
-    for alan, deger in (('ogrenim', ogrenim_seviyeleri(ilan)), ('kategori', kategori(ilan))):
+    """Site filtreleri ve kişisel bot için öğrenim, kategori, il ve KPSS alanlarını günceller."""
+    for alan, deger in (('ogrenim', ogrenim_seviyeleri(ilan)), ('kategori', kategori(ilan)),
+                        ('iller', il_adlari(ilan)), ('kpss', kpss_durumu(ilan))):
         if deger:
             ilan[alan] = deger
         else:

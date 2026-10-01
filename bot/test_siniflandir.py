@@ -1,6 +1,6 @@
 import unittest
 
-from siniflandir import etiketler, kategori, kpss_durumu, ogrenim_seviyeleri
+from siniflandir import etiketler, il_adlari, kategori, kpss_durumu, ogrenim_seviyeleri
 
 
 def ilan(**alanlar):
@@ -106,6 +106,42 @@ class DenetimDuzeltmeTests(unittest.TestCase):
     def test_bozuk_tabloda_p93_lisans_sayilmaz(self):
         ilan = {'ozet': 'ön kadın en az 1 memuru gih 10 1 lisans programlarının erkek p93 60'}
         self.assertEqual(ogrenim_seviyeleri(ilan), ['onlisans'])
+
+
+class IlAdlariTesti(unittest.TestCase):
+    def il(self, yer):
+        return il_adlari(ilan(yer=yer))
+
+    def test_tek_il_ve_ilce(self):
+        self.assertEqual(self.il('İSTANBUL / ATAŞEHİR'), ['İstanbul'])
+        self.assertEqual(self.il('Afyonkarahisar'), ['Afyonkarahisar'])
+        self.assertEqual(self.il('ANKARA • ANKARA / MERKEZ'), ['Ankara'])
+
+    def test_kurum_sonrasi_iller_taranir(self):
+        self.assertEqual(self.il('BATI AKDENİZ KALKINMA AJANSI / ANTALYA, BURDUR, ISPARTA'),
+                         ['Antalya', 'Burdur', 'Isparta'])
+
+    def test_tire_ile_birden_cok_il(self):
+        self.assertEqual(self.il('Kars-Ardahan'), ['Kars', 'Ardahan'])
+        self.assertEqual(self.il('İSTANBUL-ANKARA'), ['İstanbul', 'Ankara'])
+        self.assertEqual(self.il('BURSA -ESKİŞEHİR - BİLECİK'), ['Bursa', 'Eskişehir', 'Bilecik'])
+
+    def test_ilce_basta_il_sonda(self):
+        self.assertEqual(self.il('Çankaya / Ankara'), ['Ankara'])
+        self.assertEqual(self.il('MERKEZ / ANKARA'), ['Ankara'])
+
+    def test_parantez_ve_kismi_tanim(self):
+        self.assertEqual(self.il('İstanbul (Avrupa Yakası) • Ankara'), ['İstanbul', 'Ankara'])
+        self.assertEqual(self.il('DENİZLİ / MANİSA'), ['Denizli', 'Manisa'])
+        self.assertEqual(self.il('ANKARA / ÇANKAYA'), ['Ankara'])
+        self.assertEqual(self.il('Ankara • Çankaya'), [])
+        self.assertEqual(self.il('İzmir, Merkez Teşkilatı'), [])
+
+    def test_emin_degilse_bos(self):
+        self.assertEqual(self.il('BAKANLIK MERKEZ TEŞKİLATI'), [])
+        self.assertEqual(self.il('Ankara Kalkınma Ajansı'), [])
+        self.assertEqual(self.il('Çankaya'), [])
+        self.assertEqual(self.il(None), [])
 
 
 if __name__ == '__main__':

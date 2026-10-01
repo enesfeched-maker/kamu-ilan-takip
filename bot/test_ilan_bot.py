@@ -225,6 +225,16 @@ class EtiketTests(unittest.TestCase):
         self.assertNotIn('ogrenim', ilan)
         self.assertNotIn('kategori', ilan)
 
+    def test_siniflandir_il_ve_kpss_yazar_ve_temizler(self):
+        ilan = {'baslik': 'Zabıta Memuru', 'yer': 'Ankara / Çankaya • İzmir', 'ozet': 'KPSS puanı ile'}
+        ilan_bot.siniflandir(ilan)
+        self.assertEqual(ilan['iller'], ['Ankara', 'İzmir'])
+        self.assertEqual(ilan['kpss'], 'kpss')
+        ilan.update({'yer': 'Bakanlık merkez teşkilatı', 'ozet': 'Genel duyuru'})
+        ilan_bot.siniflandir(ilan)
+        self.assertNotIn('iller', ilan)
+        self.assertNotIn('kpss', ilan)
+
 
 if __name__ == '__main__':
     unittest.main()
