@@ -21,10 +21,45 @@ async function yukle(d){
   return veriler[d];
 }
 
+const bolumVerileri={};let bolumListesiDuzey='',robotNo=0;
+async function bolumYukle(d){
+  if(!(d in bolumVerileri)){
+    try{const r=await fetch(d+'-bolum.json',{cache:'no-cache'});if(!r.ok)return null;bolumVerileri[d]=await r.json();}catch{return null;}  // hata önbelleğe yazılmaz, tekrar denenir
+  }
+  return bolumVerileri[d];
+}
+async function bolumListesiDoldur(){
+  const d=duzey,v=await bolumYukle(d);
+  if(!v||d!==duzey||bolumListesiDuzey===d)return;
+  const adlar=[...new Set(Object.values(v.bolumler))].sort((a,b)=>a.localeCompare(b,'tr'));
+  $('bolum-liste').replaceChildren(...adlar.map(a=>{const o=E('option');o.value=a;return o;}));
+  bolumListesiDuzey=d;
+}
+function bolumKodlari(v,ad){const k=kucuk(ad);return Object.entries(v.bolumler).filter(([,a])=>kucuk(a)===k).map(([kod])=>kod);}
+const BOLUM_NOTLARI={
+  belirsiz:'Bölüm şartı kılavuzun özel koşullarında; kontrol et',
+  okunamadi:'Bu kadronun bölüm şartı belgeden okunamadı; kılavuzdan kontrol et',
+  kismi:'Bu bölüm adının birden fazla ÖSYM program kodu var; kadro yalnız bazılarını kabul ediyor. Diplomandaki programın kabul edildiğini kılavuzdan kontrol et.'};
+// Seçilen adın tüm kodları kabul ediliyorsa 'uygun', yalnız bir kısmı kabul ediliyorsa 'kismi';
+// nitelik bilinmiyorsa 'belirsiz', belgeden okunamadıysa 'okunamadi'; hiçbiri değilse null (kadro elenir).
+function bolumDurumu(k,v,kodlar){
+  if(!k.nit||!k.nit.length)return 'belirsiz';
+  const d=v.nitelikler[k.donem]||{},kabul=new Set();let okunamadi=false;
+  for(const n of k.nit){
+    const l=d[n]||[];
+    if(l.includes('?'))okunamadi=true;
+    for(const s of kodlar)if(l.includes('*')||l.some(e=>e===s||e.endsWith('-*')&&s.startsWith(e.slice(0,-1))))kabul.add(s);
+  }
+  if(kabul.size===kodlar.length)return 'uygun';
+  return kabul.size?'kismi':okunamadi?'okunamadi':null;
+}
+
 async function duzeyAc(d){
   duzey=d;writeStore('kit-puan-duzey',d);
   for(const b of document.querySelectorAll('#duzeyler .tab')){const s=b.dataset.duzey===d;b.classList.toggle('selected',s);b.setAttribute('aria-pressed',s);}
   $('puan-turu').textContent='('+PUAN_TURU[d]+')';
+  $('bolum-etiket').textContent=d==='ortaogretim'?'Mezun olduğun alan / dal':'Mezun olduğun bölüm';
+  $('robot-bolum').value='';$('bolum-liste').replaceChildren();bolumListesiDuzey='';
   const v=await yukle(d);
   if(d!==duzey)return;
   kayitlar=[];
@@ -72,10 +107,18 @@ function tabloCiz(){
   }
 }
 
-function robot(){
+async function robot(){
   const puan=parseFloat(String($('robot-puan').value).replace(',','.')),il=$('robot-il').value,ara=kucuk($('robot-ara').value).split(' ').filter(Boolean);
-  const kutu=$('robot-sonuc');kutu.replaceChildren();
-  if(!kayitlar.length||!(puan>0))return;
+  const kutu=$('robot-sonuc'),d=duzey,bolumAdi=$('robot-bolum').value.trim(),no=++robotNo;
+  if(!kayitlar.length||!(puan>0)){kutu.replaceChildren();return;}
+  let bolum=null,kodlar=[];
+  if(bolumAdi){
+    bolum=await bolumYukle(d);
+    if(no!==robotNo||d!==duzey)return;
+    kodlar=bolum?bolumKodlari(bolum,bolumAdi):[];
+    if(!kodlar.length){kutu.replaceChildren(E('p','notice',bolum?'Listeden bir bölüm seç':'Bölüm listesi yüklenemedi; bölüm alanını boş bırakıp tekrar dene.'));return;}
+  }
+  kutu.replaceChildren();
   // Her program kodu ayrı kadrodur (aynı unvan farklı nitelik isteyebilir); kodlar dönemler arasında
   // değiştiği için diğer dönemler yalnız aynı kurum/il/unvan için bilgi olarak gösterilir.
   const gecmis=new Map();
@@ -84,21 +127,26 @@ function robot(){
   for(const k of kayitlar){
     if(k.min==null||il&&k.il!==il||!ara.every(a=>k.metin.includes(a)))continue;
     const sinif=puan>=k.max?'guclu':puan>=k.min?'uygun':puan>=k.min-SINIR?'sinirda':null;
-    if(sinif)sonuc.push({k,sinif});
+    if(!sinif)continue;
+    const bd=bolum?bolumDurumu(k,bolum,kodlar):null;
+    if(bolum&&!bd)continue;
+    sonuc.push({k,sinif,bd});
   }
   const agirlik={guclu:0,uygun:1,sinirda:2};
   sonuc.sort((a,b)=>b.k.donem.localeCompare(a.k.donem)||agirlik[a.sinif]-agirlik[b.sinif]||b.k.min-a.k.min);
   const say=s=>sonuc.filter(x=>x.sinif===s).length,ozet=E('div','robot-ozet');
   ozet.append(E('span',null,say('guclu')+' kadroda en yüksek puanı geçiyordun'),E('span',null,say('uygun')+' kadroda puanın yeterdi'),E('span',null,say('sinirda')+' kadroda sınırdaydın (en fazla '+SINIR+' puan eksik)'));
+  if(bolum)ozet.append(E('span',null,sonuc.filter(x=>x.bd==='uygun').length+' kadro bölümüne uygun'));
   kutu.append(ozet);
   if(!sonuc.length){kutu.append(E('p','muted','Bu puanla eşleşen kadro bulunamadı. Filtreleri genişletmeyi dene.'));return;}
   const ol=E('ol','robot-liste'),ad={guclu:'Rahat yeterdi',uygun:'Yeterdi',sinirda:'Sınırda'};
-  for(const {k,sinif} of sonuc.slice(0,robotSinir)){
+  for(const {k,sinif,bd} of sonuc.slice(0,robotSinir)){
     const li=E('li');li.append(E('span','rozet '+sinif,ad[sinif]));
     const orta=E('div');orta.append(E('h3',null,k.unvan));
     orta.append(E('p',null,k.kurum+' · '+[k.il,k.teskilat].filter(Boolean).join(' · ')+' · '+k.kontenjan+' kontenjan'));
     const diger=[...gecmis.get(k.anahtar)].filter(([d])=>d!==k.donem).sort((a,b)=>b[0].localeCompare(a[0]));
     if(diger.length)orta.append(E('p',null,'Diğer dönemler: '+diger.map(([d,m])=>donemAdi(d)+' '+puanYaz(m)).join(' · ')));
+    if(BOLUM_NOTLARI[bd])orta.append(E('p','bolum-not',BOLUM_NOTLARI[bd]));
     const sag=E('div','robot-puan');sag.append(E('strong',null,puanYaz(k.min)),E('span',null,donemAdi(k.donem)+' en küçük'));
     li.append(orta,sag);ol.append(li);
   }
@@ -111,5 +159,6 @@ $('theme').onclick=()=>{writeStore('kit-theme',document.documentElement.dataset.
 for(const b of document.querySelectorAll('#duzeyler .tab'))b.onclick=()=>duzeyAc(b.dataset.duzey);
 for(const id of ['donem','il','sirala'])$(id).onchange=()=>{sayfa=1;tabloCiz();};
 let bekle;$('ara').oninput=()=>{clearTimeout(bekle);bekle=setTimeout(()=>{sayfa=1;tabloCiz();},150);};
+$('robot-bolum').onfocus=bolumListesiDoldur;
 $('robot-form').onsubmit=e=>{e.preventDefault();robotSinir=ROBOT_ILK;robot();};
 duzeyAc(PUAN_TURU[readStore('kit-puan-duzey','')]?readStore('kit-puan-duzey',''):'lisans');
