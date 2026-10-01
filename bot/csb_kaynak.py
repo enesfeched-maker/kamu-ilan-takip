@@ -21,7 +21,8 @@ LISTE = SITE + 'duyurular'
 SAYFA_SAYISI = 2           # her sayfada ~12 duyuru; 30 dakikalık tarama için yeterli
 KAYNAK_ADI = 'ÇŞB Yerel Yönetimler'
 # Ayrıştırma mantığı değişince VERSIYON artırılır (önbellekteki eski kayıtlar yeniden okunur).
-VERSIYON = 2
+VERSIYON = 3
+YENIDEN_DENEME_GUN = 14   # ek belgesi okunamayan duyuru yayımından bu kadar gün boyunca her taramada yeniden denenir
 HOSTLAR = {'yerelyonetimler.csb.gov.tr', 'webdosya.csb.gov.tr'}
 SAYFA_SINIRI = 1_500_000
 BELGE_SINIRI = 8_000_000
@@ -51,9 +52,11 @@ class _Yonlendirme(urllib.request.HTTPRedirectHandler):
         return super().redirect_request(req, fp, code, msg, headers, newurl)
 
 
-def indir(adres, sinir=SAYFA_SINIRI):
-    istek = urllib.request.Request(guvenli_adres(adres), headers={
-        'User-Agent': 'kamu-ilan-takip/1.0 (+https://enesfeched-maker.github.io/kamu-ilan-takip/)'})
+def indir(adres, sinir=SAYFA_SINIRI, referer=None):
+    basliklar = {'User-Agent': 'kamu-ilan-takip/1.0 (+https://enesfeched-maker.github.io/kamu-ilan-takip/)'}
+    if referer:
+        basliklar['Referer'] = referer
+    istek = urllib.request.Request(guvenli_adres(adres), headers=basliklar)
     with urllib.request.build_opener(_Yonlendirme()).open(istek, timeout=25) as yanit:
         veri = yanit.read(sinir + 1)
     if len(veri) > sinir:
@@ -249,17 +252,43 @@ def kayit_olustur(satir, detay, tarih):
     return kayit
 
 
+def _ek_indir(ek, referer):
+    """Ek belgeyi indirir; geçici ağ hatasında bir kez daha dener."""
+    for deneme in range(2):
+        try:
+            return indir(ek, BELGE_SINIRI, referer)
+        except (OSError, ValueError) as exc:
+            if deneme:
+                raise
+            print(f'ÇŞB ek belge ilk deneme başarısız ({type(exc).__name__}: {getattr(exc, "reason", exc)}); yeniden deneniyor.', flush=True)
+            time.sleep(1.5)
+
+
 def duyuru_oku(satir):
     detay = detay_ayristir(indir(satir['link']))
-    tarihler = set()
+    tarihler, okunamayan = set(), 0
     for ek in detay['ekler']:
         try:
-            tarihler.add(son_basvuru(belge_metni(ek, indir(ek, BELGE_SINIRI))))
+            tarihler.add(son_basvuru(belge_metni(ek, _ek_indir(ek, satir['link']))))
         except Exception as exc:
-            print(f'ÇŞB ek belge okunamadı ({type(exc).__name__}): {ek.rsplit("/", 1)[-1][:60]}', flush=True)
+            okunamayan += 1
+            print(f'ÇŞB ek belge okunamadı ({type(exc).__name__}: {str(getattr(exc, "reason", exc))[:80]}): {ek.rsplit("/", 1)[-1][:60]}', flush=True)
     tarihler.discard(None)
     # Farklı belgeler çelişirse tarih yazılmaz.
-    return kayit_olustur(satir, detay, next(iter(tarihler)) if len(tarihler) == 1 else None)
+    kayit = kayit_olustur(satir, detay, next(iter(tarihler)) if len(tarihler) == 1 else None)
+    if okunamayan:
+        kayit['ek_okunamadi'] = okunamayan   # eksik ayrıntı: "taze" sayılmaz, sonraki taramada yeniden denenir
+    return kayit
+
+
+def eksik_mi(kayit):
+    """Ek belgesi okunamamış kaydı, yayımından itibaren YENIDEN_DENEME_GUN boyunca eksik sayar."""
+    if not kayit.get('ek_okunamadi'):
+        return False
+    try:
+        return (now().date() - date.fromisoformat(kayit.get('yayim_tarihi') or '')).days <= YENIDEN_DENEME_GUN
+    except ValueError:
+        return True
 
 
 def csb_oku(onceki):
@@ -278,7 +307,7 @@ def csb_oku(onceki):
         raise RuntimeError('ÇŞB duyuru listesi okunamadı')
     # SBB ile aynı sözleşme: 12 saatten eski (ya da hiç olmayan) ayrıntılar yeniden okunur; yeni duyurular
     # önce, sonra en eski ayrıntı. Okunamazsa eski kayıt, detay_guncelleme'si değiştirilmeden korunur.
-    okunacak = [n for n, s in satirlar.items() if not (onbellek.get('csb-' + n) and fresh(onbellek['csb-' + n]))]
+    okunacak = [n for n, s in satirlar.items() if not (onbellek.get('csb-' + n) and fresh(onbellek['csb-' + n]) and not eksik_mi(onbellek['csb-' + n]))]
     okunacak.sort(key=lambda n: (onbellek['csb-' + n]['detay_guncelleme'] if 'csb-' + n in onbellek else ''))
     okunacak = set(okunacak[:AZAMI_DETAY])
     kayitlar = []
