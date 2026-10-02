@@ -36,6 +36,8 @@ def merge_registry(a, b):
                 return version,record.get('detay_guncelleme') or ''
             if old and detail_order(old) > detail_order(item):
                 item = {**item, **old}
+            if old and old.get('iptal_edildi') and not item.get('iptal_edildi'):
+                item={**item,'iptal_edildi':old['iptal_edildi']}  # iptal işareti hiçbir birleşmede kaybolmaz
             if old:
                 item={**item,'kaynak_kimlikleri':sorted(set(old.get('kaynak_kimlikleri',[])+item.get('kaynak_kimlikleri',[])))}
                 refs={s['link']:s for obj in (old,item) for s in obj.get('kaynaklar',[]) if s.get('link')}
@@ -44,15 +46,28 @@ def merge_registry(a, b):
             merged[item['id']] = item
     sent = set().union(*(set(s.get('telegram_gonderilen',[])) for s in histories))
     aliases={alias:i['id'] for i in merged.values() for alias in i.get('kaynak_kimlikleri',[]) if alias!=i['id']}
-    for alias in aliases:
-        merged.pop(alias,None)
+    for alias,hedef in aliases.items():
+        eski=merged.pop(alias,None)
+        if eski and eski.get('iptal_edildi') and hedef in merged and not merged[hedef].get('iptal_edildi'):
+            merged[hedef]['iptal_edildi']=eski['iptal_edildi']  # takma ada dönüşen orijinalin iptal işareti korunur
     sent.update(aliases[x] for x in list(sent) if x in aliases)
     pending = set().union(*(set(s.get('telegram_bekleyen',[])) for s in histories)) - sent
     pending={aliases.get(x,x) for x in pending}-sent
+    # Telegram message_id kayıtları gönderim geçmişi gibidir: asla silinmez, her iki durumun birleşimi alınır.
+    mesajlar={}
+    for state in sorted([a, b], key=lambda s: s.get('guncelleme') or ''):
+        mesajlar.update({k:v for k,v in (state.get('telegram_mesajlari') or {}).items() if v})
+    yanitlar={}
+    for state in sorted([a, b], key=lambda s: s.get('guncelleme') or ''):
+        for k,v in (state.get('telegram_duyuru_yanitlari') or {}).items():
+            yanitlar[k]=max(str(v),yanitlar.get(k,''))
     return {'guncelleme': max(a.get('guncelleme') or '', b.get('guncelleme') or ''),
             'ilanlar': sorted(merged.values(), key=lambda i: i.get('son_tarih') or '9999'),
             'telegram_gonderilen': sorted(sent), 'telegram_bekleyen': sorted(pending),
             'telegram_yayin_surumu': version,
+            'telegram_mesajlari': dict(sorted(mesajlar.items())),
+            'telegram_duyuru_yanitlari': dict(sorted(yanitlar.items())),
+            'telegram_toplu_hatirlatma_gunu': max([g for g in (a.get('telegram_toplu_hatirlatma_gunu'), b.get('telegram_toplu_hatirlatma_gunu')) if g] or [None]),
             'telegram_hatirlatilan': merge_reminders(set().union(*(set(s.get('telegram_hatirlatilan',[])) for s in histories)),aliases),
             'kaynak_baslangiclari': sorted(set(a.get('kaynak_baslangiclari',[])) | set(b.get('kaynak_baslangiclari',[]))),
             'canli_kimlikler': sorted({aliases.get(x,x) for x in sorted([a,b],key=lambda s:s.get('guncelleme') or '')[-1].get('canli_kimlikler',[])}),

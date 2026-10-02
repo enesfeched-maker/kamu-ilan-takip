@@ -22,10 +22,12 @@ from pathlib import Path
 from resmi_detay import detay_oku
 from resmi_ag import url_ac
 from ilan_gorsel import gorsel_olustur
-from ek_kaynaklar import read_sbb, read_iskur, merge_sources
+from ek_kaynaklar import read_sbb, read_iskur, merge_sources, norm
 from ilan_baglanti import ilan_sayfasi
+from iptal_yaniti import (duz_anahtar, guclu_kokler, kadro_adi, kurum_kimligi, mesaj_kimligi, orijinal_ara,
+                          tam_iptal, yanit_anahtarlari)
 from kurum_gorseli import kurum_logosu
-from siniflandir import etiketler, il_adlari, kategori, kpss_durumu, ogrenim_seviyeleri
+from siniflandir import akademik_ilan, etiketler, il_adlari, kategori, kpss_durumu, ogrenim_seviyeleri
 from yerel_kaynak import oku as yerel_oku, sbb_verisi, csb_verisi
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -172,17 +174,6 @@ def kisa_baslik(ilan):
     return kisalt(okunakli_baslik(baslik), 130)
 
 
-def hatirlatma_anahtari(ilan):
-    if ilan.get('duyuru_turu'):
-        return None
-    if not ilan.get('son_tarih') or suresi_doldu(ilan):
-        return None
-    kalan = (date.fromisoformat(ilan['son_tarih']) - simdi().date()).days
-    if 0 <= kalan <= 3:
-        return json.dumps([ilan['id'], ilan.get('son_zaman') or ilan['son_tarih']], ensure_ascii=False)
-    return None
-
-
 def kadro_ozeti(ilan):
     parcalar = (ilan.get('kadro') or '').split(' • ')
     metin = ' • '.join(parcalar[:3])
@@ -224,7 +215,42 @@ def mesaj_olustur(ilan, site_url, hatirlatma=False):
     return "\n".join(satirlar)
 
 
-def telegram_gonder(token, chat_id, metin, ilan_linki="", site_url="", foto=None):
+def duyuru_turu_iptal_mi(duyuru):
+    return 'iptal' in norm(duyuru.get('duyuru_turu'))
+
+
+def duyuru_metni(duyuru, orijinale_yanit, tam=True):
+    """İptal/düzeltme duyurusu mesajı. Orijinal ilana yanıtsa kısa, değilse kurum ve başlıkla kartsız metin.
+    tam=False: iptal ilanın yalnız bir kadrosunu kapsıyor ('Bu ilandaki Tekniker alımı iptal edilmiştir')."""
+    e = html.escape
+    iptal = duyuru_turu_iptal_mi(duyuru)
+    satirlar = []
+    if orijinale_yanit:
+        if iptal and not tam:
+            kadro = okunakli_baslik(kadro_adi(duyuru)) or 'bazı kadroların'
+            satirlar.append(f"❌ <b>Bu ilandaki {e(kadro)} alımı iptal edilmiştir.</b>")
+        else:
+            satirlar.append("❌ <b>Bu ilan iptal edilmiştir.</b>" if iptal else "📝 <b>Bu ilanda düzeltme yapıldı.</b>")
+        if iptal and duyuru.get('ozet'):
+            satirlar.append(e(kisalt(duyuru['ozet'], 220)))
+        if not iptal and duyuru.get('son_tarih'):
+            satirlar.append(f"📅 <b>Yeni son başvuru:</b> {tarih_yaz(duyuru['son_tarih'])}")
+    else:
+        kurum = okunakli_baslik(duyuru.get('kurum') or '')
+        konu = kisa_baslik(duyuru)
+        parca = ' — '.join(p for p in (kurum, kisalt(konu, 110) if konu and konu != kurum else '') if p) or konu
+        satirlar.append(e(f"❌ İptal: {parca} ilanı iptal edilmiştir." if iptal
+                          else f"📝 Düzeltme: {parca} ilanında düzeltme yapılmıştır."))
+        if not iptal and duyuru.get('son_tarih'):
+            satirlar.append(f"📅 <b>Son başvuru:</b> {tarih_yaz(duyuru['son_tarih'])}")
+    if duyuru.get('kaynak_turu') in ('sbb', 'iskur', 'csb') and duyuru.get('kaynak'):
+        satirlar.append(f"<i>Kaynak: {e(duyuru['kaynak'])}</i>")
+    return "\n".join(satirlar)
+
+
+def telegram_gonder(token, chat_id, metin, ilan_linki="", site_url="", foto=None, yanit=None):
+    """Gönderir; başarıda Telegram message_id'sini (yoksa True), başarısızlıkta False döndürür.
+    yanit: bir mesaja yanıt olarak göndermek için message_id (mesaj silinmişse yine de gönderilir)."""
     url = f"https://api.telegram.org/bot{token}/{'sendPhoto' if foto else 'sendMessage'}"
     alanlar = {
         "chat_id": chat_id,
@@ -240,6 +266,8 @@ def telegram_gonder(token, chat_id, metin, ilan_linki="", site_url="", foto=None
         dugmeler.append([{"text": "📋 Tüm kamu ilanları", "url": site_url}])
     if dugmeler:
         alanlar["reply_markup"] = json.dumps({"inline_keyboard": dugmeler}, ensure_ascii=False)
+    if yanit:
+        alanlar["reply_parameters"] = json.dumps({"message_id": int(yanit), "allow_sending_without_reply": True})
     headers = {}
     if foto:
         boundary = 'ilan-' + uuid.uuid4().hex
@@ -255,7 +283,11 @@ def telegram_gonder(token, chat_id, metin, ilan_linki="", site_url="", foto=None
     for deneme in range(2):
         try:
             with urllib.request.urlopen(urllib.request.Request(url, data=govde, headers=headers), timeout=30) as response:
-                return bool(json.load(response).get("ok"))
+                sonuc = json.load(response)
+                if not sonuc.get("ok"):
+                    return False
+                mid = (sonuc.get("result") or {}).get("message_id")
+                return mid if isinstance(mid, int) and mid > 0 else True
         except urllib.error.HTTPError as h:
             if h.code == 429 and deneme == 0:
                 try:
@@ -288,12 +320,110 @@ def telegram_sirasi(mevcut, gelen, yeniler, gonderilen, bekleyen, ilk_calisma, d
         if not i or kimlik not in canli:
             bekleyen.discard(kimlik)
             continue
+        if akademik_ilan(i):
+            bekleyen.discard(kimlik)  # akademik ilanlar kanala hiç gitmez
+            continue
         if suresi_doldu(i):
             bekleyen.discard(kimlik)
             continue
         if telegram_icin_uygun(i, dahil, haric):
             uygun.append(i)
     return sorted(uygun, key=lambda i: (i.get('son_tarih') or '9999', i.get('kurum', ''), i['baslik']))
+
+
+DUZ_METIN_TEKILLESTIRME_GUN = 30
+
+
+def gun_icinde(deger, bugun, gun):
+    try:
+        return 0 <= (bugun - date.fromisoformat(str(deger)[:10])).days <= gun
+    except ValueError:
+        return False
+
+
+def duyuru_karari(duyuru, ilanlar, mesajlar, yanitlar, bugun):
+    """İptal/düzeltme duyurusu için karar: {'islem': 'sessiz'|'gonder', 'orijinal', 'tam', 'yaz', 'sebep'}.
+    Sessiz: akademik ilana ait, orijinal zaten iptal edilmiş ya da aynı olay (kopya) daha önce bildirilmiş."""
+    tur = 'iptal' if duyuru_turu_iptal_mi(duyuru) else 'duzeltme'
+    adaylar = orijinal_ara(duyuru, ilanlar, mesajlar, bugun)
+    # Akademik bastırma yalnız: akademik olmayan hiçbir aday (mesaj şartı olmadan da) yok VE akademik aday var.
+    if not adaylar and not orijinal_ara(duyuru, ilanlar, mesajlar, bugun, mesaj_gerekli=False) \
+            and orijinal_ara(duyuru, ilanlar, mesajlar, bugun, akademik=True):
+        return {'islem': 'sessiz', 'sebep': 'akademik ilana ait'}
+    if len(adaylar) == 1:
+        o = adaylar[0]
+        if tur == 'iptal' and o.get('iptal_edildi'):
+            return {'islem': 'sessiz', 'sebep': 'orijinal zaten iptal edilmiş'}
+        tam = tam_iptal(duyuru, o) if tur == 'iptal' else True
+        imza = ','.join(sorted(guclu_kokler(duyuru, set(norm(o.get('kurum')).split()))))
+        anahtarlar = yanit_anahtarlari(tur, o, tam, imza)
+        if any(k in yanitlar for k in anahtarlar):
+            return {'islem': 'sessiz', 'sebep': 'aynı olay daha önce bildirildi'}
+        return {'islem': 'gonder', 'orijinal': o, 'tam': tam, 'yaz': anahtarlar[0]}
+    anahtar = duz_anahtar(duyuru)
+    if anahtar in yanitlar and gun_icinde(yanitlar[anahtar], bugun, DUZ_METIN_TEKILLESTIRME_GUN):
+        return {'islem': 'sessiz', 'sebep': 'aynı olay (düz metin) son 30 günde bildirildi'}
+    return {'islem': 'gonder', 'orijinal': None, 'tam': True, 'yaz': anahtar}
+
+
+TOPLU_EN_COK_SATIR = 15
+TOPLU_SINIR = 950  # sendPhoto başlık sınırı 1024 görünür karakter
+
+
+def toplu_zamani(zaman, son_gun):
+    """Günde bir kez: İstanbul 09:00'dan sonra ve bugün henüz gönderilmediyse."""
+    return zaman.hour >= 9 and son_gun != zaman.date().isoformat()
+
+
+def toplu_secim(ilanlar, gonderilen, cfg):
+    """Son başvurusu bugün..3 gün içinde olan, kanalda daha önce paylaşılmış, akademik/iptal/duyuru olmayan ilanlar."""
+    bugun = simdi().date()
+    dahil, haric = cfg.get('telegram_kelimeler_dahil', []), cfg.get('telegram_kelimeler_haric', [])
+    sonuc = []
+    for i in ilanlar:
+        if i.get('duyuru_turu') or i.get('iptal_edildi') or akademik_ilan(i) or not i.get('son_tarih'):
+            continue
+        if not ({i['id'], *i.get('kaynak_kimlikleri', [])} & gonderilen) or suresi_doldu(i):
+            continue
+        if 0 <= (date.fromisoformat(i['son_tarih']) - bugun).days <= 3 and telegram_icin_uygun(i, dahil, haric):
+            sonuc.append(i)
+    sonuc.sort(key=lambda i: (i['son_tarih'], i.get('kurum', ''), i['id']))
+    gorulen, tekil = set(), []
+    for i in sonuc:  # aynı normalize kurum + aynı son tarih (SBB/İŞKUR kopyaları) tek satır
+        k = kurum_kimligi(i)
+        anahtar = (i['son_tarih'], k[:2] if k else i['id'])
+        if anahtar not in gorulen:
+            gorulen.add(anahtar)
+            tekil.append(i)
+    return tekil
+
+
+def toplu_mesaj(ilanlar, site_url):
+    """Başlık + ilan başına '• <a>Kurum — kadro</a> · <b>Yarın son gün</b>'; en fazla 15 satır ve ~950 görünür karakter."""
+    from kart_tasarimlari import toplu_satir
+    e = html.escape
+    bugun = simdi().date()
+    baslik = "⏰ <b>Son başvurusu yaklaşan ilanlar</b>"
+    satirlar, uzunluk = [], len("Son başvurusu yaklaşan ilanlar") + 4
+    for i in ilanlar:
+        kurum, kadro = toplu_satir(i)
+        ad = kisalt(f"{kurum} — {kadro}" if kadro and kadro != kurum else kurum, 70)
+        fark = (date.fromisoformat(i['son_tarih']) - bugun).days
+        etiket = "Bugün son gün" if fark <= 0 else "Yarın son gün" if fark == 1 else f"{fark} gün kaldı"
+        gorunen = len(f"• {ad} · {etiket}") + 1
+        if len(satirlar) >= TOPLU_EN_COK_SATIR or uzunluk + gorunen > TOPLU_SINIR:
+            break
+        try:
+            url = ilan_sayfasi(i, site_url)
+        except ValueError:
+            url = ''
+        govde = f'<a href="{e(url, quote=True)}">{e(ad)}</a>' if url else e(ad)
+        satirlar.append(f"• {govde} · <b>{etiket}</b>")
+        uzunluk += gorunen
+    kalan = len(ilanlar) - len(satirlar)
+    if kalan > 0:
+        satirlar.append(f"+{kalan} ilan daha — tümü sitemizde")
+    return "\n".join([baslik, "", *satirlar])
 
 
 def suresi_doldu(ilan):
@@ -320,6 +450,8 @@ def yukle(yol):
 
 
 def telegram_icin_uygun(ilan, dahil, haric):
+    if akademik_ilan(ilan):
+        return False
     metin = (ilan["baslik"] + " " + ilan.get("kurum", "")).lower()
     if dahil and not any(k.lower() in metin for k in dahil):
         return False
@@ -496,10 +628,14 @@ def main():
     yeni_ids = {i['id'] for i in yeniler}
     birlesik_ids = {i['id'] for i in gelen}
     aliases = {alias:i['id'] for i in gelen for alias in i.get('kaynak_kimlikleri', [])}
+    canli = {i['id']: i for i in gelen}
     for old_id in list(mevcut):
         if old_id in aliases and aliases[old_id] != old_id:
+            hedef = canli.get(aliases[old_id])
+            if hedef is not None and mevcut[old_id].get('iptal_edildi') and not hedef.get('iptal_edildi'):
+                hedef['iptal_edildi'] = mevcut[old_id]['iptal_edildi']  # takma ada dönüşen orijinalin işareti kaybolmaz
             del mevcut[old_id]
-    mevcut.update({i['id']:i for i in gelen})
+    mevcut.update(canli)
     yeniler = [i for i in gelen if i['id'] in yeni_ids and i['id'] in birlesik_ids]
 
     # 3) Telegram: sınırı aşan ve başarısız olan gönderimleri sonraki taramaya sakla.
@@ -516,51 +652,108 @@ def main():
     bekleyen = {aliases.get(x,x) for x in bekleyen}
     gonderilecek = telegram_sirasi(mevcut, gelen, yeniler, gonderilen, bekleyen,
                                   ilk_calisma, a.duyur_mevcut, cfg)
-    hatirlatmalar = []
-    for kimlik in {i['id'] for i in gelen} & gonderilen:
-        i = mevcut[kimlik]
-        anahtar = hatirlatma_anahtari(i)
-        if anahtar and anahtar not in hatirlatilan and telegram_icin_uygun(
-                i, cfg.get('telegram_kelimeler_dahil', []), cfg.get('telegram_kelimeler_haric', [])):
-            hatirlatmalar.append(i)
-    hatirlatmalar.sort(key=lambda i: (i['son_tarih'], i['id']))
-    kuyruk = [(i, False) for i in gonderilecek] + [(i, True) for i in hatirlatmalar]
+    # İlan başına hatırlatma kaldırıldı (geçmiş hatirlatilan korunur, yeni kayıt eklenmez);
+    # yerine günde bir kez toplu son gün kartı gönderilir.
+    mesajlar = dict(veri.get('telegram_mesajlari', {}))
+    yanitlar = dict(veri.get('telegram_duyuru_yanitlari', {}))
+    toplu_gun = veri.get('telegram_toplu_hatirlatma_gunu')
+    toplu = toplu_secim(gelen, gonderilen, cfg) if toplu_zamani(simdi(), toplu_gun) else []
+    kuyruk = ([('toplu', toplu)] if toplu else []) + \
+             [('duyuru' if i.get('duyuru_turu') else 'ilan', i) for i in gonderilecek]
     limit = max(1, int(cfg.get('max_mesaj_per_calisma', 15)))
+    site_url = cfg.get('site_url', '')
     hata = False
     adet = 0
     ertelenen = 0
-    for i, hatirlatma in ([] if a.prepare else kuyruk[:limit]):
+
+    def mesaj_kaydet(kimlik, mid):
+        if isinstance(mid, int) and not isinstance(mid, bool):
+            mesajlar[kimlik] = mid
+
+    for tur, i in ([] if a.prepare else kuyruk[:limit]):
+        if tur == 'toplu':
+            if a.dry_run:
+                print('--- (önizleme, gönderilmedi) ---\n' + toplu_mesaj(i, site_url) + '\n')
+                continue
+            try:
+                from kart_tasarimlari import toplu_son_gun_karti
+                foto = toplu_son_gun_karti(i, simdi())
+            except Exception as exc:
+                print(f'Toplu son gün kartı oluşturulamadı ({type(exc).__name__}); sonraki çalıştırmada denenecek.', file=sys.stderr)
+                hata = True
+                continue
+            mid = telegram_gonder(token, chat_id, toplu_mesaj(i, site_url), '', site_url, foto=foto) if (token and chat_id) else False
+            if not mid:
+                hata = True
+                break
+            toplu_gun = simdi().date().isoformat()  # gün işareti yalnız başarıda yazılır
+            adet += 1
+            print(f"Telegram'a toplu son gün kartı gönderildi: {len(i)} ilan")
+            time.sleep(3.2)
+            continue
         if cfg.get('resmi_detaylari_oku', False) and not detay_taze(i):
             # Resmi servise geçici erişim sorunu: ilan sırada kalır, iş başarısız sayılmaz.
             ertelenen += 1
             continue
-        metin = mesaj_olustur(i, cfg.get('site_url', ''), hatirlatma)
+        if tur == 'duyuru':
+            karar = duyuru_karari(i, list(mevcut.values()), mesajlar, yanitlar, simdi().date())
+            if karar['islem'] == 'sessiz':
+                # Gönderilmez ama tekrar denenmesin diye gönderilmiş sayılır.
+                if not a.dry_run:
+                    gonderilen.add(i['id'])
+                    bekleyen.discard(i['id'])
+                print(f"İptal/düzeltme duyurusu gönderilmedi ({karar['sebep']}): {i['baslik']}")
+                continue
+            orijinal = karar['orijinal']
+            yanit = mesaj_kimligi(orijinal, mesajlar)[1] if orijinal else None
+            metin = duyuru_metni(i, orijinal is not None, karar['tam'])
+            if a.dry_run:
+                print('--- (önizleme, gönderilmedi) ---\n' + metin + '\n')
+                continue
+            try:
+                hedef = ilan_sayfasi(i, site_url)
+            except ValueError:
+                hedef = ''
+            mid = telegram_gonder(token, chat_id, metin, hedef, site_url, yanit=yanit) if (token and chat_id) else False
+            if not mid:
+                hata = True
+                break
+            gonderilen.add(i['id'])
+            bekleyen.discard(i['id'])
+            mesaj_kaydet(i['id'], mid)
+            yanitlar[karar['yaz']] = simdi().date().isoformat()
+            if orijinal is not None and duyuru_turu_iptal_mi(i) and karar['tam']:
+                orijinal['iptal_edildi'] = i['id']  # kısmi (tek kadro) iptallerde ilan açık kalır
+            adet += 1
+            print(f"Telegram'a {'iptal' if duyuru_turu_iptal_mi(i) else 'düzeltme'} duyurusu gönderildi"
+                  f"{' (orijinal ilana yanıt)' if orijinal is not None else ''}: {i['baslik']}")
+            time.sleep(3.2)
+            continue
+        metin = mesaj_olustur(i, site_url)
         if a.dry_run:
             print('--- (önizleme, gönderilmedi) ---\n' + metin + '\n')
             continue
         try:
-            foto = ilan_gorseli(i, hatirlatma, kurum_logosu(i))
+            foto = ilan_gorseli(i, False, kurum_logosu(i))
         except Exception as exc:
             print(f'İlan görseli oluşturulamadı ({type(exc).__name__}); gönderim ertelendi.', file=sys.stderr)
             hata = True
             continue
         try:
-            hedef=ilan_sayfasi(i,cfg.get('site_url',''))
+            hedef=ilan_sayfasi(i,site_url)
         except ValueError:
             print('Site ayrıntı bağlantısı hazırlanamadı; gönderim ertelendi.',file=sys.stderr)
             hata=True
             continue
-        if not (token and chat_id) or not telegram_gonder(token, chat_id, metin, hedef, cfg.get('site_url', ''), foto=foto):
+        mid = telegram_gonder(token, chat_id, metin, hedef, site_url, foto=foto) if (token and chat_id) else False
+        if not mid:
             hata = True
             break
         gonderilen.add(i['id'])
         bekleyen.discard(i['id'])
-        # A first announcement already in the final three days also fulfils the reminder.
-        anahtar = hatirlatma_anahtari(i)
-        if anahtar:
-            hatirlatilan.add(anahtar)
+        mesaj_kaydet(i['id'], mid)
         adet += 1
-        print(f"Telegram'a {'hatırlatma' if hatirlatma else 'ilan'} gönderildi: {i['baslik']}")
+        print(f"Telegram'a ilan gönderildi: {i['baslik']}")
         time.sleep(3.2)
     if ilk_calisma and not a.duyur_mevcut:
         print(f"İlk çalıştırma: {len(yeniler)} mevcut ilan sessizce kaydedildi (kanala gönderilmedi).")
@@ -578,6 +771,11 @@ def main():
         "telegram_gonderilen": sorted(gonderilen),
         "telegram_bekleyen": sorted(bekleyen - gonderilen),
         "telegram_hatirlatilan": sorted(hatirlatilan),
+        "telegram_mesajlari": dict(sorted(mesajlar.items())),
+        # 'm:' (düz metin) kayıtları 30 gün sonra budanır; 'o:' (orijinale yanıt) kayıtları kalıcıdır.
+        "telegram_duyuru_yanitlari": dict(sorted((k, v) for k, v in yanitlar.items()
+            if not k.startswith('m:') or gun_icinde(v, simdi().date(), DUZ_METIN_TEKILLESTIRME_GUN))),
+        "telegram_toplu_hatirlatma_gunu": toplu_gun,
         "telegram_yayin_surumu": yayin_surumu,
         "kaynak_baslangiclari": sorted(kaynak_baslangiclari),
         "kaynak_durumlari": kaynak_durumlari,

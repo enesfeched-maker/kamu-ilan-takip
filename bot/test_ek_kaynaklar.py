@@ -70,7 +70,8 @@ class SourceTests(unittest.TestCase):
                 self.assertEqual(send.call_count,1)
 
     def test_notice_has_no_reminder(self):
-        self.assertIsNone(ilan_bot.hatirlatma_anahtari({'duyuru_turu':'İptal duyurusu'}))
+        bugun=ilan_bot.simdi().date().isoformat()
+        self.assertEqual(ilan_bot.toplu_secim([{'id':'x','baslik':'B','duyuru_turu':'İptal duyurusu','son_tarih':bugun}],{'x'},{}),[])
 
 
 if __name__=='__main__':

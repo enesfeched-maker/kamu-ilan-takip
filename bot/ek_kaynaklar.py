@@ -327,6 +327,9 @@ def merge_sources(records, previous):
         prior=result.get(ident,{})
         refs={s['link']:s for obj in (chosen,prior,item) for s in obj.get('kaynaklar',[{'ad':obj.get('kaynak','Kariyer Kapısı'),'link':obj.get('link','')}]) if s.get('link')}
         merged['kaynaklar']=list(refs.values())
+        for kaynak_kayit in (chosen,prior,item):
+            if kaynak_kayit.get('iptal_edildi') and not merged.get('iptal_edildi'):
+                merged['iptal_edildi']=kaynak_kayit['iptal_edildi']
         merged['kaynak_kimlikleri']=sorted(set(chosen.get('kaynak_kimlikleri',[])+prior.get('kaynak_kimlikleri',[])+item.get('kaynak_kimlikleri',[])+[item['id'],ident]))
         result[ident]=merged
     return list(result.values())
