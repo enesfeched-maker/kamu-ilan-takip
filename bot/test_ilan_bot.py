@@ -1,4 +1,5 @@
 import unittest
+from unittest import mock
 import contextlib
 import io
 import json
@@ -234,6 +235,25 @@ class EtiketTests(unittest.TestCase):
         ilan_bot.siniflandir(ilan)
         self.assertNotIn('iller', ilan)
         self.assertNotIn('kpss', ilan)
+
+
+class IlanGorseliTesti(unittest.TestCase):
+    ILAN = {'id': 'x', 'baslik': 'Örnek Belediyesi - Alım', 'kurum': 'Örnek Belediyesi', 'son_tarih': '2099-10-23',
+            'kadro': 'Toplam 3 kişi — 3 Zabıta Memuru', 'yer': 'Ankara'}
+
+    def test_yeni_kart_kullanilir(self):
+        import io
+        from PIL import Image
+        foto = ilan_bot.ilan_gorseli(self.ILAN, False)
+        self.assertEqual(Image.open(io.BytesIO(foto)).size, (1080, 1350))
+
+    def test_yeni_kart_hata_verirse_eski_karta_duser(self):
+        import io
+        from PIL import Image
+        import kart_tasarimlari
+        with mock.patch.object(kart_tasarimlari, 'ilan_karti', side_effect=RuntimeError('x')):
+            foto = ilan_bot.ilan_gorseli(self.ILAN, False)
+        self.assertEqual(Image.open(io.BytesIO(foto)).size[0], 1200)  # eski kart genişliği
 
 
 if __name__ == '__main__':

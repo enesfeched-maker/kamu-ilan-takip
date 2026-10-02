@@ -1,6 +1,44 @@
 """Small original vector-style occupational illustrations, rendered locally."""
 import re
+from functools import lru_cache
+from pathlib import Path
 from PIL import Image, ImageDraw
+
+FOTO_KLASORU = Path(__file__).resolve().parents[1] / 'docs' / 'assets' / 'meslek'
+GENEL_PERSONEL = 30
+# Sıra önemlidir: özel meslekler genel olanlardan önce gelir. Kökler norm() edilmiş metinde kelime başından aranır;
+# sonunda boşluk olan kök tam kelime olmalıdır.
+FOTO_ESLEME = [
+    (4, ('veteriner',)),
+    (5, ('eczaci',)),
+    (3, ('hekim', 'doktor', 'tabip')),
+    (2, ('hemsire', 'ebe ', 'saglik')),
+    (29, ('laborant', 'kimyager', 'biyolog')),
+    (1, ('yazilim', 'bilgisayar', 'bilisim', 'sistem', 'ag ', 'siber', 'devops', 'veri tabani', 'veritabani', 'programci')),
+    (7, ('zabita',)),
+    (8, ('itfaiye',)),
+    (6, ('guvenlik', 'koruma', 'bekci')),
+    (10, ('pilot',)),
+    (11, ('asci',)),
+    (12, ('garson',)),
+    (27, ('operator', 'is makinesi')),
+    (9, ('sofor', 'surucu')),
+    (13, ('temizlik', 'destek personeli', 'hizmetli')),
+    (18, ('ogretim uyesi', 'ogretim gorevlisi', 'ogretim elemani', 'arastirma gorevlisi', 'akadem', 'profesor', 'docent')),
+    (19, ('ogretmen',)),
+    (20, ('kutuphane',)),
+    (21, ('avukat', 'hukuk')),
+    (23, ('mufettis', 'denetci', 'kontrolor')),
+    (28, ('muhasebe', 'mali ', 'gelir uzman')),
+    (14, ('muhendis',)),
+    (15, ('mimar',)),
+    (17, ('elektrik',)),
+    (16, ('tekniker', 'teknisyen')),
+    (25, ('bahcivan',)),
+    (26, ('orman',)),
+    (24, ('isci',)),
+    (22, ('buro', 'memur', 'sekreter', 'veri hazirlama', 'vhki')),
+]
 
 
 def norm(text):
@@ -110,3 +148,48 @@ def illustration(label, size=220):
             for y in (177,188,199):d.line((92,y,127,y),fill=teal,width=3)
             d.rounded_rectangle((207,182,267,226),6,fill=ink);d.rectangle((224,174,249,184),outline=ink,width=4)
     return im.resize((size, round(size*250/320)), Image.Resampling.LANCZOS)
+
+
+def meslek_no(label):
+    """Kadro adından 30 meslekten birinin numarası (eşleşmezse 30: Genel Personel)."""
+    s = ' ' + ' '.join(re.sub(r'[^a-z0-9]+', ' ', norm(label or '')).split()) + ' '
+    for no, kokler in FOTO_ESLEME:
+        for kok in kokler:
+            if (' ' + kok if not kok.endswith(' ') else ' ' + kok) in s:
+                return no
+    return GENEL_PERSONEL
+
+
+@lru_cache(maxsize=None)
+def _foto_yukle(no):
+    for yol in sorted(FOTO_KLASORU.glob(f'{no:02d}-*.jpg')):
+        try:
+            with Image.open(yol) as im:
+                return im.convert('RGB')
+        except OSError:
+            return None
+    return None
+
+
+def fotograf(label, boy=150):
+    """Mesleğin fotoğrafını ince açık kenarlıklı daire olarak döndürür; yoksa/açılamazsa None.
+    Fotoğraf kendi çözünürlüğünden fazla büyütülmez."""
+    foto = _foto_yukle(meslek_no(label))
+    if foto is None:
+        return None
+    boy = min(boy, *foto.size)
+    kat = 4
+    buyuk = foto.resize((boy * kat, boy * kat), Image.Resampling.LANCZOS).convert('RGBA')
+    maske = Image.new('L', buyuk.size, 0)
+    ImageDraw.Draw(maske).ellipse((0, 0, buyuk.width - 1, buyuk.height - 1), fill=255)
+    halka = Image.new('RGBA', buyuk.size, (0, 0, 0, 0))
+    ImageDraw.Draw(halka).ellipse((0, 0, buyuk.width - 1, buyuk.height - 1), outline='#f3f6f1', width=3 * kat)
+    sonuc = Image.new('RGBA', buyuk.size, (0, 0, 0, 0))
+    sonuc.paste(buyuk, (0, 0), maske)
+    sonuc.alpha_composite(halka)
+    return sonuc.resize((boy, boy), Image.Resampling.LANCZOS)
+
+
+def kutu_gorseli(label, size=206):
+    """Kadro kutusu görseli: fotoğraf varsa daire fotoğraf, yoksa eski vektör çizim."""
+    return fotograf(label) or illustration(label, size)

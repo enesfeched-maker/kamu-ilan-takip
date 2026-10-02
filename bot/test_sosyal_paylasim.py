@@ -134,26 +134,23 @@ class DenetimDuzeltmeTesti(unittest.TestCase):
         self.assertIn('Diğer Kurum', metin)
 
 
-class KartAlanlariTesti(unittest.TestCase):
-    def test_kadro_tekrari_normalize_gizlenir(self):
-        alanlar = sp._kart_alanlari(ilan('a', kadro='2 ÖĞRETİM ELEMANI ALACAK'), '2 Öğretim Elemanı Alacak')
-        self.assertNotIn('KADRO', [e for e, _, _ in alanlar])
-        alanlar = sp._kart_alanlari(ilan('a', kadro='2 Öğretim Elemanı, Alacak.'), '2 Öğretim Elemanı Alacak')
-        self.assertNotIn('KADRO', [e for e, _, _ in alanlar])
+class KartTesti(unittest.TestCase):
+    def test_kartlar_ilan_karti_ile_uretilir(self):
+        with tempfile.TemporaryDirectory() as klasor, mock.patch.object(sp, 'ilan_karti', wraps=sp.ilan_karti) as karti:
+            veri = sp.uret([ilan('a'), ilan('b', kadro='Toplam 2 kişi — 2 Şoför')], SIMDI, klasor, SITE)
+            self.assertEqual(karti.call_count, 2)
+            for cagri in karti.call_args_list:  # referans an: paylaşım günü 10:30
+                self.assertEqual(cagri.kwargs['simdi'], datetime(2026, 10, 2, 10, 30, tzinfo=TR))
+            self.assertEqual(len(veri['gorseller']), 3)
 
-    def test_kadro_farkliysa_baslik_bicimine_cevrilir(self):
-        alanlar = dict((e, d) for e, d, _ in sp._kart_alanlari(ilan('a', kadro='3 ZABITA MEMURU'), 'Başka başlık'))
-        self.assertEqual(alanlar['KADRO'], '3 Zabıta Memuru')
-
-    def test_il_ogrenim_kpss_yalniz_varsa(self):
-        alanlar = dict((e, d) for e, d, _ in sp._kart_alanlari(
-            ilan('a', iller=['Ankara', 'İzmir'], ogrenim=['onlisans', 'lisans'], kpss='kpss'), 'b'))
-        self.assertEqual(alanlar['GÖREV YERİ'], 'Ankara, İzmir')
-        self.assertEqual(alanlar['ÖĞRENİM'], 'Önlisans, Lisans')
-        self.assertEqual(alanlar['KPSS'], 'KPSS puanı ile')
-        bos = dict((e, d) for e, d, _ in sp._kart_alanlari(
-            {'id': 'x', 'son_tarih': '2026-10-20'}, 'b'))
-        self.assertEqual(list(bos), ['SON BAŞVURU'])
+    def test_kart_farkli_uretim_saatinde_ayni(self):
+        ilanlar = [ilan('a'), ilan('b', kadro='Toplam 2 kişi — 2 Şoför')]
+        sonuclar = []
+        for saat in (9, 14):
+            with tempfile.TemporaryDirectory() as klasor:
+                sp.uret(ilanlar, datetime(2026, 10, 2, saat, 5, tzinfo=TR), klasor, SITE)
+                sonuclar.append([(Path(klasor) / 'paylasim' / '2026-10-02' / f'{n:02d}.jpg').read_bytes() for n in (1, 2)])
+        self.assertEqual(sonuclar[0], sonuclar[1])
 
 
 class SiteUretEntegrasyonu(unittest.TestCase):

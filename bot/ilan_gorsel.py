@@ -49,9 +49,16 @@ def lines(draw, text, face, width, maximum):
 
 
 def gorsel_olustur(kurum, kadro, yer, tarih, rozet='', kaynak='Kariyer Kapısı', logo=None):
-    from meslek_gorseli import meslekler, illustration
+    from meslek_gorseli import meslekler, kutu_gorseli
+    try:
+        from ilan_bot import okunakli_baslik
+    except ImportError:
+        okunakli_baslik = lambda metin: metin
     import math
-    roles = meslekler(kadro) or ['İlan ayrıntıları']
+    roles = [okunakli_baslik(r) for r in meslekler(kadro)] or ['İlan ayrıntıları']
+    ozet = len(roles) - 5 if len(roles) > 6 else 0
+    if ozet:
+        roles = roles[:5] + [f'+{ozet} kadro türü daha']
     columns = min(3, len(roles))
     rows = math.ceil(len(roles)/columns)
     rowheight = 268
@@ -88,8 +95,13 @@ def gorsel_olustur(kurum, kadro, yer, tarih, rozet='', kaynak='Kariyer Kapısı'
     for index,role in enumerate(roles):
         x=52+(index%columns)*(cellw+gap); y=350+(index//columns)*rowheight
         d.rounded_rectangle((x,y,x+cellw,y+rowheight-16),radius=19,fill='#f3f6f1')
-        art=illustration(role,206)
-        im.paste(art,(x+(cellw-art.width)//2,y+6),art)
+        art = None if ozet and index == 5 else kutu_gorseli(role, 206)
+        if art is None:
+            sade = font(64, True)
+            d.text((x + cellw / 2, y + 85), role.split(' ')[0], font=sade, fill='#173e48', anchor='mm')
+            role = role.split(' ', 1)[1]
+        else:
+            im.paste(art, (x + (cellw - art.width) // 2, y + (6 if art.height < art.width * 0.9 else 8)), art)
         face=font(25,True)
         for n,line in enumerate(lines(d,role,face,cellw-24,3)):
             d.text((x+(cellw-d.textlength(line,font=face))/2,y+167+n*27),line,font=face,fill='#173e48')
