@@ -14,7 +14,7 @@
      `meta.ig_son_gun` = bugün ise atlanır; başarıdan sonra yazılır.
    - **X taslağı** (yalnız `meta.yonetici_chat` varsa): yöneticiye özelden `sendPhoto` (photo = kapak URL'si,
      caption = `x_metin`) gönderilir; `meta.x_son_gun` ile günde bir kez.
-3. **Yönetici tanıma:** `wrangler.toml [vars] YONETICI_KULLANICI` (Telegram kullanıcı adı, @ olmadan, küçük harf
+3. **Yönetici tanıma:** `YONETICI_KULLANICI` gizli ayarı (wrangler secret; repoya yazılmaz) (Telegram kullanıcı adı, @ olmadan, küçük harf
    karşılaştırma). Bu kullanıcıdan gelen herhangi bir özel iletide `meta.yonetici_chat` = chat_id yazılır (log yok).
 
 ## `docs/paylasim/gunluk.json`
