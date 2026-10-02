@@ -9,7 +9,7 @@ from PIL import Image, ImageDraw
 
 from kart_tasarimlari import F as font, ilan_karti
 from kurum_gorseli import kurum_logosu
-from siniflandir import ETIKET_OGRENIM, kucuk
+from siniflandir import ETIKET_OGRENIM, akademik_ilan, kucuk
 from site_uret import TR, _bitis
 
 GENISLIK, YUKSEKLIK = 1080, 1350
@@ -32,13 +32,13 @@ def _gorulme_gunu(ilan):
 
 
 def sec(ilanlar, simdi):
-    """Dün ilk görülen, iptal/düzeltme olmayan, süresi geçmemiş ilanlar; en yakın son tarih önce."""
+    """Dün ilk görülen; iptal/düzeltme, iptal edilmiş ya da akademik olmayan, süresi geçmemiş ilanlar; en yakın son tarih önce."""
     bugun = simdi.astimezone(TR).date()
     dun = bugun - timedelta(days=1)
     referans = datetime.combine(bugun, time(10, 30), tzinfo=TR)  # paylaşım anı; üretim anından bağımsız
     uygun = []
     for ilan in ilanlar:
-        if ilan.get('duyuru_turu') or _gorulme_gunu(ilan) != dun:
+        if ilan.get('duyuru_turu') or ilan.get('iptal_edildi') or akademik_ilan(ilan) or _gorulme_gunu(ilan) != dun:
             continue
         bitis = _bitis(ilan)
         if bitis and bitis <= referans:

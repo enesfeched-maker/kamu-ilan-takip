@@ -374,7 +374,7 @@ class AkisTesti(unittest.TestCase):
         self.assertIn('📌 <b>İptal duyurusu</b>',metin)
         self.assertIn('Kaynak: ÇŞB Yerel Yönetimler',metin)
         self.assertIn('Resmi ilan üzerinden kontrol edin',metin)
-        self.assertIsNone(ilan_bot.hatirlatma_anahtari(k))
+        self.assertEqual(ilan_bot.toplu_secim([dict(k,son_tarih=ilan_bot.simdi().date().isoformat())],{k['id']},{}),[])
         ilan_bot.siniflandir(k)
         self.assertEqual(k['iller'],['Rize'])
 

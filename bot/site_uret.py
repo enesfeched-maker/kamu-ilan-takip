@@ -15,6 +15,9 @@ def esc(value):
 
 
 def detail_page(item):
+    from siniflandir import akademik_ilan
+    if akademik_ilan(item):
+        return None  # akademik ilanlar sitede gösterilmez
     url = urlparse(item.get('link', ''))
     key = parse_qs(url.query).get('i', [''])[0]
     import uuid
@@ -36,8 +39,12 @@ def detail_page(item):
     status = 'Başvuru sona erdi' if end and end <= datetime.now(TR) else 'Son tarihi resmî ilandan doğrula'
     if item.get('duyuru_turu'):
         status = esc(item['duyuru_turu'])
+    if item.get('iptal_edildi'):
+        status = 'İptal edildi'
     date = end.astimezone(TR).strftime('%d.%m.%Y · %H:%M TSİ' if item.get('son_zaman') else '%d.%m.%Y') if end else 'Belirtilmemiş'
     sections = ''
+    if item.get('iptal_edildi'):
+        sections += '<p class="notice"><strong>İptal edildi.</strong> Bu ilan için resmî iptal duyurusu yayımlandı. Başvuru yapmadan önce resmî kaynağı kontrol et.</p>'
     for heading, value in [('Kadro ve kontenjan', item.get('kadro')), ('İlan özeti', item.get('ozet')), ('Başvuru notu', item.get('basvuru_notu'))]:
         if value:
             sections += f'<h3>{heading}</h3><p>{esc(value)}</p>'
@@ -56,7 +63,7 @@ def detail_page(item):
     button='İlan belgesini aç (PDF) ↗' if document else 'Resmî ilanı incele ↗'
     if document:
         sections += f'<p class="muted">{esc(item.get("belge_aciklamasi"))}</p>'
-    return key, f'''<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(title)} | Kamu İlan Takip</title><meta name="description" content="{esc(description)}"><link rel="canonical" href="{canonical}"><meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(description)}"><meta property="og:type" content="article"><link rel="stylesheet" href="../../portal.css?v=3"><link rel="icon" href="../../kamu-logo.png?v=1" type="image/png"></head><body><div class="topline"><div class="container">Kariyer Kapısı · İŞKUR · SBB · ÇŞB Yerel Yönetimler — Bağımsız ilan rehberi</div></div><header class="header"><div class="container header-inner"><a class="brand" href="../../"><img class="brand-logo" src="../../kamu-logo.png?v=1" alt="" width="48" height="48"><span>Kamu İlan<span class="brand-sub">TAKİP</span></span></a><a class="button secondary" href="../../">Tüm ilanlar →</a></div></header><main class="container" style="padding-block:36px"><p><a class="text-link" href="../../">← İlanları keşfet</a></p><div class="detail-header"><span class="eyebrow">{esc(item.get('ilan_turu','KAMU İLANI'))}</span><h1 style="font-size:clamp(1.7rem,3vw,2.5rem)">{esc(title)}</h1><p>{esc(item.get('kurum'))}</p></div><div class="detail-layout"><article class="detail-content"><p class="notice">Bilgiler kayıtlı kaynak özetini yansıtır. Güncel durum ve başvuru şartlarında resmî ilan esas alınır.</p>{sections}<p class="muted">Ayrıntı kontrolü: {esc(item.get('detay_guncelleme','Tarih belirtilmemiş'))}</p></article><aside class="detail-aside"><dl><dt>Durum</dt><dd>{status}</dd><dt>Görev yeri</dt><dd>{esc(item.get('yer') or 'Resmî ilandan kontrol et')}</dd><dt>Son başvuru</dt><dd>{date}</dd></dl><a class="button primary" href="{esc(target)}" target="_blank" rel="noopener noreferrer">{button}</a><a class="button secondary" href="../../#ilan/{key}">Kaydet, paylaş ve karşılaştır</a><a class="button secondary" href="https://t.me/kamuilantakip" target="_blank" rel="noopener">Telegram'dan takip et ↗</a></aside></div><section class="trust-strip" style="margin-top:40px"><strong>Başka fırsatlara da göz at.</strong><a class="button primary" href="../../">İlanları keşfet →</a></section></main><footer class="footer"><div class="container footer-bottom">Kamu İlan Takip resmî bir hizmet değildir. Başvurunu ilanda belirtilen resmî kanaldan tamamla.</div></footer></body></html>'''
+    return key, f'''<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(title)} | Kamu İlan Takip</title><meta name="description" content="{esc(description)}"><link rel="canonical" href="{canonical}"><meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(description)}"><meta property="og:type" content="article"><link rel="stylesheet" href="../../portal.css?v=4"><link rel="icon" href="../../kamu-logo.png?v=1" type="image/png"></head><body><div class="topline"><div class="container">Kariyer Kapısı · İŞKUR · SBB · ÇŞB Yerel Yönetimler — Bağımsız ilan rehberi</div></div><header class="header"><div class="container header-inner"><a class="brand" href="../../"><img class="brand-logo" src="../../kamu-logo.png?v=1" alt="" width="48" height="48"><span>Kamu İlan<span class="brand-sub">TAKİP</span></span></a><a class="button secondary" href="../../">Tüm ilanlar →</a></div></header><main class="container" style="padding-block:36px"><p><a class="text-link" href="../../">← İlanları keşfet</a></p><div class="detail-header"><span class="eyebrow">{esc(item.get('ilan_turu','KAMU İLANI'))}</span><h1 style="font-size:clamp(1.7rem,3vw,2.5rem)">{esc(title)}</h1><p>{esc(item.get('kurum'))}</p></div><div class="detail-layout"><article class="detail-content"><p class="notice">Bilgiler kayıtlı kaynak özetini yansıtır. Güncel durum ve başvuru şartlarında resmî ilan esas alınır.</p>{sections}<p class="muted">Ayrıntı kontrolü: {esc(item.get('detay_guncelleme','Tarih belirtilmemiş'))}</p></article><aside class="detail-aside"><dl><dt>Durum</dt><dd>{status}</dd><dt>Görev yeri</dt><dd>{esc(item.get('yer') or 'Resmî ilandan kontrol et')}</dd><dt>Son başvuru</dt><dd>{date}</dd></dl><a class="button primary" href="{esc(target)}" target="_blank" rel="noopener noreferrer">{button}</a><a class="button secondary" href="../../#ilan/{key}">Kaydet, paylaş ve karşılaştır</a><a class="button secondary" href="https://t.me/kamuilantakip" target="_blank" rel="noopener">Telegram'dan takip et ↗</a></aside></div><section class="trust-strip" style="margin-top:40px"><strong>Başka fırsatlara da göz at.</strong><a class="button primary" href="../../">İlanları keşfet →</a></section></main><footer class="footer"><div class="container footer-bottom">Kamu İlan Takip resmî bir hizmet değildir. Başvurunu ilanda belirtilen resmî kanaldan tamamla.</div></footer></body></html>'''
 
 
 def _bitis(item):
@@ -94,7 +101,10 @@ def bot_ilanlari(ilanlar, simdi=None):
     """Süresi geçmemiş (ya da tarihsiz) ilanların bot kayıtları."""
     simdi = simdi or datetime.now(TR)
     sonuc = []
+    from siniflandir import akademik_ilan
     for item in ilanlar:
+        if akademik_ilan(item) or item.get('iptal_edildi'):
+            continue
         bitis = _bitis(item)
         if bitis and bitis <= simdi:
             continue
@@ -102,14 +112,31 @@ def bot_ilanlari(ilanlar, simdi=None):
     return {'guncelleme': simdi.isoformat(timespec='seconds'), 'ilanlar': sonuc}
 
 
+def _sayfayi_kaldir(docs, item):
+    """Önceden üretilmiş akademik ilan sayfasını siler (yalnız ilan/<kimlik>/ altında, güvenli kimliklerde)."""
+    import re
+    import shutil
+    for kimlik in {item.get('id', ''), *item.get('kaynak_kimlikleri', [])}:
+        if re.fullmatch(r'(?:(?:sbb|iskur)-[a-f0-9]{24}|csb-\d{4,9})', kimlik or ''):
+            shutil.rmtree(docs / 'ilan' / kimlik, ignore_errors=True)
+    kimlik = parse_qs(urlparse(item.get('link', '')).query).get('i', [''])[0]
+    try:
+        shutil.rmtree(docs / 'ilan' / str(__import__('uuid').UUID(kimlik)), ignore_errors=True)
+    except ValueError:
+        pass
+
+
 def main():
     docs = ROOT / 'docs'
     data = json.loads((docs / 'ilanlar.json').read_text(encoding='utf-8'))
     urls = [BASE]
     count = 0
+    from siniflandir import akademik_ilan
     for item in data.get('ilanlar', []):
         result = detail_page(item)
         if not result:
+            if akademik_ilan(item):
+                _sayfayi_kaldir(docs, item)
             continue
         key, content = result
         folder = docs / 'ilan' / key

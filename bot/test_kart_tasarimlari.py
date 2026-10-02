@@ -22,6 +22,38 @@ def resim(ilan_, **kw):
     return Image.open(io.BytesIO(ilan_karti(ilan_, simdi=SIMDI, **kw))).convert('RGB')
 
 
+class TopluKartTesti(unittest.TestCase):
+    def liste(self, n, gun=2):
+        bitis = (SIMDI.date() + __import__('datetime').timedelta(days=gun)).isoformat()
+        return [ilan(id=f'i{k}', kurum=f'Örnek Belediyesi {k}', kadro=f'{k + 1} Zabıta Memuru', son_tarih=bitis) for k in range(n)]
+
+    def test_boyut_ve_satir_siniri(self):
+        for n in (1, 4, 7, 12):
+            im = Image.open(io.BytesIO(kt.toplu_son_gun_karti(self.liste(n), SIMDI)))
+            self.assertEqual(im.size, (1080, 1350))
+
+    def test_satir_bilgisi_kurum_ve_kadro(self):
+        kurum, kadro = kt.toplu_satir(self.liste(1)[0])
+        self.assertEqual(kurum, 'Örnek Belediyesi 0')
+        self.assertEqual(kadro, '1 Zabıta Memuru')
+        _, kadro = kt.toplu_satir(ilan(kadro='Toplam 6 kişi — 2 Sekreter • 2 Şoför • 2 Hemşire'))
+        self.assertTrue(kadro.endswith('+1'))
+
+    def test_rozet_renkleri_bugun_yarin_kirmizi_diger_turuncu(self):
+        def renk(gun):
+            im = Image.open(io.BytesIO(kt.toplu_son_gun_karti(self.liste(1, gun), SIMDI))).convert('RGB')
+            return im.getpixel((1080 - kt.KENAR - 20, 40 + 210 + 14 + 69))
+        kirmizi, turuncu = tuple(int(kt.KIRMIZI[i:i + 2], 16) for i in (1, 3, 5)), tuple(int(kt.TURUNCU[i:i + 2], 16) for i in (1, 3, 5))
+        self.assertEqual(renk(0), kirmizi)
+        self.assertEqual(renk(1), kirmizi)
+        self.assertEqual(renk(2), turuncu)
+        self.assertEqual(renk(3), turuncu)
+
+    def test_cok_uzun_kurum_tek_satira_sigar(self):
+        uzun = ilan(kurum='Çok Uzun Adlı ' * 12 + 'Belediye Başkanlığı', kadro='1 ' + 'Zabıta ' * 30)
+        Image.open(io.BytesIO(kt.toplu_son_gun_karti([uzun], SIMDI))).load()
+
+
 class SecimTesti(unittest.TestCase):
     def test_tek_meslek_afis_cok_meslek_bilet(self):
         self.assertEqual(tasarim_secimi(ilan(kadro='Toplam 23 kişi — 23 SAĞLIK TEKNİKERİ')), 'afis')

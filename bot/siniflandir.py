@@ -66,11 +66,18 @@ def _tum_metin(ilan):
 
 
 # Başlıkta unvan yazmayan akademik ilanlar şart metninden tanınır.
-AKADEMIK_SART = re.compile(r'2547 sayılı|doktora veya tıpta|doçentliğini|doktorasını|öğretim üyeliğine')
+AKADEMIK_SART = re.compile(r'2547 sayılı|doktora veya tıpta|doçentliğini|doktorasını|öğretim üyeliğine'
+                           r'|profesör\s+kadro|doçent\s+kadro|yabancı dille öğretim yapılmasında|öğretim\s*/\s*görevlisi')
 
 
 def akademik_mi(ilan):
     return bool(AKADEMIK.search(_kisa_metin(ilan)) or AKADEMIK_SART.search(_tum_metin(ilan)))
+
+
+def akademik_ilan(ilan):
+    """Akademik kadro ilanı (öğretim üyesi/görevlisi, araştırma görevlisi...). Bu ilanlar kanalda, sosyal medyada,
+    sitede ve kişisel bot verisinde hiçbir yerde gösterilmez; yalnız docs/ilanlar.json'da kalır."""
+    return ilan.get('kategori') == 'akademik' or akademik_mi(ilan)
 
 
 def ogrenim_seviyeleri(ilan):
