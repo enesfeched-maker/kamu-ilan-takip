@@ -45,7 +45,6 @@ export function tercihOzeti(k) {
     `Öğrenim düzeyi: ${kacis(duzey)}\n` +
     `İl: ${kacis(il)}\n` +
     `Kategori: ${kacis(kat)}\n` +
-    `Akademik kadro: ${k.akademik ? 'Evet' : 'Hayır'}\n` +
     `Anahtar kelime: ${kacis(kel)}\n` +
     `Bildirimler: ${k.aktif ? 'Açık' : 'Durduruldu'}\n` +
     `Son gün hatırlatması: ${k.hatirlatma ? 'Açık' : 'Kapalı'}`
@@ -218,7 +217,7 @@ export async function callbackIsle(env, cq, bag = varsayilanBagimliliklar) {
     await cevapla();
     if (mod === 'duzey') return goster(env, chat_id, message_id, 'Öğrenim düzeyi seç:', duzeyKlavye(k.duzeyler, 'e'));
     if (mod === 'il') return goster(env, chat_id, message_id, 'İl seç:', ilKlavye(k.iller, 0, 'e'));
-    if (mod === 'kategori') return goster(env, chat_id, message_id, 'Kategori seç:', kategoriKlavye(k.kategoriler, k.akademik, 'e'));
+    if (mod === 'kategori') return goster(env, chat_id, message_id, 'Kategori seç:', kategoriKlavye(k.kategoriler, 'e'));
     if (mod === 'kelime') return kelimeSor(env, k, message_id, false);
     if (mod === 'hat') {
       k = await kullaniciGuncelle(env, chat_id, (u) => { u.hatirlatma = u.hatirlatma ? 0 : 1; });
@@ -251,7 +250,7 @@ export async function callbackIsle(env, cq, bag = varsayilanBagimliliklar) {
     await cevapla();
     const baslik = kurulum ? 'Hangi illerdeki ilanları görmek istersin?' : 'İl seç:';
     if (deger === 'ok') {
-      if (kurulum) return goster(env, chat_id, message_id, 'Hangi kategorilerdeki ilanları görmek istersin? Akademik kadro ilanları için ayrıca anahtarı aç.', kategoriKlavye(k.kategoriler, k.akademik, 'w'));
+      if (kurulum) return goster(env, chat_id, message_id, 'Hangi kategorilerdeki ilanları görmek istersin?', kategoriKlavye(k.kategoriler, 'w'));
       return ayarlarGoster(env, k, message_id);
     }
     if (deger === 'tum') {
@@ -277,12 +276,11 @@ export async function callbackIsle(env, cq, bag = varsayilanBagimliliklar) {
       return ayarlarGoster(env, k, message_id);
     }
     let degisim;
-    if (deger === 'akd') degisim = (u) => { u.akademik = u.akademik ? 0 : 1; };
-    else if (KATEGORILER.some(([kod]) => kod === deger)) degisim = (u) => { u.kategoriler = degistir(u.kategoriler, deger); };
+    if (KATEGORILER.some(([kod]) => kod === deger)) degisim = (u) => { u.kategoriler = degistir(u.kategoriler, deger); };
     else return;
     k = await kullaniciGuncelle(env, chat_id, degisim);
     if (!k) return;
-    return goster(env, chat_id, message_id, kurulum ? 'Hangi kategorilerdeki ilanları görmek istersin?' : 'Kategori seç:', kategoriKlavye(k.kategoriler, k.akademik, mod));
+    return goster(env, chat_id, message_id, kurulum ? 'Hangi kategorilerdeki ilanları görmek istersin?' : 'Kategori seç:', kategoriKlavye(k.kategoriler, mod));
   }
 
   return cevapla();

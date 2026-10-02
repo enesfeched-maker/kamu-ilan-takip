@@ -38,7 +38,7 @@ export function sureDoldu(ilan, bugun, simdi) {
 export function uygunMu(ilan, kullanici, bugun = bugunIstanbul(), simdi = null, sureAtla = false) {
   if (!kullanici || !kullanici.aktif || !kullanici.onay) return false;
   if (!sureAtla && sureDoldu(ilan, bugun, simdi)) return false;
-  if (!kullanici.akademik && ilan.kategori === 'akademik') return false;
+  if (ilan.kategori === 'akademik') return false; // akademik ilanlar hiçbir yerde gösterilmez
 
   const duzeyler = liste(kullanici.duzeyler);
   const ogrenim = liste(ilan.ogrenim);

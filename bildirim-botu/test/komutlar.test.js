@@ -75,10 +75,11 @@ test('kurulum sihirbazı: kategori, kelime, özet', async () => {
   await gonder(cb(1, 'onay'));
   await gonder(cb(1, 'i:w:ok'));
   await gonder(cb(1, 'k:w:saglik'));
-  await gonder(cb(1, 'k:w:akd'));
+  await gonder(cb(1, 'k:w:akd')); // eski mesajlardaki akademik düğmesi artık etkisiz
   let k = await kullaniciGetir(env, 1);
   assert.deepEqual(k.kategoriler, ['saglik']);
-  assert.equal(k.akademik, 1);
+  assert.ok(!k.akademik);
+  assert.ok(!JSON.stringify(tgs.son('editMessageText')).toLowerCase().includes('akademik'));
   await gonder(cb(1, 'k:w:ok'));
   assert.ok(butonlar(tgs.son('editMessageText')).some((x) => x.callback_data === 'kw:atla'));
   await gonder(mesaj(1, ' Hukuk,  BİLGİSAYAR ,hukuk'));

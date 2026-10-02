@@ -24,12 +24,12 @@ ilanlar özelden gelir, son başvuru gününden önce hatırlatılır.
 | `src/sponsor.js` | `sponsorSec(env, kullanici, ilan)` → `{metin, link}` ya da `null` | İşçi C |
 | `test/sahte.js` | Sahte D1 (`prepare().bind().all()/first()/run()`, basit SQL'i destekleyen bellek içi) + sahte `fetch` | İşçi B yazar, C kullanır |
 
-`kullanici` nesnesi: `{chat_id, onay, duzeyler:[], iller:[], kategoriler:[], akademik:0|1, kelimeler:[], aktif, hatirlatma, durum, vip_bitis}`.
+`kullanici` nesnesi: `{chat_id, onay, duzeyler:[], iller:[], kategoriler:[], kelimeler:[], aktif, hatirlatma, durum, vip_bitis}`.
 
 ## Eşleştirme kuralı (`uygunMu`)
 - Kullanıcı `aktif=1` ve `onay=1` değilse: false.
 - Süresi geçmiş ilan (`son_tarih` < bugün, Europe/Istanbul): false.
-- `akademik=0` ve `ilan.kategori === 'akademik'`: false.
+- `ilan.kategori === 'akademik'`: her zaman false (akademik ilanlar hiçbir yerde gösterilmez; `kullanicilar.akademik` kolonu şemada kalır ama kullanılmaz).
 - Düzey: `duzeyler` boşsa geçer. İlanın `ogrenim` listesi boş/yoksa GEÇER (belirsiz ilan kaçırılmaz). Doluysa kesişim gerekir.
 - İl: `iller` boşsa geçer. İlanın `iller` listesi boş/yoksa GEÇER (çok ilde/merkezi). Doluysa kesişim.
 - Kategori: `kategoriler` boşsa geçer; doluysa `ilan.kategori` listede olmalı (kategorisiz ilan geçer).
@@ -52,7 +52,7 @@ HTML parse_mode; tüm ilan metinleri kaçışlanır (`&<>`). Başlık (kalın), 
 - `/kelime`: "Anahtar kelimeleri virgülle yaz (ör. hukuk, bilgisayar). Silmek için 'yok' yaz." → `durum='kelime_bekleniyor'`.
 - `/durdur`, `/devam`: `aktif` 0/1. `/sil`: kullanıcının tüm satırlarını (kullanicilar + gonderilen) siler.
 - `/yardim`. `/vip`: `VIP_ACIK!=="1"` ise "Yakında" yanıtı.
-- Klavyeler: düzey çoklu seçim (✓ işaretli), il seçimi sayfalı (81 il, 3 sütun, sayfa başına 24, "Tüm Türkiye"), kategori çoklu seçim + "Akademik de gelsin" anahtarı. `callback_data` ≤ 64 bayt.
+- Klavyeler: düzey çoklu seçim (✓ işaretli), il seçimi sayfalı (81 il, 3 sütun, sayfa başına 24, "Tüm Türkiye"), kategori çoklu seçim (akademik anahtarı yok). `callback_data` ≤ 64 bayt.
 - Webhook isteği `X-Telegram-Bot-Api-Secret-Token` başlığı `WEBHOOK_SECRET` ile eşleşmiyorsa 401.
 - Grup sohbetlerinden gelen iletiler yok sayılır (yalnız `chat.type === 'private'`).
 
