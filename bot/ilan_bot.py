@@ -326,6 +326,24 @@ def telegram_icin_uygun(ilan, dahil, haric):
     return not any(k.lower() in metin for k in haric)
 
 
+def ilan_gorseli(i, hatirlatma, logo=None):
+    """Telegram kartı: yeni tasarım (afiş/bilet); hata olursa eski kart ile devam eder (gönderim aksamasın)."""
+    try:
+        from kart_tasarimlari import ilan_karti
+        return ilan_karti(i, logo=logo, hatirlatma=hatirlatma)
+    except Exception as exc:
+        print(f'Yeni ilan kartı oluşturulamadı ({type(exc).__name__}); eski kart kullanılıyor.', file=sys.stderr)
+    tarih = tarih_yaz(i['son_tarih']) if i.get('son_tarih') else 'Resmi ilandan kontrol edin'
+    if i.get('son_zaman'):
+        tarih += ' · ' + datetime.fromisoformat(i['son_zaman']).strftime('%H:%M') + ' TSİ'
+    return gorsel_olustur(
+        okunakli_baslik(i.get('kurum') or i['baslik']),
+        okunakli_baslik(i.get("kadro", "")) or kisa_baslik(i),
+        okunakli_baslik(i.get('yer', '')), tarih,
+        kalan_gun_metni(i['son_tarih']).capitalize() if hatirlatma else '',
+        kaynak=i.get('kaynak', 'Kariyer Kapısı'), logo=logo)
+
+
 def siniflandir(ilan):
     """Site filtreleri ve kişisel bot için öğrenim, kategori, il ve KPSS alanlarını günceller."""
     for alan, deger in (('ogrenim', ogrenim_seviyeleri(ilan)), ('kategori', kategori(ilan)),
@@ -520,16 +538,8 @@ def main():
         if a.dry_run:
             print('--- (önizleme, gönderilmedi) ---\n' + metin + '\n')
             continue
-        tarih = tarih_yaz(i['son_tarih']) if i.get('son_tarih') else 'Resmi ilandan kontrol edin'
-        if i.get('son_zaman'):
-            tarih += ' · ' + datetime.fromisoformat(i['son_zaman']).strftime('%H:%M') + ' TSİ'
         try:
-            foto = gorsel_olustur(
-                okunakli_baslik(i.get('kurum') or i['baslik']),
-                okunakli_baslik(i.get("kadro", "")) or kisa_baslik(i),
-                okunakli_baslik(i.get('yer', '')), tarih,
-                kalan_gun_metni(i['son_tarih']).capitalize() if hatirlatma else '',
-                kaynak=i.get('kaynak','Kariyer Kapısı'),logo=kurum_logosu(i))
+            foto = ilan_gorseli(i, hatirlatma, kurum_logosu(i))
         except Exception as exc:
             print(f'İlan görseli oluşturulamadı ({type(exc).__name__}); gönderim ertelendi.', file=sys.stderr)
             hata = True

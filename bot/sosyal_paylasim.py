@@ -7,7 +7,8 @@ from io import BytesIO
 from pathlib import Path
 from PIL import Image, ImageDraw
 
-from ilan_gorsel import font, lines
+from kart_tasarimlari import F as font, ilan_karti
+from kurum_gorseli import kurum_logosu
 from siniflandir import ETIKET_OGRENIM, kucuk
 from site_uret import TR, _bitis
 
@@ -83,15 +84,6 @@ def _kisalt(metin, uzunluk):
     return metin if len(metin) <= uzunluk else metin[:uzunluk - 1].rstrip() + '…'
 
 
-def _il_metni(ilan):
-    return ', '.join(ilan.get('iller') or [])
-
-
-def _kaynak(ilan):
-    kaynaklar = ilan.get('kaynaklar') or []
-    return (kaynaklar[0].get('ad') if kaynaklar else '') or ''
-
-
 def _tarih_yazi(gun):
     return f'{gun.day} {AYLAR[gun.month - 1]} {gun.year}'
 
@@ -138,66 +130,10 @@ def _norm(metin):
     return ' '.join(re.sub(r'[^\w]+', ' ', kucuk(str(metin or ''))).split())
 
 
-DUZEY_ADI = {'lisans': 'Lisans', 'onlisans': 'Önlisans', 'ortaogretim': 'Ortaöğretim'}
-KPSS_ADI = {'kpss': 'KPSS puanı ile', 'kpsssiz': 'KPSS şartı yok'}
-
-
-def _kart_alanlari(ilan, baslik):
-    kadro = _baslik_bicimi(ilan.get('kadro'))
-    if kadro and _norm(kadro) in _norm(baslik):
-        kadro = ''
-    duzey = ', '.join(DUZEY_ADI[d] for d in ilan.get('ogrenim') or [] if d in DUZEY_ADI)
-    alanlar = [('KADRO', kadro, 3), ('GÖREV YERİ', _il_metni(ilan), 2), ('ÖĞRENİM', duzey, 1),
-               ('KPSS', KPSS_ADI.get(ilan.get('kpss'), ''), 1), ('SON BAŞVURU', _gg_aa(ilan), 1),
-               ('KAYNAK', _kaynak(ilan), 1)]
-    return [(e, str(d), n) for e, d, n in alanlar if d]
-
-
-def kart_gorseli(ilan, sira, toplam):
-    im = Image.new('RGB', (GENISLIK, YUKSEKLIK), KOYU)
-    d = ImageDraw.Draw(im)
-    d.rectangle((0, 0, 18, YUKSEKLIK), fill=LIME)
-    d.text((70, 70), 'KAMU İLAN TAKİP', font=font(30, True), fill=LIME)
-    sayac = f'{sira} / {toplam}'
-    d.text((GENISLIK - 70 - d.textlength(sayac, font=font(30, True)), 70), sayac, font=font(30, True), fill=SOLUK)
-    kurum = _baslik_bicimi(ilan.get('kurum'))
-    baslik = _baslik_bicimi(ilan.get('baslik'))
-    baslik = _kurumu_at(kurum, baslik)
-    alanlar = _kart_alanlari(ilan, baslik)
-    ust, alt = 140, YUKSEKLIK - 190
-    for olcek in (1.0, 0.9, 0.8, 0.7, 0.6):
-        f_kurum, f_baslik, f_alan, f_etiket = (font(round(46 * olcek), True), font(round(64 * olcek), True),
-                                               font(round(40 * olcek), True), font(round(24 * olcek), True))
-        satir_kurum = lines(d, kurum, f_kurum, 940, 3)
-        satir_baslik = lines(d, baslik, f_baslik, 940, 4)
-        blok_alanlar = [(e, lines(d, v, f_alan, 940, n)) for e, v, n in alanlar]
-        h_kurum, h_baslik, h_alan = round(58 * olcek), round(76 * olcek), round(50 * olcek)
-        yukseklik = (len(satir_kurum) * h_kurum + 40 + len(satir_baslik) * h_baslik + 50
-                     + sum(round(38 * olcek) + len(s) * h_alan + 24 for _, s in blok_alanlar))
-        if yukseklik <= alt - ust:
-            break
-    y = ust + max(0, (alt - ust - yukseklik) // 2)
-    for satir in satir_kurum:
-        d.text((70, y), satir, font=f_kurum, fill=LIME)
-        y += h_kurum
-    y += 10
-    d.line((70, y, GENISLIK - 70, y), fill='#35515a', width=3)
-    y += 30
-    for satir in satir_baslik:
-        d.text((70, y), satir, font=f_baslik, fill=BEYAZ)
-        y += h_baslik
-    y += 50
-    for etiket, satirlar in blok_alanlar:
-        d.text((70, y), etiket, font=f_etiket, fill=SOLUK)
-        y += round(38 * olcek)
-        for satir in satirlar:
-            d.text((70, y), satir, font=f_alan, fill=BEYAZ)
-            y += h_alan
-        y += 24
-    d.rectangle((0, YUKSEKLIK - 150, GENISLIK, YUKSEKLIK), fill=ANA)
-    d.text((GENISLIK // 2, YUKSEKLIK - 100), 'Ayrıntılar ve başvuru bağlantısı:', font=font(30), fill=BEYAZ, anchor='mm')
-    d.text((GENISLIK // 2, YUKSEKLIK - 55), 'profildeki bağlantı', font=font(34, True), fill=LIME, anchor='mm')
-    return _jpeg(im)
+def kart_gorseli(ilan, simdi):
+    """İlan kartı: Telegram ile aynı tasarım (tek meslek afiş, çok meslek bilet); simdi referansıyla deterministik."""
+    with Image.open(BytesIO(ilan_karti(ilan, logo=kurum_logosu(ilan), simdi=simdi))) as kart:
+        return _jpeg(kart.convert('RGB'))
 
 
 def x_agirlik(metin):
@@ -255,6 +191,7 @@ def ig_metni(secilen, sayi, tarih):
 def uret(ilanlar, simdi, cikti_kok, site_url):
     """docs/paylasim/<bugün>/ görsellerini ve docs/paylasim/gunluk.json dosyasını yazar; sözlüğü döndürür."""
     simdi = simdi.astimezone(TR) if simdi.tzinfo else simdi.replace(tzinfo=TR)
+    referans = datetime.combine(simdi.date(), time(10, 30), tzinfo=TR)
     bugun = simdi.date().isoformat()
     kok = Path(cikti_kok) / 'paylasim'
     klasor = kok / bugun
@@ -269,7 +206,7 @@ def uret(ilanlar, simdi, cikti_kok, site_url):
     else:
         dosyalar = [('00-kapak.jpg', kapak_gorseli(sayi, simdi))]
         for n, ilan in enumerate(secilen, 1):
-            dosyalar.append((f'{n:02d}.jpg', kart_gorseli(ilan, n, len(secilen))))
+            dosyalar.append((f'{n:02d}.jpg', kart_gorseli(ilan, referans)))
         for ad, icerik in dosyalar:
             (klasor / ad).write_bytes(icerik)
         taban = site_url.rstrip('/') + '/paylasim/' + bugun + '/'
