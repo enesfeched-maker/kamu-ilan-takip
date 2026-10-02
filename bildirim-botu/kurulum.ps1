@@ -1,4 +1,4 @@
-# Bildirim botu sır kurulumu. Token yalnızca bu pencerede, gizli girişle alınır;
+﻿# Bildirim botu sır kurulumu. Token yalnızca bu pencerede, gizli girişle alınır;
 # diske, loga veya ekrana yazılmaz. Kullanım (bildirim-botu klasöründe):
 #   powershell -ExecutionPolicy Bypass -File .\kurulum.ps1 -WorkerUrl https://kamu-ilan-bildirim.<alt-alan>.workers.dev
 param([Parameter(Mandatory = $true)][string]$WorkerUrl)
@@ -15,6 +15,8 @@ function Duz([Security.SecureString]$s) {
 # Hata kayıtları istek adresini (dolayısıyla token'ı) tutabildiği için ayrıntı gösterilmez, kayıt temizlenir.
 function Telegram([string]$yontem, $govde) {
   try {
+  # Wrangler geçici dosyalarını çalışma klasörüne yazar; System32 gibi korumalı bir yerden çalıştırılsa da betik klasörüne geç.
+  Push-Location $PSScriptRoot
     $istek = @{ Method = 'Post'; Uri = ($script:api + $yontem) }
     if ($govde) { $istek.ContentType = 'application/json; charset=utf-8'; $istek.Body = [Text.Encoding]::UTF8.GetBytes(($govde | ConvertTo-Json -Depth 5)) }
     return Invoke-RestMethod @istek
@@ -30,6 +32,8 @@ function Sir([string]$ad, [string]$deger) {
 }
 
 try {
+  # Wrangler geçici dosyalarını çalışma klasörüne yazar; System32 gibi korumalı bir yerden çalıştırılsa da betik klasörüne geç.
+  Push-Location $PSScriptRoot
   $token = Duz (Read-Host 'BotFather token (ekranda görünmez)' -AsSecureString)
   if ($token -notmatch '^\d+:[A-Za-z0-9_-]{30,}$') { throw 'Token biçimi hatalı. BotFather''ın verdiği satırı olduğu gibi yapıştır.' }
   $script:api = "https://api.telegram.org/bot$token/"
@@ -59,5 +63,6 @@ try {
   $Error.Clear()
   exit 1
 } finally {
+  Pop-Location -ErrorAction SilentlyContinue
   $token = $null; $gizli = $null; $script:api = $null; $bayt = $null
 }

@@ -1,4 +1,4 @@
-# Instagram paylaşım kurulumu. Erişim anahtarı yalnızca bu pencerede, gizli girişle alınır;
+﻿# Instagram paylaşım kurulumu. Erişim anahtarı yalnızca bu pencerede, gizli girişle alınır;
 # diske, loga veya ekrana yazılmaz. Kullanım (herhangi bir klasörden):
 #   powershell -ExecutionPolicy Bypass -File "...\bildirim-botu\kurulum-instagram.ps1"
 $ErrorActionPreference = 'Stop'
@@ -18,6 +18,8 @@ function Sir([string]$ad, [string]$deger) {
 }
 
 try {
+  # Wrangler geçici dosyalarını çalışma klasörüne yazar; System32 gibi korumalı bir yerden çalıştırılsa da betik klasörüne geç.
+  Push-Location $PSScriptRoot
   $token = Duz (Read-Host 'Instagram erişim anahtarı (ekranda görünmez)' -AsSecureString)
   if ($token.Length -lt 50 -or $token -match '\s') { throw 'Anahtar biçimi hatalı. Meta panelindeki "Generate token" ile alınan anahtarı olduğu gibi yapıştır.' }
 
@@ -38,5 +40,6 @@ try {
   $Error.Clear()
   exit 1
 } finally {
+  Pop-Location -ErrorAction SilentlyContinue
   $token = $null; $ben = $null
 }
