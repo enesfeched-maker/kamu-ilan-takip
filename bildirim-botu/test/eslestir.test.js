@@ -17,9 +17,9 @@ test('süresi geçmiş ilan geçmez, bugün son gün geçer', () => {
   assert.equal(uygunMu(i({ son_tarih: '2026-10-01' }), k(), BUGUN), true);
 });
 
-test('akademik ilan akademik=0 iken geçmez', () => {
+test('akademik ilan her zaman elenir (eski akademik=1 tercihi dahil)', () => {
   assert.equal(uygunMu(i({ kategori: 'akademik' }), k(), BUGUN), false);
-  assert.equal(uygunMu(i({ kategori: 'akademik' }), k({ akademik: 1 }), BUGUN), true);
+  assert.equal(uygunMu(i({ kategori: 'akademik' }), k({ akademik: 1 }), BUGUN), false);
 });
 
 test('düzey: boş tercih geçer, belirsiz ilan geçer, kesişim gerekir', () => {

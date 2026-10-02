@@ -64,11 +64,10 @@ export function ilKlavye(secili = [], sayfa = 0, mod = 'w') {
   return { inline_keyboard: satirlar };
 }
 
-export function kategoriKlavye(secili = [], akademik = 0, mod = 'w') {
+export function kategoriKlavye(secili = [], mod = 'w') {
   return {
     inline_keyboard: [
       ...KATEGORILER.map(([kod, ad]) => [d(isaret(secili.includes(kod), ad), `k:${mod}:${kod}`)]),
-      [d(isaret(!!akademik, 'Akademik de gelsin'), `k:${mod}:akd`)],
       [d('Bitti', `k:${mod}:ok`)],
     ],
   };
