@@ -1,5 +1,5 @@
 {
- "guncelleme": "2026-10-03T14:03:42+03:00",
+ "guncelleme": "2026-10-03T14:04:44+03:00",
  "ilanlar": [
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=9c82aab5-022e-43c8-b7f1-e6cf329d205b",
@@ -10215,6 +10215,7 @@
   "sbb-83609f07f8861d5c98115fb7",
   "sbb-866abc35896ad9d91ee671c5",
   "sbb-88a9760a607c548d73c7b5c9",
+  "sbb-89c8b060891cf9aed29dbcdc",
   "sbb-8a62442fbdabe75f3d80199d",
   "sbb-8aec380e7ccafce20f013c1c",
   "sbb-90590b042f3d9058effaa9d4",
@@ -10276,12 +10277,14 @@
   "sbb-fefad4b939608db5c1d8a19c",
   "sbb-ffbba5c3ef2b2c84c00bb8e2"
  ],
- "telegram_bekleyen": [
-  "sbb-89c8b060891cf9aed29dbcdc"
- ],
+ "telegram_bekleyen": [],
  "telegram_yayin_surumu": 2,
- "telegram_mesajlari": {},
- "telegram_duyuru_yanitlari": {},
+ "telegram_mesajlari": {
+  "sbb-89c8b060891cf9aed29dbcdc": 280
+ },
+ "telegram_duyuru_yanitlari": {
+  "m:iptal:kurum:adana alparslan turkes bilim ve teknoloji universitesi|": "2026-10-03"
+ },
  "telegram_toplu_hatirlatma_gunu": "2026-10-03",
  "telegram_hatirlatilan": [
   "[\"https://kariyerkapisi.gov.tr/IlanDetay?i=1f94b6b1-1143-4b0a-9d84-c7dcfa542586\", \"2026-09-30T13:00:00+03:00\"]",
