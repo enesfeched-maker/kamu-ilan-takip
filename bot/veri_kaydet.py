@@ -32,7 +32,7 @@ def merge_registry(a, b):
             # pretending that the original document was fetched more recently.
             # Preserve that upgrade when merging with an older parser's output.
             def detail_order(record):
-                version=int(record.get('sbb_detay_surumu',0)) if record.get('kaynak_turu')=='sbb' else 0
+                version=int(record.get('sbb_detay_surumu',0)) if record.get('kaynak_turu')=='sbb' else int(record.get('iskur_detay_surumu',0)) if record.get('kaynak_turu')=='iskur' else 0
                 return version,record.get('detay_guncelleme') or ''
             if old and detail_order(old) > detail_order(item):
                 item = {**item, **old}

@@ -55,7 +55,10 @@ def detail_page(item, gorsel=None):
         sections += '<h3>Başvuru koşullarından seçmeler</h3>'
     for s in item.get('sartlar', []):
         sections += f'<section class="condition"><h4>{esc(s.get("kadro"))}</h4><p>{esc(s.get("metin"))}</p></section>'
-    sections += '<p class="muted">Seçilmiş alıntılardır. Tüm koşullar, kadrolar ve güncel tarihler için resmî ilanı incele.</p>'
+    if any(item.get(k) for k in ('kadro', 'duyuru_cumlesi', 'ozet', 'basvuru_notu', 'sartlar')):
+        sections += '<p class="muted">Seçilmiş alıntılardır. Tüm koşullar, kadrolar ve güncel tarihler için resmî ilanı incele.</p>'
+    else:
+        sections += '<p class="muted">Bu ilanın kadro, şart ve başvuru ayrıntıları henüz kaynaktan okunamadı. Tüm bilgiler için resmî ilan belgesini aç.</p>'
     for belge in item.get('belgeler', [])[:3]:
         if str(belge.get('link', '')).startswith('https://webdosya.csb.gov.tr/v2/yerelyonetimler/'):
             sections += f'<p><a class="text-link" href="{esc(belge["link"])}" target="_blank" rel="noopener noreferrer">Duyuru eki: {esc(belge.get("ad"))} ↗</a></p>'
