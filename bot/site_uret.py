@@ -65,7 +65,7 @@ def detail_page(item, gorsel=None):
     kurum_adi = esc(item.get('kurum') or 'Kurum')
     if gorsel.get('kart'):
         kart_url = esc(BASE + gorsel['kart'])
-        og_gorsel = f'<meta property="og:image" content="{kart_url}"><meta property="og:image:width" content="{KART_GENISLIK}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{kart_url}">'
+        og_gorsel = f'<meta property="og:image" content="{kart_url}"><meta property="og:image:width" content="{KART_GENISLIK}"><meta property="og:image:height" content="{gorsel.get("kart_yukseklik", 900)}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{kart_url}">'
         kart_html = f'<div class="detail-visual"><img class="detail-card-img" src="../../{esc(gorsel["kart"])}" alt="{kurum_adi} ilan görseli" width="{KART_GENISLIK}" height="{gorsel.get("kart_yukseklik", 900)}" decoding="async" fetchpriority="high"></div>'
     if gorsel.get('logo'):
         logo_html = f'<img class="detail-logo" src="../../{esc(gorsel["logo"])}" alt="{kurum_adi} logosu" width="64" height="64">'
@@ -185,9 +185,49 @@ def _kart_png(item, simdi, logo=None):
     return ilan_karti(item, logo=logo, simdi=simdi)
 
 
+LOGO_ONBELLEK_GUN = 30
+
+
+def _onbellek_yolu(item):
+    import hashlib
+    from kurum_gorseli import kurum_anahtari
+    return ROOT / '.cache' / 'logolar' / (hashlib.sha1(kurum_anahtari(item.get('kurum', '')).encode('utf-8')).hexdigest() + '.png')
+
+
+def _onbellekte(item):
+    try:
+        import time
+        yol = _onbellek_yolu(item)
+        return yol.is_file() and time.time() - yol.stat().st_mtime < LOGO_ONBELLEK_GUN * 86400
+    except Exception:
+        return False
+
+
+def _logo_adresi(item):
+    """Ağdan indirilecek logo adresi; yoksa/hatalıysa None."""
+    try:
+        from kurum_gorseli import logo_adresi
+        return logo_adresi(item)
+    except Exception:
+        return None
+
+
 def _logo_png(item):
     from kurum_gorseli import kurum_logosu
-    return kurum_logosu(item)
+    if _onbellekte(item):
+        try:
+            return _onbellek_yolu(item).read_bytes()
+        except Exception:
+            pass
+    png = kurum_logosu(item)
+    if png and not _logo_yerelde(item):
+        try:
+            yol = _onbellek_yolu(item)
+            yol.parent.mkdir(parents=True, exist_ok=True)
+            yol.write_bytes(png)
+        except Exception:
+            pass
+    return png
 
 
 def _logo_yerelde(item):
@@ -255,13 +295,14 @@ def gorselleri_uret(ilanlar, docs, simdi=None, en_cok_indirme=EN_COK_LOGO_INDIRM
             kurum = kurum_anahtari(item.get('kurum', ''))
             if kurum:
                 if kurum not in logolar:
-                    yerel = _logo_yerelde(item)
+                    yerel = _logo_yerelde(item) or _onbellekte(item)
                     png = None
-                    if yerel or (indirme < en_cok_indirme and ardisik_hata < 8):
-                        if not yerel:
+                    ag = not yerel and _logo_adresi(item) is not None  # yalnızca gerçek indirme denemesi sayılır
+                    if yerel or (ag and indirme < en_cok_indirme and ardisik_hata < 8):
+                        if ag:
                             indirme += 1
                         png = _logo_png(item)
-                        if not yerel:
+                        if ag:
                             ardisik_hata = 0 if png else ardisik_hata + 1
                     ad = None
                     if png:

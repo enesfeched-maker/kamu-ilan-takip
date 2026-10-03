@@ -32,12 +32,14 @@ SIMDI = datetime(2026, 10, 3, 12, 0, tzinfo=TR)
 
 
 class GorselTests(unittest.TestCase):
-    def kos(self, ilanlar, logo, **kw):
+    def kos(self, ilanlar, logo, adres=None, **kw):
         tmp = tempfile.TemporaryDirectory()
         self.addCleanup(tmp.cleanup)
         docs = Path(tmp.name)
         with mock.patch.object(site_uret, '_logo_png', side_effect=logo), \
-                mock.patch.object(site_uret, '_logo_yerelde', return_value=False):
+                mock.patch.object(site_uret, '_logo_yerelde', return_value=False), \
+                mock.patch.object(site_uret, '_onbellekte', return_value=False), \
+                mock.patch.object(site_uret, '_logo_adresi', side_effect=adres or (lambda i: 'https://x/logo.png')):
             sonuc = gorselleri_uret(ilanlar, docs, SIMDI, **kw)
         return docs, sonuc
 
@@ -83,6 +85,18 @@ class GorselTests(unittest.TestCase):
         self.assertEqual(sonuc.get(U1), None)
         self.assertEqual(sonuc.get(U2), None)
 
+    def test_adressiz_kurumlar_butceyi_harcamaz(self):
+        uuidler = ['%08d-1111-4111-8111-111111111111' % n for n in range(11)]
+        ilanlar = [ilan(u, f'Kurum{n} Belediyesi') for n, u in enumerate(uuidler)]
+        cagrilar = []
+
+        def logo(item):
+            cagrilar.append(item['kurum'])
+            return png()
+        docs, sonuc = self.kos(ilanlar, logo, adres=lambda i: 'https://x/l.png' if i['kurum'] == 'Kurum10 Belediyesi' else None)
+        self.assertEqual(cagrilar, ['Kurum10 Belediyesi'])
+        self.assertIn('logo', sonuc[uuidler[10]])
+
     def test_indirme_siniri(self):
         ilanlar = [ilan(U1, 'A Belediyesi'), ilan(U2, 'B Belediyesi'), ilan(U3, 'C Belediyesi')]
         cagrilar = []
@@ -99,6 +113,7 @@ class GorselTests(unittest.TestCase):
         g = {'kart': f'ilan/kart/{U1}.webp', 'logo': 'ilan/logo/abc.webp', 'kart_yukseklik': 900}
         html = detail_page(ilan(U1, 'Ankara Belediyesi'), g)[1]
         self.assertIn(f'<meta property="og:image" content="{site_uret.BASE}ilan/kart/{U1}.webp">', html)
+        self.assertIn('og:image:height', html)
         self.assertIn('alt="Ankara Belediyesi ilan görseli"', html)
         self.assertIn('alt="Ankara Belediyesi logosu"', html)
         yok = detail_page(ilan(U1, 'Ankara Belediyesi'))[1]
