@@ -71,7 +71,12 @@ AKADEMIK_SART = re.compile(r'2547 sayılı|doktora veya tıpta|doçentliğini|do
 
 
 def akademik_mi(ilan):
-    return bool(AKADEMIK.search(_kisa_metin(ilan)) or AKADEMIK_SART.search(_tum_metin(ilan)))
+    if AKADEMIK.search(_kisa_metin(ilan)) or AKADEMIK_SART.search(_tum_metin(ilan)):
+        return True
+    # İptal/düzeltme duyurularında işlem cümlesi ('... Araştırma Görevlisi kadrosu ilanımız iptal edilmiştir').
+    if AKADEMIK.search(kucuk(ilan.get('duyuru_cumlesi'))):
+        return True
+    return bool(ilan.get('duyuru_turu') and AKADEMIK.search(kucuk(ilan.get('ozet'))))
 
 
 def akademik_ilan(ilan):

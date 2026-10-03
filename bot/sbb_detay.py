@@ -9,13 +9,43 @@ ROOT=Path(__file__).resolve().parents[1]
 BASE='https://enesfeched-maker.github.io/kamu-ilan-takip/'
 VERSION=5
 
+FIIL=re.compile(r'(?:iptal\s+edil(?:miş\s*tir|di)|düzeltil(?:miş\s*tir|di)|değiştiril(?:miş\s*tir|di)|uzatıl(?:mış\s*tır|dı))')
+
+
+def _katla(s):
+    return s.translate(str.maketrans({'İ':'i','I':'ı'})).lower()  # length-preserving Turkish fold
+
+
+def duyuru_cumlesi_bul(pages):
+    """Resmi duyurunun işlem cümlesi ('... kadrosu ilanımız iptal edilmiştir.'); bulunamazsa ''.
+    pages: düz extract_text() sayfa metinleri (layout modu 'edilmiş  tir' diye böler)."""
+    from ek_kaynaklar import clean
+    full=clean(' '.join(pages))
+    for s in re.split(r'(?<=[.!?])\s+(?=[A-ZÇĞİÖŞÜ0-9])',full):
+        m=FIIL.search(_katla(s))
+        if m:
+            s=clean(s[:m.end()])+'.'  # fiilden hemen sonra kes
+            if len(s)>600:s='…'+s[-600:].split(' ',1)[-1]
+            return s
+    return ''
+
+
+def belge_cumlesi(item):
+    """Depodaki PDF kopyasından duyuru cümlesi (geriye dönük doldurma); belge yoksa None."""
+    sha=str(item.get('belge_sha256') or '')
+    path=ROOT/'docs'/'belgeler'/'sbb'/(sha+'.pdf')
+    if not re.fullmatch(r'[a-f0-9]{64}',sha) or not path.exists():return None
+    return duyuru_cumlesi_bul([p.extract_text() or '' for p in PdfReader(str(path)).pages])
+
 
 def summarize(raw,row):
     from ek_kaynaklar import clean,norm
     pages=[]
+    plain_pages=[]
     for page in PdfReader(io.BytesIO(raw)).pages:
         layout=page.extract_text(extraction_mode='layout') or ''
         plain=page.extract_text() or ''
+        plain_pages.append(plain)
         pages.append(plain if len(clean(layout))<len(clean(plain))*.6 else layout)
     rawblocks=[b for page in pages for b in re.split(r'\n\s*\n',page) if clean(b)]
     blocks=[clean(b) for b in rawblocks]
@@ -118,11 +148,15 @@ def summarize(raw,row):
     target=ROOT/'docs'/relative
     target.parent.mkdir(parents=True,exist_ok=True)
     if not target.exists():target.write_bytes(raw)
-    return {'ozet':' '.join(summary),'sartlar':conditions,
+    result={'ozet':' '.join(summary),'sartlar':conditions,
             'basvuru_notu':' '.join(application[1:]) or '',
             'belge_kopyasi':BASE+relative,'belge_sha256':digest,
             'belge_aciklamasi':'SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.',
             'sbb_detay_surumu':VERSION}
+    if row.get('duyuru_turu'):
+        result['duyuru_cumlesi']=duyuru_cumlesi_bul(plain_pages)
+        if result['duyuru_cumlesi']:result['ozet']=result['duyuru_cumlesi']
+    return result
 
 
 def document_url(item):

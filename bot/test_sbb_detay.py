@@ -61,4 +61,33 @@ class SbbDetailTests(unittest.TestCase):
         self.assertIn('href="'+link+'"',html)
         self.assertNotIn('kurum adıyla ara',html)
 
+class DuyuruCumlesiTests(unittest.TestCase):
+    def test_adana_cumlesi_kesilir(self):
+        from sbb_detay import duyuru_cumlesi_bul
+        s=duyuru_cumlesi_bul(['Adana … Rektörlüğünden: \nİPTAL İLANI \n20.09.2026 tarihli ve 33376 sayılı Resmi Gazete’de yayımlanan ve aşağıda belirtilen 6 \nSıra Nolu Havacılık … Anabilim Dalı 1 (bir) adet Araştırma Görevlisi kadrosu ilanımız iptal edilmiştir. \nS.NO BİRİM'])
+        self.assertTrue(s.endswith('Araştırma Görevlisi kadrosu ilanımız iptal edilmiştir.'))
+        self.assertNotIn('S.NO',s)
+
+    def test_ytu_tarzi_fiilden_sonra_kesilir(self):
+        from sbb_detay import duyuru_cumlesi_bul
+        s=duyuru_cumlesi_bul(['Kadro nitelikleri aşağıdaki şekilde değiştirilmiştir. (*) : 23.03.2016 tarih ve 29662 sayılı'])
+        self.assertTrue(s.endswith('değiştirilmiştir.'))
+        self.assertNotIn('(*)',s)
+
+    def test_gelecek_zamanli_cumle_eslesmez(self):
+        from sbb_detay import duyuru_cumlesi_bul
+        self.assertEqual(duyuru_cumlesi_bul(['Atamaları yapılmış olsa dahi iptal edilecektir.']),'')
+
+    def test_bolunmus_fiil_eslesir(self):
+        from sbb_detay import duyuru_cumlesi_bul
+        self.assertIn('iptal edilmiş tir.',duyuru_cumlesi_bul(['Zabıta alımı ilanı iptal edilmiş  tir. Başka cümle.']))
+
+    def test_gercek_adana_pdf(self):
+        from sbb_detay import belge_cumlesi,ROOT
+        sha='e94b91e9153ca7114a409d7a187a600cd357a4ee8985bfef4a4f9bb174c0967f'
+        if not (ROOT/'docs'/'belgeler'/'sbb'/(sha+'.pdf')).exists():self.skipTest('PDF yok')
+        self.assertIn('Araştırma Görevlisi',belge_cumlesi({'belge_sha256':sha}))
+        self.assertIsNone(belge_cumlesi({'belge_sha256':'../x'}))
+
+
 if __name__=='__main__':unittest.main()
