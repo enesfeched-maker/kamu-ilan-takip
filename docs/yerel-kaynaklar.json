@@ -1,10 +1,10 @@
 {
  "schema": 1,
- "guncelleme": "2026-10-03T10:33:49.098125+00:00",
+ "guncelleme": "2026-10-03T11:06:44.175563+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-10-03T10:36:25.118638+00:00",
-   "hata_sayisi": 1,
+   "kontrol": "2026-10-03T11:06:46.555637+00:00",
+   "hata_sayisi": 0,
    "ilanlar": [
     {
      "id": "sbb-99752bbf271fb02a24df0c8e",
@@ -1912,8 +1912,8 @@
      "donem": "( 28 Eylül - 12 Ekim)",
      "baslangic_zaman": "2026-09-28T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-03T01:36:44+03:00",
-     "belge_ozeti": "ca384cf8aab3ca3a4a3615f978e74af4dd96967be1159406a0d74cf8ee3f4f4f",
+     "detay_guncelleme": "2026-10-03T14:06:44+03:00",
+     "belge_ozeti": "1d450da23410cf40cbef734465972d0a0fc9fff49d453704f78332a34508b673",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1928,8 +1928,8 @@
       }
      ],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/ca384cf8aab3ca3a4a3615f978e74af4dd96967be1159406a0d74cf8ee3f4f4f.pdf",
-     "belge_sha256": "ca384cf8aab3ca3a4a3615f978e74af4dd96967be1159406a0d74cf8ee3f4f4f",
+     "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/1d450da23410cf40cbef734465972d0a0fc9fff49d453704f78332a34508b673.pdf",
+     "belge_sha256": "1d450da23410cf40cbef734465972d0a0fc9fff49d453704f78332a34508b673",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 5
     },
@@ -2467,8 +2467,8 @@
      "kaynak_turu": "sbb",
      "donem": "( 25 Eylül - 9 Ekim)",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-03T01:08:17+03:00",
-     "belge_ozeti": "6dd10f90768771b6f592c53ca255edd2054397ead6722e0c7e5fd7ce51f8cc77",
+     "detay_guncelleme": "2026-10-03T14:06:45+03:00",
+     "belge_ozeti": "a873fc3f76a47746785b7f4b9bdd36613ac1e654d8f0dd35ecc3f4f5094a5e60",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -2503,8 +2503,8 @@
       }
      ],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/6dd10f90768771b6f592c53ca255edd2054397ead6722e0c7e5fd7ce51f8cc77.pdf",
-     "belge_sha256": "6dd10f90768771b6f592c53ca255edd2054397ead6722e0c7e5fd7ce51f8cc77",
+     "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/a873fc3f76a47746785b7f4b9bdd36613ac1e654d8f0dd35ecc3f4f5094a5e60.pdf",
+     "belge_sha256": "a873fc3f76a47746785b7f4b9bdd36613ac1e654d8f0dd35ecc3f4f5094a5e60",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 5
     },
@@ -5154,7 +5154,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-10-03T10:37:10.315626+00:00",
+   "kontrol": "2026-10-03T11:07:04.345058+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -5222,7 +5222,7 @@
       }
      ],
      "yayim_tarihi": "2026-09-29",
-     "detay_guncelleme": "2026-10-03T13:36:29+03:00",
+     "detay_guncelleme": "2026-10-03T14:06:49+03:00",
      "csb_detay_surumu": 3,
      "ozet": "İstanbul ili Şile Belediye Başkanlığı bünyesinde 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği ile Belediye Zabıta Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla, belirtilen boş kadrolara açıktan atama yoluyla memur ve zabıta memuru alınacaktır.",
      "belgeler": [
@@ -5251,7 +5251,7 @@
       }
      ],
      "yayim_tarihi": "2026-09-29",
-     "detay_guncelleme": "2026-10-03T13:36:32+03:00",
+     "detay_guncelleme": "2026-10-03T14:06:52+03:00",
      "csb_detay_surumu": 3,
      "ozet": "İstanbul ili Şile Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Belediye Zabıta Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla zabıta memuru alımı yapılacaktır.",
      "belgeler": [
@@ -5328,7 +5328,7 @@
       }
      ],
      "yayim_tarihi": "2026-09-29",
-     "detay_guncelleme": "2026-10-03T13:36:36+03:00",
+     "detay_guncelleme": "2026-10-03T14:06:54+03:00",
      "csb_detay_surumu": 3,
      "ozet": "Ardahan ili Posof Belediye Başkanlığı bünyesinde 5393 sayılı Belediye Kanunu’nun 49 uncu maddesi ile Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla, belirtilen boş pozisyona tam zamanlı sözleşmeli personel alınacaktır.",
      "belgeler": [
@@ -5357,7 +5357,7 @@
       }
      ],
      "yayim_tarihi": "2026-09-23",
-     "detay_guncelleme": "2026-10-03T13:36:38+03:00",
+     "detay_guncelleme": "2026-10-03T14:06:56+03:00",
      "csb_detay_surumu": 3,
      "ozet": "Osmaniye ili Atalan Belediye Başkanlığı bünyesinde 5393 sayılı Belediye Kanununun 49 uncu maddesi ile Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla, belirtilen boş pozisyona tam zamanlı sözleşmeli personel alınacaktır",
      "belgeler": [
@@ -5410,7 +5410,7 @@
       }
      ],
      "yayim_tarihi": "2026-09-21",
-     "detay_guncelleme": "2026-10-03T13:36:41+03:00",
+     "detay_guncelleme": "2026-10-03T14:06:59+03:00",
      "csb_detay_surumu": 3,
      "ozet": "Konya ili Çeltik Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır.",
      "belgeler": [
@@ -5439,7 +5439,7 @@
       }
      ],
      "yayim_tarihi": "2026-09-21",
-     "detay_guncelleme": "2026-10-03T13:36:43+03:00",
+     "detay_guncelleme": "2026-10-03T14:07:01+03:00",
      "csb_detay_surumu": 3,
      "ozet": "Ağrı ili Eleşkirt Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır.",
      "belgeler": [
@@ -5468,7 +5468,7 @@
       }
      ],
      "yayim_tarihi": "2026-09-21",
-     "detay_guncelleme": "2026-10-03T13:36:46+03:00",
+     "detay_guncelleme": "2026-10-03T14:07:04+03:00",
      "csb_detay_surumu": 3,
      "ozet": "Muş ili Malazgirt Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır.",
      "belgeler": [
