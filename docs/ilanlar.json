@@ -1,5 +1,5 @@
 {
- "guncelleme": "2026-10-03T14:21:11+03:00",
+ "guncelleme": "2026-10-03T14:49:13+03:00",
  "ilanlar": [
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=9c82aab5-022e-43c8-b7f1-e6cf329d205b",
@@ -1615,7 +1615,8 @@
    "belge_sha256": "663f098ed663ed6dd0fd283297447b567a747bf75b6a6c5d7471f5df2385ed90",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
    "sbb_detay_surumu": 5,
-   "kategori": "belediye"
+   "kategori": "belediye",
+   "duyuru_cumlesi": "Sokak No: 3 Altınova/Yalova adresindeki Subaşı Belediye Başka nlığı İnsan Kaynakları ve Eğit im Müdürlüğü birimine yapabileceklerdir. (Geciken post alardan Belediyemiz sorumlu olm ayacaktır.)” şeklinde düzeltilmiştir."
   },
   {
    "id": "sbb-e4f2debf180fbc0c6897a62b",
@@ -1719,7 +1720,8 @@
    "ogrenim": [
     "onlisans"
    ],
-   "kpss": "kpss"
+   "kpss": "kpss",
+   "duyuru_cumlesi": "24/9/2026 PERŞEMBE ÇEŞİTLİ İLAN 9854 (DİSKET) SALİH Sivas Bilim ve Teknoloji Üniversitesi Rektörlüğünden: DÜZELTME İLANI 18.09.2026 tarihli ve 33374 sayılı Resmî Gazete’de aslına uygun olarak yayımlanan Sözleşmeli Personel alım ilanımızdaki TK1 ve TK2 ilan kodu ile belirtilen kadromuz aşağıdaki şekilde düzeltilmiştir."
   },
   {
    "id": "sbb-f18b0ff040aebffaaf4a702d",
@@ -1811,7 +1813,8 @@
    "belge_sha256": "2f42551c43fcf13b32564da118547a863507c5f766724fb6423d3d9689d9ac5b",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
    "sbb_detay_surumu": 5,
-   "kategori": "akademik"
+   "kategori": "akademik",
+   "duyuru_cumlesi": "KARABÜK ÜNİVERSİTESİ REKTÖRLÜĞÜNDEN ÖĞRETİM ELEMANI DÜZELTME İLANI 11.09.2026 tarihli ve 33367 sayılı Resmi Gazete'de aslına uygun olarak yayımlanan öğretim elemanı alım ilanımızdaki, ÖE-2026-09-01-02 numaralı ilanın özel şartı ve ilgili ilanın sınav takvimi aşağıdaki şekilde düzeltilmiştir."
   },
   {
    "id": "sbb-53d5d7eddcc0304e9046a8e2",
@@ -2203,7 +2206,7 @@
      "link": "https://www.iskur.gov.tr/medya/mgbpdb0p/ardahan-hanak-belediyesi-memur-al%C4%B1m-ilan%C4%B1-05102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-03T14:20:59+03:00",
+   "detay_guncelleme": "2026-10-03T14:49:03+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-90bc49ba5ab8723a8adb1001"
@@ -2390,7 +2393,8 @@
     "lisans",
     "onlisans",
     "ortaogretim"
-   ]
+   ],
+   "duyuru_cumlesi": ""
   },
   {
    "id": "sbb-cf0ab108a51eb8616627b01b",
@@ -2423,7 +2427,8 @@
    "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/d8b0fa8a7c1369e5ec640481ee0448b396948aab9e82067578192248dc31323f.pdf",
    "belge_sha256": "d8b0fa8a7c1369e5ec640481ee0448b396948aab9e82067578192248dc31323f",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-   "sbb_detay_surumu": 5
+   "sbb_detay_surumu": 5,
+   "duyuru_cumlesi": "Türkiye Bilimsel ve Teknolojik Araştırma Kurumu Başkanlığından: 01 Eylül 2026 tarihli ve 33357 sayılı Resmî Gazete'nin 87 - 112' inci sayfalar arasında yayımlanan son başvuru tarihi 22/09/2026 olan TÜBİTAK bünyesinde görev yapmak üzere Personel alımına ilişkin ilanların son başvuru tarihi 05/10/2026 saat 17:00'a kadar uzatılmıştır."
   },
   {
    "id": "sbb-486f940153a3616ee11609f8",
@@ -2786,7 +2791,7 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-03T14:20:34+03:00",
+   "detay_guncelleme": "2026-10-03T14:48:46+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-8f2afcb0d71295c346c4b20d",
@@ -2818,7 +2823,7 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-03T14:20:59+03:00",
+   "detay_guncelleme": "2026-10-03T14:49:03+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-46fd3ccae48ba3acd1a3e086",
@@ -2846,7 +2851,7 @@
      "link": "https://www.iskur.gov.tr/medya/ykdb03ym/osmaniye-bah%C3%A7e-belediyesi-memur-al%C4%B1m-ilan%C4%B1-06102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-03T14:21:08+03:00",
+   "detay_guncelleme": "2026-10-03T14:49:10+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-c87f9628d86934195c827cdb"
@@ -3227,7 +3232,8 @@
     "ortaogretim"
    ],
    "kategori": "belediye",
-   "kpss": "kpss"
+   "kpss": "kpss",
+   "duyuru_cumlesi": ""
   },
   {
    "id": "sbb-c49d399e06ae4c205b04a173",
@@ -3332,7 +3338,7 @@
      "link": "https://www.iskur.gov.tr/medya/odhp4e4v/k%C4%B1r%C5%9Fehir-mucur-belediyesi-itfaiye-eri-al%C4%B1m-ilan%C4%B1-08102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-03T14:20:39+03:00",
+   "detay_guncelleme": "2026-10-03T14:48:49+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-ced29e58351712e81082b7e6"
@@ -3607,7 +3613,7 @@
      "link": "https://www.iskur.gov.tr/medya/ccubtphj/sigortac%C4%B1l%C4%B1k-ve-oezel-emeklilik-duezenleme-ve-denetleme-kurumu-personel-al%C4%B1m-ilan%C4%B1-09102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-03T14:20:10+03:00",
+   "detay_guncelleme": "2026-10-03T14:48:29+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-3bd8add3dfef4b37e1293996"
@@ -5518,7 +5524,7 @@
      "link": "https://www.iskur.gov.tr/medya/auljiglt/istanbul-bankac%C4%B1l%C4%B1k-duezenleme-ve-denetleme-kurumu-meslek-personeli-sinav-ilan%C4%B1-19102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-03T14:20:30+03:00",
+   "detay_guncelleme": "2026-10-03T14:48:43+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-edc2d470694c21853b0687e1"
@@ -5673,7 +5679,7 @@
      "link": "https://www.iskur.gov.tr/medya/xhgeviwu/cumhurba%C5%9Fkanl%C4%B1%C4%9F%C4%B1-ileti%C5%9Fim-ba%C5%9Fkanl%C4%B1%C4%9F%C4%B1-ileti%C5%9Fim-uzman-yard%C4%B1mc%C4%B1s%C4%B1-s%C4%B1nav-ilan%C4%B1-20112026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-03T14:20:10+03:00",
+   "detay_guncelleme": "2026-10-03T14:48:29+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-372564423bd22d94fde88cb4"
@@ -5703,7 +5709,7 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-03T14:20:20+03:00",
+   "detay_guncelleme": "2026-10-03T14:48:36+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-3b7504f32c379b237fe86abd",
@@ -5731,7 +5737,7 @@
      "link": "https://www.iskur.gov.tr/medya/0zyoftxs/mu%C5%9F-elmakaya-belediyesi-memur-al%C4%B1m-ilan%C4%B1-21102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-03T14:20:54+03:00",
+   "detay_guncelleme": "2026-10-03T14:49:00+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-3f593d9e3c71078c698a111a"
@@ -5758,7 +5764,7 @@
      "link": "https://www.iskur.gov.tr/medya/lntnwe1n/i%C4%9Fd%C4%B1r-aral%C4%B1k-belediyesi-itfaiye-eri-al%C4%B1m-ilan%C4%B1-21102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-03T14:21:03+03:00",
+   "detay_guncelleme": "2026-10-03T14:49:07+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-9d4d97ec470c2efcf5b3e55c"
@@ -5898,7 +5904,7 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-03T14:20:20+03:00",
+   "detay_guncelleme": "2026-10-03T14:48:36+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-d7f20bcc9ddeb5d62087e563",
@@ -5930,7 +5936,7 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-03T14:20:10+03:00",
+   "detay_guncelleme": "2026-10-03T14:48:29+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-ce2ccce684a67cfe5ec42653",
@@ -5958,7 +5964,7 @@
      "link": "https://www.iskur.gov.tr/medya/4j0dwbbo/gelir-idaresi-ba%C5%9Fkanl%C4%B1%C4%9F%C4%B1-gelir-uzman-yard%C4%B1mc%C4%B1l%C4%B1%C4%9F%C4%B1-s%C4%B1nav-ilan%C4%B1-23102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-03T14:20:10+03:00",
+   "detay_guncelleme": "2026-10-03T14:48:29+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-ee701ad45d382400f44d53e1"
@@ -5988,7 +5994,7 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-03T14:20:15+03:00",
+   "detay_guncelleme": "2026-10-03T14:48:33+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-55d194dea1dd698008c3081f",
@@ -6016,7 +6022,7 @@
      "link": "https://www.iskur.gov.tr/medya/wx1p1ned/isparta-bat%C4%B1-akdeniz-kalk%C4%B1nma-ajans%C4%B1-personel-al%C4%B1m-ilan%C4%B1-23102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-03T14:20:24+03:00",
+   "detay_guncelleme": "2026-10-03T14:48:39+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-23bb5b4d65d3d7cab7bc3531"
@@ -6042,7 +6048,7 @@
      "link": "https://www.iskur.gov.tr/medya/caddauml/gen%C3%A7lik-ve-spor-bakanl%C4%B1%C4%9F%C4%B1-soezle%C5%9Fmeli-bili%C5%9Fim-personeli-al%C4%B1m-ilan%C4%B1-25102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-03T14:20:10+03:00",
+   "detay_guncelleme": "2026-10-03T14:48:29+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-2c1f6248f41bf93601b7b619"
@@ -6166,7 +6172,7 @@
      "link": "https://www.iskur.gov.tr/medya/kqjkfztt/kocaeli-do%C4%9Fu-marmara-kalk%C4%B1nma-ajans%C4%B1-personel-al%C4%B1m-ilan%C4%B1-27102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-03T14:20:44+03:00",
+   "detay_guncelleme": "2026-10-03T14:48:53+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-427041e176b4b5fb14fbd125"
@@ -6223,7 +6229,7 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-03T14:21:08+03:00",
+   "detay_guncelleme": "2026-10-03T14:49:10+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-e5a9e00c5b187107927c4403",
@@ -6354,7 +6360,7 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-03T14:20:39+03:00",
+   "detay_guncelleme": "2026-10-03T14:48:49+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-82e1a52fc83cba2b4d8fa6ff",
@@ -6428,7 +6434,7 @@
      "link": "https://www.iskur.gov.tr/medya/horguglp/istanbul-bueyuek%C5%9Fehir-belediyesi-iett-i%C5%9Fletmeleri-genel-mueduerlue%C4%9Fue-memur-al%C4%B1m-ilan%C4%B1-02112026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-03T14:20:30+03:00",
+   "detay_guncelleme": "2026-10-03T14:48:43+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-20df4e86aedf099d725ee262"
@@ -6516,7 +6522,7 @@
      "link": "https://www.iskur.gov.tr/medya/vldigvnk/a%C4%9Fr%C4%B1-ele%C5%9Fkirt-belediyesi-memur-al%C4%B1m-ilan%C4%B1-04112026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-03T14:20:05+03:00",
+   "detay_guncelleme": "2026-10-03T14:48:26+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-0ca1c1811f87d2184aafb65b"
@@ -6547,7 +6553,7 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-03T14:20:54+03:00",
+   "detay_guncelleme": "2026-10-03T14:49:00+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-5a5a6b5acc24bdec945de41f",
@@ -6679,7 +6685,7 @@
      "link": "https://www.iskur.gov.tr/medya/xggdhmpt/ardahan-pasof-belediyesi-soezle%C5%9Fmeli-personel-al%C4%B1m-ilan%C4%B1-04112026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-03T14:20:59+03:00",
+   "detay_guncelleme": "2026-10-03T14:49:03+03:00",
    "ilk_gorulme": "2026-10-02T09:52:47+03:00",
    "kaynak_kimlikleri": [
     "iskur-56961c753a205497cf8368a3"
@@ -6710,7 +6716,7 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-03T14:20:49+03:00",
+   "detay_guncelleme": "2026-10-03T14:48:56+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-c322e5601259e08082548c73",
@@ -7619,7 +7625,8 @@
    "belge_sha256": "d5d1a0eeab9415c6b4a10cae880adf81378bcb40a19345b5598c6be6b698adc0",
    "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
    "sbb_detay_surumu": 5,
-   "kategori": "akademik"
+   "kategori": "akademik",
+   "duyuru_cumlesi": "Munzur Üniversitesi Rektörlüğünden: İPTAL İLANI 28.08.2026 tarihli ve 33354 sayılı Resmî Gazete ’de aslına uygun olarak yayımlanan aşağıda birimi, anabilim dalı, unvanı, adedi ve nitelikleri belirtilen kadroya ilişkin ilanımız iptal edilmiştir."
   },
   {
    "id": "sbb-2caf6c6d0c5408e4f309eb59",
@@ -8557,7 +8564,8 @@
    "kaynak_kimlikleri": [
     "sbb-52dbd737dcdc57666bf5642b"
    ],
-   "kategori": "belediye"
+   "kategori": "belediye",
+   "duyuru_cumlesi": "NİĞDE İLİ ÇUIKURKUYU BELEDİYESİ İLK DEFA MEMUR (Zabıta) ALIM İPTAL İLANI Niğde ili Çukurkuyu Belediyesinin 21.09.2026 tarihli ve 5651 sayılı yazısına istinaden ilk defa zabıta memuru alımı ilanı iptal edildi."
   },
   {
    "id": "sbb-649fc699f7ba30ddee6ff00f",
@@ -8595,7 +8603,8 @@
     "csb-477949",
     "sbb-649fc699f7ba30ddee6ff00f"
    ],
-   "kategori": "belediye"
+   "kategori": "belediye",
+   "duyuru_cumlesi": "ZONGULDAK BELEDİYESİ ZABITA MEMUR ALIMI İPTAL İLANI 26 Ağustos 2026 tarih ve 33352 sayılı Resmi Gazete de yayımlanan İlk Defa Zabıta Memuru alımı ilanı iptal edilmiştir."
   },
   {
    "id": "sbb-3333ec52c9cc10ff4e166307",
@@ -8628,7 +8637,8 @@
    "kaynak_kimlikleri": [
     "sbb-3333ec52c9cc10ff4e166307"
    ],
-   "kategori": "belediye"
+   "kategori": "belediye",
+   "duyuru_cumlesi": "Rize Belediyesinin 23/09/2026 tarihli ve 48367 sayılı yazısına istinaden ilk defa atanmak üzere sözleşmeli personel (Gıda Mühendisi) alım ilanı iptal edilmiştir."
   },
   {
    "id": "sbb-a1c877c33f7b4889a05df648",
@@ -8672,7 +8682,8 @@
    ],
    "ogrenim": [
     "lisans"
-   ]
+   ],
+   "duyuru_cumlesi": "İLAN İPTALİ 28.09.2026 tarihli ve 33384 sayılı Resmi Gazete’de aslına uygun olarak yayımlanan Sözleşmeli Personel Alım ilanımızda yer alan ve aşağıda belirtilen 2 ve 5. sıradaki kadro pozisyonuna ait ilanımız iptal edilmiştir."
   },
   {
    "id": "sbb-0b7df8582c71ac4f134e4f42",
@@ -8705,7 +8716,8 @@
    "kaynak_kimlikleri": [
     "sbb-0b7df8582c71ac4f134e4f42"
    ],
-   "kategori": "belediye"
+   "kategori": "belediye",
+   "duyuru_cumlesi": "Rize Belediyesinin 23/09/2026 tarihli ve 48367 sayılı yazısına istinaden ilk defa atanmak üzere sözleşmeli personel (Gıda Mühendisi) alım ilanı iptal edilmiştir."
   },
   {
    "id": "sbb-83609f07f8861d5c98115fb7",
@@ -8795,7 +8807,8 @@
    "kaynak_kimlikleri": [
     "sbb-4b7f53f63fc6ad79ebc93137"
    ],
-   "kategori": "akademik"
+   "kategori": "akademik",
+   "duyuru_cumlesi": "Sırasında yer alan Spor Bilimleri Fakültesi Antrenörlük Eğitimi Bölümü 3.Derece Doçent kadrosu iptal edilmiştir."
   },
   {
    "id": "csb-478009",
@@ -8878,7 +8891,7 @@
     }
    ],
    "yayim_tarihi": "2026-09-29",
-   "detay_guncelleme": "2026-10-03T14:06:49+03:00",
+   "detay_guncelleme": "2026-10-03T14:36:45+03:00",
    "csb_detay_surumu": 3,
    "ozet": "İstanbul ili Şile Belediye Başkanlığı bünyesinde 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği ile Belediye Zabıta Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla, belirtilen boş kadrolara açıktan atama yoluyla memur ve zabıta memuru alınacaktır.",
    "belgeler": [
@@ -8916,7 +8929,7 @@
     }
    ],
    "yayim_tarihi": "2026-09-29",
-   "detay_guncelleme": "2026-10-03T14:06:52+03:00",
+   "detay_guncelleme": "2026-10-03T14:36:47+03:00",
    "csb_detay_surumu": 3,
    "ozet": "İstanbul ili Şile Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Belediye Zabıta Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla zabıta memuru alımı yapılacaktır.",
    "belgeler": [
@@ -8986,7 +8999,7 @@
     }
    ],
    "yayim_tarihi": "2026-09-29",
-   "detay_guncelleme": "2026-10-03T14:06:54+03:00",
+   "detay_guncelleme": "2026-10-03T14:36:49+03:00",
    "csb_detay_surumu": 3,
    "ozet": "Ardahan ili Posof Belediye Başkanlığı bünyesinde 5393 sayılı Belediye Kanunu’nun 49 uncu maddesi ile Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla, belirtilen boş pozisyona tam zamanlı sözleşmeli personel alınacaktır.",
    "belgeler": [
@@ -9024,7 +9037,7 @@
     }
    ],
    "yayim_tarihi": "2026-09-23",
-   "detay_guncelleme": "2026-10-03T14:06:56+03:00",
+   "detay_guncelleme": "2026-10-03T14:36:52+03:00",
    "csb_detay_surumu": 3,
    "ozet": "Osmaniye ili Atalan Belediye Başkanlığı bünyesinde 5393 sayılı Belediye Kanununun 49 uncu maddesi ile Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla, belirtilen boş pozisyona tam zamanlı sözleşmeli personel alınacaktır",
    "belgeler": [
@@ -9094,7 +9107,7 @@
     }
    ],
    "yayim_tarihi": "2026-09-21",
-   "detay_guncelleme": "2026-10-03T14:06:59+03:00",
+   "detay_guncelleme": "2026-10-03T14:36:54+03:00",
    "csb_detay_surumu": 3,
    "ozet": "Konya ili Çeltik Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır.",
    "belgeler": [
@@ -9132,7 +9145,7 @@
     }
    ],
    "yayim_tarihi": "2026-09-21",
-   "detay_guncelleme": "2026-10-03T14:07:01+03:00",
+   "detay_guncelleme": "2026-10-03T14:36:57+03:00",
    "csb_detay_surumu": 3,
    "ozet": "Ağrı ili Eleşkirt Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır.",
    "belgeler": [
@@ -9170,7 +9183,7 @@
     }
    ],
    "yayim_tarihi": "2026-09-21",
-   "detay_guncelleme": "2026-10-03T14:07:04+03:00",
+   "detay_guncelleme": "2026-10-03T14:36:59+03:00",
    "csb_detay_surumu": 3,
    "ozet": "Muş ili Malazgirt Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır.",
    "belgeler": [
@@ -9615,7 +9628,9 @@
    "ilk_gorulme": "2026-10-02T00:17:12+03:00",
    "kaynak_kimlikleri": [
     "sbb-343661bf9920cdc1aecd58dd"
-   ]
+   ],
+   "duyuru_cumlesi": "İPTAL İLANI 09/09/2026 tarihli ve 33365 sayılı Resmi Gazete’de yayımlanan Sağlık Bilimleri Fakültesi Ebelik Bölümü Ebelik Ana Bilim Dalı Doçent kadrosu ilanımız iptal edilmiştir.",
+   "kategori": "akademik"
   },
   {
    "id": "sbb-009d404a87069a3456793865",
@@ -9943,7 +9958,8 @@
    "kaynak_kimlikleri": [
     "sbb-d676b0980a4180ca8db00687"
    ],
-   "kategori": "belediye"
+   "kategori": "belediye",
+   "duyuru_cumlesi": "Rize Belediye Başkanlığından: İPTAL İLANI 15.08.2026 tarihli ve 33341 sayılı Resmî Gazete’de yayımlanan i lk defa atanmak üzere sözleşmeli personel alım ilanı iptal edilmiştir."
   },
   {
    "id": "sbb-bcb7f73cc73505ad2d8f49f2",
@@ -9989,7 +10005,8 @@
    "kaynak_kimlikleri": [
     "sbb-bcb7f73cc73505ad2d8f49f2"
    ],
-   "kategori": "akademik"
+   "kategori": "akademik",
+   "duyuru_cumlesi": "YILDIZ TEKNİK ÜNİVERSİTESİ REKTÖRLÜĞÜ'NDEN DÜZELTME İLANI : 01.10.2026 tarihli ve 33387 sayılı Resmi Gazetede yayımlanan Öğretim Üyesi Kadro İlanımızda yer alan öğretim üyesi kadrolarının nitelikleri aşağıdaki şekilde değiştirilmiştir."
   },
   {
    "id": "sbb-99752bbf271fb02a24df0c8e",
@@ -10022,7 +10039,8 @@
    "kaynak_kimlikleri": [
     "sbb-99752bbf271fb02a24df0c8e"
    ],
-   "kategori": "akademik"
+   "kategori": "akademik",
+   "duyuru_cumlesi": "Iğdır Üniversitesi Rektörlüğünden: İPTAL İLANI 29.09.2024 tarihli ve 33385 sayılı Resmî Gazete’de yayımlanan Üniversitemize alınacak Öğretim Üyeleri alım ilanımızın 25. sırasında yer alan Fen Edebiyat Fakültesi Sanat Tarihi Bölümü 4.Derece Doktor Öğretim Üyesi kadrosu iptal edilmiştir."
   },
   {
    "id": "sbb-89c8b060891cf9aed29dbcdc",
@@ -10060,9 +10078,8 @@
    "kaynak_kimlikleri": [
     "sbb-89c8b060891cf9aed29dbcdc"
    ],
-   "ogrenim": [
-    "lisans"
-   ]
+   "duyuru_cumlesi": "Adana Alparslan Türkeş Bilim ve Teknoloji Üniversitesi Rektörlüğünden: İPTAL İLANI 20.09.2026 tarihli ve 33376 sayılı Resmi Gazete’de yayımlanan ve aşağıda belirtilen 6 Sıra Nolu Havacılık ve Uzay Bilimleri Fakültesi Havacılık Yönetimi Bölümü Havacılık Yönetimi Anabilim Dalı 1 (bir) adet Araştırma Görevlisi kadrosu ilanımız iptal edilmiştir.",
+   "kategori": "akademik"
   }
  ],
  "telegram_gonderilen": [
@@ -10519,22 +10536,22 @@
  ],
  "kaynak_durumlari": {
   "sbb": {
-   "kontrol": "2026-10-03T14:19:57+03:00",
+   "kontrol": "2026-10-03T14:48:20+03:00",
    "ilan_sayisi": 120,
    "hata_sayisi": 0,
-   "yerel_kontrol": "2026-10-03T11:06:46.555637+00:00",
+   "yerel_kontrol": "2026-10-03T11:36:41.380236+00:00",
    "calisma_yeri": "yerel"
   },
   "iskur": {
-   "kontrol": "2026-10-03T14:21:09+03:00",
+   "kontrol": "2026-10-03T14:49:10+03:00",
    "ilan_sayisi": 29,
    "hata_sayisi": 0
   },
   "csb": {
-   "kontrol": "2026-10-03T14:21:09+03:00",
+   "kontrol": "2026-10-03T14:49:10+03:00",
    "ilan_sayisi": 24,
    "hata_sayisi": 0,
-   "yerel_kontrol": "2026-10-03T11:07:04.345058+00:00",
+   "yerel_kontrol": "2026-10-03T11:36:59.902017+00:00",
    "calisma_yeri": "yerel"
   }
  }
