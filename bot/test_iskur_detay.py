@@ -17,8 +17,12 @@ def sayfalar(ad):
     return (VERI / f'iskur_{ad}.sayfalar.txt').read_text(encoding='utf-8').split('\f')
 
 
+def yerlesim(ad):
+    return (VERI / f'iskur_{ad}.layout.txt').read_text(encoding='utf-8').split('\f')
+
+
 def ozet(ad, baslik='Örnek Belediyesi Memur Alım İlanı'):
-    return iskur_detay.ozetle_metin(sayfalar(ad), {'baslik': baslik}, 'abc')
+    return iskur_detay.ozetle_metin(sayfalar(ad), {'baslik': baslik}, 'abc', yerlesim(ad))
 
 
 def tum_metinler(deger):
@@ -42,6 +46,7 @@ class ParseTests(unittest.TestCase):
         self.assertTrue(o['ozet'].startswith('Osmaniye ili Bahçe Belediye Başkanlığı bünyesinde'))
         self.assertTrue(o['ozet'].endswith('memur alınacaktır.'))
         self.assertIn('iletisim@bahce.bel.tr', o['basvuru_notu'])
+        self.assertNotIn('D evlet', o['ozet'])
         self.assertEqual(o['iskur_detay_surumu'], iskur_detay.VERSION)
         self.assertEqual(o['iskur_belge_sha256'], 'abc')
         self.assertNotIn('belge_ozeti', o)
@@ -92,6 +97,8 @@ class ParseTests(unittest.TestCase):
     def test_fixture_kisi_adi_icermez(self):
         for p in VERI.glob('iskur_*.sayfalar.txt'):
             self.assertNotIn('ÇEŞİTLİ', p.read_text(encoding='utf-8'))
+        for p in VERI.glob('iskur_*.layout.txt'):
+            self.assertNotIn('ÇEŞİTLİ', p.read_text(encoding='utf-8'))
 
     def test_pdf_degil(self):
         with self.assertRaises(ValueError):
@@ -135,7 +142,7 @@ class ReadIskurTests(unittest.TestCase):
                 raise pdf
             return b'%PDF-sahte', url
         with patch.object(ek, 'get', sahte_get), patch.object(ek, 'iskur_cities', return_value=[('osmaniye', 'Osmaniye')]), \
-                patch.object(ek.time, 'sleep'), patch.object(iskur_detay, 'sayfa_metinleri', return_value=sayfalar('bahce_memur')), \
+                patch.object(ek.time, 'sleep'), patch.object(iskur_detay, 'sayfa_metinleri', return_value=(sayfalar('bahce_memur'), yerlesim('bahce_memur'))), \
                 contextlib.redirect_stdout(io.StringIO()):
             records, errors = ek.read_iskur(previous)
         return records, errors, pdf_istekleri
@@ -171,6 +178,16 @@ class ReadIskurTests(unittest.TestCase):
         records6, _, istekler6 = self.calistir(sehir_html(20), {})
         self.assertEqual((len(records6), len(istekler6)), (20, ek.ISKUR_PDF_SINIRI))
         self.assertEqual(sum(1 for r in records6 if r.get('kadro')), ek.ISKUR_PDF_SINIRI)
+
+
+class DigerKaynakTests(unittest.TestCase):
+    def test_baska_kaynak_kaydina_indirme_yapilmaz(self):
+        row = ek.iskur_rows((VERI / 'iskur_il_osmaniye.html').read_text(encoding='utf-8'), 'Osmaniye')[0]
+        onceki = {'x': {**row, 'kaynak_turu': 'sbb', 'kaynak_kimlikleri': [row['id']], 'id': 'x'}}
+        with patch.object(ek, 'get') as g, patch.object(ek.time, 'sleep'):
+            ek.iskur_zenginlestir(None, [row], onceki)
+        g.assert_not_called()
+        self.assertNotIn('kadro', row)
 
 
 class MergeAndPageTests(unittest.TestCase):

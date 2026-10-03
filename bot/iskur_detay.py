@@ -8,7 +8,7 @@ import re
 from datetime import datetime
 from pypdf import PdfReader
 
-VERSION = 1
+VERSION = 2
 SAYFA_SINIRI = 40
 ETIKET_KOSUL = 'Belgede belirtilen koşullar'
 
@@ -21,7 +21,7 @@ BASLIK_SONU = re.compile(r'BAŞVURU\s+GENEL|GENEL\s+ŞARTLAR')
 PARCA = re.compile(r'(?<=[.!?;:])(?<!Mah\.)(?<!Cad\.)(?<!Sok\.)(?<!Bul\.)(?<!No\.)\s+(?=[A-ZÇĞİÖŞÜ(])|\s+(?=[a-zçğış]\)\s)|\s+(?=\d{1,2}\s?[-.)]\s+[A-ZÇĞİÖŞÜ])')
 BASLIK_ATLA = re.compile(r'\b\w+(?:ndan|nden|dan|den):\s*(?:[A-ZÇĞİÖŞÜ0-9/().\-]+\s+){1,12}?(?=[A-ZÇĞİÖŞÜ][a-zçğıöşü])')
 GIRIS = re.compile(r'^(.{60,1400}?(?:alınacaktır|yapılacaktır|gerçekleştirecektir)\.)')
-BASVURU_DISLA = ('sinavsonuc', 'itiraz', 'fotokopi', 'eksikbilgi', 'tebligat', 'hataliadres', 'gecik')
+BASVURU_DISLA = ('sinavsonuc', 'itiraz', 'fotokopi', 'eksikbilgi', 'tebligat', 'hataliadres', 'gecik', 'gericek')
 BASVURU_ONCELIK0 = ('tarihleriarasinda', 'tarihinden')
 BASVURU_ONCELIK1 = ('sahsen', 'adresine', 'edevlet', 'kariyerkapisi')
 
@@ -47,7 +47,17 @@ def sayfa_metinleri(raw):
     reader = PdfReader(io.BytesIO(raw))
     if len(reader.pages) > SAYFA_SINIRI:
         raise ValueError('İŞKUR belgesi çok uzun')
-    return [p.extract_text() or '' for p in reader.pages]
+    plain, layout = [], []
+    for p in reader.pages:
+        plain.append(p.extract_text() or '')
+        layout.append(p.extract_text(extraction_mode='layout') or '')
+    return plain, layout
+
+
+def duzyazi_sayfalari(plain_pages, layout_pages):
+    # Düzyazı alanları için yerleşim modu (bölünmüş kelime az); çok kısa kalırsa düz metin (sbb_detay ile aynı kural).
+    ek = _ek()
+    return [pl if len(ek.clean(ly)) < len(ek.clean(pl)) * .6 else ly for pl, ly in zip(plain_pages, layout_pages)]
 
 
 def _satirlar(plain):
@@ -88,7 +98,7 @@ def _parcalar(plain):
     return out
 
 
-def _sartlar(plain, satirlar, pozisyon):
+def _sartlar(prose, satirlar, pozisyon):
     norm = _ek().norm
     sartlar = []
     birim = 'pozisyon' if pozisyon else 'kadro'
@@ -99,8 +109,8 @@ def _sartlar(plain, satirlar, pozisyon):
         metin += f"Hizmet sınıfı {s['sinif']}, {s['derece']}. derece. Öğrenim ve diğer nitelikler ilan belgesindeki tabloda yer alıyor."
         sartlar.append({'kadro': f"{s['unvan']} · {s['adet']} {birim}", 'metin': metin})
     ekler, gorulen = [], set()
-    b = BASLIK_SONU.search(plain)
-    for p in _parcalar(plain[b.start():] if satirlar and b else plain):
+    b = BASLIK_SONU.search(prose)
+    for p in _parcalar(prose[b.start():] if satirlar and b else prose):
         n = norm(p)
         if satirlar:
             uygun = 'yasini doldurmamis' in n or ('surucu belgesi' in n and 'olmak' in n)
@@ -118,23 +128,23 @@ def _sartlar(plain, satirlar, pozisyon):
     return (sartlar + ekler[:2])[:6] if satirlar else ekler[:3]
 
 
-def _ozet(plain, plain_pages, baslik):
+def _ozet(prose, plain_pages, baslik):
     ek = _ek()
     if ek.notice(baslik):
         from sbb_detay import duyuru_cumlesi_bul
         cumle = duyuru_cumlesi_bul(plain_pages)
         if cumle:
             return cumle
-    h = BASLIK_ATLA.search(plain[:600])
-    govde = plain[h.end():] if h else plain
+    h = BASLIK_ATLA.search(prose[:600])
+    govde = prose[h.end():] if h else prose
     m = GIRIS.search(govde)
     return _kisalt(m.group(1), 520) if m else ''
 
 
-def _basvuru(plain):
+def _basvuru(prose):
     norm = _ek().norm
     adaylar = []
-    for p in _parcalar(plain):
+    for p in _parcalar(prose):
         if not 30 <= len(p) <= 450:
             continue
         n = norm(p)
@@ -156,20 +166,21 @@ def _basvuru(plain):
     return ' '.join(secilen)
 
 
-def ozetle_metin(plain_pages, row, sha=''):
+def ozetle_metin(plain_pages, row, sha='', layout_pages=None):
     plain = _temizle(' '.join(plain_pages))
+    prose = _temizle(' '.join(duzyazi_sayfalari(plain_pages, layout_pages))) if layout_pages else plain
     satirlar = _satirlar(plain)
     sonuc = {}
     if satirlar:
         sonuc['kadro'] = _kadro(satirlar)
     pozisyon = bool(re.search(r'Pozisyon\s+Ünvanı', plain)) and not re.search(r'Kadro\s+Ünvanı', plain)
-    sartlar = _sartlar(plain, satirlar, pozisyon)
+    sartlar = _sartlar(prose, satirlar, pozisyon)
     if sartlar:
         sonuc['sartlar'] = sartlar
-    ozet = _ozet(plain, plain_pages, row.get('baslik', ''))
+    ozet = _ozet(prose, plain_pages, row.get('baslik', ''))
     if ozet:
         sonuc['ozet'] = ozet
-    basvuru = _basvuru(plain)
+    basvuru = _basvuru(prose)
     if basvuru:
         sonuc['basvuru_notu'] = basvuru
     sonuc = _damgasiz(sonuc)
@@ -192,4 +203,5 @@ def _damgasiz(deger):
 
 def ozetle(raw, row):
     """PDF baytları -> yalnızca dolu alanlar. Hatalarda istisna yükseltir; çağıran yakalar."""
-    return ozetle_metin(sayfa_metinleri(raw), row, hashlib.sha256(raw).hexdigest())
+    plain, layout = sayfa_metinleri(raw)
+    return ozetle_metin(plain, row, hashlib.sha256(raw).hexdigest(), layout)

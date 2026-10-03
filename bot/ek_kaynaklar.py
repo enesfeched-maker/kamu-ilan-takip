@@ -272,7 +272,7 @@ def iskur_zenginlestir(op,records,previous):
     for row in records:
         cached=cache.get(row['id'])
         if cached and cached.get('kaynak_turu')!='iskur':
-            cached=None
+            continue
         if cached and cached.get('iskur_detay_surumu')==iskur_detay.VERSION and cached.get('link')==row['link']:
             _iskur_onbellek(row,cached)
             continue
