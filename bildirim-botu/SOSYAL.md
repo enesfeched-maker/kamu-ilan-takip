@@ -23,13 +23,14 @@
   "tarih": "2026-10-02",            // paylaşım günü (İstanbul) — içerik bir önceki günün ilanları
   "bos": false,                      // uygun ilan yoksa true ve diğer alanlar boş
   "ilan_sayisi": 7,                  // dün eklenen uygun ilan sayısı (gösterilen ≤ 9)
+  "kapak_tasarimi": "manset",        // o günün kapak tasarımı (manset | mozaik | kacirma; bos ise null); Instagram istatistikleriyle karşılaştırmak için kaydedilir
   "gorseller": ["https://.../paylasim/2026-10-02/00-kapak.jpg", "https://.../01.jpg", "..."],  // ≤ 10, ilki kapak
   "ig_metin": "…",                   // ≤ 2200 karakter, sonunda hashtag'ler ve son satırda "kamuilan-2026-10-02" işareti YOK (işaret D1'de)
   "x_metin": "…"                     // ≤ 280 karakter (X ağırlıklı sayımına göre güvenli: ≤ 260 düz karakter), BAĞLANTI İÇERMEZ
 }
 ```
-- Görseller: JPEG, 1080×1350 (4:5), sRGB, ≤ 1 MB. Kapak: marka (docs/kamu-logo.png), "Bugünün yeni kamu ilanları",
-  tarih, ilan sayısı. Kartlar: kurum, başlık, kadro özeti, il, son başvuru tarihi, kaynak; alt bilgi "Ayrıntılar ve
+- Görseller: JPEG, 1080×1350 (4:5), sRGB, ≤ 1 MB. Kapak: günün verisinden türetilen kancalı tasarım (manset / mozaik / kacirma; bot/kapak_tasarimlari.py), küçük marka logosu (docs/kamu-logo.png).
+   Kartlar: kurum, başlık, kadro özeti, il, son başvuru tarihi, kaynak; alt bilgi "Ayrıntılar ve
   başvuru bağlantısı: profildeki bağlantı". Tüm metin resmi kayıttan; tahmin yok, boş alan gösterilmez.
 - Seçim: ilk_gorulme dün (İstanbul) olan, `duyuru_turu` boş (iptal/düzeltme hariç), süresi geçmemiş ilanlar;
   sıra: son_tarih yakın olan önce (tarihsiz sona), sonra ilk_gorulme. En fazla 9 kart.

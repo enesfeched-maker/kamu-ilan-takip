@@ -5,19 +5,17 @@ from collections import Counter
 from datetime import datetime, time, timedelta
 from io import BytesIO
 from pathlib import Path
-from PIL import Image, ImageDraw
+from PIL import Image
 
-from kart_tasarimlari import F as font, ilan_karti
+from kapak_tasarimlari import TASARIMLAR, kapak_sec
+from kart_tasarimlari import ilan_karti
 from kurum_gorseli import kurum_logosu
 from siniflandir import ETIKET_OGRENIM, akademik_ilan, kucuk
 from site_uret import TR, _bitis
 
-GENISLIK, YUKSEKLIK = 1080, 1350
-KOYU, ANA, LIME, BEYAZ, SOLUK = '#102e35', '#174c46', '#c9f395', '#ffffff', '#b6cbcc'
 EN_COK_KART = 9
 EN_COK_ETIKET = 25  # Instagram 30'u aşarsa yayını reddeder
 AYLAR = ('Ocak Şubat Mart Nisan Mayıs Haziran Temmuz Ağustos Eylül Ekim Kasım Aralık').split()
-LOGO = Path(__file__).resolve().parents[1] / 'docs' / 'kamu-logo.png'
 ALAN_ADI = re.compile(r'https?:|www\.|\w\.(?:com|net|org|gov|io|tr|me|co)\b|github|kamuilan\.', re.I)
 
 
@@ -88,17 +86,6 @@ def _tarih_yazi(gun):
     return f'{gun.day} {AYLAR[gun.month - 1]} {gun.year}'
 
 
-def _logo_yapistir(im, d, merkez_x, ust, kutu):
-    if not LOGO.exists():
-        return
-    with Image.open(LOGO) as logo:
-        logo = logo.convert('RGBA')
-        oran = min(1.0, (kutu - 40) / max(logo.size))
-        logo = logo.resize((max(1, round(logo.width * oran)), max(1, round(logo.height * oran))), Image.Resampling.LANCZOS)
-    d.rounded_rectangle((merkez_x - kutu // 2, ust, merkez_x + kutu // 2, ust + kutu), radius=28, fill=BEYAZ)
-    im.paste(logo, (merkez_x - logo.width // 2, ust + (kutu - logo.height) // 2), logo)
-
-
 def _jpeg(im):
     for kalite in (88, 82, 76, 70):
         cikti = BytesIO()
@@ -106,23 +93,6 @@ def _jpeg(im):
         if cikti.tell() <= 1_000_000:
             break
     return cikti.getvalue()
-
-
-def kapak_gorseli(sayi, simdi):
-    im = Image.new('RGB', (GENISLIK, YUKSEKLIK), KOYU)
-    d = ImageDraw.Draw(im)
-    d.rectangle((0, 0, 18, YUKSEKLIK), fill=LIME)
-    d.rectangle((0, YUKSEKLIK - 260, GENISLIK, YUKSEKLIK), fill=ANA)
-    _logo_yapistir(im, d, GENISLIK // 2, 120, 260)
-    d.text((GENISLIK // 2, 470), 'KAMU İLAN TAKİP', font=font(40, True), fill=LIME, anchor='mm')
-    for n, satir in enumerate(('Bugünün yeni', 'kamu ilanları')):
-        d.text((GENISLIK // 2, 600 + n * 100), satir, font=font(88, True), fill=BEYAZ, anchor='mm')
-    d.text((GENISLIK // 2, 860), _tarih_yazi(simdi.astimezone(TR).date()), font=font(46), fill=SOLUK, anchor='mm')
-    d.rounded_rectangle((250, 940, 830, 1060), radius=60, fill=LIME)
-    d.text((GENISLIK // 2, 1000), f'{sayi} yeni ilan', font=font(58, True), fill=KOYU, anchor='mm')
-    d.text((GENISLIK // 2, 1170), 'Kaydırarak incele', font=font(36, True), fill=BEYAZ, anchor='mm')
-    d.text((GENISLIK // 2, 1230), 'Kariyer Kapısı · İŞKUR · SBB · ÇŞB', font=font(28), fill=SOLUK, anchor='mm')
-    return _jpeg(im)
 
 
 def _norm(metin):
@@ -202,15 +172,17 @@ def uret(ilanlar, simdi, cikti_kok, site_url):
     secilen = uygun[:EN_COK_KART]
     sayi = len(uygun)
     if not secilen:
-        veri = {'tarih': bugun, 'bos': True, 'ilan_sayisi': 0, 'gorseller': [], 'ig_metin': '', 'x_metin': ''}
+        veri = {'tarih': bugun, 'bos': True, 'ilan_sayisi': 0, 'kapak_tasarimi': None, 'gorseller': [], 'ig_metin': '', 'x_metin': ''}
     else:
-        dosyalar = [('00-kapak.jpg', kapak_gorseli(sayi, simdi))]
+        kapak = kapak_sec(uygun, referans)
+        dosyalar = [('00-kapak.jpg', _jpeg(TASARIMLAR[kapak](uygun, sayi, referans)))]
         for n, ilan in enumerate(secilen, 1):
             dosyalar.append((f'{n:02d}.jpg', kart_gorseli(ilan, referans)))
         for ad, icerik in dosyalar:
             (klasor / ad).write_bytes(icerik)
         taban = site_url.rstrip('/') + '/paylasim/' + bugun + '/'
-        veri = {'tarih': bugun, 'bos': False, 'ilan_sayisi': sayi, 'gorseller': [taban + ad for ad, _ in dosyalar],
+        veri = {'tarih': bugun, 'bos': False, 'ilan_sayisi': sayi, 'kapak_tasarimi': kapak, 'gorseller': [taban + ad for ad, _ in dosyalar],
                 'ig_metin': ig_metni(secilen, sayi, simdi.date()), 'x_metin': x_metni(secilen, sayi)}
     (kok / 'gunluk.json').write_text(json.dumps(veri, ensure_ascii=False, indent=1), encoding='utf-8')
     return veri
+
