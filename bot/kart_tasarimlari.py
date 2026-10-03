@@ -117,7 +117,10 @@ def _bitis(ilan):
     deger = ilan.get('son_zaman') or ilan.get('son_tarih')
     if not deger:
         return None, False
-    bitis = datetime.fromisoformat(deger)
+    try:
+        bitis = datetime.fromisoformat(deger)
+    except (ValueError, TypeError):  # bozuk tarih biçimi: tarih yok sayılır
+        return None, False
     if bitis.tzinfo is None:
         bitis = bitis.replace(tzinfo=TR, hour=23, minute=59)
     return bitis.astimezone(TR), bool(ilan.get('son_zaman'))

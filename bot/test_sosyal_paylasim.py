@@ -8,6 +8,7 @@ from unittest import mock
 
 from PIL import Image
 
+import kapak_tasarimlari as kt
 import site_uret
 import sosyal_paylasim as sp
 from site_uret import TR
@@ -151,6 +152,70 @@ class KartTesti(unittest.TestCase):
                 sp.uret(ilanlar, datetime(2026, 10, 2, saat, 5, tzinfo=TR), klasor, SITE)
                 sonuclar.append([(Path(klasor) / 'paylasim' / '2026-10-02' / f'{n:02d}.jpg').read_bytes() for n in (1, 2)])
         self.assertEqual(sonuclar[0], sonuclar[1])
+
+
+class KapakTesti(unittest.TestCase):
+    BUYUK = dict(kadro='Toplam 12 kişi — 12 Zabıta Memuru', son_tarih='2026-10-05')
+
+    def test_uc_gun_uc_farkli_tasarim(self):
+        ilanlar = [ilan('a', **self.BUYUK)]
+        adlar = [kt.kapak_sec(ilanlar, datetime(2026, 10, g, 10, 30, tzinfo=TR)) for g in (2, 3, 4)]
+        self.assertEqual(sorted(adlar), sorted(kt.TASARIMLAR))
+        self.assertEqual(kt.kapak_sec(ilanlar, SIMDI), kt.kapak_sec(ilanlar, SIMDI))
+
+    def test_uygunluk_dususleri(self):
+        kadrosuz = [ilan('a', kadro='', baslik='Personel alımı', son_tarih='2026-10-05')]
+        tarihsiz = [ilan('a', kadro='Toplam 12 kişi — 12 Zabıta Memuru', son_tarih=None)]
+        for g in range(1, 10):
+            simdi = datetime(2026, 10, g, 10, 30, tzinfo=TR)
+            self.assertNotEqual(kt.kapak_sec(kadrosuz, simdi), 'manset')
+            self.assertNotEqual(kt.kapak_sec(tarihsiz, simdi), 'kacirma')
+
+    def test_tasarimlar_boyut_ve_az_veri(self):
+        bol = [ilan('a', **self.BUYUK), ilan('b', kadro='Toplam 5 kişi — 5 Hemşire • 1 Uzman, 2 Destek Personel', son_tarih='2026-10-03')]
+        az = [ilan('c', kadro='', baslik='ÖRNEK BELEDİYESİ personel alımı', son_tarih=None, ogrenim=[], iller=[])]
+        for ad, tasarim in kt.TASARIMLAR.items():
+            for liste in (bol, az):
+                with self.subTest(ad=ad, ilan=len(liste), az=liste is az):
+                    im = tasarim(liste, len(liste), SIMDI)
+                    self.assertEqual((im.size, im.mode), ((1080, 1350), 'RGB'))
+
+    def test_mozaik_cipleri_temiz(self):
+        self.assertEqual(kt._temiz_adlar(['Uzman, 2 Destek Personel', 'Hemşire', 'hemşire', '3 Zabıta', 'x' * 40, 'Mühendis']),
+                         ['Uzman', 'Hemşire', 'Mühendis'])
+
+    def test_manset_basligi_adetsiz_kadroda_toplam(self):
+        i = ilan('a', kadro='Toplam 12 kişi — Zabıta Memuru')
+        v = kt._veri(i, SIMDI)
+        baslik = kt.manset_basligi(i, v, 1)
+        self.assertIn('12', baslik)
+        self.assertIn('Zabıta Memuru', baslik)
+        self.assertEqual(kt.manset_basligi(i, None, 3), 'Örnek Belediyesi yeni ilan yayınladı')
+
+    def test_bozuk_tarih_yok_sayilir(self):
+        from kart_tasarimlari import _bitis
+        self.assertEqual(_bitis({'son_tarih': '31/12/2026'}), (None, False))
+        self.assertEqual(_bitis({'son_zaman': 'bozuk'}), (None, False))
+        self.assertIsNone(kt._bitis({'son_tarih': 'bozuk'}))
+
+    def test_kapak_saatten_bagimsiz(self):
+        ilanlar = [ilan('a', kadro='Toplam 12 kişi — Zabıta Memuru', son_tarih='2026-10-05')]
+        sonuc = []
+        for an in (datetime(2026, 1, 1, 8, tzinfo=TR), datetime(2030, 6, 6, 20, tzinfo=TR)):
+            with mock.patch('kart_tasarimlari.datetime') as sahte:
+                sahte.now.return_value = an
+                sahte.fromisoformat = datetime.fromisoformat
+                sonuc.append({ad: t(ilanlar, 1, SIMDI).tobytes() for ad, t in kt.TASARIMLAR.items()})
+        self.assertEqual(sonuc[0], sonuc[1])
+
+    def test_gunluk_json_kapak_tasarimi(self):
+        with tempfile.TemporaryDirectory() as klasor:
+            veri = sp.uret([ilan('a', **self.BUYUK)], SIMDI, klasor, SITE)
+            kayitli = json.loads((Path(klasor) / 'paylasim' / 'gunluk.json').read_text(encoding='utf-8'))
+        self.assertIn(veri['kapak_tasarimi'], kt.TASARIMLAR)
+        self.assertEqual(kayitli['kapak_tasarimi'], veri['kapak_tasarimi'])
+        with tempfile.TemporaryDirectory() as klasor:
+            self.assertIsNone(sp.uret([], SIMDI, klasor, SITE)['kapak_tasarimi'])
 
 
 class SiteUretEntegrasyonu(unittest.TestCase):
