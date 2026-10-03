@@ -101,8 +101,6 @@ def kapsam_kokleri(duyuru, ek_kurum_sozcukleri=frozenset()):
     if guclu:
         return guclu
     kurum_s = set(norm(duyuru.get('kurum')).split()) | set(ek_kurum_sozcukleri)
-    if _kokler(duyuru, ('baslik', 'kadro'), kurum_s):
-        return guclu  # başlıkta yalnız zayıf sözcük ('memur') varsa eski davranış korunur
     return {t[:6] for t in _parcalar(cumle_kadrosu(resmi_cumle(duyuru)))
             if t not in GENEL and t not in kurum_s and t[:6] not in ZAYIF and t not in ZAYIF}
 

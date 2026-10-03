@@ -422,6 +422,8 @@ def duyuru_karari(duyuru, ilanlar, mesajlar, yanitlar, bugun, gonderilen=None):
     if genis and gonderilen is not None and not any(paylasilmis(i) for i in genis):
         return {'islem': 'sessiz', 'sebep': 'orijinal kanalda paylaşılmadı', 'referans': None}
     referans = genis[0] if len(genis) == 1 and paylasilmis(genis[0]) and gonderilen is not None else None
+    if referans and tur == 'iptal' and referans.get('iptal_edildi'):
+        return {'islem': 'sessiz', 'sebep': 'orijinal zaten iptal edilmiş', 'referans': None}
     if not referans and not kapsam and not resmi_cumle(duyuru) and (tur == 'iptal' or not duyuru.get('son_tarih')):
         return {'islem': 'sessiz', 'sebep': 'içerik belirsiz', 'referans': None}
     anahtar = duz_anahtar(duyuru)

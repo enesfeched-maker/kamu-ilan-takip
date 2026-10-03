@@ -48,7 +48,7 @@ def detail_page(item, gorsel=None):
     sections = ''
     if item.get('iptal_edildi'):
         sections += '<p class="notice"><strong>İptal edildi.</strong> Bu ilan için resmî iptal duyurusu yayımlandı. Başvuru yapmadan önce resmî kaynağı kontrol et.</p>'
-    for heading, value in [('Kadro ve kontenjan', item.get('kadro')), ('Duyuru metni', item.get('duyuru_cumlesi')), ('İlan özeti', item.get('ozet')), ('Başvuru notu', item.get('basvuru_notu'))]:
+    for heading, value in [('Kadro ve kontenjan', item.get('kadro')), ('Duyuru metni', item.get('duyuru_cumlesi')), ('İlan özeti', None if item.get('ozet') == item.get('duyuru_cumlesi') else item.get('ozet')),('Başvuru notu', item.get('basvuru_notu'))]:
         if value:
             sections += f'<h3>{heading}</h3><p>{esc(value)}</p>'
     if item.get('sartlar'):

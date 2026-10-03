@@ -267,7 +267,8 @@ class IptalYanitiTesti(Dugum):
         self.assertEqual(iptal_yaniti.orijinal_ara(d, [ilan('k1', 'Örnek Kurumu Genel Müdürlüğü')], {'k1': 1}, SIMDI.date()), [])
 
     def test_zayif_unvan_yalniz_ayirt_edici_yoksa_kullanilir(self):
-        d = duyuru(baslik='ÇELTİK BELEDİYE BAŞKANLIĞI İLK DEFA ATANMAK ÜZERE MEMUR ALIM İPTAL İLANI', kurum='ÇELTİK BELEDİYE BAŞKANLIĞI')
+        d = duyuru(baslik='ÇELTİK BELEDİYE BAŞKANLIĞI İLK DEFA ATANMAK ÜZERE MEMUR ALIM İPTAL İLANI', kurum='ÇELTİK BELEDİYE BAŞKANLIĞI',
+                   ozet='Çeltik Belediyesinin yazısına istinaden memur alım ilanı iptal edilmiştir.')
         memur = ilan('k1', 'ÇELTİK BELEDİYESİ', '1 MEMUR ALACAK')
         tekniker = ilan('k2', 'ÇELTİK BELEDİYESİ', '1 TEKNİKER ALACAK')
         self.assertEqual([i['id'] for i in iptal_yaniti.orijinal_ara(d, [memur, tekniker], {'k1': 1, 'k2': 2}, SIMDI.date())], ['k1'])
@@ -604,6 +605,28 @@ class IptalIcerigiTesti(Dugum):
         self.assertEqual(self.calistir(), 1)
         self.assertIn('Bu ilandaki Zabıta Memuru alımı iptal edilmiştir.', self.cagrilar[0][0][2])
         self.assertNotIn('iptal_edildi', self.kayit('k1'))
+
+    def test_zayif_baslik_cumledeki_kadro_kismi_iptal(self):
+        o = ilan('k1', 'ÖRNEK BELEDİYE BAŞKANLIĞI', 'Toplam 2 kişi — 1 GIDA MÜHENDİSİ • 1 MİMAR')
+        d = sbb_duyuru(kurum='ÖRNEK BELEDİYE BAŞKANLIĞI', baslik='ÖRNEK BELEDİYE BAŞKANLIĞI - SÖZLEŞMELİ PERSONEL İPTAL İLANI',
+                       cumle='Resmi Gazete’de yayımlanan ilk defa sözleşmeli personel (Gıda Mühendisi) alım ilanı iptal edilmiştir.')
+        k = self.karar(d, [o], mesajlar={'k1': 500}, gonderilen=['k1'])
+        self.assertEqual(k['islem'], 'gonder')
+        self.assertIs(k['tam'], False)
+        self.assertIn('Bu ilandaki Gıda Mühendisi alımı iptal edilmiştir.', ilan_bot.duyuru_metni(d, True, k['tam']))
+        self.yaz([o, d], gonderilen=['k1'], telegram_bekleyen=[d['id']], mesajlar={'k1': 500})
+        self.assertEqual(self.calistir(), 1)
+        self.assertNotIn('iptal_edildi', self.kayit('k1'))
+
+    def test_kural_4_referans_zaten_iptal_sessiz(self):
+        k = self.karar(duyuru(), [ilan('k1', iptal_edildi='csb-0')], gonderilen=['k1'])
+        self.assertEqual((k['islem'], k['sebep']), ('sessiz', 'orijinal zaten iptal edilmiş'))
+
+    def test_site_ozet_duyuru_cumlesiyle_ayniysa_tekrarlanmaz(self):
+        n = sbb_duyuru(cumle='Zabıta alımı ilanı iptal edilmiştir.', ozet='Zabıta alımı ilanı iptal edilmiştir.', kurum='ÖRNEK BELEDİYESİ')
+        sayfa = site_uret.detail_page(n)[1]
+        self.assertEqual(sayfa.count('Zabıta alımı ilanı iptal edilmiştir.'), 1)
+        self.assertNotIn('İlan özeti', sayfa)
 
     def test_akademik_tanima_kapsami(self):
         csb = duyuru('csb-9', ozet='Üniversitesinin araştırma görevlisi alım ilanı iptal edilmiştir.')
