@@ -251,6 +251,53 @@ def iskur_rows(data, city):
     return records
 
 
+DETAY_ALANLARI=('kadro','sartlar','ozet','basvuru_notu','iskur_detay_surumu','iskur_belge_sha256','iskur_detay_guncelleme')
+ISKUR_PDF_SINIRI=15
+
+
+def _iskur_onbellek(row,cached):
+    """Önceki ayrıntı alanlarını (varsa, dolu olanları) satıra kopyalar."""
+    for key in DETAY_ALANLARI:
+        if cached and cached.get(key):
+            row[key]=cached[key]
+    if cached and cached.get('iskur_detay_denemesi'):
+        row['iskur_detay_denemesi']=cached['iskur_detay_denemesi']
+
+
+def iskur_zenginlestir(op,records,previous):
+    """İlan PDF'lerinden kadro/şart/özet alanlarını doldurur. Başarısızlık kaynak hatası sayılmaz."""
+    import iskur_detay
+    cache={alias:i for i in previous.values() for alias in [i['id']]+i.get('kaynak_kimlikleri',[])}
+    indirilen=hata=0
+    for row in records:
+        cached=cache.get(row['id'])
+        if cached and cached.get('kaynak_turu')!='iskur':
+            continue
+        if cached and cached.get('iskur_detay_surumu')==iskur_detay.VERSION and cached.get('link')==row['link']:
+            _iskur_onbellek(row,cached)
+            continue
+        _iskur_onbellek(row,cached)
+        try:
+            denendi=datetime.fromisoformat(cached['iskur_detay_denemesi']) if cached and cached.get('iskur_detay_denemesi') else None
+        except (ValueError,TypeError):
+            denendi=None
+        if denendi and timedelta(0)<=now()-denendi<timedelta(hours=12):
+            continue
+        if indirilen>=ISKUR_PDF_SINIRI:
+            continue
+        indirilen+=1
+        try:
+            data,_=get(op,row['link'],ISKUR)
+            row.update(iskur_detay.ozetle(data,row))
+            row.pop('iskur_detay_denemesi',None)
+        except Exception as exc:
+            hata+=1
+            print(f'İŞKUR ilan belgesi okunamadı ({type(exc).__name__}: {str(exc)[:100]}): {row["baslik"]}',flush=True)
+            row['iskur_detay_denemesi']=now().isoformat(timespec='seconds')
+        time.sleep(.3)
+    return indirilen,hata
+
+
 def read_iskur(previous):
     op=session()
     data,_=get(op,ISKUR)
@@ -266,8 +313,9 @@ def read_iskur(previous):
             print(f'İŞKUR il kontrolü ertelendi ({type(exc).__name__}: {str(exc)[:100]}): {city}',flush=True)
             records.extend(i for i in previous.values() if i.get('kaynak_turu')=='iskur' and i.get('yer')==city)
         time.sleep(.2)
+    indirilen,hata=iskur_zenginlestir(op,records,previous)
+    print(f'İŞKUR ilan belgeleri: {indirilen} indirildi, {hata} okunamadı',flush=True)
     return records,errors
-
 
 def same_listing(a,b):
     if a['id']==b['id'] or a.get('link') and a.get('link')==b.get('link') and urllib.parse.urlsplit(a['link']).path not in ('','/'):
@@ -294,8 +342,8 @@ def same_listing(a,b):
     # Distinct positions at the same institution/date must not disappear.
     compatible_kind=kind(a.get('ilan_turu','')+' '+a['baslik'])==kind(b.get('ilan_turu','')+' '+b['baslik'])
     count_matches=total(a) is not None and total(a)==total(b)
-    iskur_missing_count=(a.get('kaynak_turu')=='iskur' or b.get('kaynak_turu')=='iskur') and (total(a) is None or total(b) is None)
-    return compatible_kind and (count_matches or iskur_missing_count)
+    iskur_side='iskur' in (a.get('kaynak_turu'),b.get('kaynak_turu'))
+    return compatible_kind and (count_matches or iskur_side)
 
 
 def merge_sources(records, previous):

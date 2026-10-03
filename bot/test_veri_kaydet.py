@@ -11,6 +11,14 @@ class RegistryMergeTests(unittest.TestCase):
             self.assertEqual(result['ilanlar'][0]['ozet'],'yeni')
             self.assertEqual(result['telegram_gonderilen'],['a'])
 
+    def test_parsed_iskur_details_survive_newer_list_scan_in_both_orders(self):
+        a={'guncelleme':'2026-10-03T12:00','ilanlar':[{'id':'i','kaynak_turu':'iskur','iskur_detay_surumu':1,'detay_guncelleme':'2026-10-03T10:00','kadro':'1 Memur'}]}
+        b={'guncelleme':'2026-10-03T13:00','ilanlar':[{'id':'i','kaynak_turu':'iskur','detay_guncelleme':'2026-10-03T12:30'}]}
+        for left,right in [(a,b),(b,a)]:
+            item=merge_registry(left,right)['ilanlar'][0]
+            self.assertEqual(item['kadro'],'1 Memur')
+            self.assertEqual(item['iskur_detay_surumu'],1)
+
     def test_preserves_delivery_history_and_fresh_details(self):
         a = {'guncelleme': '2026-09-25T13:00', 'ilanlar': [{'id': 'a', 'detay_guncelleme': '2026-09-25T12:00', 'yer': 'Ankara'}], 'telegram_gonderilen': ['a'], 'telegram_bekleyen': ['b']}
         b = {'guncelleme': '2026-09-25T14:00', 'ilanlar': [{'id': 'a', 'detay_guncelleme': '2026-09-24T12:00', 'yer': ''}, {'id': 'b'}], 'telegram_gonderilen': ['b'], 'telegram_bekleyen': ['a', 'c']}
