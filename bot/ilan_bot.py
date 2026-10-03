@@ -24,8 +24,9 @@ from resmi_ag import url_ac
 from ilan_gorsel import gorsel_olustur
 from ek_kaynaklar import read_sbb, read_iskur, merge_sources, norm
 from ilan_baglanti import ilan_sayfasi
-from iptal_yaniti import (duz_anahtar, guclu_kokler, kadro_adi, kurum_kimligi, mesaj_kimligi, orijinal_ara,
-                          tam_iptal, yanit_anahtarlari)
+from iptal_yaniti import (duz_anahtar, guclu_kokler, kadro_adi, kapsam_kokleri, kurum_kimligi, mesaj_kimligi,
+                          orijinal_ara, paylasildi, resmi_cumle, tam_iptal, yanit_anahtarlari)
+from sbb_detay import FIIL, _katla, belge_cumlesi
 from kurum_gorseli import kurum_logosu
 from siniflandir import akademik_ilan, etiketler, il_adlari, kategori, kpss_durumu, ogrenim_seviyeleri
 from yerel_kaynak import oku as yerel_oku, sbb_verisi, csb_verisi
@@ -219,28 +220,71 @@ def duyuru_turu_iptal_mi(duyuru):
     return 'iptal' in norm(duyuru.get('duyuru_turu'))
 
 
-def duyuru_metni(duyuru, orijinale_yanit, tam=True):
+_CUMLE_ONEKI = re.compile(r'(?:yayımlanan|yayınlanan|istinaden)\s+(?:ve\s+)?(?:aşağıda\s+belirtilen\s+)?', re.I)
+_CUMLE_KURUM = re.compile(r'\S+(?:ndan|nden):\s*(?:[A-ZÇĞİÖŞÜ ]+İLANI\s*:?\s*)?')
+
+
+def _bas_harf_buyut(metin):
+    return metin[:1].translate(str.maketrans('iı', 'İI')).upper() + metin[1:] if metin else metin
+
+
+def resmi_cumle_kisa(d, sinir=280):
+    """Duyurunun resmi işlem cümlesi, kurum/Resmi Gazete önekinden arındırılmış ve kısaltılmış hâliyle; yoksa ''."""
+    c = resmi_cumle(d)
+    if not c:
+        return ''
+    fiil = FIIL.search(_katla(c))
+    onceki = c[:fiil.start()] if fiil else c
+    ms = list(_CUMLE_ONEKI.finditer(onceki))
+    if ms:
+        c = c[ms[-1].end():]
+    else:
+        m = _CUMLE_KURUM.search(c)
+        if m:
+            c = c[m.end():]
+    c = c.strip()
+    return kisalt(_bas_harf_buyut(c), sinir) if c else ''
+
+
+def duyuru_metni(duyuru, orijinale_yanit, tam=True, referans=None):
     """İptal/düzeltme duyurusu mesajı. Orijinal ilana yanıtsa kısa, değilse kurum ve başlıkla kartsız metin.
-    tam=False: iptal ilanın yalnız bir kadrosunu kapsıyor ('Bu ilandaki Tekniker alımı iptal edilmiştir')."""
+    tam=False: iptal ilanın yalnız bir kadrosunu kapsıyor ('Bu ilandaki Tekniker alımı iptal edilmiştir').
+    referans: kanalda paylaşılmış ama mesaj kaydı olmayan orijinal ilan (yanıt verilemez, 📌 satırıyla gösterilir)."""
     e = html.escape
     iptal = duyuru_turu_iptal_mi(duyuru)
     satirlar = []
+    kadro = okunakli_baslik(kadro_adi(duyuru)) if iptal else ''
+    cumle = resmi_cumle_kisa(duyuru)
     if orijinale_yanit:
         if iptal and not tam:
-            kadro = okunakli_baslik(kadro_adi(duyuru)) or 'bazı kadroların'
-            satirlar.append(f"❌ <b>Bu ilandaki {e(kadro)} alımı iptal edilmiştir.</b>")
+            satirlar.append(f"❌ <b>Bu ilandaki {e(kadro or 'bazı kadroların')} alımı iptal edilmiştir.</b>")
         else:
             satirlar.append("❌ <b>Bu ilan iptal edilmiştir.</b>" if iptal else "📝 <b>Bu ilanda düzeltme yapıldı.</b>")
-        if iptal and duyuru.get('ozet'):
-            satirlar.append(e(kisalt(duyuru['ozet'], 220)))
+        if cumle:
+            satirlar.append(e(cumle))
         if not iptal and duyuru.get('son_tarih'):
             satirlar.append(f"📅 <b>Yeni son başvuru:</b> {tarih_yaz(duyuru['son_tarih'])}")
     else:
-        kurum = okunakli_baslik(duyuru.get('kurum') or '')
-        konu = kisa_baslik(duyuru)
-        parca = ' — '.join(p for p in (kurum, kisalt(konu, 110) if konu and konu != kurum else '') if p) or konu
-        satirlar.append(e(f"❌ İptal: {parca} ilanı iptal edilmiştir." if iptal
-                          else f"📝 Düzeltme: {parca} ilanında düzeltme yapılmıştır."))
+        kurum = okunakli_baslik(duyuru.get('kurum') or '') or kisa_baslik(duyuru)
+        satirlar.append(f"{'❌ <b>İptal duyurusu:</b>' if iptal else '📝 <b>Düzeltme duyurusu:</b>'} {e(kurum)}")
+        if referans:
+            gun = str(referans.get('ilk_gorulme') or '')[:10]
+            try:
+                tarih = f" — {tarih_yaz(gun)} tarihli ilan"
+            except ValueError:
+                tarih = ' — tarihli ilan'
+            satirlar.append(f"📌 {e(kisa_baslik(referans))}{tarih}")
+        if iptal and referans:
+            baslik = ("Bu ilan iptal edilmiştir." if tam in (True, None)
+                      else f"Bu ilandaki {kadro or 'bazı kadroların'} alımı iptal edilmiştir.")
+        elif iptal and kadro:
+            baslik = f"{_bas_harf_buyut(kadro)} alımı iptal edilmiştir."
+        else:
+            baslik = ''
+        if baslik:
+            satirlar.append(f"<b>{e(baslik)}</b>")
+        if cumle:
+            satirlar.append(e(cumle))
         if not iptal and duyuru.get('son_tarih'):
             satirlar.append(f"📅 <b>Son başvuru:</b> {tarih_yaz(duyuru['son_tarih'])}")
     if duyuru.get('kaynak_turu') in ('sbb', 'iskur', 'csb') and duyuru.get('kaynak'):
@@ -341,29 +385,50 @@ def gun_icinde(deger, bugun, gun):
         return False
 
 
-def duyuru_karari(duyuru, ilanlar, mesajlar, yanitlar, bugun):
-    """İptal/düzeltme duyurusu için karar: {'islem': 'sessiz'|'gonder', 'orijinal', 'tam', 'yaz', 'sebep'}.
-    Sessiz: akademik ilana ait, orijinal zaten iptal edilmiş ya da aynı olay (kopya) daha önce bildirilmiş."""
+def duyuru_karari(duyuru, ilanlar, mesajlar, yanitlar, bugun, gonderilen=None):
+    """İptal/düzeltme duyurusu için karar:
+    {'islem': 'sessiz'|'gonder', 'orijinal', 'referans', 'tam', 'yaz', 'sebep'}.
+    Sessiz: akademik duyuru/ilana ait, kanalda hiç paylaşılmamış ilana ait, içeriği belirsiz, orijinal zaten iptal
+    edilmiş ya da aynı olay (kopya) daha önce bildirilmiş.
+    referans: kanalda paylaşılmış ama mesaj kaydı olmayan tek orijinal (yanıt verilemez; metinde 📌 ile gösterilir)."""
     tur = 'iptal' if duyuru_turu_iptal_mi(duyuru) else 'duzeltme'
+    if akademik_ilan(duyuru):
+        return {'islem': 'sessiz', 'sebep': 'akademik duyuru', 'referans': None}
     adaylar = orijinal_ara(duyuru, ilanlar, mesajlar, bugun)
+    genis = orijinal_ara(duyuru, ilanlar, mesajlar, bugun, mesaj_gerekli=False)
     # Akademik bastırma yalnız: akademik olmayan hiçbir aday (mesaj şartı olmadan da) yok VE akademik aday var.
-    if not adaylar and not orijinal_ara(duyuru, ilanlar, mesajlar, bugun, mesaj_gerekli=False) \
-            and orijinal_ara(duyuru, ilanlar, mesajlar, bugun, akademik=True):
-        return {'islem': 'sessiz', 'sebep': 'akademik ilana ait'}
+    if not adaylar and not genis and orijinal_ara(duyuru, ilanlar, mesajlar, bugun, akademik=True):
+        return {'islem': 'sessiz', 'sebep': 'akademik ilana ait', 'referans': None}
+    kapsam = kapsam_kokleri(duyuru)
+    # Kapsamı belirsiz (genel başlıklı) duyuru: aynı kurumun yalnız akademik ilanı varsa ona ait sayılır.
+    if not adaylar and not kapsam \
+            and not orijinal_ara(duyuru, ilanlar, mesajlar, bugun, mesaj_gerekli=False, ortusme_gerekli=False) \
+            and orijinal_ara(duyuru, ilanlar, mesajlar, bugun, akademik=True, ortusme_gerekli=False):
+        return {'islem': 'sessiz', 'sebep': 'akademik ilana ait (kurum)', 'referans': None}
     if len(adaylar) == 1:
         o = adaylar[0]
         if tur == 'iptal' and o.get('iptal_edildi'):
-            return {'islem': 'sessiz', 'sebep': 'orijinal zaten iptal edilmiş'}
+            return {'islem': 'sessiz', 'sebep': 'orijinal zaten iptal edilmiş', 'referans': None}
         tam = tam_iptal(duyuru, o) if tur == 'iptal' else True
-        imza = ','.join(sorted(guclu_kokler(duyuru, set(norm(o.get('kurum')).split()))))
+        imza = ','.join(sorted(kapsam_kokleri(duyuru, set(norm(o.get('kurum')).split()))))
         anahtarlar = yanit_anahtarlari(tur, o, tam, imza)
         if any(k in yanitlar for k in anahtarlar):
-            return {'islem': 'sessiz', 'sebep': 'aynı olay daha önce bildirildi'}
-        return {'islem': 'gonder', 'orijinal': o, 'tam': tam, 'yaz': anahtarlar[0]}
+            return {'islem': 'sessiz', 'sebep': 'aynı olay daha önce bildirildi', 'referans': None}
+        return {'islem': 'gonder', 'orijinal': o, 'referans': None, 'tam': tam, 'yaz': anahtarlar[0]}
+
+    def paylasilmis(i):
+        return bool(mesaj_kimligi(i, mesajlar)) or (gonderilen is not None and paylasildi(i, gonderilen))
+
+    if genis and gonderilen is not None and not any(paylasilmis(i) for i in genis):
+        return {'islem': 'sessiz', 'sebep': 'orijinal kanalda paylaşılmadı', 'referans': None}
+    referans = genis[0] if len(genis) == 1 and paylasilmis(genis[0]) and gonderilen is not None else None
+    if not referans and not kapsam and not resmi_cumle(duyuru) and (tur == 'iptal' or not duyuru.get('son_tarih')):
+        return {'islem': 'sessiz', 'sebep': 'içerik belirsiz', 'referans': None}
     anahtar = duz_anahtar(duyuru)
     if anahtar in yanitlar and gun_icinde(yanitlar[anahtar], bugun, DUZ_METIN_TEKILLESTIRME_GUN):
-        return {'islem': 'sessiz', 'sebep': 'aynı olay (düz metin) son 30 günde bildirildi'}
-    return {'islem': 'gonder', 'orijinal': None, 'tam': True, 'yaz': anahtar}
+        return {'islem': 'sessiz', 'sebep': 'aynı olay (düz metin) son 30 günde bildirildi', 'referans': None}
+    tam = tam_iptal(duyuru, referans) if referans else None
+    return {'islem': 'gonder', 'orijinal': None, 'referans': referans, 'tam': tam, 'yaz': anahtar}
 
 
 TOPLU_EN_COK_SATIR = 15
@@ -636,6 +701,16 @@ def main():
                 hedef['iptal_edildi'] = mevcut[old_id]['iptal_edildi']  # takma ada dönüşen orijinalin işareti kaybolmaz
             del mevcut[old_id]
     mevcut.update(canli)
+    # Eski SBB duyurularına resmi işlem cümlesini depodaki PDF kopyasından bir kez ekle (mevcut alanlar korunur).
+    for i in mevcut.values():
+        if i.get('duyuru_turu') and i.get('kaynak_turu') == 'sbb' and 'duyuru_cumlesi' not in i:
+            try:
+                cumle = belge_cumlesi(i)
+            except Exception as exc:
+                print(f"Duyuru cümlesi okunamadı ({type(exc).__name__}): {i.get('id')}", file=sys.stderr)
+                continue
+            if cumle is not None:
+                i['duyuru_cumlesi'] = cumle
     yeniler = [i for i in gelen if i['id'] in yeni_ids and i['id'] in birlesik_ids]
 
     # 3) Telegram: sınırı aşan ve başarısız olan gönderimleri sonraki taramaya sakla.
@@ -696,7 +771,7 @@ def main():
             ertelenen += 1
             continue
         if tur == 'duyuru':
-            karar = duyuru_karari(i, list(mevcut.values()), mesajlar, yanitlar, simdi().date())
+            karar = duyuru_karari(i, list(mevcut.values()), mesajlar, yanitlar, simdi().date(), gonderilen=gonderilen)
             if karar['islem'] == 'sessiz':
                 # Gönderilmez ama tekrar denenmesin diye gönderilmiş sayılır.
                 if not a.dry_run:
@@ -706,7 +781,7 @@ def main():
                 continue
             orijinal = karar['orijinal']
             yanit = mesaj_kimligi(orijinal, mesajlar)[1] if orijinal else None
-            metin = duyuru_metni(i, orijinal is not None, karar['tam'])
+            metin = duyuru_metni(i, orijinal is not None, karar['tam'], karar.get('referans'))
             if a.dry_run:
                 print('--- (önizleme, gönderilmedi) ---\n' + metin + '\n')
                 continue

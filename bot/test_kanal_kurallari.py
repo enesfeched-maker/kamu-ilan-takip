@@ -235,8 +235,8 @@ class IptalYanitiTesti(Dugum):
         a, k = self.cagrilar[0]
         self.assertIsNone(k.get('yanit'))
         self.assertIsNone(k.get('foto'))
-        self.assertTrue(a[2].startswith('❌ İptal: Rize Belediyesi — '))
-        self.assertIn('ilanı iptal edilmiştir.', a[2])
+        self.assertTrue(a[2].startswith('❌ <b>İptal duyurusu:</b> Rize Belediyesi'))  # k1 paylaşıldı ama mesajsız: kural 4
+        self.assertIn('Bu ilan iptal edilmiştir.', a[2])
         self.assertTrue(a[3].endswith('/ilan/csb-1/'))  # site bağlantı düğmesi
         self.assertNotIn('iptal_edildi', self.kayit('k1'))
         self.assertIn('csb-1', self.durum()['telegram_gonderilen'])
@@ -246,7 +246,7 @@ class IptalYanitiTesti(Dugum):
         self.assertEqual(self.calistir(), 1)
         a, k = self.cagrilar[0]
         self.assertIsNone(k.get('yanit'))
-        self.assertTrue(a[2].startswith('❌ İptal:'))
+        self.assertTrue(a[2].startswith('❌ <b>İptal duyurusu:</b>'))
         self.assertNotIn('iptal_edildi', self.kayit('k1'))
         self.assertNotIn('iptal_edildi', self.kayit('k2'))
 
@@ -286,7 +286,7 @@ class IptalYanitiTesti(Dugum):
         self.calistir()
         a, k = self.cagrilar[0]
         self.assertIsNone(k.get('yanit'))
-        self.assertTrue(a[2].startswith('📝 Düzeltme: Rize Belediyesi — '))
+        self.assertTrue(a[2].startswith('📝 <b>Düzeltme duyurusu:</b> Rize Belediyesi'))
         self.assertIn('6 Kasım 2026', a[2])
 
     def test_ayni_calistirmada_once_ilan_sonra_iptal_yanit_verir(self):
@@ -389,7 +389,9 @@ class KismiIptalTesti(Dugum):
         o = ilan('k1', kadro='Toplam 3 kişi — 1 TEKNİKER • 1 MİMAR • 1 ZABITA')
         self.assertFalse(iptal_yaniti.tam_iptal(self.duy('RİZE BELEDİYESİ ( TEKNİKER ) ALIM İPTAL İLANI'), o))
         self.assertTrue(iptal_yaniti.tam_iptal(self.duy('RİZE BELEDİYESİ TEKNİKER MİMAR ZABITA ALIM İPTAL İLANI'), o))
-        self.assertTrue(iptal_yaniti.tam_iptal(self.duy('RİZE BELEDİYESİ ALIM İPTAL İLANI'), o))  # genel iptal
+        genel = self.duy('RİZE BELEDİYESİ ALIM İPTAL İLANI')
+        genel['ozet'] = 'Alım ilanı iptal edilmiştir.'  # kadro adı içermeyen resmî cümle
+        self.assertTrue(iptal_yaniti.tam_iptal(genel, o))  # genel iptal
 
     def test_kadrosu_bilinmeyen_orijinalde_kismi_sayilir(self):
         o = ilan('k1', kadro='')
@@ -447,7 +449,7 @@ class AkademikBastirmaTesti(Dugum):
         akademik = ilan('u1', 'ÖRNEK ÜNİVERSİTESİ', '1 TEKNİSYEN ALACAK', ozet='Doçentliğini almış olmak (2547 sayılı Kanun)')
         diger = ilan('u2', 'ÖRNEK ÜNİVERSİTESİ', '1 TEKNİSYEN ALACAK')  # akademik olmayan eşleşme, mesaj kaydı YOK
         d = duyuru('csb-5', kurum='ÖRNEK ÜNİVERSİTESİ', baslik='ÖRNEK ÜNİVERSİTESİ TEKNİSYEN ALIM İPTAL İLANI')
-        self.yaz([akademik, diger, d], telegram_bekleyen=['csb-5'])
+        self.yaz([akademik, diger, d], gonderilen=['u2'], telegram_bekleyen=['csb-5'])
         self.assertEqual(self.calistir(), 1)           # bastırılmaz, düz metin gider
         self.assertIsNone(self.cagrilar[0][1].get('yanit'))
 
@@ -485,6 +487,139 @@ class IptalIsaretiBirlesmeTesti(unittest.TestCase):
         m = merge_registry(eski, yeni)
         self.assertEqual([i['id'] for i in m['ilanlar']], ['a'])
         self.assertEqual(m['ilanlar'][0]['iptal_edildi'], 'csb-9')
+
+
+ADANA = 'ADANA ALPARSLAN TÜRKEŞ BİLİM VE TEKNOLOJİ ÜNİVERSİTESİ'
+ADANA_CUMLE = ('20.09.2026 tarihli ve 33376 sayılı Resmi Gazete’de yayımlanan ve aşağıda belirtilen 6 Sıra Nolu Havacılık ve Uzay '
+               'Bilimleri Fakültesi Havacılık Yönetimi Bölümü Havacılık Yönetimi Anabilim Dalı 1 (bir) adet Araştırma Görevlisi '
+               'kadrosu ilanımız iptal edilmiştir.')
+JUNK = 'İPTAL İLANI. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.'
+
+
+def sbb_duyuru(kimlik='sbb-' + '8' * 24, kurum=ADANA, cumle=None, **ek):
+    r = {'id': kimlik, 'baslik': f'{kurum} - İPTAL İLANI', 'kurum': kurum, 'kadro': 'İPTAL İLANI',
+         'duyuru_turu': 'İptal duyurusu', 'ozet': JUNK, 'kaynak_turu': 'sbb', 'kaynak': 'SBB Kamu İlan',
+         'link': 'https://kamuilan.sbb.gov.tr/', 'son_tarih': None, 'ilk_gorulme': gun(0)}
+    if cumle is not None:
+        r['duyuru_cumlesi'] = cumle
+    r.update(ek)
+    return r
+
+
+def adana_orijinal():
+    return {'id': 'sbb-' + '7' * 24, 'baslik': f'{ADANA} - 25 ÖĞRETİM ELEMANI ALACAK', 'kurum': ADANA,
+            'kadro': '25 ÖĞRETİM ELEMANI ALACAK', 'kategori': 'akademik', 'kaynak_turu': 'sbb',
+            'link': 'https://kamuilan.sbb.gov.tr/', 'son_tarih': gun(20)[:10], 'ilk_gorulme': gun(-7)}
+
+
+class CumleKadrosuTesti(unittest.TestCase):
+    def test_gercek_cumleler(self):
+        tablo = [
+            (ADANA_CUMLE, 'Araştırma Görevlisi'),
+            ('Sağlık Bilimleri Fakültesi Ebelik Bölümü Ebelik Ana Bilim Dalı Doçent kadrosu ilanımız iptal edilmiştir.', 'Doçent'),
+            ('Fen Edebiyat Fakültesi Sanat Tarihi Bölümü 4.Derece Doktor Öğretim Üyesi kadrosu iptal edilmiştir.', 'Doktor Öğretim Üyesi'),
+            ('Gazete de yayımlanan İlk Defa Zabıta Memuru alımı ilanı iptal edilmiştir.', 'Zabıta Memuru'),
+            ('Çukurkuyu Belediyesinin yazısına istinaden ilk defa zabıta memuru alımı ilanı iptal edildi.', 'zabıta memuru'),
+            ('Rize Belediyesinin yazısına istinaden ilk defa atanmak üzere sözleşmeli personel (Gıda Mühendisi) alım ilanı iptal edilmiştir.', 'Gıda Mühendisi'),
+            ('Rize Belediyesinin yazısına istinaden ilk defa sözleşmeli personel (peyzaj mimarı) alım ilanı iptal edilmiştir.', 'peyzaj mimarı'),
+            ('Üsküdar Belediyesinin yazısına istinaden ilk defa memur ve zabıta memuru alım ilanı iptal edilmiştir.', 'zabıta memuru'),
+            ('Resmî Gazete’de yayımlanan ilk defa atanmak üzere sözleşmeli personel alım ilanı iptal edilmiştir.', ''),
+            ('Sözleşmeli Personel Alım ilanımızda yer alan ve aşağıda belirtilen 2 ve 5. sıradaki kadro pozisyonuna ait ilanımız iptal edilmiştir.', ''),
+            ('Resmî Gazete ’de yayımlanan aşağıda birimi, anabilim dalı, unvanı, adedi ve nitelikleri belirtilen kadroya ilişkin ilanımız iptal edilmiştir.', ''),
+        ]
+        for cumle, beklenen in tablo:
+            self.assertEqual(iptal_yaniti.cumle_kadrosu(cumle), beklenen, cumle)
+
+
+class IptalIcerigiTesti(Dugum):
+    def karar(self, d, ilanlar, mesajlar=None, gonderilen=()):
+        return ilan_bot.duyuru_karari(d, ilanlar + [d], mesajlar or {}, {}, SIMDI.date(), gonderilen=set(gonderilen))
+
+    def test_adana_gercek_senaryo_gonderilmez(self):
+        n = sbb_duyuru(cumle=ADANA_CUMLE)
+        self.yaz([adana_orijinal(), n], telegram_bekleyen=[n['id']])
+        self.assertEqual(self.calistir(), 0)
+        self.assertEqual(self.durum()['telegram_bekleyen'], [])  # akademik: kuyruktan düşer (gonderilen'e yazılmaz)
+        self.assertTrue(akademik_ilan(n))
+        self.assertIsNone(site_uret.detail_page(dict(n, id='sbb-' + '8' * 24)))
+
+    def test_cumlesiz_adana_kurum_kuraliyla_sessiz(self):
+        k = self.karar(sbb_duyuru(), [adana_orijinal()], gonderilen=set())
+        self.assertEqual(k['islem'], 'sessiz')
+        self.assertIn('akademik', k['sebep'])
+
+    def test_kural_1b_akademik_olmayan_ilani_yutmaz(self):
+        diger = ilan('d1', ADANA, '2 TEKNİKER', baslik=f'{ADANA} - 2 TEKNİKER')
+        k = self.karar(sbb_duyuru(), [adana_orijinal(), diger], gonderilen=['d1'])
+        self.assertNotEqual(k.get('sebep'), 'akademik ilana ait (kurum)')
+
+    def test_kural_3_orijinal_kanalda_paylasilmadi(self):
+        self.senaryo = None
+        k = self.karar(duyuru(), [ilan('k1')], gonderilen=set())
+        self.assertEqual((k['islem'], k['sebep']), ('sessiz', 'orijinal kanalda paylaşılmadı'))
+
+    def test_kural_4_referansli_duz_metin(self):
+        d = duyuru()
+        self.yaz([ilan('k1'), d], gonderilen=['k1'], telegram_bekleyen=[d['id']])
+        self.assertEqual(self.calistir(), 1)
+        a, k = self.cagrilar[0]
+        self.assertIsNone(k.get('yanit'))
+        self.assertTrue(a[2].startswith('❌ <b>İptal duyurusu:</b> Rize Belediyesi'))
+        self.assertIn('📌 ', a[2])
+        self.assertIn('tarihli ilan', a[2])
+        self.assertIn('Bu ilan iptal edilmiştir.', a[2])
+        self.assertIn('Tekniker alım ilanı iptal edilmiştir', a[2])
+        self.assertNotIn('ilanı ilanı', a[2])
+        self.assertNotIn('İptal İlanı', a[2])
+        self.assertNotIn('iptal_edildi', self.kayit('k1'))
+
+    def test_kural_5_icerik_belirsiz(self):
+        d = sbb_duyuru(kurum='ÖRNEK BELEDİYESİ')
+        k = self.karar(d, [], gonderilen=set())
+        self.assertEqual((k['islem'], k['sebep']), ('sessiz', 'içerik belirsiz'))
+
+    def test_kural_6_somut_icerikli_duz_metin(self):
+        d = sbb_duyuru(kurum='ÖRNEK BELEDİYESİ', cumle='Resmi Gazete’de yayımlanan İlk Defa Zabıta Memuru alımı ilanı iptal edilmiştir.')
+        self.yaz([d], telegram_bekleyen=[d['id']])
+        self.assertEqual(self.calistir(), 1)
+        metin = self.cagrilar[0][0][2]
+        self.assertIn('<b>Zabıta Memuru alımı iptal edilmiştir.</b>', metin)
+        self.assertNotIn('📌', metin)
+
+    def test_genel_baslik_cumle_ile_posted_orijinale_yanit(self):
+        o = ilan('k1', kadro='1 ZABITA MEMURU ALACAK')
+        d = sbb_duyuru(kurum='RİZE BELEDİYESİ', cumle='Resmi Gazete’de yayımlanan İlk Defa Zabıta Memuru alımı ilanı iptal edilmiştir.')
+        self.yaz([o, d], gonderilen=['k1'], telegram_bekleyen=[d['id']], mesajlar={'k1': 500})
+        self.assertEqual(self.calistir(), 1)
+        a, k = self.cagrilar[0]
+        self.assertEqual(k.get('yanit'), 500)
+        self.assertIn('Bu ilan iptal edilmiştir.', a[2])
+        self.assertNotIn('Kadroya göre', a[2])
+        self.assertIsNotNone(self.kayit('k1').get('iptal_edildi'))
+
+    def test_genel_baslik_cumle_kismi_iptal(self):
+        o = ilan('k1', kadro='Toplam 2 kişi — 1 ZABITA MEMURU • 1 TEKNİKER')
+        d = sbb_duyuru(kurum='RİZE BELEDİYESİ', cumle='Resmi Gazete’de yayımlanan İlk Defa Zabıta Memuru alımı ilanı iptal edilmiştir.')
+        self.yaz([o, d], gonderilen=['k1'], telegram_bekleyen=[d['id']], mesajlar={'k1': 500})
+        self.assertEqual(self.calistir(), 1)
+        self.assertIn('Bu ilandaki Zabıta Memuru alımı iptal edilmiştir.', self.cagrilar[0][0][2])
+        self.assertNotIn('iptal_edildi', self.kayit('k1'))
+
+    def test_akademik_tanima_kapsami(self):
+        csb = duyuru('csb-9', ozet='Üniversitesinin araştırma görevlisi alım ilanı iptal edilmiştir.')
+        self.assertTrue(akademik_ilan(csb))
+        normal = ilan('n1', kadro='1 TEKNİKER', ozet='Öğretim görevlisi gözetiminde çalışacaktır.')
+        self.assertFalse(akademik_ilan(normal))
+
+    def test_gecmise_donuk_pdf_cumlesi_eklenir(self):
+        n = sbb_duyuru(belge_sha256='a' * 64, kurum='ÖRNEK BELEDİYESİ')
+        self.yaz([n], telegram_bekleyen=[])
+        with patch('ilan_bot.belge_cumlesi', return_value='X kadrosu iptal edilmiştir.'):
+            self.calistir()
+        k = self.kayit(n['id'])
+        self.assertEqual(k['duyuru_cumlesi'], 'X kadrosu iptal edilmiştir.')
+        self.assertEqual(k['ozet'], JUNK)
+        self.assertEqual(k['kadro'], 'İPTAL İLANI')
 
 
 if __name__ == '__main__':

@@ -48,7 +48,7 @@ def detail_page(item, gorsel=None):
     sections = ''
     if item.get('iptal_edildi'):
         sections += '<p class="notice"><strong>İptal edildi.</strong> Bu ilan için resmî iptal duyurusu yayımlandı. Başvuru yapmadan önce resmî kaynağı kontrol et.</p>'
-    for heading, value in [('Kadro ve kontenjan', item.get('kadro')), ('İlan özeti', item.get('ozet')), ('Başvuru notu', item.get('basvuru_notu'))]:
+    for heading, value in [('Kadro ve kontenjan', item.get('kadro')), ('Duyuru metni', item.get('duyuru_cumlesi')), ('İlan özeti', item.get('ozet')), ('Başvuru notu', item.get('basvuru_notu'))]:
         if value:
             sections += f'<h3>{heading}</h3><p>{esc(value)}</p>'
     if item.get('sartlar'):
@@ -139,8 +139,8 @@ def bot_ilani(item):
     kimlik = item.get('id')
     kimlikler = sorted({k for k in [*item.get('kaynak_kimlikleri', []), kimlik] if k})
     sayfa = detail_page(item)
-    parcalar = [item.get('baslik'), item.get('kurum'), item.get('kadro'), item.get('ozet')]
-    parcalar += [str(s.get(alan) or '') for s in item.get('sartlar', []) for alan in ('kadro', 'metin')]
+    parcalar = [item.get('baslik'), item.get('kurum'), item.get('kadro'), item.get('ozet'), item.get('duyuru_cumlesi')]
+    parcalar +=[str(s.get(alan) or '') for s in item.get('sartlar', []) for alan in ('kadro', 'metin')]
     metin = kucuk(' '.join(str(p) for p in parcalar if p))[:1500]
     return {
         'id': kimlik, 'kimlikler': kimlikler, 'baslik': item.get('baslik'), 'kurum': item.get('kurum'),

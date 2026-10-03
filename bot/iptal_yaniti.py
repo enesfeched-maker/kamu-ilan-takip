@@ -7,6 +7,7 @@ from datetime import datetime, timedelta, timezone
 
 from csb_kaynak import cekirdek
 from ek_kaynaklar import norm
+from sbb_detay import FIIL, _katla
 from siniflandir import akademik_ilan
 
 TR = timezone(timedelta(hours=3))
@@ -47,13 +48,76 @@ def _kokler(ilan, alanlar, kurum_sozcukleri=frozenset()):
     return {t[:6] for t in _parcalar(metin) if t not in GENEL and t not in kurum_sozcukleri}
 
 
+DUR = set('''adet dali bolumu fakultesi yuksekokulu merkezi defa uzere atanmak ilk siradaki sirasinda belirtilen ait ile
+ve istinaden nolu derece'''.split())
+_PAREN = re.compile(r'\(\s*([^()]{3,60}?)\s*\)\s*al[ıi]m')
+_ANKRAJ = re.compile(r'\s(?:kadrosu|kadroları|alımı|alım)\s+(?:ilan\w*\s+)?(?:iptal|düzelt|değiştir)')
+
+
+def resmi_cumle(d):
+    """Duyurunun resmi işlem cümlesi: duyuru_cumlesi; yoksa geçmiş zamanlı işlem fiili içeren ozet; yoksa ''."""
+    c = str(d.get('duyuru_cumlesi') or '').strip()
+    if c:
+        return c
+    ozet = str(d.get('ozet') or '').strip()
+    return ozet if ozet and FIIL.search(_katla(ozet)) else ''
+
+
+def _zayif_mi(sozcukler):
+    return all(norm(w)[:6] in ZAYIF for w in sozcukler)
+
+
+def cumle_kadrosu(s):
+    """İşlem cümlesinde iptal edilen kadro adı ('Araştırma Görevlisi', 'Gıda Mühendisi'); bulunamazsa ''."""
+    s = str(s or '')
+    k = _katla(s)  # uzunluk korunur: ofsetler orijinal metne uyar
+    paren = None
+    for paren in _PAREN.finditer(k):
+        pass
+    ankraj = None
+    for ankraj in _ANKRAJ.finditer(k):
+        pass
+    if paren and (not ankraj or paren.end() > ankraj.start() or paren.start() > ankraj.start()):
+        ad = s[paren.start(1):paren.end(1)].strip()
+        return '' if _zayif_mi(ad.split()) else ad
+    if not ankraj:
+        return ''
+    toplanan = []
+    for w in reversed(s[:ankraj.start()].split()):
+        n = norm(w).strip()
+        if len(toplanan) >= 4 or not n or n in DUR or n.isdigit() or re.fullmatch(r'\d+ ?derece', n) \
+                or w.endswith((')', ':')):
+            break
+        toplanan.append(w)
+    toplanan.reverse()
+    if not toplanan or _zayif_mi(toplanan):
+        return ''
+    return ' '.join(toplanan)
+
+
+def kapsam_kokleri(duyuru, ek_kurum_sozcukleri=frozenset()):
+    """Duyurunun kapsamını belirten kökler: başlık/kadrodaki güçlü kökler, yoksa işlem cümlesindeki kadro adının kökleri."""
+    guclu = guclu_kokler(duyuru, ek_kurum_sozcukleri)
+    if guclu:
+        return guclu
+    kurum_s = set(norm(duyuru.get('kurum')).split()) | set(ek_kurum_sozcukleri)
+    if _kokler(duyuru, ('baslik', 'kadro'), kurum_s):
+        return guclu  # başlıkta yalnız zayıf sözcük ('memur') varsa eski davranış korunur
+    return {t[:6] for t in _parcalar(cumle_kadrosu(resmi_cumle(duyuru)))
+            if t not in GENEL and t not in kurum_s and t[:6] not in ZAYIF and t not in ZAYIF}
+
+
+def paylasildi(ilan, gonderilen):
+    return any(k in gonderilen for k in [ilan.get('id'), *ilan.get('kaynak_kimlikleri', [])])
+
+
 def anlamli_ortusme(duyuru, ilan):
     """Duyurunun ayırt edici kadro/unvan sözcüklerinden en az biri ilanda geçmeli ('zabıta', 'tekniker'...).
     Duyuruda ayırt edici sözcük yoksa ('memur alımı iptal') zayıf sınıf sözcüğü ortak olmalı."""
     kurum_s = set(norm(duyuru.get('kurum')).split()) | set(norm(ilan.get('kurum')).split())
     d = _kokler(duyuru, ('baslik', 'kadro'), kurum_s)
     i = _kokler(ilan, ('baslik', 'kadro', 'ozet', 'ilan_turu'), kurum_s)
-    guclu = {k for k in d if k not in ZAYIF}
+    guclu = kapsam_kokleri(duyuru, kurum_s)
     if guclu:
         return bool(guclu & i)
     return bool(d & i & ZAYIF)
@@ -73,7 +137,7 @@ def _tur(duyuru):
     return 'iptal' if 'iptal' in norm(duyuru.get('duyuru_turu')) else 'duzeltme'
 
 
-def orijinal_ara(duyuru, ilanlar, mesajlar, bugun=None, akademik=False, mesaj_gerekli=True):
+def orijinal_ara(duyuru, ilanlar, mesajlar, bugun=None, akademik=False, mesaj_gerekli=True, ortusme_gerekli=True):
     """Duyurunun orijinal ilanı için ADAY listesi: kanalda paylaşılmış (telegram_mesajlari'nda kimliği/takma adı olan),
     duyuru olmayan, kurum çekirdeği aynı, kadro/başlıkta anlamlı örtüşen, son 120 günde görülmüş ilanlar.
     Akademik ilanlar hiçbir zaman aday olmaz. akademik=True: tersine yalnız akademik ilanlara bakar ve mesaj kaydı
@@ -93,7 +157,7 @@ def orijinal_ara(duyuru, ilanlar, mesajlar, bugun=None, akademik=False, mesaj_ge
         gun = _gun(ilan)
         if gun and not (timedelta(0) <= (bugun - gun) <= timedelta(days=GUN_PENCERESI)):
             continue
-        if kurum_uyumlu(duyuru, ilan) and anlamli_ortusme(duyuru, ilan):
+        if kurum_uyumlu(duyuru, ilan) and (not ortusme_gerekli or anlamli_ortusme(duyuru, ilan)):
             adaylar.append(ilan)
     return adaylar
 
@@ -118,7 +182,7 @@ def duyuru_imzasi(duyuru):
     (güçlü sözcük yoksa tüm kökler). Büyük/küçük harf ve yazım farklarından etkilenmez."""
     k = kurum_kimligi(duyuru)
     kurum = f'{k[0]}:{k[1]}' if k else ''
-    kokler = guclu_kokler(duyuru) or _kokler(duyuru, ('baslik', 'kadro'), set(norm(duyuru.get('kurum')).split()))
+    kokler = kapsam_kokleri(duyuru) or _kokler(duyuru, ('baslik', 'kadro'), set(norm(duyuru.get('kurum')).split()))
     return f"{kurum}|{','.join(sorted(kokler))}"
 
 
@@ -139,7 +203,7 @@ def tam_iptal(duyuru, orijinal):
     """İptal duyurusu orijinal ilanın TAMAMINI mı iptal ediyor? Duyuruda ayırt edici sözcük yoksa (genel iptal),
     orijinal tek kalemliyse ya da duyurunun güçlü sözcükleri orijinalin tüm kalemlerini kapsıyorsa evet.
     Orijinalin kadrosu bilinmiyorsa kapsamı kanıtlanamaz: hayır (kısmi sayılır)."""
-    guclu = guclu_kokler(duyuru, set(norm(orijinal.get('kurum')).split()))
+    guclu = kapsam_kokleri(duyuru, set(norm(orijinal.get('kurum')).split()))
     if not guclu:
         return True
     kalemler = kadro_kalemleri(orijinal)
@@ -159,7 +223,7 @@ def kadro_adi(duyuru):
     guclu = guclu_kokler(duyuru)
     kurum_s = set(norm(duyuru.get('kurum')).split())
     sozcukler = [w for w in re.split(r'\s+', baslik) if norm(w)[:6] in guclu and norm(w) not in kurum_s]
-    return ' '.join(sozcukler).strip()
+    return ' '.join(sozcukler).strip() or cumle_kadrosu(resmi_cumle(duyuru))
 
 
 def yanit_anahtarlari(tur, orijinal, tam, imza=''):
