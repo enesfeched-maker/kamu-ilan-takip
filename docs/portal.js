@@ -13,7 +13,7 @@ const today = () => new Date().toLocaleDateString('sv-SE',{timeZone:'Europe/Ista
 const days = v => v ? Math.round((Date.parse(v+'T00:00:00Z')-Date.parse(today()+'T00:00:00Z'))/86400000) : null;
 function readStore(key,fallback){try{const v=JSON.parse(localStorage.getItem(key));return v??fallback;}catch{return fallback;}}
 function writeStore(key,value){try{localStorage.setItem(key,JSON.stringify(value));return true;}catch{return false;}}
-let saved=new Set((Array.isArray(readStore('kit-saved',[]))?readStore('kit-saved',[]):[]).filter(s=>typeof s==='string'&&s.length>0&&s.length<=80)), compared=new Set(), items=[], liste=[], listeVar=false, listeZaman='', view='active', shown=20, takvimGun=7, loaded=false, listeLoaded=false, toastTimer, profil=null, sonZiyaret=null, tab='bugun', lastTab='bugun';
+let saved=new Set((Array.isArray(readStore('kit-saved',[]))?readStore('kit-saved',[]):[]).filter(s=>typeof s==='string'&&s.length>0&&s.length<=80)), compared=new Set(), items=[], liste=[], listeTum=[], listeUyari=null, listeVar=false, listeZaman='', view='active', shown=20, takvimGun=7, loaded=false, listeLoaded=false, toastTimer, profil=null, sonZiyaret=null, tab='bugun', lastTab='bugun';
 const PAGE_SIZE=20, defaultTitle=document.title;
 const TABS=['bugun','ilanlar','takvim','kayitli','rehber'];
 const AY=['Oca','Şub','Mar','Nis','May','Haz','Tem','Ağu','Eyl','Eki','Kas','Ara'],AYU=['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'],GUNLER=['Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi','Pazar'];
@@ -33,7 +33,7 @@ const strList=(v,n,m)=>Array.isArray(v)?v.filter(x=>typeof x==='string'&&x.lengt
 /* liste.json kaydını doğrular: her alan biçim denetiminden geçer, geçmeyen alan boşaltılır. */
 function cleanL(l){
 if(!l||typeof l!=='object'||!KEY_RE.test(l.key||''))return null;
-const o={key:l.key,id:str(l.id,120)||l.key,manset:str(l.manset,160),ek:posInt(l.ek,1000),toplam:posInt(l.toplam,20000),kurum:str(l.kurum,200),il:str(l.il,80),kpss:l.kpss==='kpss'||l.kpss==='kpsssiz'?l.kpss:'',son_tarih:DATE_RE.test(l.son_tarih||'')?l.son_tarih:'',durum:str(l.durum,12),ilan_turu:str(l.ilan_turu,60),kategori:/^[a-z0-9_-]{1,30}$/.test(l.kategori||'')?l.kategori:''};
+const o={key:l.key,kopya_of:KEY_RE.test(l.kopya_of||'')&&l.kopya_of!==l.key?l.kopya_of:'',kaynak_sayisi:posInt(l.kaynak_sayisi,10),kaynaklar:strList(l.kaynaklar,6,40),id:str(l.id,120)||l.key,manset:str(l.manset,160),ek:posInt(l.ek,1000),toplam:posInt(l.toplam,20000),kurum:str(l.kurum,200),il:str(l.il,80),kpss:l.kpss==='kpss'||l.kpss==='kpsssiz'?l.kpss:'',son_tarih:DATE_RE.test(l.son_tarih||'')?l.son_tarih:'',durum:str(l.durum,12),ilan_turu:str(l.ilan_turu,60),kategori:/^[a-z0-9_-]{1,30}$/.test(l.kategori||'')?l.kategori:''};
 for(const k of ['son_zaman','baslangic_zaman','ilk_gorulme'])o[k]=typeof l[k]==='string'&&DT_RE.test(l[k])&&!isNaN(Date.parse(l[k]))?l[k]:'';
 o.meslek=Array.isArray(l.meslek)?l.meslek.filter(f=>typeof f==='string'&&MESLEK.test(f)).slice(0,3):[];
 o.logo=IMG_PATH.test(l.logo||'')?l.logo:'';
@@ -44,8 +44,12 @@ return o;}
 /* liste.json yoksa/yüklenemezse satır modeli tam kayıttan türetilir (taban referansı ve puan türü olmadan). */
 function fallbackModel(i){const t=i.toplam||kadroSayisi(i);return{key:i.key,id:i.id,manset:baslikTemiz(i.manset||title(i)),ek:i.ek||0,toplam:t||0,kurum:kurumAdi(i.kurum),il:placeName(i),iller:strList(i.iller,20,80),ogrenim:(i.ogrenim||[]).filter(x=>LEVELS[x]),meslek:i.meslek||[],logo:i.logo||'',kurum_slug:i.kurum_slug||'',kpss:i.kpss||'',puan_turleri:[],taban_ref:{},son_tarih:i.son_tarih||'',son_zaman:i.son_zaman||'',baslangic_zaman:i.baslangic_zaman||'',ilk_gorulme:i.ilk_gorulme||'',durum:'',ilan_turu:str(i.ilan_turu,60),kategori:/^[a-z0-9_-]{1,30}$/.test(i.kategori||'')?i.kategori:''};}
 const rowOf=i=>i.L||fallbackModel(i);
-function save(i){const was=saved.has(i.id);if(was){saved.delete(i.id);compared.delete(i.id);}else saved.add(i.id);const ok=writeStore('kit-saved',[...saved]);render();const full=items.find(x=>x.id===i.id);if(location.hash.startsWith('#ilan/')&&full)showDetail(full);notify(ok?(was?'İlan kaydedilenlerden kaldırıldı.':'İlan bu tarayıcıya kaydedildi.'):'Tarayıcı depolaması kapalı; seçim yalnızca bu oturumda saklanır.');}
-function saveButton(i){const b=E('button','kaydet'+(saved.has(i.id)?' dolu':''));b.type='button';b.setAttribute('aria-label',(saved.has(i.id)?'Kaydı kaldır: ':'İlanı kaydet: ')+(i.manset||title(i)));b.setAttribute('aria-pressed',String(saved.has(i.id)));b.innerHTML=IC.kayit;b.onclick=e=>{e.stopPropagation();save(i);};return b;}
+/* Kaynaklar arası kopya ilanın ikincil kimlikleri birincil satıra eşlenir (alias: birincil anahtar -> ikincil kimlikler). */
+let alias=new Map(),gizli=new Set(),idKey=new Map();
+const idsOf=o=>[o.id,...(alias.get(o.key)||[])];
+const isSaved=o=>idsOf(o).some(x=>saved.has(x));
+function save(i){const was=isSaved(i);if(was){for(const x of idsOf(i)){saved.delete(x);compared.delete(x);}}else saved.add(i.id);const ok=writeStore('kit-saved',[...saved]);render();const full=items.find(x=>x.id===i.id);if(location.hash.startsWith('#ilan/')&&full)showDetail(full);notify(ok?(was?'İlan kaydedilenlerden kaldırıldı.':'İlan bu tarayıcıya kaydedildi.'):'Tarayıcı depolaması kapalı; seçim yalnızca bu oturumda saklanır.');}
+function saveButton(i){const on=isSaved(i),b=E('button','kaydet'+(on?' dolu':''));b.type='button';b.setAttribute('aria-label',(on?'Kaydı kaldır: ':'İlanı kaydet: ')+(i.manset||title(i)));b.setAttribute('aria-pressed',String(on));b.innerHTML=IC.kayit;b.onclick=e=>{e.stopPropagation();save(i);};return b;}
 function notify(text){$('toast').textContent=text;$('toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').hidden=true,3500);}
 function pickImages(g){const o={};if(!g)return o;if(IMG_PATH.test(g.kart||''))o.kart=g.kart,o.kart_yukseklik=Number(g.kart_yukseklik)||900;if(IMG_PATH.test(g.logo||''))o.logo=g.logo;if(Array.isArray(g.meslek)){const m=g.meslek.filter(f=>typeof f==='string'&&MESLEK.test(f)).slice(0,3);if(m.length)o.meslek=m;}if(typeof g.kurum_slug==='string'&&g.kurum_slug.length<=80&&SLUG.test(g.kurum_slug))o.kurum_slug=g.kurum_slug;for(const [k,max] of [['kurum_sayisi',100000],['ek',1000],['toplam',20000]])if(Number.isInteger(g[k])&&g[k]>0&&g[k]<max)o[k]=g[k];for(const k of ['manset','alt'])if(typeof g[k]==='string'&&g[k].trim())o[k]=g[k].slice(0,160);return o;}
 function keyFor(i){try{return new URL(i.link).searchParams.get('i')||i.id;}catch{return i.id;}}
@@ -68,11 +72,19 @@ function cardImage(i,preview){if(!i.kart)return null;const im=E('img',preview?'c
 function statusKind(i){if(i.iptal_edildi)return 'cancelled';if(i.duyuru_turu)return 'info';if(closed(i))return 'closed';if(upcoming(i))return 'upcoming';const d=days(i.son_tarih);return d===null?'none':d<=1?'today':d<=3?'urgent':d<=7?'soon':'ok';}
 function kurumNode(i,cls){const name=kurumAdi(i.kurum)||'Kurum belirtilmemiş';if(!i.kurum_slug)return E('p',cls,name);const a=E('a',cls,name);a.href='kurum/'+i.kurum_slug+'/';a.title=name+' — kurumun tüm ilanları';return a;}
 function placeName(i){const y=String(i.yer||'').split(/\s*[\/•]\s*/)[0].replace(/^[\s-]+|[\s-]+$/g,'');if(!y)return '';return /^(bakanlık merkez|ankara)/i.test(y.toLocaleLowerCase('tr-TR'))?'Ankara':proper(y);}
+/* Görev yeri: il önce, ilçe/birim parantezde; tekrarlar atılır; 3'ten fazla ilde 'Ankara, İstanbul +4' (bot/kurum_sayfasi.yer_metni ile aynı). */
+function yerMetni(i,yedek=''){
+const iller=new Map(),diger=[],ekle=(l,a)=>{if(!l.some(x=>normalize(x)===normalize(a)))l.push(a);},ilOf=t=>IL_LIST.find(x=>normalize(x)===normalize(t));
+for(const parca of String(i.yer||'').split(/\s*•\s*/)){let cur=null;for(let t of parca.split(/\s*,\s*|\s*\/\s*|\s+-\s*|\s*-\s+/)){t=t.replace(/^[\s-]+|[\s-]+$/g,'');if(!t)continue;const il=ilOf(t);if(il){cur=il;if(!iller.has(il))iller.set(il,[]);}else if(cur)ekle(iller.get(cur),proper(t));else ekle(diger,proper(t));}}
+for(const a of Array.isArray(i.iller)?i.iller:[]){const il=ilOf(a);if(il&&!iller.has(il))iller.set(il,[]);}
+if(!iller.size&&!diger.length)return yedek;
+const L=[...iller],yazi=L.length>3?L.slice(0,2).map(x=>x[0]).join(', ')+' +'+(L.length-2):L.map(([il,ic])=>ic.length?il+' ('+ic.join(', ')+')':il).join(', ');
+return [...diger,...(yazi?[yazi]:[])].join(' · ');}
 function breakdown(list){let a=0,u=0,x=0;for(const i of list){if(upcoming(i))u++;else if(!i.son_tarih)x++;else if(knownActive(i))a++;}const p=[];if(a)p.push(a+' başvurusu açık');if(u)p.push(u+' yakında başlıyor');if(x)p.push(x+' tarihi belirsiz');return p.length>1||u||x?p.join(' · '):'';}
 function external(url,label,cls='button primary'){const a=E('a',cls,label);a.href=url;a.target='_blank';a.rel='noopener noreferrer';return a;}
 function openModal(){if(!$('modal').open)$('modal').showModal();$('modal').scrollTop=0;}
 function infoSection(parent,heading,text){parent.append(E('h3','',heading),E('p','',text));}
-function showDetail(i){const body=$('modal-body');body.replaceChildren();const header=E('div','detail-header');header.append(E('span','eyebrow',i.ilan_turu||'KAMU PERSONEL ALIMI'));const h=E('h2','',title(i));h.id='modal-title';header.append(h,kurumNode(i,'detail-kurum'));const vis=cardImage(i,false);if(vis){const box=E('div','detail-visual');if(i.logo)box.append(logoNode(i,'detail-logo',64));box.append(vis);body.append(box);}body.append(header);const layout=E('div','detail-layout'),content=E('div','detail-content'),side=E('aside','detail-aside'),dl=E('dl');for(const [k,v] of [['Durum',status(i)],['Görev yeri',proper(i.yer)||'Resmî ilandan kontrol et'],['Son başvuru',trDate(i.son_tarih)+(i.son_zaman?' · '+trTime(i.son_zaman)+' TSİ':'')],['Başlangıç',i.baslangic_zaman?trDate(i.baslangic_zaman):'Belirtilmemiş']])dl.append(E('dt','',k),E('dd','',v));side.append(dl);const docURL=sourceDocument(i);const link=docURL||officialURL(i.link);if(link)side.append(external(link,docURL?'İlan belgesini aç (PDF) ↗':'Resmî ilana git · Başvur ↗'));if(docURL)side.append(E('p','muted',i.belge_aciklamasi));const sb=E('button','button secondary',saved.has(i.id)?'Kaydedildi · kaldır':'İlanı kaydet');sb.onclick=()=>save(i);const share=E('button','button secondary','Bağlantıyı paylaş');share.onclick=()=>shareItem(i);side.append(sb,share);if(i.son_tarih&&!closed(i)&&!i.duyuru_turu){const calendar=E('button','button secondary','Takvimime ekle');calendar.onclick=()=>downloadCalendar(i);side.append(calendar);}side.append(E('p','muted','Kaydetmek veya takvime eklemek başvuru oluşturmaz. İşlemini resmî başvuru kanalında tamamla.'));if(stale(i))content.append(E('p','notice','Bu ilanın ayrıntıları 24 saat içinde doğrulanmadı. Başvuru yapmadan önce güncel tarih ve koşulları resmî ilandan kontrol et.'));if(closed(i))content.append(E('p','notice','Kayıtlı son başvuru zamanı geçti. Bu ilan arşiv amacıyla gösteriliyor.'));if(upcoming(i))content.append(E('p','notice','Kayıtlı başvuru başlangıcı henüz gelmedi.'));infoSection(content,'Kadro ve kontenjan',i.kadro||'Kontenjan bilgisi kaynak özetinde bulunmuyor. Tam ilanı incele.');if(i.ozet)infoSection(content,'İlan özeti',i.ozet);content.append(E('h3','','Başvuru koşullarından seçmeler'));if(i.sartlar?.length){for(const s of i.sartlar){const c=E('section','condition');c.append(E('h4','',proper(s.kadro)),E('p','',s.metin));content.append(c);}content.append(E('p','muted','Bu bölüm seçilmiş alıntıları içerir; tüm kadro ve özel koşulların listesi değildir. Üç nokta ile biten metinler kısaltılmıştır.'));}else content.append(E('p','','Kaynak özetinde başvuru koşulları yer almıyor. Mezuniyet, KPSS, yaş ve diğer şartlar için resmî ilanı aç.'));if(i.basvuru_notu)infoSection(content,'Başvuruya ilişkin not',i.basvuru_notu);const related=items.filter(x=>x.id!==i.id&&knownActive(x)).sort((a,b)=>Number(b.ilan_turu===i.ilan_turu)-Number(a.ilan_turu===i.ilan_turu)).slice(0,3);if(related.length){content.append(E('h3','','Bunlara da göz at'));const box=E('div','related');for(const r of related){const a=detailLink(r,title(r));a.append(E('span','',kurumAdi(r.kurum)+' · '+status(r)));box.append(a);}content.append(box);}content.append(E('p','muted','Kaynak: '+(i.kaynaklar?.map(s=>s.ad).join(' · ')||i.kaynak||'Kariyer Kapısı')+(i.detay_guncelleme?' · Ayrıntı kontrolü: '+trDate(i.detay_guncelleme)+' '+trTime(i.detay_guncelleme):'')));layout.append(content,side);body.append(layout);document.title=title(i)+' | Kamu İlan Takip';openModal();}
+function showDetail(i){const body=$('modal-body');body.replaceChildren();const header=E('div','detail-header');header.append(E('span','eyebrow',i.ilan_turu||'KAMU PERSONEL ALIMI'));const h=E('h2','',title(i));h.id='modal-title';header.append(h,kurumNode(i,'detail-kurum'));const vis=cardImage(i,false);if(vis){const box=E('div','detail-visual');if(i.logo)box.append(logoNode(i,'detail-logo',64));box.append(vis);body.append(box);}body.append(header);const layout=E('div','detail-layout'),content=E('div','detail-content'),side=E('aside','detail-aside'),dl=E('dl');for(const [k,v] of [['Durum',status(i)],['Görev yeri',yerMetni(i)||'Resmî ilandan kontrol et'],['Son başvuru',trDate(i.son_tarih)+(i.son_zaman?' · '+trTime(i.son_zaman)+' TSİ':'')],['Başlangıç',i.baslangic_zaman?trDate(i.baslangic_zaman):'Belirtilmemiş']])dl.append(E('dt','',k),E('dd','',v));side.append(dl);const docURL=sourceDocument(i);const link=docURL||officialURL(i.link);if(link)side.append(external(link,docURL?'İlan belgesini aç (PDF) ↗':'Resmî ilana git · Başvur ↗'));if(docURL)side.append(E('p','muted',i.belge_aciklamasi));const sb=E('button','button secondary',isSaved(i)?'Kaydedildi · kaldır':'İlanı kaydet');sb.onclick=()=>save(i);const share=E('button','button secondary','Bağlantıyı paylaş');share.onclick=()=>shareItem(i);side.append(sb,share);if(i.son_tarih&&!closed(i)&&!i.duyuru_turu){const calendar=E('button','button secondary','Takvimime ekle');calendar.onclick=()=>downloadCalendar(i);side.append(calendar);}side.append(E('p','muted','Kaydetmek veya takvime eklemek başvuru oluşturmaz. İşlemini resmî başvuru kanalında tamamla.'));if(stale(i))content.append(E('p','notice','Bu ilanın ayrıntıları 24 saat içinde doğrulanmadı. Başvuru yapmadan önce güncel tarih ve koşulları resmî ilandan kontrol et.'));if(closed(i))content.append(E('p','notice','Kayıtlı son başvuru zamanı geçti. Bu ilan arşiv amacıyla gösteriliyor.'));if(upcoming(i))content.append(E('p','notice','Kayıtlı başvuru başlangıcı henüz gelmedi.'));infoSection(content,'Kadro ve kontenjan',i.kadro||'Kontenjan bilgisi kaynak özetinde bulunmuyor. Tam ilanı incele.');if(i.ozet)infoSection(content,'İlan özeti',i.ozet);content.append(E('h3','','Başvuru koşullarından seçmeler'));if(i.sartlar?.length){for(const s of i.sartlar){const c=E('section','condition');c.append(E('h4','',proper(s.kadro)),E('p','',s.metin));content.append(c);}content.append(E('p','muted','Bu bölüm seçilmiş alıntıları içerir; tüm kadro ve özel koşulların listesi değildir. Üç nokta ile biten metinler kısaltılmıştır.'));}else content.append(E('p','','Kaynak özetinde başvuru koşulları yer almıyor. Mezuniyet, KPSS, yaş ve diğer şartlar için resmî ilanı aç.'));if(i.basvuru_notu)infoSection(content,'Başvuruya ilişkin not',i.basvuru_notu);const related=items.filter(x=>x.id!==i.id&&knownActive(x)).sort((a,b)=>Number(b.ilan_turu===i.ilan_turu)-Number(a.ilan_turu===i.ilan_turu)).slice(0,3);if(related.length){content.append(E('h3','','Bunlara da göz at'));const box=E('div','related');for(const r of related){const a=detailLink(r,title(r));a.append(E('span','',kurumAdi(r.kurum)+' · '+status(r)));box.append(a);}content.append(box);}content.append(E('p','muted','Kaynak: '+(i.kaynaklar?.map(s=>s.ad).join(' · ')||i.kaynak||'Kariyer Kapısı')+(i.detay_guncelleme?' · Ayrıntı kontrolü: '+trDate(i.detay_guncelleme)+' '+trTime(i.detay_guncelleme):'')));layout.append(content,side);body.append(layout);document.title=title(i)+' | Kamu İlan Takip';openModal();}
 async function shareItem(i){const url=new URL(location.href);url.hash='ilan/'+encodeURIComponent(i.key);url.search='';try{if(navigator.share)await navigator.share({title:title(i),url:url.href});else{await navigator.clipboard.writeText(url.href);notify('İlan bağlantısı kopyalandı.');}}catch(e){if(e.name!=='AbortError'){const field=E('input');field.value=url.href;field.readOnly=true;field.setAttribute('aria-label','Paylaşılacak ilan bağlantısı');$('modal-body').append(field);field.focus();field.select();notify('Bağlantıyı seçip kopyalayabilirsin.');}}}
 function calendarText(list){
 const esc=v=>String(v||'').replace(/\\/g,'\\\\').replace(/\r\n|\r|\n/g,'\\n').replace(/;/g,'\\;').replace(/,/g,'\\,');const utc=d=>new Date(d).toISOString().replace(/[-:]/g,'').replace(/\.\d{3}Z/,'Z');
@@ -182,14 +194,21 @@ const son=b>0?b+' ilanın son günü':y>0?y+' ilanın son günü yarın':'';
 if(n>0)h.append('Bugün ',E('mark','',n+' yeni ilan'),' var'+(son?', '+son:'')+'.');
 else h.append((hs?'Hafta sonu sakin: yeni ilan yok':'Bugün yeni ilan yok')+(son?'; '+son:'; açık ilanlar aşağıda')+'.');
 return h;}
+/* liste.json 'uyari' nesnesi (derleme zamanı): kaynak hatası ve 24 saatten eski ayrıntı sayısı; tek nötr satır. */
+function cleanUyari(u){if(!u||typeof u!=='object')return {kaynaklar:[],eski:0};return {kaynaklar:strList(u.kaynaklar,5,40),eski:posInt(u.eski_detay,100000)};}
+function uyariMetni(){
+if(!listeUyari)return '';const p=[];
+if(listeUyari.kaynaklar.length)p.push(listeUyari.kaynaklar.join(' ve ')+' kaynağına erişimde sorun var; bu kaynağın ilanları güncel olmayabilir.');
+if(listeUyari.eski)p.push(listeUyari.eski+' ilanın ayrıntıları 24 saat içinde doğrulanmadı.');
+return p.join(' ');}
 function ozetOf(m){
 const parts=[];
 if(sonZiyaret&&m.yeni.length){let s=uzunTarih(istDate(sonZiyaret))+'’deki ziyaretinden beri '+m.yeni.length+' ilan eklendi';if(m.p){const u=m.yeni.filter(o=>uygun(o,m.p)).length;if(u)s+=', '+ekSi(u)+' profiline uygun';}parts.push(s+'.');}
-const k=m.acik.filter(o=>saved.has(o.id));
+const k=m.acik.filter(isSaved);
 if(k.length){const a=k.filter(o=>o.son_tarih&&!upcoming(o)&&days(o.son_tarih)<=2).length;if(a)parts.push('Kaydettiğin '+k.length+' ilandan '+ekSi(a)+' 2 gün içinde kapanıyor.');}
 return parts.join(' ');}
 function railKayitli(m){
-const k=m.acik.filter(o=>saved.has(o.id)).sort((a,b)=>(a.son_tarih||'9999').localeCompare(b.son_tarih||'9999')).slice(0,5),box=E('section','kutu'),h=E('h3');h.append(ic('kayit'),'Kaydettiklerin');box.append(h);
+const k=m.acik.filter(isSaved).sort((a,b)=>(a.son_tarih||'9999').localeCompare(b.son_tarih||'9999')).slice(0,5),box=E('section','kutu'),h=E('h3');h.append(ic('kayit'),'Kaydettiklerin');box.append(h);
 if(!k.length){box.append(E('p','','Bir ilanı kaydetmek için yer imi simgesine dokun; son tarihi yaklaşınca burada hatırlatırız.'));return box;}
 box.append(E('p','','Son tarihi yaklaşınca burada hatırlatırız.'));
 const ul=E('ul','mini');for(const o of k){const li=E('li'),d=E('div'),a=detailLink(o,o.manset),g=o.son_tarih?days(o.son_tarih):null,em=E('em',g!==null&&g<=1?'acil':'',g===null?'—':g<=0?'Bugün son gün':g===1?'Yarın son gün':g+' gün');d.append(a,E('small','',o.kurum));li.append(d,em);ul.append(li);}
@@ -212,6 +231,7 @@ const eski=listeZaman&&Date.now()-Date.parse(listeZaman)>864e5;
 if(listeZaman&&!eski){c.append(E('span','nokta'),'Son kontrol '+trTime(listeZaman));us.append(c);}
 bas.append(us,h1Of(m));const oz=ozetOf(m);if(oz)bas.append(E('p','ozet',oz));
 if(eski)bas.append(E('p','tazelik','Veriler en son '+uzunTarih(istDate(listeZaman))+' '+trTime(listeZaman)+'’de güncellendi.'));
+const uy=uyariMetni();if(uy)bas.append(E('p','tazelik uyari-satir',uy));
 if(p)bas.append(profilStrip('m-only'));else bas.append(kurulumCard());
 const main=E('div'),secs=[];
 if(p){const hav=pool(m.senin),sh=hav.slice(0,5);mark(sh);
@@ -270,7 +290,8 @@ try{const u=new URL(location.href),sp=new URLSearchParams(u.search);for(const k 
 const rest=[sp.toString(),tab==='ilanlar'?queryOf(F,!!activeProfile()):''].filter(Boolean).join('&'),next=u.pathname+(rest?'?'+rest:'')+u.hash;
 if(next!==u.pathname+u.search+u.hash)history.replaceState(null,'',next);}catch{}}
 const fullOf=o=>fmap.get(o.key)||null;
-const aramaMetni=o=>{const f=fullOf(o);return f?f.search:normalize([o.manset,o.kurum,o.il,...o.iller].join(' '));};
+const aramaTek=o=>{const f=fullOf(o);return f?f.search:normalize([o.manset,o.kurum,o.il,...o.iller].join(' '));};
+const aramaMetni=o=>(sec.get(o.key)||[]).reduce((t,k)=>{const r=lmap.get(k);return r?t+' '+aramaTek(r):t;},aramaTek(o));
 /* Profil dışındaki tüm süzgeçler. Metin araması tam kayıt gelene kadar satır alanlarında yapılır. */
 function rowMatches(o,f){
 if(!f.arsiv&&closed(o))return false;
@@ -293,7 +314,7 @@ const a=base.filter(o=>rowMatches(o,f)),on=uygunAcik(f,pr),seviye=new Map();
 const u=pr?a.filter(o=>{const s=uygun(o,pr);if(s)seviye.set(o.key,s);return !!s;}):[];
 return{list:sortRows(on?u:a,f),seviye,tum:a.length,uyan:u.length,disinda:on?a.length-u.length:0,on};}
 const suzgecVar=f=>!!(f.q||f.il.length||f.ogr||f.sb||f.tur||f.yeni||f.arsiv);
-const ilanBase=f=>f.arsiv&&loaded?items.filter(i=>!i.duyuru_turu&&!i.iptal_edildi).map(rowOf):liste;
+const ilanBase=f=>f.arsiv&&loaded?items.filter(i=>!i.duyuru_turu&&!i.iptal_edildi).map(rowOf).filter(o=>!gizli.has(o.key)):liste;
 const bekleniyor=f=>!loaded&&f.arsiv;
 /* Tür etiketleri kaynakta tutarsız (sonda "İlanları" eki); gösterimde ve süzmede ek atılır. */
 const turLabel=t=>String(t||'').replace(/\s+İlan(?:ı|ları)$/,'').trim();
@@ -400,7 +421,7 @@ const addGun=(s,n)=>new Date(Date.parse(s+'T12:00:00Z')+n*864e5).toISOString().s
 const gunEtiket=g=>g<=0?'Bugün':g===1?'Yarın':g+' gün';
 function takvimRows(seg){
 const acik=liste.filter(o=>!closed(o)),p=activeProfile();
-return seg==='uygun'?(p?acik.filter(o=>uygun(o,p)):[]):seg==='kayitli'?acik.filter(o=>saved.has(o.id)):acik;}
+return seg==='uygun'?(p?acik.filter(o=>uygun(o,p)):[]):seg==='kayitli'?acik.filter(isSaved):acik;}
 /* Son başvuru gününe göre gruplar (en yakın önce); tarihi olmayanlar ayrı. */
 function takvimGruplari(rows){
 const gr=new Map();
@@ -473,9 +494,9 @@ return[['7 gün içinde kapanıyor',rows.filter(hafta).sort(dl)],['Daha sonra',r
 const kayitliTakvimlik=()=>items.filter(i=>saved.has(i.id)&&i.son_tarih&&!closed(i)&&!i.duyuru_turu&&!i.iptal_edildi);
 function renderKayitli(){
 const box=$('kayitli-icerik');if(!box)return;
-const by=new Map(liste.map(o=>[o.id,o]));for(const i of items)by.set(i.id,rowOf(i));
+const by=new Map(listeTum.map(o=>[o.id,gizli.has(o.key)?(lmap.get(o.kopya_of)||o):o]));for(const i of items)if(!by.has(i.id))by.set(i.id,rowOf(i));
 if(!loaded&&[...saved].some(id=>!by.has(id)))ensureFull();
-const rows=[...saved].map(id=>by.get(id)).filter(Boolean);
+const rows=[...new Map([...saved].map(id=>by.get(id)).filter(Boolean).map(o=>[o.key,o])).values()];
 if(!rows.length){const a=E('a','btn btn-ana','İlanlara bak');a.href='#ilanlar';a.onclick=e=>{e.preventDefault();openIlanlar({uygun:false});};box.replaceChildren(bosKutu(E('p','','Henüz kaydettiğin ilan yok.'),E('p','','Bir ilanı kaydetmek için satırın sağındaki yer imi simgesine dokun. Kaydettiklerin burada, son başvuru gününe göre sıralı görünür; son günü yaklaşınca Bugün sayfasında hatırlatırız.'),a));return;}
 const bar=E('div','kayit-arac'),yazi=E('p','','Karşılaştırmak için iki veya üç ilanın “Karşılaştır” kutusunu işaretle.'),ics=E('button','btn btn-ikinci');
 const n=loaded?kayitliTakvimlik().length:0;ics.type='button';ics.textContent='Takvimime ekle (.ics)'+(n?' · '+n:'');
@@ -484,7 +505,7 @@ bar.append(yazi,ics);
 const out=[bar];kayitliGruplari(rows).forEach((g,i)=>out.push(sectionEl('k-'+i,{baslik:g.baslik,sayi:g.rows.length,govde:listeEl(g.rows,{kars:true})})));
 box.replaceChildren(...out);}
 /* Rozet yalnızca bilinen (listede ya da tam kayıtta bulunan) kayıtlı ilanları sayar; veri gelmeden ham sayı gösterilir. */
-function savedCount(){if(!listeLoaded&&!loaded)return saved.size;return [...saved].filter(id=>lids.has(id)||iids.has(id)).length;}
+function savedCount(){if(!listeLoaded&&!loaded)return saved.size;return new Set([...saved].map(id=>idKey.get(id)||(iids.has(id)?id:null)).filter(Boolean)).size;}
 function render(){
 if(!loaded&&!listeLoaded)return;
 const n=savedCount();for(const id of ['saved-count','saved-count-m']){const e=$(id);if(e){e.textContent=n;e.hidden=!n;}}
@@ -548,10 +569,14 @@ const GUNES='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12"
 function applyTheme(){const dark=readStore('kit-theme',null)==='dark';document.documentElement.dataset.theme=dark?'dark':'light';const t=$('theme');t.innerHTML=dark?GUNES:AY_IKON;t.setAttribute('aria-pressed',String(dark));t.setAttribute('aria-label',dark?'Açık temaya geç':'Koyu temaya geç');const m=document.querySelector&&document.querySelector('meta[name=theme-color]');if(m)m.content=dark?'#0D0E0C':'#F6F6F1';}
 async function loadSponsors(){try{const r=await fetch('sponsors.json',{cache:'no-store'});if(!r.ok)return;const cfg=await r.json();if(!cfg.enabled)return;for(const placement of ['sidebar','feed']){const s=cfg[placement],url=s&&safeURL(s.url);if(!s||!url||!s.title)continue;const box=E('aside','sponsor');box.setAttribute('aria-label','Reklam');box.append(E('span','eyebrow','REKLAM · SPONSORLU'));const a=external(url,s.title,'');a.rel='sponsored noopener noreferrer';box.append(a,E('p','',s.description||''));adBox[placement].replaceChildren(box);adBox[placement].hidden=false;}}catch{/* Optional sponsorship cannot break listing discovery. */}}
 async function getJSON(url,cache){const r=await fetch(url,{cache});if(!r.ok)throw Error(url);return r.json();}
-let lmap=new Map(),fmap=new Map(),iids=new Set(),lids=new Set(),fullPromise=null,fullFailed=false,sig='';
+let sec=new Map(),lmap=new Map(),fmap=new Map(),iids=new Set(),lids=new Set(),fullPromise=null,fullFailed=false,sig='';
 async function loadListe(){
 try{const d=await getJSON('liste.json','no-cache');if(!d||!Array.isArray(d.ilanlar))throw Error('shape');
-liste=d.ilanlar.map(cleanL).filter(Boolean);listeVar=true;listeZaman=typeof d.guncelleme==='string'&&!isNaN(Date.parse(d.guncelleme))?d.guncelleme:'';lmap=new Map(liste.map(o=>[o.key,o]));lids=new Set(liste.map(o=>o.id));listeLoaded=true;}catch{listeVar=false;}}
+listeTum=d.ilanlar.map(cleanL).filter(Boolean);listeVar=true;listeZaman=typeof d.guncelleme==='string'&&!isNaN(Date.parse(d.guncelleme))?d.guncelleme:'';lmap=new Map(listeTum.map(o=>[o.key,o]));
+/* Kopya (kaynaklar arası yinelenen) ikincil satırlar her listeden, sayıdan ve süzgeçten çıkar; kimlikleri birincile eşlenir. */
+alias=new Map();gizli=new Set();sec=new Map();idKey=new Map();
+for(const o of listeTum){const p=o.kopya_of&&lmap.get(o.kopya_of);if(p&&!p.kopya_of){gizli.add(o.key);alias.set(p.key,[...(alias.get(p.key)||[]),o.id]);sec.set(p.key,[...(sec.get(p.key)||[]),o.key]);idKey.set(o.id,p.key);}else idKey.set(o.id,o.id);}
+liste=listeTum.filter(o=>!gizli.has(o.key));lids=new Set(listeTum.map(o=>o.id));listeUyari=d.uyari&&typeof d.uyari==='object'?cleanUyari(d.uyari):null;listeLoaded=true;}catch{listeVar=false;}}
 /* Tam kayıtlar (arama, ayrıntı penceresi, karşılaştırma) ilk gerektiğinde ya da boşta yüklenir. */
 function ensureFull(){
 if(fullPromise)return fullPromise;
@@ -564,7 +589,7 @@ items=data.ilanlar.filter(i=>i&&typeof i.id==='string'&&typeof i.baslik==='strin
 loaded=true;if(!listeZaman&&data.guncelleme)listeZaman=data.guncelleme;
 if(!listeVar){liste=items.filter(i=>!i.duyuru_turu&&!i.iptal_edildi&&!closed(i)).map(fallbackModel);}
 const failed=Object.entries(data.kaynak_durumlari||{}).filter(([,s])=>s.hata_sayisi>0).map(([k])=>({sbb:'SBB',csb:'ÇŞB Yerel Yönetimler'})[k]||'İŞKUR');
-if(failed.length){$('freshness').hidden=false;$('freshness').textContent=failed.join(' ve ')+' kaynağına erişimde sorun var; bu kaynağın ilanları güncel olmayabilir. Erişim sonraki taramada yeniden denenecek.';}
+if(failed.length&&!listeUyari){$('freshness').hidden=false;$('freshness').textContent=failed.join(' ve ')+' kaynağına erişimde sorun var; bu kaynağın ilanları güncel olmayabilir. Erişim sonraki taramada yeniden denenecek.';}
 fmap=new Map(items.map(i=>[i.key,i]));iids=new Set(items.map(i=>i.id));
 listeLoaded=true;}
 else{fullPromise=null;fullFailed=true;if(tab==='ilanlar'&&bekleniyor(F)){F.tur='';F.arsiv=false;if(F.ogr==='belediye')F.ogr='';}$('result-count').textContent='Ayrıntılı ilan verisi yüklenemedi; yeniden denemek için sayfayı yenile.';}

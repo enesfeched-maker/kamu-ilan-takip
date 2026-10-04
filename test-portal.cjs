@@ -191,5 +191,31 @@ assert.ok(ics.split('\r\n').every(l=>Buffer.byteLength(l)<=75),'ics lines folded
 const S=make({store:{'kit-saved':JSON.stringify(['one',5,'x'.repeat(81),'sbb-abc'])}});await tick();
 assert.equal(S.run('[...saved].join()'),'one,sbb-abc','invalid saved entries dropped');
 assert.equal(S.run("saved.clear(),saved.add(liste[0].id),saved.add('ghost'),savedCount()"),1,'badge counts only known ids');
+// ---- kopya ilanlar (kaynaklar arası): ikincil satır her yerden çıkar, kimlikleri birincile eşlenir
+const hanak=row(k(8),'eight',{manset:'Memur',kurum:'Hanak Belediyesi',kurum_slug:'hanak-belediyesi',il:'Ardahan',iller:['Ardahan'],son_tarih:iso(5),kaynak_sayisi:2,kaynaklar:['İŞKUR','ÇŞB']});
+const hanak2=row(k(9),'nine',{manset:'Memur',kurum:'Hanak Belediye Başkanlığı',il:'Ardahan',iller:['Ardahan'],son_tarih:iso(5),kopya_of:k(8)});
+const yetim=row(k(3),'three',{manset:'Yetim kopya',kopya_of:'yok-boyle-bir-anahtar',son_tarih:iso(6)});
+liste.ilanlar.push(hanak,hanak2,yetim);liste.uyari={kaynaklar:['SBB'],eski_detay:3};
+const K=make({store:{'kit-saved':JSON.stringify(['nine'])}});await tick();
+assert.equal(K.run('listeTum.length'),8,'tüm satırlar saklanır');assert.equal(K.run('liste.length'),7,'ikincil satır listeden çıkar');
+assert.equal(K.run("liste.some(o=>o.id==='nine')"),false);assert.equal(K.run("liste.some(o=>o.id==='three')"),true,'birincili olmayan kopya_of satırı gizlenmez');
+assert.equal(K.run("lmap.get('"+k(8)+"').kaynaklar.join()"),'İŞKUR,ÇŞB');assert.equal(K.run("lmap.get('"+k(8)+"').kaynak_sayisi"),2);
+assert.equal(K.run("isSaved(lmap.get('"+k(8)+"'))"),true,'ikincilin kayıtlı kimliği birincilde görünür');assert.equal(K.run('savedCount()'),1);
+K.run("tab='kayitli';renderKayitli()");assert.equal((text(K.get('kayitli-icerik')).match(/Hanak/g)||[]).length,1,'Kayıtlı yalnız birincili gösterir');
+assert.deepEqual(JSON.parse(K.run("JSON.stringify(filterIlan(ilanBase(defaultF()),{...defaultF(),q:'baskanligi'},null).list.map(o=>o.id))")),['eight'],'ikincilin metniyle birincil bulunur');
+assert.equal(K.run("filterIlan(ilanBase(defaultF()),defaultF(),null).list.filter(o=>o.kurum.startsWith('Hanak')).length"),1,'İlanlar sayısında çift tek sayılır');
+K.run("takvimRows('tumu')");assert.equal(K.run("takvimRows('tumu').filter(o=>o.kurum.startsWith('Hanak')).length"),1);
+K.run("save(lmap.get('"+k(8)+"'))");assert.equal(K.run('[...saved].join()'),'','kaydı kaldırmak ikincil kimliği de siler');
+K.run("tab='bugun';render()");const bg=text(K.get('bugun'));
+assert.match(bg,/SBB kaynağına erişimde sorun var/,'liste.json uyarısı Bugün sayfasında');assert.match(bg,/3 ilanın ayrıntıları 24 saat içinde doğrulanmadı/);
+assert.ok(!K.get('freshness').textContent,'ilanlar.json olmadan da uyarı #freshness yedeğine yazılmaz');
+delete liste.uyari;const K2=make();await tick();assert.equal(K2.run('uyariMetni()'),'','uyari yoksa satır yok');
+liste.uyari={};const K3=make();await tick();assert.equal(K3.run('uyariMetni()'),'','boş uyari satır çizmez');
+// ---- görev yeri tekrarsız
+assert.equal(run("yerMetni({yer:'ANKARA • ANKARA / MERKEZ'})"),'Ankara (Merkez)');
+assert.equal(run("yerMetni({yer:'BOLU / GEREDE • BOLU / MENGEN • BOLU / MERKEZ'})"),'Bolu (Gerede, Mengen, Merkez)');
+assert.equal(run("yerMetni({yer:'KOCAELİ, SAKARYA, YALOVA, BOLU, DÜZCE'})"),'Kocaeli, Sakarya +3');
+assert.equal(run("yerMetni({yer:'ANKARA / ÇANKAYA',iller:['Ankara']})"),'Ankara (Çankaya)');assert.equal(run("yerMetni({yer:'Ankara'})"),'Ankara');
+assert.equal(run("yerMetni({yer:'BAKANLIK MERKEZ TEŞKİLATI'})"),'Bakanlık Merkez Teşkilatı');assert.equal(run("yerMetni({},'Rize')"),'Rize');
 console.log('portal checks passed: query sync + popstate, chip filters, liste-based tür/kategori, profile match, pagination, Takvim, Kayıtlı groups, compare only on Kayıtlı, folded ics, validated saved ids, ?profil=1, ?q=.');
 })().catch(e=>{console.error(e);process.exitCode=1;});

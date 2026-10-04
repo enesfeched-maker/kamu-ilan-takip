@@ -93,16 +93,18 @@ def _il_slug(item):
     return _ascii_slug(iller[0]) if iller else ''
 
 
-def kart_meta(ilanlar, basarili=None):
+def kart_meta(ilanlar, basarili=None, kopyalar=None):
     """{ilan anahtarı: kart alanları (+ kurum_slug, kurum_sayisi)} — ayrıntı sayfası olan her kayıt için.
     `basarili` verilirse kurum bağlantısı yalnız sayfası yazılabilen gruplara eklenir."""
     gruplar, slugler = kurum_gruplari(ilanlar)
+    ikincil = (kopyalar or {}).get('kopya_of') or {}
     sonuc = {}
     for kan, liste in gruplar.items():
+        sayi = sum(1 for i in liste if i.get('id') not in ikincil) or len(liste)   # kopya çift tek sayılır
         for item in liste:
             alan = kart_alanlari(item)
             if basarili is None or kan in basarili:
-                alan.update(kurum_slug=slugler[kan], kurum_sayisi=len(liste))
+                alan.update(kurum_slug=slugler[kan], kurum_sayisi=sayi)
             sonuc[_su().detail_page(item)[0]] = alan
     return sonuc
 
@@ -280,6 +282,44 @@ def yer_kisa(i):
     return _su()._duzgun(y)
 
 
+YER_AYIR = re.compile(r'\s*,\s*|\s*/\s*|\s+-\s*|\s*-\s+')
+YER_EN_COK_IL = 3
+
+
+def yer_metni(item, il_yedek=''):
+    """Görev yeri gösterimi: il önce, ilçe/birim parantezde ('Ankara (Merkez)'); il/yer/iller alanları tekilleştirilir,
+    çoklu iller ', ' ile birleşir, 3'ten fazla ilde 'Ankara, İstanbul +4'. İl bulunamayan ad (örn. 'Bakanlık Merkez Teşkilatı')
+    olduğu gibi (düzgün yazımla) kalır. Hiçbir alan yoksa `il_yedek`."""
+    su = _su()
+    iller, diger = {}, []                      # {il adı: [ilçe/birim, …]}, il olmayan adlar
+    ekle = lambda liste, ad: liste.append(ad) if kucuk(ad) not in {kucuk(x) for x in liste} else None
+    for parca in re.split(r'\s*•\s*', str(item.get('yer') or '')):
+        simdiki = None
+        for tok in (t.strip(' -') for t in YER_AYIR.split(parca)):
+            if not tok:
+                continue
+            il = IL_ADI.get(kurum_anahtari(tok))
+            if il:
+                simdiki = il
+                iller.setdefault(il, [])
+            elif simdiki:
+                ekle(iller[simdiki], su._duzgun(tok))
+            else:
+                ekle(diger, su._duzgun(tok))
+    for ad in item.get('iller') or []:
+        il = IL_ADI.get(kurum_anahtari(ad))
+        if il:
+            iller.setdefault(il, [])
+    if not iller and not diger:
+        return il_yedek or ''
+    liste = list(iller.items())
+    if len(liste) > YER_EN_COK_IL:
+        yazi = ', '.join(il for il, _ in liste[:2]) + f' +{len(liste) - 2}'
+    else:
+        yazi = ', '.join(f'{il} ({", ".join(ilce)})' if ilce else il for il, ilce in liste)
+    return ' · '.join([*diger, yazi] if yazi else diger)
+
+
 # ------------------------------------------------------------------ sunucu tarafı satır (kurum / ilan sayfaları)
 # portal.js rowEl() çıktısıyla aynı sınıf adları: ilan, ilan-foto, ilan-govde, ilan-kurum, ilan-meta, sinyal, ilan-sag, tarih, kaydet.
 SAAT = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>'
@@ -409,11 +449,14 @@ def en_cok_gecen_ad(liste):
     return sorted(sayac, key=lambda a: (not a.endswith('Belediyesi'), -sayac[a], -len(a), a))[0]
 
 
-def kurum_sayfasi(kan, liste, slug, gorseller, simdi, tablolar=None, harita=None):
-    """Tek kurumun statik sayfası (HTML metni)."""
+def kurum_sayfasi(kan, liste, slug, gorseller, simdi, tablolar=None, harita=None, kopyalar=None):
+    """Tek kurumun statik sayfası (HTML metni). Kaynaklar arası kopyaların ikincil kaydı listelerden ve sayılardan çıkarılır."""
     su = _su()
     import liste_verisi
-    ad = en_cok_gecen_ad(liste)
+    tum = liste
+    ikincil = (kopyalar or {}).get('kopya_of') or {}
+    liste = [i for i in tum if i.get('id') not in ikincil] or tum
+    ad = en_cok_gecen_ad(tum)
     if '|' in kan:
         il = kan.split('|')[1]
         if il not in kurum_anahtari(ad).split():
@@ -425,7 +468,7 @@ def kurum_sayfasi(kan, liste, slug, gorseller, simdi, tablolar=None, harita=None
     acik.sort(key=lambda p: p[0].get('son_tarih') or '9999')
     gecmis.sort(key=lambda p: p[0].get('son_tarih') or '', reverse=True)
     toplam_kadro = sum(kart_alanlari(i).get('toplam') or 0 for i, _ in acik)
-    diger = sorted({kurum_adi(i['kurum']) for i in liste} - {ad})
+    diger = sorted({kurum_adi(i['kurum']) for i in tum} - {ad})
     logo_g = next((g for _, g in ciftler if g.get('logo')), {})
     logo_i = next((i for i, g in ciftler if g.get('logo')), liste[0])
     logo = _logo_html(logo_i, logo_g, kok, 'kp-logo', 64)
@@ -461,7 +504,7 @@ def kurum_sayfasi(kan, liste, slug, gorseller, simdi, tablolar=None, harita=None
     return su.sayfa_kabugu(baslik + ' | Kamu İlan Takip', aciklama, canonical, icerik, 'kurum-page', baslik)
 
 
-def kurum_sayfalarini_uret(ilanlar, docs, gorseller, simdi=None):
+def kurum_sayfalarini_uret(ilanlar, docs, gorseller, simdi=None, kopyalar=None):
     """docs/kurum/ altını baştan yazar. (gruplar, slugler, sitemap adresleri, başarıyla yazılan grup anahtarları) döndürür;
     bir grubun sayfası üretilemezse atlanır (klasörü silinir) ve başarılı kümeye girmez."""
     su = _su()
@@ -480,7 +523,7 @@ def kurum_sayfalarini_uret(ilanlar, docs, gorseller, simdi=None):
         slug = slugler[kan]
         klasor = kok / slug
         try:
-            html = kurum_sayfasi(kan, liste, slug, gorseller, simdi, tablolar, harita)
+            html = kurum_sayfasi(kan, liste, slug, gorseller, simdi, tablolar, harita, kopyalar)
             klasor.mkdir(parents=True, exist_ok=True)
             (klasor / 'index.html').write_text(html, encoding='utf-8')
         except Exception as hata:
