@@ -581,3 +581,76 @@ def toplu_son_gun_karti(ilanlar, simdi=None):
         d.text((KENAR, alan_ust + len(gorunen) * rh + 32), f'+{fazla} ilan daha', font=F(36, True), fill='#5d6f72', anchor='lm')
     marka_seridi(d, Y - 88, im=im)
     return jpeg_png(im)
+
+
+# ---------------------------------------------------------------- Sabah özeti kartı (son günü yaklaşan yoksa)
+GUNLER = ('Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar')
+SABAH_EN_COK_SATIR = 4
+
+
+def sabah_ozeti_karti(yeniler, acik_sayisi, simdi=None):
+    """Günlük sabah özeti kartı (1080x1350 PNG): büyük 'Günaydın' + tarih, 'N yeni ilan · M kadro',
+    en fazla 4 satır (kurum + kadro özeti, sağda kadro adedi), altta 'başvurusu açık' kutusu.
+    Yeni ilan yoksa yalnız açık ilan sayısı büyük gösterilir."""
+    simdi = (simdi or datetime.now(TR)).astimezone(TR)
+    im = Image.new('RGB', (G, Y), ACIK)
+    d = ImageDraw.Draw(im)
+    kx0, ky0, kx1, ky1 = 40, 40, G - 40, 1230
+    d.rounded_rectangle((kx0 + 4, ky0 + 8, kx1 + 4, ky1 + 8), radius=34, fill='#dbe3e2')
+    d.rounded_rectangle((kx0, ky0, kx1, ky1), radius=34, fill='#ffffff')
+    bant_h = 210
+    d.rounded_rectangle((kx0, ky0, kx1, ky0 + bant_h), radius=34, fill=PETROL)
+    d.rectangle((kx0, ky0 + bant_h - 40, kx1, ky0 + bant_h), fill=PETROL)
+    sag = G - KENAR
+    d.text((KENAR, ky0 + 50), 'KAMU İLAN TAKİP', font=F(28, True), fill=LIME, anchor='lm')
+    d.text((sag, ky0 + 50), f'{simdi.day} {AYLAR[simdi.month - 1]} {GUNLER[simdi.weekday()]}', font=F(30, True), fill=SOLUK, anchor='rm')
+    d.text((KENAR, ky0 + 130), 'Günaydın', font=F(84, True), fill='#ffffff', anchor='lm')
+
+    gorunen = list(yeniler)[:SABAH_EN_COK_SATIR]
+    fazla = len(yeniler) - len(gorunen)
+    kutu_alt = 1192
+    if gorunen:
+        kadro_toplam = sum(veri(i)['toplam'] or 0 for i in yeniler)
+        kutu_ust = kutu_alt - (172 + (SABAH_EN_COK_SATIR - len(gorunen)) * 90)
+        y0 = ky0 + bant_h + 84
+        ana = f'{len(yeniler)} yeni ilan'
+        d.text((KENAR, y0), ana, font=F(64, True), fill=PETROL, anchor='ls')
+        if kadro_toplam:
+            x = KENAR + d.textlength(ana, font=F(64, True))
+            d.text((x, y0), f'  ·  {kadro_toplam} kadro', font=F(44), fill='#5d6f72', anchor='ls')
+        alan_ust = y0 + 30
+        rh = max(120, min(190, (kutu_ust - 60 - (64 if fazla else 0) - alan_ust) // len(gorunen)))
+        d.line((KENAR, alan_ust, sag, alan_ust), fill='#c6d3d1', width=3)
+        for n, ilan in enumerate(gorunen):
+            ry = alan_ust + n * rh
+            kurum, kadro = toplu_satir(ilan)
+            adet = veri(ilan)['toplam']
+            adet_w = 0
+            if adet:
+                ya = F(60, True)
+                adet_w = round(d.textlength(str(adet), font=ya)) + 20
+                d.text((sag, ry + rh / 2 - 8), str(adet), font=ya, fill=ANA, anchor='rm')
+                d.text((sag, ry + rh / 2 + 34), 'kadro', font=F(26), fill='#5d6f72', anchor='rm')
+            genislik = sag - KENAR - (adet_w + 24 if adet else 0)
+            yk, ktxt = tek_satir(d, kurum, [40, 36, 32, 30], genislik, True)
+            yd, dtxt = tek_satir(d, kadro, [32, 30, 28], genislik)
+            d.text((KENAR, ry + rh / 2 - 18), ktxt, font=yk, fill=PETROL, anchor='lm')
+            d.text((KENAR, ry + rh / 2 + 24), dtxt, font=yd, fill='#5d6f72', anchor='lm')
+            d.line((KENAR, ry + rh, sag, ry + rh), fill='#c6d3d1', width=2)
+        if fazla:
+            d.text((KENAR, alan_ust + len(gorunen) * rh + 40), f'+{fazla} ilan daha', font=F(36, True), fill='#5d6f72', anchor='lm')
+        d.rounded_rectangle((KENAR, kutu_ust, sag, kutu_alt), radius=28, fill='#e6f0ee')
+        sayi = f'{acik_sayisi:,}'.replace(',', '.')
+        ys = 88 + (SABAH_EN_COK_SATIR - len(gorunen)) * 14
+        d.text((KENAR + 36, (kutu_ust + kutu_alt) / 2 + 2), sayi, font=F(ys, True), fill=ANA, anchor='lm')
+        x = KENAR + 36 + d.textlength(sayi, font=F(ys, True)) + 32
+        d.text((x, (kutu_ust + kutu_alt) / 2 - 22), 'ŞU AN', font=F(28, True), fill='#5d6f72', anchor='lm')
+        d.text((x, (kutu_ust + kutu_alt) / 2 + 22), 'başvurusu açık ilan', font=F(42, True), fill=PETROL, anchor='lm')
+    else:
+        sayi = f'{acik_sayisi:,}'.replace(',', '.')
+        d.rounded_rectangle((KENAR, 340, sag, 900), radius=28, fill='#e6f0ee')
+        d.text((G / 2, 560), sayi, font=F(230, True), fill=ANA, anchor='mm')
+        d.text((G / 2, 760), 'başvurusu açık ilan', font=F(56, True), fill=PETROL, anchor='mm')
+        d.text((G / 2, 830), 'Tüm ilanlar sitemizde', font=F(32), fill='#5d6f72', anchor='mm')
+    marka_seridi(d, Y - 88, im=im)
+    return jpeg_png(im)

@@ -78,6 +78,24 @@ class TopluKartTesti(unittest.TestCase):
         Image.open(io.BytesIO(kt.toplu_son_gun_karti([uzun], SIMDI))).load()
 
 
+class SabahKartiTesti(unittest.TestCase):
+    def liste(self, n):
+        return [ilan(id=f'i{k}', kurum=f'Örnek Belediyesi {k}', kadro=f'Toplam {k + 1} kişi — {k + 1} Zabıta Memuru') for k in range(n)]
+
+    def test_boyut_her_adette(self):
+        for n in (0, 1, 2, 4, 9):
+            im = Image.open(io.BytesIO(kt.sabah_ozeti_karti(self.liste(n), 44, SIMDI)))
+            self.assertEqual(im.size, (1080, 1350))
+
+    def test_cok_uzun_kurum_ve_buyuk_sayi_tasmaz(self):
+        uzun = ilan(kurum='Çok Uzun Adlı ' * 12 + 'Belediye Başkanlığı', kadro='1 ' + 'Zabıta ' * 30)
+        Image.open(io.BytesIO(kt.sabah_ozeti_karti([uzun] + self.liste(3), 12345, SIMDI))).load()
+
+    def test_marka_seridi_ve_tarih_baslikta(self):
+        im = Image.open(io.BytesIO(kt.sabah_ozeti_karti(self.liste(2), 5, SIMDI))).convert('RGB')
+        self.assertEqual(im.getpixel((10, 1350 - 10)), (0x17, 0x4c, 0x46))  # alt marka şeridi
+        self.assertEqual(im.getpixel((60, 60)), (0x10, 0x2e, 0x35))  # petrol başlık bandı
+
 class SecimTesti(unittest.TestCase):
     def test_tek_meslek_afis_cok_meslek_bilet(self):
         self.assertEqual(tasarim_secimi(ilan(kadro='Toplam 23 kişi — 23 SAĞLIK TEKNİKERİ')), 'afis')

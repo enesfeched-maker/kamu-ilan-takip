@@ -68,7 +68,11 @@ class TelegramDeliveryTests(unittest.TestCase):
 
     def run_bot(self, *args, success=True, zaman=None, donus=None):
         self.gonderimler = []
-        sahte = patch.object(ilan_bot, 'simdi', return_value=zaman) if zaman else contextlib.nullcontext()
+        self.stdout = io.StringIO()
+        if zaman is None:  # varsayılan: gerçek an, ama 09:00 öncesine çekilir (sabah özeti duvar saatine bağlı olmasın)
+            zaman = datetime.now(timezone(timedelta(hours=3)))
+            zaman = zaman.replace(hour=8, minute=0) if zaman.hour >= 9 else zaman
+        sahte = patch.object(ilan_bot, 'simdi', return_value=zaman)
         with sahte, patch.object(ilan_bot, 'CONFIG_YOLU', self.cfg), \
              patch.object(ilan_bot, 'indir', return_value=b''), \
              patch.object(ilan_bot, 'rss_coz', return_value=[dict(i) for i in self.items]), \
@@ -80,7 +84,7 @@ class TelegramDeliveryTests(unittest.TestCase):
              patch.object(ilan_bot.time, 'sleep'), \
              patch.dict(os.environ, {'TELEGRAM_BOT_TOKEN': 'test', 'TELEGRAM_CHAT_ID': '@test', 'RSS_URLS': ''}), \
              patch('sys.argv', ['bot', '--cikti', str(self.data), *args]), \
-             contextlib.redirect_stdout(io.StringIO()):
+             contextlib.redirect_stdout(self.stdout):
             ilan_bot.main()
             return send.call_count
 
@@ -177,34 +181,56 @@ class TelegramDeliveryTests(unittest.TestCase):
         state = json.loads(self.data.read_text())
         state['telegram_hatirlatilan'] = ['["eski", "2026-09-01"]']
         self.data.write_text(json.dumps(state))
-        self.run_bot(zaman=self.SABAH.replace(hour=8))  # 09:00 öncesi: toplu kart da yok
+        self.run_bot(zaman=self.SABAH.replace(hour=8))  # 09:00 öncesi: sabah özeti de yok
         self.assertEqual(self.gonderimler, [])
         self.assertEqual(json.loads(self.data.read_text())['telegram_hatirlatilan'], ['["eski", "2026-09-01"]'])
 
-    def test_toplu_kart_gunde_bir_kez(self):
+    def test_sabah_ozeti_gunde_bir_kez(self):
         self.prepare_reminders(3)
         self.assertEqual(self.run_bot(zaman=self.SABAH), 1)
         args, kwargs = self.gonderimler[0]
-        self.assertIn('Son başvuru', args[2])
+        self.assertIn('Günaydın — 5 Ekim Pazartesi', args[2])
+        self.assertIn('Son başvurusu yaklaşanlar', args[2])
         self.assertTrue(kwargs['foto'].startswith(b'\x89PNG'))
         self.assertEqual(json.loads(self.data.read_text())['telegram_toplu_hatirlatma_gunu'], '2026-10-05')
         self.assertEqual(self.run_bot(zaman=self.SABAH.replace(hour=15)), 0)
         self.assertEqual(self.run_bot(zaman=self.SABAH + timedelta(days=1)), 1)  # ertesi gün yine 2 gün kaldı
 
-    def test_toplu_kart_09_oncesi_gitmez_sonra_gider(self):
+    def test_sabah_ozeti_09_oncesi_gitmez_sonra_gider(self):
         self.prepare_reminders(1)
         self.assertEqual(self.run_bot(zaman=self.SABAH.replace(hour=8, minute=59)), 0)
         self.assertEqual(self.run_bot(zaman=self.SABAH.replace(hour=9, minute=0)), 1)
 
-    def test_toplu_kart_ilan_yoksa_gonderilmez(self):
-        for days in (4, -1):
-            self.prepare_reminders(days)
-            self.assertEqual(self.run_bot(zaman=self.SABAH), 0)
-        self.prepare_reminders(2, gonderilen=False)  # kanala hiç paylaşılmamış ilan toplu karta girmez
-        self.assertEqual(self.run_bot('--prepare', zaman=self.SABAH), 0)
-        self.assertEqual(json.loads(self.data.read_text()).get('telegram_toplu_hatirlatma_gunu'), None)
+    def test_sabah_ozeti_son_gun_yoksa_da_gider_ama_bolum_ve_kart_degisir(self):
+        self.prepare_reminders(4)  # kimse 3 gün içinde kapanmıyor ama 25 açık ilan var
+        self.assertEqual(self.run_bot(zaman=self.SABAH), 1)
+        args, kwargs = self.gonderimler[0]
+        self.assertNotIn('Son başvurusu yaklaşanlar', args[2])
+        self.assertNotIn('yeni ilan', args[2])
+        self.assertIn('Şu an başvurusu açık <b>25 ilan</b>', args[2])
+        self.assertTrue(kwargs['foto'].startswith(b'\x89PNG'))
 
-    def test_toplu_kart_basarisizsa_gun_isaretlenmez_ve_yeniden_denenir(self):
+    def test_sabah_ozeti_her_sey_bossa_atlanir_ve_gun_isaretlenmez(self):
+        self.prepare_reminders(-1)  # hepsi süresi dolmuş, yeni yok, açık yok
+        self.assertEqual(self.run_bot(zaman=self.SABAH), 0)
+        self.assertIsNone(json.loads(self.data.read_text()).get('telegram_toplu_hatirlatma_gunu'))
+
+    def test_sabah_ozeti_prepare_modunda_gitmez(self):
+        self.prepare_reminders(2, gonderilen=False)
+        self.assertEqual(self.run_bot('--prepare', zaman=self.SABAH), 0)
+        self.assertIsNone(json.loads(self.data.read_text()).get('telegram_toplu_hatirlatma_gunu'))
+
+    def test_sabah_ozeti_yeni_ilanlar_bolumu(self):
+        self.prepare_reminders(2)
+        state = json.loads(self.data.read_text())
+        for i in state['ilanlar']:
+            i['ilk_gorulme'] = (self.SABAH - timedelta(hours=3)).isoformat()
+        self.data.write_text(json.dumps(state))
+        self.assertEqual(self.run_bot(zaman=self.SABAH), 1)
+        metin = self.gonderimler[0][0][2]
+        self.assertIn('🆕 <b>Son 24 saatte 1 yeni ilan</b>', metin)  # 25 kayıt aynı kurum+tarih: tek satır
+
+    def test_sabah_ozeti_basarisizsa_gun_isaretlenmez_ve_yeniden_denenir(self):
         self.prepare_reminders(2)
         with self.assertRaises(SystemExit):
             self.run_bot(success=False, zaman=self.SABAH)
@@ -212,15 +238,109 @@ class TelegramDeliveryTests(unittest.TestCase):
         self.assertEqual(self.run_bot(zaman=self.SABAH.replace(hour=11)), 1)
         self.assertEqual(json.loads(self.data.read_text())['telegram_toplu_hatirlatma_gunu'], '2026-10-05')
 
-    def test_toplu_kart_butce_paylasir(self):
+    def test_sabah_ozeti_gorsel_hatasinda_yalniz_metin_gider(self):
+        self.prepare_reminders(2)
+        with patch('kart_tasarimlari.toplu_son_gun_karti', side_effect=RuntimeError('bozuk')), \
+             contextlib.redirect_stderr(io.StringIO()):
+            self.assertEqual(self.run_bot(zaman=self.SABAH), 1)
+        args, kwargs = self.gonderimler[0]
+        self.assertIsNone(kwargs['foto'])
+        self.assertIn('Günaydın', args[2])
+        self.assertEqual(json.loads(self.data.read_text())['telegram_toplu_hatirlatma_gunu'], '2026-10-05')
+
+    def test_sabah_ozeti_dry_run_basligi_yazdirir_ve_veriyi_degistirmez(self):
+        self.prepare_reminders(2)
+        once = self.data.read_bytes()
+        self.assertEqual(self.run_bot('--dry-run', zaman=self.SABAH), 0)
+        self.assertIn('Günaydın — 5 Ekim Pazartesi', self.stdout.getvalue())
+        self.assertEqual(self.data.read_bytes(), once)
+
+    def test_sabah_ozeti_butce_paylasir(self):
         self.prepare_reminders(2)
         state = json.loads(self.data.read_text())
         state['telegram_gonderilen'] = []
         self.data.write_text(json.dumps(state))
-        # 25 yeni ilan + 0 gönderilmiş: toplu yok; limit 15
+        # 25 kanala gitmemiş ilan: özet (yalnız açık sayısı) 1 yer kaplar, 14 ilan gider; limit 15
         self.assertEqual(self.run_bot('--duyur-mevcut', zaman=self.SABAH), 15)
+        self.assertIn('Günaydın', self.gonderimler[0][0][2])
 
-    def test_toplu_kartta_iptal_akademik_duyuru_olmayanlar_yer_almaz(self):
+    def kayit(self, n, **ek):
+        k = {'id': f'i{n}', 'baslik': f'K{n} Belediyesi - Alım', 'kurum': f'K{n} Belediyesi',
+             'kadro': f'Toplam {n + 1} kişi — {n + 1} Zabıta Memuru',
+             'son_tarih': (self.SABAH.date() + timedelta(days=10)).isoformat(),
+             'ilk_gorulme': (self.SABAH - timedelta(hours=2)).isoformat()}
+        k.update(ek)
+        return k
+
+    def yeniler(self, kayitlar, gonderilen=None):
+        gon = {k['id'] for k in kayitlar} if gonderilen is None else gonderilen
+        with patch.object(ilan_bot, 'simdi', return_value=self.SABAH):
+            return ilan_bot.sabah_yeniler(kayitlar, gon, {}, self.SABAH)
+
+    def test_sabah_yeniler_24_saat_siniri(self):
+        sinir = [self.kayit(0, ilk_gorulme=(self.SABAH - timedelta(hours=24)).isoformat()),
+                 self.kayit(1, ilk_gorulme=(self.SABAH - timedelta(hours=24, seconds=1)).isoformat()),
+                 self.kayit(2, ilk_gorulme=(self.SABAH + timedelta(minutes=1)).isoformat()),
+                 self.kayit(3, ilk_gorulme=self.SABAH.isoformat()),
+                 self.kayit(4, ilk_gorulme='bozuk')]
+        self.assertEqual({k['id'] for k in self.yeniler(sinir)}, {'i0', 'i3'})
+
+    def test_sabah_yeniler_kanalda_paylasilmayan_girmez(self):
+        kayitlar = [self.kayit(0), self.kayit(1)]
+        self.assertEqual([k['id'] for k in self.yeniler(kayitlar, {'i1'})], ['i1'])
+
+    def test_sabah_yeniler_akademik_iptal_duyuru_disarida(self):
+        kayitlar = [self.kayit(0, iptal_edildi='x-1'), self.kayit(1, duyuru_turu='İptal duyurusu'),
+                    self.kayit(2, kategori='akademik'), self.kayit(3, ozet='Doçentliğini almış olmak (2547 sayılı Kanun)'),
+                    self.kayit(4)]
+        self.assertEqual([k['id'] for k in self.yeniler(kayitlar)], ['i4'])
+
+    def test_sabah_yeniler_tekilleştirir_ve_buyuk_kadro_once(self):
+        bitis = (self.SABAH.date() + timedelta(days=5)).isoformat()
+        kayitlar = [self.kayit(0, id='sbb-' + 'a' * 24, kurum='ŞİLE BELEDİYE BAŞKANLIĞI', son_tarih=bitis, kadro='Toplam 2 kişi — 2 Memur'),
+                    self.kayit(1, id='iskur-' + 'b' * 24, kurum='İstanbul Şile Belediyesi', son_tarih=bitis, kadro='Toplam 2 kişi — 2 Memur'),
+                    self.kayit(2, kadro='Toplam 40 kişi — 40 Hemşire'), self.kayit(3)]
+        sonuc = self.yeniler(kayitlar)
+        self.assertEqual(len(sonuc), 3)
+        self.assertEqual(sonuc[0]['id'], 'i2')
+
+    def test_sabah_mesaji_bos_bolumleri_yazmaz_ve_turkce_tarih(self):
+        with patch.object(ilan_bot, 'ilan_sayfasi', return_value='https://example.com/x/'):
+            yalniz_acik = ilan_bot.sabah_mesaj([], [], 7, 'https://example.com/', self.SABAH)
+            self.assertNotIn('🆕', yalniz_acik)
+            self.assertNotIn('⏰', yalniz_acik)
+            self.assertNotIn('yeni ilan', yalniz_acik)
+            self.assertIn('☀️ <b>Günaydın — 5 Ekim Pazartesi</b>', yalniz_acik)
+            self.assertIn('📌 Şu an başvurusu açık <b>7 ilan</b>', yalniz_acik)
+            self.assertIn('href="https://example.com/?g=bugun"', yalniz_acik)
+            yeni = ilan_bot.sabah_mesaj([self.kayit(0)], [], 7, '', self.SABAH)
+        self.assertIn('🆕 <b>Son 24 saatte 1 yeni ilan</b> · 1 kadro', yeni)
+        self.assertNotIn('⏰', yeni)
+        self.assertNotIn('👉', yeni)  # site adresi yoksa bağlantı satırı yok
+        for gun, ad in enumerate(('Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar')):
+            self.assertTrue(ilan_bot.turkce_tarih(self.SABAH + timedelta(days=gun)).endswith(ad))
+        self.assertEqual(ilan_bot.turkce_tarih(datetime(2026, 8, 30, tzinfo=self.SABAH.tzinfo)), '30 Ağustos Pazar')
+
+    def test_sabah_mesaji_butce_asilinca_once_yeni_sonra_son_gun_kisalir_altlik_kalir(self):
+        uzun = 'Çok Uzun Adlı Büyükşehir Belediye Başkanlığı Zabıta Müdürlüğü '
+        yeni = [self.kayit(n, kurum=uzun + str(n), baslik=uzun) for n in range(12)]
+        bitis = (self.SABAH.date() + timedelta(days=1)).isoformat()
+        son = [self.kayit(n + 20, kurum=uzun + str(n + 20), son_tarih=bitis) for n in range(10)]
+        with patch.object(ilan_bot, 'simdi', return_value=self.SABAH), \
+             patch.object(ilan_bot, 'ilan_sayfasi', return_value='https://example.com/ilan/x/'):
+            tam = ilan_bot.sabah_mesaj(yeni[:1], son[:1], 30, 'https://example.com/', self.SABAH)
+            metin = ilan_bot.sabah_mesaj(yeni, son, 30, 'https://example.com/', self.SABAH)
+        self.assertLessEqual(ilan_bot.gorunen_uzunluk(tam), ilan_bot.TOPLU_SINIR)
+        self.assertLessEqual(ilan_bot.gorunen_uzunluk(metin), ilan_bot.TOPLU_SINIR)
+        yeni_bolum, son_bolum = metin.split('⏰')
+        self.assertGreaterEqual(yeni_bolum.count('• '), 3)  # yeni liste en az 3'e kadar kısalır
+        self.assertLess(yeni_bolum.count('• '), 5)
+        self.assertIn('ilan daha', yeni_bolum)
+        self.assertIn('📌 Şu an başvurusu açık <b>30 ilan</b>', metin)
+        self.assertIn('Bugünün tüm ilanları', metin)
+        self.assertTrue(metin.startswith('☀️ <b>Günaydın'))
+
+    def test_toplu_secimde_iptal_akademik_duyuru_olmayanlar_yer_almaz(self):
         kayitlar = []
         for n in range(25):
             k = {'id': f'i{n}', 'baslik': f'K{n} Belediyesi - Alım', 'kurum': f'K{n} Belediyesi',
@@ -233,11 +353,11 @@ class TelegramDeliveryTests(unittest.TestCase):
         with patch.object(ilan_bot, 'simdi', return_value=self.SABAH), patch.object(ilan_bot, 'ilan_sayfasi', return_value='https://example.com/x/'):
             secim = ilan_bot.toplu_secim(kayitlar, {k['id'] for k in kayitlar}, {})
             self.assertEqual(len(secim), 21)  # 25 - 4 dışlanan
-            metin = ilan_bot.toplu_mesaj(secim, '')
-        self.assertEqual(metin.count('• '), 15)
-        self.assertIn('+6 ilan daha', metin)
+            metin = ilan_bot.sabah_mesaj([], secim, 21, '', self.SABAH)
+        self.assertEqual(metin.count('• '), 6)
+        self.assertIn('+15 ilan daha', metin)
 
-    def test_toplu_kartta_ayni_kurum_ve_tarih_tek_satir(self):
+    def test_toplu_secimde_ayni_kurum_ve_tarih_tek_satir(self):
         bitis = (self.SABAH.date() + timedelta(days=1)).isoformat()
         kayitlar = [{'id': 'sbb-' + 'a' * 24, 'baslik': 'X', 'kurum': 'ŞİLE BELEDİYE BAŞKANLIĞI', 'son_tarih': bitis},
                     {'id': 'iskur-' + 'b' * 24, 'baslik': 'X', 'kurum': 'İstanbul Şile Belediyesi', 'son_tarih': bitis},
@@ -246,6 +366,14 @@ class TelegramDeliveryTests(unittest.TestCase):
             secim = ilan_bot.toplu_secim(kayitlar, {k['id'] for k in kayitlar}, {})
         self.assertEqual(len(secim), 2)
 
+    def test_acik_sayisi_site_tanimiyla_ayni(self):
+        s = self.SABAH
+        kayitlar = [self.kayit(0), self.kayit(1, son_tarih=None), self.kayit(2, son_tarih='2026-10-04'),
+                    self.kayit(3, duyuru_turu='Düzeltme duyurusu'), self.kayit(4, kategori='akademik'),
+                    self.kayit(5, iptal_edildi='x'), self.kayit(6, baslangic_zaman=(s + timedelta(days=1)).isoformat()),
+                    self.kayit(7, baslangic_zaman=(s - timedelta(days=1)).isoformat()), self.kayit(8, son_tarih=s.date().isoformat())]
+        with patch.object(ilan_bot, 'simdi', return_value=s):
+            self.assertEqual(ilan_bot.sabah_acik_sayisi(kayitlar, s), 3)  # 0, 7, 8
     def test_fotograf_ve_dugmeler_tek_istekte(self):
         response = io.BytesIO(b'{"ok": true}')
         with patch.object(ilan_bot.urllib.request, 'urlopen', return_value=response) as api:
