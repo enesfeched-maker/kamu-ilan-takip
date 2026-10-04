@@ -4,15 +4,19 @@ Yalnızca yerel (Türkiye IP'li) tarayıcıdan çalıştırılır; GitHub Action
 Resmî kaynakta açıkça yazmayan bilgi (ör. son başvuru tarihi) tahmin edilmez, boş bırakılır."""
 import io
 import re
+import ssl
 import time
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
 import zipfile
 from datetime import date
+from functools import lru_cache
+from pathlib import Path
 
 from bs4 import BeautifulSoup
 
+import csb_ek
 from ek_kaynaklar import MONTHS, clean, fresh, kind, norm, notice, now, pdf_text
 from siniflandir import ILLER, kucuk
 
@@ -21,9 +25,13 @@ LISTE = SITE + 'duyurular'
 SAYFA_SAYISI = 2           # her sayfada ~12 duyuru; 30 dakikalık tarama için yeterli
 KAYNAK_ADI = 'ÇŞB Yerel Yönetimler'
 # Ayrıştırma mantığı değişince VERSIYON artırılır (önbellekteki eski kayıtlar yeniden okunur).
-VERSIYON = 3
+VERSIYON = 4
 YENIDEN_DENEME_GUN = 14   # ek belgesi okunamayan duyuru yayımından bu kadar gün boyunca her taramada yeniden denenir
 HOSTLAR = {'yerelyonetimler.csb.gov.tr', 'webdosya.csb.gov.tr'}
+# webdosya.csb.gov.tr sunucusu ara sertifikayı (SSL2BUY EMEA RSA OV, Sectigo R46 altında) göndermiyor. Windows'ta Python yalnızca
+# sistem deposundaki sertifikaları kullanır; ara sertifikası depoda olmayan kullanıcı/oturumda (ör. zamanlanmış görev)
+# 'unable to get local issuer certificate' hatası alınır. Bu halka açık ara sertifika depoda sabitlenir; doğrulama kapatılmaz.
+ARA_SERTIFIKA = Path(__file__).with_name('csb_ara_sertifika.pem')
 SAYFA_SINIRI = 1_500_000
 BELGE_SINIRI = 8_000_000
 XML_SINIRI = 6_000_000
@@ -52,12 +60,24 @@ class _Yonlendirme(urllib.request.HTTPRedirectHandler):
         return super().redirect_request(req, fp, code, msg, headers, newurl)
 
 
+@lru_cache(maxsize=1)
+def _baglam():
+    """Sistem sertifikaları + sabitlenmiş ara sertifika (eksik zincir tamamlanır; doğrulama açık kalır)."""
+    ctx = ssl.create_default_context()
+    try:
+        ctx.load_verify_locations(cafile=str(ARA_SERTIFIKA))
+        ctx.verify_flags |= getattr(ssl, 'VERIFY_X509_PARTIAL_CHAIN', 0x80000)
+    except (OSError, ssl.SSLError) as exc:
+        print(f'ÇŞB ara sertifikası yüklenemedi ({type(exc).__name__}); yalnız sistem deposu kullanılacak.', flush=True)
+    return ctx
+
+
 def indir(adres, sinir=SAYFA_SINIRI, referer=None):
     basliklar = {'User-Agent': 'kamu-ilan-takip/1.0 (+https://enesfeched-maker.github.io/kamu-ilan-takip/)'}
     if referer:
         basliklar['Referer'] = referer
     istek = urllib.request.Request(guvenli_adres(adres), headers=basliklar)
-    with urllib.request.build_opener(_Yonlendirme()).open(istek, timeout=25) as yanit:
+    with urllib.request.build_opener(_Yonlendirme(), urllib.request.HTTPSHandler(context=_baglam())).open(istek, timeout=25) as yanit:
         veri = yanit.read(sinir + 1)
     if len(veri) > sinir:
         raise ValueError('Kaynak dosya boyutu sınırı aşıldı')
@@ -156,16 +176,9 @@ def detay_ayristir(veri):
 
 
 def docx_metni(veri):
-    with zipfile.ZipFile(io.BytesIO(veri)) as z:
-        bilgi = z.getinfo('word/document.xml')
-        if bilgi.file_size > XML_SINIRI:
-            raise ValueError('Belge metni boyut sınırını aşıyor')
-        xml = z.read(bilgi)
-    if b'<!DOCTYPE' in xml or b'<!ENTITY' in xml:
-        raise ValueError('Beklenmeyen belge yapısı')
     w = '{http://schemas.openxmlformats.org/wordprocessingml/2006/main}'
     satirlar = []
-    for p in ET.fromstring(xml).iter(w + 'p'):
+    for p in csb_ek.docx_xml(veri, XML_SINIRI).iter(w + 'p'):
         parca = []
         for e in p.iter():
             if e.tag == w + 't':
@@ -245,8 +258,9 @@ def kayit_olustur(satir, detay, tarih):
              'detay_guncelleme': now().isoformat(timespec='seconds'),
              'csb_detay_surumu': VERSIYON, 'ozet': ' '.join(ozet),
              'belgeler': [{'ad': urllib.parse.unquote(e.rsplit('/', 1)[1]), 'link': e} for e in detay['ekler']]}
-    if parca['il']:
-        kayit['yer'] = parca['il']
+    il = parca['il'] or csb_ek.il_slug(satir['link'])    # başlıkta il yoksa bağlantıdaki 'istanbul-ili-...' kalıbı
+    if il:
+        kayit['yer'] = il
     if tur:
         kayit['duyuru_turu'] = tur
     return kayit
@@ -266,16 +280,27 @@ def _ek_indir(ek, referer):
 
 def duyuru_oku(satir):
     detay = detay_ayristir(indir(satir['link']))
-    tarihler, okunamayan = set(), 0
-    for ek in detay['ekler']:
+    tarihler, okunamayan, alanlar = set(), 0, {}
+    for sira, ek in enumerate(detay['ekler']):
+        if sira:
+            time.sleep(.3)    # aynı sunucuya art arda istek: kısa bekleme (en çok AZAMI_BELGE belge)
         try:
-            tarihler.add(son_basvuru(belge_metni(ek, _ek_indir(ek, satir['link']))))
+            veri = _ek_indir(ek, satir['link'])
+            tarihler.add(son_basvuru(belge_metni(ek, veri)))
         except Exception as exc:
             okunamayan += 1
             print(f'ÇŞB ek belge okunamadı ({type(exc).__name__}: {str(getattr(exc, "reason", exc))[:80]}): {ek.rsplit("/", 1)[-1][:60]}', flush=True)
+            continue
+        if not alanlar:
+            # Kadro tablosu ayıklanamazsa belge okunmuş sayılır (hata değil); alanlar boş kalır, tahmin yapılmaz.
+            try:
+                alanlar = csb_ek.belge_alanlari(ek, veri, satir['baslik'])
+            except Exception as exc:
+                print(f'ÇŞB ek belge tablosu ayıklanamadı ({type(exc).__name__}: {str(exc)[:80]}): {ek.rsplit("/", 1)[-1][:60]}', flush=True)
     tarihler.discard(None)
     # Farklı belgeler çelişirse tarih yazılmaz.
     kayit = kayit_olustur(satir, detay, next(iter(tarihler)) if len(tarihler) == 1 else None)
+    kayit.update(alanlar)
     if okunamayan:
         kayit['ek_okunamadi'] = okunamayan   # eksik ayrıntı: "taze" sayılmaz, sonraki taramada yeniden denenir
     return kayit
@@ -360,7 +385,9 @@ def _kimlik(i):
 
 
 def _isci(i):
-    metin = norm(' '.join(str(i.get(a) or '') for a in ('baslik', 'kadro', 'ozet')))
+    # ÇŞB kayıtlarının belgeden gelen kadro metni eşleşme kararını değiştirmesin (zenginleştirmeden önceki davranış korunur).
+    alanlar = ('baslik', 'ozet') if i.get('kaynak_turu') == 'csb' else ('baslik', 'kadro', 'ozet')
+    metin = norm(' '.join(str(i.get(a) or '') for a in alanlar))
     return bool(re.search(r'\bisci', metin))
 
 
