@@ -172,6 +172,7 @@ dialog svg,.save-button svg{stroke-width:1.7}
 :root[data-theme=dark] .k1-bas h1 mark{background:none;color:var(--lime)}
 .k1-bas .ozet{margin:14px 0 0;font-size:17px;line-height:1.55;color:var(--ink-2);max-width:700px}
 .k1-bas .tazelik{margin:10px 0 0;font-size:13.5px;color:var(--muted)}
+.k1-bas .uyari-satir{max-width:700px;line-height:1.5}
 .atla{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0 0}
 .atla button,.atla a{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--line-2);background:var(--surface);text-decoration:none;font:inherit;font-size:14px;font-weight:550;color:var(--ink);cursor:pointer}
 .atla b{font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums}

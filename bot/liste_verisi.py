@@ -158,13 +158,53 @@ def takvim(kayitlar, simdi, gun=TAKVIM_GUN):
     return dict(sorted(sonuc.items()))
 
 
-def liste_uret(ilanlar, gorseller, docs, simdi=None, guncelleme=None):
-    """docs/liste.json içeriği."""
+KAYNAK_GORUNEN = {'sbb': 'SBB', 'csb': 'ÇŞB Yerel Yönetimler'}   # portal.js ile aynı; diğerleri İŞKUR
+
+
+def eski_detay(item, simdi):
+    """portal.js stale(): ayrıntı kontrolü yok ya da 24 saatten eski."""
+    s = item.get('detay_guncelleme')
+    if not s:
+        return True
+    try:
+        return (simdi - datetime.fromisoformat(s)).total_seconds() > 86400
+    except (TypeError, ValueError):
+        return False
+
+
+def uyari_uret(kaynak_durumlari, acik_ilanlar, simdi):
+    """Bugün sayfasındaki tek satırlık uyarı: {'kaynaklar': ['SBB'], 'eski_detay': 12}; ikisi de yoksa {}.
+    kaynaklar: son taramada hata_sayisi > 0 olan kaynaklar; eski_detay: gösterilen açık ilanlardan ayrıntısı 24 saatten eski olanların sayısı."""
+    kaynaklar = []
+    for k, s in (kaynak_durumlari or {}).items():
+        if isinstance(s, dict) and (s.get('hata_sayisi') or 0) > 0:
+            ad = KAYNAK_GORUNEN.get(k, 'İŞKUR')
+            if ad not in kaynaklar:
+                kaynaklar.append(ad)
+    eski = sum(1 for i in acik_ilanlar if eski_detay(i, simdi))
+    sonuc = {}
+    if kaynaklar:
+        sonuc['kaynaklar'] = kaynaklar
+    if eski:
+        sonuc['eski_detay'] = eski
+    return sonuc
+
+
+def liste_uret(ilanlar, gorseller, docs, simdi=None, guncelleme=None, kopyalar=None, kaynak_durumlari=None):
+    """docs/liste.json içeriği. Kaynaklar arası kopya ilanların ikincil satırlarına `kopya_of` (birincil anahtar),
+    birincil satıra `kaynak_sayisi`/`kaynaklar` yazılır; sayılar ve takvim yalnız görünen (birincil) satırlardan hesaplanır."""
     from siniflandir import akademik_ilan
     simdi = (simdi or datetime.now(TR)).astimezone(TR)
     tablolar = taban_tablolari(docs)
     harita = il_haritasi(ilanlar)
-    kayitlar = []
+    if kopyalar is None:
+        try:
+            import kopya
+            kopyalar = kopya.kopya_bul(ilanlar)
+        except Exception as hata:
+            print(f'Uyarı: kopya ilanlar bulunamadı: {hata}')
+            kopyalar = {}
+    kayitlar, kayit_id = [], {}
     for item in ilanlar:
         try:
             if akademik_ilan(item):
@@ -175,16 +215,33 @@ def liste_uret(ilanlar, gorseller, docs, simdi=None, guncelleme=None):
             continue
         if k:
             kayitlar.append(k)
-    bugun_yeni = sum(1 for k in kayitlar if _tr_tarih(k.get('ilk_gorulme')) == simdi.date())
+            kayit_id[item.get('id')] = (k, item)
+    for ikincil, birincil in (kopyalar.get('kopya_of') or {}).items():
+        if ikincil in kayit_id and birincil in kayit_id:   # birincil satırı yoksa ikincil de tek başına görünür
+            kayit_id[ikincil][0]['kopya_of'] = kayit_id[birincil][0]['key']
+    try:
+        import kopya
+        for birincil, uyeler in (kopyalar.get('uyeler') or {}).items():
+            if birincil in kayit_id:
+                adlar = kopya.kaynak_adlari(uyeler)
+                if len(adlar) > 1:
+                    kayit_id[birincil][0]['kaynak_sayisi'] = len(adlar)
+                    kayit_id[birincil][0]['kaynaklar'] = adlar
+    except Exception as hata:
+        print(f'Uyarı: kaynak adları yazılamadı: {hata}')
+    gorunen = [k for k in kayitlar if not k.get('kopya_of')]
+    bugun_yeni = sum(1 for k in gorunen if _tr_tarih(k.get('ilk_gorulme')) == simdi.date())
+    gorunen_ilanlar = [i for k, i in kayit_id.values() if not k.get('kopya_of')]
     return {
         'guncelleme': guncelleme or simdi.isoformat(timespec='seconds'),
-        'sayilar': {'acik': len(kayitlar), 'kadro': sum(k.get('toplam') or 0 for k in kayitlar), 'bugun_yeni': bugun_yeni},
-        'takvim': takvim(kayitlar, simdi),
+        'sayilar': {'acik': len(gorunen), 'kadro': sum(k.get('toplam') or 0 for k in gorunen), 'bugun_yeni': bugun_yeni},
+        'uyari': uyari_uret(kaynak_durumlari, gorunen_ilanlar, simdi),
+        'takvim': takvim(gorunen, simdi),
         'ilanlar': kayitlar,
     }
 
 
-def uret(ilanlar, gorseller, docs, simdi=None, guncelleme=None):
-    veri = liste_uret(ilanlar, gorseller, docs, simdi, guncelleme)
+def uret(ilanlar, gorseller, docs, simdi=None, guncelleme=None, kopyalar=None, kaynak_durumlari=None):
+    veri = liste_uret(ilanlar, gorseller, docs, simdi, guncelleme, kopyalar, kaynak_durumlari)
     (Path(docs) / 'liste.json').write_text(json.dumps(veri, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
     return veri

@@ -12,7 +12,7 @@ TR = timezone(timedelta(hours=3))
 KART_GENISLIK = 720
 LOGO_BOYUT = 128
 EN_COK_LOGO_INDIRME = 150
-CSS_SURUM = 9
+CSS_SURUM = 11
 LOGO_SURUM = 2
 ACIK_ZEMIN, KOYU_ZEMIN = '#F6F6F1', '#0D0E0C'
 # <head> içinde, theme-color etiketinden sonra: açık tema varsayılan, yalnız kit-theme=="dark" koyu açar.
@@ -145,6 +145,20 @@ def _kadro_tablosu(item):
                   f'<div class="tablo-kap"><table class="ktablo"><thead><tr><th scope="col">Konu</th><th scope="col">Koşul</th></tr></thead><tbody>{govde}</tbody></table></div>')
     return html_
 
+def _kopya_notlari(kopya):
+    """(ikincil kayıt için üst not, birincil kayıt için kaynak satırı) — kopya: kopya.sayfa_bilgisi() çıktısı ya da None."""
+    if not kopya:
+        return '', ''
+    if kopya.get('rol') == 'ikincil':
+        return (f'<p class="not kopya-not"><strong>Bu ilan başka bir kaynakta da yayımlandı.</strong> '
+                f'<a class="yazi-link" href="../{esc(kopya["birincil"])}/">Bu ilanın daha ayrıntılı kaydı →</a></p>'), ''
+    adlar = kopya.get('adlar') or []
+    baglar = ', '.join(f'<a href="{esc(h)}" target="_blank" rel="noopener noreferrer">{esc(a)} ↗</a>' for a, h in kopya.get('baglantilar') or [])
+    if len(adlar) < 2 or not baglar:
+        return '', ''
+    return '', f'<p class="d-kaynaklar">Bu ilan {len(adlar)} kaynakta yayımlandı: {baglar}</p>'
+
+
 def _senin_icin(item, kayit):
     """"Senin için" kutusu: öğrenim/puan türü/il eşleşmesi tarayıcıda kit-profil ile doldurulur (sayfa.js);
     taban referansı derleme zamanında yazılır."""
@@ -188,7 +202,7 @@ def benzer_ilanlar(kayit, kayitlar, en_cok=5):
     return [p[3] for p in sorted(sonuc, key=lambda p: p[:3])[:en_cok]]
 
 
-def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None):
+def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=None):
     from siniflandir import akademik_ilan
     if akademik_ilan(item):
         return None  # akademik ilanlar sitede gösterilmez
@@ -225,6 +239,7 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None):
     h1 = liste_verisi.baslik_temiz(alanlar['manset'])
     alt = _gorunen_baslik(item).strip()
     alt_html_ = f'<p class="d-alt">{esc(alt)}</p>' if kucuk_ad(alt) != kucuk_ad(h1) else ''
+    kopya_ust, kopya_alt = _kopya_notlari(kopya)
     # --- durum rozeti
     metin, sinif = ks.durum(item, simdi)
     if sinif == 'none':
@@ -283,7 +298,7 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None):
     pt = (kayit or {}).get('puan_turleri') or liste_verisi.puan_turleri(item)
     kpss = ', '.join(pt[:3]) if pt else 'Gerekli' if item.get('kpss') == 'kpss' else 'Gerekmez' if item.get('kpss') == 'kpsssiz' else 'Belirtilmemiş'
     toplam = alanlar.get('toplam')
-    yer = esc(_duzgun(item.get('yer')) or (kayit or {}).get('il') or 'Resmî ilandan kontrol et')
+    yer = esc(ks.yer_metni(item, (kayit or {}).get('il') or '') or 'Resmî ilandan kontrol et')
     acil_sinifi = ' class="acil"' if pill_sinif == 'acil' else ''
     facts = (f'<ul class="d-facts"><li{acil_sinifi}><span>Son başvuru</span><strong>{date}</strong></li>'
              f'<li><span>Kadro</span><strong>{esc(ks.SAYI_YAZ(toplam) + " kişi") if toplam else "İlanda"}</strong></li>'
@@ -291,9 +306,10 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None):
              f'<li><span>Öğrenim</span><strong>{esc(" / ".join(ks.LEVELS[o] for o in ogr)) or "Belirtilmemiş"}</strong></li>'
              f'<li><span>KPSS</span><strong>{esc(kpss)}</strong></li></ul>')
     kayit_id = esc(item.get('id') or key)
+    ikincil_veri = f' data-ikincil="{esc(",".join((kopya or {}).get("ikincil_idler") or []))}"' if (kopya or {}).get('ikincil_idler') else ''
     from kurum_sayfasi import BOOKMARK
     cta = (f'<div class="d-cta"><a class="btn btn-ana btn-buyuk" href="{esc(target)}" target="_blank" rel="noopener noreferrer">{button}</a>'
-           f'<button type="button" class="btn btn-ikinci btn-buyuk" id="kaydet-btn" data-kaydet="{kayit_id}" data-ad="{esc(h1)}" aria-pressed="false">{BOOKMARK}<span data-yazi>Kaydet</span></button></div>'
+           f'<button type="button" class="btn btn-ikinci btn-buyuk" id="kaydet-btn" data-kaydet="{kayit_id}"{ikincil_veri} data-ad="{esc(h1)}" aria-pressed="false">{BOOKMARK}<span data-yazi>Kaydet</span></button></div>'
            '<p class="d-cta-not">Başvuru bu sitede yapılmaz; işlemini ilanda belirtilen resmî kanaldan tamamla. Kaydetmek başvuru oluşturmaz.</p>')
     senin = _senin_icin(item, kayit) if acik_ilan else ''
     # --- afiş bandı (meslek fotoğrafı)
@@ -311,7 +327,7 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None):
                        + ''.join(ks.satir_html(k, simdi, '../../') for k in benzer[:5]) + '</div></section>')
     kok = '../../'
     govde = (f'<main id="icerik" class="wrap"><article class="d-bas"><nav class="crumbs" aria-label="Konum"><a href="{kok}">Ana sayfa</a><span aria-hidden="true">/</span><a href="{kok}#ilanlar">İlanlar</a>{kurum_kirinti}</nav>'
-             f'{kurum_html}<div class="ust-satir"><span class="eyebrow">{esc(item.get("ilan_turu", "KAMU İLANI"))}</span>{durum_html}</div><h1>{esc(h1)}</h1>{alt_html_}{facts}{cta}</article>'
+             f'{kurum_html}<div class="ust-satir"><span class="eyebrow">{esc(item.get("ilan_turu", "KAMU İLANI"))}</span>{durum_html}</div><h1>{esc(h1)}</h1>{alt_html_}{kopya_ust}{facts}{cta}{kopya_alt}</article>'
              f'<div class="d-ana">{senin}<section class="d-bolum">{sections}{bolum}{diger}'
              f'<p class="muted d-son">Ayrıntı kontrolü: {esc(item.get("detay_guncelleme", "Tarih belirtilmemiş"))}</p></section>{afis}{benzer_html}</div></main>')
     return key, (sayfa_basi(f'{title} | Kamu İlan Takip', description, canonical, kok, 'article', og_gorsel, og_baslik=title)
@@ -569,6 +585,14 @@ def main():
     count = 0
     from siniflandir import akademik_ilan
     gorseller = {}
+    kopyalar = {}
+    try:
+        import kopya
+        kopyalar = kopya.kopya_bul(data.get('ilanlar', []))
+        print(f'{len(kopyalar["kopya_of"])} kopya ilan (kaynaklar arası) birleştirildi.')
+    except Exception as hata:
+        print(f'Uyarı: kopya ilanlar bulunamadı: {hata}')
+    kimlik_harita = {i.get('id'): i for i in data.get('ilanlar', [])}
     try:
         gorseller = gorselleri_uret(data.get('ilanlar', []), docs, datetime.now(TR))
     except Exception as hata:
@@ -577,9 +601,9 @@ def main():
     kurum_adresleri = []
     try:
         import kurum_sayfasi
-        sonuc = kurum_sayfasi.kurum_sayfalarini_uret(data.get('ilanlar', []), docs, gorseller, datetime.now(TR))
+        sonuc = kurum_sayfasi.kurum_sayfalarini_uret(data.get('ilanlar', []), docs, gorseller, datetime.now(TR), kopyalar)
         kurum_adresleri = sonuc[2]
-        for anahtar, alan in kurum_sayfasi.kart_meta(data.get('ilanlar', []), sonuc[3]).items():
+        for anahtar, alan in kurum_sayfasi.kart_meta(data.get('ilanlar', []), sonuc[3], kopyalar).items():
             gorseller.setdefault(anahtar, {}).update(alan)
     except Exception as hata:
         print(f'Uyarı: kurum sayfaları üretilemedi: {hata}')
@@ -587,11 +611,12 @@ def main():
     liste = None
     try:
         import liste_verisi
-        liste = liste_verisi.uret(data.get('ilanlar', []), gorseller, docs, datetime.now(TR), data.get('guncelleme'))
+        liste = liste_verisi.uret(data.get('ilanlar', []), gorseller, docs, datetime.now(TR), data.get('guncelleme'), kopyalar, data.get('kaynak_durumlari'))
     except Exception as hata:
         print(f'::warning::liste.json üretilemedi: {hata}')
     kayitlar = (liste or {}).get('ilanlar') or []
     kayit_haritasi = {k['key']: k for k in kayitlar}
+    gorunen = [k for k in kayitlar if not k.get('kopya_of')]
     for item in data.get('ilanlar', []):
         result = detail_page(item)
         if not result:
@@ -600,11 +625,16 @@ def main():
             continue
         kayit = kayit_haritasi.get(result[0])
         try:
-            benzer = benzer_ilanlar(kayit, kayitlar)
+            benzer = benzer_ilanlar(kayit, gorunen)
         except Exception as hata:
             benzer = []
             print(f'Uyarı: benzer ilanlar bulunamadı ({result[0]}): {hata}')
-        result = detail_page(item, gorseller.get(result[0]), kayit, benzer)
+        try:
+            sayfa_kopya = kopya.sayfa_bilgisi(kopyalar, item, kimlik_harita)
+        except Exception as hata:
+            sayfa_kopya = None
+            print(f'Uyarı: kopya notu yazılamadı ({result[0]}): {hata}')
+        result = detail_page(item, gorseller.get(result[0]), kayit, benzer, None, sayfa_kopya)
         key, content = result
         folder = docs / 'ilan' / key
         folder.mkdir(parents=True, exist_ok=True)

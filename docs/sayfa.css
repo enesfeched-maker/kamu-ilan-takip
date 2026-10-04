@@ -162,6 +162,9 @@ svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke
 .d-facts li.acil strong{color:var(--alert)}
 .d-cta{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:22px}
 .d-cta-not{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.d-kaynaklar{margin:8px 0 0;font-size:13px;color:var(--ink-2)}
+.d-kaynaklar a{color:inherit;text-decoration:underline;text-underline-offset:2px;margin-right:6px}
+.kopya-not{margin:14px 0 0;max-width:720px}
 .d-ana{max-width:860px}
 .d-bolum{margin-top:36px}
 .d-bolum h2{margin-bottom:12px}
