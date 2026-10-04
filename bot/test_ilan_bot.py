@@ -277,14 +277,32 @@ class TelegramDeliveryTests(unittest.TestCase):
         with patch.object(ilan_bot, 'simdi', return_value=self.SABAH):
             return ilan_bot.sabah_yeniler(kayitlar, gon, {}, self.SABAH)
 
-    def test_sabah_yeniler_24_saat_siniri(self):
-        sinir = [self.kayit(0, ilk_gorulme=(self.SABAH - timedelta(hours=24)).isoformat()),
-                 self.kayit(1, ilk_gorulme=(self.SABAH - timedelta(hours=24, seconds=1)).isoformat()),
-                 self.kayit(2, ilk_gorulme=(self.SABAH + timedelta(minutes=1)).isoformat()),
-                 self.kayit(3, ilk_gorulme=self.SABAH.isoformat()),
+    def test_sabah_yeniler_sabit_pencere_dunku_09_dahil_bugunku_09_haric(self):
+        bugun_09 = self.SABAH.replace(hour=9, minute=0)
+        s = timedelta(seconds=1)
+        sinir = [self.kayit(0, ilk_gorulme=(bugun_09 - timedelta(days=1)).isoformat()),
+                 self.kayit(1, ilk_gorulme=(bugun_09 - timedelta(days=1) - s).isoformat()),
+                 self.kayit(2, ilk_gorulme=bugun_09.isoformat()),
+                 self.kayit(3, ilk_gorulme=(bugun_09 - s).isoformat()),
                  self.kayit(4, ilk_gorulme='bozuk')]
-        self.assertEqual({k['id'] for k in self.yeniler(sinir)}, {'i0', 'i3'})
+        simdi_gec = self.SABAH.replace(hour=9, minute=50)  # özet geç gitse de pencere değişmez
+        with patch.object(ilan_bot, 'simdi', return_value=simdi_gec):
+            sonuc = ilan_bot.sabah_yeniler(sinir, {k['id'] for k in sinir}, {}, simdi_gec)
+        self.assertEqual({k['id'] for k in sonuc}, {'i0', 'i3'})
 
+    def test_sabah_mesaji_son_gun_listesindeki_yeni_ilan_yalniz_altta_gorunur(self):
+        bitis = (self.SABAH.date() + timedelta(days=1)).isoformat()
+        ortak = self.kayit(0, son_tarih=bitis, kurum='Ortak Belediyesi')
+        diger = self.kayit(1, kurum='Diger Belediyesi')
+        with patch.object(ilan_bot, 'simdi', return_value=self.SABAH), \
+             patch.object(ilan_bot, 'ilan_sayfasi', return_value='https://example.com/x/'):
+            metin = ilan_bot.sabah_mesaj([ortak, diger], [ortak], 9, '', self.SABAH)
+        yeni_bolum, son_bolum = metin.split('⏰')
+        self.assertIn('Son 24 saatte 2 yeni ilan', yeni_bolum)  # sayı hepsini sayar
+        self.assertNotIn('Ortak Belediyesi', yeni_bolum)
+        self.assertIn('Diger Belediyesi', yeni_bolum)
+        self.assertIn('Ortak Belediyesi', son_bolum)
+        self.assertNotIn('ilan daha', yeni_bolum)
     def test_sabah_yeniler_kanalda_paylasilmayan_girmez(self):
         kayitlar = [self.kayit(0), self.kayit(1)]
         self.assertEqual([k['id'] for k in self.yeniler(kayitlar, {'i1'})], ['i1'])

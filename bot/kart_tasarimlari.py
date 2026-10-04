@@ -588,7 +588,7 @@ GUNLER = ('Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 
 SABAH_EN_COK_SATIR = 4
 
 
-def sabah_ozeti_karti(yeniler, acik_sayisi, simdi=None):
+def sabah_ozeti_karti(yeniler, acik_sayisi, simdi=None, son_gun=()):
     """Günlük sabah özeti kartı (1080x1350 PNG): büyük 'Günaydın' + tarih, 'N yeni ilan · M kadro',
     en fazla 4 satır (kurum + kadro özeti, sağda kadro adedi), altta 'başvurusu açık' kutusu.
     Yeni ilan yoksa yalnız açık ilan sayısı büyük gösterilir."""
@@ -606,8 +606,11 @@ def sabah_ozeti_karti(yeniler, acik_sayisi, simdi=None):
     d.text((sag, ky0 + 50), f'{simdi.day} {AYLAR[simdi.month - 1]} {GUNLER[simdi.weekday()]}', font=F(30, True), fill=SOLUK, anchor='rm')
     d.text((KENAR, ky0 + 130), 'Günaydın', font=F(84, True), fill='#ffffff', anchor='lm')
 
-    gorunen = list(yeniler)[:SABAH_EN_COK_SATIR]
-    fazla = len(yeniler) - len(gorunen)
+    # Son gün listesinde de olan ilanlar satırlarda tekrarlanmaz (üstteki sayı hepsini sayar).
+    haric = {i.get('id') for i in son_gun}
+    satirlik = [i for i in yeniler if i.get('id') not in haric]
+    gorunen = satirlik[:SABAH_EN_COK_SATIR]
+    fazla = len(satirlik) - len(gorunen)
     kutu_alt = 1192
     if gorunen:
         kadro_toplam = sum(veri(i)['toplam'] or 0 for i in yeniler)

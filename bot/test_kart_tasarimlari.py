@@ -87,6 +87,12 @@ class SabahKartiTesti(unittest.TestCase):
             im = Image.open(io.BytesIO(kt.sabah_ozeti_karti(self.liste(n), 44, SIMDI)))
             self.assertEqual(im.size, (1080, 1350))
 
+    def test_son_gun_listesindeki_ilan_satirda_tekrarlanmaz(self):
+        l = self.liste(2)
+        a = kt.sabah_ozeti_karti(l, 5, SIMDI)
+        b = kt.sabah_ozeti_karti(l, 5, SIMDI, son_gun=[l[0]])
+        self.assertNotEqual(a, b)
+
     def test_cok_uzun_kurum_ve_buyuk_sayi_tasmaz(self):
         uzun = ilan(kurum='Çok Uzun Adlı ' * 12 + 'Belediye Başkanlığı', kadro='1 ' + 'Zabıta ' * 30)
         Image.open(io.BytesIO(kt.sabah_ozeti_karti([uzun] + self.liste(3), 12345, SIMDI))).load()

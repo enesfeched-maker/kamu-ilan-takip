@@ -480,10 +480,12 @@ def gorunen_uzunluk(metin):
 
 
 def sabah_yeniler(ilanlar, gonderilen, cfg, zaman):
-    """Son 24 saatte ilk görülen, kanalda paylaşılmış; akademik/iptal/duyuru olmayan ilanlar (en çok kadro önce).
+    """Dünkü 09:00 (dahil) ile bugünkü 09:00 (hariç) arasında ilk görülen, kanalda paylaşılmış; akademik/iptal/duyuru
+    olmayan ilanlar (en çok kadro önce). Sabit sınır: özet geç gitse bile günler arası boşluk/çift sayım olmaz.
     Aynı normalize kurum + aynı son tarih (SBB/İŞKUR kopyaları) tek kayıt."""
     from kart_tasarimlari import veri as kart_verisi
     dahil, haric = cfg.get('telegram_kelimeler_dahil', []), cfg.get('telegram_kelimeler_haric', [])
+    bugun_09 = datetime.combine(zaman.astimezone(TR).date(), datetime.min.time(), tzinfo=TR).replace(hour=9)
     sonuc = []
     for i in ilanlar:
         if i.get('duyuru_turu') or i.get('iptal_edildi') or akademik_ilan(i):
@@ -494,7 +496,7 @@ def sabah_yeniler(ilanlar, gonderilen, cfg, zaman):
             continue
         if gorulme.tzinfo is None:
             gorulme = gorulme.replace(tzinfo=TR)
-        if not timedelta(0) <= zaman - gorulme <= timedelta(hours=24):
+        if not bugun_09 - timedelta(days=1) <= gorulme < bugun_09:
             continue
         if not ({i['id'], *i.get('kaynak_kimlikleri', [])} & gonderilen) or suresi_doldu(i):
             continue
@@ -503,12 +505,16 @@ def sabah_yeniler(ilanlar, gonderilen, cfg, zaman):
     sonuc.sort(key=lambda s: s[:3])
     gorulen, tekil = set(), []
     for *_, i in sonuc:
-        k = kurum_kimligi(i)
-        anahtar = (i.get('son_tarih'), k[:2] if k else i['id'])
+        anahtar = _tekil_anahtar(i)
         if anahtar not in gorulen:
             gorulen.add(anahtar)
             tekil.append(i)
     return tekil
+
+
+def _tekil_anahtar(i):
+    k = kurum_kimligi(i)
+    return (i.get('son_tarih'), k[:2] if k else i['id'])
 
 
 def sabah_acik_sayisi(ilanlar, zaman):
@@ -554,7 +560,10 @@ def sabah_mesaj(yeniler, son_gun, acik_sayisi, site_url, zaman):
         alt.append(f"📌 Şu an başvurusu açık <b>{acik_sayisi} ilan</b>")
     if site_url:
         alt.append(f'👉 <a href="{html.escape(site_url.rstrip("/") + "/?g=bugun", quote=True)}">Bugünün tüm ilanları</a>')
-    yeni_satirlari = [_ilan_satiri(i, site_url) for i in yeniler]
+    son_gun_anahtar = {x for i in son_gun for x in (('id', i['id']), ('k', _tekil_anahtar(i)))}
+    # Son gün listesinde olan yeni ilan yalnız ⏰ altında görünür (başlıktaki sayı yine hepsini sayar).
+    yeni_satirlari = [_ilan_satiri(i, site_url) for i in yeniler
+                      if ('id', i['id']) not in son_gun_anahtar and ('k', _tekil_anahtar(i)) not in son_gun_anahtar]
     son_satirlari = []
     for i in son_gun:
         fark = (date.fromisoformat(i['son_tarih']) - bugun).days
@@ -564,8 +573,8 @@ def sabah_mesaj(yeniler, son_gun, acik_sayisi, site_url, zaman):
 
     def olustur(ny, ns):
         parcalar = [ust]
-        if ny:
-            satirlar = yeni_satirlari[:ny] + ([f"+{len(yeniler) - ny} ilan daha"] if len(yeniler) > ny else [])
+        if yeniler:
+            satirlar = yeni_satirlari[:ny] + ([f"+{len(yeni_satirlari) - ny} ilan daha"] if len(yeni_satirlari) > ny else [])
             parcalar.append("\n".join([yeni_baslik, *satirlar]))
         if ns:
             satirlar = son_satirlari[:ns] + ([f"+{len(son_gun) - ns} ilan daha"] if len(son_gun) > ns else [])
@@ -574,7 +583,7 @@ def sabah_mesaj(yeniler, son_gun, acik_sayisi, site_url, zaman):
             parcalar.append("\n".join(alt))
         return "\n\n".join(parcalar)
 
-    ny, ns = min(len(yeniler), SABAH_YENI_EN_COK), min(len(son_gun), SABAH_SON_GUN_EN_COK)
+    ny, ns = min(len(yeni_satirlari), SABAH_YENI_EN_COK), min(len(son_gun), SABAH_SON_GUN_EN_COK)
     while gorunen_uzunluk(olustur(ny, ns)) > TOPLU_SINIR:
         if ny > SABAH_YENI_EN_AZ:
             ny -= 1
@@ -859,7 +868,7 @@ def main():
                 continue
             try:
                 from kart_tasarimlari import sabah_ozeti_karti, toplu_son_gun_karti
-                foto = toplu_son_gun_karti(son_gun_l, simdi()) if son_gun_l else sabah_ozeti_karti(yeni_l, acik, simdi())
+                foto = toplu_son_gun_karti(son_gun_l, simdi()) if son_gun_l else sabah_ozeti_karti(yeni_l, acik, simdi(), son_gun=son_gun_l)
             except Exception as exc:
                 # Görsel yapılamazsa gün atlanmaz: yalnız metin gönderilir.
                 print(f'Sabah özeti kartı oluşturulamadı ({type(exc).__name__}); yalnız metin gönderilecek.', file=sys.stderr)
