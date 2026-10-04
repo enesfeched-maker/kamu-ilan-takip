@@ -235,9 +235,43 @@ def kadro_ozeti(v, en_cok):
     return kutular
 
 
-def marka_seridi(d, y, yuk=88, dolgu=ANA, renk=LIME, sag='#ffffff'):
+LOGO_YOLU = Path(__file__).resolve().parents[1] / 'docs' / 'assets' / 'logo-512.png'
+
+
+@lru_cache(maxsize=None)
+def _logo_yukle():
+    """Marka logosu (512 px) bir kez yüklenir; dosya yoksa None."""
+    if not LOGO_YOLU.exists():
+        return None
+    with Image.open(LOGO_YOLU) as logo:
+        return logo.convert('RGBA')
+
+
+@lru_cache(maxsize=None)
+def logo_kare(boy):
+    """Logo boy x boy, LANCZOS; yuvarlak köşeli alfa maskesiyle (köşeler şeffaf). Logo yoksa None."""
+    logo = _logo_yukle()
+    if logo is None:
+        return None
+    kucuk = logo.resize((boy, boy), Image.Resampling.LANCZOS)
+    kat = 4  # maske 4x çizilip küçültülür: pürüzsüz köşe
+    maske = Image.new('L', (boy * kat, boy * kat), 0)
+    ImageDraw.Draw(maske).rounded_rectangle((0, 0, boy * kat - 1, boy * kat - 1), radius=round(boy * kat * 0.22), fill=255)
+    kucuk.putalpha(maske.resize((boy, boy), Image.Resampling.LANCZOS))
+    return kucuk
+
+
+def marka_seridi(d, y, yuk=88, dolgu=ANA, renk=LIME, sag='#ffffff', im=None):
     d.rectangle((0, y, G, y + yuk), fill=dolgu)
-    d.text((KENAR, y + yuk / 2), 'Kamu İlan Takip', font=F(34, True), fill=renk, anchor='lm')
+    x = KENAR
+    logo = logo_kare(yuk - 28) if im is not None else None
+    if logo is not None:
+        boy = logo.width
+        ky = y + (yuk - boy) // 2
+        im.paste(logo, (x, ky), logo)
+        d.rounded_rectangle((x, ky, x + boy - 1, ky + boy - 1), radius=round(boy * 0.22), outline=LIME, width=2)
+        x += boy + 16
+    d.text((x, y + yuk / 2), 'Kamu İlan Takip', font=F(34, True), fill=renk, anchor='lm')
     d.text((G - KENAR, y + yuk / 2), 't.me/kamuilantakip', font=F(34, True), fill=sag, anchor='rm')
 
 
@@ -388,7 +422,7 @@ def afis(ilan, logo=None, simdi=None, hatirlatma=False):
     kalan_rozeti(d, v, G - KENAR, cy + 20, hatirlatma)
     if v['kaynak']:
         d.text((KENAR, cy + 106), f'Kaynak: {v["kaynak"]}', font=F(30), fill='#5d6f72')
-    marka_seridi(d, Y - 88)
+    marka_seridi(d, Y - 88, im=im)
     return jpeg_png(im)
 
 
@@ -454,7 +488,7 @@ def bilet(ilan, logo=None, simdi=None, hatirlatma=False):
     kalan_rozeti(d, v, sag, cy + (0 if hatirlatma else 8), hatirlatma, koyu_zemin=True)
     if v['kaynak']:
         d.text((KENAR, cy + 94), f'Kaynak: {v["kaynak"]}', font=F(30), fill='#5d6f72')
-    marka_seridi(d, Y - 88)
+    marka_seridi(d, Y - 88, im=im)
     return jpeg_png(im)
 
 
@@ -545,5 +579,5 @@ def toplu_son_gun_karti(ilanlar, simdi=None):
         d.line((KENAR, ry + rh, sag, ry + rh), fill='#c6d3d1', width=2)
     if fazla:
         d.text((KENAR, alan_ust + len(gorunen) * rh + 32), f'+{fazla} ilan daha', font=F(36, True), fill='#5d6f72', anchor='lm')
-    marka_seridi(d, Y - 88)
+    marka_seridi(d, Y - 88, im=im)
     return jpeg_png(im)

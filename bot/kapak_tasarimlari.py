@@ -7,10 +7,10 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFilter
 
 from kart_tasarimlari import (ACIK, ANA, F, G, KENAR, KIRMIZI, LIME, PETROL, SOLUK, TURUNCU, Y, AYLAR, TR, _kurum_adi,
-                              gecis, sigdir, tek_satir, tr_buyuk, veri)
+                              gecis, logo_kare, sigdir, tek_satir, tr_buyuk, veri)
 from meslek_gorseli import GENEL_PERSONEL, _foto_yukle, meslek_no, norm
 
-LOGO = Path(__file__).resolve().parents[1] / 'docs' / 'kamu-logo.png'  # sosyal_paylasim.LOGO ile aynı (döngüsel içe aktarma olmasın)
+LOGO = Path(__file__).resolve().parents[1] / 'docs' / 'assets' / 'logo-512.png'  # yeni marka logosu (siyah yuvarlak kare, lime K)
 SARI = '#f5c400'
 SIYAH = '#111417'
 # Verideki meslekler 6 kareyi doldurmazsa, bu sırayla (genel personel hariç) fotoğraf eklenir.
@@ -107,13 +107,11 @@ def _marka_seridi(im, d, y=None, dolgu=PETROL, sag_metin='Kaydır', yuk=104):
     x = KENAR
     if LOGO.exists():
         kutu = 68
-        with Image.open(LOGO) as logo:
-            logo = logo.convert('RGBA')
-            oran = min(1.0, (kutu - 12) / max(logo.size))
-            logo = logo.resize((max(1, round(logo.width * oran)), max(1, round(logo.height * oran))), Image.Resampling.LANCZOS)
+        logo = logo_kare(kutu)
         ky = y + (yuk - kutu) // 2
-        d.rounded_rectangle((x, ky, x + kutu, ky + kutu), radius=16, fill='#ffffff')
-        im.paste(logo, (x + (kutu - logo.width) // 2, ky + (kutu - logo.height) // 2), logo)
+        im.paste(logo, (x, ky), logo)
+        # siyah logo koyu şeritlerde (PETROL/SIYAH) kaybolmasın: ince lime çerçeve
+        d.rounded_rectangle((x, ky, x + kutu - 1, ky + kutu - 1), radius=round(kutu * 0.22), outline=LIME, width=2)
         x += kutu + 20
     d.text((x, y + yuk / 2 + 1), 'KAMU İLAN TAKİP', font=F(34, True), fill=LIME, anchor='lm')
     if sag_metin:  # ok işareti yazı tipinde yok: çizgiyle çizilir
