@@ -26,7 +26,7 @@ ALT_MENU = (('Bugün', '#bugun', '<path d="M4 10.5 12 4l8 6.5V20h-5v-6h-6v6H4z"/
             ('İlanlar', '#ilanlar', '<path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/>'),
             ('Takvim', '#takvim', '<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/>'),
             ('Kayıtlı', '#kayitli', '<path d="M7 3.5h10a1 1 0 0 1 1 1V21l-6-4-6 4V4.5a1 1 0 0 1 1-1z"/>'),
-            ('Puanlar', 'puanlar/', '<path d="M4 20V10m6 10V4m6 16v-7m4 7H3"/>'))
+            ('Profil', '?profil=1', '<circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5"/>'))
 
 
 def esc(value):
@@ -57,19 +57,19 @@ def ust_html(kok, aktif=''):
 def alt_html(kok, yil=None):
     """Tek satırlık alt bilgi (ana sayfayla aynı) ve mobil alt menü."""
     yil = yil or datetime.now(TR).year
-    menu = ''.join(f'<a href="{kok}{h}"><i><svg viewBox="0 0 24 24" aria-hidden="true">{s}</svg></i>{ad}</a>' for ad, h, s in ALT_MENU)
+    menu = ''.join(f'<a href="{kok}{h}"><i><svg viewBox="0 0 24 24" aria-hidden="true">{s}</svg></i>{ad}{'<b id="saved-count-m" hidden>0</b>' if h == '#kayitli' else ''}</a>' for ad, h, s in ALT_MENU)
     return (f'<footer class="alt-bilgi"><div class="wrap"><div><a href="{kok}#bilgi/hakkimizda">Hakkımızda ve veri kaynakları</a><a href="{kok}#bilgi/gizlilik">Gizlilik</a>'
             f'<a href="{kok}#bilgi/reklam">Reklam</a><a href="https://t.me/kamuilantakip" target="_blank" rel="noopener">Telegram</a></div>'
-            f'<span>© {yil} Kamu İlan Takip · Bağımsız ilan rehberi · Başvurular resmî ilan üzerinden yapılır.</span></div></footer>'
+            f'<span>© <span id="yil">{yil}</span> Kamu İlan Takip · Bağımsız ilan rehberi · Başvurular resmî ilan üzerinden yapılır.</span></div></footer>'
             f'<nav class="alt-menu" aria-label="Alt menü">{menu}</nav>')
 
 
-def sayfa_basi(baslik, aciklama, canonical, kok, og_tur='website', ek_head=''):
+def sayfa_basi(baslik, aciklama, canonical, kok, og_tur='website', ek_head='', og_baslik=None):
     """<!doctype> … <body> açılışına kadar ortak kısım (kurum ve ilan sayfaları)."""
     return (f'<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
             f'<meta name="theme-color" content="{ACIK_ZEMIN}"><meta name="color-scheme" content="light dark">{TEMA_BETIGI}'
             f'<title>{esc(baslik)}</title><meta name="description" content="{esc(aciklama)}"><link rel="canonical" href="{canonical}">'
-            f'<meta property="og:title" content="{esc(baslik)}"><meta property="og:description" content="{esc(aciklama)}"><meta property="og:type" content="{og_tur}">{ek_head}'
+            f'<meta property="og:title" content="{esc(og_baslik or baslik)}"><meta property="og:description" content="{esc(aciklama)}"><meta property="og:type" content="{og_tur}">{ek_head}'
             f'<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
             f'<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap">'
             f'<link rel="stylesheet" href="{kok}sayfa.css?v={CSS_SURUM}">{ikonlar(kok)}<script src="{kok}sayfa.js?v={CSS_SURUM}" defer></script></head>')
@@ -93,10 +93,10 @@ def _kurum_bloklari(item, gorsel, logo_html):
     return hero, kirinti, yan
 
 
-def sayfa_kabugu(baslik, aciklama, canonical, icerik, govde_sinifi=''):
+def sayfa_kabugu(baslik, aciklama, canonical, icerik, govde_sinifi='', og_baslik=None):
     """Kurum sayfaları için ortak iskelet (ilan sayfasıyla aynı üst/alt bölüm)."""
     kok = '../../'
-    return (sayfa_basi(baslik, aciklama, canonical, kok)
+    return (sayfa_basi(baslik, aciklama, canonical, kok, og_baslik=og_baslik)
             + f'<body class="{govde_sinifi}"><a class="skip" href="#icerik">İçeriğe geç</a>{ust_html(kok)}{icerik}{alt_html(kok)}'
               f'<noscript><div class="not wrap">Bazı özellikler (kaydetme, kalan gün) için JavaScript gerekir.</div></noscript></body></html>')
 
@@ -114,15 +114,19 @@ def _kadro_tablosu(item):
     sartlar = [dict(s) for s in item.get('sartlar') or []]
     if not kadrolar and not sartlar:
         return ''
+    def sinirli(kisa, uzun):
+        return bool(kisa) and re.search(r'(?<!\w)' + re.escape(kisa) + r'(?!\w)', uzun) is not None
     satirlar, kullanilan = [], set()
     for adet, ad in kadrolar:
-        a, metin = kucuk(ad), ''
-        for n, s in enumerate(sartlar):
-            baslik = kucuk(s.get('kadro') or '')
-            if n not in kullanilan and a and (a in baslik or (baslik and baslik in a)):
-                kullanilan.add(n)
-                metin = s.get('metin') or ''
-                break
+        a, secilen = kucuk(ad), None
+        bos = [(n, kucuk(s.get('kadro') or '')) for n, s in enumerate(sartlar) if n not in kullanilan]
+        secilen = next((n for n, b in bos if a and a == b), None)
+        if secilen is None:
+            secilen = next((n for n, b in bos if sinirli(a, b) or sinirli(b, a)), None)
+        metin = ''
+        if secilen is not None:
+            kullanilan.add(secilen)
+            metin = sartlar[secilen].get('metin') or ''
         satirlar.append((ad, adet, metin))
     kalan = [s for n, s in enumerate(sartlar) if n not in kullanilan]
     html_ = ''
@@ -156,8 +160,8 @@ def _senin_icin(item, kayit):
     veri = (f' data-ogr="{esc(",".join(kayit.get("ogrenim") or []))}" data-pt="{esc(",".join(kayit.get("puan_turleri") or []))}"'
             f' data-il="{esc(kayit.get("il") or "")}" data-ref="{esc(json.dumps(ref, ensure_ascii=False, separators=(",", ":")))}"')
     return (f'<section class="senin" id="senin"{veri}><h2><i>{KISI_IKON}</i>Senin için</h2>'
-            '<div data-profil data-ana="../../"><p class="senin-link">Öğrenim düzeyini, KPSS puanını ve illerini ana sayfada ekle; bu ilana uyup uymadığını burada göster. '
-            '<a href="../../">Profilini oluştur →</a></p></div>' + ref_html + '</section>')
+            '<div data-profil data-ana="../../?profil=1"><p class="senin-link">Öğrenim düzeyini, KPSS puanını ve illerini ana sayfada ekle; bu ilana uyup uymadığını burada göster. '
+            '<a href="../../?profil=1">Profilini oluştur →</a></p></div>' + ref_html + '</section>')
 
 
 def benzer_ilanlar(kayit, kayitlar, en_cok=5):
@@ -166,8 +170,12 @@ def benzer_ilanlar(kayit, kayitlar, en_cok=5):
         return []
     from siniflandir import kucuk
 
+    onbellek = {}
+
     def unvanlar(k):
-        return {re.sub(r'^\d+\s+', '', kucuk(p)).strip() for p in re.split(r'\s*,\s*', k.get('manset') or '') if p.strip()}
+        if k.get('key') not in onbellek:
+            onbellek[k.get('key')] = set(k.get('unvanlar') or ()) or {re.sub(r'^\d+\s+', '', kucuk(p)).strip() for p in re.split(r'\s*,\s*', k.get('manset') or '') if p.strip()}
+        return onbellek[k.get('key')]
     mevcut = unvanlar(kayit)
     meslek = {m for m in kayit.get('meslek') or [] if not m.startswith('30-')}
     sonuc = []
@@ -221,6 +229,12 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None):
     metin, sinif = ks.durum(item, simdi)
     if sinif == 'none':
         metin = 'Son tarihi resmî ilandan doğrula'
+    if sinif == 'upcoming' and item.get('baslangic_zaman'):
+        try:
+            b = datetime.fromisoformat(item['baslangic_zaman']).astimezone(TR)
+            metin = f'Başvuru {b.day} {ks.AY[b.month - 1]}’de açılıyor'
+        except ValueError:
+            pass
     pill_sinif = 'kapali' if sinif in ('closed', 'cancelled') else 'yakinda' if sinif == 'upcoming' else ''
     if sinif in ('today', 'urgent') and item.get('son_tarih') and (datetime.fromisoformat(item['son_tarih']).date() - simdi.date()).days <= 2:
         pill_sinif = 'acil'
@@ -261,7 +275,7 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None):
     from sbb_detay import document_url
     document = document_url(item)
     target = document or item['link']
-    button = 'İlan belgesini aç (PDF) ↗' if document else 'Resmî ilana git · Başvur ↗'
+    button = 'İlan belgesini aç (PDF) ↗' if document else 'Resmî ilana git · Başvur ↗' if acik_ilan else 'Resmî duyuruyu aç ↗' if item.get('duyuru_turu') else 'Resmî ilanı aç ↗'
     if document:
         diger += f'<p class="muted">{esc(item.get("belge_aciklamasi"))}</p>'
     # --- bilgi satırı
@@ -286,7 +300,7 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None):
     afis = ''
     foto = next((f for f in ((kayit or {}).get('meslek') or alanlar.get('meslek') or []) if not f.startswith('30-')), None)
     if foto:
-        adlar = ', '.join(esc(a) for _, a in ks.kadrolar(item)[:3]) or esc(re.sub(r'^\d+\s+', '', h1))
+        adlar = esc(re.sub(r'^\d+\s+', '', h1)) + (f' +{int(alanlar["ek"])}' if alanlar.get('ek') else '')
         yer_kisa = (kayit or {}).get('il') or ks.yer_kisa(item)
         sayi = f'<b>{esc(ks.SAYI_YAZ(toplam))}</b><small>kadro</small>' if toplam else '<small>Kadro</small>'
         afis = (f'<figure class="afis"><div>{sayi}<p>{adlar}{" · " + esc(yer_kisa) if yer_kisa else ""}</p></div>'
@@ -300,7 +314,7 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None):
              f'{kurum_html}<div class="ust-satir"><span class="eyebrow">{esc(item.get("ilan_turu", "KAMU İLANI"))}</span>{durum_html}</div><h1>{esc(h1)}</h1>{alt_html_}{facts}{cta}</article>'
              f'<div class="d-ana">{senin}<section class="d-bolum">{sections}{bolum}{diger}'
              f'<p class="muted d-son">Ayrıntı kontrolü: {esc(item.get("detay_guncelleme", "Tarih belirtilmemiş"))}</p></section>{afis}{benzer_html}</div></main>')
-    return key, (sayfa_basi(f'{title} | Kamu İlan Takip', description, canonical, kok, 'article', og_gorsel)
+    return key, (sayfa_basi(f'{title} | Kamu İlan Takip', description, canonical, kok, 'article', og_gorsel, og_baslik=title)
                  + f'<body class="detail-page"><a class="skip" href="#icerik">İçeriğe geç</a>{ust_html(kok)}{govde}{alt_html(kok)}'
                    '<noscript><div class="not wrap">Bazı özellikler (kaydetme, kalan gün, “Senin için”) için JavaScript gerekir.</div></noscript></body></html>')
 

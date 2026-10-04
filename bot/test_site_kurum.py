@@ -264,10 +264,25 @@ class YeniBicimTests(unittest.TestCase):
         self.assertIn('rel="manifest"', html)
         self.assertNotIn('class="card"', html)
 
+    def test_eslesme_tam_esitlik_ve_og_baslik_ve_dugme(self):
+        i = ilan(1, 'A Belediyesi', kadro='1 Ebe • 1 Muhasebe', sartlar=[{'kadro': 'Muhasebe', 'metin': 'MUH-METNI'}, {'kadro': 'Ebe', 'metin': 'EBE-METNI'}])
+        h = detail_page(i, None, None, None, SIMDI)[1]
+        self.assertIn('<td>Ebe</td><td class="sayi" data-et="Kontenjan">1</td><td data-et="Koşullar">EBE-METNI</td>', h)
+        self.assertIn('data-et="Koşullar">MUH-METNI', h)
+        self.assertIn('<meta property="og:title" content="A Belediyesi', h)
+        self.assertNotIn('og:title" content="A Belediyesi Alım İlanı | Kamu', h)
+        self.assertIn('Resmî ilana git · Başvur', h)
+        kapali = detail_page(ilan(2, 'A Belediyesi', son_tarih='2026-01-01'), None, None, None, SIMDI)[1]
+        self.assertIn('Resmî ilanı aç ↗', kapali)
+        self.assertNotIn('Resmî ilana git', kapali)
+        yakinda = detail_page(ilan(3, 'A Belediyesi', baslangic_zaman='2026-10-20T09:00:00+03:00'), None, None, None, SIMDI)[1]
+        self.assertIn('Başvuru 20 Ekim’de açılıyor', yakinda)
+        self.assertIn('?profil=1', h)
     def test_manifest_ve_puanlar(self):
         m = json.loads((site_uret.ROOT / 'docs' / 'manifest.webmanifest').read_text(encoding='utf-8'))
         self.assertEqual(m['start_url'], './?g=bugun')
         self.assertEqual(m['display'], 'standalone')
+        self.assertEqual(m['id'], './')
         for ic in m['icons']:
             self.assertTrue((site_uret.ROOT / 'docs' / ic['src']).is_file())
         puan = (site_uret.ROOT / 'docs' / 'puanlar' / 'index.html').read_text(encoding='utf-8')

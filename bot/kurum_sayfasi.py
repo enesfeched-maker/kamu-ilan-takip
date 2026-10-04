@@ -387,8 +387,8 @@ def _gecmis_satir(item, simdi, kok):
     a = kart_alanlari(item)
     metin, cls = durum(item, simdi)
     zaman = tarih_yazi(item['son_tarih']) if item.get('son_tarih') else 'Tarih yok'
-    return (f'<tr class="kp-row"><td><a href="{kok}ilan/{esc(anahtar(item))}/">{esc(a["manset"])}</a></td>'
-            f'<td><span class="kp-st {cls}">{esc(metin)}</span></td><td><time>{esc(zaman)}</time></td></tr>')
+    return (f'<tr class="kp-row"><td class="kp-baslik"><a href="{kok}ilan/{esc(anahtar(item))}/">{esc(a["manset"])}</a></td>'
+            f'<td class="kp-durum"><span class="kp-st {cls}">{esc(metin)}</span></td><td class="kp-tarih"><time>{esc(zaman)}</time></td></tr>')
 
 
 def kurum_turu(ad):
@@ -458,7 +458,7 @@ def kurum_sayfasi(kan, liste, slug, gorseller, simdi, tablolar=None, harita=None
 <div class="kp-stats"><div><strong>{len(acik)}</strong><span>açık ilan</span></div><div><strong>{kadro_yazi}</strong><span>bilinen kadro</span></div><div><strong>{len(liste)}</strong><span>toplam kayıt</span></div></div>
 <div class="kp-actions"><a class="btn btn-tg btn-buyuk" href="https://t.me/kamuilantakip" target="_blank" rel="noopener">Telegram'da takip et ↗</a></div></div></section>
 <main id="icerik" class="wrap kp-main"><section class="bolum"><div class="bolum-bas"><h2>Başvurusu açık ilanlar <span class="sayi">{len(acik)}</span></h2></div>{acik_blok}</section>{gecmis_blok}</main>'''
-    return su.sayfa_kabugu(baslik + ' | Kamu İlan Takip', aciklama, canonical, icerik, 'kurum-page')
+    return su.sayfa_kabugu(baslik + ' | Kamu İlan Takip', aciklama, canonical, icerik, 'kurum-page', baslik)
 
 
 def kurum_sayfalarini_uret(ilanlar, docs, gorseller, simdi=None):

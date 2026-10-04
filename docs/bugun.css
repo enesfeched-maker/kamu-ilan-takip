@@ -107,7 +107,7 @@ dialog svg,.save-button svg{stroke-width:1.7}
 .tarih.acil strong,.tarih.acil span{color:var(--alert)}
 .tarih.acil strong::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--alert);margin:0 6px 2px 0}
 .tarih.yok strong{color:var(--faint)}
-.kaydet{position:relative;z-index:2;width:32px;height:32px;display:grid;place-items:center;border-radius:9px;border:0;background:transparent;color:var(--faint);cursor:pointer;padding:0}
+.kaydet{position:relative;z-index:2;width:32px;height:32px;display:grid;place-items:center;border-radius:9px;border:0;background:transparent;color:var(--muted);cursor:pointer;padding:0}
 .kaydet:hover{background:var(--surface-3);color:var(--ink)}
 .kaydet svg{width:18px;height:18px}
 .kaydet.dolu{color:var(--ink)}
@@ -454,7 +454,7 @@ button.hc{cursor:pointer}
   .kurulum{flex-wrap:wrap}
   .alt-bilgi{margin-top:40px}
   .alt-menu{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:30;background:color-mix(in srgb,var(--surface) 94%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:6px 4px 10px}
-  .alt-menu a,.alt-menu button{display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:var(--muted);font:inherit;font-size:10.5px;font-weight:600;position:relative;background:none;border:0;padding:0;cursor:pointer}
+  .alt-menu a,.alt-menu button{display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:var(--ink-2);font:inherit;font-size:10.5px;font-weight:600;position:relative;background:none;border:0;padding:0;cursor:pointer}
   .alt-menu i{width:44px;height:28px;border-radius:14px;display:grid;place-items:center}
   .alt-menu svg{width:21px;height:21px}
   .alt-menu .aktif{color:var(--ink)}

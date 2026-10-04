@@ -43,6 +43,8 @@
   if (tb) tb.onclick = function () { yaz('kit-theme', document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'); tema(); };
   tema();
 
+  var yl = document.getElementById('yil'); if (yl) yl.textContent = String(new Date().getFullYear());
+
   /* kaydet: portal.js ile aynı anahtar (kit-saved) ve aynı kimlik (ilan id'si) */
   var kayitli = oku('kit-saved', []); if (!Array.isArray(kayitli)) kayitli = [];
   function kaydetCiz(b) {
@@ -52,13 +54,15 @@
     if (y) y.textContent = d ? 'Kaydedildi' : 'Kaydet';
     else b.setAttribute('aria-label', (d ? 'Kaydı kaldır: ' : 'İlanı kaydet: ') + ad);
   }
+  function sayac() { var c = document.getElementById('saved-count-m'); if (c) { c.textContent = String(kayitli.length); c.hidden = !kayitli.length; } }
+  sayac();
   Array.prototype.forEach.call(document.querySelectorAll('[data-kaydet]'), function (b) {
     kaydetCiz(b);
     b.addEventListener('click', function (e) {
       e.stopPropagation();
       var id = b.getAttribute('data-kaydet'), i = kayitli.indexOf(id);
       if (i >= 0) kayitli.splice(i, 1); else kayitli.push(id);
-      yaz('kit-saved', kayitli);
+      yaz('kit-saved', kayitli); sayac();
       Array.prototype.forEach.call(document.querySelectorAll('[data-kaydet]'), function (x) { if (x.getAttribute('data-kaydet') === id) kaydetCiz(x); });
     });
   });
@@ -120,7 +124,7 @@
     var kalin = function (t) { return el('b', '', t); };
     if (!pr) {
       var ek2 = el('p', 'senin-link'); ek2.append('Öğrenim düzeyini, KPSS puanını ve illerini ana sayfada 30 saniyede ekle; bu ilana uyup uymadığını burada göstereyim. ');
-      var l = el('a', '', 'Profilini oluştur →'); l.href = hedef.getAttribute('data-ana') || '../../'; ek2.append(l);
+      var l = el('a', '', 'Profilini oluştur →'); l.href = hedef.getAttribute('data-ana') || '../../?profil=1'; ek2.append(l);
       hedef.replaceChildren(ek2);
     } else {
       var en = ogr.length ? Math.min.apply(null, ogr.map(function (x) { return RANK[x]; })) : -1;

@@ -17,9 +17,10 @@ const LEVELS={lisans:'Lisans',onlisans:'Önlisans',ortaogretim:'Ortaöğretim'};
 function profilOku(){const p=readStore('kit-profil',null);if(!p||typeof p!=='object'||p.v!==1||p.atlandi===true||!LEVELS[p.ogrenim])return null;const o={ogrenim:p.ogrenim,puan_turu:typeof p.puan_turu==='string'&&/^P\d{1,3}$/.test(p.puan_turu)?p.puan_turu:PUAN_TURU[p.ogrenim]};if(typeof p.puan==='number'&&isFinite(p.puan)&&p.puan>0&&p.puan<=100)o.puan=p.puan;return o;}
 /* "Bu unvanda açık ilanlar (N)": ../liste.json bir kez yüklenir; yüklenemezse bağlantı sessizce gösterilmez */
 let acikListe=null;const acikOnbellek=new Map();
-const dizge=s=>String(s||'').toLocaleLowerCase('tr').normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/ı/g,'i').replace(/\s*\(.*?\)/g,'').replace(/\s+/g,' ').trim();
-async function acikListeYukle(){try{const r=await fetch('../liste.json',{cache:'no-cache'});if(!r.ok)return;const v=await r.json();if(v&&Array.isArray(v.ilanlar))acikListe=v.ilanlar.filter(i=>i&&typeof i.manset==='string').map(i=>({m:dizge(i.manset)}));}catch{}}
-function acikSayi(unvan){if(!acikListe)return 0;const u=dizge(unvan);if(u.length<3)return 0;if(!acikOnbellek.has(u))acikOnbellek.set(u,acikListe.filter(i=>i.m.includes(u)).length);return acikOnbellek.get(u);}
+/* Python kucuk() ile aynı: Türkçe küçük harf, kesme işareti atılır, boşluk tekilleşir; parantezli ek atılır. VHKİ kısaltması tam adıyla eşleşir. */
+const dizge=s=>{const k=String(s||'').toLocaleLowerCase('tr').replace(/['’`´]/g,'').replace(/\s*\(.*?\)/g,'').replace(/\s+/g,' ').trim();return k==='veri hazırlama ve kontrol işletmeni'?'vhki':k;};
+async function acikListeYukle(){try{const r=await fetch('../liste.json',{cache:'no-cache'});if(!r.ok)return;const v=await r.json();if(v&&Array.isArray(v.ilanlar))acikListe=v.ilanlar.filter(i=>i&&Array.isArray(i.unvanlar)).map(i=>({u:new Set(i.unvanlar.filter(x=>typeof x==='string').map(dizge))}));}catch{}}
+function acikSayi(unvan){if(!acikListe)return 0;const u=dizge(unvan);if(u.length<2)return 0;if(!acikOnbellek.has(u))acikOnbellek.set(u,acikListe.filter(i=>i.u.has(u)).length);return acikOnbellek.get(u);}
 function acikBaglanti(unvan){const n=acikSayi(unvan);if(!n)return null;const a=E('a','acik-link','Bu unvanda açık ilanlar ('+n+') →');a.href='../?q='+encodeURIComponent(unvan)+'#ilanlar';return a;}
 function secenekler(sel,degerler,ilk){sel.replaceChildren(E('option',null,ilk));sel.firstChild.value='';for(const [v,t] of degerler){const o=E('option',null,t);o.value=v;sel.append(o);}}
 function durum(metin){$('durum').hidden=!metin;$('durum').textContent=metin||'';}
@@ -166,7 +167,7 @@ async function robot(){
   if(sonuc.length>robotSinir){const b=E('button','btn btn-ikinci','Daha fazla göster ('+(sonuc.length-robotSinir)+')');b.onclick=()=>{robotSinir+=ROBOT_ILK;robot();};kutu.append(b);}
 }
 
-applyTheme();
+applyTheme();{const y=$('yil');if(y)y.textContent=String(new Date().getFullYear());}
 $('theme').onclick=()=>{writeStore('kit-theme',document.documentElement.dataset.theme==='dark'?'light':'dark');applyTheme();};
 for(const b of document.querySelectorAll('#duzeyler .tab'))b.onclick=()=>duzeyAc(b.dataset.duzey);
 for(const id of ['donem','il','sirala'])$(id).onchange=()=>{sayfa=1;tabloCiz();};
@@ -176,8 +177,8 @@ $('robot-form').onsubmit=e=>{e.preventDefault();robotSinir=ROBOT_ILK;robot();};
 {
   const pr=profilOku(),kayitliDuzey=readStore('kit-puan-duzey','');
   duzeyAc(pr?pr.ogrenim:PUAN_TURU[kayitliDuzey]?kayitliDuzey:'lisans').then(()=>{
-    if(!pr)return;
     const ip=$('profil-ipucu');
+    if(!pr){ip.replaceChildren('Profilini oluşturursan puan türün ve puanın otomatik dolar. ');const l=E('a','acik-link','Profilini oluştur →');l.href='../?profil=1';ip.append(l);ip.hidden=false;return;}
     let m='Profilinden dolduruldu: '+LEVELS[pr.ogrenim]+(pr.puan?' · KPSS '+pr.puan_turu+' '+String(pr.puan).replace('.',','):'')+'.';
     if(pr.puan_turu!==PUAN_TURU[pr.ogrenim])m+=' Bu tablo yalnızca '+PUAN_TURU[pr.ogrenim]+' puan türüyle yapılan merkezi yerleştirmeleri gösterir.';
     ip.textContent=m;ip.hidden=false;

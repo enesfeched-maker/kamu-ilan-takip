@@ -4,7 +4,7 @@
 .puan-intro h1{margin:10px 0;font-size:40px;line-height:1.1;letter-spacing:-.04em;font-weight:700}
 .puan-intro p{margin:0;color:var(--muted);font-size:16px}
 .segment{display:inline-flex;flex-wrap:wrap;border:1px solid var(--line-2);border-radius:999px;padding:3px;background:var(--surface);margin-bottom:18px}
-.segment .tab{height:34px;padding:0 16px;border:0;border-radius:999px;background:transparent;color:var(--ink-2);font:inherit;font-size:14px;font-weight:550;cursor:pointer}
+.segment .tab{min-height:34px;height:auto;padding:0 16px;border:0;border-radius:999px;background:transparent;color:var(--ink-2);font:inherit;font-size:14px;font-weight:550;cursor:pointer}
 .segment .tab.secili{background:var(--ink);color:var(--surface)}
 .kutu{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px;box-shadow:var(--shadow)}
 .kutu.robot{margin-bottom:36px}
