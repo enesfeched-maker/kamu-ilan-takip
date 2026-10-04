@@ -32,8 +32,24 @@ def baslik_temiz(s):
     return s[:1].upper() + s[1:]
 
 
-def il_bul(item):
-    """Görünen il: tek il -> 'Ankara'; çoklu -> 'Ankara +2'; belediyede addan/kayıttan il; yoksa yer_kisa."""
+def il_haritasi(ilanlar):
+    """{belediye kanonik adı: il adı} — ili addan/kayıttan bilinen kayıtlardan; aynı belediyenin ili belirsiz
+    kayıtları (örn. 'HANAK BELEDİYE BAŞKANLIĞI' <- 'Ardahan Hanak Belediyesi') bununla çözülür."""
+    ks = _ks()
+    harita = {}
+    for item in ilanlar:
+        kan = ks.kurum_kanonik(item.get('kurum'))
+        if not kan.endswith(' belediye') or kan in harita:
+            continue
+        il = ks._ilan_ili(item)
+        if il:
+            harita[kan] = ks.IL_ADI.get(il, il)
+    return harita
+
+
+def il_bul(item, harita=None):
+    """Görünen il: tek il -> 'Ankara'; çoklu -> 'Ankara +2'; belediyede addan/kayıttan/haritadan il;
+    parantezli il ('Subaşı (Yalova)'); yoksa yer_kisa (bilinmiyorsa '' — tarayıcı bunu ülke geneli sayar)."""
     ks = _ks()
     iller = item.get('iller') or []
     if iller:
@@ -41,6 +57,14 @@ def il_bul(item):
     il = ks._ilan_ili(item)
     if il:
         return ks.IL_ADI.get(il, il)
+    for p in re.findall(r'\(([^)]+)\)', item.get('kurum') or ''):
+        a = ks.kurum_anahtari(p)
+        if a in ks.IL_ADI:
+            return ks.IL_ADI[a]
+    if harita:
+        il = harita.get(ks.kurum_kanonik(item.get('kurum')))
+        if il:
+            return il
     return ks.yer_kisa(item)
 
 
@@ -70,7 +94,8 @@ def taban_tablolari(docs):
 
 
 def taban_ref(tablolar, duzey, kadro_adlari):
-    """İlk eşleşen unvan için {'duzey','unvan','medyan','n','donem'}; n < EN_AZ_KAYIT ise veya eşleşme yoksa None."""
+    """İlk eşleşen unvan için {'duzey','unvan','medyan','n','donem'}; eşleşme yoksa None.
+    n: o unvanın son iki dönemdeki taban puanı kayıt sayısı (kadro satırı; yerleşen kişi sayısı değil), en az EN_AZ_KAYIT."""
     from siniflandir import kucuk
     tablo, donem = tablolar.get(duzey, ({}, ''))
     for ad in kadro_adlari:
@@ -87,7 +112,7 @@ def _tr_tarih(iso):
         return None
 
 
-def kayit(item, gorsel, tablolar, simdi):
+def kayit(item, gorsel, tablolar, simdi, harita=None):
     """Tek ilanın ince kaydı (None: listede gösterilmeyecek durumda)."""
     ks = _ks()
     metin, cls = ks.durum(item, simdi)
@@ -98,18 +123,18 @@ def kayit(item, gorsel, tablolar, simdi):
     g = gorsel or {}
     ogr = [o for o in (item.get('ogrenim') or []) if o in ks.LEVELS]
     adlar = [ad for _, ad in ks.kadrolar(item)]
-    ref = None
+    ref = {}  # öğrenim düzeyine göre {'lisans': {...}}; tarayıcı profil düzeyine göre okur
     for duzey in ogr:
-        ref = taban_ref(tablolar, duzey, adlar)
-        if ref:
-            break
+        r = taban_ref(tablolar, duzey, adlar)
+        if r:
+            ref[duzey] = {k: v for k, v in r.items() if k != 'duzey'}
     kay = {
-        'key': key, 'id': item.get('id') or key,
+        'key': key, 'id': item.get('id') if item.get('id') != key else None,
         'manset': baslik_temiz(a['manset']), 'ek': a.get('ek', 0), 'toplam': a.get('toplam'),
         'meslek': a.get('meslek') or [], 'logo': g.get('logo'),
         'kurum': ks.kurum_adi(item.get('kurum')), 'kurum_slug': g.get('kurum_slug') or ks.kurum_slug(item.get('kurum')),
-        'il': il_bul(item), 'iller': item.get('iller') or [],
-        'ogrenim': ogr, 'kpss': item.get('kpss'), 'puan_turleri': puan_turleri(item), 'taban_ref': ref,
+        'il': il_bul(item, harita), 'iller': item.get('iller') or [],
+        'ogrenim': ogr, 'kpss': item.get('kpss'), 'puan_turleri': puan_turleri(item), 'taban_ref': ref or None,
         'son_tarih': item.get('son_tarih'), 'son_zaman': item.get('son_zaman'),
         'baslangic_zaman': item.get('baslangic_zaman'), 'ilk_gorulme': item.get('ilk_gorulme'), 'durum': cls,
     }
@@ -136,12 +161,13 @@ def liste_uret(ilanlar, gorseller, docs, simdi=None, guncelleme=None):
     from siniflandir import akademik_ilan
     simdi = (simdi or datetime.now(TR)).astimezone(TR)
     tablolar = taban_tablolari(docs)
+    harita = il_haritasi(ilanlar)
     kayitlar = []
     for item in ilanlar:
         try:
             if akademik_ilan(item):
                 continue
-            k = kayit(item, (gorseller or {}).get(_ks().anahtar(item)), tablolar, simdi)
+            k = kayit(item, (gorseller or {}).get(_ks().anahtar(item)), tablolar, simdi, harita)
         except Exception as hata:
             print(f'Uyarı: liste kaydı üretilemedi ({item.get("id")}): {hata}')
             continue

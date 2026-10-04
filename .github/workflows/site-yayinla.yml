@@ -53,6 +53,7 @@ jobs:
         run: |
           python -c "from PIL import features; print('Pillow WebP desteği:', features.check('webp'))"
           python -m unittest discover -s bot -p 'test_site_*.py'
+          python -m unittest discover -s bot -p 'test_liste_verisi.py'
           python bot/site_uret.py
       - name: Pages yapılandır
         uses: actions/configure-pages@v5

@@ -330,3 +330,18 @@ dialog svg,.save-button svg{stroke-width:1.7}
 .filtre select{width:auto;max-width:100%}
 .filtre .temizle{padding:0 6px}
 .kars{margin-top:-2px}
+.ilan-kurum a.ad{position:relative;z-index:2;color:inherit;text-decoration:none}
+.ilan-kurum a.ad:hover{color:var(--ink);text-decoration:underline}
+.alt-etiket{flex-shrink:0;font-size:11px;font-weight:600;line-height:18px;padding:0 7px;border-radius:6px;background:var(--surface-3);color:var(--ink-2)}
+.kars{min-height:32px;padding:0 0 0 6px}
+.kars input{width:16px;height:16px}
+body.kars-acik{padding-bottom:96px}
+#icerik:focus{outline:0}
+.onay{align-items:flex-start;gap:8px}
+.onay input{margin:2px 0 0;flex-shrink:0}
+#profil-dialog{position:relative}
+#profil-dialog .kapat{position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:10px;border:0;background:var(--surface-2);color:var(--ink-2);display:grid;place-items:center;cursor:pointer;padding:0}
+#profil-dialog .kapat svg{width:18px;height:18px}
+#profil-dialog h2{padding-right:44px}
+@media (max-width:760px){body.kars-acik{padding-bottom:150px}#profil-dialog .kapat{top:18px}}
+.adim>label.onay{justify-content:flex-start;width:auto;font-weight:400;margin:12px 0 0}

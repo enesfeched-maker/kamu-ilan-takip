@@ -43,6 +43,17 @@ class IlTests(unittest.TestCase):
     def test_belediyede_addan_il(self):
         self.assertEqual(lv.il_bul({'kurum': 'Kırşehir Mucur Belediyesi'}), 'Kırşehir')
 
+    def test_parantezli_il(self):
+        self.assertEqual(lv.il_bul({'kurum': 'SUBAŞI (YALOVA) BELEDİYE BAŞKANLIĞI'}), 'Yalova')
+        self.assertEqual(lv.il_bul({'kurum': 'Test Birimi (Konya) Müdürlüğü'}), 'Konya')
+
+    def test_harita_ilsiz_belediyeyi_cozer(self):
+        ilanlar = [{'kurum': 'Ardahan Hanak Belediyesi'}, {'kurum': 'HANAK BELEDİYE BAŞKANLIĞI'}, {'kurum': 'Bilinmez Belediyesi'}]
+        harita = lv.il_haritasi(ilanlar)
+        self.assertEqual(lv.il_bul(ilanlar[1], harita), 'Ardahan')
+        self.assertEqual(lv.il_bul(ilanlar[1]), '')
+        self.assertEqual(lv.il_bul(ilanlar[2], harita), '')
+
     def test_yer_kisa_yedek(self):
         self.assertEqual(lv.il_bul({'yer': 'Bakanlık Merkez / Ankara'}), 'Ankara')
 
@@ -97,7 +108,8 @@ class ListeTests(unittest.TestCase):
         self.assertEqual([k['key'] for k in v['ilanlar']], [uid(1), uid(5)])
         a = v['ilanlar'][0]
         self.assertEqual((a['il'], a['puan_turleri'], a['logo'], a['durum']), ('Ankara', ['P3'], 'ilan/logo/ab.webp', 'soon'))
-        self.assertEqual(a['taban_ref']['n'], 5)
+        self.assertEqual(a['taban_ref']['lisans']['n'], 5)
+        self.assertNotIn('duzey', a['taban_ref']['lisans'])
         self.assertEqual(v['sayilar'], {'acik': 2, 'kadro': 4, 'bugun_yeni': 1})
         self.assertEqual(v['takvim'], {'2026-10-10': 2})
         self.assertEqual(v['guncelleme'], '2026-10-04T17:24:28+03:00')

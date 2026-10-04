@@ -19,11 +19,11 @@ const fixture=[
  {id:'two',baslik:'ESKİ İLAN',kurum:'Kurum',yer:'Ankara',son_tarih:'2000-01-01',link:KK(2)},
  {id:'three',baslik:'Destek Personeli',kurum:'Kurum 3',link:KK(3)}
 ];
-const row=(key,id,extra={})=>({key,id,manset:'Büro Personeli',ek:0,toplam:2,meslek:['30-genel.jpg'],logo:'',kurum:'İstanbul Üniversitesi',kurum_slug:'istanbul-universitesi',il:'İstanbul',iller:['İstanbul'],ogrenim:['lisans'],kpss:'kpss',puan_turleri:['P3'],taban_ref:{duzey:'lisans',unvan:'memur',medyan:81,n:9,donem:'2025-2/2026-1'},son_tarih:iso(1),son_zaman:'',baslangic_zaman:'',ilk_gorulme:nowIso,durum:'today',...extra});
+const row=(key,id,extra={})=>({key,id,manset:'Büro Personeli',ek:0,toplam:2,meslek:['30-genel.jpg'],logo:'',kurum:'İstanbul Üniversitesi',kurum_slug:'istanbul-universitesi',il:'İstanbul',iller:['İstanbul'],ogrenim:['lisans'],kpss:'kpss',puan_turleri:['P3'],taban_ref:{lisans:{unvan:'memur',medyan:81,n:9,donem:'2025-2/2026-1'}},son_tarih:iso(1),son_zaman:'',baslangic_zaman:'',ilk_gorulme:nowIso,durum:'today',...extra});
 const k=n=>KK(n).split('?i=')[1];
 const liste={guncelleme:nowIso,sayilar:{acik:3,kadro:6,bugun_yeni:3},takvim:{},ilanlar:[
  row(k(1),'one'),
- row(k(4),'four',{il:'Ankara',iller:['Ankara'],son_tarih:iso(10),manset:'Zabıta',taban_ref:null,ilk_gorulme:'2020-01-01T00:00:00+03:00'}),
+ row(k(4),'four',{il:'Ankara',iller:['Ankara'],son_tarih:iso(10),manset:'Zabıta',taban_ref:{},ilk_gorulme:'2020-01-01T00:00:00+03:00'}),
  row(k(5),'five',{il:'Ankara',iller:['Ankara'],ogrenim:['onlisans'],son_tarih:iso(0),manset:'Teknisyen',ilk_gorulme:'2020-01-01T00:00:00+03:00',puan_turleri:['P93']}),
  row(k(6),'six',{son_tarih:'',baslangic_zaman:new Date(Date.now()+864e5).toISOString().slice(0,19)+'+00:00',durum:'upcoming',ilk_gorulme:'2020-01-01T00:00:00+03:00',manset:'Yakında'}),
  {key:'../evil',id:'x',manset:'<img src=x onerror=alert(1)>'}
@@ -39,7 +39,7 @@ const ctx=vm.createContext({URL,URLSearchParams,Date,Intl,Blob,console,Set,Map,N
 const run=s=>vm.runInContext(s,ctx);
 vm.runInContext(fs.readFileSync('docs/portal.js','utf8'),ctx);
 (async()=>{await new Promise(r=>setImmediate(r));await new Promise(r=>setImmediate(r));
-assert.equal(run('loaded'),true);
+assert.equal(run('listeLoaded'),true);assert.equal(run('loaded'),false,'full records load lazily');await run('ensureFull()');assert.equal(run('loaded'),true);
 assert.equal(ctx.__replaced,'/kamu-ilan-takip/','?g=bugun stripped from URL');
 // liste.json: bozuk kayıt (geçersiz anahtar) elenir
 assert.equal(run('liste.length'),4,'invalid liste row dropped');
@@ -60,22 +60,25 @@ run('showDetail(items[0])');assert.equal(get('modal').open,true);assert.match(ru
 run("compared.add('one');compared.add('two');showComparison()");assert.equal(get('modal-body').children.length,1);
 // doğrulama
 assert.equal(run("cleanL({key:'a/b'})"),null);assert.equal(run("cleanL({key:'abc',meslek:['../x.jpg','01-yazilimci.jpg'],logo:'javascript:1'}).meslek.length"),1);assert.equal(run("cleanL({key:'abc',logo:'javascript:1'}).logo"),'');
-assert.equal(run("cleanL({key:'abc',taban_ref:{duzey:'lisans',medyan:80,n:3}}).taban_ref"),null,'n<5 reference dropped');
+assert.equal(run("Object.keys(cleanL({key:'abc',taban_ref:{lisans:{medyan:80,n:3},onlisans:{medyan:70,n:6}}}).taban_ref).join()"),'onlisans','n<5 reference dropped');
 assert.equal(run("validProfile({v:1,ogrenim:'x'})"),null);assert.equal(run("validProfile({v:1,ogrenim:'lisans',iller:['Ankara','<b>'],puan:150}).iller.length"),1);
 assert.equal(run("ekSi(1)"),'1’i');assert.equal(run("ekSi(30)"),'30’u');assert.equal(run("baslikTemiz('İlk Defa Atanmak Üzere Vhki Alımı İlanı')"),'VHKİ alımı');
 // Bugün: profilsiz -> kurulum kartı, Telegram saati 09:00
 run("showTab('bugun')");
 const bugun=text(get('bugun'));
-assert.match(bugun,/Her sabah 09:00/);assert.doesNotMatch(bugun,/08:30/);assert.match(bugun,/30 saniyede sana göre ayarla/);
+assert.match(bugun,/Her sabah 09:00 civarı/);assert.doesNotMatch(bugun,/08:30/);assert.match(bugun,/30 saniyede sana göre ayarla/);
 // Profil: Senin için, taban sinyali, kayıt
 run("profil={v:1,ogrenim:'lisans',puan_turu:'P3',puan:82.15,iller:['İstanbul'],tum_turkiye:false,bolum:'',t:'2026-10-04'};render()");
 const b2=text(get('bugun'));
-assert.match(b2,/Senin için/);assert.match(b2,/Benzer kadro tabanı|Taban/);assert.match(b2,/puanın üstünde/);
-assert.equal(run("uygun(liste[0],profil)"),true);assert.equal(run("uygun(liste[1],profil)"),false,'il mismatch');assert.equal(run("uygun(liste[2],profil)"),false,'öğrenim mismatch');
+assert.match(b2,/Senin için/);assert.doesNotMatch(b2,/yeni ilan yok\./,'no empty-new message while new items shown elsewhere');assert.match(b2,/Puanın, benzer kadroların taban medyanından/);assert.doesNotMatch(b2,/puanın üstünde|Taban ~/);
+assert.equal(run("uygun(liste[0],profil)"),'tam');assert.equal(run("uygun(liste[1],profil)"),false,'il mismatch');assert.equal(run("uygun(liste[2],profil)"),false,'il mismatch (onlisans listing in Ankara)');
+assert.equal(run("uygun({...liste[0],ogrenim:['onlisans']},profil)"),'alt','lower level listing');assert.equal(run("uygun({...liste[0],ogrenim:['lisans']},{...profil,ogrenim:'onlisans'})"),false,'higher level listing excluded');assert.equal(run("uygun({...liste[1],il:'Türkiye Geneli',iller:[]},profil)"),'tam','nationwide matches every il');assert.equal(run("uygun({...liste[1],il:'',iller:[]},profil)"),'tam');
 // puan türü ilanda varsa ve kullanıcınınkiyle uyuşmuyorsa sinyal gizlenir
-assert.equal(run("sinyalOf({...liste[0],puan_turleri:['P93']})"),null);
+assert.equal(run("sinyalOf({...liste[0],puan_turleri:['P93']})"),null);assert.match(text(run("sinyalOf({...liste[0],taban_ref:{lisans:{medyan:92.15,n:9}}})")),/Benzer kadroların taban medyanı puanından 10,0 puan yüksek/);
+// kayıtlı son ziyaret doğrulaması
+assert.equal(run("validVisit('2999-01-01T00:00:00Z')"),null,'future visit rejected');assert.equal(run("validVisit('x')"),null);assert.ok(run("validVisit('2026-10-02T05:00:00.000Z')")>0);
 // Tüm Türkiye
-run("profil.tum_turkiye=true");assert.equal(run("uygun(liste[1],profil)"),true);
+run("profil.tum_turkiye=true");assert.equal(run("uygun(liste[1],profil)"),'tam');
 // Son ziyaret 10 sn gecikmeli yazılır (burada setTimeout stub: yazılmamış olmalı)
 assert.ok(!stored.includes('kit-son-ziyaret'),'last visit not written immediately');
 // Her ilan bir bölümde yalnız bir kez
