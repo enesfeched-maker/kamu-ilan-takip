@@ -19,6 +19,7 @@ AY = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağusto
 LEVELS = {'lisans': 'Lisans', 'onlisans': 'Önlisans', 'ortaogretim': 'Ortaöğretim'}
 SON_EK = re.compile(r'\s+(?:alacak|alınacak|alinacak|temin edecektir|alımı|alimi)\s*$', re.I)
 IL_ANAHTAR = {kurum_anahtari(il) for il in ILLER}
+IL_ADI = {kurum_anahtari(il): il for il in ILLER}
 ACIK = ('ok', 'soon', 'urgent', 'today', 'none', 'upcoming')
 BOOKMARK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg>'
 
@@ -41,19 +42,39 @@ def kurum_adi(k):
     return s
 
 
+def _belediye_parcalar(k):
+    """Belediye değilse None; değilse (il önekisiz/ilsiz kanonik ad, addan çıkan il anahtarı | None)."""
+    s = kurum_anahtari(k or '')
+    if not s.endswith(' belediye'):
+        return None
+    w = s[:-len(' belediye')].split()
+    il = None
+    if len(w) >= 2 and w[0] in IL_ANAHTAR and w[1:] != ['buyuksehir']:
+        il, w = w[0], w[1:]
+    elif len(w) >= 2 and w[-1] in IL_ANAHTAR:
+        il, w = w[-1], w[:-1]
+    return ' '.join(w) + ' belediye', il
+
+
 def kurum_kanonik(k):
     """kurum_anahtari + belediyelerde il önekini/parantezli ili atar: 'Kırşehir Mucur Belediyesi',
     'MUCUR BELEDİYE BAŞKANLIĞI' ve 'Mucur (Kırşehir) Belediye Başkanlığı' -> 'mucur belediye'.
-    Büyükşehir ve il belediyeleri ('rize belediye', 'ankara buyuksehir belediye') korunur."""
-    s = kurum_anahtari(k or '')
-    if s.endswith(' belediye'):
-        w = s[:-len(' belediye')].split()
-        if len(w) >= 2 and w[0] in IL_ANAHTAR and w[1:] != ['buyuksehir']:
-            w = w[1:]
-        elif len(w) >= 2 and w[-1] in IL_ANAHTAR:
-            w = w[:-1]
-        s = ' '.join(w) + ' belediye'
-    return s
+    Büyükşehir ve il belediyeleri ('rize belediye', 'ankara buyuksehir belediye') korunur.
+    Aynı adlı farklı il belediyeleri kurum_gruplari() içinde il ile ayrılır."""
+    p = _belediye_parcalar(k)
+    return p[0] if p else kurum_anahtari(k or '')
+
+
+def _ilan_ili(item):
+    """Belediye kaydının ili: addaki il, yoksa kayıttaki tek il; bilinmiyorsa None."""
+    p = _belediye_parcalar(item.get('kurum'))
+    if p and p[1]:
+        return p[1]
+    iller = item.get('iller') or []
+    if len(iller) == 1:
+        a = kurum_anahtari(iller[0])
+        return a if a in IL_ANAHTAR else None
+    return None
 
 
 def _ascii_slug(s):
@@ -72,30 +93,58 @@ def _il_slug(item):
     return _ascii_slug(iller[0]) if iller else ''
 
 
-def kart_meta(ilanlar):
-    """{ilan anahtarı: kart alanları + kurum_slug + kurum_sayisi} — ayrıntı sayfası olan her kayıt için."""
+def kart_meta(ilanlar, basarili=None):
+    """{ilan anahtarı: kart alanları (+ kurum_slug, kurum_sayisi)} — ayrıntı sayfası olan her kayıt için.
+    `basarili` verilirse kurum bağlantısı yalnız sayfası yazılabilen gruplara eklenir."""
     gruplar, slugler = kurum_gruplari(ilanlar)
     sonuc = {}
     for kan, liste in gruplar.items():
         for item in liste:
-            sayfa = _su().detail_page(item)
-            if not sayfa:
-                continue
-            sonuc[sayfa[0]] = {**kart_alanlari(item), 'kurum_slug': slugler[kan], 'kurum_sayisi': len(liste)}
+            alan = kart_alanlari(item)
+            if basarili is None or kan in basarili:
+                alan.update(kurum_slug=slugler[kan], kurum_sayisi=len(liste))
+            sonuc[_su().detail_page(item)[0]] = alan
     return sonuc
 
 
+def _grup_slug(kan, liste):
+    s = kurum_slug(liste[0]['kurum'])
+    return (s[:70].strip('-') + '-' + _ascii_slug(IL_ADI.get(kan.split('|')[1], kan.split('|')[1])))[:80].strip('-') if '|' in kan else s
+
+
+def _sayfali(item):
+    try:
+        return _su().detail_page(item) is not None
+    except Exception:
+        return False
+
+
 def kurum_gruplari(ilanlar):
-    """{kanonik: [ilan,…]} (akademik ve kurumsuz kayıtlar hariç) ve {kanonik: slug}.
-    Farklı kurumlar aynı slug'a düşerse sonuna il (yoksa sıra no) eklenir."""
-    gruplar = {}
+    """({grup anahtarı: [ilan,…]}, {grup anahtarı: slug}). Yalnız ayrıntı sayfası olan (akademik olmayan) kayıtlar.
+    Aynı adlı belediyeler farklı illerdeyse 'ad|il' grupları olur (ili bilinmeyen kayıtlar ayrı, ilsiz grupta kalır);
+    tek ilse ili bilinmeyenler de gruba katılır. Slug çakışırsa sonuna il (yoksa sıra no) eklenir."""
+    ham = {}
     for item in ilanlar:
-        if akademik_ilan(item) or not (item.get('kurum') or '').strip():
+        if akademik_ilan(item) or not (item.get('kurum') or '').strip() or not _sayfali(item):
             continue
-        gruplar.setdefault(kurum_kanonik(item['kurum']), []).append(item)
+        ham.setdefault(kurum_kanonik(item['kurum']), []).append(item)
+    gruplar = {}
+    for kan, liste in ham.items():
+        illi, bilinmeyen = {}, []
+        if kan.endswith(' belediye'):
+            for i in liste:
+                il = _ilan_ili(i)
+                (illi.setdefault(il, []) if il else bilinmeyen).append(i)
+        if len(illi) <= 1:
+            gruplar[kan] = liste
+            continue
+        for il, l in illi.items():
+            gruplar[f'{kan}|{il}'] = l
+        if bilinmeyen:
+            gruplar[kan] = bilinmeyen
     adaylar = {}
     for kan, liste in gruplar.items():
-        adaylar.setdefault(kurum_slug(liste[0]['kurum']), []).append(kan)
+        adaylar.setdefault(_grup_slug(kan, liste), []).append(kan)
     slugler = {}
     for slug, kanlar in adaylar.items():
         if len(kanlar) == 1:
@@ -104,7 +153,6 @@ def kurum_gruplari(ilanlar):
         for n, kan in enumerate(sorted(kanlar), 1):
             il = next((_il_slug(i) for i in gruplar[kan] if _il_slug(i)), '') or str(n)
             slugler[kan] = (slug[:70].strip('-') + '-' + il)[:80].strip('-')
-    # hâlâ çakışan varsa sıra no ekle
     gorulen = {}
     for kan in sorted(slugler):
         s = slugler[kan]
@@ -301,6 +349,10 @@ def kurum_sayfasi(kan, liste, slug, gorseller, simdi):
     """Tek kurumun statik sayfası (HTML metni)."""
     su = _su()
     ad = en_cok_gecen_ad(liste)
+    if '|' in kan:
+        il = kan.split('|')[1]
+        if il not in kurum_anahtari(ad).split():
+            ad += f' ({IL_ADI.get(il, il)})'
     kok = '../../'
     ciftler = [(i, gorseller.get(anahtar(i), {})) for i in liste]
     acik = [(i, g) for i, g in ciftler if durum(i, simdi)[1] in ACIK]
@@ -312,8 +364,6 @@ def kurum_sayfasi(kan, liste, slug, gorseller, simdi):
     logo_g = next((g for _, g in ciftler if g.get('logo')), {})
     logo_i = next((i for i, g in ciftler if g.get('logo')), liste[0])
     logo = _logo_html(logo_i, logo_g, kok).replace('institution-icon', 'kp-logo').replace('width="48" height="48"', 'width="84" height="84"')
-    if 'kp-logo institution-logo' in logo:
-        logo = logo.replace('kp-logo institution-logo', 'kp-logo institution-logo')
     baslik = f'{ad} ilanları'
     aciklama = f'{ad} kurumunun başvurusu açık kamu personel alım ilanları ({len(acik)}) ve geçmiş duyuruları.'[:190]
     canonical = su.BASE + 'kurum/' + slug + '/'
@@ -333,21 +383,29 @@ def kurum_sayfasi(kan, liste, slug, gorseller, simdi):
 <div class="kp-stats"><div><strong>{len(acik)}</strong><span>başvurusu açık ilan</span></div><div><strong>{f"{toplam_kadro:,}".replace(",", ".") if toplam_kadro else "—"}</strong><span>bilinen kadro</span></div><div><strong>{len(liste)}</strong><span>toplam ilan kaydı</span></div></div>
 <div class="kp-actions"><a class="button lime" href="https://t.me/kamuilantakip" target="_blank" rel="noopener">Telegram'da ilanları takip et ↗</a><a class="button ghost" href="{kok}">Tüm ilanlara dön</a></div></div></section>
 <main id="icerik" class="container kp-main"><section class="kp-section"><h2>Başvurusu açık ilanlar <small>{len(acik)}</small></h2>{acik_blok}</section>{gecmis_blok}</main>'''
-    return su.sayfa_kabugu(baslik + ' | Kamu İlan Takip', aciklama, canonical, icerik, 'kurum-page') + ''
+    return su.sayfa_kabugu(baslik + ' | Kamu İlan Takip', aciklama, canonical, icerik, 'kurum-page')
 
 
 def kurum_sayfalarini_uret(ilanlar, docs, gorseller, simdi=None):
-    """docs/kurum/ altını baştan yazar; {kanonik: (slug, adet)} ve sitemap adresleri döndürür."""
+    """docs/kurum/ altını baştan yazar. (gruplar, slugler, sitemap adresleri, başarıyla yazılan grup anahtarları) döndürür;
+    bir grubun sayfası üretilemezse atlanır (klasörü silinir) ve başarılı kümeye girmez."""
     su = _su()
     simdi = (simdi or datetime.now(TR)).astimezone(TR)
     kok = docs / 'kurum'
     shutil.rmtree(kok, ignore_errors=True)
     gruplar, slugler = kurum_gruplari(ilanlar)
-    adresler = []
+    adresler, basarili = [], set()
     for kan, liste in gruplar.items():
         slug = slugler[kan]
         klasor = kok / slug
-        klasor.mkdir(parents=True, exist_ok=True)
-        (klasor / 'index.html').write_text(kurum_sayfasi(kan, liste, slug, gorseller, simdi), encoding='utf-8')
+        try:
+            html = kurum_sayfasi(kan, liste, slug, gorseller, simdi)
+            klasor.mkdir(parents=True, exist_ok=True)
+            (klasor / 'index.html').write_text(html, encoding='utf-8')
+        except Exception as hata:
+            print(f'Uyarı: kurum sayfası üretilemedi ({slug}): {hata}')
+            shutil.rmtree(klasor, ignore_errors=True)
+            continue
         adresler.append(su.BASE + 'kurum/' + slug + '/')
-    return gruplar, slugler, adresler
+        basarili.add(kan)
+    return gruplar, slugler, adresler, basarili

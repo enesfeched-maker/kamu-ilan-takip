@@ -386,9 +386,10 @@ def main():
     kurum_adresleri = []
     try:
         import kurum_sayfasi
-        for anahtar, alan in kurum_sayfasi.kart_meta(data.get('ilanlar', [])).items():
+        sonuc = kurum_sayfasi.kurum_sayfalarini_uret(data.get('ilanlar', []), docs, gorseller, datetime.now(TR))
+        kurum_adresleri = sonuc[2]
+        for anahtar, alan in kurum_sayfasi.kart_meta(data.get('ilanlar', []), sonuc[3]).items():
             gorseller.setdefault(anahtar, {}).update(alan)
-        kurum_adresleri = kurum_sayfasi.kurum_sayfalarini_uret(data.get('ilanlar', []), docs, gorseller, datetime.now(TR))[2]
     except Exception as hata:
         print(f'Uyarı: kurum sayfaları üretilemedi: {hata}')
     (docs / 'ilan' / 'gorseller.json').write_text(json.dumps(gorseller, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')

@@ -48,6 +48,63 @@ class SlugTests(unittest.TestCase):
         self.assertTrue(all(s.startswith('ayni-') for s in slugler.values()))
 
 
+class IlAyirmaTests(unittest.TestCase):
+    def bol(self, *ilanlar):
+        return ks.kurum_gruplari(list(ilanlar))
+
+    def test_ayni_adli_farkli_il_ayrilir(self):
+        for a, b in ((('Çanakkale Yenice Belediyesi', 'Çanakkale'), ('Karabük Yenice Belediyesi', 'Karabük')),
+                     (('Rize Pazar Belediyesi', 'Rize'), ('Pazar (Tokat) Belediye Başkanlığı', 'Tokat')),
+                     (('Malatya Kale Belediyesi', 'Malatya'), ('Kale (Denizli) Belediyesi', 'Denizli'))):
+            g, s = self.bol(ilan(1, a[0], iller=[a[1]]), ilan(2, b[0], iller=[b[1]]))
+            self.assertEqual(len(g), 2, a)
+            self.assertEqual(len(set(s.values())), 2)
+        g, s = self.bol(ilan(1, 'Gölbaşı Belediyesi', iller=['Ankara']), ilan(2, 'Gölbaşı Belediyesi', iller=['Adıyaman']))
+        self.assertEqual(sorted(s.values()), ['golbasi-belediyesi-adiyaman', 'golbasi-belediyesi-ankara'])
+
+    def test_il_slug_ve_gorunen_ad(self):
+        a = ilan(1, 'Yenice Belediyesi', iller=['Çanakkale'])
+        b = ilan(2, 'Yenice Belediyesi', iller=['Karabük'])
+        g, s = self.bol(a, b)
+        self.assertIn('yenice-belediyesi-canakkale', s.values())
+        kan = next(k for k in g if k.endswith('|canakkale'))
+        html = ks.kurum_sayfasi(kan, g[kan], s[kan], {}, SIMDI)
+        self.assertIn('Yenice Belediyesi (Çanakkale)', html)
+
+    def test_mucur_hala_birlesir(self):
+        g, s = self.bol(ilan(1, 'Kırşehir Mucur Belediyesi'), ilan(2, 'MUCUR BELEDİYE BAŞKANLIĞI', iller=['Kırşehir']),
+                        ilan(3, 'Mucur (Kırşehir) Belediye Başkanlığı'), ilan(4, 'Mucur Belediyesi'))
+        self.assertEqual(len(g), 1)
+        self.assertEqual(list(s.values()), ['mucur-belediyesi'])
+
+    def test_ilsiz_kayit_tek_il_varsa_katilir(self):
+        g, _ = self.bol(ilan(1, 'Yenice Belediyesi', iller=['Çanakkale']), ilan(2, 'Yenice Belediyesi'))
+        self.assertEqual([len(v) for v in g.values()], [2])
+
+    def test_detay_sayfasiz_kayit_sayilmaz(self):
+        kotu = {'id': 'x', 'link': 'https://evil.example/x', 'kurum': 'A Belediyesi', 'baslik': 'x'}
+        g, _ = self.bol(ilan(1, 'A Belediyesi'), kotu)
+        self.assertEqual([len(v) for v in g.values()], [1])
+
+    def test_sayfasi_yazilamayan_grupta_baglanti_yok(self):
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        bozuk = ilan(1, 'A Belediyesi')
+        gercek = ks.kart_html
+
+        def kart(item, *a, **k):
+            if item is bozuk:
+                raise ValueError('bozuk tarih')
+            return gercek(item, *a, **k)
+        with mock.patch.object(ks, 'kart_html', side_effect=kart):
+            sonuc = ks.kurum_sayfalarini_uret([bozuk, ilan(2, 'B Belediyesi')], Path(tmp.name), {}, SIMDI)
+        self.assertEqual(len(sonuc[3]), 1)
+        meta = ks.kart_meta([bozuk, ilan(2, 'B Belediyesi')], sonuc[3])
+        self.assertNotIn('kurum_slug', meta[uid(1)])
+        self.assertIn('kurum_slug', meta[uid(2)])
+        self.assertFalse((Path(tmp.name) / 'kurum' / 'a-belediyesi').exists())
+
+
 class BaslikTests(unittest.TestCase):
     def test_tek_kadro(self):
         a = ks.kart_alanlari({'baslik': 'X Üniversitesi 4/B', 'kurum': 'X Üniversitesi', 'kadro': '23 Sağlık Teknikeri'})
@@ -94,7 +151,7 @@ class SayfaTests(unittest.TestCase):
     def test_sayfa_uretilir_akademik_haric_ad_kacirilir(self):
         ilanlar = [ilan(1, 'A <b>Belediyesi</b>'), ilan(2, 'A <b>Belediyesi</b>', son_tarih='2026-01-01'),
                    ilan(3, 'X Üniversitesi', baslik='Öğretim Görevlisi alımı', kategori='akademik')]
-        docs, (gruplar, slugler, adresler) = self.kos(ilanlar)
+        docs, (gruplar, slugler, adresler, _) = self.kos(ilanlar)
         self.assertEqual(len(gruplar), 1)
         self.assertEqual(len(adresler), 1)
         klasorler = [p.name for p in (docs / 'kurum').iterdir()]
