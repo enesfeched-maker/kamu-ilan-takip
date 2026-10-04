@@ -29,7 +29,7 @@
   "x_metin": "…"                     // ≤ 280 karakter (X ağırlıklı sayımına göre güvenli: ≤ 260 düz karakter), BAĞLANTI İÇERMEZ
 }
 ```
-- Görseller: JPEG, 1080×1350 (4:5), sRGB, ≤ 1 MB. Kapak: günün verisinden türetilen kancalı tasarım (manset / mozaik / kacirma; bot/kapak_tasarimlari.py), küçük marka logosu (docs/kamu-logo.png).
+- Görseller: JPEG, 1080×1350 (4:5), sRGB, ≤ 1 MB. Kapak: günün verisinden türetilen kancalı tasarım (manset / mozaik / kacirma; bot/kapak_tasarimlari.py), küçük marka logosu (docs/assets/logo-512.png).
    Kartlar: kurum, başlık, kadro özeti, il, son başvuru tarihi, kaynak; alt bilgi "Ayrıntılar ve
   başvuru bağlantısı: profildeki bağlantı". Tüm metin resmi kayıttan; tahmin yok, boş alan gösterilmez.
 - Seçim: ilk_gorulme dün (İstanbul) olan, `duyuru_turu` boş (iptal/düzeltme hariç), süresi geçmemiş ilanlar;

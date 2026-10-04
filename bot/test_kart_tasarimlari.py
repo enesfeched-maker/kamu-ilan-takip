@@ -22,6 +22,30 @@ def resim(ilan_, **kw):
     return Image.open(io.BytesIO(ilan_karti(ilan_, simdi=SIMDI, **kw))).convert('RGB')
 
 
+class MarkaSeridiLogoTesti(unittest.TestCase):
+    def serit(self, im=True):
+        from PIL import ImageDraw
+        resim_ = Image.new('RGB', (1080, 200), '#ffffff')
+        kt.marka_seridi(ImageDraw.Draw(resim_), 50, im=resim_ if im else None)
+        return resim_
+
+    def test_logo_serit_disinda_piksel_basar(self):
+        logo, yok = self.serit(True), self.serit(False)
+        self.assertNotEqual(logo.crop((kt.KENAR, 64, kt.KENAR + 60, 124)).tobytes(), yok.crop((kt.KENAR, 64, kt.KENAR + 60, 124)).tobytes())
+        self.assertEqual(logo.getpixel((kt.KENAR, 64)), (0x17, 0x4c, 0x46))  # yuvarlak köşe: şerit rengi görünür
+        self.assertEqual(logo.getpixel((kt.KENAR + 30, 64)), (0xc9, 0xf3, 0x95))  # üst kenarda lime çerçeve
+
+    def test_logo_olmadan_eskisi_gibi(self):
+        with mock.patch.object(kt, 'LOGO_YOLU', kt.LOGO_YOLU.with_name('yok.png')):
+            kt._logo_yukle.cache_clear()
+            kt.logo_kare.cache_clear()
+            try:
+                self.assertEqual(self.serit(True).tobytes(), self.serit(False).tobytes())
+            finally:
+                kt._logo_yukle.cache_clear()
+                kt.logo_kare.cache_clear()
+
+
 class TopluKartTesti(unittest.TestCase):
     def liste(self, n, gun=2):
         bitis = (SIMDI.date() + __import__('datetime').timedelta(days=gun)).isoformat()
