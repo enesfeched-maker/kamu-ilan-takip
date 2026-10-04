@@ -17,11 +17,11 @@ const fixture=[
  {id:'two',baslik:'ESKİ İLAN',kurum:'Kurum',yer:'Ankara',son_tarih:'2000-01-01',link:KK(2)},
  {id:'three',baslik:'Destek Personeli',kurum:'Kurum 3',link:KK(3)}
 ];
-const row=(key,id,extra={})=>({key,id,manset:'Büro Personeli',ek:0,toplam:2,meslek:['30-genel.jpg'],logo:'',kurum:'İstanbul Üniversitesi',kurum_slug:'istanbul-universitesi',il:'İstanbul',iller:['İstanbul'],ogrenim:['lisans'],kpss:'kpss',puan_turleri:['P3'],taban_ref:{lisans:{unvan:'memur',medyan:81,n:9,donem:'2025-2/2026-1'}},son_tarih:iso(1),son_zaman:'',baslangic_zaman:'',ilk_gorulme:nowIso,durum:'today',...extra});
+const row=(key,id,extra={})=>({key,id,manset:'Büro Personeli',ek:0,toplam:2,meslek:['30-genel.jpg'],logo:'',kurum:'İstanbul Üniversitesi',kurum_slug:'istanbul-universitesi',il:'İstanbul',iller:['İstanbul'],ogrenim:['lisans'],kpss:'kpss',puan_turleri:['P3'],taban_ref:{lisans:{unvan:'memur',medyan:81,n:9,donem:'2025-2/2026-1'}},son_tarih:iso(1),son_zaman:'',baslangic_zaman:'',ilk_gorulme:nowIso,durum:'today',ilan_turu:'',kategori:'',...extra});
 const k=n=>KK(n).split('?i=')[1];
 const liste={guncelleme:nowIso,sayilar:{acik:3,kadro:6,bugun_yeni:3},takvim:{},ilanlar:[
- row(k(1),'one'),
- row(k(4),'four',{il:'Ankara',iller:['Ankara'],son_tarih:iso(10),manset:'Zabıta',taban_ref:{},ilk_gorulme:'2020-01-01T00:00:00+03:00',toplam:7}),
+ row(k(1),'one',{ilan_turu:'Sözleşmeli Personel İlanları'}),
+ row(k(4),'four',{il:'Ankara',iller:['Ankara'],son_tarih:iso(10),manset:'Zabıta',kategori:'belediye',ilan_turu:'Memur',taban_ref:{},ilk_gorulme:'2020-01-01T00:00:00+03:00',toplam:7}),
  row(k(5),'five',{il:'Ankara',iller:['Ankara'],ogrenim:['onlisans'],son_tarih:iso(0),manset:'Teknisyen',ilk_gorulme:'2020-01-01T00:00:00+03:00',puan_turleri:['P93']}),
  row(k(6),'six',{son_tarih:'',baslangic_zaman:new Date(Date.now()+864e5).toISOString().slice(0,19)+'+00:00',durum:'upcoming',ilk_gorulme:'2020-01-01T00:00:00+03:00',manset:'Yakında'}),
  row(k(7),'seven',{son_tarih:'2000-01-01',manset:'Kapanmış',ilk_gorulme:'2020-01-01T00:00:00+03:00'}),
@@ -34,10 +34,10 @@ function make({href='https://enesfeched-maker.github.io/kamu-ilan-takip/?g=bugun
  const ctx=vm.createContext({URL,URLSearchParams,Date,Intl,Blob,console,Set,Map,Number,String,Array,JSON,Promise,Error,isNaN,
   document:{title:'Portal',getElementById:get,createElement:t=>new Element(t),createTextNode:t=>t,querySelectorAll:()=>[],documentElement:{dataset:{}}},
   localStorage:{getItem:k=>k in store?store[k]:null,setItem(k,v){store[k]=v;stored.push(k);},removeItem(k){delete store[k];}},
-  location:loc,history:{replaceState(a,b,u){ctx.__replaced=u;const n=new URL(u,loc.href);loc.href=n.href;loc.hash=n.hash;}},
-  navigator:{},window:{addEventListener(){}},matchMedia:()=>({matches:false}),setInterval(){},setTimeout(){},clearTimeout(){},
+  location:loc,history:{replaceState(a,b,u){ctx.__replaced=u;const n=new URL(u,loc.href);loc.href=n.href;loc.hash=n.hash;},pushState(a,b,u){ctx.__pushed=u;const n=new URL(u,loc.href);loc.href=n.href;loc.hash=n.hash;}},
+  navigator:{},window:{innerWidth:1280,addEventListener(t,f){(ctx.__h[t]=ctx.__h[t]||[]).push(f);}},matchMedia:()=>({matches:false}),setInterval(){},setTimeout(){},clearTimeout(){},
   fetch:async url=>({ok:true,json:async()=>url==='ilanlar.json'?{ilanlar:fixture,guncelleme:nowIso}:url==='liste.json'?liste:url==='sponsors.json'?{enabled:false}:{}})});
- vm.runInContext(fs.readFileSync('docs/portal.js','utf8'),ctx);
+ ctx.__h={};vm.runInContext(fs.readFileSync('docs/portal.js','utf8'),ctx);
  return{ctx,get,stored,loc,run:s=>vm.runInContext(s,ctx)};
 }
 const tick=async()=>{await new Promise(r=>setImmediate(r));await new Promise(r=>setImmediate(r));};
@@ -71,7 +71,9 @@ run("F={...defaultF(),sb:'14'}");assert.equal(n(),3,'deadline <=14 days');
 run("F={...defaultF(),sb:'yakinda'}");assert.equal(n(),1,'upcoming only');assert.equal(run("filterIlan(ilanBase(F),F,null).list[0].manset"),'Yakında');
 run("F={...defaultF(),ogr:'onlisans'}");assert.equal(n(),1,'level filter');
 run("F={...defaultF(),yeni:true}");assert.equal(n(),1,'only new');
-run("F={...defaultF(),tur:'Sözleşmeli'}");assert.equal(n(),1,'type via full record');
+run("F={...defaultF(),tur:'Sözleşmeli Personel'}");assert.equal(n(),1,'type from liste row, label normalized');assert.equal(J('turSecenekleri()'),'[[\"Memur\",1],[\"Sözleşmeli Personel\",1]]');
+run("F={...defaultF(),ogr:'belediye'}");assert.equal(n(),1,'belediye via kategori');
+run("F={...defaultF(),tur:'Yok'};render()");assert.equal(run('F.tur'),'','unknown type dropped');
 run("F={...defaultF(),sira:'yeni'}");assert.equal(run("filterIlan(ilanBase(F),F,null).list[0].key"),k(1),'sort by newest');
 run("F={...defaultF(),sira:'son'}");assert.equal(run("filterIlan(ilanBase(F),F,null).list.map(o=>o.manset).join()"),'Teknisyen,Büro Personeli,Zabıta,Yakında','deadline sort, undated last');
 run("F={...defaultF(),arsiv:true}");assert.equal(n(),3,'archive view lists every full record, including the closed one');
@@ -95,7 +97,7 @@ assert.equal(run("(()=>{const r=filterIlan([{...liste[0],ogrenim:['onlisans']}],
 assert.equal(run("ilanLink('Tümü',{uygun:true}).href"),'./#ilanlar');
 assert.equal(run("ilanLink('Son günler',{sb:'2',uygun:false}).href"),'?sb=2&uygun=0#ilanlar');
 assert.equal(run("ilanLink('Yakında',{sb:'yakinda',uygun:false}).href"),'?sb=yakinda&uygun=0#ilanlar');
-run("openIlanlar({sb:'2',uygun:false})");assert.equal(run('F.sb'),'2');assert.equal(run('F.uygun'),false);assert.equal(T.loc.hash,'ilanlar','deep link navigates to İlanlar');
+run("openIlanlar({sb:'2',uygun:false})");assert.equal(run('F.sb'),'2');assert.equal(run('F.uygun'),false);assert.equal(T.loc.hash,'#ilanlar','deep link navigates to İlanlar');assert.match(ctx.__pushed,/\?sb=2&uygun=0#ilanlar$/);assert.equal(run('tab'),'ilanlar');
 // ---- Takvim
 run("F=defaultF();saved.clear();showTab('takvim')");
 const tg=JSON.parse(J("(()=>{const g=takvimGruplari(takvimRows('tumu'));return{keys:[...g.gr.keys()],tarihsiz:g.tarihsiz.length}})()"));
@@ -113,9 +115,9 @@ run("saved.add(liste[0].id);tkSeg='kayitli';renderTakvim()");assert.equal(get('t
 run("tkSeg='uygun';renderTakvim()");assert.equal(get('takvim-icerik').children.length,2,'Bana uygun: 1 day group + undated upcoming');
 run("tkSeg='tumu';saved.clear()");
 // ---- Kayıtlı
-run("saved.add('five');saved.add('four');saved.add('seven');showTab('kayitli')");
-assert.equal(JSON.parse(J("kayitliGruplari([liste[2],liste[1],liste[4],liste[3]]).map(g=>g.baslik)")).join(),'Bu hafta kapanıyor,Daha sonra,Sona erdi','Kayıtlı groups');
-assert.equal(get('kayitli-icerik').children.length,4,'toolbar + 3 groups');assert.match(text(get('kayitli-icerik').children[0]),/Takvimime ekle \(\.ics\)/);
+run("saved.add('five');saved.add('four');saved.add('seven');saved.add('six');showTab('kayitli')");
+assert.equal(JSON.parse(J("kayitliGruplari([liste[2],liste[1],liste[4],liste[3],{...liste[0],son_tarih:'2026-10-10'}]).map(g=>g.baslik)")).join(),'7 gün içinde kapanıyor,Daha sonra,Tarihi ilanda,Sona erdi','Kayıtlı groups');
+assert.equal(get('kayitli-icerik').children.length,5,'toolbar + 4 groups');assert.match(text(get('kayitli-icerik').children[0]),/Takvimime ekle \(\.ics\)/);
 assert.match(text(get('kayitli-icerik')),/Karşılaştır/);
 assert.equal(get('compare-bar').hidden,true);run("compared.add('five');compared.add('four');renderCompare()");assert.equal(get('compare-bar').hidden,false,'compare lives on Kayıtlı');
 run("showTab('ilanlar')");assert.equal(get('compare-bar').hidden,true,'no compare bar outside Kayıtlı');
@@ -163,5 +165,31 @@ assert.match(B.loc.href,/\?il=ankara&sb=14&uygun=0#ilanlar$/,'shareable URL kept
 const C=make({href:'https://enesfeched-maker.github.io/kamu-ilan-takip/?q=zab%C4%B1ta#takvim'});await tick();
 assert.equal(C.run('tab'),'takvim','explicit hash tab wins over query');assert.equal(C.run('F.q'),'zabıta');
 const D=make({href:'https://enesfeched-maker.github.io/kamu-ilan-takip/?g=bugun'});await tick();assert.equal(D.run('tab'),'bugun');assert.equal(D.run('queryHas(new URL(location.href).search)'),false);
-console.log('portal checks passed: query sync, chip filters, profile match, pagination, Takvim grouping/strip/heat-map, Kayıtlı groups, compare only on Kayıtlı, ics, safe links, Bugün sections.');
+// ---- Geri/ileri: yalnız sorgu değişse de sekme ve süzgeç eşitlenir (popstate)
+const P=make({href:'https://enesfeched-maker.github.io/kamu-ilan-takip/#bugun'});await tick();
+assert.equal(P.run('tab'),'bugun');assert.ok(P.ctx.__h.popstate&&P.ctx.__h.popstate.length,'popstate listener registered');
+P.loc.href='https://enesfeched-maker.github.io/kamu-ilan-takip/?il=ankara&sb=14#ilanlar';P.loc.hash='#ilanlar';P.ctx.__h.popstate.forEach(f=>f());
+assert.equal(P.run('tab'),'ilanlar','popstate switches tab');assert.equal(P.run('JSON.stringify(F.il)'),'["Ankara"]');assert.equal(P.run('F.sb'),'14');
+P.loc.href='https://enesfeched-maker.github.io/kamu-ilan-takip/?il=istanbul#ilanlar';P.ctx.__h.popstate.forEach(f=>f());
+assert.equal(P.run('JSON.stringify(F.il)'),'["İstanbul"]','query-only change re-parses filters');assert.equal(P.run('F.sb'),'');
+P.loc.href='https://enesfeched-maker.github.io/kamu-ilan-takip/#bugun';P.loc.hash='#bugun';P.ctx.__h.popstate.forEach(f=>f());assert.equal(P.run('tab'),'bugun');
+P.ctx.__h.hashchange.forEach(f=>f());assert.equal(P.run('tab'),'bugun','duplicate hashchange for same URL is ignored');
+// ---- ?q=<unvan>#ilanlar
+const Q=make({href:'https://enesfeched-maker.github.io/kamu-ilan-takip/?q=Zab%C4%B1ta#ilanlar'});await tick();
+assert.equal(Q.run('tab'),'ilanlar');assert.equal(Q.get('search').value,'Zabıta');assert.equal(Q.get('cards').children.length,1,'?q= search applied');
+// ---- ?profil=1 profil penceresini açar ve adresten silinir
+const R1=make({href:'https://enesfeched-maker.github.io/kamu-ilan-takip/?profil=1'});await tick();
+assert.equal(R1.get('profil-dialog').open,true);assert.equal(R1.loc.href,'https://enesfeched-maker.github.io/kamu-ilan-takip/');
+// ---- ARIA ve arşiv çipi
+run("showTab('ilanlar')");assert.equal(run("chips.ogr.attrs['aria-haspopup']"),'dialog');assert.equal(run("chips.ogr.attrs['aria-controls']"),'cip-menu');
+assert.ok(run("!!chips.arsiv")&&/Sona erenler dahil/.test(text(run('chips.arsiv'))));
+run("menuAc('il')");assert.equal(get('cip-menu').attrs['aria-labelledby'],'cip-menu-baslik');run("menuKapat()");
+// ---- ICS: CRLF kaçışı ve 75 sekizlik katlama
+const ics=run("calendarText([{...items[0],ozet:'x',baslik:'Çok uzun başlık '.repeat(12)+'ş'}])");
+assert.ok(ics.split('\r\n').every(l=>Buffer.byteLength(l)<=75),'ics lines folded to 75 octets');assert.match(ics,/\r\n [^\r\n]/,'continuation lines start with a space');
+// ---- kayıtlı doğrulama ve rozet
+const S=make({store:{'kit-saved':JSON.stringify(['one',5,'x'.repeat(81),'sbb-abc'])}});await tick();
+assert.equal(S.run('[...saved].join()'),'one,sbb-abc','invalid saved entries dropped');
+assert.equal(S.run("saved.clear(),saved.add(liste[0].id),saved.add('ghost'),savedCount()"),1,'badge counts only known ids');
+console.log('portal checks passed: query sync + popstate, chip filters, liste-based tür/kategori, profile match, pagination, Takvim, Kayıtlı groups, compare only on Kayıtlı, folded ics, validated saved ids, ?profil=1, ?q=.');
 })().catch(e=>{console.error(e);process.exitCode=1;});
