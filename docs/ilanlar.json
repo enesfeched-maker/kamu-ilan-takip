@@ -1,5 +1,5 @@
 {
- "guncelleme": "2026-10-04T17:23:04+03:00",
+ "guncelleme": "2026-10-04T17:24:28+03:00",
  "ilanlar": [
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=9c82aab5-022e-43c8-b7f1-e6cf329d205b",
@@ -10726,6 +10726,9 @@
   }
  ],
  "telegram_gonderilen": [
+  "csb-477190",
+  "csb-477209",
+  "csb-477229",
   "csb-477247",
   "csb-477402",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=12c5b0ac-cd05-4316-9d7c-39ed4d06a358",
@@ -10754,6 +10757,7 @@
   "https://kariyerkapisi.gov.tr/IlanDetay?i=b4372970-fdd6-4cf9-a92d-cc3f9865a634",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=bbed829a-5960-4a8a-b8a3-8c84226efb36",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=bd035022-6f30-4150-8acc-a6061a5dd315",
+  "https://kariyerkapisi.gov.tr/IlanDetay?i=be701e43-3849-4ebc-9374-89a2e432c2db",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=c2122f16-3cd3-447f-8878-47f4b16a296c",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=cb98ad26-9f19-467b-97f1-6c657b2c1593",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=ec8cb14d-917f-4d65-951b-281faac1f564",
@@ -10937,17 +10941,17 @@
   "sbb-fefad4b939608db5c1d8a19c",
   "sbb-ffbba5c3ef2b2c84c00bb8e2"
  ],
- "telegram_bekleyen": [
-  "csb-477190",
-  "csb-477209",
-  "csb-477229",
-  "https://kariyerkapisi.gov.tr/IlanDetay?i=be701e43-3849-4ebc-9374-89a2e432c2db"
- ],
+ "telegram_bekleyen": [],
  "telegram_yayin_surumu": 2,
  "telegram_mesajlari": {
+  "csb-477190": 285,
+  "csb-477209": 284,
+  "csb-477229": 283,
+  "https://kariyerkapisi.gov.tr/IlanDetay?i=be701e43-3849-4ebc-9374-89a2e432c2db": 282,
   "sbb-89c8b060891cf9aed29dbcdc": 280
  },
  "telegram_duyuru_yanitlari": {
+  "m:iptal:belediye:tekkekoy|memur": "2026-10-04",
   "m:iptal:kurum:adana alparslan turkes bilim ve teknoloji universitesi|": "2026-10-03"
  },
  "telegram_toplu_hatirlatma_gunu": "2026-10-04",
