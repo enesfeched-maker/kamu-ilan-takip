@@ -110,6 +110,7 @@ class ListeTests(unittest.TestCase):
         self.assertEqual((a['il'], a['puan_turleri'], a['logo'], a['durum']), ('Ankara', ['P3'], 'ilan/logo/ab.webp', 'soon'))
         self.assertEqual(a['taban_ref']['lisans']['n'], 5)
         self.assertNotIn('duzey', a['taban_ref']['lisans'])
+        self.assertEqual(a['unvanlar'], ['memur'])
         self.assertEqual((a['ilan_turu'], a['kategori']), ('Sözleşmeli Personel İlanları', 'lisans'))
         self.assertNotIn('ilan_turu', v['ilanlar'][1])
         self.assertEqual(v['sayilar'], {'acik': 2, 'kadro': 4, 'bugun_yeni': 1})

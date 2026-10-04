@@ -1,0 +1,19 @@
+{
+  "id": "./",
+  "name": "Kamu İlan Takip",
+  "short_name": "Kamu İlan",
+  "description": "Güncel kamu personel alımları: bugün eklenenler, son günü yaklaşanlar ve sana uygun ilanlar.",
+  "lang": "tr",
+  "dir": "ltr",
+  "start_url": "./?g=bugun",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F6F6F1",
+  "theme_color": "#F6F6F1",
+  "icons": [
+    { "src": "assets/logo-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/logo-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/logo-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "assets/logo-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
