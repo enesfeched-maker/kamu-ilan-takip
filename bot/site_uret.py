@@ -11,7 +11,7 @@ TR = timezone(timedelta(hours=3))
 KART_GENISLIK = 720
 LOGO_BOYUT = 128
 EN_COK_LOGO_INDIRME = 150
-CSS_SURUM = 7
+CSS_SURUM = 8
 LOGO_SURUM = 2
 
 
@@ -393,6 +393,11 @@ def main():
     except Exception as hata:
         print(f'Uyarı: kurum sayfaları üretilemedi: {hata}')
     (docs / 'ilan' / 'gorseller.json').write_text(json.dumps(gorseller, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
+    try:
+        import liste_verisi
+        liste_verisi.uret(data.get('ilanlar', []), gorseller, docs, datetime.now(TR), data.get('guncelleme'))
+    except Exception as hata:
+        print(f'Uyarı: liste.json üretilemedi: {hata}')
     for item in data.get('ilanlar', []):
         result = detail_page(item)
         if not result:

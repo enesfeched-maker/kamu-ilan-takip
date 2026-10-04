@@ -8,6 +8,8 @@ on:
       - 'docs/index.html'
       - 'docs/portal.js'
       - 'docs/portal.css'
+      - 'docs/bugun.css'
+      - 'bot/liste_verisi.py'
       - 'bot/site_uret.py'
       - 'bot/kurum_sayfasi.py'
       - 'bot/kart_tasarimlari.py'
