@@ -86,6 +86,7 @@ jobs:
         if: ${{ !cancelled() }}
         run: |
           python -m unittest discover -s bot -p 'test_site_uret.py'
+          python -m unittest discover -s bot -p 'test_liste_verisi.py'
           python bot/site_uret.py
       - name: Pages yapılandır
         if: ${{ !cancelled() && steps.portal.outcome == 'success' }}

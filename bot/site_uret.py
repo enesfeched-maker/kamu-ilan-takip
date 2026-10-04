@@ -11,7 +11,7 @@ TR = timezone(timedelta(hours=3))
 KART_GENISLIK = 720
 LOGO_BOYUT = 128
 EN_COK_LOGO_INDIRME = 150
-CSS_SURUM = 7
+CSS_SURUM = 8
 LOGO_SURUM = 2
 
 
@@ -47,7 +47,7 @@ def _kurum_bloklari(item, gorsel, logo_html):
 
 def sayfa_kabugu(baslik, aciklama, canonical, icerik, govde_sinifi=''):
     """Kurum sayfaları için ortak iskelet (ilan sayfasıyla aynı üst/alt bölüm)."""
-    gorunum = '<script>try{var t=JSON.parse(localStorage.getItem("kit-theme"));if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}</script>'
+    gorunum = '<script>try{var d=JSON.parse(localStorage.getItem("kit-theme"))==="dark";document.documentElement.dataset.theme=d?"dark":"light";var m=document.querySelector("meta[name=theme-color]");if(m)m.content=d?"#0a161b":"#102e35"}catch(e){document.documentElement.dataset.theme="light"}</script>'
     from kurum_sayfasi import KURUM_SAYAC
     return (f'<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#102e35"><meta name="color-scheme" content="light dark">'
             f'<title>{esc(baslik)}</title><meta name="description" content="{esc(aciklama)}"><link rel="canonical" href="{canonical}"><meta property="og:title" content="{esc(baslik)}"><meta property="og:description" content="{esc(aciklama)}"><meta property="og:type" content="website">{gorunum}'
@@ -126,7 +126,7 @@ def detail_page(item, gorsel=None):
     if not (item.get('iptal_edildi') or item.get('duyuru_turu')) and end and end > datetime.now(TR) and item.get('son_tarih'):
         durum_html = f'<strong class="status-badge" id="durum" data-son="{esc(item["son_tarih"])}" data-zaman="{esc(item.get("son_zaman") or "")}">{status}</strong>'
     yer = esc(_duzgun(item.get('yer')) or 'Resmî ilandan kontrol et')
-    gorunum = '<script>try{var t=JSON.parse(localStorage.getItem("kit-theme"));if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}</script>'
+    gorunum = '<script>try{var d=JSON.parse(localStorage.getItem("kit-theme"))==="dark";document.documentElement.dataset.theme=d?"dark":"light";var m=document.querySelector("meta[name=theme-color]");if(m)m.content=d?"#0a161b":"#102e35"}catch(e){document.documentElement.dataset.theme="light"}</script>'
     sayac = ('<script>(function(){var e=document.getElementById("durum");if(!e)return;var z=e.dataset.zaman;if(z&&Date.parse(z)<=Date.now()){e.textContent="Başvuru sona erdi";e.className+=" closed";return}'
              'var t=new Date().toLocaleDateString("sv-SE",{timeZone:"Europe/Istanbul"}),d=Math.round((Date.parse(e.dataset.son+"T00:00:00Z")-Date.parse(t+"T00:00:00Z"))/864e5);if(isNaN(d))return;'
              'if(d<0){e.textContent="Başvuru sona erdi";e.className+=" closed";return}e.textContent=d===0?"Bugün son gün":d===1?"Yarın son gün":d+" gün kaldı";e.className+=d<=1?" urgent today":d<=3?" urgent":d<=7?" soon":""})()</script>')
@@ -393,6 +393,11 @@ def main():
     except Exception as hata:
         print(f'Uyarı: kurum sayfaları üretilemedi: {hata}')
     (docs / 'ilan' / 'gorseller.json').write_text(json.dumps(gorseller, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
+    try:
+        import liste_verisi
+        liste_verisi.uret(data.get('ilanlar', []), gorseller, docs, datetime.now(TR), data.get('guncelleme'))
+    except Exception as hata:
+        print(f'::warning::liste.json üretilemedi: {hata}')
     for item in data.get('ilanlar', []):
         result = detail_page(item)
         if not result:

@@ -10,7 +10,7 @@ function donemAdi(d){return d.replace('-','/');}
 function puanYaz(p){return p==null?'—':p.toLocaleString('tr-TR',{minimumFractionDigits:5,maximumFractionDigits:5});}
 function readStore(k,f){try{const v=JSON.parse(localStorage.getItem(k));return v??f;}catch{return f;}}
 function writeStore(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
-function applyTheme(){const t=readStore('kit-theme',null);document.documentElement.dataset.theme=t==='dark'||t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+function applyTheme(){const t=readStore('kit-theme',null);document.documentElement.dataset.theme=t==='dark'?'dark':'light';}
 function secenekler(sel,degerler,ilk){sel.replaceChildren(E('option',null,ilk));sel.firstChild.value='';for(const [v,t] of degerler){const o=E('option',null,t);o.value=v;sel.append(o);}}
 function durum(metin){$('durum').hidden=!metin;$('durum').textContent=metin||'';}
 
