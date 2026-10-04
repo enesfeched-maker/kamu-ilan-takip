@@ -98,7 +98,7 @@ class ListeTests(unittest.TestCase):
     def test_liste_uret(self):
         docs = puan_klasoru([{'unvan': 'MEMUR', 'min': 70 + i} for i in range(5)])
         ilanlar = [
-            ilan(1, ilk_gorulme='2026-10-04T08:00:00+03:00', ozet='KPSS P3'),
+            ilan(1, ilk_gorulme='2026-10-04T08:00:00+03:00', ozet='KPSS P3', ilan_turu='Sözleşmeli Personel İlanları', kategori='lisans'),
             ilan(2, son_tarih='2026-09-01'),                       # süresi geçmiş
             ilan(3, iptal_edildi=True),
             ilan(4, duyuru_turu='Düzeltme'),
@@ -110,6 +110,8 @@ class ListeTests(unittest.TestCase):
         self.assertEqual((a['il'], a['puan_turleri'], a['logo'], a['durum']), ('Ankara', ['P3'], 'ilan/logo/ab.webp', 'soon'))
         self.assertEqual(a['taban_ref']['lisans']['n'], 5)
         self.assertNotIn('duzey', a['taban_ref']['lisans'])
+        self.assertEqual((a['ilan_turu'], a['kategori']), ('Sözleşmeli Personel İlanları', 'lisans'))
+        self.assertNotIn('ilan_turu', v['ilanlar'][1])
         self.assertEqual(v['sayilar'], {'acik': 2, 'kadro': 4, 'bugun_yeni': 1})
         self.assertEqual(v['takvim'], {'2026-10-10': 2})
         self.assertEqual(v['guncelleme'], '2026-10-04T17:24:28+03:00')

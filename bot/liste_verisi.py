@@ -134,7 +134,7 @@ def kayit(item, gorsel, tablolar, simdi, harita=None):
         'meslek': a.get('meslek') or [], 'logo': g.get('logo'),
         'kurum': ks.kurum_adi(item.get('kurum')), 'kurum_slug': g.get('kurum_slug') or ks.kurum_slug(item.get('kurum')),
         'il': il_bul(item, harita), 'iller': item.get('iller') or [],
-        'ogrenim': ogr, 'kpss': item.get('kpss'), 'puan_turleri': puan_turleri(item), 'taban_ref': ref or None,
+        'ogrenim': ogr, 'ilan_turu': (item.get('ilan_turu') or '')[:60], 'kategori': item.get('kategori'), 'kpss': item.get('kpss'), 'puan_turleri': puan_turleri(item), 'taban_ref': ref or None,
         'son_tarih': item.get('son_tarih'), 'son_zaman': item.get('son_zaman'),
         'baslangic_zaman': item.get('baslangic_zaman'), 'ilk_gorulme': item.get('ilk_gorulme'), 'durum': cls,
     }
