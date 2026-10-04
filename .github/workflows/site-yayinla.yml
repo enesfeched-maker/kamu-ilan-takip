@@ -9,6 +9,7 @@ on:
       - 'docs/portal.js'
       - 'docs/portal.css'
       - 'bot/site_uret.py'
+      - 'bot/kurum_sayfasi.py'
       - 'bot/kart_tasarimlari.py'
       - 'bot/kurum_gorseli.py'
       - 'bot/meslek_gorseli.py'
