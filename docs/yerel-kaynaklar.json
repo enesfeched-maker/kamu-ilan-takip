@@ -1,9 +1,9 @@
 {
  "schema": 1,
- "guncelleme": "2026-10-04T22:36:40.010365+00:00",
+ "guncelleme": "2026-10-04T23:06:40.258824+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-10-04T22:36:40.390923+00:00",
+   "kontrol": "2026-10-04T23:06:40.688183+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -5076,7 +5076,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-10-04T22:36:51.162127+00:00",
+   "kontrol": "2026-10-04T23:07:01.493171+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -5096,8 +5096,8 @@
       }
      ],
      "yayim_tarihi": "2026-10-01",
-     "detay_guncelleme": "2026-10-04T14:49:13+03:00",
-     "csb_detay_surumu": 3,
+     "detay_guncelleme": "2026-10-05T02:06:42+03:00",
+     "csb_detay_surumu": 4,
      "ozet": "Rize Belediyesinin 30/09/2026 tarihli ve 48847 sayılı yazısına istinaden ilk defa atanmak üzere sözleşmeli personel (tekniker) alım ilanı iptal edilmiştir",
      "belgeler": [],
      "yer": "Rize",
@@ -5120,8 +5120,8 @@
       }
      ],
      "yayim_tarihi": "2026-09-29",
-     "detay_guncelleme": "2026-10-04T14:49:14+03:00",
-     "csb_detay_surumu": 3,
+     "detay_guncelleme": "2026-10-05T02:06:42+03:00",
+     "csb_detay_surumu": 4,
      "ozet": "Rize Belediyesinin 23/09/2026 tarihli ve 48367 sayılı yazısına istinaden ilk defa atanmak üzere sözleşmeli personel (Gıda Mühendisi) alım ilanı iptal edilmiştir.",
      "belgeler": [],
      "yer": "Rize",
@@ -5131,9 +5131,9 @@
      "id": "csb-477953",
      "baslik": "ŞİLE BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR VE ZABITA MEMURU ALIM İLANI",
      "kurum": "ŞİLE BELEDİYE BAŞKANLIĞI",
-     "kadro": "",
+     "kadro": "Toplam 6 kişi — 2 Zabıta Memuru • 4 Tekniker",
      "ilan_turu": "Memur",
-     "son_tarih": null,
+     "son_tarih": "2026-11-13",
      "kaynak": "ÇŞB Yerel Yönetimler",
      "kaynak_turu": "csb",
      "link": "https://yerelyonetimler.csb.gov.tr/istanbul-ili-sile-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-ve-zabita-memuru-alim-ilani-duyuru-477953",
@@ -5144,9 +5144,9 @@
       }
      ],
      "yayim_tarihi": "2026-09-29",
-     "detay_guncelleme": "2026-10-05T01:36:43+03:00",
-     "csb_detay_surumu": 3,
-     "ozet": "İstanbul ili Şile Belediye Başkanlığı bünyesinde 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği ile Belediye Zabıta Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla, belirtilen boş kadrolara açıktan atama yoluyla memur ve zabıta memuru alınacaktır.",
+     "detay_guncelleme": "2026-10-05T02:06:43+03:00",
+     "csb_detay_surumu": 4,
+     "ozet": "İstanbul ili Şile Belediye Başkanlığı bünyesinde 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği ile Belediye Zabıta Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla, belirtilen boş kadrolara açıktan atama yoluyla memur ve zabıta memuru alınacaktır. Son başvuru: 13.11.2026.",
      "belgeler": [
       {
        "ad": "2-ile-Belediyesi-lk-Defa-Atanmak-zere-Memur-ve-Zab-ta-Memuru-Al-m-lan-20260929101825.docx",
@@ -5154,15 +5154,24 @@
       }
      ],
      "yer": "İstanbul",
-     "ek_okunamadi": 1
+     "sartlar": [
+      {
+       "kadro": "Zabıta Memuru · 2 kadro",
+       "metin": "KPSS P3 puan türünden en az 65 puan. Hizmet sınıfı GİH, 9. derece. Öğrenim: Lisans mezunu. Herhangi bir lisans programından mezun olmak."
+      },
+      {
+       "kadro": "Tekniker · 4 kadro",
+       "metin": "KPSS P93 puan türünden en az 65 puan. Hizmet sınıfı TH, 10. derece. Öğrenim: Önlisans mezunu. Harita, harita kadastro, harita teknikerliği, harita ve maden ölçme, harita ve kadastro, inşaat, inşaat teknikerliği, inşaat teknolojisi makine, elektrik önlisans programlarının birinden mezun olmak."
+      }
+     ]
     },
     {
      "id": "csb-477952",
      "baslik": "ŞİLE BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE ZABITA MEMURU ALIMI İLANI",
      "kurum": "ŞİLE BELEDİYE BAŞKANLIĞI",
-     "kadro": "",
+     "kadro": "8 Zabıta Memuru",
      "ilan_turu": "Memur",
-     "son_tarih": null,
+     "son_tarih": "2026-11-06",
      "kaynak": "ÇŞB Yerel Yönetimler",
      "kaynak_turu": "csb",
      "link": "https://yerelyonetimler.csb.gov.tr/istanbul-ili-sile-belediye-baskanligina-ilk-defa-atanmak-uzere-zabita-memuru-alimi-ilani-duyuru-477952",
@@ -5173,9 +5182,9 @@
       }
      ],
      "yayim_tarihi": "2026-09-29",
-     "detay_guncelleme": "2026-10-05T01:36:46+03:00",
-     "csb_detay_surumu": 3,
-     "ozet": "İstanbul ili Şile Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Belediye Zabıta Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla zabıta memuru alımı yapılacaktır.",
+     "detay_guncelleme": "2026-10-05T02:06:44+03:00",
+     "csb_detay_surumu": 4,
+     "ozet": "İstanbul ili Şile Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Belediye Zabıta Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla zabıta memuru alımı yapılacaktır. Son başvuru: 06.11.2026.",
      "belgeler": [
       {
        "ad": "29-09-2026-ile-Belediyesi-lk-Defa-Atanmak-zere-Zab-ta-Memuru-Al-m-lan-20260929101417.docx",
@@ -5183,7 +5192,12 @@
       }
      ],
      "yer": "İstanbul",
-     "ek_okunamadi": 1
+     "sartlar": [
+      {
+       "kadro": "Zabıta Memuru · 8 kadro",
+       "metin": "KPSS P94 puan türünden en az 65 puan. Hizmet sınıfı GİH, 11. derece. Öğrenim: Ortaöğretim mezunu. Herhangi bir ortaöğretim kurumundan (lise veya dengi okul) mezun olmak. En az (B) sınıfı sürücü belgesine sahip olmak."
+      }
+     ]
     },
     {
      "id": "csb-477951",
@@ -5202,8 +5216,8 @@
       }
      ],
      "yayim_tarihi": "2026-09-29",
-     "detay_guncelleme": "2026-10-04T14:49:20+03:00",
-     "csb_detay_surumu": 3,
+     "detay_guncelleme": "2026-10-05T02:06:45+03:00",
+     "csb_detay_surumu": 4,
      "ozet": "Niğde ili Çukurkuyu Belediyesinin 21.09.2026 tarihli ve 5651 sayılı yazısına istinaden ilk defa zabıta memuru alımı ilanı iptal edildi.",
      "belgeler": [],
      "yer": "Niğde",
@@ -5226,8 +5240,8 @@
       }
      ],
      "yayim_tarihi": "2026-09-29",
-     "detay_guncelleme": "2026-10-04T14:49:20+03:00",
-     "csb_detay_surumu": 3,
+     "detay_guncelleme": "2026-10-05T02:06:45+03:00",
+     "csb_detay_surumu": 4,
      "ozet": "Zonguldak Belediyesinin 24.09.2026 tarihli ve 190079 sayılı yazısına istinaden ilk defa zabıta memuru alımı ilanı iptal edilmiştir.",
      "belgeler": [],
      "yer": "Zonguldak",
@@ -5237,9 +5251,9 @@
      "id": "csb-477826",
      "baslik": "ATALAN BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE SÖZLEŞMELİ PERSONEL ALIM İLANI",
      "kurum": "ATALAN BELEDİYE BAŞKANLIĞI",
-     "kadro": "",
+     "kadro": "1 Tekniker",
      "ilan_turu": "Sözleşmeli Personel",
-     "son_tarih": null,
+     "son_tarih": "2026-10-27",
      "kaynak": "ÇŞB Yerel Yönetimler",
      "kaynak_turu": "csb",
      "link": "https://yerelyonetimler.csb.gov.tr/osmaniye-ili-atalan-belediye-baskanligina-ilk-defa-atanmak-uzere-sozlesmeli-personel-alim-ilani-duyuru-477826",
@@ -5250,9 +5264,9 @@
       }
      ],
      "yayim_tarihi": "2026-09-23",
-     "detay_guncelleme": "2026-10-05T01:36:48+03:00",
-     "csb_detay_surumu": 3,
-     "ozet": "Osmaniye ili Atalan Belediye Başkanlığı bünyesinde 5393 sayılı Belediye Kanununun 49 uncu maddesi ile Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla, belirtilen boş pozisyona tam zamanlı sözleşmeli personel alınacaktır",
+     "detay_guncelleme": "2026-10-05T02:06:46+03:00",
+     "csb_detay_surumu": 4,
+     "ozet": "Osmaniye ili Atalan Belediye Başkanlığı bünyesinde 5393 sayılı Belediye Kanununun 49 uncu maddesi ile Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla, belirtilen boş pozisyona tam zamanlı sözleşmeli personel alınacaktır Son başvuru: 27.10.2026.",
      "belgeler": [
       {
        "ad": "22-09-2026-Atalan-belediyesi-sozlesmeli-personel-alim-1-20260923102146.docx",
@@ -5260,7 +5274,12 @@
       }
      ],
      "yer": "Osmaniye",
-     "ek_okunamadi": 1
+     "sartlar": [
+      {
+       "kadro": "Tekniker · 1 pozisyon",
+       "metin": "KPSS P93 puan türünden en az 60 puan. Hizmet sınıfı TH, 8. derece. Öğrenim: Önlisans mezunu. Harita, harita kadastro, harita ve maden ölçme, harita teknikerliği, harita ve kadastro önlisans programlarının birinden mezun olmak. En az (B) sınıfı sürücü belgesine sahip olmak."
+      }
+     ]
     },
     {
      "id": "csb-477774",
@@ -5279,8 +5298,8 @@
       }
      ],
      "yayim_tarihi": "2026-09-21",
-     "detay_guncelleme": "2026-10-04T14:49:24+03:00",
-     "csb_detay_surumu": 3,
+     "detay_guncelleme": "2026-10-05T02:06:47+03:00",
+     "csb_detay_surumu": 4,
      "ozet": "Rize Belediyesinin 16.09.2026 tarihli ve 47818 sayılı yazısına istinaden ilk defa sözleşmeli personel (Çevre Mühendisi) alım ilanı iptal edilmiştir.",
      "belgeler": [],
      "yer": "Rize",
@@ -5290,9 +5309,9 @@
      "id": "csb-477772",
      "baslik": "ÇELTİK BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
      "kurum": "ÇELTİK BELEDİYE BAŞKANLIĞI",
-     "kadro": "",
+     "kadro": "2 Mühendis",
      "ilan_turu": "Memur",
-     "son_tarih": null,
+     "son_tarih": "2026-11-06",
      "kaynak": "ÇŞB Yerel Yönetimler",
      "kaynak_turu": "csb",
      "link": "https://yerelyonetimler.csb.gov.tr/konya-ili-celtik-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-477772",
@@ -5303,9 +5322,9 @@
       }
      ],
      "yayim_tarihi": "2026-09-21",
-     "detay_guncelleme": "2026-10-05T01:36:50+03:00",
-     "csb_detay_surumu": 3,
-     "ozet": "Konya ili Çeltik Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır.",
+     "detay_guncelleme": "2026-10-05T02:06:48+03:00",
+     "csb_detay_surumu": 4,
+     "ozet": "Konya ili Çeltik Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır. Son başvuru: 06.11.2026.",
      "belgeler": [
       {
        "ad": "21-09-2026-eltik-Bel-Memur-Alimi-Ilan-Metni-1-20260921114918.docx",
@@ -5313,7 +5332,16 @@
       }
      ],
      "yer": "Konya",
-     "ek_okunamadi": 1
+     "sartlar": [
+      {
+       "kadro": "Mühendis · 1 kadro",
+       "metin": "KPSS P3 puan türünden en az 65 puan. Hizmet sınıfı TH, 6. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren fakültelerin inşaat mühendisliği programından mezun olmak. En az (B) sınıfı sürücü belgesine sahip olmak."
+      },
+      {
+       "kadro": "Mühendis · 1 kadro",
+       "metin": "KPSS P3 puan türünden en az 65 puan. Hizmet sınıfı TH, 6. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren fakültelerin jeodezi ve fotogrametri mühendisliği, jeodezi ve haritacılık mühendisliği, harita mühendisliği, geomatik mühendisliği programlarının birinden mezun olmak. En az (B) sınıfı sürücü belgesine sahip olmak."
+      }
+     ]
     },
     {
      "id": "csb-477610",
@@ -5332,8 +5360,8 @@
       }
      ],
      "yayim_tarihi": "2026-09-14",
-     "detay_guncelleme": "2026-10-04T14:49:27+03:00",
-     "csb_detay_surumu": 3,
+     "detay_guncelleme": "2026-10-05T02:06:49+03:00",
+     "csb_detay_surumu": 4,
      "ozet": "Rize Belediyesinin 11/09/2026 tarihli ve 47570 sayılı yazısına istinaden ilk defa sözleşmeli personel (mimar) alım ilanı iptal edilmiştir",
      "belgeler": [],
      "yer": "Rize",
@@ -5356,8 +5384,8 @@
       }
      ],
      "yayim_tarihi": "2026-09-14",
-     "detay_guncelleme": "2026-10-04T14:49:27+03:00",
-     "csb_detay_surumu": 3,
+     "detay_guncelleme": "2026-10-05T02:06:50+03:00",
+     "csb_detay_surumu": 4,
      "ozet": "Rize Belediyesinin 09/09/2026 tarihli ve 47452 sayılı yazısına istinaden ilk defa sözleşmeli personel (peyzaj mimarı) alım ilanı iptal edilmiştir.",
      "belgeler": [],
      "yer": "Rize",
@@ -5380,8 +5408,8 @@
       }
      ],
      "yayim_tarihi": "2026-09-14",
-     "detay_guncelleme": "2026-10-04T14:49:28+03:00",
-     "csb_detay_surumu": 3,
+     "detay_guncelleme": "2026-10-05T02:06:50+03:00",
+     "csb_detay_surumu": 4,
      "ozet": "Üsküdar Belediyesinin 11/09/2026 tarihli ve 480167 sayılı yazısına istinaden ilk defa memur ve zabıta memuru alım ilanı iptal edilmiştir.",
      "belgeler": [],
      "yer": "İstanbul",
@@ -5391,9 +5419,9 @@
      "id": "csb-477600",
      "baslik": "GEREDE BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE SÖZLEŞMELİ PERSONEL ALIM İLANI",
      "kurum": "GEREDE BELEDİYE BAŞKANLIĞI",
-     "kadro": "",
+     "kadro": "1 Mühendis",
      "ilan_turu": "Sözleşmeli Personel",
-     "son_tarih": null,
+     "son_tarih": "2026-10-22",
      "kaynak": "ÇŞB Yerel Yönetimler",
      "kaynak_turu": "csb",
      "link": "https://yerelyonetimler.csb.gov.tr/bolu-ili-gerede-belediye-baskanligina-ilk-defa-atanmak-uzere-sozlesmeli-personel-alim-ilani-duyuru-477600",
@@ -5404,9 +5432,9 @@
       }
      ],
      "yayim_tarihi": "2026-09-14",
-     "detay_guncelleme": "2026-10-04T14:49:30+03:00",
-     "csb_detay_surumu": 3,
-     "ozet": "Bolu ili Gerede Belediye Başkanlığı bünyesinde 5393 sayılı Belediye Kanununun 49 uncu maddesi ile Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla, belirtilen boş pozisyona tam zamanlı sözleşmeli personel alınacaktır.",
+     "detay_guncelleme": "2026-10-05T02:06:51+03:00",
+     "csb_detay_surumu": 4,
+     "ozet": "Bolu ili Gerede Belediye Başkanlığı bünyesinde 5393 sayılı Belediye Kanununun 49 uncu maddesi ile Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla, belirtilen boş pozisyona tam zamanlı sözleşmeli personel alınacaktır. Son başvuru: 22.10.2026.",
      "belgeler": [
       {
        "ad": "14-09-2026-Gerede-Bel-Sozlesmeli-Insaat-Muhendisi-alim-Ilani-son-20260914145544.docx",
@@ -5414,15 +5442,20 @@
       }
      ],
      "yer": "Bolu",
-     "ek_okunamadi": 1
+     "sartlar": [
+      {
+       "kadro": "Mühendis · 1 pozisyon",
+       "metin": "KPSS P3 puan türünden en az 75 puan. Hizmet sınıfı TH, 8. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren fakültelerin İnşaat Mühendisliği bölümünden mezun olmak. En az (B) sınıfı sürücü belgesine sahip olmak."
+      }
+     ]
     },
     {
      "id": "csb-477599",
      "baslik": "MUCUR BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
      "kurum": "MUCUR BELEDİYE BAŞKANLIĞI",
-     "kadro": "",
+     "kadro": "1 Memur",
      "ilan_turu": "Memur",
-     "son_tarih": null,
+     "son_tarih": "2026-10-28",
      "kaynak": "ÇŞB Yerel Yönetimler",
      "kaynak_turu": "csb",
      "link": "https://yerelyonetimler.csb.gov.tr/kirsehir-ili-mucur-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-477599",
@@ -5433,9 +5466,9 @@
       }
      ],
      "yayim_tarihi": "2026-09-14",
-     "detay_guncelleme": "2026-10-04T14:49:33+03:00",
-     "csb_detay_surumu": 3,
-     "ozet": "Kırşehir ili Mucur Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır.",
+     "detay_guncelleme": "2026-10-05T02:06:52+03:00",
+     "csb_detay_surumu": 4,
+     "ozet": "Kırşehir ili Mucur Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır. Son başvuru: 28.10.2026.",
      "belgeler": [
       {
        "ad": "14-09-2026-Mucur-Bel-1-Memur-Alim-Ilani-lisans-son-20260914145247.docx",
@@ -5443,15 +5476,20 @@
       }
      ],
      "yer": "Kırşehir",
-     "ek_okunamadi": 1
+     "sartlar": [
+      {
+       "kadro": "Memur · 1 kadro",
+       "metin": "KPSS P3 puan türünden en az 55 puan. Hizmet sınıfı GİH, 12. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren fakültelerin; istatistik, ilköğretim matematik öğretmenliği, işletme programlarının birinden mezun olmak."
+      }
+     ]
     },
     {
      "id": "csb-477598",
      "baslik": "DİDİM BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE ZABITA MEMURU ALIMI İLANI",
      "kurum": "DİDİM BELEDİYE BAŞKANLIĞI",
-     "kadro": "",
+     "kadro": "18 Zabıta Memuru",
      "ilan_turu": "Memur",
-     "son_tarih": null,
+     "son_tarih": "2026-10-23",
      "kaynak": "ÇŞB Yerel Yönetimler",
      "kaynak_turu": "csb",
      "link": "https://yerelyonetimler.csb.gov.tr/aydin-ili-didim-belediye-baskanligina-ilk-defa-atanmak-uzere-zabita-memuru-alimi-ilani-duyuru-477598",
@@ -5462,9 +5500,9 @@
       }
      ],
      "yayim_tarihi": "2026-09-14",
-     "detay_guncelleme": "2026-10-04T14:49:36+03:00",
-     "csb_detay_surumu": 3,
-     "ozet": "Aydın ili Didim Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanunu’na tabi olarak istihdam edilmek üzere; Belediye Zabıta Yönetmeliği hükümlerine göre aşağıda kadro unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla zabıta memuru alımı yapılacaktır.",
+     "detay_guncelleme": "2026-10-05T02:06:53+03:00",
+     "csb_detay_surumu": 4,
+     "ozet": "Aydın ili Didim Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanunu’na tabi olarak istihdam edilmek üzere; Belediye Zabıta Yönetmeliği hükümlerine göre aşağıda kadro unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla zabıta memuru alımı yapılacaktır. Son başvuru: 23.10.2026.",
      "belgeler": [
       {
        "ad": "14-09-2026-didim-belediyesi-ZABITA-MEMURU-ALIMI-ilan-metni-1-20260914144944.docx",
@@ -5472,15 +5510,20 @@
       }
      ],
      "yer": "Aydın",
-     "ek_okunamadi": 1
+     "sartlar": [
+      {
+       "kadro": "Zabıta Memuru · 18 kadro",
+       "metin": "KPSS P3 puan türünden en az 70 puan. Hizmet sınıfı GİH, 9. derece. Öğrenim: Lisans mezunu. Herhangi bir lisans programından mezun olmak. En az (B) sınıfı sürücü belgesine sahip olmak."
+      }
+     ]
     },
     {
      "id": "csb-477595",
      "baslik": "ELMAKAYA BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
      "kurum": "ELMAKAYA BELEDİYE BAŞKANLIĞI",
-     "kadro": "",
+     "kadro": "1 Mühendis",
      "ilan_turu": "Memur",
-     "son_tarih": null,
+     "son_tarih": "2026-10-21",
      "kaynak": "ÇŞB Yerel Yönetimler",
      "kaynak_turu": "csb",
      "link": "https://yerelyonetimler.csb.gov.tr/mus-ili-elmakaya-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-477595",
@@ -5491,9 +5534,9 @@
       }
      ],
      "yayim_tarihi": "2026-09-14",
-     "detay_guncelleme": "2026-10-04T14:49:38+03:00",
-     "csb_detay_surumu": 3,
-     "ozet": "Muş ili Elmakaya Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır",
+     "detay_guncelleme": "2026-10-05T02:06:54+03:00",
+     "csb_detay_surumu": 4,
+     "ozet": "Muş ili Elmakaya Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır Son başvuru: 21.10.2026.",
      "belgeler": [
       {
        "ad": "14-09-2026-ELMAKAYA-BELEDIYESI-MEMUR-ALIM-ILANI-20260914144747.docx",
@@ -5501,15 +5544,20 @@
       }
      ],
      "yer": "Muş",
-     "ek_okunamadi": 1
+     "sartlar": [
+      {
+       "kadro": "Mühendis · 1 kadro",
+       "metin": "KPSS P3 puan türünden en az 60 puan. Hizmet sınıfı TH, 9. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren fakültelerin jeodezi ve fotogrametri mühendisliği, jeodezi ve haritacılık mühendisliği, harita mühendisliği, geomatik mühendisliği programından mezun olmak. En az (B) sınıfı sürücü belgesine sahip olmak."
+      }
+     ]
     },
     {
      "id": "csb-477502",
      "baslik": "PURSAKLAR BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE ZABITA MEMURU ALIMI İLANI",
      "kurum": "PURSAKLAR BELEDİYE BAŞKANLIĞI",
-     "kadro": "",
+     "kadro": "9 Zabıta Memuru",
      "ilan_turu": "Memur",
-     "son_tarih": null,
+     "son_tarih": "2026-10-23",
      "kaynak": "ÇŞB Yerel Yönetimler",
      "kaynak_turu": "csb",
      "link": "https://yerelyonetimler.csb.gov.tr/ankara-illi-pursaklar-belediye-baskanligina-ilk-defa-atanmak-uzere-zabita-memuru-alimi-ilani-duyuru-477502",
@@ -5520,9 +5568,9 @@
       }
      ],
      "yayim_tarihi": "2026-09-10",
-     "detay_guncelleme": "2026-10-04T14:49:41+03:00",
-     "csb_detay_surumu": 3,
-     "ozet": "Ankara ili Pursaklar Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Belediye Zabıta Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla zabıta memuru alımı yapılacaktır.",
+     "detay_guncelleme": "2026-10-05T02:06:55+03:00",
+     "csb_detay_surumu": 4,
+     "ozet": "Ankara ili Pursaklar Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Belediye Zabıta Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla zabıta memuru alımı yapılacaktır. Son başvuru: 23.10.2026.",
      "belgeler": [
       {
        "ad": "09-09-2026-pursaklar-Ilan-metni-son-1-20260910095006.docx",
@@ -5530,15 +5578,28 @@
       }
      ],
      "yer": "Ankara",
-     "ek_okunamadi": 1
+     "sartlar": [
+      {
+       "kadro": "Zabıta Memuru · 5 kadro",
+       "metin": "KPSS P3 puan türünden en az 65 puan. Hizmet sınıfı GİH, 9. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren fakültelerin Kamu Yönetimi, Siyaset Bilimi ve Kamu Yönetimi, Maliye, İşletme, İktisat, Acil Yardım ve Afet Yönetimi, Gıda Teknolojisi, Yerel Yönetimler, Aile ve Tüketici Bilimleri, Halkla İlişkiler, İletişim Bilimleri, bölümlerinin birinden mezun olmak. En az (B) sınıfı sürücü belgesine sahip olmak. Cinsiyet: Erkek."
+      },
+      {
+       "kadro": "Zabıta Memuru · 2 kadro",
+       "metin": "KPSS P3 puan türünden en az 65 puan. Hizmet sınıfı GİH, 9. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren fakültelerin Veri Bilimi ve Analitiği, İngilizce Mütercim ve Tercümanlık, Yerel Yönetimler, bölümlerinin birinden mezun olmak. En az (B) sınıfı sürücü belgesine sahip olmak. Cinsiyet: Erkek."
+      },
+      {
+       "kadro": "Zabıta Memuru · 2 kadro",
+       "metin": "KPSS P3 puan türünden en az 65 puan. Hizmet sınıfı GİH, 9. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren fakültelerin, Gıda Teknolojisi, Aile ve Tüketici Bilimleri, Veri Bilimi ve Analitiği bölümlerinin birinden mezun olmak. En az (B) sınıfı sürücü belgesine sahip olmak. Cinsiyet: Kadın."
+      }
+     ]
     },
     {
      "id": "csb-477478",
      "baslik": "TAŞKESTİ BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE SÖZLEŞMELİ PERSONEL ALIM İLANI",
      "kurum": "TAŞKESTİ BELEDİYE BAŞKANLIĞI",
-     "kadro": "",
+     "kadro": "1 Mühendis",
      "ilan_turu": "Sözleşmeli Personel",
-     "son_tarih": null,
+     "son_tarih": "2026-10-21",
      "kaynak": "ÇŞB Yerel Yönetimler",
      "kaynak_turu": "csb",
      "link": "https://yerelyonetimler.csb.gov.tr/bolu-ili-taskesti-belediye-baskanligina-ilk-defa-atanmak-uzere-sozlesmeli-personel-alim-ilani-duyuru-477478",
@@ -5549,9 +5610,9 @@
       }
      ],
      "yayim_tarihi": "2026-09-09",
-     "detay_guncelleme": "2026-10-04T14:49:43+03:00",
-     "csb_detay_surumu": 3,
-     "ozet": "Bolu ili Taşkesti Belediye Başkanlığı bünyesinde 5393 sayılı Belediye Kanununun 49 uncu maddesi ile Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla, belirtilen boş pozisyona tam zamanlı sözleşmeli personel alınacaktır.",
+     "detay_guncelleme": "2026-10-05T02:06:56+03:00",
+     "csb_detay_surumu": 4,
+     "ozet": "Bolu ili Taşkesti Belediye Başkanlığı bünyesinde 5393 sayılı Belediye Kanununun 49 uncu maddesi ile Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla, belirtilen boş pozisyona tam zamanlı sözleşmeli personel alınacaktır. Son başvuru: 21.10.2026.",
      "belgeler": [
       {
        "ad": "09-09-2026-Taskesti-Belediyesi-Ilk-Defa-Atanmak-Uzere-Sozlesmeli-Personel-Alim-Ilani-1-20260909100359.docx",
@@ -5559,15 +5620,20 @@
       }
      ],
      "yer": "Bolu",
-     "ek_okunamadi": 1
+     "sartlar": [
+      {
+       "kadro": "Mühendis · 1 pozisyon",
+       "metin": "KPSS P3 puan türünden en az 70 puan. Hizmet sınıfı TH, 7. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren fakültelerin inşaat mühendisliği programından mezun olmak. En az (B) Sınıfı sürücü belgesine sahip olmak."
+      }
+     ]
     },
     {
      "id": "csb-477477",
      "baslik": "ARALIK BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE İTFAİYE ERİ ALIMI İLANI",
      "kurum": "ARALIK BELEDİYE BAŞKANLIĞI",
-     "kadro": "",
+     "kadro": "3 İtfaiye Eri",
      "ilan_turu": "Kamu Personeli",
-     "son_tarih": null,
+     "son_tarih": "2026-10-21",
      "kaynak": "ÇŞB Yerel Yönetimler",
      "kaynak_turu": "csb",
      "link": "https://yerelyonetimler.csb.gov.tr/igdir-ili-aralik-belediye-baskanligina-ilk-defa-atanmak-uzere-itfaiye-eri-alimi-ilani-duyuru-477477",
@@ -5578,9 +5644,9 @@
       }
      ],
      "yayim_tarihi": "2026-09-09",
-     "detay_guncelleme": "2026-10-04T14:49:45+03:00",
-     "csb_detay_surumu": 3,
-     "ozet": "Iğdır ili Aralık Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanunu’na tabi olarak istihdam edilmek üzere; Belediye İtfaiye Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla itfaiye eri alımı yapılacaktır",
+     "detay_guncelleme": "2026-10-05T02:06:57+03:00",
+     "csb_detay_surumu": 4,
+     "ozet": "Iğdır ili Aralık Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanunu’na tabi olarak istihdam edilmek üzere; Belediye İtfaiye Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla itfaiye eri alımı yapılacaktır Son başvuru: 21.10.2026.",
      "belgeler": [
       {
        "ad": "09-09-2026-Aralik-Igdir-Belediyesi-2026-itfaiye-Eri-Alim-Ilani-son-hali-1-20260909100143.docx",
@@ -5588,13 +5654,22 @@
       }
      ],
      "yer": "Iğdır",
-     "ek_okunamadi": 1
+     "sartlar": [
+      {
+       "kadro": "İtfaiye Eri · 1 kadro",
+       "metin": "KPSS P93 puan türünden en az 65 puan. Hizmet sınıfı GİH, 11. derece. Öğrenim: Önlisans mezunu. Herhangi bir ön lisans programından mezun olmak. En az (B) sınıfı sürücü belgesine sahip olmak. Cinsiyet: Erkek."
+      },
+      {
+       "kadro": "İtfaiye Eri · 2 kadro",
+       "metin": "KPSS P94 puan türünden en az 60 puan. Hizmet sınıfı GİH, 11. derece. Öğrenim: Ortaöğretim mezunu. Herhangi bir ortaöğretim kurumundan (lise veya dengi okul) mezun olmak. En az (B) sınıfı sürücü belgesine sahip olmak. Cinsiyet: Erkek."
+      }
+     ]
     },
     {
      "id": "csb-477402",
      "baslik": "MUCUR BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR VE İTFAİYE ERİ ALIMI DÜZELTME İLANI",
      "kurum": "MUCUR BELEDİYE BAŞKANLIĞI",
-     "kadro": "",
+     "kadro": "Toplam 4 kişi — 3 İtfaiye Eri • 1 Memur",
      "ilan_turu": "Memur",
      "son_tarih": null,
      "kaynak": "ÇŞB Yerel Yönetimler",
@@ -5607,8 +5682,8 @@
       }
      ],
      "yayim_tarihi": "2026-09-04",
-     "detay_guncelleme": "2026-10-04T14:49:48+03:00",
-     "csb_detay_surumu": 3,
+     "detay_guncelleme": "2026-10-05T02:06:57+03:00",
+     "csb_detay_surumu": 4,
      "ozet": "Kırşehir ili Mucur Belediye Başkanlığı bünyesinde 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği ile Belediye İtfaiye Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla, belirtilen boş kadrolara açıktan atama yoluyla memur ve itfaiye eri alınacaktır.",
      "belgeler": [
       {
@@ -5618,15 +5693,28 @@
      ],
      "yer": "Kırşehir",
      "duyuru_turu": "Düzeltme / süre değişikliği",
-     "ek_okunamadi": 1
+     "sartlar": [
+      {
+       "kadro": "İtfaiye Eri · 1 kadro",
+       "metin": "KPSS P94 puan türünden en az 65 puan. Hizmet sınıfı GİH, 12. derece. Öğrenim: Ortaöğretim mezunu. Herhangi bir ortaöğretim kurumundan (Lise ve dengi okul) mezun olmak. En az (C) sınıfı sürücü belgesine sahip olmak. Cinsiyet: Erkek."
+      },
+      {
+       "kadro": "İtfaiye Eri · 2 kadro",
+       "metin": "KPSS P94 puan türünden en az 60 puan. Hizmet sınıfı GİH, 12. derece. Öğrenim: Ortaöğretim mezunu. Herhangi bir ortaöğretim kurumundan (Lise ve dengi okul) mezun olmak. En az (B) sınıfı sürücü belgesine sahip olmak."
+      },
+      {
+       "kadro": "Memur · 1 kadro",
+       "metin": "KPSS P94 puan türünden en az 70 puan. Hizmet sınıfı GİH, 10. derece. Öğrenim: Ortaöğretim mezunu. Herhangi bir ortaöğretim kurumundan (Lise ve dengi okul) mezun olmak. En az (B) sınıfı sürücü belgesine sahip olmak."
+      }
+     ]
     },
     {
      "id": "csb-477247",
      "baslik": "KARABURUN BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE ZABITA MEMURU ALIMI İLANI",
      "kurum": "KARABURUN BELEDİYE BAŞKANLIĞI",
-     "kadro": "",
+     "kadro": "4 Zabıta Memuru",
      "ilan_turu": "Memur",
-     "son_tarih": null,
+     "son_tarih": "2026-10-06",
      "kaynak": "ÇŞB Yerel Yönetimler",
      "kaynak_turu": "csb",
      "link": "https://yerelyonetimler.csb.gov.tr/izmir-ili-karaburun-belediye-baskanligi-ilk-defa-atanmak-uzere-zabita-memuru-alimi-ilani-duyuru-477247",
@@ -5637,9 +5725,9 @@
       }
      ],
      "yayim_tarihi": "2026-08-28",
-     "detay_guncelleme": "2026-10-04T14:49:50+03:00",
-     "csb_detay_surumu": 3,
-     "ozet": "İzmir ili Karaburun Belediye Başkanlığı bünyesinde,657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Belediye Zabıta Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla zabıta memuru alımı yapılacaktır.",
+     "detay_guncelleme": "2026-10-05T02:06:58+03:00",
+     "csb_detay_surumu": 4,
+     "ozet": "İzmir ili Karaburun Belediye Başkanlığı bünyesinde,657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Belediye Zabıta Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla zabıta memuru alımı yapılacaktır. Son başvuru: 06.10.2026.",
      "belgeler": [
       {
        "ad": "28-08-2026-KARABURUN-BELEDIYESI-ZABITA-MEMUR-SINAVI-ILAN-METNI-1-1-20260828150956.docx",
@@ -5647,15 +5735,24 @@
       }
      ],
      "yer": "İzmir",
-     "ek_okunamadi": 1
+     "sartlar": [
+      {
+       "kadro": "Zabıta Memuru · 3 kadro",
+       "metin": "KPSS P3 puan türünden en az 60 puan. Hizmet sınıfı GİH, 9. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren fakültelerin beden eğitimi ve spor, halkla ilişkiler ve reklamcılık, ingiliz dili ve edebiyatı programlarının birinden mezun olmak. En az (B) sınıfı sürücü belgesine sahip olmak. Cinsiyet: Erkek."
+      },
+      {
+       "kadro": "Zabıta Memuru · 1 kadro",
+       "metin": "KPSS P3 puan türünden en az 60 puan. Hizmet sınıfı GİH, 9. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren fakültelerin beden eğitimi ve spor, halkla ilişkiler ve reklamcılık, ingiliz dili ve edebiyatı programlarının birinden mezun olmak. En az (B) sınıfı sürücü belgesine sahip olmak. Cinsiyet: Kadın."
+      }
+     ]
     },
     {
      "id": "csb-477229",
      "baslik": "GÖLE BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIMI İLANI",
      "kurum": "GÖLE BELEDİYE BAŞKANLIĞI",
-     "kadro": "",
+     "kadro": "Toplam 3 kişi — 1 Ayniyat Memuru • 1 Anbar Memuru • 1 Memur",
      "ilan_turu": "Memur",
-     "son_tarih": null,
+     "son_tarih": "2026-10-06",
      "kaynak": "ÇŞB Yerel Yönetimler",
      "kaynak_turu": "csb",
      "link": "https://yerelyonetimler.csb.gov.tr/ardahan-ili-gole-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alimi-ilani-duyuru-477229",
@@ -5666,9 +5763,9 @@
       }
      ],
      "yayim_tarihi": "2026-08-28",
-     "detay_guncelleme": "2026-10-04T14:49:53+03:00",
-     "csb_detay_surumu": 3,
-     "ozet": "Ardahan ili Göle Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadroya açıktan atama yoluyla memur alınacaktır.",
+     "detay_guncelleme": "2026-10-05T02:06:59+03:00",
+     "csb_detay_surumu": 4,
+     "ozet": "Ardahan ili Göle Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadroya açıktan atama yoluyla memur alınacaktır. Son başvuru: 06.10.2026.",
      "belgeler": [
       {
        "ad": "28-08-2026-Gole-Belediyesi-Memur-Al-m-Ilani-20260828100807.docx",
@@ -5676,7 +5773,20 @@
       }
      ],
      "yer": "Ardahan",
-     "ek_okunamadi": 1
+     "sartlar": [
+      {
+       "kadro": "Ayniyat Memuru · 1 kadro",
+       "metin": "KPSS P3 puan türünden en az 75 puan. Hizmet sınıfı GİH, 10. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren fakültelerin herhangi bir programından mezun olmak. En az (B) sınıfı sürücü belgesine sahip olmak."
+      },
+      {
+       "kadro": "Anbar Memuru · 1 kadro",
+       "metin": "KPSS P3 puan türünden en az 70 puan. Hizmet sınıfı GİH, 10. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren fakültelerin herhangi bir programından mezun olmak. En az (B) sınıfı sürücü belgesine sahip olmak."
+      },
+      {
+       "kadro": "Memur · 1 kadro",
+       "metin": "KPSS P94 puan türünden en az 60 puan. Hizmet sınıfı GİH, 11. derece. Öğrenim: Ortaöğretim mezunu. Herhangi bir ortaöğretim kurumundan (lise veya dengi okul) mezun olmak. En az (B) sınıfı sürücü belgesi sahibi olmak."
+      }
+     ]
     },
     {
      "id": "csb-477190",
@@ -5695,8 +5805,8 @@
       }
      ],
      "yayim_tarihi": "2026-08-26",
-     "detay_guncelleme": "2026-10-04T14:49:56+03:00",
-     "csb_detay_surumu": 3,
+     "detay_guncelleme": "2026-10-05T02:07:00+03:00",
+     "csb_detay_surumu": 4,
      "ozet": "Samsun ili Tekkeköy Belediyesinin 24.08.2026 tarihli ve 56372 sayılı yazısına istinaden ilk defa atanmak üzere memur alımı iptal edilmiştir.",
      "belgeler": [],
      "yer": "Samsun",
@@ -5706,7 +5816,7 @@
      "id": "csb-477163",
      "baslik": "BAHÇE BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
      "kurum": "BAHÇE BELEDİYE BAŞKANLIĞI",
-     "kadro": "",
+     "kadro": "1 Memur",
      "ilan_turu": "Memur",
      "son_tarih": null,
      "kaynak": "ÇŞB Yerel Yönetimler",
@@ -5719,8 +5829,8 @@
       }
      ],
      "yayim_tarihi": "2026-08-25",
-     "detay_guncelleme": "2026-10-05T00:07:38+03:00",
-     "csb_detay_surumu": 3,
+     "detay_guncelleme": "2026-10-05T02:07:01+03:00",
+     "csb_detay_surumu": 4,
      "ozet": "Osmaniye ili Bahçe Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır.",
      "belgeler": [
       {
@@ -5729,7 +5839,12 @@
       }
      ],
      "yer": "Osmaniye",
-     "ek_okunamadi": 1
+     "sartlar": [
+      {
+       "kadro": "Memur · 1 kadro",
+       "metin": "KPSS P3 puan türünden en az 55 puan. Hizmet sınıfı GİH, 9. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren fakültelerin işletme, kamu yönetimi, muhasebe ve finans yönetimi programlarının birinden mezun olmak. En az (B) sınıfı sürücü belgesine sahip olmak."
+      }
+     ]
     }
    ]
   }
