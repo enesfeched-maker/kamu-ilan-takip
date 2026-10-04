@@ -433,7 +433,6 @@ def duyuru_karari(duyuru, ilanlar, mesajlar, yanitlar, bugun, gonderilen=None):
     return {'islem': 'gonder', 'orijinal': None, 'referans': referans, 'tam': tam, 'yaz': anahtar}
 
 
-TOPLU_EN_COK_SATIR = 15
 TOPLU_SINIR = 950  # sendPhoto başlık sınırı 1024 görünür karakter
 
 
@@ -465,33 +464,140 @@ def toplu_secim(ilanlar, gonderilen, cfg):
     return tekil
 
 
-def toplu_mesaj(ilanlar, site_url):
-    """Başlık + ilan başına '• <a>Kurum — kadro</a> · <b>Yarın son gün</b>'; en fazla 15 satır ve ~950 görünür karakter."""
+GUN_ADLARI = ('Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar')
+AY_ADLARI = ('Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık')
+SABAH_YENI_EN_COK, SABAH_YENI_EN_AZ = 5, 3
+SABAH_SON_GUN_EN_COK = 6
+
+
+def turkce_tarih(zaman):
+    """'5 Ekim Pazartesi' (İstanbul tarihi)."""
+    return f"{zaman.day} {AY_ADLARI[zaman.month - 1]} {GUN_ADLARI[zaman.weekday()]}"
+
+
+def gorunen_uzunluk(metin):
+    return len(html.unescape(re.sub(r"<[^>]+>", "", metin)))
+
+
+def sabah_yeniler(ilanlar, gonderilen, cfg, zaman):
+    """Dünkü 09:00 (dahil) ile bugünkü 09:00 (hariç) arasında ilk görülen, kanalda paylaşılmış; akademik/iptal/duyuru
+    olmayan ilanlar (en çok kadro önce). Sabit sınır: özet geç gitse bile günler arası boşluk/çift sayım olmaz.
+    Aynı normalize kurum + aynı son tarih (SBB/İŞKUR kopyaları) tek kayıt."""
+    from kart_tasarimlari import veri as kart_verisi
+    dahil, haric = cfg.get('telegram_kelimeler_dahil', []), cfg.get('telegram_kelimeler_haric', [])
+    bugun_09 = datetime.combine(zaman.astimezone(TR).date(), datetime.min.time(), tzinfo=TR).replace(hour=9)
+    sonuc = []
+    for i in ilanlar:
+        if i.get('duyuru_turu') or i.get('iptal_edildi') or akademik_ilan(i):
+            continue
+        try:
+            gorulme = datetime.fromisoformat(i['ilk_gorulme'])
+        except (KeyError, TypeError, ValueError):
+            continue
+        if gorulme.tzinfo is None:
+            gorulme = gorulme.replace(tzinfo=TR)
+        if not bugun_09 - timedelta(days=1) <= gorulme < bugun_09:
+            continue
+        if not ({i['id'], *i.get('kaynak_kimlikleri', [])} & gonderilen) or suresi_doldu(i):
+            continue
+        if telegram_icin_uygun(i, dahil, haric):
+            sonuc.append((-(kart_verisi(i)['toplam'] or 0), i.get('kurum', ''), i['id'], i))
+    sonuc.sort(key=lambda s: s[:3])
+    gorulen, tekil = set(), []
+    for *_, i in sonuc:
+        anahtar = _tekil_anahtar(i)
+        if anahtar not in gorulen:
+            gorulen.add(anahtar)
+            tekil.append(i)
+    return tekil
+
+
+def _tekil_anahtar(i):
+    k = kurum_kimligi(i)
+    return (i.get('son_tarih'), k[:2] if k else i['id'])
+
+
+def sabah_acik_sayisi(ilanlar, zaman):
+    """Sitedeki 'Başvurusu açık' tanımı: akademik/duyuru/iptal değil, son tarihi var, süresi dolmamış, başlamış."""
+    sayi = 0
+    for i in ilanlar:
+        if i.get('duyuru_turu') or i.get('iptal_edildi') or akademik_ilan(i) or not i.get('son_tarih') or suresi_doldu(i):
+            continue
+        try:
+            if i.get('baslangic_zaman') and datetime.fromisoformat(i['baslangic_zaman']) > zaman:
+                continue
+        except ValueError:
+            pass
+        sayi += 1
+    return sayi
+
+
+def sabah_toplam_kadro(yeniler):
+    from kart_tasarimlari import veri as kart_verisi
+    return sum(kart_verisi(i)['toplam'] or 0 for i in yeniler)
+
+
+def _ilan_satiri(i, site_url, etiket=None):
     from kart_tasarimlari import toplu_satir
     e = html.escape
-    bugun = simdi().date()
-    baslik = "⏰ <b>Son başvurusu yaklaşan ilanlar</b>"
-    satirlar, uzunluk = [], len("Son başvurusu yaklaşan ilanlar") + 4
-    for i in ilanlar:
-        kurum, kadro = toplu_satir(i)
-        ad = kisalt(f"{kurum} — {kadro}" if kadro and kadro != kurum else kurum, 70)
-        fark = (date.fromisoformat(i['son_tarih']) - bugun).days
-        etiket = "Bugün son gün" if fark <= 0 else "Yarın son gün" if fark == 1 else f"{fark} gün kaldı"
-        gorunen = len(f"• {ad} · {etiket}") + 1
-        if len(satirlar) >= TOPLU_EN_COK_SATIR or uzunluk + gorunen > TOPLU_SINIR:
-            break
-        try:
-            url = ilan_sayfasi(i, site_url)
-        except ValueError:
-            url = ''
-        govde = f'<a href="{e(url, quote=True)}">{e(ad)}</a>' if url else e(ad)
-        satirlar.append(f"• {govde} · <b>{etiket}</b>")
-        uzunluk += gorunen
-    kalan = len(ilanlar) - len(satirlar)
-    if kalan > 0:
-        satirlar.append(f"+{kalan} ilan daha — tümü sitemizde")
-    return "\n".join([baslik, "", *satirlar])
+    kurum, kadro = toplu_satir(i)
+    ad = kisalt(f"{kurum} — {kadro}" if kadro and kadro != kurum else kurum, 70)
+    try:
+        url = ilan_sayfasi(i, site_url)
+    except ValueError:
+        url = ''
+    govde = f'<a href="{e(url, quote=True)}">{e(ad)}</a>' if url else e(ad)
+    return f"• {govde}" + (f" · <b>{etiket}</b>" if etiket else "")
 
+
+def sabah_mesaj(yeniler, son_gun, acik_sayisi, site_url, zaman):
+    """Sabah özeti başlığı (HTML): yeni ilanlar, son başvurusu yaklaşanlar, açık ilan sayısı. Boş bölüm yazılmaz.
+    Sınır (~950 görünür karakter) aşılırsa önce yeni listesi 3'e, sonra son gün listesi kısaltılır; başlık/altlık kalır."""
+    bugun = zaman.date()
+    ust = f"☀️ <b>Günaydın — {turkce_tarih(zaman)}</b>"
+    alt = []
+    if acik_sayisi:
+        alt.append(f"📌 Şu an başvurusu açık <b>{acik_sayisi} ilan</b>")
+    if site_url:
+        alt.append(f'👉 <a href="{html.escape(site_url.rstrip("/") + "/?g=bugun", quote=True)}">Bugünün tüm ilanları</a>')
+    son_gun_anahtar = {x for i in son_gun for x in (('id', i['id']), ('k', _tekil_anahtar(i)))}
+    # Son gün listesinde olan yeni ilan yalnız ⏰ altında görünür (başlıktaki sayı yine hepsini sayar).
+    yeni_satirlari = [_ilan_satiri(i, site_url) for i in yeniler
+                      if ('id', i['id']) not in son_gun_anahtar and ('k', _tekil_anahtar(i)) not in son_gun_anahtar]
+    son_satirlari = []
+    for i in son_gun:
+        fark = (date.fromisoformat(i['son_tarih']) - bugun).days
+        son_satirlari.append(_ilan_satiri(i, site_url, "Bugün son gün" if fark <= 0 else "Yarın son gün" if fark == 1 else f"{fark} gün kaldı"))
+    kadro = sabah_toplam_kadro(yeniler)
+    yeni_baslik = f"🆕 <b>Son 24 saatte {len(yeniler)} yeni ilan</b>" + (f" · {kadro} kadro" if kadro else "")
+
+    def olustur(ny, ns):
+        parcalar = [ust]
+        if yeniler:
+            satirlar = yeni_satirlari[:ny] + ([f"+{len(yeni_satirlari) - ny} ilan daha"] if len(yeni_satirlari) > ny else [])
+            parcalar.append("\n".join([yeni_baslik, *satirlar]))
+        if ns:
+            satirlar = son_satirlari[:ns] + ([f"+{len(son_gun) - ns} ilan daha"] if len(son_gun) > ns else [])
+            parcalar.append("\n".join(["⏰ <b>Son başvurusu yaklaşanlar</b>", *satirlar]))
+        if alt:
+            parcalar.append("\n".join(alt))
+        return "\n\n".join(parcalar)
+
+    ny, ns = min(len(yeni_satirlari), SABAH_YENI_EN_COK), min(len(son_gun), SABAH_SON_GUN_EN_COK)
+    while gorunen_uzunluk(olustur(ny, ns)) > TOPLU_SINIR:
+        if ny > SABAH_YENI_EN_AZ:
+            ny -= 1
+        elif ns > 1:
+            ns -= 1
+        elif ny > 1:
+            ny -= 1
+        elif ns > 0:
+            ns -= 1
+        elif ny > 0:
+            ny -= 1
+        else:
+            break
+    return olustur(ny, ns)
 
 def suresi_doldu(ilan):
     if ilan.get('son_zaman'):
@@ -730,12 +836,18 @@ def main():
     gonderilecek = telegram_sirasi(mevcut, gelen, yeniler, gonderilen, bekleyen,
                                   ilk_calisma, a.duyur_mevcut, cfg)
     # İlan başına hatırlatma kaldırıldı (geçmiş hatirlatilan korunur, yeni kayıt eklenmez);
-    # yerine günde bir kez toplu son gün kartı gönderilir.
+    # yerine günde bir kez sabah özeti (yeni ilanlar + son başvurusu yaklaşanlar + açık ilan sayısı) gönderilir.
     mesajlar = dict(veri.get('telegram_mesajlari', {}))
     yanitlar = dict(veri.get('telegram_duyuru_yanitlari', {}))
     toplu_gun = veri.get('telegram_toplu_hatirlatma_gunu')
-    toplu = toplu_secim(gelen, gonderilen, cfg) if toplu_zamani(simdi(), toplu_gun) else []
-    kuyruk = ([('toplu', toplu)] if toplu else []) + \
+    sabah = None
+    if toplu_zamani(simdi(), toplu_gun):
+        sabah_yeni = sabah_yeniler(gelen, gonderilen, cfg, simdi())
+        sabah_son_gun = toplu_secim(gelen, gonderilen, cfg)
+        sabah_acik = sabah_acik_sayisi(gelen, simdi())
+        if sabah_yeni or sabah_son_gun or sabah_acik:  # üçü de boşsa sessizce atlanır, gün işaretlenmez
+            sabah = (sabah_yeni, sabah_son_gun, sabah_acik)
+    kuyruk = ([('sabah', sabah)] if sabah else []) + \
              [('duyuru' if i.get('duyuru_turu') else 'ilan', i) for i in gonderilecek]
     limit = max(1, int(cfg.get('max_mesaj_per_calisma', 15)))
     site_url = cfg.get('site_url', '')
@@ -748,24 +860,26 @@ def main():
             mesajlar[kimlik] = mid
 
     for tur, i in ([] if a.prepare else kuyruk[:limit]):
-        if tur == 'toplu':
+        if tur == 'sabah':
+            yeni_l, son_gun_l, acik = i
+            metin = sabah_mesaj(yeni_l, son_gun_l, acik, site_url, simdi())
             if a.dry_run:
-                print('--- (önizleme, gönderilmedi) ---\n' + toplu_mesaj(i, site_url) + '\n')
+                print('--- (önizleme, gönderilmedi) ---\n' + metin + '\n')
                 continue
             try:
-                from kart_tasarimlari import toplu_son_gun_karti
-                foto = toplu_son_gun_karti(i, simdi())
+                from kart_tasarimlari import sabah_ozeti_karti, toplu_son_gun_karti
+                foto = toplu_son_gun_karti(son_gun_l, simdi()) if son_gun_l else sabah_ozeti_karti(yeni_l, acik, simdi(), son_gun=son_gun_l)
             except Exception as exc:
-                print(f'Toplu son gün kartı oluşturulamadı ({type(exc).__name__}); sonraki çalıştırmada denenecek.', file=sys.stderr)
-                hata = True
-                continue
-            mid = telegram_gonder(token, chat_id, toplu_mesaj(i, site_url), '', site_url, foto=foto) if (token and chat_id) else False
+                # Görsel yapılamazsa gün atlanmaz: yalnız metin gönderilir.
+                print(f'Sabah özeti kartı oluşturulamadı ({type(exc).__name__}); yalnız metin gönderilecek.', file=sys.stderr)
+                foto = None
+            mid = telegram_gonder(token, chat_id, metin, '', site_url, foto=foto) if (token and chat_id) else False
             if not mid:
                 hata = True
                 break
             toplu_gun = simdi().date().isoformat()  # gün işareti yalnız başarıda yazılır
             adet += 1
-            print(f"Telegram'a toplu son gün kartı gönderildi: {len(i)} ilan")
+            print(f"Telegram'a sabah özeti gönderildi: {len(yeni_l)} yeni, {len(son_gun_l)} son gün, {acik} açık ilan")
             time.sleep(3.2)
             continue
         if cfg.get('resmi_detaylari_oku', False) and not detay_taze(i):
