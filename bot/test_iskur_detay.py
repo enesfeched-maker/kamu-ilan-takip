@@ -206,7 +206,7 @@ class MergeAndPageTests(unittest.TestCase):
         self.assertIn('henüz kaynaktan okunamadı', bos)
         self.assertNotIn('Seçilmiş alıntılardır', bos)
         dolu = detail_page({**rows[0], **ozet('bahce_memur')})[1]
-        for parca in ('Kadro ve kontenjan', '1 Memur', 'Başvuru koşullarından seçmeler', 'Seçilmiş alıntılardır'):
+        for parca in ('Kadro ve başvuru koşulları', '1 Memur', 'Başvuru koşullarından seçmeler', 'Seçilmiş alıntılardır'):
             self.assertIn(parca, dolu)
         self.assertNotIn('henüz kaynaktan okunamadı', dolu)
 

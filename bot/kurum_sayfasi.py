@@ -280,60 +280,124 @@ def yer_kisa(i):
     return _su()._duzgun(y)
 
 
-# ------------------------------------------------------------------ sunucu tarafı kart (kurum sayfası)
-def _logo_html(item, gorsel, kok):
+# ------------------------------------------------------------------ sunucu tarafı satır (kurum / ilan sayfaları)
+# portal.js rowEl() çıktısıyla aynı sınıf adları: ilan, ilan-foto, ilan-govde, ilan-kurum, ilan-meta, sinyal, ilan-sag, tarih, kaydet.
+SAAT = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>'
+KISA_AY = ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara']
+SAYI_YAZ = lambda n: f'{n:,}'.replace(',', '.')
+
+
+def _logo_html(item, gorsel, kok, sinif='institution-icon', boyut=48):
+    """Kurum logosu (WebP) ya da baş harfli renkli karo."""
     ad = esc(kurum_adi(item.get('kurum')))
     if gorsel.get('logo'):
-        return f'<img class="institution-icon institution-logo" src="{kok}{esc(gorsel["logo"])}" alt="{ad} logosu" width="48" height="48" loading="lazy" decoding="async">'
+        return f'<img class="{sinif} institution-logo" src="{kok}{esc(gorsel["logo"])}" alt="{ad} logosu" width="{boyut}" height="{boyut}" loading="lazy" decoding="async">'
     su = _su()
-    return f'<span class="institution-icon institution-badge" style="--h:{su._ton(item.get("kurum"))}" aria-hidden="true">{esc(su._bas_harfler(item.get("kurum")))}</span>'
+    return f'<span class="{sinif} institution-badge" style="--h:{su._ton(item.get("kurum"))}" aria-hidden="true">{esc(su._bas_harfler(item.get("kurum")))}</span>'
 
 
-def kart_html(item, gorsel, simdi, kok='../../'):
-    """Vitrin kartı (portal.js card() ile aynı yapı). Kayıt/karşılaştırma düğmeleri yoktur (JS gerektirir)."""
-    a = kart_alanlari(item)
-    metin, cls = durum(item, simdi)
-    key = anahtar(item)
-    href = f'{kok}ilan/{esc(key)}/'
-    veri = f' data-son="{esc(item["son_tarih"])}" data-zaman="{esc(item.get("son_zaman") or "")}"' if cls in ('ok', 'soon', 'urgent', 'today') and item.get('son_tarih') else ''
-    sayi = (f'<strong>{a["toplam"]:,}</strong><span>kadro</span>'.replace(',', '.')) if a.get('toplam') else f'<span class="card-count-none">{"Resmî duyuru" if item.get("duyuru_turu") else "Kadro sayısı ilanda"}</span>'
-    dosyalar = a['meslek'] or ['30-genel.jpg']
-    fotolar = ''.join(f'<img src="{kok}assets/meslek/{esc(f)}" alt="" width="76" height="76" loading="lazy">' for f in dosyalar)
-    ek = f'<span class="card-more">+{a["ek"]}</span>' if a.get('ek') else ''
-    chips = ''
-    if item.get('kpss') == 'kpss':
-        chips += '<span class="pill kpss">KPSS</span>'
-    elif item.get('kpss') == 'kpsssiz':
-        chips += '<span class="pill kpss">KPSS şartı yok</span>'
-    chips += ''.join(f'<span class="pill level">{esc(LEVELS.get(o, o))}</span>' for o in item.get('ogrenim') or [])
-    if yer_kisa(item):
-        chips += f'<span class="pill place">{esc(yer_kisa(item))}</span>'
-    tarih = f'Son başvuru <b>{esc(tarih_yazi(item["son_tarih"]))}</b>' if item.get('son_tarih') else 'Tarih resmî ilanda'
-    return (f'<article class="card"><div class="card-band"><span class="card-status {cls}"{veri}>{esc(metin)}</span>'
-            f'<div class="card-count">{sayi}</div><div class="card-photos n{len(dosyalar)}">{fotolar}</div></div>'
-            f'<div class="card-body"><div class="card-head">{_logo_html(item, gorsel, kok)}</div>'
-            f'<p class="institution">{esc(kurum_adi(item.get("kurum")))}</p>'
-            f'<h3><a href="{href}">{esc(a["manset"])}</a>{ek}</h3><p class="card-sub">{esc(a["alt"])}</p>'
-            f'<div class="card-chips">{chips}</div>'
-            f'<div class="card-foot"><div class="card-when"><span class="deadline-date">{tarih}</span></div>'
-            f'<a class="detail-link" href="{href}">İncele <span aria-hidden="true">→</span></a></div></div></article>')
+def _kayit(item, gorsel, simdi, tablolar=None, harita=None):
+    import liste_verisi
+    return liste_verisi.kayit(item, gorsel, tablolar or {}, simdi, harita)
+
+
+def _ilan_gorseli(k, kok):
+    """(görsel düğümü, karo mu): genel fotoğrafta logo karosu ya da harf karosu."""
+    su = _su()
+    meslek = k.get('meslek') or []
+    if not meslek or meslek[0].startswith('30-'):
+        if k.get('logo'):
+            return f'<span class="ilan-foto logo-karo"><img src="{kok}{esc(k["logo"])}" alt="" loading="lazy" decoding="async"></span>', True
+        return f'<span class="ilan-foto harf-karo" style="--h:{su._ton(k.get("kurum"))}" aria-hidden="true">{esc(su._bas_harfler(k.get("kurum")))}</span>', False
+    return f'<img class="ilan-foto" src="{kok}assets/meslek/{esc(meslek[0])}" alt="" width="52" height="52" loading="lazy" decoding="async">', False
+
+
+def _meta_html(k):
+    parcalar = []
+    if k.get('toplam') and not re.match(r'\d', k.get('manset') or ''):
+        parcalar.append(('', f'<b>{SAYI_YAZ(k["toplam"])} kadro</b>'))
+    if k.get('il'):
+        parcalar.append(('', esc(k['il'])))
+    if k.get('ogrenim'):
+        parcalar.append(('', esc(' / '.join(LEVELS[o] for o in k['ogrenim']))))
+    if k.get('puan_turleri'):
+        parcalar.append(('kpss', 'KPSS ' + esc(', '.join(k['puan_turleri'][:2]))))
+    elif k.get('kpss') == 'kpss':
+        parcalar.append(('kpss', 'KPSS'))
+    return '<p class="ilan-meta">' + ''.join(f'<span{f" class={chr(34)}{c}{chr(34)}" if c else ""}>{v}</span>' for c, v in parcalar[:4]) + '</p>'
+
+
+def _tarih_html(k, simdi):
+    yakinda = k.get('durum') == 'upcoming'
+    if not k.get('son_tarih'):
+        return '<div class="tarih yok"><strong>—</strong><span>tarih ilanda</span></div>'
+    g = (date.fromisoformat(k['son_tarih']) - simdi.date()).days
+    veri = f' data-son="{esc(k["son_tarih"])}" data-zaman="{esc(k.get("son_zaman") or "")}" data-yakinda="{int(yakinda)}"'
+    d = date.fromisoformat(k['son_tarih'])
+    kisa = f'{d.day} ' + KISA_AY[d.month - 1]
+    if g <= 2 and not yakinda:
+        if g <= 0:
+            return f'<div class="tarih acil"{veri}><strong>Bugün</strong><span>son gün</span></div>'
+        if g == 1:
+            return f'<div class="tarih acil"{veri}><strong>Yarın</strong><span>son gün</span></div>'
+        return f'<div class="tarih acil"{veri}><strong>{kisa}</strong><span>2 gün kaldı</span></div>'
+    return f'<div class="tarih"{veri}><strong>{kisa}</strong><span>{g} gün</span></div>'
+
+
+def satir_html(k, simdi, kok='../../', kurum_baglantisi=True):
+    """liste.json kaydından tek ilan satırı (portal.js rowEl ile aynı yapı). Tüm metin kaçışlıdır."""
+    su = _su()
+    gorsel, karo = _ilan_gorseli(k, kok)
+    ad = k.get('kurum') or 'Kurum belirtilmemiş'
+    if k.get('logo') and not karo:
+        kucuk_logo = f'<img class="kl" src="{kok}{esc(k["logo"])}" alt="" width="18" height="18" loading="lazy">'
+    elif karo:
+        kucuk_logo = ''
+    else:
+        kucuk_logo = f'<span class="kb" style="--h:{su._ton(k.get("kurum"))}" aria-hidden="true">{esc(su._bas_harfler(k.get("kurum")))}</span>'
+    if kurum_baglantisi and k.get('kurum_slug'):
+        kurum = f'<a class="ad" href="{kok}kurum/{esc(k["kurum_slug"])}/" title="{esc(ad)} — kurumun tüm ilanları">{esc(ad)}</a>'
+    else:
+        kurum = f'<span class="ad">{esc(ad)}</span>'
+    ek = f' <span class="ek">+{int(k["ek"])}</span>' if k.get('ek') else ''
+    sinyal, veri = '', ''
+    if k.get('durum') == 'upcoming' and k.get('baslangic_zaman'):
+        try:
+            b = datetime.fromisoformat(k['baslangic_zaman']).astimezone(TR)
+            sinyal = f'<p class="sinyal acilis"><span class="ic">{SAAT}</span>Başvuru {b.day} {AY[b.month - 1]}’de açılıyor</p>'
+        except ValueError:
+            pass
+    elif k.get('taban_ref'):
+        veri = f' data-ref="{esc(json.dumps(k["taban_ref"], ensure_ascii=False, separators=(",", ":")))}" data-pt="{esc(",".join(k.get("puan_turleri") or []))}"'
+    key = esc(k['key'])
+    kayit_id = esc(k.get('id') or k['key'])
+    return (f'<article class="ilan"{veri}>{gorsel}<div class="ilan-govde"><div class="ilan-kurum">{kucuk_logo}{kurum}</div>'
+            f'<h3><a href="{kok}ilan/{key}/">{esc(k.get("manset") or "Kamu ilanı")}</a>{ek}</h3>{_meta_html(k)}{sinyal}</div>'
+            f'<div class="ilan-sag">{_tarih_html(k, simdi)}'
+            f'<button type="button" class="kaydet" data-kaydet="{kayit_id}" data-ad="{esc(k.get("manset") or "İlan")}" aria-label="İlanı kaydet: {esc(k.get("manset") or "İlan")}" aria-pressed="false">{BOOKMARK}</button></div></article>')
+
+
+def kart_html(item, gorsel, simdi, kok='../../', tablolar=None, harita=None, kurum_baglantisi=False):
+    """Açık ilanın satırı (yeni .ilan satır biçimi); satır gösterilmeyecek bir ilan için boş metin."""
+    k = _kayit(item, gorsel, simdi, tablolar, harita)
+    return satir_html(k, simdi, kok, kurum_baglantisi) if k else ''
 
 
 def _gecmis_satir(item, simdi, kok):
     a = kart_alanlari(item)
     metin, cls = durum(item, simdi)
     zaman = tarih_yazi(item['son_tarih']) if item.get('son_tarih') else 'Tarih yok'
-    return (f'<li class="kp-row"><span class="kp-st {cls}">{esc(metin)}</span>'
-            f'<a href="{kok}ilan/{esc(anahtar(item))}/">{esc(a["manset"])}</a><time>{esc(zaman)}</time></li>')
+    return (f'<tr class="kp-row"><td><a href="{kok}ilan/{esc(anahtar(item))}/">{esc(a["manset"])}</a></td>'
+            f'<td><span class="kp-st {cls}">{esc(metin)}</span></td><td><time>{esc(zaman)}</time></td></tr>')
 
 
-KURUM_SAYAC = ('<script>(function(){var t=new Date().toLocaleDateString("sv-SE",{timeZone:"Europe/Istanbul"});'
-               'document.querySelectorAll(".card-status[data-son]").forEach(function(e){var z=e.dataset.zaman;'
-               'if(z&&Date.parse(z)<=Date.now()){e.textContent="Başvuru sona erdi";e.className="card-status closed";return}'
-               'var d=Math.round((Date.parse(e.dataset.son+"T00:00:00Z")-Date.parse(t+"T00:00:00Z"))/864e5);if(isNaN(d))return;'
-               'if(d<0){e.textContent="Başvuru sona erdi";e.className="card-status closed";return}'
-               'e.textContent=d===0?"Bugün son gün":d===1?"Yarın son gün":d+" gün kaldı";'
-               'e.className="card-status "+(d<=1?"today":d<=3?"urgent":d<=7?"soon":"ok")})})()</script>')
+def kurum_turu(ad):
+    k = kucuk(ad)
+    for parca, etiket in (('belediye', 'Belediye'), ('üniversite', 'Üniversite'), ('hastane', 'Hastane'), ('bakanlığı', 'Bakanlık'),
+                          ('genel müdürlüğü', 'Genel müdürlük'), ('başkanlığı', 'Başkanlık'), ('müdürlüğü', 'Müdürlük'), ('kurumu', 'Kurum'), ('kurulu', 'Kurul')):
+        if parca in k:
+            return etiket
+    return ''
 
 
 def en_cok_gecen_ad(liste):
@@ -345,9 +409,10 @@ def en_cok_gecen_ad(liste):
     return sorted(sayac, key=lambda a: (not a.endswith('Belediyesi'), -sayac[a], -len(a), a))[0]
 
 
-def kurum_sayfasi(kan, liste, slug, gorseller, simdi):
+def kurum_sayfasi(kan, liste, slug, gorseller, simdi, tablolar=None, harita=None):
     """Tek kurumun statik sayfası (HTML metni)."""
     su = _su()
+    import liste_verisi
     ad = en_cok_gecen_ad(liste)
     if '|' in kan:
         il = kan.split('|')[1]
@@ -363,26 +428,36 @@ def kurum_sayfasi(kan, liste, slug, gorseller, simdi):
     diger = sorted({kurum_adi(i['kurum']) for i in liste} - {ad})
     logo_g = next((g for _, g in ciftler if g.get('logo')), {})
     logo_i = next((i for i, g in ciftler if g.get('logo')), liste[0])
-    logo = _logo_html(logo_i, logo_g, kok).replace('institution-icon', 'kp-logo').replace('width="48" height="48"', 'width="84" height="84"')
+    logo = _logo_html(logo_i, logo_g, kok, 'kp-logo', 64)
+    ilar = {}
+    for i in liste:
+        il_adi = re.sub(r'\s*\+\d+$', '', liste_verisi.il_bul(i, harita) or '')
+        if il_adi:
+            ilar[il_adi] = ilar.get(il_adi, 0) + 1
+    il_yazi = sorted(ilar, key=lambda a: (-ilar[a], a))[0] if ilar else ''
+    ozet = ''.join(f'<span>{esc(p)}</span>' for p in (il_yazi, kurum_turu(ad)) if p)
+    ozet = f'<div class="kp-ozet">{ozet}</div>' if ozet else ''
     baslik = f'{ad} ilanları'
     aciklama = f'{ad} kurumunun başvurusu açık kamu personel alım ilanları ({len(acik)}) ve geçmiş duyuruları.'[:190]
     canonical = su.BASE + 'kurum/' + slug + '/'
-    adlar = f'<p>Kaynaklarda geçen adlar: {esc(", ".join(diger))}</p>' if diger else '<p>Kamu personel alım ilanları ve duyuruları</p>'
-    acik_html = ''.join(kart_html(i, g, simdi, kok) for i, g in acik) if acik else ''
+    adlar = f'<p>Kaynaklarda geçen adlar: {esc(", ".join(diger))}</p>' if diger else ''
+    satirlar = ''.join(kart_html(i, g, simdi, kok, tablolar, harita) for i, g in acik)
     if acik:
-        acik_blok = f'<div class="cards">{acik_html}</div>'
+        acik_blok = f'<div class="liste">{satirlar}</div>'
     else:
-        acik_blok = '<div class="empty"><h3>Şu an başvurusu açık ilan yok.</h3><p>Bu kurumdan yeni bir ilan geldiğinde burada görünür. Telegram kanalından da takip edebilirsin.</p></div>'
+        acik_blok = '<div class="bos-kutu"><h3>Şu an başvurusu açık ilan yok.</h3><p>Bu kurumdan yeni bir ilan geldiğinde burada görünür. Telegram kanalından da takip edebilirsin.</p></div>'
     gecmis_blok = ''
     if gecmis:
-        gecmis_blok = (f'<section class="kp-section"><h2>Duyurular ve geçmiş ilanlar <small>{len(gecmis)}</small></h2><ul class="kp-past">'
+        gecmis_blok = (f'<section class="bolum"><div class="bolum-bas"><h2>Duyurular ve geçmiş ilanlar <span class="sayi">{len(gecmis)}</span></h2></div>'
+                       '<div class="tablo-kap"><table class="kp-tablo"><thead><tr><th scope="col">İlan</th><th scope="col">Durum</th><th scope="col">Son başvuru</th></tr></thead><tbody>'
                        + ''.join(_gecmis_satir(i, simdi, kok) for i, _ in gecmis)
-                       + '</ul><p class="kp-note">Düzeltme/iptal duyuruları ile sona eren ilanlar arşiv amacıyla gösterilir. Güncel bilgi için resmî kaynağı esas al.</p></section>')
-    icerik = f'''<section class="kp-hero"><div class="container"><nav class="crumbs" aria-label="Konum"><a href="{kok}">Ana sayfa</a><span aria-hidden="true">/</span><a href="{kok}#ilanlar">İlanlar</a><span aria-hidden="true">/</span><span>{esc(ad)}</span></nav>
-<div class="kp-id">{logo}<div><span class="eyebrow">KURUM</span><h1>{esc(ad)}</h1>{adlar}</div></div>
-<div class="kp-stats"><div><strong>{len(acik)}</strong><span>başvurusu açık ilan</span></div><div><strong>{f"{toplam_kadro:,}".replace(",", ".") if toplam_kadro else "—"}</strong><span>bilinen kadro</span></div><div><strong>{len(liste)}</strong><span>toplam ilan kaydı</span></div></div>
-<div class="kp-actions"><a class="button lime" href="https://t.me/kamuilantakip" target="_blank" rel="noopener">Telegram'da ilanları takip et ↗</a><a class="button ghost" href="{kok}">Tüm ilanlara dön</a></div></div></section>
-<main id="icerik" class="container kp-main"><section class="kp-section"><h2>Başvurusu açık ilanlar <small>{len(acik)}</small></h2>{acik_blok}</section>{gecmis_blok}</main>'''
+                       + '</tbody></table></div><p class="kp-note">Düzeltme/iptal duyuruları ile sona eren ilanlar arşiv amacıyla gösterilir. Güncel bilgi için resmî kaynağı esas al.</p></section>')
+    kadro_yazi = SAYI_YAZ(toplam_kadro) if toplam_kadro else '—'
+    icerik = f'''<section class="kp-hero"><div class="wrap"><nav class="crumbs" aria-label="Konum"><a href="{kok}">Ana sayfa</a><span aria-hidden="true">/</span><a href="{kok}#ilanlar">İlanlar</a><span aria-hidden="true">/</span><span>{esc(ad)}</span></nav>
+<div class="kp-id">{logo}<div><span class="eyebrow">Kurum</span><h1>{esc(ad)}</h1>{ozet}{adlar}</div></div>
+<div class="kp-stats"><div><strong>{len(acik)}</strong><span>açık ilan</span></div><div><strong>{kadro_yazi}</strong><span>bilinen kadro</span></div><div><strong>{len(liste)}</strong><span>toplam kayıt</span></div></div>
+<div class="kp-actions"><a class="btn btn-tg btn-buyuk" href="https://t.me/kamuilantakip" target="_blank" rel="noopener">Telegram'da takip et ↗</a></div></div></section>
+<main id="icerik" class="wrap kp-main"><section class="bolum"><div class="bolum-bas"><h2>Başvurusu açık ilanlar <span class="sayi">{len(acik)}</span></h2></div>{acik_blok}</section>{gecmis_blok}</main>'''
     return su.sayfa_kabugu(baslik + ' | Kamu İlan Takip', aciklama, canonical, icerik, 'kurum-page')
 
 
@@ -394,12 +469,18 @@ def kurum_sayfalarini_uret(ilanlar, docs, gorseller, simdi=None):
     kok = docs / 'kurum'
     shutil.rmtree(kok, ignore_errors=True)
     gruplar, slugler = kurum_gruplari(ilanlar)
+    tablolar, harita = {}, None
+    try:
+        import liste_verisi
+        tablolar, harita = liste_verisi.taban_tablolari(docs), liste_verisi.il_haritasi(ilanlar)
+    except Exception as hata:
+        print(f'Uyarı: kurum sayfaları için taban verisi okunamadı: {hata}')
     adresler, basarili = [], set()
     for kan, liste in gruplar.items():
         slug = slugler[kan]
         klasor = kok / slug
         try:
-            html = kurum_sayfasi(kan, liste, slug, gorseller, simdi)
+            html = kurum_sayfasi(kan, liste, slug, gorseller, simdi, tablolar, harita)
             klasor.mkdir(parents=True, exist_ok=True)
             (klasor / 'index.html').write_text(html, encoding='utf-8')
         except Exception as hata:

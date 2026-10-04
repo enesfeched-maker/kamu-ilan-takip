@@ -1,6 +1,7 @@
 """Generate crawlable public detail pages from the existing verified registry."""
 import html
 import json
+import re
 from pathlib import Path
 from urllib.parse import urlparse, parse_qs
 from datetime import datetime, timezone, timedelta
@@ -11,8 +12,21 @@ TR = timezone(timedelta(hours=3))
 KART_GENISLIK = 720
 LOGO_BOYUT = 128
 EN_COK_LOGO_INDIRME = 150
-CSS_SURUM = 8
+CSS_SURUM = 9
 LOGO_SURUM = 2
+ACIK_ZEMIN, KOYU_ZEMIN = '#F6F6F1', '#0D0E0C'
+# <head> içinde, theme-color etiketinden sonra: açık tema varsayılan, yalnız kit-theme=="dark" koyu açar.
+TEMA_BETIGI = ('<script>try{var d=JSON.parse(localStorage.getItem("kit-theme"))==="dark";document.documentElement.dataset.theme=d?"dark":"light";'
+               'var m=document.querySelector("meta[name=theme-color]");if(m)m.content=d?"' + KOYU_ZEMIN + '":"' + ACIK_ZEMIN + '"}'
+               'catch(e){document.documentElement.dataset.theme="light"}</script>')
+AY_IKON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>'
+TG_IKON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 4-18 7.2 6 2.3M21 4l-3 16-8.5-6.5M21 4 9.5 13.5v5.5l3-3.5"/></svg>'
+KISI_IKON = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5"/></svg>'
+ALT_MENU = (('Bugün', '#bugun', '<path d="M4 10.5 12 4l8 6.5V20h-5v-6h-6v6H4z"/>'),
+            ('İlanlar', '#ilanlar', '<path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/>'),
+            ('Takvim', '#takvim', '<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/>'),
+            ('Kayıtlı', '#kayitli', '<path d="M7 3.5h10a1 1 0 0 1 1 1V21l-6-4-6 4V4.5a1 1 0 0 1 1-1z"/>'),
+            ('Puanlar', 'puanlar/', '<path d="M4 20V10m6 10V4m6 16v-7m4 7H3"/>'))
 
 
 def esc(value):
@@ -20,11 +34,45 @@ def esc(value):
 
 
 def ikonlar(kok):
-    """Sekme simgesi + iOS ana ekran simgesi (yeni marka işareti)."""
+    """Sekme simgesi + iOS ana ekran simgesi + web uygulaması bildirimi."""
     v = LOGO_SURUM
     return (f'<link rel="icon" href="{kok}assets/logo-32.png?v={v}" type="image/png" sizes="32x32">'
             f'<link rel="icon" href="{kok}assets/logo-192.png?v={v}" type="image/png" sizes="192x192">'
-            f'<link rel="apple-touch-icon" href="{kok}assets/logo-180.png?v={v}">')
+            f'<link rel="apple-touch-icon" href="{kok}assets/logo-180.png?v={v}">'
+            f'<link rel="manifest" href="{kok}manifest.webmanifest">')
+
+
+def ust_html(kok, aktif=''):
+    """Ana sayfayla aynı üst bar (docs/index.html .ust); bağlantılar `kok` göreli."""
+    menu = [('Bugün', f'{kok}#bugun', ''), ('İlanlar', f'{kok}#ilanlar', ''), ('Takvim', f'{kok}#takvim', ''),
+            ('Taban puanları', f'{kok}puanlar/', 'puanlar'), ('Rehber', f'{kok}#rehber', '')]
+    bagla = ''.join(f'<a href="{h}"{" class=" + chr(34) + "aktif" + chr(34) + " aria-current=" + chr(34) + "page" + chr(34) if a and a == aktif else ""}>{ad}</a>' for ad, h, a in menu)
+    return (f'<header class="ust"><div class="wrap ust-ic"><a class="marka" href="{kok}" aria-label="Kamu İlan Takip ana sayfa">'
+            f'<img src="{kok}assets/logo-96.webp?v={LOGO_SURUM}" alt="" width="32" height="32">Kamu İlan Takip</a>'
+            f'<nav class="menu" aria-label="Ana menü">{bagla}</nav>'
+            f'<div class="ust-sag"><button type="button" class="ikon-btn" id="theme" aria-label="Renk temasını değiştir">{AY_IKON}</button>'
+            f'<a class="btn btn-tg" href="https://t.me/kamuilantakip" target="_blank" rel="noopener">{TG_IKON}Telegram</a></div></div></header>')
+
+
+def alt_html(kok, yil=None):
+    """Tek satırlık alt bilgi (ana sayfayla aynı) ve mobil alt menü."""
+    yil = yil or datetime.now(TR).year
+    menu = ''.join(f'<a href="{kok}{h}"><i><svg viewBox="0 0 24 24" aria-hidden="true">{s}</svg></i>{ad}</a>' for ad, h, s in ALT_MENU)
+    return (f'<footer class="alt-bilgi"><div class="wrap"><div><a href="{kok}#bilgi/hakkimizda">Hakkımızda ve veri kaynakları</a><a href="{kok}#bilgi/gizlilik">Gizlilik</a>'
+            f'<a href="{kok}#bilgi/reklam">Reklam</a><a href="https://t.me/kamuilantakip" target="_blank" rel="noopener">Telegram</a></div>'
+            f'<span>© {yil} Kamu İlan Takip · Bağımsız ilan rehberi · Başvurular resmî ilan üzerinden yapılır.</span></div></footer>'
+            f'<nav class="alt-menu" aria-label="Alt menü">{menu}</nav>')
+
+
+def sayfa_basi(baslik, aciklama, canonical, kok, og_tur='website', ek_head=''):
+    """<!doctype> … <body> açılışına kadar ortak kısım (kurum ve ilan sayfaları)."""
+    return (f'<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
+            f'<meta name="theme-color" content="{ACIK_ZEMIN}"><meta name="color-scheme" content="light dark">{TEMA_BETIGI}'
+            f'<title>{esc(baslik)}</title><meta name="description" content="{esc(aciklama)}"><link rel="canonical" href="{canonical}">'
+            f'<meta property="og:title" content="{esc(baslik)}"><meta property="og:description" content="{esc(aciklama)}"><meta property="og:type" content="{og_tur}">{ek_head}'
+            f'<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
+            f'<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap">'
+            f'<link rel="stylesheet" href="{kok}sayfa.css?v={CSS_SURUM}">{ikonlar(kok)}<script src="{kok}sayfa.js?v={CSS_SURUM}" defer></script></head>')
 
 
 def _kurum_bloklari(item, gorsel, logo_html):
@@ -47,17 +95,92 @@ def _kurum_bloklari(item, gorsel, logo_html):
 
 def sayfa_kabugu(baslik, aciklama, canonical, icerik, govde_sinifi=''):
     """Kurum sayfaları için ortak iskelet (ilan sayfasıyla aynı üst/alt bölüm)."""
-    gorunum = '<script>try{var d=JSON.parse(localStorage.getItem("kit-theme"))==="dark";document.documentElement.dataset.theme=d?"dark":"light";var m=document.querySelector("meta[name=theme-color]");if(m)m.content=d?"#0a161b":"#102e35"}catch(e){document.documentElement.dataset.theme="light"}</script>'
-    from kurum_sayfasi import KURUM_SAYAC
-    return (f'<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#102e35"><meta name="color-scheme" content="light dark">'
-            f'<title>{esc(baslik)}</title><meta name="description" content="{esc(aciklama)}"><link rel="canonical" href="{canonical}"><meta property="og:title" content="{esc(baslik)}"><meta property="og:description" content="{esc(aciklama)}"><meta property="og:type" content="website">{gorunum}'
-            f'<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&amp;display=swap"><link rel="stylesheet" href="../../portal.css?v={CSS_SURUM}">{ikonlar("../../")}</head>'
-            f'<body class="{govde_sinifi}"><a class="skip" href="#icerik">İçeriğe geç</a><div class="topline"><div class="container">Kariyer Kapısı · İŞKUR · SBB · ÇŞB Yerel Yönetimler — Bağımsız ilan rehberi <span>Başvurular resmî ilan üzerinden yapılır.</span></div></div>'
-            f'<header class="header"><div class="container header-inner"><a class="brand" href="../../" aria-label="Kamu İlan Takip ana sayfa"><img class="brand-logo" src="../../assets/logo-96.webp?v={LOGO_SURUM}" alt="" width="44" height="44"><span>Kamu İlan<span class="brand-sub">TAKİP</span></span></a><nav aria-label="Ana menü"><a href="../../#ilanlar">Tüm ilanlar</a><a href="../../#rehber">Başvuru rehberi</a><a href="../../puanlar/">Taban puanları</a></nav><div class="header-actions"><a class="button primary small" href="https://t.me/kamuilantakip" target="_blank" rel="noopener">Telegram\'a katıl ↗</a></div></div></header>'
-            f'{icerik}<footer class="footer"><div class="container footer-bottom"><span>© Kamu İlan Takip</span><span>Kamu İlan Takip resmî bir hizmet değildir. Başvurunu ilanda belirtilen resmî kanaldan tamamla.</span></div></footer>{KURUM_SAYAC}</body></html>')
+    kok = '../../'
+    return (sayfa_basi(baslik, aciklama, canonical, kok)
+            + f'<body class="{govde_sinifi}"><a class="skip" href="#icerik">İçeriğe geç</a>{ust_html(kok)}{icerik}{alt_html(kok)}'
+              f'<noscript><div class="not wrap">Bazı özellikler (kaydetme, kalan gün) için JavaScript gerekir.</div></noscript></body></html>')
 
 
-def detail_page(item, gorsel=None):
+def _virgul(n, k=1):
+    return f'{n:.{k}f}'.replace('.', ',')
+
+
+def _kadro_tablosu(item):
+    """Kadro / kontenjan tablosu (kadro adıyla eşleşen koşul metni aynı satırda) ve eşleşmeyen koşullar için ikinci tablo.
+    HTML bölümü döner (başlıkla birlikte); gösterilecek bir şey yoksa boş metin."""
+    import kurum_sayfasi as ks
+    from siniflandir import kucuk
+    kadrolar = ks.kadrolar(item)
+    sartlar = [dict(s) for s in item.get('sartlar') or []]
+    if not kadrolar and not sartlar:
+        return ''
+    satirlar, kullanilan = [], set()
+    for adet, ad in kadrolar:
+        a, metin = kucuk(ad), ''
+        for n, s in enumerate(sartlar):
+            baslik = kucuk(s.get('kadro') or '')
+            if n not in kullanilan and a and (a in baslik or (baslik and baslik in a)):
+                kullanilan.add(n)
+                metin = s.get('metin') or ''
+                break
+        satirlar.append((ad, adet, metin))
+    kalan = [s for n, s in enumerate(sartlar) if n not in kullanilan]
+    html_ = ''
+    if satirlar:
+        kosullu = any(m for _, _, m in satirlar)
+        govde = ''.join(
+            f'<tr><td>{esc(ad)}</td><td class="sayi" data-et="Kontenjan">{esc(ks.SAYI_YAZ(adet) if adet else "—")}</td>'
+            + (f'<td data-et="Koşullar">{esc(metin) if metin else "Resmî ilandan kontrol et"}</td>' if kosullu else '') + '</tr>'
+            for ad, adet, metin in satirlar)
+        baslik = '<th scope="col">Kadro</th><th scope="col" class="sayi">Kontenjan</th>' + ('<th scope="col">Başvuru koşulları</th>' if kosullu else '')
+        html_ += (f'<h2>{"Kadro ve başvuru koşulları" if kosullu else "Kadro ve kontenjan"}</h2>'
+                  f'<div class="tablo-kap"><table class="ktablo"><thead><tr>{baslik}</tr></thead><tbody>{govde}</tbody></table></div>')
+    if kalan:
+        govde = ''.join(f'<tr><td>{esc(s.get("kadro") or "Genel")}</td><td>{esc(s.get("metin") or "")}</td></tr>' for s in kalan)
+        html_ += (f'<h{"3" if satirlar else "2"} class="alt-h">Başvuru koşullarından seçmeler</h{"3" if satirlar else "2"}>'
+                  f'<div class="tablo-kap"><table class="ktablo"><thead><tr><th scope="col">Konu</th><th scope="col">Koşul</th></tr></thead><tbody>{govde}</tbody></table></div>')
+    return html_
+
+def _senin_icin(item, kayit):
+    """"Senin için" kutusu: öğrenim/puan türü/il eşleşmesi tarayıcıda kit-profil ile doldurulur (sayfa.js);
+    taban referansı derleme zamanında yazılır."""
+    kayit = kayit or {}
+    ref = kayit.get('taban_ref') or {}
+    from kurum_sayfasi import LEVELS
+    satirlar = ''
+    for duzey, r in ref.items():
+        if duzey in LEVELS and isinstance(r.get('medyan'), (int, float)):
+            donem = f' · {esc(r["donem"])}' if r.get('donem') else ''
+            satirlar += f'<li>{LEVELS[duzey]}: benzer kadroların taban puanı medyanı <b>{_virgul(r["medyan"])}</b> ({int(r.get("n") or 0)} kayıt{donem})</li>'
+    ref_html = (f'<ul class="senin-ref">{satirlar}</ul><p class="senin-not">Geçmiş yerleştirmelerden referans; bu ilanın şartı değildir.</p>') if satirlar else ''
+    veri = (f' data-ogr="{esc(",".join(kayit.get("ogrenim") or []))}" data-pt="{esc(",".join(kayit.get("puan_turleri") or []))}"'
+            f' data-il="{esc(kayit.get("il") or "")}" data-ref="{esc(json.dumps(ref, ensure_ascii=False, separators=(",", ":")))}"')
+    return (f'<section class="senin" id="senin"{veri}><h2><i>{KISI_IKON}</i>Senin için</h2>'
+            '<div data-profil data-ana="../../"><p class="senin-link">Öğrenim düzeyini, KPSS puanını ve illerini ana sayfada ekle; bu ilana uyup uymadığını burada göster. '
+            '<a href="../../">Profilini oluştur →</a></p></div>' + ref_html + '</section>')
+
+
+def benzer_ilanlar(kayit, kayitlar, en_cok=5):
+    """Aynı unvan/meslek fotoğrafı olan diğer açık ilanlar (liste.json kayıtları), en çok `en_cok`; en yakın son tarih önce."""
+    if not kayit:
+        return []
+    from siniflandir import kucuk
+
+    def unvanlar(k):
+        return {re.sub(r'^\d+\s+', '', kucuk(p)).strip() for p in re.split(r'\s*,\s*', k.get('manset') or '') if p.strip()}
+    mevcut = unvanlar(kayit)
+    meslek = {m for m in kayit.get('meslek') or [] if not m.startswith('30-')}
+    sonuc = []
+    for k in kayitlar or []:
+        if k.get('key') == kayit.get('key'):
+            continue
+        skor = 2 if mevcut & unvanlar(k) else 1 if meslek & set(k.get('meslek') or []) else 0
+        if skor:
+            sonuc.append((-skor, k.get('son_tarih') or '9999', k.get('key') or '', k))
+    return [p[3] for p in sorted(sonuc, key=lambda p: p[:3])[:en_cok]]
+
+
+def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None):
     from siniflandir import akademik_ilan
     if akademik_ilan(item):
         return None  # akademik ilanlar sitede gösterilmez
@@ -67,70 +190,124 @@ def detail_page(item, gorsel=None):
     try:
         key = str(uuid.UUID(key))
     except ValueError:
-        import re
         key = item.get('id', '')
         if not re.fullmatch(r'(?:(?:sbb|iskur)-[a-f0-9]{24}|csb-\d{4,9})', key):
             return None
     if url.scheme != 'https' or url.hostname not in {'kariyerkapisi.gov.tr','kamuilan.sbb.gov.tr','www.iskur.gov.tr','iskur.gov.tr','yerelyonetimler.csb.gov.tr'} or url.username or url.password:
         return None
+    import kurum_sayfasi as ks
+    import liste_verisi
+    simdi = (simdi or datetime.now(TR)).astimezone(TR)
     canonical = BASE + 'ilan/' + key + '/'
     title = item.get('baslik', 'Kamu ilanı')
     deadline = item.get('son_zaman') or item.get('son_tarih')
     end = datetime.fromisoformat(deadline) if deadline else None
     if end and end.tzinfo is None:
         end = end.replace(tzinfo=TR, hour=23, minute=59, second=59)
-    status = 'Başvuru sona erdi' if end and end <= datetime.now(TR) else 'Son tarihi resmî ilandan doğrula'
-    if item.get('duyuru_turu'):
-        status = esc(item['duyuru_turu'])
-    if item.get('iptal_edildi'):
-        status = 'İptal edildi'
+    kapali = bool(end and end <= simdi)
+    acik_ilan = not (item.get('iptal_edildi') or item.get('duyuru_turu') or kapali)
     date = end.astimezone(TR).strftime('%d.%m.%Y · %H:%M TSİ' if item.get('son_zaman') else '%d.%m.%Y') if end else 'Belirtilmemiş'
+    if kayit is None:
+        try:
+            kayit = liste_verisi.kayit(item, gorsel, {}, simdi)
+        except Exception:
+            kayit = None
+    gorsel = gorsel or {}
+    alanlar = ks.kart_alanlari(item)
+    h1 = liste_verisi.baslik_temiz(alanlar['manset'])
+    alt = _gorunen_baslik(item).strip()
+    alt_html_ = f'<p class="d-alt">{esc(alt)}</p>' if kucuk_ad(alt) != kucuk_ad(h1) else ''
+    # --- durum rozeti
+    metin, sinif = ks.durum(item, simdi)
+    if sinif == 'none':
+        metin = 'Son tarihi resmî ilandan doğrula'
+    pill_sinif = 'kapali' if sinif in ('closed', 'cancelled') else 'yakinda' if sinif == 'upcoming' else ''
+    if sinif in ('today', 'urgent') and item.get('son_tarih') and (datetime.fromisoformat(item['son_tarih']).date() - simdi.date()).days <= 2:
+        pill_sinif = 'acil'
+    veri = f' id="durum" data-son="{esc(item["son_tarih"])}" data-zaman="{esc(item.get("son_zaman") or "")}"' if sinif in ('ok', 'soon', 'urgent', 'today') and item.get('son_tarih') else ''
+    durum_html = f'<span class="pill{" " + pill_sinif if pill_sinif else ""}"{veri}>{esc(metin)}</span>'
+    # --- içerik bölümleri
     sections = ''
     if item.get('iptal_edildi'):
-        sections += '<p class="notice"><strong>İptal edildi.</strong> Bu ilan için resmî iptal duyurusu yayımlandı. Başvuru yapmadan önce resmî kaynağı kontrol et.</p>'
-    for heading, value in [('Kadro ve kontenjan', item.get('kadro')), ('Duyuru metni', item.get('duyuru_cumlesi')), ('İlan özeti', None if item.get('ozet') == item.get('duyuru_cumlesi') else item.get('ozet')),('Başvuru notu', item.get('basvuru_notu'))]:
+        sections += '<p class="not uyari"><strong>İptal edildi.</strong> Bu ilan için resmî iptal duyurusu yayımlandı. Başvuru yapmadan önce resmî kaynağı kontrol et.</p>'
+    tablo = _kadro_tablosu(item)
+    bolum = ''
+    if tablo:
+        bolum += tablo
+    elif item.get('kadro'):
+        bolum += f'<h2>Kadro ve kontenjan</h2><p>{esc(item["kadro"])}</p>'
+    diger = ''
+    for heading, value in [('Duyuru metni', item.get('duyuru_cumlesi')), ('İlan özeti', None if item.get('ozet') == item.get('duyuru_cumlesi') else item.get('ozet')), ('Başvuru notu', item.get('basvuru_notu'))]:
         if value:
-            sections += f'<h3>{heading}</h3><p>{esc(value)}</p>'
-    if item.get('sartlar'):
-        sections += '<h3>Başvuru koşullarından seçmeler</h3>'
-    for s in item.get('sartlar', []):
-        sections += f'<section class="condition"><h4>{esc(s.get("kadro"))}</h4><p>{esc(s.get("metin"))}</p></section>'
+            diger += f'<h3>{heading}</h3><p>{esc(value)}</p>'
     if any(item.get(k) for k in ('kadro', 'duyuru_cumlesi', 'ozet', 'basvuru_notu', 'sartlar')):
-        sections += '<p class="muted">Seçilmiş alıntılardır. Tüm koşullar, kadrolar ve güncel tarihler için resmî ilanı incele.</p>'
+        diger += '<p class="muted">Seçilmiş alıntılardır. Tüm koşullar, kadrolar ve güncel tarihler için resmî ilanı incele.</p>'
     else:
-        sections += '<p class="muted">Bu ilanın kadro, şart ve başvuru ayrıntıları henüz kaynaktan okunamadı. Tüm bilgiler için resmî ilan belgesini aç.</p>'
+        diger += '<p class="muted">Bu ilanın kadro, şart ve başvuru ayrıntıları henüz kaynaktan okunamadı. Tüm bilgiler için resmî ilan belgesini aç.</p>'
     for belge in item.get('belgeler', [])[:3]:
         if str(belge.get('link', '')).startswith('https://webdosya.csb.gov.tr/v2/yerelyonetimler/'):
-            sections += f'<p><a class="text-link" href="{esc(belge["link"])}" target="_blank" rel="noopener noreferrer">Duyuru eki: {esc(belge.get("ad"))} ↗</a></p>'
+            diger += f'<p><a class="yazi-link" href="{esc(belge["link"])}" target="_blank" rel="noopener noreferrer">Duyuru eki: {esc(belge.get("ad"))} ↗</a></p>'
     description = (item.get('kurum', '') + ' — ' + (item.get('kadro') or title))[:190]
-    gorsel = gorsel or {}
-    og_gorsel = kart_html = ''
+    og_gorsel = ''
     kurum_adi = esc(item.get('kurum') or 'Kurum')
     if gorsel.get('kart'):
         kart_url = esc(BASE + gorsel['kart'])
         og_gorsel = f'<meta property="og:image" content="{kart_url}"><meta property="og:image:width" content="{KART_GENISLIK}"><meta property="og:image:height" content="{gorsel.get("kart_yukseklik", 900)}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{kart_url}">'
-        kart_html = f'<div class="detail-visual"><img class="detail-card-img" src="../../{esc(gorsel["kart"])}" alt="{kurum_adi} ilan görseli" width="{KART_GENISLIK}" height="{gorsel.get("kart_yukseklik", 900)}" decoding="async" fetchpriority="high"></div>'
     if gorsel.get('logo'):
-        logo_html = f'<img class="detail-logo" src="../../{esc(gorsel["logo"])}" alt="{kurum_adi} logosu" width="64" height="64">'
+        logo_html = f'<img class="detail-logo" src="../../{esc(gorsel["logo"])}" alt="{kurum_adi} logosu" width="44" height="44">'
     else:
         logo_html = f'<span class="detail-logo institution-badge" style="--h:{_ton(item.get("kurum"))}" aria-hidden="true">{esc(_bas_harfler(item.get("kurum")))}</span>'
-    kurum_html, kurum_kirinti, kurum_aside = _kurum_bloklari(item, gorsel, logo_html)
+    kurum_html, kurum_kirinti, _yan = _kurum_bloklari(item, gorsel, logo_html)
     from sbb_detay import document_url
-    document=document_url(item)
-    target=document or item['link']
-    button='İlan belgesini aç (PDF) ↗' if document else 'Resmî ilana git · Başvur ↗'
+    document = document_url(item)
+    target = document or item['link']
+    button = 'İlan belgesini aç (PDF) ↗' if document else 'Resmî ilana git · Başvur ↗'
     if document:
-        sections += f'<p class="muted">{esc(item.get("belge_aciklamasi"))}</p>'
-    durum_sinifi = ' closed cancelled' if item.get('iptal_edildi') else ' closed' if end and end <= datetime.now(TR) else ''
-    durum_html = f'<strong class="status-badge{durum_sinifi}">{status}</strong>'
-    if not (item.get('iptal_edildi') or item.get('duyuru_turu')) and end and end > datetime.now(TR) and item.get('son_tarih'):
-        durum_html = f'<strong class="status-badge" id="durum" data-son="{esc(item["son_tarih"])}" data-zaman="{esc(item.get("son_zaman") or "")}">{status}</strong>'
-    yer = esc(_duzgun(item.get('yer')) or 'Resmî ilandan kontrol et')
-    gorunum = '<script>try{var d=JSON.parse(localStorage.getItem("kit-theme"))==="dark";document.documentElement.dataset.theme=d?"dark":"light";var m=document.querySelector("meta[name=theme-color]");if(m)m.content=d?"#0a161b":"#102e35"}catch(e){document.documentElement.dataset.theme="light"}</script>'
-    sayac = ('<script>(function(){var e=document.getElementById("durum");if(!e)return;var z=e.dataset.zaman;if(z&&Date.parse(z)<=Date.now()){e.textContent="Başvuru sona erdi";e.className+=" closed";return}'
-             'var t=new Date().toLocaleDateString("sv-SE",{timeZone:"Europe/Istanbul"}),d=Math.round((Date.parse(e.dataset.son+"T00:00:00Z")-Date.parse(t+"T00:00:00Z"))/864e5);if(isNaN(d))return;'
-             'if(d<0){e.textContent="Başvuru sona erdi";e.className+=" closed";return}e.textContent=d===0?"Bugün son gün":d===1?"Yarın son gün":d+" gün kaldı";e.className+=d<=1?" urgent today":d<=3?" urgent":d<=7?" soon":""})()</script>')
-    return key, f'''<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#102e35"><meta name="color-scheme" content="light dark"><title>{esc(title)} | Kamu İlan Takip</title><meta name="description" content="{esc(description)}"><link rel="canonical" href="{canonical}"><meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(description)}"><meta property="og:type" content="article">{og_gorsel}{gorunum}<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&amp;display=swap"><link rel="stylesheet" href="../../portal.css?v={CSS_SURUM}">{ikonlar("../../")}</head><body class="detail-page"><a class="skip" href="#icerik">İçeriğe geç</a><div class="topline"><div class="container">Kariyer Kapısı · İŞKUR · SBB · ÇŞB Yerel Yönetimler — Bağımsız ilan rehberi <span>Başvurular resmî ilan üzerinden yapılır.</span></div></div><header class="header"><div class="container header-inner"><a class="brand" href="../../" aria-label="Kamu İlan Takip ana sayfa"><img class="brand-logo" src="../../assets/logo-96.webp?v={LOGO_SURUM}" alt="" width="44" height="44"><span>Kamu İlan<span class="brand-sub">TAKİP</span></span></a><nav aria-label="Ana menü"><a href="../../#ilanlar">Tüm ilanlar</a><a href="../../#rehber">Başvuru rehberi</a><a href="../../puanlar/">Taban puanları</a></nav><div class="header-actions"><a class="button primary small" href="https://t.me/kamuilantakip" target="_blank" rel="noopener">Telegram'a katıl ↗</a></div></div></header><section class="detail-hero"><div class="container detail-hero-grid{' has-visual' if kart_html else ''}"><div class="detail-hero-copy"><nav class="crumbs" aria-label="Konum"><a href="../../">Ana sayfa</a><span aria-hidden="true">/</span><a href="../../#ilanlar">İlanlar</a>{kurum_kirinti}</nav>{kurum_html}<span class="eyebrow">{esc(item.get('ilan_turu','KAMU İLANI'))}</span><h1>{esc(_gorunen_baslik(item))}</h1><ul class="detail-facts"><li><span>Durum</span>{durum_html}</li><li><span>Son başvuru</span><strong>{date}</strong></li><li><span>Görev yeri</span><strong>{yer}</strong></li></ul><div class="detail-cta"><a class="button lime" href="{esc(target)}" target="_blank" rel="noopener noreferrer">{button}</a><a class="button ghost" href="../../#ilan/{key}">Kaydet ve karşılaştır</a></div></div>{kart_html}</div></section><main id="icerik" class="container detail-main"><div class="detail-layout"><article class="detail-content"><p class="notice">Bilgiler kayıtlı kaynak özetini yansıtır. Güncel durum ve başvuru şartlarında resmî ilan esas alınır.</p>{sections}<p class="muted">Ayrıntı kontrolü: {esc(item.get('detay_guncelleme','Tarih belirtilmemiş'))}</p></article><aside class="detail-aside"><h2>Başvuru</h2><dl><dt>Son başvuru</dt><dd>{date}</dd><dt>Görev yeri</dt><dd>{yer}</dd></dl><a class="button primary" href="{esc(target)}" target="_blank" rel="noopener noreferrer">{button}</a><a class="button secondary" href="../../#ilan/{key}">Kaydet, paylaş ve karşılaştır</a><a class="button secondary" href="https://t.me/kamuilantakip" target="_blank" rel="noopener">Telegram'dan takip et ↗</a>{kurum_aside}<p class="muted">Başvuru bu sitede yapılmaz; işlemini ilanda belirtilen resmî kanaldan tamamla.</p></aside></div><section class="trust-strip"><strong>Başka fırsatlara da göz at.</strong><p>Açık ilanları son tarihe göre sırala, kaydet ve karşılaştır.</p><a class="button primary" href="../../">İlanları keşfet →</a></section></main><footer class="footer"><div class="container footer-bottom"><span>© Kamu İlan Takip</span><span>Kamu İlan Takip resmî bir hizmet değildir. Başvurunu ilanda belirtilen resmî kanaldan tamamla.</span></div></footer>{sayac}</body></html>'''
+        diger += f'<p class="muted">{esc(item.get("belge_aciklamasi"))}</p>'
+    # --- bilgi satırı
+    ogr = [o for o in (item.get('ogrenim') or []) if o in ks.LEVELS]
+    pt = (kayit or {}).get('puan_turleri') or liste_verisi.puan_turleri(item)
+    kpss = ', '.join(pt[:3]) if pt else 'Gerekli' if item.get('kpss') == 'kpss' else 'Gerekmez' if item.get('kpss') == 'kpsssiz' else 'Belirtilmemiş'
+    toplam = alanlar.get('toplam')
+    yer = esc(_duzgun(item.get('yer')) or (kayit or {}).get('il') or 'Resmî ilandan kontrol et')
+    acil_sinifi = ' class="acil"' if pill_sinif == 'acil' else ''
+    facts = (f'<ul class="d-facts"><li{acil_sinifi}><span>Son başvuru</span><strong>{date}</strong></li>'
+             f'<li><span>Kadro</span><strong>{esc(ks.SAYI_YAZ(toplam) + " kişi") if toplam else "İlanda"}</strong></li>'
+             f'<li><span>Yer</span><strong>{yer}</strong></li>'
+             f'<li><span>Öğrenim</span><strong>{esc(" / ".join(ks.LEVELS[o] for o in ogr)) or "Belirtilmemiş"}</strong></li>'
+             f'<li><span>KPSS</span><strong>{esc(kpss)}</strong></li></ul>')
+    kayit_id = esc(item.get('id') or key)
+    from kurum_sayfasi import BOOKMARK
+    cta = (f'<div class="d-cta"><a class="btn btn-ana btn-buyuk" href="{esc(target)}" target="_blank" rel="noopener noreferrer">{button}</a>'
+           f'<button type="button" class="btn btn-ikinci btn-buyuk" id="kaydet-btn" data-kaydet="{kayit_id}" data-ad="{esc(h1)}" aria-pressed="false">{BOOKMARK}<span data-yazi>Kaydet</span></button></div>'
+           '<p class="d-cta-not">Başvuru bu sitede yapılmaz; işlemini ilanda belirtilen resmî kanaldan tamamla. Kaydetmek başvuru oluşturmaz.</p>')
+    senin = _senin_icin(item, kayit) if acik_ilan else ''
+    # --- afiş bandı (meslek fotoğrafı)
+    afis = ''
+    foto = next((f for f in ((kayit or {}).get('meslek') or alanlar.get('meslek') or []) if not f.startswith('30-')), None)
+    if foto:
+        adlar = ', '.join(esc(a) for _, a in ks.kadrolar(item)[:3]) or esc(re.sub(r'^\d+\s+', '', h1))
+        yer_kisa = (kayit or {}).get('il') or ks.yer_kisa(item)
+        sayi = f'<b>{esc(ks.SAYI_YAZ(toplam))}</b><small>kadro</small>' if toplam else '<small>Kadro</small>'
+        afis = (f'<figure class="afis"><div>{sayi}<p>{adlar}{" · " + esc(yer_kisa) if yer_kisa else ""}</p></div>'
+                f'<img src="../../assets/meslek/{esc(foto)}" alt="" width="176" height="176" loading="lazy" decoding="async"></figure>')
+    benzer_html = ''
+    if benzer:
+        benzer_html = ('<section class="benzer"><div class="bolum-bas"><h2>Benzer ilanlar</h2></div><div class="liste">'
+                       + ''.join(ks.satir_html(k, simdi, '../../') for k in benzer[:5]) + '</div></section>')
+    kok = '../../'
+    govde = (f'<main id="icerik" class="wrap"><article class="d-bas"><nav class="crumbs" aria-label="Konum"><a href="{kok}">Ana sayfa</a><span aria-hidden="true">/</span><a href="{kok}#ilanlar">İlanlar</a>{kurum_kirinti}</nav>'
+             f'{kurum_html}<div class="ust-satir"><span class="eyebrow">{esc(item.get("ilan_turu", "KAMU İLANI"))}</span>{durum_html}</div><h1>{esc(h1)}</h1>{alt_html_}{facts}{cta}</article>'
+             f'<div class="d-ana">{senin}<section class="d-bolum">{sections}{bolum}{diger}'
+             f'<p class="muted d-son">Ayrıntı kontrolü: {esc(item.get("detay_guncelleme", "Tarih belirtilmemiş"))}</p></section>{afis}{benzer_html}</div></main>')
+    return key, (sayfa_basi(f'{title} | Kamu İlan Takip', description, canonical, kok, 'article', og_gorsel)
+                 + f'<body class="detail-page"><a class="skip" href="#icerik">İçeriğe geç</a>{ust_html(kok)}{govde}{alt_html(kok)}'
+                   '<noscript><div class="not wrap">Bazı özellikler (kaydetme, kalan gün, “Senin için”) için JavaScript gerekir.</div></noscript></body></html>')
+
+
+def kucuk_ad(metin):
+    from siniflandir import kucuk
+    return kucuk(' '.join(str(metin or '').split()))
 
 
 def _duzgun(metin):
@@ -393,18 +570,27 @@ def main():
     except Exception as hata:
         print(f'Uyarı: kurum sayfaları üretilemedi: {hata}')
     (docs / 'ilan' / 'gorseller.json').write_text(json.dumps(gorseller, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
+    liste = None
     try:
         import liste_verisi
-        liste_verisi.uret(data.get('ilanlar', []), gorseller, docs, datetime.now(TR), data.get('guncelleme'))
+        liste = liste_verisi.uret(data.get('ilanlar', []), gorseller, docs, datetime.now(TR), data.get('guncelleme'))
     except Exception as hata:
         print(f'::warning::liste.json üretilemedi: {hata}')
+    kayitlar = (liste or {}).get('ilanlar') or []
+    kayit_haritasi = {k['key']: k for k in kayitlar}
     for item in data.get('ilanlar', []):
         result = detail_page(item)
         if not result:
             if akademik_ilan(item):
                 _sayfayi_kaldir(docs, item)
             continue
-        result = detail_page(item, gorseller.get(result[0]))
+        kayit = kayit_haritasi.get(result[0])
+        try:
+            benzer = benzer_ilanlar(kayit, kayitlar)
+        except Exception as hata:
+            benzer = []
+            print(f'Uyarı: benzer ilanlar bulunamadı ({result[0]}): {hata}')
+        result = detail_page(item, gorseller.get(result[0]), kayit, benzer)
         key, content = result
         folder = docs / 'ilan' / key
         folder.mkdir(parents=True, exist_ok=True)

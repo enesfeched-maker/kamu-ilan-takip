@@ -202,12 +202,77 @@ class SayfaTests(unittest.TestCase):
         html = detail_page(i, {'kurum_slug': 'ankara-belediyesi', 'kurum_sayisi': 6})[1]
         self.assertIn('href="../../kurum/ankara-belediyesi/"', html)
         self.assertIn('Bu kurumun tüm ilanları (6)', html)
-        self.assertIn('Diğer 5 ilanını gör', html)
         tek = detail_page(i, {'kurum_slug': 'ankara-belediyesi', 'kurum_sayisi': 1})[1]
         self.assertIn('Kurum sayfası', tek)
         self.assertNotIn('tüm ilanları (', tek)
         yok = detail_page(i)[1]
         self.assertIn('href="../../kurum/ankara-belediyesi/"', yok)
+
+
+class YeniBicimTests(unittest.TestCase):
+    def kayit(self, n, manset='2 Zabıta Memuru', **ek):
+        return {'key': uid(n), 'manset': manset, 'kurum': 'A <b>Belediyesi</b>', 'kurum_slug': 'a-belediyesi', 'meslek': ['07-zabita.jpg'],
+                'il': 'Ankara', 'ogrenim': ['lisans'], 'puan_turleri': ['P3'], 'son_tarih': '2026-10-20', 'durum': 'ok', 'toplam': 2, **ek}
+
+    def test_satir_kacis_ve_kaydet(self):
+        h = ks.satir_html(self.kayit(1, manset='<img src=x onerror=1>', taban_ref={'lisans': {'medyan': 80.5, 'n': 9}}), SIMDI)
+        self.assertNotIn('<img src=x', h)
+        self.assertNotIn('<b>Belediyesi', h)
+        self.assertIn('class="ilan"', h)
+        self.assertIn(f'data-kaydet="{uid(1)}"', h)
+        self.assertIn('data-ref=', h)
+        self.assertIn('href="../../ilan/%s/"' % uid(1), h)
+
+    def test_detay_yeni_iskelet(self):
+        i = ilan(1, 'A <b>Belediyesi</b>', sartlar=[{'kadro': 'Zabıta Memuru', 'metin': '<i>x</i> KPSS P3'}])
+        html = detail_page(i, {'kurum_slug': 'a-belediyesi', 'kurum_sayisi': 3},
+                           self.kayit(1, taban_ref={'lisans': {'medyan': 80.5, 'n': 9, 'donem': '2025-2/2026-1'}}),
+                           [self.kayit(n) for n in range(2, 9)], SIMDI)[1]
+        self.assertIn('rel="manifest" href="../../manifest.webmanifest"', html)
+        self.assertIn('sayfa.css', html)
+        self.assertNotIn('portal.css', html)
+        self.assertIn('Resmî ilana git · Başvur', html)
+        self.assertIn('id="kaydet-btn"', html)
+        self.assertIn(f'data-kaydet="{site_uret.esc(i["id"])}"', html)
+        self.assertIn('Senin için', html)
+        self.assertIn('80,5', html)
+        self.assertIn('Geçmiş yerleştirmelerden referans; bu ilanın şartı değildir', html)
+        self.assertNotIn('<i>x</i>', html)
+        self.assertNotIn('<b>Belediyesi', html)
+        self.assertEqual(html.count('<article class="ilan"'), 5)
+        self.assertIn('Benzer ilanlar', html)
+        self.assertIn('Bu kurumun tüm ilanları (3)', html)
+        self.assertIn('"light"', html)
+
+    def test_benzer_ilanlar_sinir_ve_siralama(self):
+        k = self.kayit(1)
+        digerleri = [self.kayit(n, son_tarih=f'2026-10-{30 - n}') for n in range(2, 9)] + [self.kayit(20, manset='Hemşire', meslek=['02-hemsire.jpg'])]
+        s = site_uret.benzer_ilanlar(k, [k] + digerleri)
+        self.assertEqual(len(s), 5)
+        self.assertNotIn(uid(1), [x['key'] for x in s])
+        self.assertNotIn(uid(20), [x['key'] for x in s])
+        self.assertEqual(s[0]['key'], uid(8))
+        self.assertEqual(site_uret.benzer_ilanlar(None, digerleri), [])
+
+    def test_kurum_sayfasi_yeni_bicim(self):
+        g, s = ks.kurum_gruplari([ilan(1, 'A Belediyesi'), ilan(2, 'A Belediyesi', son_tarih='2026-01-01')])
+        kan = next(iter(g))
+        html = ks.kurum_sayfasi(kan, g[kan], s[kan], {}, SIMDI)
+        self.assertIn('class="ilan"', html)
+        self.assertIn("Telegram'da takip et", html)
+        self.assertIn('class="kp-tablo"', html)
+        self.assertIn('rel="manifest"', html)
+        self.assertNotIn('class="card"', html)
+
+    def test_manifest_ve_puanlar(self):
+        m = json.loads((site_uret.ROOT / 'docs' / 'manifest.webmanifest').read_text(encoding='utf-8'))
+        self.assertEqual(m['start_url'], './?g=bugun')
+        self.assertEqual(m['display'], 'standalone')
+        for ic in m['icons']:
+            self.assertTrue((site_uret.ROOT / 'docs' / ic['src']).is_file())
+        puan = (site_uret.ROOT / 'docs' / 'puanlar' / 'index.html').read_text(encoding='utf-8')
+        self.assertIn('rel="manifest" href="../manifest.webmanifest"', puan)
+        self.assertIn('sayfa.css', puan)
 
 
 if __name__ == '__main__':
