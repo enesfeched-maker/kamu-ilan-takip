@@ -203,7 +203,7 @@ def sayfa_bilgisi(kopyalar, item, kimlik_harita):
         return {'rol': 'ikincil', 'birincil': ks.anahtar(hedef)} if hedef else None
     uyeler = (kopyalar.get('uyeler') or {}).get(kimlik)
     if uyeler:
-        return {'rol': 'birincil', 'adlar': kaynak_adlari(uyeler), 'baglantilar': kaynak_baglantilari(uyeler)}
+        return {'rol': 'birincil', 'adlar': kaynak_adlari(uyeler), 'baglantilar': kaynak_baglantilari(uyeler), 'ikincil_idler': [m['id'] for m in uyeler[1:]]}
     return None
 
 

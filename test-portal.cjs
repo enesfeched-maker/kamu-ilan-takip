@@ -207,8 +207,10 @@ assert.equal(K.run("filterIlan(ilanBase(defaultF()),defaultF(),null).list.filter
 K.run("takvimRows('tumu')");assert.equal(K.run("takvimRows('tumu').filter(o=>o.kurum.startsWith('Hanak')).length"),1);
 K.run("save(lmap.get('"+k(8)+"'))");assert.equal(K.run('[...saved].join()'),'','kaydı kaldırmak ikincil kimliği de siler');
 K.run("tab='bugun';render()");const bg=text(K.get('bugun'));
-assert.match(bg,/SBB kaynağına erişimde sorun var/,'liste.json uyarısı Bugün sayfasında');assert.match(bg,/3 ilanın ayrıntıları 24 saat içinde doğrulanmadı/);
+assert.match(bg,/SBB kaynağına erişimde sorun var/,'liste.json uyarısı Bugün sayfasında');assert.match(bg,/3 ilanın ayrıntıları 24 saat içinde doğrulanmadı/,'eski ayrıntı >= %25 ise gösterilir (3/7)');
 assert.ok(!K.get('freshness').textContent,'ilanlar.json olmadan da uyarı #freshness yedeğine yazılmaz');
+liste.uyari={kaynaklar:[],eski_detay:1};const K4=make();await tick();assert.equal(K4.run('uyariMetni()'),'','eski ayrıntı < %25 ise satır yok');
+liste.uyari={kaynaklar:['SBB'],eski_detay:1};const K5=make();await tick();assert.equal(K5.run('uyariMetni()'),'SBB kaynağına erişimde sorun var; bu kaynağın ilanları güncel olmayabilir.','yalnız kaynak hatası');
 delete liste.uyari;const K2=make();await tick();assert.equal(K2.run('uyariMetni()'),'','uyari yoksa satır yok');
 liste.uyari={};const K3=make();await tick();assert.equal(K3.run('uyariMetni()'),'','boş uyari satır çizmez');
 // ---- görev yeri tekrarsız

@@ -199,7 +199,7 @@ function cleanUyari(u){if(!u||typeof u!=='object')return {kaynaklar:[],eski:0};r
 function uyariMetni(){
 if(!listeUyari)return '';const p=[];
 if(listeUyari.kaynaklar.length)p.push(listeUyari.kaynaklar.join(' ve ')+' kaynağına erişimde sorun var; bu kaynağın ilanları güncel olmayabilir.');
-if(listeUyari.eski)p.push(listeUyari.eski+' ilanın ayrıntıları 24 saat içinde doğrulanmadı.');
+if(listeUyari.eski&&liste.length&&listeUyari.eski>=liste.length*0.25)p.push(listeUyari.eski+' ilanın ayrıntıları 24 saat içinde doğrulanmadı.');
 return p.join(' ');}
 function ozetOf(m){
 const parts=[];

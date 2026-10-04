@@ -47,8 +47,10 @@
 
   /* kaydet: portal.js ile aynı anahtar (kit-saved) ve aynı kimlik (ilan id'si) */
   var kayitli = oku('kit-saved', []); if (!Array.isArray(kayitli)) kayitli = [];
+  /* Kopya (kaynaklar arası yinelenen) ilanın birincil sayfasında ikincil kimlikler data-ikincil'de listelenir: biri kayıtlıysa kayıtlı görünür, kaldırınca hepsi silinir. */
+  function kimlikler(b) { return [b.getAttribute('data-kaydet')].concat((b.getAttribute('data-ikincil') || '').split(',').filter(Boolean)); }
   function kaydetCiz(b) {
-    var id = b.getAttribute('data-kaydet'), d = kayitli.indexOf(id) >= 0, ad = b.getAttribute('data-ad') || 'İlan';
+    var d = kimlikler(b).some(function (x) { return kayitli.indexOf(x) >= 0; }), ad = b.getAttribute('data-ad') || 'İlan';
     b.classList.toggle('dolu', d); b.setAttribute('aria-pressed', String(d));
     var y = b.querySelector('[data-yazi]');
     if (y) y.textContent = d ? 'Kaydedildi' : 'Kaydet';
@@ -60,8 +62,8 @@
     kaydetCiz(b);
     b.addEventListener('click', function (e) {
       e.stopPropagation();
-      var id = b.getAttribute('data-kaydet'), i = kayitli.indexOf(id);
-      if (i >= 0) kayitli.splice(i, 1); else kayitli.push(id);
+      var id = b.getAttribute('data-kaydet'), ids = kimlikler(b), acik = ids.some(function (x) { return kayitli.indexOf(x) >= 0; });
+      if (acik) kayitli = kayitli.filter(function (x) { return ids.indexOf(x) < 0; }); else kayitli.push(id);
       yaz('kit-saved', kayitli); sayac();
       Array.prototype.forEach.call(document.querySelectorAll('[data-kaydet]'), function (x) { if (x.getAttribute('data-kaydet') === id) kaydetCiz(x); });
     });

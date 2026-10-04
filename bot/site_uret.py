@@ -1,4 +1,4 @@
-"""Generate crawlable public detail pages from the existing verified registry."""
+﻿"""Generate crawlable public detail pages from the existing verified registry."""
 import html
 import json
 import re
@@ -12,20 +12,20 @@ TR = timezone(timedelta(hours=3))
 KART_GENISLIK = 720
 LOGO_BOYUT = 128
 EN_COK_LOGO_INDIRME = 150
-CSS_SURUM = 10
+CSS_SURUM = 11
 LOGO_SURUM = 2
 ACIK_ZEMIN, KOYU_ZEMIN = '#F6F6F1', '#0D0E0C'
-# <head> içinde, theme-color etiketinden sonra: açık tema varsayılan, yalnız kit-theme=="dark" koyu açar.
+# <head> iÃ§inde, theme-color etiketinden sonra: aÃ§Ä±k tema varsayÄ±lan, yalnÄ±z kit-theme=="dark" koyu aÃ§ar.
 TEMA_BETIGI = ('<script>try{var d=JSON.parse(localStorage.getItem("kit-theme"))==="dark";document.documentElement.dataset.theme=d?"dark":"light";'
                'var m=document.querySelector("meta[name=theme-color]");if(m)m.content=d?"' + KOYU_ZEMIN + '":"' + ACIK_ZEMIN + '"}'
                'catch(e){document.documentElement.dataset.theme="light"}</script>')
 AY_IKON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>'
 TG_IKON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 4-18 7.2 6 2.3M21 4l-3 16-8.5-6.5M21 4 9.5 13.5v5.5l3-3.5"/></svg>'
 KISI_IKON = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5"/></svg>'
-ALT_MENU = (('Bugün', '#bugun', '<path d="M4 10.5 12 4l8 6.5V20h-5v-6h-6v6H4z"/>'),
-            ('İlanlar', '#ilanlar', '<path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/>'),
+ALT_MENU = (('BugÃ¼n', '#bugun', '<path d="M4 10.5 12 4l8 6.5V20h-5v-6h-6v6H4z"/>'),
+            ('Ä°lanlar', '#ilanlar', '<path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/>'),
             ('Takvim', '#takvim', '<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/>'),
-            ('Kayıtlı', '#kayitli', '<path d="M7 3.5h10a1 1 0 0 1 1 1V21l-6-4-6 4V4.5a1 1 0 0 1 1-1z"/>'),
+            ('KayÄ±tlÄ±', '#kayitli', '<path d="M7 3.5h10a1 1 0 0 1 1 1V21l-6-4-6 4V4.5a1 1 0 0 1 1-1z"/>'),
             ('Profil', '?profil=1', '<circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5"/>'))
 
 
@@ -34,7 +34,7 @@ def esc(value):
 
 
 def ikonlar(kok):
-    """Sekme simgesi + iOS ana ekran simgesi + web uygulaması bildirimi."""
+    """Sekme simgesi + iOS ana ekran simgesi + web uygulamasÄ± bildirimi."""
     v = LOGO_SURUM
     return (f'<link rel="icon" href="{kok}assets/logo-32.png?v={v}" type="image/png" sizes="32x32">'
             f'<link rel="icon" href="{kok}assets/logo-192.png?v={v}" type="image/png" sizes="192x192">'
@@ -43,29 +43,29 @@ def ikonlar(kok):
 
 
 def ust_html(kok, aktif=''):
-    """Ana sayfayla aynı üst bar (docs/index.html .ust); bağlantılar `kok` göreli."""
-    menu = [('Bugün', f'{kok}#bugun', ''), ('İlanlar', f'{kok}#ilanlar', ''), ('Takvim', f'{kok}#takvim', ''),
-            ('Taban puanları', f'{kok}puanlar/', 'puanlar'), ('Rehber', f'{kok}#rehber', '')]
+    """Ana sayfayla aynÄ± Ã¼st bar (docs/index.html .ust); baÄŸlantÄ±lar `kok` gÃ¶reli."""
+    menu = [('BugÃ¼n', f'{kok}#bugun', ''), ('Ä°lanlar', f'{kok}#ilanlar', ''), ('Takvim', f'{kok}#takvim', ''),
+            ('Taban puanlarÄ±', f'{kok}puanlar/', 'puanlar'), ('Rehber', f'{kok}#rehber', '')]
     bagla = ''.join(f'<a href="{h}"{" class=" + chr(34) + "aktif" + chr(34) + " aria-current=" + chr(34) + "page" + chr(34) if a and a == aktif else ""}>{ad}</a>' for ad, h, a in menu)
-    return (f'<header class="ust"><div class="wrap ust-ic"><a class="marka" href="{kok}" aria-label="Kamu İlan Takip ana sayfa">'
-            f'<img src="{kok}assets/logo-96.webp?v={LOGO_SURUM}" alt="" width="32" height="32">Kamu İlan Takip</a>'
-            f'<nav class="menu" aria-label="Ana menü">{bagla}</nav>'
-            f'<div class="ust-sag"><button type="button" class="ikon-btn" id="theme" aria-label="Renk temasını değiştir">{AY_IKON}</button>'
+    return (f'<header class="ust"><div class="wrap ust-ic"><a class="marka" href="{kok}" aria-label="Kamu Ä°lan Takip ana sayfa">'
+            f'<img src="{kok}assets/logo-96.webp?v={LOGO_SURUM}" alt="" width="32" height="32">Kamu Ä°lan Takip</a>'
+            f'<nav class="menu" aria-label="Ana menÃ¼">{bagla}</nav>'
+            f'<div class="ust-sag"><button type="button" class="ikon-btn" id="theme" aria-label="Renk temasÄ±nÄ± deÄŸiÅŸtir">{AY_IKON}</button>'
             f'<a class="btn btn-tg" href="https://t.me/kamuilantakip" target="_blank" rel="noopener">{TG_IKON}Telegram</a></div></div></header>')
 
 
 def alt_html(kok, yil=None):
-    """Tek satırlık alt bilgi (ana sayfayla aynı) ve mobil alt menü."""
+    """Tek satÄ±rlÄ±k alt bilgi (ana sayfayla aynÄ±) ve mobil alt menÃ¼."""
     yil = yil or datetime.now(TR).year
     menu = ''.join(f'<a href="{kok}{h}"><i><svg viewBox="0 0 24 24" aria-hidden="true">{s}</svg></i>{ad}{'<b id="saved-count-m" hidden>0</b>' if h == '#kayitli' else ''}</a>' for ad, h, s in ALT_MENU)
-    return (f'<footer class="alt-bilgi"><div class="wrap"><div><a href="{kok}#bilgi/hakkimizda">Hakkımızda ve veri kaynakları</a><a href="{kok}#bilgi/gizlilik">Gizlilik</a>'
+    return (f'<footer class="alt-bilgi"><div class="wrap"><div><a href="{kok}#bilgi/hakkimizda">HakkÄ±mÄ±zda ve veri kaynaklarÄ±</a><a href="{kok}#bilgi/gizlilik">Gizlilik</a>'
             f'<a href="{kok}#bilgi/reklam">Reklam</a><a href="https://t.me/kamuilantakip" target="_blank" rel="noopener">Telegram</a></div>'
-            f'<span>© <span id="yil">{yil}</span> Kamu İlan Takip · Bağımsız ilan rehberi · Başvurular resmî ilan üzerinden yapılır.</span></div></footer>'
-            f'<nav class="alt-menu" aria-label="Alt menü">{menu}</nav>')
+            f'<span>Â© <span id="yil">{yil}</span> Kamu Ä°lan Takip Â· BaÄŸÄ±msÄ±z ilan rehberi Â· BaÅŸvurular resmÃ® ilan Ã¼zerinden yapÄ±lÄ±r.</span></div></footer>'
+            f'<nav class="alt-menu" aria-label="Alt menÃ¼">{menu}</nav>')
 
 
 def sayfa_basi(baslik, aciklama, canonical, kok, og_tur='website', ek_head='', og_baslik=None):
-    """<!doctype> … <body> açılışına kadar ortak kısım (kurum ve ilan sayfaları)."""
+    """<!doctype> â€¦ <body> aÃ§Ä±lÄ±ÅŸÄ±na kadar ortak kÄ±sÄ±m (kurum ve ilan sayfalarÄ±)."""
     return (f'<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
             f'<meta name="theme-color" content="{ACIK_ZEMIN}"><meta name="color-scheme" content="light dark">{TEMA_BETIGI}'
             f'<title>{esc(baslik)}</title><meta name="description" content="{esc(aciklama)}"><link rel="canonical" href="{canonical}">'
@@ -76,29 +76,29 @@ def sayfa_basi(baslik, aciklama, canonical, kok, og_tur='website', ek_head='', o
 
 
 def _kurum_bloklari(item, gorsel, logo_html):
-    """(hero kurum bağlantısı, breadcrumb parçası, yan kart) — kurum sayfasına tek bağlantı."""
+    """(hero kurum baÄŸlantÄ±sÄ±, breadcrumb parÃ§asÄ±, yan kart) â€” kurum sayfasÄ±na tek baÄŸlantÄ±."""
     from kurum_sayfasi import kurum_adi, kurum_slug
     ad = esc(kurum_adi(item.get('kurum')))
     if not (item.get('kurum') or '').strip():
-        return f'<div class="detail-org">{logo_html}<p>Kurum belirtilmemiş</p></div>', '', ''
+        return f'<div class="detail-org">{logo_html}<p>Kurum belirtilmemiÅŸ</p></div>', '', ''
     slug = (gorsel or {}).get('kurum_slug') or kurum_slug(item['kurum'])
     n = (gorsel or {}).get('kurum_sayisi') or 1
     href = f'../../kurum/{esc(slug)}/'
-    etiket = f'Bu kurumun tüm ilanları ({n})' if n > 1 else 'Kurum sayfası'
-    hero = (f'<a class="kurum-link" href="{href}" title="{ad} — kurumun tüm ilanları">{logo_html}'
-            f'<span><b>{ad}</b><span class="more">{etiket} <i aria-hidden="true">→</i></span></span></a>')
+    etiket = f'Bu kurumun tÃ¼m ilanlarÄ± ({n})' if n > 1 else 'Kurum sayfasÄ±'
+    hero = (f'<a class="kurum-link" href="{href}" title="{ad} â€” kurumun tÃ¼m ilanlarÄ±">{logo_html}'
+            f'<span><b>{ad}</b><span class="more">{etiket} <i aria-hidden="true">â†’</i></span></span></a>')
     kirinti = f'<span aria-hidden="true">/</span><a href="{href}">{ad}</a>'
     yan = (f'<a class="aside-kurum" href="{href}">{logo_html}<span><b>{ad}</b>'
-           f'<span class="more">{f"Diğer {n - 1} ilanını gör" if n > 1 else "Kurum sayfasını gör"} →</span></span></a>')
+           f'<span class="more">{f"DiÄŸer {n - 1} ilanÄ±nÄ± gÃ¶r" if n > 1 else "Kurum sayfasÄ±nÄ± gÃ¶r"} â†’</span></span></a>')
     return hero, kirinti, yan
 
 
 def sayfa_kabugu(baslik, aciklama, canonical, icerik, govde_sinifi='', og_baslik=None):
-    """Kurum sayfaları için ortak iskelet (ilan sayfasıyla aynı üst/alt bölüm)."""
+    """Kurum sayfalarÄ± iÃ§in ortak iskelet (ilan sayfasÄ±yla aynÄ± Ã¼st/alt bÃ¶lÃ¼m)."""
     kok = '../../'
     return (sayfa_basi(baslik, aciklama, canonical, kok, og_baslik=og_baslik)
-            + f'<body class="{govde_sinifi}"><a class="skip" href="#icerik">İçeriğe geç</a>{ust_html(kok)}{icerik}{alt_html(kok)}'
-              f'<noscript><div class="not wrap">Bazı özellikler (kaydetme, kalan gün) için JavaScript gerekir.</div></noscript></body></html>')
+            + f'<body class="{govde_sinifi}"><a class="skip" href="#icerik">Ä°Ã§eriÄŸe geÃ§</a>{ust_html(kok)}{icerik}{alt_html(kok)}'
+              f'<noscript><div class="not wrap">BazÄ± Ã¶zellikler (kaydetme, kalan gÃ¼n) iÃ§in JavaScript gerekir.</div></noscript></body></html>')
 
 
 def _virgul(n, k=1):
@@ -106,8 +106,8 @@ def _virgul(n, k=1):
 
 
 def _kadro_tablosu(item):
-    """Kadro / kontenjan tablosu (kadro adıyla eşleşen koşul metni aynı satırda) ve eşleşmeyen koşullar için ikinci tablo.
-    HTML bölümü döner (başlıkla birlikte); gösterilecek bir şey yoksa boş metin."""
+    """Kadro / kontenjan tablosu (kadro adÄ±yla eÅŸleÅŸen koÅŸul metni aynÄ± satÄ±rda) ve eÅŸleÅŸmeyen koÅŸullar iÃ§in ikinci tablo.
+    HTML bÃ¶lÃ¼mÃ¼ dÃ¶ner (baÅŸlÄ±kla birlikte); gÃ¶sterilecek bir ÅŸey yoksa boÅŸ metin."""
     import kurum_sayfasi as ks
     from siniflandir import kucuk
     kadrolar = ks.kadrolar(item)
@@ -133,53 +133,53 @@ def _kadro_tablosu(item):
     if satirlar:
         kosullu = any(m for _, _, m in satirlar)
         govde = ''.join(
-            f'<tr><td>{esc(ad)}</td><td class="sayi" data-et="Kontenjan">{esc(ks.SAYI_YAZ(adet) if adet else "—")}</td>'
-            + (f'<td data-et="Koşullar">{esc(metin) if metin else "Resmî ilandan kontrol et"}</td>' if kosullu else '') + '</tr>'
+            f'<tr><td>{esc(ad)}</td><td class="sayi" data-et="Kontenjan">{esc(ks.SAYI_YAZ(adet) if adet else "â€”")}</td>'
+            + (f'<td data-et="KoÅŸullar">{esc(metin) if metin else "ResmÃ® ilandan kontrol et"}</td>' if kosullu else '') + '</tr>'
             for ad, adet, metin in satirlar)
-        baslik = '<th scope="col">Kadro</th><th scope="col" class="sayi">Kontenjan</th>' + ('<th scope="col">Başvuru koşulları</th>' if kosullu else '')
-        html_ += (f'<h2>{"Kadro ve başvuru koşulları" if kosullu else "Kadro ve kontenjan"}</h2>'
+        baslik = '<th scope="col">Kadro</th><th scope="col" class="sayi">Kontenjan</th>' + ('<th scope="col">BaÅŸvuru koÅŸullarÄ±</th>' if kosullu else '')
+        html_ += (f'<h2>{"Kadro ve baÅŸvuru koÅŸullarÄ±" if kosullu else "Kadro ve kontenjan"}</h2>'
                   f'<div class="tablo-kap"><table class="ktablo"><thead><tr>{baslik}</tr></thead><tbody>{govde}</tbody></table></div>')
     if kalan:
         govde = ''.join(f'<tr><td>{esc(s.get("kadro") or "Genel")}</td><td>{esc(s.get("metin") or "")}</td></tr>' for s in kalan)
-        html_ += (f'<h{"3" if satirlar else "2"} class="alt-h">Başvuru koşullarından seçmeler</h{"3" if satirlar else "2"}>'
-                  f'<div class="tablo-kap"><table class="ktablo"><thead><tr><th scope="col">Konu</th><th scope="col">Koşul</th></tr></thead><tbody>{govde}</tbody></table></div>')
+        html_ += (f'<h{"3" if satirlar else "2"} class="alt-h">BaÅŸvuru koÅŸullarÄ±ndan seÃ§meler</h{"3" if satirlar else "2"}>'
+                  f'<div class="tablo-kap"><table class="ktablo"><thead><tr><th scope="col">Konu</th><th scope="col">KoÅŸul</th></tr></thead><tbody>{govde}</tbody></table></div>')
     return html_
 
 def _kopya_notlari(kopya):
-    """(ikincil kayıt için üst not, birincil kayıt için kaynak satırı) — kopya: kopya.sayfa_bilgisi() çıktısı ya da None."""
+    """(ikincil kayÄ±t iÃ§in Ã¼st not, birincil kayÄ±t iÃ§in kaynak satÄ±rÄ±) â€” kopya: kopya.sayfa_bilgisi() Ã§Ä±ktÄ±sÄ± ya da None."""
     if not kopya:
         return '', ''
     if kopya.get('rol') == 'ikincil':
-        return (f'<p class="not kopya-not"><strong>Bu ilan başka bir kaynakta da yayımlandı.</strong> '
-                f'<a class="yazi-link" href="../{esc(kopya["birincil"])}/">Bu ilanın daha ayrıntılı kaydı →</a></p>'), ''
+        return (f'<p class="not kopya-not"><strong>Bu ilan baÅŸka bir kaynakta da yayÄ±mlandÄ±.</strong> '
+                f'<a class="yazi-link" href="../{esc(kopya["birincil"])}/">Bu ilanÄ±n daha ayrÄ±ntÄ±lÄ± kaydÄ± â†’</a></p>'), ''
     adlar = kopya.get('adlar') or []
-    baglar = ', '.join(f'<a href="{esc(h)}" target="_blank" rel="noopener noreferrer">{esc(a)} ↗</a>' for a, h in kopya.get('baglantilar') or [])
+    baglar = ', '.join(f'<a href="{esc(h)}" target="_blank" rel="noopener noreferrer">{esc(a)} â†—</a>' for a, h in kopya.get('baglantilar') or [])
     if len(adlar) < 2 or not baglar:
         return '', ''
-    return '', f'<p class="d-kaynaklar">Bu ilan {len(adlar)} kaynakta yayımlandı: {baglar}</p>'
+    return '', f'<p class="d-kaynaklar">Bu ilan {len(adlar)} kaynakta yayÄ±mlandÄ±: {baglar}</p>'
 
 
 def _senin_icin(item, kayit):
-    """"Senin için" kutusu: öğrenim/puan türü/il eşleşmesi tarayıcıda kit-profil ile doldurulur (sayfa.js);
-    taban referansı derleme zamanında yazılır."""
+    """"Senin iÃ§in" kutusu: Ã¶ÄŸrenim/puan tÃ¼rÃ¼/il eÅŸleÅŸmesi tarayÄ±cÄ±da kit-profil ile doldurulur (sayfa.js);
+    taban referansÄ± derleme zamanÄ±nda yazÄ±lÄ±r."""
     kayit = kayit or {}
     ref = kayit.get('taban_ref') or {}
     from kurum_sayfasi import LEVELS
     satirlar = ''
     for duzey, r in ref.items():
         if duzey in LEVELS and isinstance(r.get('medyan'), (int, float)):
-            donem = f' · {esc(r["donem"])}' if r.get('donem') else ''
-            satirlar += f'<li>{LEVELS[duzey]}: benzer kadroların taban puanı medyanı <b>{_virgul(r["medyan"])}</b> ({int(r.get("n") or 0)} kayıt{donem})</li>'
-    ref_html = (f'<ul class="senin-ref">{satirlar}</ul><p class="senin-not">Geçmiş yerleştirmelerden referans; bu ilanın şartı değildir.</p>') if satirlar else ''
+            donem = f' Â· {esc(r["donem"])}' if r.get('donem') else ''
+            satirlar += f'<li>{LEVELS[duzey]}: benzer kadrolarÄ±n taban puanÄ± medyanÄ± <b>{_virgul(r["medyan"])}</b> ({int(r.get("n") or 0)} kayÄ±t{donem})</li>'
+    ref_html = (f'<ul class="senin-ref">{satirlar}</ul><p class="senin-not">GeÃ§miÅŸ yerleÅŸtirmelerden referans; bu ilanÄ±n ÅŸartÄ± deÄŸildir.</p>') if satirlar else ''
     veri = (f' data-ogr="{esc(",".join(kayit.get("ogrenim") or []))}" data-pt="{esc(",".join(kayit.get("puan_turleri") or []))}"'
             f' data-il="{esc(kayit.get("il") or "")}" data-ref="{esc(json.dumps(ref, ensure_ascii=False, separators=(",", ":")))}"')
-    return (f'<section class="senin" id="senin"{veri}><h2><i>{KISI_IKON}</i>Senin için</h2>'
-            '<div data-profil data-ana="../../?profil=1"><p class="senin-link">Öğrenim düzeyini, KPSS puanını ve illerini ana sayfada ekle; bu ilana uyup uymadığını burada göster. '
-            '<a href="../../?profil=1">Profilini oluştur →</a></p></div>' + ref_html + '</section>')
+    return (f'<section class="senin" id="senin"{veri}><h2><i>{KISI_IKON}</i>Senin iÃ§in</h2>'
+            '<div data-profil data-ana="../../?profil=1"><p class="senin-link">Ã–ÄŸrenim dÃ¼zeyini, KPSS puanÄ±nÄ± ve illerini ana sayfada ekle; bu ilana uyup uymadÄ±ÄŸÄ±nÄ± burada gÃ¶ster. '
+            '<a href="../../?profil=1">Profilini oluÅŸtur â†’</a></p></div>' + ref_html + '</section>')
 
 
 def benzer_ilanlar(kayit, kayitlar, en_cok=5):
-    """Aynı unvan/meslek fotoğrafı olan diğer açık ilanlar (liste.json kayıtları), en çok `en_cok`; en yakın son tarih önce."""
+    """AynÄ± unvan/meslek fotoÄŸrafÄ± olan diÄŸer aÃ§Ä±k ilanlar (liste.json kayÄ±tlarÄ±), en Ã§ok `en_cok`; en yakÄ±n son tarih Ã¶nce."""
     if not kayit:
         return []
     from siniflandir import kucuk
@@ -205,7 +205,7 @@ def benzer_ilanlar(kayit, kayitlar, en_cok=5):
 def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=None):
     from siniflandir import akademik_ilan
     if akademik_ilan(item):
-        return None  # akademik ilanlar sitede gösterilmez
+        return None  # akademik ilanlar sitede gÃ¶sterilmez
     url = urlparse(item.get('link', ''))
     key = parse_qs(url.query).get('i', [''])[0]
     import uuid
@@ -221,14 +221,14 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
     import liste_verisi
     simdi = (simdi or datetime.now(TR)).astimezone(TR)
     canonical = BASE + 'ilan/' + key + '/'
-    title = item.get('baslik', 'Kamu ilanı')
+    title = item.get('baslik', 'Kamu ilanÄ±')
     deadline = item.get('son_zaman') or item.get('son_tarih')
     end = datetime.fromisoformat(deadline) if deadline else None
     if end and end.tzinfo is None:
         end = end.replace(tzinfo=TR, hour=23, minute=59, second=59)
     kapali = bool(end and end <= simdi)
     acik_ilan = not (item.get('iptal_edildi') or item.get('duyuru_turu') or kapali)
-    date = end.astimezone(TR).strftime('%d.%m.%Y · %H:%M TSİ' if item.get('son_zaman') else '%d.%m.%Y') if end else 'Belirtilmemiş'
+    date = end.astimezone(TR).strftime('%d.%m.%Y Â· %H:%M TSÄ°' if item.get('son_zaman') else '%d.%m.%Y') if end else 'BelirtilmemiÅŸ'
     if kayit is None:
         try:
             kayit = liste_verisi.kayit(item, gorsel, {}, simdi)
@@ -243,11 +243,11 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
     # --- durum rozeti
     metin, sinif = ks.durum(item, simdi)
     if sinif == 'none':
-        metin = 'Son tarihi resmî ilandan doğrula'
+        metin = 'Son tarihi resmÃ® ilandan doÄŸrula'
     if sinif == 'upcoming' and item.get('baslangic_zaman'):
         try:
             b = datetime.fromisoformat(item['baslangic_zaman']).astimezone(TR)
-            metin = f'Başvuru {b.day} {ks.AY[b.month - 1]}’de açılıyor'
+            metin = f'BaÅŸvuru {b.day} {ks.AY[b.month - 1]}â€™de aÃ§Ä±lÄ±yor'
         except ValueError:
             pass
     pill_sinif = 'kapali' if sinif in ('closed', 'cancelled') else 'yakinda' if sinif == 'upcoming' else ''
@@ -255,10 +255,10 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
         pill_sinif = 'acil'
     veri = f' id="durum" data-son="{esc(item["son_tarih"])}" data-zaman="{esc(item.get("son_zaman") or "")}"' if sinif in ('ok', 'soon', 'urgent', 'today') and item.get('son_tarih') else ''
     durum_html = f'<span class="pill{" " + pill_sinif if pill_sinif else ""}"{veri}>{esc(metin)}</span>'
-    # --- içerik bölümleri
+    # --- iÃ§erik bÃ¶lÃ¼mleri
     sections = ''
     if item.get('iptal_edildi'):
-        sections += '<p class="not uyari"><strong>İptal edildi.</strong> Bu ilan için resmî iptal duyurusu yayımlandı. Başvuru yapmadan önce resmî kaynağı kontrol et.</p>'
+        sections += '<p class="not uyari"><strong>Ä°ptal edildi.</strong> Bu ilan iÃ§in resmÃ® iptal duyurusu yayÄ±mlandÄ±. BaÅŸvuru yapmadan Ã¶nce resmÃ® kaynaÄŸÄ± kontrol et.</p>'
     tablo = _kadro_tablosu(item)
     bolum = ''
     if tablo:
@@ -266,17 +266,17 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
     elif item.get('kadro'):
         bolum += f'<h2>Kadro ve kontenjan</h2><p>{esc(item["kadro"])}</p>'
     diger = ''
-    for heading, value in [('Duyuru metni', item.get('duyuru_cumlesi')), ('İlan özeti', None if item.get('ozet') == item.get('duyuru_cumlesi') else item.get('ozet')), ('Başvuru notu', item.get('basvuru_notu'))]:
+    for heading, value in [('Duyuru metni', item.get('duyuru_cumlesi')), ('Ä°lan Ã¶zeti', None if item.get('ozet') == item.get('duyuru_cumlesi') else item.get('ozet')), ('BaÅŸvuru notu', item.get('basvuru_notu'))]:
         if value:
             diger += f'<h3>{heading}</h3><p>{esc(value)}</p>'
     if any(item.get(k) for k in ('kadro', 'duyuru_cumlesi', 'ozet', 'basvuru_notu', 'sartlar')):
-        diger += '<p class="muted">Seçilmiş alıntılardır. Tüm koşullar, kadrolar ve güncel tarihler için resmî ilanı incele.</p>'
+        diger += '<p class="muted">SeÃ§ilmiÅŸ alÄ±ntÄ±lardÄ±r. TÃ¼m koÅŸullar, kadrolar ve gÃ¼ncel tarihler iÃ§in resmÃ® ilanÄ± incele.</p>'
     else:
-        diger += '<p class="muted">Bu ilanın kadro, şart ve başvuru ayrıntıları henüz kaynaktan okunamadı. Tüm bilgiler için resmî ilan belgesini aç.</p>'
+        diger += '<p class="muted">Bu ilanÄ±n kadro, ÅŸart ve baÅŸvuru ayrÄ±ntÄ±larÄ± henÃ¼z kaynaktan okunamadÄ±. TÃ¼m bilgiler iÃ§in resmÃ® ilan belgesini aÃ§.</p>'
     for belge in item.get('belgeler', [])[:3]:
         if str(belge.get('link', '')).startswith('https://webdosya.csb.gov.tr/v2/yerelyonetimler/'):
-            diger += f'<p><a class="yazi-link" href="{esc(belge["link"])}" target="_blank" rel="noopener noreferrer">Duyuru eki: {esc(belge.get("ad"))} ↗</a></p>'
-    description = (item.get('kurum', '') + ' — ' + (item.get('kadro') or title))[:190]
+            diger += f'<p><a class="yazi-link" href="{esc(belge["link"])}" target="_blank" rel="noopener noreferrer">Duyuru eki: {esc(belge.get("ad"))} â†—</a></p>'
+    description = (item.get('kurum', '') + ' â€” ' + (item.get('kadro') or title))[:190]
     og_gorsel = ''
     kurum_adi = esc(item.get('kurum') or 'Kurum')
     if gorsel.get('kart'):
@@ -290,48 +290,49 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
     from sbb_detay import document_url
     document = document_url(item)
     target = document or item['link']
-    button = 'İlan belgesini aç (PDF) ↗' if document else 'Resmî ilana git · Başvur ↗' if acik_ilan else 'Resmî duyuruyu aç ↗' if item.get('duyuru_turu') else 'Resmî ilanı aç ↗'
+    button = 'Ä°lan belgesini aÃ§ (PDF) â†—' if document else 'ResmÃ® ilana git Â· BaÅŸvur â†—' if acik_ilan else 'ResmÃ® duyuruyu aÃ§ â†—' if item.get('duyuru_turu') else 'ResmÃ® ilanÄ± aÃ§ â†—'
     if document:
         diger += f'<p class="muted">{esc(item.get("belge_aciklamasi"))}</p>'
-    # --- bilgi satırı
+    # --- bilgi satÄ±rÄ±
     ogr = [o for o in (item.get('ogrenim') or []) if o in ks.LEVELS]
     pt = (kayit or {}).get('puan_turleri') or liste_verisi.puan_turleri(item)
-    kpss = ', '.join(pt[:3]) if pt else 'Gerekli' if item.get('kpss') == 'kpss' else 'Gerekmez' if item.get('kpss') == 'kpsssiz' else 'Belirtilmemiş'
+    kpss = ', '.join(pt[:3]) if pt else 'Gerekli' if item.get('kpss') == 'kpss' else 'Gerekmez' if item.get('kpss') == 'kpsssiz' else 'BelirtilmemiÅŸ'
     toplam = alanlar.get('toplam')
-    yer = esc(ks.yer_metni(item, (kayit or {}).get('il') or '') or 'Resmî ilandan kontrol et')
+    yer = esc(ks.yer_metni(item, (kayit or {}).get('il') or '') or 'ResmÃ® ilandan kontrol et')
     acil_sinifi = ' class="acil"' if pill_sinif == 'acil' else ''
-    facts = (f'<ul class="d-facts"><li{acil_sinifi}><span>Son başvuru</span><strong>{date}</strong></li>'
-             f'<li><span>Kadro</span><strong>{esc(ks.SAYI_YAZ(toplam) + " kişi") if toplam else "İlanda"}</strong></li>'
+    facts = (f'<ul class="d-facts"><li{acil_sinifi}><span>Son baÅŸvuru</span><strong>{date}</strong></li>'
+             f'<li><span>Kadro</span><strong>{esc(ks.SAYI_YAZ(toplam) + " kiÅŸi") if toplam else "Ä°landa"}</strong></li>'
              f'<li><span>Yer</span><strong>{yer}</strong></li>'
-             f'<li><span>Öğrenim</span><strong>{esc(" / ".join(ks.LEVELS[o] for o in ogr)) or "Belirtilmemiş"}</strong></li>'
+             f'<li><span>Ã–ÄŸrenim</span><strong>{esc(" / ".join(ks.LEVELS[o] for o in ogr)) or "BelirtilmemiÅŸ"}</strong></li>'
              f'<li><span>KPSS</span><strong>{esc(kpss)}</strong></li></ul>')
     kayit_id = esc(item.get('id') or key)
+    ikincil_veri = f' data-ikincil="{esc(",".join((kopya or {}).get("ikincil_idler") or []))}"' if (kopya or {}).get('ikincil_idler') else ''
     from kurum_sayfasi import BOOKMARK
     cta = (f'<div class="d-cta"><a class="btn btn-ana btn-buyuk" href="{esc(target)}" target="_blank" rel="noopener noreferrer">{button}</a>'
-           f'<button type="button" class="btn btn-ikinci btn-buyuk" id="kaydet-btn" data-kaydet="{kayit_id}" data-ad="{esc(h1)}" aria-pressed="false">{BOOKMARK}<span data-yazi>Kaydet</span></button></div>'
-           '<p class="d-cta-not">Başvuru bu sitede yapılmaz; işlemini ilanda belirtilen resmî kanaldan tamamla. Kaydetmek başvuru oluşturmaz.</p>')
+           f'<button type="button" class="btn btn-ikinci btn-buyuk" id="kaydet-btn" data-kaydet="{kayit_id}"{ikincil_veri} data-ad="{esc(h1)}" aria-pressed="false">{BOOKMARK}<span data-yazi>Kaydet</span></button></div>'
+           '<p class="d-cta-not">BaÅŸvuru bu sitede yapÄ±lmaz; iÅŸlemini ilanda belirtilen resmÃ® kanaldan tamamla. Kaydetmek baÅŸvuru oluÅŸturmaz.</p>')
     senin = _senin_icin(item, kayit) if acik_ilan else ''
-    # --- afiş bandı (meslek fotoğrafı)
+    # --- afiÅŸ bandÄ± (meslek fotoÄŸrafÄ±)
     afis = ''
     foto = next((f for f in ((kayit or {}).get('meslek') or alanlar.get('meslek') or []) if not f.startswith('30-')), None)
     if foto:
         adlar = esc(re.sub(r'^\d+\s+', '', h1)) + (f' +{int(alanlar["ek"])}' if alanlar.get('ek') else '')
         yer_kisa = (kayit or {}).get('il') or ks.yer_kisa(item)
         sayi = f'<b>{esc(ks.SAYI_YAZ(toplam))}</b><small>kadro</small>' if toplam else '<small>Kadro</small>'
-        afis = (f'<figure class="afis"><div>{sayi}<p>{adlar}{" · " + esc(yer_kisa) if yer_kisa else ""}</p></div>'
+        afis = (f'<figure class="afis"><div>{sayi}<p>{adlar}{" Â· " + esc(yer_kisa) if yer_kisa else ""}</p></div>'
                 f'<img src="../../assets/meslek/{esc(foto)}" alt="" width="176" height="176" loading="lazy" decoding="async"></figure>')
     benzer_html = ''
     if benzer:
         benzer_html = ('<section class="benzer"><div class="bolum-bas"><h2>Benzer ilanlar</h2></div><div class="liste">'
                        + ''.join(ks.satir_html(k, simdi, '../../') for k in benzer[:5]) + '</div></section>')
     kok = '../../'
-    govde = (f'<main id="icerik" class="wrap"><article class="d-bas"><nav class="crumbs" aria-label="Konum"><a href="{kok}">Ana sayfa</a><span aria-hidden="true">/</span><a href="{kok}#ilanlar">İlanlar</a>{kurum_kirinti}</nav>'
-             f'{kurum_html}<div class="ust-satir"><span class="eyebrow">{esc(item.get("ilan_turu", "KAMU İLANI"))}</span>{durum_html}</div><h1>{esc(h1)}</h1>{alt_html_}{kopya_ust}{facts}{cta}{kopya_alt}</article>'
+    govde = (f'<main id="icerik" class="wrap"><article class="d-bas"><nav class="crumbs" aria-label="Konum"><a href="{kok}">Ana sayfa</a><span aria-hidden="true">/</span><a href="{kok}#ilanlar">Ä°lanlar</a>{kurum_kirinti}</nav>'
+             f'{kurum_html}<div class="ust-satir"><span class="eyebrow">{esc(item.get("ilan_turu", "KAMU Ä°LANI"))}</span>{durum_html}</div><h1>{esc(h1)}</h1>{alt_html_}{kopya_ust}{facts}{cta}{kopya_alt}</article>'
              f'<div class="d-ana">{senin}<section class="d-bolum">{sections}{bolum}{diger}'
-             f'<p class="muted d-son">Ayrıntı kontrolü: {esc(item.get("detay_guncelleme", "Tarih belirtilmemiş"))}</p></section>{afis}{benzer_html}</div></main>')
-    return key, (sayfa_basi(f'{title} | Kamu İlan Takip', description, canonical, kok, 'article', og_gorsel, og_baslik=title)
-                 + f'<body class="detail-page"><a class="skip" href="#icerik">İçeriğe geç</a>{ust_html(kok)}{govde}{alt_html(kok)}'
-                   '<noscript><div class="not wrap">Bazı özellikler (kaydetme, kalan gün, “Senin için”) için JavaScript gerekir.</div></noscript></body></html>')
+             f'<p class="muted d-son">AyrÄ±ntÄ± kontrolÃ¼: {esc(item.get("detay_guncelleme", "Tarih belirtilmemiÅŸ"))}</p></section>{afis}{benzer_html}</div></main>')
+    return key, (sayfa_basi(f'{title} | Kamu Ä°lan Takip', description, canonical, kok, 'article', og_gorsel, og_baslik=title)
+                 + f'<body class="detail-page"><a class="skip" href="#icerik">Ä°Ã§eriÄŸe geÃ§</a>{ust_html(kok)}{govde}{alt_html(kok)}'
+                   '<noscript><div class="not wrap">BazÄ± Ã¶zellikler (kaydetme, kalan gÃ¼n, â€œSenin iÃ§inâ€) iÃ§in JavaScript gerekir.</div></noscript></body></html>')
 
 
 def kucuk_ad(metin):
@@ -340,26 +341,26 @@ def kucuk_ad(metin):
 
 
 def _duzgun(metin):
-    """portal.js proper(): Türkçe kurallarıyla küçült, kelime başlarını büyüt."""
+    """portal.js proper(): TÃ¼rkÃ§e kurallarÄ±yla kÃ¼Ã§Ã¼lt, kelime baÅŸlarÄ±nÄ± bÃ¼yÃ¼t."""
     import re
-    kucuk = str(metin or '').replace('I', 'ı').replace('İ', 'i').lower()
-    buyut = lambda h: 'İ' if h == 'i' else 'I' if h == 'ı' else h.upper()
-    sonuc = re.sub(r'(^|[\s(/-])([a-zçğıöşü])', lambda m: m.group(1) + buyut(m.group(2)), kucuk)
-    sonuc = re.sub(r'(?<=\S )(Ve|İle|Veya)(?= )', lambda m: 'ile' if m.group(1) == 'İle' else m.group(1).lower(), sonuc)
+    kucuk = str(metin or '').replace('I', 'Ä±').replace('Ä°', 'i').lower()
+    buyut = lambda h: 'Ä°' if h == 'i' else 'I' if h == 'Ä±' else h.upper()
+    sonuc = re.sub(r'(^|[\s(/-])([a-zÃ§ÄŸÄ±Ã¶ÅŸÃ¼])', lambda m: m.group(1) + buyut(m.group(2)), kucuk)
+    sonuc = re.sub(r'(?<=\S )(Ve|Ä°le|Veya)(?= )', lambda m: 'ile' if m.group(1) == 'Ä°le' else m.group(1).lower(), sonuc)
     return re.sub(r'\b4/b\b', '4/B', re.sub(r'\bkpss\b', 'KPSS', sonuc, flags=re.I), flags=re.I)
 
 
 def _gorunen_baslik(item):
-    """portal.js title(): baştaki kurum adını at, düzgün yaz."""
+    """portal.js title(): baÅŸtaki kurum adÄ±nÄ± at, dÃ¼zgÃ¼n yaz."""
     import re
-    baslik, kurum = str(item.get('baslik') or 'Kamu ilanı'), str(item.get('kurum') or '')
+    baslik, kurum = str(item.get('baslik') or 'Kamu ilanÄ±'), str(item.get('kurum') or '')
     if kurum and _duzgun(baslik).startswith(_duzgun(kurum)) and len(baslik) > len(kurum):
-        baslik = re.sub(r'^\s*[-–:]\s*', '', baslik[len(kurum):])
+        baslik = re.sub(r'^\s*[-â€“:]\s*', '', baslik[len(kurum):])
     return _duzgun(baslik)
 
 
 def _ton(kurum):
-    """portal.js hue() ile aynı: kurum adından sabit renk tonu."""
+    """portal.js hue() ile aynÄ±: kurum adÄ±ndan sabit renk tonu."""
     h = 0
     for c in str(kurum or ''):
         h = (h * 31 + ord(c)) & 0xFFFFFFFF
@@ -368,7 +369,7 @@ def _ton(kurum):
 
 def _bas_harfler(kurum):
     kelimeler = [k for k in str(kurum or '').split() if k[:1].isalpha()][:2]
-    return ''.join(k[0] for k in kelimeler).replace('i', 'İ').upper() or 'K'
+    return ''.join(k[0] for k in kelimeler).replace('i', 'Ä°').upper() or 'K'
 
 
 def _bitis(item):
@@ -385,7 +386,7 @@ def _bitis(item):
 
 
 def bot_ilani(item):
-    """Kişisel bildirim botu için ilanın kısa kaydı."""
+    """KiÅŸisel bildirim botu iÃ§in ilanÄ±n kÄ±sa kaydÄ±."""
     from siniflandir import kucuk
     kimlik = item.get('id')
     kimlikler = sorted({k for k in [*item.get('kaynak_kimlikleri', []), kimlik] if k})
@@ -403,7 +404,7 @@ def bot_ilani(item):
 
 
 def bot_ilanlari(ilanlar, simdi=None):
-    """Süresi geçmemiş (ya da tarihsiz) ilanların bot kayıtları."""
+    """SÃ¼resi geÃ§memiÅŸ (ya da tarihsiz) ilanlarÄ±n bot kayÄ±tlarÄ±."""
     simdi = simdi or datetime.now(TR)
     sonuc = []
     from siniflandir import akademik_ilan
@@ -418,7 +419,7 @@ def bot_ilanlari(ilanlar, simdi=None):
 
 
 def _sayfayi_kaldir(docs, item):
-    """Önceden üretilmiş akademik ilan sayfasını siler (yalnız ilan/<kimlik>/ altında, güvenli kimliklerde)."""
+    """Ã–nceden Ã¼retilmiÅŸ akademik ilan sayfasÄ±nÄ± siler (yalnÄ±z ilan/<kimlik>/ altÄ±nda, gÃ¼venli kimliklerde)."""
     import re
     import shutil
     for kimlik in {item.get('id', ''), *item.get('kaynak_kimlikleri', [])}:
@@ -455,7 +456,7 @@ def _onbellekte(item):
 
 
 def _logo_adresi(item):
-    """Ağdan indirilecek logo adresi; yoksa/hatalıysa None."""
+    """AÄŸdan indirilecek logo adresi; yoksa/hatalÄ±ysa None."""
     try:
         from kurum_gorseli import logo_adresi
         return logo_adresi(item)
@@ -482,7 +483,7 @@ def _logo_png(item):
 
 
 def _logo_yerelde(item):
-    """Logo yerel kütüphanede varsa ağ gerekmez."""
+    """Logo yerel kÃ¼tÃ¼phanede varsa aÄŸ gerekmez."""
     try:
         from kurum_gorseli import LIBRARY, kurum_anahtari
         manifest = LIBRARY / 'kaynaklar.json'
@@ -520,8 +521,8 @@ def _kart_webp(png):
 
 
 def gorselleri_uret(ilanlar, docs, simdi=None, en_cok_indirme=EN_COK_LOGO_INDIRME):
-    """Süresi geçmemiş her ilan için kart + kurum logosu WebP dosyalarını docs/ilan/{kart,logo}/ altına yazar.
-    {anahtar: {'kart':…, 'logo':…, 'kart_yukseklik':…}} döndürür (olmayan alan yazılmaz). Hiçbir hata derlemeyi düşürmez."""
+    """SÃ¼resi geÃ§memiÅŸ her ilan iÃ§in kart + kurum logosu WebP dosyalarÄ±nÄ± docs/ilan/{kart,logo}/ altÄ±na yazar.
+    {anahtar: {'kart':â€¦, 'logo':â€¦, 'kart_yukseklik':â€¦}} dÃ¶ndÃ¼rÃ¼r (olmayan alan yazÄ±lmaz). HiÃ§bir hata derlemeyi dÃ¼ÅŸÃ¼rmez."""
     import hashlib
     import shutil
     from kurum_gorseli import kurum_anahtari
@@ -548,7 +549,7 @@ def gorselleri_uret(ilanlar, docs, simdi=None, en_cok_indirme=EN_COK_LOGO_INDIRM
                 if kurum not in logolar:
                     yerel = _logo_yerelde(item) or _onbellekte(item)
                     png = None
-                    ag = not yerel and _logo_adresi(item) is not None  # yalnızca gerçek indirme denemesi sayılır
+                    ag = not yerel and _logo_adresi(item) is not None  # yalnÄ±zca gerÃ§ek indirme denemesi sayÄ±lÄ±r
                     if yerel or (ag and indirme < en_cok_indirme and ardisik_hata < 8):
                         if ag:
                             indirme += 1
@@ -565,14 +566,14 @@ def gorselleri_uret(ilanlar, docs, simdi=None, en_cok_indirme=EN_COK_LOGO_INDIRM
                     girdi['logo'] = yol
         except Exception as hata:
             png = None
-            print(f'Uyarı: kurum logosu üretilemedi ({item.get("kurum")}): {hata}')
+            print(f'UyarÄ±: kurum logosu Ã¼retilemedi ({item.get("kurum")}): {hata}')
         try:
             kart, yuk = _kart_webp(_kart_png(item, simdi, png))
             (kart_klasoru / f'{anahtar}.webp').write_bytes(kart)
             girdi['kart'] = f'ilan/kart/{anahtar}.webp'
             girdi['kart_yukseklik'] = yuk
         except Exception as hata:
-            print(f'Uyarı: ilan kartı üretilemedi ({item.get("id")}): {hata}')
+            print(f'UyarÄ±: ilan kartÄ± Ã¼retilemedi ({item.get("id")}): {hata}')
         if girdi:
             sonuc[anahtar] = girdi
     return sonuc
@@ -588,14 +589,14 @@ def main():
     try:
         import kopya
         kopyalar = kopya.kopya_bul(data.get('ilanlar', []))
-        print(f'{len(kopyalar["kopya_of"])} kopya ilan (kaynaklar arası) birleştirildi.')
+        print(f'{len(kopyalar["kopya_of"])} kopya ilan (kaynaklar arasÄ±) birleÅŸtirildi.')
     except Exception as hata:
-        print(f'Uyarı: kopya ilanlar bulunamadı: {hata}')
+        print(f'UyarÄ±: kopya ilanlar bulunamadÄ±: {hata}')
     kimlik_harita = {i.get('id'): i for i in data.get('ilanlar', [])}
     try:
         gorseller = gorselleri_uret(data.get('ilanlar', []), docs, datetime.now(TR))
     except Exception as hata:
-        print(f'Uyarı: ilan görselleri üretilemedi: {hata}')
+        print(f'UyarÄ±: ilan gÃ¶rselleri Ã¼retilemedi: {hata}')
     (docs / 'ilan').mkdir(parents=True, exist_ok=True)
     kurum_adresleri = []
     try:
@@ -605,14 +606,14 @@ def main():
         for anahtar, alan in kurum_sayfasi.kart_meta(data.get('ilanlar', []), sonuc[3], kopyalar).items():
             gorseller.setdefault(anahtar, {}).update(alan)
     except Exception as hata:
-        print(f'Uyarı: kurum sayfaları üretilemedi: {hata}')
+        print(f'UyarÄ±: kurum sayfalarÄ± Ã¼retilemedi: {hata}')
     (docs / 'ilan' / 'gorseller.json').write_text(json.dumps(gorseller, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
     liste = None
     try:
         import liste_verisi
         liste = liste_verisi.uret(data.get('ilanlar', []), gorseller, docs, datetime.now(TR), data.get('guncelleme'), kopyalar, data.get('kaynak_durumlari'))
     except Exception as hata:
-        print(f'::warning::liste.json üretilemedi: {hata}')
+        print(f'::warning::liste.json Ã¼retilemedi: {hata}')
     kayitlar = (liste or {}).get('ilanlar') or []
     kayit_haritasi = {k['key']: k for k in kayitlar}
     gorunen = [k for k in kayitlar if not k.get('kopya_of')]
@@ -627,12 +628,12 @@ def main():
             benzer = benzer_ilanlar(kayit, gorunen)
         except Exception as hata:
             benzer = []
-            print(f'Uyarı: benzer ilanlar bulunamadı ({result[0]}): {hata}')
+            print(f'UyarÄ±: benzer ilanlar bulunamadÄ± ({result[0]}): {hata}')
         try:
             sayfa_kopya = kopya.sayfa_bilgisi(kopyalar, item, kimlik_harita)
         except Exception as hata:
             sayfa_kopya = None
-            print(f'Uyarı: kopya notu yazılamadı ({result[0]}): {hata}')
+            print(f'UyarÄ±: kopya notu yazÄ±lamadÄ± ({result[0]}): {hata}')
         result = detail_page(item, gorseller.get(result[0]), kayit, benzer, None, sayfa_kopya)
         key, content = result
         folder = docs / 'ilan' / key
@@ -648,7 +649,7 @@ def main():
         from sosyal_paylasim import uret
         uret(data.get('ilanlar', []), datetime.now(TR), docs, BASE)
     except Exception as hata:
-        print(f'Uyarı: sosyal paylaşım içeriği üretilemedi: {hata}')
+        print(f'UyarÄ±: sosyal paylaÅŸÄ±m iÃ§eriÄŸi Ã¼retilemedi: {hata}')
     print(f'{count} public detail pages and sitemap generated.')
 
 

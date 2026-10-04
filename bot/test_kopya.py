@@ -175,6 +175,8 @@ class SayfaKopyaTests(unittest.TestCase):
         self.assertIn('yerelyonetimler.csb.gov.tr', html)
         self.assertIn('iskur.gov.tr', html)
         self.assertNotIn('daha ayrıntılı kaydı', html)
+        self.assertEqual(sorted(bilgi['ikincil_idler']), sorted(self.kopyalar['kopya_of']))
+        self.assertIn('data-ikincil="', html)
 
     def test_ikincil_sayfa_birincile_baglanir(self):
         ikincil = next(iter(self.kopyalar['kopya_of']))
