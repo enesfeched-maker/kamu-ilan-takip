@@ -11,10 +11,50 @@ TR = timezone(timedelta(hours=3))
 KART_GENISLIK = 720
 LOGO_BOYUT = 128
 EN_COK_LOGO_INDIRME = 150
+CSS_SURUM = 7
+LOGO_SURUM = 2
 
 
 def esc(value):
     return html.escape(str(value or ''), quote=True)
+
+
+def ikonlar(kok):
+    """Sekme simgesi + iOS ana ekran simgesi (yeni marka işareti)."""
+    v = LOGO_SURUM
+    return (f'<link rel="icon" href="{kok}assets/logo-32.png?v={v}" type="image/png" sizes="32x32">'
+            f'<link rel="icon" href="{kok}assets/logo-192.png?v={v}" type="image/png" sizes="192x192">'
+            f'<link rel="apple-touch-icon" href="{kok}assets/logo-180.png?v={v}">')
+
+
+def _kurum_bloklari(item, gorsel, logo_html):
+    """(hero kurum bağlantısı, breadcrumb parçası, yan kart) — kurum sayfasına tek bağlantı."""
+    from kurum_sayfasi import kurum_adi, kurum_slug
+    ad = esc(kurum_adi(item.get('kurum')))
+    if not (item.get('kurum') or '').strip():
+        return f'<div class="detail-org">{logo_html}<p>Kurum belirtilmemiş</p></div>', '', ''
+    slug = (gorsel or {}).get('kurum_slug') or kurum_slug(item['kurum'])
+    n = (gorsel or {}).get('kurum_sayisi') or 1
+    href = f'../../kurum/{esc(slug)}/'
+    etiket = f'Bu kurumun tüm ilanları ({n})' if n > 1 else 'Kurum sayfası'
+    hero = (f'<a class="kurum-link" href="{href}" title="{ad} — kurumun tüm ilanları">{logo_html}'
+            f'<span><b>{ad}</b><span class="more">{etiket} <i aria-hidden="true">→</i></span></span></a>')
+    kirinti = f'<span aria-hidden="true">/</span><a href="{href}">{ad}</a>'
+    yan = (f'<a class="aside-kurum" href="{href}">{logo_html}<span><b>{ad}</b>'
+           f'<span class="more">{f"Diğer {n - 1} ilanını gör" if n > 1 else "Kurum sayfasını gör"} →</span></span></a>')
+    return hero, kirinti, yan
+
+
+def sayfa_kabugu(baslik, aciklama, canonical, icerik, govde_sinifi=''):
+    """Kurum sayfaları için ortak iskelet (ilan sayfasıyla aynı üst/alt bölüm)."""
+    gorunum = '<script>try{var t=JSON.parse(localStorage.getItem("kit-theme"));if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}</script>'
+    from kurum_sayfasi import KURUM_SAYAC
+    return (f'<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#102e35"><meta name="color-scheme" content="light dark">'
+            f'<title>{esc(baslik)}</title><meta name="description" content="{esc(aciklama)}"><link rel="canonical" href="{canonical}"><meta property="og:title" content="{esc(baslik)}"><meta property="og:description" content="{esc(aciklama)}"><meta property="og:type" content="website">{gorunum}'
+            f'<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&amp;display=swap"><link rel="stylesheet" href="../../portal.css?v={CSS_SURUM}">{ikonlar("../../")}</head>'
+            f'<body class="{govde_sinifi}"><a class="skip" href="#icerik">İçeriğe geç</a><div class="topline"><div class="container">Kariyer Kapısı · İŞKUR · SBB · ÇŞB Yerel Yönetimler — Bağımsız ilan rehberi <span>Başvurular resmî ilan üzerinden yapılır.</span></div></div>'
+            f'<header class="header"><div class="container header-inner"><a class="brand" href="../../" aria-label="Kamu İlan Takip ana sayfa"><img class="brand-logo" src="../../assets/logo-96.webp?v={LOGO_SURUM}" alt="" width="44" height="44"><span>Kamu İlan<span class="brand-sub">TAKİP</span></span></a><nav aria-label="Ana menü"><a href="../../#ilanlar">Tüm ilanlar</a><a href="../../#rehber">Başvuru rehberi</a><a href="../../puanlar/">Taban puanları</a></nav><div class="header-actions"><a class="button primary small" href="https://t.me/kamuilantakip" target="_blank" rel="noopener">Telegram\'a katıl ↗</a></div></div></header>'
+            f'{icerik}<footer class="footer"><div class="container footer-bottom"><span>© Kamu İlan Takip</span><span>Kamu İlan Takip resmî bir hizmet değildir. Başvurunu ilanda belirtilen resmî kanaldan tamamla.</span></div></footer>{KURUM_SAYAC}</body></html>')
 
 
 def detail_page(item, gorsel=None):
@@ -74,6 +114,7 @@ def detail_page(item, gorsel=None):
         logo_html = f'<img class="detail-logo" src="../../{esc(gorsel["logo"])}" alt="{kurum_adi} logosu" width="64" height="64">'
     else:
         logo_html = f'<span class="detail-logo institution-badge" style="--h:{_ton(item.get("kurum"))}" aria-hidden="true">{esc(_bas_harfler(item.get("kurum")))}</span>'
+    kurum_html, kurum_kirinti, kurum_aside = _kurum_bloklari(item, gorsel, logo_html)
     from sbb_detay import document_url
     document=document_url(item)
     target=document or item['link']
@@ -89,7 +130,7 @@ def detail_page(item, gorsel=None):
     sayac = ('<script>(function(){var e=document.getElementById("durum");if(!e)return;var z=e.dataset.zaman;if(z&&Date.parse(z)<=Date.now()){e.textContent="Başvuru sona erdi";e.className+=" closed";return}'
              'var t=new Date().toLocaleDateString("sv-SE",{timeZone:"Europe/Istanbul"}),d=Math.round((Date.parse(e.dataset.son+"T00:00:00Z")-Date.parse(t+"T00:00:00Z"))/864e5);if(isNaN(d))return;'
              'if(d<0){e.textContent="Başvuru sona erdi";e.className+=" closed";return}e.textContent=d===0?"Bugün son gün":d===1?"Yarın son gün":d+" gün kaldı";e.className+=d<=1?" urgent today":d<=3?" urgent":d<=7?" soon":""})()</script>')
-    return key, f'''<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#102e35"><meta name="color-scheme" content="light dark"><title>{esc(title)} | Kamu İlan Takip</title><meta name="description" content="{esc(description)}"><link rel="canonical" href="{canonical}"><meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(description)}"><meta property="og:type" content="article">{og_gorsel}{gorunum}<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&amp;display=swap"><link rel="stylesheet" href="../../portal.css?v=6"><link rel="icon" href="../../assets/logo-192.png?v=1" type="image/png"></head><body class="detail-page"><a class="skip" href="#icerik">İçeriğe geç</a><div class="topline"><div class="container">Kariyer Kapısı · İŞKUR · SBB · ÇŞB Yerel Yönetimler — Bağımsız ilan rehberi <span>Başvurular resmî ilan üzerinden yapılır.</span></div></div><header class="header"><div class="container header-inner"><a class="brand" href="../../" aria-label="Kamu İlan Takip ana sayfa"><img class="brand-logo" src="../../assets/logo-96.webp?v=1" alt="" width="44" height="44"><span>Kamu İlan<span class="brand-sub">TAKİP</span></span></a><nav aria-label="Ana menü"><a href="../../#ilanlar">Tüm ilanlar</a><a href="../../#rehber">Başvuru rehberi</a><a href="../../puanlar/">Taban puanları</a></nav><div class="header-actions"><a class="button primary small" href="https://t.me/kamuilantakip" target="_blank" rel="noopener">Telegram'a katıl ↗</a></div></div></header><section class="detail-hero"><div class="container detail-hero-grid{' has-visual' if kart_html else ''}"><div class="detail-hero-copy"><nav class="crumbs" aria-label="Konum"><a href="../../">Ana sayfa</a><span aria-hidden="true">/</span><a href="../../#ilanlar">İlanlar</a></nav><div class="detail-org">{logo_html}<p>{esc(_duzgun(item.get('kurum')))}</p></div><span class="eyebrow">{esc(item.get('ilan_turu','KAMU İLANI'))}</span><h1>{esc(_gorunen_baslik(item))}</h1><ul class="detail-facts"><li><span>Durum</span>{durum_html}</li><li><span>Son başvuru</span><strong>{date}</strong></li><li><span>Görev yeri</span><strong>{yer}</strong></li></ul><div class="detail-cta"><a class="button lime" href="{esc(target)}" target="_blank" rel="noopener noreferrer">{button}</a><a class="button ghost" href="../../#ilan/{key}">Kaydet ve karşılaştır</a></div></div>{kart_html}</div></section><main id="icerik" class="container detail-main"><div class="detail-layout"><article class="detail-content"><p class="notice">Bilgiler kayıtlı kaynak özetini yansıtır. Güncel durum ve başvuru şartlarında resmî ilan esas alınır.</p>{sections}<p class="muted">Ayrıntı kontrolü: {esc(item.get('detay_guncelleme','Tarih belirtilmemiş'))}</p></article><aside class="detail-aside"><h2>Başvuru</h2><dl><dt>Son başvuru</dt><dd>{date}</dd><dt>Görev yeri</dt><dd>{yer}</dd></dl><a class="button primary" href="{esc(target)}" target="_blank" rel="noopener noreferrer">{button}</a><a class="button secondary" href="../../#ilan/{key}">Kaydet, paylaş ve karşılaştır</a><a class="button secondary" href="https://t.me/kamuilantakip" target="_blank" rel="noopener">Telegram'dan takip et ↗</a><p class="muted">Başvuru bu sitede yapılmaz; işlemini ilanda belirtilen resmî kanaldan tamamla.</p></aside></div><section class="trust-strip"><strong>Başka fırsatlara da göz at.</strong><p>Açık ilanları son tarihe göre sırala, kaydet ve karşılaştır.</p><a class="button primary" href="../../">İlanları keşfet →</a></section></main><footer class="footer"><div class="container footer-bottom"><span>© Kamu İlan Takip</span><span>Kamu İlan Takip resmî bir hizmet değildir. Başvurunu ilanda belirtilen resmî kanaldan tamamla.</span></div></footer>{sayac}</body></html>'''
+    return key, f'''<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#102e35"><meta name="color-scheme" content="light dark"><title>{esc(title)} | Kamu İlan Takip</title><meta name="description" content="{esc(description)}"><link rel="canonical" href="{canonical}"><meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(description)}"><meta property="og:type" content="article">{og_gorsel}{gorunum}<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&amp;display=swap"><link rel="stylesheet" href="../../portal.css?v={CSS_SURUM}">{ikonlar("../../")}</head><body class="detail-page"><a class="skip" href="#icerik">İçeriğe geç</a><div class="topline"><div class="container">Kariyer Kapısı · İŞKUR · SBB · ÇŞB Yerel Yönetimler — Bağımsız ilan rehberi <span>Başvurular resmî ilan üzerinden yapılır.</span></div></div><header class="header"><div class="container header-inner"><a class="brand" href="../../" aria-label="Kamu İlan Takip ana sayfa"><img class="brand-logo" src="../../assets/logo-96.webp?v={LOGO_SURUM}" alt="" width="44" height="44"><span>Kamu İlan<span class="brand-sub">TAKİP</span></span></a><nav aria-label="Ana menü"><a href="../../#ilanlar">Tüm ilanlar</a><a href="../../#rehber">Başvuru rehberi</a><a href="../../puanlar/">Taban puanları</a></nav><div class="header-actions"><a class="button primary small" href="https://t.me/kamuilantakip" target="_blank" rel="noopener">Telegram'a katıl ↗</a></div></div></header><section class="detail-hero"><div class="container detail-hero-grid{' has-visual' if kart_html else ''}"><div class="detail-hero-copy"><nav class="crumbs" aria-label="Konum"><a href="../../">Ana sayfa</a><span aria-hidden="true">/</span><a href="../../#ilanlar">İlanlar</a>{kurum_kirinti}</nav>{kurum_html}<span class="eyebrow">{esc(item.get('ilan_turu','KAMU İLANI'))}</span><h1>{esc(_gorunen_baslik(item))}</h1><ul class="detail-facts"><li><span>Durum</span>{durum_html}</li><li><span>Son başvuru</span><strong>{date}</strong></li><li><span>Görev yeri</span><strong>{yer}</strong></li></ul><div class="detail-cta"><a class="button lime" href="{esc(target)}" target="_blank" rel="noopener noreferrer">{button}</a><a class="button ghost" href="../../#ilan/{key}">Kaydet ve karşılaştır</a></div></div>{kart_html}</div></section><main id="icerik" class="container detail-main"><div class="detail-layout"><article class="detail-content"><p class="notice">Bilgiler kayıtlı kaynak özetini yansıtır. Güncel durum ve başvuru şartlarında resmî ilan esas alınır.</p>{sections}<p class="muted">Ayrıntı kontrolü: {esc(item.get('detay_guncelleme','Tarih belirtilmemiş'))}</p></article><aside class="detail-aside"><h2>Başvuru</h2><dl><dt>Son başvuru</dt><dd>{date}</dd><dt>Görev yeri</dt><dd>{yer}</dd></dl><a class="button primary" href="{esc(target)}" target="_blank" rel="noopener noreferrer">{button}</a><a class="button secondary" href="../../#ilan/{key}">Kaydet, paylaş ve karşılaştır</a><a class="button secondary" href="https://t.me/kamuilantakip" target="_blank" rel="noopener">Telegram'dan takip et ↗</a>{kurum_aside}<p class="muted">Başvuru bu sitede yapılmaz; işlemini ilanda belirtilen resmî kanaldan tamamla.</p></aside></div><section class="trust-strip"><strong>Başka fırsatlara da göz at.</strong><p>Açık ilanları son tarihe göre sırala, kaydet ve karşılaştır.</p><a class="button primary" href="../../">İlanları keşfet →</a></section></main><footer class="footer"><div class="container footer-bottom"><span>© Kamu İlan Takip</span><span>Kamu İlan Takip resmî bir hizmet değildir. Başvurunu ilanda belirtilen resmî kanaldan tamamla.</span></div></footer>{sayac}</body></html>'''
 
 
 def _duzgun(metin):
@@ -98,6 +139,7 @@ def _duzgun(metin):
     kucuk = str(metin or '').replace('I', 'ı').replace('İ', 'i').lower()
     buyut = lambda h: 'İ' if h == 'i' else 'I' if h == 'ı' else h.upper()
     sonuc = re.sub(r'(^|[\s(/-])([a-zçğıöşü])', lambda m: m.group(1) + buyut(m.group(2)), kucuk)
+    sonuc = re.sub(r'(?<=\S )(Ve|İle|Veya)(?= )', lambda m: 'ile' if m.group(1) == 'İle' else m.group(1).lower(), sonuc)
     return re.sub(r'\b4/b\b', '4/B', re.sub(r'\bkpss\b', 'KPSS', sonuc, flags=re.I), flags=re.I)
 
 
@@ -341,6 +383,14 @@ def main():
     except Exception as hata:
         print(f'Uyarı: ilan görselleri üretilemedi: {hata}')
     (docs / 'ilan').mkdir(parents=True, exist_ok=True)
+    kurum_adresleri = []
+    try:
+        import kurum_sayfasi
+        for anahtar, alan in kurum_sayfasi.kart_meta(data.get('ilanlar', [])).items():
+            gorseller.setdefault(anahtar, {}).update(alan)
+        kurum_adresleri = kurum_sayfasi.kurum_sayfalarini_uret(data.get('ilanlar', []), docs, gorseller, datetime.now(TR))[2]
+    except Exception as hata:
+        print(f'Uyarı: kurum sayfaları üretilemedi: {hata}')
     (docs / 'ilan' / 'gorseller.json').write_text(json.dumps(gorseller, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
     for item in data.get('ilanlar', []):
         result = detail_page(item)
@@ -355,6 +405,7 @@ def main():
         (folder / 'index.html').write_text(content, encoding='utf-8')
         urls.append(BASE + 'ilan/' + key + '/')
         count += 1
+    urls += kurum_adresleri
     (docs / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+esc(u)+'</loc></url>' for u in urls)+'</urlset>\n', encoding='utf-8')
     bot = bot_ilanlari(data.get('ilanlar', []))
     (docs / 'bot-ilanlar.json').write_text(json.dumps(bot, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
