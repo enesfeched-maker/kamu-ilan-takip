@@ -1,10 +1,10 @@
 {
  "schema": 1,
- "guncelleme": "2026-10-05T16:36:39.996014+00:00",
+ "guncelleme": "2026-10-05T17:06:43.876824+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-10-05T16:39:51.910542+00:00",
-   "hata_sayisi": 1,
+   "kontrol": "2026-10-05T17:06:45.835280+00:00",
+   "hata_sayisi": 0,
    "ilanlar": [
     {
      "id": "sbb-46734a52a4045202658b0bf7",
@@ -4327,8 +4327,8 @@
      "donem": "( 21 Eylül - 5 Ekim)",
      "baslangic_zaman": "2026-09-21T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-05T11:39:01+03:00",
-     "belge_ozeti": "ce8d0f2a685a2ae0bfbf82f7fdccd3cff5fded36543200b1ac2fba28cbb0e21d",
+     "detay_guncelleme": "2026-10-05T20:06:45+03:00",
+     "belge_ozeti": "0633dfe50870ffbb5d1d70eeca48146150c46cca8636669e8b874f38711c4cd3",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -4363,10 +4363,14 @@
       }
      ],
      "basvuru_notu": "1- Başvurular yukarda istenen belgelerle (pdf formatında) birlikte Üniversitemiz Akademik Personel Başvuru Sistemine (https://apbs.osmaniye.edu.tr/anasayfa) online olarak yapılacaktır.",
-     "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/ce8d0f2a685a2ae0bfbf82f7fdccd3cff5fded36543200b1ac2fba28cbb0e21d.pdf",
-     "belge_sha256": "ce8d0f2a685a2ae0bfbf82f7fdccd3cff5fded36543200b1ac2fba28cbb0e21d",
+     "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/0633dfe50870ffbb5d1d70eeca48146150c46cca8636669e8b874f38711c4cd3.pdf",
+     "belge_sha256": "0633dfe50870ffbb5d1d70eeca48146150c46cca8636669e8b874f38711c4cd3",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 5
+     "sbb_detay_surumu": 6,
+     "belge_ogrenim": [
+      "lisans",
+      "onlisans"
+     ]
     },
     {
      "id": "sbb-e3cf06b41a8f98824b49c594",
@@ -5945,7 +5949,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-10-05T16:39:52.954473+00:00",
+   "kontrol": "2026-10-05T17:06:46.871810+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
