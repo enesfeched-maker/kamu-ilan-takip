@@ -191,7 +191,11 @@ def kadrolar(i):
     if i.get('duyuru_turu'):
         return []
     out = []
+    parcalar = []
     for p in meslekler(i.get('kadro')):
+        # SBB: '3 UZMAN, 2 DESTEK PERSONEL' -> iki kadro (virgülden sonra yeni sayı başlıyorsa)
+        parcalar += re.split(r',\s*(?=\d+\s)', p) if re.match(r'^\d+\s', p) else [p]
+    for p in parcalar:
         m = re.match(r'^(\d+)\s+(.*)$', p)
         adet, ad = (int(m.group(1)), m.group(2)) if m else (None, p)
         ad = SON_EK.sub('', ad).strip()

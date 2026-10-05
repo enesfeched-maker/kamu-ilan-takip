@@ -33,6 +33,7 @@ function make({href='https://enesfeched-maker.github.io/kamu-ilan-takip/?g=bugun
  const stored=[],loc={hash:hash||new URL(href).hash,href};
  const ctx=vm.createContext({URL,URLSearchParams,Date,Intl,Blob,console,Set,Map,Number,String,Array,JSON,Promise,Error,isNaN,
   document:{title:'Portal',getElementById:get,createElement:t=>new Element(t),createTextNode:t=>t,querySelectorAll:()=>[],documentElement:{dataset:{}}},
+  confirm:m=>{ctx.__confirmMsg=m;return ctx.__confirmCevap!==false;},
   localStorage:{getItem:k=>k in store?store[k]:null,setItem(k,v){store[k]=v;stored.push(k);},removeItem(k){delete store[k];},key:i=>Object.keys(store)[i]??null,get length(){return Object.keys(store).length;}},
   location:loc,history:{replaceState(a,b,u){ctx.__replaced=u;const n=new URL(u,loc.href);loc.href=n.href;loc.hash=n.hash;},pushState(a,b,u){ctx.__pushed=u;const n=new URL(u,loc.href);loc.href=n.href;loc.hash=n.hash;}},
   navigator:{},window:{innerWidth:1280,addEventListener(t,f){(ctx.__h[t]=ctx.__h[t]||[]).push(f);}},matchMedia:()=>({matches:false}),setInterval(){},setTimeout(){},clearTimeout(){},
@@ -302,6 +303,19 @@ const gStore={'kit-profil':'{}','kit-theme':'"dark"','kit-saved':'[]','kit-puan-
 G.run("showArticle('bilgi/gizlilik')");
 const bulBtn=n=>n.tag==='button'?n:(n.children||[]).map(bulBtn).find(Boolean);const gb=bulBtn(G.get('modal-body').children[0]);assert.ok(gb);gb.onclick();
 assert.deepEqual(Object.keys(gStore),['baska'],'her kit-* anahtarı silindi, başkaları kaldı');
+// 13b) Profili sıfırla: yalnız kit-profil gider; ekran profilsiz varsayılana döner
+const rStore={'kit-profil':JSON.stringify(PR('lisans')),'kit-saved':JSON.stringify(['abc']),'kit-theme':'"dark"','kit-son-ziyaret':JSON.stringify('2020-01-01T00:00:00.000Z')};
+const RS=make({store:rStore});await tick();
+RS.run("showTab('bugun')");assert.ok(RS.run('activeProfile()'),'profil var');assert.match(text(RS.get('bugun')),/Senin için/);
+RS.run('openProfile()');assert.equal(RS.get('p-sifirla-kutu').hidden,false,'profil varken sıfırla düğmesi görünür');assert.equal(RS.get('profil-dialog').open,true);
+RS.ctx.__confirmCevap=false;RS.get('p-sifirla').onclick();assert.equal(RS.ctx.__confirmMsg,'Profil tercihlerin silinsin mi?');assert.ok('kit-profil' in rStore,'onay verilmezse silinmez');assert.ok(RS.run('activeProfile()'));
+RS.ctx.__confirmCevap=true;RS.get('p-sifirla').onclick();
+assert.ok(!('kit-profil' in rStore),'kit-profil silindi');assert.deepEqual(Object.keys(rStore).sort(),['kit-saved','kit-son-ziyaret','kit-theme'],'diğer anahtarlar yerinde');
+assert.equal(rStore['kit-saved'],JSON.stringify(['abc']));assert.equal(rStore['kit-theme'],'"dark"');
+assert.equal(RS.run('activeProfile()'),null);assert.equal(RS.get('profil-dialog').open,false,'pencere kapandı');
+assert.doesNotMatch(text(RS.get('bugun')),/Senin için/,'Senin için kalktı');assert.match(text(RS.get('bugun')),/30 saniyede sana göre ayarla/,'Profilini oluştur çağrısı döndü');
+RS.run("showTab('ilanlar')");assert.equal(RS.run("filterIlan(ilanBase(F),F,activeProfile()).on"),false,'eşleşme rozeti/filtresi kapalı');
+RS.run('openProfile()');assert.equal(RS.get('p-sifirla-kutu').hidden,true,'profil yokken düğme gizli');
 // 14) sayfa.js: ayrıntı sayfası "Senin için"
 function sayfaYap(dataset,profilVeri){
  const hedef=new Element('div');hedef.getAttribute=a=>a==='data-ana'?'../../?profil=1':null;

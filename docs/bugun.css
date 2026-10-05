@@ -373,6 +373,10 @@ button.hc{cursor:pointer}
 .onay input{width:18px;height:18px;accent-color:var(--ink);margin:0}
 .sheet-alt{display:flex;flex-direction:column;gap:6px;margin-top:26px}
 .sheet-alt .btn{height:48px;font-size:15px;width:100%}
+.sifirla{margin:18px 0 0;padding-top:16px;border-top:1px solid var(--line-2);display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px}
+.sifirla .btn{height:38px;padding:0 16px;font-size:14px}
+.sifirla .btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.sifirla .ipucu{margin:0;flex:1 1 200px}
 .sheet-alt .atla-link{background:none;border:0;font:inherit;font-size:14px;color:var(--muted);padding:8px;cursor:pointer}
 .gizlilik{display:flex;gap:8px;align-items:flex-start;margin-top:4px;font-size:12.5px;color:var(--muted)}
 .gizlilik svg{width:15px;height:15px;margin-top:1px}

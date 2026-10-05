@@ -170,6 +170,107 @@ class CokKaynakliKopyaTests(unittest.TestCase):
         self.assertEqual(kopya.kopya_bul([a, b])['kopya_of'], {})
 
 
+class KalanKopyaTests(unittest.TestCase):
+    def test_toplam_virgullu_sbb_kadro(self):
+        sbb = sbb_kayit(1, 'DOĞU MARMARA KALKINMA AJANSI', '3 UZMAN, 2 DESTEK PERSONEL ALACAK', son='2026-10-27')
+        self.assertEqual(ks.kart_alanlari(sbb)['toplam'], 5)
+        self.assertEqual([a for a, _ in ks.kadrolar(sbb)], [3, 2])
+        self.assertEqual(ks.kadrolar({'kadro': '3 Uzman Yardımcısı, Ankara'}), [(3, 'Uzman Yardımcısı, Ankara')])
+
+    def marka(self):
+        kk = kk_kayit(1, 'DOĞU MARMARA KALKINMA AJANSI (MARKA)', 'DOĞU MARMARA KALKINMA AJANSI (MARKA) - PERSONEL ALIM İLANI (2026)', '2026-10-27',
+                      kadro='Toplam 5 kişi — 3 UZMAN • 2 BÜRO PERSONELİ / DESTEK PERSONELİ', iller=['Kocaeli', 'Sakarya'], yer='KOCAELİ, SAKARYA')
+        sbb = sbb_kayit(1, 'DOĞU MARMARA KALKINMA AJANSI', '3 UZMAN, 2 DESTEK PERSONEL ALACAK', son='2026-10-27')
+        iskur = iskur_kayit(1, 'Doğu Marmara Kalkınma Ajansı', 'Doğu Marmara Kalkınma Ajansı Personel Alım İlanı', '2026-10-27', yer='Kocaeli', iller=['Kocaeli'])
+        iskur.pop('kadro')
+        return kk, sbb, iskur
+
+    def test_kalkinma_ajansi_uc_kaynak_birlesir(self):
+        kk, sbb, iskur = self.marka()
+        sonuc = kopya.kopya_bul([kk, sbb, iskur])
+        self.assertEqual(len(sonuc['kopya_of']), 2)
+        self.assertEqual(len(set(sonuc['kopya_of'].values())), 1)
+
+    def test_kalkinma_ajansi_ayni_gun_iki_ilan_ise_genel_baslikli_birlesmez(self):
+        kk, sbb, iskur = self.marka()
+        ikinci = sbb_kayit(2, 'DOĞU MARMARA KALKINMA AJANSI', '1 AVUKAT ALACAK', son='2026-10-27')
+        sonuc = kopya.kopya_bul([kk, sbb, iskur, ikinci])['kopya_of']
+        self.assertNotIn(sonuc.get(iskur['id']), {kk['id'], sbb['id']})   # İŞKUR bu iki kayıtla (tekil kuralı) eşlenmez
+        self.assertNotIn(ikinci['id'], sonuc)
+
+    def test_kalkinma_ajansi_farkli_son_tarih_birlesmez(self):
+        kk, sbb, iskur = self.marka()
+        iskur['son_tarih'] = '2026-11-20'
+        self.assertNotIn(iskur['id'], kopya.kopya_bul([kk, sbb, iskur])['kopya_of'])
+
+    def test_genel_baslikli_belediyede_birlesmez(self):
+        sbb = sbb_kayit(1, 'ÇUKURKUYU (NİĞDE) BELEDİYE BAŞKANLIĞI', '1 MEMUR ALACAK', son='2026-10-27')
+        iskur = iskur_kayit(1, 'Niğde Çukurkuyu Belediyesi', 'Niğde Çukurkuyu Belediyesi Personel Alım İlanı', '2026-10-27', yer='Niğde', iller=['Niğde'])
+        iskur.pop('kadro')
+        self.assertEqual(kopya.kopya_bul([sbb, iskur])['kopya_of'], {})
+
+    def jandarma(self):
+        kk = kk_kayit(1, 'JANDARMA VE SAHİL GÜVENLİK AKADEMİSİ BAŞKANLIĞI',
+                      'JANDARMA VE SAHİL GÜVENLİK AKADEMİSİ BAŞKANLIĞI - 2026 YILI J.GN.K.LIĞININ SÖZLEŞMELİ PİLOT (UÇAK) TEMİNİ', '2026-10-11', kadro='')
+        sbb = sbb_kayit(1, 'JANDARMA GENEL KOMUTANLIĞI', '1 SÖZLEŞMELİ PİLOT (UÇAK) TEMİN EDECEKTİR', donem='( 24 Eylül - 11 Ekim)')
+        return kk, sbb
+
+    def test_jandarma_pilot_birlesir(self):
+        kk, sbb = self.jandarma()
+        self.assertEqual(len(kopya.kopya_bul([kk, sbb])['kopya_of']), 1)
+
+    def test_jandarma_akademi_baska_ilan_birlesmez(self):
+        kk, sbb = self.jandarma()
+        bilisim = kk_kayit(2, kk['kurum'], 'JANDARMA VE SAHİL GÜVENLİK AKADEMİSİ BAŞKANLIĞI - 2026 YILI JANDARMA GENEL KOMUTANLIĞININ SÖZLEŞMELİ BİLİŞİM PERSONELİ TEMİNİ', '2026-10-11', kadro='')
+        self.assertEqual(kopya.kopya_bul([bilisim, sbb])['kopya_of'], {})
+        # J.Gn.K. adı geçmeyen Akademi ilanı (kendi öğrencisi alımı) takma adla eşleşmez
+        kk['baslik'] = 'JANDARMA VE SAHİL GÜVENLİK AKADEMİSİ BAŞKANLIĞI - SÖZLEŞMELİ PİLOT (UÇAK) TEMİNİ'
+        self.assertEqual(kopya.kopya_bul([kk, sbb])['kopya_of'], {})
+
+    def test_jandarma_farkli_donem_birlesmez(self):
+        kk, sbb = self.jandarma()
+        sbb['donem'] = '( 24 Ekim - 11 Kasım)'
+        self.assertEqual(kopya.kopya_bul([kk, sbb])['kopya_of'], {})
+
+    def cukurkuyu(self, sartlar_unvan='Zabıta Memuru'):
+        sbb = sbb_kayit(1, 'ÇUKURKUYU (NİĞDE) BELEDİYE BAŞKANLIĞI', '1 MEMUR ALACAK', son='2026-10-27',
+                        sartlar=[{'kadro': 'Sınav puanı koşulu', 'metin': f'Sıra Kadro Unvanı 1 {sartlar_unvan} GİH 10 1 P93 60'}])
+        iskur = iskur_kayit(1, 'Niğde Çukurkuyu Belediyesi', 'Niğde Çukurkuyu Belediyesi Zabıta Memuru Alım İlanı', '2026-10-27', yer='Niğde', iller=['Niğde'])
+        iskur.pop('kadro')
+        return sbb, iskur
+
+    def test_genel_memur_belgede_zabita_gecerse_birlesir(self):
+        self.assertEqual(len(kopya.kopya_bul(list(self.cukurkuyu()))['kopya_of']), 1)
+
+    def test_genel_memur_belgede_zabita_yoksa_birlesmez(self):
+        self.assertEqual(kopya.kopya_bul(list(self.cukurkuyu('Veri Hazırlama ve Kontrol İşletmeni')))['kopya_of'], {})
+
+    def hanak(self):
+        not_ = 'Elektronik ortamda başvurular, 01/10/2026 – 05/10/2026 tarihleri arasında yapılacaktır.'
+        sbb = sbb_kayit(1, 'HANAK BELEDİYE BAŞKANLIĞI', '3 MEMUR ALACAK', son='2026-10-07', basvuru_notu='a) ' + not_)
+        iskur = iskur_kayit(1, 'Ardahan Hanak Belediyesi', 'Ardahan Hanak Belediyesi Memur Alım İlanı', '2026-10-05', yer='Ardahan', iller=['Ardahan'],
+                            kadro='Toplam 3 kişi — 1 Memur • 1 VHKİ • 1 Tahsildar', basvuru_notu=not_)
+        return sbb, iskur
+
+    def test_hanak_ayni_basvuru_araligi_birlesir(self):
+        self.assertEqual(len(kopya.kopya_bul(list(self.hanak()))['kopya_of']), 1)
+
+    def test_hanak_aralik_farkliysa_ya_da_yoksa_birlesmez(self):
+        sbb, iskur = self.hanak()
+        sbb['basvuru_notu'] = 'Başvurular 03/10/2026 – 07/10/2026 tarihleri arasındadır.'
+        self.assertEqual(kopya.kopya_bul([sbb, iskur])['kopya_of'], {})
+        sbb, iskur = self.hanak()
+        sbb.pop('basvuru_notu')
+        self.assertEqual(kopya.kopya_bul([sbb, iskur])['kopya_of'], {})
+
+    def test_posof_sozlesmeli_csb_ile_memur_sbb_birlesmez(self):
+        sbb = sbb_kayit(1, 'POSOF BELEDİYE BAŞKANLIĞI', '1 MEMUR ALACAK', son='2026-11-04')
+        csb = {'id': 'csb-477947', 'link': 'https://yerelyonetimler.csb.gov.tr/x-477947', 'kaynak_turu': 'csb', 'kurum': 'POSOF BELEDİYE BAŞKANLIĞI',
+               'baslik': 'POSOF BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE SÖZLEŞMELİ PERSONEL ALIM İLANI', 'kadro': '', 'yer': 'Ardahan',
+               'iller': ['Ardahan'], 'yayim_tarihi': '2026-09-29', 'ilk_gorulme': '2026-10-01T20:47:43+03:00'}
+        self.assertEqual(kopya.kopya_bul([sbb, csb])['kopya_of'], {})
+
+
 class ListeKopyaTests(unittest.TestCase):
     def liste(self, ilanlar, **ek):
         return lv.liste_uret(ilanlar, {}, Path(tempfile.mkdtemp()), SIMDI, **ek)

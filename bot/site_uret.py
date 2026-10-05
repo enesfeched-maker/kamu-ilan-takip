@@ -233,8 +233,10 @@ def hero_html(item, gorsel, kayit, simdi, kok='../../'):
         h1 = re.sub(r'^\d+\s+', '', h1)
     if alanlar.get('ek'):
         h1 += f' +{int(alanlar["ek"])}'
-    alt = _gorunen_baslik(item).strip()
-    alt_html = f'<p class="d-alt">{esc(alt)}</p>' if kucuk_ad(alt) not in (kucuk_ad(h1), kucuk_ad(alanlar['manset'])) else ''
+    alt = liste_verisi.baslik_temiz(_gorunen_baslik(item).strip())
+    sayisiz = lambda s: kucuk_ad(re.sub(r'^\d+\s+', '', s))
+    alt_html = (f'<p class="d-alt">{esc(alt)}</p>'
+                if alt and sayisiz(alt) not in (sayisiz(h1), sayisiz(alanlar['manset'])) else '')
     # kurum
     kurum = ''
     if (item.get('kurum') or '').strip():

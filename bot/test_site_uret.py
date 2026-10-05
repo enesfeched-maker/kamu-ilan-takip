@@ -16,6 +16,16 @@ class SiteTests(unittest.TestCase):
         self.assertIsNone(detail_page({'link': 'https://kariyerkapisi.gov.tr/?i=../../secret'}))
 
 
+    def test_alt_baslik_temizlenir_ve_h1_ile_ayniysa_atilir(self):
+        item = {'baslik': 'ADALET BAKANLIĞI - 150 İCRA MÜDÜR VE İCRA MÜDÜR YARDIMCISI ALACAK.', 'kurum': 'ADALET BAKANLIĞI', 'kadro': '150 İCRA MÜDÜR VE İCRA MÜDÜR YARDIMCISI ALACAK.',
+                'link': 'https://kariyerkapisi.gov.tr/IlanDetay?i=11111111-1111-4111-8111-111111111111', 'son_tarih': '2099-01-01'}
+        html = detail_page(item, simdi=datetime(2026, 10, 5, tzinfo=TR))[1]
+        self.assertNotIn('d-alt', html)
+        self.assertNotIn('Alacak', html.split('</section>')[0])
+        item['baslik'] = 'ADALET BAKANLIĞI - 2026 Yılı Açıktan İcra Müdür Alım İlanı'
+        html = detail_page(item, simdi=datetime(2026, 10, 5, tzinfo=TR))[1]
+        self.assertIn('<p class="d-alt">2026 Yılı Açıktan İcra Müdür alımı</p>', html)
+
     def test_bot_ilanlari(self):
         simdi = datetime(2026, 5, 10, 12, 0, tzinfo=TR)
         kk = 'https://kariyerkapisi.gov.tr/IlanDetay?i=11111111-1111-4111-8111-111111111111'

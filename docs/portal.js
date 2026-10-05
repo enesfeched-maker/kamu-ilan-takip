@@ -607,7 +607,9 @@ return{hata:'İl adını listeden seç.'};}
 function addIl(){const r=ilCoz($('p-il').value);if(r.bos)return true;if(r.hata){profilHata(r.hata,'p-il');return false;}if(!draft.iller.includes(r.il))draft.iller.push(r.il);$('p-il').value='';renderIller();return true;}
 /* "75", "75,5", "75.47987" (en çok 5 ondalık); bilimsel/onaltılık gösterim, binlik ayırıcı ve fazlası reddedilir. */
 function puanOku(raw){const m=String(raw||'').trim().match(/^(\d{1,3})(?:[.,](\d{1,5}))?$/);return m?Number(m[1]+'.'+(m[2]||'0')):NaN;}
-function openProfile(){duzenleme=!!activeProfile();draft=duzenleme?{...profil,iller:[...profil.iller]}:{ogrenim:'',puan_turu:'',iller:[],tum_turkiye:false,bolum:''};fillForm();if(!$('profil-dialog').open){kaydirKilidi(true);$('profil-dialog').showModal();}}
+function openProfile(){duzenleme=!!activeProfile();draft=duzenleme?{...profil,iller:[...profil.iller]}:{ogrenim:'',puan_turu:'',iller:[],tum_turkiye:false,bolum:''};fillForm();$('p-sifirla-kutu').hidden=!duzenleme;if(!$('profil-dialog').open){kaydirKilidi(true);$('profil-dialog').showModal();}}
+/* Profili sıfırla: yalnız kit-profil silinir (Kayıtlı, tema, son ziyaret kalır); ekran profilsiz varsayılana döner. */
+function resetProfile(){if(!confirm('Profil tercihlerin silinsin mi?'))return;try{localStorage.removeItem('kit-profil');}catch{}profil=null;draft=null;$('profil-dialog').close();kaydirKilidi(false);render();notify('Profilin sıfırlandı.');}
 function saveProfile(){
 profilHataTemizle();
 if(!draft.ogrenim){profilHata('Önce öğrenim düzeyini seç.','p-ogrenim');return;}
@@ -624,7 +626,7 @@ $('p-tur').onchange=()=>{$('p-tur-a').hidden=$('p-tur').value!=='A';profilHataTe
 for(const id of ['p-puan','p-il','p-tur-a','p-tum','p-bolum'])$(id).addEventListener('input',profilHataTemizle);
 $('p-bolum').addEventListener('focus',bolumListeDoldur);
 $('p-il-ekle').onclick=addIl;$('p-il').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();addIl();}};
-$('profil-form').onsubmit=e=>{e.preventDefault();saveProfile();};$('p-atla').onclick=skipProfile;$('p-kapat').onclick=()=>{$('profil-dialog').close();kaydirKilidi(false);};$('nav-profile').onclick=openProfile;
+$('profil-form').onsubmit=e=>{e.preventDefault();saveProfile();};$('p-atla').onclick=skipProfile;$('p-sifirla').onclick=resetProfile;$('p-kapat').onclick=()=>{$('profil-dialog').close();kaydirKilidi(false);};$('nav-profile').onclick=openProfile;
 $('profil-dialog').addEventListener('close',()=>kaydirKilidi(false));
 $('profil-dialog').addEventListener('click',e=>{if(e.target===$('profil-dialog')){const r=$('profil-dialog').getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)$('profil-dialog').close();}});}
 /* ---------- tema, yükleme ---------- */
