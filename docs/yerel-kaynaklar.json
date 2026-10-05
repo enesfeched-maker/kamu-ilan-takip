@@ -1,10 +1,10 @@
 {
  "schema": 1,
- "guncelleme": "2026-10-05T08:36:51.043736+00:00",
+ "guncelleme": "2026-10-05T09:06:46.260139+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-10-05T08:39:36.724868+00:00",
-   "hata_sayisi": 1,
+   "kontrol": "2026-10-05T09:06:47.567570+00:00",
+   "hata_sayisi": 0,
    "ilanlar": [
     {
      "id": "sbb-2ab4ade78beb072a71ae1bb0",
@@ -3241,8 +3241,8 @@
      "donem": "( 23 Ekim - 27 Ekim)",
      "baslangic_zaman": "2026-10-23T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-04T14:48:11+03:00",
-     "belge_ozeti": "b16c87a287aacc81639e2f9d279d16210e349aaeb264c5425f3f0ad6cfb462dd",
+     "detay_guncelleme": "2026-10-05T12:06:47+03:00",
+     "belge_ozeti": "6c6acc7d6a5031ad29f7aa20b4d845ed22258443f6bfc489ad0c39ad3db98634",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -3277,8 +3277,8 @@
       }
      ],
      "basvuru_notu": "a) Elektronik ortamda başvurular; 23/10/2026 – 27/10/2026 tarihleri arasında istenen belgeler eklenmek suretiyle Belediyemizin muhasebe@atalan.bel.tr adresine yapılacaktır.",
-     "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/b16c87a287aacc81639e2f9d279d16210e349aaeb264c5425f3f0ad6cfb462dd.pdf",
-     "belge_sha256": "b16c87a287aacc81639e2f9d279d16210e349aaeb264c5425f3f0ad6cfb462dd",
+     "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/6c6acc7d6a5031ad29f7aa20b4d845ed22258443f6bfc489ad0c39ad3db98634.pdf",
+     "belge_sha256": "6c6acc7d6a5031ad29f7aa20b4d845ed22258443f6bfc489ad0c39ad3db98634",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 5
     },
@@ -5387,7 +5387,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-10-05T08:39:37.843709+00:00",
+   "kontrol": "2026-10-05T09:06:48.584041+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
