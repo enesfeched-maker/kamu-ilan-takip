@@ -21,7 +21,7 @@ AKADEMIK = re.compile(
 OGRENIM = (
     ('lisans', re.compile(
         SOL + r'(?<!yüksek )(?<!ön )lisans (?:mezun|diploma|derece|program|düzey|eğitim)'
-        r'|fakültelerin|fakülte(?:si)? mezun|fakültesinden|dört yıllık|kpss ?p3' + r'(?!\d)')),
+        r'|fakültelerin|fakülte(?:si)? mezun|fakültesinden|dört yıllık|(?:kpss ?|b grubu )p3' + r'(?!\d)')),
     ('onlisans', re.compile(
         r'ön ?lisans|meslek yüksekokul|iki yıllık|' + SOL + r'(?:kpss ?)?p93(?!\d)')),
     ('ortaogretim', re.compile(

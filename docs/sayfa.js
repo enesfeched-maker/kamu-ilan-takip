@@ -16,13 +16,17 @@
   function kisa(s) { var p = s.split('-'); return Number(p[2]) + ' ' + AY[Number(p[1]) - 1]; }
   function virgul(n, k) { return n.toFixed(k).replace('.', ','); }
 
+  /* Puan türü -> düzey ve satırın etkin düzeyleri (portal.js ptLevel/rowLevels ile aynı). */
+  function ptLevel(p) { return p === 'P94' ? 'ortaogretim' : p === 'P93' ? 'onlisans' : /^P([1-9]|[1-3]\d|4[0-8])$/.test(p) ? 'lisans' : null; }
+  function varsayilanTur(o) { return { onlisans: 'P93', ortaogretim: 'P94' }[o] || 'P3'; }
+
   /* kit-profil doğrulaması (portal.js validProfile ile aynı kurallar) */
   function profil() {
     var p = oku('kit-profil', null);
     if (!p || typeof p !== 'object' || p.v !== 1 || p.atlandi === true || !LV[p.ogrenim]) return null;
     var o = {
       ogrenim: p.ogrenim,
-      puan_turu: typeof p.puan_turu === 'string' && /^P\d{1,3}$/.test(p.puan_turu) ? p.puan_turu : ({ onlisans: 'P93', ortaogretim: 'P94' }[p.ogrenim] || 'P3'),
+      puan_turu: typeof p.puan_turu === 'string' && /^P\d{1,3}$/.test(p.puan_turu) && ptLevel(p.puan_turu) === p.ogrenim ? p.puan_turu : varsayilanTur(p.ogrenim),
       iller: (Array.isArray(p.iller) ? p.iller : []).filter(function (x) { return typeof x === 'string' && x.length <= 40; }).slice(0, 81),
       tum: p.tum_turkiye === true
     };
@@ -98,12 +102,12 @@
   function cumle(fark) {
     var x = virgul(Math.abs(fark), 1);
     return fark > 0 ? 'Puanın, benzer kadroların taban medyanından ' + x + ' puan yüksek'
-      : fark < 0 ? 'Benzer kadroların taban medyanı puanından ' + x + ' puan yüksek'
+      : fark < 0 ? 'Puanın, benzer kadroların taban medyanından ' + x + ' puan düşük'
         : 'Puanın, benzer kadroların taban medyanıyla aynı';
   }
   var pr = profil();
   Array.prototype.forEach.call(document.querySelectorAll('article.ilan[data-ref]'), function (a) {
-    if (!pr || typeof pr.puan !== 'number') return;
+    if (!pr || typeof pr.puan !== 'number' || pr.puan_turu !== varsayilanTur(pr.ogrenim)) return;
     var ref = {}, pt = (a.getAttribute('data-pt') || '').split(',').filter(Boolean);
     try { ref = JSON.parse(a.getAttribute('data-ref')) || {}; } catch (e) { return; }
     var r = ref[pr.ogrenim];
@@ -118,9 +122,10 @@
   /* ayrıntı sayfası: "Senin için" kutusu */
   var s = document.getElementById('senin'), hedef = s && s.querySelector('[data-profil]');
   if (s && hedef) {
-    var ogr = (s.dataset.ogr || '').split(',').filter(function (x) { return LV[x]; });
     var pt2 = (s.dataset.pt || '').split(',').filter(function (x) { return /^P\d{1,3}$/.test(x); });
-    var il = s.dataset.il || '', ref2 = {};
+    var ogr = (s.dataset.ogr || '').split(',').filter(function (x) { return LV[x]; });
+    pt2.forEach(function (p) { var d = ptLevel(p); if (d && ogr.indexOf(d) < 0) ogr.push(d); });
+    var il = s.dataset.il || '', ilanIller = (s.dataset.iller || '').split(',').filter(Boolean), kurumIci = s.dataset.kurumIci === '1', ref2 = {};
     try { ref2 = JSON.parse(s.dataset.ref || '{}') || {}; } catch (e) { ref2 = {}; }
     var ul = el('ul'), ek = function (sinif, parca) { var li = el('li', sinif); parca.forEach(function (x) { li.append(x); }); ul.append(li); };
     var kalin = function (t) { return el('b', '', t); };
@@ -128,22 +133,26 @@
       var ek2 = el('p', 'senin-link'); ek2.append('Öğrenim düzeyini, KPSS puanını ve illerini ana sayfada 30 saniyede ekle; bu ilana uyup uymadığını burada göstereyim. ');
       var l = el('a', '', 'Profilini oluştur →'); l.href = hedef.getAttribute('data-ana') || '../../?profil=1'; ek2.append(l);
       hedef.replaceChildren(ek2);
+    } else if (kurumIci) {
+      ek('uyari', ['Kurum içi yeterlik sınavı; açıktan başvuruya açık değil.']);
+      hedef.replaceChildren(ul);
     } else {
       var en = ogr.length ? Math.min.apply(null, ogr.map(function (x) { return RANK[x]; })) : -1;
       if (!ogr.length) ek('', ['İlanda öğrenim düzeyi belirtilmemiş; şartları resmî ilandan kontrol et.']);
       else if (ogr.indexOf(pr.ogrenim) >= 0) ek('tamam', ['Öğrenim düzeyin: ', kalin(LV[pr.ogrenim]), ' — ilanın aradığı düzeylerden biri.']);
       else if (RANK[pr.ogrenim] > en) ek('', ['İlan daha alt düzeyleri (' + ogr.map(function (x) { return LV[x]; }).join(' / ') + ') arıyor; şartlarını kontrol et.']);
       else ek('uyari', ['İlan ' + ogr.map(function (x) { return LV[x]; }).join(' / ') + ' düzeyi arıyor; senin düzeyin: ' + LV[pr.ogrenim] + '.']);
-      if (il && !pr.tum && pr.iller.length) {
-        var ilanIl = il.replace(/\s*\+\d+$/, '');
-        if (pr.iller.some(function (x) { return normal(x) === normal(ilanIl); })) ek('tamam', ['Görev yeri ', kalin(ilanIl), ' seçtiğin illerden biri.']);
-        else ek('', ['Görev yeri ' + il + '; seçtiğin illerin dışında.']);
+      if (!ilanIller.length) ek('', ['Görev yeri: ülke geneli / ilanda belirtilmemiş.']);
+      else if (!pr.tum && pr.iller.length) {
+        var eslesen = ilanIller.filter(function (x) { return pr.iller.some(function (y) { return normal(y) === normal(x); }); });
+        if (eslesen.length) ek('tamam', ['Görev yeri ', kalin(eslesen.join(', ')), ' seçtiğin illerden biri.']);
+        else ek('', ['Görev yeri ' + (il || ilanIller.join(', ')) + '; seçtiğin illerin dışında.']);
       }
       if (pt2.length) {
         if (pt2.indexOf(pr.puan_turu) >= 0) ek('tamam', ['Puan türün: ', kalin(pr.puan_turu), ' — ilan ' + pt2.join(', ') + ' puanı arıyor.']);
         else ek('uyari', ['İlan ' + pt2.join(', ') + ' puanı arıyor; puan türün ' + pr.puan_turu + '.']);
       }
-      var r = ref2[pr.ogrenim], uygunTur = !pt2.length || pt2.indexOf(pr.puan_turu) >= 0;
+      var r = ref2[pr.ogrenim], uygunTur = pr.puan_turu === varsayilanTur(pr.ogrenim) && (!pt2.length || pt2.indexOf(pr.puan_turu) >= 0);
       if (r && typeof r.medyan === 'number' && uygunTur) {
         if (typeof pr.puan === 'number') ek(pr.puan >= r.medyan ? 'tamam' : '', [cumle(pr.puan - r.medyan) + ' (' + virgul(r.medyan, 1) + ').']);
         else ek('', ['Benzer kadroların taban medyanı ' + virgul(r.medyan, 1) + '. Puanını profiline eklersen farkı gösteririm.']);

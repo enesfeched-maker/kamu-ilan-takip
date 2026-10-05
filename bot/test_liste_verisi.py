@@ -128,5 +128,102 @@ class ListeTests(unittest.TestCase):
         self.assertEqual(json.loads((docs / 'liste.json').read_text(encoding='utf-8'))['sayilar']['acik'], 1)
 
 
+def kayit_ogr(**ek):
+    """Düzey çıkarımını sınamak için: metinde düzey olmayan, açık bir ilanın ince kaydı."""
+    return lv.kayit(ilan(1, ogrenim=[], **ek), None, {}, SIMDI)
+
+
+class OgrenimCikarimTests(unittest.TestCase):
+    def test_puan_turu_duzeyi_ima_eder(self):
+        k = kayit_ogr(ozet='2024 yılı KPSS B grubu P3 puanının %70')
+        self.assertEqual(k['ogrenim'], ['lisans'])
+        self.assertTrue(k['ogrenim_cikarim'])
+        self.assertEqual(kayit_ogr(ozet='KPSS P93 puanı')['ogrenim'], ['onlisans'])
+        self.assertEqual(kayit_ogr(ozet='KPSS P94 puanı')['ogrenim'], ['ortaogretim'])
+        self.assertEqual(kayit_ogr(ozet='KPSS P25 puanı (A grubu)')['ogrenim'], ['lisans'])
+
+    def test_metinden_gelen_duzey_silinmez_birlesir(self):
+        k = lv.kayit(ilan(1, ogrenim=['onlisans'], ozet='KPSS P3 puanı'), None, {}, SIMDI)
+        self.assertEqual(k['ogrenim'], ['lisans', 'onlisans'])
+        self.assertTrue(k['ogrenim_cikarim'])
+        tam = lv.kayit(ilan(1, ogrenim=['lisans'], ozet='KPSS P3 puanı'), None, {}, SIMDI)
+        self.assertEqual(tam['ogrenim'], ['lisans'])
+        self.assertNotIn('ogrenim_cikarim', tam)
+
+    def test_kpss_lisans_ifadesi(self):
+        self.assertEqual(kayit_ogr(ozet='KPSS Lisans sınavına girmiş olmak')['ogrenim'], ['lisans'])
+
+    def test_lisans_unvanlari(self):
+        for baslik in ('TSK 2026 Yılı Hukuk Sınıfı Muvazzaf Subay Adayı Temini', 'Gelir Uzman Yardımcılığı Sınav İlanı',
+                       '135 MESLEK PERSONELİ ALACAK', 'Sözleşmeli Bilişim Personeli Alım İlanı', '1 Mühendis'):
+            with self.subTest(baslik):
+                self.assertEqual(kayit_ogr(baslik=baslik, kadro=baslik)['ogrenim'], ['lisans'])
+
+    def test_belirsiz_unvanlar_bos_kalir(self):
+        for baslik in ('Zabıta Memuru alımı', 'İtfaiye Eri alımı', '4/B Sözleşmeli Personel', '1 Sözleşmeli Pilot (Uçak)', 'Bilgisayar İşletmeni'):
+            with self.subTest(baslik):
+                k = kayit_ogr(baslik=baslik, kadro=baslik)
+                self.assertEqual(k['ogrenim'], [])
+                self.assertNotIn('ogrenim_cikarim', k)
+
+    def test_unvan_kurali_yalniz_kisa_metinde(self):
+        self.assertEqual(kayit_ogr(ozet='Mimarlık ve mühendislik birimlerinde görev yapacak personel')['ogrenim'], [])
+
+    def test_yeterlik_sinavi_kurum_ici(self):
+        k = kayit_ogr(baslik='MUHASEBE UZMANLIĞI YETERLİK SINAVI DUYURUSU', ozet='KPSS P3')
+        self.assertTrue(k['kurum_ici'])
+        self.assertEqual(k['ogrenim'], [])
+        self.assertNotIn('kurum_ici', kayit_ogr(baslik='Memur Sınavı Duyurusu'))
+
+    def test_siniflandirici_kpss_b_p3(self):
+        from siniflandir import ogrenim_seviyeleri
+        self.assertEqual(ogrenim_seviyeleri({'ozet': 'KPSS B grubu P3 puanı'}), ['lisans'])
+
+    def test_taban_ref_cikarilan_duzey_icin_hesaplanir(self):
+        docs = puan_klasoru([{'unvan': 'Memur', 'min': 70 + i} for i in range(9)])
+        k = lv.kayit(ilan(1, ogrenim=[], ozet='KPSS P3 puanı', kadro='2 Memur'), None, lv.taban_tablolari(docs), SIMDI)
+        self.assertIn('lisans', k['taban_ref'])
+
+    def test_kopya_grubunda_birlesim(self):
+        docs = puan_klasoru([])
+        birincil = ilan(1, ogrenim=[], iller=[])
+        ikincil = ilan(2, ogrenim=['lisans'], iller=['Ankara'], ozet='KPSS P3 puanı')
+        v = lv.liste_uret([birincil, ikincil], {}, docs, SIMDI, kopyalar={'kopya_of': {ikincil['id']: birincil['id']}})
+        p = next(k for k in v['ilanlar'] if k['key'] == uid(1))
+        self.assertEqual((p['ogrenim'], p['puan_turleri'], p['iller']), (['lisans'], ['P3'], ['Ankara']))
+        self.assertEqual(p['il'], 'Ankara')
+
+
+class IlCikarimTests(unittest.TestCase):
+    def test_kurum_adindaki_il(self):
+        self.assertEqual(lv.il_bul({'kurum': 'Bolu Abant İzzet Baysal Üniversitesi'}), 'Bolu')
+        self.assertEqual(lv.il_bul({'kurum': 'İSTANBUL ELEKTRİK TRAMVAY VE TÜNEL İŞLETMELERİ GENEL MÜDÜRLÜĞÜ (İETT)'}), 'İstanbul')
+        k = lv.kayit(ilan(1, kurum='Bolu Abant İzzet Baysal Üniversitesi', iller=[]), None, {}, SIMDI)
+        self.assertEqual((k['il'], k['iller']), ('Bolu', ['Bolu']))
+
+    def test_bilinen_kurum_haritasi(self):
+        self.assertEqual(lv.il_bul({'kurum': 'Tarsus Üniversitesi Rektörlüğü'}), 'Mersin')
+        self.assertEqual(lv.il_bul({'kurum': 'TÜRKİYE TAŞKÖMÜRÜ KURUMU GENEL MÜDÜRLÜĞÜ'}), 'Zonguldak')
+
+    def test_ozetten_il(self):
+        self.assertEqual(lv.il_bul({'kurum': 'Test Kurumu', 'ozet': '(İstanbul) istihdam edilmek üzere'}), 'İstanbul')
+        self.assertEqual(lv.il_bul({'kurum': 'Test Kurumu', 'ozet': 'İstanbul’da görev yapmak üzere 3 personel'}), 'İstanbul')
+        self.assertEqual(lv.il_bul({'kurum': 'Test Kurumu', 'ozet': '(Ankara) ve (İzmir) için'}), '')
+
+    def test_turkiye_geneli_ulusal_kalir(self):
+        self.assertEqual(lv.il_bul({'kurum': 'Test Kurumu', 'yer': 'Türkiye Geneli'}), 'Türkiye Geneli')
+        k = lv.kayit(ilan(1, kurum='Test Kurumu', iller=[], yer='Türkiye Geneli'), None, {}, SIMDI)
+        self.assertEqual(k['iller'], [])
+
+    def test_ayrinti_sayfasi_iller_ozniteligi(self):
+        import site_uret
+        item = ilan(1, iller=['Antalya', 'Burdur'], ozet='x')
+        html = site_uret.detail_page(item)[1]
+        self.assertIn('data-iller="Antalya,Burdur"', html)
+        self.assertNotIn('data-kurum-ici', html)
+        ici = site_uret.detail_page(ilan(2, baslik='Hazine Uzmanlığı Yeterlik Sınavı Duyurusu', ogrenim=[]))[1]
+        self.assertIn('data-kurum-ici="1"', ici)
+
+
 if __name__ == '__main__':
     unittest.main()

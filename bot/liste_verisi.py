@@ -14,6 +14,72 @@ ACIK = ('ok', 'soon', 'urgent', 'today', 'none', 'upcoming')
 EN_AZ_KAYIT = 5          # taban referansı için aynı unvanda en az bu kadar yerleşme
 TAKVIM_GUN = 45
 PUAN_RE = re.compile(r'\bKPSS\s*P\s?(\d{1,3})\b|\bP(\d{1,3})\s*puan', re.I)
+SEVIYE_SIRASI = ('lisans', 'onlisans', 'ortaogretim')
+# Öğrenim çıkarımı (derleme zamanı): metinde düzey yazmayan ilanlar "tüm düzeylere uygun" sayılmasın.
+KPSS_LISANS = re.compile(r'kpss[- ]?\(?lisans\)?|lisans düzeyi kpss|kpss b grubu p3|kpss a grubu')
+LISANS_UNVAN = re.compile(
+    r'uzman yardımcı|müfettiş yardımcı|denetçi yardımcı|murakıp yardımcı|kontrolör yardımcı|aktüer yardımcı'
+    r'|stajyer avukat|(?<!\w)avukat|hukuk sınıfı|muvazzaf subay|meslek personeli'
+    r'|bilişim personeli|yazılım geliştirme|(?<!\w)mühendis|(?<!\w)mimar(?!\w)')
+YETERLIK = re.compile(r'yeterlik sınavı')
+# İli kurum adında yazmayan, bilinen kurumlar (kurum_anahtari biçimiyle içerir-eşleşme)
+KURUM_IL = (
+    ('tarsus universitesi', 'Mersin'), ('turkiye taskomuru kurumu', 'Zonguldak'),
+    ('bankacilik duzenleme ve denetleme kurumu', 'İstanbul'), ('bddk', 'İstanbul'),
+    ('sigortacilik ve ozel emeklilik duzenleme ve denetleme kurumu', 'İstanbul'), ('seddk', 'İstanbul'),
+)
+OZET_IL_PARANTEZ = re.compile(r'\(([A-ZÇĞİÖŞÜ][a-zçğıöşü]+)\)')
+OZET_IL_GOREV = re.compile(r'(\w+?)(?:da|de|ta|te) görev yapmak üzere')
+
+
+def puan_duzeyi(p):
+    """KPSS puan türü -> öğrenim düzeyi: P94 ortaöğretim, P93 önlisans, P1–P48 lisans (A grubu dahil); diğeri None."""
+    if p == 'P94':
+        return 'ortaogretim'
+    if p == 'P93':
+        return 'onlisans'
+    try:
+        return 'lisans' if 1 <= int(p[1:]) <= 48 else None
+    except ValueError:
+        return None
+
+
+def ogrenim_cikar(item, ogr, pt):
+    """(düzeyler, çıkarım_yapıldı, kurum_içi). Sırayla: yeterlik sınavı -> kurum içi; puan türü -> düzey; açık 'KPSS lisans'
+    ifadesi; yalnız lisans gerektiren unvanlar (başlık/kadro/tür kısa metni). Sonuç metinden gelen düzeylerle birleşir, hiçbiri silinmez."""
+    from siniflandir import kucuk, _tum_metin, _kisa_metin
+    if YETERLIK.search(kucuk(f"{item.get('baslik') or ''} {item.get('ilan_turu') or ''}")):
+        return list(ogr), False, True
+    ek = {d for d in (puan_duzeyi(p) for p in pt) if d}
+    if KPSS_LISANS.search(_tum_metin(item)) or LISANS_UNVAN.search(_kisa_metin(item)):
+        ek.add('lisans')
+    sonuc = [d for d in SEVIYE_SIRASI if d in ogr or d in ek]
+    return sonuc, bool(ek - set(ogr)), False
+
+
+def _il_gecerli(il):
+    ks = _ks()
+    return ks.kurum_anahtari(re.sub(r'\s*\+\d+$', '', il or '')) in ks.IL_ADI
+
+
+def il_cikar(item):
+    """İli açıkça yazılmayan ilan için il tahmini ('' = bulunamadı): kurum adındaki tek il sözcüğü, bilinen kurum haritası,
+    özetteki '(İstanbul)' ya da 'İstanbul’da görev yapmak üzere'. Birden çok farklı il bulunursa belirsiz sayılır."""
+    ks = _ks()
+    from siniflandir import kucuk
+    kurum = ks.kurum_anahtari(item.get('kurum') or '')
+    bulunan = {ks.IL_ADI[t] for t in kurum.split() if t in ks.IL_ADI}
+    if len(bulunan) == 1:
+        return next(iter(bulunan))
+    if bulunan:
+        return ''
+    for anahtar, il in KURUM_IL:
+        if re.search(r'\b' + anahtar + r'\b', kurum):
+            return il
+    ozet = str(item.get('ozet') or '')
+    bulunan = {ks.IL_ADI[a] for a in (ks.kurum_anahtari(p) for p in OZET_IL_PARANTEZ.findall(ozet)) if a in ks.IL_ADI}
+    bulunan |= {ks.IL_ADI[a] for a in (ks.kurum_anahtari(p) for p in OZET_IL_GOREV.findall(kucuk(ozet))) if a in ks.IL_ADI}
+    return next(iter(bulunan)) if len(bulunan) == 1 else ''
 
 
 def _ks():
@@ -65,7 +131,10 @@ def il_bul(item, harita=None):
         il = harita.get(ks.kurum_kanonik(item.get('kurum')))
         if il:
             return il
-    return ks.yer_kisa(item)
+    il = ks.yer_kisa(item)
+    if _il_gecerli(il) or ks.kurum_anahtari(il).startswith('turkiye geneli'):
+        return il
+    return il_cikar(item) or il
 
 
 def puan_turleri(item):
@@ -122,6 +191,8 @@ def kayit(item, gorsel, tablolar, simdi, harita=None):
     key = ks.anahtar(item)
     g = gorsel or {}
     ogr = [o for o in (item.get('ogrenim') or []) if o in ks.LEVELS]
+    pt = puan_turleri(item)
+    ogr, cikarim, kurum_ici = ogrenim_cikar(item, ogr, pt)
     adlar = [ad for _, ad in ks.kadrolar(item)]
     from siniflandir import kucuk
     unvanlar = list(dict.fromkeys(kucuk(re.sub(r'\s*\(.*?\)', '', ad)).strip() for ad in adlar))  # puanlar sayfası tam eşleşme için
@@ -130,17 +201,54 @@ def kayit(item, gorsel, tablolar, simdi, harita=None):
         r = taban_ref(tablolar, duzey, adlar)
         if r:
             ref[duzey] = {k: v for k, v in r.items() if k != 'duzey'}
+    il = il_bul(item, harita)
+    iller = item.get('iller') or []
+    if not iller and _il_gecerli(il) and il == il_cikar(item):
+        iller = [il]   # kurum adı/özetten çıkarılan il, tarayıcıda ve ayrıntı sayfasında iller gibi kullanılır
     kay = {
         'key': key, 'id': item.get('id') if item.get('id') != key else None,
         'manset': baslik_temiz(a['manset']), 'ek': a.get('ek', 0), 'toplam': a.get('toplam'),
         'meslek': a.get('meslek') or [], 'logo': g.get('logo'),
         'kurum': ks.kurum_adi(item.get('kurum')), 'kurum_slug': g.get('kurum_slug') or ks.kurum_slug(item.get('kurum')),
-        'il': il_bul(item, harita), 'iller': item.get('iller') or [],
-        'unvanlar': unvanlar, 'ogrenim': ogr, 'ilan_turu': (item.get('ilan_turu') or '')[:60], 'kategori': item.get('kategori'), 'kpss': item.get('kpss'), 'puan_turleri': puan_turleri(item), 'taban_ref': ref or None,
+        'il': il, 'iller': iller,
+        'unvanlar': unvanlar, 'ogrenim': ogr, 'ilan_turu': (item.get('ilan_turu') or '')[:60], 'kategori': item.get('kategori'), 'kpss': item.get('kpss'), 'puan_turleri': pt, 'taban_ref': ref or None,
+        'ogrenim_cikarim': cikarim, 'kurum_ici': kurum_ici,
         'son_tarih': item.get('son_tarih'), 'son_zaman': item.get('son_zaman'),
         'baslangic_zaman': item.get('baslangic_zaman'), 'ilk_gorulme': item.get('ilk_gorulme'), 'durum': cls,
     }
     return {k: v for k, v in kay.items() if v not in (None, '', 0) or k in ('ek', 'ogrenim', 'iller', 'meslek', 'puan_turleri', 'unvanlar')}
+
+
+def _etkin_iller(k):
+    return k.get('iller') or ([re.sub(r'\s*\+\d+$', '', k['il'])] if k.get('il') and _il_gecerli(k['il']) else [])
+
+
+def grup_birlestir(birincil, ikincil):
+    """Kopya grubunda birincil satırın öğrenim, puan türü, il ve taban referansı bilgisi ikincillerle birleştirilir
+    (birincil metinde düzey yazmıyor ama aynı ilanın başka kaynaktaki kaydı yazıyor olabilir); hiçbir değer silinmez."""
+    uyeler = [birincil, *ikincil]
+    ogr = [d for d in SEVIYE_SIRASI if any(d in (u.get('ogrenim') or []) for u in uyeler)]
+    if ogr != (birincil.get('ogrenim') or []):
+        if not (birincil.get('ogrenim') or []):
+            birincil['ogrenim_cikarim'] = True
+        birincil['ogrenim'] = ogr
+    pt = sorted({p for u in uyeler for p in (u.get('puan_turleri') or [])}, key=lambda s: int(s[1:]))
+    birincil['puan_turleri'] = pt
+    ilk_iller = _etkin_iller(birincil)
+    iller = list(dict.fromkeys(il for u in uyeler for il in _etkin_iller(u)))
+    if iller != ilk_iller and (not ilk_iller or all(il in iller for il in ilk_iller)):
+        birincil['iller'] = iller
+        if not _il_gecerli(birincil.get('il')):
+            birincil['il'] = iller[0] if len(iller) == 1 else f'{iller[0]} +{len(iller) - 1}'
+    ref = dict(birincil.get('taban_ref') or {})
+    for u in ikincil:
+        for d, r in (u.get('taban_ref') or {}).items():
+            ref.setdefault(d, r)
+    ref = {d: r for d, r in ref.items() if d in ogr}
+    if ref:
+        birincil['taban_ref'] = ref
+    elif 'taban_ref' in birincil:
+        del birincil['taban_ref']
 
 
 def takvim(kayitlar, simdi, gun=TAKVIM_GUN):
@@ -219,6 +327,12 @@ def liste_uret(ilanlar, gorseller, docs, simdi=None, guncelleme=None, kopyalar=N
     for ikincil, birincil in (kopyalar.get('kopya_of') or {}).items():
         if ikincil in kayit_id and birincil in kayit_id:   # birincil satırı yoksa ikincil de tek başına görünür
             kayit_id[ikincil][0]['kopya_of'] = kayit_id[birincil][0]['key']
+    gruplar = {}
+    for ikincil, birincil in (kopyalar.get('kopya_of') or {}).items():
+        if ikincil in kayit_id and birincil in kayit_id:
+            gruplar.setdefault(birincil, []).append(kayit_id[ikincil][0])
+    for birincil, ikinciller in gruplar.items():
+        grup_birlestir(kayit_id[birincil][0], ikinciller)
     try:
         import kopya
         for birincil, uyeler in (kopyalar.get('uyeler') or {}).items():

@@ -14,7 +14,9 @@ const GUNES='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12"
 function applyTheme(){const dark=readStore('kit-theme',null)==='dark';document.documentElement.dataset.theme=dark?'dark':'light';const m=document.querySelector('meta[name=theme-color]');if(m)m.content=dark?'#0D0E0C':'#F6F6F1';const b=$('theme');if(b){b.innerHTML=dark?GUNES:AY_IKON;b.setAttribute('aria-pressed',String(dark));b.setAttribute('aria-label',dark?'Açık temaya geç':'Koyu temaya geç');}}
 /* kit-profil (ana sayfadaki profil): doğrulanır; geçersizse yok sayılır */
 const LEVELS={lisans:'Lisans',onlisans:'Önlisans',ortaogretim:'Ortaöğretim'};
-function profilOku(){const p=readStore('kit-profil',null);if(!p||typeof p!=='object'||p.v!==1||p.atlandi===true||!LEVELS[p.ogrenim])return null;const o={ogrenim:p.ogrenim,puan_turu:typeof p.puan_turu==='string'&&/^P\d{1,3}$/.test(p.puan_turu)?p.puan_turu:PUAN_TURU[p.ogrenim]};if(typeof p.puan==='number'&&isFinite(p.puan)&&p.puan>0&&p.puan<=100)o.puan=p.puan;return o;}
+const ptLevel=p=>p==='P94'?'ortaogretim':p==='P93'?'onlisans':/^P([1-9]|[1-3]\d|4[0-8])$/.test(p)?'lisans':null;
+const puanTr=n=>Number(n).toLocaleString('tr-TR',{maximumFractionDigits:5});
+function profilOku(){const p=readStore('kit-profil',null);if(!p||typeof p!=='object'||p.v!==1||p.atlandi===true||!LEVELS[p.ogrenim])return null;const o={ogrenim:p.ogrenim,puan_turu:typeof p.puan_turu==='string'&&/^P\d{1,3}$/.test(p.puan_turu)&&ptLevel(p.puan_turu)===p.ogrenim?p.puan_turu:PUAN_TURU[p.ogrenim],bolum:typeof p.bolum==='string'?p.bolum.slice(0,60):'',iller:Array.isArray(p.iller)?p.iller.filter(x=>typeof x==='string'&&x.length<=40):[],tum_turkiye:p.tum_turkiye===true};if(typeof p.puan==='number'&&isFinite(p.puan)&&p.puan>0&&p.puan<=100)o.puan=p.puan;return o;}
 /* "Bu unvanda açık ilanlar (N)": ../liste.json bir kez yüklenir; yüklenemezse bağlantı sessizce gösterilmez */
 let acikListe=null;const acikOnbellek=new Map();
 /* Python kucuk() ile aynı: Türkçe küçük harf, kesme işareti atılır, boşluk tekilleşir; parantezli ek atılır. VHKİ kısaltması tam adıyla eşleşir. */
@@ -176,13 +178,19 @@ $('robot-bolum').onfocus=bolumListesiDoldur;
 $('robot-form').onsubmit=e=>{e.preventDefault();robotSinir=ROBOT_ILK;robot();};
 {
   const pr=profilOku(),kayitliDuzey=readStore('kit-puan-duzey','');
-  duzeyAc(pr?pr.ogrenim:PUAN_TURU[kayitliDuzey]?kayitliDuzey:'lisans').then(()=>{
+  duzeyAc(pr?pr.ogrenim:PUAN_TURU[kayitliDuzey]?kayitliDuzey:'lisans').then(async()=>{
     const ip=$('profil-ipucu');
     if(!pr){ip.replaceChildren('Profilini oluşturursan puan türün ve puanın otomatik dolar. ');const l=E('a','acik-link','Profilini oluştur →');l.href='../?profil=1';ip.append(l);ip.hidden=false;return;}
-    let m='Profilinden dolduruldu: '+LEVELS[pr.ogrenim]+(pr.puan?' · KPSS '+pr.puan_turu+' '+String(pr.puan).replace('.',','):'')+'.';
-    if(pr.puan_turu!==PUAN_TURU[pr.ogrenim])m+=' Bu tablo yalnızca '+PUAN_TURU[pr.ogrenim]+' puan türüyle yapılan merkezi yerleştirmeleri gösterir.';
+    /* Bölüm adı listedeki bir bölümle (büyük/küçük harf farkı gözetmeden) eşleşirse robota yazılır; tek il seçiliyse görev yeri de. */
+    let bolumAd='';
+    if(pr.bolum){const v=await bolumYukle(duzey);if(v&&duzey===pr.ogrenim){const ad=Object.values(v.bolumler).find(a=>kucuk(a)===kucuk(pr.bolum));if(ad){bolumAd=ad;$('robot-bolum').value=ad;}}}
+    if(pr.iller.length===1&&!pr.tum_turkiye){const o=[...$('robot-il').options].find(x=>x.value&&kucuk(x.value)===kucuk(pr.iller[0]));if(o)$('robot-il').value=o.value;}
+    const uyumlu=pr.puan_turu===PUAN_TURU[pr.ogrenim];
+    let m='Profilinden dolduruldu: '+LEVELS[pr.ogrenim]+(pr.puan?' · KPSS '+pr.puan_turu+' '+puanTr(pr.puan):'')+(bolumAd?' · '+bolumAd:'')+'.';
+    if(!uyumlu)m+=' Bu tablo yalnızca '+PUAN_TURU[pr.ogrenim]+' puan türüyle yapılan merkezi yerleştirmeleri gösterir; puanın bu türle karşılaştırılamadığı için doldurulmadı.';
     ip.textContent=m;ip.hidden=false;
-    if(pr.puan){$('robot-puan').value=String(pr.puan).replace('.',',');robot();}
+    if(pr.puan&&uyumlu){$('robot-puan').value=puanTr(pr.puan);}
+    if(pr.puan&&uyumlu||bolumAd)robot();
   });
   acikListeYukle().then(()=>{if(!acikListe)return;tabloCiz();if($('robot-sonuc').children.length)robot();});
 }
