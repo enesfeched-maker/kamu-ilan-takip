@@ -12,7 +12,7 @@ TR = timezone(timedelta(hours=3))
 KART_GENISLIK = 720
 LOGO_BOYUT = 128
 EN_COK_LOGO_INDIRME = 150
-CSS_SURUM = 11
+CSS_SURUM = 12
 LOGO_SURUM = 2
 ACIK_ZEMIN, KOYU_ZEMIN = '#F6F6F1', '#0D0E0C'
 # <head> içinde, theme-color etiketinden sonra: açık tema varsayılan, yalnız kit-theme=="dark" koyu açar.
@@ -171,8 +171,11 @@ def _senin_icin(item, kayit):
             donem = f' · {esc(r["donem"])}' if r.get('donem') else ''
             satirlar += f'<li>{LEVELS[duzey]}: benzer kadroların taban puanı medyanı <b>{_virgul(r["medyan"])}</b> ({int(r.get("n") or 0)} kayıt{donem})</li>'
     ref_html = (f'<ul class="senin-ref">{satirlar}</ul><p class="senin-not">Geçmiş yerleştirmelerden referans; bu ilanın şartı değildir.</p>') if satirlar else ''
+    import liste_verisi
+    ki = ' data-kurum-ici="1"' if kayit.get('kurum_ici') else ''
     veri = (f' data-ogr="{esc(",".join(kayit.get("ogrenim") or []))}" data-pt="{esc(",".join(kayit.get("puan_turleri") or []))}"'
-            f' data-il="{esc(kayit.get("il") or "")}" data-ref="{esc(json.dumps(ref, ensure_ascii=False, separators=(",", ":")))}"')
+            f' data-il="{esc(kayit.get("il") or "")}" data-iller="{esc(",".join(liste_verisi._etkin_iller(kayit)))}"'
+            f'{ki} data-ref="{esc(json.dumps(ref, ensure_ascii=False, separators=(",", ":")))}"')
     return (f'<section class="senin" id="senin"{veri}><h2><i>{KISI_IKON}</i>Senin için</h2>'
             '<div data-profil data-ana="../../?profil=1"><p class="senin-link">Öğrenim düzeyini, KPSS puanını ve illerini ana sayfada ekle; bu ilana uyup uymadığını burada göster. '
             '<a href="../../?profil=1">Profilini oluştur →</a></p></div>' + ref_html + '</section>')
@@ -294,7 +297,7 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
     if document:
         diger += f'<p class="muted">{esc(item.get("belge_aciklamasi"))}</p>'
     # --- bilgi satırı
-    ogr = [o for o in (item.get('ogrenim') or []) if o in ks.LEVELS]
+    ogr = [o for o in ((kayit or {}).get('ogrenim') or item.get('ogrenim') or []) if o in ks.LEVELS]
     pt = (kayit or {}).get('puan_turleri') or liste_verisi.puan_turleri(item)
     kpss = ', '.join(pt[:3]) if pt else 'Gerekli' if item.get('kpss') == 'kpss' else 'Gerekmez' if item.get('kpss') == 'kpsssiz' else 'Belirtilmemiş'
     toplam = alanlar.get('toplam')
@@ -305,6 +308,8 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
              f'<li><span>Yer</span><strong>{yer}</strong></li>'
              f'<li><span>Öğrenim</span><strong>{esc(" / ".join(ks.LEVELS[o] for o in ogr)) or "Belirtilmemiş"}</strong></li>'
              f'<li><span>KPSS</span><strong>{esc(kpss)}</strong></li></ul>')
+    if (kayit or {}).get('kurum_ici'):
+        facts = '<p class="not kopya-not"><strong>Kurum içi yeterlik sınavı;</strong> açıktan başvuruya açık değil.</p>' + facts
     kayit_id = esc(item.get('id') or key)
     ikincil_veri = f' data-ikincil="{esc(",".join((kopya or {}).get("ikincil_idler") or []))}"' if (kopya or {}).get('ikincil_idler') else ''
     from kurum_sayfasi import BOOKMARK
