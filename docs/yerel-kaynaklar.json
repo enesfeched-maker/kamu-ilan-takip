@@ -1,9 +1,9 @@
 {
  "schema": 1,
- "guncelleme": "2026-10-05T09:06:46.260139+00:00",
+ "guncelleme": "2026-10-05T09:36:41.582751+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-10-05T09:06:47.567570+00:00",
+   "kontrol": "2026-10-05T09:36:42.005608+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -5387,7 +5387,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-10-05T09:06:48.584041+00:00",
+   "kontrol": "2026-10-05T09:36:42.998013+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -7108,6 +7108,20 @@
    "sart_kadro_sayisi": 7,
    "basvuru_notu": "10- Müracaatlar 05.10.2026 ile 19.10.2026 tarihleri arasında e-Devlet Kapısı ''Batman Üniversitesi- Kariyer Kapısı İşe Alım'' veya https://kariyerkapisi.gov.tr/isealim internet adresi üzerinden başvurunun son günü saat 13:00'ye kadar yapılacaktır. Şahsen veya posta yolu ile yapılan başvurular kabul edilmeyecektir. Süresi içinde yapılmayan veya sistemde meydana gelen gecikmeler sebebiyle yapılan başvurular dikkate alınmayacaktır.",
    "detay_guncelleme": "2026-10-05T11:39:57+03:00"
+  },
+  "https://kariyerkapisi.gov.tr/IlanDetay?i=f0ca8a29-559f-426a-ade5-5ed30651c618": {
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/0f1cf613-3639-4673-b85b-4ae336c3db08.png",
+   "son_tarih": "2026-11-05",
+   "son_zaman": "2026-11-05T23:59:00+03:00",
+   "baslangic_zaman": "2026-10-05T11:30:00+03:00",
+   "yer": "",
+   "kadro": "",
+   "ilan_turu": "Merkezi Yerleştirme (ÖSYM)",
+   "ozet": "",
+   "sartlar": [],
+   "sart_kadro_sayisi": 0,
+   "basvuru_notu": "",
+   "detay_guncelleme": "2026-10-05T12:36:43+03:00"
   }
  },
  "logolar": {
