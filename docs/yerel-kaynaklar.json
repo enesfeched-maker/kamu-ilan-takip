@@ -1,9 +1,9 @@
 {
  "schema": 1,
- "guncelleme": "2026-10-05T14:36:40.090993+00:00",
+ "guncelleme": "2026-10-05T15:06:39.985538+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-10-05T14:36:40.479050+00:00",
+   "kontrol": "2026-10-05T15:06:40.408287+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -5502,7 +5502,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-10-05T14:36:41.607351+00:00",
+   "kontrol": "2026-10-05T15:06:41.586985+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -7265,6 +7265,29 @@
    "sart_kadro_sayisi": 0,
    "basvuru_notu": "",
    "detay_guncelleme": "2026-10-05T16:06:44+03:00"
+  },
+  "https://kariyerkapisi.gov.tr/IlanDetay?i=232d3886-9af8-4b69-a802-b393f13a600d": {
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/8f96fa41-1d12-432e-82f3-dec94652e406.png",
+   "son_tarih": "2026-10-18",
+   "son_zaman": "2026-10-18T23:59:00+03:00",
+   "baslangic_zaman": "2026-10-05T09:00:00+03:00",
+   "yer": "BAKANLIK MERKEZ TEŞKİLATI • TÜRKİYE GENELİ",
+   "kadro": "Toplam 130 kişi — 115 ŞUBE MÜDÜRÜ • 15 MEMUR",
+   "ilan_turu": "Görevde Yükselme ve Unvan Değişikliği İlanları",
+   "ozet": "1. Öğrenim Şartı: Fakülte veya en az dört yıllık yüksekokul mezunu olmak.",
+   "sartlar": [
+    {
+     "kadro": "MERKEZ - ŞUBE MÜDÜRÜ (TEKNİK)",
+     "metin": "Öğrenim Şartı: Fakülte veya en az dört yıllık yüksekokul mezunu olmak."
+    },
+    {
+     "kadro": "MERKEZ - MEMUR",
+     "metin": "Öğrenim Şartı: En az lise veya dengi okul mezunu olmak."
+    }
+   ],
+   "sart_kadro_sayisi": 6,
+   "basvuru_notu": "Yazılı sınavda başarılı olanlar, başvuru sırasında tercih ettikleri kadro birimi (Merkez/Taşra) ve her bir grup için (Şube Müdürü (Teknik), Şube Müdürü (İdari) ve Memur) en yüksek puan alan personelden başlamak üzere ilan edilen kadro sayısının beş katına kadar personel sözlü sınava davet edilecektir. Son sıradaki personelle aynı puana sahip olan personelin tamamı sözlü sınava davet edilecektir. Sözlü sınava davet edilecek personel, her bir…",
+   "detay_guncelleme": "2026-10-05T18:06:42+03:00"
   }
  },
  "logolar": {
