@@ -124,6 +124,12 @@ class DenetimDuzeltmeTests(unittest.TestCase):
         ilan = {'ozet': 'Örgün ön lisans eğitimi öğrencisi kaydı bulunmamak. Lise mezunu olmak.'}
         self.assertEqual(ogrenim_seviyeleri(ilan), ['ortaogretim'])
 
+    def test_disiplin_cezasi_cumlesi_ogrenim_duzeyi_sayilmaz(self):
+        # MSB subay temini: okul geçmişine dair disiplin şartı ortaöğretim mezuniyeti istemez.
+        ilan = {'ozet': 'Dört yıllık fakülte mezunu olmak. Diğer okullardan disiplinsizlik nedeniyle çıkarılmamış olmak ve '
+                        'ortaöğretim kurumlar ında örgün öğretim d ışına çıkartma cezası almamış olmak.'}
+        self.assertEqual(ogrenim_seviyeleri(ilan), ['lisans'])
+
     def test_bozuk_tabloda_p93_lisans_sayilmaz(self):
         ilan = {'ozet': 'ön kadın en az 1 memuru gih 10 1 lisans programlarının erkek p93 60'}
         self.assertEqual(ogrenim_seviyeleri(ilan), ['onlisans'])
