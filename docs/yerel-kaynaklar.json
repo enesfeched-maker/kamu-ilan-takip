@@ -1,9 +1,9 @@
 {
  "schema": 1,
- "guncelleme": "2026-10-05T12:36:40.543338+00:00",
+ "guncelleme": "2026-10-05T13:06:41.870339+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-10-05T12:36:40.991883+00:00",
+   "kontrol": "2026-10-05T13:06:42.303289+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -5466,7 +5466,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-10-05T12:36:42.140583+00:00",
+   "kontrol": "2026-10-05T13:06:43.260022+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -7201,6 +7201,34 @@
    "sart_kadro_sayisi": 0,
    "basvuru_notu": "",
    "detay_guncelleme": "2026-10-05T12:36:43+03:00"
+  },
+  "https://kariyerkapisi.gov.tr/IlanDetay?i=39d5a688-3b17-48de-a123-9140f55af29e": {
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/f9c37947-783d-4a09-8e96-02679218eab8.png",
+   "son_tarih": "2026-10-20",
+   "son_zaman": "2026-10-20T17:30:00+03:00",
+   "baslangic_zaman": "2026-10-05T11:00:00+03:00",
+   "yer": "",
+   "kadro": "",
+   "ilan_turu": "Askeri Personel İlanları",
+   "ozet": "",
+   "sartlar": [],
+   "sart_kadro_sayisi": 0,
+   "basvuru_notu": "",
+   "detay_guncelleme": "2026-10-05T16:06:43+03:00"
+  },
+  "https://kariyerkapisi.gov.tr/IlanDetay?i=d518cb3b-36c9-43fb-8e94-e563f9887888": {
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/f9c37947-783d-4a09-8e96-02679218eab8.png",
+   "son_tarih": "2026-10-20",
+   "son_zaman": "2026-10-20T23:30:00+03:00",
+   "baslangic_zaman": "2026-10-05T11:02:00+03:00",
+   "yer": "",
+   "kadro": "",
+   "ilan_turu": "Askeri Personel İlanları",
+   "ozet": "",
+   "sartlar": [],
+   "sart_kadro_sayisi": 0,
+   "basvuru_notu": "",
+   "detay_guncelleme": "2026-10-05T16:06:44+03:00"
   }
  },
  "logolar": {
