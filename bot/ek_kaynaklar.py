@@ -95,7 +95,7 @@ def notice(title):
 
 def total(item):
     text = item.get('kadro','')
-    m = re.search(r'Toplam\s+(\d+)\s+kişi',text,re.I) or re.match(r'\s*(\d+)\s+',text)
+    m = re.search(r'Toplam\s+(\d+)\s+kişi',text,re.I) or re.match(r'\s*(?!(?:19|20)\d\d\b)(\d+)\s+',text)
     if not m:
         return None
     if ',' in text and 'Toplam' not in text and ' — ' not in text:
@@ -133,6 +133,14 @@ def pdf_dates(text, range_text):
     start_day,start_month=int(parts[0][0]),MONTHS.index(parts[0][1])+1
     end_day,end_month=int(parts[1][0]),MONTHS.index(parts[1][1])+1
     candidates={d for d in dates if d.day==end_day and d.month==end_month and abs((d-now().date()).days)<370}
+    if not candidates:
+        # Belge açık bir başvuru aralığı veriyorsa (ör. "başvurular, 01/10/2026 - 05/10/2026 tarihleri arasında") SBB listesinin
+        # gösterdiği dönem değil belge kazanır; dönem yalnız belgede aralık yoksa yedek kalır.
+        from basvuru_penceresi import pencere
+        p=pencere(text,now())
+        if p:
+            return {'son_tarih':p['bitis'].isoformat(),
+                    'baslangic_zaman':datetime.combine(p['baslangic'],datetime.min.time(),TR).isoformat()}
     # The start date also establishes the range year when the PDF says "15 days".
     if not candidates:
         starts={d for d in dates if d.day==start_day and d.month==start_month and abs((d-now().date()).days)<185}
@@ -258,6 +266,20 @@ def iskur_rows(data, city):
     return records
 
 
+def iskur_pencere_uygula(row):
+    """Belgedeki başvuru penceresi (basvuru_notu) İŞKUR tablosundaki tarihten farklıysa belge kazanır; başlangıç belgeden gelir."""
+    from basvuru_penceresi import uygula
+    yeni=uygula(row,[row.get('basvuru_notu')],now())
+    if yeni is row:
+        return row
+    for key in ('son_tarih','son_zaman','baslangic_zaman'):
+        if key in yeni:
+            row[key]=yeni[key]
+        else:
+            row.pop(key,None)
+    return row
+
+
 DETAY_ALANLARI=('kadro','sartlar','ozet','basvuru_notu','iskur_detay_surumu','iskur_belge_sha256','iskur_detay_guncelleme')
 ISKUR_PDF_SINIRI=15
 
@@ -302,6 +324,8 @@ def iskur_zenginlestir(op,records,previous):
             print(f'İŞKUR ilan belgesi okunamadı ({type(exc).__name__}: {str(exc)[:100]}): {row["baslik"]}',flush=True)
             row['iskur_detay_denemesi']=now().isoformat(timespec='seconds')
         time.sleep(.3)
+    for row in records:
+        iskur_pencere_uygula(row)
     return indirilen,hata
 
 

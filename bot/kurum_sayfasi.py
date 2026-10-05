@@ -11,7 +11,7 @@ from pathlib import Path
 from urllib.parse import urlparse, parse_qs
 
 from kurum_gorseli import kurum_anahtari
-from meslek_gorseli import meslekler, meslek_no, FOTO_KLASORU
+from meslek_gorseli import meslekler, meslek_no, adet_ayir, BASLIK_ADET, FOTO_KLASORU
 from siniflandir import akademik_ilan, kucuk, ILLER
 
 TR = timezone(timedelta(hours=3))
@@ -194,15 +194,14 @@ def kadrolar(i):
     parcalar = []
     for p in meslekler(i.get('kadro')):
         # SBB: '3 UZMAN, 2 DESTEK PERSONEL' -> iki kadro (virgülden sonra yeni sayı başlıyorsa)
-        parcalar += re.split(r',\s*(?=\d+\s)', p) if re.match(r'^\d+\s', p) else [p]
+        parcalar += re.split(r',\s*(?=(?!(?:19|20)\d\d\b)\d+\s)', p) if re.match(r'^\d+\s', p) else [p]
     for p in parcalar:
-        m = re.match(r'^(\d+)\s+(.*)$', p)
-        adet, ad = (int(m.group(1)), m.group(2)) if m else (None, p)
+        adet, ad = adet_ayir(p)
         ad = SON_EK.sub('', ad).strip()
         if ad:
             out.append((adet, _ve_kucuk(_su()._duzgun(ad))))
     if not out:
-        m = re.search(r'(\d+)\s+([^\d]+?)\s+(?:alacak|alınacak|alımı|alim)', temiz_baslik(i), re.I)
+        m = re.search(BASLIK_ADET + r'\s+([^\d]+?)\s+(?:alacak|alınacak|alımı|alim)', temiz_baslik(i), re.I)
         if m:
             out.append((int(m.group(1)), _ve_kucuk(_su()._duzgun(m.group(2)))))
     return out

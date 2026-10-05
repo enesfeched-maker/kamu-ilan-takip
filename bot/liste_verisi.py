@@ -57,9 +57,23 @@ def donem_tarihleri(donem, referans):
     return None
 
 
+def pencere_tamamla(item):
+    """İŞKUR/SBB kaydında saklı başvuru notundaki (SBB'de özetteki de) belge penceresi son_tarih/son_zaman/baslangic_zaman'dan
+    farklıysa belge kazanır; düzeltilmiş KOPYA döner (kayıt değişmez), pencere yoksa aynı nesne. Toplayıcı yeni kayıtlarda
+    aynı düzeltmeyi kendisi yazar; bu, henüz yeniden okunmamış kayıtlar için derleme zamanı yedeğidir."""
+    if item.get('kaynak_turu') not in ('iskur', 'sbb') or item.get('duyuru_turu') or item.get('iptal_edildi'):
+        return item
+    from basvuru_penceresi import uygula
+    metinler = [item.get('basvuru_notu')] + ([item.get('ozet')] if item.get('kaynak_turu') == 'sbb' else [])
+    ref = _tr_tarih(item.get('ilk_gorulme')) or datetime.now(TR).date()
+    return uygula(item, [m for m in metinler if m], ref)
+
+
 def donem_tamamla(item):
     """son_tarih'i olmayan SBB kaydı için dönemden son_tarih/baslangic_zaman türetilmiş KOPYA döndürür (kayıt değişmez);
-    türetilemiyorsa aynı nesne. Derleme zamanı yedeği; toplayıcı yeni kayıtlarda aynı alanları kendisi yazar."""
+    türetilemiyorsa aynı nesne. Önce belge penceresi (pencere_tamamla) uygulanır.
+    Derleme zamanı yedeği; toplayıcı yeni kayıtlarda aynı alanları kendisi yazar."""
+    item = pencere_tamamla(item)
     if item.get('son_tarih') or item.get('kaynak_turu') != 'sbb' or not item.get('donem'):
         return item
     try:
@@ -72,6 +86,11 @@ def donem_tamamla(item):
     if not item.get('baslangic_zaman'):
         yeni['baslangic_zaman'] = datetime.combine(t[0], datetime.min.time(), TR).isoformat()
     return yeni
+
+
+def tamamla(item):
+    """Derleme zamanı düzeltmeleri (kayıt değişmez, KOPYA döner): belge penceresi ve SBB dönem yedeği."""
+    return donem_tamamla(item)
 
 
 def puan_duzeyi(p):

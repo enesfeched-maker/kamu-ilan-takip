@@ -635,6 +635,12 @@ def gorselleri_uret(ilanlar, docs, simdi=None, en_cok_indirme=EN_COK_LOGO_INDIRM
 def main():
     docs = ROOT / 'docs'
     data = json.loads((docs / 'ilanlar.json').read_text(encoding='utf-8'))
+    try:
+        import liste_verisi
+        # Yeniden okunmamış kayıtlar için derleme zamanı düzeltmeleri (belge penceresi, SBB belge alanları); ilanlar.json'a yazılmaz.
+        data['ilanlar'] = [liste_verisi.tamamla(i) for i in data.get('ilanlar', [])]
+    except Exception as hata:
+        print(f'Uyarı: kayıtlar derleme zamanında tamamlanamadı: {hata}')
     urls = [BASE]
     count = 0
     from siniflandir import akademik_ilan
