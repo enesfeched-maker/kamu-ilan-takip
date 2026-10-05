@@ -389,6 +389,20 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
                    '<noscript><div class="not wrap">Bazı özellikler (kaydetme, kalan gün, “Senin için”) için JavaScript gerekir.</div></noscript></body></html>')
 
 
+def kurum_ici_sayfasi(item):
+    """Kanalda zaten paylaşılmış kurum içi ilanın bağlantısı 404 vermesin: kısa, aranamaz (noindex) sayfa. (anahtar, html)."""
+    from ilan_baglanti import ilan_anahtari
+    key = ilan_anahtari(item)
+    kok = '../../'
+    baslik = 'Kurum içi ilan'
+    govde = (f'<main id="icerik" class="wrap"><article class="d-bas"><h1>{esc(baslik)}</h1>'
+             '<p class="not kopya-not"><strong>Bu ilan yalnız kurum personeline yöneliktir.</strong> Açıktan başvuruya açık değildir; sitede listelenmez.</p>'
+             f'<p><a class="yazi-link" href="{kok}">Ana sayfaya dön →</a></p></article></main>')
+    return key, (sayfa_basi(baslik + ' | Kamu İlan Takip', 'Bu ilan yalnız kurum personeline yöneliktir.', BASE + 'ilan/' + key + '/', kok,
+                            ek_head='<meta name="robots" content="noindex,nofollow">')
+                 + f'<body class="detail-page"><a class="skip" href="#icerik">İçeriğe geç</a>{ust_html(kok)}{govde}{alt_html(kok)}</body></html>')
+
+
 def kucuk_ad(metin):
     from siniflandir import kucuk
     return kucuk(' '.join(str(metin or '').split()))
@@ -675,6 +689,7 @@ def main():
     except Exception as hata:
         print(f'::warning::liste.json üretilemedi: {hata}')
     kayitlar = (liste or {}).get('ilanlar') or []
+    paylasilan = set(data.get('telegram_gonderilen') or [])
     kayit_haritasi = {k['key']: k for k in kayitlar}
     gorunen = [k for k in kayitlar if not k.get('kopya_of')]
     for item in data.get('ilanlar', []):
@@ -682,6 +697,14 @@ def main():
         if not result:
             if akademik_ilan(item):
                 _sayfayi_kaldir(docs, item)
+                from siniflandir import kurum_ici
+                if kurum_ici(item) and {item.get('id'), *item.get('kaynak_kimlikleri', [])} & paylasilan:
+                    try:
+                        anahtar, icerik_ = kurum_ici_sayfasi(item)   # Telegram'da paylaşılmış bağlantı 404 vermesin
+                        (docs / 'ilan' / anahtar).mkdir(parents=True, exist_ok=True)
+                        (docs / 'ilan' / anahtar / 'index.html').write_text(icerik_, encoding='utf-8')
+                    except Exception as hata:
+                        print(f'Uyarı: kurum içi ilan sayfası yazılamadı ({item.get("id")}): {hata}')
             continue
         kayit = kayit_haritasi.get(result[0])
         try:

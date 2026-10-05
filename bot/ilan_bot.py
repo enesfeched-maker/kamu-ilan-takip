@@ -29,7 +29,7 @@ from iptal_yaniti import (duz_anahtar, guclu_kokler, kadro_adi, kapsam_kokleri, 
 from sbb_detay import FIIL, _katla, belge_cumlesi
 from kurum_gorseli import kurum_logosu
 import siniflandir as siniflandir_modulu
-from siniflandir import akademik_ilan, etiketler, il_adlari, kategori, kpss_durumu, ogrenim_seviyeleri
+from siniflandir import akademik_ilan, etiketler, il_adlari, kategori, kpss_durumu, kurum_ici, ogrenim_seviyeleri
 from yerel_kaynak import oku as yerel_oku, sbb_verisi, csb_verisi
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -349,6 +349,42 @@ def telegram_gonder(token, chat_id, metin, ilan_linki="", site_url="", foto=None
     return False
 
 
+def kopyalari_ele(uygun, mevcut, gonderilen, bekleyen):
+    """Aynı gerçek ilanın başka kaynaktaki kaydı (kopya) kanalda zaten paylaşıldıysa — ya da aynı çalışmada birincil kayıt
+    paylaşılacaksa — ikincisi tekrar paylaşılmaz: yinelenen kayıt, aynı takma adlar gibi 'işlenmiş' sayılır (gönderilmiş işaretlenir,
+    sıradan düşer). kopya.kopya_bul hata verirse hiçbir şey elenmez (gönderim aksamaz)."""
+    if len(uygun) == 0:
+        return uygun
+    try:
+        import kopya
+        kopyalar = kopya.kopya_bul([i for i in mevcut.values() if not akademik_ilan(i)])
+    except Exception as hata:
+        print(f'Uyarı: kopya ilanlar bulunamadı, tekrar paylaşım denetimi atlandı: {hata}', file=sys.stderr)
+        return uygun
+    birincil_of = kopyalar.get('kopya_of') or {}
+    uyeler = {b: [m['id'] for m in g] for b, g in (kopyalar.get('uyeler') or {}).items()}
+    aday_idleri = {i['id'] for i in uygun}
+    once = set(gonderilen)   # bu çağrıda eklenen 'işlenmiş' kayıtlar gerçek paylaşım sayılmaz
+    secilen_grup, kalan = set(), []
+    for i in uygun:
+        kimlik = i['id']
+        grup_id = birincil_of.get(kimlik, kimlik)
+        diger = [m for m in uyeler.get(grup_id, []) if m != kimlik]
+        onceden = any(paylasildi(mevcut[m], once) for m in diger if m in mevcut)
+        # aynı çalışmada: grubun birincil kaydı da aday ise o gönderilir; birincil aday değilse gruptan ilk aday
+        birincil_bekliyor = kimlik != grup_id and grup_id in aday_idleri
+        baska_secildi = grup_id in secilen_grup and kimlik != grup_id and not birincil_bekliyor
+        if onceden or birincil_bekliyor or baska_secildi:
+            gonderilen.add(kimlik)
+            bekleyen.discard(kimlik)
+            print(f"Tekrar paylaşım atlandı (aynı ilan başka kaynakta {'zaten paylaşıldı' if onceden else 'paylaşılıyor'}): {i['baslik']}")
+            continue
+        if diger:
+            secilen_grup.add(grup_id)
+        kalan.append(i)
+    return kalan
+
+
 def telegram_sirasi(mevcut, gelen, yeniler, gonderilen, bekleyen, ilk_calisma, duyur_mevcut, cfg):
     """Yeni/mevcut ilanları sıraya ekler; başarıyla gönderilenleri tekrar eklemez."""
     canli = {i['id'] for i in gelen}
@@ -365,14 +401,15 @@ def telegram_sirasi(mevcut, gelen, yeniler, gonderilen, bekleyen, ilk_calisma, d
         if not i or kimlik not in canli:
             bekleyen.discard(kimlik)
             continue
-        if akademik_ilan(i):
-            bekleyen.discard(kimlik)  # akademik ilanlar kanala hiç gitmez
+        if akademik_ilan(i) or kurum_ici(i):
+            bekleyen.discard(kimlik)  # akademik ve kurum içi (yeterlik/görevde yükselme/yurt dışı eğitim) ilanlar kanala hiç gitmez
             continue
         if suresi_doldu(i):
             bekleyen.discard(kimlik)
             continue
         if telegram_icin_uygun(i, dahil, haric):
             uygun.append(i)
+    uygun = kopyalari_ele([i for i in uygun if not i.get('duyuru_turu')], mevcut, gonderilen, bekleyen) + [i for i in uygun if i.get('duyuru_turu')]
     return sorted(uygun, key=lambda i: (i.get('son_tarih') or '9999', i.get('kurum', ''), i['baslik']))
 
 
@@ -448,7 +485,7 @@ def toplu_secim(ilanlar, gonderilen, cfg):
     dahil, haric = cfg.get('telegram_kelimeler_dahil', []), cfg.get('telegram_kelimeler_haric', [])
     sonuc = []
     for i in ilanlar:
-        if i.get('duyuru_turu') or i.get('iptal_edildi') or akademik_ilan(i) or not i.get('son_tarih'):
+        if i.get('duyuru_turu') or i.get('iptal_edildi') or akademik_ilan(i) or kurum_ici(i) or not i.get('son_tarih'):
             continue
         if not ({i['id'], *i.get('kaynak_kimlikleri', [])} & gonderilen) or suresi_doldu(i):
             continue
@@ -489,7 +526,7 @@ def sabah_yeniler(ilanlar, gonderilen, cfg, zaman):
     bugun_09 = datetime.combine(zaman.astimezone(TR).date(), datetime.min.time(), tzinfo=TR).replace(hour=9)
     sonuc = []
     for i in ilanlar:
-        if i.get('duyuru_turu') or i.get('iptal_edildi') or akademik_ilan(i):
+        if i.get('duyuru_turu') or i.get('iptal_edildi') or akademik_ilan(i) or kurum_ici(i):
             continue
         try:
             gorulme = datetime.fromisoformat(i['ilk_gorulme'])
@@ -522,7 +559,7 @@ def sabah_acik_sayisi(ilanlar, zaman):
     """Sitedeki 'Başvurusu açık' tanımı: akademik/duyuru/iptal değil, son tarihi var, süresi dolmamış, başlamış."""
     sayi = 0
     for i in ilanlar:
-        if i.get('duyuru_turu') or i.get('iptal_edildi') or akademik_ilan(i) or not i.get('son_tarih') or suresi_doldu(i):
+        if i.get('duyuru_turu') or i.get('iptal_edildi') or akademik_ilan(i) or kurum_ici(i) or not i.get('son_tarih') or suresi_doldu(i):
             continue
         try:
             if i.get('baslangic_zaman') and datetime.fromisoformat(i['baslangic_zaman']) > zaman:
@@ -624,7 +661,7 @@ def yukle(yol):
 
 
 def telegram_icin_uygun(ilan, dahil, haric):
-    if akademik_ilan(ilan):
+    if akademik_ilan(ilan) or kurum_ici(ilan):
         return False
     metin = (ilan["baslik"] + " " + ilan.get("kurum", "")).lower()
     if dahil and not any(k.lower() in metin for k in dahil):

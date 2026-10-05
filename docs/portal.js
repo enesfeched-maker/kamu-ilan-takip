@@ -193,7 +193,7 @@ if(p&&p.atlandi&&Date.now()-Date.parse(p.t+'T12:00:00Z')<14*864e5){const d=E('p'
 const d=E('div','kurulum'),ik=E('span','profil-ikon'),t=E('div'),b=E('button','btn btn-ana','Başla');ik.innerHTML=IC.kisi;t.append(E('b','','30 saniyede sana göre ayarla'),E('span','','Öğrenim düzeyini ve illerini seç; sana uygun ilanlar en üstte görünsün.'));b.type='button';b.onclick=openProfile;d.append(ik,t,b);return d;}
 /* ---------- Bugün ---------- */
 function bugunModel(){
-const p=activeProfile(),acik=liste.filter(o=>!closed(o)),byDl=(a,b)=>(a.son_tarih||'9999').localeCompare(b.son_tarih||'9999')||a.kurum.localeCompare(b.kurum,'tr');
+const p=activeProfile(),acik=liste.filter(o=>!closed(o)&&!o.kurum_ici),byDl=(a,b)=>(a.son_tarih||'9999').localeCompare(b.son_tarih||'9999')||a.kurum.localeCompare(b.kurum,'tr');
 const seviye=new Map(),bilinmiyor=[];
 const senin=p?acik.filter(o=>{const s=uygun(o,p);if(s==='bilinmiyor'){bilinmiyor.push(o);return false;}if(s)seviye.set(o.key,s);return !!s;}).sort((a,b)=>Number(seviye.get(a.key)==='alt')-Number(seviye.get(b.key)==='alt')||ilRank(a,p)-ilRank(b,p)||Number(isNew(b))-Number(isNew(a))||byDl(a,b)):[];
 const acil=acik.filter(o=>o.son_tarih&&!upcoming(o)&&days(o.son_tarih)<=2).sort(byDl);

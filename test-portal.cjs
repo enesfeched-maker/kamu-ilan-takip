@@ -250,6 +250,10 @@ assert.equal(U(lisansRow,PR('ortaogretim')),false);assert.equal(U(liseRow,PR('or
 assert.equal(Z.run("rowLevels({ogrenim:['onlisans'],puan_turleri:['P3']}).join()"),'onlisans,lisans');
 // 4) kurum içi sınav
 for(const o of ['ortaogretim','onlisans','lisans'])assert.equal(U(ici,PR(o)),false,'kurum içi sınav kimseye uygun değil');
+// kurum içi ilan Bugün bölümlerinde ve açık ilan sayısında yoktur (İlanlar listesinde rozetle kalır)
+assert.equal(Z.run("bugunModel().acik.some(o=>o.kurum_ici)"),false,'kurum içi: Bugün modelinde yok');
+assert.equal(Z.run("bugunModel().acil.concat(bugunModel().yeni,bugunModel().bugunYeni).some(o=>o.kurum_ici)"),false,'kurum içi: Son gün/Yeni bölümlerinde yok');
+assert.equal(Z.run("listeTum.some(o=>o.kurum_ici)"),true,'kurum içi: İlanlar için listede durur');
 // 5) sayılar tüm yüzeylerde aynı; alt, tam'dan sonra
 Z.run(`profil=validProfile(${JSON.stringify(lisAnk)});showTab('bugun')`);
 const sn=Z.run("bugunModel().senin.length");

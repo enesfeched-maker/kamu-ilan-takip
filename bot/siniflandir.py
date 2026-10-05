@@ -50,6 +50,19 @@ def kucuk(metin):
     return re.sub(r'\s+', ' ', metin).strip()
 
 
+# Kurum içi (açıktan başvuruya kapalı) ilanlar: yeterlik sınavı, görevde yükselme/unvan değişikliği, kurum personeline yönelik
+# yurt dışı eğitim/staj/yüksek lisans programları. Sitede yalnız İlanlar listesinde (rozetle) görünür; sayılara, "Senin için"
+# ve Bugün bölümlerine, Telegram'a girmez.
+KURUM_ICI = re.compile(r'yeterlik sınavı|görevde yükselme|unvan değişikliği|kurum içi|yurt ?dışı (?:eğitim|staj|yüksek lisans|lisansüstü|lisans)')
+KURUM_ICI_OZET = re.compile(r'kurumumuz personeline yönelik|kurum personeline yönelik|kurumumuz personeli için')
+
+
+def kurum_ici(ilan):
+    if KURUM_ICI.search(kucuk(f"{ilan.get('baslik') or ''} {ilan.get('ilan_turu') or ''}")):
+        return True
+    return bool(KURUM_ICI_OZET.search(kucuk(str(ilan.get('ozet') or '')[:700])))
+
+
 def _sartlar(ilan):
     return [s for s in ilan.get('sartlar') or [] if isinstance(s, dict)]
 
@@ -80,9 +93,9 @@ def akademik_mi(ilan):
 
 
 def akademik_ilan(ilan):
-    """Akademik kadro ilanı (öğretim üyesi/görevlisi, araştırma görevlisi...). Bu ilanlar kanalda, sosyal medyada,
+    """Akademik kadro ilanı (öğretim üyesi/görevlisi, araştırma görevlisi...) ya da kurum içi ilan (kurum_ici). Bu ilanlar kanalda, sosyal medyada,
     sitede ve kişisel bot verisinde hiçbir yerde gösterilmez; yalnız docs/ilanlar.json'da kalır."""
-    return ilan.get('kategori') == 'akademik' or akademik_mi(ilan)
+    return ilan.get('kategori') == 'akademik' or akademik_mi(ilan) or kurum_ici(ilan)
 
 
 # "Hukuk fakültesi, adalet meslek yüksekokulu ... mezunu olmak": fakülte adı mezuniyet şartı olarak yalnız şart/özet

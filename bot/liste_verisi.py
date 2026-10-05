@@ -138,8 +138,8 @@ def puan_duzeyi(p):
 def ogrenim_cikar(item, ogr, pt):
     """(düzeyler, çıkarım_yapıldı, kurum_içi). Sırayla: yeterlik sınavı -> kurum içi; puan türü -> düzey; açık 'KPSS lisans'
     ifadesi; yalnız lisans gerektiren unvanlar (başlık/kadro/tür kısa metni). Sonuç metinden gelen düzeylerle birleşir, hiçbiri silinmez."""
-    from siniflandir import kucuk, _tum_metin, _kisa_metin, fakulte_sartli
-    if KURUM_ICI_BASLIK.search(kucuk(f"{item.get('baslik') or ''} {item.get('ilan_turu') or ''}")):
+    from siniflandir import kucuk, _tum_metin, _kisa_metin, fakulte_sartli, kurum_ici
+    if kurum_ici(item):
         return list(ogr), False, True
     ek = {d for d in (puan_duzeyi(p) for p in pt) if d}
     if KPSS_LISANS.search(_tum_metin(item)) or LISANS_UNVAN.search(_kisa_metin(item)) or fakulte_sartli(item):
@@ -438,9 +438,10 @@ def liste_uret(ilanlar, gorseller, docs, simdi=None, guncelleme=None, kopyalar=N
                     kayit_id[birincil][0]['kaynaklar'] = adlar
     except Exception as hata:
         print(f'Uyarı: kaynak adları yazılamadı: {hata}')
-    gorunen = [k for k in kayitlar if not k.get('kopya_of')]
+    # Kurum içi ilanlar İlanlar listesinde (rozetli) kalır; açık ilan/kadro sayısına, takvime, uyarıya girmez.
+    gorunen = [k for k in kayitlar if not k.get('kopya_of') and not k.get('kurum_ici')]
     bugun_yeni = sum(1 for k in gorunen if _tr_tarih(k.get('ilk_gorulme')) == simdi.date())
-    gorunen_ilanlar = [i for k, i in kayit_id.values() if not k.get('kopya_of')]
+    gorunen_ilanlar = [i for k, i in kayit_id.values() if not k.get('kopya_of') and not k.get('kurum_ici')]
     return {
         'guncelleme': guncelleme or simdi.isoformat(timespec='seconds'),
         'sayilar': {'acik': len(gorunen), 'kadro': sum(k.get('toplam') or 0 for k in gorunen), 'bugun_yeni': bugun_yeni},
