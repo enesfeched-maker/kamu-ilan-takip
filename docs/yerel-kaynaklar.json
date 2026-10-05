@@ -1,11 +1,38 @@
 {
  "schema": 1,
- "guncelleme": "2026-10-05T10:06:41.471402+00:00",
+ "guncelleme": "2026-10-05T10:36:39.624418+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-10-05T10:06:41.884673+00:00",
+   "kontrol": "2026-10-05T10:36:45.701546+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
+    {
+     "id": "sbb-cbaa38524cf24d4c6fa9b46f",
+     "baslik": "MİLLİ SAVUNMA BAKANLIĞI - 2026 YILI TABİP, DİŞ TABİBİ SINIFI SÖZLEŞMELİ/MUVAZZAF SUBAY VE ÖZEL NİTELİKLİ BEDEN EĞİTİMİ ÖĞRETMENİ SINIFI MUVAZZAF SUBAY ADAYI TEMİNİ",
+     "kurum": "MİLLİ SAVUNMA BAKANLIĞI",
+     "kadro": "2026 YILI TABİP, DİŞ TABİBİ SINIFI SÖZLEŞMELİ/MUVAZZAF SUBAY VE ÖZEL NİTELİKLİ BEDEN EĞİTİMİ ÖĞRETMENİ SINIFI MUVAZZAF SUBAY ADAYI TEMİNİ",
+     "ilan_turu": "Sözleşmeli Personel",
+     "son_tarih": null,
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 5 Ekim - 20 Ekim)",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-10-05T13:36:42+03:00",
+     "belge_ozeti": "d0e676451c500df45b8015150e6252db58c9881a470790bc7f5a5b81b5331da0",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "2026 YILI TABİP, DİŞ TABİBİ SINIFI SÖZLEŞMELİ/MUVAZZAF SUBAY VE ÖZEL NİTELİKLİ BEDEN EĞİTİMİ ÖĞRETMENİ SINIFI MUVAZZAF SUBAY ADAYI TEMİNİ. Şahsen, posta kanalı ile, dilekçe ile veya diğer şekil lerde yapılacak başvurular kabul edilmeyecektir. (2) Adaylar https://personeltemin.msb.gov.tr sitesine girdikten sonra e-devlet şifresi ile başvuru ekranını açacaktır. Özel şartlar aşağıdaki ilan belgesinde yer alıyor.",
+     "sartlar": [],
+     "basvuru_notu": "Bu durumda olan adaylar, aldığı tutanak ile MSB Personel Temin Daire Başkanlığına tekrar ve şahsen başvurarak sevk yazısını yenileyebilecektir. (ç) Sağlık kuruluşu tarafından düzenlenen ön bildirim raporunuzun karar hanesinde belirtilen ifadelerin ve bilgilerin kontrol etmeniz önem arz etmektedir.",
+     "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/d0e676451c500df45b8015150e6252db58c9881a470790bc7f5a5b81b5331da0.pdf",
+     "belge_sha256": "d0e676451c500df45b8015150e6252db58c9881a470790bc7f5a5b81b5331da0",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 5
+    },
     {
      "id": "sbb-2ab4ade78beb072a71ae1bb0",
      "baslik": "BATMAN ÜNİVERSİTESİ - 15 SÖZLEŞMELİ PERSONEL ALACAK",
@@ -3073,34 +3100,47 @@
      "sbb_detay_surumu": 5
     },
     {
-     "id": "sbb-36201de94c0c382c6da092f3",
-     "baslik": "HATAY MUSTAFA KEMAL ÜNİVERSİTESİ - 32 ÖĞRETİM ÜYESİ ALACAK",
-     "kurum": "HATAY MUSTAFA KEMAL ÜNİVERSİTESİ",
-     "kadro": "32 ÖĞRETİM ÜYESİ ALACAK",
-     "ilan_turu": "Öğretim Üyesi",
-     "son_tarih": null,
+     "id": "sbb-8aefee5ffa15c5bea8034be3",
+     "baslik": "ERZURUM TEKNİK ÜNİVERSİTESİ - 16 SÖZLEŞMELİ PERSONEL ALACAK",
+     "kurum": "ERZURUM TEKNİK ÜNİVERSİTESİ",
+     "kadro": "16 SÖZLEŞMELİ PERSONEL ALACAK",
+     "ilan_turu": "Sözleşmeli Personel",
+     "son_tarih": "2026-10-09",
      "kaynak": "SBB Kamu İlan",
      "kaynak_turu": "sbb",
-     "donem": "( 24 Eylül - 8 Ekim)",
+     "donem": "( 24 Eylül - 9 Ekim)",
+     "baslangic_zaman": "2026-09-24T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-05T11:38:08+03:00",
-     "belge_ozeti": "91041043877d45d67e51d4a000ae095e9fb33926c11cd4e5170c0dd1c34a9bf6",
+     "detay_guncelleme": "2026-10-05T11:38:13+03:00",
+     "belge_ozeti": "9bf887fdcd192b8d7573f501989d174783d8317fb6962d1ec3e28f66d1dd7b9a",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
        "link": "https://kamuilan.sbb.gov.tr/"
       }
      ],
-     "ozet": "32 ÖĞRETİM ÜYESİ alımı. Hatay Mustafa Kemal Üniversitesi Rektörlüğünden: Üniversitemiz birimlerine, 2547 Sayılı Yükseköğretim Kanunu ve Öğretim Üyeliğine Yükseltilme ve Atanma Yönetmeliğinin ilgili maddeleri uyarınca, Üniversitemiz Öğretim Üyeliğine Yükseltilme ve Atanma Kriterlerini (www.mku.edu.tr. adresinde Personel Daire Başkanlığı sayfasında mevzuat yan başlığı altından temin edilebilir) sağlamış olmak koşuluyla öğretim üyesi alınacaktır. Son başvuru tarihi ilanın resmi gazetede yayımlanmasından itibaren 15 (onbeş) günlük sürenin mesai bitimi (17:00) dir. Başvurular https://genelbasvuru.mku.edu.tr/ adresinden yapılacak olup, şahsen veya posta yoluyla yapılan başvurular kabul edilmeyecektir. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "ozet": "16 SÖZLEŞMELİ PERSONEL alımı. Son başvuru: 09.10.2026. Başvuru Adresi ve İletişim Bilgileri Adaylar başvurularını Kariyer Kapısı https://kariyerkapisi.gov.tr/isealim veya e-Devlet Kapısı “Erzurum Teknik Üniversitesi - Kariyer Kapısı Kamu İşe Alım” hizmeti üzerinden yapacaktır. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
      "sartlar": [
       {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "Ziraat Fakültesi mezunu olup, ilgili SEBZE YETİŞTİRME DOKTOR alanda lisansüstü eğitimini ZİRAAT FAKÜLTESİ BAHÇE BİTKİLERİ VE ISLAHI ÖĞRETİM 3 1 tamamlamış, sebzelerde türler arası ÜYESİ melezleme ve dayanıklılık konularında çalışmış olmak"
+       "kadro": "Belgedeki kadro koşullarından alıntı",
+       "metin": "Lisans mezunları için 2024 KPSS B grubu KPSS (P3) puanı, Ön lisans mezunları için 2024 KPSS B grubu KPSS (P93), Lise mezunları için 2024 KPSS B grubu KPSS (P94) puanına sahip olmak."
+      },
+      {
+       "kadro": "Belgedeki kadro koşullarından alıntı",
+       "metin": "Nitelik Kodu Unvanı Adet Cinsiyet Puan Türü Aranan Nitelikler -Maliye, İşletme veya İktisat bölümlerinden birinden lisans mezun olmak. -Başvuran adayın son başvuru tarihi itibariyle herhangi bir yükseköğretim kurumunda örgün eğitimde aktif- 2026-BP/01 Büro 1 Erkek/Kadın 2024 pasif öğrenci kaydı bulunmaması gerekir."
+      },
+      {
+       "kadro": "Belgedeki kadro koşullarından alıntı",
+       "metin": "Yurt dışındaki veya yurt içindeki öğretim kurumlarından mezun olup bu ilanda aranılan öğrenim durumuna ilişkin denkliği olan adayların denklik belgelerini Kariyer Kapısına yapılan başvurusu sırasında “Diğer Belgeleriniz” sekmesi altında bulunan “Denklik Belgesi” alanına ilgili dokümanı mutlaka yüklemeleri gerekmektedir."
+      },
+      {
+       "kadro": "Sınav puanı koşulu · kadroya göre muafiyetler için belgeyi inceleyin",
+       "metin": "Başvuracak adayların 2024 yılı KPSS (B) grubu sınavından ilgili puan türünden en az 60 puan almış olmaları gerekmektedir."
       }
      ],
-     "basvuru_notu": "Öğretim Üyeliğine Yükseltilme Ve Atanma Kriterlerine Göre Hazırlanacak Puanlama Tablosu, Adayların doçent ünvanını aldığı, Doçentlik Başvuru (ÜAK) Kriterlerine göre hazırlanan puanlama tablosu, doçentlik başarı belgesi (e-devletten alınabilir.), başlıca eseri belirtilen dilekçesi ile bilimsel çalışma ve yayınlarını online olarak https://genelbasvuru.mku.edu.tr/ adresine başvuru süresi içinde yüklemeleri gerekmektedir.",
-     "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/91041043877d45d67e51d4a000ae095e9fb33926c11cd4e5170c0dd1c34a9bf6.pdf",
-     "belge_sha256": "91041043877d45d67e51d4a000ae095e9fb33926c11cd4e5170c0dd1c34a9bf6",
+     "basvuru_notu": "BAŞVURU TAKVİMİ, BAŞVURU ADRESİ VE İLETİŞİM BİLGİLERİ 2.1.",
+     "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/9bf887fdcd192b8d7573f501989d174783d8317fb6962d1ec3e28f66d1dd7b9a.pdf",
+     "belge_sha256": "9bf887fdcd192b8d7573f501989d174783d8317fb6962d1ec3e28f66d1dd7b9a",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 5
     },
@@ -3158,6 +3198,38 @@
      "sbb_detay_surumu": 5
     },
     {
+     "id": "sbb-36201de94c0c382c6da092f3",
+     "baslik": "HATAY MUSTAFA KEMAL ÜNİVERSİTESİ - 32 ÖĞRETİM ÜYESİ ALACAK",
+     "kurum": "HATAY MUSTAFA KEMAL ÜNİVERSİTESİ",
+     "kadro": "32 ÖĞRETİM ÜYESİ ALACAK",
+     "ilan_turu": "Öğretim Üyesi",
+     "son_tarih": null,
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 24 Eylül - 8 Ekim)",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-10-05T11:38:08+03:00",
+     "belge_ozeti": "91041043877d45d67e51d4a000ae095e9fb33926c11cd4e5170c0dd1c34a9bf6",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "32 ÖĞRETİM ÜYESİ alımı. Hatay Mustafa Kemal Üniversitesi Rektörlüğünden: Üniversitemiz birimlerine, 2547 Sayılı Yükseköğretim Kanunu ve Öğretim Üyeliğine Yükseltilme ve Atanma Yönetmeliğinin ilgili maddeleri uyarınca, Üniversitemiz Öğretim Üyeliğine Yükseltilme ve Atanma Kriterlerini (www.mku.edu.tr. adresinde Personel Daire Başkanlığı sayfasında mevzuat yan başlığı altından temin edilebilir) sağlamış olmak koşuluyla öğretim üyesi alınacaktır. Son başvuru tarihi ilanın resmi gazetede yayımlanmasından itibaren 15 (onbeş) günlük sürenin mesai bitimi (17:00) dir. Başvurular https://genelbasvuru.mku.edu.tr/ adresinden yapılacak olup, şahsen veya posta yoluyla yapılan başvurular kabul edilmeyecektir. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "Ziraat Fakültesi mezunu olup, ilgili SEBZE YETİŞTİRME DOKTOR alanda lisansüstü eğitimini ZİRAAT FAKÜLTESİ BAHÇE BİTKİLERİ VE ISLAHI ÖĞRETİM 3 1 tamamlamış, sebzelerde türler arası ÜYESİ melezleme ve dayanıklılık konularında çalışmış olmak"
+      }
+     ],
+     "basvuru_notu": "Öğretim Üyeliğine Yükseltilme Ve Atanma Kriterlerine Göre Hazırlanacak Puanlama Tablosu, Adayların doçent ünvanını aldığı, Doçentlik Başvuru (ÜAK) Kriterlerine göre hazırlanan puanlama tablosu, doçentlik başarı belgesi (e-devletten alınabilir.), başlıca eseri belirtilen dilekçesi ile bilimsel çalışma ve yayınlarını online olarak https://genelbasvuru.mku.edu.tr/ adresine başvuru süresi içinde yüklemeleri gerekmektedir.",
+     "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/91041043877d45d67e51d4a000ae095e9fb33926c11cd4e5170c0dd1c34a9bf6.pdf",
+     "belge_sha256": "91041043877d45d67e51d4a000ae095e9fb33926c11cd4e5170c0dd1c34a9bf6",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 5
+    },
+    {
      "id": "sbb-66d7ba5846cebebda3352495",
      "baslik": "JANDARMA GENEL KOMUTANLIĞI - 1 SÖZLEŞMELİ PİLOT (UÇAK) TEMİN EDECEKTİR",
      "kurum": "JANDARMA GENEL KOMUTANLIĞI",
@@ -3181,51 +3253,6 @@
      "basvuru_notu": "",
      "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/9bd126a4d06fc065341b97a6d3a4b9def0a1942641f2b2cd79e9db34df4daf70.pdf",
      "belge_sha256": "9bd126a4d06fc065341b97a6d3a4b9def0a1942641f2b2cd79e9db34df4daf70",
-     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 5
-    },
-    {
-     "id": "sbb-8aefee5ffa15c5bea8034be3",
-     "baslik": "ERZURUM TEKNİK ÜNİVERSİTESİ - 16 SÖZLEŞMELİ PERSONEL ALACAK",
-     "kurum": "ERZURUM TEKNİK ÜNİVERSİTESİ",
-     "kadro": "16 SÖZLEŞMELİ PERSONEL ALACAK",
-     "ilan_turu": "Sözleşmeli Personel",
-     "son_tarih": "2026-10-09",
-     "kaynak": "SBB Kamu İlan",
-     "kaynak_turu": "sbb",
-     "donem": "( 24 Eylül - 9 Ekim)",
-     "baslangic_zaman": "2026-09-24T00:00:00+03:00",
-     "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-05T11:38:13+03:00",
-     "belge_ozeti": "9bf887fdcd192b8d7573f501989d174783d8317fb6962d1ec3e28f66d1dd7b9a",
-     "kaynaklar": [
-      {
-       "ad": "SBB Kamu İlan",
-       "link": "https://kamuilan.sbb.gov.tr/"
-      }
-     ],
-     "ozet": "16 SÖZLEŞMELİ PERSONEL alımı. Son başvuru: 09.10.2026. Başvuru Adresi ve İletişim Bilgileri Adaylar başvurularını Kariyer Kapısı https://kariyerkapisi.gov.tr/isealim veya e-Devlet Kapısı “Erzurum Teknik Üniversitesi - Kariyer Kapısı Kamu İşe Alım” hizmeti üzerinden yapacaktır. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
-     "sartlar": [
-      {
-       "kadro": "Belgedeki kadro koşullarından alıntı",
-       "metin": "Lisans mezunları için 2024 KPSS B grubu KPSS (P3) puanı, Ön lisans mezunları için 2024 KPSS B grubu KPSS (P93), Lise mezunları için 2024 KPSS B grubu KPSS (P94) puanına sahip olmak."
-      },
-      {
-       "kadro": "Belgedeki kadro koşullarından alıntı",
-       "metin": "Nitelik Kodu Unvanı Adet Cinsiyet Puan Türü Aranan Nitelikler -Maliye, İşletme veya İktisat bölümlerinden birinden lisans mezun olmak. -Başvuran adayın son başvuru tarihi itibariyle herhangi bir yükseköğretim kurumunda örgün eğitimde aktif- 2026-BP/01 Büro 1 Erkek/Kadın 2024 pasif öğrenci kaydı bulunmaması gerekir."
-      },
-      {
-       "kadro": "Belgedeki kadro koşullarından alıntı",
-       "metin": "Yurt dışındaki veya yurt içindeki öğretim kurumlarından mezun olup bu ilanda aranılan öğrenim durumuna ilişkin denkliği olan adayların denklik belgelerini Kariyer Kapısına yapılan başvurusu sırasında “Diğer Belgeleriniz” sekmesi altında bulunan “Denklik Belgesi” alanına ilgili dokümanı mutlaka yüklemeleri gerekmektedir."
-      },
-      {
-       "kadro": "Sınav puanı koşulu · kadroya göre muafiyetler için belgeyi inceleyin",
-       "metin": "Başvuracak adayların 2024 yılı KPSS (B) grubu sınavından ilgili puan türünden en az 60 puan almış olmaları gerekmektedir."
-      }
-     ],
-     "basvuru_notu": "BAŞVURU TAKVİMİ, BAŞVURU ADRESİ VE İLETİŞİM BİLGİLERİ 2.1.",
-     "belge_kopyasi": "https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/9bf887fdcd192b8d7573f501989d174783d8317fb6962d1ec3e28f66d1dd7b9a.pdf",
-     "belge_sha256": "9bf887fdcd192b8d7573f501989d174783d8317fb6962d1ec3e28f66d1dd7b9a",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 5
     },
@@ -5387,7 +5414,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-10-05T10:06:42.976718+00:00",
+   "kontrol": "2026-10-05T10:36:46.690406+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
