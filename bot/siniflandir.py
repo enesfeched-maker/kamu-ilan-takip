@@ -85,11 +85,36 @@ def akademik_ilan(ilan):
     return ilan.get('kategori') == 'akademik' or akademik_mi(ilan)
 
 
+# "Hukuk fakültesi, adalet meslek yüksekokulu ... mezunu olmak": fakülte adı mezuniyet şartı olarak yalnız şart/özet
+# metninde sayılır (kurum adındaki "Tıp Fakültesi Hastanesi" ya da "… Fakültesinde görevlendirilecek" değil).
+FAKULTE_SART = re.compile(r'fakültesi(?=\s*(?:,|veya\b|ya da\b|ile\b|mezun))|fakültesinden')
+BOLUM_KISITI = re.compile(
+    r'fakültesi(?=\s*(?:,|veya\b|ya da\b|ile\b|mezun))|bölüm(?:ü|leri|lerinden|ünden)?\s+mezun|bölümlerinden'
+    r'|programı mezunu|meslek yüksekokulunun[^.;]{0,80}bölüm')
+
+
+def _sart_metni(ilan):
+    parcalar = [ilan.get('ozet')] + [s.get('metin') for s in _sartlar(ilan)]
+    return kucuk(' '.join(str(p or '') for p in parcalar))
+
+
+def fakulte_sartli(ilan):
+    """Şart/özet metni bir fakülte mezuniyetini şart koşuyor mu (lisans düzeyi göstergesi)."""
+    return bool(FAKULTE_SART.search(_sart_metni(ilan)))
+
+
+def bolum_kisitli(ilan):
+    """Şart/özet metni belirli bölüm/fakülte mezunu istiyor mu ('Hukuk fakültesi', 'adalet bölümü mezunu')."""
+    return bool(BOLUM_KISITI.search(_sart_metni(ilan)))
+
+
 def ogrenim_seviyeleri(ilan):
     if akademik_mi(ilan):
         return []
     metin = _tum_metin(ilan)
     bulunan = [ad for ad, desen in OGRENIM if _sart_olarak_gecer(desen, metin)]
+    if 'lisans' not in bulunan and fakulte_sartli(ilan):
+        bulunan.insert(0, 'lisans')
     # Bozuk PDF tablolarında "ön" ile "lisans" ayrı hücreye düşer; puan türü
     # yalnız P93/P94 ise "lisans program..." eşleşmesi önlisans/lise demektir.
     if 'lisans' in bulunan and P9X.search(metin) and not P3.search(metin) \

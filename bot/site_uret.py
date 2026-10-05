@@ -172,7 +172,7 @@ def _senin_icin(item, kayit):
             satirlar += f'<li>{LEVELS[duzey]}: benzer kadroların taban puanı medyanı <b>{_virgul(r["medyan"])}</b> ({int(r.get("n") or 0)} kayıt{donem})</li>'
     ref_html = (f'<ul class="senin-ref">{satirlar}</ul><p class="senin-not">Geçmiş yerleştirmelerden referans; bu ilanın şartı değildir.</p>') if satirlar else ''
     import liste_verisi
-    ki = ' data-kurum-ici="1"' if kayit.get('kurum_ici') else ''
+    ki = (' data-kurum-ici="1"' if kayit.get('kurum_ici') else '') + (' data-bolum="1"' if kayit.get('bolum_kisiti') else '')
     veri = (f' data-ogr="{esc(",".join(kayit.get("ogrenim") or []))}" data-pt="{esc(",".join(kayit.get("puan_turleri") or []))}"'
             f' data-il="{esc(kayit.get("il") or "")}" data-iller="{esc(",".join(liste_verisi._etkin_iller(kayit)))}"'
             f'{ki} data-ref="{esc(json.dumps(ref, ensure_ascii=False, separators=(",", ":")))}"')
@@ -312,6 +312,7 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
         return None
     import kurum_sayfasi as ks
     import liste_verisi
+    item = liste_verisi.donem_tamamla(item)
     simdi = (simdi or datetime.now(TR)).astimezone(TR)
     canonical = BASE + 'ilan/' + key + '/'
     title = item.get('baslik', 'Kamu ilanı')

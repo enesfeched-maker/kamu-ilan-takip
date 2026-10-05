@@ -197,6 +197,13 @@ def read_sbb(previous):
             data,url=get(op,row.pop('gecici_link'),SBB)
             text=pdf_text(data)
             row.update(pdf_dates(text,row['donem']))
+            if not row.get('son_tarih'):
+                # PDF'de açık tarih yoksa SBB'nin gösterdiği dönem ('( 20 Ekim - 26 Ekim)') son başvuru günüdür.
+                from liste_verisi import donem_tarihleri
+                tarihler=donem_tarihleri(row['donem'],now())
+                if tarihler:
+                    row['son_tarih']=tarihler[1].isoformat()
+                    row.setdefault('baslangic_zaman',datetime.combine(tarihler[0],datetime.min.time(),TR).isoformat())
             # SBB's PDF endpoint rejects navigation outside its own page/session.
             # Link to its working search page rather than publishing a broken PDF URL.
             row.update(link=SBB,detay_guncelleme=now().isoformat(timespec='seconds'),

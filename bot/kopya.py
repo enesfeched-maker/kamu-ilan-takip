@@ -104,6 +104,50 @@ def _uygun(item):
         return False
 
 
+KURUM_GENEL = {'ve', 'ile', 'genel', 'mudurlugu', 'kurumu', 'kurulu', 'cumhurbaskanligi', 'baskanlik'}
+BASLIK_GENEL = {'ve', 'ile', 'veya', 'alim', 'alimi', 'ilani', 'duyurusu', 'personel', 'sinav', 'sinavi', 'yili', 'yilinda',
+                'alacak', 'alinacak', 'ilk', 'defa', 'atanmak', 'uzere', 'aciktan', 'temin', 'edecektir', 'adet', 'kisi',
+                'toplam', 'sozlesmeli', 'mevcut'}
+ILK_GORULME_FARKI_GUN = 10   # bir tarafta son tarih yoksa kayıtlar en çok bu kadar gün arayla görülmüş olmalı
+SINAV_PENCERE_GUN = 60       # Kariyer Kapısı ilan penceresi sonu ile SBB sınav başvuru sonu arası en çok bu kadar
+BASLIK_ORTAK_ESIK = 0.6
+KK, SBB_HOST, CSB_HOST = 'kariyerkapisi.gov.tr', 'kamuilan.sbb.gov.tr', 'yerelyonetimler.csb.gov.tr'
+
+
+def _kurum_cekirdek(item, kan):
+    """Kurum adının karşılaştırma çekirdeği: parantezli kısaltma, 've/genel müdürlüğü/kurumu', 'Cumhurbaşkanlığı' öneki ve
+    (geriye ≥3 sözcük kalıyorsa) baştaki il atılır; belediyelerde kanonik ad olduğu gibi kalır.
+    'İstanbul Bankacılık Düzenleme ve Denetleme Kurumu' ile 'BANKACILIK DÜZENLEME VE DENETLEME KURUMU BAŞKANLIĞI (BDDK)' aynıdır."""
+    if kan.endswith(' belediye'):
+        return frozenset(kan.split())
+    sozcukler = [w for w in ks.kurum_anahtari(re.sub(r'\([^)]*\)', ' ', item.get('kurum') or '')).split() if w not in KURUM_GENEL]
+    if len(sozcukler) >= 4 and sozcukler[0] in ks.IL_ANAHTAR:
+        sozcukler = sozcukler[1:]
+    return frozenset(sozcukler)
+
+
+def _baslik_belirtecleri(item):
+    kurum = set(ks.kurum_anahtari(item.get('kurum') or '').split())
+    sozcukler = ks.kurum_anahtari(' '.join(str(item.get(a) or '') for a in ('baslik', 'kadro'))).split()
+    return {w[:5] for w in sozcukler if not w.isdigit() and w not in BASLIK_GENEL and w not in kurum}   # 5 harflik kök: yardımcısı/yardımcılığı
+
+
+def _baslik_ortak(a, b):
+    """Unvan sözcüklerinin örtüşme oranı (küçük kümeye göre); bir tarafta sözcük yoksa 0."""
+    x, y = _baslik_belirtecleri(a), _baslik_belirtecleri(b)
+    return len(x & y) / min(len(x), len(y)) if x and y else 0
+
+
+def ortak_unvan(a, b):
+    """Başlık/kadro sözcükleri ≥ BASLIK_ORTAK_ESIK örtüşüyor ve en az 2 ortak sözcük var."""
+    return _baslik_ortak(a, b) >= BASLIK_ORTAK_ESIK and len(_baslik_belirtecleri(a) & _baslik_belirtecleri(b)) >= 2
+
+
+def _toplam_esit_ya_da_bilinmiyor(a, b):
+    ta, tb = _toplam(a), _toplam(b)
+    return not (ta and tb) or ta == tb
+
+
 def _takma_ad(a, b):
     return a.get('id') in (b.get('kaynak_kimlikleri') or []) or b.get('id') in (a.get('kaynak_kimlikleri') or [])
 
@@ -118,6 +162,7 @@ def _ayni_ilan(a, b):
 
 def kopya_bul(ilanlar):
     """Kaynaklar arası yinelenen ilanları bulur; bkz. modül açıklaması. Girdi değiştirilmez."""
+    ilanlar = [liste_verisi.donem_tamamla(i) for i in ilanlar]   # SBB'de son tarih yoksa dönemden türetilir
     aday = [i for i in ilanlar if i.get('id') and _uygun(i)]
     # İli kayıtta yazmayan belediye (SBB 'HANAK BELEDİYE BAŞKANLIĞI'), aynı adın ili yalnızca TEK ilse o ile bağlanır.
     kendi_il = {}
@@ -136,20 +181,58 @@ def kopya_bul(ilanlar):
     bilgi = {}
     for i in aday:
         kan = ks.kurum_kanonik(i.get('kurum'))
-        bilgi[i['id']] = {'il': il_coz(i, kan), 'kan': kan, 'host': _hostlar(i)}
+        bilgi[i['id']] = {'il': il_coz(i, kan), 'kan': kan, 'host': _hostlar(i), 'cekirdek': _kurum_cekirdek(i, kan)}
     siralama = sorted(aday, key=_zengin)
 
     def temel(a, b):
         x, y = bilgi[a['id']], bilgi[b['id']]
-        return (not (x['host'] & y['host']) and x['il'] and x['il'] == y['il'] and x['kan'] and x['kan'] == y['kan']
-                and _isci(a) == _isci(b))
+        if x['host'] & y['host'] or not x['kan'] or _isci(a) != _isci(b):
+            return False
+        if not (x['kan'] == y['kan'] or x['cekirdek'] and x['cekirdek'] == y['cekirdek']):
+            return False
+        if x['il'] and y['il']:
+            return x['il'] == y['il']
+        # ili bir tarafta yazmayan (İŞKUR'un şehri, SBB'de il yok) ulusal kurum ilanı eşleşebilir; belediyede il şarttır
+        return not x['kan'].endswith(' belediye')
+
+    def tarih_uyumlu(a, b):
+        sa, sb = _gun(a.get('son_tarih')), _gun(b.get('son_tarih'))
+        if sa and sb:
+            fark = abs((sa - sb).days)
+            if fark == 0:
+                return True
+            if fark == 1:   # bir günlük kayma (İŞKUR'un 23:59'u): ancak unvan sözcükleri de güçlü biçimde örtüşürse
+                return ortak_unvan(a, b)
+            return sinav_penceresi(a, b, fark)
+        if not (sa or sb):
+            return False
+        eksik = b if sa else a
+        ga, gb = _gun(a.get('ilk_gorulme')), _gun(b.get('ilk_gorulme'))
+        return bool(ga and gb and abs((ga - gb).days) <= ILK_GORULME_FARKI_GUN and bilgi[eksik['id']]['host'] != {CSB_HOST})
+
+    def sinav_penceresi(a, b, fark):
+        """Kariyer Kapısı'nın bitiş tarihi ilan penceresidir, SBB'nin sınav başvuru sonu: aynı kurum, ortak unvan, eşit kadro."""
+        hostlar = {frozenset(bilgi[a['id']]['host']), frozenset(bilgi[b['id']]['host'])}
+        return (hostlar == {frozenset({KK}), frozenset({SBB_HOST})} and fark <= SINAV_PENCERE_GUN
+                and bilgi[a['id']]['cekirdek'] == bilgi[b['id']]['cekirdek']
+                and _baslik_ortak(a, b) >= BASLIK_ORTAK_ESIK and _toplam_esit_ya_da_bilinmiyor(a, b))
+
+    def kadro_uyumlu(a, b):
+        """Unvanlar uyumlu; ya da toplam çelişmiyor ve unvan sözcükleri büyük oranda ortak (en az 2 ortak sözcük);
+        bir tarafta unvan bilgisi yoksa eşit bilinen toplam da yeter. Her iki tarafta unvan bilinip uyuşmuyorsa ortak sözcük şart."""
+        if _uyumlu_kadro(a, b):
+            return True
+        if not _tur_uyumlu(a, b) or not _toplam_esit_ya_da_bilinmiyor(a, b):
+            return False
+        ortak = ortak_unvan(a, b)
+        if _unvanlar(a) and _unvanlar(b):
+            return ortak
+        return ortak or bool(_toplam(a) and _toplam(a) == _toplam(b))
 
     def guclu(a, b):
         if _takma_ad(a, b) or _ayni_ilan(a, b) and not (bilgi[a['id']]['host'] & bilgi[b['id']]['host']):
             return True
-        if not temel(a, b) or not a.get('son_tarih') or a['son_tarih'] != b.get('son_tarih'):
-            return False
-        return _uyumlu_kadro(a, b)
+        return temel(a, b) and tarih_uyumlu(a, b) and kadro_uyumlu(a, b)
 
     atanan, gruplar = {}, {}
     for r in siralama:

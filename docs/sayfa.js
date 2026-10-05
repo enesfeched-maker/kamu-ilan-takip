@@ -150,6 +150,7 @@
       else if (ogr.indexOf(pr.ogrenim) >= 0) ek('tamam', ['Öğrenim düzeyin: ', kalin(LV[pr.ogrenim]), ' — ilanın aradığı düzeylerden biri.']);
       else if (RANK[pr.ogrenim] > en) ek('', ['İlan daha alt düzeyleri (' + ogr.map(function (x) { return LV[x]; }).join(' / ') + ') arıyor; şartlarını kontrol et.']);
       else ek('uyari', ['İlan ' + ogr.map(function (x) { return LV[x]; }).join(' / ') + ' düzeyi arıyor; senin düzeyin: ' + LV[pr.ogrenim] + '.']);
+      if (s.dataset.bolum === '1') ek('', ['Belirli bölüm mezunları başvurabilir; şartlara bak.']);
       if (!ilanIller.length) ek('', ['Görev yeri: ülke geneli / ilanda belirtilmemiş.']);
       else if (!pr.tum && pr.iller.length) {
         var eslesen = ilanIller.filter(function (x) { return pr.iller.some(function (y) { return normal(y) === normal(x); }); });

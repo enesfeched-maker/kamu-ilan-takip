@@ -7,6 +7,27 @@ def ilan(**alanlar):
     return alanlar
 
 
+ICRA_SART = ('c) Hukuk fakültesi, adalet meslek yüksekokulu, meslek yüksekokullarının adalet bölümü veya adalet meslek eğitimi '
+             'ön lisans programı mezunu olmak, öğrenim yabancı ülkede yapılmış ise denklik belgesi almış olmak,')
+
+
+class FakulteSartiTesti(unittest.TestCase):
+    def test_fakulte_virgul_lisans_sayilir(self):
+        self.assertEqual(ogrenim_seviyeleri(ilan(sartlar=[{'metin': ICRA_SART}])), ['lisans', 'onlisans'])
+        self.assertEqual(ogrenim_seviyeleri(ilan(ozet='Hukuk fakültesi veya iktisat fakültesi mezunu olmak')), ['lisans'])
+        self.assertEqual(ogrenim_seviyeleri(ilan(ozet='Eczacılık fakültesi ya da tıp fakültesi mezunu')), ['lisans'])
+
+    def test_fakulte_adi_kurum_ve_gorev_yerinde_lisans_degil(self):
+        self.assertEqual(ogrenim_seviyeleri(ilan(kurum='Tıp Fakültesi Hastanesi', baslik='Tıp Fakültesi, Hastanesi Personel')), [])
+        self.assertEqual(ogrenim_seviyeleri(ilan(sartlar=[{'metin': 'Önlisans. Diş Hekimliği Fakültesinde görevlendirilecektir.'}])), ['onlisans'])
+
+    def test_bolum_kisiti(self):
+        from siniflandir import bolum_kisitli
+        self.assertTrue(bolum_kisitli(ilan(sartlar=[{'metin': ICRA_SART}])))
+        self.assertTrue(bolum_kisitli(ilan(ozet='makine mühendisliği bölümünden mezun olmak')))
+        self.assertFalse(bolum_kisitli(ilan(ozet='Lisans mezunu olmak; Tıp Fakültesi Hastanesi', kurum='Tıp Fakültesi Hastanesi')))
+
+
 class OgrenimTesti(unittest.TestCase):
     def test_onlisans_lisans_karismaz(self):
         self.assertEqual(ogrenim_seviyeleri(ilan(ozet='Önlisans mezunu olmak.')), ['onlisans'])

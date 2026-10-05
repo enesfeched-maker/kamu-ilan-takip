@@ -21,7 +21,6 @@ LISANS_UNVAN = re.compile(
     r'uzman yardımcı|müfettiş yardımcı|denetçi yardımcı|murakıp yardımcı|kontrolör yardımcı|aktüer yardımcı'
     r'|stajyer avukat|(?<!\w)avukat|hukuk sınıfı|muvazzaf subay|meslek personeli'
     r'|bilişim personeli|yazılım geliştirme|(?<!\w)mühendis|(?<!\w)mimar(?!\w)')
-YETERLIK = re.compile(r'yeterlik sınavı')
 # İli kurum adında yazmayan, bilinen kurumlar (kurum_anahtari biçimiyle içerir-eşleşme)
 KURUM_IL = (
     ('tarsus universitesi', 'Mersin'), ('turkiye taskomuru kurumu', 'Zonguldak'),
@@ -30,6 +29,49 @@ KURUM_IL = (
 )
 OZET_IL_PARANTEZ = re.compile(r'\(([A-ZÇĞİÖŞÜ][a-zçğıöşü]+)\)')
 OZET_IL_GOREV = re.compile(r'(\w+?)(?:da|de|ta|te) görev yapmak üzere')
+
+
+AYLAR = ('ocak', 'şubat', 'mart', 'nisan', 'mayıs', 'haziran', 'temmuz', 'ağustos', 'eylül', 'ekim', 'kasım', 'aralık')
+DONEM_RE = re.compile(r'(\d{1,2})\s+(' + '|'.join(AYLAR) + r')\s*[-–]\s*(\d{1,2})\s+(' + '|'.join(AYLAR) + r')')
+KURUM_ICI_BASLIK = re.compile(r'yeterlik sınavı|görevde yükselme|unvan değişikliği')
+
+
+def donem_tarihleri(donem, referans):
+    """SBB 'donem' metni ('( 5 Ekim - 20 Ekim)') -> (başlangıç, bitiş) date çifti; çözülemezse None.
+    Yıl referans tarihin (ilk görülme) yılıdır; bitiş ayı başlangıçtan önceyse ya da dönem referanstan çok önce
+    bitiyorsa (yıl dönümü) bir yıl ilerletilir."""
+    from siniflandir import kucuk
+    m = DONEM_RE.search(kucuk(donem))
+    ref = referans.date() if isinstance(referans, datetime) else referans
+    if not m or not ref:
+        return None
+    g1, a1, g2, a2 = int(m.group(1)), AYLAR.index(m.group(2)) + 1, int(m.group(3)), AYLAR.index(m.group(4)) + 1
+    try:
+        for kaydir in (0, 1):
+            bas = date(ref.year + kaydir, a1, g1)
+            son = date(ref.year + kaydir + (a2 < a1), a2, g2)
+            if son >= ref - timedelta(days=60):
+                return bas, son
+    except ValueError:
+        pass
+    return None
+
+
+def donem_tamamla(item):
+    """son_tarih'i olmayan SBB kaydı için dönemden son_tarih/baslangic_zaman türetilmiş KOPYA döndürür (kayıt değişmez);
+    türetilemiyorsa aynı nesne. Derleme zamanı yedeği; toplayıcı yeni kayıtlarda aynı alanları kendisi yazar."""
+    if item.get('son_tarih') or item.get('kaynak_turu') != 'sbb' or not item.get('donem'):
+        return item
+    try:
+        t = donem_tarihleri(item['donem'], datetime.fromisoformat(item.get('ilk_gorulme') or '').astimezone(TR))
+    except ValueError:
+        return item
+    if not t:
+        return item
+    yeni = dict(item, son_tarih=t[1].isoformat())
+    if not item.get('baslangic_zaman'):
+        yeni['baslangic_zaman'] = datetime.combine(t[0], datetime.min.time(), TR).isoformat()
+    return yeni
 
 
 def puan_duzeyi(p):
@@ -47,11 +89,11 @@ def puan_duzeyi(p):
 def ogrenim_cikar(item, ogr, pt):
     """(düzeyler, çıkarım_yapıldı, kurum_içi). Sırayla: yeterlik sınavı -> kurum içi; puan türü -> düzey; açık 'KPSS lisans'
     ifadesi; yalnız lisans gerektiren unvanlar (başlık/kadro/tür kısa metni). Sonuç metinden gelen düzeylerle birleşir, hiçbiri silinmez."""
-    from siniflandir import kucuk, _tum_metin, _kisa_metin
-    if YETERLIK.search(kucuk(f"{item.get('baslik') or ''} {item.get('ilan_turu') or ''}")):
+    from siniflandir import kucuk, _tum_metin, _kisa_metin, fakulte_sartli
+    if KURUM_ICI_BASLIK.search(kucuk(f"{item.get('baslik') or ''} {item.get('ilan_turu') or ''}")):
         return list(ogr), False, True
     ek = {d for d in (puan_duzeyi(p) for p in pt) if d}
-    if KPSS_LISANS.search(_tum_metin(item)) or LISANS_UNVAN.search(_kisa_metin(item)):
+    if KPSS_LISANS.search(_tum_metin(item)) or LISANS_UNVAN.search(_kisa_metin(item)) or fakulte_sartli(item):
         ek.add('lisans')
     sonuc = [d for d in SEVIYE_SIRASI if d in ogr or d in ek]
     return sonuc, bool(ek - set(ogr)), False
@@ -94,6 +136,7 @@ def baslik_temiz(s):
     s = re.sub(r'\s+Alım(?:ı)?\s+İlanı$', ' alımı', s)
     s = re.sub(r'\s+Sınav(?:ı)?\s+(?:İlanı|Duyurusu)$', ' sınavı', s)
     s = re.sub(r'\s+İlanı$', '', s)
+    s = re.sub(r'\s+(?:alacak|alınacak|temin edecektir)\s*[.,;:]*\s*$', '', s, flags=re.I)
     s = s.replace('Vhki', 'VHKİ').replace('.net', '.NET')
     return s[:1].upper() + s[1:]
 
@@ -184,6 +227,7 @@ def _tr_tarih(iso):
 def kayit(item, gorsel, tablolar, simdi, harita=None):
     """Tek ilanın ince kaydı (None: listede gösterilmeyecek durumda)."""
     ks = _ks()
+    item = donem_tamamla(item)
     metin, cls = ks.durum(item, simdi)
     if cls not in ACIK or item.get('duyuru_turu') or item.get('iptal_edildi'):
         return None
@@ -194,7 +238,7 @@ def kayit(item, gorsel, tablolar, simdi, harita=None):
     pt = puan_turleri(item)
     ogr, cikarim, kurum_ici = ogrenim_cikar(item, ogr, pt)
     adlar = [ad for _, ad in ks.kadrolar(item)]
-    from siniflandir import kucuk
+    from siniflandir import kucuk, bolum_kisitli
     unvanlar = list(dict.fromkeys(kucuk(re.sub(r'\s*\(.*?\)', '', ad)).strip() for ad in adlar))  # puanlar sayfası tam eşleşme için
     ref = {}  # öğrenim düzeyine göre {'lisans': {...}}; tarayıcı profil düzeyine göre okur
     for duzey in ogr:
@@ -212,7 +256,7 @@ def kayit(item, gorsel, tablolar, simdi, harita=None):
         'kurum': ks.kurum_adi(item.get('kurum')), 'kurum_slug': g.get('kurum_slug') or ks.kurum_slug(item.get('kurum')),
         'il': il, 'iller': iller,
         'unvanlar': unvanlar, 'ogrenim': ogr, 'ilan_turu': (item.get('ilan_turu') or '')[:60], 'kategori': item.get('kategori'), 'kpss': item.get('kpss'), 'puan_turleri': pt, 'taban_ref': ref or None,
-        'ogrenim_cikarim': cikarim, 'kurum_ici': kurum_ici,
+        'ogrenim_cikarim': cikarim, 'kurum_ici': kurum_ici, 'bolum_kisiti': bolum_kisitli(item),
         'son_tarih': item.get('son_tarih'), 'son_zaman': item.get('son_zaman'),
         'baslangic_zaman': item.get('baslangic_zaman'), 'ilk_gorulme': item.get('ilk_gorulme'), 'durum': cls,
     }

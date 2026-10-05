@@ -43,7 +43,7 @@ for(const k of ['son_zaman','baslangic_zaman','ilk_gorulme'])o[k]=typeof l[k]===
 o.meslek=Array.isArray(l.meslek)?l.meslek.filter(f=>typeof f==='string'&&MESLEK.test(f)).slice(0,3):[];
 o.logo=IMG_PATH.test(l.logo||'')?l.logo:'';
 o.kurum_slug=typeof l.kurum_slug==='string'&&l.kurum_slug.length<=80&&SLUG.test(l.kurum_slug)?l.kurum_slug:'';
-o.iller=strList(l.iller,20,80);o.ogrenim=strList(l.ogrenim,3,20).filter(x=>LEVELS[x]);o.puan_turleri=strList(l.puan_turleri,8,5).filter(x=>PT_RE.test(x));o.kurum_ici=l.kurum_ici===true;
+o.iller=strList(l.iller,20,80);o.ogrenim=strList(l.ogrenim,3,20).filter(x=>LEVELS[x]);o.puan_turleri=strList(l.puan_turleri,8,5).filter(x=>PT_RE.test(x));o.kurum_ici=l.kurum_ici===true;o.bolum_kisiti=l.bolum_kisiti===true;
 const t=l.taban_ref;o.taban_ref={};if(t&&typeof t==='object')for(const d of Object.keys(LEVELS)){const r=t[d];if(r&&typeof r==='object'&&typeof r.medyan==='number'&&r.medyan>0&&r.medyan<=100&&Number.isInteger(r.n)&&r.n>=5)o.taban_ref[d]={medyan:r.medyan,n:r.n};}
 return o;}
 /* liste.json yoksa/yüklenemezse satır modeli tam kayıttan türetilir (taban referansı ve puan türü olmadan). */
