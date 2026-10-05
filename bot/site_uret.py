@@ -7,7 +7,13 @@ from urllib.parse import urlparse, parse_qs
 from datetime import datetime, timezone, timedelta
 
 ROOT = Path(__file__).resolve().parents[1]
-BASE = 'https://enesfeched-maker.github.io/kamu-ilan-takip/'
+import json as _json
+try:
+    BASE = _json.loads((ROOT / 'config.json').read_text(encoding='utf-8')).get('site_url') or 'https://kpsstercihi.com/'
+except (OSError, ValueError):
+    BASE = 'https://kpsstercihi.com/'
+if not BASE.endswith('/'):
+    BASE += '/'
 TR = timezone(timedelta(hours=3))
 KART_GENISLIK = 720
 LOGO_BOYUT = 128

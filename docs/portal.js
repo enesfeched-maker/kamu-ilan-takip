@@ -1,5 +1,5 @@
 'use strict';
-const sourceDocument = i => /^https:\/\/enesfeched-maker\.github\.io\/kamu-ilan-takip\/belgeler\/sbb\/[a-f0-9]{64}\.pdf$/.test(i.belge_kopyasi||'')?i.belge_kopyasi:null;
+const sourceDocument = i => /^https:\/\/(?:kpsstercihi\.com|enesfeched-maker\.github\.io\/kamu-ilan-takip)\/belgeler\/sbb\/[a-f0-9]{64}\.pdf$/.test(i.belge_kopyasi||'')?i.belge_kopyasi:null;
 const $ = id => document.getElementById(id);
 const E = (tag, cls, text) => { const n=document.createElement(tag); if(cls)n.className=cls; if(text!==undefined)n.textContent=text; return n; };
 const normalize = v => String(v||'').toLocaleLowerCase('tr-TR').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/ı/g,'i');

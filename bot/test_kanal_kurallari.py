@@ -18,7 +18,7 @@ from veri_kaydet import merge_registry
 
 TR = timezone(timedelta(hours=3))
 SIMDI = datetime(2026, 10, 5, 8, 0, tzinfo=TR)  # 09:00 öncesi: toplu kart karışmaz
-BASE = 'https://enesfeched-maker.github.io/kamu-ilan-takip/'
+BASE = 'https://kpsstercihi.com/'
 ROOT = Path(__file__).resolve().parents[1]
 
 

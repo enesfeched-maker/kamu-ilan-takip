@@ -11,16 +11,16 @@ from yerel_tara import publish
 
 class LocalPublishingTests(unittest.TestCase):
     def test_detail_routes_match_static_pages(self):
-        base='https://enesfeched-maker.github.io/kamu-ilan-takip/'
+        base='https://kpsstercihi.com/'
         key='39a092b0-f2b1-4f11-a125-1e6e3a6ad020'
         for item,expected in [({'id':'source-id','link':'https://kariyerkapisi.gov.tr/IlanDetay?i='+key},key),({'id':'sbb-'+'a'*24,'link':'https://kamuilan.sbb.gov.tr/'},'sbb-'+'a'*24)]:
             self.assertEqual(ilan_sayfasi(item,base),base+'ilan/'+expected+'/')
         with self.assertRaises(ValueError):ilan_sayfasi({'id':'../../x'},base)
 
     def test_telegram_primary_button_targets_own_detail(self):
-        url='https://enesfeched-maker.github.io/kamu-ilan-takip/ilan/sbb-'+'a'*24+'/'
+        url='https://kpsstercihi.com/ilan/sbb-'+'a'*24+'/'
         with patch.object(ilan_bot.urllib.request,'urlopen',return_value=io.BytesIO(b'{"ok":true}')) as api:
-            ilan_bot.telegram_gonder('test','test','test',url,'https://enesfeched-maker.github.io/kamu-ilan-takip/',foto=b'PNG')
+            ilan_bot.telegram_gonder('test','test','test',url,'https://kpsstercihi.com/',foto=b'PNG')
         data=api.call_args.args[0].data.decode(errors='replace')
         self.assertIn(url,data);self.assertIn('İlanı incele',data)
         self.assertNotIn('kamuilan.sbb.gov.tr',data)

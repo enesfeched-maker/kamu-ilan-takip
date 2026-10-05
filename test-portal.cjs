@@ -28,7 +28,7 @@ const liste={guncelleme:nowIso,sayilar:{acik:3,kadro:6,bugun_yeni:3},takvim:{},i
  {key:'../evil',id:'x',manset:'<img src=x onerror=alert(1)>'}
 ]};
 /* Her çağrı kendi tarayıcı bağlamını kurar: adres, hash ve yerel depolama ayrı tutulur. */
-function make({href='https://enesfeched-maker.github.io/kamu-ilan-takip/?g=bugun',hash='',store={},liste:L=liste}={}){
+function make({href='https://kpsstercihi.com/?g=bugun',hash='',store={},liste:L=liste}={}){
  const nodes=new Map(),get=id=>{if(!nodes.has(id))nodes.set(id,new Element());return nodes.get(id);};
  const stored=[],loc={hash:hash||new URL(href).hash,href};
  const ctx=vm.createContext({URL,URLSearchParams,Date,Intl,Blob,console,Set,Map,Number,String,Array,JSON,Promise,Error,isNaN,
@@ -45,7 +45,7 @@ const tick=async()=>{await new Promise(r=>setImmediate(r));await new Promise(r=>
 (async()=>{
 const T=make();const {ctx,get,run,stored}=T;await tick();
 assert.equal(run('listeLoaded'),true);assert.equal(run('loaded'),false,'full records load lazily');await run('ensureFull()');assert.equal(run('loaded'),true);
-assert.equal(ctx.__replaced,'/kamu-ilan-takip/','?g=bugun stripped from URL');
+assert.equal(ctx.__replaced,'/','?g=bugun stripped from URL');
 assert.equal(run('tab'),'bugun','?g=bugun keeps Bugün');
 // liste.json: bozuk kayıt (geçersiz anahtar) elenir
 assert.equal(run('liste.length'),5,'invalid liste row dropped');
@@ -83,7 +83,7 @@ run("F=defaultF();shown=2;render()");assert.equal(get('cards').children.length,3
 run("shown=PAGE_SIZE;render()");assert.equal(get('cards').children.length,4);
 // URL eşitleme: İlanlar'dayken yazılır, başka sekmede temizlenir
 run("F={...defaultF(),il:['Ankara'],ogr:'onlisans'};render()");assert.match(ctx.__replaced,/\?il=ankara&ogr=onlisans$/);
-run("showTab('takvim')");assert.equal(ctx.__replaced,'/kamu-ilan-takip/','filters cleared from URL on other tabs');
+run("showTab('takvim')");assert.equal(ctx.__replaced,'/','filters cleared from URL on other tabs');
 run("F=defaultF()");
 // ---- profil ile: Profilime uygun, kaçış kapısı
 run("profil={v:1,ogrenim:'lisans',puan_turu:'P3',puan:82.15,iller:['İstanbul'],tum_turkiye:false,bolum:'',t:'2026-10-04'};showTab('ilanlar')");
@@ -159,28 +159,29 @@ run("profil.tum_turkiye=true");assert.equal(run("uygun(liste[1],profil)"),'tam')
 // Son ziyaret 10 sn gecikmeli yazılır (burada setTimeout stub: yazılmamış olmalı)
 assert.ok(!stored.includes('kit-son-ziyaret'),'last visit not written immediately');
 // ---- Açılışta sorgu: İlanlar süzgeçlerle açılır
-const B=make({href:'https://enesfeched-maker.github.io/kamu-ilan-takip/?il=ankara&sb=14&uygun=0',hash:''});await tick();
+const B=make({href:'https://kpsstercihi.com/?il=ankara&sb=14&uygun=0',hash:''});await tick();
 assert.equal(B.run('tab'),'ilanlar','query on load opens İlanlar');assert.equal(B.run("JSON.stringify(F.il)"),'["Ankara"]');assert.equal(B.run('F.sb'),'14');assert.equal(B.run('F.uygun'),false);
 assert.match(B.ctx.__replaced,/#ilanlar$/,'hash set without extra history entry');assert.equal(B.get('cards').children.length,2,'Ankara + <=14 days (Zabıta, Teknisyen)');
 assert.match(B.loc.href,/\?il=ankara&sb=14&uygun=0#ilanlar$/,'shareable URL kept');
-const C=make({href:'https://enesfeched-maker.github.io/kamu-ilan-takip/?q=zab%C4%B1ta#takvim'});await tick();
+const C=make({href:'https://kpsstercihi.com/?q=zab%C4%B1ta#takvim'});await tick();
 assert.equal(C.run('tab'),'takvim','explicit hash tab wins over query');assert.equal(C.run('F.q'),'zabıta');
-const D=make({href:'https://enesfeched-maker.github.io/kamu-ilan-takip/?g=bugun'});await tick();assert.equal(D.run('tab'),'bugun');assert.equal(D.run('queryHas(new URL(location.href).search)'),false);
+const D=make({href:'https://kpsstercihi.com/?g=bugun'});await tick();assert.equal(D.run('tab'),'bugun');assert.equal(D.run('queryHas(new URL(location.href).search)'),false);
+const SD=h=>D.run('sourceDocument({belge_kopyasi:"'+h+'"})');{const p='aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.pdf';assert.equal(SD('https://kpsstercihi.com/belgeler/sbb/'+p),'https://kpsstercihi.com/belgeler/sbb/'+p,'yeni alan adi kabul');assert.equal(SD('https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/'+p),'https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/'+p,'eski onek kabul');assert.equal(SD('https://evil.test/belgeler/sbb/'+p),null,'yabanci alan reddedilir');}
 // ---- Geri/ileri: yalnız sorgu değişse de sekme ve süzgeç eşitlenir (popstate)
-const P=make({href:'https://enesfeched-maker.github.io/kamu-ilan-takip/#bugun'});await tick();
+const P=make({href:'https://kpsstercihi.com/#bugun'});await tick();
 assert.equal(P.run('tab'),'bugun');assert.ok(P.ctx.__h.popstate&&P.ctx.__h.popstate.length,'popstate listener registered');
-P.loc.href='https://enesfeched-maker.github.io/kamu-ilan-takip/?il=ankara&sb=14#ilanlar';P.loc.hash='#ilanlar';P.ctx.__h.popstate.forEach(f=>f());
+P.loc.href='https://kpsstercihi.com/?il=ankara&sb=14#ilanlar';P.loc.hash='#ilanlar';P.ctx.__h.popstate.forEach(f=>f());
 assert.equal(P.run('tab'),'ilanlar','popstate switches tab');assert.equal(P.run('JSON.stringify(F.il)'),'["Ankara"]');assert.equal(P.run('F.sb'),'14');
-P.loc.href='https://enesfeched-maker.github.io/kamu-ilan-takip/?il=istanbul#ilanlar';P.ctx.__h.popstate.forEach(f=>f());
+P.loc.href='https://kpsstercihi.com/?il=istanbul#ilanlar';P.ctx.__h.popstate.forEach(f=>f());
 assert.equal(P.run('JSON.stringify(F.il)'),'["İstanbul"]','query-only change re-parses filters');assert.equal(P.run('F.sb'),'');
-P.loc.href='https://enesfeched-maker.github.io/kamu-ilan-takip/#bugun';P.loc.hash='#bugun';P.ctx.__h.popstate.forEach(f=>f());assert.equal(P.run('tab'),'bugun');
+P.loc.href='https://kpsstercihi.com/#bugun';P.loc.hash='#bugun';P.ctx.__h.popstate.forEach(f=>f());assert.equal(P.run('tab'),'bugun');
 P.ctx.__h.hashchange.forEach(f=>f());assert.equal(P.run('tab'),'bugun','duplicate hashchange for same URL is ignored');
 // ---- ?q=<unvan>#ilanlar
-const Q=make({href:'https://enesfeched-maker.github.io/kamu-ilan-takip/?q=Zab%C4%B1ta#ilanlar'});await tick();
+const Q=make({href:'https://kpsstercihi.com/?q=Zab%C4%B1ta#ilanlar'});await tick();
 assert.equal(Q.run('tab'),'ilanlar');assert.equal(Q.get('search').value,'Zabıta');assert.equal(Q.get('cards').children.length,1,'?q= search applied');
 // ---- ?profil=1 profil penceresini açar ve adresten silinir
-const R1=make({href:'https://enesfeched-maker.github.io/kamu-ilan-takip/?profil=1'});await tick();
-assert.equal(R1.get('profil-dialog').open,true);assert.equal(R1.loc.href,'https://enesfeched-maker.github.io/kamu-ilan-takip/');
+const R1=make({href:'https://kpsstercihi.com/?profil=1'});await tick();
+assert.equal(R1.get('profil-dialog').open,true);assert.equal(R1.loc.href,'https://kpsstercihi.com/');
 // ---- ARIA ve arşiv çipi
 run("showTab('ilanlar')");assert.equal(run("chips.ogr.attrs['aria-haspopup']"),'dialog');assert.equal(run("chips.ogr.attrs['aria-controls']"),'cip-menu');
 assert.ok(run("!!chips.arsiv")&&/Sona erenler dahil/.test(text(run('chips.arsiv'))));

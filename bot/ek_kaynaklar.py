@@ -55,7 +55,7 @@ def session():
 
 
 def get(opener, url, referer=None):
-    headers = {'User-Agent':'kamu-ilan-takip/1.0 (+https://enesfeched-maker.github.io/kamu-ilan-takip/)'}
+    headers = {'User-Agent':'kamu-ilan-takip/1.0 (+https://kpsstercihi.com/)'}
     if referer:
         headers['Referer'] = referer
     request = urllib.request.Request(safe_url(url), headers=headers)

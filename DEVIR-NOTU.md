@@ -7,7 +7,7 @@
 KPSS adaylarına kamu ilanlarını, atama haberlerini, bölümlerin taban puanlarını ve tercih
 rehberliğini sunup reklam/sponsor geliri elde etmek istiyorum. Önce sistemi oturtacağız, sonra
 Telegram + Instagram + X'te organik içerikle büyüyeceğiz. Hedef kitle: lisans, önlisans, lise KPSS.
-Telegram kanalı: @kamuilantakip (şu an 6 abone). Site: https://enesfeched-maker.github.io/kamu-ilan-takip/
+Telegram kanalı: @kamuilantakip (şu an 6 abone). Site: https://kpsstercihi.com/
 Repo: https://github.com/enesfeched-maker/kamu-ilan-takip
 
 Çalışma şekli: Opus orkestra şefi (planlar/karar verir/entegre eder), işçi ajan (Sonnet, düşük efor)
