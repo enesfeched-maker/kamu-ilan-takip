@@ -1,5 +1,5 @@
 {
- "guncelleme": "2026-10-05T13:50:33+03:00",
+ "guncelleme": "2026-10-05T13:52:27+03:00",
  "ilanlar": [
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=9c82aab5-022e-43c8-b7f1-e6cf329d205b",
@@ -11030,6 +11030,7 @@
   "sbb-c504fd4e2be5f2b04af620d3",
   "sbb-c8c8a1015f2eea057e2a3bef",
   "sbb-c9d65b8f680562ecac4d0fb4",
+  "sbb-cbaa38524cf24d4c6fa9b46f",
   "sbb-cbd741bfdacb09b22ac9930c",
   "sbb-cc10be5230ae54b4d12a99fa",
   "sbb-ce3aeb16575b73442a9f8944",
@@ -11054,9 +11055,7 @@
   "sbb-fefad4b939608db5c1d8a19c",
   "sbb-ffbba5c3ef2b2c84c00bb8e2"
  ],
- "telegram_bekleyen": [
-  "sbb-cbaa38524cf24d4c6fa9b46f"
- ],
+ "telegram_bekleyen": [],
  "telegram_yayin_surumu": 2,
  "telegram_mesajlari": {
   "csb-477163": 286,
@@ -11068,7 +11067,8 @@
   "https://kariyerkapisi.gov.tr/IlanDetay?i=da785726-3bff-45bb-9ab6-d43389db86f9": 290,
   "https://kariyerkapisi.gov.tr/IlanDetay?i=f0ca8a29-559f-426a-ade5-5ed30651c618": 291,
   "iskur-6c0565cdb31b4595f797e950": 288,
-  "sbb-89c8b060891cf9aed29dbcdc": 280
+  "sbb-89c8b060891cf9aed29dbcdc": 280,
+  "sbb-cbaa38524cf24d4c6fa9b46f": 292
  },
  "telegram_duyuru_yanitlari": {
   "m:iptal:belediye:tekkekoy|memur": "2026-10-04",
