@@ -126,6 +126,37 @@ def _kurum_cekirdek(item, kan):
     return frozenset(sozcukler)
 
 
+JSGA = 'jandarma ve sahil guvenlik akademisi'
+JGK = 'jandarma genel komutanligi'
+
+
+def _jandarma_takma(a, b):
+    """Jandarma ve Sahil Güvenlik Akademisi, J.Gn.K.'lığı adına personel temin eder: başlığında 'J.Gn.K.' ya da 'Jandarma Genel
+    Komutanlığı' geçen Akademi ilanı, Jandarma Genel Komutanlığı ilanıyla aynı kurum sayılır. Başka Akademi ilanı sayılmaz."""
+    ka, kb = ks.kurum_kanonik(a.get('kurum')), ks.kurum_kanonik(b.get('kurum'))
+    if {ka, kb} != {JSGA, JGK}:
+        return False
+    akademi = a if ka == JSGA else b
+    baslik = ks.kurum_anahtari(str(akademi.get('baslik') or '')).replace('.', '')
+    return bool(re.search(r'\bj ?gn ?k\b', baslik) or JGK in baslik)
+
+
+def _genel_belge_kelimeleri(item):
+    """Kaydın şart / özet metnindeki sözcük kökleri (SBB'de kadro adı yalnız 'MEMUR' ise unvan burada geçer)."""
+    metin = ' '.join([str(item.get('ozet') or '')] + [str(s.get('kadro') or '') + ' ' + str(s.get('metin') or '')
+                                                       for s in item.get('sartlar') or [] if isinstance(s, dict)])
+    return {w[:5] for w in ks.kurum_anahtari(metin).split()}
+
+
+def _belgede_unvan_gecer(genel, bilgisiz):
+    """Kadrosu yalnız genel unvan ('MEMUR') olan kaydın belge metni, kadro bilgisi olmayan kaydın başlığındaki özgül unvan
+    sözcüklerinin (örn. 'zabıta') hepsini içeriyor mu."""
+    if not _unvanlar(genel) or not _unvanlar(genel) <= GENEL_UNVANLAR or _unvanlar(bilgisiz):
+        return False
+    ozgul = {w for w in _baslik_belirtecleri(bilgisiz) if w not in {'memur', 'perso', 'isci'}}
+    return bool(ozgul) and ozgul <= _genel_belge_kelimeleri(genel)
+
+
 def _baslik_belirtecleri(item):
     kurum = set(ks.kurum_anahtari(item.get('kurum') or '').split())
     sozcukler = ks.kurum_anahtari(' '.join(str(item.get(a) or '') for a in ('baslik', 'kadro'))).split()
@@ -146,6 +177,12 @@ def ortak_unvan(a, b):
 def _toplam_esit_ya_da_bilinmiyor(a, b):
     ta, tb = _toplam(a), _toplam(b)
     return not (ta and tb) or ta == tb
+
+
+def _basvuru_araligi(item):
+    """Başvuru notundaki ilk 'gg/aa/yyyy – gg/aa/yyyy' aralığı (yoksa None)."""
+    m = re.search(r'(\d{2}/\d{2}/\d{4})\s*[–—-]\s*(\d{2}/\d{2}/\d{4})', str(item.get('basvuru_notu') or ''))
+    return m.groups() if m else None
 
 
 def _takma_ad(a, b):
@@ -188,7 +225,7 @@ def kopya_bul(ilanlar):
         x, y = bilgi[a['id']], bilgi[b['id']]
         if x['host'] & y['host'] or not x['kan'] or _isci(a) != _isci(b):
             return False
-        if not (x['kan'] == y['kan'] or x['cekirdek'] and x['cekirdek'] == y['cekirdek']):
+        if not (x['kan'] == y['kan'] or x['cekirdek'] and x['cekirdek'] == y['cekirdek'] or _jandarma_takma(a, b)):
             return False
         if x['il'] and y['il']:
             return x['il'] == y['il']
@@ -203,6 +240,8 @@ def kopya_bul(ilanlar):
                 return True
             if fark == 1:   # bir günlük kayma (İŞKUR'un 23:59'u): ancak unvan sözcükleri de güçlü biçimde örtüşürse
                 return ortak_unvan(a, b)
+            if fark <= 3 and _basvuru_araligi(a) and _basvuru_araligi(a) == _basvuru_araligi(b):
+                return True   # iki kaynak da belgeden aynı başvuru aralığını (örn. 01/10 – 05/10) veriyor; SBB dönem sonu farklı olabilir
             return sinav_penceresi(a, b, fark)
         if not (sa or sb):
             return False
@@ -227,7 +266,29 @@ def kopya_bul(ilanlar):
         ortak = ortak_unvan(a, b)
         if _unvanlar(a) and _unvanlar(b):
             return ortak
-        return ortak or bool(_toplam(a) and _toplam(a) == _toplam(b))
+        return (ortak or bool(_toplam(a) and _toplam(a) == _toplam(b)) or _belgede_unvan_gecer(a, b) or _belgede_unvan_gecer(b, a)
+                or _genel_baslikli_tekil(a, b))
+
+    def _genel_baslikli_tekil(a, b):
+        """Bir tarafta kadro de unvan de yok ('X Ajansı Personel Alım İlanı'): belediye dışı kurumda, aynı son tarihte, o kurumun her
+        kaynaktan yalnız tek ilanı varsa aynı ilan sayılır (içerik doğrulanamaz ama başka aday da yoktur)."""
+        x = a if not _unvanlar(a) else b
+        y = b if x is a else a
+        if _unvanlar(x) or _baslik_belirtecleri(x) or not _unvanlar(y):
+            return False
+        bx, by = bilgi[x['id']], bilgi[y['id']]
+        if bx['kan'].endswith(' belediye') or not (bx['cekirdek'] and bx['cekirdek'] == by['cekirdek']):
+            return False
+        son = x.get('son_tarih')
+        if not son or son != y.get('son_tarih'):
+            return False
+        say = {}
+        for c in aday:
+            bc = bilgi[c['id']]
+            if bc['cekirdek'] == bx['cekirdek'] and c.get('son_tarih') == son:
+                for h in bc['host']:
+                    say[h] = say.get(h, 0) + 1
+        return all(n == 1 for n in say.values())
 
     def guclu(a, b):
         if _takma_ad(a, b) or _ayni_ilan(a, b) and not (bilgi[a['id']]['host'] & bilgi[b['id']]['host']):
