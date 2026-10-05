@@ -115,7 +115,7 @@ class GorselTests(unittest.TestCase):
         self.assertIn(f'<meta property="og:image" content="{site_uret.BASE}ilan/kart/{U1}.webp">', html)
         self.assertIn('og:image:height', html)
         self.assertNotIn('detail-card-img', html)  # kart yalnız paylaşım görseli (og:image); sayfada büyük fotoğraf bandı kullanılır
-        self.assertIn('alt="Ankara Belediyesi logosu"', html)
+        self.assertIn('class="detail-logo" src="../../ilan/logo/abc.webp" alt=""', html)
         yok = detail_page(ilan(U1, 'Ankara Belediyesi'))[1]
         self.assertNotIn('og:image', yok)
         self.assertNotIn('detail-visual', yok)

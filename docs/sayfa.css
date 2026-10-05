@@ -141,25 +141,10 @@ svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke
 
 /* ---------- ilan ayrıntısı ---------- */
 .d-bas{padding:28px 0 8px;max-width:860px}
-.kurum-link{display:inline-flex;align-items:center;gap:12px;max-width:100%;text-decoration:none;color:var(--ink);padding:8px 16px 8px 8px;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:var(--shadow)}
-.kurum-link:hover{border-color:var(--ink-2)}
-.kurum-link>span{display:flex;flex-direction:column;min-width:0;line-height:1.3}
-.kurum-link b{font-size:14.5px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.kurum-link .more{font-size:13px;color:var(--muted);font-weight:500}
-.kurum-link:hover .more{color:var(--ink)}
 .detail-logo{width:44px;height:44px;border-radius:11px;object-fit:contain;background:#fff;border:1px solid var(--line);flex-shrink:0;font-size:14px}
 .detail-logo.institution-badge{border:0;display:grid;place-items:center;background:hsl(var(--h) 30% 90%);color:hsl(var(--h) 45% 25%)}
 :root[data-theme=dark] .detail-logo.institution-badge{background:hsl(var(--h) 20% 22%);color:hsl(var(--h) 50% 85%)}
-.detail-org{display:flex;align-items:center;gap:12px;color:var(--muted)}
-.d-bas .ust-satir{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-top:22px}
-.d-bas h1{margin:12px 0 0;font-size:40px;line-height:1.1;letter-spacing:-.04em;font-weight:700}
 .d-alt{margin:10px 0 0;font-size:16px;line-height:1.5;color:var(--ink-2);max-width:720px}
-.d-facts{list-style:none;margin:24px 0 0;padding:0;display:grid;grid-template-columns:repeat(5,auto);justify-content:start;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);box-shadow:var(--shadow)}
-.d-facts li{padding:14px 22px;border-left:1px solid var(--line);min-width:0}
-.d-facts li:first-child{border-left:0}
-.d-facts span{display:block;font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.02em}
-.d-facts strong{display:block;margin-top:2px;font-size:15px;font-weight:620;font-variant-numeric:tabular-nums;color:var(--ink)}
-.d-facts li.acil strong{color:var(--alert)}
 .d-cta{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:22px}
 .d-cta-not{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
 .d-kaynaklar{margin:8px 0 0;font-size:13px;color:var(--ink-2)}
@@ -197,13 +182,70 @@ td.sayi,th.sayi{text-align:right;font-variant-numeric:tabular-nums;white-space:n
 th.sayi{background:var(--surface-2);color:var(--muted);font-size:12px;letter-spacing:.03em}
 .ktablo td:first-child{font-weight:600;color:var(--ink);min-width:160px}
 .ktablo td{color:var(--ink-2);overflow-wrap:anywhere}
-.afis{display:flex;align-items:center;justify-content:space-between;gap:24px;margin:40px 0 0;padding:26px 28px;border-radius:20px;background:#111310;color:#F0F2EB;overflow:hidden}
-:root[data-theme=dark] .afis{background:var(--surface-2);border:1px solid var(--line-2)}
-.afis b{display:block;font-size:64px;line-height:1;font-weight:700;letter-spacing:-.05em;color:var(--lime);font-variant-numeric:tabular-nums}
-.afis small{display:block;margin-top:6px;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#B9BDB2}
-.afis p{margin:14px 0 0;font-size:18px;line-height:1.35;font-weight:620;letter-spacing:-.015em;max-width:420px}
-.afis img{width:176px;height:176px;border-radius:16px;object-fit:cover;flex-shrink:0;background:#23271F}
-.afis-yok{display:none}
+/* ---------- ilan ayrıntısı: birleşik başlık kartı (dh) ---------- */
+.dh{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 212px;grid-template-areas:"ana afis" "bilgi bilgi";column-gap:32px;padding:24px 24px 0;background:var(--surface);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);overflow:hidden}
+.dh.afissiz{grid-template-columns:minmax(0,1fr);grid-template-areas:"ana" "bilgi"}
+.dh-ana{grid-area:ana;min-width:0;display:flex;flex-direction:column;justify-content:space-between;gap:22px;padding-bottom:24px}
+.dh-kurum{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;max-width:100%;text-decoration:none;color:var(--ink);line-height:1.3}
+.dh-kurum .detail-logo{width:36px;height:36px;border-radius:10px;font-size:12px}
+.dh-kurum>span{display:flex;flex-direction:column;min-width:0}
+.dh-kurum b{font-size:14.5px;font-weight:650;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.dh-kurum small{font-size:12.5px;color:var(--muted);font-weight:500}
+.dh-kurum:hover b{text-decoration:underline}
+.dh-ust{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.dh h1{margin:10px 0 0;font-size:42px;line-height:1.06;letter-spacing:-.042em;font-weight:700;text-wrap:balance}
+.dh .d-alt{margin:8px 0 0;font-size:15.5px;line-height:1.45;color:var(--muted);max-width:none}
+/* afiş karosu: meslek fotoğrafı (isteğe bağlı, yazı üstüne binmez) + mürekkep şeritte büyük kadro sayısı */
+.dh-afis{grid-area:afis;align-self:start;display:flex;flex-direction:column;margin:0 0 24px;width:212px;height:212px;border-radius:18px;overflow:hidden;background:#111310}
+.dh-afis img{display:block;width:100%;flex:1 1 0;min-height:0;object-fit:cover;object-position:50% 22%}
+.dh-afis figcaption{display:flex;align-items:baseline;gap:8px;padding:10px 16px 12px;background:#111310;color:#E6E9DF}
+.dh-afis b{font-size:44px;line-height:1;font-weight:700;letter-spacing:-.05em;color:#C8F169;font-variant-numeric:tabular-nums}
+.dh-afis small{font-size:12px;font-weight:650;letter-spacing:.09em;text-transform:uppercase}
+/* fotoğraf yoksa: karo tamamen mürekkep, sayı büyük */
+.dh-afis.fotosuz{justify-content:flex-end;background:#111310 radial-gradient(110% 80% at 100% 0,rgba(200,241,105,.22),rgba(200,241,105,0) 62%)}
+.dh-afis.fotosuz figcaption{flex-direction:column;align-items:flex-start;gap:8px;padding:18px;background:none}
+.dh-afis.fotosuz b{font-size:84px;line-height:.86}
+:root[data-theme=dark] .dh-afis{background-color:#0A0B09;box-shadow:inset 0 0 0 1px var(--line-2)}
+:root[data-theme=dark] .dh-afis figcaption{background:#0A0B09}
+:root[data-theme=dark] .dh-afis.fotosuz figcaption{background:none}
+/* bilgi şeridi: son başvuru (geri sayım) · yer · öğrenim · KPSS */
+.dh-bilgi{grid-area:bilgi;display:grid;grid-template-columns:minmax(0,1.45fr) repeat(3,minmax(0,1fr));margin:0 -24px;border-top:1px solid var(--line);background:var(--surface-2)}
+.dh-bilgi>div{padding:14px 20px 15px;border-left:1px solid var(--line);min-width:0}
+.dh-bilgi>div:first-child{border-left:0;padding-left:24px}
+.dh-bilgi dt{font-size:12px;font-weight:600;letter-spacing:.02em;color:var(--muted)}
+.dh-bilgi dd{margin:3px 0 0;font-size:15px;line-height:1.35;font-weight:620;color:var(--ink);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.dh-bilgi dd.bos{color:var(--faint);font-weight:500}
+.dh-son dd{font-weight:650}
+.dh-geri{display:flex;align-items:center;gap:6px;margin-top:3px;font-size:13px;font-weight:600;color:var(--lime-ink)}
+.dh-geri::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;flex-shrink:0}
+.dh-son.acil{background:var(--alert-soft)}
+.dh-son.acil dt,.dh-son.acil .dh-geri{color:var(--alert)}
+.dh-son.yok .dh-geri{color:var(--muted)}
+.dh-son.yok .dh-geri::before{display:none}
+.dh+.d-cta{margin-top:18px}
+
+@media (max-width:760px){
+  .dh{grid-template-columns:minmax(0,1fr);grid-template-areas:"afis" "ana" "bilgi";padding:0 16px;border-radius:18px}
+  .dh.afissiz{padding-top:16px}
+  /* karo -> kartın üstünde tam genişlik afiş bandı: solda mürekkep + sayı, sağda fotoğraf */
+  .dh-afis{position:relative;width:auto;height:136px;margin:0 -16px;border-radius:0;display:block}
+  .dh-afis img{position:absolute;top:0;right:0;width:58%;height:100%}
+  .dh-afis::after{content:"";position:absolute;top:0;bottom:0;right:0;width:58%;background:linear-gradient(90deg,#111310 0,rgba(17,19,16,0) 42%)}
+  .dh-afis figcaption,.dh-afis.fotosuz figcaption{position:absolute;left:16px;bottom:16px;flex-direction:column;align-items:flex-start;gap:6px;padding:0;background:none}
+  .dh-afis b,.dh-afis.fotosuz b{font-size:64px;line-height:.86}
+  :root[data-theme=dark] .dh-afis{box-shadow:none;border-bottom:1px solid var(--line-2)}
+  :root[data-theme=dark] .dh-afis::after{background:linear-gradient(90deg,#0A0B09 0,rgba(10,11,9,0) 42%)}
+  .dh-ana{gap:16px;padding:16px 0 18px}
+  .dh h1{font-size:28px;letter-spacing:-.035em}
+  .dh .d-alt{font-size:14.5px}
+  /* son başvuru tam genişlik; yer · öğrenim · KPSS tek satırda üç sütun */
+  .dh-bilgi{grid-template-columns:repeat(3,minmax(0,1fr));margin:0 -16px}
+  .dh-bilgi>div{padding:12px 12px 13px;border-top:1px solid var(--line)}
+  .dh-bilgi>div:nth-child(2){border-left:0;padding-left:16px}
+  .dh-bilgi>div:first-child{grid-column:1/-1;border-top:0;padding:12px 16px 13px}
+  .dh-bilgi dd{font-size:14px}
+  .dh-son dd{font-size:15px}
+}
 .benzer{margin-top:40px}
 .d-son{margin-top:30px}
 
@@ -232,11 +274,6 @@ th.sayi{background:var(--surface-2);color:var(--muted);font-size:12px;letter-spa
 .kp-st{display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:999px;background:var(--surface-3);color:var(--muted);font-size:12.5px;font-weight:600;white-space:nowrap}
 .kp-st.cancelled{color:var(--alert)}
 
-@media (max-width:1080px){
-  .d-facts{grid-template-columns:repeat(3,auto)}
-  .d-facts li:nth-child(4){border-left:0}
-  .d-facts li:nth-child(n+4){border-top:1px solid var(--line)}
-}
 @media (max-width:760px){
   body{padding-bottom:76px}
   .wrap{padding:0 16px}
@@ -256,19 +293,8 @@ th.sayi{background:var(--surface-2);color:var(--muted);font-size:12px;letter-spa
   .bolum{margin-top:32px}
   .bolum-bas h2,.d-bolum h2{font-size:17.5px}
   .d-bas{padding-top:18px}
-  .d-bas h1{font-size:28px;letter-spacing:-.035em}
-  .d-facts{grid-template-columns:1fr 1fr;width:100%}
-  .d-facts li{padding:12px 14px;border-left:0;border-top:1px solid var(--line)}
-  .d-facts li:nth-child(-n+2){border-top:0}
-  .d-facts li:nth-child(even){border-left:1px solid var(--line)}
   .d-cta .btn{flex:1 1 100%}
-  .kurum-link{width:100%}
   .senin{padding:18px 16px}
-  .afis{padding:20px}
-  .afis b{font-size:52px}
-  .afis img{width:132px;height:132px;align-self:flex-end;margin-top:-4px}
-  .afis{flex-direction:row-reverse;align-items:center;gap:16px}
-  .afis p{font-size:16px}
   .ktablo thead{display:none}
   .ktablo,.ktablo tbody,.ktablo tr,.ktablo td{display:block;width:100%}
   .ktablo tr{padding:12px 16px;border-bottom:1px solid var(--line)}

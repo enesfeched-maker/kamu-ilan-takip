@@ -201,9 +201,9 @@ class SayfaTests(unittest.TestCase):
         i = ilan(1, 'Ankara Belediyesi')
         html = detail_page(i, {'kurum_slug': 'ankara-belediyesi', 'kurum_sayisi': 6})[1]
         self.assertIn('href="../../kurum/ankara-belediyesi/"', html)
-        self.assertIn('Bu kurumun tüm ilanları (6)', html)
+        self.assertIn('Kurumun tüm ilanları (6) →', html)
         tek = detail_page(i, {'kurum_slug': 'ankara-belediyesi', 'kurum_sayisi': 1})[1]
-        self.assertIn('Kurum sayfası', tek)
+        self.assertIn('Kurumun tüm ilanları →', tek)
         self.assertNotIn('tüm ilanları (', tek)
         yok = detail_page(i)[1]
         self.assertIn('href="../../kurum/ankara-belediyesi/"', yok)
@@ -241,7 +241,10 @@ class YeniBicimTests(unittest.TestCase):
         self.assertNotIn('<b>Belediyesi', html)
         self.assertEqual(html.count('<article class="ilan"'), 5)
         self.assertIn('Benzer ilanlar', html)
-        self.assertIn('Bu kurumun tüm ilanları (3)', html)
+        self.assertIn('Kurumun tüm ilanları (3) →', html)
+        self.assertIn('<section class="dh"', html)
+        self.assertNotIn('d-facts', html)
+        self.assertNotIn('class="afis"', html)
         self.assertIn('"light"', html)
 
     def test_benzer_ilanlar_sinir_ve_siralama(self):
@@ -289,6 +292,61 @@ class YeniBicimTests(unittest.TestCase):
         self.assertIn('rel="manifest" href="../manifest.webmanifest"', puan)
         self.assertIn('sayfa.css', puan)
 
+class HeroKartiTests(unittest.TestCase):
+    """Ayrıntı sayfası birleşik başlık kartı (.dh): fotoğraf/kadro durumları ve acil durum."""
+    def sayfa(self, item, kayit=None, gorsel=None):
+        return detail_page(item, gorsel or {}, kayit, None, SIMDI)[1]
+
+    def test_foto_ve_kadro_var(self):
+        h = self.sayfa(ilan(1, 'A Belediyesi', kadro='3 Zabıta Memuru'), {'meslek': ['07-zabita.jpg']})
+        self.assertIn('<figure class="dh-afis"><img src="../../assets/meslek/07-zabita.jpg"', h)
+        self.assertIn('<figcaption><b>3</b><small>kadro</small></figcaption>', h)
+        self.assertIn('<h1 id="dh-baslik">Zabıta Memuru</h1>', h)  # sayı başlıktan düştü
+        self.assertNotIn('class="afis"', h)
+        self.assertNotIn('d-facts', h)
+
+    def test_foto_var_kadro_yok(self):
+        h = self.sayfa(ilan(1, 'A Belediyesi', kadro=''), {'meslek': ['07-zabita.jpg']})
+        self.assertIn('<figure class="dh-afis"><img src=', h)
+        self.assertNotIn('<figcaption>', h)
+        self.assertNotIn('afissiz', h)
+
+    def test_foto_yok_kadro_var(self):
+        h = self.sayfa(ilan(1, 'A Belediyesi', kadro='Toplam 3 kişi'))
+        self.assertIn('<figure class="dh-afis fotosuz"><figcaption><b>3</b>', h)
+        self.assertNotIn('<figure class="dh-afis fotosuz"><img', h)
+
+    def test_foto_ve_kadro_yok_karo_gizli(self):
+        h = self.sayfa(ilan(1, 'A Belediyesi', kadro=''))
+        self.assertIn('<section class="dh afissiz"', h)
+        self.assertNotIn('<figure', h)
+
+    def test_acil_durum(self):
+        h = self.sayfa(ilan(1, 'A Belediyesi', son_tarih='2026-10-04', son_zaman='2026-10-04T17:00:00+03:00'))
+        self.assertIn('<span class="pill acil">', h)
+        self.assertIn('<div class="dh-son acil">', h)
+        self.assertIn('data-son="2026-10-04" data-zaman="2026-10-04T17:00:00+03:00"', h)
+        self.assertIn('4 Ekim 2026, 17:00', h)
+
+    def test_normal_durumda_rozet_yok_geri_sayim_var(self):
+        h = self.sayfa(ilan(1, 'A Belediyesi'))
+        self.assertNotIn('class="pill', h)
+        self.assertIn('class="dh-geri" data-son="2026-12-31"', h)
+        self.assertNotIn('id="durum"', h)
+
+    def test_kapali_ve_tarihsiz(self):
+        k = self.sayfa(ilan(1, 'A Belediyesi', son_tarih='2026-01-01'))
+        self.assertIn('<span class="pill kapali">', k)
+        self.assertNotIn('data-son', k.split('<dl class="dh-bilgi">')[1].split('</dl>')[0])
+        t = self.sayfa({k_: v for k_, v in ilan(2, 'A Belediyesi').items() if k_ != 'son_tarih'})
+        self.assertIn('Tarihi ilandan doğrula', t)
+
+    def test_bos_hucreler_ve_kacis(self):
+        h = self.sayfa(ilan(1, 'A <b>Belediyesi</b>', ogrenim=[], kadro='', baslik='<i>x</i>'), None, {'kurum_slug': 'a'})
+        self.assertIn('<dd class="bos">İlanda</dd>', h)
+        self.assertNotIn('<b>Belediyesi</b>', h)
+        self.assertNotIn('<i>x</i>', h)
+        self.assertIn('href="../../kurum/a/"', h)
 
 if __name__ == '__main__':
     unittest.main()
