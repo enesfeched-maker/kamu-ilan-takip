@@ -1,7 +1,7 @@
 import json
 import tempfile
 import unittest
-from datetime import datetime
+from datetime import date, datetime
 from pathlib import Path
 
 import liste_verisi as lv
@@ -33,6 +33,44 @@ class BaslikTests(unittest.TestCase):
         self.assertEqual(lv.baslik_temiz('Memur Sınav İlanı'), 'Memur sınavı')
         self.assertEqual(lv.baslik_temiz('Büro Personeli İlanı'), 'Büro Personeli')
         self.assertEqual(lv.baslik_temiz('.net Uzmanı'), '.NET Uzmanı')
+        self.assertEqual(lv.baslik_temiz('İcra Müdür ve İcra Müdür Yardımcısı Alacak.'), 'İcra Müdür ve İcra Müdür Yardımcısı')
+        self.assertEqual(lv.baslik_temiz('1 Sözleşmeli Pilot (Uçak) Temin Edecektir'), '1 Sözleşmeli Pilot (Uçak)')
+
+    def test_sbb_baslik_sonu_ayrinti_basliginda(self):
+        from site_uret import detail_page
+        item = {'id': 'sbb-46734a52a4045202658b0bf7', 'baslik': 'ADALET BAKANLIĞI - 150 İCRA MÜDÜR VE İCRA MÜDÜR YARDIMCISI ALACAK.',
+                'kurum': 'ADALET BAKANLIĞI', 'kadro': '150 İCRA MÜDÜR VE İCRA MÜDÜR YARDIMCISI ALACAK.', 'kaynak_turu': 'sbb',
+                'link': 'https://kamuilan.sbb.gov.tr/', 'son_tarih': None}
+        html = detail_page(item, simdi=SIMDI)[1]
+        self.assertIn('<h1 id="dh-baslik">İcra Müdür ve İcra Müdür Yardımcısı</h1>', html)
+
+
+class DonemTests(unittest.TestCase):
+    REF = datetime(2026, 10, 5, 17, 22, tzinfo=TR)
+
+    def test_ayni_ay_ve_ay_gecisi(self):
+        self.assertEqual(lv.donem_tarihleri('( 5 Ekim - 20 Ekim)', self.REF), (date(2026, 10, 5), date(2026, 10, 20)))
+        self.assertEqual(lv.donem_tarihleri('( 24 Eylül - 11 Ekim)', self.REF), (date(2026, 9, 24), date(2026, 10, 11)))
+        self.assertEqual(lv.donem_tarihleri('( 20 Ekim - 26 Ekim)', self.REF), (date(2026, 10, 20), date(2026, 10, 26)))
+
+    def test_yil_gecisi(self):
+        ref = datetime(2026, 12, 20, 10, 0, tzinfo=TR)
+        self.assertEqual(lv.donem_tarihleri('( 22 Aralık - 5 Ocak)', ref), (date(2026, 12, 22), date(2027, 1, 5)))
+        self.assertEqual(lv.donem_tarihleri('( 5 Ocak - 12 Ocak)', ref), (date(2027, 1, 5), date(2027, 1, 12)))
+
+    def test_cozulemeyen_donem_none(self):
+        for s in ('', None, 'Resmî ilanda', '( 31 Şubat - 5 Mart)', '(5 - 20 Ekim)'):
+            with self.subTest(s):
+                self.assertIsNone(lv.donem_tarihleri(s, self.REF))
+
+    def test_donem_tamamla(self):
+        sbb = {'kaynak_turu': 'sbb', 'donem': '( 20 Ekim - 26 Ekim)', 'ilk_gorulme': '2026-10-05T17:22:54+03:00', 'son_tarih': None}
+        t = lv.donem_tamamla(sbb)
+        self.assertEqual((t['son_tarih'], t['baslangic_zaman'][:10]), ('2026-10-26', '2026-10-20'))
+        self.assertIsNone(sbb['son_tarih'], 'kayıt değişmez, kopya döner')
+        self.assertEqual(lv.donem_tamamla({**sbb, 'son_tarih': '2026-10-30'})['son_tarih'], '2026-10-30')
+        self.assertIsNone(lv.donem_tamamla({**sbb, 'kaynak_turu': 'iskur'})['son_tarih'])
+        self.assertEqual(lv.kayit(sbb | {'id': 'sbb-' + 'a' * 24, 'baslik': 'X - 1 MEMUR ALACAK', 'kurum': 'X', 'kadro': '1 MEMUR ALACAK', 'link': 'https://kamuilan.sbb.gov.tr/'}, None, {}, SIMDI)['durum'], 'upcoming')
 
 
 class IlTests(unittest.TestCase):
@@ -174,6 +212,18 @@ class OgrenimCikarimTests(unittest.TestCase):
         self.assertTrue(k['kurum_ici'])
         self.assertEqual(k['ogrenim'], [])
         self.assertNotIn('kurum_ici', kayit_ogr(baslik='Memur Sınavı Duyurusu'))
+
+    def test_fakulte_sarti_lisans_ve_bolum_kisiti(self):
+        sart = {'kadro': 'Belgede belirtilen koşullar', 'metin': 'c) Hukuk fakültesi, adalet meslek yüksekokulu, meslek yüksekokullarının adalet bölümü veya adalet meslek eğitimi ön lisans programı mezunu olmak,'}
+        k = lv.kayit(ilan(1, ogrenim=['onlisans'], sartlar=[sart]), None, {}, SIMDI)
+        self.assertEqual(k['ogrenim'], ['lisans', 'onlisans'])
+        self.assertTrue(k['bolum_kisiti'])
+        self.assertNotIn('bolum_kisiti', kayit_ogr(ozet='Lise mezunu olmak'))
+
+    def test_gorevde_yukselme_ve_unvan_degisikligi_kurum_ici(self):
+        for baslik in ('Görevde Yükselme Sınavı İlanı (Şube Müdürü)', 'Unvan Değişikliği Sınavı Duyurusu'):
+            with self.subTest(baslik):
+                self.assertTrue(kayit_ogr(baslik=baslik)['kurum_ici'])
 
     def test_siniflandirici_kpss_b_p3(self):
         from siniflandir import ogrenim_seviyeleri

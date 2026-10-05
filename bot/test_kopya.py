@@ -115,6 +115,61 @@ class KopyaTests(unittest.TestCase):
         self.assertEqual(len(kopya.kaynak_baglantilari(uyeler)), 3)
 
 
+def kk_kayit(n, kurum, baslik, son, **ek):
+    return {'id': 'https://kariyerkapisi.gov.tr/IlanDetay?i=%08d-2222-4222-8222-222222222222' % n,
+            'link': 'https://kariyerkapisi.gov.tr/IlanDetay?i=%08d-2222-4222-8222-222222222222' % n,
+            'kurum': kurum, 'baslik': baslik, 'kadro': baslik, 'son_tarih': son, 'ilk_gorulme': '2026-10-05T17:00:00+03:00', **ek}
+
+
+def sbb_kayit(n, kurum, kadro, son=None, donem=None, **ek):
+    return {'id': 'sbb-%024x' % n, 'link': 'https://kamuilan.sbb.gov.tr/', 'kaynak_turu': 'sbb', 'kurum': kurum, 'baslik': kurum + ' - ' + kadro,
+            'kadro': kadro, 'son_tarih': son, 'donem': donem, 'ilk_gorulme': '2026-10-05T17:20:00+03:00', **ek}
+
+
+def iskur_kayit(n, kurum, baslik, son, yer='Ankara', **ek):
+    return {'id': 'iskur-%024x' % n, 'link': 'https://www.iskur.gov.tr/x/%d.pdf' % n, 'kaynak_turu': 'iskur', 'kurum': kurum, 'baslik': baslik,
+            'kadro': baslik, 'son_tarih': son, 'yer': yer, 'ilk_gorulme': '2026-09-26T20:00:00+03:00', **ek}
+
+
+class CokKaynakliKopyaTests(unittest.TestCase):
+    ICRA_KK = ('ADALET BAKANLIĞI', 'ADALET BAKANLIĞI - 2026 Yılı Açıktan İcra Müdür ve İcra Müdür Yardımcısı Alım İlanı', '2026-11-05')
+
+    def test_sbb_son_tarihi_donemden_gelir_ve_sinav_penceresi_kk_ile_birlesir(self):
+        kk = kk_kayit(1, *self.ICRA_KK)
+        sbb = sbb_kayit(1, 'ADALET BAKANLIĞI', '150 İCRA MÜDÜR VE İCRA MÜDÜR YARDIMCISI ALACAK.', donem='( 20 Ekim - 26 Ekim)')
+        self.assertEqual(kopya.kopya_bul([kk, sbb])['kopya_of'], {sbb['id']: kk['id']} if kopya._zengin(kk) < kopya._zengin(sbb) else {kk['id']: sbb['id']})
+
+    def test_sinav_penceresi_toplam_farkliysa_birlesmez(self):
+        kk = kk_kayit(1, *self.ICRA_KK, kadro='Toplam 100 kişi — 100 İcra Müdür Yardımcısı')
+        sbb = sbb_kayit(1, 'ADALET BAKANLIĞI', '150 İCRA MÜDÜR VE İCRA MÜDÜR YARDIMCISI ALACAK.', donem='( 20 Ekim - 26 Ekim)')
+        self.assertEqual(kopya.kopya_bul([kk, sbb])['kopya_of'], {})
+
+    def test_farkli_unvan_ayni_kurum_ayni_pencere_birlesmez(self):
+        kk = kk_kayit(1, 'ADALET BAKANLIĞI', 'ADALET BAKANLIĞI - Zabıt Katibi Alım İlanı', '2026-11-05')
+        sbb = sbb_kayit(1, 'ADALET BAKANLIĞI', '150 İCRA MÜDÜR VE İCRA MÜDÜR YARDIMCISI ALACAK.', donem='( 20 Ekim - 26 Ekim)')
+        self.assertEqual(kopya.kopya_bul([kk, sbb])['kopya_of'], {})
+
+    def test_iskur_sbb_tarih_yoksa_ilk_gorulme_yakinsa_birlesir(self):
+        iskur = iskur_kayit(1, 'Cumhurbaşkanlığı İletişim Başkanlığı', 'Cumhurbaşkanlığı İletişim Başkanlığı İletişim Uzman Yardımcılığı Sınav İlanı', '2026-10-20')
+        sbb = sbb_kayit(1, 'İLETİŞİM BAŞKANLIĞI', '15 UZMAN YARDIMCISI ALACAK', donem='( 5 Ekim - 20 Ekim)')
+        self.assertEqual(len(kopya.kopya_bul([iskur, sbb])['kopya_of']), 1)
+
+    def test_kurum_cekirdegi(self):
+        def c(k):
+            return kopya._kurum_cekirdek({'kurum': k}, ks.kurum_kanonik(k))
+        self.assertEqual(c('İstanbul Bankacılık Düzenleme ve Denetleme Kurumu'), c('BANKACILIK DÜZENLEME VE DENETLEME KURUMU BAŞKANLIĞI (BDDK)'))
+        self.assertEqual(c('Cumhurbaşkanlığı İletişim Başkanlığı'), c('İLETİŞİM BAŞKANLIĞI'))
+        self.assertEqual(c('Doğu Marmara Kalkınma Ajansı (MARKA)'), c('DOĞU MARMARA KALKINMA AJANSI'))
+        self.assertEqual(c('Bahçe (OSMANİYE) Belediye Başkanlığı'), c('Osmaniye Bahçe Belediyesi'))
+        self.assertNotEqual(c('Göç İdaresi Başkanlığı'), c('Gelir İdaresi Başkanlığı'))
+        self.assertNotEqual(c('Ankara Kalkınma Ajansı'), c('İzmir Kalkınma Ajansı'))
+
+    def test_farkli_kurum_ayni_unvan_birlesmez(self):
+        a = sbb_kayit(1, 'GÖÇ İDARESİ GENEL MÜDÜRLÜĞÜ', '3 UZMAN YARDIMCISI ALACAK', son='2026-10-20')
+        b = iskur_kayit(1, 'Gelir İdaresi Başkanlığı', 'Gelir İdaresi Başkanlığı 3 Uzman Yardımcısı', '2026-10-20')
+        self.assertEqual(kopya.kopya_bul([a, b])['kopya_of'], {})
+
+
 class ListeKopyaTests(unittest.TestCase):
     def liste(self, ilanlar, **ek):
         return lv.liste_uret(ilanlar, {}, Path(tempfile.mkdtemp()), SIMDI, **ek)

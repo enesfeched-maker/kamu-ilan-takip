@@ -17,7 +17,7 @@ from siniflandir import akademik_ilan, kucuk, ILLER
 TR = timezone(timedelta(hours=3))
 AY = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık']
 LEVELS = {'lisans': 'Lisans', 'onlisans': 'Önlisans', 'ortaogretim': 'Ortaöğretim'}
-SON_EK = re.compile(r'\s+(?:alacak|alınacak|alinacak|temin edecektir|alımı|alimi)\s*$', re.I)
+SON_EK = re.compile(r'\s+(?:alacak|alınacak|alinacak|temin edecektir|alımı|alimi)\s*[.,;:]*\s*$', re.I)
 IL_ANAHTAR = {kurum_anahtari(il) for il in ILLER}
 IL_ADI = {kurum_anahtari(il): il for il in ILLER}
 ACIK = ('ok', 'soon', 'urgent', 'today', 'none', 'upcoming')
