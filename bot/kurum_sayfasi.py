@@ -250,6 +250,20 @@ def tarih_yazi(iso):
     return f'{d.day} {AY[d.month - 1]} {d.year}'
 
 
+BELIRSIZ_GUN = 10
+
+
+def belirsiz_mi(i, simdi):
+    """Kariyer Kapısı kaydı: tarih yok, ayrıntı hiç alınamamış ve ilk görülmeden BELIRSIZ_GUN günden fazla geçmiş. Büyük olasılıkla
+    süresi dolmuştur; sayılara ve Bugün bölümlerine girmez, İlanlar'da 'Tarih doğrulanamadı' etiketiyle kalır."""
+    if i.get('kaynak_turu') in ('sbb', 'iskur', 'csb') or i.get('detay_guncelleme'):
+        return False
+    try:
+        return simdi - datetime.fromisoformat(i.get('ilk_gorulme') or '').astimezone(TR) > timedelta(days=BELIRSIZ_GUN)
+    except ValueError:
+        return False
+
+
 def durum(i, simdi):
     """(metin, sınıf) — sınıf: ok/soon/urgent/today/none/upcoming/info/closed/cancelled."""
     if i.get('iptal_edildi'):
@@ -267,6 +281,8 @@ def durum(i, simdi):
         pass
     st = i.get('son_tarih')
     if not st:
+        if belirsiz_mi(i, simdi):
+            return 'Tarih doğrulanamadı', 'belirsiz'
         return 'Tarih ilanda', 'none'
     d = (date.fromisoformat(st) - simdi.date()).days
     if d <= 0:
@@ -373,7 +389,7 @@ def _meta_html(k):
 def _tarih_html(k, simdi):
     yakinda = k.get('durum') == 'upcoming'
     if not k.get('son_tarih'):
-        return '<div class="tarih yok"><strong>—</strong><span>tarih ilanda</span></div>'
+        return f'<div class="tarih yok"><strong>—</strong><span>{"tarih doğrulanamadı" if k.get("durum") == "belirsiz" else "tarih ilanda"}</span></div>'
     g = (date.fromisoformat(k['son_tarih']) - simdi.date()).days
     veri = f' data-son="{esc(k["son_tarih"])}" data-zaman="{esc(k.get("son_zaman") or "")}" data-yakinda="{int(yakinda)}"'
     d = date.fromisoformat(k['son_tarih'])

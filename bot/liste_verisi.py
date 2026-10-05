@@ -10,7 +10,7 @@ from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 TR = timezone(timedelta(hours=3))
-ACIK = ('ok', 'soon', 'urgent', 'today', 'none', 'upcoming')
+ACIK = ('ok', 'soon', 'urgent', 'today', 'none', 'upcoming', 'belirsiz')
 EN_AZ_KAYIT = 5          # taban referansı için aynı unvanda en az bu kadar yerleşme
 TAKVIM_GUN = 45
 PUAN_RE = re.compile(r'\bKPSS\s*P\s?(\d{1,3})\b|\bP(\d{1,3})\s*puan', re.I)
@@ -322,6 +322,7 @@ def kayit(item, gorsel, tablolar, simdi, harita=None):
     adlar = [ad for _, ad in ks.kadrolar(item)]
     from siniflandir import kucuk, bolum_kisitli
     unvanlar = list(dict.fromkeys(kucuk(re.sub(r'\s*\(.*?\)', '', ad)).strip() for ad in adlar))  # puanlar sayfası tam eşleşme için
+    unvanlar = [u for u in unvanlar if not any(o != u and o in (u + 'i', u + 'si') for o in unvanlar)]  # 'destek personel' + 'destek personeli'
     ref = {}  # öğrenim düzeyine göre {'lisans': {...}}; tarayıcı profil düzeyine göre okur
     for duzey in ogr:
         r = taban_ref(tablolar, duzey, adlar)
@@ -353,6 +354,11 @@ def grup_birlestir(birincil, ikincil):
     """Kopya grubunda birincil satırın öğrenim, puan türü, il ve taban referansı bilgisi ikincillerle birleştirilir
     (birincil metinde düzey yazmıyor ama aynı ilanın başka kaynaktaki kaydı yazıyor olabilir); hiçbir değer silinmez."""
     uyeler = [birincil, *ikincil]
+    for alan in ('son_zaman', 'baslangic_zaman'):   # aynı gün için saat bilgisi yalnız kopyada olabilir (Bahçe 17:00, TİBU 13:00)
+        if not birincil.get(alan):
+            ikiz = next((u for u in ikincil if u.get(alan) and u.get('son_tarih') == birincil.get('son_tarih')), None)
+            if ikiz:
+                birincil[alan] = ikiz[alan]
     ogr = [d for d in SEVIYE_SIRASI if any(d in (u.get('ogrenim') or []) for u in uyeler)]
     if ogr != (birincil.get('ogrenim') or []):
         if not (birincil.get('ogrenim') or []):
@@ -470,9 +476,9 @@ def liste_uret(ilanlar, gorseller, docs, simdi=None, guncelleme=None, kopyalar=N
     except Exception as hata:
         print(f'Uyarı: kaynak adları yazılamadı: {hata}')
     # Kurum içi ilanlar İlanlar listesinde (rozetli) kalır; açık ilan/kadro sayısına, takvime, uyarıya girmez.
-    gorunen = [k for k in kayitlar if not k.get('kopya_of') and not k.get('kurum_ici')]
+    gorunen = [k for k in kayitlar if not k.get('kopya_of') and k.get('durum') != 'belirsiz']
     bugun_yeni = sum(1 for k in gorunen if _tr_tarih(k.get('ilk_gorulme')) == simdi.date())
-    gorunen_ilanlar = [i for k, i in kayit_id.values() if not k.get('kopya_of') and not k.get('kurum_ici')]
+    gorunen_ilanlar = [i for k, i in kayit_id.values() if not k.get('kopya_of') and k.get('durum') != 'belirsiz']
     return {
         'guncelleme': guncelleme or simdi.isoformat(timespec='seconds'),
         'sayilar': {'acik': len(gorunen), 'kadro': sum(k.get('toplam') or 0 for k in gorunen), 'bugun_yeni': bugun_yeni},

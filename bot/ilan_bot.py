@@ -142,10 +142,12 @@ def tarih_yaz(son_tarih):
 
 def okunakli_baslik(metin):
     """Tamamı büyük harfli metni Türkçe karakterleri koruyarak düzenler."""
-    if not metin.isupper():
+    harfler = [c for c in metin if c.isalpha()]
+    # Başlıkta bir harf küçük kalmış olabilir ("57 SüREKLİ İŞÇİ"): harflerin %85'i büyükse tamamı büyük harfli sayılır.
+    if not harfler or not (metin.isupper() or sum(c.isupper() for c in harfler) / len(harfler) >= 0.85):
         return metin
-    kisaltmalar = {"KPSS", "YDS", "YÖKDİL", "ALES", "İŞKUR", "TÜBİTAK", "TÜİK", "AFAD",
-                   "MEB", "MSB", "SGK", "DSİ", "T.C", "T.C.", "J.GN.K.LIĞININ"}
+    kisaltmalar = {"KPSS", "YDS", "YÖKDİL", "ALES", "İŞKUR", "TÜBİTAK", "TÜİK", "AFAD", "BDDK", "SPK", "SEDDK", "İETT", "TGA",
+                   "VHKİ", "TKGM", "GSB", "TTK", "MEB", "MSB", "SGK", "DSİ", "T.C", "T.C.", "J.GN.K.LIĞININ"}
     def kelime(m):
         s = m.group()
         if s in kisaltmalar or any(c.isdigit() for c in s):
@@ -154,7 +156,7 @@ def okunakli_baslik(metin):
         if s in {"ve", "ile", "veya"}:
             return s
         return s[0].translate(str.maketrans("iı", "İI")).upper() + s[1:]
-    return re.sub(r"[\w./]+", kelime, metin)
+    return re.sub(r"[\w.]+", kelime, metin)   # '/' sözcük ayracı: "Öğretmen/Mühendis"
 
 
 def kisalt(metin, sinir):
@@ -243,7 +245,7 @@ def resmi_cumle_kisa(d, sinir=280):
         m = _CUMLE_KURUM.search(c)
         if m:
             c = c[m.end():]
-    c = c.strip()
+    c = re.sub(r'(?i)\b(?:iptal\s+)?ilanı\s+ilanı\b', 'ilanı', c).strip()   # "İptal İlanı ilanı iptal edilmiştir" çift sözcüğü
     return kisalt(_bas_harf_buyut(c), sinir) if c else ''
 
 

@@ -72,6 +72,42 @@ def _adaylar(metin):
     return sorted(sonuc, key=lambda x: x[0])
 
 
+def asamali(metin):
+    """'ön başvurular 20-22 Ekim 2026 … nihai başvurular ise 30 Ekim - 3 Kasım 2026' -> {'on': (başlangıç, bitiş), 'nihai': (…)} ya da None."""
+    metin = re.sub(r'\s+', ' ', str(metin or ''))
+    k = _kucuk(metin)
+    on, nihai = re.search(r'ön\s*başvuru', k), re.search(r'nihai\s*başvuru', k)
+    if not (on and nihai):
+        return None
+    adaylar = _adaylar(metin)
+    sonraki = lambda m: next((a for a in adaylar if 0 <= a[0] - m.end() <= 45), None)
+    a, b = sonraki(on), sonraki(nihai)
+    if not (a and b) or a[2] > a[3] or b[2] > b[3] or b[3] < a[3]:
+        return None
+    return {'on': (a[2], a[3]), 'nihai': (b[2], b[3])}
+
+
+AY_KISA = ('Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık')
+
+
+def _aralik_yazi(b, e):
+    if b == e:
+        return f'{b.day} {AY_KISA[b.month - 1]}'
+    if b.month == e.month:
+        return f'{b.day}–{e.day} {AY_KISA[b.month - 1]}'
+    return f'{b.day} {AY_KISA[b.month - 1]}–{e.day} {AY_KISA[e.month - 1]}'
+
+
+def asama_yazisi(asamalar):
+    """{'on': ['2026-10-20','2026-10-22'], 'nihai': [...]} -> 'Ön başvuru 20–22 Ekim · Nihai başvuru 30 Ekim–3 Kasım' ('' bozuksa)."""
+    try:
+        on = [date.fromisoformat(x) for x in asamalar['on']]
+        nihai = [date.fromisoformat(x) for x in asamalar['nihai']]
+        return f'Ön başvuru {_aralik_yazi(*on)} · Nihai başvuru {_aralik_yazi(*nihai)}'
+    except (KeyError, TypeError, ValueError):
+        return ''
+
+
 def pencere(metin, referans=None, en_cok_gun=120):
     """Metindeki ilk başvuru aralığı: {'baslangic': date, 'bitis': date, 'baslangic_saat': (s,dk)|None, 'bitis_saat': (s,dk)|None}.
     Aralığın yakınında 'başvur' geçmeli; bitiş başlangıçtan önce olamaz, aralık en çok `en_cok_gun` gün sürer ve
@@ -86,6 +122,9 @@ def pencere(metin, referans=None, en_cok_gun=120):
         ref = referans
     else:
         ref = datetime.now(TR).date()
+    s = asamali(metin)
+    if s and abs(s['nihai'][1].year - ref.year) <= 1 and (s['nihai'][1] - s['on'][0]).days <= en_cok_gun:
+        return {'baslangic': s['on'][0], 'bitis': s['nihai'][1], 'baslangic_saat': None, 'bitis_saat': None, 'asamalar': s}
     for bas_k, bit_k, b, e, bs, es in _adaylar(metin):
         if e < b or (e - b).days > en_cok_gun or abs(e.year - ref.year) > 1:
             continue
@@ -121,4 +160,6 @@ def uygula(kayit, metinler, referans=None):
     elif p['bitis_saat']:
         yeni['son_zaman'] = _zaman(p['bitis'], p['bitis_saat']).isoformat()
     yeni['baslangic_zaman'] = _zaman(p['baslangic'], p['baslangic_saat']).isoformat()
+    if p.get('asamalar'):
+        yeni['basvuru_asamalari'] = {a: [d.isoformat() for d in v] for a, v in p['asamalar'].items()}
     return yeni

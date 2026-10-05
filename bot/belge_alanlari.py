@@ -30,6 +30,19 @@ def _il(plain):
     return ''
 
 
+def _is_kurumu_ili(plain):
+    """TTK gibi işçi alımları: 'Bartın İş Kurumu aracılığı ile … Bartın ilinde ikamet ediyor olmak' (kurum adından çıkarılamayan il)."""
+    from siniflandir import ILLER, kucuk
+    for desen in (r'(?<!\S)(\S+)\s+İş Kurumu\s+aracılığı', r'(?<!\S)(\S+)\s+ilinde ikamet'):
+        m = re.search(desen, plain)
+        if m:
+            ad = kucuk(m.group(1))
+            for il in ILLER:
+                if kucuk(il) == ad:
+                    return il
+    return ''
+
+
 ESKI_CUMLE = re.compile(r'mezun|öğrenim|yıllık|fakülte|program|kpss', re.I)
 ELE_CUMLE = re.compile(r'denklik|belge|transkript|sertifika|fotokopi|vb\.|bilgisi|kayıt', re.I)
 
@@ -53,7 +66,7 @@ def alanlar(plain_pages, row):
     if len(plain) < 200:
         return {}
     sonuc = {}
-    il = _il(plain)
+    il = _il(plain) or _is_kurumu_ili(plain)
     if il and not row.get('yer'):
         sonuc['yer'] = il
     baslik = kucuk(plain[:400])

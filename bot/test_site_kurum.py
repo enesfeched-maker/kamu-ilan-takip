@@ -137,7 +137,7 @@ class BaslikTests(unittest.TestCase):
 
     def test_ve_ile_kucuk(self):
         self.assertEqual(_duzgun('SİGORTACILIK VE ÖZEL EMEKLİLİK'), 'Sigortacılık ve Özel Emeklilik')
-        self.assertEqual(ks.kurum_adi('SEDDK (SEDDK) VE X'), 'Seddk (SEDDK) ve X')
+        self.assertEqual(ks.kurum_adi('SEDDK (SEDDK) VE X'), 'SEDDK (SEDDK) ve X')
 
 
 class SayfaTests(unittest.TestCase):

@@ -189,6 +189,16 @@ def _basvuru_araligi(item):
     return m.groups() if m else None
 
 
+def _asamada(a, b):
+    """a'nın aşamalı başvuru takvimi (basvuru_asamalari) b'nin son tarihini kapsıyor mu."""
+    try:
+        s = a['basvuru_asamalari']
+        bas, bit = _gun(s['on'][0]), _gun(s['nihai'][1])
+        return bool(bas and bit and _gun(b.get('son_tarih')) and bas <= _gun(b['son_tarih']) <= bit)
+    except (KeyError, TypeError, IndexError):
+        return False
+
+
 def _takma_ad(a, b):
     return a.get('id') in (b.get('kaynak_kimlikleri') or []) or b.get('id') in (a.get('kaynak_kimlikleri') or [])
 
@@ -242,6 +252,8 @@ def kopya_bul(ilanlar):
             fark = abs((sa - sb).days)
             if fark == 0:
                 return True
+            if _asamada(a, b) or _asamada(b, a):
+                return True   # ön + nihai başvuru: öteki kaynağın tarihi aşamalardan birine denk geliyor
             if fark == 1:   # bir günlük kayma (İŞKUR'un 23:59'u): ancak unvan sözcükleri de güçlü biçimde örtüşürse
                 return ortak_unvan(a, b)
             if fark <= 3 and _basvuru_araligi(a) and _basvuru_araligi(a) == _basvuru_araligi(b):

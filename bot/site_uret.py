@@ -345,6 +345,9 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
     elif item.get('kadro'):
         bolum += f'<h2>Kadro ve kontenjan</h2><p>{esc(item["kadro"])}</p>'
     diger = ''
+    from basvuru_penceresi import asama_yazisi
+    if item.get('basvuru_asamalari') and asama_yazisi(item['basvuru_asamalari']):
+        diger += f'<h3>Başvuru aşamaları</h3><p>{esc(asama_yazisi(item["basvuru_asamalari"]))}</p>'
     for heading, value in [('Duyuru metni', item.get('duyuru_cumlesi')), ('İlan özeti', None if item.get('ozet') == item.get('duyuru_cumlesi') else item.get('ozet')), ('Başvuru notu', item.get('basvuru_notu'))]:
         if value:
             diger += f'<h3>{heading}</h3><p>{esc(value)}</p>'
@@ -408,6 +411,9 @@ def kucuk_ad(metin):
     return kucuk(' '.join(str(metin or '').split()))
 
 
+AKRONIMLER = {'BDDK', 'SPK', 'SEDDK', 'İETT', 'TGA', 'VHKİ', 'TKGM', 'GSB', 'TTK', 'MSB', 'MEB', 'SGK', 'DSİ', 'TÜBİTAK', 'TÜİK', 'AFAD', 'DMKA', 'TİBU', 'EGO', 'İSKİ', 'TRT', 'KPSS', 'ALES', 'YDS'}
+
+
 def _duzgun(metin):
     """portal.js proper(): Türkçe kurallarıyla küçült, kelime başlarını büyüt."""
     import re
@@ -415,6 +421,12 @@ def _duzgun(metin):
     buyut = lambda h: 'İ' if h == 'i' else 'I' if h == 'ı' else h.upper()
     sonuc = re.sub(r'(^|[\s(/-])([a-zçğıöşü])', lambda m: m.group(1) + buyut(m.group(2)), kucuk)
     sonuc = re.sub(r'(?<=\S )(Ve|İle|Veya)(?= )', lambda m: 'ile' if m.group(1) == 'İle' else m.group(1).lower(), sonuc)
+    # Büyük harfle yazılmış bilinen kısaltmalar korunur (BDDK, SPK, İETT…)
+    ilk = {w for w in re.findall(r'[\wçğıöşüÇĞİÖŞÜ]+', str(metin or '')) if w in AKRONIMLER}
+    if ilk:
+        kat = lambda s: s.replace('I', 'ı').replace('İ', 'i').lower()
+        harita = {kat(w): w for w in ilk}
+        sonuc = re.sub(r'[\wçğıöşüÇĞİÖŞÜ]+', lambda m: harita.get(kat(m.group()), m.group()), sonuc)
     return re.sub(r'\b4/b\b', '4/B', re.sub(r'\bkpss\b', 'KPSS', sonuc, flags=re.I), flags=re.I)
 
 

@@ -143,6 +143,12 @@ def pdf_dates(text, range_text):
     parts = re.findall(r'(\d{1,2})\s+('+'|'.join(MONTHS)+r')',range_text.lower())
     if len(parts) != 2:
         return {}
+    from basvuru_penceresi import pencere as _pencere
+    asamali=_pencere(text,now())
+    if asamali and asamali.get('asamalar'):
+        # Ön başvuru + nihai başvuru: son başvuru nihai aşamanın bitişidir.
+        return {'son_tarih':asamali['bitis'].isoformat(),
+                'baslangic_zaman':datetime.combine(asamali['baslangic'],datetime.min.time(),TR).isoformat()}
     start_day,start_month=int(parts[0][0]),MONTHS.index(parts[0][1])+1
     end_day,end_month=int(parts[1][0]),MONTHS.index(parts[1][1])+1
     candidates={d for d in dates if d.day==end_day and d.month==end_month and abs((d-now().date()).days)<370}
