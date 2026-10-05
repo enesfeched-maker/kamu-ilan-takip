@@ -10,7 +10,7 @@ from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 TR = timezone(timedelta(hours=3))
-ACIK = ('ok', 'soon', 'urgent', 'today', 'none', 'upcoming')
+ACIK = ('ok', 'soon', 'urgent', 'today', 'none', 'upcoming', 'belirsiz')
 EN_AZ_KAYIT = 5          # taban referansı için aynı unvanda en az bu kadar yerleşme
 TAKVIM_GUN = 45
 PUAN_RE = re.compile(r'\bKPSS\s*P\s?(\d{1,3})\b|\bP(\d{1,3})\s*puan', re.I)
@@ -57,9 +57,23 @@ def donem_tarihleri(donem, referans):
     return None
 
 
+def pencere_tamamla(item):
+    """İŞKUR/SBB kaydında saklı başvuru notundaki (SBB'de özetteki de) belge penceresi son_tarih/son_zaman/baslangic_zaman'dan
+    farklıysa belge kazanır; düzeltilmiş KOPYA döner (kayıt değişmez), pencere yoksa aynı nesne. Toplayıcı yeni kayıtlarda
+    aynı düzeltmeyi kendisi yazar; bu, henüz yeniden okunmamış kayıtlar için derleme zamanı yedeğidir."""
+    if item.get('kaynak_turu') not in ('iskur', 'sbb') or item.get('duyuru_turu') or item.get('iptal_edildi'):
+        return item
+    from basvuru_penceresi import uygula
+    metinler = [item.get('basvuru_notu')] + ([item.get('ozet')] if item.get('kaynak_turu') == 'sbb' else [])
+    ref = _tr_tarih(item.get('ilk_gorulme')) or datetime.now(TR).date()
+    return uygula(item, [m for m in metinler if m], ref)
+
+
 def donem_tamamla(item):
     """son_tarih'i olmayan SBB kaydı için dönemden son_tarih/baslangic_zaman türetilmiş KOPYA döndürür (kayıt değişmez);
-    türetilemiyorsa aynı nesne. Derleme zamanı yedeği; toplayıcı yeni kayıtlarda aynı alanları kendisi yazar."""
+    türetilemiyorsa aynı nesne. Önce belge penceresi (pencere_tamamla) uygulanır.
+    Derleme zamanı yedeği; toplayıcı yeni kayıtlarda aynı alanları kendisi yazar."""
+    item = pencere_tamamla(item)
     if item.get('son_tarih') or item.get('kaynak_turu') != 'sbb' or not item.get('donem'):
         return item
     try:
@@ -72,6 +86,41 @@ def donem_tamamla(item):
     if not item.get('baslangic_zaman'):
         yeni['baslangic_zaman'] = datetime.combine(t[0], datetime.min.time(), TR).isoformat()
     return yeni
+
+
+_BELGE_ONBELLEK = {}
+
+
+def belge_tamamla(item):
+    """Eski sürümle okunmuş SBB kaydının alanlarını depodaki PDF kopyasının TAM metninden tamamlar (il, gerçek kadro, puan türleri,
+    öğrenim, KPSS durumu); KOPYA döner, kayıt değişmez. Kopya yoksa/okunamazsa aynı nesne. Toplayıcı yeni sürümde aynısını kendisi yazar."""
+    if item.get('kaynak_turu') != 'sbb' or item.get('duyuru_turu') or item.get('iptal_edildi') or not item.get('belge_sha256'):
+        return item
+    try:
+        from sbb_detay import VERSION, belge_sayfalari
+        from siniflandir import akademik_ilan, tazele
+        if (item.get('sbb_detay_surumu') or 0) >= VERSION or akademik_ilan(item):
+            return item
+        if item.get('son_tarih') and item['son_tarih'] < datetime.now(TR).date().isoformat():
+            return item   # süresi dolmuş kayıt için PDF okunmaz
+        sha = item['belge_sha256']
+        if sha not in _BELGE_ONBELLEK:
+            from belge_alanlari import alanlar
+            sayfalar = belge_sayfalari(item)
+            _BELGE_ONBELLEK[sha] = alanlar(sayfalar, item) if sayfalar else {}
+        alan = _BELGE_ONBELLEK[sha]
+        if not alan:
+            return item
+        yeni = dict(item, **alan)
+        return tazele(yeni)
+    except Exception as hata:
+        print(f'Uyarı: SBB belge alanları tamamlanamadı ({item.get("id")}): {hata}')
+        return item
+
+
+def tamamla(item):
+    """Derleme zamanı düzeltmeleri (kayıt değişmez, KOPYA döner): SBB belge alanları, belge penceresi ve SBB dönem yedeği."""
+    return donem_tamamla(iskur_tamamla(belge_tamamla(item)))
 
 
 def puan_duzeyi(p):
@@ -89,14 +138,45 @@ def puan_duzeyi(p):
 def ogrenim_cikar(item, ogr, pt):
     """(düzeyler, çıkarım_yapıldı, kurum_içi). Sırayla: yeterlik sınavı -> kurum içi; puan türü -> düzey; açık 'KPSS lisans'
     ifadesi; yalnız lisans gerektiren unvanlar (başlık/kadro/tür kısa metni). Sonuç metinden gelen düzeylerle birleşir, hiçbiri silinmez."""
-    from siniflandir import kucuk, _tum_metin, _kisa_metin, fakulte_sartli
-    if KURUM_ICI_BASLIK.search(kucuk(f"{item.get('baslik') or ''} {item.get('ilan_turu') or ''}")):
+    from siniflandir import kucuk, _tum_metin, _kisa_metin, fakulte_sartli, kurum_ici
+    if kurum_ici(item):
         return list(ogr), False, True
     ek = {d for d in (puan_duzeyi(p) for p in pt) if d}
     if KPSS_LISANS.search(_tum_metin(item)) or LISANS_UNVAN.search(_kisa_metin(item)) or fakulte_sartli(item):
         ek.add('lisans')
     sonuc = [d for d in SEVIYE_SIRASI if d in ogr or d in ek]
     return sonuc, bool(ek - set(ogr)), False
+
+
+def ozet_gorev_ili(item):
+    """Özette 'İstanbul’da görev yapmak üzere' diyorsa o il (tek ve geçerli il); yoksa ''."""
+    from siniflandir import kucuk
+    ks = _ks()
+    bulunan = {ks.IL_ADI[a] for a in (ks.kurum_anahtari(p) for p in OZET_IL_GOREV.findall(kucuk(item.get('ozet')))) if a in ks.IL_ADI}
+    return next(iter(bulunan)) if len(bulunan) == 1 else ''
+
+
+def iskur_tamamla(item):
+    """İŞKUR kaydında kurum adı (başlıktan: 'Ajansı', en özgül birim, 'Personel Alım İlanı' öncesi) ve görev ili (özetten)
+    toplayıcının yeni sürümüyle aynı biçimde düzeltilmiş KOPYA döner; değişiklik yoksa aynı nesne."""
+    if item.get('kaynak_turu') != 'iskur' or item.get('duyuru_turu'):
+        return item
+    yeni = item
+    try:
+        from ek_kaynaklar import institution
+        kurum = institution(item.get('baslik') or '')
+        if kurum and kurum != item.get('kurum'):
+            yeni = dict(yeni, kurum=kurum)
+        il = ozet_gorev_ili(item)
+        if il and item.get('yer') != il:
+            yeni = dict(yeni, yer=il)
+            yeni.pop('iller', None)
+            from siniflandir import il_adlari
+            if il_adlari(yeni):
+                yeni['iller'] = il_adlari(yeni)
+    except Exception:
+        return item
+    return yeni
 
 
 def _il_gecerli(il):
@@ -183,7 +263,9 @@ def il_bul(item, harita=None):
 def puan_turleri(item):
     """İlan metninde geçen KPSS puan türleri (['P3', 'P93']); yoksa []."""
     metin = json.dumps([item.get('ozet'), item.get('sartlar'), item.get('kadro')], ensure_ascii=False)
-    return sorted({'P' + (a or b) for a, b in PUAN_RE.findall(metin)}, key=lambda s: int(s[1:]))
+    bulunan = {'P' + (a or b) for a, b in PUAN_RE.findall(metin)}
+    bulunan |= {p for p in item.get('puan_turleri') or [] if isinstance(p, str) and re.fullmatch(r'P\d{1,3}', p)}   # belge tablosundan
+    return sorted(bulunan, key=lambda s: int(s[1:]))
 
 
 def taban_tablolari(docs):
@@ -240,6 +322,7 @@ def kayit(item, gorsel, tablolar, simdi, harita=None):
     adlar = [ad for _, ad in ks.kadrolar(item)]
     from siniflandir import kucuk, bolum_kisitli
     unvanlar = list(dict.fromkeys(kucuk(re.sub(r'\s*\(.*?\)', '', ad)).strip() for ad in adlar))  # puanlar sayfası tam eşleşme için
+    unvanlar = [u for u in unvanlar if not any(o != u and o in (u + 'i', u + 'si') for o in unvanlar)]  # 'destek personel' + 'destek personeli'
     ref = {}  # öğrenim düzeyine göre {'lisans': {...}}; tarayıcı profil düzeyine göre okur
     for duzey in ogr:
         r = taban_ref(tablolar, duzey, adlar)
@@ -271,6 +354,11 @@ def grup_birlestir(birincil, ikincil):
     """Kopya grubunda birincil satırın öğrenim, puan türü, il ve taban referansı bilgisi ikincillerle birleştirilir
     (birincil metinde düzey yazmıyor ama aynı ilanın başka kaynaktaki kaydı yazıyor olabilir); hiçbir değer silinmez."""
     uyeler = [birincil, *ikincil]
+    for alan in ('son_zaman', 'baslangic_zaman'):   # aynı gün için saat bilgisi yalnız kopyada olabilir (Bahçe 17:00, TİBU 13:00)
+        if not birincil.get(alan):
+            ikiz = next((u for u in ikincil if u.get(alan) and u.get('son_tarih') == birincil.get('son_tarih')), None)
+            if ikiz:
+                birincil[alan] = ikiz[alan]
     ogr = [d for d in SEVIYE_SIRASI if any(d in (u.get('ogrenim') or []) for u in uyeler)]
     if ogr != (birincil.get('ogrenim') or []):
         if not (birincil.get('ogrenim') or []):
@@ -387,9 +475,10 @@ def liste_uret(ilanlar, gorseller, docs, simdi=None, guncelleme=None, kopyalar=N
                     kayit_id[birincil][0]['kaynaklar'] = adlar
     except Exception as hata:
         print(f'Uyarı: kaynak adları yazılamadı: {hata}')
-    gorunen = [k for k in kayitlar if not k.get('kopya_of')]
+    # Kurum içi ilanlar İlanlar listesinde (rozetli) kalır; açık ilan/kadro sayısına, takvime, uyarıya girmez.
+    gorunen = [k for k in kayitlar if not k.get('kopya_of') and k.get('durum') != 'belirsiz']
     bugun_yeni = sum(1 for k in gorunen if _tr_tarih(k.get('ilk_gorulme')) == simdi.date())
-    gorunen_ilanlar = [i for k, i in kayit_id.values() if not k.get('kopya_of')]
+    gorunen_ilanlar = [i for k, i in kayit_id.values() if not k.get('kopya_of') and k.get('durum') != 'belirsiz']
     return {
         'guncelleme': guncelleme or simdi.isoformat(timespec='seconds'),
         'sayilar': {'acik': len(gorunen), 'kadro': sum(k.get('toplam') or 0 for k in gorunen), 'bugun_yeni': bugun_yeni},

@@ -45,6 +45,22 @@ def norm(text):
     return text.replace('İ','i').lower().translate(str.maketrans('ışğüöç', 'isguoc'))
 
 
+YIL_SAYISI = re.compile(r'(?:19|20)\d\d$')
+
+
+def adet_ayir(parca):
+    """'3 UZMAN' -> (3, 'UZMAN'); baştaki sayı yıl (1900-2100) ya da sayı yoksa (None, parca).
+    '2026 YILI TABİP ...' bir kadro sayısı değil, yıl bilgisidir."""
+    m = re.match(r'^(\d+)\s+(.*)$', parca or '')
+    if not m or YIL_SAYISI.fullmatch(m.group(1)) and 1900 <= int(m.group(1)) <= 2100:
+        return None, parca
+    return int(m.group(1)), m.group(2)
+
+
+# Başlıktaki "N ... alacak" sayısı: yıl değil
+BASLIK_ADET = r'(?<![\d.])(?!(?:19|20)\d\d\b)(\d+)'
+
+
 def meslekler(kadro):
     text = re.sub(r'^Toplam\s+\d+\s+kişi\s*[—–-]\s*', '', kadro or '', flags=re.I)
     return list(dict.fromkeys(p.strip() for p in text.split('•') if p.strip()))

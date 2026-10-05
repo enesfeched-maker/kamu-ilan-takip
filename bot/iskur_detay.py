@@ -74,8 +74,9 @@ def _satirlar(plain):
             return []
         son = eslesmeler[k + 1].start() if k + 1 < len(eslesmeler) else min(len(govde), e.end() + 600)
         pt = PT.search(govde[e.end():son])
+        nitelik = govde[e.end():e.end() + pt.start()] if pt else ''
         sonuc.append({'unvan': unvan, 'sinif': re.sub(r'[\s.]', '', sinif), 'derece': derece, 'adet': adet,
-                      'pt': 'P' + pt.group(1) if pt else None, 'taban': pt.group(2) if pt else None})
+                      'pt': 'P' + pt.group(1) if pt else None, 'taban': pt.group(2) if pt else None, 'nitelik': nitelik})
     return sonuc
 
 

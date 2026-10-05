@@ -134,7 +134,7 @@ p.title=not;p.setAttribute('aria-label',tam+'. '+not);
 p.append(ic('grafik'),E('span','d',tam),E('span','m',kisa));return p;}
 function tarihOf(o){
 const d=E('div','tarih'),g=o.son_tarih?days(o.son_tarih):null;
-if(g===null){d.className='tarih yok';d.append(E('strong','','—'),E('span','','tarih ilanda'));return d;}
+if(g===null){d.className='tarih yok';d.append(E('strong','','—'),E('span','',o.durum==='belirsiz'?'tarih doğrulanamadı':'tarih ilanda'));return d;}
 if(closed(o)){d.append(E('strong','',kisaTarih(o.son_tarih)),E('span','','sona erdi'));return d;}
 if(g<=2&&!upcoming(o)){d.className='tarih acil';if(g<=0)d.append(E('strong','','Bugün'),E('span','','son gün'));else if(g===1)d.append(E('strong','','Yarın'),E('span','','son gün'));else d.append(E('strong','',kisaTarih(o.son_tarih)),E('span','','2 gün kaldı'));return d;}
 d.append(E('strong','',kisaTarih(o.son_tarih)),E('span','',g+' gün'));return d;}
@@ -193,7 +193,7 @@ if(p&&p.atlandi&&Date.now()-Date.parse(p.t+'T12:00:00Z')<14*864e5){const d=E('p'
 const d=E('div','kurulum'),ik=E('span','profil-ikon'),t=E('div'),b=E('button','btn btn-ana','Başla');ik.innerHTML=IC.kisi;t.append(E('b','','30 saniyede sana göre ayarla'),E('span','','Öğrenim düzeyini ve illerini seç; sana uygun ilanlar en üstte görünsün.'));b.type='button';b.onclick=openProfile;d.append(ik,t,b);return d;}
 /* ---------- Bugün ---------- */
 function bugunModel(){
-const p=activeProfile(),acik=liste.filter(o=>!closed(o)),byDl=(a,b)=>(a.son_tarih||'9999').localeCompare(b.son_tarih||'9999')||a.kurum.localeCompare(b.kurum,'tr');
+const p=activeProfile(),acik=liste.filter(o=>!closed(o)&&!o.kurum_ici&&o.durum!=='belirsiz'),byDl=(a,b)=>(a.son_tarih||'9999').localeCompare(b.son_tarih||'9999')||a.kurum.localeCompare(b.kurum,'tr');
 const seviye=new Map(),bilinmiyor=[];
 const senin=p?acik.filter(o=>{const s=uygun(o,p);if(s==='bilinmiyor'){bilinmiyor.push(o);return false;}if(s)seviye.set(o.key,s);return !!s;}).sort((a,b)=>Number(seviye.get(a.key)==='alt')-Number(seviye.get(b.key)==='alt')||ilRank(a,p)-ilRank(b,p)||Number(isNew(b))-Number(isNew(a))||byDl(a,b)):[];
 const acil=acik.filter(o=>o.son_tarih&&!upcoming(o)&&days(o.son_tarih)<=2).sort(byDl);

@@ -95,7 +95,7 @@ def notice(title):
 
 def total(item):
     text = item.get('kadro','')
-    m = re.search(r'Toplam\s+(\d+)\s+kişi',text,re.I) or re.match(r'\s*(\d+)\s+',text)
+    m = re.search(r'Toplam\s+(\d+)\s+kişi',text,re.I) or re.match(r'\s*(?!(?:19|20)\d\d\b)(\d+)\s+',text)
     if not m:
         return None
     if ',' in text and 'Toplam' not in text and ' — ' not in text:
@@ -106,8 +106,21 @@ def total(item):
 
 def institution(title):
     # Keep the actual named institution; never infer a workplace from its city name.
-    m = re.match(r'(.+?\b(?:Belediye Başkanlığı|Belediyesi|Üniversitesi|Kurumu Başkanlığı|Kalkınma Ajansı|Kurumu|Birliği|Bakanlığı|Genel Müdürlüğü|Başkanlığı))\b',title,re.I)
-    return clean(m.group(1)) if m else ''
+    m = re.match(r'(.+?\b(?:Belediye Başkanlığı|Belediyesi|Üniversitesi|Kurumu Başkanlığı|Kalkınma Ajansı|Ajansı|Kurumu|Birliği|Bakanlığı|Genel Müdürlüğü|Başkanlığı))\b',title,re.I)
+    if m:
+        org=clean(m.group(1))
+        # "İstanbul Büyükşehir Belediyesi İETT İşletmeleri Genel Müdürlüğü": ilanı veren en özgül birimdir.
+        birim=re.match(r'\s+(\S+(?:\s+\S+){0,4}?\s+Genel Müdürlüğü)\b',title[m.end():],re.I)
+        if birim and re.search(r'Büyükşehir Belediyesi$',org,re.I):
+            org=clean(birim.group(1))
+        return org
+    return kurum_basliktan(title)
+
+
+def kurum_basliktan(title):
+    """Kurum adı bilinen bir sözcükle bitmiyorsa ("… Personel Alım İlanı"), kurum adı başlıktaki ilan türü ekinden önceki kısımdır."""
+    ad=clean(re.sub(r'\s+(?:(?:Sözleşmeli\s+)?(?:Personel|Memur|İşçi|Bilişim Personeli|Uzman)\s+)?Alım(?:ı)?\s+İlanı.*$','',title,flags=re.I))
+    return ad if ad!=clean(title) and len(ad.split())>=2 and len(ad)<=90 else ''
 
 
 def pdf_text(data):
@@ -130,9 +143,23 @@ def pdf_dates(text, range_text):
     parts = re.findall(r'(\d{1,2})\s+('+'|'.join(MONTHS)+r')',range_text.lower())
     if len(parts) != 2:
         return {}
+    from basvuru_penceresi import pencere as _pencere
+    asamali=_pencere(text,now())
+    if asamali and asamali.get('asamalar'):
+        # Ön başvuru + nihai başvuru: son başvuru nihai aşamanın bitişidir.
+        return {'son_tarih':asamali['bitis'].isoformat(),
+                'baslangic_zaman':datetime.combine(asamali['baslangic'],datetime.min.time(),TR).isoformat()}
     start_day,start_month=int(parts[0][0]),MONTHS.index(parts[0][1])+1
     end_day,end_month=int(parts[1][0]),MONTHS.index(parts[1][1])+1
     candidates={d for d in dates if d.day==end_day and d.month==end_month and abs((d-now().date()).days)<370}
+    if not candidates:
+        # Belge açık bir başvuru aralığı veriyorsa (ör. "başvurular, 01/10/2026 - 05/10/2026 tarihleri arasında") SBB listesinin
+        # gösterdiği dönem değil belge kazanır; dönem yalnız belgede aralık yoksa yedek kalır.
+        from basvuru_penceresi import pencere
+        p=pencere(text,now())
+        if p:
+            return {'son_tarih':p['bitis'].isoformat(),
+                    'baslangic_zaman':datetime.combine(p['baslangic'],datetime.min.time(),TR).isoformat()}
     # The start date also establishes the range year when the PDF says "15 days".
     if not candidates:
         starts={d for d in dates if d.day==start_day and d.month==start_month and abs((d-now().date()).days)<185}
@@ -258,6 +285,29 @@ def iskur_rows(data, city):
     return records
 
 
+def iskur_il_duzelt(row):
+    """Özetteki "İstanbul'da görev yapmak üzere" İŞKUR'un ilan şehrinden (kayıt ofisi) daha güvenilirdir."""
+    import liste_verisi
+    il=liste_verisi.ozet_gorev_ili(row)
+    if il and row.get('yer')!=il:
+        row['yer']=il
+    return row
+
+
+def iskur_pencere_uygula(row):
+    """Belgedeki başvuru penceresi (basvuru_notu) İŞKUR tablosundaki tarihten farklıysa belge kazanır; başlangıç belgeden gelir."""
+    from basvuru_penceresi import uygula
+    yeni=uygula(row,[row.get('basvuru_notu')],now())
+    if yeni is row:
+        return row
+    for key in ('son_tarih','son_zaman','baslangic_zaman'):
+        if key in yeni:
+            row[key]=yeni[key]
+        else:
+            row.pop(key,None)
+    return row
+
+
 DETAY_ALANLARI=('kadro','sartlar','ozet','basvuru_notu','iskur_detay_surumu','iskur_belge_sha256','iskur_detay_guncelleme')
 ISKUR_PDF_SINIRI=15
 
@@ -302,6 +352,9 @@ def iskur_zenginlestir(op,records,previous):
             print(f'İŞKUR ilan belgesi okunamadı ({type(exc).__name__}: {str(exc)[:100]}): {row["baslik"]}',flush=True)
             row['iskur_detay_denemesi']=now().isoformat(timespec='seconds')
         time.sleep(.3)
+    for row in records:
+        iskur_pencere_uygula(row)
+        iskur_il_duzelt(row)
     return indirilen,hata
 
 
@@ -342,6 +395,7 @@ def same_listing(a,b):
         t=norm(i.get('kurum'))
         t=re.sub(r'\b(rektorlugu|baskanligi)\b','',t)
         t=re.sub(r'\bbelediyesi\b','belediye',t)
+        t=re.sub(r'\bpasof\b','posof',t)   # İŞKUR kaynağındaki bilinen yazım hatası
         return clean(t)
     x,y=org(a),org(b)
     if not x or not y or not (x==y or x.endswith(' '+y) or y.endswith(' '+x)):

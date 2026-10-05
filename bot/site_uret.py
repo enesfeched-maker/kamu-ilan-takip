@@ -345,6 +345,9 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
     elif item.get('kadro'):
         bolum += f'<h2>Kadro ve kontenjan</h2><p>{esc(item["kadro"])}</p>'
     diger = ''
+    from basvuru_penceresi import asama_yazisi
+    if item.get('basvuru_asamalari') and asama_yazisi(item['basvuru_asamalari']):
+        diger += f'<h3>Başvuru aşamaları</h3><p>{esc(asama_yazisi(item["basvuru_asamalari"]))}</p>'
     for heading, value in [('Duyuru metni', item.get('duyuru_cumlesi')), ('İlan özeti', None if item.get('ozet') == item.get('duyuru_cumlesi') else item.get('ozet')), ('Başvuru notu', item.get('basvuru_notu'))]:
         if value:
             diger += f'<h3>{heading}</h3><p>{esc(value)}</p>'
@@ -389,9 +392,26 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
                    '<noscript><div class="not wrap">Bazı özellikler (kaydetme, kalan gün, “Senin için”) için JavaScript gerekir.</div></noscript></body></html>')
 
 
+def kurum_ici_sayfasi(item):
+    """Kanalda zaten paylaşılmış kurum içi ilanın bağlantısı 404 vermesin: kısa, aranamaz (noindex) sayfa. (anahtar, html)."""
+    from ilan_baglanti import ilan_anahtari
+    key = ilan_anahtari(item)
+    kok = '../../'
+    baslik = 'Kurum içi ilan'
+    govde = (f'<main id="icerik" class="wrap"><article class="d-bas"><h1>{esc(baslik)}</h1>'
+             '<p class="not kopya-not"><strong>Bu ilan yalnız kurum personeline yöneliktir.</strong> Açıktan başvuruya açık değildir; sitede listelenmez.</p>'
+             f'<p><a class="yazi-link" href="{kok}">Ana sayfaya dön →</a></p></article></main>')
+    return key, (sayfa_basi(baslik + ' | Kamu İlan Takip', 'Bu ilan yalnız kurum personeline yöneliktir.', BASE + 'ilan/' + key + '/', kok,
+                            ek_head='<meta name="robots" content="noindex,nofollow">')
+                 + f'<body class="detail-page"><a class="skip" href="#icerik">İçeriğe geç</a>{ust_html(kok)}{govde}{alt_html(kok)}</body></html>')
+
+
 def kucuk_ad(metin):
     from siniflandir import kucuk
     return kucuk(' '.join(str(metin or '').split()))
+
+
+AKRONIMLER = {'BDDK', 'SPK', 'SEDDK', 'İETT', 'TGA', 'VHKİ', 'TKGM', 'GSB', 'TTK', 'MSB', 'MEB', 'SGK', 'DSİ', 'TÜBİTAK', 'TÜİK', 'AFAD', 'DMKA', 'TİBU', 'EGO', 'İSKİ', 'TRT', 'KPSS', 'ALES', 'YDS'}
 
 
 def _duzgun(metin):
@@ -401,6 +421,12 @@ def _duzgun(metin):
     buyut = lambda h: 'İ' if h == 'i' else 'I' if h == 'ı' else h.upper()
     sonuc = re.sub(r'(^|[\s(/-])([a-zçğıöşü])', lambda m: m.group(1) + buyut(m.group(2)), kucuk)
     sonuc = re.sub(r'(?<=\S )(Ve|İle|Veya)(?= )', lambda m: 'ile' if m.group(1) == 'İle' else m.group(1).lower(), sonuc)
+    # Büyük harfle yazılmış bilinen kısaltmalar korunur (BDDK, SPK, İETT…)
+    ilk = {w for w in re.findall(r'[\wçğıöşüÇĞİÖŞÜ]+', str(metin or '')) if w in AKRONIMLER}
+    if ilk:
+        kat = lambda s: s.replace('I', 'ı').replace('İ', 'i').lower()
+        harita = {kat(w): w for w in ilk}
+        sonuc = re.sub(r'[\wçğıöşüÇĞİÖŞÜ]+', lambda m: harita.get(kat(m.group()), m.group()), sonuc)
     return re.sub(r'\b4/b\b', '4/B', re.sub(r'\bkpss\b', 'KPSS', sonuc, flags=re.I), flags=re.I)
 
 
@@ -635,6 +661,12 @@ def gorselleri_uret(ilanlar, docs, simdi=None, en_cok_indirme=EN_COK_LOGO_INDIRM
 def main():
     docs = ROOT / 'docs'
     data = json.loads((docs / 'ilanlar.json').read_text(encoding='utf-8'))
+    try:
+        import liste_verisi
+        # Yeniden okunmamış kayıtlar için derleme zamanı düzeltmeleri (belge penceresi, SBB belge alanları); ilanlar.json'a yazılmaz.
+        data['ilanlar'] = [liste_verisi.tamamla(i) for i in data.get('ilanlar', [])]
+    except Exception as hata:
+        print(f'Uyarı: kayıtlar derleme zamanında tamamlanamadı: {hata}')
     urls = [BASE]
     count = 0
     from siniflandir import akademik_ilan
@@ -669,6 +701,7 @@ def main():
     except Exception as hata:
         print(f'::warning::liste.json üretilemedi: {hata}')
     kayitlar = (liste or {}).get('ilanlar') or []
+    paylasilan = set(data.get('telegram_gonderilen') or [])
     kayit_haritasi = {k['key']: k for k in kayitlar}
     gorunen = [k for k in kayitlar if not k.get('kopya_of')]
     for item in data.get('ilanlar', []):
@@ -676,6 +709,14 @@ def main():
         if not result:
             if akademik_ilan(item):
                 _sayfayi_kaldir(docs, item)
+                from siniflandir import kurum_ici
+                if kurum_ici(item) and {item.get('id'), *item.get('kaynak_kimlikleri', [])} & paylasilan:
+                    try:
+                        anahtar, icerik_ = kurum_ici_sayfasi(item)   # Telegram'da paylaşılmış bağlantı 404 vermesin
+                        (docs / 'ilan' / anahtar).mkdir(parents=True, exist_ok=True)
+                        (docs / 'ilan' / anahtar / 'index.html').write_text(icerik_, encoding='utf-8')
+                    except Exception as hata:
+                        print(f'Uyarı: kurum içi ilan sayfası yazılamadı ({item.get("id")}): {hata}')
             continue
         kayit = kayit_haritasi.get(result[0])
         try:

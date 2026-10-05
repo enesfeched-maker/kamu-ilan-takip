@@ -7,7 +7,7 @@ from pypdf import PdfReader
 
 ROOT=Path(__file__).resolve().parents[1]
 BASE='https://enesfeched-maker.github.io/kamu-ilan-takip/'
-VERSION=5
+VERSION=6
 
 FIIL=re.compile(r'(?:iptal\s+edil(?:miş\s*tir|di)|düzeltil(?:miş\s*tir|di)|değiştiril(?:miş\s*tir|di)|uzatıl(?:mış\s*tır|dı))')
 
@@ -135,7 +135,13 @@ def summarize(raw,row):
                 and not any(w in norm(b) for w in ('ucret','sonuc','itiraz','tercih'))),None)
     if dates and application and dates not in application:
         application=application[:1]+[dates]
-    summary=[row['kadro'].rstrip('.').replace('ALACAK','alımı')+'.']
+    # PDF'nin TAM metninden il, gerçek kadro, puan türü, öğrenim, KPSS durumu (güvenilmezse alan hiç yazılmaz).
+    try:
+        from belge_alanlari import alanlar as belge_alanlari
+        turetilen=belge_alanlari(plain_pages,row) if not row.get('duyuru_turu') else {}
+    except Exception:
+        turetilen={}
+    summary=[(turetilen.get('kadro') or row['kadro']).rstrip('.').replace('ALACAK','alımı')+'.']
     if row.get('son_tarih'):summary.append('Son başvuru: '+'.'.join(reversed(row['son_tarih'].split('-')))+'.')
     if application:summary.append(application[0])
     if conditions:
@@ -153,10 +159,19 @@ def summarize(raw,row):
             'belge_kopyasi':BASE+relative,'belge_sha256':digest,
             'belge_aciklamasi':'SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.',
             'sbb_detay_surumu':VERSION}
+    result.update(turetilen)
     if row.get('duyuru_turu'):
         result['duyuru_cumlesi']=duyuru_cumlesi_bul(plain_pages)
         if result['duyuru_cumlesi']:result['ozet']=result['duyuru_cumlesi']
     return result
+
+
+def belge_sayfalari(item, en_buyuk=4_000_000):
+    """Depodaki PDF kopyasının düz sayfa metinleri; kopya yoksa/çok büyükse None."""
+    sha=str(item.get('belge_sha256') or '')
+    path=ROOT/'docs'/'belgeler'/'sbb'/(sha+'.pdf')
+    if not re.fullmatch(r'[a-f0-9]{64}',sha) or not path.exists() or path.stat().st_size>en_buyuk:return None
+    return [p.extract_text() or '' for p in PdfReader(str(path)).pages]
 
 
 def document_url(item):

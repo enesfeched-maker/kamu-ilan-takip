@@ -9,7 +9,7 @@ from pathlib import Path
 from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageFont, ImageOps
 
 from ilan_gorsel import lines
-from meslek_gorseli import fotograf, meslek_no, meslekler
+from meslek_gorseli import fotograf, meslek_no, meslekler, adet_ayir, BASLIK_ADET
 
 TR = timezone(timedelta(hours=3))
 G, Y = 1080, 1350
@@ -91,11 +91,10 @@ def _kadrolar(ilan):
         return []
     sonuc = []
     for parca in meslekler(ilan.get('kadro')):
-        m = re.match(r'^(\d+)\s+(.*)$', parca)
-        adet, ad = (int(m.group(1)), m.group(2)) if m else (None, parca)
+        adet, ad = adet_ayir(parca)
         sonuc.append({'adet': adet, 'ad': _baslik(ad), 'no': meslek_no(ad)})
     if not sonuc:
-        m = re.search(r'(\d+)\s+([^\d]+?)\s+(?:alacak|alınacak|alim|alım)', _baslik_ozeti(ilan), re.I)
+        m = re.search(BASLIK_ADET + r'\s+([^\d]+?)\s+(?:alacak|alınacak|alim|alım)', _baslik_ozeti(ilan), re.I)
         if m:
             sonuc.append({'adet': int(m.group(1)), 'ad': _baslik(m.group(2).strip()), 'no': meslek_no(m.group(2))})
     return sonuc

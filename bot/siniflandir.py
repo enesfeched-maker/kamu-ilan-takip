@@ -32,7 +32,7 @@ ETIKET_KATEGORI = {
     'akademik': '#akademik', 'belediye': '#belediye', 'isci': '#işçi',
     'bilisim': '#bilişim', 'saglik': '#sağlık',
 }
-KPSSSIZ = re.compile(r'kpsssiz|kpss[^.;]{0,40}aranma(?:z|yacak|mamaktadır)|sınavsız')
+KPSSSIZ = re.compile(r'kpsssiz|kpss[^.;]{0,40}aranma(?:z|yacak|maktadır)|kpss puanı istenme|sınavsız')
 SAGLIK = re.compile(SOL + r'(?:hemşire|ebe' + SAG + r'|sağlık personeli|hastane)')
 
 
@@ -48,6 +48,19 @@ def kucuk(metin):
     metin = unicodedata.normalize('NFC', metin.lower()).replace('̇', '')
     metin = re.sub(r"['’`´]", '', metin)
     return re.sub(r'\s+', ' ', metin).strip()
+
+
+# Kurum içi (açıktan başvuruya kapalı) ilanlar: yeterlik sınavı, görevde yükselme/unvan değişikliği, kurum personeline yönelik
+# yurt dışı eğitim/staj/yüksek lisans programları. Sitede yalnız İlanlar listesinde (rozetle) görünür; sayılara, "Senin için"
+# ve Bugün bölümlerine, Telegram'a girmez.
+KURUM_ICI = re.compile(r'yeterlik sınavı|görevde yükselme|unvan değişikliği|kurum içi|yurt ?dışı (?:eğitim|staj|yüksek lisans|lisansüstü|lisans)')
+KURUM_ICI_OZET = re.compile(r'kurumumuz personeline yönelik|kurum personeline yönelik|kurumumuz personeli için')
+
+
+def kurum_ici(ilan):
+    if KURUM_ICI.search(kucuk(f"{ilan.get('baslik') or ''} {ilan.get('ilan_turu') or ''}")):
+        return True
+    return bool(KURUM_ICI_OZET.search(kucuk(str(ilan.get('ozet') or '')[:700])))
 
 
 def _sartlar(ilan):
@@ -80,9 +93,9 @@ def akademik_mi(ilan):
 
 
 def akademik_ilan(ilan):
-    """Akademik kadro ilanı (öğretim üyesi/görevlisi, araştırma görevlisi...). Bu ilanlar kanalda, sosyal medyada,
+    """Akademik kadro ilanı (öğretim üyesi/görevlisi, araştırma görevlisi...) ya da kurum içi ilan (kurum_ici). Bu ilanlar kanalda, sosyal medyada,
     sitede ve kişisel bot verisinde hiçbir yerde gösterilmez; yalnız docs/ilanlar.json'da kalır."""
-    return ilan.get('kategori') == 'akademik' or akademik_mi(ilan)
+    return ilan.get('kategori') == 'akademik' or akademik_mi(ilan) or kurum_ici(ilan)
 
 
 # "Hukuk fakültesi, adalet meslek yüksekokulu ... mezunu olmak": fakülte adı mezuniyet şartı olarak yalnız şart/özet
@@ -120,7 +133,9 @@ def ogrenim_seviyeleri(ilan):
     if 'lisans' in bulunan and P9X.search(metin) and not P3.search(metin) \
             and not LISANS_KESIN.search(metin):
         bulunan.remove('lisans')
-    return bulunan
+    # SBB belgesinin tam metninden/tablosundan toplayıcının bulduğu düzeyler (kısaltılmış özet göremediğini tamamlar).
+    belge = [d for d in ilan.get('belge_ogrenim') or [] if d in ETIKET_OGRENIM]
+    return [d for d in ETIKET_OGRENIM if d in bulunan or d in belge] if belge else bulunan
 
 
 def _sart_olarak_gecer(desen, metin):
@@ -147,7 +162,7 @@ def kategori(ilan):
 
 def kpss_durumu(ilan):
     metin = _tum_metin(ilan)
-    if KPSSSIZ.search(metin):
+    if KPSSSIZ.search(metin) or ilan.get('belge_kpss') == 'kpsssiz':
         return 'kpsssiz'
     if 'kpss' in metin:
         return 'kpss'
@@ -189,6 +204,17 @@ def il_adlari(ilan):
             if il not in sonuc:
                 sonuc.append(il)
     return sonuc
+
+
+def tazele(ilan):
+    """Site filtreleri için öğrenim, kategori, il ve KPSS alanlarını metinden yeniden hesaplar (yoksa alanı siler)."""
+    for alan, deger in (('ogrenim', ogrenim_seviyeleri(ilan)), ('kategori', kategori(ilan)),
+                        ('iller', il_adlari(ilan)), ('kpss', kpss_durumu(ilan))):
+        if deger:
+            ilan[alan] = deger
+        else:
+            ilan.pop(alan, None)
+    return ilan
 
 
 def il_etiketi(ilan):
