@@ -13,8 +13,12 @@ LIBRARY=Path(__file__).resolve().parents[1]/'docs/assets/kurum-logolari'
 HOSTS={'kariyerkapisi.gov.tr','cdn.e-devlet.gov.tr'}
 
 
+YAZIM_HATALARI={'pasof':'posof'}   # kaynaklardaki bilinen kurum adı yazım hataları
+
+
 def kurum_anahtari(name):
     value=clean(re.sub(r'\b(?:rektorlugu|baskanligi)\b','',norm(name)))
+    value=re.sub(r'\b('+'|'.join(YAZIM_HATALARI)+r')\b',lambda m:YAZIM_HATALARI[m.group(1)],value)
     return re.sub(r'\bbelediyesi\b','belediye',value)
 
 

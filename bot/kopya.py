@@ -91,7 +91,7 @@ def _gun(iso):
 def _zengin(item):
     """Birincil seçimi için sıralama anahtarı (küçük = daha zengin)."""
     return (0 if ks.kadrolar(item) else 1, 0 if (item.get('ozet') or item.get('sartlar')) else 1,
-            _rutbe(item), item.get('ilk_gorulme') or '9999', item.get('id') or '')
+            _rutbe(item), -(_toplam(item) or 0), item.get('ilk_gorulme') or '9999', item.get('id') or '')
 
 
 def _uygun(item):
@@ -104,6 +104,7 @@ def _uygun(item):
         return False
 
 
+KURUM_TAKMA = {'iett': 'elektrik tramvay tunel'}   # kısaltma -> adın ayırt edici sözcükleri
 KURUM_GENEL = {'ve', 'ile', 'genel', 'mudurlugu', 'kurumu', 'kurulu', 'cumhurbaskanligi', 'baskanlik'}
 BASLIK_GENEL = {'ve', 'ile', 'veya', 'alim', 'alimi', 'ilani', 'duyurusu', 'personel', 'sinav', 'sinavi', 'yili', 'yilinda',
                 'alacak', 'alinacak', 'ilk', 'defa', 'atanmak', 'uzere', 'aciktan', 'temin', 'edecektir', 'adet', 'kisi',
@@ -120,7 +121,10 @@ def _kurum_cekirdek(item, kan):
     'İstanbul Bankacılık Düzenleme ve Denetleme Kurumu' ile 'BANKACILIK DÜZENLEME VE DENETLEME KURUMU BAŞKANLIĞI (BDDK)' aynıdır."""
     if kan.endswith(' belediye'):
         return frozenset(kan.split())
-    sozcukler = [w for w in ks.kurum_anahtari(re.sub(r'\([^)]*\)', ' ', item.get('kurum') or '')).split() if w not in KURUM_GENEL]
+    ad = ks.kurum_anahtari(re.sub(r'\([^)]*\)', ' ', item.get('kurum') or ''))
+    for kisa, acik in KURUM_TAKMA.items():
+        ad = re.sub(r'\b' + kisa + r'\b', acik, ad)
+    sozcukler = [w for w in ad.split() if w not in KURUM_GENEL]
     if len(sozcukler) >= 4 and sozcukler[0] in ks.IL_ANAHTAR:
         sozcukler = sozcukler[1:]
     return frozenset(sozcukler)
@@ -256,10 +260,24 @@ def kopya_bul(ilanlar):
                 and bilgi[a['id']]['cekirdek'] == bilgi[b['id']]['cekirdek']
                 and _baslik_ortak(a, b) >= BASLIK_ORTAK_ESIK and _toplam_esit_ya_da_bilinmiyor(a, b))
 
+    def kismi_kadro(a, b):
+        """Kariyer Kapısı ayrıştırması kadroların yalnız bir kısmını listeleyebilir (ör. 18 kadrodan 13'ü): aynı son tarih ve aynı
+        başlangıç günü, toplamlar farklı, küçük tarafın unvanları büyük tarafın unvanlarının altkümesi ya da büyük taraf genel
+        unvanlı ('sözleşmeli personel') ise aynı ilandır. Birincil, belgeye dayalı büyük toplamlı kayıttır (_zengin)."""
+        ta, tb = _toplam(a), _toplam(b)
+        if not (ta and tb) or ta == tb or not a.get('son_tarih') or a.get('son_tarih') != b.get('son_tarih'):
+            return False
+        ba, bb = _gun(a.get('baslangic_zaman')), _gun(b.get('baslangic_zaman'))
+        if not ba or ba != bb or not _tur_uyumlu(a, b):
+            return False
+        kucuk_, buyuk_ = (a, b) if ta < tb else (b, a)
+        uk, ub = _unvanlar(kucuk_), _unvanlar(buyuk_)
+        return bool(uk) and bool(ub) and (uk <= ub or ub <= GENEL_UNVANLAR)
+
     def kadro_uyumlu(a, b):
         """Unvanlar uyumlu; ya da toplam çelişmiyor ve unvan sözcükleri büyük oranda ortak (en az 2 ortak sözcük);
         bir tarafta unvan bilgisi yoksa eşit bilinen toplam da yeter. Her iki tarafta unvan bilinip uyuşmuyorsa ortak sözcük şart."""
-        if _uyumlu_kadro(a, b):
+        if _uyumlu_kadro(a, b) or kismi_kadro(a, b):
             return True
         if not _tur_uyumlu(a, b) or not _toplam_esit_ya_da_bilinmiyor(a, b):
             return False

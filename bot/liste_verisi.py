@@ -120,7 +120,7 @@ def belge_tamamla(item):
 
 def tamamla(item):
     """Derleme zamanı düzeltmeleri (kayıt değişmez, KOPYA döner): SBB belge alanları, belge penceresi ve SBB dönem yedeği."""
-    return donem_tamamla(belge_tamamla(item))
+    return donem_tamamla(iskur_tamamla(belge_tamamla(item)))
 
 
 def puan_duzeyi(p):
@@ -146,6 +146,37 @@ def ogrenim_cikar(item, ogr, pt):
         ek.add('lisans')
     sonuc = [d for d in SEVIYE_SIRASI if d in ogr or d in ek]
     return sonuc, bool(ek - set(ogr)), False
+
+
+def ozet_gorev_ili(item):
+    """Özette 'İstanbul’da görev yapmak üzere' diyorsa o il (tek ve geçerli il); yoksa ''."""
+    from siniflandir import kucuk
+    ks = _ks()
+    bulunan = {ks.IL_ADI[a] for a in (ks.kurum_anahtari(p) for p in OZET_IL_GOREV.findall(kucuk(item.get('ozet')))) if a in ks.IL_ADI}
+    return next(iter(bulunan)) if len(bulunan) == 1 else ''
+
+
+def iskur_tamamla(item):
+    """İŞKUR kaydında kurum adı (başlıktan: 'Ajansı', en özgül birim, 'Personel Alım İlanı' öncesi) ve görev ili (özetten)
+    toplayıcının yeni sürümüyle aynı biçimde düzeltilmiş KOPYA döner; değişiklik yoksa aynı nesne."""
+    if item.get('kaynak_turu') != 'iskur' or item.get('duyuru_turu'):
+        return item
+    yeni = item
+    try:
+        from ek_kaynaklar import institution
+        kurum = institution(item.get('baslik') or '')
+        if kurum and kurum != item.get('kurum'):
+            yeni = dict(yeni, kurum=kurum)
+        il = ozet_gorev_ili(item)
+        if il and item.get('yer') != il:
+            yeni = dict(yeni, yer=il)
+            yeni.pop('iller', None)
+            from siniflandir import il_adlari
+            if il_adlari(yeni):
+                yeni['iller'] = il_adlari(yeni)
+    except Exception:
+        return item
+    return yeni
 
 
 def _il_gecerli(il):

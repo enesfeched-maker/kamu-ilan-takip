@@ -106,8 +106,21 @@ def total(item):
 
 def institution(title):
     # Keep the actual named institution; never infer a workplace from its city name.
-    m = re.match(r'(.+?\b(?:Belediye Başkanlığı|Belediyesi|Üniversitesi|Kurumu Başkanlığı|Kalkınma Ajansı|Kurumu|Birliği|Bakanlığı|Genel Müdürlüğü|Başkanlığı))\b',title,re.I)
-    return clean(m.group(1)) if m else ''
+    m = re.match(r'(.+?\b(?:Belediye Başkanlığı|Belediyesi|Üniversitesi|Kurumu Başkanlığı|Kalkınma Ajansı|Ajansı|Kurumu|Birliği|Bakanlığı|Genel Müdürlüğü|Başkanlığı))\b',title,re.I)
+    if m:
+        org=clean(m.group(1))
+        # "İstanbul Büyükşehir Belediyesi İETT İşletmeleri Genel Müdürlüğü": ilanı veren en özgül birimdir.
+        birim=re.match(r'\s+(\S+(?:\s+\S+){0,4}?\s+Genel Müdürlüğü)\b',title[m.end():],re.I)
+        if birim and re.search(r'Büyükşehir Belediyesi$',org,re.I):
+            org=clean(birim.group(1))
+        return org
+    return kurum_basliktan(title)
+
+
+def kurum_basliktan(title):
+    """Kurum adı bilinen bir sözcükle bitmiyorsa ("… Personel Alım İlanı"), kurum adı başlıktaki ilan türü ekinden önceki kısımdır."""
+    ad=clean(re.sub(r'\s+(?:(?:Sözleşmeli\s+)?(?:Personel|Memur|İşçi|Bilişim Personeli|Uzman)\s+)?Alım(?:ı)?\s+İlanı.*$','',title,flags=re.I))
+    return ad if ad!=clean(title) and len(ad.split())>=2 and len(ad)<=90 else ''
 
 
 def pdf_text(data):
@@ -266,6 +279,15 @@ def iskur_rows(data, city):
     return records
 
 
+def iskur_il_duzelt(row):
+    """Özetteki "İstanbul'da görev yapmak üzere" İŞKUR'un ilan şehrinden (kayıt ofisi) daha güvenilirdir."""
+    import liste_verisi
+    il=liste_verisi.ozet_gorev_ili(row)
+    if il and row.get('yer')!=il:
+        row['yer']=il
+    return row
+
+
 def iskur_pencere_uygula(row):
     """Belgedeki başvuru penceresi (basvuru_notu) İŞKUR tablosundaki tarihten farklıysa belge kazanır; başlangıç belgeden gelir."""
     from basvuru_penceresi import uygula
@@ -326,6 +348,7 @@ def iskur_zenginlestir(op,records,previous):
         time.sleep(.3)
     for row in records:
         iskur_pencere_uygula(row)
+        iskur_il_duzelt(row)
     return indirilen,hata
 
 
@@ -366,6 +389,7 @@ def same_listing(a,b):
         t=norm(i.get('kurum'))
         t=re.sub(r'\b(rektorlugu|baskanligi)\b','',t)
         t=re.sub(r'\bbelediyesi\b','belediye',t)
+        t=re.sub(r'\bpasof\b','posof',t)   # İŞKUR kaynağındaki bilinen yazım hatası
         return clean(t)
     x,y=org(a),org(b)
     if not x or not y or not (x==y or x.endswith(' '+y) or y.endswith(' '+x)):
