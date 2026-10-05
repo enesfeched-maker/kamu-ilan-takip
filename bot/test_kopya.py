@@ -234,7 +234,7 @@ class YerMetniTests(unittest.TestCase):
         item = sec(ELM_SBB)[0]
         item.update(yer='ANKARA • ANKARA / MERKEZ', iller=['Ankara'])
         html = site_uret.detail_page(item, simdi=SIMDI)[1]
-        self.assertIn('<strong>Ankara (Merkez)</strong>', html)
+        self.assertIn('<dd>Ankara (Merkez)</dd>', html)
         self.assertNotIn('Ankara • Ankara', html)
         self.assertNotIn('Ankara / Merkez', html)
 

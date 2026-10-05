@@ -87,14 +87,22 @@
     d.replaceChildren(a, b);
   });
 
-  /* ayrıntı sayfası: kalan gün rozeti */
-  var du = document.getElementById('durum');
-  if (du && du.dataset.son) {
-    var z = du.dataset.zaman, g = gun(du.dataset.son);
-    if (!isNaN(g)) {
-      if ((z && Date.parse(z) <= Date.now()) || g < 0) { du.textContent = 'Başvuru sona erdi'; du.className = 'pill kapali'; }
-      else { du.textContent = g === 0 ? 'Bugün son gün' : g === 1 ? 'Yarın son gün' : g + ' gün kaldı'; du.className = 'pill' + (g <= 2 ? ' acil' : ''); }
-    }
+  /* ayrıntı sayfası: başlık kartındaki geri sayım (dakikada bir; JS yoksa derleme anındaki metin kalır) */
+  var gg = document.querySelector('.dh-geri[data-son]');
+  if (gg) {
+    var hc = gg.closest('.dh-son'), zs = gg.getAttribute('data-zaman'), ds = gg.getAttribute('data-son');
+    var bitis = zs ? Date.parse(zs) : Date.parse(ds + 'T23:59:59+03:00');
+    var geriCiz = function () {
+      var kalan = bitis - Date.now(), d = gun(ds), t;
+      if (isNaN(kalan) || isNaN(d)) return;
+      if (kalan <= 0) { t = 'Başvuru sona erdi'; hc.classList.remove('acil'); hc.classList.add('yok'); }
+      else if (kalan < 864e5) {
+        var sa = Math.floor(kalan / 36e5), dk = Math.floor(kalan % 36e5 / 6e4);
+        t = (d <= 0 ? 'Bugün son gün' : 'Yarın son gün') + ' · ' + (sa ? sa + ' sa ' : '') + dk + ' dk kaldı'; hc.classList.add('acil');
+      } else { t = d === 1 ? 'Yarın son gün' : d + ' gün kaldı'; hc.classList.toggle('acil', d <= 2); }
+      gg.textContent = t;
+    };
+    geriCiz(); setInterval(geriCiz, 6e4);
   }
 
   /* satır sinyali: taban referansı (portal.js sinyalOf ile aynı cümleler) */
