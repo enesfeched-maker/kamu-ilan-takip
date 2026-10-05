@@ -28,6 +28,7 @@ from iptal_yaniti import (duz_anahtar, guclu_kokler, kadro_adi, kapsam_kokleri, 
                           orijinal_ara, paylasildi, resmi_cumle, tam_iptal, yanit_anahtarlari)
 from sbb_detay import FIIL, _katla, belge_cumlesi
 from kurum_gorseli import kurum_logosu
+import siniflandir as siniflandir_modulu
 from siniflandir import akademik_ilan, etiketler, il_adlari, kategori, kpss_durumu, ogrenim_seviyeleri
 from yerel_kaynak import oku as yerel_oku, sbb_verisi, csb_verisi
 
@@ -651,12 +652,7 @@ def ilan_gorseli(i, hatirlatma, logo=None):
 
 def siniflandir(ilan):
     """Site filtreleri ve kişisel bot için öğrenim, kategori, il ve KPSS alanlarını günceller."""
-    for alan, deger in (('ogrenim', ogrenim_seviyeleri(ilan)), ('kategori', kategori(ilan)),
-                        ('iller', il_adlari(ilan)), ('kpss', kpss_durumu(ilan))):
-        if deger:
-            ilan[alan] = deger
-        else:
-            ilan.pop(alan, None)
+    siniflandir_modulu.tazele(ilan)
 
 
 def temizle(ilanlar):

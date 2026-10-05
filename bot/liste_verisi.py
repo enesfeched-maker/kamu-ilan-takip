@@ -88,9 +88,39 @@ def donem_tamamla(item):
     return yeni
 
 
+_BELGE_ONBELLEK = {}
+
+
+def belge_tamamla(item):
+    """Eski sürümle okunmuş SBB kaydının alanlarını depodaki PDF kopyasının TAM metninden tamamlar (il, gerçek kadro, puan türleri,
+    öğrenim, KPSS durumu); KOPYA döner, kayıt değişmez. Kopya yoksa/okunamazsa aynı nesne. Toplayıcı yeni sürümde aynısını kendisi yazar."""
+    if item.get('kaynak_turu') != 'sbb' or item.get('duyuru_turu') or item.get('iptal_edildi') or not item.get('belge_sha256'):
+        return item
+    try:
+        from sbb_detay import VERSION, belge_sayfalari
+        from siniflandir import akademik_ilan, tazele
+        if (item.get('sbb_detay_surumu') or 0) >= VERSION or akademik_ilan(item):
+            return item
+        if item.get('son_tarih') and item['son_tarih'] < datetime.now(TR).date().isoformat():
+            return item   # süresi dolmuş kayıt için PDF okunmaz
+        sha = item['belge_sha256']
+        if sha not in _BELGE_ONBELLEK:
+            from belge_alanlari import alanlar
+            sayfalar = belge_sayfalari(item)
+            _BELGE_ONBELLEK[sha] = alanlar(sayfalar, item) if sayfalar else {}
+        alan = _BELGE_ONBELLEK[sha]
+        if not alan:
+            return item
+        yeni = dict(item, **alan)
+        return tazele(yeni)
+    except Exception as hata:
+        print(f'Uyarı: SBB belge alanları tamamlanamadı ({item.get("id")}): {hata}')
+        return item
+
+
 def tamamla(item):
-    """Derleme zamanı düzeltmeleri (kayıt değişmez, KOPYA döner): belge penceresi ve SBB dönem yedeği."""
-    return donem_tamamla(item)
+    """Derleme zamanı düzeltmeleri (kayıt değişmez, KOPYA döner): SBB belge alanları, belge penceresi ve SBB dönem yedeği."""
+    return donem_tamamla(belge_tamamla(item))
 
 
 def puan_duzeyi(p):
@@ -202,7 +232,9 @@ def il_bul(item, harita=None):
 def puan_turleri(item):
     """İlan metninde geçen KPSS puan türleri (['P3', 'P93']); yoksa []."""
     metin = json.dumps([item.get('ozet'), item.get('sartlar'), item.get('kadro')], ensure_ascii=False)
-    return sorted({'P' + (a or b) for a, b in PUAN_RE.findall(metin)}, key=lambda s: int(s[1:]))
+    bulunan = {'P' + (a or b) for a, b in PUAN_RE.findall(metin)}
+    bulunan |= {p for p in item.get('puan_turleri') or [] if isinstance(p, str) and re.fullmatch(r'P\d{1,3}', p)}   # belge tablosundan
+    return sorted(bulunan, key=lambda s: int(s[1:]))
 
 
 def taban_tablolari(docs):

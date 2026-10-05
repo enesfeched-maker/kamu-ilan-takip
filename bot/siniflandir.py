@@ -32,7 +32,7 @@ ETIKET_KATEGORI = {
     'akademik': '#akademik', 'belediye': '#belediye', 'isci': '#işçi',
     'bilisim': '#bilişim', 'saglik': '#sağlık',
 }
-KPSSSIZ = re.compile(r'kpsssiz|kpss[^.;]{0,40}aranma(?:z|yacak|mamaktadır)|sınavsız')
+KPSSSIZ = re.compile(r'kpsssiz|kpss[^.;]{0,40}aranma(?:z|yacak|maktadır)|kpss puanı istenme|sınavsız')
 SAGLIK = re.compile(SOL + r'(?:hemşire|ebe' + SAG + r'|sağlık personeli|hastane)')
 
 
@@ -120,7 +120,9 @@ def ogrenim_seviyeleri(ilan):
     if 'lisans' in bulunan and P9X.search(metin) and not P3.search(metin) \
             and not LISANS_KESIN.search(metin):
         bulunan.remove('lisans')
-    return bulunan
+    # SBB belgesinin tam metninden/tablosundan toplayıcının bulduğu düzeyler (kısaltılmış özet göremediğini tamamlar).
+    belge = [d for d in ilan.get('belge_ogrenim') or [] if d in ETIKET_OGRENIM]
+    return [d for d in ETIKET_OGRENIM if d in bulunan or d in belge] if belge else bulunan
 
 
 def _sart_olarak_gecer(desen, metin):
@@ -147,7 +149,7 @@ def kategori(ilan):
 
 def kpss_durumu(ilan):
     metin = _tum_metin(ilan)
-    if KPSSSIZ.search(metin):
+    if KPSSSIZ.search(metin) or ilan.get('belge_kpss') == 'kpsssiz':
         return 'kpsssiz'
     if 'kpss' in metin:
         return 'kpss'
@@ -189,6 +191,17 @@ def il_adlari(ilan):
             if il not in sonuc:
                 sonuc.append(il)
     return sonuc
+
+
+def tazele(ilan):
+    """Site filtreleri için öğrenim, kategori, il ve KPSS alanlarını metinden yeniden hesaplar (yoksa alanı siler)."""
+    for alan, deger in (('ogrenim', ogrenim_seviyeleri(ilan)), ('kategori', kategori(ilan)),
+                        ('iller', il_adlari(ilan)), ('kpss', kpss_durumu(ilan))):
+        if deger:
+            ilan[alan] = deger
+        else:
+            ilan.pop(alan, None)
+    return ilan
 
 
 def il_etiketi(ilan):
