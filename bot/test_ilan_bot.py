@@ -47,7 +47,7 @@ class RssTests(unittest.TestCase):
         mesaj = mesaj_olustur(ilan, '')
         self.assertLess(len(ilan_bot.duz_metin(mesaj).encode('utf-16-le')) // 2, 1024)
         self.assertNotIn('İlan metninden', mesaj)
-        self.assertNotIn('KAMU İLAN TAKİP', mesaj)
+        self.assertNotIn('KPSS TERCİHİ', mesaj)
         self.assertNotIn('<script', mesaj)
 
 

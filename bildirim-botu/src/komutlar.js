@@ -7,7 +7,7 @@ import {
 } from './klavye.js';
 
 const ONAY_METNI =
-  'Merhaba! Ben kamu ilanı takip botuyum. Öğrenim düzeyine, iline ve ilgi alanına göre uygun yeni ilanları sana özelden gönderir, son başvuru gününden önce hatırlatırım.\n\n' +
+  'Merhaba! Ben KPSS Tercihi bildirim botuyum. Öğrenim düzeyine, iline ve ilgi alanına göre uygun yeni ilanları sana özelden gönderir, son başvuru gününden önce hatırlatırım.\n\n' +
   'Tercihlerini istediğin an /sil ile tamamen silebilirsin.';
 
 const YARDIM_METNI =

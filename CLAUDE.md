@@ -1,4 +1,4 @@
-# Kamu İlan Takip — proje hafızası
+# KPSS Tercihi — proje hafızası
 
 Türkiye'deki kamu ilanlarını (KPSS ile atanma, sözleşmeli personel, belediye alımları) toplayıp
 Telegram kanalına (@kamuilantakip) ve GitHub Pages sitesine yayınlayan bot. Amaç: KPSS adaylarına

@@ -520,7 +520,7 @@ def kurum_sayfasi(kan, liste, slug, gorseller, simdi, tablolar=None, harita=None
 <div class="kp-stats"><div><strong>{len(acik)}</strong><span>açık ilan</span></div><div><strong>{kadro_yazi}</strong><span>bilinen kadro</span></div><div><strong>{len(liste)}</strong><span>toplam kayıt</span></div></div>
 <div class="kp-actions"><a class="btn btn-tg btn-buyuk" href="https://t.me/kamuilantakip" target="_blank" rel="noopener">Telegram'da takip et ↗</a></div></div></section>
 <main id="icerik" class="wrap kp-main"><section class="bolum"><div class="bolum-bas"><h2>Başvurusu açık ilanlar <span class="sayi">{len(acik)}</span></h2></div>{acik_blok}</section>{gecmis_blok}</main>'''
-    return su.sayfa_kabugu(baslik + ' | Kamu İlan Takip', aciklama, canonical, icerik, 'kurum-page', baslik)
+    return su.sayfa_kabugu(baslik + ' | KPSS Tercihi', aciklama, canonical, icerik, 'kurum-page', baslik)
 
 
 def kurum_sayfalarini_uret(ilanlar, docs, gorseller, simdi=None, kopyalar=None):

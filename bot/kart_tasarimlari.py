@@ -270,7 +270,7 @@ def marka_seridi(d, y, yuk=88, dolgu=ANA, renk=LIME, sag='#ffffff', im=None):
         im.paste(logo, (x, ky), logo)
         d.rounded_rectangle((x, ky, x + boy - 1, ky + boy - 1), radius=round(boy * 0.22), outline=LIME, width=2)
         x += boy + 16
-    d.text((x, y + yuk / 2), 'Kamu İlan Takip', font=F(34, True), fill=renk, anchor='lm')
+    d.text((x, y + yuk / 2), 'KPSS Tercihi', font=F(34, True), fill=renk, anchor='lm')
     d.text((G - KENAR, y + yuk / 2), 't.me/kamuilantakip', font=F(34, True), fill=sag, anchor='rm')
 
 
@@ -546,7 +546,7 @@ def toplu_son_gun_karti(ilanlar, simdi=None):
     d.rounded_rectangle((kx0, ky0, kx1, ky0 + bant_h), radius=34, fill=PETROL)
     d.rectangle((kx0, ky0 + bant_h - 40, kx1, ky0 + bant_h), fill=PETROL)
     sag = G - KENAR
-    d.text((KENAR, ky0 + 50), 'KAMU İLAN TAKİP', font=F(28, True), fill=LIME, anchor='lm')
+    d.text((KENAR, ky0 + 50), 'KPSS TERCİHİ', font=F(28, True), fill=LIME, anchor='lm')
     satirlar, yz = sigdir(d, 'Son başvurusu yaklaşan ilanlar', True, [60, 54, 48], sag - KENAR, 2)
     blok(d, KENAR, ky0 + 86, satirlar, yz, '#ffffff', aralik=round(yz.size * 1.12))
     d.text((sag, ky0 + 50), f'{simdi.day} {AYLAR[simdi.month - 1]} {simdi.year}', font=F(30, True), fill=SOLUK, anchor='rm')
@@ -601,7 +601,7 @@ def sabah_ozeti_karti(yeniler, acik_sayisi, simdi=None, son_gun=()):
     d.rounded_rectangle((kx0, ky0, kx1, ky0 + bant_h), radius=34, fill=PETROL)
     d.rectangle((kx0, ky0 + bant_h - 40, kx1, ky0 + bant_h), fill=PETROL)
     sag = G - KENAR
-    d.text((KENAR, ky0 + 50), 'KAMU İLAN TAKİP', font=F(28, True), fill=LIME, anchor='lm')
+    d.text((KENAR, ky0 + 50), 'KPSS TERCİHİ', font=F(28, True), fill=LIME, anchor='lm')
     d.text((sag, ky0 + 50), f'{simdi.day} {AYLAR[simdi.month - 1]} {GUNLER[simdi.weekday()]}', font=F(30, True), fill=SOLUK, anchor='rm')
     d.text((KENAR, ky0 + 130), 'Günaydın', font=F(84, True), fill='#ffffff', anchor='lm')
 
