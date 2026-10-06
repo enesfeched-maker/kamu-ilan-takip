@@ -158,11 +158,11 @@ assert.equal(run("ekSi(1)"),'1’i');assert.equal(run("ekSi(30)"),'30’u');asse
 // Bugün: profilsiz -> kurulum kartı, Telegram saati 09:00
 run("profil=null;saved.clear();compared.clear();showTab('takvim')");
 const tk=text(get('takvim-sol'));assert.match(tk,/Her sabah 09:00 civarı/);assert.doesNotMatch(tk,/08:30/);
-run("showTab('bugun')");assert.match(text(get('suzgecler')),/Profilini oluştur/,'profilsiz: yan sütunda profil çağrısı');
+run("showTab('bugun')");assert.match(text(get('suzgecler')),/^Filtreler/);assert.doesNotMatch(text(get('suzgecler')),/Profilini oluştur|Hesap gerekmez|profilime uygun/,'profilsiz: yan sütunda açıklama/profil kutusu yok');
 // Profil: Senin için, taban sinyali, kayıt
 run("profil={v:1,ogrenim:'lisans',puan_turu:'P3',puan:82.15,iller:['İstanbul'],tum_turkiye:false,bolum:'',t:'2026-10-04'};render()");
 const b2=text(get('suzgecler'));
-assert.match(b2,/Yalnız profilime uygun/);assert.match(b2,/PROFİLİN/);
+assert.match(b2,/Yalnız profilime uygun/);
 assert.equal(run("uygun(liste[0],profil)"),'tam');assert.equal(run("uygun(liste[1],profil)"),false,'il mismatch');assert.equal(run("uygun(liste[2],profil)"),false,'il mismatch (onlisans listing in Ankara)');
 assert.equal(run("uygun({...liste[0],ogrenim:['onlisans'],puan_turleri:[]},profil)"),'alt','lower level listing');assert.equal(run("uygun({...liste[0],ogrenim:['lisans']},{...profil,ogrenim:'onlisans'})"),false,'higher level listing excluded');assert.equal(run("uygun({...liste[1],il:'Türkiye Geneli',iller:[]},profil)"),'tam','nationwide matches every il');assert.equal(run("uygun({...liste[1],il:'',iller:[]},profil)"),'tam');
 // puan türü ilanda varsa ve kullanıcınınkiyle uyuşmuyorsa sinyal gizlenir
@@ -214,7 +214,7 @@ assert.equal(S.run("saved.clear(),saved.add(liste[0].id),saved.add('ghost'),save
 const hanak=row(k(8),'eight',{manset:'Memur',kurum:'Hanak Belediyesi',kurum_slug:'hanak-belediyesi',il:'Ardahan',iller:['Ardahan'],son_tarih:iso(5),kaynak_sayisi:2,kaynaklar:['İŞKUR','ÇŞB']});
 const hanak2=row(k(9),'nine',{manset:'Memur',kurum:'Hanak Belediye Başkanlığı',il:'Ardahan',iller:['Ardahan'],son_tarih:iso(5),kopya_of:k(8)});
 const yetim=row(k(3),'three',{manset:'Yetim kopya',kopya_of:'yok-boyle-bir-anahtar',son_tarih:iso(6)});
-liste.ilanlar.push(hanak,hanak2,yetim);liste.uyari={kaynaklar:['SBB'],eski_detay:3};
+liste.ilanlar.push(hanak,hanak2,yetim);
 const K=make({store:{'kit-saved':JSON.stringify(['nine'])}});await tick();
 assert.equal(K.run('listeTum.length'),8,'tüm satırlar saklanır');assert.equal(K.run('liste.length'),7,'ikincil satır listeden çıkar');
 assert.equal(K.run("liste.some(o=>o.id==='nine')"),false);assert.equal(K.run("liste.some(o=>o.id==='three')"),true,'birincili olmayan kopya_of satırı gizlenmez');
@@ -225,13 +225,7 @@ assert.deepEqual(JSON.parse(K.run("JSON.stringify(filterIlan(ilanBase(defaultF()
 assert.equal(K.run("filterIlan(ilanBase(defaultF()),defaultF(),null).list.filter(o=>o.kurum.startsWith('Hanak')).length"),1,'İlanlar sayısında çift tek sayılır');
 K.run("takvimRows('tumu')");assert.equal(K.run("takvimRows('tumu').filter(o=>o.kurum.startsWith('Hanak')).length"),1);
 K.run("save(lmap.get('"+k(8)+"'))");assert.equal(K.run('[...saved].join()'),'','kaydı kaldırmak ikincil kimliği de siler');
-K.run("tab='bugun';render()");const bg=text(K.get('uyari'));assert.equal(K.get('uyari').hidden,false);
-assert.match(bg,/SBB kaynağına erişimde sorun var/,'liste.json uyarısı Bugün sayfasında');assert.match(bg,/3 ilanın ayrıntıları 24 saat içinde doğrulanmadı/,'eski ayrıntı >= %25 ise gösterilir (3/7)');
-assert.ok(!K.get('freshness').textContent,'ilanlar.json olmadan da uyarı #freshness yedeğine yazılmaz');
-liste.uyari={kaynaklar:[],eski_detay:1};const K4=make();await tick();assert.equal(K4.run('uyariMetni()'),'','eski ayrıntı < %25 ise satır yok');
-liste.uyari={kaynaklar:['SBB'],eski_detay:1};const K5=make();await tick();assert.equal(K5.run('uyariMetni()'),'SBB kaynağına erişimde sorun var; bu kaynağın ilanları güncel olmayabilir.','yalnız kaynak hatası');
-delete liste.uyari;const K2=make();await tick();assert.equal(K2.run('uyariMetni()'),'','uyari yoksa satır yok');
-liste.uyari={};const K3=make();await tick();assert.equal(K3.run('uyariMetni()'),'','boş uyari satır çizmez');
+K.run("tab='bugun';render()");assert.doesNotMatch(text(K.get('ilanlar')),/kaynağına erişimde sorun|24 saat içinde doğrulanmadı/,'ana sayfada uyarı kutusu yok');
 // ---- görev yeri tekrarsız
 assert.equal(run("yerMetni({yer:'ANKARA • ANKARA / MERKEZ'})"),'Ankara (Merkez)');
 assert.equal(run("yerMetni({yer:'BOLU / GEREDE • BOLU / MENGEN • BOLU / MERKEZ'})"),'Bolu (Gerede, Mengen, Merkez)');
@@ -290,7 +284,6 @@ Z.run(`profil=validProfile(${JSON.stringify({...lisAnk,puan_turu:'P25'})})`);ass
 Z.run(`profil=validProfile(${JSON.stringify(lisAnk)})`);assert.match(text(Z.run("sinyalOf({...listeTum[0],puan_turleri:[],taban_ref:{lisans:{medyan:80,n:9}}})")),/Puanın, benzer kadroların taban medyanından 4,5 puan düşük/);assert.match(text(Z.run("sinyalOf({...listeTum[0],puan_turleri:[],taban_ref:{lisans:{medyan:80,n:9}}})")),/4,5 puan geride/);
 // 11) puan gösterimi
 assert.equal(Z.run("puanTr(75.5)"),'75,5');assert.equal(Z.run("puanTr(75)"),'75');assert.equal(Z.run("puanTr(75.47987)"),'75,47987');assert.equal(Z.run("puanTr(82.15)"),'82,15');
-Z.run(`profil=validProfile(${JSON.stringify(onlAnk)})`);assert.match(text(Z.run("profilStrip('')")),/KPSS P93 75,5(?!\d)/);assert.doesNotMatch(text(Z.run("profilStrip('')")),/75,50/);
 // 9) + 8) + 12) form
 const F1=make({liste:L2});await tick();
 F1.run("globalThis.__nd=0;{const _n=notify;notify=function(t){if($('profil-dialog').open)__nd++;return _n(t);};}");
@@ -332,7 +325,7 @@ RS.ctx.__confirmCevap=true;RS.get('p-sifirla').onclick();
 assert.ok(!('kit-profil' in rStore),'kit-profil silindi');assert.deepEqual(Object.keys(rStore).sort(),['kit-saved','kit-son-ziyaret','kit-theme'],'diğer anahtarlar yerinde');
 assert.equal(rStore['kit-saved'],JSON.stringify(['abc']));assert.equal(rStore['kit-theme'],'"dark"');
 assert.equal(RS.run('activeProfile()'),null);assert.equal(RS.get('profil-dialog').open,false,'pencere kapandı');
-assert.doesNotMatch(text(RS.get('suzgecler')),/Yalnız profilime uygun/,'profil süzgeci kalktı');assert.match(text(RS.get('suzgecler')),/Profilini oluştur/,'Profilini oluştur çağrısı döndü');
+assert.doesNotMatch(text(RS.get('suzgecler')),/Yalnız profilime uygun/,'profil süzgeci kalktı');
 RS.run("showTab('ilanlar')");assert.equal(RS.run("filterIlan(ilanBase(F),F,activeProfile()).on"),false,'eşleşme rozeti/filtresi kapalı');
 RS.run('openProfile()');assert.equal(RS.get('p-sifirla-kutu').hidden,true,'profil yokken düğme gizli');
 // 14) sayfa.js: ayrıntı sayfası "Senin için"

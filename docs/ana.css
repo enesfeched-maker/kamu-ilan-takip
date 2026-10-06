@@ -1,7 +1,7 @@
 /* KPSS Tercihi — ana sayfa düzeni: manşet kaydırıcı + yan sütun (arama, kategori ağacı, süzgeçler) + yayın gününe göre zaman çizelgesi.
    portal.css ve bugun.css'ten SONRA yüklenir; renk belirteçleri bugun.css'tedir (açık varsayılan, [data-theme=dark] koyu). */
-:root{--koyu:#0D1A1B;--koyu-2:#10282A;--cizgi-vurgu:#9ED437;--tarih-yazi:var(--lime-ink);--yakin-zemin:#FFF4D1;--yakin-yazi:#7A5200}
-:root[data-theme=dark]{--cizgi-vurgu:#7FA82C;--tarih-yazi:#C8F169;--yakin-zemin:#352B10;--yakin-yazi:#F2CF78}
+:root{--koyu:#0D1A1B;--koyu-2:#10282A;--cizgi-vurgu:#9ED437;--tarih-yazi:#C62828;--bugun-yazi:var(--lime-ink);--acil-zemin:#C62828;--acil-yazi:#FFFFFF;--yakin-zemin:#FFF4D1;--yakin-yazi:#7A5200}
+:root[data-theme=dark]{--cizgi-vurgu:#7FA82C;--tarih-yazi:#FF8A80;--bugun-yazi:#C8F169;--acil-zemin:#C62828;--acil-yazi:#FFFFFF;--yakin-zemin:#352B10;--yakin-yazi:#F2CF78}
 body.ana-sayfa{padding-bottom:0}
 html{scroll-padding-top:76px}
 .skip{z-index:60}
@@ -26,7 +26,7 @@ html{scroll-padding-top:76px}
 .slayt-kurum{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#C8F169}
 .slayt-baslik{font-size:clamp(26px,3.5vw,44px);line-height:1.06;font-weight:800;letter-spacing:-.01em;text-transform:uppercase;text-wrap:balance}
 .slayt-alt{font-size:15px;line-height:1.45;color:#C3D2CE;max-width:720px}
-.slayt-tarih{display:inline-flex;align-items:center;gap:8px;margin-top:8px;padding:7px 16px 7px 12px;border-radius:999px;background:#C8F169;color:#0D1A1B;font-weight:700;font-size:14px}
+.slayt-tarih{display:inline-flex;align-items:center;gap:8px;margin-top:8px;padding:7px 16px 7px 12px;border-radius:999px;background:#C62828;color:#FFFFFF;box-shadow:0 6px 18px -8px rgba(198,40,40,.7);font-weight:700;font-size:14px}
 .slayt-tarih .ic{display:grid}.slayt-tarih svg{width:17px;height:17px}
 .slayt-link:hover .slayt-baslik{text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:7px;text-decoration-color:#C8F169}
 .manset-kontrol{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:22px}
@@ -81,11 +81,6 @@ html{scroll-padding-top:76px}
 .yan-onay input{width:17px;height:17px;margin:0;accent-color:var(--koyu)}
 :root[data-theme=dark] .yan-onay input{accent-color:var(--lime)}
 .yan-onay small{margin-left:auto;font-size:12px;font-weight:600;color:var(--muted);background:var(--surface-2);border-radius:999px;padding:1px 8px}
-.yan-profil{display:grid;gap:8px;padding-top:12px;border-top:1px solid var(--line)}
-.yan-not{margin:0;font-size:13px;line-height:1.45;color:var(--muted)}
-.yan-btn{height:38px;border-radius:9px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);font:600 14px/1 inherit;font-family:inherit;cursor:pointer}
-.yan-btn:hover{border-color:var(--ink-2)}
-.yan-profil .profil{margin:0;padding:10px;border-radius:10px;box-shadow:none}
 .yan .sponsor{margin-top:14px}
 
 /* ---------- liste başlığı ---------- */
@@ -95,14 +90,9 @@ html{scroll-padding-top:76px}
 .liste-bas small{font-size:14px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--muted)}
 .liste-bas small::before{content:"· "}
 .liste-bas .temizle{border:0;background:none;padding:0 0 2px;color:var(--ink-2);font:600 13.5px/1.2 inherit;font-family:inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer;white-space:nowrap}
-.liste-ozet,.liste-kontrol,.liste-uyari{margin:8px 0 0;font-size:13px;color:var(--muted)}
+.liste-ozet{margin:8px 0 0;font-size:13px;color:var(--muted)}
 .liste-ozet:empty{display:none}
 .liste-ozet .yazi-link{font-size:13px;text-decoration:underline}
-.liste-kontrol{display:flex;align-items:center;gap:7px}
-.liste-kontrol .nokta{width:7px;height:7px;border-radius:50%;background:#5BB318;flex-shrink:0}
-.liste-uyari{padding:8px 12px;border-radius:9px;background:var(--alert-soft);color:var(--alert)}
-.liste-uyari[hidden]{display:none}
-.liste-alan #freshness{margin:10px 0 0}
 
 /* ---------- zaman çizelgesi ---------- */
 .zaman{margin-top:20px}
@@ -111,7 +101,7 @@ html{scroll-padding-top:76px}
 .gun-tarih strong{font-size:40px;line-height:1;font-weight:800;letter-spacing:-.03em;color:var(--ink)}
 .gun-tarih span{margin-top:4px;font-size:14px;font-weight:600;color:var(--ink-2)}
 .gun-tarih em{margin-top:2px;font-style:normal;font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
-.zg.bugun .gun-tarih em{color:var(--tarih-yazi);font-weight:800}
+.zg.bugun .gun-tarih em{color:var(--bugun-yazi);font-weight:800}
 .gun-liste{position:relative;list-style:none;margin:0 0 0 14px;padding:0 0 22px 22px;border-left:3px solid var(--cizgi-vurgu)}
 .gun-liste::before{content:"";position:absolute;left:-9px;top:18px;width:15px;height:15px;border-radius:50%;background:var(--bg);border:3px solid var(--cizgi-vurgu);box-sizing:border-box}
 .zg:last-of-type .gun-liste{padding-bottom:6px}
@@ -128,7 +118,6 @@ html{scroll-padding-top:76px}
 .satir-kurum{margin:0;font-size:12.5px;line-height:1.35;font-weight:800;letter-spacing:.03em;text-transform:uppercase;color:var(--ink)}
 .satir-kurum a{position:relative;z-index:2;color:inherit;text-decoration:none}
 .satir-kurum a:hover{text-decoration:underline;text-underline-offset:3px}
-.satir-yeni{display:inline-block;width:7px;height:7px;margin:0 7px 1px 0;border-radius:50%;background:#5BB318;vertical-align:middle}
 .satir-baslik{margin:3px 0 0;font-size:15px;line-height:1.42;font-weight:500;letter-spacing:0;color:var(--ink-2)}
 .satir-link{color:inherit;text-decoration:none}
 .satir-link::after{content:"";position:absolute;inset:0;z-index:1;border-radius:10px}
@@ -140,7 +129,7 @@ html{scroll-padding-top:76px}
 .satir-alt{margin:2px 0 0;font-size:12.5px;color:var(--muted)}
 .satir-sag{position:relative;z-index:2;display:flex;align-items:center;gap:6px}
 .rozet{padding:3px 9px;border-radius:999px;background:var(--surface-2);color:var(--ink-2);font-size:11.5px;font-weight:700;white-space:nowrap}
-.rozet.acil{background:var(--alert-soft);color:var(--alert)}
+.rozet.acil{background:var(--acil-zemin);color:var(--acil-yazi)}
 .rozet.yakin{background:var(--yakin-zemin);color:var(--yakin-yazi)}
 .rozet.soluk{font-weight:600;color:var(--muted)}
 .zaman .daha{margin:18px 0 0 112px}
