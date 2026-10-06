@@ -73,7 +73,7 @@ def _baglam():
 
 
 def indir(adres, sinir=SAYFA_SINIRI, referer=None):
-    basliklar = {'User-Agent': 'kamu-ilan-takip/1.0 (+https://enesfeched-maker.github.io/kamu-ilan-takip/)'}
+    basliklar = {'User-Agent': 'kamu-ilan-takip/1.0 (+https://kpsstercihi.com/)'}
     if referer:
         basliklar['Referer'] = referer
     istek = urllib.request.Request(guvenli_adres(adres), headers=basliklar)

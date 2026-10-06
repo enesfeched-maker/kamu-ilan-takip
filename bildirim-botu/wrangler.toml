@@ -13,8 +13,8 @@ database_name = "kamu-ilan-bildirim"
 database_id = "cb1fc32e-001d-45e6-b4aa-51ea3b274af8"
 
 [vars]
-ILAN_URL = "https://enesfeched-maker.github.io/kamu-ilan-takip/bot-ilanlar.json"
-SITE_URL = "https://enesfeched-maker.github.io/kamu-ilan-takip/"
+ILAN_URL = "https://kpsstercihi.com/bot-ilanlar.json"
+SITE_URL = "https://kpsstercihi.com/"
 VIP_ACIK = "0"
 
 # Sirlar (degerleri buraya YAZILMAZ; `wrangler secret put <AD>` ile eklenir):

@@ -6,7 +6,7 @@ ilanlar özelden gelir, son başvuru gününden önce hatırlatılır.
 ## Çalışma yeri
 - Cloudflare Workers (ücretsiz) + D1. Webhook ile anında yanıt; Cron Trigger (`* * * * *`, dakikada bir) ile
   kuyruk boşaltma + 30 dakikada bir tarama. Ayrıntı: aşağıdaki "Sürüm 2" bölümü (eski "Bildirim" bölümünün yerine geçer).
-- İlan verisi: `https://enesfeched-maker.github.io/kamu-ilan-takip/bot-ilanlar.json` (Python `site_uret.py` üretir;
+- İlan verisi: `https://kpsstercihi.com/bot-ilanlar.json` (Python `site_uret.py` üretir;
   yalnız açık ilanlar ve botun ihtiyaç duyduğu alanlar). `ILAN_URL` bunu gösterir.
 - Kişisel veri yalnız D1'de. Repoya, loglara chat_id/tercih yazılmaz.
 - Kanal botundan AYRI bir bot (BotFather). Sırlar: `BOT_TOKEN`, `WEBHOOK_SECRET` (wrangler secret).

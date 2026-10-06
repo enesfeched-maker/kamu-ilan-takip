@@ -23,7 +23,7 @@ jobs:
           import urllib.request, urllib.error
           for name,url in [('SBB','https://kamuilan.sbb.gov.tr/'),('ISKUR','https://www.iskur.gov.tr/ilanlar/kamu-memur-alim-ilanlari/')]:
               try:
-                  req=urllib.request.Request(url,headers={'User-Agent':'kamu-ilan-takip/1.0 (+https://enesfeched-maker.github.io/kamu-ilan-takip/)'})
+                  req=urllib.request.Request(url,headers={'User-Agent':'kamu-ilan-takip/1.0 (+https://kpsstercihi.com/)'})
                   with urllib.request.urlopen(req,timeout=25) as r:
                       data=r.read(1000000)
                       marker=b'nav2' if name=='SBB' else b'svg-turkiye-haritasi'

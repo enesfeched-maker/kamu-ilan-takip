@@ -39,7 +39,7 @@ AdSense veya başka bir reklam ağı bu sürümde bağlanmadı. Gerçek yayınc�
 GitHub Actions `bot/site_uret.py` ile ayrıntı sayfalarını oluşturur ve mevcut Pages yayınına dahil eder. Üretilen `docs/ilan/` sayfalarını elle değiştirmeyin. Kaynak `docs/ilanlar.json` dosyasıdır; eski bir yerel dosyayla gönderim geçmişini ezmeyin.
 
 Arama motoruna siteyi tanıtırken kullanılabilecek site haritası:
-https://enesfeched-maker.github.io/kamu-ilan-takip/sitemap.xml
+https://kpsstercihi.com/sitemap.xml
 
 Gizlilik, veri kaynağı, iletişim ve reklam açıklamaları portalda bulunur. İletişim bağlantısı mevcut GitHub Issues sayfasına gider. Ayrı bir iletişim e-postası belirlendiğinde değiştirilebilir. Analiz veya reklam ağı açılırsa gizlilik açıklamasını gerçek uygulamaya göre güncelleyin.
 

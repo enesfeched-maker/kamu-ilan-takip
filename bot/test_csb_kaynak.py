@@ -360,17 +360,17 @@ class AkisTesti(unittest.TestCase):
         self.assertEqual(anahtar,'csb-477952')
         self.assertIn(k['link'],sayfa)
         self.assertIn('webdosya.csb.gov.tr/v2/yerelyonetimler/2026/09/',sayfa)
-        self.assertEqual(ilan_sayfasi(k,'https://enesfeched-maker.github.io/kamu-ilan-takip/'),
-                         'https://enesfeched-maker.github.io/kamu-ilan-takip/ilan/csb-477952/')
+        self.assertEqual(ilan_sayfasi(k,'https://kpsstercihi.com/'),
+                         'https://kpsstercihi.com/ilan/csb-477952/')
         for kotu in ('csb-','csb-abc','csb-1234567890123'):
             with self.assertRaises(ValueError):
-                ilan_sayfasi({'id':kotu,'link':''},'https://enesfeched-maker.github.io/kamu-ilan-takip/')
+                ilan_sayfasi({'id':kotu,'link':''},'https://kpsstercihi.com/')
 
     def test_telegram_mesaji_duyuru_turu_ve_kaynak(self):
         s=next(x for x in csb.liste_ayristir(oku('csb_liste.html')) if x['numara']=='478009')
         with patch.object(csb,'indir',return_value=oku('csb_detay_iptal.html')):
             k=csb.duyuru_oku(s)
-        metin=ilan_bot.mesaj_olustur(k,'https://enesfeched-maker.github.io/kamu-ilan-takip/')
+        metin=ilan_bot.mesaj_olustur(k,'https://kpsstercihi.com/')
         self.assertIn('📌 <b>İptal duyurusu</b>',metin)
         self.assertIn('Kaynak: ÇŞB Yerel Yönetimler',metin)
         self.assertIn('Resmi ilan üzerinden kontrol edin',metin)

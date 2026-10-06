@@ -6,7 +6,13 @@ from pathlib import Path
 from pypdf import PdfReader
 
 ROOT=Path(__file__).resolve().parents[1]
-BASE='https://enesfeched-maker.github.io/kamu-ilan-takip/'
+import json as _json
+try:
+    BASE=_json.loads((ROOT/'config.json').read_text(encoding='utf-8')).get('site_url') or 'https://kpsstercihi.com/'
+except (OSError,ValueError):
+    BASE='https://kpsstercihi.com/'
+if not BASE.endswith('/'):BASE+='/'
+ESKI_BASE='https://enesfeched-maker.github.io/kamu-ilan-takip/'
 VERSION=6
 
 FIIL=re.compile(r'(?:iptal\s+edil(?:miş\s*tir|di)|düzeltil(?:miş\s*tir|di)|değiştiril(?:miş\s*tir|di)|uzatıl(?:mış\s*tır|dı))')
@@ -176,4 +182,4 @@ def belge_sayfalari(item, en_buyuk=4_000_000):
 
 def document_url(item):
     value=item.get('belge_kopyasi','')
-    return value if re.fullmatch(re.escape(BASE)+r'belgeler/sbb/[a-f0-9]{64}\.pdf',value) else None
+    return value if re.fullmatch('(?:'+re.escape(BASE)+'|'+re.escape(ESKI_BASE)+r')belgeler/sbb/[a-f0-9]{64}\.pdf',value) else None
