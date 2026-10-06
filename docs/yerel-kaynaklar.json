@@ -1,9 +1,9 @@
 {
  "schema": 1,
- "guncelleme": "2026-10-06T10:36:39.565960+00:00",
+ "guncelleme": "2026-10-06T11:06:39.460687+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-10-06T10:36:39.959403+00:00",
+   "kontrol": "2026-10-06T11:06:39.868945+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -5554,7 +5554,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-10-06T10:36:41.035793+00:00",
+   "kontrol": "2026-10-06T11:06:41.041383+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -7293,6 +7293,20 @@
    "sart_kadro_sayisi": 0,
    "basvuru_notu": "",
    "detay_guncelleme": "2026-10-06T13:36:44+03:00"
+  },
+  "https://kariyerkapisi.gov.tr/IlanDetay?i=9b93b57a-1ca8-408d-9b71-1d3dc14ff390": {
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/38d57cca-b022-47e1-8113-768faac8f241.png",
+   "son_tarih": "2026-10-14",
+   "son_zaman": "2026-10-14T18:00:00+03:00",
+   "baslangic_zaman": "2026-10-05T09:00:00+03:00",
+   "yer": "TÜRKİYE GENELİ",
+   "kadro": "120 MUHASEBE UZMANI",
+   "ilan_turu": "Yeterlik Sınavı İlanları",
+   "ozet": "Fiili hizmet süresinin hesabında; 2/5/2019 tarihli ve 1025 sayılı Cumhurbaşkanı Kararı ile yürürlüğe konulan Kurumlar Arası Geçici Görevlendirme Yönetmeliği uyarınca yapılacak geçici görevlendirmeler dışındaki geçici görevlendirmeler ile aylıksız izinde geçen süreler hariç, Muhasebe Uzman Yardımcılığında geçen süreler dikkate alınacaktır.",
+   "sartlar": [],
+   "sart_kadro_sayisi": 1,
+   "basvuru_notu": "",
+   "detay_guncelleme": "2026-10-06T14:06:41+03:00"
   }
  },
  "logolar": {
