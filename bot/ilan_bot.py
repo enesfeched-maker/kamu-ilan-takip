@@ -295,6 +295,11 @@ def duyuru_metni(duyuru, orijinale_yanit, tam=True, referans=None):
     return "\n".join(satirlar)
 
 
+def site_adi(site_url):
+    """Kullanıcıya gösterilen kısa site adı: https://kpsstercihi.com/ -> kpsstercihi.com"""
+    return re.sub(r'^https?://(www\.)?', '', site_url or '').rstrip('/')
+
+
 def telegram_gonder(token, chat_id, metin, ilan_linki="", site_url="", foto=None, yanit=None):
     """Gönderir; başarıda Telegram message_id'sini (yoksa True), başarısızlıkta False döndürür.
     yanit: bir mesaja yanıt olarak göndermek için message_id (mesaj silinmişse yine de gönderilir)."""
@@ -310,7 +315,7 @@ def telegram_gonder(token, chat_id, metin, ilan_linki="", site_url="", foto=None
         label='🔎 İlanı incele'
         dugmeler.append([{"text": label, "url": ilan_linki}])
     if site_url:
-        dugmeler.append([{"text": "📋 Tüm kamu ilanları", "url": site_url}])
+        dugmeler.append([{"text": "🌐 " + site_adi(site_url), "url": site_url}])
     if dugmeler:
         alanlar["reply_markup"] = json.dumps({"inline_keyboard": dugmeler}, ensure_ascii=False)
     if yanit:
@@ -599,7 +604,7 @@ def sabah_mesaj(yeniler, son_gun, acik_sayisi, site_url, zaman):
     if acik_sayisi:
         alt.append(f"📌 Şu an başvurusu açık <b>{acik_sayisi} ilan</b>")
     if site_url:
-        alt.append(f'👉 <a href="{html.escape(site_url.rstrip("/") + "/?g=bugun", quote=True)}">Bugünün tüm ilanları</a>')
+        alt.append(f'👉 Bugünün tüm ilanları: <a href="{html.escape(site_url.rstrip("/") + "/?g=bugun", quote=True)}">{html.escape(site_adi(site_url))}</a>')
     son_gun_anahtar = {x for i in son_gun for x in (('id', i['id']), ('k', _tekil_anahtar(i)))}
     # Son gün listesinde olan yeni ilan yalnız ⏰ altında görünür (başlıktaki sayı yine hepsini sayar).
     yeni_satirlari = [_ilan_satiri(i, site_url) for i in yeniler
