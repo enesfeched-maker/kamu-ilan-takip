@@ -101,7 +101,7 @@ def _kapla(foto, w, h):
 
 
 def _marka_seridi(im, d, y=None, dolgu=PETROL, sag_metin='Kaydır', yuk=104):
-    """Alt şerit: küçük logo + KAMU İLAN TAKİP solda, sağda kaydır çağrısı. Tüm kapaklarda aynı yer."""
+    """Alt şerit: küçük logo + KPSS TERCİHİ solda, sağda kaydır çağrısı. Tüm kapaklarda aynı yer."""
     y = Y - yuk if y is None else y
     d.rectangle((0, y, G, Y), fill=dolgu)
     x = KENAR
@@ -113,7 +113,7 @@ def _marka_seridi(im, d, y=None, dolgu=PETROL, sag_metin='Kaydır', yuk=104):
         # siyah logo koyu şeritlerde (PETROL/SIYAH) kaybolmasın: ince lime çerçeve
         d.rounded_rectangle((x, ky, x + kutu - 1, ky + kutu - 1), radius=round(kutu * 0.22), outline=LIME, width=2)
         x += kutu + 20
-    d.text((x, y + yuk / 2 + 1), 'KAMU İLAN TAKİP', font=F(34, True), fill=LIME, anchor='lm')
+    d.text((x, y + yuk / 2 + 1), 'KPSS TERCİHİ', font=F(34, True), fill=LIME, anchor='lm')
     if sag_metin:  # ok işareti yazı tipinde yok: çizgiyle çizilir
         cy, ax = y + yuk / 2 + 1, G - KENAR
         d.line((ax - 50, cy, ax, cy), fill='#ffffff', width=6)

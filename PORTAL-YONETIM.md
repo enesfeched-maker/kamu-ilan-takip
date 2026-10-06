@@ -1,4 +1,4 @@
-# Kamu İlan Takip portalı
+# KPSS Tercihi portalı
 
 Site GitHub Pages üzerinde, mevcut adresinde çalışır. Ücretli servis veya yeni sunucu gerekmez.
 

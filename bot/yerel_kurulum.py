@@ -30,7 +30,7 @@ def install_task(start=True):
     subprocess.run(['powershell.exe','-NoProfile','-NonInteractive','-Command',command],check=True,capture_output=True,creationflags=subprocess.CREATE_NO_WINDOW)
 
 def main():
-    app=tk.Tk();app.title('Kamu İlan Takip — Güvenli bağlantı');app.geometry('620x360');app.resizable(False,False);app.configure(bg='#f4f7f2')
+    app=tk.Tk();app.title('KPSS Tercihi — Güvenli bağlantı');app.geometry('620x360');app.resizable(False,False);app.configure(bg='#f4f7f2')
     tk.Label(app,text='Yerel taramayı bağla',font=('Segoe UI',20,'bold'),bg='#f4f7f2',fg='#102b35').pack(pady=(24,12))
     tk.Label(app,text='Yalnızca kamu-ilan-takip projesi için oluşturduğun\nContents: Read and write izinli GitHub anahtarını buraya yapıştır.\nAnahtar bu Windows hesabına bağlı olarak şifrelenir.\nSohbete yazma; Telegram anahtarı gerekmiyor.',justify='left',font=('Segoe UI',11),bg='#f4f7f2').pack(padx=26,anchor='w')
     value=tk.StringVar();field=tk.Entry(app,textvariable=value,show='•',font=('Segoe UI',12),width=57);field.pack(pady=18);field.focus_set()

@@ -1,4 +1,4 @@
-# Kamu İlan Takip
+# KPSS Tercihi
 
 Kariyer Kapısı'ndaki yeni kamu ilanlarını Telegram kanalına gönderir ve herkesin bakabileceği bir sitede son başvuru tarihine göre listeler. Sunucu gerekmez: GitHub Actions çalıştırır, GitHub Pages yayınlar. İkisi de ücretsiz.
 

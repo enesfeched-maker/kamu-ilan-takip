@@ -53,8 +53,8 @@ def ust_html(kok, aktif=''):
     menu = [('Bugün', f'{kok}#bugun', ''), ('İlanlar', f'{kok}#ilanlar', ''), ('Takvim', f'{kok}#takvim', ''),
             ('Taban puanları', f'{kok}puanlar/', 'puanlar'), ('Rehber', f'{kok}#rehber', '')]
     bagla = ''.join(f'<a href="{h}"{" class=" + chr(34) + "aktif" + chr(34) + " aria-current=" + chr(34) + "page" + chr(34) if a and a == aktif else ""}>{ad}</a>' for ad, h, a in menu)
-    return (f'<header class="ust"><div class="wrap ust-ic"><a class="marka" href="{kok}" aria-label="Kamu İlan Takip ana sayfa">'
-            f'<img src="{kok}assets/logo-96.webp?v={LOGO_SURUM}" alt="" width="32" height="32">Kamu İlan Takip</a>'
+    return (f'<header class="ust"><div class="wrap ust-ic"><a class="marka" href="{kok}" aria-label="KPSS Tercihi ana sayfa">'
+            f'<img src="{kok}assets/logo-96.webp?v={LOGO_SURUM}" alt="" width="32" height="32">KPSS Tercihi</a>'
             f'<nav class="menu" aria-label="Ana menü">{bagla}</nav>'
             f'<div class="ust-sag"><button type="button" class="ikon-btn" id="theme" aria-label="Renk temasını değiştir">{AY_IKON}</button>'
             f'<a class="btn btn-tg" href="https://t.me/kamuilantakip" target="_blank" rel="noopener">{TG_IKON}Telegram</a></div></div></header>')
@@ -66,7 +66,7 @@ def alt_html(kok, yil=None):
     menu = ''.join(f'<a href="{kok}{h}"><i><svg viewBox="0 0 24 24" aria-hidden="true">{s}</svg></i>{ad}{'<b id="saved-count-m" hidden>0</b>' if h == '#kayitli' else ''}</a>' for ad, h, s in ALT_MENU)
     return (f'<footer class="alt-bilgi"><div class="wrap"><div><a href="{kok}#bilgi/hakkimizda">Hakkımızda ve veri kaynakları</a><a href="{kok}kpss-taban-puanlari/">KPSS taban puanları</a><a href="{kok}#bilgi/gizlilik">Gizlilik</a>'
             f'<a href="{kok}#bilgi/reklam">Reklam</a><a href="https://t.me/kamuilantakip" target="_blank" rel="noopener">Telegram</a></div>'
-            f'<span>© <span id="yil">{yil}</span> Kamu İlan Takip · Bağımsız ilan rehberi · Başvurular resmî ilan üzerinden yapılır.</span></div></footer>'
+            f'<span>© <span id="yil">{yil}</span> KPSS Tercihi · Bağımsız ilan rehberi · Başvurular resmî ilan üzerinden yapılır.</span></div></footer>'
             f'<nav class="alt-menu" aria-label="Alt menü">{menu}</nav>')
 
 
@@ -393,7 +393,7 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
              f'{hero_html(item, gorsel, kayit, simdi)}{kurum_ici_not}{kopya_ust}{cta}{kopya_alt}</article>'
              f'<div class="d-ana">{senin}<section class="d-bolum">{sections}{bolum}{diger}'
              f'<p class="muted d-son">Ayrıntı kontrolü: {esc(item.get("detay_guncelleme", "Tarih belirtilmemiş"))}</p></section>{benzer_html}</div></main>')
-    return key, (sayfa_basi(f'{title} | Kamu İlan Takip', description, canonical, kok, 'article', og_gorsel, og_baslik=title)
+    return key, (sayfa_basi(f'{title} | KPSS Tercihi', description, canonical, kok, 'article', og_gorsel, og_baslik=title)
                  + f'<body class="detail-page"><a class="skip" href="#icerik">İçeriğe geç</a>{ust_html(kok)}{govde}{alt_html(kok)}'
                    '<noscript><div class="not wrap">Bazı özellikler (kaydetme, kalan gün, “Senin için”) için JavaScript gerekir.</div></noscript></body></html>')
 
@@ -407,7 +407,7 @@ def kurum_ici_sayfasi(item):
     govde = (f'<main id="icerik" class="wrap"><article class="d-bas"><h1>{esc(baslik)}</h1>'
              '<p class="not kopya-not"><strong>Bu ilan yalnız kurum personeline yöneliktir.</strong> Açıktan başvuruya açık değildir; sitede listelenmez.</p>'
              f'<p><a class="yazi-link" href="{kok}">Ana sayfaya dön →</a></p></article></main>')
-    return key, (sayfa_basi(baslik + ' | Kamu İlan Takip', 'Bu ilan yalnız kurum personeline yöneliktir.', BASE + 'ilan/' + key + '/', kok,
+    return key, (sayfa_basi(baslik + ' | KPSS Tercihi', 'Bu ilan yalnız kurum personeline yöneliktir.', BASE + 'ilan/' + key + '/', kok,
                             ek_head='<meta name="robots" content="noindex,nofollow">')
                  + f'<body class="detail-page"><a class="skip" href="#icerik">İçeriğe geç</a>{ust_html(kok)}{govde}{alt_html(kok)}</body></html>')
 
