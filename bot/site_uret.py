@@ -64,7 +64,7 @@ def alt_html(kok, yil=None):
     """Tek satırlık alt bilgi (ana sayfayla aynı) ve mobil alt menü."""
     yil = yil or datetime.now(TR).year
     menu = ''.join(f'<a href="{kok}{h}"><i><svg viewBox="0 0 24 24" aria-hidden="true">{s}</svg></i>{ad}{'<b id="saved-count-m" hidden>0</b>' if h == '#kayitli' else ''}</a>' for ad, h, s in ALT_MENU)
-    return (f'<footer class="alt-bilgi"><div class="wrap"><div><a href="{kok}#bilgi/hakkimizda">Hakkımızda ve veri kaynakları</a><a href="{kok}#bilgi/gizlilik">Gizlilik</a>'
+    return (f'<footer class="alt-bilgi"><div class="wrap"><div><a href="{kok}#bilgi/hakkimizda">Hakkımızda ve veri kaynakları</a><a href="{kok}kpss-taban-puanlari/">KPSS taban puanları</a><a href="{kok}#bilgi/gizlilik">Gizlilik</a>'
             f'<a href="{kok}#bilgi/reklam">Reklam</a><a href="https://t.me/kamuilantakip" target="_blank" rel="noopener">Telegram</a></div>'
             f'<span>© <span id="yil">{yil}</span> Kamu İlan Takip · Bağımsız ilan rehberi · Başvurular resmî ilan üzerinden yapılır.</span></div></footer>'
             f'<nav class="alt-menu" aria-label="Alt menü">{menu}</nav>')
@@ -743,6 +743,11 @@ def main():
         urls.append(BASE + 'ilan/' + key + '/')
         count += 1
     urls += kurum_adresleri
+    try:
+        from puan_sayfalari import puan_sayfalarini_uret
+        urls += puan_sayfalarini_uret(docs, BASE)
+    except Exception as hata:
+        print(f'Uyarı: taban puanı sayfaları üretilemedi: {hata}')
     (docs / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+esc(u)+'</loc></url>' for u in urls)+'</urlset>\n', encoding='utf-8')
     bot = bot_ilanlari(data.get('ilanlar', []))
     (docs / 'bot-ilanlar.json').write_text(json.dumps(bot, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
