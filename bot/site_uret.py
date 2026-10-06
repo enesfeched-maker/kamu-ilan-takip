@@ -18,7 +18,7 @@ TR = timezone(timedelta(hours=3))
 KART_GENISLIK = 720
 LOGO_BOYUT = 128
 EN_COK_LOGO_INDIRME = 150
-CSS_SURUM = 13
+CSS_SURUM = 14
 LOGO_SURUM = 2
 ACIK_ZEMIN, KOYU_ZEMIN = '#F6F6F1', '#0D0E0C'
 # <head> içinde, theme-color etiketinden sonra: açık tema varsayılan, yalnız kit-theme=="dark" koyu açar.
@@ -28,11 +28,6 @@ TEMA_BETIGI = ('<script>try{var d=JSON.parse(localStorage.getItem("kit-theme"))=
 AY_IKON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>'
 TG_IKON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 4-18 7.2 6 2.3M21 4l-3 16-8.5-6.5M21 4 9.5 13.5v5.5l3-3.5"/></svg>'
 KISI_IKON = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5"/></svg>'
-ALT_MENU = (('Bugün', '#bugun', '<path d="M4 10.5 12 4l8 6.5V20h-5v-6h-6v6H4z"/>'),
-            ('İlanlar', '#ilanlar', '<path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/>'),
-            ('Takvim', '#takvim', '<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/>'),
-            ('Kayıtlı', '#kayitli', '<path d="M7 3.5h10a1 1 0 0 1 1 1V21l-6-4-6 4V4.5a1 1 0 0 1 1-1z"/>'),
-            ('Profil', '?profil=1', '<circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5"/>'))
 
 
 def esc(value):
@@ -48,26 +43,42 @@ def ikonlar(kok):
             f'<link rel="manifest" href="{kok}manifest.webmanifest">')
 
 
+KABUK_SURUM = 1
+HAMBURGER_IKON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>'
+# Mobil menü düğmesi: iç sayfaların kendi betiğine bağlı kalmasın diye üst barın hemen ardından çalışır.
+MENU_BETIGI = ('<script>(function(){var h=document.getElementById("tb"),b=document.getElementById("tb-ac");if(!h||!b)return;'
+               'b.onclick=function(){var o=!h.classList.contains("acik");h.classList.toggle("acik",o);b.setAttribute("aria-expanded",String(o));'
+               'b.setAttribute("aria-label",o?"Menüyü kapat":"Menüyü aç")}})()</script>')
+
+
 def ust_html(kok, aktif=''):
-    """Ana sayfayla aynı üst bar (docs/index.html .ust); bağlantılar `kok` göreli."""
-    menu = [('Bugün', f'{kok}#bugun', ''), ('İlanlar', f'{kok}#ilanlar', ''), ('Takvim', f'{kok}#takvim', ''),
-            ('Taban puanları', f'{kok}puanlar/', 'puanlar'), ('Rehber', f'{kok}#rehber', '')]
-    bagla = ''.join(f'<a href="{h}"{" class=" + chr(34) + "aktif" + chr(34) + " aria-current=" + chr(34) + "page" + chr(34) if a and a == aktif else ""}>{ad}</a>' for ad, h, a in menu)
-    return (f'<header class="ust"><div class="wrap ust-ic"><a class="marka" href="{kok}" aria-label="KPSS Tercihi ana sayfa">'
-            f'<img src="{kok}assets/logo-96.webp?v={LOGO_SURUM}" alt="" width="32" height="32">KPSS Tercihi</a>'
-            f'<nav class="menu" aria-label="Ana menü">{bagla}</nav>'
-            f'<div class="ust-sag"><button type="button" class="ikon-btn" id="theme" aria-label="Renk temasını değiştir">{AY_IKON}</button>'
-            f'<a class="btn btn-tg" href="https://t.me/kamuilantakip" target="_blank" rel="noopener">{TG_IKON}Telegram</a></div></div></header>')
+    """Ana sayfayla aynı ince koyu üst bar (docs/index.html .tb, docs/kabuk.css); bağlantılar `kok` göreli."""
+    menu = [('Manşet', f'{kok}#bugun', ''), ('İlanlar', f'{kok}#ilanlar', 'ilanlar'),
+            ('Taban Puanları', f'{kok}kpss-taban-puanlari/', 'puanlar'), ('Tercih Robotu', f'{kok}puanlar/', 'robot'),
+            ('Takvim', f'{kok}#takvim', ''), ('Kayıtlı', f'{kok}#kayitli', '')]
+    bagla = ''.join(f'<a href="{h}"{" class=" + chr(34) + "aktif" + chr(34) + " aria-current=" + chr(34) + "page" + chr(34) if a and a == aktif else ""}>'
+                    f'{ad}{"<b class=" + chr(34) + "tb-sayi" + chr(34) + " id=" + chr(34) + "saved-count-m" + chr(34) + " hidden>0</b>" if ad == "Kayıtlı" else ""}</a>'
+                    for ad, h, a in menu)
+    return (f'<header class="tb" id="tb"><div class="tb-ic"><a class="tb-marka" href="{kok}" aria-label="KPSS Tercihi ana sayfa">'
+            f'<img src="{kok}assets/logo-96.webp?v={LOGO_SURUM}" alt="" width="34" height="34"><span>KPSS Tercihi</span></a>'
+            f'<button type="button" class="tb-ac" id="tb-ac" aria-expanded="false" aria-controls="tb-nav" aria-label="Menüyü aç">{HAMBURGER_IKON}</button>'
+            f'<nav class="tb-nav" id="tb-nav" aria-label="Ana menü">{bagla}<span class="tb-ayrac" aria-hidden="true"></span>'
+            f'<a class="tb-ikon" href="{kok}?profil=1" aria-label="Profil">{KISI_IKON}<span class="tb-etiket">Profil</span></a>'
+            f'<button type="button" class="tb-ikon" id="theme" aria-label="Renk temasını değiştir">{AY_IKON}</button>'
+            f'<a class="tb-ikon" href="https://t.me/kamuilantakip" target="_blank" rel="noopener" aria-label="Telegram kanalı">{TG_IKON}<span class="tb-etiket">Telegram kanalı</span></a>'
+            f'</nav></div></header>{MENU_BETIGI}')
 
 
 def alt_html(kok, yil=None):
-    """Tek satırlık alt bilgi (ana sayfayla aynı) ve mobil alt menü."""
+    """Ana sayfayla aynı koyu alt bilgi: marka, bağlantılar ve bağımsızlık notu."""
     yil = yil or datetime.now(TR).year
-    menu = ''.join(f'<a href="{kok}{h}"><i><svg viewBox="0 0 24 24" aria-hidden="true">{s}</svg></i>{ad}{'<b id="saved-count-m" hidden>0</b>' if h == '#kayitli' else ''}</a>' for ad, h, s in ALT_MENU)
-    return (f'<footer class="alt-bilgi"><div class="wrap"><div><a href="{kok}#bilgi/hakkimizda">Hakkımızda ve veri kaynakları</a><a href="{kok}kpss-taban-puanlari/">KPSS taban puanları</a><a href="{kok}#bilgi/gizlilik">Gizlilik</a>'
-            f'<a href="{kok}#bilgi/reklam">Reklam</a><a href="https://t.me/kamuilantakip" target="_blank" rel="noopener">Telegram</a></div>'
-            f'<span>© <span id="yil">{yil}</span> KPSS Tercihi · Bağımsız ilan rehberi · Başvurular resmî ilan üzerinden yapılır.</span></div></footer>'
-            f'<nav class="alt-menu" aria-label="Alt menü">{menu}</nav>')
+    return (f'<footer class="ab"><div class="ab-ic"><div class="ab-marka"><img src="{kok}assets/logo-96.webp?v={LOGO_SURUM}" alt="" width="36" height="36">'
+            f'<div><strong>KPSS Tercihi</strong><span>Bağımsız ilan rehberi · resmî kaynak değildir</span></div></div>'
+            f'<nav class="ab-linkler" aria-label="Alt bilgi"><a href="{kok}#bilgi/hakkimizda">Hakkımızda ve veri kaynakları</a><a href="{kok}#rehber">Başvuru rehberi</a>'
+            f'<a href="{kok}kpss-taban-puanlari/">KPSS taban puanları</a><a href="{kok}puanlar/">Tercih robotu</a><a href="{kok}#bilgi/gizlilik">Gizlilik</a>'
+            f'<a href="{kok}#bilgi/reklam">Reklam</a><a href="https://t.me/kamuilantakip" target="_blank" rel="noopener">Telegram</a></nav>'
+            f'<p class="ab-not">© <span id="yil">{yil}</span> KPSS Tercihi · Bağımsız ilan rehberi; herhangi bir kamu kurumuna bağlı değildir ve resmî kaynak değildir. '
+            f'Başvurular resmî ilan üzerinden yapılır.</p></div></footer>')
 
 
 def sayfa_basi(baslik, aciklama, canonical, kok, og_tur='website', ek_head='', og_baslik=None):
@@ -78,7 +89,7 @@ def sayfa_basi(baslik, aciklama, canonical, kok, og_tur='website', ek_head='', o
             f'<meta property="og:title" content="{esc(og_baslik or baslik)}"><meta property="og:description" content="{esc(aciklama)}"><meta property="og:type" content="{og_tur}">{ek_head}'
             f'<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
             f'<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap">'
-            f'<link rel="stylesheet" href="{kok}sayfa.css?v={CSS_SURUM}">{ikonlar(kok)}<script src="{kok}sayfa.js?v={CSS_SURUM}" defer></script></head>')
+            f'<link rel="stylesheet" href="{kok}sayfa.css?v={CSS_SURUM}"><link rel="stylesheet" href="{kok}kabuk.css?v={KABUK_SURUM}">{ikonlar(kok)}<script src="{kok}sayfa.js?v={CSS_SURUM}" defer></script></head>')
 
 
 def _kurum_bloklari(item, gorsel, logo_html):

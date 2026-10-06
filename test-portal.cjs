@@ -9,6 +9,9 @@ class Element {
   addEventListener(){} showModal(){this.open=true;} close(){this.open=false;} scrollIntoView(){} click(){} focus(){} select(){}
 }
 const text=n=>typeof n==='string'?n:(n.textContent||'')+(n.children||[]).map(text).join('');
+/* Zaman çizelgesindeki ilan satırları (gün grupları içinde) */
+const satirSay=n=>typeof n==='string'?0:(n.className==='satir'?1:0)+(n.children||[]).reduce((s,c)=>s+satirSay(c),0);
+const bul=(n,f)=>typeof n==='string'?null:f(n)?n:(n.children||[]).map(c=>bul(c,f)).find(Boolean)||null;
 const iso=d=>new Date(Date.now()+d*864e5).toLocaleDateString('sv-SE',{timeZone:'Europe/Istanbul'});
 const nowIso=new Date().toISOString();
 const KK=n=>`https://kariyerkapisi.gov.tr/IlanDetay?i=${String(n).repeat(8)}-${String(n).repeat(4)}-4${String(n).repeat(3)}-8${String(n).repeat(3)}-${String(n).repeat(12)}`;
@@ -52,21 +55,22 @@ assert.equal(run('liste.length'),5,'invalid liste row dropped');
 // ---- İlanlar: sorgu ayrıştırma / yazma
 const J=s=>JSON.stringify(run(s));
 const f1=JSON.parse(J("parseQuery('?q=b%C3%BCro&il=istanbul,Ankara,Atlantis&ogr=lisans&sb=2&tur=S%C3%B6zle%C5%9Fmeli&yeni=1&uygun=0&sira=yeni&arsiv=1')"));
-assert.deepEqual(f1,{q:'büro',il:['İstanbul','Ankara'],ogr:'lisans',sb:'2',tur:'Sözleşmeli',yeni:true,uygun:false,sira:'yeni',arsiv:true},'query parsed');
-assert.deepEqual(JSON.parse(J("parseQuery('?ogr=x&sb=99&sira=zzz&uygun=7&il=foo')")),{q:'',il:[],ogr:'',sb:'',tur:'',yeni:false,uygun:null,sira:'son',arsiv:false},'invalid values dropped');
+assert.deepEqual(f1,{q:'büro',il:['İstanbul','Ankara'],ogr:'lisans',sb:'2',tur:'Sözleşmeli',kat:'',yeni:true,uygun:false,sira:'yeni',arsiv:true},'query parsed');
+assert.deepEqual(JSON.parse(J("parseQuery('?ogr=x&sb=99&sira=zzz&uygun=7&il=foo')")),{q:'',il:[],ogr:'',sb:'',tur:'',kat:'',yeni:false,uygun:null,sira:'son',arsiv:false},'invalid values dropped');
+assert.equal(J("parseQuery('?kat=memur').kat"),'"memur"');assert.equal(J("parseQuery('?kat=yok').kat"),'""');assert.equal(run("queryOf({...defaultF(),kat:'isci'},true)"),'kat=isci');
 assert.equal(run("queryOf(parseQuery('?q=b%C3%BCro&il=istanbul,ankara&ogr=lisans&sb=2&yeni=1&uygun=0&sira=yeni'),true)"),'q=b%C3%BCro&il=istanbul%2Cankara&ogr=lisans&sb=2&yeni=1&uygun=0&sira=yeni','query serialized');
 assert.equal(run("queryOf(defaultF(),true)"),'','defaults leave URL clean');
 assert.equal(run("queryOf({...defaultF(),uygun:true},true)"),'','uygun default on with profile');assert.equal(run("queryOf({...defaultF(),uygun:true},false)"),'uygun=1');
 assert.equal(run("queryHas('?g=bugun')"),false);assert.equal(run("queryHas('?il=ankara')"),true);
 // ---- İlanlar: süzme (profil yok)
 run("showTab('ilanlar')");
-assert.equal(get('cards').children.length,4,'closed listing excluded');
+assert.equal(satirSay(get('cards')),4,'closed listing excluded');
 assert.equal(get('result-count').textContent,'4 ilan');
 const n=s=>run(`filterIlan(ilanBase(F),F,activeProfile()).list.length`);
-run("F={...defaultF(),q:'istanbul buro'};render()");assert.equal(get('cards').children.length,1,'Turkish search');
-run("F={...defaultF(),q:'muhasebe'};render()");assert.equal(get('cards').children.length,1,'condition search (full records)');
-run("F={...defaultF(),q:'istanbul buro',il:['Ankara']};render()");assert.equal(get('cards').children.length,0);assert.equal(get('empty').hidden,false);assert.equal(get('clear').hidden,false);
-run("F={...defaultF(),il:['Ankara']};render()");assert.equal(get('cards').children.length,2,'il filter');
+run("F={...defaultF(),q:'istanbul buro'};render()");assert.equal(satirSay(get('cards')),1,'Turkish search');
+run("F={...defaultF(),q:'muhasebe'};render()");assert.equal(satirSay(get('cards')),1,'condition search (full records)');
+run("F={...defaultF(),q:'istanbul buro',il:['Ankara']};render()");assert.equal(satirSay(get('cards')),0);assert.equal(get('empty').hidden,false);assert.equal(get('clear').hidden,false);
+run("F={...defaultF(),il:['Ankara']};render()");assert.equal(satirSay(get('cards')),2,'il filter');
 run("F={...defaultF(),sb:'2'}");assert.equal(n(),2,'deadline <=2 days (today + tomorrow)');
 run("F={...defaultF(),sb:'14'}");assert.equal(n(),3,'deadline <=14 days');
 run("F={...defaultF(),sb:'yakinda'}");assert.equal(n(),1,'upcoming only');assert.equal(run("filterIlan(ilanBase(F),F,null).list[0].manset"),'Yakında');
@@ -79,8 +83,20 @@ run("F={...defaultF(),sira:'yeni'}");assert.equal(run("filterIlan(ilanBase(F),F,
 run("F={...defaultF(),sira:'son'}");assert.equal(run("filterIlan(ilanBase(F),F,null).list.map(o=>o.manset).join()"),'Teknisyen,Büro Personeli,Zabıta,Yakında','deadline sort, undated last');
 run("F={...defaultF(),arsiv:true}");assert.equal(n(),3,'archive view lists every full record, including the closed one');
 // sayfalama + ilerleme
-run("F=defaultF();shown=2;render()");assert.equal(get('cards').children.length,3,'2 rows + progress block');assert.match(text(get('cards').children[2]),/2 \/ 4 ilan gösteriliyor/);assert.match(text(get('cards').children[2]),/Daha fazla göster/);
-run("shown=PAGE_SIZE;render()");assert.equal(get('cards').children.length,4);
+run("F=defaultF();shown=2;render()");assert.equal(satirSay(get('cards')),2,'2 rows + progress block');{const c=get('cards').children,son=c[c.length-1];assert.match(text(son),/2 \/ 4 ilan gösteriliyor/);assert.match(text(son),/Daha fazla göster/);}
+run("shown=PAGE_SIZE;render()");assert.equal(satirSay(get('cards')),4);
+// zaman çizelgesi: yayın gününe göre gruplar, en yeni gün önce; tarihli satırda başvuru aralığı
+assert.equal(get('cards').children.length,2,'bugün + 2020-01-01 grupları');assert.equal(get('cards').children[0].id,'gun-'+iso(0));assert.match(text(get('cards').children[0]),/Bugün/);
+assert.match(text(get('cards')),/Son gün/,'≤3 gün rozeti');assert.equal(run("tarihAraligi({son_tarih:'2026-10-20',baslangic_zaman:'2026-10-06T00:00:00+03:00',ilk_gorulme:''})"),'6 Ekim – 20 Ekim');assert.equal(run("tarihAraligi({son_tarih:'',ilk_gorulme:''})"),'Son tarih ilanda');
+{const a=bul(get('cards'),n=>n.className==='satir-link');assert.match(a.href,/^ilan\/[A-Za-z0-9-]+\/$/,'satır ayrıntı sayfasına gider');}
+// manşet: kapanmamış ilanlar, kadro büyükten küçüğe, kurum içi hariç
+assert.equal(run("mansetSecimi().map(o=>o.toplam).join()"),'7,2,2,2','kadroya göre sıralı, kapanan hariç');
+assert.equal(run("mansetBaslik({manset:'860 Gelir Uzman Yardımcısı',toplam:860}).b"),'860 Gelir Uzman Yardımcısı alacak');assert.deepEqual(JSON.parse(J("mansetBaslik({manset:'Destek Personeli, Tekniker',toplam:103})")),{b:'103 personel alacak',alt:'Destek Personeli, Tekniker'});assert.equal(run("mansetBaslik({manset:'Zabıta',toplam:7}).b"),'7 Zabıta alacak');
+assert.match(text(get('manset')),/7 Zabıta alacak/);
+// kategori ağacı: tür etiketinden üst kategori; seçim listeyi süzer
+assert.equal(run("katOf({ilan_turu:'Sözleşmeli Personel İlanları'})"),'sozlesmeli');assert.equal(run("katOf({ilan_turu:'İşçi'})"),'isci');assert.equal(run("katOf({ilan_turu:'Kamu Personeli'})"),'memur');assert.equal(run("katOf({ilan_turu:'Askeri Personel'})"),'diger');assert.equal(run("katOf({ilan_turu:'',kategori:'akademik'})"),'akademik');
+assert.match(text(get('kategoriler')),/Tüm İlanlar4/);assert.match(text(get('kategoriler')),/Memur1/);assert.match(text(get('kategoriler')),/Sözleşmeli Personel1/);
+run("F={...defaultF(),kat:'memur'};render()");assert.equal(satirSay(get('cards')),1,'kategori süzgeci');assert.equal(get('liste-ad').textContent,'Memur');run("F=defaultF();render()");assert.equal(get('liste-ad').textContent,'Tüm İlanlar');
 // URL eşitleme: İlanlar'dayken yazılır, başka sekmede temizlenir
 run("F={...defaultF(),il:['Ankara'],ogr:'onlisans'};render()");assert.match(ctx.__replaced,/\?il=ankara&ogr=onlisans$/);
 run("showTab('takvim')");assert.equal(ctx.__replaced,'/','filters cleared from URL on other tabs');
@@ -89,8 +105,8 @@ run("F=defaultF()");
 run("profil={v:1,ogrenim:'lisans',puan_turu:'P3',puan:82.15,iller:['İstanbul'],tum_turkiye:false,bolum:'',t:'2026-10-04'};showTab('ilanlar')");
 let res=JSON.parse(J("(()=>{const r=filterIlan(ilanBase(F),F,activeProfile());return{on:r.on,n:r.list.length,uyan:r.uyan,disinda:r.disinda}})()"));
 assert.deepEqual(res,{on:true,n:2,uyan:2,disinda:2},'Profilime uygun default on');
-assert.equal(get('cards').children.length,2);assert.match(text(get('disinda')),/Profilinin dışında 2 açık ilan daha/);assert.equal(get('disinda').hidden,false);
-run("F.uygun=false;render()");assert.equal(get('cards').children.length,4);assert.equal(get('disinda').hidden,true);
+assert.equal(satirSay(get('cards')),2);assert.match(text(get('disinda')),/Profilinin dışında 2 açık ilan daha/);assert.equal(get('disinda').hidden,false);
+run("F.uygun=false;render()");assert.equal(satirSay(get('cards')),4);assert.equal(get('disinda').hidden,true);
 assert.equal(run("queryOf(F,true)"),'uygun=0');
 // alt düzey ilan 'uygun' içinde işaretlenir
 assert.equal(run("(()=>{const r=filterIlan([{...liste[0],ogrenim:['onlisans'],puan_turleri:[]}],defaultF(),profil);return r.seviye.get(liste[0].key)})()"),'alt');
@@ -98,7 +114,7 @@ assert.equal(run("(()=>{const r=filterIlan([{...liste[0],ogrenim:['onlisans'],pu
 assert.equal(run("ilanLink('Tümü',{uygun:true}).href"),'./#ilanlar');
 assert.equal(run("ilanLink('Son günler',{sb:'2',uygun:false}).href"),'?sb=2&uygun=0#ilanlar');
 assert.equal(run("ilanLink('Yakında',{sb:'yakinda',uygun:false}).href"),'?sb=yakinda&uygun=0#ilanlar');
-run("openIlanlar({sb:'2',uygun:false})");assert.equal(run('F.sb'),'2');assert.equal(run('F.uygun'),false);assert.equal(T.loc.hash,'#ilanlar','deep link navigates to İlanlar');assert.match(ctx.__pushed,/\?sb=2&uygun=0#ilanlar$/);assert.equal(run('tab'),'ilanlar');
+run("openIlanlar({sb:'2',uygun:false})");assert.equal(run('F.sb'),'2');assert.equal(run('F.uygun'),false);assert.equal(T.loc.hash,'#ilanlar','deep link navigates to İlanlar');assert.equal(get('v-ana').hidden,false,'İlanlar ana görünümde');assert.match(ctx.__pushed,/\?sb=2&uygun=0#ilanlar$/);assert.equal(run('tab'),'ilanlar');
 // ---- Takvim
 run("F=defaultF();saved.clear();showTab('takvim')");
 const tg=JSON.parse(J("(()=>{const g=takvimGruplari(takvimRows('tumu'));return{keys:[...g.gr.keys()],tarihsiz:g.tarihsiz.length}})()"));
@@ -140,14 +156,13 @@ assert.equal(run("Object.keys(cleanL({key:'abc',taban_ref:{lisans:{medyan:80,n:3
 assert.equal(run("validProfile({v:1,ogrenim:'x'})"),null);assert.equal(run("validProfile({v:1,ogrenim:'lisans',iller:['Ankara','<b>'],puan:150}).iller.length"),1);
 assert.equal(run("ekSi(1)"),'1’i');assert.equal(run("ekSi(30)"),'30’u');assert.equal(run("baslikTemiz('İlk Defa Atanmak Üzere Vhki Alımı İlanı')"),'VHKİ alımı');
 // Bugün: profilsiz -> kurulum kartı, Telegram saati 09:00
-run("profil=null;saved.clear();compared.clear();showTab('bugun')");
-const bugun=text(get('bugun'));
-assert.match(bugun,/Her sabah 09:00 civarı/);assert.doesNotMatch(bugun,/08:30/);assert.match(bugun,/30 saniyede sana göre ayarla/);
+run("profil=null;saved.clear();compared.clear();showTab('takvim')");
+const tk=text(get('takvim-sol'));assert.match(tk,/Her sabah 09:00 civarı/);assert.doesNotMatch(tk,/08:30/);
+run("showTab('bugun')");assert.match(text(get('suzgecler')),/^Filtreler/);assert.doesNotMatch(text(get('suzgecler')),/Profilini oluştur|Hesap gerekmez|profilime uygun/,'profilsiz: yan sütunda açıklama/profil kutusu yok');
 // Profil: Senin için, taban sinyali, kayıt
 run("profil={v:1,ogrenim:'lisans',puan_turu:'P3',puan:82.15,iller:['İstanbul'],tum_turkiye:false,bolum:'',t:'2026-10-04'};render()");
-const b2=text(get('bugun'));
-assert.match(b2,/Senin için/);assert.doesNotMatch(b2,/yeni ilan yok\./,'no empty-new message while new items shown elsewhere');assert.match(b2,/Puanın, benzer kadroların taban medyanından/);assert.doesNotMatch(b2,/puanın üstünde|Taban ~/);
-assert.match(b2,/Tüm son günler/);
+const b2=text(get('suzgecler'));
+assert.match(b2,/Yalnız profilime uygun/);
 assert.equal(run("uygun(liste[0],profil)"),'tam');assert.equal(run("uygun(liste[1],profil)"),false,'il mismatch');assert.equal(run("uygun(liste[2],profil)"),false,'il mismatch (onlisans listing in Ankara)');
 assert.equal(run("uygun({...liste[0],ogrenim:['onlisans'],puan_turleri:[]},profil)"),'alt','lower level listing');assert.equal(run("uygun({...liste[0],ogrenim:['lisans']},{...profil,ogrenim:'onlisans'})"),false,'higher level listing excluded');assert.equal(run("uygun({...liste[1],il:'Türkiye Geneli',iller:[]},profil)"),'tam','nationwide matches every il');assert.equal(run("uygun({...liste[1],il:'',iller:[]},profil)"),'tam');
 // puan türü ilanda varsa ve kullanıcınınkiyle uyuşmuyorsa sinyal gizlenir
@@ -161,7 +176,7 @@ assert.ok(!stored.includes('kit-son-ziyaret'),'last visit not written immediatel
 // ---- Açılışta sorgu: İlanlar süzgeçlerle açılır
 const B=make({href:'https://kpsstercihi.com/?il=ankara&sb=14&uygun=0',hash:''});await tick();
 assert.equal(B.run('tab'),'ilanlar','query on load opens İlanlar');assert.equal(B.run("JSON.stringify(F.il)"),'["Ankara"]');assert.equal(B.run('F.sb'),'14');assert.equal(B.run('F.uygun'),false);
-assert.match(B.ctx.__replaced,/#ilanlar$/,'hash set without extra history entry');assert.equal(B.get('cards').children.length,2,'Ankara + <=14 days (Zabıta, Teknisyen)');
+assert.match(B.ctx.__replaced,/#ilanlar$/,'hash set without extra history entry');assert.equal(satirSay(B.get('cards')),2,'Ankara + <=14 days (Zabıta, Teknisyen)');
 assert.match(B.loc.href,/\?il=ankara&sb=14&uygun=0#ilanlar$/,'shareable URL kept');
 const C=make({href:'https://kpsstercihi.com/?q=zab%C4%B1ta#takvim'});await tick();
 assert.equal(C.run('tab'),'takvim','explicit hash tab wins over query');assert.equal(C.run('F.q'),'zabıta');
@@ -178,14 +193,16 @@ P.loc.href='https://kpsstercihi.com/#bugun';P.loc.hash='#bugun';P.ctx.__h.popsta
 P.ctx.__h.hashchange.forEach(f=>f());assert.equal(P.run('tab'),'bugun','duplicate hashchange for same URL is ignored');
 // ---- ?q=<unvan>#ilanlar
 const Q=make({href:'https://kpsstercihi.com/?q=Zab%C4%B1ta#ilanlar'});await tick();
-assert.equal(Q.run('tab'),'ilanlar');assert.equal(Q.get('search').value,'Zabıta');assert.equal(Q.get('cards').children.length,1,'?q= search applied');
+assert.equal(Q.run('tab'),'ilanlar');assert.equal(Q.get('search').value,'Zabıta');assert.equal(satirSay(Q.get('cards')),1,'?q= search applied');
 // ---- ?profil=1 profil penceresini açar ve adresten silinir
 const R1=make({href:'https://kpsstercihi.com/?profil=1'});await tick();
 assert.equal(R1.get('profil-dialog').open,true);assert.equal(R1.loc.href,'https://kpsstercihi.com/');
 // ---- ARIA ve arşiv çipi
-run("showTab('ilanlar')");assert.equal(run("chips.ogr.attrs['aria-haspopup']"),'dialog');assert.equal(run("chips.ogr.attrs['aria-controls']"),'cip-menu');
-assert.ok(run("!!chips.arsiv")&&/Sona erenler dahil/.test(text(run('chips.arsiv'))));
-run("menuAc('il')");assert.equal(get('cip-menu').attrs['aria-labelledby'],'cip-menu-baslik');run("menuKapat()");
+// ---- yan sütun süzgeçleri
+run("showTab('ilanlar')");assert.match(text(get('suzgecler')),/Sona erenler dahil/);
+{const s=bul(get('suzgecler'),n=>n.id==='f-il');assert.ok(s,'il seçimi');s.value='ankara';s.onchange();assert.equal(run('JSON.stringify(F.il)'),'["Ankara"]');run("F=defaultF();render()");}
+{const s=bul(get('suzgecler'),n=>n.id==='f-ogr');s.value='onlisans';s.onchange();assert.equal(run('F.ogr'),'onlisans');run("F=defaultF();render()");}
+run("showTab('takvim')");assert.equal(get('v-ana').hidden,true);assert.equal(get('v-takvim').hidden,false);run("showTab('bugun')");assert.equal(get('v-ana').hidden,false,'Manşet ana görünüm');
 // ---- ICS: CRLF kaçışı ve 75 sekizlik katlama
 const ics=run("calendarText([{...items[0],ozet:'x',baslik:'Çok uzun başlık '.repeat(12)+'ş'}])");
 assert.ok(ics.split('\r\n').every(l=>Buffer.byteLength(l)<=75),'ics lines folded to 75 octets');assert.match(ics,/\r\n [^\r\n]/,'continuation lines start with a space');
@@ -197,7 +214,7 @@ assert.equal(S.run("saved.clear(),saved.add(liste[0].id),saved.add('ghost'),save
 const hanak=row(k(8),'eight',{manset:'Memur',kurum:'Hanak Belediyesi',kurum_slug:'hanak-belediyesi',il:'Ardahan',iller:['Ardahan'],son_tarih:iso(5),kaynak_sayisi:2,kaynaklar:['İŞKUR','ÇŞB']});
 const hanak2=row(k(9),'nine',{manset:'Memur',kurum:'Hanak Belediye Başkanlığı',il:'Ardahan',iller:['Ardahan'],son_tarih:iso(5),kopya_of:k(8)});
 const yetim=row(k(3),'three',{manset:'Yetim kopya',kopya_of:'yok-boyle-bir-anahtar',son_tarih:iso(6)});
-liste.ilanlar.push(hanak,hanak2,yetim);liste.uyari={kaynaklar:['SBB'],eski_detay:3};
+liste.ilanlar.push(hanak,hanak2,yetim);
 const K=make({store:{'kit-saved':JSON.stringify(['nine'])}});await tick();
 assert.equal(K.run('listeTum.length'),8,'tüm satırlar saklanır');assert.equal(K.run('liste.length'),7,'ikincil satır listeden çıkar');
 assert.equal(K.run("liste.some(o=>o.id==='nine')"),false);assert.equal(K.run("liste.some(o=>o.id==='three')"),true,'birincili olmayan kopya_of satırı gizlenmez');
@@ -208,13 +225,7 @@ assert.deepEqual(JSON.parse(K.run("JSON.stringify(filterIlan(ilanBase(defaultF()
 assert.equal(K.run("filterIlan(ilanBase(defaultF()),defaultF(),null).list.filter(o=>o.kurum.startsWith('Hanak')).length"),1,'İlanlar sayısında çift tek sayılır');
 K.run("takvimRows('tumu')");assert.equal(K.run("takvimRows('tumu').filter(o=>o.kurum.startsWith('Hanak')).length"),1);
 K.run("save(lmap.get('"+k(8)+"'))");assert.equal(K.run('[...saved].join()'),'','kaydı kaldırmak ikincil kimliği de siler');
-K.run("tab='bugun';render()");const bg=text(K.get('bugun'));
-assert.match(bg,/SBB kaynağına erişimde sorun var/,'liste.json uyarısı Bugün sayfasında');assert.match(bg,/3 ilanın ayrıntıları 24 saat içinde doğrulanmadı/,'eski ayrıntı >= %25 ise gösterilir (3/7)');
-assert.ok(!K.get('freshness').textContent,'ilanlar.json olmadan da uyarı #freshness yedeğine yazılmaz');
-liste.uyari={kaynaklar:[],eski_detay:1};const K4=make();await tick();assert.equal(K4.run('uyariMetni()'),'','eski ayrıntı < %25 ise satır yok');
-liste.uyari={kaynaklar:['SBB'],eski_detay:1};const K5=make();await tick();assert.equal(K5.run('uyariMetni()'),'SBB kaynağına erişimde sorun var; bu kaynağın ilanları güncel olmayabilir.','yalnız kaynak hatası');
-delete liste.uyari;const K2=make();await tick();assert.equal(K2.run('uyariMetni()'),'','uyari yoksa satır yok');
-liste.uyari={};const K3=make();await tick();assert.equal(K3.run('uyariMetni()'),'','boş uyari satır çizmez');
+K.run("tab='bugun';render()");assert.doesNotMatch(text(K.get('ilanlar')),/kaynağına erişimde sorun|24 saat içinde doğrulanmadı/,'ana sayfada uyarı kutusu yok');
 // ---- görev yeri tekrarsız
 assert.equal(run("yerMetni({yer:'ANKARA • ANKARA / MERKEZ'})"),'Ankara (Merkez)');
 assert.equal(run("yerMetni({yer:'BOLU / GEREDE • BOLU / MENGEN • BOLU / MERKEZ'})"),'Bolu (Gerede, Mengen, Merkez)');
@@ -239,9 +250,8 @@ const onlAnk=PR('onlisans'),lisAnk=PR('lisans'),lisAnkara=lisAnk;
 // 1) düzeyi okunamayan ilan hiçbir profile sessizce uymaz; "okunamayan N ilan" bağlantısı
 assert.equal(U(unk,onlAnk),'bilinmiyor');
 Z.run("showTab('bugun')");
-const zb=text(Z.get('bugun'));
-assert.equal(Z.run("bugunModel().senin.some(o=>o.manset==='Bilinmeyen satır')"),false,'unknown-level row not listed in Senin için');assert.match(zb,/Öğrenim şartı okunamayan 1 ilan/);
-const bh=Z.run("bilinmiyorSatiri(bugunModel()).children[0].href");assert.match(bh,/ogr=bilinmiyor/);assert.match(bh,/uygun=0/);assert.match(bh,/il=ankara/);
+assert.equal(Z.run("filterIlan(ilanBase(F),F,activeProfile()).list.some(o=>o.manset==='Bilinmeyen satır')"),false,'unknown-level row not listed as uygun');assert.match(text(Z.get('filter-summary')),/1 ilanın öğrenim şartı okunamadı/);
+assert.equal(Z.run("queryOf({...defaultF(),...bilinmiyorYama(activeProfile())},true)"),'il=ankara&ogr=bilinmiyor&uygun=0');
 // bağlantının açtığı liste tam olarak o N satırdır
 Z.run("openIlanlar({ogr:'bilinmiyor',uygun:false,il:['Ankara']})");assert.deepEqual(JSON.parse(Z.run("JSON.stringify(filterIlan(ilanBase(F),F,activeProfile()).list.map(o=>o.manset))")),['Bilinmeyen satır']);
 // 2) puan türü düzeyi ima eder
@@ -252,22 +262,20 @@ assert.equal(Z.run("rowLevels({ogrenim:['onlisans'],puan_turleri:['P3']}).join()
 // 4) kurum içi sınav
 for(const o of ['ortaogretim','onlisans','lisans'])assert.equal(U(ici,PR(o)),false,'kurum içi sınav kimseye uygun değil');
 // kurum içi ilan Bugün bölümlerinde ve açık ilan sayısında yoktur (İlanlar listesinde rozetle kalır)
-assert.equal(Z.run("bugunModel().acik.some(o=>o.kurum_ici)"),false,'kurum içi: Bugün modelinde yok');
-assert.equal(Z.run("bugunModel().acil.concat(bugunModel().yeni,bugunModel().bugunYeni).some(o=>o.kurum_ici)"),false,'kurum içi: Son gün/Yeni bölümlerinde yok');
+assert.equal(Z.run("mansetSecimi().some(o=>o.kurum_ici)"),false,'kurum içi: manşette yok');
 assert.equal(Z.run("listeTum.some(o=>o.kurum_ici)"),true,'kurum içi: İlanlar için listede durur');
 // 5) sayılar tüm yüzeylerde aynı; alt, tam'dan sonra
-Z.run(`profil=validProfile(${JSON.stringify(lisAnk)});showTab('bugun')`);
-const sn=Z.run("bugunModel().senin.length");
-assert.equal(sn,Z.run("filterIlan(ilanBase(defaultF()),defaultF(),activeProfile()).uyan"),'Senin için = İlanlar chip');assert.equal(sn,Z.run("takvimRows('uygun').length"),'Senin için = Takvim Bana uygun');
-assert.equal(Z.run("bugunModel().senin.map(o=>o.manset).join()"),'P3 satırı,Lisans satırı,Ulusal,Önlisans satırı,Lise satırı','Bugün: tam önce, alt sonra (il Ankara, çok il satırı dışarıda)');
+Z.run(`profil=validProfile(${JSON.stringify(lisAnk)});F=defaultF();showTab('bugun')`);
+const sn=Z.run("filterIlan(ilanBase(defaultF()),defaultF(),activeProfile()).uyan");
+assert.equal(sn,Z.run("takvimRows('uygun').length"),'Profilime uygun = Takvim Bana uygun');assert.equal(sn,5);
 assert.equal(Z.run("filterIlan(ilanBase(defaultF()),defaultF(),activeProfile()).list.map(o=>o.manset).join()"),'P3 satırı,Lisans satırı,Ulusal,Önlisans satırı,Lise satırı','İlanlar: alt tam satırlardan sonra, tarih sırasında önde olsa da');
-assert.match(text(Z.get('bugun')),new RegExp(Z.run(`ekSi(${sn})`).replace('’','.')+' profiline uygun'),'H1/özet cümlesi aynı sayıyı kullanır');
+assert.match(text(Z.get('suzgecler')),new RegExp('Yalnız profilime uygun '+sn),'yan sütun aynı sayıyı kullanır');
 Z.run("F=defaultF();showTab('ilanlar');render()");assert.match(text(Z.get('filter-summary')),/1 ilanın öğrenim şartı okunamadı/);assert.match(text(Z.get('filter-summary')),/göster/);
 // 6) il seçilmemiş = tüm Türkiye
 assert.equal(U(multi,{...lisAnk,iller:[],tum_turkiye:false}),'tam');assert.equal(U(multi,lisAnk),false,'il seçili ve eşleşmiyorsa dışarıda');assert.equal(U(multi,{...lisAnk,iller:['Burdur']}),'tam');
 assert.equal(U(ulusalRow,lisAnk),'tam');
 // Tüm Türkiye açıkken seçilen iller öne alınır
-Z.run(`profil=validProfile(${JSON.stringify({...lisAnk,tum_turkiye:true})})`);assert.equal(Z.run("bugunModel().senin.map(o=>o.manset).slice(0,3).join()"),'P3 satırı,Lisans satırı,Çok il','seçili il önce');assert.equal(Z.run("(()=>{const s=bugunModel().senin;return s[s.length-1].manset})()"),'Lise satırı');
+Z.run(`profil=validProfile(${JSON.stringify({...lisAnk,tum_turkiye:true})})`);{const s=Z.run("filterIlan(ilanBase(defaultF()),defaultF(),activeProfile()).list.map(o=>o.manset)");assert.ok(s.indexOf('Çok il')>s.indexOf('Lisans satırı'),'seçili il önce');assert.equal(s[s.length-1],'Lise satırı');}
 // 7) validProfile: düzeyle uyumlu puan türü
 const vp=(o,t)=>Z.run(`validProfile({v:1,ogrenim:'${o}',puan_turu:${JSON.stringify(t)}}).puan_turu`);
 assert.equal(vp('lisans','P94'),'P3');assert.equal(vp('onlisans','P3'),'P93');assert.equal(vp('lisans','P999'),'P3');assert.equal(vp('lisans','P25'),'P25');assert.equal(vp('ortaogretim','P93'),'P94');
@@ -276,7 +284,6 @@ Z.run(`profil=validProfile(${JSON.stringify({...lisAnk,puan_turu:'P25'})})`);ass
 Z.run(`profil=validProfile(${JSON.stringify(lisAnk)})`);assert.match(text(Z.run("sinyalOf({...listeTum[0],puan_turleri:[],taban_ref:{lisans:{medyan:80,n:9}}})")),/Puanın, benzer kadroların taban medyanından 4,5 puan düşük/);assert.match(text(Z.run("sinyalOf({...listeTum[0],puan_turleri:[],taban_ref:{lisans:{medyan:80,n:9}}})")),/4,5 puan geride/);
 // 11) puan gösterimi
 assert.equal(Z.run("puanTr(75.5)"),'75,5');assert.equal(Z.run("puanTr(75)"),'75');assert.equal(Z.run("puanTr(75.47987)"),'75,47987');assert.equal(Z.run("puanTr(82.15)"),'82,15');
-Z.run(`profil=validProfile(${JSON.stringify(onlAnk)})`);assert.match(text(Z.run("profilStrip('')")),/KPSS P93 75,5(?!\d)/);assert.doesNotMatch(text(Z.run("profilStrip('')")),/75,50/);
 // 9) + 8) + 12) form
 const F1=make({liste:L2});await tick();
 F1.run("globalThis.__nd=0;{const _n=notify;notify=function(t){if($('profil-dialog').open)__nd++;return _n(t);};}");
@@ -311,14 +318,14 @@ assert.deepEqual(Object.keys(gStore),['baska'],'her kit-* anahtarı silindi, ba�
 // 13b) Profili sıfırla: yalnız kit-profil gider; ekran profilsiz varsayılana döner
 const rStore={'kit-profil':JSON.stringify(PR('lisans')),'kit-saved':JSON.stringify(['abc']),'kit-theme':'"dark"','kit-son-ziyaret':JSON.stringify('2020-01-01T00:00:00.000Z')};
 const RS=make({store:rStore});await tick();
-RS.run("showTab('bugun')");assert.ok(RS.run('activeProfile()'),'profil var');assert.match(text(RS.get('bugun')),/Senin için/);
+RS.run("showTab('bugun')");assert.ok(RS.run('activeProfile()'),'profil var');assert.match(text(RS.get('suzgecler')),/Yalnız profilime uygun/);
 RS.run('openProfile()');assert.equal(RS.get('p-sifirla-kutu').hidden,false,'profil varken sıfırla düğmesi görünür');assert.equal(RS.get('profil-dialog').open,true);
 RS.ctx.__confirmCevap=false;RS.get('p-sifirla').onclick();assert.equal(RS.ctx.__confirmMsg,'Profil tercihlerin silinsin mi?');assert.ok('kit-profil' in rStore,'onay verilmezse silinmez');assert.ok(RS.run('activeProfile()'));
 RS.ctx.__confirmCevap=true;RS.get('p-sifirla').onclick();
 assert.ok(!('kit-profil' in rStore),'kit-profil silindi');assert.deepEqual(Object.keys(rStore).sort(),['kit-saved','kit-son-ziyaret','kit-theme'],'diğer anahtarlar yerinde');
 assert.equal(rStore['kit-saved'],JSON.stringify(['abc']));assert.equal(rStore['kit-theme'],'"dark"');
 assert.equal(RS.run('activeProfile()'),null);assert.equal(RS.get('profil-dialog').open,false,'pencere kapandı');
-assert.doesNotMatch(text(RS.get('bugun')),/Senin için/,'Senin için kalktı');assert.match(text(RS.get('bugun')),/30 saniyede sana göre ayarla/,'Profilini oluştur çağrısı döndü');
+assert.doesNotMatch(text(RS.get('suzgecler')),/Yalnız profilime uygun/,'profil süzgeci kalktı');
 RS.run("showTab('ilanlar')");assert.equal(RS.run("filterIlan(ilanBase(F),F,activeProfile()).on"),false,'eşleşme rozeti/filtresi kapalı');
 RS.run('openProfile()');assert.equal(RS.get('p-sifirla-kutu').hidden,true,'profil yokken düğme gizli');
 // 14) sayfa.js: ayrıntı sayfası "Senin için"
@@ -339,5 +346,5 @@ assert.match(sayfaYap({...sd,kurumIci:'1'},PR('lisans')),/Kurum içi yeterlik s�
 assert.match(sayfaYap({...sd,pt:'P3',ref:JSON.stringify({lisans:{medyan:80,n:9}})},PR('lisans',{puan_turu:'P25'})),/P3 puanı arıyor; puan türün P25/);
 assert.doesNotMatch(sayfaYap({...sd,pt:'',ref:JSON.stringify({lisans:{medyan:80,n:9}})},PR('lisans',{puan_turu:'P25'})),/medyan/,'P25 profiline P3 medyanı gösterilmez');
 assert.match(sayfaYap({...sd,ref:JSON.stringify({lisans:{medyan:80,n:9}})},PR('lisans')),/Puanın, benzer kadroların taban medyanından 4,5 puan düşük/);
-console.log('portal checks passed: query sync + popstate, chip filters, liste-based tür/kategori, profile match, pagination, Takvim, Kayıtlı groups, compare only on Kayıtlı, folded ics, validated saved ids, ?profil=1, ?q=.');
+console.log('portal checks passed: timeline groups, manşet, kategori ağacı, query sync + popstate, sidebar filters, liste-based tür/kategori, profile match, pagination, Takvim, Kayıtlı groups, compare only on Kayıtlı, folded ics, validated saved ids, ?profil=1, ?q=.');
 })().catch(e=>{console.error(e);process.exitCode=1;});

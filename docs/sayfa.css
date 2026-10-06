@@ -275,7 +275,6 @@ th.sayi{background:var(--surface-2);color:var(--muted);font-size:12px;letter-spa
 .kp-st.cancelled{color:var(--alert)}
 
 @media (max-width:760px){
-  body{padding-bottom:76px}
   .wrap{padding:0 16px}
   .ust-ic{height:56px;gap:12px}
   .menu,.ust-sag .btn{display:none}
