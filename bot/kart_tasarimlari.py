@@ -271,7 +271,7 @@ def marka_seridi(d, y, yuk=88, dolgu=ANA, renk=LIME, sag='#ffffff', im=None):
         d.rounded_rectangle((x, ky, x + boy - 1, ky + boy - 1), radius=round(boy * 0.22), outline=LIME, width=2)
         x += boy + 16
     d.text((x, y + yuk / 2), 'KPSS Tercihi', font=F(34, True), fill=renk, anchor='lm')
-    d.text((G - KENAR, y + yuk / 2), 't.me/kamuilantakip', font=F(34, True), fill=sag, anchor='rm')
+    d.text((G - KENAR, y + yuk / 2), 'kpsstercihi.com', font=F(34, True), fill=sag, anchor='rm')
 
 
 def jpeg_png(im):

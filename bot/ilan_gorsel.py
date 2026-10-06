@@ -114,7 +114,7 @@ def gorsel_olustur(kurum, kadro, yer, tarih, rozet='', kaynak='Kariyer Kapısı'
         face=font(25,True);label=lines(d,rozet,face,250,1)[0]
         d.text((1013-d.textlength(label,font=face)/2,footer+60),label,font=face,fill='white')
     d.text((52,footer+151),'KPSS Tercihi',font=font(22,True),fill=accent)
-    channel='Telegram  @kamuilantakip'
+    channel='kpsstercihi.com'
     channel_face=font(22,True)
     d.text((1152-d.textlength(channel,font=channel_face),footer+151),channel,font=channel_face,fill='white')
     out=BytesIO();im.save(out,format='PNG',optimize=True)
