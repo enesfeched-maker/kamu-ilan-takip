@@ -1,0 +1,49 @@
+/* KPSS Tercihi — ortak kabuk: ince koyu üst bar + alt bilgi. Ana sayfa ve tüm iç sayfalar (ilan, kurum, taban puanları) aynı dosyayı yükler.
+   Renkler logodan: koyu petrol/siyah zemin + lime vurgu. Sayfa belirteçlerinden bağımsızdır; açık ve koyu temada aynı görünür. */
+:root{--kb-zemin:#0D1A1B;--kb-zemin-2:#132527;--kb-cizgi:#21393B;--kb-yazi:#EAF1EC;--kb-soluk:#A3B5B0;--kb-lime:#C8F169;--kb-wrap:1180px}
+.tb{position:sticky;top:0;z-index:40;background:var(--kb-zemin);color:var(--kb-yazi);border-bottom:1px solid var(--kb-cizgi)}
+.tb-ic{max-width:var(--kb-wrap);margin:0 auto;padding:0 24px;height:60px;display:flex;align-items:center;gap:20px}
+.tb-marka{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:700;font-size:16.5px;letter-spacing:-.01em;white-space:nowrap;margin-right:auto}
+.tb-marka img{width:34px;height:34px;border-radius:9px;display:block}
+.tb-nav{display:flex;align-items:center;gap:2px}
+.tb-nav>a{position:relative;display:flex;align-items:center;gap:6px;color:var(--kb-soluk);text-decoration:none;font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:8px 11px;border-radius:8px;white-space:nowrap}
+.tb-nav>a:hover{color:#fff;background:var(--kb-zemin-2)}
+.tb-nav>a.aktif,.tb-nav>a[aria-current=page]{color:#fff}
+.tb-nav>a.aktif::after,.tb-nav>a[aria-current=page]::after{content:"";position:absolute;left:11px;right:11px;bottom:-11px;height:3px;border-radius:3px 3px 0 0;background:var(--kb-lime)}
+.tb-sayi{min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--kb-lime);color:#0D1A1B;font-size:11px;font-weight:700;letter-spacing:0;display:inline-grid;place-items:center}
+.tb-sayi[hidden]{display:none}
+.tb-ayrac{width:1px;height:22px;background:var(--kb-cizgi);margin:0 8px}
+.tb-ikon{width:36px;height:36px;display:inline-grid;place-items:center;border-radius:9px;border:0;background:transparent;color:var(--kb-soluk);cursor:pointer;padding:0;text-decoration:none;font:inherit}
+.tb-ikon:hover{color:#fff;background:var(--kb-zemin-2)}
+.tb-ikon svg,.tb-ac svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tb-etiket{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.tb-ac{display:none;width:40px;height:40px;place-items:center;border-radius:9px;border:1px solid var(--kb-cizgi);background:transparent;color:#fff;cursor:pointer;padding:0}
+.tb a:focus-visible,.tb button:focus-visible,.ab a:focus-visible{outline:2px solid var(--kb-lime);outline-offset:2px}
+@media (max-width:1020px){
+  .tb-ic{padding:0 16px;height:56px}
+  .tb-ac{display:grid}
+  .tb-nav{display:none;position:absolute;left:0;right:0;top:100%;flex-direction:column;align-items:stretch;gap:0;background:var(--kb-zemin);border-bottom:1px solid var(--kb-cizgi);padding:6px 16px 14px;box-shadow:0 18px 30px -18px rgba(0,0,0,.6);max-height:calc(100dvh - 56px);overflow:auto}
+  .tb.acik .tb-nav{display:flex}
+  .tb-nav>a{font-size:14px;padding:13px 4px;border-bottom:1px solid var(--kb-cizgi);border-radius:0}
+  .tb-nav>a.aktif::after,.tb-nav>a[aria-current=page]::after{left:-16px;right:auto;top:10px;bottom:10px;width:3px;height:auto;border-radius:0 3px 3px 0}
+  .tb-ayrac{display:none}
+  .tb-nav .tb-ikon{width:auto;height:auto;display:flex;justify-content:flex-start;gap:12px;padding:13px 4px;border-radius:0;border-bottom:1px solid var(--kb-cizgi);font-size:14px;font-weight:600}
+  .tb-nav .tb-ikon:last-child{border-bottom:0}
+  .tb-nav .tb-etiket{position:static;width:auto;height:auto;overflow:visible;clip:auto}
+}
+/* ---------- alt bilgi ---------- */
+.ab{margin-top:64px;background:var(--kb-zemin);color:var(--kb-soluk);font-size:13px;line-height:1.55}
+.ab-ic{max-width:var(--kb-wrap);margin:0 auto;padding:30px 24px 34px;display:grid;grid-template-columns:auto 1fr;gap:18px 40px;align-items:start}
+.ab-marka{display:flex;gap:12px;align-items:center}
+.ab-marka img{width:36px;height:36px;border-radius:9px;display:block}
+.ab-marka strong{display:block;color:#fff;font-size:15px}
+.ab-marka span{display:block;font-size:12.5px}
+.ab-linkler{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px 20px;padding-top:8px}
+.ab-linkler a{color:var(--kb-yazi);text-decoration:none}
+.ab-linkler a:hover{text-decoration:underline;text-underline-offset:3px}
+.ab-not{grid-column:1/-1;margin:0;padding-top:16px;border-top:1px solid var(--kb-cizgi)}
+@media (max-width:760px){
+  .ab{margin-top:40px}
+  .ab-ic{grid-template-columns:1fr;padding:26px 16px 30px}
+  .ab-linkler{justify-content:flex-start;padding-top:0}
+}
