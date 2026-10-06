@@ -1,9 +1,9 @@
 {
  "schema": 1,
- "guncelleme": "2026-10-06T09:36:44.795794+00:00",
+ "guncelleme": "2026-10-06T10:06:40.626366+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-10-06T09:36:48.759734+00:00",
+   "kontrol": "2026-10-06T10:06:41.060471+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -5554,7 +5554,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-10-06T09:36:49.668014+00:00",
+   "kontrol": "2026-10-06T10:06:42.020210+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -7119,6 +7119,47 @@
    "sart_kadro_sayisi": 0,
    "basvuru_notu": "",
    "detay_guncelleme": "2026-10-06T12:36:58+03:00"
+  },
+  "https://kariyerkapisi.gov.tr/IlanDetay?i=ebb1543d-afb7-4af2-98db-ba1f0b0bc0b5": {
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/fe7cc207-c14d-4dcd-899a-c1e634c0a43e.png",
+   "son_tarih": "2026-09-25",
+   "son_zaman": "2026-09-25T17:30:00+03:00",
+   "baslangic_zaman": "2026-09-21T08:30:00+03:00",
+   "yer": "",
+   "kadro": "",
+   "ilan_turu": "İşçi İlanları",
+   "ozet": "SÜRESİ BELİRLİ OLMAYAN SÜREKLİ İŞ SÖZLEŞMESİ İLE ÇALIŞTIRILMAK ÜZERE; TOPLAM 50 İŞÇİ ALINACAKTIR.",
+   "sartlar": [],
+   "sart_kadro_sayisi": 0,
+   "basvuru_notu": "",
+   "detay_guncelleme": "2026-10-06T13:06:42+03:00"
+  },
+  "https://kariyerkapisi.gov.tr/IlanDetay?i=4c8c21d7-0131-486c-968c-375ecc3b9822": {
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/eaf82f9f-42b9-465f-a4b2-13c77ce65da2.png",
+   "son_tarih": "2026-09-29",
+   "son_zaman": "2026-09-29T13:00:00+03:00",
+   "baslangic_zaman": "2026-09-15T09:00:00+03:00",
+   "yer": "KARS / MERKEZ",
+   "kadro": "Toplam 92 kişi — 1 VETERİNER HEKİM • 50 HEMŞİRE • 4 EBE • 2 PSİKOLOG • 1 DİYETİSYEN • 1 DİĞER SAĞLIK PERSONELİ • 13 SAĞLIK TEKNİKERİ • 2 TEKNİKER • 2 TEKNİSYEN • 16 DESTEK PERSONELİ",
+   "ilan_turu": "Sözleşmeli Personel İlanları",
+   "ozet": "Üniversitemizin çeşitli birimlerinde, 657 sayılı Devlet Memurları Kanununun 4’üncü maddesinin (B) fıkrasına göre istihdam edilmek ve giderleri özel bütçeden karşılanmak üzere 06/06/1978 tarihli ve 7/15754 sayılı Bakanlar Kurulu Kararına ekli “Sözleşmeli Personel Çalıştırılmasına İlişkin Esasların Ek 2.Maddesinin (b) fıkrası kapsamında 2024 yılı KPSS (B) grubu puana göre yapılacak sıralama esas alınmak suretiyle, aşağıda belirtilen pozisyonlara karşılarında belirtilen sayı ve nitelikte sözleşmeli personel…",
+   "sartlar": [
+    {
+     "kadro": "VETERİNER HEKİM",
+     "metin": "2024 KPSS‘den en az 60 (altmış) ve üzeri puan almak\nYükseköğretim Kurumlarının Veterinerlik Lisans bölümünden mezun olmak"
+    },
+    {
+     "kadro": "HEMŞİRE",
+     "metin": "2024 KPSS‘den en az 60 (altmış) ve üzeri puan almak\nYükseköğretim Kurumlarının Hemşirelik Lisans bölümünden mezun olmak"
+    },
+    {
+     "kadro": "EBELİK",
+     "metin": "2024 KPSS‘den en az 60 (altmış) ve üzeri puan almak\nYükseköğretim Kurumlarının Ebelik Lisans bölümünden mezun olmak"
+    }
+   ],
+   "sart_kadro_sayisi": 21,
+   "basvuru_notu": "a) Başvuruda bulunacak adaylar, 15/09/2026 – 29/09/2026 tarihleri arasında Kariyer Kapısı (https://kariyerkapisi.gov.tr/isealim) üzerinden gerçekleştirecektir. Şahsen ve posta yolu ile yapılan başvurular kabul edilmeyecektir.",
+   "detay_guncelleme": "2026-10-06T13:06:43+03:00"
   }
  },
  "logolar": {
