@@ -105,6 +105,15 @@ def _su():
     return site_uret
 
 
+def _kurum(k):
+    from kurum_sayfasi import kurum_adi
+    return kurum_adi(k) if k else ''
+
+
+def _duzgun(s):
+    return _su()._duzgun(s) if s else ''
+
+
 def _kirinti_json(base, parcalar):
     ogeler = [{'@type': 'ListItem', 'position': i, 'name': ad, 'item': url} for i, (ad, url) in enumerate(parcalar, 1)]
     j = json.dumps({'@context': 'https://schema.org', '@type': 'BreadcrumbList', 'itemListElement': ogeler},
@@ -178,7 +187,7 @@ def kadro_sayfasi(base, duzey_slug, duzey_ad, unvan, slug, donemler, ilk_yil, so
         rows = sorted(donemler[d], key=lambda r: (r.get('min') if isinstance(r.get('min'), (int, float)) else 1e9, str(r.get('kurum'))))
         detay += (f'<section class="bolum"><div class="bolum-bas"><h2>{esc(donem_yaz(d))} dönemi kadro kadro puanlar <span class="sayi">{len(rows)}</span></h2></div>'
                   + _tablo(['Kurum', 'İl', 'Teşkilat', 'Kontenjan', 'Yerleşen', 'En küçük puan', 'En büyük puan'],
-                           [[esc(r.get('kurum')), esc(r.get('il')), esc(r.get('teskilat')), tam(r.get('kontenjan') or 0),
+                           [[esc(_kurum(r.get('kurum'))), esc(_duzgun(r.get('il'))), esc(_duzgun(r.get('teskilat'))), tam(r.get('kontenjan') or 0),
                              tam(r.get('yerlesen') or 0), _p(r.get('min'), 3), _p(r.get('max'), 3)] for r in rows]) + '</section>')
     icerik = (_hero(_crumbs(kok, kir), f'KPSS {ad} Taban Puanları ({duzey_ad})', ozet_p)
               + f'<main id="icerik" class="wrap kp-main"><section class="bolum"><div class="bolum-bas"><h2>Dönem dönem özet</h2></div>{ozet_tablo}</section>{detay}'

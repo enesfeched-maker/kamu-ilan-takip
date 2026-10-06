@@ -57,14 +57,22 @@ class PuanSayfalariTest(unittest.TestCase):
         self.assertIn('en düşük puan 71,23, en yüksek 88,10', h)
         self.assertNotIn('71.23', h)
 
+    def test_kurum_il_baslik_hali(self):
+        h = (self.k / 'lisans' / 'hemsire' / 'index.html').read_text(encoding='utf-8')
+        self.assertIn('<td>Ankara</td>', h)
+        self.assertNotIn('<td>ANKARA</td>', h)
+        self.assertEqual(ps._duzgun('İSTANBUL'), 'İstanbul')
+        self.assertEqual(ps._duzgun('IĞDIR'), 'Iğdır')
+        self.assertIn('Z Kurumu', h)
+
     def test_baslik_hali(self):
         self.assertEqual(ps.baslik_hali('HEMŞİRE YARDIMCISI'), 'Hemşire Yardımcısı')
         self.assertEqual(ps.baslik_hali('İŞÇİ'), 'İşçi')
 
     def test_html_kacis(self):
         h = (self.k / 'lisans' / 'hemsire' / 'index.html').read_text(encoding='utf-8')
-        self.assertIn('ABC &lt;b&gt;Kurumu&lt;/b&gt;', h)
-        self.assertNotIn('<b>Kurumu</b>', h)
+        self.assertIn('&lt;b&gt;', h)
+        self.assertNotIn('<b>', h.split('<main')[1])
 
     def test_aciklama_uzunlugu_ve_not(self):
         import re
