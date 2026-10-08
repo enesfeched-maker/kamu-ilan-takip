@@ -200,10 +200,25 @@ if(!son)return bas&&upcoming(o)?uzunTarih(bas)+' – son tarih ilanda':'Son tari
 if(!bas||bas>=son)return uzunTarih(son);
 return uzunTarih(bas)+' – '+uzunTarih(son);}
 function kurumGorseli(o,cls,size){const s=E('span',cls);if(o.logo){const im=E('img');im.src=o.logo;im.alt='';im.width=size;im.height=size;im.loading='lazy';im.decoding='async';im.onerror=()=>s.replaceChildren(badge({kurum:o.kurum},'harf'));s.append(im);}else s.append(badge({kurum:o.kurum},'harf'));return s;}
-/* Manşet: kapanmamış ilanlardan kadrosu en büyük 12'si (eşitlikte en yeni); kurum içi ve tarihi doğrulanamayanlar hariç. */
+/* Manşet: kapanmamış ilanlardan 12 tane; kurum içi ve tarihi doğrulanamayanlar hariç.
+   Sıra: son 7 günün popülerlik puanı (api /populer) azalan; puanı olmayanlar (ya da veri gelmediyse hepsi) kadrosu en büyükten, eşitlikte en yeni. */
+let mansetPop=null,mansetEtkilesim=false;
+const OKLAR={sol:'<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14.5 5.5-6.5 6.5 6.5 6.5"/></svg>',sag:'<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9.5 5.5 6.5 6.5-6.5 6.5"/></svg>'};
+const POPULER_URL='https://api.kpsstercihi.com/populer';
 function mansetSecimi(){
-const gor=new Set();
-return liste.filter(o=>!closed(o)&&!o.kurum_ici&&o.durum!=='belirsiz'&&o.toplam>0).sort((a,b)=>b.toplam-a.toplam||(Date.parse(b.ilk_gorulme)||0)-(Date.parse(a.ilk_gorulme)||0)).filter(o=>{const k=normalize(o.manset)+'|'+o.toplam;if(gor.has(k))return false;gor.add(k);return true;}).slice(0,12);}
+const gor=new Set(),pop=mansetPop,puan=o=>pop&&pop.has(o.key)?pop.get(o.key):0;
+return liste.filter(o=>!closed(o)&&!o.kurum_ici&&o.durum!=='belirsiz'&&o.toplam>0).sort((a,b)=>puan(b)-puan(a)||b.toplam-a.toplam||(Date.parse(b.ilk_gorulme)||0)-(Date.parse(a.ilk_gorulme)||0)).filter(o=>{const k=normalize(o.manset)+'|'+o.toplam;if(gor.has(k))return false;gor.add(k);return true;}).slice(0,12);}
+/* Popülerlik verisi: 1,5 sn içinde gelmezse ya da hata verirse sessizce yok sayılır. Kullanıcı slayta dokunmadıysa manşet yeni sırayla yeniden çizilir. */
+async function populerYukle(){
+try{
+if(typeof fetch!=='function')return;
+const ac=typeof AbortController==='function'?new AbortController():null,zm=ac?setTimeout(()=>ac.abort(),1500):null;
+let j;try{const r=await fetch(POPULER_URL,ac?{signal:ac.signal}:{});if(!r||!r.ok)return;j=await r.json();}finally{if(zm)clearTimeout(zm);}
+const o=j&&typeof j==='object'?j.ilanlar:null;if(!o||typeof o!=='object')return;
+const m=new Map();for(const [k,v] of Object.entries(o))if(KEY_RE.test(k)&&typeof v==='number'&&v>0&&isFinite(v))m.set(k,v);
+if(!m.size)return;mansetPop=m;
+if(!mansetEtkilesim&&listeLoaded&&viewOf(tab)==='ana'){mansetSira=0;renderManset();}
+}catch{}}
 /* "860 Gelir Uzman Yardımcısı alacak"; birden çok unvanda "103 personel alacak" + unvanlar alt satırda. */
 function mansetBaslik(o){
 const m=String(o.manset||'').trim();
@@ -211,19 +226,46 @@ if(/^\d/.test(m))return{b:m+' alacak',alt:''};
 if(!o.toplam)return{b:m||'Kamu ilanı',alt:''};
 if(/,/.test(m))return{b:sayiTr(o.toplam)+' personel alacak',alt:m};
 return{b:sayiTr(o.toplam)+' '+m+' alacak',alt:''};}
-let mansetL=[],mansetSira=0,mansetImza='',mansetZaman=null,mansetDur=null,mansetUstunde=false,mansetOdakta=false;
+let mansetL=[],mansetSira=0,mansetImza='',mansetZaman=null,mansetDur=null,mansetUstunde=false,mansetOdakta=false,mansetSuruk=false;
 const azHareket=()=>{try{return matchMedia('(prefers-reduced-motion: reduce)').matches;}catch{return false;}};
 function mansetSaat(){
 clearTimeout(mansetZaman);mansetZaman=null;
 if(mansetDur===null)mansetDur=azHareket();
-if(mansetDur||mansetUstunde||mansetOdakta||document.hidden||mansetL.length<2||(tab!=='bugun'&&tab!=='ilanlar'))return;
+if(mansetDur||mansetUstunde||mansetOdakta||mansetSuruk||document.hidden||mansetL.length<2||(tab!=='bugun'&&tab!=='ilanlar'))return;
 const t=()=>{mansetGit(mansetSira+1);mansetZaman=setTimeout(t,6000);};mansetZaman=setTimeout(t,6000);}
 function mansetGuncelle(){
 const root=$('manset');if(!root)return;
 root.querySelectorAll('.slayt').forEach((s,i)=>{s.hidden=i!==mansetSira;});
 root.querySelectorAll('.manset-nokta button').forEach((b,i)=>{if(i===mansetSira)b.setAttribute('aria-current','true');else b.removeAttribute('aria-current');});
 const d=$('manset-dur');if(d){d.innerHTML=mansetDur?IC.oynat:IC.dur;d.setAttribute('aria-label',mansetDur?'Manşeti otomatik oynat':'Otomatik geçişi durdur');}}
-function mansetGit(i,kullanici){const n=mansetL.length;if(!n)return;mansetSira=((i%n)+n)%n;mansetGuncelle();if(kullanici)mansetSaat();}
+/* yon: -1 geri, 1 ileri (yeni slayt o yönden kayarak girer); 0/yok: aşağıdan belirir. */
+function mansetGit(i,kullanici,yon){const n=mansetL.length;if(!n)return;const root=$('manset'),sl=root&&root.querySelector&&root.querySelector('.manset-slaytlar');
+if(sl&&sl.style&&sl.style.setProperty){sl.style.setProperty('--gx',(yon?yon*48:0)+'px');sl.style.setProperty('--gy',yon?'0px':'6px');}
+mansetSira=((i%n)+n)%n;mansetGuncelle();if(kullanici)mansetSaat();}
+/* Sürükleme / kaydırma: fare ve dokunma (pointer events). Dikey kaydırma touch-action:pan-y ile tarayıcıya bırakılır. */
+function mansetSurukle(sl){
+const ESIK=40;let p=null,bastir=false;
+const cur=()=>sl.querySelectorAll('.slayt')[mansetSira]||null;
+const sifirla=(anim)=>{const c=cur();if(!c||!c.style)return;c.style.transition=anim&&!azHareket()?'transform .22s ease,opacity .22s ease':'none';c.style.transform='';c.style.opacity='';};
+const bitir=(git)=>{
+if(!p)return;const d=p.dx,sure=Math.max(1,Date.now()-p.t0),hiz=Math.abs(d)/sure,s=p.suruk;
+try{if(p.cap&&sl.releasePointerCapture)sl.releasePointerCapture(p.id);}catch{}
+p=null;if(!s)return;
+mansetSuruk=false;bastir=true;setTimeout(()=>{bastir=false;},0);
+const ilerle=git&&(Math.abs(d)>=ESIK||(hiz>0.45&&Math.abs(d)>12));
+if(ilerle){sifirla(false);mansetGit(mansetSira+(d<0?1:-1),true,d<0?1:-1);}else{sifirla(true);mansetSaat();}};
+sl.addEventListener('pointerdown',e=>{if(p||(e.pointerType==='mouse'&&e.button!==0)||mansetL.length<2)return;mansetEtkilesim=true;p={id:e.pointerId,x:e.clientX,y:e.clientY,dx:0,t0:Date.now(),suruk:false,cap:false};});
+sl.addEventListener('pointermove',e=>{
+if(!p||e.pointerId!==p.id)return;const dx=e.clientX-p.x,dy=e.clientY-p.y;
+if(!p.suruk){if(Math.abs(dx)<8||Math.abs(dx)<Math.abs(dy)*1.2){if(Math.abs(dy)>14)p=null;return;}
+p.suruk=true;mansetSuruk=true;clearTimeout(mansetZaman);mansetZaman=null;try{if(sl.setPointerCapture){sl.setPointerCapture(e.pointerId);p.cap=true;}}catch{}}
+p.dx=dx;const c=cur();if(c&&c.style){c.style.transition='none';c.style.transform='translateX('+dx+'px)';c.style.opacity=String(Math.max(.35,1-Math.abs(dx)/320));}
+if(e.cancelable)e.preventDefault();});
+sl.addEventListener('pointerup',e=>{if(p&&e.pointerId===p.id)bitir(true);});
+sl.addEventListener('pointercancel',e=>{if(p&&e.pointerId===p.id)bitir(false);});
+/* Sürükleme sonrası bırakma, bağlantıyı açmasın. */
+sl.addEventListener('click',e=>{if(bastir){e.preventDefault();e.stopPropagation();bastir=false;}},true);
+sl.addEventListener('dragstart',e=>e.preventDefault());}
 function renderManset(){
 const root=$('manset');if(!root||!listeLoaded)return;
 const L=mansetSecimi(),imz=L.map(o=>o.key).join();
@@ -238,12 +280,13 @@ tx.append(E('span','slayt-kurum',o.kurum||'Kurum belirtilmemiş'),E('strong','sl
 const t=E('span','slayt-tarih');t.append(ic('saat'),tarihAraligi(o));tx.append(t);
 a.append(kurumGorseli(o,'slayt-logo',88),tx);s.append(a);sl.append(s);});
 const kon=E('div','manset-kontrol'),nk=E('div','manset-nokta');nk.setAttribute('role','group');nk.setAttribute('aria-label','Manşet seç');
-const ok=(ad,ikon,fark)=>{const b=E('button','manset-ok');b.type='button';b.setAttribute('data-a','manset_ok');b.setAttribute('data-a-x',fark<0?'onceki':'sonraki');b.setAttribute('aria-label',ad);b.innerHTML=IC[ikon];b.onclick=()=>mansetGit(mansetSira+fark,true);return b;};
-L.forEach((o,i)=>{const b=E('button','',String(i+1));b.type='button';b.setAttribute('aria-label',(i+1)+'. manşet: '+o.kurum);b.setAttribute('data-a','manset_nokta');b.setAttribute('data-a-n',String(i+1));b.onclick=()=>mansetGit(i,true);nk.append(b);});
-const dur=E('button','manset-ok manset-dur');dur.type='button';dur.id='manset-dur';dur.onclick=()=>{mansetDur=!mansetDur;mansetSaat();mansetGuncelle();};
-kon.append(ok('Önceki manşet','sol',-1),nk,ok('Sonraki manşet','sag',1),dur);
-ic_.append(sl,kon);root.replaceChildren(ic_);
-root.onkeydown=e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();mansetGit(mansetSira+(e.key==='ArrowLeft'?-1:1),true);const b=root.querySelectorAll('.manset-nokta button')[mansetSira];if(b&&b.focus&&e.target&&e.target.closest&&e.target.closest('.manset-nokta'))b.focus();}};
+const ok=(ad,ikon,fark)=>{const b=E('button','manset-ok manset-yon manset-'+(fark<0?'onceki':'sonraki'));b.type='button';b.setAttribute('data-a','manset_ok');b.setAttribute('data-a-x',fark<0?'onceki':'sonraki');b.setAttribute('aria-label',ad);b.innerHTML=OKLAR[ikon];b.onclick=()=>{mansetEtkilesim=true;mansetGit(mansetSira+fark,true,fark);};return b;};
+L.forEach((o,i)=>{const b=E('button','',String(i+1));b.type='button';b.setAttribute('aria-label',(i+1)+'. manşet: '+o.kurum);b.setAttribute('data-a','manset_nokta');b.setAttribute('data-a-n',String(i+1));b.onclick=()=>{mansetEtkilesim=true;mansetGit(i,true,Math.sign(i-mansetSira));};nk.append(b);});
+const dur=E('button','manset-ok manset-dur');dur.type='button';dur.id='manset-dur';dur.onclick=()=>{mansetEtkilesim=true;mansetDur=!mansetDur;mansetSaat();mansetGuncelle();};
+kon.append(nk,dur);
+const sahne=E('div','manset-sahne');if(L.length>1)sahne.append(ok('Önceki manşet','sol',-1));sahne.append(sl);if(L.length>1)sahne.append(ok('Sonraki manşet','sag',1));
+ic_.append(sahne,kon);root.replaceChildren(ic_);mansetSurukle(sl);
+root.onkeydown=e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();mansetEtkilesim=true;mansetGit(mansetSira+(e.key==='ArrowLeft'?-1:1),true,e.key==='ArrowLeft'?-1:1);const b=root.querySelectorAll('.manset-nokta button')[mansetSira];if(b&&b.focus&&e.target&&e.target.closest&&e.target.closest('.manset-nokta'))b.focus();}};
 root.onmouseenter=()=>{mansetUstunde=true;mansetSaat();};root.onmouseleave=()=>{mansetUstunde=false;mansetSaat();};
 root.onfocusin=()=>{mansetOdakta=true;mansetSaat();};root.onfocusout=e=>{if(!e.relatedTarget||!root.contains(e.relatedTarget)){mansetOdakta=false;mansetSaat();}};
 mansetGuncelle();mansetSaat();}
@@ -679,6 +722,7 @@ else{fullPromise=null;fullFailed=true;if(tab==='ilanlar'&&bekleniyor(F)){F.tur='
 render();})();
 return fullPromise;}
 async function load(){
+populerYukle();
 await loadListe();
 if(listeVar){render();route();return;}
 await ensureFull();

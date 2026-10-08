@@ -31,7 +31,7 @@ const liste={guncelleme:nowIso,sayilar:{acik:3,kadro:6,bugun_yeni:3},takvim:{},i
  {key:'../evil',id:'x',manset:'<img src=x onerror=alert(1)>'}
 ]};
 /* Her çağrı kendi tarayıcı bağlamını kurar: adres, hash ve yerel depolama ayrı tutulur. */
-function make({href='https://kpsstercihi.com/?g=bugun',hash='',store={},liste:L=liste}={}){
+function make({href='https://kpsstercihi.com/?g=bugun',hash='',store={},liste:L=liste,pop}={}){
  const nodes=new Map(),get=id=>{if(!nodes.has(id))nodes.set(id,new Element());return nodes.get(id);};
  const stored=[],loc={hash:hash||new URL(href).hash,href};
  const ctx=vm.createContext({URL,URLSearchParams,Date,Intl,Blob,console,Set,Map,Number,String,Array,JSON,Promise,Error,isNaN,
@@ -40,7 +40,7 @@ function make({href='https://kpsstercihi.com/?g=bugun',hash='',store={},liste:L=
   localStorage:{getItem:k=>k in store?store[k]:null,setItem(k,v){store[k]=v;stored.push(k);},removeItem(k){delete store[k];},key:i=>Object.keys(store)[i]??null,get length(){return Object.keys(store).length;}},
   location:loc,history:{replaceState(a,b,u){ctx.__replaced=u;const n=new URL(u,loc.href);loc.href=n.href;loc.hash=n.hash;},pushState(a,b,u){ctx.__pushed=u;const n=new URL(u,loc.href);loc.href=n.href;loc.hash=n.hash;}},
   navigator:{},window:{innerWidth:1280,addEventListener(t,f){(ctx.__h[t]=ctx.__h[t]||[]).push(f);}},matchMedia:()=>({matches:false}),setInterval(){},setTimeout(){},clearTimeout(){},
-  fetch:async url=>({ok:true,json:async()=>url==='ilanlar.json'?{ilanlar:fixture,guncelleme:nowIso}:url==='liste.json'?L:url==='sponsors.json'?{enabled:false}:{}})});
+  fetch:async url=>url==='https://api.kpsstercihi.com/populer'&&pop!==undefined?(typeof pop==='function'?pop():pop):({ok:true,json:async()=>url==='ilanlar.json'?{ilanlar:fixture,guncelleme:nowIso}:url==='liste.json'?L:url==='sponsors.json'?{enabled:false}:{}})});
  ctx.__h={};get('p-ogrenim')._qs=['ortaogretim','onlisans','lisans'].map(v=>{const b=new Element('button');b.dataset.v=v;return b;});vm.runInContext(fs.readFileSync('docs/portal.js','utf8'),ctx);
  return{ctx,get,stored,loc,run:s=>vm.runInContext(s,ctx)};
 }
@@ -93,6 +93,29 @@ assert.match(text(get('cards')),/Son gün/,'≤3 gün rozeti');assert.equal(run(
 assert.equal(run("mansetSecimi().map(o=>o.toplam).join()"),'7,2,2,2','kadroya göre sıralı, kapanan hariç');
 assert.equal(run("mansetBaslik({manset:'860 Gelir Uzman Yardımcısı',toplam:860}).b"),'860 Gelir Uzman Yardımcısı alacak');assert.deepEqual(JSON.parse(J("mansetBaslik({manset:'Destek Personeli, Tekniker',toplam:103})")),{b:'103 personel alacak',alt:'Destek Personeli, Tekniker'});assert.equal(run("mansetBaslik({manset:'Zabıta',toplam:7}).b"),'7 Zabıta alacak');
 assert.match(text(get('manset')),/7 Zabıta alacak/);
+/* ---- Manşet: popülerlik sıralaması */
+{
+const pr=(n,ad,toplam,extra={})=>row(k(n),'pop'+n,{manset:ad,toplam,ilk_gorulme:'2020-01-01T00:00:00+03:00',son_tarih:iso(10),...extra});
+const PL={...liste,ilanlar:[pr(21,'Bir',5),pr(22,'Iki',9),pr(23,'Kapali',4,{son_tarih:'2000-01-01'}),pr(24,'Uc',3),pr(25,'Dort',2),pr(26,'Bes',1)]};
+const keys=s=>JSON.parse(s).join();
+const sira=T=>T.run("JSON.stringify(mansetSecimi().map(o=>o.manset))");
+const expNormal='["Iki","Bir","Uc","Dort","Bes"]';
+// popülerlik verisi yoksa / hata verirse / geçersizse kadro sırası
+for(const [ad,pop] of [['fetch hata',()=>Promise.reject(new Error('ag'))],['http 500',{ok:false,json:async()=>({})}],['bozuk gövde',{ok:true,json:async()=>({ilanlar:'x'})}],['boş',{ok:true,json:async()=>({ilanlar:{}})}]]){
+ const T=make({liste:PL,pop});await tick();assert.equal(sira(T),expNormal,'popülerlik yokken kadro sırası: '+ad);assert.equal(T.run('listeLoaded'),true);}
+{const T=make({liste:PL});await tick();assert.equal(sira(T),expNormal,'test ortamı: popülerlik yok sayılır');}
+// popüler açık ilan öne; popüler KAPANMIŞ ilan hiç girmez; puansızlar kadro sırasıyla doldurur
+const popData={ok:true,json:async()=>({guncelleme:nowIso,gun:7,ilanlar:{[k(26)]:50,[k(23)]:999,[k(24)]:7,['../kotu']:100}})};
+{const T=make({liste:PL,pop:popData});await tick();
+ assert.equal(sira(T),'["Bes","Uc","Iki","Bir","Dort"]','popüler önde, kapanmış yok, puansızlar kadro sırasında');
+ assert.equal(T.run("mansetSecimi().some(o=>o.manset==='Kapali')"),false);
+ assert.equal(T.run('mansetL[0].manset'),'Bes','slayt yeni sırayla yeniden çizildi');
+ assert.ok(!T.run("mansetPop.has('../kotu')"),'geçersiz anahtar atılır');}
+// veri geç gelir: kullanıcı dokunmadıysa yeniden çizilir, dokunduysa slayt yerinde kalır
+{let ac;const gec=()=>new Promise(r=>{ac=()=>r({ok:true,json:async()=>({ilanlar:{[k(26)]:50}})});});
+ const T=make({liste:PL,pop:gec});await tick();assert.equal(T.run('mansetL[0].manset'),'Iki','önce kadro sırasıyla çizilir');ac();await tick();assert.equal(T.run('mansetL[0].manset'),'Bes','veri gelince yeniden çizilir');
+ const U=make({liste:PL,pop:gec});await tick();U.run('mansetEtkilesim=true');ac();await tick();assert.equal(U.run('mansetL[0].manset'),'Iki','etkileşimden sonra slayt değişmez');assert.equal(U.run("mansetSecimi()[0].manset"),'Bes','yine de sonraki çizimde yeni sıra kullanılır');}
+}
 // kategori ağacı: tür etiketinden üst kategori; seçim listeyi süzer
 assert.equal(run("katOf({ilan_turu:'Sözleşmeli Personel İlanları'})"),'sozlesmeli');assert.equal(run("katOf({ilan_turu:'İşçi'})"),'isci');assert.equal(run("katOf({ilan_turu:'Kamu Personeli'})"),'memur');assert.equal(run("katOf({ilan_turu:'Askeri Personel'})"),'diger');assert.equal(run("katOf({ilan_turu:'',kategori:'akademik'})"),'akademik');
 assert.match(text(get('kategoriler')),/Tüm İlanlar4/);assert.match(text(get('kategoriler')),/Memur1/);assert.match(text(get('kategoriler')),/Sözleşmeli Personel1/);
