@@ -18,13 +18,12 @@ TR = timezone(timedelta(hours=3))
 KART_GENISLIK = 720
 LOGO_BOYUT = 128
 EN_COK_LOGO_INDIRME = 150
-CSS_SURUM = 15
+CSS_SURUM = 16
 LOGO_SURUM = 2
 ACIK_ZEMIN, KOYU_ZEMIN = '#F6F6F1', '#0D0E0C'
 ANALIZ_SURUM = 2  # docs/a.js (çerezsiz ziyaret istatistiği) önbellek sürümü
 # <head> içinde, theme-color etiketinden sonra: kit-theme (elle seçim) > sistem koyu tercihi > gece 20:00-07:00 koyu > açık.
 TEMA_BETIGI = ('<script>try{var r=document.documentElement,K=window.kitKoyu=function(){var s;try{s=JSON.parse(localStorage.getItem("kit-theme"))}catch(e){}if(s==="dark"||s==="light")return s==="dark";try{if(matchMedia("(prefers-color-scheme: dark)").matches)return!0}catch(e){}var h=new Date().getHours();return h>=20||h<7},U=function(){if(window.kitTemaUygula)return window.kitTemaUygula();var d=K(),m=document.querySelector("meta[name=theme-color]");r.dataset.theme=d?"dark":"light";if(m)m.content=d?"' + KOYU_ZEMIN + '":"' + ACIK_ZEMIN + '"},C=function(){if((K()?"dark":"light")!==r.dataset.theme)U()};U();setInterval(C,3e5);try{matchMedia("(prefers-color-scheme: dark)").addEventListener("change",C)}catch(e){}}catch(e){document.documentElement.dataset.theme="light"}</script>')
-AY_IKON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>'
 TG_IKON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 4-18 7.2 6 2.3M21 4l-3 16-8.5-6.5M21 4 9.5 13.5v5.5l3-3.5"/></svg>'
 KISI_IKON = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5"/></svg>'
 
@@ -42,7 +41,7 @@ def ikonlar(kok):
             f'<link rel="manifest" href="{kok}manifest.webmanifest">')
 
 
-KABUK_SURUM = 2
+KABUK_SURUM = 3
 TG_DOLU = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.5 3.6 2.9 10.8c-1.1.4-1.1 1.2-.2 1.5l4.8 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.4l2.4-2.3 4.9 3.6c.9.5 1.5.2 1.8-.8l3.2-15.1c.3-1.3-.5-1.9-1.4-1.6zM9 13.4l9.3-5.9c.4-.3.8-.1.5.2l-7.9 7.1-.3 3.4z"/></svg>'
 HAMBURGER_IKON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>'
 # Mobil menü düğmesi: iç sayfaların kendi betiğine bağlı kalmasın diye üst barın hemen ardından çalışır.
@@ -65,7 +64,7 @@ def ust_html(kok, aktif=''):
             f'<button type="button" class="tb-ac" id="tb-ac" aria-expanded="false" aria-controls="tb-nav" aria-label="Menüyü aç">{HAMBURGER_IKON}</button>'
             f'<nav class="tb-nav" id="tb-nav" aria-label="Ana menü">{bagla}<span class="tb-ayrac" aria-hidden="true"></span>'
             f'<a class="tb-ikon" href="{kok}?profil=1" aria-label="Profil">{KISI_IKON}<span class="tb-etiket">Profil</span></a>'
-            f'<button type="button" class="tb-ikon" id="theme" aria-label="Renk temasını değiştir">{AY_IKON}</button>'
+            f'<span class="tb-tema"><span class="tb-tema-et">Tema</span><button type="button" class="anahtar" id="theme" aria-pressed="false" aria-label="Koyu temaya geç"><span class="bulut"></span><span class="yildiz y1"></span><span class="yildiz y2"></span><span class="yildiz y3"></span><span class="top"></span></button></span>'
             f'</nav></div></header>{MENU_BETIGI}')
 
 
