@@ -904,14 +904,10 @@ def main():
     kuyruk = ([('sabah', sabah)] if sabah else []) + \
              [('duyuru' if i.get('duyuru_turu') else 'ilan', i) for i in gonderilecek]
     if sessiz_donemde(cfg, simdi()):
-        # Sessiz dönemde gelenler paylaşılmış sayılır: dönem bitince kanal birikmiş ilanlarla dolmaz,
-        # bunlar bir sonraki sabah özetinde topluca yer alır.
-        if not a.dry_run:
-            for i in gonderilecek:
-                gonderilen.add(i['id'])
-                bekleyen.discard(i['id'])
+        # Sessiz dönemde hiçbir şey gönderilmez; ilanlar sırada (telegram_bekleyen) kalır ve dönem bitince
+        # max_mesaj_per_calisma sınırıyla taramalara yayılarak tek tek paylaşılır.
         print(f"Telegram sessiz dönemde ({cfg['telegram_sessiz_bitis']} kadar): "
-              f"{len(gonderilecek)} ilan kanala gönderilmeden işaretlendi.")
+              f"{len(gonderilecek)} ilan sırada bekliyor.")
         kuyruk = []
     limit = max(1, int(cfg.get('max_mesaj_per_calisma', 15)))
     site_url = cfg.get('site_url', '')
