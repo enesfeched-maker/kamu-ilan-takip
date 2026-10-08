@@ -1,6 +1,7 @@
 // Panel verisi: ham/özet satırlarından tek bir JSON gövdesi üretir.
 import { aralikOku, birlestir } from './sorgu.js';
 import { aralikCoz, gunListesi } from './zaman.js';
+import { okumaGunlugu } from './onbellek.js';
 
 const sirala = (liste, alan = 'say') => liste.slice().sort((a, b) => b[alan] - a[alan]);
 const ilk = (liste, n) => liste.slice(0, n);
@@ -152,7 +153,8 @@ export async function canli(env, simdiMs = Date.now()) {
   const sn = Math.floor(simdiMs / 1000);
   const [a, akis] = await env.DB.batch([
     env.DB.prepare('SELECT COUNT(DISTINCT zv) AS n FROM olaylar WHERE ts >= ?').bind(sn - 300),
-    env.DB.prepare('SELECT ts, t, p, sy, v, k, a, h, x, n, n2, sehir, cihaz, kaynak FROM olaylar ORDER BY id DESC LIMIT 50'),
+    env.DB.prepare('SELECT ts, t, p, sy, v, k, a, h, x, n, n2, sehir, cihaz, kaynak FROM olaylar ORDER BY ts DESC LIMIT 50'), // ts indeksi: yalnız son 50 satır okunur
   ]);
+  okumaGunlugu('panel/canli', a, akis);
   return { aktif: Number(a.results?.[0]?.n || 0), akis: akis.results || [], sn };
 }

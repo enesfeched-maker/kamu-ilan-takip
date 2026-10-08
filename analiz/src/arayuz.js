@@ -254,18 +254,18 @@ function ciz(d){
   var f=h('footer',null,'Veriler anonimdir: IP adresi ve tarayıcı kimliği saklanmaz; ham olaylar 90 gün, özetler 400 gün tutulur. Tekil ziyaretçi günlük hesaplanır.');kok.appendChild(f);
   canliGuncelle()
 }
-function yukle(a){
+function yukle(a,taze){
   aralik=a;
   document.querySelectorAll('.segment button').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.a===a))});
   try{history.replaceState(null,'','?aralik='+a)}catch(e){}
   $('icerik').replaceChildren(h('p','bos','Yükleniyor…'));
-  fetch('/panel/veri?aralik='+a,{credentials:'same-origin'}).then(function(r){if(r.status===401){location.href='/panel';throw 0}if(!r.ok)throw new Error(r.status);return r.json()}).then(ciz).catch(function(e){if(e!==0)$('icerik').replaceChildren(h('p','bos hata-mesaj','Veri alınamadı. Yeniden dene.'))})
+  fetch('/panel/veri?aralik='+a+(taze?'&taze=1':''),{credentials:'same-origin'}).then(function(r){if(r.status===401){location.href='/panel';throw 0}if(!r.ok)throw new Error(r.status);return r.json()}).then(ciz).catch(function(e){if(e!==0)$('icerik').replaceChildren(h('p','bos hata-mesaj','Veri alınamadı. Yeniden dene.'))})
 }
 document.querySelectorAll('.segment button').forEach(function(b){b.onclick=function(){yukle(b.dataset.a)}});
-$('yenile').onclick=function(){yukle(aralik)};
+$('yenile').onclick=function(){yukle(aralik,true)};
 var q=new URLSearchParams(location.search).get('aralik');
 yukle(['bugun','7g','30g','90g'].indexOf(q)>=0?q:'7g');
-setInterval(function(){if(!document.hidden)canliGuncelle()},30000);
+setInterval(function(){if(!document.hidden)canliGuncelle()},60000);document.addEventListener('visibilitychange',function(){if(!document.hidden)canliGuncelle()});
 })();
 `;
 
