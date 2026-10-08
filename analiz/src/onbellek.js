@@ -26,15 +26,17 @@ export async function yaz(anahtar, govde, ttlSn, ms) {
   const c = cache();
   if (!c) return;
   try {
-    await c.put(cacheIstegi(anahtar), new Response(govde, { headers: { 'Cache-Control': `public, max-age=${ttlSn}`, 'X-Uretildi': String(ms) } }));
+    await c.put(cacheIstegi(anahtar), new Response(govde, { headers: { 'Cache-Control': `public, max-age=${Math.max(ttlSn, 86400)}`, 'X-Uretildi': String(ms) } }));
   } catch { /* önbellek yazılamazsa yalnız bellek kalır */ }
 }
 
 export const oku_ = oku;
 
 // ttlSn süresince önbellekten verir; taze=true ise (girdi en az 5 dk eskiyse) yeniden üretir.
-export async function onbellekli(anahtar, ttlSn, uret, simdiMs = Date.now(), taze = false) {
+// kisit=true (okuma bütçesi doldu): yaşına bakılmaksızın eldeki kayıt verilir, hiç yoksa null döner (D1'e gidilmez).
+export async function onbellekli(anahtar, ttlSn, uret, simdiMs = Date.now(), taze = false, kisit = false) {
   const g = await oku(anahtar);
+  if (kisit) return g ? { govde: g.govde, ms: g.ms, onbellekte: true, bayat: true } : null;
   if (g) {
     const yas = simdiMs - g.ms;
     if (yas >= 0 && yas < ttlSn * 1000 && !(taze && yas >= TAZE_ARALIK_MS)) return { govde: g.govde, ms: g.ms, onbellekte: true };

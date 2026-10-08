@@ -193,6 +193,15 @@ function canliGuncelle(){
 }
 function ciz(d){
   var kok=$('icerik');kok.replaceChildren();
+  if(d.kota_korumasi){kok.appendChild(h('p','bos hata-mesaj','Kota koruması: günlük D1 okuma bütçesi doldu, veri yarın (UTC 00:00 sonrası) yeniden hesaplanır.'));return}
+  var bt=d.butce;
+  if(bt&&(bt.veriAzaltildi||bt.okumaKademesi>0)){
+    var nt=[];
+    if(bt.yazmaKademesi>=3)nt.push('Günlük yazma bütçesi doldu: bugün yeni olay toplanmıyor (UTC 00:00 sonrası devam eder).');
+    else if(bt.veriAzaltildi)nt.push('Veri azaltıldı (yazma bütçesi: '+tr(bt.yazma)+' / '+tr(bt.sinirYazma)+'). Etkilenen ölçümler: '+bt.azaltilan.join(', ')+'.');
+    if(bt.okumaKademesi>=1)nt.push('Okuma bütçesi '+(bt.okumaKademesi>=2?'doldu':'eşiği aştı')+': veriler önbellekten sunulur, güncel olmayabilir.');
+    kok.appendChild(h('p','bos hata-mesaj',nt.join(' ')))
+  }
   var k=d.kpi,yg=k.yeni+k.geri;
   var kp=h('div','kpi');
   [['Tekil ziyaretçi',tr(k.ziyaretci),d.aralik.adet>1?'günlük tekil sayıların toplamı':'bugün'],['Oturum',tr(k.oturum),''],['Sayfa görüntüleme',tr(k.sayfa),k.oturum?(k.sayfa/k.oturum).toFixed(1).replace('.',',')+' sayfa / oturum':''],

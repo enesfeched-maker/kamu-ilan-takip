@@ -8,6 +8,7 @@
 //  - Bugün: ham olaylar yalnız ts aralığıyla ve ARTIMLI okunur (son okunan ts'den sonrası); durum Cache API'de saklanır.
 //  - Sonuç 30 dk Cache API + izolat belleğinde tutulur; tarayıcıya max-age=600 verilir.
 import { izinliKokenler } from './toplama.js';
+import { butceDurumu } from './butce.js';
 import { gunEkle, gunBasSn, bugun } from './zaman.js';
 import { onbellekli, okumaGunlugu, yaz as onbellegeYaz, oku_ as onbellektenOku, bellekSifirla } from './onbellek.js';
 
@@ -66,7 +67,14 @@ export async function populerIstegi(request, env, simdiMs = Date.now()) {
   if (izinliKokenler(env).includes(origin)) { cors['Access-Control-Allow-Origin'] = origin; cors.Vary = 'Origin'; }
   if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: { ...cors, 'Access-Control-Allow-Methods': 'GET, OPTIONS', 'Access-Control-Max-Age': '86400' } });
   if (request.method !== 'GET') return new Response(null, { status: 405, headers: cors });
-  const o = await onbellekli('populer', SUNUCU_ONBELLEK_SN, async () => JSON.stringify(await populerHesapla(env, simdiMs)), simdiMs);
+  const b = await butceDurumu(env, simdiMs);
+  const o = await onbellekli('populer', SUNUCU_ONBELLEK_SN, async () => JSON.stringify(await populerHesapla(env, simdiMs)), simdiMs, false, b.okumaKademesi >= 1);
+  if (!o) {
+    // Okuma bütçesi doldu ve elde kayıt yok: D1'e gidilmez.
+    return new Response(JSON.stringify({ guncelleme: new Date(simdiMs).toISOString(), gun: GUN, ilanlar: {}, kota_korumasi: true, mesaj: 'kota koruması: veri yarın' }), {
+      headers: { ...cors, 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'public, max-age=300', 'X-Content-Type-Options': 'nosniff' },
+    });
+  }
   return new Response(o.govde, {
     headers: { ...cors, 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': `public, max-age=${ONBELLEK_SN}`, 'X-Content-Type-Options': 'nosniff' },
   });

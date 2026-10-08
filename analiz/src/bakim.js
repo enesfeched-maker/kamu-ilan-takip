@@ -1,11 +1,15 @@
 // Günlük bakım (cron): tamamlanan günlerin özetini çıkarır, eski ham olayları ve tuzları siler.
 import { gunOzetiYaz } from './sorgu.js';
+import { butceDurumu } from './butce.js';
 import { bugun, gunEkle, gunBasSn, trParcalari } from './zaman.js';
 
 export const HAM_SAKLAMA_GUN = 90;
 export const OZET_SAKLAMA_GUN = 400;
 
 export async function bakim(env, simdiMs = Date.now()) {
+  // Günlük D1 bütçesi dolduysa bakım ertelenir; ertesi gün atlanan günleri kendisi tamamlar.
+  const b = await butceDurumu(env, simdiMs);
+  if (b.okumaKademesi >= 2 || b.yazmaKademesi >= 3) return { ertelendi: true, ozetlenen: [] };
   const db = env.DB;
   const simdiSn = Math.floor(simdiMs / 1000);
   const bu = bugun(simdiMs);
@@ -40,5 +44,6 @@ export async function bakim(env, simdiMs = Date.now()) {
   const eski = gunEkle(bu, -OZET_SAKLAMA_GUN);
   await db.prepare('DELETE FROM ozet WHERE gun < ?').bind(eski).run();
   await db.prepare('DELETE FROM ozet_gun WHERE gun < ?').bind(eski).run();
+  try { await db.prepare('DELETE FROM butce WHERE gun_utc < ?').bind(gunEkle(bu, -30)).run(); } catch { /* 0003_butce.sql henüz uygulanmadıysa atlanır */ }
   return { ozetlenen: yazilan };
 }

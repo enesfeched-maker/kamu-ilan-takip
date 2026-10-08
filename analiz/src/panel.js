@@ -5,6 +5,7 @@ import { trParcalari } from './zaman.js';
 import { raporUret, canli } from './rapor.js';
 import { panelSayfasi, girisSayfasi } from './arayuz.js';
 import { onbellekli } from './onbellek.js';
+import { butceDurumu, butceOzeti } from './butce.js';
 
 export const COOKIE = 'kpss_panel';
 export const OTURUM_SN = 30 * 86400;
@@ -135,15 +136,26 @@ export async function panelIstegi(request, env, url, secenek = {}) {
     const aralik = ['bugun', '7g', '30g', '90g'].includes(url.searchParams.get('aralik')) ? url.searchParams.get('aralik') : '7g';
     // Rapor çok sayıda toplama sorgusu çalıştırır: bugün 10 dk, diğer aralıklar 60 dk önbellekte; ?taze=1 en çok 5 dakikada bir işe yarar.
     const ttl = aralik === 'bugun' ? 600 : 3600;
+    const b = await butceDurumu(env, simdiMs);
+    const ozet = butceOzeti(b);
+    // Okuma bütçesi 2,5M'i aşınca yalnız önbellekteki (bayat olabilir) sonuç verilir; D1'e gidilmez.
     const o = await onbellekli('veri:' + aralik, ttl, async () => {
       const rapor = await raporUret(env, aralik, simdiMs, secenek.adlariGetir);
       rapor.aralik.ad = aralik;
       return JSON.stringify(rapor);
-    }, simdiMs, url.searchParams.get('taze') === '1');
-    return new Response(o.govde, { status: 200, headers: { 'Content-Type': 'application/json; charset=utf-8', ...GUVENLIK, 'X-Onbellek': o.onbellekte ? 'var' : 'yok' } });
+    }, simdiMs, url.searchParams.get('taze') === '1', b.okumaKademesi >= 1);
+    if (!o) return json({ kota_korumasi: true, mesaj: 'kota koruması: veri yarın', butce: ozet });
+    // Önbellekteki gövdeye güncel bütçe durumu eklenir (rapor nesnesi '}' ile biter).
+    const govde = o.govde.endsWith('}') ? o.govde.slice(0, -1) + ',"butce":' + JSON.stringify(ozet) + '}' : o.govde;
+    return new Response(govde, { status: 200, headers: { 'Content-Type': 'application/json; charset=utf-8', ...GUVENLIK, 'X-Onbellek': o.onbellekte ? 'var' : 'yok' } });
+  }
+  if (yol === '/panel/butce' && request.method === 'GET') {
+    return json(butceOzeti(await butceDurumu(env, simdiMs)));
   }
   if (yol === '/panel/canli' && request.method === 'GET') {
-    const o = await onbellekli('canli', 30, async () => JSON.stringify(await canli(env, simdiMs)), simdiMs);
+    const b = await butceDurumu(env, simdiMs);
+    const o = await onbellekli('canli', 30, async () => JSON.stringify(await canli(env, simdiMs)), simdiMs, false, b.okumaKademesi >= 2);
+    if (!o) return json({ aktif: 0, akis: [], sn: Math.floor(simdiMs / 1000), kota_korumasi: true });
     return new Response(o.govde, { status: 200, headers: { 'Content-Type': 'application/json; charset=utf-8', ...GUVENLIK, 'X-Onbellek': o.onbellekte ? 'var' : 'yok' } });
   }
   return new Response('bulunamadı', { status: 404 });

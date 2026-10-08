@@ -11,7 +11,12 @@ export function sahteD1() {
     return {
       sql, p: [],
       bind(...a) { this.p = duzelt(a); return this; },
-      _calistir() { sayac.sorgu++; const s = db.prepare(sql); return /^\s*(select|with)/i.test(sql) ? { results: s.all(...this.p) } : (s.run(...this.p), { results: [] }); },
+      _calistir() {
+        sayac.sorgu++; const s = db.prepare(sql);
+        if (/^\s*(select|with)/i.test(sql)) { const results = s.all(...this.p); return { results, meta: { rows_read: results.length, rows_written: 0 } }; }
+        const r = s.run(...this.p);
+        return { results: [], meta: { rows_read: 0, rows_written: Number(r.changes) || 0 } };
+      },
       async all() { return this._calistir(); },
       async first() { const r = this._calistir().results; return r[0] ?? null; },
       async run() { return this._calistir(); },
