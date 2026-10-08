@@ -47,3 +47,21 @@
   .ab-ic{grid-template-columns:1fr;padding:26px 16px 30px}
   .ab-linkler{justify-content:flex-start;padding-top:0}
 }
+
+/* Telegram: üst barda belirgin "katıl" hapı (mobilde kısa) + ana sayfa yan sütun kartı */
+.tb-tg{display:inline-flex;align-items:center;gap:8px;margin-left:14px;padding:8px 15px 8px 12px;border-radius:999px;background:var(--kb-lime);color:#0D1A1B;font-weight:700;font-size:13px;letter-spacing:.01em;text-decoration:none;white-space:nowrap;box-shadow:0 0 0 1px rgba(200,241,105,.35),0 6px 18px -8px rgba(200,241,105,.55);transition:transform .15s,box-shadow .15s}
+.tb-tg:hover{transform:translateY(-1px);box-shadow:0 0 0 1px rgba(200,241,105,.5),0 10px 22px -8px rgba(200,241,105,.7)}
+.tb-tg:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.tb-tg svg{width:17px;height:17px;fill:currentColor;stroke:none}
+.tb-tg .kisa{display:none}
+.tg-kart{display:flex;align-items:center;gap:12px;margin-top:14px;padding:14px 16px;border-radius:14px;background:var(--kb-zemin);color:var(--kb-yazi);text-decoration:none;border:1px solid var(--kb-cizgi)}
+.tg-kart:hover,.tg-kart:focus-visible{border-color:var(--kb-lime)}
+.tg-ikon{flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--kb-lime);color:#0D1A1B}
+.tg-ikon svg{width:20px;height:20px;fill:currentColor;stroke:none}
+.tg-metin{display:flex;flex-direction:column;gap:2px;min-width:0}
+.tg-metin b{font-size:14px;font-weight:700;color:#fff}
+.tg-metin small{font-size:12px;color:var(--kb-soluk)}
+.tg-ok{margin-left:auto;color:var(--kb-lime);font-weight:700;font-size:18px}
+@media (min-width:1021px){.tb-tg{order:9}}
+@media (max-width:1020px){.tb-tg{margin-left:auto;margin-right:8px}}
+@media (max-width:760px){.tb-tg{padding:7px 12px 7px 10px;font-size:12.5px}.tb-tg .tam{display:none}.tb-tg .kisa{display:inline}.tg-kart{display:none}}
