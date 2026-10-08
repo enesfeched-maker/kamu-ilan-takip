@@ -625,7 +625,10 @@ class EkBelgeHatasiTesti(unittest.TestCase):
             ilk,_=csb.csb_oku({})
         eksik=[k for k in ilk if k.get('ek_okunamadi')]
         self.assertTrue(eksik)
-        with patch.object(csb,'indir',side_effect=self.ag()),patch.object(csb.time,'sleep'):
+        # Yeniden deneme penceresi yayım tarihine bağlı: testin sonucu bugünün tarihine göre değişmesin.
+        yayim=max(datetime.fromisoformat(k['yayim_tarihi']) for k in eksik)
+        sabit=(yayim+timedelta(days=1)).replace(tzinfo=timezone.utc)
+        with patch.object(csb,'indir',side_effect=self.ag()),patch.object(csb.time,'sleep'),patch.object(csb,'now',return_value=sabit):
             ikinci,_=csb.csb_oku({k['id']:k for k in ilk})
         self.assertFalse(any(k.get('ek_okunamadi') for k in ikinci))
         self.assertTrue(any(k['son_tarih'] for k in ikinci))
