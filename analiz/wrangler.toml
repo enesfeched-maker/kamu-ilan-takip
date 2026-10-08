@@ -1,0 +1,36 @@
+# KPSS Tercihi - cerezsiz site analizi (Cloudflare Worker + D1).
+# Uretim adimlari icin KURULUM.md dosyasina bak. Buradaki hicbir sey kendiliginden dagitilmaz.
+name = "kpss-analiz"
+main = "src/index.js"
+compatibility_date = "2026-05-22"
+
+# Gunluk bakim: dunun ozetini cikarir, eski ham olaylari ve eski tuzlari siler.
+# 21:10 UTC = 00:10 Turkiye saati (Turkiye yil boyu UTC+3).
+[triggers]
+crons = ["10 21 * * *"]
+
+# api.kpsstercihi.com alan adini `wrangler deploy` kendisi olusturur (kpsstercihi.com Cloudflare'da
+# olmali; DNS kaydini elle eklemek gerekmez). Calismazsa Cloudflare panelinden:
+# Workers > kpss-analiz > Settings > Domains & Routes > Add > Custom domain.
+[[routes]]
+pattern = "api.kpsstercihi.com"
+custom_domain = true
+
+# D1 veritabani: `wrangler d1 create kpss-analiz` ciktisindaki id'yi asagiya yaz,
+# sonra `wrangler d1 execute kpss-analiz --remote --file=schema.sql --config wrangler.toml` ile tablolari olustur.
+[[d1_databases]]
+binding = "DB"
+database_name = "kpss-analiz"
+database_id = "BURAYA-D1-ID-YAZ"
+
+[vars]
+SITE_URL = "https://kpsstercihi.com/"
+# Olay gonderebilen siteler (virgulle ayrilir).
+IZINLI_KOKENLER = "https://kpsstercihi.com,https://www.kpsstercihi.com"
+# Acil durumda olay toplamayi durdurmak icin "1" yap ve yeniden dagit.
+TOPLAMA_KAPALI = "0"
+
+# Sir (degeri buraya YAZILMAZ): PANEL_ANAHTARI -> `wrangler secret put PANEL_ANAHTARI --config wrangler.toml`
+# (kurulum.ps1 bunu gizli girisle sorar).
+# Yerel deneme icin: `wrangler dev --local --var ORTAM:yerel --var PANEL_ANAHTARI:deneme` (ORTAM=yerel panel girisini atlar;
+# uretimde ORTAM tanimli degildir).

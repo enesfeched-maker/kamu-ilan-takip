@@ -8,6 +8,7 @@ function E(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=
 function kucuk(s){return String(s||'').toLocaleLowerCase('tr').replace(/\s+/g,' ').trim();}
 function donemAdi(d){return d.replace('-','/');}
 function puanYaz(p){return p==null?'—':p.toLocaleString('tr-TR',{minimumFractionDigits:5,maximumFractionDigits:5});}
+const A=(t,p)=>{try{if(typeof window!=='undefined'&&window.kpssA)window.kpssA(t,p);}catch{}};
 function readStore(k,f){try{const v=JSON.parse(localStorage.getItem(k));return v??f;}catch{return f;}}
 function writeStore(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
 const GUNES='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.6 5.6 7 7m10 10 1.4 1.4M5.6 18.4 7 17M17 7l1.4-1.4"/></svg>',AY_IKON='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>';
@@ -170,12 +171,12 @@ async function robot(){
 }
 
 applyTheme();{const y=$('yil');if(y)y.textContent=String(new Date().getFullYear());}
-$('theme').onclick=()=>{writeStore('kit-theme',document.documentElement.dataset.theme==='dark'?'light':'dark');applyTheme();};
+$('theme').onclick=()=>{A('tikla',{a:'tema',x:document.documentElement.dataset.theme==='dark'?'light':'dark'});writeStore('kit-theme',document.documentElement.dataset.theme==='dark'?'light':'dark');applyTheme();};
 for(const b of document.querySelectorAll('#duzeyler .tab'))b.onclick=()=>duzeyAc(b.dataset.duzey);
 for(const id of ['donem','il','sirala'])$(id).onchange=()=>{sayfa=1;tabloCiz();};
 let bekle;$('ara').oninput=()=>{clearTimeout(bekle);bekle=setTimeout(()=>{sayfa=1;tabloCiz();},150);};
 $('robot-bolum').onfocus=bolumListesiDoldur;
-$('robot-form').onsubmit=e=>{e.preventDefault();robotSinir=ROBOT_ILK;robot();};
+$('robot-form').onsubmit=e=>{e.preventDefault();robotSinir=ROBOT_ILK;const p=parseFloat(String($('robot-puan').value).replace(',','.'));if(p>0)A('tikla',{a:'robot',x:duzey,n:Math.floor(p/5)*5});robot();};
 {
   const pr=profilOku(),kayitliDuzey=readStore('kit-puan-duzey','');
   duzeyAc(pr?pr.ogrenim:PUAN_TURU[kayitliDuzey]?kayitliDuzey:'lisans').then(async()=>{
