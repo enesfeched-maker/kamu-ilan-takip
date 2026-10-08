@@ -16,16 +16,16 @@ html{scroll-padding-top:76px}
 .slayt[hidden]{display:flex;visibility:hidden}
 .slayt:not([hidden]){animation:slayt-gir .45s ease both}
 @keyframes slayt-gir{from{opacity:0;transform:translate(var(--gx,0px),var(--gy,6px))}to{opacity:1;transform:none}}
-.slayt-link{display:flex;align-items:center;gap:32px;max-width:980px;color:inherit;text-decoration:none;border-radius:16px;padding:8px}
+.slayt-link{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;max-width:900px;color:inherit;text-decoration:none;border-radius:16px;padding:8px}
 .slayt-link:focus-visible{outline:2px solid #C8F169;outline-offset:4px}
-.slayt-logo{width:104px;height:104px;border-radius:50%;background:#fff;display:grid;place-items:center;flex-shrink:0;overflow:hidden;box-shadow:0 0 0 7px rgba(255,255,255,.07)}
-.slayt-logo img{width:80px;height:80px;object-fit:contain;display:block}
+.slayt-logo{width:88px;height:88px;border-radius:50%;background:#fff;display:grid;place-items:center;flex-shrink:0;overflow:hidden;box-shadow:0 0 0 7px rgba(255,255,255,.07)}
+.slayt-logo img{width:68px;height:68px;object-fit:contain;display:block}
 .slayt-logo .harf,.satir-logo .harf{width:100%;height:100%;display:grid;place-items:center;font-weight:800;background:hsl(var(--h) 32% 90%);color:hsl(var(--h) 45% 24%)}
-.slayt-logo .harf{font-size:32px}
-.slayt-metin{display:flex;flex-direction:column;align-items:flex-start;gap:8px;min-width:0}
+.slayt-logo .harf{font-size:28px}
+.slayt-metin{display:flex;flex-direction:column;align-items:center;gap:8px;min-width:0}
 .slayt-kurum{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#C8F169}
-.slayt-baslik{font-size:clamp(26px,3.5vw,44px);line-height:1.06;font-weight:800;letter-spacing:-.01em;text-transform:uppercase;text-wrap:balance}
-.slayt-alt{font-size:15px;line-height:1.45;color:#C3D2CE;max-width:720px}
+.slayt-baslik{font-size:clamp(26px,3.3vw,42px);line-height:1.08;font-weight:800;letter-spacing:-.01em;text-transform:uppercase;text-wrap:balance}
+.slayt-alt{font-size:15px;line-height:1.45;color:#C3D2CE;max-width:720px;text-wrap:balance}
 .slayt-tarih{display:inline-flex;align-items:center;gap:8px;margin-top:8px;padding:7px 16px 7px 12px;border-radius:999px;background:#C62828;color:#FFFFFF;box-shadow:0 6px 18px -8px rgba(198,40,40,.7);font-weight:700;font-size:14px}
 .slayt-tarih .ic{display:grid}.slayt-tarih svg{width:17px;height:17px}
 .slayt-link:hover .slayt-baslik{text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:7px;text-decoration-color:#C8F169}
@@ -166,10 +166,10 @@ html{scroll-padding-top:76px}
 @media (max-width:760px){
   body,body.ana-sayfa{padding-bottom:0}
   .manset-ic{padding:22px 16px 16px}
-  .slayt{min-height:0;justify-content:flex-start}
-  .slayt-link{gap:14px;align-items:flex-start;padding:4px}
-  .slayt-logo{width:60px;height:60px;box-shadow:0 0 0 4px rgba(255,255,255,.07)}
-  .slayt-logo img{width:46px;height:46px}
+  .slayt{min-height:0}
+  .slayt-link{gap:10px;padding:4px}
+  .slayt-logo{width:64px;height:64px;box-shadow:0 0 0 4px rgba(255,255,255,.07)}
+  .slayt-logo img{width:50px;height:50px}
   .slayt-logo .harf{font-size:20px}
   .slayt-kurum{font-size:11.5px;letter-spacing:.08em}
   .slayt-baslik{font-size:23px;line-height:1.1}
