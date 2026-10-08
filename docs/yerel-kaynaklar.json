@@ -1,9 +1,9 @@
 {
  "schema": 1,
- "guncelleme": "2026-10-08T17:07:05.371071+00:00",
+ "guncelleme": "2026-10-08T17:36:42.980255+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-10-08T17:07:06.042228+00:00",
+   "kontrol": "2026-10-08T17:36:43.542091+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -5254,7 +5254,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-10-08T17:07:07.487601+00:00",
+   "kontrol": "2026-10-08T17:36:44.948820+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -7029,6 +7029,25 @@
    "sart_kadro_sayisi": 4,
    "basvuru_notu": "3) Kariyer Kapısı (https://kariyerkapisi.gov.tr/isealim) adresi üzerinden yapılmayan, posta yolu veya şahsen yapılan ve bu duyuruda belirtilen esaslara uygun olmayan başvurular kabul edilmeyecektir.",
    "detay_guncelleme": "2026-10-08T19:43:40+03:00"
+  },
+  "https://kariyerkapisi.gov.tr/IlanDetay?i=2fcec3f5-8c49-41d2-9ab4-9aead6433459": {
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/223e6ac3-a227-4b37-bd1b-e94589d3fb73.png",
+   "son_tarih": "2026-10-22",
+   "son_zaman": "2026-10-22T23:59:00+03:00",
+   "baslangic_zaman": "2026-10-07T00:00:00+03:00",
+   "yer": "ANKARA / YENİMAHALLE",
+   "kadro": "1 Kıdemli Yazılım Mimarı",
+   "ilan_turu": "Sözleşmeli Personel İlanları",
+   "ozet": "Türk Patent ve Marka Kurumu Bilgi İşlem Dairesi Başkanlığı emrinde tam zamanlı olarak istihdam edilmek üzere, 375 sayılı Kanun Hükmünde Kararnamenin ek 6 ncı maddesinin üçüncü fıkrası ile 31/12/2008 tarihli ve 27097 sayılı Resmî Gazete’de yayımlanan “Kamu Kurum ve Kuruluşlarının Büyük Ölçekli Bilgi İşlem Birimlerinde Sözleşmeli Bilişim Personeli İstihdamına İlişkin Esas ve Usuller Hakkında Yönetmelik”in 8 inci maddesi uyarınca, sözlü ve uygulamalı sınav başarı sırasına göre 1 (bir) sözleşmeli bilişim personeli…",
+   "sartlar": [
+    {
+     "kadro": "Kıdemli Yazılım Mimarı",
+     "metin": "Spring Framework bileşenlerini (Spring MVC, Spring Boot, Spring Data, Spring Cloud vb.) kullanarak geliştirilen projelerde en az 5 (beş) yıl aktif olarak görev almış olmak ve bu tecrübeyi belgelemek."
+    }
+   ],
+   "sart_kadro_sayisi": 1,
+   "basvuru_notu": "Şahsen, posta yoluyla veya diğer yöntemlerle yapılan başvurular kabul edilmeyecektir.",
+   "detay_guncelleme": "2026-10-08T20:36:45+03:00"
   }
  },
  "logolar": {
