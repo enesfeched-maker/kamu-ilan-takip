@@ -106,3 +106,33 @@ test('canlı gösterge son 5 dakikayı sayar', async () => {
   ekle('a', sn - 10); ekle('b', sn - 200); ekle('c', sn - 400);
   assert.equal((await canli(e, T0)).aktif, 2);
 });
+
+import { panelIstegi, oturumCerezi } from '../src/panel.js';
+import { bellekSifirla } from '../src/onbellek.js';
+
+test('panel/veri ve canli önbelleklenir; taze=1 en çok 5 dakikada bir işe yarar', async () => {
+  bellekSifirla();
+  const e = env({ PANEL_ANAHTARI: 'k-123456789' });
+  const sn = Math.floor(T0 / 1000);
+  const cerez = 'kpss_panel=' + await oturumCerezi(e, sn);
+  const cagri = (yol, ms) => { const u = 'https://api.kpsstercihi.com' + yol; return panelIstegi(new Request(u, { headers: { Cookie: cerez } }), e, new URL(u), { simdiMs: ms }); };
+  const r1 = await cagri('/panel/veri?aralik=7g', T0); assert.equal(r1.headers.get('X-Onbellek'), 'yok');
+  const q1 = e.DB.sayac.sorgu;
+  const r2 = await cagri('/panel/veri?aralik=7g', T0 + 60_000); assert.equal(r2.headers.get('X-Onbellek'), 'var');
+  const r3 = await cagri('/panel/veri?aralik=7g&taze=1', T0 + 120_000); assert.equal(r3.headers.get('X-Onbellek'), 'var', '5 dk dolmadan taze yok sayılır');
+  assert.equal(e.DB.sayac.sorgu, q1);
+  const r4 = await cagri('/panel/veri?aralik=7g&taze=1', T0 + 400_000); assert.equal(r4.headers.get('X-Onbellek'), 'yok');
+  assert.equal((await cagri('/panel/veri?aralik=bugun', T0)).headers.get('X-Onbellek'), 'yok');
+  assert.equal((await cagri('/panel/veri?aralik=bugun', T0 + 601_000)).headers.get('X-Onbellek'), 'yok', 'bugün 10 dk');
+  assert.equal((await cagri('/panel/veri?aralik=7g', T0 + 601_000)).headers.get('X-Onbellek'), 'var'.replace('var', 'var'));
+  const c1 = await cagri('/panel/canli', T0); assert.equal(c1.headers.get('X-Onbellek'), 'yok');
+  assert.equal((await cagri('/panel/canli', T0 + 20_000)).headers.get('X-Onbellek'), 'var');
+  assert.equal((await cagri('/panel/canli', T0 + 31_000)).headers.get('X-Onbellek'), 'yok');
+});
+
+test('okuma günlüğü meta.rows_read toplar', async () => {
+  const { okumaGunlugu } = await import('../src/onbellek.js');
+  const eski = console.log; const satirlar = []; console.log = (s) => satirlar.push(s);
+  try { assert.equal(okumaGunlugu('x', { meta: { rows_read: 5 } }, [{ meta: { rows_read: 7 } }]), 12); } finally { console.log = eski; }
+  assert.deepEqual(satirlar, ['okuma x rows_read=12']);
+});

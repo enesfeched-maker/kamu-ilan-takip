@@ -6,6 +6,7 @@
 // çünkü günlük tuz yüzünden günler arası eşleştirme zaten yapılamaz).
 
 import { gunBasSn } from './zaman.js';
+import { okumaGunlugu } from './onbellek.js';
 
 const SUT = (k1, k2 = "''") => `gun, ${k1} AS k1, ${k2} AS k2, COUNT(*) AS say, COUNT(DISTINCT zv) AS tekil, COUNT(DISTINCT os) AS oturum`;
 const ILAN_EKRANI = "(sy = 'ilan' OR (sy = 'ana' AND v = 'ilan')) AND k IS NOT NULL";
@@ -71,6 +72,17 @@ export const METRIKLER = [
       SELECT gun, 'huni2' AS k1, '' AS k2, SUM(a2 * a3) AS say, 0, 0, 0 FROM (${oturumBayraklari()}) GROUP BY gun`,
   },
   // Kaydırma: ekran başına TEK olay (h = 'm': ulaşılan en büyük derinlik). Eski kümülatif olaylar h'siz gelir. Örneklenen olay n2 = ağırlık taşır.
+  // Günlük ilan popülerlik puanı (/populer için; yalnız gün özetinde, ham günlük taramada çalışmaz): ilan başına benzersiz oturum.
+  // görüntüleme + satır tıklaması + kaydet (1'er) ve resmî ilana gidiş (2). manset_tikla bilerek yok.
+  {
+    boyut: 'pop', yalnizOzet: true,
+    sql: `SELECT gun, ilanKey AS k1, '' AS k2, SUM(w) AS say, 0 AS tekil, 0 AS oturum, 0 AS toplam FROM (
+      SELECT DISTINCT gun, os, CASE WHEN t = 'sayfa' THEN k ELSE h END AS ilanKey, tur, CASE WHEN tur = 'resmi_ilan' THEN 2 ELSE 1 END AS w FROM (
+        SELECT gun, os, t, k, h, CASE WHEN t = 'sayfa' THEN 'gor' ELSE a END AS tur FROM olaylar
+        WHERE {G} AND ((t = 'sayfa' AND k IS NOT NULL AND (sy = 'ilan' OR (sy = 'ana' AND v = 'ilan')))
+          OR (t = 'tikla' AND a IN ('satir_tikla', 'resmi_ilan', 'kaydet') AND h IS NOT NULL)))
+    ) WHERE ilanKey IS NOT NULL GROUP BY gun, ilanKey ORDER BY say DESC {L}`,
+  },
   { boyut: 'kaydirma', sql: `SELECT gun, CAST(n AS TEXT) AS k1, sy || CASE WHEN h = 'm' THEN '|m' ELSE '' END AS k2, SUM(COALESCE(n2, 1)) AS say, COUNT(DISTINCT zv) AS tekil, COUNT(DISTINCT os) AS oturum, 0 AS toplam FROM olaylar WHERE t = 'kaydirma' AND {G} GROUP BY gun, n, k2 ORDER BY say DESC {L}` },
   { boyut: 'hata', sql: grup(SUT('x', "COALESCE(h, '')"), "t = 'hata'", 'x, h') },
   { boyut: 'yok404', sql: grup(SUT('p'), "t = '404'", 'p') },
@@ -88,6 +100,20 @@ function hazirla(metrik, kosul, baglar, sinir) {
   return { sql, baglar: hepsi };
 }
 
+// Tüm metrikler TEK deyimde: koşula uyan ham satırlar bir kez okunup (MATERIALIZED CTE) bellekte tüm toplamalara beslenir.
+// Önceki düzen her metrik için ham satırları yeniden tarıyordu (~30x D1 okuması).
+function tekSorgu(db, metrikler, kosul, baglar, sinir) {
+  const parca = metrikler.map((m) => `SELECT '${m.boyut}' AS boyut, gun, k1, k2, say, tekil, oturum, toplam FROM (${m.sql.replaceAll('{G}', '1').replaceAll('{L}', sinir ? `LIMIT ${sinir}` : '').replace(/FROM olaylar\b/g, 'FROM s')})`);
+  return db.prepare(`WITH s AS MATERIALIZED (SELECT * FROM olaylar WHERE ${kosul}) ${parca.join(' UNION ALL ')}`).bind(...baglar);
+}
+function satirlarBirlesik(sonuc) {
+  return (sonuc.results || []).map((r) => {
+    const o = { boyut: r.boyut, gun: r.gun, k1: String(r.k1 ?? ''), k2: String(r.k2 ?? '') };
+    for (const a of SAYI_ALANLARI) o[a] = Number(r[a] || 0);
+    return o;
+  });
+}
+
 function satirlar(sonuc, boyut) {
   return (sonuc.results || []).map((r) => {
     const o = { boyut, gun: r.gun, k1: String(r.k1 ?? ''), k2: String(r.k2 ?? '') };
@@ -98,10 +124,11 @@ function satirlar(sonuc, boyut) {
 
 // Tamamlanmış bir günün özetini yazar (var olanın üzerine yazar).
 export async function gunOzetiYaz(db, gun, simdiSn = Math.floor(Date.now() / 1000)) {
-  const sorgular = METRIKLER.map((m) => { const h = hazirla(m, 'ts >= ? AND ts < ?', [gunBasSn(gun), gunBasSn(gun) + 86400], 200); return db.prepare(h.sql).bind(...h.baglar); });
-  const sonuc = await db.batch(sorgular);
-  const kayitlar = [];
-  sonuc.forEach((s, i) => kayitlar.push(...satirlar(s, METRIKLER[i].boyut)));
+  const [sonuc] = await db.batch([tekSorgu(db, METRIKLER, 'ts >= ? AND ts < ?', [gunBasSn(gun), gunBasSn(gun) + 86400], 200)]);
+  okumaGunlugu('bakim/gun', sonuc);
+  const kayitlar = satirlarBirlesik(sonuc);
+  // 'pop' satırı olmayan gün bakımda yeniden özetlenir; boş günler bu yüzden işaret satırı ('_') taşır.
+  if (!kayitlar.some((r) => r.boyut === 'pop')) kayitlar.push({ boyut: 'pop', gun, k1: '_', k2: '', say: 0, tekil: 0, oturum: 0, toplam: 0 });
   const yaz = kayitlar.map((r) => db.prepare('INSERT OR REPLACE INTO ozet (gun, boyut, k1, k2, say, tekil, oturum, toplam) VALUES (?, ?, ?, ?, ?, ?, ?, ?)')
     .bind(gun, r.boyut, r.k1.slice(0, 200), r.k2.slice(0, 200), r.say, r.tekil, r.oturum, r.toplam));
   await db.prepare('DELETE FROM ozet WHERE gun = ?').bind(gun).run();
@@ -115,9 +142,10 @@ export async function aralikOku(db, bas, bit) {
   const ozetli = await db.prepare('SELECT gun, boyut, k1, k2, say, tekil, oturum, toplam FROM ozet WHERE gun BETWEEN ? AND ?').bind(bas, bit).all();
   // ts aralığı tek indeksi (idx_olaylar_ts) kullanır; gün sınırları Türkiye saatindedir.
   const kos = 'ts >= ? AND ts < ? AND gun NOT IN (SELECT gun FROM ozet_gun)';
-  const sonuc = await db.batch(METRIKLER.map((m) => { const h = hazirla(m, kos, [gunBasSn(bas), gunBasSn(bit) + 86400], 0); return db.prepare(h.sql).bind(...h.baglar); }));
-  const ham = [];
-  sonuc.forEach((s, i) => ham.push(...satirlar(s, METRIKLER[i].boyut)));
+  const hamMetrik = METRIKLER.filter((m) => !m.yalnizOzet);
+  const [sonuc] = await db.batch([tekSorgu(db, hamMetrik, kos, [gunBasSn(bas), gunBasSn(bit) + 86400], 0)]);
+  okumaGunlugu('panel/veri', ozetli, sonuc);
+  const ham = satirlarBirlesik(sonuc);
   return [...satirlar(ozetli, null).map((r, i) => ({ ...r, boyut: ozetli.results[i].boyut })), ...ham];
 }
 

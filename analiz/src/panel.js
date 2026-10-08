@@ -4,6 +4,7 @@ import { gunlukTuz, ziyaretciOzeti, sha256Hex } from './toplama.js';
 import { trParcalari } from './zaman.js';
 import { raporUret, canli } from './rapor.js';
 import { panelSayfasi, girisSayfasi } from './arayuz.js';
+import { onbellekli } from './onbellek.js';
 
 export const COOKIE = 'kpss_panel';
 export const OTURUM_SN = 30 * 86400;
@@ -132,11 +133,19 @@ export async function panelIstegi(request, env, url, secenek = {}) {
   }
   if (yol === '/panel/veri' && request.method === 'GET') {
     const aralik = ['bugun', '7g', '30g', '90g'].includes(url.searchParams.get('aralik')) ? url.searchParams.get('aralik') : '7g';
-    const rapor = await raporUret(env, aralik, simdiMs, secenek.adlariGetir);
-    rapor.aralik.ad = aralik;
-    return json(rapor);
+    // Rapor çok sayıda toplama sorgusu çalıştırır: bugün 10 dk, diğer aralıklar 60 dk önbellekte; ?taze=1 en çok 5 dakikada bir işe yarar.
+    const ttl = aralik === 'bugun' ? 600 : 3600;
+    const o = await onbellekli('veri:' + aralik, ttl, async () => {
+      const rapor = await raporUret(env, aralik, simdiMs, secenek.adlariGetir);
+      rapor.aralik.ad = aralik;
+      return JSON.stringify(rapor);
+    }, simdiMs, url.searchParams.get('taze') === '1');
+    return new Response(o.govde, { status: 200, headers: { 'Content-Type': 'application/json; charset=utf-8', ...GUVENLIK, 'X-Onbellek': o.onbellekte ? 'var' : 'yok' } });
   }
-  if (yol === '/panel/canli' && request.method === 'GET') return json(await canli(env, simdiMs));
+  if (yol === '/panel/canli' && request.method === 'GET') {
+    const o = await onbellekli('canli', 30, async () => JSON.stringify(await canli(env, simdiMs)), simdiMs);
+    return new Response(o.govde, { status: 200, headers: { 'Content-Type': 'application/json; charset=utf-8', ...GUVENLIK, 'X-Onbellek': o.onbellekte ? 'var' : 'yok' } });
+  }
   return new Response('bulunamadı', { status: 404 });
 }
 

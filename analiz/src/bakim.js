@@ -25,6 +25,13 @@ export async function bakim(env, simdiMs = Date.now()) {
     }
   }
 
+  // /populer için günlük 'pop' özeti sonradan eklendi: son 6 günden bu satırı olmayan (ve ham verisi hâlâ duran) günler bir kez yeniden özetlenir.
+  const geriDoldur = await db.prepare("SELECT gun FROM ozet_gun WHERE gun BETWEEN ? AND ? AND gun NOT IN (SELECT gun FROM ozet WHERE boyut = 'pop') ORDER BY gun").bind(gunEkle(bu, -6), gunEkle(bu, -1)).all();
+  for (const { gun } of geriDoldur.results || []) {
+    await gunOzetiYaz(db, gun, simdiSn);
+    yazilan.push(gun);
+  }
+
   // Ham olaylar yalnız özeti çıkmış günler için silinir; özeti çıkmamış gün (hata durumu) korunur.
   const sinir = simdiSn - HAM_SAKLAMA_GUN * 86400;
   await db.prepare('DELETE FROM olaylar WHERE ts < ? AND gun IN (SELECT gun FROM ozet_gun)').bind(sinir).run();
