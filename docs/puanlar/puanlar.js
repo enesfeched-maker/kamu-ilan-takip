@@ -11,8 +11,7 @@ function puanYaz(p){return p==null?'—':p.toLocaleString('tr-TR',{minimumFracti
 const A=(t,p)=>{try{if(typeof window!=='undefined'&&window.kpssA)window.kpssA(t,p);}catch{}};
 function readStore(k,f){try{const v=JSON.parse(localStorage.getItem(k));return v??f;}catch{return f;}}
 function writeStore(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
-const GUNES='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.6 5.6 7 7m10 10 1.4 1.4M5.6 18.4 7 17M17 7l1.4-1.4"/></svg>',AY_IKON='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>';
-function applyTheme(){const dark=window.kitKoyu?window.kitKoyu():readStore('kit-theme',null)==='dark';document.documentElement.dataset.theme=dark?'dark':'light';const m=document.querySelector('meta[name=theme-color]');if(m)m.content=dark?'#0D0E0C':'#F6F6F1';const b=$('theme');if(b){b.innerHTML=dark?GUNES:AY_IKON;b.setAttribute('aria-pressed',String(dark));b.setAttribute('aria-label',dark?'Açık temaya geç':'Koyu temaya geç');}}
+function applyTheme(){const dark=window.kitKoyu?window.kitKoyu():readStore('kit-theme',null)==='dark';document.documentElement.dataset.theme=dark?'dark':'light';const m=document.querySelector('meta[name=theme-color]');if(m)m.content=dark?'#0D0E0C':'#F6F6F1';const b=$('theme');if(b){if(!b.dataset.hazir){b.dataset.hazir='1';if(typeof requestAnimationFrame==='function')requestAnimationFrame(()=>requestAnimationFrame(()=>b.classList.add('anahtar-hazir')));}b.setAttribute('aria-pressed',String(dark));b.setAttribute('aria-label',dark?'Açık temaya geç':'Koyu temaya geç');}}
 /* kit-profil (ana sayfadaki profil): doğrulanır; geçersizse yok sayılır */
 const LEVELS={lisans:'Lisans',onlisans:'Önlisans',ortaogretim:'Ortaöğretim'};
 const ptLevel=p=>p==='P94'?'ortaogretim':p==='P93'?'onlisans':/^P([1-9]|[1-3]\d|4[0-8])$/.test(p)?'lisans':null;

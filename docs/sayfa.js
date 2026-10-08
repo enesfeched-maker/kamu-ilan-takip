@@ -4,8 +4,6 @@
 (function () {
   var LV = { lisans: 'Lisans', onlisans: 'Önlisans', ortaogretim: 'Ortaöğretim' }, RANK = { ortaogretim: 0, onlisans: 1, lisans: 2 };
   var AY = ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara'];
-  var GUNES = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.6 5.6 7 7m10 10 1.4 1.4M5.6 18.4 7 17M17 7l1.4-1.4"/></svg>';
-  var AYIKON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>';
   var GRAFIK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10m6 10V4m6 16v-7m4 7H3"/></svg>';
 
   function oku(k, f) { try { var v = JSON.parse(localStorage.getItem(k)); return v == null ? f : v; } catch (e) { return f; } }
@@ -41,7 +39,7 @@
     document.documentElement.dataset.theme = d ? 'dark' : 'light';
     var m = document.querySelector('meta[name=theme-color]'); if (m) m.content = d ? '#0D0E0C' : '#F6F6F1';
     var b = document.getElementById('theme');
-    if (b) { b.innerHTML = d ? GUNES : AYIKON; b.setAttribute('aria-pressed', String(d)); b.setAttribute('aria-label', d ? 'Açık temaya geç' : 'Koyu temaya geç'); }
+    if (b) { if (!b.dataset.hazir) { b.dataset.hazir = '1'; if (typeof requestAnimationFrame === 'function') requestAnimationFrame(function () { requestAnimationFrame(function () { b.classList.add('anahtar-hazir'); }); }); } b.setAttribute('aria-pressed', String(d)); b.setAttribute('aria-label', d ? 'Açık temaya geç' : 'Koyu temaya geç'); }
   }
   var tb = document.getElementById('theme');
   function iz(t, o) { try { if (typeof window !== 'undefined' && window.kpssA) window.kpssA(t, o); } catch (e) { /* ölçüm sayfayı bozmaz */ } }
