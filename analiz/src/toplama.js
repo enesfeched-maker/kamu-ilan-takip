@@ -3,6 +3,7 @@ import { paketDogrula, MAKS_BAYT } from './dogrula.js';
 import { botMu, cihazTuru, tarayiciAilesi, isletimAilesi, genislikKovasi } from './ua.js';
 import { kaynakSinifla } from './kaynak.js';
 import { trParcalari } from './zaman.js';
+import { butceDurumu, olaylariSuz } from './butce.js';
 
 export const HIZ_PENCERE_SN = 600;
 export const HIZ_SINIR = 300; // ziyaretçi başına 10 dakikada en çok 300 olay
@@ -99,6 +100,9 @@ export async function topla(request, env, simdiMs = Date.now(), rastgele = Math.
   if (request.headers.get('Sec-GPC') === '1' || request.headers.get('DNT') === '1') return yanit(204, cors);
   const ua = request.headers.get('User-Agent') || '';
   if (botMu(ua)) return yanit(204, cors);
+  // Günlük D1 yazma bütçesi (butce.js): son kademede hiçbir şey yazılmaz.
+  const butce = await butceDurumu(env, simdiMs);
+  if (butce.yazmaKademesi >= 3) return yanit(204, cors);
   const uzunluk = Number(request.headers.get('Content-Length') || 0);
   if (uzunluk > MAKS_BAYT) return yanit(413, cors);
 
@@ -110,9 +114,10 @@ export async function topla(request, env, simdiMs = Date.now(), rastgele = Math.
   const { gun, saat, hg } = trParcalari(simdiSn);
   if (sayac.gun !== gun) { sayac.gun = gun; sayac.say = 0; }
   const azalt = env.TOPLAMA_AZALT === '1' || sayac.say > GUNLUK_YUMUSAK_SINIR;
+  const butceSuzulen = olaylariSuz(paket.olaylar, butce.yazmaKademesi);
   const olaylar = azalt
-    ? paket.olaylar.filter((e) => (e.t !== 'aktif' && e.t !== 'kaydirma') || (rastgele() < 0.5 && (e.n2 = 2)))
-    : paket.olaylar;
+    ? butceSuzulen.filter((e) => (e.t !== 'aktif' && e.t !== 'kaydirma') || (rastgele() < 0.5 && (e.n2 = 2)))
+    : butceSuzulen;
   if (!olaylar.length) return yanit(204, cors);
   const tuz = await gunlukTuz(env.DB, gun);
   const ip = request.headers.get('CF-Connecting-IP') || '';
@@ -148,6 +153,8 @@ export async function topla(request, env, simdiMs = Date.now(), rastgele = Math.
     };
     return env.DB.prepare(EKLE).bind(...SUTUNLAR.map((s) => deger[s] ?? null));
   });
+  // Bir işaretçinin tüm olayları TEK batch'te (tek işlem, tek gidiş-dönüş) yazılır. Çok satırlı tek INSERT yazılan satır sayısını
+  // azaltmaz ve D1'in 100 bağlı parametre sınırı yüzünden (31 sütun) en çok 3 satıra sığar; bu yüzden batch kullanılır.
   await env.DB.batch(komutlar);
   return yanit(204, cors);
 }

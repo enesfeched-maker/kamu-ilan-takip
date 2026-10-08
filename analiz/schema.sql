@@ -61,3 +61,10 @@ CREATE TABLE IF NOT EXISTS ozet_gun (
   gun TEXT PRIMARY KEY,
   ts  INTEGER NOT NULL
 );
+
+-- Gunluk D1 kota bekcisi sayaclari (UTC gunu; hesap kotasi 00:00 UTC'de sifirlanir). Bkz. migrations/0003_butce.sql.
+CREATE TABLE IF NOT EXISTS butce (
+  gun_utc TEXT PRIMARY KEY,
+  yazma   INTEGER NOT NULL DEFAULT 0,
+  okuma   INTEGER NOT NULL DEFAULT 0
+);
