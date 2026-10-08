@@ -80,7 +80,7 @@ run("F={...defaultF(),tur:'Sözleşmeli Personel'}");assert.equal(n(),1,'type fr
 run("F={...defaultF(),ogr:'belediye'}");assert.equal(n(),1,'belediye via kategori');
 run("F={...defaultF(),tur:'Yok'};render()");assert.equal(run('F.tur'),'','unknown type dropped');
 run("F={...defaultF(),sira:'yeni'}");assert.equal(run("filterIlan(ilanBase(F),F,null).list[0].key"),k(1),'sort by newest');
-run("F={...defaultF(),sira:'son'}");assert.equal(run("filterIlan(ilanBase(F),F,null).list.map(o=>o.manset).join()"),'Teknisyen,Büro Personeli,Zabıta,Yakında','deadline sort, undated last');
+run("F={...defaultF(),sira:'son'}");{const g=JSON.parse(J("filterIlan(ilanBase(F),F,null).list.map(o=>o.ilk_gorulme?istDate(Date.parse(o.ilk_gorulme)):'')"));assert.deepEqual(g,g.slice().sort().reverse(),'default timeline: newest publish day first, so the first page is never older days only');}
 run("F={...defaultF(),arsiv:true}");assert.equal(n(),3,'archive view lists every full record, including the closed one');
 // sayfalama + ilerleme
 run("F=defaultF();shown=2;render()");assert.equal(satirSay(get('cards')),2,'2 rows + progress block');{const c=get('cards').children,son=c[c.length-1];assert.match(text(son),/2 \/ 4 ilan gösteriliyor/);assert.match(text(son),/Daha fazla göster/);}
