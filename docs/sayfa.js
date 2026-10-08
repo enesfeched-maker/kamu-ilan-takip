@@ -37,7 +37,7 @@
 
   /* tema (açık varsayılan) */
   function tema() {
-    var d = oku('kit-theme', null) === 'dark';
+    var d = typeof window !== 'undefined' && window.kitKoyu ? window.kitKoyu() : oku('kit-theme', null) === 'dark';
     document.documentElement.dataset.theme = d ? 'dark' : 'light';
     var m = document.querySelector('meta[name=theme-color]'); if (m) m.content = d ? '#0D0E0C' : '#F6F6F1';
     var b = document.getElementById('theme');
@@ -46,6 +46,7 @@
   var tb = document.getElementById('theme');
   function iz(t, o) { try { if (typeof window !== 'undefined' && window.kpssA) window.kpssA(t, o); } catch (e) { /* ölçüm sayfayı bozmaz */ } }
   if (tb) tb.onclick = function () { var yeni = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'; iz('tikla', { a: 'tema', x: yeni }); yaz('kit-theme', yeni); tema(); };
+  if (typeof window !== 'undefined') window.kitTemaUygula = tema;
   tema();
 
   var yl = document.getElementById('yil'); if (yl) yl.textContent = String(new Date().getFullYear());

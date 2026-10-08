@@ -351,6 +351,25 @@ assert.equal(RS.run('activeProfile()'),null);assert.equal(RS.get('profil-dialog'
 assert.doesNotMatch(text(RS.get('suzgecler')),/Yalnız profilime uygun/,'profil süzgeci kalktı');
 RS.run("showTab('ilanlar')");assert.equal(RS.run("filterIlan(ilanBase(F),F,activeProfile()).on"),false,'eşleşme rozeti/filtresi kapalı');
 RS.run('openProfile()');assert.equal(RS.get('p-sifirla-kutu').hidden,true,'profil yokken düğme gizli');
+// 13c) Otomatik tema: elle seçim > sistem koyu > gece (20:00-07:00) > açık
+{const betik=fs.readFileSync('docs/index.html','utf8').match(/<script>(try\{var r=document\.documentElement[\s\S]*?)<\/script>/)[1];
+ const tema=(kayit,sistemKoyu,saat)=>{const meta={content:'#F6F6F1'},cl={};const w={};
+  class D extends Date{constructor(...a){super(...(a.length?a:[2026,9,8,saat,30]));}}
+  vm.runInContext(betik,vm.createContext({window:w,Date:D,JSON,setInterval(f,ms){cl.ms=ms;cl.f=f;},
+   matchMedia:()=>({matches:sistemKoyu,addEventListener(t,f){cl.ch=[t,f];}}),
+   localStorage:{getItem:k=>k==='kit-theme'&&kayit!==null?kayit:null},
+   document:{documentElement:cl.r={dataset:{}},querySelector:()=>meta}}));
+  return{tema:cl.r.dataset.theme,renk:meta.content,w,cl};};
+ assert.equal(tema('"dark"',false,12).tema,'dark','elle koyu kazanır (gündüz, açık sistem)');
+ assert.equal(tema('"light"',true,23).tema,'light','elle açık kazanır (gece, koyu sistem)');
+ assert.equal(tema(null,true,12).tema,'dark','sistem koyu → koyu');
+ assert.equal(tema(null,false,21).tema,'dark','açık sistem, 21:00 → koyu');
+ assert.equal(tema(null,false,3).tema,'dark','açık sistem, 03:00 → koyu');
+ assert.equal(tema(null,false,7).tema,'light','açık sistem, 07:00 → açık');
+ assert.equal(tema(null,false,19).tema,'light','açık sistem, 19:00 → açık');
+ const ac=tema(null,false,12);assert.equal(ac.tema,'light');assert.equal(ac.renk,'#F6F6F1');assert.equal(ac.cl.ms,300000,'5 dakikada bir yeniden bakar');assert.equal(ac.cl.ch[0],'change');
+ assert.equal(tema(null,false,22).renk,'#0D0E0C');assert.equal(typeof ac.w.kitKoyu,'function');
+ assert.equal(tema('bozuk{',false,12).tema,'light','bozuk kayıt otomatiğe düşer');}
 // 14) sayfa.js: ayrıntı sayfası "Senin için"
 function sayfaYap(dataset,profilVeri){
  const hedef=new Element('div');hedef.getAttribute=a=>a==='data-ana'?'../../?profil=1':null;

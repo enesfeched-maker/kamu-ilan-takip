@@ -46,5 +46,20 @@ class SiteTests(unittest.TestCase):
         self.assertEqual(len(cikti[1]['metin']), 1500)
 
 
+class TemaBetigiTests(unittest.TestCase):
+    def test_tema_kurali_isaretleri(self):
+        from site_uret import TEMA_BETIGI
+        for isaret in ('kit-theme', 'prefers-color-scheme: dark', 'getHours()', 'h>=20||h<7', 'kitKoyu', 'kitTemaUygula', 'setInterval', '"change"', '#0D0E0C', '#F6F6F1'):
+            self.assertIn(isaret, TEMA_BETIGI)
+
+    def test_tema_betigi_statik_sayfalarla_ayni(self):
+        import os
+        from site_uret import TEMA_BETIGI
+        kok = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'docs')
+        for yol in ('index.html', '404.html', os.path.join('puanlar', 'index.html')):
+            with open(os.path.join(kok, yol), encoding='utf-8') as f:
+                self.assertIn(TEMA_BETIGI, f.read(), yol)
+
+
 if __name__ == '__main__':
     unittest.main()
