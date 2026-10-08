@@ -481,6 +481,20 @@ def duyuru_karari(duyuru, ilanlar, mesajlar, yanitlar, bugun, gonderilen=None):
 TOPLU_SINIR = 950  # sendPhoto başlık sınırı 1024 görünür karakter
 
 
+def sessiz_donemde(cfg, zaman):
+    """config 'telegram_sessiz_bitis' (ISO, saat dilimli) gelene kadar kanala hiçbir şey gönderilmez."""
+    bitis = cfg.get('telegram_sessiz_bitis')
+    if not bitis:
+        return False
+    try:
+        bitis = datetime.fromisoformat(bitis)
+    except ValueError:
+        return False
+    if bitis.tzinfo is None:
+        bitis = bitis.replace(tzinfo=TR)
+    return zaman < bitis
+
+
 def toplu_zamani(zaman, son_gun):
     """Günde bir kez: İstanbul 09:00'dan sonra ve bugün henüz gönderilmediyse."""
     return zaman.hour >= 9 and son_gun != zaman.date().isoformat()
@@ -889,6 +903,16 @@ def main():
             sabah = (sabah_yeni, sabah_son_gun, sabah_acik)
     kuyruk = ([('sabah', sabah)] if sabah else []) + \
              [('duyuru' if i.get('duyuru_turu') else 'ilan', i) for i in gonderilecek]
+    if sessiz_donemde(cfg, simdi()):
+        # Sessiz dönemde gelenler paylaşılmış sayılır: dönem bitince kanal birikmiş ilanlarla dolmaz,
+        # bunlar bir sonraki sabah özetinde topluca yer alır.
+        if not a.dry_run:
+            for i in gonderilecek:
+                gonderilen.add(i['id'])
+                bekleyen.discard(i['id'])
+        print(f"Telegram sessiz dönemde ({cfg['telegram_sessiz_bitis']} kadar): "
+              f"{len(gonderilecek)} ilan kanala gönderilmeden işaretlendi.")
+        kuyruk = []
     limit = max(1, int(cfg.get('max_mesaj_per_calisma', 15)))
     site_url = cfg.get('site_url', '')
     hata = False

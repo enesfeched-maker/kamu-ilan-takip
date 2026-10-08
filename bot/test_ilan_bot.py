@@ -448,5 +448,18 @@ class IlanGorseliTesti(unittest.TestCase):
         self.assertEqual(Image.open(io.BytesIO(foto)).size[0], 1200)  # eski kart genişliği
 
 
+class SessizDonemTesti(unittest.TestCase):
+    def test_bitise_kadar_sessiz_sonra_acik(self):
+        cfg = {'telegram_sessiz_bitis': '2026-10-09T09:00:00+03:00'}
+        tr = ilan_bot.TR
+        self.assertTrue(ilan_bot.sessiz_donemde(cfg, datetime(2026, 10, 9, 8, 59, tzinfo=tr)))
+        self.assertFalse(ilan_bot.sessiz_donemde(cfg, datetime(2026, 10, 9, 9, 0, tzinfo=tr)))
+
+    def test_ayar_yoksa_veya_bozuksa_sessiz_degil(self):
+        simdi = datetime(2026, 10, 8, 12, 0, tzinfo=ilan_bot.TR)
+        self.assertFalse(ilan_bot.sessiz_donemde({}, simdi))
+        self.assertFalse(ilan_bot.sessiz_donemde({'telegram_sessiz_bitis': 'yarın'}, simdi))
+
+
 if __name__ == '__main__':
     unittest.main()
