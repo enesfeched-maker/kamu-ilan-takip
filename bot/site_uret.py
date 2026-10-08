@@ -44,7 +44,8 @@ def ikonlar(kok):
             f'<link rel="manifest" href="{kok}manifest.webmanifest">')
 
 
-KABUK_SURUM = 1
+KABUK_SURUM = 2
+TG_DOLU = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.5 3.6 2.9 10.8c-1.1.4-1.1 1.2-.2 1.5l4.8 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.4l2.4-2.3 4.9 3.6c.9.5 1.5.2 1.8-.8l3.2-15.1c.3-1.3-.5-1.9-1.4-1.6zM9 13.4l9.3-5.9c.4-.3.8-.1.5.2l-7.9 7.1-.3 3.4z"/></svg>'
 HAMBURGER_IKON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>'
 # Mobil menü düğmesi: iç sayfaların kendi betiğine bağlı kalmasın diye üst barın hemen ardından çalışır.
 MENU_BETIGI = ('<script>(function(){var h=document.getElementById("tb"),b=document.getElementById("tb-ac");if(!h||!b)return;'
@@ -62,11 +63,11 @@ def ust_html(kok, aktif=''):
                     for ad, h, a in menu)
     return (f'<header class="tb" id="tb"><div class="tb-ic"><a class="tb-marka" href="{kok}" aria-label="KPSS Tercihi ana sayfa">'
             f'<img src="{kok}assets/logo-96.webp?v={LOGO_SURUM}" alt="" width="34" height="34"><span>KPSS Tercihi</span></a>'
+            f'<a class="tb-tg" href="https://t.me/kamuilantakip" target="_blank" rel="noopener" data-a="telegram" data-a-x="ust">{TG_DOLU}<span class="tam">Telegram\'a katıl</span><span class="kisa">Katıl</span></a>'
             f'<button type="button" class="tb-ac" id="tb-ac" aria-expanded="false" aria-controls="tb-nav" aria-label="Menüyü aç">{HAMBURGER_IKON}</button>'
             f'<nav class="tb-nav" id="tb-nav" aria-label="Ana menü">{bagla}<span class="tb-ayrac" aria-hidden="true"></span>'
             f'<a class="tb-ikon" href="{kok}?profil=1" aria-label="Profil">{KISI_IKON}<span class="tb-etiket">Profil</span></a>'
-            f'<button type="button" class="tb-ikon" id="theme" aria-label="Renk temasını değiştir">{AY_IKON}</button>'
-            f'<a class="tb-ikon" href="https://t.me/kamuilantakip" target="_blank" rel="noopener" aria-label="Telegram kanalı" data-a="telegram" data-a-x="ust">{TG_IKON}<span class="tb-etiket">Telegram kanalı</span></a>'
+            f'<button type="button" class="tb-ikon" id="theme" aria-label="Renk temasını değiştir">{AY_IKON}</button>'
             f'</nav></div></header>{MENU_BETIGI}')
 
 
