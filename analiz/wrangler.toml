@@ -7,7 +7,7 @@ compatibility_date = "2026-05-22"
 # Gunluk bakim: dunun ozetini cikarir, eski ham olaylari ve eski tuzlari siler.
 # 21:10 UTC = 00:10 Turkiye saati (Turkiye yil boyu UTC+3).
 [triggers]
-crons = ["10 21 * * *"]
+crons = ["30 0 * * *"]   # 00:30 UTC = 03:30 Türkiye: D1 günlük ücretsiz kotası 00:00 UTC'de sıfırlandıktan sonra
 
 # api.kpsstercihi.com alan adini `wrangler deploy` kendisi olusturur (kpsstercihi.com Cloudflare'da
 # olmali; DNS kaydini elle eklemek gerekmez). Calismazsa Cloudflare panelinden:
