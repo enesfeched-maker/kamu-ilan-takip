@@ -21,7 +21,7 @@ custom_domain = true
 [[d1_databases]]
 binding = "DB"
 database_name = "kpss-analiz"
-database_id = "BURAYA-D1-ID-YAZ"
+database_id = "18fb9833-13eb-484a-a9ab-e675285d0045"
 
 [vars]
 SITE_URL = "https://kpsstercihi.com/"
