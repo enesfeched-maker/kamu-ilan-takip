@@ -82,6 +82,7 @@ export function olayDogrula(o) {
   }
   if (t === 'kaydirma') {
     e.n = tamsayi(o.n, 0, 100);
+    if (o.h === 'm') e.h = 'm'; // ekran başına tek olay: ulaşılan en büyük derinlik
     return [25, 50, 75, 100].includes(e.n) ? e : null;
   }
   if (t === 'hiz') {

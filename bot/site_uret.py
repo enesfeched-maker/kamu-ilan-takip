@@ -21,7 +21,7 @@ EN_COK_LOGO_INDIRME = 150
 CSS_SURUM = 14
 LOGO_SURUM = 2
 ACIK_ZEMIN, KOYU_ZEMIN = '#F6F6F1', '#0D0E0C'
-ANALIZ_SURUM = 1  # docs/a.js (çerezsiz ziyaret istatistiği) önbellek sürümü
+ANALIZ_SURUM = 2  # docs/a.js (çerezsiz ziyaret istatistiği) önbellek sürümü
 # <head> içinde, theme-color etiketinden sonra: açık tema varsayılan, yalnız kit-theme=="dark" koyu açar.
 TEMA_BETIGI = ('<script>try{var d=JSON.parse(localStorage.getItem("kit-theme"))==="dark";document.documentElement.dataset.theme=d?"dark":"light";'
                'var m=document.querySelector("meta[name=theme-color]");if(m)m.content=d?"' + KOYU_ZEMIN + '":"' + ACIK_ZEMIN + '"}'

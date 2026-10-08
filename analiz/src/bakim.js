@@ -1,6 +1,6 @@
 // Günlük bakım (cron): tamamlanan günlerin özetini çıkarır, eski ham olayları ve tuzları siler.
 import { gunOzetiYaz } from './sorgu.js';
-import { bugun, gunEkle } from './zaman.js';
+import { bugun, gunEkle, gunBasSn, trParcalari } from './zaman.js';
 
 export const HAM_SAKLAMA_GUN = 90;
 export const OZET_SAKLAMA_GUN = 400;
@@ -11,11 +11,18 @@ export async function bakim(env, simdiMs = Date.now()) {
   const bu = bugun(simdiMs);
 
   // Özeti çıkmamış geçmiş günler (cron birkaç gün atlamış olabilir). Bugüne dokunulmaz.
-  const bekleyen = await db.prepare('SELECT DISTINCT gun FROM olaylar WHERE gun < ? AND gun NOT IN (SELECT gun FROM ozet_gun) ORDER BY gun').bind(bu).all();
+  // Tüm tabloyu taramamak için en eski olaydan bugüne gün gün gidilir; her gün ts indeksiyle LIMIT 1 yoklanır.
   const yazilan = [];
-  for (const { gun } of bekleyen.results || []) {
-    await gunOzetiYaz(db, gun, simdiSn);
-    yazilan.push(gun);
+  const enEski = await db.prepare('SELECT MIN(ts) AS m FROM olaylar').first();
+  if (enEski && enEski.m !== null && enEski.m !== undefined) {
+    const ozetli = new Set(((await db.prepare('SELECT gun FROM ozet_gun').all()).results || []).map((r) => r.gun));
+    for (let gun = trParcalari(Number(enEski.m)).gun; gun < bu; gun = gunEkle(gun, 1)) {
+      if (ozetli.has(gun)) continue;
+      const varMi = await db.prepare('SELECT 1 AS v FROM olaylar WHERE ts >= ? AND ts < ? LIMIT 1').bind(gunBasSn(gun), gunBasSn(gun) + 86400).first();
+      if (!varMi) continue;
+      await gunOzetiYaz(db, gun, simdiSn);
+      yazilan.push(gun);
+    }
   }
 
   // Ham olaylar yalnız özeti çıkmış günler için silinir; özeti çıkmamış gün (hata durumu) korunur.

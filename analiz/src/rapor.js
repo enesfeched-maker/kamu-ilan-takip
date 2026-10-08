@@ -85,7 +85,12 @@ export async function raporUret(env, aralik, simdiMs = Date.now(), adlariGetir =
   const h1 = Object.fromEntries(B('huni').map((r) => [r.k1, r]));
 
   const kaydirmaToplam = new Map();
-  for (const r of B('kaydirma')) kaydirmaToplam.set(r.k1, (kaydirmaToplam.get(r.k1) || 0) + r.say);
+  // Yeni olaylar ('|m' = ekran başına en büyük derinlik) kümülatiftir: n derinliğine inen ekran 25..n eşiklerinin hepsine sayılır.
+  // Eski olaylar (ek yok) zaten eşik başına ayrı gelirdi. Örneklenmiş olaylar Worker'da ağırlıkla (n2) saklanır.
+  for (const r of B('kaydirma')) {
+    const n = Number(r.k1), yeni = r.k2.endsWith('|m');
+    for (const e of [25, 50, 75, 100]) if (yeni ? e <= n : e === n) kaydirmaToplam.set(String(e), (kaydirmaToplam.get(String(e)) || 0) + r.say);
+  }
 
   return {
     aralik: { bas, bit, adet },
@@ -135,6 +140,7 @@ export async function raporUret(env, aralik, simdiMs = Date.now(), adlariGetir =
       kaydirma: [25, 50, 75, 100].map((n) => ({ n, say: kaydirmaToplam.get(String(n)) || 0 })),
       hatalar: ilk(sirala(B('hata')).map((r) => ({ mesaj: r.k1, dosya: r.k2, say: r.say, tekil: r.tekil })), 15),
       yok404: ilk(sirala(B('yok404')).map((r) => ({ p: r.k1, say: r.say })), 15),
+      hizOrnek: rows.filter((r) => r.boyut === 'lcp').reduce((t, r) => t + r.say, 0), // hız ölçümü %10 örneklemeyle gelir; medyan örneklemden etkilenmez
       lcpMs: agirlikliOrtalama(rows.filter((r) => r.boyut === 'lcp')),
       ttfbMs: agirlikliOrtalama(rows.filter((r) => r.boyut === 'ttfb')),
     },
