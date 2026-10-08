@@ -5,6 +5,8 @@
 // "tekil" ve "oturum" gün bazında sayılır; çok günlük görünümde toplanır (aynı kişi farklı günlerde tekrar sayılır,
 // çünkü günlük tuz yüzünden günler arası eşleştirme zaten yapılamaz).
 
+import { gunBasSn } from './zaman.js';
+
 const SUT = (k1, k2 = "''") => `gun, ${k1} AS k1, ${k2} AS k2, COUNT(*) AS say, COUNT(DISTINCT zv) AS tekil, COUNT(DISTINCT os) AS oturum`;
 const ILAN_EKRANI = "(sy = 'ilan' OR (sy = 'ana' AND v = 'ilan')) AND k IS NOT NULL";
 
@@ -31,11 +33,11 @@ const ilkOturum = (boyut, ifade, ek = '', k2 = "''") => ({
 export const METRIKLER = [
   { boyut: 'genel', sql: `SELECT ${SUT("''")}, 0 AS toplam FROM olaylar WHERE t = 'sayfa' AND {G} GROUP BY gun` },
   { boyut: 'yeni_geri', sql: `SELECT ${SUT("CASE yeni WHEN 1 THEN 'yeni' ELSE 'geri' END")}, 0 AS toplam FROM olaylar WHERE ilk = 1 AND {G} GROUP BY gun, k1` },
-  { boyut: 'etkin', sql: `SELECT ${SUT("''")}, SUM(n) AS toplam FROM olaylar WHERE t = 'aktif' AND {G} GROUP BY gun` },
+  { boyut: 'etkin', sql: `SELECT ${SUT("''")}, SUM(n * COALESCE(n2, 1)) AS toplam FROM olaylar WHERE t = 'aktif' AND {G} GROUP BY gun` },
   {
     boyut: 'oturum_ozet',
     sql: `SELECT gun, CASE WHEN sp <= 1 AND tk = 0 AND ak < 10 THEN 'hemen' ELSE 'diger' END AS k1, '' AS k2, COUNT(*) AS say, COUNT(DISTINCT zv) AS tekil, COUNT(*) AS oturum, 0 AS toplam
-      FROM (SELECT gun, os, MIN(zv) AS zv, SUM(t = 'sayfa') AS sp, SUM(t = 'tikla') AS tk, SUM(CASE WHEN t = 'aktif' THEN n ELSE 0 END) AS ak
+      FROM (SELECT gun, os, MIN(zv) AS zv, SUM(t = 'sayfa') AS sp, SUM(t = 'tikla') AS tk, SUM(CASE WHEN t = 'aktif' THEN n * COALESCE(n2, 1) ELSE 0 END) AS ak
             FROM olaylar WHERE {G} GROUP BY gun, os HAVING sp >= 1) GROUP BY gun, k1`,
   },
   { boyut: 'isi', sql: `SELECT ${SUT('CAST(hg AS TEXT)', 'CAST(saat AS TEXT)')}, 0 AS toplam FROM olaylar WHERE t = 'sayfa' AND {G} GROUP BY gun, hg, saat` },
@@ -51,9 +53,9 @@ export const METRIKLER = [
   ilkOturum('dil', 'dil', 'AND dil IS NOT NULL'),
   { boyut: 'sayfa', sql: grup(SUT('p', "COALESCE(v, '')"), "t = 'sayfa'", 'p, v') },
   { boyut: 'gorunum', sql: grup(SUT('v'), "t = 'sayfa' AND sy = 'ana' AND v IS NOT NULL", 'v') },
-  { boyut: 'gorunum_sure', sql: `SELECT ${SUT("COALESCE(v, 'bugun')")}, SUM(n) AS toplam FROM olaylar WHERE t = 'aktif' AND sy = 'ana' AND {G} GROUP BY gun, k1 ORDER BY toplam DESC {L}` },
+  { boyut: 'gorunum_sure', sql: `SELECT ${SUT("COALESCE(v, 'bugun')")}, SUM(n * COALESCE(n2, 1)) AS toplam FROM olaylar WHERE t = 'aktif' AND sy = 'ana' AND {G} GROUP BY gun, k1 ORDER BY toplam DESC {L}` },
   { boyut: 'ilan_goruntu', sql: grup(SUT('k'), `t = 'sayfa' AND ${ILAN_EKRANI}`, 'k') },
-  { boyut: 'ilan_sure', sql: `SELECT ${SUT('k')}, SUM(n) AS toplam FROM olaylar WHERE t = 'aktif' AND ${ILAN_EKRANI} AND {G} GROUP BY gun, k ORDER BY toplam DESC {L}` },
+  { boyut: 'ilan_sure', sql: `SELECT ${SUT('k')}, SUM(n * COALESCE(n2, 1)) AS toplam FROM olaylar WHERE t = 'aktif' AND ${ILAN_EKRANI} AND {G} GROUP BY gun, k ORDER BY toplam DESC {L}` },
   { boyut: 'kurum', sql: grup(SUT('k'), "t = 'sayfa' AND sy = 'kurum' AND k IS NOT NULL", 'k') },
   { boyut: 'taban', sql: grup(SUT("COALESCE(k, '')"), "t = 'sayfa' AND sy = 'taban'", 'k') },
   { boyut: 'tikla_ad', sql: grup(SUT('a'), "t = 'tikla'", 'a') },
@@ -68,7 +70,8 @@ export const METRIKLER = [
       UNION ALL
       SELECT gun, 'huni2' AS k1, '' AS k2, SUM(a2 * a3) AS say, 0, 0, 0 FROM (${oturumBayraklari()}) GROUP BY gun`,
   },
-  { boyut: 'kaydirma', sql: grup(SUT('CAST(n AS TEXT)', 'sy'), "t = 'kaydirma'", 'n, sy') },
+  // Kaydırma: ekran başına TEK olay (h = 'm': ulaşılan en büyük derinlik). Eski kümülatif olaylar h'siz gelir. Örneklenen olay n2 = ağırlık taşır.
+  { boyut: 'kaydirma', sql: `SELECT gun, CAST(n AS TEXT) AS k1, sy || CASE WHEN h = 'm' THEN '|m' ELSE '' END AS k2, SUM(COALESCE(n2, 1)) AS say, COUNT(DISTINCT zv) AS tekil, COUNT(DISTINCT os) AS oturum, 0 AS toplam FROM olaylar WHERE t = 'kaydirma' AND {G} GROUP BY gun, n, k2 ORDER BY say DESC {L}` },
   { boyut: 'hata', sql: grup(SUT('x', "COALESCE(h, '')"), "t = 'hata'", 'x, h') },
   { boyut: 'yok404', sql: grup(SUT('p'), "t = '404'", 'p') },
   { boyut: 'lcp', sql: medyan('n', 'lcp') },
@@ -95,7 +98,7 @@ function satirlar(sonuc, boyut) {
 
 // Tamamlanmış bir günün özetini yazar (var olanın üzerine yazar).
 export async function gunOzetiYaz(db, gun, simdiSn = Math.floor(Date.now() / 1000)) {
-  const sorgular = METRIKLER.map((m) => { const h = hazirla(m, 'gun = ?', [gun], 200); return db.prepare(h.sql).bind(...h.baglar); });
+  const sorgular = METRIKLER.map((m) => { const h = hazirla(m, 'ts >= ? AND ts < ?', [gunBasSn(gun), gunBasSn(gun) + 86400], 200); return db.prepare(h.sql).bind(...h.baglar); });
   const sonuc = await db.batch(sorgular);
   const kayitlar = [];
   sonuc.forEach((s, i) => kayitlar.push(...satirlar(s, METRIKLER[i].boyut)));
@@ -110,8 +113,9 @@ export async function gunOzetiYaz(db, gun, simdiSn = Math.floor(Date.now() / 100
 // [bas, bit] arasındaki tüm metrikler: özeti çıkmış günler ozet tablosundan, kalanlar ham olaylardan.
 export async function aralikOku(db, bas, bit) {
   const ozetli = await db.prepare('SELECT gun, boyut, k1, k2, say, tekil, oturum, toplam FROM ozet WHERE gun BETWEEN ? AND ?').bind(bas, bit).all();
-  const kos = 'gun BETWEEN ? AND ? AND gun NOT IN (SELECT gun FROM ozet_gun)';
-  const sonuc = await db.batch(METRIKLER.map((m) => { const h = hazirla(m, kos, [bas, bit], 0); return db.prepare(h.sql).bind(...h.baglar); }));
+  // ts aralığı tek indeksi (idx_olaylar_ts) kullanır; gün sınırları Türkiye saatindedir.
+  const kos = 'ts >= ? AND ts < ? AND gun NOT IN (SELECT gun FROM ozet_gun)';
+  const sonuc = await db.batch(METRIKLER.map((m) => { const h = hazirla(m, kos, [gunBasSn(bas), gunBasSn(bit) + 86400], 0); return db.prepare(h.sql).bind(...h.baglar); }));
   const ham = [];
   sonuc.forEach((s, i) => ham.push(...satirlar(s, METRIKLER[i].boyut)));
   return [...satirlar(ozetli, null).map((r, i) => ({ ...r, boyut: ozetli.results[i].boyut })), ...ham];

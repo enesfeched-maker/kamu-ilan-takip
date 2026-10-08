@@ -27,8 +27,8 @@ CREATE TABLE IF NOT EXISTS olaylar (
   cihaz    TEXT, tarayici TEXT, isletim TEXT, gen TEXT, dil TEXT,
   kaynak   TEXT, rhost TEXT, us TEXT, um TEXT, uc TEXT
 );
-CREATE INDEX IF NOT EXISTS idx_olaylar_ts    ON olaylar (ts);
-CREATE INDEX IF NOT EXISTS idx_olaylar_gun_t ON olaylar (gun, t);
+-- TEK indeks: her olay 2 satir yazar (tablo + indeks). Tum sicak sorgular (canli, populer, gun/aralik raporu, bakim, temizlik) ts araligi kullanir.
+CREATE INDEX IF NOT EXISTS idx_olaylar_ts ON olaylar (ts);
 
 -- Gunluk tuz: gun basina bir satir, gece yarisindan sonra bakim isi eskileri siler.
 CREATE TABLE IF NOT EXISTS tuz (

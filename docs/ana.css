@@ -1,4 +1,4 @@
-﻿/* KPSS Tercihi — ana sayfa düzeni: manşet kaydırıcı + yan sütun (arama, kategori ağacı, süzgeçler) + yayın gününe göre zaman çizelgesi.
+/* KPSS Tercihi — ana sayfa düzeni: manşet kaydırıcı + yan sütun (arama, kategori ağacı, süzgeçler) + yayın gününe göre zaman çizelgesi.
    portal.css ve bugun.css'ten SONRA yüklenir; renk belirteçleri bugun.css'tedir (açık varsayılan, [data-theme=dark] koyu). */
 :root{--koyu:#0D1A1B;--koyu-2:#10282A;--cizgi-vurgu:#9ED437;--tarih-yazi:#C62828;--bugun-yazi:var(--lime-ink);--acil-zemin:#C62828;--acil-yazi:#FFFFFF;--yakin-zemin:#FFF4D1;--yakin-yazi:#7A5200}
 :root[data-theme=dark]{--cizgi-vurgu:#7FA82C;--tarih-yazi:#FF8A80;--bugun-yazi:#C8F169;--acil-zemin:#C62828;--acil-yazi:#FFFFFF;--yakin-zemin:#352B10;--yakin-yazi:#F2CF78}

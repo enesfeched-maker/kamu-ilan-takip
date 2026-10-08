@@ -15,6 +15,9 @@ export function gunEkle(gun, adet) {
   return d.toISOString().slice(0, 10);
 }
 
+// Bir Türkiye gününün 00:00'ının unix saniyesi (olaylar.ts aralığı sorguları için).
+export function gunBasSn(gun) { return Date.parse(gun + 'T00:00:00Z') / 1000 - TR_SANIYE; }
+
 export function bugun(simdiMs = Date.now()) {
   return trParcalari(Math.floor(simdiMs / 1000)).gun;
 }

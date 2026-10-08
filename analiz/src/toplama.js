@@ -80,7 +80,16 @@ const EKLE = `INSERT INTO olaylar (${SUTUNLAR.join(', ')}) VALUES (${SUTUNLAR.ma
 
 const kisa = (v, n) => (typeof v === 'string' && v ? v.slice(0, n) : null);
 
-export async function topla(request, env, simdiMs = Date.now()) {
+// D1 yazma kotası koruması (izolat belleğinde yaklaşık sayaç; ek D1 yazımı yok): gün içinde kabul edilen olay sayısı
+// GUNLUK_YUMUSAK_SINIR'ı aşarsa (ya da TOPLAMA_AZALT=1 ise) 'aktif' ve 'kaydirma' olayları %50 örneklenir; saklanan olay
+// n2 = 2 ağırlığı taşır, panel ağırlıklı toplar, böylece toplamlar yaklaşık doğru kalır.
+export const GUNLUK_YUMUSAK_SINIR = 30000;
+const sayac = { gun: '', say: 0 };
+export function sayacSifirla() { sayac.gun = ''; sayac.say = 0; }
+export function sayacAyarla(gun, say) { sayac.gun = gun; sayac.say = say; }
+export function sayacOku() { return { ...sayac }; }
+
+export async function topla(request, env, simdiMs = Date.now(), rastgele = Math.random) {
   const cors = corsBasliklari(request, env);
   if (request.method === 'OPTIONS') return yanit(204, cors);
   if (request.method !== 'POST') return yanit(405, cors);
@@ -99,6 +108,12 @@ export async function topla(request, env, simdiMs = Date.now()) {
 
   const simdiSn = Math.floor(simdiMs / 1000);
   const { gun, saat, hg } = trParcalari(simdiSn);
+  if (sayac.gun !== gun) { sayac.gun = gun; sayac.say = 0; }
+  const azalt = env.TOPLAMA_AZALT === '1' || sayac.say > GUNLUK_YUMUSAK_SINIR;
+  const olaylar = azalt
+    ? paket.olaylar.filter((e) => (e.t !== 'aktif' && e.t !== 'kaydirma') || (rastgele() < 0.5 && (e.n2 = 2)))
+    : paket.olaylar;
+  if (!olaylar.length) return yanit(204, cors);
   const tuz = await gunlukTuz(env.DB, gun);
   const ip = request.headers.get('CF-Connecting-IP') || '';
   const zv = await ziyaretciOzeti(tuz, ip, ua);
@@ -120,7 +135,8 @@ export async function topla(request, env, simdiMs = Date.now()) {
   };
 
   let ilkVar = false;
-  const komutlar = paket.olaylar.map((e) => {
+  sayac.say += olaylar.length;
+  const komutlar = olaylar.map((e) => {
     const ilk = e.t === 'sayfa' && e.f && !ilkVar ? 1 : 0;
     if (ilk) ilkVar = true;
     const oz = ilk ? oturumOzellikleri : {};

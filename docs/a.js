@@ -9,7 +9,9 @@
   if (!n.sendBeacon && typeof fetch !== 'function') return;
 
   var kuyruk = [], zamanlayici = 0, cur = { p: '', v: null, k: null }, sonSayfa = '', ilk = true, hata = 0;
-  var sonEtk = Date.now(), aktifSn = 0, kaydirma = {}, lcp = 0, hizGitti = false;
+  var sonEtk = Date.now(), aktifSn = 0, kaydirmaMax = 0, kaydirmaGit = 0, lcp = 0, hizGitti = false;
+  /* Hız ölçümü sayfa yüklemelerinin %10'unda gönderilir (medyan örneklemden etkilenmez; D1 yazma kotası için). */
+  var hizOrnek = Math.random() < 0.1;
 
   function oku(k) { try { return w.sessionStorage.getItem(k); } catch (e) { return null; } }
   function yaz(k, v) { try { w.sessionStorage.setItem(k, v); } catch (e) { /* depolama kapalı */ } }
@@ -64,7 +66,11 @@
   function aktifYaz() {
     if (aktifSn > 0) { olay('aktif', { n: Math.min(aktifSn, 120) }); aktifSn = 0; }
   }
-  function ekran(v, k) { aktifYaz(); cur = { p: yol(), v: v || null, k: k || null }; kaydirma = {}; }
+  /* Kaydırma: ekran başına TEK olay, ulaşılan en büyük derinlik (25/50/75/100); h = 'm'. */
+  function kaydirmaYaz() {
+    if (kaydirmaMax > kaydirmaGit) { olay('kaydirma', { n: kaydirmaMax, h: 'm' }); kaydirmaGit = kaydirmaMax; }
+  }
+  function ekran(v, k) { aktifYaz(); kaydirmaYaz(); kaydirmaMax = 0; kaydirmaGit = 0; cur = { p: yol(), v: v || null, k: k || null }; }
 
   /* Genel API: kpssA('sayfa'|'ekran'|'tikla', {v,k,a,h,x,n}) */
   w.kpssA = function (t, o) {
@@ -114,7 +120,7 @@
   d.addEventListener('click', tikla, true);
   d.addEventListener('auxclick', tikla, true);
 
-  /* Etkin süre: sekme görünürken ve son 60 sn içinde etkileşim varsa 15 sn'lik adımlarla sayılır; paketler 60 sn'de bir gider. */
+  /* Etkin süre: sekme görünürken ve son 60 sn içinde etkileşim varsa 15 sn'lik adımlarla sayılır; paketler 120 sn'de bir gider. */
   function etk() { sonEtk = Date.now(); }
   ['pointerdown', 'keydown', 'touchstart', 'wheel', 'mousemove'].forEach(function (a) { d.addEventListener(a, etk, { passive: true }); });
   var adim = 0;
@@ -122,10 +128,10 @@
     if (d.hidden || Date.now() - sonEtk > 60000) return;
     aktifSn += 15;
     adim++;
-    if (adim % 4 === 0) { aktifYaz(); sirala(true); }
+    if (adim % 8 === 0) { aktifYaz(); sirala(true); } /* 8 x 15 sn = 120 sn; toplam süre aynı, olay sayısı yarı */
   }, 15000);
 
-  /* Kaydırma derinliği (25/50/75/100), ekran başına bir kez. Pencere/diyalog görünümlerinde ölçülmez. */
+  /* Kaydırma derinliği (25/50/75/100): ölçülür, ekran değişince ya da sayfadan çıkınca tek olay olarak gider. Pencere/diyalog görünümlerinde ölçülmez. */
   var kaydirmaBekle = 0;
   w.addEventListener('scroll', function () {
     etk();
@@ -136,7 +142,7 @@
       var el = d.documentElement, toplam = el.scrollHeight, gorunen = w.innerHeight || 0;
       if (!toplam || toplam <= gorunen * 1.15) return;
       var yuzde = ((w.scrollY || el.scrollTop || 0) + gorunen) / toplam * 100;
-      [25, 50, 75, 100].forEach(function (e) { if (yuzde >= (e === 100 ? 97 : e) && !kaydirma[e]) { kaydirma[e] = 1; olay('kaydirma', { n: e }); } });
+      [25, 50, 75, 100].forEach(function (e) { if (yuzde >= (e === 100 ? 97 : e) && e > kaydirmaMax) kaydirmaMax = e; });
     }, 400);
   }, { passive: true });
 
@@ -157,6 +163,7 @@
   function hizYolla() {
     if (hizGitti) return;
     hizGitti = true;
+    if (!hizOrnek) return;
     try {
       var nv = w.performance && w.performance.getEntriesByType ? w.performance.getEntriesByType('navigation')[0] : null;
       var ttfb = nv ? Math.round(nv.responseStart) : 0;
@@ -165,7 +172,7 @@
   }
   setTimeout(hizYolla, 10000);
 
-  function cikis() { hizYolla(); aktifYaz(); sirala(true); }
+  function cikis() { hizYolla(); aktifYaz(); kaydirmaYaz(); sirala(true); }
   d.addEventListener('visibilitychange', function () { if (d.hidden) cikis(); else etk(); });
   w.addEventListener('pagehide', cikis);
 

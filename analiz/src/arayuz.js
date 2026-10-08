@@ -244,7 +244,7 @@ function ciz(d){
   g=bolum(kok,'Kalite');
   c=kart(g,'Kaydırma derinliği','sayfa sayısı');cubuklar(c,d.kalite.kaydirma.map(function(r){return {ad:'%'+r.n,v:r.say}}),{bos:'Kaydırma verisi yok.'});
   c=kart(g,'Sayfa hızı');var hz=h('div','donusum');
-  [['LCP (medyan)',d.kalite.lcpMs!=null?tr(d.kalite.lcpMs)+' ms':'—'],['TTFB (medyan)',d.kalite.ttfbMs!=null?tr(d.kalite.ttfbMs)+' ms':'—']].forEach(function(a){var x=h('div');x.appendChild(h('span',null,a[0]));x.appendChild(h('strong',null,a[1]));hz.appendChild(x)});c.appendChild(hz);
+  [['LCP (medyan, '+tr(d.kalite.hizOrnek||0)+' örnek)',d.kalite.lcpMs!=null?tr(d.kalite.lcpMs)+' ms':'—'],['TTFB (medyan)',d.kalite.ttfbMs!=null?tr(d.kalite.ttfbMs)+' ms':'—']].forEach(function(a){var x=h('div');x.appendChild(h('span',null,a[0]));x.appendChild(h('strong',null,a[1]));hz.appendChild(x)});c.appendChild(hz);
   c.appendChild(h('p','not','İyi: LCP 2,5 sn altı. Çok günlük görünümde günlük medyanların ağırlıklı ortalamasıdır.'));
   c=kart(g,'JavaScript hataları');cubuklar(c,d.kalite.hatalar.map(function(r){return {ad:r.mesaj,alt:r.dosya,v:r.say}}),{uyari:true,bos:'Hata kaydı yok.'});
   c=kart(g,'404 — bulunamayan adresler');cubuklar(c,d.kalite.yok404.map(function(r){return {ad:r.p,v:r.say}}),{uyari:true,bos:'404 kaydı yok.'});
