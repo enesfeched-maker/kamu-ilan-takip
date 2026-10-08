@@ -29,7 +29,8 @@ concurrency:
 
 jobs:
   tara:
-    runs-on: macos-latest
+    # macos-latest (arm64) kapasite sıkıntısında saatlerce iş almıyor; Intel macOS havuzu ayrı.
+    runs-on: macos-15-intel
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
