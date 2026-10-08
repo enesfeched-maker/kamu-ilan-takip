@@ -21,6 +21,7 @@ EN_COK_LOGO_INDIRME = 150
 CSS_SURUM = 14
 LOGO_SURUM = 2
 ACIK_ZEMIN, KOYU_ZEMIN = '#F6F6F1', '#0D0E0C'
+ANALIZ_SURUM = 1  # docs/a.js (çerezsiz ziyaret istatistiği) önbellek sürümü
 # <head> içinde, theme-color etiketinden sonra: açık tema varsayılan, yalnız kit-theme=="dark" koyu açar.
 TEMA_BETIGI = ('<script>try{var d=JSON.parse(localStorage.getItem("kit-theme"))==="dark";document.documentElement.dataset.theme=d?"dark":"light";'
                'var m=document.querySelector("meta[name=theme-color]");if(m)m.content=d?"' + KOYU_ZEMIN + '":"' + ACIK_ZEMIN + '"}'
@@ -56,7 +57,7 @@ def ust_html(kok, aktif=''):
     menu = [('Manşet', f'{kok}#bugun', ''), ('İlanlar', f'{kok}#ilanlar', 'ilanlar'),
             ('Taban Puanları', f'{kok}kpss-taban-puanlari/', 'puanlar'), ('Tercih Robotu', f'{kok}puanlar/', 'robot'),
             ('Takvim', f'{kok}#takvim', ''), ('Kayıtlı', f'{kok}#kayitli', '')]
-    bagla = ''.join(f'<a href="{h}"{" class=" + chr(34) + "aktif" + chr(34) + " aria-current=" + chr(34) + "page" + chr(34) if a and a == aktif else ""}>'
+    bagla = ''.join(f'<a href="{h}" data-a="menu" data-a-x="{ad}"{" class=" + chr(34) + "aktif" + chr(34) + " aria-current=" + chr(34) + "page" + chr(34) if a and a == aktif else ""}>'
                     f'{ad}{"<b class=" + chr(34) + "tb-sayi" + chr(34) + " id=" + chr(34) + "saved-count-m" + chr(34) + " hidden>0</b>" if ad == "Kayıtlı" else ""}</a>'
                     for ad, h, a in menu)
     return (f'<header class="tb" id="tb"><div class="tb-ic"><a class="tb-marka" href="{kok}" aria-label="KPSS Tercihi ana sayfa">'
@@ -65,7 +66,7 @@ def ust_html(kok, aktif=''):
             f'<nav class="tb-nav" id="tb-nav" aria-label="Ana menü">{bagla}<span class="tb-ayrac" aria-hidden="true"></span>'
             f'<a class="tb-ikon" href="{kok}?profil=1" aria-label="Profil">{KISI_IKON}<span class="tb-etiket">Profil</span></a>'
             f'<button type="button" class="tb-ikon" id="theme" aria-label="Renk temasını değiştir">{AY_IKON}</button>'
-            f'<a class="tb-ikon" href="https://t.me/kamuilantakip" target="_blank" rel="noopener" aria-label="Telegram kanalı">{TG_IKON}<span class="tb-etiket">Telegram kanalı</span></a>'
+            f'<a class="tb-ikon" href="https://t.me/kamuilantakip" target="_blank" rel="noopener" aria-label="Telegram kanalı" data-a="telegram" data-a-x="ust">{TG_IKON}<span class="tb-etiket">Telegram kanalı</span></a>'
             f'</nav></div></header>{MENU_BETIGI}')
 
 
@@ -76,7 +77,7 @@ def alt_html(kok, yil=None):
             f'<div><strong>KPSS Tercihi</strong><span>Bağımsız ilan rehberi · resmî kaynak değildir</span></div></div>'
             f'<nav class="ab-linkler" aria-label="Alt bilgi"><a href="{kok}#bilgi/hakkimizda">Hakkımızda ve veri kaynakları</a><a href="{kok}#rehber">Başvuru rehberi</a>'
             f'<a href="{kok}kpss-taban-puanlari/">KPSS taban puanları</a><a href="{kok}puanlar/">Tercih robotu</a><a href="{kok}#bilgi/gizlilik">Gizlilik</a>'
-            f'<a href="{kok}#bilgi/reklam">Reklam</a><a href="https://t.me/kamuilantakip" target="_blank" rel="noopener">Telegram</a></nav>'
+            f'<a href="{kok}#bilgi/reklam">Reklam</a><a href="https://t.me/kamuilantakip" target="_blank" rel="noopener" data-a="telegram" data-a-x="alt">Telegram</a></nav>'
             f'<p class="ab-not">© <span id="yil">{yil}</span> KPSS Tercihi · Bağımsız ilan rehberi; herhangi bir kamu kurumuna bağlı değildir ve resmî kaynak değildir. '
             f'Başvurular resmî ilan üzerinden yapılır.</p></div></footer>')
 
@@ -89,7 +90,7 @@ def sayfa_basi(baslik, aciklama, canonical, kok, og_tur='website', ek_head='', o
             f'<meta property="og:title" content="{esc(og_baslik or baslik)}"><meta property="og:description" content="{esc(aciklama)}"><meta property="og:type" content="{og_tur}">{ek_head}'
             f'<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
             f'<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap">'
-            f'<link rel="stylesheet" href="{kok}sayfa.css?v={CSS_SURUM}"><link rel="stylesheet" href="{kok}kabuk.css?v={KABUK_SURUM}">{ikonlar(kok)}<script src="{kok}sayfa.js?v={CSS_SURUM}" defer></script></head>')
+            f'<link rel="stylesheet" href="{kok}sayfa.css?v={CSS_SURUM}"><link rel="stylesheet" href="{kok}kabuk.css?v={KABUK_SURUM}">{ikonlar(kok)}<script src="{kok}a.js?v={ANALIZ_SURUM}" defer></script><script src="{kok}sayfa.js?v={CSS_SURUM}" defer></script></head>')
 
 
 def _kurum_bloklari(item, gorsel, logo_html):
@@ -391,7 +392,7 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
     kayit_id = esc(item.get('id') or key)
     ikincil_veri = f' data-ikincil="{esc(",".join((kopya or {}).get("ikincil_idler") or []))}"' if (kopya or {}).get('ikincil_idler') else ''
     from kurum_sayfasi import BOOKMARK
-    cta = (f'<div class="d-cta"><a class="btn btn-ana btn-buyuk" href="{esc(target)}" target="_blank" rel="noopener noreferrer">{button}</a>'
+    cta = (f'<div class="d-cta"><a class="btn btn-ana btn-buyuk" href="{esc(target)}" target="_blank" rel="noopener noreferrer" data-a="resmi_ilan" data-a-h="{esc(key)}">{button}</a>'
            f'<button type="button" class="btn btn-ikinci btn-buyuk" id="kaydet-btn" data-kaydet="{kayit_id}"{ikincil_veri} data-ad="{esc(h1)}" aria-pressed="false">{BOOKMARK}<span data-yazi>Kaydet</span></button></div>'
            '<p class="d-cta-not">Başvuru bu sitede yapılmaz; işlemini ilanda belirtilen resmî kanaldan tamamla. Kaydetmek başvuru oluşturmaz.</p>')
     senin = _senin_icin(item, kayit) if acik_ilan else ''

@@ -44,7 +44,8 @@
     if (b) { b.innerHTML = d ? GUNES : AYIKON; b.setAttribute('aria-pressed', String(d)); b.setAttribute('aria-label', d ? 'Açık temaya geç' : 'Koyu temaya geç'); }
   }
   var tb = document.getElementById('theme');
-  if (tb) tb.onclick = function () { yaz('kit-theme', document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'); tema(); };
+  function iz(t, o) { try { if (typeof window !== 'undefined' && window.kpssA) window.kpssA(t, o); } catch (e) { /* ölçüm sayfayı bozmaz */ } }
+  if (tb) tb.onclick = function () { var yeni = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'; iz('tikla', { a: 'tema', x: yeni }); yaz('kit-theme', yeni); tema(); };
   tema();
 
   var yl = document.getElementById('yil'); if (yl) yl.textContent = String(new Date().getFullYear());
@@ -69,6 +70,8 @@
       var id = b.getAttribute('data-kaydet'), ids = kimlikler(b), acik = ids.some(function (x) { return kayitli.indexOf(x) >= 0; });
       if (acik) kayitli = kayitli.filter(function (x) { return ids.indexOf(x) < 0; }); else kayitli.push(id);
       yaz('kit-saved', kayitli); sayac();
+      var kart = b.closest ? b.closest('article') : null, bag = kart ? kart.querySelector('a[href*="ilan/"]') : null, mm = ((bag && bag.getAttribute('href')) || location.pathname).match(/ilan\/([A-Za-z0-9-]+)/);
+      iz('tikla', { a: acik ? 'kaydi_sil' : 'kaydet', h: mm ? mm[1] : '' });
       Array.prototype.forEach.call(document.querySelectorAll('[data-kaydet]'), function (x) { if (x.getAttribute('data-kaydet') === id) kaydetCiz(x); });
     });
   });

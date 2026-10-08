@@ -431,7 +431,7 @@ def satir_html(k, simdi, kok='../../', kurum_baglantisi=True):
     key = esc(k['key'])
     kayit_id = esc(k.get('id') or k['key'])
     return (f'<article class="ilan"{veri}>{gorsel}<div class="ilan-govde"><div class="ilan-kurum">{kucuk_logo}{kurum}</div>'
-            f'<h3><a href="{kok}ilan/{key}/">{esc(k.get("manset") or "Kamu ilanı")}</a>{ek}</h3>{_meta_html(k)}{sinyal}</div>'
+            f'<h3><a href="{kok}ilan/{key}/" data-a="satir_tikla" data-a-h="{key}">{esc(k.get("manset") or "Kamu ilanı")}</a>{ek}</h3>{_meta_html(k)}{sinyal}</div>'
             f'<div class="ilan-sag">{_tarih_html(k, simdi)}'
             f'<button type="button" class="kaydet" data-kaydet="{kayit_id}" data-ad="{esc(k.get("manset") or "İlan")}" aria-label="İlanı kaydet: {esc(k.get("manset") or "İlan")}" aria-pressed="false">{BOOKMARK}</button></div></article>')
 
@@ -518,7 +518,7 @@ def kurum_sayfasi(kan, liste, slug, gorseller, simdi, tablolar=None, harita=None
     icerik = f'''<section class="kp-hero"><div class="wrap"><nav class="crumbs" aria-label="Konum"><a href="{kok}">Ana sayfa</a><span aria-hidden="true">/</span><a href="{kok}#ilanlar">İlanlar</a><span aria-hidden="true">/</span><span>{esc(ad)}</span></nav>
 <div class="kp-id">{logo}<div><span class="eyebrow">Kurum</span><h1>{esc(ad)}</h1>{ozet}{adlar}</div></div>
 <div class="kp-stats"><div><strong>{len(acik)}</strong><span>açık ilan</span></div><div><strong>{kadro_yazi}</strong><span>bilinen kadro</span></div><div><strong>{len(liste)}</strong><span>toplam kayıt</span></div></div>
-<div class="kp-actions"><a class="btn btn-tg btn-buyuk" href="https://t.me/kamuilantakip" target="_blank" rel="noopener">Telegram'da takip et ↗</a></div></div></section>
+<div class="kp-actions"><a class="btn btn-tg btn-buyuk" href="https://t.me/kamuilantakip" target="_blank" rel="noopener" data-a="telegram" data-a-x="kurum">Telegram'da takip et ↗</a></div></div></section>
 <main id="icerik" class="wrap kp-main"><section class="bolum"><div class="bolum-bas"><h2>Başvurusu açık ilanlar <span class="sayi">{len(acik)}</span></h2></div>{acik_blok}</section>{gecmis_blok}</main>'''
     return su.sayfa_kabugu(baslik + ' | KPSS Tercihi', aciklama, canonical, icerik, 'kurum-page', baslik)
 
