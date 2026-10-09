@@ -31,18 +31,22 @@ jobs:
   tara:
     # macos-latest (arm64) kapasite sıkıntısında saatlerce iş almıyor; Intel macOS havuzu ayrı.
     runs-on: macos-15-intel
+    # İki iş akışı da Pages'e yayın yapar; aynı anda yayın GitHub'da çakışır.
+    concurrency:
+      group: pages
+      cancel-in-progress: false
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url || steps.deployment2.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7.0.1
       - name: Logo önbelleğini geri yükle
-        uses: actions/cache@v4
+        uses: actions/cache@v6.1.0
         with:
           path: .cache/logolar
           key: logolar-${{ github.run_id }}
           restore-keys: logolar-
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7.0.0
         with:
           python-version: "3.12"
       - name: Görsel bağımlılığını kur
@@ -91,10 +95,10 @@ jobs:
           python bot/site_uret.py
       - name: Pages yapılandır
         if: ${{ !cancelled() && steps.portal.outcome == 'success' }}
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6.0.0
       - name: Site dosyalarını hazırla
         if: ${{ !cancelled() && steps.portal.outcome == 'success' }}
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5.0.0
         with:
           path: docs
       # "Siteyi yayınla" iş akışı aynı anda Pages'e yayın yaparsa GitHub ikinci isteği 400 ile reddeder;
@@ -103,14 +107,14 @@ jobs:
         if: ${{ !cancelled() && steps.portal.outcome == 'success' }}
         id: deployment
         continue-on-error: true
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5.0.1
       - name: Eşzamanlı yayının bitmesini bekle
         if: ${{ !cancelled() && steps.deployment.outcome == 'failure' }}
         run: sleep 90
       - name: Siteyi yayınla (yeniden dene)
         if: ${{ !cancelled() && steps.deployment.outcome == 'failure' }}
         id: deployment2
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5.0.1
       - name: Yayımlanan ilanları Telegram'a gönder
         id: telegram
         if: ${{ !cancelled() && (steps.deployment.outcome == 'success' || steps.deployment2.outcome == 'success') }}

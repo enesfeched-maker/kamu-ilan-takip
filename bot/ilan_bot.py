@@ -499,6 +499,16 @@ def duyuru_karari(duyuru, ilanlar, mesajlar, yanitlar, bugun, gonderilen=None):
 TOPLU_SINIR = 950  # sendPhoto başlık sınırı 1024 görünür karakter
 
 
+def calisma_limiti(cfg, bekleyen_sayisi):
+    """Tarama başına mesaj sınırı; kuyruk 5'i geçince 2, 10'u geçince 3 mesaj (birikme erirken kanal boğulmaz)."""
+    limit = max(1, int(cfg.get('max_mesaj_per_calisma', 15)))
+    if bekleyen_sayisi > 10:
+        return max(limit, 3)
+    if bekleyen_sayisi > 5:
+        return max(limit, 2)
+    return limit
+
+
 def sessiz_donemde(cfg, zaman):
     """config 'telegram_sessiz_bitis' (ISO, saat dilimli) gelene kadar kanala hiçbir şey gönderilmez."""
     bitis = cfg.get('telegram_sessiz_bitis')
@@ -945,7 +955,7 @@ def main():
         print(f"Telegram sessiz dönemde ({cfg['telegram_sessiz_bitis']} kadar): "
               f"{len(gonderilecek)} ilan sırada bekliyor.")
         kuyruk = []
-    limit = max(1, int(cfg.get('max_mesaj_per_calisma', 15)))
+    limit = calisma_limiti(cfg, len(gonderilecek))
     site_url = cfg.get('site_url', '')
     hata = False
     adet = 0
