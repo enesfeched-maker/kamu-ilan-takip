@@ -525,14 +525,47 @@ def toplu_secim(ilanlar, gonderilen, cfg):
         if 0 <= (date.fromisoformat(i['son_tarih']) - bugun).days <= 3 and telegram_icin_uygun(i, dahil, haric):
             sonuc.append(i)
     sonuc.sort(key=lambda i: (i['son_tarih'], i.get('kurum', ''), i['id']))
-    gorulen, tekil = set(), []
-    for i in sonuc:  # aynı normalize kurum + aynı son tarih (SBB/İŞKUR kopyaları) tek satır
+    return kopyasiz(sonuc, ilanlar)
+
+
+def _kopya_gruplari(ilanlar):
+    """kopya.kopya_bul ile kaynaklar arası kopya grupları: {kimlik: birincil kimlik}. Hata olursa boş (seçim aksamaz)."""
+    try:
+        import kopya
+        return kopya.kopya_bul([i for i in ilanlar if not akademik_ilan(i)]).get('kopya_of') or {}
+    except Exception as hata:
+        print(f'Uyarı: kopya grupları bulunamadı, yalnız kurum/tarih tekilleştirmesi yapılıyor: {hata}', file=sys.stderr)
+        return {}
+
+
+def kopyasiz(secilen, ilanlar):
+    """Aynı gerçek ilanın kopyaları (kopya grubu ya da aynı normalize kurum + son tarih) tek kayda iner; sıra korunur.
+    Gruptan en çok meslek ayrıntısı olan kayıt seçilir, eşitlikte ilk kayıt. 9 Ekim 2026: sabah kartında 'Rektörlüğü',
+    '(TİBU)' gibi kurum adı farkları yüzünden aynı ilan iki kez çıkıyordu."""
+    from kart_tasarimlari import veri as kart_verisi
+    kof = _kopya_gruplari(ilanlar)
+
+    def ayrintili(i):
+        """Meslek ayrıntısı puanı: 'Alacak/Temin' gibi başlık özetinden çıkan genel satırlar sayılmaz."""
+        try:
+            return sum(1 for k in kart_verisi(i)['kadrolar'] if not re.search(r'alacak|temin|alım', k['ad'], re.I))
+        except Exception:
+            return 0
+
+    gruplar, sira = {}, []
+    for i in secilen:
         k = kurum_kimligi(i)
-        anahtar = (i['son_tarih'], k[:2] if k else i['id'])
-        if anahtar not in gorulen:
-            gorulen.add(anahtar)
-            tekil.append(i)
-    return tekil
+        anahtarlar = {('g', kof.get(i['id'], i['id'])), ('k', i.get('son_tarih'), k[:2] if k else i['id'])}
+        hedef = next((g for g in sira if gruplar[g]['anahtar'] & anahtarlar), None)
+        if hedef is None:
+            gruplar[i['id']] = {'anahtar': anahtarlar, 'kayit': i}
+            sira.append(i['id'])
+            continue
+        g = gruplar[hedef]
+        g['anahtar'] |= anahtarlar
+        if ayrintili(i) > ayrintili(g['kayit']):
+            g['kayit'] = i
+    return [gruplar[g]['kayit'] for g in sira]
 
 
 GUN_ADLARI = ('Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar')
@@ -574,13 +607,7 @@ def sabah_yeniler(ilanlar, gonderilen, cfg, zaman):
         if telegram_icin_uygun(i, dahil, haric):
             sonuc.append((-(kart_verisi(i)['toplam'] or 0), i.get('kurum', ''), i['id'], i))
     sonuc.sort(key=lambda s: s[:3])
-    gorulen, tekil = set(), []
-    for *_, i in sonuc:
-        anahtar = _tekil_anahtar(i)
-        if anahtar not in gorulen:
-            gorulen.add(anahtar)
-            tekil.append(i)
-    return tekil
+    return kopyasiz([s[-1] for s in sonuc], ilanlar)
 
 
 def _tekil_anahtar(i):
