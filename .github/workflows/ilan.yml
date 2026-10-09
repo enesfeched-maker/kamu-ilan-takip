@@ -33,7 +33,7 @@ jobs:
     runs-on: macos-15-intel
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url || steps.deployment2.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - name: Logo önbelleğini geri yükle
@@ -97,13 +97,23 @@ jobs:
         uses: actions/upload-pages-artifact@v4
         with:
           path: docs
+      # "Siteyi yayınla" iş akışı aynı anda Pages'e yayın yaparsa GitHub ikinci isteği 400 ile reddeder;
+      # bu durumda bir süre beklenip bir kez daha denenir (Telegram adımı yayına bağlı olduğu için önemli).
       - name: Siteyi yayınla
         if: ${{ !cancelled() && steps.portal.outcome == 'success' }}
         id: deployment
+        continue-on-error: true
+        uses: actions/deploy-pages@v4
+      - name: Eşzamanlı yayının bitmesini bekle
+        if: ${{ !cancelled() && steps.deployment.outcome == 'failure' }}
+        run: sleep 90
+      - name: Siteyi yayınla (yeniden dene)
+        if: ${{ !cancelled() && steps.deployment.outcome == 'failure' }}
+        id: deployment2
         uses: actions/deploy-pages@v4
       - name: Yayımlanan ilanları Telegram'a gönder
         id: telegram
-        if: ${{ !cancelled() && steps.deployment.outcome == 'success' }}
+        if: ${{ !cancelled() && (steps.deployment.outcome == 'success' || steps.deployment2.outcome == 'success') }}
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}

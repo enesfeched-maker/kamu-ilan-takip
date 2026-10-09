@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url || steps.deployment2.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - name: Logo önbelleğini geri yükle
@@ -64,6 +64,15 @@ jobs:
         uses: actions/upload-pages-artifact@v4
         with:
           path: docs
+      # Tarama iş akışı aynı anda yayın yapıyorsa GitHub 400 döner: bekleyip bir kez daha dene.
       - name: Siteyi yayınla
         id: deployment
+        continue-on-error: true
+        uses: actions/deploy-pages@v4
+      - name: Eşzamanlı yayının bitmesini bekle
+        if: ${{ steps.deployment.outcome == 'failure' }}
+        run: sleep 90
+      - name: Siteyi yayınla (yeniden dene)
+        if: ${{ steps.deployment.outcome == 'failure' }}
+        id: deployment2
         uses: actions/deploy-pages@v4

@@ -117,7 +117,24 @@ class TekrarPaylasimTests(unittest.TestCase):
         gonderilen, bekleyen = set(), {ELM_SBB, ELM_ISKUR}
         sira = self.calistir(mevcut, gonderilen, bekleyen)
         self.assertEqual(len(sira), 1)
-        self.assertEqual(len(gonderilen), 1)
+        # Kardeş kayıt işlenmiş sayılmaz, sırada kalır; seçilen gerçekten gönderilince sonraki çalışmada düşer.
+        self.assertEqual(gonderilen, set())
+        self.assertEqual(bekleyen, {ELM_SBB, ELM_ISKUR})
+        secilen = sira[0]['id']
+        gonderilen.add(secilen); bekleyen.discard(secilen)
+        self.assertEqual(self.calistir(mevcut, gonderilen, bekleyen), [])
+        self.assertEqual(gonderilen, {ELM_SBB, ELM_ISKUR})
+        self.assertEqual(bekleyen, set())
+
+    def test_ikisi_de_yeni_gonderilemezse_ikisi_de_kaybolmaz(self):
+        # 9 Ekim 2026 hatası: sessiz dönem/mesaj sınırı yüzünden hiçbiri gönderilmezken kopyalar birbirini
+        # 'paylaşıldı' işaretleyip ilan kanala hiç gitmiyordu.
+        mevcut = sec(ELM_SBB, ELM_ISKUR)
+        gonderilen, bekleyen = set(), {ELM_SBB, ELM_ISKUR}
+        for _ in range(3):
+            self.assertEqual(len(self.calistir(mevcut, gonderilen, bekleyen)), 1)
+        self.assertEqual(gonderilen, set())
+        self.assertEqual(bekleyen, {ELM_SBB, ELM_ISKUR})
 
     def test_farkli_ilan_elenmez(self):
         mevcut = sec(ELM_SBB, ELM_ISKUR)

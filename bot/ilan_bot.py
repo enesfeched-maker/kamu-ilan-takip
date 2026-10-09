@@ -390,10 +390,16 @@ def kopyalari_ele(uygun, mevcut, gonderilen, bekleyen):
         # aynı çalışmada: grubun birincil kaydı da aday ise o gönderilir; birincil aday değilse gruptan ilk aday
         birincil_bekliyor = kimlik != grup_id and grup_id in aday_idleri
         baska_secildi = grup_id in secilen_grup and kimlik != grup_id and not birincil_bekliyor
-        if onceden or birincil_bekliyor or baska_secildi:
+        if onceden:
             gonderilen.add(kimlik)
             bekleyen.discard(kimlik)
-            print(f"Tekrar paylaşım atlandı (aynı ilan başka kaynakta {'zaten paylaşıldı' if onceden else 'paylaşılıyor'}): {i['baslik']}")
+            print(f"Tekrar paylaşım atlandı (aynı ilan başka kaynakta zaten paylaşıldı): {i['baslik']}")
+            continue
+        if birincil_bekliyor or baska_secildi:
+            # Kardeş kayıt bu çalışmada gönderilecek ama henüz gönderilmedi (sessiz dönem, mesaj sınırı, hata olabilir):
+            # bu kayıt işlenmiş SAYILMAZ, sırada kalır. Kardeş gerçekten gönderilince sonraki çalışmada 'onceden' ile düşer.
+            # (9 Ekim 2026: iki kopya birbirini işaretleyip Türk Patent ve SSB ilanları hiç paylaşılmamıştı.)
+            print(f"Tekrar paylaşım ertelendi (aynı ilan başka kaynakta sırada): {i['baslik']}")
             continue
         if diger:
             secilen_grup.add(grup_id)
