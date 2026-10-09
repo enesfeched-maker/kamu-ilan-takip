@@ -70,6 +70,12 @@ test('rapor: KPI, kaynaklar, içerik, etkileşim, huni, kalite', async () => {
   assert.equal(r.kurumlar[0].k, 'ankara-bb');
   assert.deepEqual(r.aramalar.map((a) => a.q).sort(), ['astronot', 'zabıta']);
   assert.deepEqual(r.sifirAramalar, [{ q: 'astronot', var: 0, sifir: 1 }]);
+  // Kayıp noktaları: A (bugün) bir kez sonuçlu, bir kez sonuçsuz aradı; diğer üç oturum aramadı. B tek sayfada tıklamadan çıktı.
+  assert.deepEqual(r.kayip.arama.map((x) => [x.ad, x.oturum]), [['aramadi', 3], ['bazen_sifir', 1]]);
+  assert.equal(r.kayip.arama[1].ilgi, 1);
+  assert.equal(r.kayip.sifirSonra.devam + r.kayip.sifirSonra.birakti, 1);
+  assert.equal(r.kayip.cihaz.find((x) => x.ad === 'mobil').tekSayfa, 1);
+  assert.deepEqual(r.kayip.kaynak.map((x) => x.ad).sort(), ['Doğrudan', 'Google', 'Instagram', 'Telegram']);
   assert.equal(r.kategori[0].k, 'memur');
   assert.deepEqual(r.filtre[0], { filtre: 'il', deger: 'ankara', say: 1 });
   assert.deepEqual(r.manset.konum, [{ n: 2, say: 1 }]);

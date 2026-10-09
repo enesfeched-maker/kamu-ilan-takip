@@ -19,6 +19,21 @@ function agirlikliOrtalama(satirlar) {
   return t ? tamam(a / t) : null;
 }
 
+// 'kayip' satırları (k1 = kesit, k2 = grup): oturum, ilgi gösteren oturum, tek sayfada çıkan, ortalama etkin süre.
+const ARAMA_SIRA = ['aramadi', 'sonuclu', 'bazen_sifir', 'hep_sifir'];
+export function kayipNoktalari(satirlar) {
+  const kesit = (k1) => satirlar.filter((r) => r.k1 === k1).map((r) => ({
+    ad: r.k2, oturum: r.say, ilgi: r.tekil, tekSayfa: r.oturum, ortSn: r.say ? tamam(r.toplam / r.say) : 0,
+  }));
+  const sifir = Object.fromEntries(kesit('sifir_sonra').map((r) => [r.ad, r.oturum]));
+  return {
+    arama: kesit('arama').sort((a, b) => ARAMA_SIRA.indexOf(a.ad) - ARAMA_SIRA.indexOf(b.ad)),
+    sifirSonra: { devam: sifir.devam || 0, birakti: sifir.birakti || 0 },
+    cihaz: sirala(kesit('cihaz'), 'oturum'),
+    kaynak: ilk(sirala(kesit('kaynak'), 'oturum'), 8),
+  };
+}
+
 export function ilanYollari(rows) {
   const anahtarlar = new Set();
   for (const r of rows) {
@@ -121,6 +136,7 @@ export async function raporUret(env, aralik, simdiMs = Date.now(), adlariGetir =
     filtre: ilk(hedefler.filter((x) => x.a === 'filtre').map((x) => ({ filtre: x.h, deger: x.x, say: x.say })).sort((a, b) => b.say - a.say), 20),
     aramalar: ilk(aramaListe.sort((a, b) => (b.var + b.sifir) - (a.var + a.sifir)), 20),
     sifirAramalar: ilk(aramaListe.filter((x) => x.sifir > 0).sort((a, b) => b.sifir - a.sifir), 20),
+    kayip: kayipNoktalari(B('kayip')),
     manset: {
       konum: grupla('manset_tikla', (r) => String(r.n ?? 0)).map((r) => ({ n: Number(r.k), say: r.say })).sort((a, b) => a.n - b.n),
       nokta: toplaAd('manset_nokta'),

@@ -102,7 +102,7 @@ var yuzde=function(x){return (x*100).toFixed(x<0.1&&x>0?1:0).replace('.',',')+'%
 function sure(sn){sn=Math.round(sn||0);if(sn<60)return sn+' sn';var d=Math.floor(sn/60),s=sn%60;if(d<60)return d+' dk'+(s?' '+s+' sn':'');return Math.floor(d/60)+' sa '+(d%60)+' dk'}
 function gunKisa(g){var p=g.split('-');return Number(p[2])+'.'+p[1]}
 var GUNAD=['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'];
-var EYLEM={manset_tikla:'Manşet tıklaması',manset_nokta:'Manşet noktası',manset_ok:'Manşet oku',satir_tikla:'İlan satırı',kurum_tikla:'Kurum bağlantısı',kategori:'Kategori seçimi',filtre:'Filtre değişimi',arama:'Arama',daha_fazla:'Daha fazla göster',kaydet:'İlan kaydedildi',kaydi_sil:'Kayıt kaldırıldı',takvim_ics:'Takvim indirme (.ics)',telegram:'Telegram bağlantısı',resmi_ilan:'Resmî ilana git',profil_kaydet:'Profil kaydı',robot:'Tercih robotu',tema:'Tema değiştirme',menu:'Menü',makale:'Rehber makalesi'};
+var EYLEM={manset_tikla:'Manşet tıklaması',manset_nokta:'Manşet noktası',manset_ok:'Manşet oku',satir_tikla:'İlan satırı',kurum_tikla:'Kurum bağlantısı',kategori:'Kategori seçimi',filtre:'Filtre değişimi',arama:'Arama',daha_fazla:'Daha fazla göster',kaydet:'İlan kaydedildi',kaydi_sil:'Kayıt kaldırıldı',takvim_ics:'Takvim indirme (.ics)',telegram:'Telegram bağlantısı',resmi_ilan:'Resmî ilana git',profil_kaydet:'Profil kaydı',robot:'Tercih robotu',tema:'Tema değiştirme',menu:'Menü',makale:'Rehber makalesi',arama_bildirim:'Sonuçsuz arama → Telegram haber al',arama_gecmis:'Sonuçsuz arama → geçmiş ilanlar',arama_cip:'Hızlı arama düğmesi',arama_taban:'Sonuçsuz arama → taban puanları'};
 var GORUNUM={bugun:'Manşet',ilanlar:'İlanlar',takvim:'Takvim',kayitli:'Kayıtlı',rehber:'Rehber',ilan:'İlan penceresi',makale:'Bilgi / rehber makalesi',karsilastir:'Karşılaştırma'};
 function eylem(a){return EYLEM[a]||a}
 
@@ -210,8 +210,21 @@ function ciz(d){
     var c=h('div');c.appendChild(h('span',null,a[0]));c.appendChild(h('strong',null,a[1]));c.appendChild(h('em',null,a[2]));kp.appendChild(c)});
   kok.appendChild(kp);
 
-  var g=bolum(kok,'Zaman');g.className='izgara genis';
-  var c=kart(g,'Günlük tekil ziyaretçi');cizgiGrafik(c,d.gunler);
+  var g,c,K=d.kayip;
+  if(K){
+    // Kayıp noktaları: hangi grupta ilgi düşük, tek sayfada çıkış yüksek. ilgi = ilana/kuruma/Telegram'a tıklayan oturum oranı.
+    var kayipSatir=function(ad){return function(r){return {ad:ad?ad(r.ad):r.ad,v:r.oturum,yazi:tr(r.oturum),ek:(r.oturum?yuzde(r.ilgi/r.oturum):'—')+' ilgi · '+(r.oturum?yuzde(r.tekSayfa/r.oturum):'—')+' tek sayfa · '+sure(r.ortSn)}}};
+    var ARAMA_AD={aramadi:'Arama yapmayan',sonuclu:'Arayıp sonuç bulan',bazen_sifir:'Bazen sonuçsuz kalan',hep_sifir:'Hep sonuçsuz kalan'};
+    g=bolum(kok,'Kayıp noktaları');
+    c=kart(g,'Aramaya göre oturumlar','oturum · ilgi · tek sayfa · süre');cubuklar(c,K.arama.map(kayipSatir(function(a){return ARAMA_AD[a]||a})),{bos:'Veri yok.'});
+    var sz=K.sifirSonra.devam+K.sifirSonra.birakti;
+    if(sz)c.appendChild(h('p',K.sifirSonra.birakti/sz>0.4?'not hata-mesaj':'not','Sonuçsuz aramadan sonra '+tr(K.sifirSonra.birakti)+' oturum ('+yuzde(K.sifirSonra.birakti/sz)+') hiçbir şeye tıklamadan bıraktı; '+tr(K.sifirSonra.devam)+' oturum devam etti.'));
+    c=kart(g,'Cihaza göre','oturum · ilgi · tek sayfa · süre');cubuklar(c,K.cihaz.map(kayipSatir()),{bos:'Veri yok.'});
+    c=kart(g,'Kaynağa göre','oturum · ilgi · tek sayfa · süre');cubuklar(c,K.kaynak.map(kayipSatir()),{bos:'Veri yok.'});
+  }
+
+  g=bolum(kok,'Zaman');g.className='izgara genis';
+  c=kart(g,'Günlük tekil ziyaretçi');cizgiGrafik(c,d.gunler);
   c=kart(g,'Hangi gün, hangi saat','sayfa görüntüleme');isiHaritasi(c,d.isi);
 
   g=bolum(kok,'Nereden geliyorlar');

@@ -310,7 +310,7 @@ test('sponsor yokken sponsor satırı yok; tarih gg.aa.yyyy; sayfa bağlantısı
   assert.ok(!yok.text.includes('Sponsorlu'));
   assert.ok(yok.text.includes('20.10.2026'));
   assert.ok(yok.text.includes('Ankara'));
-  assert.ok(yok.text.includes('href="https://site.test/ilan/1/"'));
+  assert.ok(yok.text.includes('href="https://site.test/ilan/1/?utm_source=telegram&amp;utm_medium=bot"'), yok.text);
 });
 
 test('sponsor hedefleme: tarih, aktiflik, eşleşme ve en spesifik tercih', async () => {

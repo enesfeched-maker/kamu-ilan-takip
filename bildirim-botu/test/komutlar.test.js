@@ -35,6 +35,32 @@ test('/start onay düğmesi gösterir', async () => {
   assert.equal(await kullaniciGetir(env, 1), null);
 });
 
+const kod = (s) => Buffer.from(s, 'utf8').toString('base64url');
+
+test('siteden gelen kelime: onaysız kullanıcıda onaydan sonra, onaylıda hemen eklenir', async () => {
+  await gonder(mesaj(1, '/start k_' + kod('Çocuk Gelişimi')));
+  const c = tgs.son('sendMessage');
+  assert.match(c.params.text, /“çocuk gelişimi”/);
+  const veri = butonlar(c)[0].callback_data;
+  assert.equal(veri, 'onay:' + kod('Çocuk Gelişimi'));
+  assert.ok(Buffer.byteLength(veri) <= 64);
+  assert.equal(await kullaniciGetir(env, 1), null);
+  await gonder(cb(1, veri));
+  assert.deepEqual((await kullaniciGetir(env, 1)).kelimeler, ['çocuk gelişimi']);
+  await gonder(mesaj(1, '/start k_' + kod('diyetisyen')));
+  assert.deepEqual((await kullaniciGetir(env, 1)).kelimeler, ['çocuk gelişimi', 'diyetisyen']);
+  assert.match(tgs.son('sendMessage').params.text, /takibe eklendi/);
+  await gonder(mesaj(1, '/start k_' + kod('diyetisyen')));
+  assert.deepEqual((await kullaniciGetir(env, 1)).kelimeler, ['çocuk gelişimi', 'diyetisyen']);
+});
+
+test('bozuk derin bağlantı kelime eklemez', async () => {
+  await gonder(mesaj(1, '/start k_%%%'));
+  assert.equal(butonlar(tgs.son('sendMessage'))[0].callback_data, 'onay');
+  await gonder(mesaj(1, '/start k_' + Buffer.from([0xff, 0xfe]).toString('base64url')));
+  assert.equal(butonlar(tgs.son('sendMessage'))[0].callback_data, 'onay');
+});
+
 test('onay -> düzey klavyesi; düzey seçimi ✓ toggle', async () => {
   await gonder(cb(1, 'onay'));
   const k = await kullaniciGetir(env, 1);

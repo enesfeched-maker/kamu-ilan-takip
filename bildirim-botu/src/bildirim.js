@@ -28,8 +28,15 @@ export function tarihGoster(t) {
   return m ? `${m[3]}.${m[2]}.${m[1]}` : '';
 }
 
+// Siteye giden bağlantıya kaynak etiketi: Telegram'ın uygulama içi tarayıcısı yönlendireni gizler.
+export function utmEkle(url, site) {
+  if (!url || !site || !url.startsWith(site.replace(/\/+$/, '')) || url.includes('utm_source=')) return url;
+  const [govde, ...kare] = url.split('#');
+  return govde + (govde.includes('?') ? '&' : '?') + 'utm_source=telegram&utm_medium=bot' + (kare.length ? '#' + kare.join('#') : '');
+}
+
 function ilanBaglanti(ilan, env) {
-  return ilan.sayfa || ilan.link || env.SITE_URL || '';
+  return utmEkle(ilan.sayfa || ilan.link || env.SITE_URL || '', env.SITE_URL);
 }
 
 function duyuruEtiketi(ilan) {

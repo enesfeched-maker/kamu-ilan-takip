@@ -62,6 +62,21 @@ export function kelimeAyikla(metin) {
   return out.slice(0, 10);
 }
 
+// Siteden gelen derin bağlantı: t.me/<bot>?start=k_<base64url(UTF-8 kelime)>. Geçersizse ''.
+export function derinKelime(kod) {
+  if (!/^[A-Za-z0-9_-]{2,62}$/.test(kod || '')) return '';
+  try {
+    const ikili = atob(kod.replace(/-/g, '+').replace(/_/g, '/') + '='.repeat((4 - (kod.length % 4)) % 4));
+    const metin = new TextDecoder('utf-8', { fatal: true }).decode(Uint8Array.from(ikili, (c) => c.charCodeAt(0)));
+    const w = metin.replace(/[\u0000-\u001f,<>]/g, ' ').replace(/\s+/g, ' ').trim().toLocaleLowerCase('tr').slice(0, 40);
+    return w.length >= 2 ? w : '';
+  } catch {
+    return '';
+  }
+}
+
+const kelimeEkle = (liste, w) => (liste.includes(w) ? liste : [...liste, w].slice(-10));
+
 // Mesajı düzenle (message_id varsa), olmazsa yeni gönder.
 async function goster(env, chat_id, message_id, metin, klavye) {
   const params = { text: metin, parse_mode: 'HTML' };
@@ -131,11 +146,28 @@ export async function mesajIsle(env, mesaj, bag = varsayilanBagimliliklar) {
   const onayli = !!(k && k.onay);
 
   switch (komut) {
-    case 'start':
+    case 'start': {
+      const arg = metin.split(/\s+/)[1] || '';
+      const kod = arg.startsWith('k_') ? arg.slice(2) : '';
+      const kelime = derinKelime(kod);
       if (onayli) {
+        if (kelime) {
+          const g = await kullaniciGuncelle(env, chat_id, (u) => { u.kelimeler = kelimeEkle(u.kelimeler || [], kelime); });
+          return yolla(
+            env, chat_id,
+            `“${kacis(kelime)}” takibe eklendi. Bu kelimeyi içeren yeni ilan çıkınca sana haber vereceğim.\n` +
+            `Takip ettiğin kelimeler: ${kacis((g ? g.kelimeler : [kelime]).join(', '))}` +
+            (g && !g.aktif ? '\n\nBildirimlerin şu an kapalı; açmak için /devam yaz.' : ''),
+          );
+        }
         return yolla(env, chat_id, 'Tekrar hoş geldin! Tercihlerini görmek için /ayarlar, komutlar için /yardim yaz.');
       }
-      return yolla(env, chat_id, ONAY_METNI, onayKlavye());
+      return yolla(
+        env, chat_id,
+        ONAY_METNI + (kelime ? `\n\nOnay verince “${kacis(kelime)}” kelimesini takibe alacağım.` : ''),
+        onayKlavye(kelime ? kod : ''),
+      );
+    }
     case 'yardim':
     case 'help':
       return yolla(env, chat_id, YARDIM_METNI);
@@ -182,13 +214,15 @@ export async function callbackIsle(env, cq, bag = varsayilanBagimliliklar) {
 
   let k = await kullaniciGetir(env, chat_id);
 
-  if (veri === 'onay') {
+  if (veri === 'onay' || veri.startsWith('onay:')) {
     await cevapla();
     if (k && k.onay) {
       // Eski düğme: durumu (ör. /durdur) değiştirme, yalnız bilgi ver.
       return goster(env, chat_id, message_id, 'Onayın zaten kayıtlı. Tercihlerini /ayarlar ile değiştirebilirsin.');
     }
     const yeni = k || { chat_id, duzeyler: [], iller: [], kategoriler: [], kelimeler: [] };
+    const kelime = derinKelime(veri.slice(5));
+    if (kelime) yeni.kelimeler = kelimeEkle(yeni.kelimeler || [], kelime);
     yeni.onay = 1;
     yeni.aktif = 0; // kurulum bitene kadar bildirim yok
     yeni.durum = null;

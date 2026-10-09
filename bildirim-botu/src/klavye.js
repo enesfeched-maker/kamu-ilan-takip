@@ -31,8 +31,9 @@ export const SAYFA_SAYISI = Math.ceil(ILLER.length / SAYFA_BOYU);
 const d = (text, callback_data) => ({ text, callback_data });
 const isaret = (secili, ad) => (secili ? '✓ ' : '') + ad;
 
-export function onayKlavye() {
-  return { inline_keyboard: [[d('Kabul ediyorum', 'onay')]] };
+// kod: siteden gelen anahtar kelimenin base64url hâli; onaydan sonra kelime filtresine eklenir.
+export function onayKlavye(kod = '') {
+  return { inline_keyboard: [[d('Kabul ediyorum', kod ? 'onay:' + kod : 'onay')]] };
 }
 
 export function duzeyKlavye(secili = [], mod = 'w') {

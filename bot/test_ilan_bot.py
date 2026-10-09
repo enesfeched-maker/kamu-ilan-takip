@@ -13,6 +13,15 @@ import ilan_bot
 from ilan_bot import rss_coz, tarih_bul, mesaj_olustur
 
 
+class UtmTests(unittest.TestCase):
+    def test_site_baglantisina_kaynak_etiketi(self):
+        s = 'https://kpsstercihi.com/'
+        self.assertEqual(ilan_bot.utm_ekle(s + 'ilan/x/', s), s + 'ilan/x/?utm_source=telegram&utm_medium=kanal')
+        self.assertEqual(ilan_bot.utm_ekle(s + '?g=bugun#a', s, 'ozet'), s + '?g=bugun&utm_source=telegram&utm_medium=ozet#a')
+        self.assertEqual(ilan_bot.utm_ekle('https://ilan.gov.tr/x', s), 'https://ilan.gov.tr/x')
+        self.assertEqual(ilan_bot.utm_ekle('', s), '')
+
+
 class RssTests(unittest.TestCase):
     def test_yayin_tarihi_son_tarih_degil(self):
         self.assertIsNone(tarih_bul("PERSONEL ALIMI (09.09.2026)"))
@@ -330,7 +339,7 @@ class TelegramDeliveryTests(unittest.TestCase):
             self.assertNotIn('yeni ilan', yalniz_acik)
             self.assertIn('☀️ <b>Günaydın — 5 Ekim Pazartesi</b>', yalniz_acik)
             self.assertIn('📌 Şu an başvurusu açık <b>7 ilan</b>', yalniz_acik)
-            self.assertIn('href="https://example.com/?g=bugun"', yalniz_acik)
+            self.assertIn('href="https://example.com/?g=bugun&amp;utm_source=telegram&amp;utm_medium=ozet"', yalniz_acik)
             yeni = ilan_bot.sabah_mesaj([self.kayit(0)], [], 7, '', self.SABAH)
         self.assertIn('🆕 <b>Son 24 saatte 1 yeni ilan</b> · 1 kadro', yeni)
         self.assertNotIn('⏰', yeni)
