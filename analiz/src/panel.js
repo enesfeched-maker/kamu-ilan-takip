@@ -135,7 +135,7 @@ export async function panelIstegi(request, env, url, secenek = {}) {
   if (yol === '/panel/veri' && request.method === 'GET') {
     const aralik = ['bugun', '7g', '30g', '90g'].includes(url.searchParams.get('aralik')) ? url.searchParams.get('aralik') : '7g';
     // Rapor çok sayıda toplama sorgusu çalıştırır: bugün 10 dk, diğer aralıklar 60 dk önbellekte; ?taze=1 en çok 5 dakikada bir işe yarar.
-    const ttl = aralik === 'bugun' ? 600 : 3600;
+    const ttl = aralik === 'bugun' ? 3600 : 6 * 3600; // ham tarama saatte bir; geçmiş aralıklar günde 4 kez
     const b = await butceDurumu(env, simdiMs);
     const ozet = butceOzeti(b);
     // Okuma bütçesi 2,5M'i aşınca yalnız önbellekteki (bayat olabilir) sonuç verilir; D1'e gidilmez.

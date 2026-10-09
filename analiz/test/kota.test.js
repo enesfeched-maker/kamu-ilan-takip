@@ -110,7 +110,7 @@ test('canlı gösterge son 5 dakikayı sayar', async () => {
 import { panelIstegi, oturumCerezi } from '../src/panel.js';
 import { bellekSifirla } from '../src/onbellek.js';
 
-test('panel/veri ve canli önbelleklenir; taze=1 en çok 5 dakikada bir işe yarar', async () => {
+test('panel/veri ve canli önbelleklenir; taze=1 en çok saatte bir işe yarar', async () => {
   bellekSifirla();
   const e = env({ PANEL_ANAHTARI: 'k-123456789' });
   const sn = Math.floor(T0 / 1000);
@@ -119,12 +119,12 @@ test('panel/veri ve canli önbelleklenir; taze=1 en çok 5 dakikada bir işe yar
   const r1 = await cagri('/panel/veri?aralik=7g', T0); assert.equal(r1.headers.get('X-Onbellek'), 'yok');
   const q1 = e.DB.sayac.sorgu;
   const r2 = await cagri('/panel/veri?aralik=7g', T0 + 60_000); assert.equal(r2.headers.get('X-Onbellek'), 'var');
-  const r3 = await cagri('/panel/veri?aralik=7g&taze=1', T0 + 120_000); assert.equal(r3.headers.get('X-Onbellek'), 'var', '5 dk dolmadan taze yok sayılır');
+  const r3 = await cagri('/panel/veri?aralik=7g&taze=1', T0 + 120_000); assert.equal(r3.headers.get('X-Onbellek'), 'var', '1 saat dolmadan taze yok sayılır');
   assert.equal(e.DB.sayac.sorgu, q1);
-  const r4 = await cagri('/panel/veri?aralik=7g&taze=1', T0 + 400_000); assert.equal(r4.headers.get('X-Onbellek'), 'yok');
+  const r4 = await cagri('/panel/veri?aralik=7g&taze=1', T0 + 3_700_000); assert.equal(r4.headers.get('X-Onbellek'), 'yok');
   assert.equal((await cagri('/panel/veri?aralik=bugun', T0)).headers.get('X-Onbellek'), 'yok');
-  assert.equal((await cagri('/panel/veri?aralik=bugun', T0 + 601_000)).headers.get('X-Onbellek'), 'yok', 'bugün 10 dk');
-  assert.equal((await cagri('/panel/veri?aralik=7g', T0 + 601_000)).headers.get('X-Onbellek'), 'var'.replace('var', 'var'));
+  assert.equal((await cagri('/panel/veri?aralik=bugun', T0 + 3_601_000)).headers.get('X-Onbellek'), 'yok', 'bugün 1 saat');
+  assert.equal((await cagri('/panel/veri?aralik=7g', T0 + 3_800_000)).headers.get('X-Onbellek'), 'var'.replace('var', 'var'));
   const c1 = await cagri('/panel/canli', T0); assert.equal(c1.headers.get('X-Onbellek'), 'yok');
   assert.equal((await cagri('/panel/canli', T0 + 20_000)).headers.get('X-Onbellek'), 'var');
   assert.equal((await cagri('/panel/canli', T0 + 31_000)).headers.get('X-Onbellek'), 'yok');
