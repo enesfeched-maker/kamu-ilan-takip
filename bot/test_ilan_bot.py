@@ -488,5 +488,12 @@ class SessizDonemTesti(unittest.TestCase):
         self.assertFalse(ilan_bot.sessiz_donemde({'telegram_sessiz_bitis': 'yarın'}, simdi))
 
 
+class CalismaLimitiTests(unittest.TestCase):
+    def test_kuyruk_buyuyunce_limit_artar(self):
+        cfg = {'max_mesaj_per_calisma': 1}
+        self.assertEqual([ilan_bot.calisma_limiti(cfg, n) for n in (0, 5, 6, 10, 11)], [1, 1, 2, 2, 3])
+        self.assertEqual(ilan_bot.calisma_limiti({'max_mesaj_per_calisma': 15}, 20), 15)
+
+
 if __name__ == '__main__':
     unittest.main()
