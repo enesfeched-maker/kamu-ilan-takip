@@ -1,5 +1,5 @@
 {
- "guncelleme": "2026-10-09T11:52:56+03:00",
+ "guncelleme": "2026-10-09T11:55:14+03:00",
  "ilanlar": [
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=9c82aab5-022e-43c8-b7f1-e6cf329d205b",
@@ -12574,6 +12574,7 @@
   "sbb-ad7e8dd467d5e49bfbfebd87",
   "sbb-af8b48f6cba75a72b79efb54",
   "sbb-af90a8ab2404bc69c088d70b",
+  "sbb-b0dc4cbe8c3b5ea169828109",
   "sbb-b23a1336a56e5a15fa16d512",
   "sbb-b2fb286c43de0cc8445bd632",
   "sbb-b411eade69d5ac65717b7b95",
@@ -12622,8 +12623,7 @@
  "telegram_bekleyen": [
   "csb-472497",
   "csb-478081",
-  "csb-478083",
-  "sbb-b0dc4cbe8c3b5ea169828109"
+  "csb-478083"
  ],
  "telegram_yayin_surumu": 2,
  "telegram_mesajlari": {
@@ -12646,9 +12646,11 @@
   "sbb-88240428a1026a054a7d3bb8": 303,
   "sbb-89c8b060891cf9aed29dbcdc": 280,
   "sbb-9ed3758a19cd1983ad11eee0": 305,
+  "sbb-b0dc4cbe8c3b5ea169828109": 306,
   "sbb-cbaa38524cf24d4c6fa9b46f": 292
  },
  "telegram_duyuru_yanitlari": {
+  "m:duzeltme:belediye:malazgirt|": "2026-10-09",
   "m:iptal:belediye:rize|jeoloj,muhend": "2026-10-09",
   "m:iptal:belediye:rize|muhend,ziraat": "2026-10-09",
   "m:iptal:belediye:tekkekoy|memur": "2026-10-04",
@@ -12714,7 +12716,6 @@
   "sbb"
  ],
  "canli_kimlikler": [
-  "csb-469171",
   "csb-472497",
   "csb-477190",
   "csb-477606",
