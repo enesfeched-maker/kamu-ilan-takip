@@ -446,6 +446,9 @@ def duyuru_karari(duyuru, ilanlar, mesajlar, yanitlar, bugun, gonderilen=None):
     edilmiş ya da aynı olay (kopya) daha önce bildirilmiş.
     referans: kanalda paylaşılmış ama mesaj kaydı olmayan tek orijinal (yanıt verilemez; metinde 📌 ile gösterilir)."""
     tur = 'iptal' if duyuru_turu_iptal_mi(duyuru) else 'duzeltme'
+    if tur == 'duzeltme':
+        # 9 Ekim 2026 kararı: düzeltme duyuruları kanalda paylaşılmaz; yalnız iptaller orijinal ilana yanıt olarak gider.
+        return {'islem': 'sessiz', 'sebep': 'düzeltme duyuruları paylaşılmıyor', 'referans': None}
     if akademik_ilan(duyuru):
         return {'islem': 'sessiz', 'sebep': 'akademik duyuru', 'referans': None}
     adaylar = orijinal_ara(duyuru, ilanlar, mesajlar, bugun)
@@ -632,40 +635,31 @@ def sabah_mesaj(yeniler, son_gun, acik_sayisi, site_url, zaman):
     # Son gün listesinde olan yeni ilan yalnız ⏰ altında görünür (başlıktaki sayı yine hepsini sayar).
     yeni_satirlari = [_ilan_satiri(i, site_url) for i in yeniler
                       if ('id', i['id']) not in son_gun_anahtar and ('k', _tekil_anahtar(i)) not in son_gun_anahtar]
-    son_satirlari = []
-    for i in son_gun:
-        fark = (date.fromisoformat(i['son_tarih']) - bugun).days
-        son_satirlari.append(_ilan_satiri(i, site_url, "Bugün son gün" if fark <= 0 else "Yarın son gün" if fark == 1 else f"{fark} gün kaldı"))
+    # Son başvurusu yaklaşanlar yalnız görselde (toplu son gün kartı) listelenir; metinde tek satır kalır ki
+    # gönderi kısa olsun ve okuyan ayrıntı için siteye geçsin (9 Ekim 2026 kararı).
+    son_satir = ""
+    if son_gun:
+        bugun_son = sum(1 for i in son_gun if (date.fromisoformat(i['son_tarih']) - bugun).days <= 0)
+        son_satir = (f"⏰ <b>{len(son_gun)} ilanın</b> son başvurusu yaklaşıyor"
+                     + (f" ({bugun_son} tanesinde bugün son gün)" if bugun_son else "") + " — liste görselde.")
     kadro = sabah_toplam_kadro(yeniler)
     yeni_baslik = f"🆕 <b>Son 24 saatte {len(yeniler)} yeni ilan</b>" + (f" · {kadro} kadro" if kadro else "")
 
-    def olustur(ny, ns):
+    def olustur(ny):
         parcalar = [ust]
         if yeniler:
             satirlar = yeni_satirlari[:ny] + ([f"+{len(yeni_satirlari) - ny} ilan daha"] if len(yeni_satirlari) > ny else [])
             parcalar.append("\n".join([yeni_baslik, *satirlar]))
-        if ns:
-            satirlar = son_satirlari[:ns] + ([f"+{len(son_gun) - ns} ilan daha"] if len(son_gun) > ns else [])
-            parcalar.append("\n".join(["⏰ <b>Son başvurusu yaklaşanlar</b>", *satirlar]))
+        if son_satir:
+            parcalar.append(son_satir)
         if alt:
             parcalar.append("\n".join(alt))
         return "\n\n".join(parcalar)
 
-    ny, ns = min(len(yeni_satirlari), SABAH_YENI_EN_COK), min(len(son_gun), SABAH_SON_GUN_EN_COK)
-    while gorunen_uzunluk(olustur(ny, ns)) > TOPLU_SINIR:
-        if ny > SABAH_YENI_EN_AZ:
-            ny -= 1
-        elif ns > 1:
-            ns -= 1
-        elif ny > 1:
-            ny -= 1
-        elif ns > 0:
-            ns -= 1
-        elif ny > 0:
-            ny -= 1
-        else:
-            break
-    return olustur(ny, ns)
+    ny = min(len(yeni_satirlari), SABAH_YENI_EN_COK)
+    while ny > 0 and gorunen_uzunluk(olustur(ny)) > TOPLU_SINIR:
+        ny -= 1
+    return olustur(ny)
 
 def suresi_doldu(ilan):
     if ilan.get('son_zaman'):

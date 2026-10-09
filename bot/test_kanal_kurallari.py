@@ -273,22 +273,16 @@ class IptalYanitiTesti(Dugum):
         tekniker = ilan('k2', 'ÇELTİK BELEDİYESİ', '1 TEKNİKER ALACAK')
         self.assertEqual([i['id'] for i in iptal_yaniti.orijinal_ara(d, [memur, tekniker], {'k1': 1, 'k2': 2}, SIMDI.date())], ['k1'])
 
-    def test_duzeltme_yanit_yeni_tarih_orijinale_iptal_isareti_yok(self):
-        self.senaryo([ilan('k1')], duy=duyuru('csb-2', 'Düzeltme / süre değişikliği', son_tarih='2026-11-06'))
-        self.assertEqual(self.calistir(), 1)
-        a, k = self.cagrilar[0]
-        self.assertEqual(k.get('yanit'), 500)
-        self.assertIn('📝 <b>Bu ilanda düzeltme yapıldı.</b>', a[2])
-        self.assertIn('Yeni son başvuru:</b> 6 Kasım 2026', a[2])
-        self.assertNotIn('iptal_edildi', self.kayit('k1'))
-
-    def test_duzeltme_aday_yoksa_duz_metin(self):
-        self.senaryo([ilan('k1')], duy=duyuru('csb-2', 'Düzeltme / süre değişikliği', son_tarih='2026-11-06'), mesajlar={})
-        self.calistir()
-        a, k = self.cagrilar[0]
-        self.assertIsNone(k.get('yanit'))
-        self.assertTrue(a[2].startswith('📝 <b>Düzeltme duyurusu:</b> Rize Belediyesi'))
-        self.assertIn('6 Kasım 2026', a[2])
+    def test_duzeltme_duyurusu_paylasilmaz_gonderilmis_sayilir(self):
+        # 9 Ekim 2026 kararı: düzeltme duyuruları kanalda paylaşılmaz (yanıt olarak da, düz metin olarak da).
+        for mesajlar in (None, {}):
+            with self.subTest(mesajlar=mesajlar):
+                ek ={} if mesajlar is None else {'mesajlar': mesajlar}
+                self.senaryo([ilan('k1')], duy=duyuru('csb-2', 'Düzeltme / süre değişikliği', son_tarih='2026-11-06'), **ek)
+                self.assertEqual(self.calistir(), 0)
+                self.assertEqual(self.cagrilar, [])
+                self.assertIn('csb-2', self.durum()['telegram_gonderilen'])
+                self.assertNotIn('iptal_edildi', self.kayit('k1'))
 
     def test_ayni_calistirmada_once_ilan_sonra_iptal_yanit_verir(self):
         orijinal = ilan('k1', kaynak_turu=None, son_tarih=gun(10)[:10])
@@ -328,18 +322,17 @@ class GercekKopyaTesti(Dugum):
                  mesajlar={k: 100 + n for n, k in enumerate(o['orijinaller'])})
         return duyurular
 
-    def test_mucur_duzeltmesi_iki_kopya_tek_yanit(self):
+    def test_mucur_duzeltmesi_paylasilmaz(self):
         o = self.ornek()
         mucur = [i for i in o['ilanlar'] if 'MUCUR' in i['kurum'].upper() and i.get('duyuru_turu')]
         self.assertEqual(len(mucur), 2)
         self.yaz([i for i in o['ilanlar'] if 'MUCUR' in i['kurum'].upper() or 'Mucur' in i['kurum']],
                  gonderilen=['iskur-ced29e58351712e81082b7e6'], telegram_bekleyen=[d['id'] for d in mucur],
                  mesajlar={'iskur-ced29e58351712e81082b7e6': 77})
-        self.assertEqual(self.calistir(), 1)
-        self.assertEqual(self.cagrilar[0][1].get('yanit'), 77)
+        self.assertEqual(self.calistir(), 0)   # düzeltme duyuruları paylaşılmaz
+        self.assertEqual(self.cagrilar, [])
         durum = self.durum()
         self.assertTrue(all(d['id'] in durum['telegram_gonderilen'] for d in mucur))   # ikisi de gönderilmiş sayılır
-        self.assertTrue(any(k.startswith('o:duzeltme:') for k in durum['telegram_duyuru_yanitlari']))
         self.assertEqual(self.calistir(), 0)
 
     def test_rize_iptal_kopyalari_kadro_basina_tek_ileti(self):
@@ -352,7 +345,7 @@ class GercekKopyaTesti(Dugum):
         self.assertEqual(len(rize), 5)
         for kadro in ('Gıda Mühendisi', 'Tekniker', 'Çevre Mühendisi', 'Mimar', 'Peyzaj Mimarı'):
             self.assertEqual(sum(kadro.lower() in m.lower() for m in rize), 1 if kadro != 'Mimar' else 2, kadro)  # 'Mimar' peyzaj mimarında da geçer
-        self.assertEqual(sayi, 6)             # 5 Rize + 1 Mucur
+        self.assertEqual(sayi, 5)             # 5 Rize iptali; Mucur düzeltmesi paylaşılmaz
         self.assertEqual(self.calistir(), 0)  # tekrar gönderilmez
         self.assertTrue(all(d['id'] in self.durum()['telegram_gonderilen'] for d in duyurular))
 

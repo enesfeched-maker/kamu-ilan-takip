@@ -199,7 +199,8 @@ class TelegramDeliveryTests(unittest.TestCase):
         self.assertEqual(self.run_bot(zaman=self.SABAH), 1)
         args, kwargs = self.gonderimler[0]
         self.assertIn('Günaydın — 5 Ekim Pazartesi', args[2])
-        self.assertIn('Son başvurusu yaklaşanlar', args[2])
+        self.assertIn('son başvurusu yaklaşıyor', args[2])
+        self.assertNotIn('• ', args[2].split('⏰')[1])  # liste yalnız görselde
         self.assertTrue(kwargs['foto'].startswith(b'\x89PNG'))
         self.assertEqual(json.loads(self.data.read_text())['telegram_toplu_hatirlatma_gunu'], '2026-10-05')
         self.assertEqual(self.run_bot(zaman=self.SABAH.replace(hour=15)), 0)
@@ -299,7 +300,7 @@ class TelegramDeliveryTests(unittest.TestCase):
             sonuc = ilan_bot.sabah_yeniler(sinir, {k['id'] for k in sinir}, {}, simdi_gec)
         self.assertEqual({k['id'] for k in sonuc}, {'i0', 'i3'})
 
-    def test_sabah_mesaji_son_gun_listesindeki_yeni_ilan_yalniz_altta_gorunur(self):
+    def test_sabah_mesaji_son_gun_ilanlari_metinde_listelenmez(self):
         bitis = (self.SABAH.date() + timedelta(days=1)).isoformat()
         ortak = self.kayit(0, son_tarih=bitis, kurum='Ortak Belediyesi')
         diger = self.kayit(1, kurum='Diger Belediyesi')
@@ -310,7 +311,8 @@ class TelegramDeliveryTests(unittest.TestCase):
         self.assertIn('Son 24 saatte 2 yeni ilan', yeni_bolum)  # sayı hepsini sayar
         self.assertNotIn('Ortak Belediyesi', yeni_bolum)
         self.assertIn('Diger Belediyesi', yeni_bolum)
-        self.assertIn('Ortak Belediyesi', son_bolum)
+        self.assertNotIn('Ortak Belediyesi', son_bolum)  # son gün listesi yalnız görselde
+        self.assertIn('<b>1 ilanın</b> son başvurusu yaklaşıyor', son_bolum)
         self.assertNotIn('ilan daha', yeni_bolum)
     def test_sabah_yeniler_kanalda_paylasilmayan_girmez(self):
         kayitlar = [self.kayit(0), self.kayit(1)]
@@ -348,7 +350,7 @@ class TelegramDeliveryTests(unittest.TestCase):
             self.assertTrue(ilan_bot.turkce_tarih(self.SABAH + timedelta(days=gun)).endswith(ad))
         self.assertEqual(ilan_bot.turkce_tarih(datetime(2026, 8, 30, tzinfo=self.SABAH.tzinfo)), '30 Ağustos Pazar')
 
-    def test_sabah_mesaji_butce_asilinca_once_yeni_sonra_son_gun_kisalir_altlik_kalir(self):
+    def test_sabah_mesaji_butce_asilinca_yeni_listesi_kisalir_altlik_kalir(self):
         uzun = 'Çok Uzun Adlı Büyükşehir Belediye Başkanlığı Zabıta Müdürlüğü '
         yeni = [self.kayit(n, kurum=uzun + str(n), baslik=uzun) for n in range(12)]
         bitis = (self.SABAH.date() + timedelta(days=1)).isoformat()
@@ -360,9 +362,11 @@ class TelegramDeliveryTests(unittest.TestCase):
         self.assertLessEqual(ilan_bot.gorunen_uzunluk(tam), ilan_bot.TOPLU_SINIR)
         self.assertLessEqual(ilan_bot.gorunen_uzunluk(metin), ilan_bot.TOPLU_SINIR)
         yeni_bolum, son_bolum = metin.split('⏰')
-        self.assertGreaterEqual(yeni_bolum.count('• '), 3)  # yeni liste en az 3'e kadar kısalır
-        self.assertLess(yeni_bolum.count('• '), 5)
+        self.assertGreaterEqual(yeni_bolum.count('• '), 3)
+        self.assertLess(yeni_bolum.count('• '), 12)
         self.assertIn('ilan daha', yeni_bolum)
+        self.assertNotIn('• ', son_bolum)
+        self.assertIn('<b>10 ilanın</b> son başvurusu yaklaşıyor', son_bolum)
         self.assertIn('📌 Şu an başvurusu açık <b>30 ilan</b>', metin)
         self.assertIn('Bugünün tüm ilanları', metin)
         self.assertTrue(metin.startswith('☀️ <b>Günaydın'))
@@ -381,8 +385,8 @@ class TelegramDeliveryTests(unittest.TestCase):
             secim = ilan_bot.toplu_secim(kayitlar, {k['id'] for k in kayitlar}, {})
             self.assertEqual(len(secim), 21)  # 25 - 4 dışlanan
             metin = ilan_bot.sabah_mesaj([], secim, 21, '', self.SABAH)
-        self.assertEqual(metin.count('• '), 6)
-        self.assertIn('+15 ilan daha', metin)
+        self.assertEqual(metin.count('• '), 0)  # son gün ilanları yalnız görselde
+        self.assertIn('⏰ <b>21 ilanın</b> son başvurusu yaklaşıyor — liste görselde.', metin)
 
     def test_toplu_secimde_ayni_kurum_ve_tarih_tek_satir(self):
         bitis = (self.SABAH.date() + timedelta(days=1)).isoformat()
