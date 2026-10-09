@@ -179,16 +179,13 @@ $('robot-form').onsubmit=e=>{e.preventDefault();robotSinir=ROBOT_ILK;const p=par
 {
   const pr=profilOku(),kayitliDuzey=readStore('kit-puan-duzey','');
   duzeyAc(pr?pr.ogrenim:PUAN_TURU[kayitliDuzey]?kayitliDuzey:'lisans').then(async()=>{
-    const ip=$('profil-ipucu');
-    if(!pr){ip.replaceChildren('Profilini oluşturursan puan türün ve puanın otomatik dolar. ');const l=E('a','acik-link','Profilini oluştur →');l.href='../?profil=1';ip.append(l);ip.hidden=false;return;}
+    /* Profil varsa robot sessizce doldurulur; açıklama kutusu gösterilmez (sade sayfa, 9 Ekim 2026). */
+    if(!pr)return;
     /* Bölüm adı listedeki bir bölümle (büyük/küçük harf farkı gözetmeden) eşleşirse robota yazılır; tek il seçiliyse görev yeri de. */
     let bolumAd='';
     if(pr.bolum){const v=await bolumYukle(duzey);if(v&&duzey===pr.ogrenim){const ad=Object.values(v.bolumler).find(a=>kucuk(a)===kucuk(pr.bolum));if(ad){bolumAd=ad;$('robot-bolum').value=ad;}}}
     if(pr.iller.length===1&&!pr.tum_turkiye){const o=[...$('robot-il').options].find(x=>x.value&&kucuk(x.value)===kucuk(pr.iller[0]));if(o)$('robot-il').value=o.value;}
     const uyumlu=pr.puan_turu===PUAN_TURU[pr.ogrenim];
-    let m='Profilinden dolduruldu: '+LEVELS[pr.ogrenim]+(pr.puan?' · KPSS '+pr.puan_turu+' '+puanTr(pr.puan):'')+(bolumAd?' · '+bolumAd:'')+'.';
-    if(!uyumlu)m+=' Bu tablo yalnızca '+PUAN_TURU[pr.ogrenim]+' puan türüyle yapılan merkezi yerleştirmeleri gösterir; puanın bu türle karşılaştırılamadığı için doldurulmadı.';
-    ip.textContent=m;ip.hidden=false;
     if(pr.puan&&uyumlu){$('robot-puan').value=puanTr(pr.puan);}
     if(pr.puan&&uyumlu||bolumAd)robot();
   });
