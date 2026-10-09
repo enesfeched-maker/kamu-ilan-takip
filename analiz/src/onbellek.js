@@ -1,6 +1,6 @@
 // D1 okuma kotasını korumak için: izolat belleği + Cache API (izolatlar arası paylaşılır) ve okunan satır günlüğü.
 const bellek = new Map(); // anahtar -> { ms, govde }
-const TAZE_ARALIK_MS = 300_000; // ?taze=1 aynı girdi için en çok 5 dakikada bir işe yarar
+const TAZE_ARALIK_MS = 3_600_000; // ham taramayı sınırlar; // ?taze=1 aynı girdi için en çok 5 dakikada bir işe yarar
 
 export function bellekSifirla() { bellek.clear(); }
 

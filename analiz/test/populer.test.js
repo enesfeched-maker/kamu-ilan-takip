@@ -49,7 +49,7 @@ test('son 7 günden eski olaylar, geçersiz anahtarlar ve yabancı köken', asyn
   assert.equal((await iste(env, { Origin: 'https://www.kpsstercihi.com' })).headers.get('Access-Control-Allow-Origin'), 'https://www.kpsstercihi.com');
 });
 
-test('en çok 100 ilan ve sunucu önbelleği 30 dk', async () => {
+test('en çok 100 ilan ve sunucu önbelleği 6 saat', async () => {
   populerBellekSifirla();
   const db = sahteD1(); const env = { DB: db };
   for (let i = 0; i < 120; i++) tikla(db, 's' + i, 'kaydet', 'K' + String(i).padStart(3, '0'));
@@ -58,9 +58,9 @@ test('en çok 100 ilan ve sunucu önbelleği 30 dk', async () => {
   const once = db.sayac.sorgu;
   await iste(env);
   assert.equal(db.sayac.sorgu, once, 'ikinci istek veritabanına gitmez');
-  const r = await populerIstegi(new Request('https://api.kpsstercihi.com/populer'), env, T0 + 1801_000);
+  const r = await populerIstegi(new Request('https://api.kpsstercihi.com/populer'), env, T0 + 21_601_000);
   assert.equal(r.status, 200);
-  assert.ok(db.sayac.sorgu > once, '30 dk sonra yenilenir');
+  assert.ok(db.sayac.sorgu > once, '6 saat sonra yenilenir');
 });
 
 test('OPTIONS 204, POST 405', async () => {
@@ -83,8 +83,8 @@ test('geçmiş günler gün özetinden gelir (ham tabloya gerek yok); bugün art
   goruntule(db, 's1', 'BUGUN');
   const j = await (await iste(env)).json();
   assert.deepEqual(j.ilanlar, { DUN: 4, BUGUN: 1 });
-  // 31 dk sonra: aynı bugünkü olay yeniden okunsa da iki kez sayılmaz; yeni olay eklenir
+  // 6 saat sonra: aynı bugünkü olay yeniden okunsa da iki kez sayılmaz; yeni olay eklenir
   goruntule(db, 's2', 'BUGUN', SN + 60);
-  const r = await populerIstegi(new Request('https://api.kpsstercihi.com/populer'), env, T0 + 1801_000);
+  const r = await populerIstegi(new Request('https://api.kpsstercihi.com/populer'), env, T0 + 21_601_000);
   assert.deepEqual((await r.json()).ilanlar, { DUN: 4, BUGUN: 2 });
 });

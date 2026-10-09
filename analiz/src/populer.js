@@ -15,7 +15,7 @@ import { onbellekli, okumaGunlugu, yaz as onbellegeYaz, oku_ as onbellektenOku, 
 export const GUN = 7;
 export const EN_COK = 100;
 export const ONBELLEK_SN = 600; // tarayıcı
-export const SUNUCU_ONBELLEK_SN = 1800;
+export const SUNUCU_ONBELLEK_SN = 6 * 3600; // günde 4 hesap
 const KEY_RE = /^[A-Za-z0-9-]{1,80}$/;
 
 export function populerBellekSifirla() { bellekSifirla(); }
