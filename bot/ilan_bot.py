@@ -300,6 +300,15 @@ def site_adi(site_url):
     return re.sub(r'^https?://(www\.)?', '', site_url or '').rstrip('/')
 
 
+def utm_ekle(url, site_url, ortam='kanal'):
+    """Siteye giden Telegram bağlantısına kaynak etiketi ekler; uygulama içi tarayıcı yönlendireni gizlediği için
+    analizde aksi hâlde 'Doğrudan' görünür. Başka alan adına giden bağlantıya dokunmaz."""
+    if not url or not site_url or not url.startswith(site_url.rstrip('/')) or 'utm_source=' in url:
+        return url
+    govde, kare, parca = url.partition('#')
+    return govde + ('&' if '?' in govde else '?') + 'utm_source=telegram&utm_medium=' + ortam + kare + parca
+
+
 def telegram_gonder(token, chat_id, metin, ilan_linki="", site_url="", foto=None, yanit=None):
     """Gönderir; başarıda Telegram message_id'sini (yoksa True), başarısızlıkta False döndürür.
     yanit: bir mesaja yanıt olarak göndermek için message_id (mesaj silinmişse yine de gönderilir)."""
@@ -313,9 +322,9 @@ def telegram_gonder(token, chat_id, metin, ilan_linki="", site_url="", foto=None
     dugmeler = []
     if ilan_linki:
         label='🔎 İlanı incele'
-        dugmeler.append([{"text": label, "url": ilan_linki}])
+        dugmeler.append([{"text": label, "url": utm_ekle(ilan_linki, site_url)}])
     if site_url:
-        dugmeler.append([{"text": "🌐 " + site_adi(site_url), "url": site_url}])
+        dugmeler.append([{"text": "🌐 " + site_adi(site_url), "url": utm_ekle(site_url, site_url)}])
     if dugmeler:
         alanlar["reply_markup"] = json.dumps({"inline_keyboard": dugmeler}, ensure_ascii=False)
     if yanit:
@@ -602,7 +611,7 @@ def _ilan_satiri(i, site_url, etiket=None):
     kurum, kadro = toplu_satir(i)
     ad = kisalt(f"{kurum} — {kadro}" if kadro and kadro != kurum else kurum, 70)
     try:
-        url = ilan_sayfasi(i, site_url)
+        url = utm_ekle(ilan_sayfasi(i, site_url), site_url, 'ozet')
     except ValueError:
         url = ''
     govde = f'<a href="{e(url, quote=True)}">{e(ad)}</a>' if url else e(ad)
@@ -618,7 +627,7 @@ def sabah_mesaj(yeniler, son_gun, acik_sayisi, site_url, zaman):
     if acik_sayisi:
         alt.append(f"📌 Şu an başvurusu açık <b>{acik_sayisi} ilan</b>")
     if site_url:
-        alt.append(f'👉 Bugünün tüm ilanları: <a href="{html.escape(site_url.rstrip("/") + "/?g=bugun", quote=True)}">{html.escape(site_adi(site_url))}</a>')
+        alt.append(f'👉 Bugünün tüm ilanları: <a href="{html.escape(utm_ekle(site_url.rstrip("/") + "/?g=bugun", site_url, "ozet"), quote=True)}">{html.escape(site_adi(site_url))}</a>')
     son_gun_anahtar = {x for i in son_gun for x in (('id', i['id']), ('k', _tekil_anahtar(i)))}
     # Son gün listesinde olan yeni ilan yalnız ⏰ altında görünür (başlıktaki sayı yine hepsini sayar).
     yeni_satirlari = [_ilan_satiri(i, site_url) for i in yeniler

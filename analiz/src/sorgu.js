@@ -64,6 +64,30 @@ export const METRIKLER = [
     boyut: 'tikla_hedef',
     sql: grup(SUT('a', "COALESCE(h, '') || '|' || COALESCE(x, '') || '|' || COALESCE(CAST(n AS TEXT), '')"), "t = 'tikla' AND a <> 'arama'", 'a, k2'),
   },
+  // Kayıp noktaları: oturum başına tek satırdan dört kesit (arama sonucu, sonuçsuz aramadan sonra, cihaz, kaynak).
+  // json_each ile tek terim: UNION ALL'sız, ham satırlar bir kez gruplanır. say = oturum, tekil = ilgi gösteren oturum
+  // (ilana/kuruma/Telegram'a tıklama), oturum = tek sayfada tıklamadan çıkan, toplam = etkin saniye.
+  {
+    boyut: 'kayip',
+    sql: `SELECT gun,
+        CASE d.value WHEN 1 THEN 'arama' WHEN 2 THEN 'sifir_sonra' WHEN 3 THEN 'cihaz' ELSE 'kaynak' END AS k1,
+        CASE d.value
+          WHEN 1 THEN CASE WHEN ar = 0 THEN 'aramadi' WHEN ar0 = ar THEN 'hep_sifir' WHEN ar0 > 0 THEN 'bazen_sifir' ELSE 'sonuclu' END
+          WHEN 2 THEN CASE WHEN sonilgi > ilk0 THEN 'devam' ELSE 'birakti' END
+          WHEN 3 THEN COALESCE(c, '?') ELSE COALESCE(kk, 'Doğrudan') END AS k2,
+        COUNT(*) AS say, SUM(ilgi > 0) AS tekil, SUM(sp <= 1 AND tk = 0) AS oturum, SUM(ak) AS toplam
+      FROM (SELECT gun, os, MAX(CASE WHEN ilk = 1 THEN cihaz END) AS c, MAX(CASE WHEN ilk = 1 THEN kaynak END) AS kk,
+              SUM(t = 'sayfa') AS sp, SUM(t = 'tikla') AS tk,
+              SUM(t = 'tikla' AND a = 'arama') AS ar, SUM(t = 'tikla' AND a = 'arama' AND COALESCE(n, 0) = 0) AS ar0,
+              SUM(t = 'tikla' AND a IN ('satir_tikla', 'resmi_ilan', 'kurum_tikla', 'manset_tikla', 'telegram', 'kaydet', 'arama_bildirim')) AS ilgi,
+              SUM(CASE WHEN t = 'aktif' THEN n * COALESCE(n2, 1) ELSE 0 END) AS ak,
+              MIN(CASE WHEN t = 'tikla' AND a = 'arama' AND COALESCE(n, 0) = 0 THEN ts END) AS ilk0,
+              MAX(CASE WHEN t = 'tikla' AND (a IN ('satir_tikla', 'resmi_ilan', 'kurum_tikla', 'manset_tikla', 'telegram', 'kaydet', 'arama_bildirim', 'arama_gecmis', 'arama_cip')
+                OR (a = 'arama' AND n > 0)) THEN ts END) AS sonilgi
+            FROM olaylar WHERE {G} GROUP BY gun, os HAVING sp >= 1) AS o, json_each('[1,2,3,4]') AS d
+      WHERE d.value <> 2 OR o.ilk0 IS NOT NULL
+      GROUP BY gun, k1, k2`,
+  },
   { boyut: 'arama', sql: grup(SUT('x', "CASE WHEN COALESCE(n, 0) = 0 THEN 'sifir' ELSE 'var' END"), "t = 'tikla' AND a = 'arama' AND x IS NOT NULL", 'x, k2') },
   {
     boyut: 'huni',
