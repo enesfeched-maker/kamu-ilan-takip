@@ -397,6 +397,20 @@ class TelegramDeliveryTests(unittest.TestCase):
             secim = ilan_bot.toplu_secim(kayitlar, {k['id'] for k in kayitlar}, {})
         self.assertEqual(len(secim), 2)
 
+    def test_toplu_secimde_kopya_grubu_tek_satir_ayrintili_kayit(self):
+        # Kurum adları farklı ('Rektörlüğü', '(TİBU)') ama kopya tespiti aynı ilan diyor: tek satır, meslek ayrıntılı kayıt.
+        bitis = (self.SABAH.date() + timedelta(days=2)).isoformat()
+        genel = {'id': 'sbb-' + 'a' * 24, 'baslik': 'X ÜNİVERSİTESİ - 18 SÖZLEŞMELİ PERSONEL ALACAK', 'kurum': 'X Üniversitesi',
+                 'kadro': '18 Sözleşmeli Personel Alacak', 'son_tarih': bitis}
+        ayrinti = {'id': 'iskur-' + 'b' * 24, 'baslik': 'X ÜNİVERSİTESİ REKTÖRLÜĞÜ - SÖZLEŞMELİ PERSONEL', 'kurum': 'X Üniversitesi Rektörlüğü',
+                   'kadro': 'Toplam 13 kişi — 4 Büro Personeli • 9 Destek Personeli', 'son_tarih': bitis}
+        diger = {'id': 'iskur-' + 'c' * 24, 'baslik': 'Y', 'kurum': 'Başka Belediyesi', 'son_tarih': bitis}
+        kayitlar = [genel, ayrinti, diger]
+        with patch.object(ilan_bot, 'simdi', return_value=self.SABAH), \
+             patch.object(ilan_bot, '_kopya_gruplari', return_value={ayrinti['id']: genel['id']}):
+            secim = ilan_bot.toplu_secim(kayitlar, {k['id'] for k in kayitlar}, {})
+        self.assertEqual(sorted(k['id'] for k in secim), sorted([ayrinti['id'], diger['id']]))
+
     def test_acik_sayisi_site_tanimiyla_ayni(self):
         s = self.SABAH
         kayitlar = [self.kayit(0), self.kayit(1, son_tarih=None), self.kayit(2, son_tarih='2026-10-04'),
