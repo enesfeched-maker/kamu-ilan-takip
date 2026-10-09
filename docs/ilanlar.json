@@ -1,5 +1,5 @@
 {
- "guncelleme": "2026-10-09T10:23:12+03:00",
+ "guncelleme": "2026-10-09T10:25:52+03:00",
  "ilanlar": [
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=9c82aab5-022e-43c8-b7f1-e6cf329d205b",
@@ -12543,6 +12543,7 @@
   "sbb-809b134654a12117df3fdb91",
   "sbb-83609f07f8861d5c98115fb7",
   "sbb-866abc35896ad9d91ee671c5",
+  "sbb-88240428a1026a054a7d3bb8",
   "sbb-88a9760a607c548d73c7b5c9",
   "sbb-89c8b060891cf9aed29dbcdc",
   "sbb-8a62442fbdabe75f3d80199d",
@@ -12616,7 +12617,6 @@
   "csb-478081",
   "csb-478083",
   "sbb-2fecfe789ec2e94bc8a58047",
-  "sbb-88240428a1026a054a7d3bb8",
   "sbb-9ed3758a19cd1983ad11eee0",
   "sbb-b0dc4cbe8c3b5ea169828109"
  ],
@@ -12637,10 +12637,12 @@
   "sbb-25dc07af54e14d911de09cb0": 302,
   "sbb-46734a52a4045202658b0bf7": 296,
   "sbb-4ff1ffce4a1f868025e826e0": 293,
+  "sbb-88240428a1026a054a7d3bb8": 303,
   "sbb-89c8b060891cf9aed29dbcdc": 280,
   "sbb-cbaa38524cf24d4c6fa9b46f": 292
  },
  "telegram_duyuru_yanitlari": {
+  "m:iptal:belediye:rize|jeoloj,muhend": "2026-10-09",
   "m:iptal:belediye:tekkekoy|memur": "2026-10-04",
   "m:iptal:kurum:adana alparslan turkes bilim ve teknoloji universitesi|": "2026-10-03"
  },
@@ -12704,7 +12706,6 @@
   "sbb"
  ],
  "canli_kimlikler": [
-  "csb-469171",
   "csb-472497",
   "csb-477190",
   "csb-477606",
