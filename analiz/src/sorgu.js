@@ -102,9 +102,28 @@ function hazirla(metrik, kosul, baglar, sinir) {
 
 // Tüm metrikler TEK deyimde: koşula uyan ham satırlar bir kez okunup (MATERIALIZED CTE) bellekte tüm toplamalara beslenir.
 // Önceki düzen her metrik için ham satırları yeniden tarıyordu (~30x D1 okuması).
+// D1 tek deyimde en çok 5 bileşik SELECT terimine izin verir ("too many terms in compound SELECT"); metrikler bu sınıra göre
+// deyimlere bölünür ve aynı batch'te gönderilir. Her deyim ham satırları bir kez okur (~30 tarama yerine ~8).
+export const D1_BILESIK_SINIRI = 5;
+const terimSayisi = (sql) => 1 + (sql.match(/\bUNION\s+ALL\b/gi) || []).length;
 function tekSorgu(db, metrikler, kosul, baglar, sinir) {
-  const parca = metrikler.map((m) => `SELECT '${m.boyut}' AS boyut, gun, k1, k2, say, tekil, oturum, toplam FROM (${m.sql.replaceAll('{G}', '1').replaceAll('{L}', sinir ? `LIMIT ${sinir}` : '').replace(/FROM olaylar\b/g, 'FROM s')})`);
-  return db.prepare(`WITH s AS MATERIALIZED (SELECT * FROM olaylar WHERE ${kosul}) ${parca.join(' UNION ALL ')}`).bind(...baglar);
+  const gruplar = [];
+  let grup = [], terim = 0;
+  for (const m of metrikler) {
+    const sql = `SELECT '${m.boyut}' AS boyut, gun, k1, k2, say, tekil, oturum, toplam FROM (${m.sql.replaceAll('{G}', '1').replaceAll('{L}', sinir ? `LIMIT ${sinir}` : '').replace(/FROM olaylar\b/g, 'FROM s')})`;
+    const t = terimSayisi(m.sql);
+    if (grup.length && terim + t > D1_BILESIK_SINIRI) { gruplar.push(grup); grup = []; terim = 0; }
+    grup.push(sql); terim += t;
+  }
+  if (grup.length) gruplar.push(grup);
+  return gruplar.map((g) => db.prepare(`WITH s AS MATERIALIZED (SELECT * FROM olaylar WHERE ${kosul}) ${g.join(' UNION ALL ')}`).bind(...baglar));
+}
+// Bölünmüş deyimlerin sonuçları tek sonuç gibi birleştirilir (okuma günlüğü için meta toplanır).
+function sonuclariBirlestir(sonuclar) {
+  return {
+    results: sonuclar.flatMap((s) => s.results || []),
+    meta: { rows_read: sonuclar.reduce((t, s) => t + Number(s.meta?.rows_read || 0), 0) },
+  };
 }
 function satirlarBirlesik(sonuc) {
   return (sonuc.results || []).map((r) => {
@@ -124,7 +143,7 @@ function satirlar(sonuc, boyut) {
 
 // Tamamlanmış bir günün özetini yazar (var olanın üzerine yazar).
 export async function gunOzetiYaz(db, gun, simdiSn = Math.floor(Date.now() / 1000)) {
-  const [sonuc] = await db.batch([tekSorgu(db, METRIKLER, 'ts >= ? AND ts < ?', [gunBasSn(gun), gunBasSn(gun) + 86400], 200)]);
+  const sonuc = sonuclariBirlestir(await db.batch(tekSorgu(db, METRIKLER, 'ts >= ? AND ts < ?', [gunBasSn(gun), gunBasSn(gun) + 86400], 200)));
   okumaGunlugu('bakim/gun', sonuc);
   const kayitlar = satirlarBirlesik(sonuc);
   // 'pop' satırı olmayan gün bakımda yeniden özetlenir; boş günler bu yüzden işaret satırı ('_') taşır.
@@ -143,7 +162,7 @@ export async function aralikOku(db, bas, bit) {
   // ts aralığı tek indeksi (idx_olaylar_ts) kullanır; gün sınırları Türkiye saatindedir.
   const kos = 'ts >= ? AND ts < ? AND gun NOT IN (SELECT gun FROM ozet_gun)';
   const hamMetrik = METRIKLER.filter((m) => !m.yalnizOzet);
-  const [sonuc] = await db.batch([tekSorgu(db, hamMetrik, kos, [gunBasSn(bas), gunBasSn(bit) + 86400], 0)]);
+  const sonuc = sonuclariBirlestir(await db.batch(tekSorgu(db, hamMetrik, kos, [gunBasSn(bas), gunBasSn(bit) + 86400], 0)));
   okumaGunlugu('panel/veri', ozetli, sonuc);
   const ham = satirlarBirlesik(sonuc);
   return [...satirlar(ozetli, null).map((r, i) => ({ ...r, boyut: ozetli.results[i].boyut })), ...ham];
