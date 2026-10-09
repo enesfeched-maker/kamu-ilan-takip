@@ -495,5 +495,22 @@ class CalismaLimitiTests(unittest.TestCase):
         self.assertEqual(ilan_bot.calisma_limiti({'max_mesaj_per_calisma': 15}, 20), 15)
 
 
+class HaftalikArananTests(unittest.TestCase):
+    PZT = datetime(2026, 10, 5, 7, 0, tzinfo=timezone(timedelta(hours=3)))
+
+    def test_pazartesi_acik_ilani_olan_elenir(self):
+        veri = {'kelimeler': [{'kelime': 'diyetisyen', 'oturum': 9}, {'kelime': 'zabıta', 'oturum': 5}, {'kelime': 'veteriner', 'oturum': 4}]}
+        acik = [{'id': 'x', 'baslik': 'Rize Belediyesi - Zabıta Memuru Alımı', 'kadro': '', 'son_tarih': '2026-10-20'}]
+        with patch.object(ilan_bot, 'simdi', return_value=self.PZT):
+            self.assertEqual(ilan_bot.haftalik_aranan({}, acik, self.PZT, getir=lambda: veri), ['diyetisyen', 'veteriner'])
+            self.assertEqual(ilan_bot.haftalik_aranan({}, acik, self.PZT + timedelta(days=1), getir=lambda: veri), [])
+            self.assertEqual(ilan_bot.haftalik_aranan({}, acik, self.PZT, getir=lambda: 1 / 0), [])
+
+    def test_sabah_mesajinda_satir(self):
+        m = ilan_bot.sabah_mesaj([], [], 3, 'https://kpsstercihi.com/', self.PZT, ['diyetisyen', 'işitme uzmanı'])
+        self.assertIn('Bu hafta çok aranıp ilanı çıkmayanlar:</b> Diyetisyen · İşitme Uzmanı', m)
+        self.assertIn('https://kpsstercihi.com/puanlar/?utm_source=telegram', m)
+        self.assertNotIn('çok aranıp', ilan_bot.sabah_mesaj([], [], 3, 'https://kpsstercihi.com/', self.PZT))
+
 if __name__ == '__main__':
     unittest.main()
