@@ -485,16 +485,13 @@ let anahtar=null;try{const a=document.activeElement;anahtar=a&&a.dataset?a.datas
 renderKategori();renderSuzgec(res,pr);
 if(anahtar){const y=document.querySelector&&document.querySelector('[data-odak="'+anahtar+'"]');if(y&&y.focus)y.focus({preventScroll:true});}}
 function listeAdi(){if(F.tur)return F.tur;if(F.kat)return (KATEGORI.find(x=>x[0]===F.kat)||[0,'Tüm İlanlar'])[1];if(F.ogr==='belediye')return 'Belediye ilanları';return 'Tüm İlanlar';}
-/* Sonuçsuz aramada boş sayfa bırakılmaz: Telegram'dan haber alma (bildirim botu kelimeyi takibe alır), geçmiş ilanlar,
-   sık aranan kelimeler ve taban puanları. Analizde sonuçsuz arama yapanların yarısı hiçbir şeye tıklamadan çıkıyordu. */
-const BILDIRIM_BOTU='kamuilanibot',SIK_ARANAN=['memur','mühendis','psikolog','hemşire','büro personeli','sağlık teknikeri'];
-const b64u=s=>btoa(unescape(encodeURIComponent(s))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
-/* t.me derin bağlantısı en çok 64 karakter ve onay düğmesi 64 bayt: kod 58 karakteri geçmeyecek kadar kısaltılır. */
-function botBaglanti(q){let k=q.toLocaleLowerCase('tr-TR').replace(/[,<>]/g,' ').replace(/\s+/g,' ').trim().slice(0,40);while(k&&b64u(k).length>58)k=k.slice(0,-1);return 'https://t.me/'+BILDIRIM_BOTU+'?start=k_'+b64u(k);}
+/* Sonuçsuz aramada boş sayfa bırakılmaz: Telegram kanalına katılma, geçmiş ilanlar, sık aranan kelimeler ve taban puanları.
+   Analizde sonuçsuz arama yapanların yarısı hiçbir şeye tıklamadan çıkıyordu. Bildirim botu hazır olana kadar kanala yönlendirilir. */
+const TG_KANAL='https://t.me/kamuilantakip',SIK_ARANAN=['memur','mühendis','psikolog','hemşire','büro personeli','sağlık teknikeri'];
 function sonucsuzOneriler(q){
-const out=[],tg=E('a','btn btn-tg','🔔 “'+q.slice(0,40)+'” ilanı çıkınca Telegram’dan haber al');
-tg.href=botBaglanti(q);tg.target='_blank';tg.rel='noopener';tg.onclick=()=>A('tikla',{a:'arama_bildirim',x:normalize(q).slice(0,60)});
-out.push(E('p','bos-not','Şu an açık ilan yok. Yeni ilan yayımlanınca sana özelden haber verelim:'),tg);
+const out=[],tg=E('a','btn btn-tg','🔔 Yeni ilanlardan haberdar ol: Telegram kanalına katıl');
+tg.href=TG_KANAL;tg.target='_blank';tg.rel='noopener';tg.onclick=()=>A('tikla',{a:'arama_bildirim',x:normalize(q).slice(0,60)});
+out.push(E('p','bos-not','Şu an açık ilan yok. Yeni ilanlar her gün Telegram kanalımızda paylaşılıyor:'),tg);
 if(loaded&&!F.arsiv){const fa={...F,arsiv:true},n=ilanBase(fa).filter(o=>rowMatches(o,fa)).length;
 if(n){const b=E('button','btn btn-ikinci','Geçmişteki '+n+' ilanı göster');b.type='button';b.onclick=()=>{A('tikla',{a:'arama_gecmis',x:normalize(q).slice(0,60),n});F.arsiv=true;ilanDegisti();};out.push(b);}}
 const cipler=E('div','ara-cip');cipler.append(E('span','','Sık arananlar:'));
