@@ -250,3 +250,10 @@ $('robot-form').onsubmit=e=>{e.preventDefault();robotSinir=ROBOT_ILK;const p=par
   });
   acikListeYukle().then(()=>{if(!acikListe)return;tabloCiz();if($('robot-sonuc').children.length)robot();});
 }
+/* Çok aranıp ilanı çıkmayan meslekler (analizden, 12 saatte bir): tıklayınca taban puanı tablosunda aranır. */
+fetch('https://api.kpsstercihi.com/aranan').then(r=>r.ok?r.json():null).then(j=>{
+  const k=((j&&j.kelimeler)||[]).slice(0,6);if(!k.length)return;
+  const d=E('div','aranan-cip');d.append(E('span','muted','Çok arananlar:'));
+  for(const x of k){const b=E('button','cip',x.kelime);b.type='button';b.onclick=()=>{A('tikla',{a:'aranan_cip',x:x.kelime});$('ara').value=x.kelime;sayfa=1;tabloCiz();$('ara').scrollIntoView({block:'center'});};d.append(b);}
+  $('ara').closest('label').parentElement.after(d);
+}).catch(()=>{});

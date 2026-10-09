@@ -664,7 +664,7 @@ def _ilan_satiri(i, site_url, etiket=None):
     return f"• {govde}" + (f" · <b>{etiket}</b>" if etiket else "")
 
 
-def sabah_mesaj(yeniler, son_gun, acik_sayisi, site_url, zaman):
+def sabah_mesaj(yeniler, son_gun, acik_sayisi, site_url, zaman, aranan=None):
     """Sabah özeti başlığı (HTML): yeni ilanlar, son başvurusu yaklaşanlar, açık ilan sayısı. Boş bölüm yazılmaz.
     Sınır (~950 görünür karakter) aşılırsa önce yeni listesi 3'e, sonra son gün listesi kısaltılır; başlık/altlık kalır."""
     bugun = zaman.date()
@@ -695,6 +695,8 @@ def sabah_mesaj(yeniler, son_gun, acik_sayisi, site_url, zaman):
             parcalar.append("\n".join([yeni_baslik, *satirlar]))
         if son_satir:
             parcalar.append(son_satir)
+        if aranan:
+            parcalar.append(aranan_satiri(aranan, site_url))
         if alt:
             parcalar.append("\n".join(alt))
         return "\n\n".join(parcalar)
@@ -703,6 +705,42 @@ def sabah_mesaj(yeniler, son_gun, acik_sayisi, site_url, zaman):
     while ny > 0 and gorunen_uzunluk(olustur(ny)) > TOPLU_SINIR:
         ny -= 1
     return olustur(ny)
+
+def _bas_harf(kelime):
+    return " ".join(("İ" if k[0] == "i" else "I" if k[0] == "ı" else k[0].upper()) + k[1:] for k in kelime.split())
+
+
+def aranan_satiri(kelimeler, site_url):
+    """Haftalık: çok aranıp ilanı çıkmayan meslekler + taban puanları bağlantısı."""
+    satir = "🔎 <b>Bu hafta çok aranıp ilanı çıkmayanlar:</b> " + " · ".join(html.escape(_bas_harf(k)) for k in kelimeler)
+    if site_url:
+        url = utm_ekle(site_url.rstrip("/") + "/puanlar/", site_url, "ozet")
+        satir += f'\nİlan gelince kanalda ilk burada. <a href="{html.escape(url, quote=True)}">Taban puanlarına bak →</a>'
+    return satir
+
+
+def haftalik_aranan(cfg, ilanlar, zaman, getir=None):
+    """Pazartesi sabahı analizden (/aranan) çok aranıp sonuç çıkmayan kelimeleri alır; şu an açık ilanı olanları eler.
+    Analiz erişilemezse ya da GitHub Actions dışında (testler) boş döner; sabah özeti bundan etkilenmez."""
+    if zaman.weekday() != 0:
+        return []
+    if getir is None:
+        if not os.environ.get("GITHUB_ACTIONS"):
+            return []
+
+        def getir():
+            url = cfg.get("analiz_url", "https://api.kpsstercihi.com").rstrip("/") + "/aranan"
+            with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "kpss-tercihi-bot"}), timeout=10) as r:
+                return json.loads(r.read().decode("utf-8"))
+    try:
+        kelimeler = [k["kelime"] for k in (getir() or {}).get("kelimeler", []) if k.get("kelime")]
+    except Exception as e:  # noqa: BLE001 - analiz hatası özeti durdurmaz
+        print(f"Aranan kelimeler alınamadı: {e}")
+        return []
+    acik = [norm(f"{i.get('baslik', '')} {i.get('kadro', '')}") for i in ilanlar
+            if not akademik_ilan(i) and not suresi_doldu(i)]
+    return [k for k in kelimeler if not any(norm(k) in a for a in acik)][:5]
+
 
 def suresi_doldu(ilan):
     if ilan.get('son_zaman'):
@@ -968,7 +1006,7 @@ def main():
     for tur, i in ([] if a.prepare else kuyruk[:limit]):
         if tur == 'sabah':
             yeni_l, son_gun_l, acik = i
-            metin = sabah_mesaj(yeni_l, son_gun_l, acik, site_url, simdi())
+            metin = sabah_mesaj(yeni_l, son_gun_l, acik, site_url, simdi(), haftalik_aranan(cfg, gelen, simdi()))
             if a.dry_run:
                 print('--- (önizleme, gönderilmedi) ---\n' + metin + '\n')
                 continue

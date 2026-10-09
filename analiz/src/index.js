@@ -4,6 +4,7 @@ import { butceSarmala, butceDurumu, butceOzeti } from './butce.js';
 import { bakim } from './bakim.js';
 import { ilanAdlari } from './adlar.js';
 import { populerIstegi } from './populer.js';
+import { arananIstegi } from './aranan.js';
 
 export default {
   async fetch(request, env, ctx) {
@@ -20,6 +21,7 @@ export default {
       }
       if (url.pathname === '/o') return await topla(request, env);
       if (url.pathname === '/populer') return await populerIstegi(request, env);
+      if (url.pathname === '/aranan') return await arananIstegi(request, env);
       if (url.pathname === '/panel' || url.pathname.startsWith('/panel/')) {
         return await panelIstegi(request, env, url, { adlariGetir: (anahtarlar) => ilanAdlari(env, anahtarlar) });
       }
