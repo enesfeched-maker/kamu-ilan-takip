@@ -24,7 +24,66 @@ const dizge=s=>{const k=String(s||'').toLocaleLowerCase('tr').replace(/['’`´]
 async function acikListeYukle(){try{const r=await fetch('../liste.json',{cache:'no-cache'});if(!r.ok)return;const v=await r.json();if(v&&Array.isArray(v.ilanlar))acikListe=v.ilanlar.filter(i=>i&&Array.isArray(i.unvanlar)).map(i=>({u:new Set(i.unvanlar.filter(x=>typeof x==='string').map(dizge))}));}catch{}}
 function acikSayi(unvan){if(!acikListe)return 0;const u=dizge(unvan);if(u.length<2)return 0;if(!acikOnbellek.has(u))acikOnbellek.set(u,acikListe.filter(i=>i.u.has(u)).length);return acikOnbellek.get(u);}
 function acikBaglanti(unvan){const n=acikSayi(unvan);if(!n)return null;const a=E('a','acik-link','Bu unvanda açık ilanlar ('+n+') →');a.href='../?q='+encodeURIComponent(unvan)+'#ilanlar';return a;}
-function secenekler(sel,degerler,ilk){sel.replaceChildren(E('option',null,ilk));sel.firstChild.value='';for(const [v,t] of degerler){const o=E('option',null,t);o.value=v;sel.append(o);}}
+/* Açılır seçim kutusu (tek tip görünüm): data-coklu="1" ise onay kutulu çoklu seçim, data-ara varsa listede arama.
+   API: ayarla([[değer, yazı]]), degerler() → dizi, sec(dizi), onDegis / onAc geri çağrıları. */
+const ACIK_SECIMLER=new Set();
+function secimKur(kok){
+  const coklu=kok.dataset.coklu==='1',bos=kok.dataset.bos||'Tümü',araYer=kok.dataset.ara||'';
+  let liste=[],secili=new Set(),acik=false;
+  const btn=E('button','secim-btn'),yazi=E('span','secim-yazi',bos),ok=E('span','secim-ok');ok.setAttribute('aria-hidden','true');
+  btn.type='button';btn.setAttribute('aria-haspopup','listbox');btn.setAttribute('aria-expanded','false');btn.append(yazi,ok);
+  const panel=E('div','secim-panel');panel.hidden=true;
+  const ara=araYer?E('input','secim-ara'):null;
+  if(ara){ara.type='search';ara.placeholder=araYer;ara.autocomplete='off';ara.oninput=()=>ciz();ara.onkeydown=e=>{if(e.key==='Enter')e.preventDefault();};panel.append(ara);}
+  const ul=E('div','secim-liste');ul.setAttribute('role','listbox');if(coklu)ul.setAttribute('aria-multiselectable','true');panel.append(ul);
+  let alt=null;
+  if(coklu){alt=E('div','secim-alt');const t=E('button','secim-temizle','Temizle'),k=E('button','secim-tamam','Tamam');t.type=k.type='button';
+    t.onclick=()=>{secili.clear();degisti();ciz();};k.onclick=()=>kapat(true);alt.append(t,k);panel.append(alt);}
+  kok.replaceChildren(btn,panel);
+  const api={onDegis:null,onAc:null};
+  function etiket(){
+    const s=liste.filter(([v])=>secili.has(v)).map(([,t])=>t);
+    yazi.textContent=!s.length?bos:s.length===1?s[0]:s.length===2?s.join(', '):s[0]+' +'+(s.length-1);
+    kok.classList.toggle('dolu',s.length>0);
+  }
+  function degisti(){etiket();if(api.onDegis)api.onDegis(api.degerler());}
+  function ciz(){
+    const q=ara?kucuk(ara.value):'';const ogeler=[];
+    if(!coklu&&!q){const b=E('button','secim-oge'+(secili.size?'':' secili'),bos);b.type='button';b.onclick=()=>{secili.clear();degisti();kapat(true);};ogeler.push(b);}
+    for(const [v,t] of liste){
+      if(q&&!kucuk(t).includes(q))continue;
+      if(ogeler.length>=300)break;  // uzun listelerde (bölümler) ilk 300 eşleşme; arama daraltır
+      if(coklu){const l=E('label','secim-oge'),c=E('input');c.type='checkbox';c.checked=secili.has(v);
+        c.onchange=()=>{c.checked?secili.add(v):secili.delete(v);degisti();};l.append(c,E('span',null,t));ogeler.push(l);}
+      else{const b=E('button','secim-oge'+(secili.has(v)?' secili':''),t);b.type='button';b.onclick=()=>{secili=new Set([v]);degisti();kapat(true);};ogeler.push(b);}
+    }
+    if(!ogeler.length)ogeler.push(E('p','secim-yok',liste.length?'Eşleşme yok':'Yükleniyor…'));
+    ul.replaceChildren(...ogeler);
+  }
+  async function ac(){
+    for(const s of ACIK_SECIMLER)s.kapat(false);
+    acik=true;ACIK_SECIMLER.add(api);panel.hidden=false;btn.setAttribute('aria-expanded','true');kok.classList.add('acik');
+    if(ara)ara.value='';ciz();
+    if(api.onAc){await api.onAc();if(acik)ciz();}
+    if(ara&&acik&&matchMedia('(pointer:fine)').matches)ara.focus();
+  }
+  function kapat(odak){if(!acik)return;acik=false;ACIK_SECIMLER.delete(api);panel.hidden=true;btn.setAttribute('aria-expanded','false');kok.classList.remove('acik');if(odak)btn.focus();}
+  btn.onclick=()=>acik?kapat(false):ac();
+  kok.addEventListener('keydown',e=>{if(e.key==='Escape'&&acik){e.preventDefault();kapat(true);}});
+  Object.assign(api,{
+    kapat,
+    ayarla(yeni){liste=yeni;const varolan=new Set(yeni.map(([v])=>v));secili=new Set([...secili].filter(v=>varolan.has(v)));etiket();if(acik)ciz();},
+    degerler:()=>liste.filter(([v])=>secili.has(v)).map(([v])=>v),
+    sec(dizi){secili=new Set(dizi);etiket();if(acik)ciz();},
+  });
+  etiket();
+  return api;
+}
+document.addEventListener('mousedown',e=>{for(const s of ACIK_SECIMLER)if(!s.kok.contains(e.target))s.kapat(false);});
+document.addEventListener('touchstart',e=>{for(const s of ACIK_SECIMLER)if(!s.kok.contains(e.target))s.kapat(false);},{passive:true});
+const SEC={};
+for(const id of ['robot-bolum','robot-il','donem','il']){SEC[id]=secimKur($(id));SEC[id].kok=$(id);}
+const ilYazi=x=>x.charAt(0)+x.slice(1).toLocaleLowerCase('tr');
 function durum(metin){$('durum').hidden=!metin;$('durum').textContent=metin||'';}
 
 async function yukle(d){
@@ -45,7 +104,7 @@ async function bolumListesiDoldur(){
   const d=duzey,v=await bolumYukle(d);
   if(!v||d!==duzey||bolumListesiDuzey===d)return;
   const adlar=[...new Set(Object.values(v.bolumler))].sort((a,b)=>a.localeCompare(b,'tr'));
-  $('bolum-liste').replaceChildren(...adlar.map(a=>{const o=E('option');o.value=a;return o;}));
+  SEC['robot-bolum'].ayarla(adlar.map(a=>[a,a]));
   bolumListesiDuzey=d;
 }
 function bolumKodlari(v,ad){const k=kucuk(ad);return Object.entries(v.bolumler).filter(([,a])=>kucuk(a)===k).map(([kod])=>kod);}
@@ -72,7 +131,7 @@ async function duzeyAc(d){
   for(const b of document.querySelectorAll('#duzeyler .tab')){const s=b.dataset.duzey===d;b.classList.toggle('secili',s);b.setAttribute('aria-pressed',s);}
   $('puan-turu').textContent='('+PUAN_TURU[d]+')';
   $('bolum-etiket').textContent=d==='ortaogretim'?'Mezun olduğun alan / dal':'Mezun olduğun bölüm';
-  $('robot-bolum').value='';$('bolum-liste').replaceChildren();bolumListesiDuzey='';
+  SEC['robot-bolum'].sec([]);SEC['robot-bolum'].ayarla([]);bolumListesiDuzey='';
   const v=await yukle(d);
   if(d!==duzey)return;
   kayitlar=[];
@@ -85,14 +144,14 @@ async function duzeyAc(d){
   }
   const donemler=[...new Set(kayitlar.map(k=>k.donem))].sort().reverse();
   const iller=[...new Set(kayitlar.map(k=>k.il))].sort((a,b)=>a.localeCompare(b,'tr'));
-  secenekler($('donem'),donemler.map(x=>[x,donemAdi(x)]),'Tüm dönemler');
-  for(const id of ['il','robot-il'])secenekler($(id),iller.map(x=>[x,x.charAt(0)+x.slice(1).toLocaleLowerCase('tr')]),'Tüm iller');
+  SEC.donem.ayarla(donemler.map(x=>[x,donemAdi(x)]));
+  for(const id of ['il','robot-il'])SEC[id].ayarla(iller.map(x=>[x,ilYazi(x)]));
   sayfa=1;tabloCiz();$('robot-sonuc').replaceChildren();
 }
 
 function suzulmus(){
-  const donem=$('donem').value,il=$('il').value,ara=kucuk($('ara').value).split(' ').filter(Boolean);
-  const l=kayitlar.filter(k=>(!donem||k.donem===donem)&&(!il||k.il===il)&&ara.every(a=>k.metin.includes(a)));
+  const donem=new Set(SEC.donem.degerler()),il=new Set(SEC.il.degerler()),ara=kucuk($('ara').value).split(' ').filter(Boolean);
+  const l=kayitlar.filter(k=>(!donem.size||donem.has(k.donem))&&(!il.size||il.has(k.il))&&ara.every(a=>k.metin.includes(a)));
   const s=$('sirala').value,yok=x=>x.min??-1;
   const sira={'min-azalan':(a,b)=>yok(b)-yok(a),'min-artan':(a,b)=>(a.min??999)-(b.min??999),
     donem:(a,b)=>b.donem.localeCompare(a.donem)||yok(b)-yok(a),kurum:(a,b)=>a.kurum.localeCompare(b.kurum,'tr')||b.donem.localeCompare(a.donem)}[s];
@@ -122,8 +181,8 @@ function tabloCiz(){
 }
 
 async function robot(){
-  const puan=parseFloat(String($('robot-puan').value).replace(',','.')),il=$('robot-il').value,ara=kucuk($('robot-ara').value).split(' ').filter(Boolean);
-  const kutu=$('robot-sonuc'),d=duzey,bolumAdi=$('robot-bolum').value.trim(),no=++robotNo;
+  const puan=parseFloat(String($('robot-puan').value).replace(',','.')),il=new Set(SEC['robot-il'].degerler()),ara=kucuk($('robot-ara').value).split(' ').filter(Boolean);
+  const kutu=$('robot-sonuc'),d=duzey,bolumAdi=SEC['robot-bolum'].degerler()[0]||'',no=++robotNo;
   if(!kayitlar.length||!(puan>0)){kutu.replaceChildren();return;}
   let bolum=null,kodlar=[];
   if(bolumAdi){
@@ -139,7 +198,7 @@ async function robot(){
   for(const k of kayitlar)if(k.min!=null){const g=gecmis.get(k.anahtar)||new Map();g.set(k.donem,Math.min(g.get(k.donem)??999,k.min));gecmis.set(k.anahtar,g);}
   const sonuc=[];
   for(const k of kayitlar){
-    if(k.min==null||il&&k.il!==il||!ara.every(a=>k.metin.includes(a)))continue;
+    if(k.min==null||il.size&&!il.has(k.il)||!ara.every(a=>k.metin.includes(a)))continue;
     const sinif=puan>=k.max?'guclu':puan>=k.min?'uygun':puan>=k.min-SINIR?'sinirda':null;
     if(!sinif)continue;
     const bd=bolum?bolumDurumu(k,bolum,kodlar):null;
@@ -172,19 +231,19 @@ async function robot(){
 window.kitTemaUygula=applyTheme;applyTheme();{const y=$('yil');if(y)y.textContent=String(new Date().getFullYear());}
 $('theme').onclick=()=>{A('tikla',{a:'tema',x:document.documentElement.dataset.theme==='dark'?'light':'dark'});writeStore('kit-theme',document.documentElement.dataset.theme==='dark'?'light':'dark');applyTheme();};
 for(const b of document.querySelectorAll('#duzeyler .tab'))b.onclick=()=>duzeyAc(b.dataset.duzey);
-for(const id of ['donem','il','sirala'])$(id).onchange=()=>{sayfa=1;tabloCiz();};
+$('sirala').onchange=SEC.donem.onDegis=SEC.il.onDegis=()=>{sayfa=1;tabloCiz();};
 let bekle;$('ara').oninput=()=>{clearTimeout(bekle);bekle=setTimeout(()=>{sayfa=1;tabloCiz();},150);};
-$('robot-bolum').onfocus=bolumListesiDoldur;
+SEC['robot-bolum'].onAc=bolumListesiDoldur;
 $('robot-form').onsubmit=e=>{e.preventDefault();robotSinir=ROBOT_ILK;const p=parseFloat(String($('robot-puan').value).replace(',','.'));if(p>0)A('tikla',{a:'robot',x:duzey,n:Math.floor(p/5)*5});robot();};
 {
   const pr=profilOku(),kayitliDuzey=readStore('kit-puan-duzey','');
   duzeyAc(pr?pr.ogrenim:PUAN_TURU[kayitliDuzey]?kayitliDuzey:'lisans').then(async()=>{
     /* Profil varsa robot sessizce doldurulur; açıklama kutusu gösterilmez (sade sayfa, 9 Ekim 2026). */
     if(!pr)return;
-    /* Bölüm adı listedeki bir bölümle (büyük/küçük harf farkı gözetmeden) eşleşirse robota yazılır; tek il seçiliyse görev yeri de. */
+    /* Bölüm adı listedeki bir bölümle (büyük/küçük harf farkı gözetmeden) eşleşirse robota yazılır; profildeki iller de seçilir. */
     let bolumAd='';
-    if(pr.bolum){const v=await bolumYukle(duzey);if(v&&duzey===pr.ogrenim){const ad=Object.values(v.bolumler).find(a=>kucuk(a)===kucuk(pr.bolum));if(ad){bolumAd=ad;$('robot-bolum').value=ad;}}}
-    if(pr.iller.length===1&&!pr.tum_turkiye){const o=[...$('robot-il').options].find(x=>x.value&&kucuk(x.value)===kucuk(pr.iller[0]));if(o)$('robot-il').value=o.value;}
+    if(pr.bolum){await bolumListesiDoldur();const v=bolumVerileri[duzey];if(v&&duzey===pr.ogrenim){const ad=Object.values(v.bolumler).find(a=>kucuk(a)===kucuk(pr.bolum));if(ad){bolumAd=ad;SEC['robot-bolum'].sec([ad]);}}}
+    if(pr.iller.length&&!pr.tum_turkiye){const pi=new Set(pr.iller.map(kucuk));SEC['robot-il'].sec([...new Set(kayitlar.map(k=>k.il))].filter(x=>pi.has(kucuk(x))));}
     const uyumlu=pr.puan_turu===PUAN_TURU[pr.ogrenim];
     if(pr.puan&&uyumlu){$('robot-puan').value=puanTr(pr.puan);}
     if(pr.puan&&uyumlu||bolumAd)robot();

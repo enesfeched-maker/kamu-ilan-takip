@@ -15,6 +15,27 @@
 .robot-form input,.robot-form select,.tablo-filtre input,.tablo-filtre select{width:100%;height:44px;padding:0 12px;border:1px solid var(--line-2);border-radius:11px;background:var(--surface);color:var(--ink);font:inherit;font-size:15px;font-weight:400}
 .robot-form input:focus,.tablo-filtre input:focus,.robot-form select:focus,.tablo-filtre select:focus{outline:0;border-color:var(--ink);box-shadow:0 0 0 4px var(--lime-soft)}
 .robot-form .btn{height:44px}
+/* Açılır seçim kutusu (il, dönem, bölüm): select ile aynı görünüm; panel sayfa stiline uygun */
+.alan{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:var(--ink);min-width:0}
+.secim{position:relative;min-width:0}
+.secim-btn{display:flex;align-items:center;gap:8px;width:100%;height:44px;padding:0 12px;border:1px solid var(--line-2);border-radius:11px;background:var(--surface);color:var(--ink);font:inherit;font-size:15px;font-weight:400;text-align:left;cursor:pointer}
+.secim-btn:focus-visible,.secim.acik .secim-btn{outline:0;border-color:var(--ink);box-shadow:0 0 0 4px var(--lime-soft)}
+.secim-yazi{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.secim.dolu .secim-yazi{font-weight:600}
+.secim-ok{width:8px;height:8px;border-right:2px solid var(--ink-2);border-bottom:2px solid var(--ink-2);transform:translateY(-2px) rotate(45deg);transition:transform .15s;flex:none}
+.secim.acik .secim-ok{transform:translateY(2px) rotate(-135deg)}
+.secim-panel{position:absolute;z-index:30;top:calc(100% + 6px);left:0;min-width:100%;width:max-content;max-width:min(380px,calc(100vw - 32px));background:var(--surface);border:1px solid var(--line-2);border-radius:14px;box-shadow:0 12px 32px rgba(0,0,0,.16);padding:8px;font-weight:400}
+.secim .secim-ara{width:100%;height:38px;padding:0 10px;margin-bottom:6px;border:1px solid var(--line-2);border-radius:9px;background:var(--surface);color:var(--ink);font:inherit;font-size:14px}
+.secim .secim-ara:focus{outline:0;border-color:var(--ink);box-shadow:none}
+.secim-liste{max-height:280px;overflow:auto;overscroll-behavior:contain;display:flex;flex-direction:column}
+.secim .secim-oge{display:flex;flex-direction:row;margin:0;align-items:center;gap:10px;width:100%;min-height:38px;padding:7px 10px;border:0;border-radius:8px;background:transparent;color:var(--ink);font:inherit;font-size:14.5px;font-weight:400;text-align:left;cursor:pointer}
+.secim .secim-oge:hover{background:var(--surface-3)}
+.secim .secim-oge.secili{background:var(--lime-soft);font-weight:600}
+.secim .secim-oge input{width:17px;height:17px;padding:0;margin:0;border-radius:4px;box-shadow:none;accent-color:var(--ink);flex:none}
+.secim-yok{margin:8px 10px;color:var(--muted);font-size:13.5px}
+.secim-alt{display:flex;justify-content:space-between;gap:8px;margin-top:6px;padding-top:8px;border-top:1px solid var(--line)}
+.secim-alt button{height:34px;padding:0 14px;border-radius:9px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);font:inherit;font-size:13.5px;font-weight:600;cursor:pointer}
+.secim-alt .secim-tamam{background:var(--ink);color:var(--surface);border-color:var(--ink)}
 .muted.not{margin:14px 0 0}
 .profil-ipucu{margin:12px 0 0;padding:10px 14px;border-radius:12px;background:var(--lime-soft);color:var(--ink);font-size:13.5px}
 .robot-ozet{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 10px}
@@ -46,6 +67,7 @@ td small,.robot-liste small{display:block;margin-top:2px;color:var(--muted);font
 @media(max-width:760px){
   .puan-intro h1{font-size:28px}
   .robot-form,.tablo-filtre{grid-template-columns:1fr}
+  .secim-panel{width:100%;max-width:none}
   .robot-liste li{grid-template-columns:1fr auto}
   .robot-liste .rozet{grid-column:1/-1;justify-self:start}
   .segment{display:flex;width:100%}
