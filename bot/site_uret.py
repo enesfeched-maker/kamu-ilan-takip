@@ -73,12 +73,9 @@ def alt_html(kok, yil=None):
     """Ana sayfayla aynı koyu alt bilgi: marka, bağlantılar ve bağımsızlık notu."""
     yil = yil or datetime.now(TR).year
     return (f'<footer class="ab"><div class="ab-ic"><div class="ab-marka"><img src="{kok}assets/logo-96.webp?v={LOGO_SURUM}" alt="" width="36" height="36">'
-            f'<div><strong>KPSS Tercihi</strong><span>Bağımsız ilan rehberi · resmî kaynak değildir</span></div></div>'
-            f'<nav class="ab-linkler" aria-label="Alt bilgi"><a href="{kok}#bilgi/hakkimizda">Hakkımızda ve veri kaynakları</a><a href="{kok}#rehber">Başvuru rehberi</a>'
-            f'<a href="{kok}kpss-taban-puanlari/">KPSS taban puanları</a><a href="{kok}puanlar/">Tercih robotu</a><a href="{kok}#bilgi/gizlilik">Gizlilik</a>'
-            f'<a href="{kok}#bilgi/reklam">Reklam</a><a href="https://t.me/kamuilantakip" target="_blank" rel="noopener" data-a="telegram" data-a-x="alt">Telegram</a></nav>'
-            f'<p class="ab-not">© <span id="yil">{yil}</span> KPSS Tercihi · Bağımsız ilan rehberi; herhangi bir kamu kurumuna bağlı değildir ve resmî kaynak değildir. '
-            f'Başvurular resmî ilan üzerinden yapılır.</p></div></footer>')
+            f'<div><strong>KPSS Tercihi</strong><span>Kamu ilanları, sade ve tek yerde</span></div></div>'
+            f'<nav class="ab-linkler" aria-label="Alt bilgi"><a href="https://t.me/kamuilantakip" target="_blank" rel="noopener" data-a="telegram" data-a-x="alt">Telegram</a></nav>'
+            f'<p class="ab-not">© <span id="yil">{yil}</span> KPSS Tercihi</p></div></footer>')
 
 
 def sayfa_basi(baslik, aciklama, canonical, kok, og_tur='website', ek_head='', og_baslik=None):
@@ -176,28 +173,6 @@ def _kopya_notlari(kopya):
     return '', f'<p class="d-kaynaklar">Bu ilan {len(adlar)} kaynakta yayımlandı: {baglar}</p>'
 
 
-def _senin_icin(item, kayit):
-    """"Senin için" kutusu: öğrenim/puan türü/il eşleşmesi tarayıcıda kit-profil ile doldurulur (sayfa.js);
-    taban referansı derleme zamanında yazılır."""
-    kayit = kayit or {}
-    ref = kayit.get('taban_ref') or {}
-    from kurum_sayfasi import LEVELS
-    satirlar = ''
-    for duzey, r in ref.items():
-        if duzey in LEVELS and isinstance(r.get('medyan'), (int, float)):
-            donem = f' · {esc(r["donem"])}' if r.get('donem') else ''
-            satirlar += f'<li>{LEVELS[duzey]}: benzer kadroların taban puanı medyanı <b>{_virgul(r["medyan"])}</b> ({int(r.get("n") or 0)} kayıt{donem})</li>'
-    ref_html = (f'<ul class="senin-ref">{satirlar}</ul><p class="senin-not">Geçmiş yerleştirmelerden referans; bu ilanın şartı değildir.</p>') if satirlar else ''
-    import liste_verisi
-    ki = (' data-kurum-ici="1"' if kayit.get('kurum_ici') else '') + (' data-bolum="1"' if kayit.get('bolum_kisiti') else '')
-    veri = (f' data-ogr="{esc(",".join(kayit.get("ogrenim") or []))}" data-pt="{esc(",".join(kayit.get("puan_turleri") or []))}"'
-            f' data-il="{esc(kayit.get("il") or "")}" data-iller="{esc(",".join(liste_verisi._etkin_iller(kayit)))}"'
-            f'{ki} data-ref="{esc(json.dumps(ref, ensure_ascii=False, separators=(",", ":")))}"')
-    return (f'<section class="senin" id="senin"{veri}><h2><i>{KISI_IKON}</i>Senin için</h2>'
-            '<div data-profil data-ana="../../?profil=1"><p class="senin-link">Öğrenim düzeyini, KPSS puanını ve illerini ana sayfada ekle; bu ilana uyup uymadığını burada göster. '
-            '<a href="../../?profil=1">Profilini oluştur →</a></p></div>' + ref_html + '</section>')
-
-
 def benzer_ilanlar(kayit, kayitlar, en_cok=5):
     """Aynı unvan/meslek fotoğrafı olan diğer açık ilanlar (liste.json kayıtları), en çok `en_cok`; en yakın son tarih önce."""
     if not kayit:
@@ -250,10 +225,6 @@ def hero_html(item, gorsel, kayit, simdi, kok='../../'):
         h1 = re.sub(r'^\d+\s+', '', h1)
     if alanlar.get('ek'):
         h1 += f' +{int(alanlar["ek"])}'
-    alt = liste_verisi.baslik_temiz(_gorunen_baslik(item).strip())
-    sayisiz = lambda s: kucuk_ad(re.sub(r'^\d+\s+', '', s))
-    alt_html = (f'<p class="d-alt">{esc(alt)}</p>'
-                if alt and sayisiz(alt) not in (sayisiz(h1), sayisiz(alanlar['manset'])) else '')
     # kurum
     kurum = ''
     if (item.get('kurum') or '').strip():
@@ -309,9 +280,10 @@ def hero_html(item, gorsel, kayit, simdi, kok='../../'):
         return f'<div><dt>{dt}</dt><dd{"" if dd else " class=" + chr(34) + "bos" + chr(34)}>{esc(dd) if dd else "İlanda"}</dd></div>'
     bilgi = (f'<dl class="dh-bilgi">{son_html}{hucre("Yer", yer)}'
              f'{hucre("Öğrenim", " / ".join(ks.LEVELS[o] for o in ogr))}{hucre("KPSS", kpss)}</dl>')
+    ust = f'<div class="dh-ust">{pill_html}</div>' if pill_html else ''
     return (f'<section class="dh{"" if afis else " afissiz"}" aria-labelledby="dh-baslik">'
-            f'<div class="dh-ana">{kurum}<div class="dh-baslik"><div class="dh-ust"><span class="eyebrow">{esc(item.get("ilan_turu") or "Kamu ilanı")}</span>{pill_html}</div>'
-            f'<h1 id="dh-baslik">{esc(h1)}</h1>{alt_html}</div></div>{afis}{bilgi}</section>')
+            f'<div class="dh-ana">{kurum}<div class="dh-baslik">{ust}'
+            f'<h1 id="dh-baslik">{esc(h1)}</h1></div></div>{afis}{bilgi}</section>')
 
 
 def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=None):
@@ -368,9 +340,7 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
     for heading, value in [('Duyuru metni', item.get('duyuru_cumlesi')), ('İlan özeti', None if item.get('ozet') == item.get('duyuru_cumlesi') else item.get('ozet')), ('Başvuru notu', item.get('basvuru_notu'))]:
         if value:
             diger += f'<h3>{heading}</h3><p>{esc(value)}</p>'
-    if any(item.get(k) for k in ('kadro', 'duyuru_cumlesi', 'ozet', 'basvuru_notu', 'sartlar')):
-        diger += '<p class="muted">Seçilmiş alıntılardır. Tüm koşullar, kadrolar ve güncel tarihler için resmî ilanı incele.</p>'
-    else:
+    if not any(item.get(k) for k in ('kadro', 'duyuru_cumlesi', 'ozet', 'basvuru_notu', 'sartlar')):
         diger += '<p class="muted">Bu ilanın kadro, şart ve başvuru ayrıntıları henüz kaynaktan okunamadı. Tüm bilgiler için resmî ilan belgesini aç.</p>'
     for belge in item.get('belgeler', [])[:3]:
         if str(belge.get('link', '')).startswith('https://webdosya.csb.gov.tr/v2/yerelyonetimler/'):
@@ -392,9 +362,7 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
     ikincil_veri = f' data-ikincil="{esc(",".join((kopya or {}).get("ikincil_idler") or []))}"' if (kopya or {}).get('ikincil_idler') else ''
     from kurum_sayfasi import BOOKMARK
     cta = (f'<div class="d-cta"><a class="btn btn-ana btn-buyuk" href="{esc(target)}" target="_blank" rel="noopener noreferrer" data-a="resmi_ilan" data-a-h="{esc(key)}">{button}</a>'
-           f'<button type="button" class="btn btn-ikinci btn-buyuk" id="kaydet-btn" data-kaydet="{kayit_id}"{ikincil_veri} data-ad="{esc(h1)}" aria-pressed="false">{BOOKMARK}<span data-yazi>Kaydet</span></button></div>'
-           '<p class="d-cta-not">Başvuru bu sitede yapılmaz; işlemini ilanda belirtilen resmî kanaldan tamamla. Kaydetmek başvuru oluşturmaz.</p>')
-    senin = _senin_icin(item, kayit) if acik_ilan else ''
+           f'<button type="button" class="btn btn-ikinci btn-buyuk" id="kaydet-btn" data-kaydet="{kayit_id}"{ikincil_veri} data-ad="{esc(h1)}" aria-pressed="false">{BOOKMARK}<span data-yazi>Kaydet</span></button></div>')
     benzer_html = ''
     if benzer:
         benzer_html = ('<section class="benzer"><div class="bolum-bas"><h2>Benzer ilanlar</h2></div><div class="liste">'
@@ -402,11 +370,9 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
     kok = '../../'
     govde = (f'<main id="icerik" class="wrap"><article class="d-bas"><nav class="crumbs" aria-label="Konum"><a href="{kok}">Ana sayfa</a><span aria-hidden="true">/</span><a href="{kok}#ilanlar">İlanlar</a>{kurum_kirinti}</nav>'
              f'{hero_html(item, gorsel, kayit, simdi)}{kurum_ici_not}{kopya_ust}{cta}{kopya_alt}</article>'
-             f'<div class="d-ana">{senin}<section class="d-bolum">{sections}{bolum}{diger}'
-             f'<p class="muted d-son">Ayrıntı kontrolü: {esc(item.get("detay_guncelleme", "Tarih belirtilmemiş"))}</p></section>{benzer_html}</div></main>')
+             f'<div class="d-ana"><section class="d-bolum">{sections}{bolum}{diger}</section>{benzer_html}</div></main>')
     return key, (sayfa_basi(f'{title} | KPSS Tercihi', description, canonical, kok, 'article', og_gorsel, og_baslik=title)
-                 + f'<body class="detail-page"><a class="skip" href="#icerik">İçeriğe geç</a>{ust_html(kok)}{govde}{alt_html(kok)}'
-                   '<noscript><div class="not wrap">Bazı özellikler (kaydetme, kalan gün, “Senin için”) için JavaScript gerekir.</div></noscript></body></html>')
+                 + f'<body class="detail-page"><a class="skip" href="#icerik">İçeriğe geç</a>{ust_html(kok)}{govde}{alt_html(kok)}</body></html>')
 
 
 def kurum_ici_sayfasi(item):

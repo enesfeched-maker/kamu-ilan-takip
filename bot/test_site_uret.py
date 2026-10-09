@@ -24,7 +24,7 @@ class SiteTests(unittest.TestCase):
         self.assertNotIn('Alacak', html.split('</section>')[0])
         item['baslik'] = 'ADALET BAKANLIĞI - 2026 Yılı Açıktan İcra Müdür Alım İlanı'
         html = detail_page(item, simdi=datetime(2026, 10, 5, tzinfo=TR))[1]
-        self.assertIn('<p class="d-alt">2026 Yılı Açıktan İcra Müdür alımı</p>', html)
+        self.assertNotIn('d-alt', html)  # alt başlık kaldırıldı (sade sayfa)
 
     def test_bot_ilanlari(self):
         simdi = datetime(2026, 5, 10, 12, 0, tzinfo=TR)

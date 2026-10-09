@@ -269,7 +269,6 @@ class IlCikarimTests(unittest.TestCase):
         import site_uret
         item = ilan(1, iller=['Antalya', 'Burdur'], ozet='x')
         html = site_uret.detail_page(item)[1]
-        self.assertIn('data-iller="Antalya,Burdur"', html)
         self.assertNotIn('data-kurum-ici', html)
         self.assertIsNone(site_uret.detail_page(ilan(2, baslik='Hazine Uzmanlığı Yeterlik Sınavı Duyurusu', ogrenim=[])),
                           'kurum içi ilan sitede gösterilmez (akademik gibi)')
