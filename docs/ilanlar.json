@@ -11878,9 +11878,9 @@
    "id": "csb-477947",
    "baslik": "POSOF BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE SÖZLEŞMELİ PERSONEL ALIM İLANI",
    "kurum": "POSOF BELEDİYE BAŞKANLIĞI",
-   "kadro": "",
+   "kadro": "1 Teknisyen",
    "ilan_turu": "Sözleşmeli Personel",
-   "son_tarih": null,
+   "son_tarih": "2026-11-04",
    "kaynak": "ÇŞB Yerel Yönetimler",
    "kaynak_turu": "csb",
    "link": "https://yerelyonetimler.csb.gov.tr/ardahan-ili-posof-belediye-baskanligina-ilk-defa-atanmak-uzere-sozlesmeli-personel-alim-ilani-duyuru-477947",
@@ -11891,8 +11891,8 @@
     }
    ],
    "yayim_tarihi": "2026-09-29",
-   "detay_guncelleme": "2026-10-03T21:36:48+03:00",
-   "csb_detay_surumu": 3,
+   "detay_guncelleme": "2026-10-10T13:12:25+03:00",
+   "csb_detay_surumu": 4,
    "ozet": "Ardahan ili Posof Belediye Başkanlığı bünyesinde 5393 sayılı Belediye Kanunu’nun 49 uncu maddesi ile Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla, belirtilen boş pozisyona tam zamanlı sözleşmeli personel alınacaktır.",
    "belgeler": [
     {
@@ -11910,7 +11910,12 @@
     "Ardahan"
    ],
    "kpss": "kpss",
-   "ek_okunamadi": 1
+   "sartlar": [
+    {
+     "kadro": "Teknisyen · 1 pozisyon",
+     "metin": "KPSS P94 puan türünden en az 60 puan. Hizmet sınıfı TH, 11. derece. Öğrenim: Ortaöğretim mezunu. Herhangi bir mesleki ve dengi ortaöğretim kurumlarının inşaat teknolojisi, elektrik-elektronik teknolojisi, makine ve tasarım teknolojisi, harita-tapu kadastro, bilişim teknolojileri, motorlu araçlar teknolojisi alanı dallarının birinden mezun olmak. En az (B) sınıfı sürücü belgesine sahip olmak."
+    }
+   ]
   },
   {
    "id": "csb-477774",
@@ -11948,9 +11953,9 @@
    "id": "csb-477764",
    "baslik": "ELEŞKİRT BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
    "kurum": "ELEŞKİRT BELEDİYE BAŞKANLIĞI",
-   "kadro": "",
+   "kadro": "1 Çözümleyici",
    "ilan_turu": "Memur",
-   "son_tarih": null,
+   "son_tarih": "2026-11-04",
    "kaynak": "ÇŞB Yerel Yönetimler",
    "kaynak_turu": "csb",
    "link": "https://yerelyonetimler.csb.gov.tr/agri-ili-eleskirt-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-477764",
@@ -11961,8 +11966,8 @@
     }
    ],
    "yayim_tarihi": "2026-09-21",
-   "detay_guncelleme": "2026-10-03T21:36:56+03:00",
-   "csb_detay_surumu": 3,
+   "detay_guncelleme": "2026-10-10T13:12:25+03:00",
+   "csb_detay_surumu": 4,
    "ozet": "Ağrı ili Eleşkirt Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır.",
    "belgeler": [
     {
@@ -11980,15 +11985,20 @@
     "Ağrı"
    ],
    "kpss": "kpss",
-   "ek_okunamadi": 1
+   "sartlar": [
+    {
+     "kadro": "Çözümleyici · 1 kadro",
+     "metin": "KPSS P3 puan türünden en az 50 puan. Hizmet sınıfı TH, 8. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren fakültelerin İşletme, Siyaset Bilimi ve yerel yönetimler bölümlerinin birinden mezun olmak. En az iki programlama dilini bildiğini mezun olduğu okuldan alacağı belge veya Millî Eğitim Bakanlığından onaylı kurs sertifikası ile belgelemek. En az (B) sınıfı sürücü belgesine sahip olmak."
+    }
+   ]
   },
   {
    "id": "csb-477763",
    "baslik": "MALAZGİRT BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
    "kurum": "MALAZGİRT BELEDİYE BAŞKANLIĞI",
-   "kadro": "",
+   "kadro": "Toplam 4 kişi — 2 Mühendis • 1 Mimar • 1 Muhasebeci",
    "ilan_turu": "Memur",
-   "son_tarih": null,
+   "son_tarih": "2026-11-04",
    "kaynak": "ÇŞB Yerel Yönetimler",
    "kaynak_turu": "csb",
    "link": "https://yerelyonetimler.csb.gov.tr/mus-ili-malazgirt-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-477763",
@@ -11999,8 +12009,8 @@
     }
    ],
    "yayim_tarihi": "2026-09-21",
-   "detay_guncelleme": "2026-10-03T21:36:58+03:00",
-   "csb_detay_surumu": 3,
+   "detay_guncelleme": "2026-10-10T13:12:25+03:00",
+   "csb_detay_surumu": 4,
    "ozet": "Muş ili Malazgirt Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır.",
    "belgeler": [
     {
@@ -12018,15 +12028,32 @@
     "Muş"
    ],
    "kpss": "kpss",
-   "ek_okunamadi": 1
+   "sartlar": [
+    {
+     "kadro": "Mühendis · 1 kadro",
+     "metin": "KPSS P3 puan türünden en az 60 puan. Hizmet sınıfı TH, 8. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren fakültelerin jeodezi ve fotogrametri mühendisliği, jeodezi ve haritacılık mühendisliği, harita mühendisliği, geomatik mühendisliği programından mezun olmak."
+    },
+    {
+     "kadro": "Mühendis · 1 kadro",
+     "metin": "KPSS P3 puan türünden en az 60 puan. Hizmet sınıfı TH, 8. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren fakültelerin İnşaat mühendisliği programından mezun olmak."
+    },
+    {
+     "kadro": "Mimar · 1 kadro",
+     "metin": "KPSS P3 puan türünden en az 60 puan. Hizmet sınıfı TH, 8. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren fakültelerin mimarlık programından mezun olmak."
+    },
+    {
+     "kadro": "Muhasebeci · 1 kadro",
+     "metin": "KPSS P3 puan türünden en az 60 puan. Hizmet sınıfı GİH, 8. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren fakültelerin Muhasebe ve Maliye programından mezun olmak."
+    }
+   ]
   },
   {
    "id": "csb-477761",
    "baslik": "İSTANBUL ELEKTRİK TRAMVAY VE TÜNEL İŞLETMELERİ GENEL MÜDÜRLÜĞÜ - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
    "kurum": "İSTANBUL ELEKTRİK TRAMVAY VE TÜNEL İŞLETMELERİ GENEL MÜDÜRLÜĞÜ",
-   "kadro": "",
+   "kadro": "Toplam 44 kişi — 4 Bilgisayar İşletmeni • 1 Muhasebeci • 1 Psikolog • 38 Mühendis",
    "ilan_turu": "Memur",
-   "son_tarih": null,
+   "son_tarih": "2026-11-02",
    "kaynak": "ÇŞB Yerel Yönetimler",
    "kaynak_turu": "csb",
    "link": "https://yerelyonetimler.csb.gov.tr/istanbul-elektrik-tramvay-ve-tunel-isletmeleri-genel-mudurlugune-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-477761",
@@ -12037,8 +12064,8 @@
     }
    ],
    "yayim_tarihi": "2026-09-21",
-   "detay_guncelleme": "2026-10-01T20:33:47+03:00",
-   "csb_detay_surumu": 2,
+   "detay_guncelleme": "2026-10-10T13:12:25+03:00",
+   "csb_detay_surumu": 4,
    "ozet": "İstanbul Elektrik Tramvay ve Tünel İşletmeleri Genel Müdürlüğü bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır",
    "belgeler": [
     {
@@ -12050,7 +12077,33 @@
    "kaynak_kimlikleri": [
     "csb-477761"
    ],
-   "kpss": "kpss"
+   "kpss": "kpss",
+   "sartlar": [
+    {
+     "kadro": "Bilgisayar İşletmeni · 2 kadro",
+     "metin": "KPSS P3 puan türünden en az 70 puan. Hizmet sınıfı GİH, 9. derece. Öğrenim: Lisans mezunu. Bilgisayar ve öğretim teknolojileri eğitimi, bilgisayar ve öğretim teknolojileri öğretmenliği, otomotiv öğretmenliği, iş idaresi lisans programlarının birinden mezun olmak. Millî Eğitim Bakanlığı onaylı bilgisayar işletmeni sertifikasına sahip olmak veya mezun olduğu okulda bilgisayar dersi gördüğünü belgelemek."
+    },
+    {
+     "kadro": "Bilgisayar İşletmeni · 2 kadro",
+     "metin": "KPSS P3 puan türünden en az 70 puan. Hizmet sınıfı GİH, 9. derece. Öğrenim: Lisans mezunu. Maliye, muhasebe ve maliye, yönetim bilişim sistemleri lisans programlarının birinden mezun olmak. Millî Eğitim Bakanlığı onaylı bilgisayar işletmeni sertifikasına sahip olmak veya mezun olduğu okulda bilgisayar dersi gördüğünü belgelemek."
+    },
+    {
+     "kadro": "Muhasebeci · 1 kadro",
+     "metin": "KPSS P3 puan türünden en az 70 puan. Hizmet sınıfı GİH, 7. derece. Öğrenim: Lisans mezunu. Muhasebe-finansman, muhasebe ve finansal yönetim, muhasebe ve finans yönetimi lisans programlarının birinden mezun olmak."
+    },
+    {
+     "kadro": "Psikolog · 1 kadro",
+     "metin": "KPSS P3 puan türünden en az 70 puan. Hizmet sınıfı SH, 8. derece. Öğrenim: Lisans mezunu. Psikoloji lisans programından mezun olmak."
+    },
+    {
+     "kadro": "Mühendis · 5 kadro",
+     "metin": "KPSS P3 puan türünden en az 70 puan. Hizmet sınıfı TH, 8. derece. Öğrenim: Lisans mezunu. Bilgisayar mühendisliği, bilgisayar bilimleri mühendisliği, bilgisayar bilimi ve mühendisliği, bilişim sistemleri mühendisliği, bilgisayar ve enformatik mühendisliği, kontrol ve bilgisayar mühendisliği, yazılım mühendisliği lisans programlarının birinden mezun olmak."
+    },
+    {
+     "kadro": "Mühendis · 1 kadro",
+     "metin": "KPSS P3 puan türünden en az 70 puan. Hizmet sınıfı TH, 7. derece. Öğrenim: Lisans mezunu. Çevre mühendisliği lisans programından mezun olmak."
+    }
+   ]
   },
   {
    "id": "csb-477610",
@@ -12281,9 +12334,9 @@
    "id": "csb-477209",
    "baslik": "HANAK BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
    "kurum": "HANAK BELEDİYE BAŞKANLIĞI",
-   "kadro": "",
+   "kadro": "Toplam 3 kişi — 1 Memur • 1 VHKİ • 1 Tahsildar",
    "ilan_turu": "Memur",
-   "son_tarih": null,
+   "son_tarih": "2026-10-05",
    "kaynak": "ÇŞB Yerel Yönetimler",
    "kaynak_turu": "csb",
    "link": "https://yerelyonetimler.csb.gov.tr/ardahan-ili-hanak-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-477209",
@@ -12294,8 +12347,8 @@
     }
    ],
    "yayim_tarihi": "2026-08-27",
-   "detay_guncelleme": "2026-10-04T14:49:55+03:00",
-   "csb_detay_surumu": 3,
+   "detay_guncelleme": "2026-10-10T13:12:25+03:00",
+   "csb_detay_surumu": 4,
    "ozet": "Ardahan ili Hanak Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadroya açıktan atama yoluyla memur alınacaktır.",
    "belgeler": [
     {
@@ -12304,7 +12357,6 @@
     }
    ],
    "yer": "Ardahan",
-   "ek_okunamadi": 1,
    "ilk_gorulme": "2026-10-04T17:23:01+03:00",
    "kaynak_kimlikleri": [
     "csb-477209"
@@ -12313,7 +12365,21 @@
    "iller": [
     "Ardahan"
    ],
-   "kpss": "kpss"
+   "kpss": "kpss",
+   "sartlar": [
+    {
+     "kadro": "Memur · 1 kadro",
+     "metin": "KPSS P93 puan türünden en az 55 puan. Hizmet sınıfı GİH, 11. derece. Öğrenim: Önlisans mezunu. Turizm ve otel işletmeciliği, turizm rehberliği veya yerel yönetimler bölümü ön lisans programlarının birinden mezun olmak."
+    },
+    {
+     "kadro": "VHKİ · 1 kadro",
+     "metin": "KPSS P3 puan türünden en az 55 puan. Hizmet sınıfı GİH, 11. derece. Öğrenim: Lisans mezunu. Kamu yönetimi, çalışma ekonomisi ve endüstri ilişkileri veya muhasebe bilgi sistemleri lisans programlarının birinden mezun olmak. MEB onaylı bilgisayar işletmenliği sertifikasına sahip olmak veya mezun olduğu okulda bilgisayar dersi gördüğünü belgelemiş olmak. En az (B) sınıfı sürücü belgesine sahibi olmak."
+    },
+    {
+     "kadro": "Tahsildar · 1 kadro",
+     "metin": "KPSS P3 puan türünden en az 55 puan. Hizmet sınıfı GİH, 11. derece. Öğrenim: Lisans mezunu. Kamu yönetimi, çalışma ekonomisi ve endüstri ilişkileri veya muhasebe bilgi sistemleri lisans programlarının birinden mezun olmak. En az (B) sınıfı sürücü belgesine sahibi olmak."
+    }
+   ]
   },
   {
    "id": "csb-477190",
@@ -12364,7 +12430,7 @@
     }
    ],
    "yayim_tarihi": "2026-08-25",
-   "detay_guncelleme": "2026-10-05T14:36:52+03:00",
+   "detay_guncelleme": "2026-10-10T13:12:25+03:00",
    "csb_detay_surumu": 4,
    "ozet": "Osmaniye ili Bahçe Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır.",
    "belgeler": [
@@ -12374,7 +12440,6 @@
     }
    ],
    "yer": "Osmaniye",
-   "ek_okunamadi": 1,
    "ilk_gorulme": "2026-10-05T00:21:22+03:00",
    "kaynak_kimlikleri": [
     "csb-477163"
