@@ -229,7 +229,7 @@ class TelegramDeliveryTests(unittest.TestCase):
         self.assertEqual(self.run_bot('--prepare', zaman=self.SABAH), 0)
         self.assertIsNone(json.loads(self.data.read_text()).get('telegram_toplu_hatirlatma_gunu'))
 
-    def test_sabah_ozeti_yeni_ilanlar_bolumu(self):
+    def test_sabah_ozetinde_yeni_ilanlar_listelenmez(self):
         self.prepare_reminders(2)
         state = json.loads(self.data.read_text())
         for i in state['ilanlar']:
@@ -237,7 +237,7 @@ class TelegramDeliveryTests(unittest.TestCase):
         self.data.write_text(json.dumps(state))
         self.assertEqual(self.run_bot(zaman=self.SABAH), 1)
         metin = self.gonderimler[0][0][2]
-        self.assertIn('🆕 <b>Son 24 saatte 1 yeni ilan</b>', metin)  # 25 kayıt aynı kurum+tarih: tek satır
+        self.assertNotIn('🆕', metin)  # yeni ilanlar gün içinde tek tek paylaşılır (10 Ekim 2026)
 
     def test_sabah_ozeti_basarisizsa_gun_isaretlenmez_ve_yeniden_denenir(self):
         self.prepare_reminders(2)
