@@ -61,5 +61,12 @@ class TemaBetigiTests(unittest.TestCase):
                 self.assertIn(TEMA_BETIGI, f.read(), yol)
 
 
+class KosulTemizTests(unittest.TestCase):
+    def test_karisik_gizlenir_maddeler_alt_alta(self):
+        import site_uret
+        self.assertEqual(site_uret._kosul_temiz('Ünvan Başvuru Cinsiyet Adet Aranan Nitelikler Kodu Ofis 1 BÜRO PERSONELİ BP01 - 4birinden mezun olmak.'), '')
+        t = site_uret._kosul_temiz('6) Tüm unvanlar için en az 60 puan. a) Lisans için KPSSP3. b) Ön lisans için KPSSP93.')
+        self.assertEqual(site_uret._kosul_html(t), 'Tüm unvanlar için en az 60 puan.<br>a) Lisans için KPSSP3.<br>b) Ön lisans için KPSSP93.')
+
 if __name__ == '__main__':
     unittest.main()
