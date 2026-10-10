@@ -469,7 +469,9 @@ const box=$('suzgecler');if(!box)return;
 const say=ilSayilari(),iller=IL_LIST.filter(il=>say.has(il)||F.il.includes(il)),ilSec=[['','Tüm iller']];
 if(F.il.length>1)ilSec.push(['*',F.il.slice(0,3).join(', ')+(F.il.length>3?' +'+(F.il.length-3):'')]);
 for(const il of iller)ilSec.push([ilSlug(il),il+' ('+(say.get(il)||0)+')']);
-const kids=[E('p','yan-baslik','Filtreler'),
+const bas=E('div','yan-baslik-satir');bas.append(E('p','yan-baslik','Filtreler'));
+if(suzgecVar(F)){const t=E('button','yan-temizle','✕ Temizle');t.type='button';t.onclick=temizle;bas.append(t);}
+const kids=[bas,
 secim('f-il','İl',ilSec,F.il.length>1?'*':F.il.length?ilSlug(F.il[0]):'',v=>{if(v==='*')return;F.il=v?[IL_LIST.find(x=>ilSlug(x)===v)].filter(Boolean):[];}),
 secim('f-ogr','Öğrenim düzeyi',[['','Tüm düzeyler'],...OGR_SECENEK.filter(x=>x[0]!=='belediye')],F.ogr==='belediye'?'':F.ogr,v=>{F.ogr=v;}),
 secim('f-sb','Son başvuru',[['','Tüm tarihler'],...SB_SECENEK],F.sb,v=>{F.sb=v;})];
@@ -785,6 +787,12 @@ $('theme').onclick=()=>{A('tikla',{a:'tema',x:document.documentElement.dataset.t
 $('search-form').onsubmit=e=>{e.preventDefault();F.q=$('search').value.trim().slice(0,80);aramaIz();ilanDegisti();};
 $('search').oninput=()=>{F.q=$('search').value.slice(0,80);if(F.q.trim())ensureFull();aramaIz();ilanDegisti();};
 $('clear').onclick=temizle;
+/* Logo, Bugün ve İlanlar bağlantıları süzgeçleri sıfırlar (profil uygunluğu korunur). */
+function sifirlaGit(e){if(!suzgecVar(F))return;const t=(e.currentTarget.getAttribute('href')||'').slice(1);e.preventDefault();
+const u=F.uygun;F={...defaultF(),uygun:u};$('search').value='';shown=PAGE_SIZE;
+try{const x=new URL(location.href),sp=new URLSearchParams(x.search);for(const k of QKEYS)if(k!=='uygun')sp.delete(k);history.replaceState(null,'',x.pathname+(sp.toString()?'?'+sp:'')+x.hash);}catch{}
+if(location.hash.slice(1)===t){lastHref=location.href;route();}else location.hash=t;}
+document.querySelectorAll('.tb-marka,.tb-nav a[data-tab="bugun"],.tb-nav a[data-tab="ilanlar"]').forEach(a=>a.addEventListener('click',sifirlaGit));
 document.querySelectorAll('[data-query]').forEach(b=>b.onclick=()=>cipAra(b.dataset.query));
 document.querySelectorAll('[data-seg]').forEach(b=>b.onclick=()=>{tkSeg=b.dataset.seg;takvimGun=7;renderTakvim();});
 if($('tb-ac'))$('tb-ac').onclick=()=>navAc(!navAcik);

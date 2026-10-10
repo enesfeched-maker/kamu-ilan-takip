@@ -90,6 +90,10 @@ html{scroll-padding-top:76px}
 .agac-alt .agac-a.secili small{background:var(--surface);color:var(--ink-2)}
 .agac-ayrac{margin-top:6px;padding-top:6px;border-top:1px solid var(--line)}
 .suzgec{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);display:grid;gap:12px}
+.yan-baslik-satir{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.yan-temizle{border:1px solid var(--line-2);background:none;border-radius:999px;padding:3px 10px;font:600 12px/1.3 inherit;font-family:inherit;color:var(--ink-2);cursor:pointer}
+.yan-temizle:hover,.yan-temizle:focus-visible{border-color:var(--ink);color:var(--ink)}
+@media (min-width:901px){.liste-bas .temizle{display:none}}
 .yan-baslik{margin:0;font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
 .secim label{display:block;margin-bottom:4px;font-size:12.5px;font-weight:600;color:var(--ink-2)}
 .secim select{width:100%;height:38px;padding:0 10px;border:1px solid var(--line-2);border-radius:9px;background:var(--surface);color:var(--ink);font:inherit;font-size:14px}
