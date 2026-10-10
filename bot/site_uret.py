@@ -119,6 +119,27 @@ def _virgul(n, k=1):
     return f'{n:.{k}f}'.replace('.', ',')
 
 
+_KOSUL_ETIKET = {'Belgedeki kadro koşullarından alıntı': 'Genel koşul', 'Belgede belirtilen koşullar': 'Genel koşul',
+                 'Sınav puanı koşulu · kadroya göre muafiyetler için belgeyi inceleyin': 'KPSS puanı', 'Sınav puanı koşulu': 'KPSS puanı'}
+# PDF tablosu düz metne dökülünce sütunlar birbirine karışır (başlık sözcükleri, BP01 gibi kodlar, "4birinden").
+_KARISIK_RE = re.compile(r'\b[A-ZÇĞİÖŞÜ]{2,4}\d{2,3}\b|\d[a-zçğıöşü]{3,}')
+_TABLO_BASLIK_RE = re.compile(r'\b(?:Ünvan|Unvanı|Kodu|Cinsiyet|Aranan Nitelikler|Sıra No|Adet)\b')
+
+
+def _kosul_temiz(metin):
+    """Koşul metnini sadeleştirir; sütunları karışmış (okunmaz) metinde '' döner."""
+    metin = re.sub(r'\s+', ' ', metin or '').strip()
+    if not metin or _KARISIK_RE.search(metin) or len(_TABLO_BASLIK_RE.findall(metin)) >= 2:
+        return ''
+    metin = re.sub(r'^(?:\d{1,2}[).-]|[a-zçğ]\))\s*', '', metin)
+    return metin[:1].upper() + metin[1:]
+
+
+def _kosul_html(metin):
+    """a) b) c) maddelerini alt alta yazar."""
+    return re.sub(r'\s(?=[a-zçğ]\)\s)', '<br>', esc(metin))
+
+
 def _kadro_tablosu(item):
     """Kadro / kontenjan tablosu (kadro adıyla eşleşen koşul metni aynı satırda) ve eşleşmeyen koşullar için ikinci tablo.
     HTML bölümü döner (başlıkla birlikte); gösterilecek bir şey yoksa boş metin."""
@@ -140,21 +161,22 @@ def _kadro_tablosu(item):
         metin = ''
         if secilen is not None:
             kullanilan.add(secilen)
-            metin = sartlar[secilen].get('metin') or ''
+            metin = _kosul_temiz(sartlar[secilen].get('metin'))
         satirlar.append((ad, adet, metin))
-    kalan = [s for n, s in enumerate(sartlar) if n not in kullanilan]
+    kalan = [{'kadro': _KOSUL_ETIKET.get(s.get('kadro'), s.get('kadro')), 'metin': m}
+             for n, s in enumerate(sartlar) if n not in kullanilan for m in [_kosul_temiz(s.get('metin'))] if m]
     html_ = ''
     if satirlar:
         kosullu = any(m for _, _, m in satirlar)
         govde = ''.join(
             f'<tr><td>{esc(ad)}</td><td class="sayi" data-et="Kontenjan">{esc(ks.SAYI_YAZ(adet) if adet else "—")}</td>'
-            + (f'<td data-et="Koşullar">{esc(metin) if metin else "Resmî ilandan kontrol et"}</td>' if kosullu else '') + '</tr>'
+            + (f'<td data-et="Koşullar">{_kosul_html(metin) if metin else "Resmî ilandan kontrol et"}</td>' if kosullu else '') + '</tr>'
             for ad, adet, metin in satirlar)
         baslik = '<th scope="col">Kadro</th><th scope="col" class="sayi">Kontenjan</th>' + ('<th scope="col">Başvuru koşulları</th>' if kosullu else '')
         html_ += (f'<h2>{"Kadro ve başvuru koşulları" if kosullu else "Kadro ve kontenjan"}</h2>'
                   f'<div class="tablo-kap"><table class="ktablo"><thead><tr>{baslik}</tr></thead><tbody>{govde}</tbody></table></div>')
     if kalan:
-        govde = ''.join(f'<tr><td>{esc(s.get("kadro") or "Genel")}</td><td>{esc(s.get("metin") or "")}</td></tr>' for s in kalan)
+        govde = ''.join(f'<tr><td>{esc(s.get("kadro") or "Genel")}</td><td>{_kosul_html(s["metin"])}</td></tr>' for s in kalan)
         html_ += (f'<h{"3" if satirlar else "2"} class="alt-h">Başvuru koşullarından seçmeler</h{"3" if satirlar else "2"}>'
                   f'<div class="tablo-kap"><table class="ktablo"><thead><tr><th scope="col">Konu</th><th scope="col">Koşul</th></tr></thead><tbody>{govde}</tbody></table></div>')
     return html_
