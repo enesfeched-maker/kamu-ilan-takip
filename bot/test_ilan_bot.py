@@ -508,3 +508,18 @@ class HaftalikArananTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+class GununSozuTests(unittest.TestCase):
+    def test_gunlere_gore_soz(self):
+        tr = ilan_bot.TR
+        pazar = datetime(2026, 10, 11, 9, tzinfo=tr)
+        self.assertEqual(ilan_bot.gunun_sozu(pazar), ilan_bot.PAZAR_SOZLERI[0])
+        self.assertEqual(ilan_bot.gunun_sozu(pazar + timedelta(days=7)), ilan_bot.PAZAR_SOZLERI[1])
+        self.assertEqual(ilan_bot.gunun_sozu(pazar + timedelta(days=21)), ilan_bot.PAZAR_SOZLERI[0])
+        self.assertIn('hafta sonları', ilan_bot.gunun_sozu(pazar - timedelta(days=1)))
+        self.assertEqual(ilan_bot.gunun_sozu(pazar + timedelta(days=1)), 'Kahveni al, bugünkü ilanlar burada.')
+
+    def test_sabah_mesajinda_basligin_altinda(self):
+        an = datetime(2026, 10, 11, 9, tzinfo=ilan_bot.TR)
+        metin = ilan_bot.sabah_mesaj([], [], 0, '', an)
+        self.assertEqual(metin.split('\n')[1], ilan_bot.PAZAR_SOZLERI[0])
