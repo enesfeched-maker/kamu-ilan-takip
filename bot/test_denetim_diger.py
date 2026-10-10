@@ -29,7 +29,7 @@ class TtkIlTests(unittest.TestCase):
     def test_kayit_ili_belgeden(self):
         i = {'id': 'sbb-' + 'a' * 24, 'kaynak_turu': 'sbb', 'baslik': 'TÜRKİYE TAŞKÖMÜRÜ KURUMU GENEL MÜDÜRLÜĞÜ - 4 SÜREKLİ İŞÇİ ALACAK',
              'kurum': 'TÜRKİYE TAŞKÖMÜRÜ KURUMU GENEL MÜDÜRLÜĞÜ', 'kadro': '4 SÜREKLİ İŞÇİ ALACAK', 'ilan_turu': 'İşçi', 'link': 'https://kamuilan.sbb.gov.tr/',
-             'son_tarih': '2026-10-09', 'belge_sha256': 'f' * 64, 'sbb_detay_surumu': 5}
+             'son_tarih': '2099-10-09', 'belge_sha256': 'f' * 64, 'sbb_detay_surumu': 5}
         lv._BELGE_ONBELLEK.clear()
         with patch('sbb_detay.belge_sayfalari', return_value=[TTK4]):
             k = lv.kayit(lv.tamamla(i), None, {}, SIMDI)
