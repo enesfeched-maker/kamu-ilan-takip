@@ -18,7 +18,7 @@ TR = timezone(timedelta(hours=3))
 KART_GENISLIK = 720
 LOGO_BOYUT = 128
 EN_COK_LOGO_INDIRME = 150
-CSS_SURUM = 16
+CSS_SURUM = 17
 LOGO_SURUM = 2
 ACIK_ZEMIN, KOYU_ZEMIN = '#F6F6F1', '#0D0E0C'
 ANALIZ_SURUM = 2  # docs/a.js (çerezsiz ziyaret istatistiği) önbellek sürümü

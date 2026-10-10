@@ -23,7 +23,7 @@ let acikListe=null;const acikOnbellek=new Map();
 const dizge=s=>{const k=String(s||'').toLocaleLowerCase('tr').replace(/['’`´]/g,'').replace(/\s*\(.*?\)/g,'').replace(/\s+/g,' ').trim();return k==='veri hazırlama ve kontrol işletmeni'?'vhki':k;};
 async function acikListeYukle(){try{const r=await fetch('../liste.json',{cache:'no-cache'});if(!r.ok)return;const v=await r.json();if(v&&Array.isArray(v.ilanlar))acikListe=v.ilanlar.filter(i=>i&&Array.isArray(i.unvanlar)).map(i=>({u:new Set(i.unvanlar.filter(x=>typeof x==='string').map(dizge))}));}catch{}}
 function acikSayi(unvan){if(!acikListe)return 0;const u=dizge(unvan);if(u.length<2)return 0;if(!acikOnbellek.has(u))acikOnbellek.set(u,acikListe.filter(i=>i.u.has(u)).length);return acikOnbellek.get(u);}
-function acikBaglanti(unvan){const n=acikSayi(unvan);if(!n)return null;const a=E('a','acik-link','Bu unvanda açık ilanlar ('+n+') →');a.href='../?q='+encodeURIComponent(unvan)+'#ilanlar';return a;}
+function acikBaglanti(unvan){const n=acikSayi(unvan);if(!n)return null;const a=E('a','acik-link','Bu ünvanda açık ilanlar ('+n+') →');a.href='../?q='+encodeURIComponent(unvan)+'#ilanlar';return a;}
 /* Açılır seçim kutusu (tek tip görünüm): data-coklu="1" ise onay kutulu çoklu seçim, data-ara varsa listede arama.
    API: ayarla([[değer, yazı]]), degerler() → dizi, sec(dizi), onDegis / onAc geri çağrıları. */
 const ACIK_SECIMLER=new Set();

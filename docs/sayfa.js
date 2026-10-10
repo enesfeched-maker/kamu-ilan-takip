@@ -167,7 +167,7 @@
       if (r && typeof r.medyan === 'number' && uygunTur) {
         if (typeof pr.puan === 'number') ek(pr.puan >= r.medyan ? 'tamam' : '', [cumle(pr.puan - r.medyan) + ' (' + virgul(r.medyan, 1) + ').']);
         else ek('', ['Benzer kadroların taban medyanı ' + virgul(r.medyan, 1) + '. Puanını profiline eklersen farkı gösteririm.']);
-      } else if (!Object.keys(ref2).length) ek('', ['Bu unvan için yeterli geçmiş yerleştirme verisi yok; taban karşılaştırması yapılamadı.']);
+      } else if (!Object.keys(ref2).length) ek('', ['Bu ünvan için yeterli geçmiş yerleştirme verisi yok; taban karşılaştırması yapılamadı.']);
       hedef.replaceChildren(ul);
     }
   }
