@@ -664,11 +664,28 @@ def _ilan_satiri(i, site_url, etiket=None):
     return f"• {govde}" + (f" · <b>{etiket}</b>" if etiket else "")
 
 
+PAZAR_SOZLERI = (
+    "Pazar sakin ama yarın ilanlar yeniden başlıyor. Biz hazırız, sen de hazır ol.",
+    "Yeni hafta hareketli başlayabilir. İlk duyan sen ol diye biz buradayız.",
+    "Bugün ilan yok ama biz hep hazırız. Yarın ilk haber bizden.",
+)
+
+
+def gunun_sozu(zaman):
+    """Sabah özetinin ilk satırı: hafta içi sabit, cumartesi dilek, pazar haftalık sırayla (11 Ekim 2026 = ilk söz)."""
+    gun = zaman.weekday()
+    if gun == 6:
+        return PAZAR_SOZLERI[((zaman.date() - date(2026, 10, 11)).days // 7) % len(PAZAR_SOZLERI)]
+    if gun == 5:
+        return "Emeğimizin boşa gitmemesi dileğiyle, iyi hafta sonları."
+    return "Kahveni al, bugünkü ilanlar burada."
+
+
 def sabah_mesaj(yeniler, son_gun, acik_sayisi, site_url, zaman, aranan=None):
     """Sabah özeti metni (HTML): başlık + yeni ilanlar (+ pazartesi aranan meslekler). Son başvurusu yaklaşanlar yalnız
     görselde; açık ilan sayısı ve site satırı yazılmaz, site düğmede (10 Ekim 2026 kararı: laf kalabalığı yok).
     Sınır (~950 görünür karakter) aşılırsa yeni listesi kısaltılır."""
-    ust = f"☀️ <b>Günaydın — {turkce_tarih(zaman)}</b>"
+    ust = f"☀️ <b>Günaydın — {turkce_tarih(zaman)}</b>\n{gunun_sozu(zaman)}"
     son_gun_anahtar = {x for i in son_gun for x in (('id', i['id']), ('k', _tekil_anahtar(i)))}
     # Son gün listesinde (görselde) olan yeni ilan metinde tekrar yazılmaz (başlıktaki sayı yine hepsini sayar).
     yeni_satirlari = [_ilan_satiri(i, site_url) for i in yeniler
