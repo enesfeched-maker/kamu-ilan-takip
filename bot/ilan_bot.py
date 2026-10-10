@@ -981,7 +981,7 @@ def main():
     toplu_gun = veri.get('telegram_toplu_hatirlatma_gunu')
     sabah = None
     if toplu_zamani(simdi(), toplu_gun):
-        sabah_yeni = sabah_yeniler(gelen, gonderilen, cfg, simdi())
+        sabah_yeni = []  # 10 Ekim 2026: yeni ilanlar gun icinde tek tek paylasiliyor; sabah ozetinde listelenmez
         sabah_son_gun = toplu_secim(gelen, gonderilen, cfg)
         sabah_acik = sabah_acik_sayisi(gelen, simdi())
         if sabah_yeni or sabah_son_gun or sabah_acik:  # üçü de boşsa sessizce atlanır, gün işaretlenmez
