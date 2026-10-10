@@ -53,7 +53,7 @@ MENU_BETIGI = ('<script>(function(){var h=document.getElementById("tb"),b=docume
 def ust_html(kok, aktif=''):
     """Ana sayfayla aynı ince koyu üst bar (docs/index.html .tb, docs/kabuk.css); bağlantılar `kok` göreli."""
     # Taban puanı sayfaları (kpss-taban-puanlari/) da 'puanlar' bölümüdür; menüde tek sekme robot ve tablo sayfasına gider.
-    menu = [('Bugün', f'{kok}#bugun', ''), ('İlanlar', f'{kok}#ilanlar', 'ilanlar'),
+    menu = [('İlanlar', f'{kok}#ilanlar', 'ilanlar'),
             ('Taban Puanları', f'{kok}puanlar/', 'puanlar'),
             ('Takvim', f'{kok}#takvim', ''), ('Kayıtlı', f'{kok}#kayitli', '')]
     bagla = ''.join(f'<a href="{h}" data-a="menu" data-a-x="{ad}"{" class=" + chr(34) + "aktif" + chr(34) + " aria-current=" + chr(34) + "page" + chr(34) if a and a == aktif else ""}>'
