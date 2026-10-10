@@ -22,6 +22,18 @@ def resim(ilan_, **kw):
     return Image.open(io.BytesIO(ilan_karti(ilan_, simdi=SIMDI, **kw))).convert('RGB')
 
 
+class KadroFiilTesti(unittest.TestCase):
+    def test_sondaki_fiil_atilir(self):
+        ilan = {'kurum': 'X BELEDİYESİ', 'kadro': '1 SÜREKLİ İŞÇİ ALACAK'}
+        self.assertEqual(kt.toplu_satir(ilan)[1], '1 Sürekli İşçi')
+        ilan = {'kurum': 'JANDARMA', 'kadro': '1 SÖZLEŞMELİ PİLOT (UÇAK) TEMİN EDECEKTİR'}
+        self.assertEqual(kt.toplu_satir(ilan)[1], '1 Sözleşmeli Pilot (Uçak)')
+
+    def test_yalniz_fiilse_dokunulmaz(self):
+        self.assertEqual(kt._fiilsiz('Alacak'), 'Alacak')
+        self.assertEqual(kt._fiilsiz('Destek Personeli'), 'Destek Personeli')
+
+
 class MarkaSeridiLogoTesti(unittest.TestCase):
     def serit(self, im=True):
         from PIL import ImageDraw

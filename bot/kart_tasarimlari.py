@@ -85,6 +85,14 @@ def _baslik_ozeti(ilan):
     return _kurumu_at(ilan.get('kurum') or '', ' '.join(str(ilan.get('baslik') or '').split()))
 
 
+_FIIL_SON = re.compile(r'\s+(?:temin\s+edil\w*|temin\s+edece\w*|istihdam\s+edil\w*|istihdam\s+edece\w*|al[ıi]nacak\w*|alacak\w*|al[ıi]m[ıi]?)\s*$', re.I)
+
+
+def _fiilsiz(ad):
+    """Kadro adının sonundaki 'Alacak', 'Temin Edecektir' gibi fiilleri atar ('1 Sürekli İşçi Alacak' -> 'Sürekli İşçi')."""
+    return _FIIL_SON.sub('', ad).strip() or ad
+
+
 def _kadrolar(ilan):
     """Kadro satırlarından; kadro yoksa başlıktan ('3 Öğretim Üyesi Alacak'). Duyurularda kadro gösterilmez."""
     if ilan.get('duyuru_turu'):
@@ -92,7 +100,7 @@ def _kadrolar(ilan):
     sonuc = []
     for parca in meslekler(ilan.get('kadro')):
         adet, ad = adet_ayir(parca)
-        sonuc.append({'adet': adet, 'ad': _baslik(ad), 'no': meslek_no(ad)})
+        sonuc.append({'adet': adet, 'ad': _fiilsiz(_baslik(ad)), 'no': meslek_no(ad)})
     if not sonuc:
         m = re.search(BASLIK_ADET + r'\s+([^\d]+?)\s+(?:alacak|alınacak|alim|alım)', _baslik_ozeti(ilan), re.I)
         if m:
