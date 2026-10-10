@@ -1,10 +1,10 @@
 {
  "schema": 1,
- "guncelleme": "2026-10-10T12:06:42.351335+00:00",
+ "guncelleme": "2026-10-10T12:36:43.196747+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-10-10T12:10:41.016291+00:00",
-   "hata_sayisi": 9,
+   "kontrol": "2026-10-10T12:39:22.112847+00:00",
+   "hata_sayisi": 6,
    "ilanlar": [
     {
      "id": "sbb-8b48171d4d7402911da5cfd8",
@@ -480,8 +480,8 @@
      "donem": "( 7 Ekim - 21 Ekim)",
      "baslangic_zaman": "2026-10-07T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-09T22:26:47+03:00",
-     "belge_ozeti": "3b6e1fd6da1b172b75998e5f23722f6d6b4711b056b46e3ef0427f87851673e6",
+     "detay_guncelleme": "2026-10-10T15:36:44+03:00",
+     "belge_ozeti": "f54cb36987bfdd2d251d948d1bd024fbf8003fd325b26e2d5c81655915112f81",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -496,8 +496,8 @@
       }
      ],
      "basvuru_notu": "2) Sistem üzerinden tamamlanmayan taslak durumundaki başvurular, ilanda belirtilen şartları taşımayan, eksik bilgi/belgesi olan adayların başvuruları kabul edilmeyecektir. (Online olarak yapılan başvurular için istenen tüm bilgi ve belgeler gerektiğinde adaylardan fiziksel olarak istenebilecektir.)",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/3b6e1fd6da1b172b75998e5f23722f6d6b4711b056b46e3ef0427f87851673e6.pdf",
-     "belge_sha256": "3b6e1fd6da1b172b75998e5f23722f6d6b4711b056b46e3ef0427f87851673e6",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/f54cb36987bfdd2d251d948d1bd024fbf8003fd325b26e2d5c81655915112f81.pdf",
+     "belge_sha256": "f54cb36987bfdd2d251d948d1bd024fbf8003fd325b26e2d5c81655915112f81",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
     },
@@ -1660,8 +1660,8 @@
      "donem": "( 2 Ekim - 16 Ekim)",
      "baslangic_zaman": "2026-10-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-09T22:28:12+03:00",
-     "belge_ozeti": "ca7b8ed398fd9cbbb1ea3666279a8250cd4ff5a8b30e88697b81f80864204ca2",
+     "detay_guncelleme": "2026-10-10T15:37:11+03:00",
+     "belge_ozeti": "582c7c8eb5227284e3f5ff16b7683205a8aaea6bfc23abeaa5ff104ebb194b79",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1752,8 +1752,8 @@
       }
      ],
      "basvuru_notu": "1- Başvurular Üniversitemiz İnsan Kaynakları Başvuru Sistemi'nden (https://ikbasvuru.sdu.edu.tr) çevrimiçi (online) yapılacaktır.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/ca7b8ed398fd9cbbb1ea3666279a8250cd4ff5a8b30e88697b81f80864204ca2.pdf",
-     "belge_sha256": "ca7b8ed398fd9cbbb1ea3666279a8250cd4ff5a8b30e88697b81f80864204ca2",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/582c7c8eb5227284e3f5ff16b7683205a8aaea6bfc23abeaa5ff104ebb194b79.pdf",
+     "belge_sha256": "582c7c8eb5227284e3f5ff16b7683205a8aaea6bfc23abeaa5ff104ebb194b79",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "belge_ogrenim": [
@@ -3843,8 +3843,8 @@
      "donem": "( 12 Ekim - 27 Ekim)",
      "baslangic_zaman": "2026-10-12T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-09T22:30:26+03:00",
-     "belge_ozeti": "dd0bf0c5f37c34ddac858cce003790dc8ad689df961ef97125a94bdf0ef5368d",
+     "detay_guncelleme": "2026-10-10T15:38:55+03:00",
+     "belge_ozeti": "f0025efd04bf241c8ea3a72f390fac43099fc617390f1361f43772f7740b8cb9",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -3867,8 +3867,8 @@
       }
      ],
      "basvuru_notu": "Başvurular, \"Başvuru Formu\" eksiksiz ve doğru bir şekilde doldurulmak suretiyle elektronik ortamda yapılacaktır. Adayların, yukarıda belirtilen sınav giriş şartları ve tercih nedenlerine dair kanıtlayıcı bilgi ve belgeleri elektronik ortamda başvuru formunun ilgili bölümlerine eklemeleri zorunludur.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/dd0bf0c5f37c34ddac858cce003790dc8ad689df961ef97125a94bdf0ef5368d.pdf",
-     "belge_sha256": "dd0bf0c5f37c34ddac858cce003790dc8ad689df961ef97125a94bdf0ef5368d",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/f0025efd04bf241c8ea3a72f390fac43099fc617390f1361f43772f7740b8cb9.pdf",
+     "belge_sha256": "f0025efd04bf241c8ea3a72f390fac43099fc617390f1361f43772f7740b8cb9",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "puan_turleri": [
@@ -4628,7 +4628,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-10-10T12:10:42.383140+00:00",
+   "kontrol": "2026-10-10T12:39:26.149289+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
