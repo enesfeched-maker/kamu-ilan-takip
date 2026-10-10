@@ -647,6 +647,9 @@ class EkBelgeHatasiTesti(unittest.TestCase):
         self.assertFalse(csb.eksik_mi(k))
         self.assertTrue(csb.eksik_mi({**k,'yayim_tarihi':csb.now().date().isoformat()}))
         self.assertFalse(csb.eksik_mi({'id':'csb-2'}))
+        # Başvuru süresi ~30-45 gün: 3-4 hafta önce yayımlanmış eksik kayıt hâlâ denenir (Posof/Malazgirt, Ekim 2026)
+        from datetime import timedelta
+        self.assertTrue(csb.eksik_mi({**k,'yayim_tarihi':(csb.now().date()-timedelta(days=30)).isoformat()}))
 
 
 class TekrarOnlemeTesti(unittest.TestCase):
