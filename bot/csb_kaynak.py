@@ -26,7 +26,7 @@ SAYFA_SAYISI = 2           # her sayfada ~12 duyuru; 30 dakikalık tarama için 
 KAYNAK_ADI = 'ÇŞB Yerel Yönetimler'
 # Ayrıştırma mantığı değişince VERSIYON artırılır (önbellekteki eski kayıtlar yeniden okunur).
 VERSIYON = 4
-YENIDEN_DENEME_GUN = 14   # ek belgesi okunamayan duyuru yayımından bu kadar gün boyunca her taramada yeniden denenir
+YENIDEN_DENEME_GUN = 45   # ek belgesi okunamayan duyuru yayımından bu kadar gün boyunca her taramada yeniden denenir (ÇŞB başvuru süresi ~30-45 gün; 14 gün yetmedi, Ekim 2026)
 HOSTLAR = {'yerelyonetimler.csb.gov.tr', 'webdosya.csb.gov.tr'}
 # webdosya.csb.gov.tr sunucusu ara sertifikayı (SSL2BUY EMEA RSA OV, Sectigo R46 altında) göndermiyor. Windows'ta Python yalnızca
 # sistem deposundaki sertifikaları kullanır; ara sertifikası depoda olmayan kullanıcı/oturumda (ör. zamanlanmış görev)
