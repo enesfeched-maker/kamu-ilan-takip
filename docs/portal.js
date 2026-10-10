@@ -792,7 +792,7 @@ function sifirlaGit(e){if(!suzgecVar(F))return;const t=(e.currentTarget.getAttri
 const u=F.uygun;F={...defaultF(),uygun:u};$('search').value='';shown=PAGE_SIZE;
 try{const x=new URL(location.href),sp=new URLSearchParams(x.search);for(const k of QKEYS)if(k!=='uygun')sp.delete(k);history.replaceState(null,'',x.pathname+(sp.toString()?'?'+sp:'')+x.hash);}catch{}
 if(location.hash.slice(1)===t){lastHref=location.href;route();}else location.hash=t;}
-document.querySelectorAll('.tb-marka,.tb-nav a[data-tab="bugun"],.tb-nav a[data-tab="ilanlar"]').forEach(a=>a.addEventListener('click',sifirlaGit));
+document.querySelectorAll('.tb-marka,.tb-nav a[data-tab="ilanlar"]').forEach(a=>a.addEventListener('click',sifirlaGit));
 document.querySelectorAll('[data-query]').forEach(b=>b.onclick=()=>cipAra(b.dataset.query));
 document.querySelectorAll('[data-seg]').forEach(b=>b.onclick=()=>{tkSeg=b.dataset.seg;takvimGun=7;renderTakvim();});
 if($('tb-ac'))$('tb-ac').onclick=()=>navAc(!navAcik);
