@@ -199,8 +199,7 @@ class TelegramDeliveryTests(unittest.TestCase):
         self.assertEqual(self.run_bot(zaman=self.SABAH), 1)
         args, kwargs = self.gonderimler[0]
         self.assertIn('Günaydın — 5 Ekim Pazartesi', args[2])
-        self.assertIn('son başvurusu yaklaşıyor', args[2])
-        self.assertNotIn('• ', args[2].split('⏰')[1])  # liste yalnız görselde
+        self.assertNotIn('⏰', args[2])  # son gün listesi yalnız görselde, metinde satır yok
         self.assertTrue(kwargs['foto'].startswith(b'\x89PNG'))
         self.assertEqual(json.loads(self.data.read_text())['telegram_toplu_hatirlatma_gunu'], '2026-10-05')
         self.assertEqual(self.run_bot(zaman=self.SABAH.replace(hour=15)), 0)
@@ -217,7 +216,7 @@ class TelegramDeliveryTests(unittest.TestCase):
         args, kwargs = self.gonderimler[0]
         self.assertNotIn('Son başvurusu yaklaşanlar', args[2])
         self.assertNotIn('yeni ilan', args[2])
-        self.assertIn('Şu an başvurusu açık <b>25 ilan</b>', args[2])
+        self.assertNotIn('📌', args[2])  # açık ilan sayısı metne yazılmaz
         self.assertTrue(kwargs['foto'].startswith(b'\x89PNG'))
 
     def test_sabah_ozeti_her_sey_bossa_atlanir_ve_gun_isaretlenmez(self):
@@ -307,13 +306,11 @@ class TelegramDeliveryTests(unittest.TestCase):
         with patch.object(ilan_bot, 'simdi', return_value=self.SABAH), \
              patch.object(ilan_bot, 'ilan_sayfasi', return_value='https://example.com/x/'):
             metin = ilan_bot.sabah_mesaj([ortak, diger], [ortak], 9, '', self.SABAH)
-        yeni_bolum, son_bolum = metin.split('⏰')
-        self.assertIn('Son 24 saatte 2 yeni ilan', yeni_bolum)  # sayı hepsini sayar
-        self.assertNotIn('Ortak Belediyesi', yeni_bolum)
-        self.assertIn('Diger Belediyesi', yeni_bolum)
-        self.assertNotIn('Ortak Belediyesi', son_bolum)  # son gün listesi yalnız görselde
-        self.assertIn('<b>1 ilanın</b> son başvurusu yaklaşıyor', son_bolum)
-        self.assertNotIn('ilan daha', yeni_bolum)
+        self.assertIn('Son 24 saatte 2 yeni ilan', metin)  # sayı hepsini sayar
+        self.assertNotIn('Ortak Belediyesi', metin)  # son gün listesi yalnız görselde
+        self.assertIn('Diger Belediyesi', metin)
+        self.assertNotIn('⏰', metin)
+        self.assertNotIn('ilan daha', metin)
     def test_sabah_yeniler_kanalda_paylasilmayan_girmez(self):
         kayitlar = [self.kayit(0), self.kayit(1)]
         self.assertEqual([k['id'] for k in self.yeniler(kayitlar, {'i1'})], ['i1'])
@@ -340,17 +337,17 @@ class TelegramDeliveryTests(unittest.TestCase):
             self.assertNotIn('⏰', yalniz_acik)
             self.assertNotIn('yeni ilan', yalniz_acik)
             self.assertIn('☀️ <b>Günaydın — 5 Ekim Pazartesi</b>', yalniz_acik)
-            self.assertIn('📌 Şu an başvurusu açık <b>7 ilan</b>', yalniz_acik)
-            self.assertIn('href="https://example.com/?g=bugun&amp;utm_source=telegram&amp;utm_medium=ozet"', yalniz_acik)
+            self.assertNotIn('📌', yalniz_acik)
+            self.assertNotIn('👉', yalniz_acik)  # site düğmede; metinde bağlantı satırı yok
             yeni = ilan_bot.sabah_mesaj([self.kayit(0)], [], 7, '', self.SABAH)
         self.assertIn('🆕 <b>Son 24 saatte 1 yeni ilan</b> · 1 kadro', yeni)
         self.assertNotIn('⏰', yeni)
-        self.assertNotIn('👉', yeni)  # site adresi yoksa bağlantı satırı yok
+        self.assertNotIn('👉', yeni)
         for gun, ad in enumerate(('Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar')):
             self.assertTrue(ilan_bot.turkce_tarih(self.SABAH + timedelta(days=gun)).endswith(ad))
         self.assertEqual(ilan_bot.turkce_tarih(datetime(2026, 8, 30, tzinfo=self.SABAH.tzinfo)), '30 Ağustos Pazar')
 
-    def test_sabah_mesaji_butce_asilinca_yeni_listesi_kisalir_altlik_kalir(self):
+    def test_sabah_mesaji_butce_asilinca_yeni_listesi_kisalir(self):
         uzun = 'Çok Uzun Adlı Büyükşehir Belediye Başkanlığı Zabıta Müdürlüğü '
         yeni = [self.kayit(n, kurum=uzun + str(n), baslik=uzun) for n in range(12)]
         bitis = (self.SABAH.date() + timedelta(days=1)).isoformat()
@@ -361,14 +358,11 @@ class TelegramDeliveryTests(unittest.TestCase):
             metin = ilan_bot.sabah_mesaj(yeni, son, 30, 'https://example.com/', self.SABAH)
         self.assertLessEqual(ilan_bot.gorunen_uzunluk(tam), ilan_bot.TOPLU_SINIR)
         self.assertLessEqual(ilan_bot.gorunen_uzunluk(metin), ilan_bot.TOPLU_SINIR)
-        yeni_bolum, son_bolum = metin.split('⏰')
-        self.assertGreaterEqual(yeni_bolum.count('• '), 3)
-        self.assertLess(yeni_bolum.count('• '), 12)
-        self.assertIn('ilan daha', yeni_bolum)
-        self.assertNotIn('• ', son_bolum)
-        self.assertIn('<b>10 ilanın</b> son başvurusu yaklaşıyor', son_bolum)
-        self.assertIn('📌 Şu an başvurusu açık <b>30 ilan</b>', metin)
-        self.assertIn('Bugünün tüm ilanları', metin)
+        self.assertGreaterEqual(metin.count('• '), 3)
+        self.assertLess(metin.count('• '), 12)
+        self.assertIn('ilan daha', metin)
+        self.assertNotIn('⏰', metin)
+        self.assertNotIn('📌', metin)
         self.assertTrue(metin.startswith('☀️ <b>Günaydın'))
 
     def test_toplu_secimde_iptal_akademik_duyuru_olmayanlar_yer_almaz(self):
@@ -386,7 +380,7 @@ class TelegramDeliveryTests(unittest.TestCase):
             self.assertEqual(len(secim), 21)  # 25 - 4 dışlanan
             metin = ilan_bot.sabah_mesaj([], secim, 21, '', self.SABAH)
         self.assertEqual(metin.count('• '), 0)  # son gün ilanları yalnız görselde
-        self.assertIn('⏰ <b>21 ilanın</b> son başvurusu yaklaşıyor — liste görselde.', metin)
+        self.assertNotIn('⏰', metin)
 
     def test_toplu_secimde_ayni_kurum_ve_tarih_tek_satir(self):
         bitis = (self.SABAH.date() + timedelta(days=1)).isoformat()

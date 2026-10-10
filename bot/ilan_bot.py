@@ -324,7 +324,7 @@ def telegram_gonder(token, chat_id, metin, ilan_linki="", site_url="", foto=None
         label='🔎 İlanı incele'
         dugmeler.append([{"text": label, "url": utm_ekle(ilan_linki, site_url)}])
     if site_url:
-        dugmeler.append([{"text": "🌐 " + site_adi(site_url), "url": utm_ekle(site_url, site_url)}])
+        dugmeler.append([{"text": "🌐 Tüm kamu ilanları", "url": utm_ekle(site_url, site_url)}])
     if dugmeler:
         alanlar["reply_markup"] = json.dumps({"inline_keyboard": dugmeler}, ensure_ascii=False)
     if yanit:
@@ -665,26 +665,14 @@ def _ilan_satiri(i, site_url, etiket=None):
 
 
 def sabah_mesaj(yeniler, son_gun, acik_sayisi, site_url, zaman, aranan=None):
-    """Sabah özeti başlığı (HTML): yeni ilanlar, son başvurusu yaklaşanlar, açık ilan sayısı. Boş bölüm yazılmaz.
-    Sınır (~950 görünür karakter) aşılırsa önce yeni listesi 3'e, sonra son gün listesi kısaltılır; başlık/altlık kalır."""
-    bugun = zaman.date()
+    """Sabah özeti metni (HTML): başlık + yeni ilanlar (+ pazartesi aranan meslekler). Son başvurusu yaklaşanlar yalnız
+    görselde; açık ilan sayısı ve site satırı yazılmaz, site düğmede (10 Ekim 2026 kararı: laf kalabalığı yok).
+    Sınır (~950 görünür karakter) aşılırsa yeni listesi kısaltılır."""
     ust = f"☀️ <b>Günaydın — {turkce_tarih(zaman)}</b>"
-    alt = []
-    if acik_sayisi:
-        alt.append(f"📌 Şu an başvurusu açık <b>{acik_sayisi} ilan</b>")
-    if site_url:
-        alt.append(f'👉 Bugünün tüm ilanları: <a href="{html.escape(utm_ekle(site_url.rstrip("/") + "/?g=bugun", site_url, "ozet"), quote=True)}">{html.escape(site_adi(site_url))}</a>')
     son_gun_anahtar = {x for i in son_gun for x in (('id', i['id']), ('k', _tekil_anahtar(i)))}
-    # Son gün listesinde olan yeni ilan yalnız ⏰ altında görünür (başlıktaki sayı yine hepsini sayar).
+    # Son gün listesinde (görselde) olan yeni ilan metinde tekrar yazılmaz (başlıktaki sayı yine hepsini sayar).
     yeni_satirlari = [_ilan_satiri(i, site_url) for i in yeniler
                       if ('id', i['id']) not in son_gun_anahtar and ('k', _tekil_anahtar(i)) not in son_gun_anahtar]
-    # Son başvurusu yaklaşanlar yalnız görselde (toplu son gün kartı) listelenir; metinde tek satır kalır ki
-    # gönderi kısa olsun ve okuyan ayrıntı için siteye geçsin (9 Ekim 2026 kararı).
-    son_satir = ""
-    if son_gun:
-        bugun_son = sum(1 for i in son_gun if (date.fromisoformat(i['son_tarih']) - bugun).days <= 0)
-        son_satir = (f"⏰ <b>{len(son_gun)} ilanın</b> son başvurusu yaklaşıyor"
-                     + (f" ({bugun_son} tanesinde bugün son gün)" if bugun_son else "") + " — liste görselde.")
     kadro = sabah_toplam_kadro(yeniler)
     yeni_baslik = f"🆕 <b>Son 24 saatte {len(yeniler)} yeni ilan</b>" + (f" · {kadro} kadro" if kadro else "")
 
@@ -693,12 +681,8 @@ def sabah_mesaj(yeniler, son_gun, acik_sayisi, site_url, zaman, aranan=None):
         if yeniler:
             satirlar = yeni_satirlari[:ny] + ([f"+{len(yeni_satirlari) - ny} ilan daha"] if len(yeni_satirlari) > ny else [])
             parcalar.append("\n".join([yeni_baslik, *satirlar]))
-        if son_satir:
-            parcalar.append(son_satir)
         if aranan:
             parcalar.append(aranan_satiri(aranan, site_url))
-        if alt:
-            parcalar.append("\n".join(alt))
         return "\n\n".join(parcalar)
 
     ny = min(len(yeni_satirlari), SABAH_YENI_EN_COK)
