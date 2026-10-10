@@ -1,10 +1,10 @@
 {
  "schema": 1,
- "guncelleme": "2026-10-10T19:06:43.966978+00:00",
+ "guncelleme": "2026-10-10T19:36:41.756199+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-10-10T19:07:36.395814+00:00",
-   "hata_sayisi": 2,
+   "kontrol": "2026-10-10T19:36:45.342471+00:00",
+   "hata_sayisi": 0,
    "ilanlar": [
     {
      "id": "sbb-8b48171d4d7402911da5cfd8",
@@ -18,8 +18,8 @@
      "donem": "( 12 Ekim - 26 Ekim)",
      "baslangic_zaman": "2026-10-12T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-10T08:19:48+03:00",
-     "belge_ozeti": "2228e83368652076e167b9b4b7d5ed4a1c677df1c90454fa876f1d7d6686d53c",
+     "detay_guncelleme": "2026-10-10T22:36:42+03:00",
+     "belge_ozeti": "4895a835a22404f7a9e4e58530f2f981f54d7e17ba5be9695604448eb626d4d8",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -34,8 +34,8 @@
       }
      ],
      "basvuru_notu": "Başvuru Tarihi, Yeri ve Şekli (1)Başvurular, 12 Ekim 2026, Pazartesi günü saat 10:00'da başlayıp 26 Ekim 2026, Pazartesi günü saat 23:59 itibarıyla sona erecektir. (2)Başvurular, e-Devlet üzerinden Savunma Sanayii Başkanlığı- Kariyer Kapısı (https://kariyerkapisi.gov.tr/isealim) adresinden elektronik ortamda başvuruda istenilen belgeleri de sisteme yüklemek suretiyle alınacaktır.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/2228e83368652076e167b9b4b7d5ed4a1c677df1c90454fa876f1d7d6686d53c.pdf",
-     "belge_sha256": "2228e83368652076e167b9b4b7d5ed4a1c677df1c90454fa876f1d7d6686d53c",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/4895a835a22404f7a9e4e58530f2f981f54d7e17ba5be9695604448eb626d4d8.pdf",
+     "belge_sha256": "4895a835a22404f7a9e4e58530f2f981f54d7e17ba5be9695604448eb626d4d8",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "belge_ogrenim": [
@@ -1800,8 +1800,8 @@
      "donem": "( 2 Ekim - 16 Ekim)",
      "baslangic_zaman": "2026-10-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-09T22:28:09+03:00",
-     "belge_ozeti": "7c94ae604cf2d2961bad031f8e6d36dbb7a520b86f272885f9434707936a3c91",
+     "detay_guncelleme": "2026-10-10T22:36:44+03:00",
+     "belge_ozeti": "ad30bca961ab4e9fd8a762d1f5b7da1d581af5d3f1e543b1f34dd5a7bee7a723",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1836,8 +1836,8 @@
       }
      ],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/7c94ae604cf2d2961bad031f8e6d36dbb7a520b86f272885f9434707936a3c91.pdf",
-     "belge_sha256": "7c94ae604cf2d2961bad031f8e6d36dbb7a520b86f272885f9434707936a3c91",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/ad30bca961ab4e9fd8a762d1f5b7da1d581af5d3f1e543b1f34dd5a7bee7a723.pdf",
+     "belge_sha256": "ad30bca961ab4e9fd8a762d1f5b7da1d581af5d3f1e543b1f34dd5a7bee7a723",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "puan_turleri": [
@@ -4628,7 +4628,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-10-10T19:07:38.178969+00:00",
+   "kontrol": "2026-10-10T19:36:49.141678+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
