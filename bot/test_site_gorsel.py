@@ -25,7 +25,7 @@ def png(boyut=(300, 200), renk='#336699'):
 
 def ilan(uuid, kurum, **ek):
     return {'id': KK % uuid, 'link': KK % uuid, 'baslik': kurum + ' Zabıta Memuru Alımı', 'kurum': kurum,
-            'kadro': '2 Zabıta Memuru', 'son_tarih': '2026-12-31', 'ogrenim': ['lisans'], **ek}
+            'kadro': '2 Zabıta Memuru', 'son_tarih': '2099-12-31', 'ogrenim': ['lisans'], **ek}
 
 
 SIMDI = datetime(2026, 10, 3, 12, 0, tzinfo=TR)
