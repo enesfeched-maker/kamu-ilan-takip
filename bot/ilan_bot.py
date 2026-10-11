@@ -711,7 +711,7 @@ def gunun_sozu(zaman):
         return PAZAR_SOZLERI[((zaman.date() - date(2026, 10, 11)).days // 7) % len(PAZAR_SOZLERI)]
     if gun == 5:
         return "Emeğimizin boşa gitmemesi dileğiyle, iyi hafta sonları."
-    return "Kahveni al, bugünkü ilanlar burada."
+    return "Yeni bir gün, yeni bir fırsat. Kahveni al, ilanlara birlikte bakalım."
 
 
 def sabah_mesaj(yeniler, son_gun, acik_sayisi, site_url, zaman, aranan=None):
@@ -745,11 +745,11 @@ def _bas_harf(kelime):
 
 
 def aranan_satiri(kelimeler, site_url):
-    """Haftalık: çok aranıp ilanı çıkmayan meslekler + taban puanları bağlantısı."""
-    satir = "🔎 <b>Bu hafta çok aranıp ilanı çıkmayanlar:</b> " + " · ".join(html.escape(_bas_harf(k)) for k in kelimeler)
+    """Haftalık: merak edilen ama açık ilanı olmayan meslekler + taban puanları bağlantısı (gözetleme izlenimi vermeyen dil)."""
+    satir = "💬 <b>Bu hafta merak edilenler:</b> " + " · ".join(html.escape(_bas_harf(k)) for k in kelimeler)
     if site_url:
         url = utm_ekle(site_url.rstrip("/") + "/puanlar/", site_url, "ozet")
-        satir += f'\nİlan gelince kanalda ilk burada. <a href="{html.escape(url, quote=True)}">Taban puanlarına bak →</a>'
+        satir += f'\nŞu an açık ilanları yok; çıktığında ilk burada paylaşacağız. <a href="{html.escape(url, quote=True)}">Taban puanlarına bak →</a>'
     return satir
 
 
