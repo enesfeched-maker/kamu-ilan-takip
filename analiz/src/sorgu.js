@@ -78,17 +78,17 @@ export const METRIKLER = [
         COUNT(*) AS say, SUM(ilgi > 0) AS tekil, SUM(sp <= 1 AND tk = 0) AS oturum, SUM(ak) AS toplam
       FROM (SELECT gun, os, MAX(CASE WHEN ilk = 1 THEN cihaz END) AS c, MAX(CASE WHEN ilk = 1 THEN kaynak END) AS kk,
               SUM(t = 'sayfa') AS sp, SUM(t = 'tikla') AS tk,
-              SUM(t = 'tikla' AND a = 'arama') AS ar, SUM(t = 'tikla' AND a = 'arama' AND COALESCE(n, 0) = 0) AS ar0,
+              SUM(t = 'tikla' AND a = 'arama') AS ar, SUM(t = 'tikla' AND a = 'arama' AND COALESCE(n, 0) = 0 AND COALESCE(h, '') <> 'suzgecli') AS ar0,
               SUM(t = 'tikla' AND a IN ('satir_tikla', 'resmi_ilan', 'kurum_tikla', 'manset_tikla', 'telegram', 'kaydet', 'arama_bildirim')) AS ilgi,
               SUM(CASE WHEN t = 'aktif' THEN n * COALESCE(n2, 1) ELSE 0 END) AS ak,
-              MIN(CASE WHEN t = 'tikla' AND a = 'arama' AND COALESCE(n, 0) = 0 THEN ts END) AS ilk0,
+              MIN(CASE WHEN t = 'tikla' AND a = 'arama' AND COALESCE(n, 0) = 0 AND COALESCE(h, '') <> 'suzgecli' THEN ts END) AS ilk0,
               MAX(CASE WHEN t = 'tikla' AND (a IN ('satir_tikla', 'resmi_ilan', 'kurum_tikla', 'manset_tikla', 'telegram', 'kaydet', 'arama_bildirim', 'arama_gecmis', 'arama_cip')
                 OR (a = 'arama' AND n > 0)) THEN ts END) AS sonilgi
             FROM olaylar WHERE {G} GROUP BY gun, os HAVING sp >= 1) AS o, json_each('[1,2,3,4]') AS d
       WHERE d.value <> 2 OR o.ilk0 IS NOT NULL
       GROUP BY gun, k1, k2`,
   },
-  { boyut: 'arama', sql: grup(SUT('x', "CASE WHEN COALESCE(n, 0) = 0 THEN 'sifir' ELSE 'var' END"), "t = 'tikla' AND a = 'arama' AND x IS NOT NULL", 'x, k2') },
+  { boyut: 'arama', sql: grup(SUT('x', "CASE WHEN COALESCE(n, 0) = 0 AND COALESCE(h, '') <> 'suzgecli' THEN 'sifir' ELSE 'var' END"), "t = 'tikla' AND a = 'arama' AND x IS NOT NULL", 'x, k2') },
   {
     boyut: 'huni',
     sql: `SELECT gun, 'huni' AS k1, '' AS k2, SUM(a1) AS say, SUM(a2) AS tekil, SUM(a3) AS oturum, SUM(a1 * a2) AS toplam FROM (${oturumBayraklari()}) GROUP BY gun
