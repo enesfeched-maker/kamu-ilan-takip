@@ -175,17 +175,15 @@ const ulusal=o=>!ilKeys(o).some(k=>ILN.has(k));
 const ilOk=(o,p)=>p.tum_turkiye||!p.iller.length||ulusal(o)||p.iller.some(x=>ilKeys(o).includes(normalize(x)));
 /* Tüm Türkiye açıkken seçilen illerdeki ilanlar öne alınır. */
 const ilRank=(o,p)=>p.tum_turkiye&&p.iller.length&&!p.iller.some(x=>ilKeys(o).includes(normalize(x)))?1:0;
-/* 'tam' | 'alt' (profil düzeyinden aşağı) | 'bilinmiyor' (öğrenim şartı okunamadı) | false. Kurum içi sınavlar kimseye uygun sayılmaz. */
+/* 'tam' | 'alt' (profil düzeyinden aşağı) | 'bilinmiyor' (öğrenim şartı okunamadı; uygun sayılır, gizlenmez) | false. Kurum içi sınavlar kimseye uygun sayılmaz. */
 function uygun(o,p){
 if(o.kurum_ici||!ilOk(o,p))return false;
 const L=rowLevels(o);
 if(!L.length)return 'bilinmiyor';
 if(L.includes(p.ogrenim))return 'tam';
 return L.some(x=>RANK[x]<RANK[p.ogrenim])?'alt':false;}
-const eslesen=s=>s==='tam'||s==='alt';
+const eslesen=s=>s==='tam'||s==='alt'||s==='bilinmiyor';
 const sayiTr=n=>Number(n).toLocaleString('tr-TR');
-/* Öğrenim şartı okunamayan (düzeyi belirsiz) ama il olarak uyan ilanlar: sessizce "uygun" sayılmaz, süzgeç özetindeki bağlantıyla açılır. */
-const bilinmiyorYama=p=>({ogr:'bilinmiyor',uygun:false,il:p.tum_turkiye?[]:p.iller.slice(0,10)});
 function railTelegram(){
 const b=E('section','kutu tg-kutu'),s=E('span','tg-saat'),a=E('a','btn btn-lime');s.append(ic('saat'),'Her sabah 09:00 civarı');
 a.href='https://t.me/kamuilantakip';a.target='_blank';a.rel='noopener';a.setAttribute('data-a','telegram');a.setAttribute('data-a-x','kutu');a.append(ic('tg'),'Kanala katıl');
@@ -299,6 +297,7 @@ if(o.kurum_ici)return E('span','rozet','Kurum içi');
 if(closed(o))return E('span','rozet soluk','Sona erdi');
 if(!upcoming(o)&&o.son_tarih){const g=days(o.son_tarih);if(g!==null&&g<=3)return E('span','rozet'+(g<=1?' acil':' yakin'),g<=0?'Son gün':g===1?'Yarın son gün':g+' gün kaldı');}
 if(res&&res.seviye&&res.seviye.get(o.key)==='alt')return E('span','rozet soluk','Alt düzey');
+if(res&&res.on&&res.seviye&&res.seviye.get(o.key)==='bilinmiyor')return E('span','rozet soluk','Şartı kontrol et');
 return null;}
 function satirEl(o,res){
 const n=E('article','satir'),g=E('div','satir-govde'),k=E('p','satir-kurum');
@@ -335,11 +334,11 @@ const u=sp.get('uygun');f.uygun=u==='0'?false:u==='1'?true:null;
 const s=sp.get('sira');f.sira=SIRA_SECENEK.some(x=>x[0]===s)?s:'son';f.arsiv=sp.get('arsiv')==='1';
 return f;}
 const queryHas=search=>{const sp=new URLSearchParams(search);return QKEYS.some(k=>sp.has(k));};
-/* Profil varken "Profilime uygun" varsayılan açıktır; yalnız kapalıyken (uygun=0) yazılır. */
+/* "Yalnız profilime uygun" isteğe bağlıdır (varsayılan kapalı: uygun ilan gizlenmesin); açıkken uygun=1 yazılır. */
 function queryOf(f,profilVar){
 const sp=new URLSearchParams();
 if(f.q)sp.set('q',f.q);if(f.il.length)sp.set('il',f.il.map(ilSlug).join(','));if(f.ogr)sp.set('ogr',f.ogr);if(f.sb)sp.set('sb',f.sb);if(f.tur)sp.set('tur',f.tur);if(f.kat)sp.set('kat',f.kat);if(f.yeni)sp.set('yeni','1');
-if(f.uygun===false)sp.set('uygun','0');else if(f.uygun===true&&!profilVar)sp.set('uygun','1');
+if(f.uygun===true)sp.set('uygun','1');
 if(f.sira!=='son')sp.set('sira',f.sira);if(f.arsiv)sp.set('arsiv','1');
 return sp.toString();}
 /* Adres çubuğundaki süzgeç parametreleri İlanlar sekmesindeyken güncel tutulur, başka sekmede temizlenir. */
@@ -392,18 +391,18 @@ const byDl=(a,b)=>Number(closed(a))-Number(closed(b))||(a.son_tarih||'9999').loc
 const gun=o=>o.ilk_gorulme?istDate(Date.parse(o.ilk_gorulme)):'',byGun=(a,b)=>gun(b).localeCompare(gun(a))||byDl(a,b);
 const cmp=f.sira==='yeni'?(a,b)=>(Date.parse(b.ilk_gorulme)||0)-(Date.parse(a.ilk_gorulme)||0):f.sira==='kurum'?(a,b)=>a.kurum.localeCompare(b.kurum,'tr'):f.sb==='yakinda'?(a,b)=>(Date.parse(a.baslangic_zaman)||0)-(Date.parse(b.baslangic_zaman)||0):byGun;
 return list.slice().sort(cmp);}
-const uygunAcik=(f,pr)=>!!pr&&f.uygun!==false;
+const uygunAcik=(f,pr)=>!!pr&&f.uygun===true;
 /* Arama yazılıyken "Profilime uygun" süzmez (analizde aranan meslek profil dışında kalınca "ilan yok" sanılıp çıkılıyordu);
    tüm ilanlarda aranır, profile uyanlar üstte. Tam eşleşme yoksa yazım hatası toleranslı arama denenir. */
 function filterIlan(base,f,pr){
 let a=base.filter(o=>rowMatches(o,f)),bulanik=false;
 if(!a.length&&sorguVaryant(f.q).length){a=base.filter(o=>rowMatches(o,f,true));bulanik=a.length>0;}
 const arama=!!sorguVaryant(f.q).length&&f.uygun!==true,on=uygunAcik(f,pr)&&!arama,seviye=new Map();let bilinmiyor=0;
-const u=pr?a.filter(o=>{const s=uygun(o,pr);if(s==='bilinmiyor'){bilinmiyor++;return f.ogr==='bilinmiyor';}if(s)seviye.set(o.key,s);return !!s;}):[];
+const u=pr?a.filter(o=>{const s=uygun(o,pr);if(s==='bilinmiyor'){bilinmiyor++;seviye.set(o.key,s);return true;}if(s)seviye.set(o.key,s);return !!s;}):[];
 let list=sortRows(on?u:a,f);
 if(on)list=list.sort((x,y)=>Number(seviye.get(x.key)==='alt')-Number(seviye.get(y.key)==='alt')||ilRank(x,pr)-ilRank(y,pr));
 else if(pr&&arama)list=list.sort((x,y)=>Number(!seviye.has(x.key))-Number(!seviye.has(y.key)));
-return{list,seviye,tum:a.length,uyan:u.length,disinda:on?a.length-u.length:0,bilinmiyor:f.ogr==='bilinmiyor'?0:bilinmiyor,on,bulanik,aramaGenis:!!pr&&arama&&uygunAcik(f,pr)};}
+return{list,seviye,tum:a.length,uyan:u.length,disinda:on?a.length-u.length:0,bilinmiyor,on,bulanik,aramaGenis:!!pr&&arama&&uygunAcik(f,pr)};}
 const suzgecVar=f=>!!(f.q||f.il.length||f.ogr||f.sb||f.tur||f.kat||f.yeni||f.arsiv);
 const ilanBase=f=>f.arsiv&&loaded?items.filter(i=>!i.duyuru_turu&&!i.iptal_edildi).map(rowOf).filter(o=>!gizli.has(o.key)):liste;
 const bekleniyor=f=>!loaded&&f.arsiv;
@@ -513,7 +512,7 @@ renderYan(res,pr);
 sonSayi=list.length;$('result-count').textContent=list.length+' ilan';
 /* Yalnız profil filtresi açıkken, öğrenim şartı okunamayan ilanlara tek bağlantı (sessizce gizlenmesinler). */
 {const fs=$('filter-summary');
-if(res.on&&res.bilinmiyor>0){const b=E('button','yazi-link',res.bilinmiyor+' ilanın öğrenim şartı okunamadı · göster');b.type='button';b.onclick=()=>{Object.assign(F,bilinmiyorYama(pr));ilanDegisti();};fs.replaceChildren(b);}
+if(res.on&&res.bilinmiyor>0)fs.replaceChildren(E('span','',res.bilinmiyor+' ilanın öğrenim şartı okunamadı; gizlenmedi, koşullarını kontrol et.'));
 else if(res.bulanik&&list.length)fs.replaceChildren(E('span','','“'+F.q.trim().slice(0,60)+'” için tam eşleşme yok; benzer sonuçlar gösteriliyor.'));
 else if(res.aramaGenis&&list.length)fs.replaceChildren(E('span','','Arama tüm ilanlarda yapıldı; profiline uyanlar üstte.'));
 else fs.replaceChildren();}
