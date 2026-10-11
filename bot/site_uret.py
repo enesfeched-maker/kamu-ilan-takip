@@ -18,7 +18,7 @@ TR = timezone(timedelta(hours=3))
 KART_GENISLIK = 720
 LOGO_BOYUT = 128
 EN_COK_LOGO_INDIRME = 150
-CSS_SURUM = 17
+CSS_SURUM = 18
 LOGO_SURUM = 2
 ACIK_ZEMIN, KOYU_ZEMIN = '#F6F6F1', '#0D0E0C'
 ANALIZ_SURUM = 2  # docs/a.js (çerezsiz ziyaret istatistiği) önbellek sürümü
@@ -180,6 +180,47 @@ def _kadro_tablosu(item):
         html_ += (f'<h{"3" if satirlar else "2"} class="alt-h">Başvuru koşullarından seçmeler</h{"3" if satirlar else "2"}>'
                   f'<div class="tablo-kap"><table class="ktablo"><thead><tr><th scope="col">Konu</th><th scope="col">Koşul</th></tr></thead><tbody>{govde}</tbody></table></div>')
     return html_
+
+BELGE_KLASORU = Path(__file__).resolve().parents[1] / 'docs' / 'belgeler' / 'sbb'
+
+
+def _pdf_kadrolari(item):
+    """İlan belgesinin (SBB PDF kopyası) kadro tablosu satırları; belge yoksa ya da tablo okunamazsa ()."""
+    sha = str(item.get('belge_sha256') or '')
+    if not re.fullmatch(r'[a-f0-9]{64}', sha) or not (BELGE_KLASORU / f'{sha}.pdf').is_file():
+        return ()
+    import pdf_tablo
+    return pdf_tablo.tablo_oku(str(BELGE_KLASORU / f'{sha}.pdf'))
+
+
+def _unvan_duzgun(ad):
+    return _duzgun(ad) if ad.upper() == ad else ad
+
+
+def _kadro_kartlari(item, satirlar, belge):
+    """PDF tablosundan kadro kartları: ünvan + kişi sayısı, nitelikler madde madde, KPSS türü/taban, cinsiyet;
+    altta tüm kadrolar için ortak koşullar ve resmî belge bağlantısı."""
+    import pdf_tablo
+    kartlar = ''
+    for s in satirlar:
+        alt = []
+        if s['tur'] or s['taban']:
+            kpss = ', '.join(s['tur']) + (' · ' if s['tur'] and s['taban'] else '') + (f'en az {s["taban"]} puan' if s['taban'] else '')
+            alt.append(f'<span><em>KPSS</em> {esc(kpss)}</span>')
+        if s['cinsiyet']:
+            alt.append(f'<span><em>Cinsiyet</em> {esc(s["cinsiyet"])}</span>')
+        maddeler = ''.join(f'<li>{esc(m)}</li>' for m in s['nitelik'])
+        kartlar += (f'<div class="kk"><div class="kk-bas"><strong>{esc(_unvan_duzgun(s["unvan"]))}</strong>'
+                    + (f'<span class="kk-adet">{s["adet"]} kişi</span>' if s['adet'] else '') + '</div>'
+                    + (f'<ul>{maddeler}</ul>' if maddeler else '')
+                    + (f'<div class="kk-alt">{"".join(alt)}</div>' if alt else '') + '</div>')
+    metin = ' '.join(str(x.get('metin') or '') for x in item.get('sartlar') or []) + ' ' + str(item.get('ozet') or '')
+    ortak = ''.join(f'<li>{esc(x)}</li>' for x in pdf_tablo.ortak_kosullar(metin))
+    baglanti = (f'<li>Genel şartların tamamı ve istenen belgeler: <a class="yazi-link" href="{esc(belge)}" target="_blank" '
+                f'rel="noopener noreferrer">resmî ilan belgesi (PDF) ↗</a></li>') if belge else ''
+    return (f'<h2>Kadrolar ve başvuru koşulları</h2><div class="kk-liste">{kartlar}</div>'
+            + (f'<div class="kk-ortak"><h3>Tüm kadrolar için</h3><ul>{ortak}{baglanti}</ul></div>' if ortak or baglanti else ''))
+
 
 def _kopya_notlari(kopya):
     """(ikincil kayıt için üst not, birincil kayıt için kaynak satırı) — kopya: kopya.sayfa_bilgisi() çıktısı ya da None."""
@@ -349,7 +390,11 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
     sections = ''
     if item.get('iptal_edildi'):
         sections += '<p class="not uyari"><strong>İptal edildi.</strong> Bu ilan için resmî iptal duyurusu yayımlandı. Başvuru yapmadan önce resmî kaynağı kontrol et.</p>'
-    tablo = _kadro_tablosu(item)
+    from sbb_detay import document_url
+    pdf_satirlari = _pdf_kadrolari(item)
+    tablo = _kadro_kartlari(item, pdf_satirlari, document_url(item)) if pdf_satirlari else _kadro_tablosu(item)
+    if pdf_satirlari and item.get('ozet'):  # kartlar özetin üstünde: "koşullar aşağıda gösterilmiştir" cümlesi yanıltır
+        item = dict(item, ozet=item['ozet'].replace(' Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.', ''))
     bolum = ''
     if tablo:
         bolum += tablo
