@@ -37,7 +37,7 @@ FOTO_ESLEME = [
     (25, ('bahcivan',)),
     (26, ('orman',)),
     (24, ('isci',)),
-    (22, ('buro', 'memur', 'sekreter', 'veri hazirlama', 'vhki')),
+    (22, ('buro', 'memur', 'sekreter', 'veri hazirlama', 'vhki', 'uzman', 'analist', 'murakip', 'aktuer')),
 ]
 
 
