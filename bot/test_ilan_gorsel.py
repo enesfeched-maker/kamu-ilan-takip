@@ -36,7 +36,8 @@ class GorselTests(unittest.TestCase):
                   'İş Makinesi Operatörü':27,'Mali Hizmetler Uzmanı':28,'Laborant':29,'Kimyager':29,'Yazılım Geliştirme Uzmanı':1,
                   'Siber Güvenlik Uzmanı':1,'Ağ Uzmanı':1,'Hemşire':2,'Sağlık Teknikeri':2,'Uzman Tabip':3,'Veteriner Hekim':4,
                   'Eczacı':5,'Güvenlik Görevlisi':6,'Pilot':10,'Aşçı':11,'Garson':12,'Temizlik Görevlisi':13,
-                  'Destek Personeli':13,'3 YAZILIM TAKIM LİDERİ':1,'Uzman':30,'Bilinmeyen Kadro':30}
+                  'Destek Personeli':13,'3 YAZILIM TAKIM LİDERİ':1,'Uzman':22,'Vakıf Uzman Yardımcısı':22,
+                  'Bankalar Yeminli Murakıp Yardımcısı':22,'Bilinmeyen Kadro':30}
         for ad,no in beklenen.items():
             self.assertEqual(meslek_no(ad),no,ad)
 
