@@ -278,8 +278,8 @@ def marka_seridi(d, y, yuk=88, dolgu=ANA, renk=LIME, sag='#ffffff', im=None):
         im.paste(logo, (x, ky), logo)
         d.rounded_rectangle((x, ky, x + boy - 1, ky + boy - 1), radius=round(boy * 0.22), outline=LIME, width=2)
         x += boy + 16
-    d.text((x, y + yuk / 2), 'KPSS Tercihi', font=F(34, True), fill=renk, anchor='lm')
-    d.text((G - KENAR, y + yuk / 2), 'kpsstercihi.com', font=F(34, True), fill=sag, anchor='rm')
+    # 12 Ekim 2026: marka adı tekrar edilmez; logonun yanında yalnız adres.
+    d.text((x, y + yuk / 2), 'kpsstercihi.com', font=F(34, True), fill=sag, anchor='lm')
 
 
 def jpeg_png(im):
