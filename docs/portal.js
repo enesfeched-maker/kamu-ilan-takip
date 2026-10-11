@@ -525,7 +525,11 @@ d.append(bar,E('small','',vis.length+' / '+list.length+' ilan gösteriliyor'),b)
 $('cards').replaceChildren(...nodes);$('cards').hidden=!list.length;$('empty').hidden=!!list.length;
 if(!list.length){
 const q=F.q.slice(0,60),kids=[E('h3','',q?'“'+q+'” için açık ilan bulunamadı.':'Bu filtrelerle ilan bulunamadı.')];
-if(suzgecVar(F)){const b=E('button','btn btn-ikinci','Filtreleri temizle');b.type='button';b.onclick=temizle;kids.push(b);}
+if(suzgecVar(F)){
+/* Arama başka bir filtreyle (il, kategori...) birlikte sonuçsuzsa filtresiz sonuç sayısı gösterilir: aranan ilan aslında var. */
+const yalin={...defaultF(),q:F.q,uygun:F.uygun},m=q.trim()&&suzgecVar({...F,q:''})?filterIlan(ilanBase(yalin),yalin,pr).list.length:0;
+if(m){const b=E('button','btn btn-ana','Filtreler olmadan '+m+' ilan var · göster');b.type='button';b.onclick=()=>{F=yalin;ilanDegisti();};kids.push(b);}
+const b=E('button','btn btn-ikinci','Filtreleri temizle');b.type='button';b.onclick=temizle;kids.push(b);}
 if(res.on&&res.disinda>0){const b=E('button','btn btn-ikinci','Profilimin dışındaki '+res.disinda+' ilanı göster');b.type='button';b.onclick=()=>{F.uygun=false;ilanDegisti();};kids.push(b);}
 if(q.trim())kids.push(...sonucsuzOneriler(q.trim()));
 $('empty').replaceChildren(...kids);}
@@ -839,6 +843,6 @@ setTimeout(()=>{visitDue=true;tryWriteVisit();},10000);
 if(bootTab==='ilanlar'&&!bekleyenKaydirma)bekleyenKaydirma='ilanlar';
 {const y=document.querySelector&&document.querySelector('.yan');if(y)y.append(adBox.sidebar);}
 /* Arama sözcüğü ve sonuç adedi (sonuçsuz aramalar önemli); yazma bitince bir kez, yalnızca sorgu metni (kişisel veri aranmaz). */
-function aramaIz(){clearTimeout(aramaZaman);aramaZaman=setTimeout(async()=>{const norm=()=>F.q.trim().toLocaleLowerCase('tr-TR').replace(/\s+/g,' ').slice(0,60),q=norm();if(q.length<2||q===aramaSon)return;if(!loaded&&!fullFailed)await ensureFull();if(norm()!==q)return;aramaSon=q;A('tikla',{a:'arama',x:q,n:sonSayi});},1200);}
+function aramaIz(){clearTimeout(aramaZaman);aramaZaman=setTimeout(async()=>{const norm=()=>F.q.trim().toLocaleLowerCase('tr-TR').replace(/\s+/g,' ').slice(0,60),q=norm();if(q.length<2||q===aramaSon)return;if(!loaded&&!fullFailed)await ensureFull();if(norm()!==q)return;aramaSon=q;A('tikla',{a:'arama',x:q,n:sonSayi,...(suzgecVar({...F,q:''})?{h:'suzgecli'}:{})});},1200);}
 if(F.q)aramaIz();
 showTab(bootTab);load();loadSponsors();
