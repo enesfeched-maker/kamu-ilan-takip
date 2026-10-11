@@ -521,9 +521,9 @@ class HaftalikArananTests(unittest.TestCase):
 
     def test_sabah_mesajinda_satir(self):
         m = ilan_bot.sabah_mesaj([], [], 3, 'https://kpsstercihi.com/', self.PZT, ['diyetisyen', 'işitme uzmanı'])
-        self.assertIn('Bu hafta çok aranıp ilanı çıkmayanlar:</b> Diyetisyen · İşitme Uzmanı', m)
+        self.assertIn('Bu hafta merak edilenler:</b> Diyetisyen · İşitme Uzmanı', m)
         self.assertIn('https://kpsstercihi.com/puanlar/?utm_source=telegram', m)
-        self.assertNotIn('çok aranıp', ilan_bot.sabah_mesaj([], [], 3, 'https://kpsstercihi.com/', self.PZT))
+        self.assertNotIn('merak edilenler', ilan_bot.sabah_mesaj([], [], 3, 'https://kpsstercihi.com/', self.PZT))
 
 if __name__ == '__main__':
     unittest.main()
@@ -565,7 +565,7 @@ class GununSozuTests(unittest.TestCase):
         self.assertEqual(ilan_bot.gunun_sozu(pazar + timedelta(days=7)), ilan_bot.PAZAR_SOZLERI[1])
         self.assertEqual(ilan_bot.gunun_sozu(pazar + timedelta(days=21)), ilan_bot.PAZAR_SOZLERI[0])
         self.assertIn('hafta sonları', ilan_bot.gunun_sozu(pazar - timedelta(days=1)))
-        self.assertEqual(ilan_bot.gunun_sozu(pazar + timedelta(days=1)), 'Kahveni al, bugünkü ilanlar burada.')
+        self.assertEqual(ilan_bot.gunun_sozu(pazar + timedelta(days=1)), 'Yeni bir gün, yeni bir fırsat. Kahveni al, ilanlara birlikte bakalım.')
 
     def test_sabah_mesajinda_basligin_altinda(self):
         an = datetime(2026, 10, 11, 9, tzinfo=ilan_bot.TR)
