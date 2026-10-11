@@ -1,9 +1,9 @@
 {
  "schema": 1,
- "guncelleme": "2026-10-11T21:06:42.080716+00:00",
+ "guncelleme": "2026-10-11T21:36:42.893873+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-10-11T21:06:44.009086+00:00",
+   "kontrol": "2026-10-11T21:36:43.569146+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -4573,7 +4573,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-10-11T21:06:45.392329+00:00",
+   "kontrol": "2026-10-11T21:36:45.056754+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -6380,6 +6380,25 @@
    "sart_kadro_sayisi": 2,
    "basvuru_notu": "(2) Başvurular, e-Devlet üzerinden Savunma Sanayii Başkanlığı- Kariyer Kapısı (https://kariyerkapisi.gov.tr/isealim) adresinden elektronik ortamda başvuruda istenilen belgeleri de sisteme yüklemek suretiyle alınacaktır. Şahsen, kargo ya da posta yoluyla yapılan başvurular kabul edilmeyecektir.",
    "detay_guncelleme": "2026-10-11T21:09:41+03:00"
+  },
+  "https://kariyerkapisi.gov.tr/IlanDetay?i=5a71a4f2-6023-4194-822c-01e687eb9b15": {
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/736e3f6c-5038-45f7-b417-60290c676392.png",
+   "son_tarih": "2026-10-25",
+   "son_zaman": "2026-10-25T23:59:00+03:00",
+   "baslangic_zaman": "2026-10-12T00:01:00+03:00",
+   "yer": "ANKARA / MERKEZ",
+   "kadro": "5 VAKIF UZMAN YARDIMCISI",
+   "ilan_turu": "A Grubu Memur (Kariyer Meslek)",
+   "ozet": "Genel Müdürlüğümüz merkez teşkilatında istihdam edilmek üzere Genel İdare Hizmetler sınıfında boş bulunan 5 adet 7. derece Vakıf Uzman Yardımcısı kadrosuna atama yapılması için yazılı ve sözlü olmak üzere iki aşamalı sınav yapılacaktır. Öğrenim bölümleri itibarıyla alınacak Vakıf Uzman Yardımcısı sayıları aşağıdaki tabloda belirtilmektedir.",
+   "sartlar": [
+    {
+     "kadro": "VAKIF UZMAN YARDIMCISI (ARAP DİLİ VE EDEBİYATI)",
+     "metin": "Ölçme, Seçme ve Yerleştirme Merkezi (ÖSYM) tarafından 2025 ve 2026 yıllarında yapılan Kamu Personeli Seçme Sınavlarının birinden KPSS P3 puan türünden tüm gruplar için 70 (yetmiş) ve…\nEn az 4 yıllık lisans eğitimi veren fakültelerin Arap Dili ve Edebiyatı bölümünden veya bu bölüme denkliği yetkili makamlarca kabul edilen yurt içi ya da yurt dışındaki yükseköğretim…"
+    }
+   ],
+   "sart_kadro_sayisi": 2,
+   "basvuru_notu": "2.2. Adaylar giriş sınavı başvurularını, 12/10/2026 - 25/10/2026 tarihleri arasında e-Devlet Kariyer Kapısı Kamu İşe Alım Platformu (https://kariyerkapisi.gov.tr) üzerinden istenilen bilgi ve belgeleri yükleyerek gerçekleştireceklerdir. Şahsen veya posta yoluyla yapılan, başvuru şartlarını taşımayan, eksik ve yanlış evrakla yapılan başvurular işleme alınmayacaktır.",
+   "detay_guncelleme": "2026-10-12T00:36:46+03:00"
   }
  },
  "logolar": {
