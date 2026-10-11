@@ -557,6 +557,12 @@ def harf_rozeti(d, kurum, kutu):
     d.text(((x0 + x1) / 2, (y0 + y1) / 2 + 1), tr_buyuk(harf), font=F(32, True), fill='#ffffff', anchor='mm')
 
 
+def kisa_kurum(kurum):
+    """Liste kartında yer kazanmak için: 'X Üniversitesi Rektörlüğü' -> 'X Üniversitesi', 'X Belediye Başkanlığı' -> 'X Belediyesi'."""
+    kurum = re.sub(r'\s+Rektörlüğü$', '', kurum)
+    return re.sub(r'\s+Belediye Başkanlığı$', ' Belediyesi', kurum)
+
+
 def liste_karti(ilanlar, baslik, simdi=None, logolar=None, tur='yeni'):
     """Toplu liste kartı (1080x1350 PNG): üstte başlık + sağda tarih; her satırda kurum logosu, kurum, kadro;
     sağda tur='yeni' ise kişi sayısı + kırmızı son tarih, tur='son_gun' ise kalan gün rozeti.
@@ -596,6 +602,7 @@ def liste_karti(ilanlar, baslik, simdi=None, logolar=None, tur='yeni'):
         ry = ust + n * rh
         orta = ry + rh / 2
         kurum, kadro = toplu_satir(ilan)
+        kurum = kisa_kurum(kurum)
         kutu = (KENAR, round(orta - lb / 2), KENAR + lb, round(orta + lb / 2))
         try:
             ok = bool(logo) and logo_yerlestir(im, d, {'logo': logo}, kutu, yaricap=22, ic=10)
