@@ -58,6 +58,13 @@ class MarkaSeridiLogoTesti(unittest.TestCase):
                 kt.logo_kare.cache_clear()
 
 
+class KisaKurumTesti(unittest.TestCase):
+    def test_ekler_kisalir(self):
+        self.assertEqual(kt.kisa_kurum('Düzce Üniversitesi Rektörlüğü'), 'Düzce Üniversitesi')
+        self.assertEqual(kt.kisa_kurum('İnebolu Belediye Başkanlığı'), 'İnebolu Belediyesi')
+        self.assertEqual(kt.kisa_kurum('Adalet Bakanlığı'), 'Adalet Bakanlığı')
+
+
 class TopluKartTesti(unittest.TestCase):
     def liste(self, n, gun=2):
         bitis = (SIMDI.date() + __import__('datetime').timedelta(days=gun)).isoformat()
