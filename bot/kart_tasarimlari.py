@@ -85,7 +85,7 @@ def _baslik_ozeti(ilan):
     return _kurumu_at(ilan.get('kurum') or '', ' '.join(str(ilan.get('baslik') or '').split()))
 
 
-_FIIL_SON = re.compile(r'\s+(?:temin\s+edil\w*|temin\s+edece\w*|istihdam\s+edil\w*|istihdam\s+edece\w*|al[ıi]nacak\w*|alacak\w*|al[ıi]m[ıi]?)\s*$', re.I)
+_FIIL_SON = re.compile(r'\s+(?:temin\s+edil\w*|temin\s+edece\w*|istihdam\s+edil\w*|istihdam\s+edece\w*|al[ıi]nacak\w*|alacak\w*|al[ıi]m[ıi]?)[\s.]*$', re.I)
 
 
 def _fiilsiz(ad):
