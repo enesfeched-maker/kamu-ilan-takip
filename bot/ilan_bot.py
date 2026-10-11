@@ -753,6 +753,10 @@ def aranan_satiri(kelimeler, site_url):
     return satir
 
 
+# Tek başına meslek anlatmayan aramalar ('çocuk': çocuk gelişimi mi, bakıcı mı belirsiz) duyurulmaz.
+ARANAN_GENEL = {'cocuk', 'memur', 'personel', 'isci', 'kamu', 'ilan', 'kpss', 'devlet', 'belediye', 'hastane', 'universite', 'okul'}
+
+
 def haftalik_aranan(cfg, ilanlar, zaman, getir=None):
     """Pazartesi sabahı analizden (/aranan) çok aranıp sonuç çıkmayan kelimeleri alır; şu an açık ilanı olanları eler.
     Analiz erişilemezse ya da GitHub Actions dışında (testler) boş döner; sabah özeti bundan etkilenmez."""
@@ -773,7 +777,9 @@ def haftalik_aranan(cfg, ilanlar, zaman, getir=None):
         return []
     acik = [norm(f"{i.get('baslik', '')} {i.get('kadro', '')}") for i in ilanlar
             if not akademik_ilan(i) and not suresi_doldu(i)]
-    return [k for k in kelimeler if not any(norm(k) in a for a in acik)][:5]
+    adaylar = [k for k in kelimeler if not any(norm(k) in a for a in acik) and norm(k) not in ARANAN_GENEL]
+    # 'veteriner' ile 'veteriner hekim' gibi tekrarlarda uzun olan kalır.
+    return [k for k in adaylar if not any(k != u and norm(k) in norm(u) for u in adaylar)][:5]
 
 
 def suresi_doldu(ilan):

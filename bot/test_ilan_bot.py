@@ -528,6 +528,14 @@ class HaftalikArananTests(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()
 
+class ArananTemizlikTests(unittest.TestCase):
+    def test_genel_ve_tekrar_kelimeler_elenir(self):
+        an = datetime(2026, 10, 12, 9, tzinfo=ilan_bot.TR)
+        kel = ['diyetisyen', 'veteriner', 'çocuk', 'veteriner hekim', 'biyolog']
+        sonuc = ilan_bot.haftalik_aranan({}, [], an, getir=lambda: {'kelimeler': [{'kelime': k} for k in kel]})
+        self.assertEqual(sonuc, ['diyetisyen', 'veteriner hekim', 'biyolog'])
+
+
 class AksamKartiTests(unittest.TestCase):
     def test_aksam_zamani(self):
         tr = ilan_bot.TR
