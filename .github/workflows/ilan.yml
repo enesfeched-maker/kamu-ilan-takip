@@ -115,6 +115,10 @@ jobs:
         if: ${{ !cancelled() && steps.deployment.outcome == 'failure' }}
         id: deployment2
         uses: actions/deploy-pages@v5.0.1
+      # Yayın "başarılı" olsa da yeni sayfaların yayılması sürer; Telegram bağlantısı 404 vermesin diye beklenir.
+      - name: Canlı sitenin güncellenmesini bekle
+        if: ${{ !cancelled() && (steps.deployment.outcome == 'success' || steps.deployment2.outcome == 'success') }}
+        run: python bot/yayin_bekle.py
       - name: Yayımlanan ilanları Telegram'a gönder
         id: telegram
         if: ${{ !cancelled() && (steps.deployment.outcome == 'success' || steps.deployment2.outcome == 'success') }}
