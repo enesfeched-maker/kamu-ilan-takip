@@ -528,6 +528,27 @@ class HaftalikArananTests(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()
 
+class AksamKartiTests(unittest.TestCase):
+    def test_aksam_zamani(self):
+        tr = ilan_bot.TR
+        self.assertFalse(ilan_bot.aksam_zamani(datetime(2026, 10, 12, 19, 59, tzinfo=tr), None))
+        self.assertTrue(ilan_bot.aksam_zamani(datetime(2026, 10, 12, 20, 5, tzinfo=tr), '2026-10-11'))
+        self.assertFalse(ilan_bot.aksam_zamani(datetime(2026, 10, 12, 21, 0, tzinfo=tr), '2026-10-12'))
+
+    def test_aksam_yeniler_dun_20_bugun_20_arasi(self):
+        tr = ilan_bot.TR
+        an = datetime(2099, 10, 12, 20, 10, tzinfo=tr)
+        def k(n, saat):
+            return {'id': f'i{n}', 'baslik': f'K{n} Belediyesi - Alım', 'kurum': f'K{n} Belediyesi',
+                    'kadro': f'{n} Zabıta Memuru', 'son_tarih': '2099-11-30', 'ilk_gorulme': saat.isoformat()}
+        ilanlar = [k(1, an.replace(day=11, hour=19)), k(2, an.replace(day=11, hour=20, minute=0)),
+                   k(3, an.replace(hour=10)), k(4, an.replace(hour=20, minute=1))]
+        with patch.object(ilan_bot, 'simdi', return_value=an):
+            sonuc = ilan_bot.aksam_yeniler(ilanlar, {}, an)
+        self.assertEqual({i['id'] for i in sonuc}, {'i2', 'i3'})
+        self.assertIn('Bugün yayımlanan 2 ilan', ilan_bot.aksam_mesaj(sonuc))
+
+
 class GununSozuTests(unittest.TestCase):
     def test_gunlere_gore_soz(self):
         tr = ilan_bot.TR

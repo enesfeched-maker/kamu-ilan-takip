@@ -599,6 +599,39 @@ def gorunen_uzunluk(metin):
     return len(html.unescape(re.sub(r"<[^>]+>", "", metin)))
 
 
+def aksam_zamani(zaman, son_gun):
+    """Günde bir kez: İstanbul 20:00'den sonra ve bugün henüz gönderilmediyse."""
+    return zaman.hour >= 20 and son_gun != zaman.date().isoformat()
+
+
+def aksam_yeniler(ilanlar, cfg, zaman):
+    """Akşam kartı: dün 20:00 (dahil) – bugün 20:00 (hariç) arasında ilk görülen, kanal kurallarına uyan açık ilanlar
+    (akademik/iptal/duyuru/kurum içi yok; en çok kadro önce; kaynaklar arası kopyalar tek kayıt)."""
+    from kart_tasarimlari import veri as kart_verisi
+    dahil, haric = cfg.get('telegram_kelimeler_dahil', []), cfg.get('telegram_kelimeler_haric', [])
+    bugun_20 = datetime.combine(zaman.astimezone(TR).date(), datetime.min.time(), tzinfo=TR).replace(hour=20)
+    sonuc = []
+    for i in ilanlar:
+        if i.get('duyuru_turu') or i.get('iptal_edildi') or akademik_ilan(i) or kurum_ici(i) or suresi_doldu(i):
+            continue
+        try:
+            gorulme = datetime.fromisoformat(i['ilk_gorulme'])
+        except (KeyError, TypeError, ValueError):
+            continue
+        if gorulme.tzinfo is None:
+            gorulme = gorulme.replace(tzinfo=TR)
+        if bugun_20 - timedelta(days=1) <= gorulme < bugun_20 and telegram_icin_uygun(i, dahil, haric):
+            sonuc.append((-(kart_verisi(i)['toplam'] or 0), i.get('kurum', ''), i['id'], i))
+    sonuc.sort(key=lambda s: s[:3])
+    return kopyasiz([s[-1] for s in sonuc], ilanlar)
+
+
+def aksam_mesaj(ilanlar):
+    """Akşam kartının metni: tek satır (ayrıntı görselde, site düğmede)."""
+    kadro = sabah_toplam_kadro(ilanlar)
+    return f"🆕 <b>Bugün yayımlanan {len(ilanlar)} ilan</b>" + (f" · {kadro} kadro" if kadro else "")
+
+
 def sabah_yeniler(ilanlar, gonderilen, cfg, zaman):
     """Dünkü 09:00 (dahil) ile bugünkü 09:00 (hariç) arasında ilk görülen, kanalda paylaşılmış; akademik/iptal/duyuru
     olmayan ilanlar (en çok kadro önce). Sabit sınır: özet geç gitse bile günler arası boşluk/çift sayım olmaz.
@@ -992,7 +1025,9 @@ def main():
         sabah_acik = sabah_acik_sayisi(gelen, simdi())
         if sabah_yeni or sabah_son_gun or sabah_acik:  # üçü de boşsa sessizce atlanır, gün işaretlenmez
             sabah = (sabah_yeni, sabah_son_gun, sabah_acik)
-    kuyruk = ([('sabah', sabah)] if sabah else []) + \
+    aksam_gun = veri.get('telegram_aksam_gunu')
+    aksam = aksam_yeniler(gelen, cfg, simdi()) if aksam_zamani(simdi(), aksam_gun) else []
+    kuyruk = ([('sabah', sabah)] if sabah else []) + ([('aksam', aksam)] if aksam else []) + \
              [('duyuru' if i.get('duyuru_turu') else 'ilan', i) for i in gonderilecek]
     if sessiz_donemde(cfg, simdi()):
         # Sessiz dönemde hiçbir şey gönderilmez; ilanlar sırada (telegram_bekleyen) kalır ve dönem bitince
@@ -1019,7 +1054,7 @@ def main():
                 continue
             try:
                 from kart_tasarimlari import sabah_ozeti_karti, toplu_son_gun_karti
-                foto = toplu_son_gun_karti(son_gun_l, simdi()) if son_gun_l else sabah_ozeti_karti(yeni_l, acik, simdi(), son_gun=son_gun_l)
+                foto = toplu_son_gun_karti(son_gun_l, simdi(), [kurum_logosu(x) for x in son_gun_l]) if son_gun_l else sabah_ozeti_karti(yeni_l, acik, simdi(), son_gun=son_gun_l)
             except Exception as exc:
                 # Görsel yapılamazsa gün atlanmaz: yalnız metin gönderilir.
                 print(f'Sabah özeti kartı oluşturulamadı ({type(exc).__name__}); yalnız metin gönderilecek.', file=sys.stderr)
@@ -1031,6 +1066,26 @@ def main():
             toplu_gun = simdi().date().isoformat()  # gün işareti yalnız başarıda yazılır
             adet += 1
             print(f"Telegram'a sabah özeti gönderildi: {len(yeni_l)} yeni, {len(son_gun_l)} son gün, {acik} açık ilan")
+            time.sleep(3.2)
+            continue
+        if tur == 'aksam':
+            metin = aksam_mesaj(i)
+            if a.dry_run:
+                print('--- (önizleme, gönderilmedi) ---\n' + metin + '\n')
+                continue
+            try:
+                from kart_tasarimlari import yeni_ilanlar_karti
+                foto = yeni_ilanlar_karti(i, simdi(), [kurum_logosu(x) for x in i])
+            except Exception as exc:
+                print(f'Akşam kartı oluşturulamadı ({type(exc).__name__}); yalnız metin gönderilecek.', file=sys.stderr)
+                foto = None
+            mid = telegram_gonder(token, chat_id, metin, '', site_url, foto=foto) if (token and chat_id) else False
+            if not mid:
+                hata = True
+                break
+            aksam_gun = simdi().date().isoformat()  # gün işareti yalnız başarıda yazılır
+            adet += 1
+            print(f"Telegram'a akşam kartı gönderildi: {len(i)} yayımlanan ilan")
             time.sleep(3.2)
             continue
         if cfg.get('resmi_detaylari_oku', False) and not detay_taze(i):
@@ -1118,6 +1173,7 @@ def main():
         "telegram_duyuru_yanitlari": dict(sorted((k, v) for k, v in yanitlar.items()
             if not k.startswith('m:') or gun_icinde(v, simdi().date(), DUZ_METIN_TEKILLESTIRME_GUN))),
         "telegram_toplu_hatirlatma_gunu": toplu_gun,
+        "telegram_aksam_gunu": aksam_gun,
         "telegram_yayin_surumu": yayin_surumu,
         "kaynak_baslangiclari": sorted(kaynak_baslangiclari),
         "kaynak_durumlari": kaynak_durumlari,
