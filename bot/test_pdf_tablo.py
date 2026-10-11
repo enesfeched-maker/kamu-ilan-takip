@@ -47,6 +47,32 @@ class MaddeTests(unittest.TestCase):
         self.assertEqual(pdf_tablo.ortak_kosullar('koşul yok'), [])
 
 
+class SartBolumuTests(unittest.TestCase):
+    def bolumler(self, satirlar):
+        pdf_tablo.sart_bolumleri.cache_clear()
+        with mock.patch.object(pdf_tablo, '_metin_oku', return_value=satirlar):
+            sonuc = pdf_tablo.sart_bolumleri('x.pdf')
+        pdf_tablo.sart_bolumleri.cache_clear()
+        return sonuc
+
+    def test_genel_ozel_sartlar_ve_pozisyon_basligi(self):
+        sonuc = self.bolumler([
+            'I. BAŞVURU ŞARTLARI', 'A- GENEL ŞARTLAR',
+            'a) Devlet Memurları Kanununun 48 inci maddesinde yazılı genel', 'şartları haiz olmak,',
+            'b) Güvenlik soruşturması olumlu olmak,',
+            'B- ÖZEL ŞARTLAR', 'Mobil Yazılım Uzmanı (2 kişi)',
+            'a) En az 3 yıllık tecrübe sahibi olmak.', 'b) Flutter bilmek.',
+            'II. SINAV YERİ', '- Ankara.'])
+        self.assertEqual([ad for ad, _ in sonuc], ['Genel şartlar', 'Özel şartlar'])
+        self.assertEqual(sonuc[0][1], (('Devlet Memurları Kanununun 48 inci maddesinde yazılı genel şartları haiz olmak.', False),
+                                       ('Güvenlik soruşturması olumlu olmak.', False)))
+        self.assertEqual(sonuc[1][1][0], ('Mobil Yazılım Uzmanı (2 kişi)', True))
+
+    def test_yarim_kalan_bolum_verilmez(self):
+        sonuc = self.bolumler(['SINAVA KATILMA KOŞULLARI', '1- Genel şartları taşımak,', '2- 40 adet kadro için;', 'ATAMA YERLERİ'])
+        self.assertEqual(sonuc, ())
+
+
 class OkumaTests(unittest.TestCase):
     def test_pdfplumber_yoksa_bos(self):
         pdf_tablo.tablo_oku.cache_clear()

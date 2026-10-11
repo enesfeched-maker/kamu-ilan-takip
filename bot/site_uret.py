@@ -18,7 +18,7 @@ TR = timezone(timedelta(hours=3))
 KART_GENISLIK = 720
 LOGO_BOYUT = 128
 EN_COK_LOGO_INDIRME = 150
-CSS_SURUM = 18
+CSS_SURUM = 19
 LOGO_SURUM = 2
 ACIK_ZEMIN, KOYU_ZEMIN = '#F6F6F1', '#0D0E0C'
 ANALIZ_SURUM = 2  # docs/a.js (çerezsiz ziyaret istatistiği) önbellek sürümü
@@ -140,7 +140,7 @@ def _kosul_html(metin):
     return re.sub(r'\s(?=[a-zçğ]\)\s)', '<br>', esc(metin))
 
 
-def _kadro_tablosu(item):
+def _kadro_tablosu(item, kosulsuz=False):
     """Kadro / kontenjan tablosu (kadro adıyla eşleşen koşul metni aynı satırda) ve eşleşmeyen koşullar için ikinci tablo.
     HTML bölümü döner (başlıkla birlikte); gösterilecek bir şey yoksa boş metin."""
     import kurum_sayfasi as ks
@@ -151,6 +151,8 @@ def _kadro_tablosu(item):
         return ''
     def sinirli(kisa, uzun):
         return bool(kisa) and re.search(r'(?<!\w)' + re.escape(kisa) + r'(?!\w)', uzun) is not None
+    if kosulsuz:  # koşullar ayrıca (PDF'ten madde madde) gösterilecek: yalnız kadro / kontenjan
+        sartlar = []
     satirlar, kullanilan = [], set()
     for adet, ad in kadrolar:
         a, secilen = kucuk(ad), None
@@ -220,6 +222,35 @@ def _kadro_kartlari(item, satirlar, belge):
                 f'rel="noopener noreferrer">resmî ilan belgesi (PDF) ↗</a></li>') if belge else ''
     return (f'<h2>Kadrolar ve başvuru koşulları</h2><div class="kk-liste">{kartlar}</div>'
             + (f'<div class="kk-ortak"><h3>Tüm kadrolar için</h3><ul>{ortak}{baglanti}</ul></div>' if ortak or baglanti else ''))
+
+
+def _pdf_sart_bolumleri(item):
+    """Tablosuz ilan belgesindeki şart bölümleri (pdf_tablo.sart_bolumleri); belge yoksa ()."""
+    sha = str(item.get('belge_sha256') or '')
+    if not re.fullmatch(r'[a-f0-9]{64}', sha) or not (BELGE_KLASORU / f'{sha}.pdf').is_file():
+        return ()
+    import pdf_tablo
+    return pdf_tablo.sart_bolumleri(str(BELGE_KLASORU / f'{sha}.pdf'))
+
+
+def _sart_bolumleri_html(bolumler, belge, gorunen=10):
+    """Başvuru şartları: her bölüm başlıklı madde listesi; pozisyon adları kalın ara başlık; uzun liste katlanır."""
+    def li(metin, alt):
+        return f'<li class="sb-alt">{esc(metin)}</li>' if alt else f'<li>{esc(metin)}</li>'
+    govde = ''
+    for ad, maddeler in bolumler:
+        ilk, kalan = maddeler[:gorunen], maddeler[gorunen:]
+        if len(kalan) <= 2:
+            ilk, kalan = maddeler, ()
+        govde += f'<div class="sb"><h3>{esc(ad)}</h3><ul>{"".join(li(m, a) for m, a in ilk)}</ul>'
+        if kalan:
+            n = sum(not a for _, a in kalan)
+            govde += (f'<details class="sb-devam"><summary>Tamamını göster ({n} madde daha)</summary>'
+                      f'<ul>{"".join(li(m, a) for m, a in kalan)}</ul></details>')
+        govde += '</div>'
+    baglanti = (f'<p class="sb-kaynak">Başvuru belgeleri ve şartların tamamı: <a class="yazi-link" href="{esc(belge)}" '
+                f'target="_blank" rel="noopener noreferrer">resmî ilan belgesi (PDF) ↗</a></p>') if belge else ''
+    return f'<h2>Başvuru şartları</h2>{govde}{baglanti}'
 
 
 def _kopya_notlari(kopya):
@@ -392,7 +423,13 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
         sections += '<p class="not uyari"><strong>İptal edildi.</strong> Bu ilan için resmî iptal duyurusu yayımlandı. Başvuru yapmadan önce resmî kaynağı kontrol et.</p>'
     from sbb_detay import document_url
     pdf_satirlari = _pdf_kadrolari(item)
-    tablo = _kadro_kartlari(item, pdf_satirlari, document_url(item)) if pdf_satirlari else _kadro_tablosu(item)
+    sart_bolumleri = () if pdf_satirlari else _pdf_sart_bolumleri(item)
+    if pdf_satirlari:
+        tablo = _kadro_kartlari(item, pdf_satirlari, document_url(item))
+    elif sart_bolumleri:
+        tablo = _kadro_tablosu(item, kosulsuz=True) + _sart_bolumleri_html(sart_bolumleri, document_url(item))
+    else:
+        tablo = _kadro_tablosu(item)
     if pdf_satirlari and item.get('ozet'):  # kartlar özetin üstünde: "koşullar aşağıda gösterilmiştir" cümlesi yanıltır
         item = dict(item, ozet=item['ozet'].replace(' Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.', ''))
     bolum = ''
