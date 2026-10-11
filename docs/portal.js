@@ -672,7 +672,7 @@ function tryWriteVisit(){
 if(!visitDue||visitWritten)return;
 if(listeLoaded&&viewOf(tab)==='ana'&&document.visibilityState==='visible'){visitWritten=true;writeStore('kit-son-ziyaret',new Date().toISOString());}}
 /* ---------- profil penceresi ---------- */
-let draft=null,duzenleme=false,bolumDuzey='';
+let draft=null,duzenleme=false,bolumDuzey='',bolumAdlari=[],bolumKombo=null,ilKombo=null;
 const PT_A=Array.from({length:48},(_,k)=>'P'+(k+1));
 const kaydirKilidi=on=>{try{document.documentElement.style.overflow=on?'hidden':'';}catch{}};
 /* Hata iletisi pencerenin içinde (toast, üst katmandaki <dialog>un arkasında kalır). */
@@ -697,13 +697,33 @@ const d=draft,seg=$('p-ogrenim');seg.querySelectorAll('button').forEach(b=>{b.cl
 fillTur();
 $('p-puan').value=typeof d.puan==='number'?puanTr(d.puan):'';
 $('p-tum').checked=!!d.tum_turkiye;$('p-bolum').value=d.bolum||'';$('p-il').value='';$('p-atla').textContent=duzenleme?'Vazgeç':'Şimdilik atla';
-bolumDuzey='';$('p-bolum-liste').replaceChildren();profilHataTemizle();renderIller();}
+bolumDuzey='';bolumAdlari=[];profilHataTemizle();renderIller();}
 /* Bölüm önerileri: puanlar sayfasındaki listeyle aynı kaynak (puanlar/<düzey>-bolum.json), ilk odakta yüklenir. */
 async function bolumListeDoldur(){
 const d=draft&&draft.ogrenim;if(!d||bolumDuzey===d)return;
 try{const v=await getJSON('puanlar/'+d+'-bolum.json','no-cache');if(!draft||draft.ogrenim!==d||!v||typeof v.bolumler!=='object'||!v.bolumler)return;
-const adlar=[...new Set(Object.values(v.bolumler).filter(x=>typeof x==='string'&&x.length<=120))].sort((a,b)=>a.localeCompare(b,'tr'));
-$('p-bolum-liste').replaceChildren(...adlar.map(a=>{const o=E('option');o.value=a;return o;}));bolumDuzey=d;}catch{}}
+const adlar=[...new Set(Object.values(v.bolumler).filter(x=>typeof x==='string'&&x.length<=120).map(proper))].sort((a,b)=>a.localeCompare(b,'tr'));
+bolumAdlari=adlar;bolumDuzey=d;if(bolumKombo&&document.activeElement===$('p-bolum'))bolumKombo.ciz();}catch{}}
+/* Açılır öneri listesi (tarayıcının datalist'i yerine): yazdıkça süzülür, ok tuşları / Enter / Esc ile kullanılır.
+   sec() true dönerse (çoklu seçim) kutu temizlenip liste açık kalır. */
+function kombo(inp,{kaynak,secili=()=>new Set(),sec,bos=()=>''}){
+const kap=inp.parentElement;kap.classList.add('kombo-kap');
+const ul=E('ul','kombo-liste');ul.id=inp.id+'-liste';ul.setAttribute('role','listbox');ul.hidden=true;kap.append(ul);
+inp.setAttribute('role','combobox');inp.setAttribute('aria-controls',ul.id);inp.setAttribute('aria-expanded','false');inp.setAttribute('aria-autocomplete','list');
+let aktif=-1,ogeler=[];
+const kapat=()=>{ul.hidden=true;inp.setAttribute('aria-expanded','false');aktif=-1;inp.removeAttribute('aria-activedescendant');};
+const isaretle=n=>{aktif=n;[...ul.children].forEach((li,i)=>li.classList.toggle('aktif',i===n));const li=ul.children[n];if(li){inp.setAttribute('aria-activedescendant',li.id);li.scrollIntoView({block:'nearest'});}};
+const secim=x=>{if(sec(x)){inp.value='';ciz();inp.focus();}else kapat();};
+function ciz(){const q=normalize(inp.value).trim(),hepsi=kaynak(),s=secili();
+ogeler=(q?[...hepsi.filter(x=>normalize(x).startsWith(q)),...hepsi.filter(x=>!normalize(x).startsWith(q)&&normalize(x).includes(q))]:hepsi).slice(0,80);
+if(!ogeler.length){const t=hepsi.length?'Eşleşen sonuç yok':bos();if(!t){kapat();return;}ul.replaceChildren(E('li','kombo-bos',t));}
+else ul.replaceChildren(...ogeler.map((x,i)=>{const li=E('li',s.has(x)?'secili':'',x);li.id=ul.id+'-'+i;li.setAttribute('role','option');li.setAttribute('aria-selected',String(s.has(x)));li.onmousedown=e=>e.preventDefault();li.onclick=()=>secim(x);return li;}));
+ul.hidden=false;inp.setAttribute('aria-expanded','true');aktif=-1;}
+inp.addEventListener('focus',ciz);inp.addEventListener('input',ciz);inp.addEventListener('blur',()=>setTimeout(kapat,150));
+inp.addEventListener('keydown',e=>{if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();if(ul.hidden)ciz();const n=ogeler.length;if(n)isaretle(e.key==='ArrowDown'?(aktif+1)%n:(aktif-1+n)%n);}
+else if(e.key==='Enter'&&!ul.hidden){e.preventDefault();const q=normalize(inp.value).trim(),x=aktif>=0?ogeler[aktif]:q?(ogeler.find(o=>normalize(o)===q)||(ogeler.length===1?ogeler[0]:null)):null;if(x)secim(x);else if(!q)kapat();}
+else if(e.key==='Escape'&&!ul.hidden){e.preventDefault();e.stopPropagation();kapat();}});
+return{ciz,kapat};}
 function renderIller(){const box=$('p-iller');box.replaceChildren(...draft.iller.map(il=>{const c=E('span','il-cip',il),b=E('button');b.type='button';b.setAttribute('aria-label',il+' ilini kaldır');b.innerHTML=IC.x;b.onclick=()=>{draft.iller=draft.iller.filter(x=>x!==il);renderIller();};c.append(b);return c;}));}
 /* Tam ad ya da tek eşleşen önek ("ank" -> Ankara); birden çok eşleşme belirsizdir. */
 function ilCoz(raw){
@@ -729,12 +749,15 @@ const p={v:1,ogrenim:draft.ogrenim,puan_turu:formTur(),iller:draft.iller,tum_tur
 profil=validProfile(p);writeStore('kit-profil',profil);if(profil&&profil.ogrenim)A('tikla',{a:'profil_kaydet',x:profil.ogrenim,n:profil.iller.length});$('profil-dialog').close();kaydirKilidi(false);render();notify('Profilin kaydedildi.');}
 function skipProfile(){if(duzenleme){$('profil-dialog').close();kaydirKilidi(false);return;}profil={v:1,atlandi:true,t:today()};writeStore('kit-profil',profil);$('profil-dialog').close();kaydirKilidi(false);render();}
 function initProfile(){
-const dl=$('il-listesi');IL_LIST.forEach(il=>{const o=E('option');o.value=il;dl.append(o);});
-$('p-ogrenim').querySelectorAll('button').forEach(b=>b.onclick=()=>{draft.ogrenim=b.dataset.v;draft.puan_turu=defaultTur(b.dataset.v);bolumDuzey='';$('p-bolum-liste').replaceChildren();fillTur();profilHataTemizle();$('p-ogrenim').querySelectorAll('button').forEach(x=>{x.classList.toggle('secili',x===b);x.setAttribute('aria-pressed',String(x===b));});});
+ilKombo=kombo($('p-il'),{kaynak:()=>IL_LIST,secili:()=>new Set(draft?draft.iller:[]),
+sec:il=>{if(!draft)return false;draft.iller=draft.iller.includes(il)?draft.iller.filter(x=>x!==il):[...draft.iller,il];renderIller();profilHataTemizle();return true;}});
+bolumKombo=kombo($('p-bolum'),{kaynak:()=>bolumAdlari,sec:a=>{$('p-bolum').value=a;return false;},
+bos:()=>draft&&draft.ogrenim?'Liste yükleniyor…':'Önce öğrenim düzeyini seç.'});
+$('p-ogrenim').querySelectorAll('button').forEach(b=>b.onclick=()=>{draft.ogrenim=b.dataset.v;draft.puan_turu=defaultTur(b.dataset.v);bolumDuzey='';bolumAdlari=[];fillTur();profilHataTemizle();$('p-ogrenim').querySelectorAll('button').forEach(x=>{x.classList.toggle('secili',x===b);x.setAttribute('aria-pressed',String(x===b));});});
 $('p-tur').onchange=()=>{$('p-tur-a').hidden=$('p-tur').value!=='A';profilHataTemizle();};
 for(const id of ['p-puan','p-il','p-tur-a','p-tum','p-bolum'])$(id).addEventListener('input',profilHataTemizle);
-$('p-bolum').addEventListener('focus',bolumListeDoldur);
-$('p-il-ekle').onclick=addIl;$('p-il').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();addIl();}};
+$('p-bolum').addEventListener('focus',bolumListeDoldur);$('p-bolum').addEventListener('input',bolumListeDoldur);
+$('p-il').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.defaultPrevented){e.preventDefault();addIl();if(ilKombo)ilKombo.ciz();}});
 $('profil-form').onsubmit=e=>{e.preventDefault();saveProfile();};$('p-atla').onclick=skipProfile;$('p-sifirla').onclick=resetProfile;$('p-kapat').onclick=()=>{$('profil-dialog').close();kaydirKilidi(false);};$('nav-profile').onclick=openProfile;
 $('profil-dialog').addEventListener('close',()=>kaydirKilidi(false));
 $('profil-dialog').addEventListener('click',e=>{if(e.target===$('profil-dialog')){const r=$('profil-dialog').getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)$('profil-dialog').close();}});}
