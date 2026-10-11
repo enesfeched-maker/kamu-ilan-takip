@@ -914,8 +914,14 @@ def main():
     detay_hatalari = set()
     if cfg.get('resmi_detaylari_oku', False) and not a.send_only:
         ardisik_hata = 0
-        for gelen_ilan in gelen:
-            i = mevcut[gelen_ilan['id']]
+        # Akıştan düşmüş ama son tarihi hiç okunamamış Kariyer Kapısı kayıtları da yeniden denenir (en çok 5;
+        # 22 Eylül 2026'da okunamayan 4 ilan süresi dolduğu hâlde sitede açık kalmıştı).
+        gelen_kimlik = {g['id'] for g in gelen}
+        sinir = (simdi() - timedelta(days=60)).isoformat()
+        eksikler = [k for k in mevcut.values() if k['id'] not in gelen_kimlik and not k.get('son_tarih')
+                    and k.get('kaynak_turu') not in ('sbb', 'iskur', 'csb') and not k.get('duyuru_turu')
+                    and 'kariyerkapisi.gov.tr/IlanDetay' in (k.get('link') or '') and (k.get('ilk_gorulme') or '') >= sinir][:5]
+        for i in [mevcut[g['id']] for g in gelen] + eksikler:
             if i.get('kaynak_turu') in ('sbb','iskur','csb'):
                 continue
             local_detail=yerel.get('detaylar',{}).get(i['id'],{})

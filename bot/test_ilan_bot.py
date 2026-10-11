@@ -175,6 +175,25 @@ class TelegramDeliveryTests(unittest.TestCase):
             fetch.assert_not_called()
         self.assertEqual(json.loads(self.data.read_text())['ilanlar'][0]['son_tarih'], '2099-10-09')
 
+    def test_akistan_dusen_tarihsiz_kayit_yeniden_okunur(self):
+        cfg = json.loads(self.cfg.read_text())
+        cfg['resmi_detaylari_oku'] = True
+        self.cfg.write_text(json.dumps(cfg))
+        state = json.loads(self.data.read_text())
+        link = 'https://kariyerkapisi.gov.tr/IlanDetay?i=99999999-9999-4999-8999-999999999999'
+        state['ilanlar'].append({'id': link, 'link': link, 'baslik': 'Eski Kurum - Alım', 'kurum': 'Eski Kurum',
+                                 'son_tarih': None, 'ilk_gorulme': (ilan_bot.simdi() - timedelta(days=20)).isoformat()})
+        self.data.write_text(json.dumps(state))
+        okunan = []
+        def oku(l):
+            okunan.append(l)
+            return {'son_tarih': '2099-09-24', 'detay_guncelleme': ilan_bot.simdi().isoformat()}
+        with patch.object(ilan_bot, 'detay_oku', side_effect=oku), patch.object(ilan_bot.time, 'sleep'):
+            self.run_bot()
+        self.assertIn(link, okunan)
+        kayit = next(i for i in json.loads(self.data.read_text())['ilanlar'] if i['id'] == link)
+        self.assertEqual(kayit['son_tarih'], '2099-09-24')
+
     SABAH = datetime(2026, 10, 5, 10, 0, tzinfo=timezone(timedelta(hours=3)))
 
     def prepare_reminders(self, days=3, gonderilen=True):
