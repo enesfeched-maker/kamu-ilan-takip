@@ -541,53 +541,136 @@ def tek_satir(d, metin, boyutlar, genislik, kalin=False):
     return yz, metin.rstrip() + '…'
 
 
-def toplu_son_gun_karti(ilanlar, simdi=None):
-    """Son başvurusu yaklaşan ilanların tek kartı (1080x1350 PNG): en fazla 7 satır + '+N ilan daha'.
-    Satır: kurum + kadro özeti, sağda kalan gün rozeti (bugün/yarın kırmızı, 2-3 gün turuncu)."""
+KIRMIZI_YAZI = '#d64545'
+LISTE_CIZGI = '#d3dedc'
+LISTE_GRI = '#5d6f72'
+
+
+def harf_rozeti(d, kurum, kutu):
+    """Logo yoksa sitedeki gibi kurum baş harfleri; renk kurum adından türetilir (her seferinde aynı)."""
+    import colorsys, hashlib
+    h = int(hashlib.md5(kurum.encode('utf-8')).hexdigest()[:4], 16) % 360
+    r, g, b = colorsys.hls_to_rgb(h / 360, 0.42, 0.45)
+    d.rounded_rectangle(kutu, radius=22, fill=(round(r * 255), round(g * 255), round(b * 255)))
+    harf = ''.join(w[0] for w in kurum.split() if w[:1].isalpha())[:2]
+    x0, y0, x1, y1 = kutu
+    d.text(((x0 + x1) / 2, (y0 + y1) / 2 + 1), tr_buyuk(harf), font=F(32, True), fill='#ffffff', anchor='mm')
+
+
+def liste_karti(ilanlar, baslik, simdi=None, logolar=None, tur='yeni'):
+    """Toplu liste kartı (1080x1350 PNG): üstte başlık + sağda tarih; her satırda kurum logosu, kurum, kadro;
+    sağda tur='yeni' ise kişi sayısı + kırmızı son tarih, tur='son_gun' ise kalan gün rozeti.
+    Logosu olmayan ilanlar sona alınır; en çok TOPLU_EN_COK_SATIR satır + '+N ilan daha'.
+    Alt şerit: marka logosu · 'Başvuru koşulları ve tüm ilanlar sitede' · adres."""
     simdi = (simdi or datetime.now(TR)).astimezone(TR)
-    im = Image.new('RGB', (G, Y), ACIK)
+    logolar = list(logolar or [None] * len(ilanlar))
+    sirali = [x for x in zip(ilanlar, logolar) if x[1]] + [x for x in zip(ilanlar, logolar) if not x[1]]
+    gorunen = sirali[:TOPLU_EN_COK_SATIR]
+    fazla = len(sirali) - len(gorunen)
+    sag = G - KENAR
+    tarih_w = 210
+    olcu = ImageDraw.Draw(Image.new('RGB', (1, 1)))
+    satirlar, yz = sigdir(olcu, baslik, True, [58, 54, 50, 46, 44], sag - KENAR - tarih_w, 1)
+    if len(satirlar) > 1 or olcu.textlength(satirlar[0], font=yz) > sag - KENAR - tarih_w:
+        satirlar, yz = sigdir(olcu, baslik, True, [54, 50], sag - KENAR - tarih_w, 2)
+    bh = 170 if len(satirlar) == 1 else 220
+    # Kart boyu satır sayısına göre: az ilanda boşluk kalmaz, en çok 1080x1350.
+    yuk = min(Y, 40 + bh + 10 + len(gorunen) * 150 + (60 if fazla else 0) + 20 + 32 + 96)
+    im = Image.new('RGB', (G, yuk), ACIK)
     d = ImageDraw.Draw(im)
-    kx0, ky0, kx1, ky1 = 40, 40, G - 40, 1230
+    kx0, ky0, kx1, ky1 = 40, 40, G - 40, yuk - 96 - 32
     d.rounded_rectangle((kx0 + 4, ky0 + 8, kx1 + 4, ky1 + 8), radius=34, fill='#dbe3e2')
     d.rounded_rectangle((kx0, ky0, kx1, ky1), radius=34, fill='#ffffff')
-    bant_h = 210
-    d.rounded_rectangle((kx0, ky0, kx1, ky0 + bant_h), radius=34, fill=PETROL)
-    d.rectangle((kx0, ky0 + bant_h - 40, kx1, ky0 + bant_h), fill=PETROL)
-    sag = G - KENAR
-    d.text((KENAR, ky0 + 50), 'KPSS TERCİHİ', font=F(28, True), fill=LIME, anchor='lm')
-    satirlar, yz = sigdir(d, 'Son başvurusu yaklaşan ilanlar', True, [60, 54, 48], sag - KENAR, 2)
-    blok(d, KENAR, ky0 + 86, satirlar, yz, '#ffffff', aralik=round(yz.size * 1.12))
-    d.text((sag, ky0 + 50), f'{simdi.day} {AYLAR[simdi.month - 1]} {simdi.year}', font=F(30, True), fill=SOLUK, anchor='rm')
+    d.rounded_rectangle((kx0, ky0, kx1, ky0 + bh), radius=34, fill=PETROL)
+    d.rectangle((kx0, ky0 + bh - 40, kx1, ky0 + bh), fill=PETROL)
+    aralik = round(yz.size * 1.14)
+    blok(d, KENAR, ky0 + (bh - aralik * len(satirlar)) / 2 + 4, satirlar, yz, '#ffffff', aralik=aralik)
+    d.text((sag, ky0 + bh / 2 - 20), f'{simdi.day} {AYLAR[simdi.month - 1]}', font=F(34, True), fill=LIME, anchor='rm')
+    d.text((sag, ky0 + bh / 2 + 22), GUNLER[simdi.weekday()], font=F(26, True), fill=SOLUK, anchor='rm')
 
-    gorunen = ilanlar[:TOPLU_EN_COK_SATIR]
-    fazla = len(ilanlar) - len(gorunen)
-    alan_ust = ky0 + bant_h + 14
-    alan_alt = ky1 - 24 - (64 if fazla else 0)
-    rh = min(138, (alan_alt - alan_ust) // max(1, len(gorunen)))
-    d.line((KENAR, alan_ust, sag, alan_ust), fill='#c6d3d1', width=3)
-    for n, ilan in enumerate(gorunen):
-        ry = alan_ust + n * rh
+    ust = ky0 + bh + 10
+    alt = ky1 - 20 - (60 if fazla else 0)
+    rh = min(150, (alt - ust) // max(1, len(gorunen)))
+    lb = 84
+    for n, (ilan, logo) in enumerate(gorunen):
+        ry = ust + n * rh
+        orta = ry + rh / 2
         kurum, kadro = toplu_satir(ilan)
+        kutu = (KENAR, round(orta - lb / 2), KENAR + lb, round(orta + lb / 2))
+        try:
+            ok = bool(logo) and logo_yerlestir(im, d, {'logo': logo}, kutu, yaricap=22, ic=10)
+        except Exception:
+            ok = False
+        if ok:
+            d.rounded_rectangle(kutu, radius=22, outline=LISTE_CIZGI, width=2)
+        else:
+            harf_rozeti(d, kurum, kutu)
+        x = KENAR + lb + 22
         bitis, _ = _bitis(ilan)
-        kalan = (bitis.date() - simdi.date()).days if bitis else None
-        rozet = None if kalan is None else ('Bugün' if kalan <= 0 else 'Yarın' if kalan == 1 else f'{kalan} gün')
-        rozet_w = 0
-        if rozet:
-            yr = F(38, True)
-            rozet_w = round(d.textlength(rozet, font=yr)) + 44
-            dolgu, yazi = (KIRMIZI, '#ffffff') if kalan <= 1 else (TURUNCU, PETROL)
-            d.rounded_rectangle((sag - rozet_w, ry + (rh - 62) // 2, sag, ry + (rh - 62) // 2 + 62), radius=31, fill=dolgu)
-            d.text((sag - rozet_w / 2, ry + rh / 2 + 1), rozet, font=yr, fill=yazi, anchor='mm')
-        genislik = sag - KENAR - (rozet_w + 24 if rozet else 0)
-        yk, ktxt = tek_satir(d, kurum, [40, 36, 32, 30], genislik, True)
-        yd, dtxt = tek_satir(d, kadro, [32, 30, 28], genislik)
-        d.text((KENAR, ry + rh / 2 - 18), ktxt, font=yk, fill=PETROL, anchor='lm')
-        d.text((KENAR, ry + rh / 2 + 24), dtxt, font=yd, fill='#5d6f72', anchor='lm')
-        d.line((KENAR, ry + rh, sag, ry + rh), fill='#c6d3d1', width=2)
+        fs = F(26, True)
+        if tur == 'son_gun':
+            kalan = (bitis.date() - simdi.date()).days if bitis else None
+            sagw = 0
+            if kalan is not None:
+                metin = 'Bugün' if kalan <= 0 else 'Yarın' if kalan == 1 else f'{kalan} gün'
+                f = F(34, True)
+                sagw = round(d.textlength(metin, font=f)) + 40
+                dolgu, yazi = (KIRMIZI, '#ffffff') if kalan <= 1 else (TURUNCU, PETROL)
+                d.rounded_rectangle((sag - sagw, orta - 29, sag, orta + 29), radius=29, fill=dolgu)
+                d.text((sag - sagw / 2, orta + 1), metin, font=f, fill=yazi, anchor='mm')
+        else:
+            son = f'Son {bitis.day} {AYLAR[bitis.month - 1]}' if bitis else ''
+            sw = round(d.textlength(son, font=fs)) if son else 0
+            toplam = veri(ilan)['toplam']
+            if toplam:
+                f = F(32, True)
+                metin = f'{toplam} kişi'
+                w = round(d.textlength(metin, font=f)) + 36
+                d.rounded_rectangle((sag - w, orta - 46, sag, orta + 4), radius=25, fill='#e6f2d0')
+                d.text((sag - w / 2, orta - 20), metin, font=f, fill=PETROL, anchor='mm')
+                if son:
+                    d.text((sag, orta + 30), son, font=fs, fill=KIRMIZI_YAZI, anchor='rm')
+                sagw = max(w, sw)
+            else:
+                if son:
+                    d.text((sag, orta), son, font=fs, fill=KIRMIZI_YAZI, anchor='rm')
+                sagw = sw
+        gen = sag - x - sagw - 22
+        yk, kt = tek_satir(d, kurum, [38, 34, 32, 30], gen, True)
+        yd, dt = tek_satir(d, kadro, [29, 27, 25], gen)
+        d.text((x, orta - 18), kt, font=yk, fill=PETROL, anchor='lm')
+        d.text((x, orta + 22), dt, font=yd, fill=LISTE_GRI, anchor='lm')
+        if n < len(gorunen) - 1 or fazla:
+            d.line((x, ry + rh, sag, ry + rh), fill=LISTE_CIZGI, width=2)
     if fazla:
-        d.text((KENAR, alan_ust + len(gorunen) * rh + 32), f'+{fazla} ilan daha', font=F(36, True), fill='#5d6f72', anchor='lm')
-    marka_seridi(d, Y - 88, im=im)
+        d.text((KENAR + lb + 22, ust + len(gorunen) * rh + 34), f'+{fazla} ilan daha', font=F(32, True), fill=LISTE_GRI, anchor='lm')
+
+    yb, sh = yuk - 96, 96
+    d.rectangle((0, yb, G, yuk), fill=ANA)
+    x = KENAR
+    marka = logo_kare(60)
+    if marka is not None:
+        im.paste(marka, (x, yb + (sh - 60) // 2), marka)
+        x += 80
+    cagri, adres = 'Başvuru koşulları ve tüm ilanlar sitede', 'kpsstercihi.com'
+    for boy in (32, 30, 28, 26):
+        f1, f2 = F(boy), F(boy, True)
+        w1 = d.textlength(cagri + '  ', font=f1)
+        if x + w1 + d.textlength(adres, font=f2) <= sag:
+            break
+    d.text((x, yb + sh / 2), cagri, font=f1, fill='#ffffff', anchor='lm')
+    d.text((x + w1, yb + sh / 2), adres, font=f2, fill=LIME, anchor='lm')
     return jpeg_png(im)
+
+
+def toplu_son_gun_karti(ilanlar, simdi=None, logolar=None):
+    """Sabah: son başvurusu yaklaşan ilanlar (kalan gün rozeti; bugün/yarın kırmızı, 2-3 gün turuncu)."""
+    return liste_karti(ilanlar, 'Son başvurusu yaklaşan ilanlar', simdi, logolar, tur='son_gun')
+
+
+def yeni_ilanlar_karti(ilanlar, simdi=None, logolar=None):
+    """Akşam: o gün yayımlanan ilanlar (kişi sayısı + kırmızı son başvuru tarihi)."""
+    return liste_karti(ilanlar, 'Bugün yayımlanan ilanlar', simdi, logolar, tur='yeni')
 
 
 # ---------------------------------------------------------------- Sabah özeti kartı (son günü yaklaşan yoksa)

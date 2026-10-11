@@ -1131,5 +1131,65 @@
       592,
       1024
     ]
+  },
+  "inebolu belediye": {
+    "dosya": "inebolu-belediyesi.png",
+    "kaynak": "https://www.inebolu.bel.tr/",
+    "orijinal": "https://www.inebolu.bel.tr/images/logobottom.png",
+    "boyut": [
+      190,
+      80
+    ],
+    "kesim": [
+      1,
+      0,
+      62,
+      71
+    ]
+  },
+  "posof belediye": {
+    "dosya": "posof-belediyesi.png",
+    "kaynak": "https://www.posof.bel.tr/",
+    "orijinal": "https://www.posof.bel.tr/images/posof-belediyesi-logo-3.png",
+    "boyut": [
+      1040,
+      370
+    ],
+    "kesim": [
+      11,
+      26,
+      298,
+      364
+    ]
+  },
+  "ardahan posof belediye": {
+    "dosya": "posof-belediyesi.png",
+    "kaynak": "https://www.posof.bel.tr/",
+    "orijinal": "https://www.posof.bel.tr/images/posof-belediyesi-logo-3.png",
+    "boyut": [
+      1040,
+      370
+    ],
+    "kesim": [
+      11,
+      26,
+      298,
+      364
+    ]
+  },
+  "turkiye turizm tanitim ve gelistirme ajansi": {
+    "dosya": "turkiye-turizm-tanitim-ve-gelistirme-ajansi.png",
+    "kaynak": "https://tga.gov.tr/",
+    "orijinal": "https://tga.gov.tr/images/tga-logo-red.png",
+    "boyut": [
+      891,
+      521
+    ],
+    "kesim": [
+      1,
+      0,
+      762,
+      292
+    ]
   }
 }

@@ -63,10 +63,34 @@ class TopluKartTesti(unittest.TestCase):
         bitis = (SIMDI.date() + __import__('datetime').timedelta(days=gun)).isoformat()
         return [ilan(id=f'i{k}', kurum=f'Örnek Belediyesi {k}', kadro=f'{k + 1} Zabıta Memuru', son_tarih=bitis) for k in range(n)]
 
+    def test_yeni_ilanlar_karti_logolu_logosuz(self):
+        logo = io.BytesIO()
+        Image.new('RGB', (120, 120), '#c00').save(logo, 'PNG')
+        for n in (1, 5, 9):
+            liste = self.liste(n)
+            logolar = [logo.getvalue() if k % 2 else None for k in range(n)]
+            im = Image.open(io.BytesIO(kt.yeni_ilanlar_karti(liste, SIMDI, logolar)))
+            self.assertEqual(im.width, 1080)
+
+    def test_logosuz_ilan_sona_alinir(self):
+        logo = io.BytesIO()
+        Image.new('RGB', (120, 120), '#c00').save(logo, 'PNG')
+        liste = self.liste(3)
+        cizilen = []
+        gercek = kt.toplu_satir
+        with mock.patch.object(kt, 'toplu_satir', side_effect=lambda i: cizilen.append(i['id']) or gercek(i)):
+            kt.yeni_ilanlar_karti(liste, SIMDI, [None, logo.getvalue(), logo.getvalue()])
+        self.assertEqual(cizilen, ['i1', 'i2', 'i0'])
+
     def test_boyut_ve_satir_siniri(self):
+        boylar = []
         for n in (1, 4, 7, 12):
             im = Image.open(io.BytesIO(kt.toplu_son_gun_karti(self.liste(n), SIMDI)))
-            self.assertEqual(im.size, (1080, 1350))
+            self.assertEqual(im.width, 1080)
+            self.assertLessEqual(im.height, 1350)
+            boylar.append(im.height)
+        self.assertEqual(boylar, sorted(boylar))  # az ilanda kısa kart
+        self.assertEqual(boylar[-1], 1350)
 
     def test_satir_bilgisi_kurum_ve_kadro(self):
         kurum, kadro = kt.toplu_satir(self.liste(1)[0])
@@ -78,7 +102,7 @@ class TopluKartTesti(unittest.TestCase):
     def test_rozet_renkleri_bugun_yarin_kirmizi_diger_turuncu(self):
         def renk(gun):
             im = Image.open(io.BytesIO(kt.toplu_son_gun_karti(self.liste(1, gun), SIMDI))).convert('RGB')
-            return im.getpixel((1080 - kt.KENAR - 20, 40 + 210 + 14 + 69))
+            return im.getpixel((1080 - kt.KENAR - 20, 40 + 170 + 10 + 75))  # tek satır başlık + ilk satırın ortası
         kirmizi, turuncu = tuple(int(kt.KIRMIZI[i:i + 2], 16) for i in (1, 3, 5)), tuple(int(kt.TURUNCU[i:i + 2], 16) for i in (1, 3, 5))
         self.assertEqual(renk(0), kirmizi)
         self.assertEqual(renk(1), kirmizi)
