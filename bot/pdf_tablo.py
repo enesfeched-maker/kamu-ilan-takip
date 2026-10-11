@@ -117,6 +117,104 @@ def tablo_oku(yol):
     return tuple(satirlar)
 
 
+_NUMARA = r'(?:[IVX]{1,4}\s*[.\-–)]|[A-ZÇĞİÖŞÜ]\s*[.\-–)]|\d{1,2}(?:\.\d{1,2})*\s*[.\-–)]?|\d\.[a-z](?:\.\(\d\))?)'
+_BASLIK_RE = re.compile(r'^\s*(?:' + _NUMARA + r'\s*)?(?P<ad>[^\n]{3,80}?)\s*:?\s*$')
+_SART_RE = re.compile(r'ŞART|KOŞUL|NİTELİK|şart(?:lar|ları)\b|koşul(?:lar|ları)\b|nitelikler\b', re.I)
+_MADDE_RE = re.compile(r'^\s*(?:[-–•❖▪●►]\s*|[a-zçğıöşü]\s*[).]\s+|\(\s*\d{1,2}\s*\)\s*|\d{1,2}\s*[).-]\s+(?=\D))')
+
+
+def _baslik_mi(satir):
+    """Kısa, büyük harf ağırlıklı ya da numaralı ve nokta/virgülle bitmeyen satır; içindekiler satırı (sonda sayfa no) değil."""
+    s = satir.strip()
+    if not s or len(s) > 90 or re.search(r'[.,;]$', s) or re.search(r'\s\d{1,3}$', s) or _MADDE_RE.match(s) and not s.isupper():
+        return False
+    harf = [c for c in s if c.isalpha()]
+    buyuk = sum(c.isupper() for c in harf) / max(1, len(harf))
+    numarali = re.match(r'^\s*' + _NUMARA + r'\s', s) is not None
+    return buyuk >= 0.7 or (numarali and buyuk >= 0.3 and len(s) <= 70)
+
+
+def _baslik_adi(satir):
+    ad = re.sub(r'^\s*' + _NUMARA + r'\s*', '', satir.strip()).strip(' :')
+    if ad.isupper():
+        ad = ad.replace('I', 'ı').replace('İ', 'i').lower()
+    return ad[:1].upper() + ad[1:]
+
+
+def _metin_oku(yol):
+    import pdfplumber
+    with pdfplumber.open(str(yol)) as pdf:
+        satirlar = []
+        for sayfa in pdf.pages[:20]:
+            for s in (sayfa.extract_text(x_tolerance=1.5) or '').splitlines():
+                s = _hucre(s)
+                if s and not re.fullmatch(r'\d{1,3}\s*/\s*\d{1,3}|\d{1,3}|Sayfa \d+.*', s):
+                    satirlar.append(s)
+    return satirlar
+
+
+_FIIL_SONU = re.compile(r'(?:mak|mek|maması|memesi|olmak|bulunmak|edilir|edilecektir|dır|dir|tır|tir|lıdır|lidir)[.,;:)]?$', re.I)
+
+
+def _alt_baslik_mi(madde):
+    """Pozisyon adı / ara başlık: '2.1. Uzman Personel İçin Aranan Nitelikler', 'Mobil Yazılım Geliştirme Uzmanı (2 kişi …)'."""
+    m = madde.strip()
+    if re.match(r'^\d+\.\d+\.?\s', m):
+        return True
+    return (len(m) <= 130 and not re.search(r'[.;:,]$', m) and not _FIIL_SONU.search(m) and m[:1].isupper()
+            and m.count('(') == m.count(')'))
+
+
+@lru_cache(maxsize=None)
+def sart_bolumleri(yol):
+    """Tablosuz (düz metin) ilanlarda 'Genel şartlar', 'Özel şartlar', 'Sınava katılma koşulları' gibi bölümler:
+    ((başlık, ((madde, alt_baslik_mi), ...)), ...). Bölüm, şart içermeyen ilk başlıkta biter; maddesiz başlık atlanır.
+    Yanlış bilgi göstermemek için son maddesi yarım kalan (noktalama ile bitmeyen) bölüm hiç verilmez."""
+    try:
+        satirlar = _metin_oku(yol)
+    except Exception:
+        return ()
+    bolumler, mevcut = [], None
+    for s in satirlar:
+        if _baslik_mi(s):
+            if _SART_RE.search(s) and not re.search(r'telefon|tablo|form|belge', s, re.I):
+                mevcut = [_baslik_adi(s), []]
+                bolumler.append(mevcut)
+                continue
+            if mevcut is not None and not _MADDE_RE.match(s):
+                mevcut = None
+                continue
+        if mevcut is None:
+            continue
+        m = _MADDE_RE.match(s)
+        if m:
+            mevcut[1].append(s[m.end():].strip())
+        elif mevcut[1]:
+            onceki = mevcut[1][-1]
+            if re.search(r'[.;:]$', onceki) and _alt_baslik_mi(s) and len(s) <= 90:
+                mevcut[1].append(s)  # noktayla bitmiş maddeden sonra gelen pozisyon adı yeni satırdır
+            else:
+                mevcut[1][-1] = (onceki[:-1] + s) if re.search(r'[a-zçğıöşü]-$', onceki) else onceki + ' ' + s
+        else:
+            mevcut[1].append(s)  # giriş cümlesi (madde işaretsiz)
+    sonuc = []
+    for ad, ham in bolumler:
+        temiz = []
+        for x in ham:
+            x = re.sub(r'\s+Tablo\s*[-–]?\s*\d.*$', '', x.strip())  # sayfa altındaki tablo başlığı maddeye yapışmışsa
+            x = re.sub(r',$', '.', x)
+            if len(x) > 3:
+                temiz.append((x[:1].upper() + x[1:], _alt_baslik_mi(x)))
+        while temiz and temiz[-1][1]:
+            temiz.pop()
+        if not temiz or not re.search(r'[.!)]$', temiz[-1][0]):
+            continue  # yarım kalmış bölüm (son madde ';' / ':' ile bitiyorsa devamı okunamamıştır)
+        maddeler_ = [x for x, b in temiz if not b]
+        if len(maddeler_) >= 2:
+            sonuc.append((ad, tuple(temiz)))
+    return tuple(sonuc)
+
+
 def ortak_kosullar(metin):
     """Tüm kadrolar için geçerli kısa koşullar: istenen KPSS yılı (ve grubu), yaş sınırı."""
     metin = _hucre(metin)
