@@ -43,7 +43,7 @@
   }
   var tb = document.getElementById('theme');
   function iz(t, o) { try { if (typeof window !== 'undefined' && window.kpssA) window.kpssA(t, o); } catch (e) { /* ölçüm sayfayı bozmaz */ } }
-  if (tb) tb.onclick = function () { var yeni = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'; iz('tikla', { a: 'tema', x: yeni }); yaz('kit-theme', yeni); tema(); };
+  if (tb) tb.onclick = function () { var yeni = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'; iz('tikla', { a: 'tema', x: yeni }); yaz('kit-theme', { t: yeni, a: window.kitOto ? window.kitOto() : null }); tema(); };
   if (typeof window !== 'undefined') window.kitTemaUygula = tema;
   tema();
 
