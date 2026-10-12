@@ -524,7 +524,8 @@ TOPLU_EN_COK_SATIR = 7
 def toplu_satir(ilan):
     """Toplu kart satırı için (kurum, kadro özeti); yalnız kayıttaki bilgi."""
     v = veri(ilan)
-    kadrolar = [f'{k["adet"]} {k["ad"]}' if k['adet'] else k['ad'] for k in v['kadrolar']]
+    kadrolar = [f'{k["adet"]} {k["ad"]}' if k['adet'] else k['ad']
+                for k in sorted(v['kadrolar'], key=lambda k: -(k['adet'] or 0))]   # en kalabalık kadrolar önce
     if kadrolar:
         kadro = ', '.join(kadrolar[:2]) + (f' +{len(kadrolar) - 2}' if len(kadrolar) > 2 else '')
     else:
