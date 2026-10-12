@@ -21,6 +21,7 @@ on:
       - 'bot/kurum_logolari.json'
       - 'bot/fontlar/**'
       - 'docs/assets/**'
+      - 'config.json'   # elle kararlar (gizle / alan düzeltme) hemen yayına girsin
       - '.github/workflows/site-yayinla.yml'
   workflow_dispatch:
 
