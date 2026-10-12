@@ -6,9 +6,12 @@ from PIL import Image, ImageDraw
 
 FOTO_KLASORU = Path(__file__).resolve().parents[1] / 'docs' / 'assets' / 'meslek'
 GENEL_PERSONEL = 30
+FOTOSUZ = 0  # askerî/kolluk kadroları: üniformalı fotoğraf yok, sivil (ofis) fotoğrafı yanıltır; kart fotoğrafsız çizilir
 # Sıra önemlidir: özel meslekler genel olanlardan önce gelir. Kökler norm() edilmiş metinde kelime başından aranır;
 # sonunda boşluk olan kök tam kelime olmalıdır.
 FOTO_ESLEME = [
+    (FOTOSUZ, ('subay', 'astsubay', 'muvazzaf', 'uzman erbas', 'erbas', 'er adayi', 'sozlesmeli er ', 'polis', 'komiser',
+               'harp okulu', 'askeri ogrenci', 'harbiye')),
     (4, ('veteriner',)),
     (5, ('eczaci',)),
     (3, ('hekim', 'doktor', 'tabip')),

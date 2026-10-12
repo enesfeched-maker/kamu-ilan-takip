@@ -382,6 +382,9 @@ def afis(ilan, logo=None, simdi=None, hatirlatma=False):
             kare.alpha_composite(gecis((boy, boy), yon, PETROL, a, b))
         im.paste(kare, (fx, fy), kare)
     d = ImageDraw.Draw(im)
+    if buyuk is None and v['logo']:  # fotoğrafsız (askerî/kolluk) kadro: üst alanda büyük kurum logosu
+        b = 360
+        logo_yerlestir(im, d, v, (G - KENAR - b, 100, G - KENAR, 100 + b), yaricap=44, ic=30)
     d.rectangle((0, ust_h, G, Y), fill='#ffffff')
     d.rectangle((0, 0, 16, ust_h), fill=LIME)
     # başlık
