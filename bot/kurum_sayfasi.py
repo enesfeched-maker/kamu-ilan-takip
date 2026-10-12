@@ -525,7 +525,7 @@ def kurum_sayfasi(kan, liste, slug, gorseller, simdi, tablolar=None, harita=None
     icerik = f'''<section class="kp-hero"><div class="wrap"><nav class="crumbs" aria-label="Konum"><a href="{kok}">Ana sayfa</a><span aria-hidden="true">/</span><a href="{kok}#ilanlar">İlanlar</a><span aria-hidden="true">/</span><span>{esc(ad)}</span></nav>
 <div class="kp-id">{logo}<div><span class="eyebrow">Kurum</span><h1>{esc(ad)}</h1>{ozet}{adlar}</div></div>
 <div class="kp-stats"><div><strong>{len(acik)}</strong><span>açık ilan</span></div><div><strong>{kadro_yazi}</strong><span>bilinen kadro</span></div><div><strong>{len(liste)}</strong><span>toplam kayıt</span></div></div>
-<div class="kp-actions"><a class="btn btn-tg btn-buyuk" href="https://t.me/kamuilantakip" target="_blank" rel="noopener" data-a="telegram" data-a-x="kurum">Telegram'da takip et ↗</a></div></div></section>
+<div class="kp-actions"><a class="btn btn-tg btn-buyuk" href="https://t.me/kpsstercihi" target="_blank" rel="noopener" data-a="telegram" data-a-x="kurum">Telegram'da takip et ↗</a></div></div></section>
 <main id="icerik" class="wrap kp-main"><section class="bolum"><div class="bolum-bas"><h2>Başvurusu açık ilanlar <span class="sayi">{len(acik)}</span></h2></div>{acik_blok}</section>{gecmis_blok}</main>'''
     return su.sayfa_kabugu(baslik + ' | KPSS Tercihi', aciklama, canonical, icerik, 'kurum-page', baslik)
 

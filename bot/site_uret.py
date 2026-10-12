@@ -61,7 +61,7 @@ def ust_html(kok, aktif=''):
                     for ad, h, a in menu)
     return (f'<header class="tb" id="tb"><div class="tb-ic"><a class="tb-marka" href="{kok}" aria-label="KPSS Tercihi ana sayfa">'
             f'<img src="{kok}assets/logo-96.webp?v={LOGO_SURUM}" alt="" width="34" height="34"><span>KPSS Tercihi</span></a>'
-            f'<a class="tb-tg" href="https://t.me/kamuilantakip" target="_blank" rel="noopener" data-a="telegram" data-a-x="ust">{TG_DOLU}<span class="tam">Telegram\'a katıl</span><span class="kisa">Katıl</span></a>'
+            f'<a class="tb-tg" href="https://t.me/kpsstercihi" target="_blank" rel="noopener" data-a="telegram" data-a-x="ust">{TG_DOLU}<span class="tam">Telegram\'a katıl</span><span class="kisa">Katıl</span></a>'
             f'<button type="button" class="tb-ac" id="tb-ac" aria-expanded="false" aria-controls="tb-nav" aria-label="Menüyü aç">{HAMBURGER_IKON}</button>'
             f'<nav class="tb-nav" id="tb-nav" aria-label="Ana menü">{bagla}<span class="tb-ayrac" aria-hidden="true"></span>'
             f'<a class="tb-ikon" href="{kok}?profil=1" aria-label="Profil">{KISI_IKON}<span class="tb-etiket">Profil</span></a>'
@@ -74,7 +74,7 @@ def alt_html(kok, yil=None):
     yil = yil or datetime.now(TR).year
     return (f'<footer class="ab"><div class="ab-ic"><div class="ab-marka"><img src="{kok}assets/logo-96.webp?v={LOGO_SURUM}" alt="" width="36" height="36">'
             f'<div><strong>KPSS Tercihi</strong><span>Kamu ilanları, sade ve tek yerde</span></div></div>'
-            f'<nav class="ab-linkler" aria-label="Alt bilgi"><a href="https://t.me/kamuilantakip" target="_blank" rel="noopener" data-a="telegram" data-a-x="alt">Telegram</a><a href="{kok}sss/">Sık sorulanlar</a><a href="{kok}#bilgi/gizlilik">Gizlilik</a></nav>'
+            f'<nav class="ab-linkler" aria-label="Alt bilgi"><a href="https://t.me/kpsstercihi" target="_blank" rel="noopener" data-a="telegram" data-a-x="alt">Telegram</a><a href="{kok}sss/">Sık sorulanlar</a><a href="{kok}#bilgi/gizlilik">Gizlilik</a></nav>'
             f'<p class="ab-not">© <span id="yil">{yil}</span> KPSS Tercihi</p></div></footer>')
 
 
