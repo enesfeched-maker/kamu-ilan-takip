@@ -350,7 +350,7 @@ def hero_html(item, gorsel, kayit, simdi, kok='../../'):
     foto = next((f for f in ((kayit or {}).get('meslek') or alanlar.get('meslek') or []) if not f.startswith('30-')), None)
     afis = ''
     if foto or toplam:
-        img = f'<img src="{kok}assets/meslek/{esc(foto)}" alt="" width="232" height="232" decoding="async">' if foto else ''
+        img = f'<img src="{kok}assets/meslek/kucuk/{esc(foto)}" alt="" width="232" height="232" decoding="async">' if foto else ''
         cap = f'<figcaption><b>{esc(ks.SAYI_YAZ(toplam))}</b><small>kadro</small></figcaption>' if toplam else ''
         afis = f'<figure class="dh-afis{"" if foto else " fotosuz"}">{img}{cap}</figure>'
     # bilgi şeridi

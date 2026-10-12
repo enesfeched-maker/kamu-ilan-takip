@@ -368,7 +368,7 @@ def _ilan_gorseli(k, kok):
         if k.get('logo'):
             return f'<span class="ilan-foto logo-karo"><img src="{kok}{esc(k["logo"])}" alt="" loading="lazy" decoding="async"></span>', True
         return f'<span class="ilan-foto harf-karo" style="--h:{su._ton(k.get("kurum"))}" aria-hidden="true">{esc(su._bas_harfler(k.get("kurum")))}</span>', False
-    return f'<img class="ilan-foto" src="{kok}assets/meslek/{esc(meslek[0])}" alt="" width="52" height="52" loading="lazy" decoding="async">', False
+    return f'<img class="ilan-foto" src="{kok}assets/meslek/kucuk/{esc(meslek[0])}" alt="" width="52" height="52" loading="lazy" decoding="async">', False
 
 
 def _meta_html(k):
