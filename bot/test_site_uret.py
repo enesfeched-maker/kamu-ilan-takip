@@ -49,7 +49,7 @@ class SiteTests(unittest.TestCase):
 class TemaBetigiTests(unittest.TestCase):
     def test_tema_kurali_isaretleri(self):
         from site_uret import TEMA_BETIGI
-        for isaret in ('kit-theme', 'prefers-color-scheme: dark', 'getHours()', 'h>=20||h<7', 'kitKoyu', 'kitTemaUygula', 'setInterval', '"change"', '#0D0E0C', '#F6F6F1'):
+        for isaret in ('kit-theme', 'prefers-color-scheme: dark', 'getHours()', 'h>=20||h<7', 'kitKoyu', 'kitOto', 's.a===o', 'kitTemaUygula', 'setInterval', '"change"', '#0D0E0C', '#F6F6F1'):
             self.assertIn(isaret, TEMA_BETIGI)
 
     def test_tema_betigi_statik_sayfalarla_ayni(self):

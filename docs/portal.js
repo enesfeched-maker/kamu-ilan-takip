@@ -809,7 +809,7 @@ try{const u=new URL(location.href);if(u.searchParams.get('g')==='bugun')bekleyen
 let bootTab=TABS.includes(location.hash.slice(1))?location.hash.slice(1):'bugun';
 try{const u=new URL(location.href);if(queryHas(u.search)){F=parseQuery(u.search);$('search').value=F.q;bootQuery=true;
 if(location.hash===''){history.replaceState(null,'',u.pathname+u.search+'#ilanlar');bootTab='ilanlar';}}}catch{}
-$('theme').onclick=()=>{A('tikla',{a:'tema',x:document.documentElement.dataset.theme==='dark'?'light':'dark'});writeStore('kit-theme',document.documentElement.dataset.theme==='dark'?'light':'dark');applyTheme();};
+$('theme').onclick=()=>{A('tikla',{a:'tema',x:document.documentElement.dataset.theme==='dark'?'light':'dark'});writeStore('kit-theme',{t:document.documentElement.dataset.theme==='dark'?'light':'dark',a:window.kitOto?window.kitOto():null});applyTheme();};
 $('search-form').onsubmit=e=>{e.preventDefault();F.q=$('search').value.trim().slice(0,80);aramaIz();ilanDegisti();};
 $('search').oninput=()=>{F.q=$('search').value.slice(0,80);if(F.q.trim())ensureFull();aramaIz();ilanDegisti();};
 $('clear').onclick=temizle;
