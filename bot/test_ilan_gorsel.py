@@ -9,7 +9,7 @@ class GorselTests(unittest.TestCase):
     def test_turkce_uzun_metin_ve_png(self):
         image = gorsel_olustur('Niğde Ömer Halisdemir Üniversitesi',
             'Toplam 29 kişi — 20 Destek Personeli • 9 Sağlık Teknikeri',
-            'Niğde / Merkez', '29 Eylül 2026 · 17:00 TSİ', '3 gün kaldı')
+            'Niğde / Merkez', '29 Eylül 2026 · 17:00', '3 gün kaldı')
         with Image.open(io.BytesIO(image)) as im:
             self.assertEqual(im.size, (1200, 820))
             self.assertEqual(im.format, 'PNG')

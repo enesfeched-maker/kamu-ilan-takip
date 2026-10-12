@@ -178,12 +178,27 @@ def kisa_baslik(ilan):
     return kisalt(okunakli_baslik(baslik), 130)
 
 
+KADRO_SATIR_EN_COK = 10
+
+
 def kadro_ozeti(ilan):
-    parcalar = (ilan.get('kadro') or '').split(' • ')
-    metin = ' • '.join(parcalar[:3])
-    if len(parcalar) > 3:
-        metin += f" • +{len(parcalar)-3} kadro türü"
-    return ''.join(okunakli_baslik(s) for s in re.split(r'( • | — )', metin))
+    """Çok kadrolu ilan: 'Toplam N kişi' ve her kadro ayrı satırda, en kalabalıktan başlayarak (12 Ekim 2026: Milli Saraylar'da
+    100 güvenlik görevlisi '+6 kadro türü' içinde kaybolmuştu). Tek kadro: olduğu gibi."""
+    kadro = ilan.get('kadro') or ''
+    m = re.match(r'Toplam\s+(\d+)\s+kişi\s+—\s+(.*)$', kadro)
+    parcalar = (m.group(2) if m else kadro).split(' • ')
+    sayili = []
+    for p in parcalar:
+        a = re.match(r'(\d+)\s+(.+)$', p.strip())
+        sayili.append((int(a.group(1)), a.group(2)) if a else (0, p.strip()))
+    if len(sayili) < 2:
+        return okunakli_baslik(kadro)
+    sayili.sort(key=lambda x: -x[0])
+    satirlar = [f"Toplam {m.group(1)} kişi" if m else ""]
+    satirlar += [f"• {okunakli_baslik(ad)}" + (f" — {n}" if n else "") for n, ad in sayili[:KADRO_SATIR_EN_COK]]
+    if len(sayili) > KADRO_SATIR_EN_COK:
+        satirlar.append(f"• +{len(sayili) - KADRO_SATIR_EN_COK} kadro daha")
+    return "\n".join(s for s in satirlar if s)
 
 
 def mesaj_olustur(ilan, site_url, hatirlatma=False):
@@ -201,12 +216,17 @@ def mesaj_olustur(ilan, site_url, hatirlatma=False):
         satirlar.append(e(baslik))
     for alan, etiket, sinir in [("kadro", "👥", 220), ("yer", "📍", 100)]:
         if ilan.get(alan):
+            if alan == 'kadro' and '\n' in kadro_ozeti(ilan):   # çok kadro: ilk satır kalın toplam, sonra her kadro
+                ilk, *kalan = kadro_ozeti(ilan).split("\n")
+                satirlar.append(f"{etiket} <b>{e(ilk)}</b>" if ilk.startswith('Toplam') else f"{etiket} {e(ilk)}")
+                satirlar.extend(e(s) for s in kalan)
+                continue
             deger = kadro_ozeti(ilan) if alan == 'kadro' else okunakli_baslik(ilan[alan])
             satirlar.append(f"{etiket} {e(kisalt(deger, sinir))}")
     if ilan.get("son_tarih"):
         saat = ""
         if ilan.get("son_zaman"):
-            saat = " • " + datetime.fromisoformat(ilan['son_zaman']).strftime('%H:%M') + " (TSİ)"
+            saat = " • " + datetime.fromisoformat(ilan['son_zaman']).strftime('%H:%M')
         satirlar.append(f"📅 <b>Son başvuru:</b> {tarih_yaz(ilan['son_tarih'])}{saat}")
     else:
         satirlar.extend(["", "⏳ <b>Son başvuru:</b> Resmi ilan üzerinden kontrol edin."])
@@ -817,6 +837,9 @@ def suresi_doldu(ilan):
 
 
 def detay_taze(ilan):
+    from resmi_detay import SURUM
+    if ilan.get('kk_detay_surumu', 1) != SURUM:
+        return False   # eski okuyucuyla alınmış ayrıntı (kısaltılmış şartlar): yeniden okunur
     try:
         return simdi() - datetime.fromisoformat(ilan['detay_guncelleme']) < timedelta(hours=12)
     except (KeyError, TypeError, ValueError):
@@ -851,7 +874,7 @@ def ilan_gorseli(i, hatirlatma, logo=None):
         print(f'Yeni ilan kartı oluşturulamadı ({type(exc).__name__}); eski kart kullanılıyor.', file=sys.stderr)
     tarih = tarih_yaz(i['son_tarih']) if i.get('son_tarih') else 'Resmi ilandan kontrol edin'
     if i.get('son_zaman'):
-        tarih += ' · ' + datetime.fromisoformat(i['son_zaman']).strftime('%H:%M') + ' TSİ'
+        tarih += ' · ' + datetime.fromisoformat(i['son_zaman']).strftime('%H:%M')
     return gorsel_olustur(
         okunakli_baslik(i.get('kurum') or i['baslik']),
         okunakli_baslik(i.get("kadro", "")) or kisa_baslik(i),

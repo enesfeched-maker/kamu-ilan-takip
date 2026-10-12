@@ -233,7 +233,6 @@ def etiketler(ilan):
     kpss = kpss_durumu(ilan)
     if kpss:
         sonuc.add('#' + kpss)
-    il = il_etiketi(ilan)
-    if il:
-        sonuc.add(il)
+    iller = il_adlari(ilan)[:4] or [il_etiketi(ilan)]   # ilanın TÜM görev illeri (12 Ekim 2026: Edirne + İstanbul)
+    sonuc.update(i if str(i).startswith('#') else '#' + i for i in iller if i)
     return sorted(sonuc)

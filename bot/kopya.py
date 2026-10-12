@@ -93,7 +93,7 @@ def _gun(iso):
 # ÇŞB, en son İŞKUR (kurum adı/tarih hataları). Esas kaydın eksik alanları sıradaki kaynaklardan tamamlanır (birlestir).
 KAYNAK_SIRASI = ('sbb', 'kk', 'csb', 'iskur')
 TAMAMLANAN_ALANLAR = ('kadro', 'sartlar', 'ozet', 'ogrenim', 'belge_ogrenim', 'puan_turleri', 'son_tarih', 'son_zaman',
-                      'baslangic_zaman', 'basvuru_notu', 'yer', 'iller', 'ilan_turu', 'kpss')
+                      'baslangic_zaman', 'basvuru_notu', 'yer', 'iller', 'ilan_turu', 'kpss', 'kadro_detay', 'kurum_logo')
 
 
 def kaynak_turu(item):
