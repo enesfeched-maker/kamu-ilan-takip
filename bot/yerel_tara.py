@@ -10,7 +10,7 @@ from datetime import datetime,timezone
 from pathlib import Path
 from ek_kaynaklar import read_sbb,fresh
 from csb_kaynak import csb_oku
-from resmi_detay import detay_oku
+from resmi_detay import detay_oku, SURUM
 
 ROOT=Path(__file__).resolve().parents[1]
 REPO='enesfeched-maker/kamu-ilan-takip'
@@ -64,7 +64,7 @@ def collect(registry,old):
         if item.get('kaynak_turu') or not item.get('link','').startswith('https://kariyerkapisi.gov.tr/IlanDetay?'):
             continue
         cached=result['detaylar'].get(item['id'],{})
-        if fresh(cached):
+        if fresh(cached) and cached.get('kk_detay_surumu',1)==SURUM:
             continue
         try:
             result['detaylar'][item['id']]=detay_oku(item['link'])
@@ -76,13 +76,61 @@ def collect(registry,old):
         time.sleep(.25)
     result['detaylar']={k:v for k,v in result['detaylar'].items() if k in previous and fresh(v)}
     print('Doğrulanmış Kariyer Kapısı ayrıntıları:',len(result['detaylar']),flush=True)
+    result['_yeni_logolar']=eksik_logolar(registry,result['detaylar'])
     return result
+
+
+def eksik_logolar(registry,detaylar):
+    """Kütüphanede logosu olmayan kurumların Kariyer Kapısı logo adresleri: {kurum anahtarı: (kurum, adres, ilan bağlantısı)}.
+    GitHub'dan Kariyer Kapısı'na erişilemediği günlerde kartlar logosuz kalıyordu (12 Ekim 2026, Milli Saraylar)."""
+    from kurum_gorseli import LIBRARY,kurum_anahtari
+    try:
+        man=json.loads((LIBRARY/'kaynaklar.json').read_text(encoding='utf-8'))
+    except (OSError,ValueError):
+        return {}
+    sonuc={}
+    for item in registry.get('ilanlar',[]):
+        logo=(detaylar.get(item.get('id'),{}) or {}).get('kurum_logo') or item.get('kurum_logo')
+        anahtar=kurum_anahtari(item.get('kurum',''))
+        if logo and anahtar and anahtar not in man and logo.startswith('https://kariyerkapisi.gov.tr/UPS/'):
+            sonuc[anahtar]=(item.get('kurum',''),logo,item.get('link',''))
+    return sonuc
+
+
+def logo_dosyalari(yeni):
+    """Eksik logoları indirir; {repo yolu: içerik} (logolar + güncel kaynaklar.json). İndirilemeyen atlanır."""
+    import io,re,unicodedata
+    from PIL import Image
+    from kurum_gorseli import LIBRARY
+    if not yeni:
+        return {}
+    man_yol=LIBRARY/'kaynaklar.json'
+    man=json.loads(man_yol.read_text(encoding='utf-8'))
+    dosyalar={}
+    for anahtar,(kurum,adres,kaynak) in list(yeni.items())[:10]:
+        try:
+            with urllib.request.urlopen(urllib.request.Request(adres,headers={'User-Agent':'Mozilla/5.0'}),timeout=20) as r:
+                raw=r.read(3_000_001)
+            if len(raw)>3_000_000:
+                continue
+            with Image.open(io.BytesIO(raw)) as im:
+                im.load()
+                cikti=io.BytesIO();im.convert('RGBA').save(cikti,format='PNG');boyut=list(im.size)
+        except Exception:
+            continue
+        ad=re.sub(r'[^a-z0-9]+','-',unicodedata.normalize('NFKD',anahtar).encode('ascii','ignore').decode()).strip('-')[:60]+'.png'
+        dosyalar['docs/assets/kurum-logolari/'+ad]=cikti.getvalue()
+        man[anahtar]={'dosya':ad,'kaynak':kaynak,'orijinal':adres,'boyut':boyut}
+        print('Yeni kurum logosu:',kurum,flush=True)
+    if dosyalar:
+        dosyalar['docs/assets/kurum-logolari/kaynaklar.json']=(json.dumps(man,ensure_ascii=False,indent=2)+'\n').encode()
+    return dosyalar
 
 
 def publish(snapshot,token):
     # Update only the collector file, never the bot's sent/reminder histories.
     from sbb_detay import document_url
-    documents={}
+    documents=logo_dosyalari(snapshot.pop('_yeni_logolar',{}))
     for item in snapshot.get('kaynaklar',{}).get('sbb',{}).get('ilanlar',[]):
         if document_url(item):
             path='docs/belgeler/sbb/'+item['belge_sha256']+'.pdf'
@@ -91,7 +139,7 @@ def publish(snapshot,token):
     if documents:
         from github_yayin import publish_files
         documents[REMOTE_PATH]=(json.dumps(snapshot,ensure_ascii=False,indent=1)+'\n').encode()
-        publish_files(documents,token,'SBB ilan ayrıntılarını ve kaynak belgelerini güncelle')
+        publish_files(documents,token,'SBB ilan ayrıntılarını, kaynak belgelerini ve kurum logolarını güncelle')
         return
     for attempt in range(3):
         old=github(REMOTE_PATH,token=token)

@@ -10,6 +10,7 @@ from resmi_ag import url_ac
 
 TR = timezone(timedelta(hours=3))
 API = "https://api.kariyerkapisi.gov.tr/api/"
+SURUM = 2   # 2: tüm kadroların tam ayrıntısı (kadro_detay); eski sürümle okunmuş kayıt taze sayılmaz, yeniden okunur
 
 
 def satirlar(metin):
@@ -37,12 +38,51 @@ def sart_ozeti(metin):
                   and re.search(r"en az|asgari|almış|aranma", p, re.I)), "")
     secilen = []
     if sinav:
-        secilen.append(kisalt(sinav, 185))
+        secilen.append(kisalt(sinav, 400))
     if egitim and egitim != sinav:
-        secilen.append(kisalt(egitim, 185 if sinav else 300))
+        secilen.append(kisalt(egitim, 600))
     if not secilen:
         secilen = [kisalt(p, 300) for p in parcalar if re.search(r"mezun|yaşını|tecrübe|deneyim", p, re.I)][:1]
     return "\n".join(secilen)
+
+
+OGRENIM_GRUBU = (('ön lisans', 'onlisans'), ('önlisans', 'onlisans'), ('lisans', 'lisans'), ('ortaöğretim', 'ortaogretim'),
+                 ('lise', 'ortaogretim'))
+
+
+def _kucuk(s):
+    return (s or '').replace('I', 'ı').replace('İ', 'i').lower()
+
+
+def kadro_ayrintisi(rol):
+    """Bir alt ilanın (kadro grubunun) TAM bilgisi: unvan, il, öğrenim grubu, sınav usulü ve özel şart maddeleri (kısaltılmaz).
+    12 Ekim 2026: Milli Saraylar'da 11 kadrodan yalnız 3'ünün kısaltılmış şartı alınmış, öğrenim yalnız 'lisans' görünmüştü."""
+    alanlar, maddeler, ozel = {}, [], False
+    for s in satirlar(rol.get('ilanMetni')):
+        m = re.match(r'(Unvanı|Kadro Adedi|Görev İli|Öğrenim Grubu|Sınav Usulü)\s*:\s*(.*)$', s, re.I)
+        if m and not ozel:
+            alanlar[_kucuk(m.group(1))] = m.group(2).strip()
+            continue
+        if re.match(r'(Özel Şartları|Aranan Şartlar|Başvuru Şartları)\s*:?\s*$', s, re.I):
+            ozel = True
+            continue
+        if not ozel:
+            continue
+        madde = re.match(r'^\d{1,2}\s*[-.)]\s*(.*)$', s)
+        if madde:
+            maddeler.append(madde.group(1).strip())
+        elif maddeler:
+            maddeler[-1] += ' ' + s
+        else:
+            maddeler.append(s)
+    grup = _kucuk(alanlar.get('öğrenim grubu'))
+    ogrenim = next((d for ad, d in OGRENIM_GRUBU if ad in grup), '') if grup else ''
+    iller = [yer_duzelt(k['il']) for k in rol.get('kontenjanList') or [] if k.get('il')]
+    adet = sum(k['kontenjan'] for k in rol.get('kontenjanList') or []
+               if isinstance(k.get('kontenjan'), int) and not isinstance(k.get('kontenjan'), bool) and k['kontenjan'] > 0)
+    return {'unvan': alanlar.get('unvanı') or ' '.join(satirlar(rol.get('ilanBaslik') or rol.get('unvan'))),
+            'adet': adet or None, 'iller': list(dict.fromkeys(iller)), 'ogrenim': ogrenim,
+            'sinav': alanlar.get('sınav usulü', ''), 'maddeler': [re.sub(r'\s+', ' ', x).strip() for x in maddeler if x.strip()]}
 
 
 def yer_duzelt(metin):
@@ -102,12 +142,27 @@ def detay_coz(ana, alt):
         kadro = f"Toplam {toplam} kişi — " + kadro
     logo=ana.get('logo_Path') or ''
     logo='https://kariyerkapisi.gov.tr/UPS/'+logo if re.fullmatch(r'[a-zA-Z0-9_-]+\.(?:png|jpg|jpeg|webp)',logo,re.I) else None
-    return {"kurum_logo":logo,"son_tarih": bitis[:10] if bitis else None, "son_zaman": bitis,
+    sonuc = {"kurum_logo":logo,"son_tarih": bitis[:10] if bitis else None, "son_zaman": bitis,
             "baslangic_zaman": baslangic, "yer": " • ".join(sorted(yerler)),
             "kadro": kadro, "ilan_turu": (ana.get("ilanTuru") or "").rstrip(", "),
-            "ozet": ozet, "sartlar": sartlar[:3], "sart_kadro_sayisi": len(alt),
+            "ozet": ozet, "sartlar": sartlar, "sart_kadro_sayisi": len(alt),
             "basvuru_notu": kisalt(notlar[0], 450) if notlar else "",
-            "detay_guncelleme": datetime.now(TR).isoformat(timespec="seconds")}
+            "detay_guncelleme": datetime.now(TR).isoformat(timespec="seconds"), "kk_detay_surumu": SURUM}
+    # Her kadronun tam bilgisi; öğrenim düzeyleri ve puan türleri TÜM kadrolardan (ilk birkaçından değil).
+    ayrinti = [kadro_ayrintisi(rol) for rol in alt]
+    if any(a['maddeler'] or a['ogrenim'] for a in ayrinti):
+        from siniflandir import ogrenim_seviyeleri
+        duzeyler, puanlar = set(), set()
+        for a in ayrinti:
+            metin = ' '.join(a['maddeler']) + ' ' + a['sinav']
+            duzeyler.update([a['ogrenim']] if a['ogrenim'] else ogrenim_seviyeleri({'ozet': metin}))
+            puanlar.update(re.findall(r'\bP(\d{1,2})\b', metin))
+        sonuc['kadro_detay'] = ayrinti
+        if duzeyler:
+            sonuc['belge_ogrenim'] = [d for d in ('lisans', 'onlisans', 'ortaogretim') if d in duzeyler]
+        if puanlar:
+            sonuc['puan_turleri'] = sorted({'P' + p for p in puanlar}, key=lambda p: int(p[1:]))
+    return sonuc
 
 
 def detay_oku(link):

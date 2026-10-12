@@ -229,8 +229,9 @@ def logo_yerlestir(im, d, v, kutu, arka='#ffffff', yaricap=26, ic=18):
 
 
 def kadro_ozeti(v, en_cok):
-    """Kadro listesini en fazla en_cok kutuya indirir; fazlası '+K kadro daha'. Aynı meslek fotoğrafı yalnız bir kez."""
-    k = v['kadrolar']
+    """Kadro listesini en fazla en_cok kutuya indirir; fazlası '+K kadro daha'. Aynı meslek fotoğrafı yalnız bir kez.
+    En kalabalık kadrolar önce (12 Ekim 2026: Milli Saraylar'da 100 güvenlik görevlisi '+4 kadro daha' içinde kalmıştı)."""
+    k = sorted(v['kadrolar'], key=lambda x: -(x['adet'] or 0))
     kutular = [dict(x) for x in k] if len(k) <= en_cok else [dict(x) for x in k[:en_cok - 1]]
     kalan = len(k) - len(kutular)
     kullanilan = set()
@@ -496,7 +497,7 @@ def bilet(ilan, logo=None, simdi=None, hatirlatma=False):
         d.text((KENAR, cy), 'SON BAŞVURU', font=F(30), fill='#5d6f72')
         d.text((KENAR, cy + 36), v['tarih'], font=F(44, True), fill=PETROL)
     kalan_rozeti(d, v, sag, cy + (0 if hatirlatma else 8), hatirlatma, koyu_zemin=True)
-    if v['kaynak']:
+    if v['kaynak'] and cy + 94 + 36 <= 1230 - 12:   # etiketler iki satıra taşınca kaynak satırı kart dışına (alt şeride) taşmasın
         d.text((KENAR, cy + 94), f'Kaynak: {v["kaynak"]}', font=F(30), fill='#5d6f72')
     marka_seridi(d, Y - 88, im=im)
     return jpeg_png(im)

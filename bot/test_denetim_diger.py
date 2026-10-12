@@ -81,6 +81,26 @@ class AsamaliBasvuruTests(unittest.TestCase):
         self.assertTrue(kopya._asamada(t, iskur))
         self.assertEqual(len(kopya.kopya_bul([t, iskur])['kopya_of']), 1)
 
+    def test_kk_kadro_ayrintisi_ve_kanal_metni(self):
+        import resmi_detay
+        rol = {'ilanBaslik': 'Destek Personeli / Edirne', 'kontenjanList': [{'il': 'EDİRNE', 'kontenjan': 5}],
+               'ilanMetni': '11.Grup<br>Unvanı : Destek Personeli (Temizlik Görevlisi)<br>Kadro Adedi : 5<br>Görev İli : Edirne<br>'
+                            'Öğrenim Grubu: Lise<br>Sınav Usulü : Uygulamalı Sınav + Sözlü Sınav<br>Özel Şartları :<br>'
+                            '1- Son başvuru tarihi itibarıyla 40 yaşını doldurmamış olmak.<br>2- En az ortaöğretim (lise) ve dengi okul<br>mezunu olmak.'}
+        a = resmi_detay.kadro_ayrintisi(rol)
+        self.assertEqual((a['unvan'], a['adet'], a['iller'], a['ogrenim'], a['sinav']),
+                         ('Destek Personeli (Temizlik Görevlisi)', 5, ['EDİRNE'], 'ortaogretim', 'Uygulamalı Sınav + Sözlü Sınav'))
+        self.assertEqual(a['maddeler'], ['Son başvuru tarihi itibarıyla 40 yaşını doldurmamış olmak.',
+                                         'En az ortaöğretim (lise) ve dengi okul mezunu olmak.'])
+        ilan = {'kadro': 'Toplam 126 kişi — 1 BÜRO PERSONELİ • 25 DESTEK PERSONEL • 100 KORUMA VE GÜVENLİK GÖREVLİSİ'}
+        satir = ilan_bot.kadro_ozeti(ilan).split('\n')
+        self.assertEqual(satir[0], 'Toplam 126 kişi')
+        self.assertTrue(satir[1].startswith('• Koruma ve Güvenlik Görevlisi — 100'))
+        from siniflandir import etiketler
+        e = etiketler({'kurum': 'Milli Saraylar', 'yer': 'EDİRNE • İSTANBUL', 'ozet': 'KPSS P3 lisans mezunu olmak.'})
+        self.assertIn('#Edirne', e)
+        self.assertIn('#İstanbul', e)
+
     def test_kaynak_sirasi_ve_birlestirme(self):
         sbb = {'id': 'sbb-' + 'd' * 24, 'kaynak_turu': 'sbb', 'kadro': 'TAPU VE KADASTRO SÖZLEŞMELİ BİLİŞİM PERSONELİ ALIMI',
                'son_tarih': '2026-10-19', 'sartlar': [{'metin': 'x'}]}

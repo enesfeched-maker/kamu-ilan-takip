@@ -168,7 +168,7 @@ class TelegramDeliveryTests(unittest.TestCase):
         self.cfg.write_text(json.dumps(cfg))
         state = json.loads(self.data.read_text())
         for i in state['ilanlar']:
-            i.update(son_tarih='2099-10-09', detay_guncelleme=ilan_bot.simdi().isoformat())
+            i.update(son_tarih='2099-10-09', detay_guncelleme=ilan_bot.simdi().isoformat(), kk_detay_surumu=2)
         self.data.write_text(json.dumps(state))
         with patch.object(ilan_bot, 'detay_oku') as fetch:
             self.assertEqual(self.run_bot('--duyur-mevcut'), 15)
