@@ -88,10 +88,54 @@ def _gun(iso):
         return None
 
 
+# Esas kaynak sırası (12 Ekim 2026 kararı): SBB resmî ilan PDF'ine dayanır (kadro tablosu, şartlar, gerçek başvuru tarihi;
+# Kariyer Kapısı'nın bitişi bazen yalnız yayın penceresidir, örn. ÖSYM'den başvurulan Adalet ilanı), sonra Kariyer Kapısı,
+# ÇŞB, en son İŞKUR (kurum adı/tarih hataları). Esas kaydın eksik alanları sıradaki kaynaklardan tamamlanır (birlestir).
+KAYNAK_SIRASI = ('sbb', 'kk', 'csb', 'iskur')
+TAMAMLANAN_ALANLAR = ('kadro', 'sartlar', 'ozet', 'ogrenim', 'belge_ogrenim', 'puan_turleri', 'son_tarih', 'son_zaman',
+                      'baslangic_zaman', 'basvuru_notu', 'yer', 'iller', 'ilan_turu', 'kpss')
+
+
+def kaynak_turu(item):
+    t = item.get('kaynak_turu')
+    if t in ('sbb', 'csb', 'iskur'):
+        return t
+    return 'kk' if KK in str(item.get('id') or item.get('link') or '') else ''
+
+
+def _kaynak_sira(item):
+    t = kaynak_turu(item)
+    return KAYNAK_SIRASI.index(t) if t in KAYNAK_SIRASI else len(KAYNAK_SIRASI)
+
+
 def _zengin(item):
-    """Birincil seçimi için sıralama anahtarı (küçük = daha zengin)."""
-    return (0 if ks.kadrolar(item) else 1, 0 if (item.get('ozet') or item.get('sartlar')) else 1,
+    """Birincil seçimi için sıralama anahtarı (küçük = önce): esas kaynak sırası, sonra içerik zenginliği."""
+    return (_kaynak_sira(item), 0 if ks.kadrolar(item) else 1, 0 if (item.get('ozet') or item.get('sartlar')) else 1,
             _rutbe(item), -(_toplam(item) or 0), item.get('ilk_gorulme') or '9999', item.get('id') or '')
+
+
+def birlestir(ilanlar, kopyalar):
+    """Her kopya grubunun esas (birincil) kaydındaki BOŞ alanları, gruptaki öteki kayıtlardan kaynak sırasıyla doldurur.
+    Esas kaydın dolu alanı hiç değişmez. Girdi değişmez; değişen kayıtlar kopya olarak döner."""
+    uyeler = (kopyalar or {}).get('uyeler') or {}
+    if not uyeler:
+        return ilanlar
+    sonuc = []
+    for i in ilanlar:
+        grup = uyeler.get(i.get('id'))
+        if grup:
+            yeni = dict(i)
+            for m in sorted((m for m in grup if m.get('id') != i.get('id')), key=_kaynak_sira):
+                if not any(a for a, _ in ks.kadrolar(yeni)) and any(a for a, _ in ks.kadrolar(m)):
+                    yeni['kadro'] = m['kadro']   # esas kayıttaki kadro yalnız genel cümleyse ('… BİLİŞİM PERSONELİ ALIMI') sayılı kadro
+                for alan in TAMAMLANAN_ALANLAR:
+                    if alan in ('son_zaman', 'baslangic_zaman') and m.get('son_tarih') != yeni.get('son_tarih'):
+                        continue   # saat/başlangıç ancak aynı son güne ait kayıttan alınır
+                    if not yeni.get(alan) and m.get(alan):
+                        yeni[alan] = m[alan]
+            i = yeni
+        sonuc.append(i)
+    return sonuc
 
 
 def _uygun(item):

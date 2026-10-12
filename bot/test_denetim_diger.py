@@ -81,6 +81,25 @@ class AsamaliBasvuruTests(unittest.TestCase):
         self.assertTrue(kopya._asamada(t, iskur))
         self.assertEqual(len(kopya.kopya_bul([t, iskur])['kopya_of']), 1)
 
+    def test_kaynak_sirasi_ve_birlestirme(self):
+        sbb = {'id': 'sbb-' + 'd' * 24, 'kaynak_turu': 'sbb', 'kadro': 'TAPU VE KADASTRO SÖZLEŞMELİ BİLİŞİM PERSONELİ ALIMI',
+               'son_tarih': '2026-10-19', 'sartlar': [{'metin': 'x'}]}
+        u = 'https://kariyerkapisi.gov.tr/IlanDetay?i=12c5b0ac-cd05-4316-9d7c-39ed4d06a358'
+        kk = {'id': u, 'link': u, 'kadro': 'Toplam 19 kişi — 3 YAZILIM TAKIM LİDERİ • 16 YAZILIM UZMANI', 'son_tarih': '2026-10-19',
+              'son_zaman': '2026-10-19T23:59:00+03:00', 'ogrenim': ['lisans']}
+        isk = {'id': 'iskur-' + 'e' * 24, 'kaynak_turu': 'iskur', 'son_tarih': '2026-10-23', 'son_zaman': '2026-10-23T17:00:00+03:00'}
+        self.assertEqual(sorted([isk, kk, sbb], key=kopya._zengin), [sbb, kk, isk])
+        y = kopya.birlestir([sbb, kk, isk], {'uyeler': {sbb['id']: [sbb, kk, isk]}})[0]
+        self.assertEqual((y['son_tarih'], y['son_zaman'], y['ogrenim'], y['sartlar']), ('2026-10-19', '2026-10-19T23:59:00+03:00', ['lisans'], [{'metin': 'x'}]))
+        self.assertTrue(y['kadro'].startswith('Toplam 19 kişi'))
+        self.assertNotIn('ogrenim', sbb)   # girdi değişmez
+
+    def test_iskur_kanal_beklemesi(self):
+        an = ilan_bot.simdi()
+        self.assertTrue(ilan_bot.iskur_bekliyor({'ilk_gorulme': (an - timedelta(minutes=30)).isoformat()}))
+        self.assertFalse(ilan_bot.iskur_bekliyor({'ilk_gorulme': (an - timedelta(hours=3)).isoformat()}))
+        self.assertFalse(ilan_bot.iskur_bekliyor({}))
+
     def test_elle_gizle_ve_alan_duzeltme(self):
         ilanlar = [{'id': 'a', 'son_tarih': '2026-11-02'}, {'id': 'b', 'son_tarih': '2026-11-22'}]
         with patch.object(site_uret, 'elle_kurallar', return_value=({'b'}, {'a': {'son_tarih': '2026-11-22'}})):
