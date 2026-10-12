@@ -1,9 +1,9 @@
 {
  "schema": 1,
- "guncelleme": "2026-10-12T07:37:53.363308+00:00",
+ "guncelleme": "2026-10-12T08:06:43.008788+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-10-12T07:37:56.216407+00:00",
+   "kontrol": "2026-10-12T08:06:45.139393+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -40,6 +40,74 @@
      "sbb_detay_surumu": 6,
      "puan_turleri": [
       "P3"
+     ],
+     "belge_ogrenim": [
+      "lisans"
+     ]
+    },
+    {
+     "id": "sbb-c9fc916289b6932f8c577d45",
+     "baslik": "İSTANBUL KALKINMA AJANSI - 5 UZMAN ALACAK",
+     "kurum": "İSTANBUL KALKINMA AJANSI",
+     "kadro": "5 UZMAN ALACAK",
+     "ilan_turu": "Uzman",
+     "son_tarih": "2026-11-22",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 2 Kasım - 22 Kasım)",
+     "baslangic_zaman": "2026-11-02T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-10-12T10:37:54+03:00",
+     "belge_ozeti": "174f0079c45077b0edf1d6199992ab2587e85e045bf717568f7ebcc8ca6c775f",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "5 UZMAN alımı. Son başvuru: 22.11.2026. Başvuru Bitiş Tarih ve Saati 22/11/2026 ve 23.59 (Online başvuru) Başvuru Yeri https://kariyerkapisi.gov.tr/isealim Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "2.2.1 KPSS Puanı ile Başvuracak Uzman Personel Adayları İçin Asgari Şartlar a) En az dört yıllık lisans eğitimi veren yükseköğretim kurumlarının veya bunlara denkliği YÖK tarafından kabul edilen yurt içindeki veya yurt dışındaki yükseköğretim kurumlarının Tablo 1’de belirtilen bölümlerinden mezun olmak,"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "b) Sınav son başvuru tarihinden önceki 5 yıl içinde İngilizce dilinden Yabancı Dil Bilgisi Seviye Belirleme Sınavı (YDS, e- YDS)’ndan veya dil yeterliliği bakımından bunlara denkliği kabul edilen ve uluslararası geçerliliği bulunan başka bir sınavdan asgari (C) düzeyine karşılık gelen puanın eşdeğerini sağlayan belgeye başvuru tarihi itibarıyla sahip olmak (Denklikte ÖSYM’nin dil eşdeğerliğine ilişkin resmi denklik çizelgesi temel alınmaktadır. Mevzuat gereği ÜDS-YÖKDİL kabul edilmemektedir.)"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "c) Öğrenci Seçme ve Yerleştirme Merkezi tarafından yapılan Kamu Personeli Seçme Sınavından mezun oldukları öğrenim dallarına göre son başvuru tarihi itibarıyla geçerli ve Tablo 1’de gösterilen ilgili puan türlerinden en az 80 (seksen) puan almış olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "• Birden fazla yabancı dil bilmek bakımından asgari C düzeyinde belge sahibi olmak,"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "• İlgili alanda lisans üstü eğitime sahip olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "• İlgili alanda lisans üstü eğitime sahip olmak,"
+      }
+     ],
+     "basvuru_notu": "BÖLÜM BAŞVURULACAK TERCİH NEDENLERİ POZİSYON Bilgisayar Mühendisliği, • Devlet destekleri (hibeler, teşvik Çevre Mühendisliği, mevzuatı, vb.), Proje Döngüsü Elektrik-Elektronik Yönetimi, Avrupa Birliği Destek Mühendisliği, Mekanizmaları ve Uygulamaları, Elektronik ve Dünya Bankası, Birleşmiş Milletler, Haberleşme Kalkınma Ajansları gibi kurum- Mühendisliği, kuruluşlar tarafından desteklenen",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/174f0079c45077b0edf1d6199992ab2587e85e045bf717568f7ebcc8ca6c775f.pdf",
+     "belge_sha256": "174f0079c45077b0edf1d6199992ab2587e85e045bf717568f7ebcc8ca6c775f",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "puan_turleri": [
+      "P1",
+      "P2",
+      "P3",
+      "P14",
+      "P15",
+      "P19",
+      "P20",
+      "P21",
+      "P24",
+      "P25"
      ],
      "belge_ogrenim": [
       "lisans"
@@ -128,74 +196,6 @@
      ]
     },
     {
-     "id": "sbb-c9fc916289b6932f8c577d45",
-     "baslik": "İSTANBUL KALKINMA AJANSI - 5 UZMAN ALACAK",
-     "kurum": "İSTANBUL KALKINMA AJANSI",
-     "kadro": "5 UZMAN ALACAK",
-     "ilan_turu": "Uzman",
-     "son_tarih": "2026-11-22",
-     "kaynak": "SBB Kamu İlan",
-     "kaynak_turu": "sbb",
-     "donem": "( 2 Kasım - 22 Kasım)",
-     "baslangic_zaman": "2026-11-02T00:00:00+03:00",
-     "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-12T10:37:54+03:00",
-     "belge_ozeti": "174f0079c45077b0edf1d6199992ab2587e85e045bf717568f7ebcc8ca6c775f",
-     "kaynaklar": [
-      {
-       "ad": "SBB Kamu İlan",
-       "link": "https://kamuilan.sbb.gov.tr/"
-      }
-     ],
-     "ozet": "5 UZMAN alımı. Son başvuru: 22.11.2026. Başvuru Bitiş Tarih ve Saati 22/11/2026 ve 23.59 (Online başvuru) Başvuru Yeri https://kariyerkapisi.gov.tr/isealim Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
-     "sartlar": [
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "2.2.1 KPSS Puanı ile Başvuracak Uzman Personel Adayları İçin Asgari Şartlar a) En az dört yıllık lisans eğitimi veren yükseköğretim kurumlarının veya bunlara denkliği YÖK tarafından kabul edilen yurt içindeki veya yurt dışındaki yükseköğretim kurumlarının Tablo 1’de belirtilen bölümlerinden mezun olmak,"
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "b) Sınav son başvuru tarihinden önceki 5 yıl içinde İngilizce dilinden Yabancı Dil Bilgisi Seviye Belirleme Sınavı (YDS, e- YDS)’ndan veya dil yeterliliği bakımından bunlara denkliği kabul edilen ve uluslararası geçerliliği bulunan başka bir sınavdan asgari (C) düzeyine karşılık gelen puanın eşdeğerini sağlayan belgeye başvuru tarihi itibarıyla sahip olmak (Denklikte ÖSYM’nin dil eşdeğerliğine ilişkin resmi denklik çizelgesi temel alınmaktadır. Mevzuat gereği ÜDS-YÖKDİL kabul edilmemektedir.)"
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "c) Öğrenci Seçme ve Yerleştirme Merkezi tarafından yapılan Kamu Personeli Seçme Sınavından mezun oldukları öğrenim dallarına göre son başvuru tarihi itibarıyla geçerli ve Tablo 1’de gösterilen ilgili puan türlerinden en az 80 (seksen) puan almış olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "• Birden fazla yabancı dil bilmek bakımından asgari C düzeyinde belge sahibi olmak,"
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "• İlgili alanda lisans üstü eğitime sahip olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "• İlgili alanda lisans üstü eğitime sahip olmak,"
-      }
-     ],
-     "basvuru_notu": "BÖLÜM BAŞVURULACAK TERCİH NEDENLERİ POZİSYON Bilgisayar Mühendisliği, • Devlet destekleri (hibeler, teşvik Çevre Mühendisliği, mevzuatı, vb.), Proje Döngüsü Elektrik-Elektronik Yönetimi, Avrupa Birliği Destek Mühendisliği, Mekanizmaları ve Uygulamaları, Elektronik ve Dünya Bankası, Birleşmiş Milletler, Haberleşme Kalkınma Ajansları gibi kurum- Mühendisliği, kuruluşlar tarafından desteklenen",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/174f0079c45077b0edf1d6199992ab2587e85e045bf717568f7ebcc8ca6c775f.pdf",
-     "belge_sha256": "174f0079c45077b0edf1d6199992ab2587e85e045bf717568f7ebcc8ca6c775f",
-     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 6,
-     "puan_turleri": [
-      "P1",
-      "P2",
-      "P3",
-      "P14",
-      "P15",
-      "P19",
-      "P20",
-      "P21",
-      "P24",
-      "P25"
-     ],
-     "belge_ogrenim": [
-      "lisans"
-     ]
-    },
-    {
      "id": "sbb-3c7e506b0b47e9c46bcd7fe6",
      "baslik": "KEŞAN BELEDİYE BAŞKANLIĞI - 2 MEMUR ALACAK",
      "kurum": "KEŞAN BELEDİYE BAŞKANLIĞI",
@@ -250,6 +250,34 @@
      "belge_ogrenim": [
       "lisans"
      ]
+    },
+    {
+     "id": "sbb-b86634a05b9426ed1e384cf2",
+     "baslik": "SARIİDRİS BELEDİYE BAŞKANLIĞI - 1 MEMUR ALACAK",
+     "kurum": "SARIİDRİS BELEDİYE BAŞKANLIĞI",
+     "kadro": "1 MEMUR ALACAK",
+     "ilan_turu": "Memur",
+     "son_tarih": "2026-11-20",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 18 Kasım - 20 Kasım)",
+     "baslangic_zaman": "2026-11-18T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-10-12T11:06:44+03:00",
+     "belge_ozeti": "e834b6fda53cd9848a7c98ea1feca65480b3bff3fc3f1fc7b0801df3ccfac9dd",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "1 MEMUR alımı. Son başvuru: 20.11.2026. Özel şartlar aşağıdaki ilan belgesinde yer alıyor.",
+     "sartlar": [],
+     "basvuru_notu": "",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/e834b6fda53cd9848a7c98ea1feca65480b3bff3fc3f1fc7b0801df3ccfac9dd.pdf",
+     "belge_sha256": "e834b6fda53cd9848a7c98ea1feca65480b3bff3fc3f1fc7b0801df3ccfac9dd",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6
     },
     {
      "id": "sbb-3aa4736db5de6f1d64227873",
@@ -400,6 +428,49 @@
      "belge_sha256": "53426d8d19a6a38f48efe8539c807da886a2b10ecf66a268fdc1d7ed5c7009bb",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
+    },
+    {
+     "id": "sbb-e156aab44419d790579200de",
+     "baslik": "NECMETTİN ERBAKAN ÜNİVERSİTESİ - 14.09.2026 TARİH VE 33370 SAYILI RESMİ GAZETE YAYIMLANAN 3 ADET ARAŞTIRMA GÖREVLİSİ KADROSUNUN İLAN İPTALİ",
+     "kurum": "NECMETTİN ERBAKAN ÜNİVERSİTESİ",
+     "kadro": "14.09.2026 TARİH VE 33370 SAYILI RESMİ GAZETE YAYIMLANAN 3 ADET ARAŞTIRMA GÖREVLİSİ KADROSUNUN İLAN İPTALİ",
+     "ilan_turu": "Araştırma Görevlisi",
+     "son_tarih": "2026-10-26",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 10 Ekim - 26 Ekim)",
+     "baslangic_zaman": "2026-10-10T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-10-12T11:06:44+03:00",
+     "belge_ozeti": "0866301ff8ab3838945750085de263ea44cbb1d82ac92dec054acb30a5ff4d25",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "duyuru_turu": "İptal duyurusu",
+     "ozet": "Necmettin Erbakan Üniversitesi Rektörlüğünden: İPTAL İLANI Üniversitemizin akademik birimlerinde ihtiyaç duyulan öğretim e lemanı alımı ile ilgili olarak hazırlanan ilan metni 14.09.2026 tarih ve 33370 sayılı R esmî Gazete’de yayımlanmış olup, ilanda aşağıda birim, bölüm, anabilim dalı belirtilen kadronun ilanı görülen lüzum üzerine iptal edilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgedeki kadro koşullarından alıntı",
+       "metin": "İLAN NO BİRİM/ BÖLÜM / ABD K.ÜNVANI DERECE ADET ALES YDS ÖZEL ŞARTLAR 2026- Fen Fakültesi/ Araştırma Fen Fakülteleri'nin Biyoteknoloji veya Moleküler Biyoloji ve 08 Biyoteknoloji/ Görevlisi 6 1 75 80 Genetik programlarının birinden lisans mezun olmak."
+      },
+      {
+       "kadro": "Belgedeki kadro koşullarından alıntı",
+       "metin": "2026- Hemşirelik Fakültesi/ Araştırma Hemşirelik programı lisans mezunu olmak."
+      },
+      {
+       "kadro": "Belgedeki kadro koşullarından alıntı",
+       "metin": "Uygulamalı Bilimler Lojistik, Lojistik Yönetimi, Ulaştırma ve Lojistik, Uluslararası 2026- Fakültesi/ Lojistik Yönetimi Araştırma Lojistik, Uluslararası Ticaret ve Lojistik, Endüstri 12 / Lojistik Yönetimi Görevlisi 7 1 75 80 Mühendisliği programlarının birinden lisans mezunu olmak."
+      }
+     ],
+     "basvuru_notu": "",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/0866301ff8ab3838945750085de263ea44cbb1d82ac92dec054acb30a5ff4d25.pdf",
+     "belge_sha256": "0866301ff8ab3838945750085de263ea44cbb1d82ac92dec054acb30a5ff4d25",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "duyuru_cumlesi": "Necmettin Erbakan Üniversitesi Rektörlüğünden: İPTAL İLANI Üniversitemizin akademik birimlerinde ihtiyaç duyulan öğretim e lemanı alımı ile ilgili olarak hazırlanan ilan metni 14.09.2026 tarih ve 33370 sayılı R esmî Gazete’de yayımlanmış olup, ilanda aşağıda birim, bölüm, anabilim dalı belirtilen kadronun ilanı görülen lüzum üzerine iptal edilmiştir."
     },
     {
      "id": "sbb-a2bb3558201a27b51ea4a2fc",
@@ -1097,46 +1168,6 @@
      "duyuru_cumlesi": "Muş İli Malazgirt Belediye Başkanlığından: DÜZELTME İLANI 20/09/2026 tarihli ve 33376 sayılı Resmî Gazete’de yayımlanan İ lk Defa Atanmak Üzere Memur Alım İlanında yer alan; BAŞVURU YERİ, TARİHİ, ŞEKLİ VE SÜRESİ: 4 üncü maddesinin, a) fıkrası “Elektronik ortamda başvurular, 02/11/2026-04/11/202 6 tarihleri arasında istenilen belgeler eklenmek suretiyle Belediyemizin malazgirt-b elediyesi@hotmail.com mail adresine yapılacaktır.” şeklinde düzeltilmiştir."
     },
     {
-     "id": "sbb-9ed3758a19cd1983ad11eee0",
-     "baslik": "YARGITAY BAŞKANLIĞI - 4 SÖZLEŞMELİ BİLİŞİM PERSONELİ ALACAK",
-     "kurum": "YARGITAY BAŞKANLIĞI",
-     "kadro": "4 SÖZLEŞMELİ BİLİŞİM PERSONELİ ALACAK",
-     "ilan_turu": "Bilişim Personeli",
-     "son_tarih": "2026-10-23",
-     "kaynak": "SBB Kamu İlan",
-     "kaynak_turu": "sbb",
-     "donem": "( 19 Ekim - 23 Ekim)",
-     "baslangic_zaman": "2026-10-19T00:00:00+03:00",
-     "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-12T09:07:16+03:00",
-     "belge_ozeti": "2db82456f9a96b7f22aceec3944a1acb29fc1d4c94565479339dbab41589316a",
-     "kaynaklar": [
-      {
-       "ad": "SBB Kamu İlan",
-       "link": "https://kamuilan.sbb.gov.tr/"
-      }
-     ],
-     "ozet": "4 SÖZLEŞMELİ BİLİŞİM PERSONELİ alımı. Son başvuru: 23.10.2026. o) CISSP, OSCP, CEH, GPEN, GCIH veya benzeri uluslararası geçerliliğe sahip sertifikalardan en az birine sahip olmak ve belgelemek. II- BAŞVURU ŞEKLİ, BELGELER, YERİ VE TARİHİ Başvurular 19.10.2026 – 23.10.2026 tarihleri arasında saat 17.30.00’a kadar e-Devlet üzerinden “Kariyer Kapısı Kamu İşe Alım” veya Kariyer Kapısı (https://kariyerkapisi.gov.tr) adresinden, elektronik ortamda alınacaktır. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
-     "sartlar": [
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "b) Fakültelerin dört yıllık bilgisayar mühendisliği, yazılım mühendisliği, elektrik mühendisliği, elektronik mühendisliği, elektrik ve elektronik mühendisliği ve endüstri mühendisliği bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurt dışındaki yükseköğretim kurumlarından mezun olmak,"
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "c) (b) bendinde belirtilenler dışında kalan dört yıllık eğitim veren fakültelerin mühendislik bölümlerinden, fen- edebiyat, eğitim ve eğitim bilimleri fakültelerinin, bilgisayar ve teknoloji üzerine eğitim veren bölümleri ile istatistik, matematik ve fizik bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurt dışındaki yükseköğretim kurumlarından mezun olmak, (Hazine ve Maliye Bakanlığının vizesi doğrultusunda sadece 2 katına kadar olan pozisyonlara başvuru yapabileceklerdir.)"
-      }
-     ],
-     "basvuru_notu": "a) Şahsen veya posta yoluyla yapılan başvurular kabul edilmeyecektir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/2db82456f9a96b7f22aceec3944a1acb29fc1d4c94565479339dbab41589316a.pdf",
-     "belge_sha256": "2db82456f9a96b7f22aceec3944a1acb29fc1d4c94565479339dbab41589316a",
-     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 6,
-     "puan_turleri": [
-      "P3"
-     ]
-    },
-    {
      "id": "sbb-0b9c96d4ed82c2f3f352c732",
      "baslik": "AKDENİZ ÜNİVERSİTESİ - 7 ÖĞRETİM ELEMANI ALACAK",
      "kurum": "AKDENİZ ÜNİVERSİTESİ",
@@ -1244,6 +1275,46 @@
      "belge_sha256": "4fc5b54322f002cf886206f9483a0592a4d0aca264c2beab5f69965e01221cec",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
+    },
+    {
+     "id": "sbb-9ed3758a19cd1983ad11eee0",
+     "baslik": "YARGITAY BAŞKANLIĞI - 4 SÖZLEŞMELİ BİLİŞİM PERSONELİ ALACAK",
+     "kurum": "YARGITAY BAŞKANLIĞI",
+     "kadro": "4 SÖZLEŞMELİ BİLİŞİM PERSONELİ ALACAK",
+     "ilan_turu": "Bilişim Personeli",
+     "son_tarih": "2026-10-23",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 19 Ekim - 23 Ekim)",
+     "baslangic_zaman": "2026-10-19T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-10-12T09:07:16+03:00",
+     "belge_ozeti": "2db82456f9a96b7f22aceec3944a1acb29fc1d4c94565479339dbab41589316a",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "4 SÖZLEŞMELİ BİLİŞİM PERSONELİ alımı. Son başvuru: 23.10.2026. o) CISSP, OSCP, CEH, GPEN, GCIH veya benzeri uluslararası geçerliliğe sahip sertifikalardan en az birine sahip olmak ve belgelemek. II- BAŞVURU ŞEKLİ, BELGELER, YERİ VE TARİHİ Başvurular 19.10.2026 – 23.10.2026 tarihleri arasında saat 17.30.00’a kadar e-Devlet üzerinden “Kariyer Kapısı Kamu İşe Alım” veya Kariyer Kapısı (https://kariyerkapisi.gov.tr) adresinden, elektronik ortamda alınacaktır. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "b) Fakültelerin dört yıllık bilgisayar mühendisliği, yazılım mühendisliği, elektrik mühendisliği, elektronik mühendisliği, elektrik ve elektronik mühendisliği ve endüstri mühendisliği bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurt dışındaki yükseköğretim kurumlarından mezun olmak,"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "c) (b) bendinde belirtilenler dışında kalan dört yıllık eğitim veren fakültelerin mühendislik bölümlerinden, fen- edebiyat, eğitim ve eğitim bilimleri fakültelerinin, bilgisayar ve teknoloji üzerine eğitim veren bölümleri ile istatistik, matematik ve fizik bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurt dışındaki yükseköğretim kurumlarından mezun olmak, (Hazine ve Maliye Bakanlığının vizesi doğrultusunda sadece 2 katına kadar olan pozisyonlara başvuru yapabileceklerdir.)"
+      }
+     ],
+     "basvuru_notu": "a) Şahsen veya posta yoluyla yapılan başvurular kabul edilmeyecektir.",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/2db82456f9a96b7f22aceec3944a1acb29fc1d4c94565479339dbab41589316a.pdf",
+     "belge_sha256": "2db82456f9a96b7f22aceec3944a1acb29fc1d4c94565479339dbab41589316a",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "puan_turleri": [
+      "P3"
+     ]
     },
     {
      "id": "sbb-6fbbd60d3ec95a5e772eb9b4",
@@ -1782,6 +1853,59 @@
      ]
     },
     {
+     "id": "sbb-d899263a3b730dcfad84ae2f",
+     "baslik": "AYDIN ADNAN MENDERES ÜNİVERSİTESİ - 84 ÖĞRETİM ELEMANI ALACAK",
+     "kurum": "AYDIN ADNAN MENDERES ÜNİVERSİTESİ",
+     "kadro": "84 ÖĞRETİM ELEMANI ALACAK",
+     "ilan_turu": "Öğretim Elemanı",
+     "son_tarih": "2026-10-16",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 2 Ekim - 16 Ekim)",
+     "baslangic_zaman": "2026-10-02T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-10-12T09:07:40+03:00",
+     "belge_ozeti": "4c7095a031c3ef197db5820a0083075f90691dc16c3166e5ba9a7c3761832a69",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "84 ÖĞRETİM ELEMANI alımı. Son başvuru: 16.10.2026. İLAN TAKVİMİ İlk Başvuru Tarihi : 02.10.2026 Son Başvuru Tarihi : 16.10.2026 (Mesai Bitimi) Ön Değerlendirme İlan Tarihi : 22.10.2026 Giriş Sınav Tarihi : 30.10.2026 Nihai Değerlendirme Tarihi : 06.11.2026 Başvuru Tipi : Şahsen / Posta Başvurunun Yapılacağı Yer : Her kadro için ilan metninde belirtilen birime başvuru yapılacaktır. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "2- ALES’ten en az 70 puan almış olmak gerekli olup, merkezi sınav muafiyetinden yararlanmayı talep edenlerin ön değerlendirme ve nihai değerlendirme aşamalarında ALES puanı 70 olarak kabul edilir."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "4- Öğretim Görevlisi kadrosuna başvuracak adaylarda en az tezli yüksek lisans derecesine sahip olmak veya lisans ve yüksek lisans derecesini birlikte veren programlardan mezun olmak şartı aranır."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "a) Doktora veya tıpta, diş hekimliğinde, eczacılıkta ve veteriner hekimlikte uzmanlık ya da sanatta yeterlik eğitimini tamamlamış olanlarda, meslek yüksekokullarının Yükseköğretim Kurulu tarafından belirlenen uzmanlık alanlarına atanacak olanlarda, yükseköğretim kurumlarında öğretim elemanı kadrolarında çalışmış veya çalışmakta olanlarda merkezi sınav şartı aranmaz."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "b) Meslek yüksekokullarının, Öğretim Üyesi Dışındaki Öğretim Elemanı Kadrolarına Yapılacak Atamalarda Uygulanacak Merkezi Sınav ile Giriş Sınavlarına İlişkin Usul ve Esaslar Hakkında Yönetmelik’in 6 ncı maddesinin 4 üncü fıkrası kapsamındaki Öğretim Görevlisi kadroları haricindeki Öğretim Görevlisi kadrolarına yapılacak başvurularda yabancı dil şartı aranmaz."
+      },
+      {
+       "kadro": "Sınav puanı koşulu · kadroya göre muafiyetler için belgeyi inceleyin",
+       "metin": "2- ALES’ten en az 70 puan almış olmak gerekli olup, merkezi sınav muafiyetinden yararlanmayı talep edenlerin ön değerlendirme ve nihai değerlendirme aşamalarında ALES puanı 70 olarak kabul edilir."
+      }
+     ],
+     "basvuru_notu": "Onaysız belgeler geçersiz kabul edilir.  Başvurular ilanda belirtilen başvuru adreslerine şahsen veya posta yoluyla yapılabilir.",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/4c7095a031c3ef197db5820a0083075f90691dc16c3166e5ba9a7c3761832a69.pdf",
+     "belge_sha256": "4c7095a031c3ef197db5820a0083075f90691dc16c3166e5ba9a7c3761832a69",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "belge_ogrenim": [
+      "lisans",
+      "onlisans"
+     ]
+    },
+    {
      "id": "sbb-bed1e46c6394edaa326dea22",
      "baslik": "ÇANAKKALE ONSEKİZ MART ÜNİVERSİTESİ - ÇANAKKALE ONSEKİZ MART ÜNİVERSİTESİ 3 ÖĞRETİM ELEMANI ALACAK",
      "kurum": "ÇANAKKALE ONSEKİZ MART ÜNİVERSİTESİ",
@@ -1882,59 +2006,6 @@
      "belge_sha256": "785539f00c7e48be759e916672b3a0a06986dd354312cff1cc57c2ec12a29a3f",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
-    },
-    {
-     "id": "sbb-d899263a3b730dcfad84ae2f",
-     "baslik": "AYDIN ADNAN MENDERES ÜNİVERSİTESİ - 84 ÖĞRETİM ELEMANI ALACAK",
-     "kurum": "AYDIN ADNAN MENDERES ÜNİVERSİTESİ",
-     "kadro": "84 ÖĞRETİM ELEMANI ALACAK",
-     "ilan_turu": "Öğretim Elemanı",
-     "son_tarih": "2026-10-16",
-     "kaynak": "SBB Kamu İlan",
-     "kaynak_turu": "sbb",
-     "donem": "( 2 Ekim - 16 Ekim)",
-     "baslangic_zaman": "2026-10-02T00:00:00+03:00",
-     "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-12T09:07:40+03:00",
-     "belge_ozeti": "4c7095a031c3ef197db5820a0083075f90691dc16c3166e5ba9a7c3761832a69",
-     "kaynaklar": [
-      {
-       "ad": "SBB Kamu İlan",
-       "link": "https://kamuilan.sbb.gov.tr/"
-      }
-     ],
-     "ozet": "84 ÖĞRETİM ELEMANI alımı. Son başvuru: 16.10.2026. İLAN TAKVİMİ İlk Başvuru Tarihi : 02.10.2026 Son Başvuru Tarihi : 16.10.2026 (Mesai Bitimi) Ön Değerlendirme İlan Tarihi : 22.10.2026 Giriş Sınav Tarihi : 30.10.2026 Nihai Değerlendirme Tarihi : 06.11.2026 Başvuru Tipi : Şahsen / Posta Başvurunun Yapılacağı Yer : Her kadro için ilan metninde belirtilen birime başvuru yapılacaktır. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
-     "sartlar": [
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "2- ALES’ten en az 70 puan almış olmak gerekli olup, merkezi sınav muafiyetinden yararlanmayı talep edenlerin ön değerlendirme ve nihai değerlendirme aşamalarında ALES puanı 70 olarak kabul edilir."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "4- Öğretim Görevlisi kadrosuna başvuracak adaylarda en az tezli yüksek lisans derecesine sahip olmak veya lisans ve yüksek lisans derecesini birlikte veren programlardan mezun olmak şartı aranır."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "a) Doktora veya tıpta, diş hekimliğinde, eczacılıkta ve veteriner hekimlikte uzmanlık ya da sanatta yeterlik eğitimini tamamlamış olanlarda, meslek yüksekokullarının Yükseköğretim Kurulu tarafından belirlenen uzmanlık alanlarına atanacak olanlarda, yükseköğretim kurumlarında öğretim elemanı kadrolarında çalışmış veya çalışmakta olanlarda merkezi sınav şartı aranmaz."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "b) Meslek yüksekokullarının, Öğretim Üyesi Dışındaki Öğretim Elemanı Kadrolarına Yapılacak Atamalarda Uygulanacak Merkezi Sınav ile Giriş Sınavlarına İlişkin Usul ve Esaslar Hakkında Yönetmelik’in 6 ncı maddesinin 4 üncü fıkrası kapsamındaki Öğretim Görevlisi kadroları haricindeki Öğretim Görevlisi kadrolarına yapılacak başvurularda yabancı dil şartı aranmaz."
-      },
-      {
-       "kadro": "Sınav puanı koşulu · kadroya göre muafiyetler için belgeyi inceleyin",
-       "metin": "2- ALES’ten en az 70 puan almış olmak gerekli olup, merkezi sınav muafiyetinden yararlanmayı talep edenlerin ön değerlendirme ve nihai değerlendirme aşamalarında ALES puanı 70 olarak kabul edilir."
-      }
-     ],
-     "basvuru_notu": "Onaysız belgeler geçersiz kabul edilir.  Başvurular ilanda belirtilen başvuru adreslerine şahsen veya posta yoluyla yapılabilir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/4c7095a031c3ef197db5820a0083075f90691dc16c3166e5ba9a7c3761832a69.pdf",
-     "belge_sha256": "4c7095a031c3ef197db5820a0083075f90691dc16c3166e5ba9a7c3761832a69",
-     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 6,
-     "belge_ogrenim": [
-      "lisans",
-      "onlisans"
-     ]
     },
     {
      "id": "sbb-6ac7366b3c9eca9e0e81a541",
@@ -2917,55 +2988,30 @@
      "sbb_detay_surumu": 6
     },
     {
-     "id": "sbb-5e8caa7baa7bf182a6bc458e",
-     "baslik": "IĞDIR ÜNİVERSİTESİ - 43 ÖĞRETİM ELEMANI ALACAK",
-     "kurum": "IĞDIR ÜNİVERSİTESİ",
-     "kadro": "43 ÖĞRETİM ELEMANI ALACAK",
-     "ilan_turu": "Öğretim Elemanı",
+     "id": "sbb-c504fd4e2be5f2b04af620d3",
+     "baslik": "ALANYA ALAADDİN KEYKUBAT ÜNİVERSİTESİ - 20 ÖĞRETİM ÜYESİ ALACAK",
+     "kurum": "ALANYA ALAADDİN KEYKUBAT ÜNİVERSİTESİ",
+     "kadro": "20 ÖĞRETİM ÜYESİ ALACAK",
+     "ilan_turu": "Öğretim Üyesi",
      "son_tarih": "2026-10-13",
      "kaynak": "SBB Kamu İlan",
      "kaynak_turu": "sbb",
      "donem": "( 29 Eylül - 13 Ekim)",
      "baslangic_zaman": "2026-09-29T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-12T09:08:08+03:00",
-     "belge_ozeti": "234647b3cc1c92186b947617d35d5e9d231370b3468c6ef26de70a2a6e8c7373",
+     "detay_guncelleme": "2026-10-12T09:08:11+03:00",
+     "belge_ozeti": "416459b03086d9730f850da3d346bd2aefc383d98495c8fdc92385dcd8df54ba",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
        "link": "https://kamuilan.sbb.gov.tr/"
       }
      ],
-     "ozet": "43 ÖĞRETİM ELEMANI alımı. Son başvuru: 13.10.2026. Başvurular şahsen veya posta ile yapılabilir. Posta ile yapılacak başvurular son başvuru günü mesai bitimine kadar yapılabilir. Başvurular ilgili Birimin Dekanlığına ulaşması gerekmektedir. (Postadaki gecikmelerden Üniversitemiz sorumlu değildir.) Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
-     "sartlar": [
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "4 Doçent 1 Fen Edebiyat Batı Dilleri ve İngiliz Dili ve Doçentliğini İngiliz Dili Eğitimi bilim alanında almış Fakültesi Edebiyatları Edebiyatı olmak, yabancı dil sınıflarında öğretmen liderliği ve yazma becerisinin öğretimi konularında çalışmış olmak ."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "5 Doçent 1 Fen Edebiyat Fakültesi Coğrafya Fiziki Coğrafya Doçentliğini Fiziki Coğrafya bilim alanında almış olmak, klimatolojide makine öğrenmesi ve uzaktan algılama konularında çalışmış olmak. 6 Doçent 2 İktisadi ve İdari İşletme Üretim Yönetimi Doçentliğini Pazarlama bilim alanında almış olmak, Bilimler Fakültesi ve Pazarlama pazarlamada yapay zekâ uygulamaları ve tüketici davranışları konularında çalışmış olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "7 Doçent 2 İlahiyat Fakültesi Felsefe ve Din Felsefe Tarihi Doçentliğini Felsefe Tarihi bilim alanında almış olmak, Bilimleri antik Yunan siyasetinde polis-insan ilişkisi ve epiküros’ta ataraksia kavramı konularında çalışmış olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "13 Doçent 1 Sağlık Hizmetleri Tıbbi Hizmetler ve Çevre Sağlığı Doçentliğini Çevre Bilimleri ve Mühendisliği Bilim Meslek Yüksekokulu Teknikler Bölümü, Pr. alanında almış olmak, makine öğrenimi ve hava kirliliği konularında çalışmış olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "14 Doçent 2 Tuzluca Meslek Tıbbi Hizmetler ve Laborant ve Doçentliğini Veteriner İç Hastalıkları bilim alanında Yüksekokulu Teknikler Bölümü Veteriner almış olmak, paraziter hastalıklarda moleküler tanı ile Sağlık Pr. oksidadif stres ve metabolik profil konularında çalışmış olmak. 15 Dr. Öğretim 3 Diş Hekimliği Fakültesi Klinik Bilimler Ağız, Diş ve Çene Uzmanlık eğitimini Ağız, Diş ve Çene Cerrahisi alanında Üyesi Cerrahisi tamamlamış olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "30 Dr. Öğretim 4 İlahiyat Fakültesi Temel İslam Bilimleri Arap Dili ve Doktorasını Temel İslam Bilimleri AB D’nda yapmış Üyesi Belagati olmak, klasik Arap edebiyatı ve grameri ile Endülüs Arap dilbilimi konularında çalışmış olmak 31 Dr. Öğretim 4 İlahiyat Fakültesi Temel İslam Bilimleri Hadis Doktorasını Hadis A.B.D.’ında yapmış olmak, Sahih -i Üyesi Müslim ve ilelil-hadis konularında çalışmış olmak."
-      }
-     ],
-     "basvuru_notu": "ÖNEMLİ NOTLAR Başvurular şahsen veya posta ile yapılabilir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/234647b3cc1c92186b947617d35d5e9d231370b3468c6ef26de70a2a6e8c7373.pdf",
-     "belge_sha256": "234647b3cc1c92186b947617d35d5e9d231370b3468c6ef26de70a2a6e8c7373",
+     "ozet": "20 ÖĞRETİM ÜYESİ alımı. Son başvuru: 13.10.2026. 4- Profesör ve doçent kadrosuna başvurular Üniversitemiz Personel Daire Başkanlığına, doktor öğretim üyesi kadrosuna başvurular ise ilana çıkılan kadro birimine şahsen yapılacaktır. Özel şartlar aşağıdaki ilan belgesinde yer alıyor.",
+     "sartlar": [],
+     "basvuru_notu": "• Hizmet Belgesi (Halen bir kamu kurumunda çalışmakta olanlar (kurum içinden başvuranlar hariç) ile ayrılmış olanlar için e-Devlet kapısı üzerinden alınan barkodlu HİTAP hizmet belgesi ya da ilgili kamu kurumundan alınan ıslak imzalı veya elektronik imzalı hizmet belgesi.)",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/416459b03086d9730f850da3d346bd2aefc383d98495c8fdc92385dcd8df54ba.pdf",
+     "belge_sha256": "416459b03086d9730f850da3d346bd2aefc383d98495c8fdc92385dcd8df54ba",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
     },
@@ -3084,121 +3130,103 @@
      "sbb_detay_surumu": 6
     },
     {
-     "id": "sbb-c504fd4e2be5f2b04af620d3",
-     "baslik": "ALANYA ALAADDİN KEYKUBAT ÜNİVERSİTESİ - 20 ÖĞRETİM ÜYESİ ALACAK",
-     "kurum": "ALANYA ALAADDİN KEYKUBAT ÜNİVERSİTESİ",
-     "kadro": "20 ÖĞRETİM ÜYESİ ALACAK",
-     "ilan_turu": "Öğretim Üyesi",
+     "id": "sbb-5e8caa7baa7bf182a6bc458e",
+     "baslik": "IĞDIR ÜNİVERSİTESİ - 43 ÖĞRETİM ELEMANI ALACAK",
+     "kurum": "IĞDIR ÜNİVERSİTESİ",
+     "kadro": "43 ÖĞRETİM ELEMANI ALACAK",
+     "ilan_turu": "Öğretim Elemanı",
      "son_tarih": "2026-10-13",
      "kaynak": "SBB Kamu İlan",
      "kaynak_turu": "sbb",
      "donem": "( 29 Eylül - 13 Ekim)",
      "baslangic_zaman": "2026-09-29T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-12T09:08:11+03:00",
-     "belge_ozeti": "416459b03086d9730f850da3d346bd2aefc383d98495c8fdc92385dcd8df54ba",
+     "detay_guncelleme": "2026-10-12T09:08:08+03:00",
+     "belge_ozeti": "234647b3cc1c92186b947617d35d5e9d231370b3468c6ef26de70a2a6e8c7373",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
        "link": "https://kamuilan.sbb.gov.tr/"
       }
      ],
-     "ozet": "20 ÖĞRETİM ÜYESİ alımı. Son başvuru: 13.10.2026. 4- Profesör ve doçent kadrosuna başvurular Üniversitemiz Personel Daire Başkanlığına, doktor öğretim üyesi kadrosuna başvurular ise ilana çıkılan kadro birimine şahsen yapılacaktır. Özel şartlar aşağıdaki ilan belgesinde yer alıyor.",
-     "sartlar": [],
-     "basvuru_notu": "• Hizmet Belgesi (Halen bir kamu kurumunda çalışmakta olanlar (kurum içinden başvuranlar hariç) ile ayrılmış olanlar için e-Devlet kapısı üzerinden alınan barkodlu HİTAP hizmet belgesi ya da ilgili kamu kurumundan alınan ıslak imzalı veya elektronik imzalı hizmet belgesi.)",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/416459b03086d9730f850da3d346bd2aefc383d98495c8fdc92385dcd8df54ba.pdf",
-     "belge_sha256": "416459b03086d9730f850da3d346bd2aefc383d98495c8fdc92385dcd8df54ba",
+     "ozet": "43 ÖĞRETİM ELEMANI alımı. Son başvuru: 13.10.2026. Başvurular şahsen veya posta ile yapılabilir. Posta ile yapılacak başvurular son başvuru günü mesai bitimine kadar yapılabilir. Başvurular ilgili Birimin Dekanlığına ulaşması gerekmektedir. (Postadaki gecikmelerden Üniversitemiz sorumlu değildir.) Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "4 Doçent 1 Fen Edebiyat Batı Dilleri ve İngiliz Dili ve Doçentliğini İngiliz Dili Eğitimi bilim alanında almış Fakültesi Edebiyatları Edebiyatı olmak, yabancı dil sınıflarında öğretmen liderliği ve yazma becerisinin öğretimi konularında çalışmış olmak ."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "5 Doçent 1 Fen Edebiyat Fakültesi Coğrafya Fiziki Coğrafya Doçentliğini Fiziki Coğrafya bilim alanında almış olmak, klimatolojide makine öğrenmesi ve uzaktan algılama konularında çalışmış olmak. 6 Doçent 2 İktisadi ve İdari İşletme Üretim Yönetimi Doçentliğini Pazarlama bilim alanında almış olmak, Bilimler Fakültesi ve Pazarlama pazarlamada yapay zekâ uygulamaları ve tüketici davranışları konularında çalışmış olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "7 Doçent 2 İlahiyat Fakültesi Felsefe ve Din Felsefe Tarihi Doçentliğini Felsefe Tarihi bilim alanında almış olmak, Bilimleri antik Yunan siyasetinde polis-insan ilişkisi ve epiküros’ta ataraksia kavramı konularında çalışmış olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "13 Doçent 1 Sağlık Hizmetleri Tıbbi Hizmetler ve Çevre Sağlığı Doçentliğini Çevre Bilimleri ve Mühendisliği Bilim Meslek Yüksekokulu Teknikler Bölümü, Pr. alanında almış olmak, makine öğrenimi ve hava kirliliği konularında çalışmış olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "14 Doçent 2 Tuzluca Meslek Tıbbi Hizmetler ve Laborant ve Doçentliğini Veteriner İç Hastalıkları bilim alanında Yüksekokulu Teknikler Bölümü Veteriner almış olmak, paraziter hastalıklarda moleküler tanı ile Sağlık Pr. oksidadif stres ve metabolik profil konularında çalışmış olmak. 15 Dr. Öğretim 3 Diş Hekimliği Fakültesi Klinik Bilimler Ağız, Diş ve Çene Uzmanlık eğitimini Ağız, Diş ve Çene Cerrahisi alanında Üyesi Cerrahisi tamamlamış olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "30 Dr. Öğretim 4 İlahiyat Fakültesi Temel İslam Bilimleri Arap Dili ve Doktorasını Temel İslam Bilimleri AB D’nda yapmış Üyesi Belagati olmak, klasik Arap edebiyatı ve grameri ile Endülüs Arap dilbilimi konularında çalışmış olmak 31 Dr. Öğretim 4 İlahiyat Fakültesi Temel İslam Bilimleri Hadis Doktorasını Hadis A.B.D.’ında yapmış olmak, Sahih -i Üyesi Müslim ve ilelil-hadis konularında çalışmış olmak."
+      }
+     ],
+     "basvuru_notu": "ÖNEMLİ NOTLAR Başvurular şahsen veya posta ile yapılabilir.",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/234647b3cc1c92186b947617d35d5e9d231370b3468c6ef26de70a2a6e8c7373.pdf",
+     "belge_sha256": "234647b3cc1c92186b947617d35d5e9d231370b3468c6ef26de70a2a6e8c7373",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
     },
     {
-     "id": "sbb-92175a7cf7d3c024505448b2",
-     "baslik": "İSKENDERUN TEKNİK ÜNİVERSİTESİ - 11 ÖĞRETİM ÜYESİ ALACAK",
-     "kurum": "İSKENDERUN TEKNİK ÜNİVERSİTESİ",
-     "kadro": "11 ÖĞRETİM ÜYESİ ALACAK",
-     "ilan_turu": "Öğretim Üyesi",
-     "son_tarih": "2026-10-12",
+     "id": "sbb-b2fb286c43de0cc8445bd632",
+     "baslik": "TAPU VE KADASTRO GENEL MÜDÜRLÜĞÜ - TAPU VE KADASTRO GENEL MÜDÜRLÜĞÜ SÖZLEŞMELİ BİLİŞİM PERSONELİ ALIM İLANI",
+     "kurum": "TAPU VE KADASTRO GENEL MÜDÜRLÜĞÜ",
+     "kadro": "TAPU VE KADASTRO GENEL MÜDÜRLÜĞÜ SÖZLEŞMELİ BİLİŞİM PERSONELİ ALIM İLANI",
+     "ilan_turu": "Bilişim Personeli",
+     "son_tarih": "2026-10-19",
      "kaynak": "SBB Kamu İlan",
      "kaynak_turu": "sbb",
-     "donem": "( 28 Eylül - 12 Ekim)",
-     "baslangic_zaman": "2026-09-28T00:00:00+03:00",
+     "donem": "( 12 Ekim - 19 Ekim)",
+     "baslangic_zaman": "2026-10-12T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-12T09:08:20+03:00",
-     "belge_ozeti": "7351c33f98fa32ac071e1bfcdbe6d8c0235bfa4524fa5233231231ffaabe2cd0",
+     "detay_guncelleme": "2026-10-12T09:08:18+03:00",
+     "belge_ozeti": "22191d2e10f1e0899270bdd64db7bc608d2835a0faaadba86938288eed2c95ba",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
        "link": "https://kamuilan.sbb.gov.tr/"
       }
      ],
-     "ozet": "11 ÖĞRETİM ÜYESİ alımı. Son başvuru: 12.10.2026. Başvuru süresi, ilanın yayın tarihinden itibaren 15 (on beş) gü n olup, başvurular; doçent kadrol arı için Personel Daire Başkan lığına, doktor öğretim üyesi kadroları için ise ilgili Fakülte Dekanlığı şahsen yapılacaktır. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
-     "sartlar": [
-      {
-       "kadro": "Belgedeki kadro koşullarından alıntı",
-       "metin": "2026 - 24 MİMARLIK FAKÜLTESİ ŞEHİR VE BÖLGE PLANLAMA ŞEHİR VE BÖLGE PLANLAMA DOKTOR ÖĞRETİM ÜYESİ 2 1 Şehir ve Bölge Planlama alanında lisans ve doktora mezunu olmak."
-      }
-     ],
-     "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/7351c33f98fa32ac071e1bfcdbe6d8c0235bfa4524fa5233231231ffaabe2cd0.pdf",
-     "belge_sha256": "7351c33f98fa32ac071e1bfcdbe6d8c0235bfa4524fa5233231231ffaabe2cd0",
-     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 6
-    },
-    {
-     "id": "sbb-dda3ce13537e7c6e5a9a5a62",
-     "baslik": "ANKARA ÜNİVERSİTESİ - 19 ÖĞRETİM ELEMANI ALACAK",
-     "kurum": "ANKARA ÜNİVERSİTESİ",
-     "kadro": "19 ÖĞRETİM ELEMANI ALACAK",
-     "ilan_turu": "Öğretim Elemanı",
-     "son_tarih": "2026-10-13",
-     "kaynak": "SBB Kamu İlan",
-     "kaynak_turu": "sbb",
-     "donem": "( 28 Eylül - 13 Ekim)",
-     "baslangic_zaman": "2026-09-28T00:00:00+03:00",
-     "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-12T09:08:23+03:00",
-     "belge_ozeti": "e1ae7bb2d8f0ca7fc9546e84aa34b97298ab931cd6cb2a2acc17636249f5f712",
-     "kaynaklar": [
-      {
-       "ad": "SBB Kamu İlan",
-       "link": "https://kamuilan.sbb.gov.tr/"
-      }
-     ],
-     "ozet": "19 ÖĞRETİM ELEMANI alımı. Son başvuru: 13.10.2026. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "ozet": "TAPU VE KADASTRO GENEL MÜDÜRLÜĞÜ SÖZLEŞMELİ BİLİŞİM PERSONELİ ALIM İLANI. Son başvuru: 19.10.2026. 1 BAŞVURU SÜRESİ VE ŞEKLİ 1.Başvurular 12.10.2026 tarihinden 19.10.2026 tarihi saat 17:00’a kadar Cumhurbaşkanlığı Kariyer Kapısı (https://kariyerkapisi.gov.tr) adresinden yapılacak ve istenilen belgeler taranılarak elektronik ortama aktarılacaktır. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
      "sartlar": [
       {
        "kadro": "Belgede belirtilen koşullar",
-       "metin": "Alman Dili ve Edebiyatı, Almanca Mütercim-Tercümanlık veya Alman Dili ve Edebiyatı AD Araş.Gör. 1 5 75/SÖZ 70 Almanca Öğretmenliği lisans mezunu olmak. Bu alanların birinde https://www.dtcf.ankara.edu.tr/ tezli yüksek lisans veya doktora yapıyor olmak."
+       "metin": "❖ Kimlik avı, zararlı yazılım, fidye yazılımı, yetkisiz erişim, web uygulama saldırıları, DDoS ve benzeri siber tehditler ile bunlara karşı uygulanabilecek güvenlik önlemleri konusunda bilgi sahibi olmak. ❖ OWASP Top 10, MITRE ATT&CK ve temel siber saldırı teknikleri konusunda bilgi sahibi olmak. ❖ Siber güvenlik olaylarının tespiti, analizi, kayıt altına alınması, müdahalesi ve raporlanması süreçleri konusunda bilgi sahibi olmak. ❖ Tercihen CompTIA Security+, CySA+, CEH (Certified Ethical Hacker), GCIH (GIAC Certified Incident Handler), GSOC/SOC Analyst, CompTIA CASP+ veya OSCP gibi uluslararası geçerliliği bulunan siber güvenlik sertifikalarından birine sahip olmak."
       },
       {
        "kadro": "Belgede belirtilen koşullar",
-       "metin": "Arap Dili ve Edebiyatı Anabilim Dalı lisans ve tezli yüksek lisans Arap Dili ve Edebiyatı AD Araş.Gör. 1 5 75/SÖZ 70 mezunu olmak. Arap Dili ve Edebiyatı Anabilim Dalında doktora https://www.dtcf.ankara.edu.tr/ yapıyor olmak."
+       "metin": "b) Fakültelerin dört yıllık bilgisayar mühendisliği, yazılım mühendisliği, elektrik mühendisliği, elektronik mühendisliği, elektrik ve elektronik mühendisliği ve endüstri mühendisliği bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurt dışındaki yükseköğretim kurumlarından mezun olmak."
       },
       {
        "kadro": "Belgede belirtilen koşullar",
-       "metin": "Astronomi ve Uzay Bilimleri lisans ve tezli yüksek lisans mezunu https://www.science.ankara.edu.t Astrofizik AD Araş.Gör. 1 5 75/SAY 70 olmak. Astronomi ve Uzay Bilimleri Anabilim Dalında doktora r/ yapıyor olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "İdare Hukuku AD Araş.Gör. 1 5 75/EA 70 Hukuk Fakültesi lisans mezunu olmak. Kamu Hukuku (İdare https://www.law.ankara.edu.tr/ Hukuku) alanında tezli yüksek lisans yapıyor olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "Milletlerarası Hukuk AD Araş.Gör. 1 5 75/EA 70 Hukuk Fakültesi lisans mezunu olmak. Kamu Hukuku https://www.law.ankara.edu.tr/ (Milletlerarası Hukuk) alanında doktora yapıyor olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "Medeni Hukuk AD Araş.Gör. 1 5 75/EA 70 Hukuk Fakültesi lisans mezunu olmak. Özel Hukuk (Medeni https://www.law.ankara.edu.tr/ Hukuk) alanında tezli yüksek lisans yapıyor olmak."
+       "metin": "c) (b) bendinde belirtilenler dışında kalan dört yıllık eğitim veren fakültelerin mühendislik bölümlerinden, fen-edebiyat, eğitim ve eğitim bilimleri fakültelerinin, bilgisayar ve teknoloji üzerine eğitim veren bölümleri ile istatistik, matematik ve fizik bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurt dışındaki yükseköğretim kurumlarından mezun olmak. (Bu maddede belirtilen bölüm mezunları, aylık brüt sözleşme ücret tavanının 2 katı ödenecek pozisyonlar için başvurabilecektir.)"
       }
      ],
-     "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/e1ae7bb2d8f0ca7fc9546e84aa34b97298ab931cd6cb2a2acc17636249f5f712.pdf",
-     "belge_sha256": "e1ae7bb2d8f0ca7fc9546e84aa34b97298ab931cd6cb2a2acc17636249f5f712",
+     "basvuru_notu": "Şahsen, kargo ya da posta yoluyla yapılan başvurular kabul edilmeyecektir.",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/22191d2e10f1e0899270bdd64db7bc608d2835a0faaadba86938288eed2c95ba.pdf",
+     "belge_sha256": "22191d2e10f1e0899270bdd64db7bc608d2835a0faaadba86938288eed2c95ba",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
+     "puan_turleri": [
+      "P3"
+     ],
      "belge_ogrenim": [
-      "lisans",
-      "onlisans"
+      "lisans"
      ]
     },
     {
@@ -3311,50 +3339,60 @@
      ]
     },
     {
-     "id": "sbb-b2fb286c43de0cc8445bd632",
-     "baslik": "TAPU VE KADASTRO GENEL MÜDÜRLÜĞÜ - TAPU VE KADASTRO GENEL MÜDÜRLÜĞÜ SÖZLEŞMELİ BİLİŞİM PERSONELİ ALIM İLANI",
-     "kurum": "TAPU VE KADASTRO GENEL MÜDÜRLÜĞÜ",
-     "kadro": "TAPU VE KADASTRO GENEL MÜDÜRLÜĞÜ SÖZLEŞMELİ BİLİŞİM PERSONELİ ALIM İLANI",
-     "ilan_turu": "Bilişim Personeli",
-     "son_tarih": "2026-10-19",
+     "id": "sbb-dda3ce13537e7c6e5a9a5a62",
+     "baslik": "ANKARA ÜNİVERSİTESİ - 19 ÖĞRETİM ELEMANI ALACAK",
+     "kurum": "ANKARA ÜNİVERSİTESİ",
+     "kadro": "19 ÖĞRETİM ELEMANI ALACAK",
+     "ilan_turu": "Öğretim Elemanı",
+     "son_tarih": "2026-10-13",
      "kaynak": "SBB Kamu İlan",
      "kaynak_turu": "sbb",
-     "donem": "( 12 Ekim - 19 Ekim)",
-     "baslangic_zaman": "2026-10-12T00:00:00+03:00",
+     "donem": "( 28 Eylül - 13 Ekim)",
+     "baslangic_zaman": "2026-09-28T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-12T09:08:18+03:00",
-     "belge_ozeti": "22191d2e10f1e0899270bdd64db7bc608d2835a0faaadba86938288eed2c95ba",
+     "detay_guncelleme": "2026-10-12T09:08:23+03:00",
+     "belge_ozeti": "e1ae7bb2d8f0ca7fc9546e84aa34b97298ab931cd6cb2a2acc17636249f5f712",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
        "link": "https://kamuilan.sbb.gov.tr/"
       }
      ],
-     "ozet": "TAPU VE KADASTRO GENEL MÜDÜRLÜĞÜ SÖZLEŞMELİ BİLİŞİM PERSONELİ ALIM İLANI. Son başvuru: 19.10.2026. 1 BAŞVURU SÜRESİ VE ŞEKLİ 1.Başvurular 12.10.2026 tarihinden 19.10.2026 tarihi saat 17:00’a kadar Cumhurbaşkanlığı Kariyer Kapısı (https://kariyerkapisi.gov.tr) adresinden yapılacak ve istenilen belgeler taranılarak elektronik ortama aktarılacaktır. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "ozet": "19 ÖĞRETİM ELEMANI alımı. Son başvuru: 13.10.2026. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
      "sartlar": [
       {
        "kadro": "Belgede belirtilen koşullar",
-       "metin": "❖ Kimlik avı, zararlı yazılım, fidye yazılımı, yetkisiz erişim, web uygulama saldırıları, DDoS ve benzeri siber tehditler ile bunlara karşı uygulanabilecek güvenlik önlemleri konusunda bilgi sahibi olmak. ❖ OWASP Top 10, MITRE ATT&CK ve temel siber saldırı teknikleri konusunda bilgi sahibi olmak. ❖ Siber güvenlik olaylarının tespiti, analizi, kayıt altına alınması, müdahalesi ve raporlanması süreçleri konusunda bilgi sahibi olmak. ❖ Tercihen CompTIA Security+, CySA+, CEH (Certified Ethical Hacker), GCIH (GIAC Certified Incident Handler), GSOC/SOC Analyst, CompTIA CASP+ veya OSCP gibi uluslararası geçerliliği bulunan siber güvenlik sertifikalarından birine sahip olmak."
+       "metin": "Alman Dili ve Edebiyatı, Almanca Mütercim-Tercümanlık veya Alman Dili ve Edebiyatı AD Araş.Gör. 1 5 75/SÖZ 70 Almanca Öğretmenliği lisans mezunu olmak. Bu alanların birinde https://www.dtcf.ankara.edu.tr/ tezli yüksek lisans veya doktora yapıyor olmak."
       },
       {
        "kadro": "Belgede belirtilen koşullar",
-       "metin": "b) Fakültelerin dört yıllık bilgisayar mühendisliği, yazılım mühendisliği, elektrik mühendisliği, elektronik mühendisliği, elektrik ve elektronik mühendisliği ve endüstri mühendisliği bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurt dışındaki yükseköğretim kurumlarından mezun olmak."
+       "metin": "Arap Dili ve Edebiyatı Anabilim Dalı lisans ve tezli yüksek lisans Arap Dili ve Edebiyatı AD Araş.Gör. 1 5 75/SÖZ 70 mezunu olmak. Arap Dili ve Edebiyatı Anabilim Dalında doktora https://www.dtcf.ankara.edu.tr/ yapıyor olmak."
       },
       {
        "kadro": "Belgede belirtilen koşullar",
-       "metin": "c) (b) bendinde belirtilenler dışında kalan dört yıllık eğitim veren fakültelerin mühendislik bölümlerinden, fen-edebiyat, eğitim ve eğitim bilimleri fakültelerinin, bilgisayar ve teknoloji üzerine eğitim veren bölümleri ile istatistik, matematik ve fizik bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurt dışındaki yükseköğretim kurumlarından mezun olmak. (Bu maddede belirtilen bölüm mezunları, aylık brüt sözleşme ücret tavanının 2 katı ödenecek pozisyonlar için başvurabilecektir.)"
+       "metin": "Astronomi ve Uzay Bilimleri lisans ve tezli yüksek lisans mezunu https://www.science.ankara.edu.t Astrofizik AD Araş.Gör. 1 5 75/SAY 70 olmak. Astronomi ve Uzay Bilimleri Anabilim Dalında doktora r/ yapıyor olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "İdare Hukuku AD Araş.Gör. 1 5 75/EA 70 Hukuk Fakültesi lisans mezunu olmak. Kamu Hukuku (İdare https://www.law.ankara.edu.tr/ Hukuku) alanında tezli yüksek lisans yapıyor olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "Milletlerarası Hukuk AD Araş.Gör. 1 5 75/EA 70 Hukuk Fakültesi lisans mezunu olmak. Kamu Hukuku https://www.law.ankara.edu.tr/ (Milletlerarası Hukuk) alanında doktora yapıyor olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "Medeni Hukuk AD Araş.Gör. 1 5 75/EA 70 Hukuk Fakültesi lisans mezunu olmak. Özel Hukuk (Medeni https://www.law.ankara.edu.tr/ Hukuk) alanında tezli yüksek lisans yapıyor olmak."
       }
      ],
-     "basvuru_notu": "Şahsen, kargo ya da posta yoluyla yapılan başvurular kabul edilmeyecektir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/22191d2e10f1e0899270bdd64db7bc608d2835a0faaadba86938288eed2c95ba.pdf",
-     "belge_sha256": "22191d2e10f1e0899270bdd64db7bc608d2835a0faaadba86938288eed2c95ba",
+     "basvuru_notu": "",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/e1ae7bb2d8f0ca7fc9546e84aa34b97298ab931cd6cb2a2acc17636249f5f712.pdf",
+     "belge_sha256": "e1ae7bb2d8f0ca7fc9546e84aa34b97298ab931cd6cb2a2acc17636249f5f712",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
-     "puan_turleri": [
-      "P3"
-     ],
      "belge_ogrenim": [
-      "lisans"
+      "lisans",
+      "onlisans"
      ]
     },
     {
@@ -3407,6 +3445,39 @@
      "basvuru_notu": "BAŞVURU VE SINAV TAKVİMİ İlan Tarihi 28.09.2026 Son Başvuru Tarihi 12.10.2026 Mesai bitimi – 17:00’a kadar) Ön Değerlendirme İlan Tarihi 19.10.2026 Giriş Sınavı Tarihi 23.10.2026 Sonuç İlan Tarihi 02.11.2026 Sonuçların İlan Edileceği İnternet Sitesi www.mku.edu.tr Başvuru Şekli (Online) https://genelbasvuru.mku.edu.tr/",
      "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/2db72028c28fe8a5553dc2da050fdefe835ce3d9e0ed5ea7e52fbb41ff115f30.pdf",
      "belge_sha256": "2db72028c28fe8a5553dc2da050fdefe835ce3d9e0ed5ea7e52fbb41ff115f30",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6
+    },
+    {
+     "id": "sbb-92175a7cf7d3c024505448b2",
+     "baslik": "İSKENDERUN TEKNİK ÜNİVERSİTESİ - 11 ÖĞRETİM ÜYESİ ALACAK",
+     "kurum": "İSKENDERUN TEKNİK ÜNİVERSİTESİ",
+     "kadro": "11 ÖĞRETİM ÜYESİ ALACAK",
+     "ilan_turu": "Öğretim Üyesi",
+     "son_tarih": "2026-10-12",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 28 Eylül - 12 Ekim)",
+     "baslangic_zaman": "2026-09-28T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-10-12T09:08:20+03:00",
+     "belge_ozeti": "7351c33f98fa32ac071e1bfcdbe6d8c0235bfa4524fa5233231231ffaabe2cd0",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "11 ÖĞRETİM ÜYESİ alımı. Son başvuru: 12.10.2026. Başvuru süresi, ilanın yayın tarihinden itibaren 15 (on beş) gü n olup, başvurular; doçent kadrol arı için Personel Daire Başkan lığına, doktor öğretim üyesi kadroları için ise ilgili Fakülte Dekanlığı şahsen yapılacaktır. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgedeki kadro koşullarından alıntı",
+       "metin": "2026 - 24 MİMARLIK FAKÜLTESİ ŞEHİR VE BÖLGE PLANLAMA ŞEHİR VE BÖLGE PLANLAMA DOKTOR ÖĞRETİM ÜYESİ 2 1 Şehir ve Bölge Planlama alanında lisans ve doktora mezunu olmak."
+      }
+     ],
+     "basvuru_notu": "",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/7351c33f98fa32ac071e1bfcdbe6d8c0235bfa4524fa5233231231ffaabe2cd0.pdf",
+     "belge_sha256": "7351c33f98fa32ac071e1bfcdbe6d8c0235bfa4524fa5233231231ffaabe2cd0",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
     },
@@ -4929,7 +5000,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-10-12T07:37:58.420734+00:00",
+   "kontrol": "2026-10-12T08:06:46.840398+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
