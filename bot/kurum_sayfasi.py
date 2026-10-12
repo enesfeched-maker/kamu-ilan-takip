@@ -251,12 +251,19 @@ def tarih_yazi(iso):
 
 
 BELIRSIZ_GUN = 10
+CSB_BELIRSIZ_GUN = 45  # belediye ilanında başvuru, yayımdan en geç ~6 hafta içinde biter
 
 
 def belirsiz_mi(i, simdi):
-    """Kariyer Kapısı kaydı: tarih yok, ayrıntı hiç alınamamış ve ilk görülmeden BELIRSIZ_GUN günden fazla geçmiş. Büyük olasılıkla
-    süresi dolmuştur; sayılara ve Bugün bölümlerine girmez, İlanlar'da 'Tarih doğrulanamadı' etiketiyle kalır."""
-    if i.get('kaynak_turu') in ('sbb', 'iskur', 'csb') or i.get('detay_guncelleme'):
+    """Kariyer Kapısı kaydı: tarih yok, ayrıntı hiç alınamamış ve ilk görülmeden BELIRSIZ_GUN günden fazla geçmiş. ÇŞB kaydı: belgeden
+    tarih okunamamış ve yayımından CSB_BELIRSIZ_GUN günden fazla geçmiş. Büyük olasılıkla süresi dolmuştur; sayılara ve Bugün
+    bölümlerine girmez, İlanlar'da 'Tarih doğrulanamadı' etiketiyle kalır."""
+    if i.get('kaynak_turu') == 'csb':
+        try:
+            return (simdi.date() - date.fromisoformat(i.get('yayim_tarihi') or '')).days > CSB_BELIRSIZ_GUN
+        except ValueError:
+            return False
+    if i.get('kaynak_turu') in ('sbb', 'iskur') or i.get('detay_guncelleme'):
         return False
     try:
         return simdi - datetime.fromisoformat(i.get('ilk_gorulme') or '').astimezone(TR) > timedelta(days=BELIRSIZ_GUN)

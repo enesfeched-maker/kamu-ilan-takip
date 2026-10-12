@@ -934,6 +934,9 @@ def main():
     # 2) Yeni ilanları bul
     ilk_calisma = not veri.get("guncelleme")
     mevcut = {i["id"]: i for i in veri["ilanlar"]}
+    for k in mevcut.values():  # eski kayıtlarda yazıyla 'None' saklanmış son tarih: boş say (yeniden okunsun)
+        if str(k.get('son_tarih')).strip() in ('None', 'null'):
+            k['son_tarih'] = ''
     yeniler = []
     for i in gelen:
         if i["id"] in mevcut:

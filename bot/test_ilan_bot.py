@@ -182,7 +182,7 @@ class TelegramDeliveryTests(unittest.TestCase):
         state = json.loads(self.data.read_text())
         link = 'https://kariyerkapisi.gov.tr/IlanDetay?i=99999999-9999-4999-8999-999999999999'
         state['ilanlar'].append({'id': link, 'link': link, 'baslik': 'Eski Kurum - Alım', 'kurum': 'Eski Kurum',
-                                 'son_tarih': None, 'ilk_gorulme': (ilan_bot.simdi() - timedelta(days=20)).isoformat()})
+                                 'son_tarih': 'None', 'ilk_gorulme': (ilan_bot.simdi() - timedelta(days=20)).isoformat()})
         self.data.write_text(json.dumps(state))
         okunan = []
         def oku(l):

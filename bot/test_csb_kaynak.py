@@ -115,6 +115,12 @@ class BelgeTesti(unittest.TestCase):
         self.assertEqual(csb.son_basvuru('Son başvuru tarihi: 15/10/2026 saat 17.00'),'2026-10-15')
         self.assertEqual(csb.son_basvuru('Son başvuru günü 5 Kasım 2026\'dır.'),'2026-11-05')
 
+    def test_aralik_egik_cizgi_ve_sinav_on_cumlesi(self):
+        metin=('4. BAŞVURU YERİ, TARİHİ, ŞEKLİ VE SÜRESİ: Adaylar, sözlü sınava katılabilmek için; Elektronik ortamda '
+               'başvurular, 01 . 10 .2026 / 06 . 10 .2026 tarihleri arasında istenilen belgelerle yapılır.')
+        self.assertEqual(csb.son_basvuru(metin),'2026-10-06')
+        self.assertIsNone(csb.son_basvuru('Başvuru sahipleri için sınav 01.10.2026 - 06.10.2026 tarihleri arasında yapılır.'))
+
     def test_aralik_tarihinden_tarihine_kadar(self):
         metin=('Adaylar, sözlü ve uygulamalı sınava katılabilmek için;\n19/10/2026 tarihinden 21/10/2026 tarihi mesai bitimine kadar, '
                'yukarıda sayılan belgeler ile birlikte Aralık/Iğdır adresindeki birime şahsen müracaat ederek başvuru sürecini tamamlayacaklardır.\n')
