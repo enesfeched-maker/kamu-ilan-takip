@@ -429,6 +429,11 @@ def telegram_sirasi(mevcut, gelen, yeniler, gonderilen, bekleyen, ilk_calisma, d
         if suresi_doldu(i):
             bekleyen.discard(kimlik)
             continue
+        if not (i.get('kurum') or '').strip() and not i.get('duyuru_turu'):
+            # Kurumu okunamayan kayıt başka kaynaktaki kopyasıyla eşleştirilemez (12 Ekim 2026: TMSF iki kez paylaşıldı):
+            # kanala gitmez, sırada bekler; kurum adı sonradan okunursa normal akışla paylaşılır.
+            print(f"Kanala gönderilmedi (kurum adı okunamadı): {i['baslik']}")
+            continue
         if telegram_icin_uygun(i, dahil, haric):
             uygun.append(i)
     uygun = kopyalari_ele([i for i in uygun if not i.get('duyuru_turu')], mevcut, gonderilen, bekleyen) + [i for i in uygun if i.get('duyuru_turu')]

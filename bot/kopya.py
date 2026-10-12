@@ -246,11 +246,17 @@ def kopya_bul(ilanlar):
         # ili bir tarafta yazmayan (İŞKUR'un şehri, SBB'de il yok) ulusal kurum ilanı eşleşebilir; belediyede il şarttır
         return not x['kan'].endswith(' belediye')
 
+    def baslangica_denk(a, b):
+        """İŞKUR bazen başvurunun BAŞLADIĞI günü son tarih diye yazar (12 Ekim 2026, İstanbul Kalkınma Ajansı: İŞKUR '2 Kasım',
+        Kariyer Kapısı '2–22 Kasım'): a İŞKUR kaydı ve son tarihi b'nin başlangıç günü."""
+        return (any('iskur.gov.tr' in h for h in bilgi[a['id']]['host']) and bool(_gun(a.get('son_tarih')))
+                and _gun(a.get('son_tarih')) == _gun(b.get('baslangic_zaman')))
+
     def tarih_uyumlu(a, b):
         sa, sb = _gun(a.get('son_tarih')), _gun(b.get('son_tarih'))
         if sa and sb:
             fark = abs((sa - sb).days)
-            if fark == 0:
+            if fark == 0 or baslangica_denk(a, b) or baslangica_denk(b, a):
                 return True
             if _asamada(a, b) or _asamada(b, a):
                 return True   # ön + nihai başvuru: öteki kaynağın tarihi aşamalardan birine denk geliyor
@@ -310,12 +316,13 @@ def kopya_bul(ilanlar):
         if bx['kan'].endswith(' belediye') or not (bx['cekirdek'] and bx['cekirdek'] == by['cekirdek']):
             return False
         son = x.get('son_tarih')
-        if not son or son != y.get('son_tarih'):
+        if not son or son != y.get('son_tarih') and not (baslangica_denk(x, y) or baslangica_denk(y, x)):
             return False
+        gunler = {son, y.get('son_tarih')}
         say = {}
         for c in aday:
             bc = bilgi[c['id']]
-            if bc['cekirdek'] == bx['cekirdek'] and c.get('son_tarih') == son:
+            if bc['cekirdek'] == bx['cekirdek'] and c.get('son_tarih') in gunler:
                 for h in bc['host']:
                     say[h] = say.get(h, 0) + 1
         return all(n == 1 for n in say.values())

@@ -104,8 +104,34 @@ def total(item):
     return int(m.group(1))
 
 
+# Başlığı kısaltmayla başlayan ilanlar ("TMSF Fon Denetçi Yardımcılığı ... Sınav İlanı"): kurum adı kısaltmadan bulunur.
+# 12 Ekim 2026: kurum boş kaldığı için TMSF ilanı kopya sayılmadı, kanalda iki kez paylaşıldı.
+KURUM_KISALTMALARI = {
+    'TMSF': 'Tasarruf Mevduatı Sigorta Fonu Başkanlığı', 'SPK': 'Sermaye Piyasası Kurulu Başkanlığı',
+    'BDDK': 'Bankacılık Düzenleme ve Denetleme Kurumu Başkanlığı', 'EPDK': 'Enerji Piyasası Düzenleme Kurumu Başkanlığı',
+    'RTÜK': 'Radyo ve Televizyon Üst Kurulu', 'TCMB': 'Türkiye Cumhuriyet Merkez Bankası', 'SGK': 'Sosyal Güvenlik Kurumu Başkanlığı',
+    'TÜİK': 'Türkiye İstatistik Kurumu Başkanlığı', 'ÖSYM': 'Ölçme, Seçme ve Yerleştirme Merkezi Başkanlığı',
+    'DSİ': 'Devlet Su İşleri Genel Müdürlüğü', 'TCDD': 'Türkiye Cumhuriyeti Devlet Demiryolları Genel Müdürlüğü',
+    'TPAO': 'Türkiye Petrolleri Anonim Ortaklığı Genel Müdürlüğü', 'BOTAŞ': 'BOTAŞ Genel Müdürlüğü',
+    'TÜBİTAK': 'Türkiye Bilimsel ve Teknolojik Araştırma Kurumu Başkanlığı', 'KOSGEB': 'KOSGEB Başkanlığı',
+    'TOKİ': 'Toplu Konut İdaresi Başkanlığı', 'AFAD': 'Afet ve Acil Durum Yönetimi Başkanlığı',
+    'TİKA': 'Türk İşbirliği ve Koordinasyon Ajansı Başkanlığı', 'MTA': 'Maden Tetkik ve Arama Genel Müdürlüğü',
+    'KGM': 'Karayolları Genel Müdürlüğü', 'BTK': 'Bilgi Teknolojileri ve İletişim Kurumu Başkanlığı',
+    'SSB': 'Savunma Sanayii Başkanlığı', 'GİB': 'Gelir İdaresi Başkanlığı', 'MSB': 'Milli Savunma Bakanlığı',
+    'KİK': 'Kamu İhale Kurumu Başkanlığı', 'TRT': 'Türkiye Radyo-Televizyon Kurumu Genel Müdürlüğü',
+}
+
+
+def kisaltma_kurumu(title):
+    """Başlığın ilk sözcüğü bilinen bir kurum kısaltmasıysa kurumun tam adı; değilse ''."""
+    ilk = (title or '').strip().split(' ', 1)[0].strip('.,:;-–()')
+    return KURUM_KISALTMALARI.get(ilk.replace('i', 'İ').upper(), '') if ilk else ''
+
+
 def institution(title):
     # Keep the actual named institution; never infer a workplace from its city name.
+    if kisaltma_kurumu(title):
+        return kisaltma_kurumu(title)
     m = re.match(r'(.+?\b(?:Belediye Başkanlığı|Belediyesi|Üniversitesi|Kurumu Başkanlığı|Kalkınma Ajansı|Ajansı|Kurumu|Birliği|Bakanlığı|Genel Müdürlüğü|Başkanlığı))\b',title,re.I)
     if m:
         org=clean(m.group(1))

@@ -81,6 +81,24 @@ class AsamaliBasvuruTests(unittest.TestCase):
         self.assertTrue(kopya._asamada(t, iskur))
         self.assertEqual(len(kopya.kopya_bul([t, iskur])['kopya_of']), 1)
 
+    def test_iskur_kisaltma_kurumu_ve_baslangic_gunu_kopya(self):
+        from ek_kaynaklar import institution
+        self.assertEqual(institution('TMSF Fon Denetçi Yardımcılığı, Fon Uzman Yardımcılığı ve Fon Avukatlığı Sınav İlanı'),
+                         'Tasarruf Mevduatı Sigorta Fonu Başkanlığı')
+        self.assertEqual(institution('Tmsf Fon Avukatlığı Sınav İlanı'), 'Tasarruf Mevduatı Sigorta Fonu Başkanlığı')
+        self.assertEqual(institution('İstanbul Kalkınma Ajansı Personel Alım İlanı'), 'İstanbul Kalkınma Ajansı')
+        # İŞKUR başvurunun başladığı günü son tarih yazmış: Kariyer Kapısı 2–22 Kasım, İŞKUR '2 Kasım'.
+        u = 'https://kariyerkapisi.gov.tr/IlanDetay?i=c1ab5cba-d22b-40ab-b89b-1d27431a422c'
+        kk = {'id': u, 'link': u, 'baslik': 'İSTANBUL KALKINMA AJANSI - PERSONEL ALIM İLANI 5 UZMAN', 'kurum': 'İSTANBUL KALKINMA AJANSI',
+              'kadro': '5 1.SINIF UZMAN', 'son_tarih': '2026-11-22', 'baslangic_zaman': '2026-11-02T01:01:00+03:00',
+              'ozet': 'KPSS Puanı ile Başvuracak Uzman Personel Adayları İçin Asgari Şartlar', 'ilk_gorulme': '2026-10-12T09:54:58+03:00'}
+        isk = {'id': 'iskur-' + 'c' * 24, 'kaynak_turu': 'iskur', 'baslik': 'İstanbul Kalkınma Ajansı Personel Alım İlanı',
+               'kurum': 'İstanbul Kalkınma Ajansı', 'yer': 'İstanbul', 'son_tarih': '2026-11-02', 'ilan_turu': 'Kamu Personeli',
+               'link': 'https://www.iskur.gov.tr/medya/x/i.pdf', 'kaynaklar': [{'ad': 'İŞKUR', 'link': 'https://www.iskur.gov.tr/medya/x/i.pdf'}],
+               'ilk_gorulme': '2026-10-12T10:12:24+03:00'}
+        self.assertEqual(kopya.kopya_bul([kk, isk])['kopya_of'], {isk['id']: u})
+        self.assertEqual(kopya.kopya_bul([kk, dict(isk, son_tarih='2026-11-05')])['kopya_of'], {})
+
 
 class BelirsizTests(unittest.TestCase):
     def kk(self, **ek):
