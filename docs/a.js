@@ -21,12 +21,28 @@
     for (var j = 0; j < 9; j++) s += (a[j] % 36).toString(36);
     return 'o' + s;
   }
+  /* Erişim (kaç farklı kişi): bu cihaz bugün / bu hafta / bu ay / hiç gelmiş mi? Yalnız tarih tutulur (kit-a-d), hiçbir kimlik
+     gönderilmez; sunucu yalnız 'dönemin ilk ziyareti' bayraklarını sayar. g=gün, h=hafta, a=ay, i=ilk kez. */
+  function donemBayraklari() {
+    var t = new Date(), iki = function (x) { return (x < 10 ? '0' : '') + x; };
+    var g = t.getFullYear() + '-' + iki(t.getMonth() + 1) + '-' + iki(t.getDate());
+    var pzt = new Date(t.getFullYear(), t.getMonth(), t.getDate() - ((t.getDay() + 6) % 7));
+    var h = pzt.getFullYear() + '-' + iki(pzt.getMonth() + 1) + '-' + iki(pzt.getDate()), a = g.slice(0, 7), k = null, b = '';
+    try { k = JSON.parse(w.localStorage.getItem('kit-a-d')); } catch (e) { k = null; }
+    k = k && typeof k === 'object' ? k : {};
+    if (!k.i) b += 'i';
+    if (k.g !== g) b += 'g';
+    if (k.h !== h) b += 'h';
+    if (k.a !== a) b += 'a';
+    try { w.localStorage.setItem('kit-a-d', JSON.stringify({ i: 1, g: g, h: h, a: a })); } catch (e) { return ''; }
+    return b;
+  }
   var oturum = null;
   try { oturum = JSON.parse(oku('kit-a')); } catch (e) { oturum = null; }
   if (!oturum || typeof oturum.s !== 'string') {
     var onceki = null;
     try { onceki = w.localStorage.getItem('kit-son-ziyaret'); } catch (e) { /* yok */ }
-    oturum = { s: rast(), r: onceki ? 1 : 0, f: 0 };
+    oturum = { s: rast(), r: onceki ? 1 : 0, f: 0, d: donemBayraklari() };
     yaz('kit-a', JSON.stringify(oturum));
   }
   ilk = !oturum.f;
@@ -85,7 +101,7 @@
           var e = { t: 'sayfa', p: cur.p };
           if (cur.v) e.v = cur.v;
           if (cur.k) e.k = cur.k;
-          if (ilk) { e.f = 1; ilk = false; oturum.f = 1; yaz('kit-a', JSON.stringify(oturum)); }
+          if (ilk) { e.f = 1; if (oturum.d) e.d = oturum.d; ilk = false; oturum.f = 1; yaz('kit-a', JSON.stringify(oturum)); }
           kuyruk.push(e);
           sirala(false);
         }
