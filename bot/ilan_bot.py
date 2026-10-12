@@ -365,6 +365,20 @@ def telegram_gonder(token, chat_id, metin, ilan_linki="", site_url="", foto=None
     return False
 
 
+ISKUR_BEKLEME_SAAT = 2
+
+
+def iskur_bekliyor(i):
+    """İŞKUR kaydı ilk görüldükten sonra ISKUR_BEKLEME_SAAT dolmadıysa True (tarih okunamazsa beklemez)."""
+    try:
+        gorulme = datetime.fromisoformat(i.get('ilk_gorulme') or '')
+    except ValueError:
+        return False
+    if gorulme.tzinfo is None:
+        gorulme = gorulme.replace(tzinfo=TR)
+    return simdi() - gorulme < timedelta(hours=ISKUR_BEKLEME_SAAT)
+
+
 def kopyalari_ele(uygun, mevcut, gonderilen, bekleyen):
     """Aynı gerçek ilanın başka kaynaktaki kaydı (kopya) kanalda zaten paylaşıldıysa — ya da aynı çalışmada birincil kayıt
     paylaşılacaksa — ikincisi tekrar paylaşılmaz: yinelenen kayıt, aynı takma adlar gibi 'işlenmiş' sayılır (gönderilmiş işaretlenir,
@@ -428,6 +442,10 @@ def telegram_sirasi(mevcut, gelen, yeniler, gonderilen, bekleyen, ilk_calisma, d
             continue
         if suresi_doldu(i):
             bekleyen.discard(kimlik)
+            continue
+        if i.get('kaynak_turu') == 'iskur' and not i.get('duyuru_turu') and iskur_bekliyor(i):
+            # İŞKUR ikincil kaynak: aynı ilan SBB / Kariyer Kapısı'na düşerse kanala o (esas) kayıt gitsin.
+            print(f"Kanal için bekletildi (İŞKUR, {ISKUR_BEKLEME_SAAT} saat): {i['baslik']}")
             continue
         if not (i.get('kurum') or '').strip() and not i.get('duyuru_turu'):
             # Kurumu okunamayan kayıt başka kaynaktaki kopyasıyla eşleştirilemez (12 Ekim 2026: TMSF iki kez paylaşıldı):

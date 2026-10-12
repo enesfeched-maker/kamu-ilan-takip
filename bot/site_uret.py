@@ -779,6 +779,7 @@ def main():
         import kopya
         kopyalar = kopya.kopya_bul(data.get('ilanlar', []))
         print(f'{len(kopyalar["kopya_of"])} kopya ilan (kaynaklar arası) birleştirildi.')
+        data['ilanlar'] = kopya.birlestir(data.get('ilanlar', []), kopyalar)   # esas kaydın eksikleri kopyalardan
     except Exception as hata:
         print(f'Uyarı: kopya ilanlar bulunamadı: {hata}')
     kimlik_harita = {i.get('id'): i for i in data.get('ilanlar', [])}
