@@ -423,8 +423,8 @@ def telegram_sirasi(mevcut, gelen, yeniler, gonderilen, bekleyen, ilk_calisma, d
         if not i or kimlik not in canli:
             bekleyen.discard(kimlik)
             continue
-        if akademik_ilan(i) or kurum_ici(i):
-            bekleyen.discard(kimlik)  # akademik ve kurum içi (yeterlik/görevde yükselme/yurt dışı eğitim) ilanlar kanala hiç gitmez
+        if akademik_ilan(i) or kurum_ici(i) or kimlik in set((cfg.get('elle') or {}).get('gizle') or []):
+            bekleyen.discard(kimlik)  # akademik, kurum içi (yeterlik/görevde yükselme/yurt dışı eğitim) ve elle gizlenen ilanlar kanala hiç gitmez
             continue
         if suresi_doldu(i):
             bekleyen.discard(kimlik)
@@ -615,9 +615,14 @@ def aksam_yeniler(ilanlar, cfg, zaman):
     from kart_tasarimlari import veri as kart_verisi
     dahil, haric = cfg.get('telegram_kelimeler_dahil', []), cfg.get('telegram_kelimeler_haric', [])
     bugun_20 = datetime.combine(zaman.astimezone(TR).date(), datetime.min.time(), tzinfo=TR).replace(hour=20)
+    elle = cfg.get('elle') or {}
+    gizle, alanlar = set(elle.get('gizle') or []), elle.get('alanlar') or {}
+    ilanlar = [dict(i, **alanlar.get(i.get('id'), {})) for i in ilanlar if i.get('id') not in gizle]  # sitedeki elle kararlar
     sonuc = []
     for i in ilanlar:
         if i.get('duyuru_turu') or i.get('iptal_edildi') or akademik_ilan(i) or kurum_ici(i) or suresi_doldu(i):
+            continue
+        if not (i.get('kurum') or '').strip():
             continue
         try:
             gorulme = datetime.fromisoformat(i['ilk_gorulme'])
