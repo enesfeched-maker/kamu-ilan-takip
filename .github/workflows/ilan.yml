@@ -92,6 +92,7 @@ jobs:
         run: |
           python -m unittest discover -s bot -p 'test_site_uret.py'
           python -m unittest discover -s bot -p 'test_liste_verisi.py'
+          curl -fsS --max-time 20 https://kpsstercihi.com/sitemap.xml -o "$RUNNER_TEMP/eski-sitemap.xml" || true
           python bot/site_uret.py
       - name: Pages yapılandır
         if: ${{ !cancelled() && steps.portal.outcome == 'success' }}
@@ -119,6 +120,11 @@ jobs:
       - name: Canlı sitenin güncellenmesini bekle
         if: ${{ !cancelled() && (steps.deployment.outcome == 'success' || steps.deployment2.outcome == 'success') }}
         run: python bot/yayin_bekle.py
+      # Yeni ilan sayfalarını Bing/Yandex'e hemen bildir (ChatGPT araması Bing dizinini kullanır). Hata işi düşürmez.
+      - name: Yeni sayfaları arama motorlarına bildir
+        if: ${{ !cancelled() && (steps.deployment.outcome == 'success' || steps.deployment2.outcome == 'success') }}
+        continue-on-error: true
+        run: python bot/indexnow.py "$RUNNER_TEMP/eski-sitemap.xml"
       - name: Yayımlanan ilanları Telegram'a gönder
         id: telegram
         if: ${{ !cancelled() && (steps.deployment.outcome == 'success' || steps.deployment2.outcome == 'success') }}
