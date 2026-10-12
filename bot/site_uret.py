@@ -745,6 +745,21 @@ def gorselleri_uret(ilanlar, docs, simdi=None, en_cok_indirme=EN_COK_LOGO_INDIRM
             sonuc[anahtar] = girdi
     return sonuc
 
+def elle_kurallar():
+    """config.json 'elle': {'gizle': [kimlik], 'alanlar': {kimlik: {alan: değer}}} — kullanıcının elle verdiği kararlar."""
+    try:
+        elle = json.loads((ROOT / 'config.json').read_text(encoding='utf-8')).get('elle') or {}
+    except (OSError, ValueError):
+        elle = {}
+    return set(elle.get('gizle') or []), dict(elle.get('alanlar') or {})
+
+
+def elle_uygula(ilanlar):
+    """Elle gizlenen kayıtlar sitede hiç yer almaz; elle düzeltilen alanlar (örn. yanlış son tarih) kaydın üzerine yazılır."""
+    gizle, alanlar = elle_kurallar()
+    return [dict(i, **alanlar.get(i.get('id'), {})) for i in ilanlar if i.get('id') not in gizle]
+
+
 def main():
     docs = ROOT / 'docs'
     data = json.loads((docs / 'ilanlar.json').read_text(encoding='utf-8'))
@@ -754,6 +769,7 @@ def main():
         data['ilanlar'] = [liste_verisi.tamamla(i) for i in data.get('ilanlar', [])]
     except Exception as hata:
         print(f'Uyarı: kayıtlar derleme zamanında tamamlanamadı: {hata}')
+    data['ilanlar'] = elle_uygula(data.get('ilanlar', []))
     urls = [BASE]
     count = 0
     from siniflandir import akademik_ilan

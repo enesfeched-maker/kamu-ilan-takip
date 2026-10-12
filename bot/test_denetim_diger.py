@@ -81,6 +81,12 @@ class AsamaliBasvuruTests(unittest.TestCase):
         self.assertTrue(kopya._asamada(t, iskur))
         self.assertEqual(len(kopya.kopya_bul([t, iskur])['kopya_of']), 1)
 
+    def test_elle_gizle_ve_alan_duzeltme(self):
+        ilanlar = [{'id': 'a', 'son_tarih': '2026-11-02'}, {'id': 'b', 'son_tarih': '2026-11-22'}]
+        with patch.object(site_uret, 'elle_kurallar', return_value=({'b'}, {'a': {'son_tarih': '2026-11-22'}})):
+            self.assertEqual(site_uret.elle_uygula(ilanlar), [{'id': 'a', 'son_tarih': '2026-11-22'}])
+        self.assertEqual(ilanlar[0]['son_tarih'], '2026-11-02')   # kayıt değişmez, kopya döner
+
     def test_iskur_kisaltma_kurumu_ve_baslangic_gunu_kopya(self):
         from ek_kaynaklar import institution
         self.assertEqual(institution('TMSF Fon Denetçi Yardımcılığı, Fon Uzman Yardımcılığı ve Fon Avukatlığı Sınav İlanı'),
