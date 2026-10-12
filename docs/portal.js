@@ -118,7 +118,7 @@ function visualOf(o){
 const generic=!o.meslek.length||/^30-/.test(o.meslek[0]);
 if(generic&&o.logo){const s=E('span','ilan-foto logo-karo'),im=E('img');im.src=o.logo;im.alt='';im.loading='lazy';im.decoding='async';im.onerror=()=>s.replaceWith(badge({kurum:o.kurum},'ilan-foto harf-karo'));s.append(im);return{node:s,karo:true};}
 if(generic)return{node:badge({kurum:o.kurum},'ilan-foto harf-karo'),karo:false};
-const im=E('img','ilan-foto');im.src='assets/meslek/'+o.meslek[0];im.alt='';im.width=52;im.height=52;im.loading='lazy';im.decoding='async';im.onerror=()=>im.replaceWith(badge({kurum:o.kurum},'ilan-foto harf-karo'));return{node:im,karo:false};}
+const im=E('img','ilan-foto');im.src='assets/meslek/kucuk/'+o.meslek[0];im.alt='';im.width=52;im.height=52;im.loading='lazy';im.decoding='async';im.onerror=()=>im.replaceWith(badge({kurum:o.kurum},'ilan-foto harf-karo'));return{node:im,karo:false};}
 function smallLogo(o){if(o.logo){const im=E('img','kl');im.src=o.logo;im.alt='';im.width=18;im.height=18;im.loading='lazy';im.onerror=()=>im.replaceWith(badge({kurum:o.kurum},'kb'));return im;}return badge({kurum:o.kurum},'kb');}
 function metaOf(o,kadroGizli){const p=[];if(o.toplam&&!kadroGizli&&!/^\d/.test(o.manset)){const b=E('b','',o.toplam.toLocaleString('tr-TR')+' kadro');p.push(['',b]);}if(o.il)p.push(['',o.il]);if(o.ogrenim.length)p.push(['',o.ogrenim.map(x=>LEVELS[x]).join(' / ')]);if(o.puan_turleri.length)p.push(['kpss','KPSS '+o.puan_turleri.slice(0,2).join(', ')]);else if(o.kpss==='kpss')p.push(['kpss','KPSS']);const m=E('p','ilan-meta');for(const [c,v] of p.slice(0,4)){const s=E('span',c);s.append(v);m.append(s);}return m;}
 const RANK={ortaogretim:0,onlisans:1,lisans:2};

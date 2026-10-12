@@ -363,8 +363,8 @@ def _afis_foto(no, ust_h):
     foto = _foto_yukle(no)
     if foto is None:
         return None, 0
-    boy = 600  # kaynak ~190 px: 3x büyütme; LANCZOS + hafif keskinleştirme
-    buyuk = foto.resize((boy, boy), Image.Resampling.LANCZOS).filter(ImageFilter.UnsharpMask(radius=2.2, percent=110, threshold=2))
+    boy = 600  # kaynak 600 px ikili (kadın + erkek) fotoğraf
+    buyuk = foto.resize((boy, boy), Image.Resampling.LANCZOS) if foto.size != (boy, boy) else foto
     return buyuk, boy
 
 

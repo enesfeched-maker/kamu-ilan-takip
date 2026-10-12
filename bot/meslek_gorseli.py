@@ -193,6 +193,8 @@ def fotograf(label, boy=150):
     foto = _foto_yukle(meslek_no(label))
     if foto is None:
         return None
+    w, h = foto.size  # ikili fotoğraf: yüzlerin bulunduğu üst-orta kare dairede kalır
+    foto = foto.crop((round(w * 0.08), 0, round(w * 0.92), round(h * 0.84)))
     boy = min(boy, *foto.size)
     kat = 4
     buyuk = foto.resize((boy * kat, boy * kat), Image.Resampling.LANCZOS).convert('RGBA')

@@ -297,7 +297,7 @@ class HeroKartiTests(unittest.TestCase):
 
     def test_foto_ve_kadro_var(self):
         h = self.sayfa(ilan(1, 'A Belediyesi', kadro='3 Zabıta Memuru'), {'meslek': ['07-zabita.jpg']})
-        self.assertIn('<figure class="dh-afis"><img src="../../assets/meslek/07-zabita.jpg"', h)
+        self.assertIn('<figure class="dh-afis"><img src="../../assets/meslek/kucuk/07-zabita.jpg"', h)
         self.assertIn('<figcaption><b>3</b><small>kadro</small></figcaption>', h)
         self.assertIn('<h1 id="dh-baslik">Zabıta Memuru</h1>', h)  # sayı başlıktan düştü
         self.assertNotIn('class="afis"', h)
