@@ -129,6 +129,9 @@ class DenetimDuzeltmeTests(unittest.TestCase):
         ilan = {'ozet': 'Dört yıllık fakülte mezunu olmak. Diğer okullardan disiplinsizlik nedeniyle çıkarılmamış olmak ve '
                         'ortaöğretim kurumlar ında örgün öğretim d ışına çıkartma cezası almamış olmak.'}
         self.assertEqual(ogrenim_seviyeleri(ilan), ['lisans'])
+        # Sayfa sonunda bölünmüş cümle: 'cezası' görünmez.
+        ilan = {'ozet': 'Dört yıllık fakülte mezunu olmak. Ortaöğretim kurumlarında örgün öğretim d ışına çıkartma'}
+        self.assertEqual(ogrenim_seviyeleri(ilan), ['lisans'])
 
     def test_bozuk_tabloda_p93_lisans_sayilmaz(self):
         ilan = {'ozet': 'ön kadın en az 1 memuru gih 10 1 lisans programlarının erkek p93 60'}

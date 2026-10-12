@@ -1,6 +1,6 @@
 """Denetim M3/M7/M9/M12/L1/L2 ve iptal duyurusu metni."""
 import unittest
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from unittest.mock import patch
 
 import basvuru_penceresi as bp
@@ -96,6 +96,13 @@ class BelirsizTests(unittest.TestCase):
         self.assertEqual(ks.durum(self.kk(detay_guncelleme='2026-10-05T10:00:00+03:00'), SIMDI)[1], 'none')
         self.assertEqual(ks.durum(self.kk(son_tarih='2026-10-30'), SIMDI)[1], 'ok')
         self.assertEqual(ks.durum(self.kk(kaynak_turu='csb', id='csb-123456', link='https://yerelyonetimler.csb.gov.tr/x'), SIMDI)[1], 'none')
+
+    def test_eski_tarihsiz_csb_belirsiz(self):
+        csb = dict(kaynak_turu='csb', id='csb-477163', link='https://yerelyonetimler.csb.gov.tr/x')
+        yayim = (SIMDI.date() - timedelta(days=46)).isoformat()
+        self.assertEqual(ks.durum(self.kk(yayim_tarihi=yayim, **csb), SIMDI)[1], 'belirsiz')
+        yayim = (SIMDI.date() - timedelta(days=20)).isoformat()
+        self.assertEqual(ks.durum(self.kk(yayim_tarihi=yayim, **csb), SIMDI)[1], 'none')
 
     def test_listede_ama_sayilmaz(self):
         import tempfile

@@ -139,8 +139,10 @@ def ogrenim_seviyeleri(ilan):
 
 
 def _sart_olarak_gecer(desen, metin):
-    """'... öğrenci kaydı bulunmamak', '... ortaöğretim kurumlarında ... çıkartma cezası almamış' gibi dışlayıcı ifadeleri saymaz."""
+    """'... öğrenci kaydı bulunmamak', '... ortaöğretim kurumlarında ... çıkartma cezası almamış' gibi dışlayıcı ifadeleri saymaz
+    (cümle sayfa sonunda bölünüp 'cezası' görünmese de 'öğretim dışına' yeter)."""
     return any('öğrenci' not in metin[m.end():m.end() + 40] and 'ceza' not in metin[m.end():m.end() + 90].split('.')[0]
+               and 'öğretimdışı' not in re.sub(r'\s+', '', metin[m.end():m.end() + 70].split('.')[0])
                for m in desen.finditer(metin))
 
 

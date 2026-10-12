@@ -41,7 +41,7 @@ AYLAR = [norm(m).strip() for m in MONTHS]
 EK_ADRESI = re.compile(r'^https://webdosya\.csb\.gov\.tr/v2/yerelyonetimler/\d{4}/\d{2}/[^?#\s]+\.(?:docx|pdf)$', re.I)
 KURUM = re.compile(r'^(?:(?P<il>\S+)\s+İLL?İ\s+)?(?P<ad>.+?)\s+'
                    r'(?P<tur>BELEDİYE\s+BAŞKANLIĞI(?:NA)?|BELEDİYESİ(?:NE)?|BELEDİYE|GENEL\s+MÜDÜRLÜ[ĞG]Ü(?:NE)?)\b\s*(?P<kalan>.*)$')
-ARALIK = re.compile(r'(\d{1,2})\s*[./]\s*(\d{1,2})\s*[./]\s*(20\d{2})\s*[-–—]\s*'
+ARALIK = re.compile(r'(\d{1,2})\s*[./]\s*(\d{1,2})\s*[./]\s*(20\d{2})\s*[-–—/]\s*'
                     r'(\d{1,2})\s*[./]\s*(\d{1,2})\s*[./]\s*(20\d{2})\s*tarihleri\s+aras')
 
 
@@ -222,6 +222,11 @@ def son_basvuru(metin):
     for g in ARALIK.finditer(metin):
         cumle = re.split(r'\n|\.\s', metin[max(0, g.start() - 250):g.start()])[-1]
         yazim = norm(cumle)
+        # '... sözlü sınava katılabilmek için; Elektronik ortamda başvurular, <tarih> / <tarih> tarihleri arasında':
+        # tarihe bağlı son yan cümle başvuruyu anlatıyorsa öndeki 'sınav' sayılmaz.
+        yan = norm(re.split(r'[;:]', cumle)[-1])
+        if 'basvuru' in yan and 'sinav' not in yan:
+            yazim = yan
         if 'basvuru' not in yazim or 'sinav' in yazim:
             continue
         ilk, son = _gun(*g.group(1, 2, 3)), _gun(*g.group(4, 5, 6))
