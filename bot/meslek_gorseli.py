@@ -6,12 +6,13 @@ from PIL import Image, ImageDraw
 
 FOTO_KLASORU = Path(__file__).resolve().parents[1] / 'docs' / 'assets' / 'meslek'
 GENEL_PERSONEL = 30
-FOTOSUZ = 0  # askerî/kolluk kadroları: üniformalı fotoğraf yok, sivil (ofis) fotoğrafı yanıltır; kart fotoğrafsız çizilir
+ASKER, POLIS, JANDARMA, SAHIL_GUVENLIK = 31, 32, 33, 34
 # Sıra önemlidir: özel meslekler genel olanlardan önce gelir. Kökler norm() edilmiş metinde kelime başından aranır;
 # sonunda boşluk olan kök tam kelime olmalıdır.
 FOTO_ESLEME = [
-    (FOTOSUZ, ('subay', 'astsubay', 'muvazzaf', 'uzman erbas', 'erbas', 'er adayi', 'sozlesmeli er ', 'polis', 'komiser',
-               'harp okulu', 'askeri ogrenci', 'harbiye')),
+    (ASKER, ('subay', 'astsubay', 'muvazzaf', 'uzman erbas', 'erbas', 'er adayi', 'sozlesmeli er ', 'harp okulu',
+             'askeri ogrenci', 'harbiye')),
+    (POLIS, ('polis', 'komiser')),
     (4, ('veteriner',)),
     (5, ('eczaci',)),
     (3, ('hekim', 'doktor', 'tabip')),
@@ -169,12 +170,16 @@ def illustration(label, size=220):
     return im.resize((size, round(size*250/320)), Image.Resampling.LANCZOS)
 
 
-def meslek_no(label):
-    """Kadro adından 30 meslekten birinin numarası (eşleşmezse 30: Genel Personel)."""
+def meslek_no(label, kurum=''):
+    """Kadro adından meslek fotoğrafının numarası (eşleşmezse 30: Genel Personel). Askerî kadroda kurum Jandarma ya da
+    Sahil Güvenlik ise o kurumun üniformalı fotoğrafı."""
     s = ' ' + ' '.join(re.sub(r'[^a-z0-9]+', ' ', norm(label or '')).split()) + ' '
     for no, kokler in FOTO_ESLEME:
         for kok in kokler:
             if (' ' + kok if not kok.endswith(' ') else ' ' + kok) in s:
+                if no == ASKER:
+                    k = norm(kurum or '')
+                    return SAHIL_GUVENLIK if 'sahil guvenlik' in k and 'akademi' not in k else JANDARMA if 'jandarma' in k else ASKER
                 return no
     return GENEL_PERSONEL
 
@@ -190,10 +195,10 @@ def _foto_yukle(no):
     return None
 
 
-def fotograf(label, boy=150):
+def fotograf(label, boy=150, no=None):
     """Mesleğin fotoğrafını ince açık kenarlıklı daire olarak döndürür; yoksa/açılamazsa None.
-    Fotoğraf kendi çözünürlüğünden fazla büyütülmez."""
-    foto = _foto_yukle(meslek_no(label))
+    Fotoğraf kendi çözünürlüğünden fazla büyütülmez. no verilirse (kurumla çözülmüş numara) o kullanılır."""
+    foto = _foto_yukle(no if no is not None else meslek_no(label))
     if foto is None:
         return None
     w, h = foto.size  # ikili fotoğraf: yüzlerin bulunduğu üst-orta kare dairede kalır
