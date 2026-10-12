@@ -33,6 +33,12 @@ class RegistryMergeTests(unittest.TestCase):
                            {'telegram_hatirlatilan': ['b', 'c']})
         self.assertEqual(r['telegram_hatirlatilan'], ['a', 'b', 'c'])
 
+    def test_aksam_karti_gunu_birlesmede_korunur(self):
+        for sol, sag in [({'telegram_aksam_gunu': '2026-10-12'}, {}), ({}, {'telegram_aksam_gunu': '2026-10-12'})]:
+            r = merge_registry(sol, sag)
+            self.assertEqual(r['telegram_aksam_gunu'], '2026-10-12')
+            self.assertTrue(commit_gerekli({}, r))
+
     def test_yalniz_zaman_damgasi_degisirse_commit_atlanir(self):
         eski = {'guncelleme': '2026-10-01T10:00:00+03:00', 'ilanlar': [{'id': 'a', 'detay_guncelleme': '1'}],
                 'kaynak_durumlari': {'iskur': {'kontrol': 'x', 'ilan_sayisi': 3}}}

@@ -68,6 +68,8 @@ def merge_registry(a, b):
             'telegram_mesajlari': dict(sorted(mesajlar.items())),
             'telegram_duyuru_yanitlari': dict(sorted(yanitlar.items())),
             'telegram_toplu_hatirlatma_gunu': max([g for g in (a.get('telegram_toplu_hatirlatma_gunu'), b.get('telegram_toplu_hatirlatma_gunu')) if g] or [None]),
+            # 12 Ekim 2026: bu anahtar birleştirmede düşüyordu; akşam kartı her turda yeniden gönderilebilirdi.
+            'telegram_aksam_gunu': max([g for g in (a.get('telegram_aksam_gunu'), b.get('telegram_aksam_gunu')) if g] or [None]),
             'telegram_hatirlatilan': merge_reminders(set().union(*(set(s.get('telegram_hatirlatilan',[])) for s in histories)),aliases),
             'kaynak_baslangiclari': sorted(set(a.get('kaynak_baslangiclari',[])) | set(b.get('kaynak_baslangiclari',[]))),
             'canli_kimlikler': sorted({aliases.get(x,x) for x in sorted([a,b],key=lambda s:s.get('guncelleme') or '')[-1].get('canli_kimlikler',[])}),
