@@ -211,7 +211,7 @@ def _kadro_kartlari(item, satirlar, belge):
             alt.append(f'<span><em>KPSS</em> {esc(kpss)}</span>')
         if s['cinsiyet']:
             alt.append(f'<span><em>Cinsiyet</em> {esc(s["cinsiyet"])}</span>')
-        maddeler = ''.join(f'<li>{esc(m)}</li>' for m in s['nitelik'])
+        maddeler = ''.join(f'<li>{esc(sade_madde(m))}</li>' for m in s['nitelik'] if sade_madde(m))
         kartlar += (f'<div class="kk"><div class="kk-bas"><strong>{esc(_unvan_duzgun(s["unvan"]))}</strong>'
                     + (f'<span class="kk-adet">{s["adet"]} kişi</span>' if s['adet'] else '') + '</div>'
                     + (f'<ul>{maddeler}</ul>' if maddeler else '')
@@ -225,6 +225,31 @@ def _kadro_kartlari(item, satirlar, belge):
 
 
 KK_OGRENIM = {'lisans': 'Lisans', 'onlisans': 'Önlisans', 'ortaogretim': 'Ortaöğretim'}
+
+
+def sade_madde(m):
+    """Şart maddesini okunur kısalığa indirir (12 Ekim 2026 kullanıcı kararı: kişi baktığı anda anlamalı):
+    'ÖSYM tarafından 2025 ve 2026 yılında yapılan … KPSS P3 puan türünde en az 60 (altmış) puan almış olmak' -> '2025-2026 KPSS P3
+    en az 60 puan almış olmak'; '10/6/2004 tarihli ve 5188 sayılı … Kanun'un 10 uncu maddesinde belirtilen şartlar ile' gibi mevzuat
+    öncülleri ve '(Ancak …)' gibi uzun parantez açıklamaları atılır; '60 (altmış)' -> '60'; sondaki virgül nokta olur."""
+    m = re.sub(r'\s+', ' ', str(m or '')).strip()
+    puan = re.search(r'KPSS\)?\s*(?:\(\w\)\s*grubu\s*)?(P\s?\d{1,3})\b.*?en az\s*(\d{2,3})', m)
+    if puan and re.search(r'puan\w*\s+(?:almış|sahip)', m) and len(m) > 50:
+        yillar = sorted(set(re.findall(r'\b(20\d\d)\b', m)))
+        yil = (yillar[0] if len(yillar) == 1 else f'{yillar[0]}-{yillar[-1]}') + ' ' if yillar else ''
+        return f'{yil}KPSS {puan.group(1).replace(" ", "")} en az {puan.group(2)} puan almış olmak.'
+    m = re.sub(r'^\d{1,2}[./]\d{1,2}[./]\d{4}\s+tarihli\s+ve\s+\d+\s+sayılı\s+.*?(?:belirtilen|belirtilen|belirtiler)\s+şartlar\s+ile\s+', '', m)
+    m = re.sub(r'\s*\([^()]{80,}\)?\s*$', '', m)   # sondaki uzun parantez açıklaması (belge yükleme, istisna notu)
+    m = re.sub(r'(?<=\.)\s+Ancak\s.{120,}$', '', m)   # uzun istisna cümlesi ('Ancak … kabul edilir.') ayrıntısı resmî ilanda
+    m = re.sub(r'\s*(?:,\s*)?(?:ya da|veya)\s+(?:buna|bunlara)\s+denkliği\s+Yükseköğretim\s+Kurulunca\s+kabul\s+edilmiş\s+yurt\s?dışındaki\s+'
+               r'Yükseköğretim\s+Kurumlarından', '', m)   # her ilanda geçen YÖK denklik kalıbı
+    m = re.sub(r'\bmezun\s+mezun', 'mezun', m)
+    m = re.sub(r'(\d+)\s*\((?:[a-zçğıöşü]+)\)', r'\1', m)
+    m = m.replace('“', '').replace('”', '').replace('"', '')
+    m = re.sub(r'[,;]\s*$', '.', m.strip())
+    if m and m[-1] not in '.!?)':
+        m += '.'
+    return m[:1].upper() + m[1:] if m else m
 
 
 def _kk_kadro_kartlari(kadrolar, kaynak):
@@ -248,7 +273,7 @@ def _kk_kadro_kartlari(kadrolar, kaynak):
             alt.append(f'<span><em>Görev yeri</em> {esc(yer)}</span>')
         if g['sinav']:
             alt.append(f'<span><em>Sınav</em> {esc(g["sinav"])}</span>')
-        maddeler = ''.join(f'<li>{esc(m)}</li>' for m in g['maddeler'])
+        maddeler = ''.join(f'<li>{esc(sade_madde(m))}</li>' for m in g['maddeler'] if sade_madde(m))
         kartlar += (f'<div class="kk"><div class="kk-bas"><strong>{esc(_unvan_duzgun(g["unvan"]))}</strong>'
                     + (f'<span class="kk-adet">{g["adet"]} kişi</span>' if g['adet'] else '') + '</div>'
                     + (f'<ul>{maddeler}</ul>' if maddeler else '<p class="kk-yok">Şartlar için resmî ilana bak.</p>')

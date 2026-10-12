@@ -192,7 +192,7 @@ def cip(d, x, y, metin, dolgu=ANA, yazi='#ffffff', boy=30, yuk=58, cizgi=None):
 
 def cipler(d, x, y, v, azami_x, dolgu=ANA, yazi='#ffffff', cizgi=LIME, boy=30, yuk=58, bosluk=14):
     """Öğrenim, KPSS ve yer çiplerini yan yana dizer, sığmayanı alt satıra alır; bitiş y'sini döner."""
-    metinler = list(v['duzeyler']) + ([v['kpss']] if v['kpss'] else []) + ([v['yer']] if v['yer'] else [])
+    metinler = list(v['duzeyler']) + ([v['kpss']] if v['kpss'] == 'KPSS şartı yok' else []) + ([v['yer']] if v['yer'] else [])
     cx = x
     for m in metinler:
         yz = F(boy, True)
@@ -229,15 +229,13 @@ def logo_yerlestir(im, d, v, kutu, arka='#ffffff', yaricap=26, ic=18):
 
 
 def kadro_ozeti(v, en_cok):
-    """Kadro listesini en fazla en_cok kutuya indirir; fazlası '+K kadro daha'. Aynı meslek fotoğrafı yalnız bir kez.
+    """Kadro listesini en fazla en_cok kutuya indirir; fazlası '+K kadro daha'. Her satır kendi meslek fotoğrafıyla.
     En kalabalık kadrolar önce (12 Ekim 2026: Milli Saraylar'da 100 güvenlik görevlisi '+4 kadro daha' içinde kalmıştı)."""
     k = sorted(v['kadrolar'], key=lambda x: -(x['adet'] or 0))
     kutular = [dict(x) for x in k] if len(k) <= en_cok else [dict(x) for x in k[:en_cok - 1]]
     kalan = len(k) - len(kutular)
-    kullanilan = set()
     for x in kutular:
-        x['foto'] = x['no'] not in kullanilan
-        kullanilan.add(x['no'])
+        x['foto'] = True
     if kalan > 0:
         kutular.append({'adet': None, 'ad': f'+{kalan} kadro daha', 'no': None, 'foto': False, 'ozet': True})
     return kutular
