@@ -17,7 +17,7 @@ SSS = [
      'tarihiyle birlikte listelenir.'),
     ('Güncel kamu personel alım ilanlarını nereden takip edebilirim?',
      'kpsstercihi.com ana sayfasında açık ilanlar son başvuru tarihine göre listelenir; yeni ilanlar ayrıca Telegram kanalı '
-     '@kamuilantakip üzerinden anında paylaşılır.'),
+     '@kpsstercihi üzerinden anında paylaşılır.'),
     ('İlanlar ne sıklıkla güncellenir?',
      'Kaynaklar gün boyunca yaklaşık 30 dakikada bir taranır. Yeni ilan, son başvuru tarihi değişikliği veya iptal olduğunda liste kendiliğinden güncellenir.'),
     ('Site ücretli mi, üyelik gerekiyor mu?',
@@ -63,7 +63,7 @@ def llms_metni(kayitlar, base, simdi, sayfasi_olan=None):
         f'- [KPSS tercih robotu]({base}puanlar/): puanını gir, geçmiş yerleştirmelerde yettiği kadroları gör',
         f'- [KPSS taban puanları]({base}kpss-taban-puanlari/): lisans, önlisans, ortaöğretim kadro kadro en düşük/en yüksek puanlar',
         f'- [Sık sorulan sorular]({base}sss/)',
-        '- [Telegram kanalı](https://t.me/kamuilantakip): yeni ilanlar anında',
+        '- [Telegram kanalı](https://t.me/kpsstercihi): yeni ilanlar anında',
         '',
         f'## Açık ilanlar ({len(acik)})',
     ]

@@ -186,7 +186,7 @@ const eslesen=s=>s==='tam'||s==='alt'||s==='bilinmiyor';
 const sayiTr=n=>Number(n).toLocaleString('tr-TR');
 function railTelegram(){
 const b=E('section','kutu tg-kutu'),s=E('span','tg-saat'),a=E('a','btn btn-lime');s.append(ic('saat'),'Her sabah 09:00 civarı');
-a.href='https://t.me/kamuilantakip';a.target='_blank';a.rel='noopener';a.setAttribute('data-a','telegram');a.setAttribute('data-a-x','kutu');a.append(ic('tg'),'Kanala katıl');
+a.href='https://t.me/kpsstercihi';a.target='_blank';a.rel='noopener';a.setAttribute('data-a','telegram');a.setAttribute('data-a-x','kutu');a.append(ic('tg'),'Kanala katıl');
 b.append(s,E('h3','','Günün özeti Telegram’da'),E('p','','Yeni ilanlar ve son günler tek mesajda. Mesajdaki bağlantı seni doğrudan bu sayfaya getirir.'),a);return b;}
 const adBox={sidebar:E('div'),feed:$('ad-feed')};adBox.sidebar.hidden=true;
 /* ---------- Ana sayfa: manşet ve zaman çizelgesi ---------- */
@@ -488,7 +488,7 @@ if(anahtar){const y=document.querySelector&&document.querySelector('[data-odak="
 function listeAdi(){if(F.tur)return F.tur;if(F.kat)return (KATEGORI.find(x=>x[0]===F.kat)||[0,'Tüm İlanlar'])[1];if(F.ogr==='belediye')return 'Belediye ilanları';return 'Tüm İlanlar';}
 /* Sonuçsuz aramada boş sayfa bırakılmaz: Telegram kanalına katılma, geçmiş ilanlar, sık aranan kelimeler ve taban puanları.
    Analizde sonuçsuz arama yapanların yarısı hiçbir şeye tıklamadan çıkıyordu. Bildirim botu hazır olana kadar kanala yönlendirilir. */
-const TG_KANAL='https://t.me/kamuilantakip',SIK_ARANAN=['memur','mühendis','psikolog','hemşire','büro personeli','sağlık teknikeri'];
+const TG_KANAL='https://t.me/kpsstercihi',SIK_ARANAN=['memur','mühendis','psikolog','hemşire','büro personeli','sağlık teknikeri'];
 function sonucsuzOneriler(q){
 const out=[],tg=E('a','btn btn-tg','🔔 Yeni ilanlardan haberdar ol: Telegram kanalına katıl');
 tg.href=TG_KANAL;tg.target='_blank';tg.rel='noopener';tg.onclick=()=>A('tikla',{a:'arama_bildirim',x:normalize(q).slice(0,60)});
