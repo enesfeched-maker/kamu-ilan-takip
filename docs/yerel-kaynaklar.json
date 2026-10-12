@@ -1,9 +1,9 @@
 {
  "schema": 1,
- "guncelleme": "2026-10-12T08:36:44.221882+00:00",
+ "guncelleme": "2026-10-12T09:06:45.284167+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-10-12T08:36:45.590200+00:00",
+   "kontrol": "2026-10-12T09:06:49.323066+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -18,8 +18,8 @@
      "donem": "( 12 Ekim - 25 Ekim)",
      "baslangic_zaman": "2026-10-12T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-12T00:06:43+03:00",
-     "belge_ozeti": "30ce25c36fed70a43c4352d5e1fbc3105eee7fe5c8c5274bb39fdf36976cda0e",
+     "detay_guncelleme": "2026-10-12T12:06:48+03:00",
+     "belge_ozeti": "9e28124995c79eacac1c5e55ac3e21a26044a2cc05d8f83137b6409e74862677",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -34,8 +34,8 @@
       }
      ],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/30ce25c36fed70a43c4352d5e1fbc3105eee7fe5c8c5274bb39fdf36976cda0e.pdf",
-     "belge_sha256": "30ce25c36fed70a43c4352d5e1fbc3105eee7fe5c8c5274bb39fdf36976cda0e",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/9e28124995c79eacac1c5e55ac3e21a26044a2cc05d8f83137b6409e74862677.pdf",
+     "belge_sha256": "9e28124995c79eacac1c5e55ac3e21a26044a2cc05d8f83137b6409e74862677",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "puan_turleri": [
@@ -5030,7 +5030,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-10-12T08:36:47.535785+00:00",
+   "kontrol": "2026-10-12T09:06:53.002755+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -6943,6 +6943,25 @@
    "sart_kadro_sayisi": 6,
    "basvuru_notu": "Bu duyuruda belirtilen esaslara uygun olmayan, posta yolu veya şahsen müracaat şeklinde yapılan başvurular kabul edilmeyecektir. Müracaatların sona ermesinden sonra adayın başvuru bilgilerinde kesinlikle değişiklik yapılmayacaktır. Başvuru işleminin hatasız, eksiksiz ve duyuruda belirtilen hususlara uygun olarak yapılmasından adayın kendisi sorumlu olacaktır. Adaylardan gerekli durumlarda; sisteme yüklenen belgelerin asılları istenilebilecektir.",
    "detay_guncelleme": "2026-10-12T11:36:48+03:00"
+  },
+  "https://kariyerkapisi.gov.tr/IlanDetay?i=f64bcfee-da05-46c5-8324-b42254c169a2": {
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/a3d5f33a-83cf-4f7b-ac1d-e59ebff44375.png",
+   "son_tarih": "2026-10-26",
+   "son_zaman": "2026-10-26T23:59:00+03:00",
+   "baslangic_zaman": "2026-10-12T09:00:00+03:00",
+   "yer": "ANKARA",
+   "kadro": "40 UZMAN YARDIMCISI",
+   "ilan_turu": "A Grubu Memur (Kariyer Meslek)",
+   "ozet": "- ÖSYM tarafından 2025 veya 2026 yıllarında yapılan Kamu Personel Seçme Sınavında (KPSS), KPSSP1, KPSSP2, KPSSP3, KPSSP25, KPSSP26, KPSSP27, KPSSP28 ve KPSSP45 puan türlerinin herhangi birinden 75 (Yetmişbeş) ve üzerinde olmak kaydıyla başvuruda bulunanlardan en yüksek puanlı 800 kişi içerisinde bulunmak (Eşit puan almış olmaları nedeniyle 800 üncü sıradaki aday sayısının birden fazla olması halinde bu adayların tümü sınava çağrılacaktır.),",
+   "sartlar": [
+    {
+     "kadro": "UZMAN YARDIMCISI ",
+     "metin": "- ÖSYM tarafından 2025 veya 2026 yıllarında yapılan Kamu Personel Seçme Sınavında (KPSS), KPSSP1, KPSSP2, KPSSP3, KPSSP25, KPSSP26, KPSSP27, KPSSP28 ve KPSSP45 puan türlerinin…\n- Üniversitelerin 4 yıllık eğitim veren Siyasal Bilgiler, İktisadi ve İdari Bilimler, İktisat, İşletme, İşletme ve Ekonomi, İşletme ve Yönetim Bilimleri, Hukuk, Fen, Fen-Edebiyat,…"
+    }
+   ],
+   "sart_kadro_sayisi": 1,
+   "basvuru_notu": "",
+   "detay_guncelleme": "2026-10-12T12:06:53+03:00"
   }
  },
  "logolar": {
