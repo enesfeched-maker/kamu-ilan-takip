@@ -225,7 +225,7 @@ def kart_alanlari(i):
         manset, alt = ', '.join(a for _, a in sirali[:3]), baslik
     else:
         manset, alt = baslik, i.get('ilan_turu') or 'Kamu personel alımı'
-    nolar = list(dict.fromkeys(meslek_no(a) for _, a in sirali)) or [meslek_no(baslik)]
+    nolar = list(dict.fromkeys(meslek_no(a, i.get('kurum')) for _, a in sirali)) or [meslek_no(baslik, i.get('kurum'))]
     nolar = [n for n in nolar if n != 30][:3] or [30]
     foto = _foto_haritasi()
     alan = {'manset': manset[:160], 'alt': alt[:160], 'meslek': [foto[n] for n in nolar if n in foto]}

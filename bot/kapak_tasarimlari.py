@@ -61,7 +61,7 @@ def _kancalar(secilen, simdi):
                 agirlik[k['no']] = agirlik.get(k['no'], 0) + (k['adet'] or 1)
                 adlar.setdefault(k['ad'], k['adet'] or 1)
         else:
-            no = meslek_no(v['baslik_ozeti'])
+            no = meslek_no(v['baslik_ozeti'], v.get('kurum', ''))
             agirlik[no] = agirlik.get(no, 0) + 1
     nolar = [n for n, _ in sorted(agirlik.items(), key=lambda x: -x[1]) if n != GENEL_PERSONEL]
     return {'vs': vs, 'toplam': toplam or None, 'en_buyuk': en_buyuk, 'nolar': nolar,

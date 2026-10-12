@@ -100,11 +100,11 @@ def _kadrolar(ilan):
     sonuc = []
     for parca in meslekler(ilan.get('kadro')):
         adet, ad = adet_ayir(parca)
-        sonuc.append({'adet': adet, 'ad': _fiilsiz(_baslik(ad)), 'no': meslek_no(ad)})
+        sonuc.append({'adet': adet, 'ad': _fiilsiz(_baslik(ad)), 'no': meslek_no(ad, ilan.get('kurum'))})
     if not sonuc:
         m = re.search(BASLIK_ADET + r'\s+([^\d]+?)\s+(?:alacak|alınacak|alim|alım)', _baslik_ozeti(ilan), re.I)
         if m:
-            sonuc.append({'adet': int(m.group(1)), 'ad': _baslik(m.group(2).strip()), 'no': meslek_no(m.group(2))})
+            sonuc.append({'adet': int(m.group(1)), 'ad': _baslik(m.group(2).strip()), 'no': meslek_no(m.group(2), ilan.get('kurum'))})
     return sonuc
 
 
@@ -373,7 +373,7 @@ def afis(ilan, logo=None, simdi=None, hatirlatma=False):
     im = Image.new('RGB', (G, Y), PETROL)
     ust_h = 742
     ana = max(v['kadrolar'], key=lambda k: k['adet'] or 0) if v['kadrolar'] else None
-    no = ana['no'] if ana else (meslek_no(v['baslik_ozeti']) if not v['duyuru'] else 30)
+    no = ana['no'] if ana else (meslek_no(v['baslik_ozeti'], v['kurum']) if not v['duyuru'] else 30)
     buyuk, boy = _afis_foto(no, ust_h)
     if buyuk is not None:
         fx, fy = G - boy, ust_h - boy + 30
@@ -471,7 +471,7 @@ def bilet(ilan, logo=None, simdi=None, hatirlatma=False):
         if k.get('ozet'):
             d.text((KENAR, ry + rh / 2), k['ad'], font=F(36, True), fill='#5d6f72', anchor='lm')
         else:
-            f = fotograf(k['ad'], foto_boy) if k.get('foto') else None
+            f = fotograf(k['ad'], foto_boy, no=k.get('no')) if k.get('foto') else None
             if f is not None:
                 im.paste(f, (KENAR, ry + (rh - f.height) // 2), f)
             else:
