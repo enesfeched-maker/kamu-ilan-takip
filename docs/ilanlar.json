@@ -1,5 +1,5 @@
 {
- "guncelleme": "2026-10-12T19:25:25+03:00",
+ "guncelleme": "2026-10-12T20:02:05+03:00",
  "ilanlar": [
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=9c82aab5-022e-43c8-b7f1-e6cf329d205b",
@@ -5822,14 +5822,15 @@
    ],
    "sart_kadro_sayisi": 2,
    "basvuru_notu": "2- Şahsen başvuru alınmayacak olup posta veya diğer yollarla yapılan müracaatlar da kabul edilmeyecektir.",
-   "detay_guncelleme": "2026-10-12T09:09:43+03:00",
+   "detay_guncelleme": "2026-10-12T19:37:06+03:00",
    "ogrenim": [
     "ortaogretim"
    ],
    "iller": [
     "İzmir"
    ],
-   "kpss": "kpss"
+   "kpss": "kpss",
+   "kk_detay_surumu": 2
   },
   {
    "id": "sbb-b41b1cc08f87c2bbc13c8473",
@@ -6483,7 +6484,8 @@
    "sartlar": [],
    "sart_kadro_sayisi": 1,
    "basvuru_notu": "",
-   "detay_guncelleme": "2026-10-12T09:09:44+03:00"
+   "detay_guncelleme": "2026-10-12T19:37:06+03:00",
+   "kk_detay_surumu": 2
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=bbed829a-5960-4a8a-b8a3-8c84226efb36",
@@ -6511,7 +6513,8 @@
    "sartlar": [],
    "sart_kadro_sayisi": 1,
    "basvuru_notu": "",
-   "detay_guncelleme": "2026-10-12T09:09:45+03:00"
+   "detay_guncelleme": "2026-10-12T19:37:07+03:00",
+   "kk_detay_surumu": 2
   },
   {
    "id": "sbb-d9db77fd756f0d5e88d77995",
@@ -6773,7 +6776,7 @@
    ],
    "sart_kadro_sayisi": 1,
    "basvuru_notu": "",
-   "detay_guncelleme": "2026-10-12T09:09:46+03:00",
+   "detay_guncelleme": "2026-10-12T19:37:08+03:00",
    "kaynaklar": [
     {
      "ad": "Kariyer Kapısı",
@@ -6789,7 +6792,8 @@
    ],
    "iller": [
     "Ankara"
-   ]
+   ],
+   "kk_detay_surumu": 2
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=bd035022-6f30-4150-8acc-a6061a5dd315",
@@ -6812,7 +6816,7 @@
    ],
    "sart_kadro_sayisi": 1,
    "basvuru_notu": "",
-   "detay_guncelleme": "2026-10-12T09:09:46+03:00",
+   "detay_guncelleme": "2026-10-12T19:37:08+03:00",
    "kaynaklar": [
     {
      "ad": "Kariyer Kapısı",
@@ -6828,7 +6832,8 @@
    ],
    "iller": [
     "Ankara"
-   ]
+   ],
+   "kk_detay_surumu": 2
   },
   {
    "id": "sbb-1b9270816a86ebf86b702b5b",
@@ -7148,11 +7153,23 @@
     {
      "kadro": "KGG 01 Koruma ve Güvenlik Görevlisi (Erkek)",
      "metin": "• 2024 yılı Kamu Personeli Seçme Sınavından (P93) en az 60 puan almış olmak.\n• Yükseköğretim Kurumlarının herhangi bir ön lisans programından mezun olmak."
+    },
+    {
+     "kadro": "DP 01 Destek Personeli (Erkek)",
+     "metin": "• 2024 yılı KPSS sınavından (P94) en az 60 puan almış olmak.\n• Ortaöğretim kurumlarının herhangi bir bölümünden mezun olmak."
+    },
+    {
+     "kadro": "DP 03 Destek Personeli (Erkek)",
+     "metin": "• 2024 yılı KPSS sınavından (P94) en az 60 puan almış olmak.\n• Ortaöğretim kurumlarının herhangi bir bölümünden mezun olmak."
+    },
+    {
+     "kadro": "TKN 01 Tekniker (Erkek)",
+     "metin": "• 2024 yılı Kamu Personeli Seçme Sınavından (P93) en az 60 puan almış olmak.\n• Yükseköğretim Kurumlarının Bilgisayar Teknolojisi veya Bilgisayar Programcılığı ön lisans programından mezun olmak."
     }
    ],
    "sart_kadro_sayisi": 18,
    "basvuru_notu": "• Sözleşmeli Personel Alım İlanına başvuran aday tarafından Kariyer Kapısı İşe Alım Platformu’ndaki ilgili alanların doğru ve eksiksiz bir şekilde tamamlanması ve Aday Başvuru Bilgileri dokümanının şahsen teslim etmeleri gerekmektedir.",
-   "detay_guncelleme": "2026-10-12T09:09:47+03:00",
+   "detay_guncelleme": "2026-10-12T19:37:09+03:00",
    "ogrenim": [
     "onlisans",
     "ortaogretim"
@@ -7161,7 +7178,8 @@
    "iller": [
     "Erzurum"
    ],
-   "kpss": "kpss"
+   "kpss": "kpss",
+   "kk_detay_surumu": 2
   },
   {
    "id": "sbb-ba488efdff295505612d40b4",
@@ -7644,11 +7662,12 @@
    ],
    "sart_kadro_sayisi": 6,
    "basvuru_notu": "Yazılı sınavda başarılı olanlar, başvuru sırasında tercih ettikleri kadro birimi (Merkez/Taşra) ve her bir grup için (Şube Müdürü (Teknik), Şube Müdürü (İdari) ve Memur) en yüksek puan alan personelden başlamak üzere ilan edilen kadro sayısının beş katına kadar personel sözlü sınava davet edilecektir. Son sıradaki personelle aynı puana sahip olan personelin tamamı sözlü sınava davet edilecektir. Sözlü sınava davet edilecek personel, her bir…",
-   "detay_guncelleme": "2026-10-12T09:09:48+03:00",
+   "detay_guncelleme": "2026-10-12T19:37:10+03:00",
    "ogrenim": [
     "lisans",
     "ortaogretim"
-   ]
+   ],
+   "kk_detay_surumu": 2
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=1559e356-a0e2-44e2-869b-beb38c5fdb7a",
@@ -7679,7 +7698,7 @@
    ],
    "sart_kadro_sayisi": 8,
    "basvuru_notu": "",
-   "detay_guncelleme": "2026-10-12T09:09:48+03:00",
+   "detay_guncelleme": "2026-10-12T19:37:11+03:00",
    "kaynaklar": [
     {
      "ad": "Kariyer Kapısı",
@@ -7692,7 +7711,8 @@
    "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/b5ef0b05-fa3d-4f00-a71e-1b0a484433fa.png",
    "iller": [
     "İstanbul"
-   ]
+   ],
+   "kk_detay_surumu": 2
   },
   {
    "id": "iskur-edc2d470694c21853b0687e1",
@@ -7715,7 +7735,7 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-12T19:24:04+03:00",
+   "detay_guncelleme": "2026-10-12T20:00:00+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-edc2d470694c21853b0687e1",
@@ -7781,12 +7801,41 @@
     {
      "kadro": "KIDEMLİ DEVOPS UZMANI (1 Kişi - Brüt Sözleşme Ücret Tavanının 4 Katına Kadar)",
      "metin": "Docker veya benzeri konteyner teknolojileri konusunda ileri düzeyde bilgi ve tecrübe sahibi olmak."
+    },
+    {
+     "kadro": "KIDEMLİ SİSTEM UZMANI (1 Kişi - Brüt Sözleşme Ücret tavanının 4 Katına Kadar)",
+     "metin": "Microsoft Windows Server işletim sistemlerinin kurulumu, yapılandırılması, yönetimi, güncellenmesi, performans analizi ve sorun giderme konularında ileri düzeyde bilgi ve tecrübe sahibi olmak."
+    },
+    {
+     "kadro": "KIDEMLİ YAZILIM GELİŞTİRME UZMANI (3 Kişi - Brüt Sözleşme Ücret Tavanının 3 Katına Kadar)",
+     "metin": "Mikroservis veya servis odaklı mimari yaklaşımıyla uygulama geliştirme deneyimine sahip olmak."
+    },
+    {
+     "kadro": "KIDEMLİ VERİ TABANI UZMANI ( 1Kişi - Brüt Sözleşme Ücret Tavanının 3 Katına Kadar)",
+     "metin": "PostgreSQL ve Microsoft SQL Server ilişkisel veritabanı yönetim sistemlerinin kurulumu, yapılandırılması, yönetimi, güncellenmesi ve sorun giderme süreçlerinde bilgi ve tecrübe sahibi olmak."
+    },
+    {
+     "kadro": "YAZILIM GELİŞTİRME UZMANI (6 Kişi - Brüt Sözleşme Ücret Tavanının 2 Katına Kadar)",
+     "metin": "Yazılım geliştirme alanında en az üç yıl fiilen çalışmış olmak ve bu deneyimini belgelemek."
+    },
+    {
+     "kadro": "SİBER GÜVENLİK UZMANI (1 Kişi - Brüt Sözleşme Ücret Tavanının 2 Katına Kadar)",
+     "metin": "Güvenlik duvarı (Firewall/NGFW), Web Uygulama Güvenlik Duvarı (WAF), IDS/IPS, VPN, proxy, e-posta güvenliği veya DNS güvenliği teknolojilerinden en az ikisi konusunda bilgi ve tecrübe sahibi olmak."
+    },
+    {
+     "kadro": "AĞ UZMANI (1 Kişi - Brüt Sözleşme Ücret Tavanının 2 Katına Kadar)",
+     "metin": "TCP/IP, IPv4/IPv6, subnetting, VLAN, STP/RSTP, LACP, NAT, DHCP, DNS ve NTP protokolleri ve teknolojileri konusunda bilgi ve tecrübe sahibi olmak."
+    },
+    {
+     "kadro": "SİSTEM UZMANI (1 Kişi - Brüt Sözleşme Ücret Tavanının 2 Katı)",
+     "metin": "Microsoft Windows Server işletim sistemlerinin kurulumu, yapılandırılması, yönetimi, güncellenmesi ve sorun giderme konularında bilgi ve tecrübe sahibi olmak."
     }
    ],
    "sart_kadro_sayisi": 11,
    "basvuru_notu": "1.Başvurular, 12.10.2026 tarihinden 19.10.2026 tarihi saat 17:00’a kadar Cumhurbaşkanlığı Kariyer Kapısı (https://kariyerkapisi.gov.tr) adresinden yapılacak ve istenilen belgeler taranılarak elektronik ortama aktarılacaktır. Şahsen, kargo ya da posta yoluyla yapılan başvurular kabul edilmeyecektir.",
-   "detay_guncelleme": "2026-10-12T09:09:49+03:00",
-   "kategori": "bilisim"
+   "detay_guncelleme": "2026-10-12T19:37:12+03:00",
+   "kategori": "bilisim",
+   "kk_detay_surumu": 2
   },
   {
    "id": "sbb-b2fb286c43de0cc8445bd632",
@@ -7920,11 +7969,12 @@
    ],
    "sart_kadro_sayisi": 12,
    "basvuru_notu": "3. Adaylar, ilanın Resmî Gazetede yayımlandığı tarihten itibaren 15 gün içerisinde e-Devlet Kapısı üzerinden Ankara Üniversitesi - Kariyer Kapısı Kamu İşe Alım” hizmeti veya Kariyer Kapısı https://kariyerkapisi.gov.tr platformundan başvuru yapabileceklerdir. (Posta, kargo vb. şeklinde yapılan müracaatlar kabul edilmeyecektir.)",
-   "detay_guncelleme": "2026-10-12T09:09:50+03:00",
+   "detay_guncelleme": "2026-10-12T19:37:12+03:00",
    "ogrenim": [
     "onlisans",
     "ortaogretim"
-   ]
+   ],
+   "kk_detay_surumu": 2
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=da785726-3bff-45bb-9ab6-d43389db86f9",
@@ -7961,7 +8011,7 @@
     },
     {
      "kadro": "2026-03 TEKNİKER",
-     "metin": "2024 yılı KPSS (P93) puan türünden en az 60 puan almış olmak.\nYükseköğretim kurumlarının Bilgisayar ve Enformasyon Sistemleri, Bilişim Sistemleri ve Teknolojileri, Bilgisayar Teknolojileri ve Yönetimi, Bilgisayar Teknolojisi, Bilgisayar…"
+     "metin": "2024 yılı KPSS (P93) puan türünden en az 60 puan almış olmak.\nYükseköğretim kurumlarının Bilgisayar ve Enformasyon Sistemleri, Bilişim Sistemleri ve Teknolojileri, Bilgisayar Teknolojileri ve Yönetimi, Bilgisayar Teknolojisi, Bilgisayar Donanımı, Bilgisayar Teknolojileri ve Bilişim Sistemleri, Muhabere ve Elektronik Bilgi Sistemleri veya Bulut Bilişim Operatörlüğü önlisans programından mezun olmak."
     },
     {
      "kadro": "2026-04 DESTEK PERSONELİ (ŞOFÖR)",
@@ -7970,7 +8020,7 @@
    ],
    "sart_kadro_sayisi": 7,
    "basvuru_notu": "10- Müracaatlar 05.10.2026 ile 19.10.2026 tarihleri arasında e-Devlet Kapısı ''Batman Üniversitesi- Kariyer Kapısı İşe Alım'' veya https://kariyerkapisi.gov.tr/isealim internet adresi üzerinden başvurunun son günü saat 13:00'ye kadar yapılacaktır. Şahsen veya posta yolu ile yapılan başvurular kabul edilmeyecektir. Süresi içinde yapılmayan veya sistemde meydana gelen gecikmeler sebebiyle yapılan başvurular dikkate alınmayacaktır.",
-   "detay_guncelleme": "2026-10-12T09:09:51+03:00",
+   "detay_guncelleme": "2026-10-12T19:37:13+03:00",
    "ogrenim": [
     "onlisans",
     "ortaogretim"
@@ -7978,7 +8028,8 @@
    "iller": [
     "Batman"
    ],
-   "kpss": "kpss"
+   "kpss": "kpss",
+   "kk_detay_surumu": 2
   },
   {
    "id": "sbb-e14da1425957c71329e3f898",
@@ -8143,7 +8194,7 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-12T19:23:50+03:00",
+   "detay_guncelleme": "2026-10-12T19:59:35+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-372564423bd22d94fde88cb4",
@@ -8182,7 +8233,8 @@
    "sartlar": [],
    "sart_kadro_sayisi": 0,
    "basvuru_notu": "",
-   "detay_guncelleme": "2026-10-12T09:09:51+03:00"
+   "detay_guncelleme": "2026-10-12T19:37:14+03:00",
+   "kk_detay_surumu": 2
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=d518cb3b-36c9-43fb-8e94-e563f9887888",
@@ -8210,7 +8262,8 @@
    "sartlar": [],
    "sart_kadro_sayisi": 0,
    "basvuru_notu": "",
-   "detay_guncelleme": "2026-10-12T09:09:52+03:00"
+   "detay_guncelleme": "2026-10-12T19:37:14+03:00",
+   "kk_detay_surumu": 2
   },
   {
    "id": "sbb-cbaa38524cf24d4c6fa9b46f",
@@ -8459,7 +8512,7 @@
      "link": "https://yerelyonetimler.csb.gov.tr/bolu-ili-taskesti-belediye-baskanligina-ilk-defa-atanmak-uzere-sozlesmeli-personel-alim-ilani-duyuru-477478"
     }
    ],
-   "detay_guncelleme": "2026-10-12T19:23:57+03:00",
+   "detay_guncelleme": "2026-10-12T19:59:48+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "csb-477478",
@@ -8509,7 +8562,7 @@
      "link": "https://www.iskur.gov.tr/medya/0zyoftxs/mu%C5%9F-elmakaya-belediyesi-memur-al%C4%B1m-ilan%C4%B1-21102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-12T19:24:19+03:00",
+   "detay_guncelleme": "2026-10-12T20:00:21+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-3f593d9e3c71078c698a111a"
@@ -8557,7 +8610,7 @@
      "link": "https://www.iskur.gov.tr/medya/lntnwe1n/i%C4%9Fd%C4%B1r-aral%C4%B1k-belediyesi-itfaiye-eri-al%C4%B1m-ilan%C4%B1-21102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-12T19:24:27+03:00",
+   "detay_guncelleme": "2026-10-12T20:00:30+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-9d4d97ec470c2efcf5b3e55c"
@@ -8984,7 +9037,7 @@
      "link": "https://yerelyonetimler.csb.gov.tr/bolu-ili-gerede-belediye-baskanligina-ilk-defa-atanmak-uzere-sozlesmeli-personel-alim-ilani-duyuru-477600"
     }
    ],
-   "detay_guncelleme": "2026-10-12T19:23:57+03:00",
+   "detay_guncelleme": "2026-10-12T19:59:48+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "csb-477600",
@@ -9152,10 +9205,11 @@
    ],
    "sart_kadro_sayisi": 1,
    "basvuru_notu": "Şahsen, posta yoluyla veya diğer yöntemlerle yapılan başvurular kabul edilmeyecektir.",
-   "detay_guncelleme": "2026-10-12T09:09:53+03:00",
+   "detay_guncelleme": "2026-10-12T19:37:15+03:00",
    "iller": [
     "Ankara"
-   ]
+   ],
+   "kk_detay_surumu": 2
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=292b13a1-7511-4f89-896d-b19f526fcab1",
@@ -9183,28 +9237,222 @@
    "sartlar": [
     {
      "kadro": "Büro Personeli",
-     "metin": "Sınavlarında KPSS P3 puan türünde en az 60 (altmış) puan almış olmak.\nİşletme, Yönetim Bilimleri, İktisat, Maliye, Çalışma Ekonomisi ve Endüstri İlişkileri, Kamu Yönetimi, Siyaset Bilimi, Siyaset Bilimi ve Kamu Yönetimi, Siyaset Bilimi ve Uluslararası…"
+     "metin": "Sınavlarında KPSS P3 puan türünde en az 60 (altmış) puan almış olmak.\nİşletme, Yönetim Bilimleri, İktisat, Maliye, Çalışma Ekonomisi ve Endüstri İlişkileri, Kamu Yönetimi, Siyaset Bilimi, Siyaset Bilimi ve Kamu Yönetimi, Siyaset Bilimi ve Uluslararası İlişkiler bölümlerinden birinden mezun ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurtdışındaki Yükseköğretim Kurumlarından mezun olmak."
     },
     {
      "kadro": "Müze Görevlisi",
-     "metin": "Sınavında KPSS P3 puan türünde en az 60 (altmış) puan almış olmak.\nMüzecilik, Sanat Tarihi, Tarih, Türk Halkbilimi, Arkeoloji, Klasik Arkeoloji, Arkeoloji ve Sanat Tarihi, Türk İslam Arkeolojisi, İletişim Bilimleri, Halkla İlişkiler ve Tanıtım,…"
+     "metin": "Sınavında KPSS P3 puan türünde en az 60 (altmış) puan almış olmak.\nMüzecilik, Sanat Tarihi, Tarih, Türk Halkbilimi, Arkeoloji, Klasik Arkeoloji, Arkeoloji ve Sanat Tarihi, Türk İslam Arkeolojisi, İletişim Bilimleri, Halkla İlişkiler ve Tanıtım, Halkla İlişkiler ve Reklamcılık, Gazetecilik ile Radyo, Televizyon ve Sinema lisans bölümlerinden birinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurtdışındaki Yükseköğretim Kurumlarından mezun olmak."
     },
     {
      "kadro": "Mühendis (İnşaat)",
      "metin": "Sınavlarında KPSS P3 puan türünde en az 60 (altmış) puan almış olmak.\nÜniversitelerin İnşaat Mühendisliği lisans bölümünden ya da buna denkliği Yükseköğretim Kurulunca kabul edilmiş yurtdışındaki Yükseköğretim Kurumlarından mezun olmak."
+    },
+    {
+     "kadro": "Restoratör (Kalemkar)",
+     "metin": "Sınavında KPSS P3 puan türünde en az 60 (altmış) puan almış olmak.\nÜniversitelerin Kültür Varlıklarını Koruma ve Onarım, Restorasyon ve Konservasyon, Rölöve-Restorasyon, Taşınabilir Kültür Varlıklarını Koruma ve Onarım, Sanat Eserleri Konservasyonu ve Restorasyonu lisans bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurtdışındaki Yükseköğretim Kurumlarından mezun olmak veya Mimarlık, Mühendislik, Fen-Edebiyat, Güzel Sanatlar, Dil ve Tarih-Coğrafya fakültelerinin taşınır ve taşınmaz kültür varlıklarını koruma, onarım, restorasyon ve konservasyon konularında lisansüstü programlarından mezun olmak. (Lisansüstü bölümlerden mezun…"
+    },
+    {
+     "kadro": "Çözümleyici",
+     "metin": "Bilgisayar Mühendisliği, Bilgisayar Bilimi ve Mühendisliği, Bilgisayar Bilimleri ve Mühendisliği, Bilişim Sistemleri Mühendisliği, Yazılım Mühendisliği, Bilgisayar ve Yazılım Mühendisliği, Yazılım Geliştirme, Bilgisayar Bilimleri, Bilişim Sistemleri ve Teknolojileri, Ağ, Bilgisayar Teknolojisi ve Bilişim Sistemleri, Bilgisayar ve Enformasyon Sistemleri, Bilgisayar ve Enformatik, Sistem Yönetimi, Veri Tabanı Uygulama, Web Tasarım lisans bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurtdışındaki Yükseköğretim Kurumlarından mezun olmak."
+    },
+    {
+     "kadro": "Diğer Teknik Hizmet Personeli (El Dekoru ve Seramik Üretimi)",
+     "metin": "Lisans bölümlerinin Geleneksel Türk Sanatları, Geleneksel Sanatlar, Geleneksel Türk El Sanatları, Geleneksel El Sanatları, Resim, Seramik, Seramik Sanatları, Seramik Tasarımı, Seramik ve Cam, Seramik ve Cam Tasarımı, Seramik-Cam, Bileşik Sanatlar, El Sanatları, El Sanatları Tasarımı ve Üretimi bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurtdışındaki Yükseköğretim Kurumlarından mezun olmak"
+    },
+    {
+     "kadro": "Tekniker (El Dekoru ve Seramik Üretimi)",
+     "metin": "Meslek Yüksek Okullarının Geleneksel El Sanatları, Seramik, Çini İşlemeciliği, Seramik ve Cam, Seramik, Cam ve Çinicilik, Geleneksel Türk El Sanatları, El Sanatları, Seramik-Cam bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurtdışındaki Yükseköğretim Kurumlarından mezun olmak."
+    },
+    {
+     "kadro": "Koruma ve Güvenlik Görevlisi / İstanbul",
+     "metin": "Sınavında KPSS P3 puan türünde en az 60 (altmış) puan almış olmak.\nHerhangi bir lisans bölümünden mezunu olmak."
+    },
+    {
+     "kadro": "Destek Personeli (Temizlik Görevlisi) / İstanbul",
+     "metin": "En az ortaöğretim (lise) ve dengi okul mezunu olmak."
     }
    ],
    "sart_kadro_sayisi": 11,
    "basvuru_notu": "3.2. Başvurular, Kariyer Kapısı (https://kariyerkapisi.gov.tr/isealim) internet sitesinden e- Devlet şifresi ile elektronik ortamda yapılacaktır. Başkanlığımıza şahsen, kargo ya da posta yoluyla yapılan başvurular kabul edilmeyecektir.",
-   "detay_guncelleme": "2026-10-12T15:53:21+03:00",
+   "detay_guncelleme": "2026-10-12T19:37:16+03:00",
    "ogrenim": [
-    "lisans"
+    "lisans",
+    "onlisans",
+    "ortaogretim"
    ],
    "iller": [
     "Edirne",
     "İstanbul"
    ],
-   "kpss": "kpss"
+   "kpss": "kpss",
+   "kk_detay_surumu": 2,
+   "kadro_detay": [
+    {
+     "unvan": "Büro Personeli",
+     "adet": 1,
+     "iller": [
+      "İSTANBUL"
+     ],
+     "ogrenim": "",
+     "sinav": "KPSS P3 + Sözlü Sınav",
+     "maddeler": [
+      "ÖSYM tarafından 2025 ve 2026 yılında yapılan Kamu Personeli Seçme Sınavlarında KPSS P3 puan türünde en az 60 (altmış) puan almış olmak.",
+      "Son başvuru tarihi itibarıyla 35 yaşını doldurmamış olmak.",
+      "İşletme, Yönetim Bilimleri, İktisat, Maliye, Çalışma Ekonomisi ve Endüstri İlişkileri, Kamu Yönetimi, Siyaset Bilimi, Siyaset Bilimi ve Kamu Yönetimi, Siyaset Bilimi ve Uluslararası İlişkiler bölümlerinden birinden mezun ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurtdışındaki Yükseköğretim Kurumlarından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Müze Görevlisi",
+     "adet": 9,
+     "iller": [
+      "İSTANBUL"
+     ],
+     "ogrenim": "",
+     "sinav": "KPSS P3 + Sözlü Sınav",
+     "maddeler": [
+      "ÖSYM tarafından 2025 ve 2026 yılında yapılan Kamu Personeli Seçme Sınavında KPSS P3 puan türünde en az 60 (altmış) puan almış olmak.",
+      "Son başvuru tarihi itibarıyla 35 yaşını doldurmamış olmak.",
+      "Müzecilik, Sanat Tarihi, Tarih, Türk Halkbilimi, Arkeoloji, Klasik Arkeoloji, Arkeoloji ve Sanat Tarihi, Türk İslam Arkeolojisi, İletişim Bilimleri, Halkla İlişkiler ve Tanıtım, Halkla İlişkiler ve Reklamcılık, Gazetecilik ile Radyo, Televizyon ve Sinema lisans bölümlerinden birinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurtdışındaki Yükseköğretim Kurumlarından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis (İnşaat)",
+     "adet": 1,
+     "iller": [
+      "İSTANBUL"
+     ],
+     "ogrenim": "",
+     "sinav": "KPSS P3 + Sözlü Sınav",
+     "maddeler": [
+      "ÖSYM tarafından 2025 ve 2026 yılında yapılan Kamu Personeli Seçme Sınavlarında KPSS P3 puan türünde en az 60 (altmış) puan almış olmak.",
+      "Son başvuru tarihi itibarıyla 35 yaşını doldurmamış olmak.",
+      "Üniversitelerin İnşaat Mühendisliği lisans bölümünden ya da buna denkliği Yükseköğretim Kurulunca kabul edilmiş yurtdışındaki Yükseköğretim Kurumlarından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Restoratör (Kalemkâr)",
+     "adet": 5,
+     "iller": [
+      "İSTANBUL"
+     ],
+     "ogrenim": "lisans",
+     "sinav": "KPSS P3 + Uygulamalı + Sözlü Sınav",
+     "maddeler": [
+      "ÖSYM tarafından 2025 ve 2026 yılında yapılan Kamu Personeli Seçme Sınavında KPSS P3 puan türünde en az 60 (altmış) puan almış olmak.",
+      "Son başvuru tarihi itibarıyla 35 yaşını doldurmamış olmak.",
+      "Üniversitelerin Kültür Varlıklarını Koruma ve Onarım, Restorasyon ve Konservasyon, Rölöve-Restorasyon, Taşınabilir Kültür Varlıklarını Koruma ve Onarım, Sanat Eserleri Konservasyonu ve Restorasyonu lisans bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurtdışındaki Yükseköğretim Kurumlarından mezun olmak veya Mimarlık, Mühendislik, Fen-Edebiyat, Güzel Sanatlar, Dil ve Tarih-Coğrafya fakültelerinin taşınır ve taşınmaz kültür varlıklarını koruma, onarım, restorasyon ve konservasyon konularında lisansüstü programlarından mezun olmak. (Lisansüstü bölümlerden mezun olan adayların taşınır ve taşınmaz kültür varlıklarını koruma, onarım, restorasyon ve konservasyon konularında lisansüstü mezuniyetlerine ilişkin transkript, diploma ve diğer belgeleri kariyer kapısına yüklemesi gerekmektedir.)"
+     ]
+    },
+    {
+     "unvan": "Çözümleyici",
+     "adet": 1,
+     "iller": [
+      "İSTANBUL"
+     ],
+     "ogrenim": "",
+     "sinav": "Uygulamalı Sınav + Sözlü Sınav",
+     "maddeler": [
+      "Son başvuru tarihi itibarıyla 40 yaşını doldurmamış olmak.",
+      "Bilgisayar Mühendisliği, Bilgisayar Bilimi ve Mühendisliği, Bilgisayar Bilimleri ve Mühendisliği, Bilişim Sistemleri Mühendisliği, Yazılım Mühendisliği, Bilgisayar ve Yazılım Mühendisliği, Yazılım Geliştirme, Bilgisayar Bilimleri, Bilişim Sistemleri ve Teknolojileri, Ağ, Bilgisayar Teknolojisi ve Bilişim Sistemleri, Bilgisayar ve Enformasyon Sistemleri, Bilgisayar ve Enformatik, Sistem Yönetimi, Veri Tabanı Uygulama, Web Tasarım lisans bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurtdışındaki Yükseköğretim Kurumlarından mezun olmak.",
+      "İstihdam edileceği BİM’ deki C-SHARP (ASP.NET, MVC), MS-SQL, JAVA programlama dillerinden en az iki tanesini bildiğini belgelemek. (Söz konusu belgelerin başvuru esnasında Kariyer Kapısı üzerinde ilgili alana yüklenmesi gerekmektedir.)",
+      "Yabancı Dil Seviye Tespit Sınavından (YDS) en az (D) düzeyinde İngilizce bilmek. Ancak yurtiçi ve yurtdışında İngilizce dili ile öğretim yapan fakülte, yüksekokul ve bilgisayar programcılığı alanında meslek yüksekokulu mezunu olanlar, yurt içinde lisans düzeyinde öğrenim gördükten sonra ana dili İngilizce olan yabancı ülkelerde İngilizce dilinde master veya doktora yapanlar, İngilizce dilinde”Test Of English as a Foreign Language”(TOEFL) sınavından en az 173 (veya geçerlilik süresi dolmamış eski dengi) veya “İnternaional English Language Testing System”(İELTS)sınavından en az 6 puan alanların İngilizce dil düzeyleri (D) düzeyi olarak kabul edilir."
+     ]
+    },
+    {
+     "unvan": "Diğer Teknik Hizmet Personeli (El Dekoru ve Seramik Üretimi)",
+     "adet": 11,
+     "iller": [
+      "İSTANBUL"
+     ],
+     "ogrenim": "lisans",
+     "sinav": "Uygulamalı Sınav + Sözlü Sınav",
+     "maddeler": [
+      "Son başvuru tarihi itibarıyla 40 yaşını doldurmamış olmak.",
+      "Lisans bölümlerinin Geleneksel Türk Sanatları, Geleneksel Sanatlar, Geleneksel Türk El Sanatları, Geleneksel El Sanatları, Resim, Seramik, Seramik Sanatları, Seramik Tasarımı, Seramik ve Cam, Seramik ve Cam Tasarımı, Seramik-Cam, Bileşik Sanatlar, El Sanatları, El Sanatları Tasarımı ve Üretimi bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurtdışındaki Yükseköğretim Kurumlarından mezun olmak"
+     ]
+    },
+    {
+     "unvan": "Tekniker (El Dekoru ve Seramik Üretimi)",
+     "adet": 5,
+     "iller": [
+      "İSTANBUL"
+     ],
+     "ogrenim": "onlisans",
+     "sinav": "Uygulamalı Sınav + Sözlü Sınav",
+     "maddeler": [
+      "Son başvuru tarihi itibarıyla 40 yaşını doldurmamış olmak.",
+      "Meslek Yüksek Okullarının Geleneksel El Sanatları, Seramik, Çini İşlemeciliği, Seramik ve Cam, Seramik, Cam ve Çinicilik, Geleneksel Türk El Sanatları, El Sanatları, Seramik-Cam bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurtdışındaki Yükseköğretim Kurumlarından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Koruma ve Güvenlik Görevlisi",
+     "adet": 80,
+     "iller": [
+      "İSTANBUL"
+     ],
+     "ogrenim": "lisans",
+     "sinav": "KPSS P3 + Sözlü Sınav",
+     "maddeler": [
+      "ÖSYM tarafından 2025 ve 2026 yılında yapılan Kamu Personeli Seçme Sınavında KPSS P3 puan türünde en az 60 (altmış) puan almış olmak.",
+      "10/6/2004 tarihli ve 5188 sayılı Özel Güvenlik Hizmetlerine Dair Kanun’un 10 uncu maddesinde belirtiler şartlar ile “Özel Güvenlik Görevlileri Sağlık Şartları Yönetmeliği’nde belirtilen sağlık şartlarına sahip olmak,",
+      "Silahlı Güvenlik Kimlik Kartına sahip olmak veya Silahlı Özel Güvenlik Elemanı Sertifikasına sahip olmak veya bu belgeler için ilgili kurumlara başvuruda bulunmuş olmak. (Ancak, sözlü sınav sonucunda atanmaya hak kazananlara ilişkin nihai liste ilan edildikten itibaren evrak ibraz süresi içerisinde Silahlı Özel Güvenlik Kimlik Kartını ibraz edemeyenlerin atama işlemleri gerçekleştirilmeyecek, ataması yapılanların atamaları iptal edilecektir.)",
+      "Başkanlığımızın tüm hizmet birimlerinde, gece ve gündüz, iç ve dış mekânlarında 24 saat esasına göre vardiyalı sistemde çalışmaya engel durumu bulunmamak,",
+      "Son başvuru tarihi itibarıyla 35 yaşını doldurmamış olmak.",
+      "Herhangi bir lisans bölümünden mezunu olmak."
+     ]
+    },
+    {
+     "unvan": "Koruma ve Güvenlik Görevlisi",
+     "adet": 20,
+     "iller": [
+      "EDİRNE"
+     ],
+     "ogrenim": "lisans",
+     "sinav": "KPSS P3 + Sözlü Sınav",
+     "maddeler": [
+      "ÖSYM tarafından 2025 ve 2026 yılında yapılan Kamu Personeli Seçme Sınavında KPSS P3 puan türünde en az 60 (altmış) puan almış olmak.",
+      "10/6/2004 tarihli ve 5188 sayılı Özel Güvenlik Hizmetlerine Dair Kanun’un 10 uncu maddesinde belirtiler şartlar ile “Özel Güvenlik Görevlileri Sağlık Şartları Yönetmeliği’nde belirtilen sağlık şartlarına sahip olmak,",
+      "Silahlı Güvenlik Kimlik Kartına sahip olmak veya Silahlı Özel Güvenlik Elemanı Sertifikasına sahip olmak veya bu belgeler için ilgili kurumlara başvuruda bulunmuş olmak. (Ancak, sözlü sınav sonucunda atanmaya hak kazananlara ilişkin nihai liste ilan edildikten itibaren evrak ibraz süresi içerisinde Silahlı Özel Güvenlik Kimlik Kartını ibraz edemeyenlerin atama işlemleri gerçekleştirilmeyecek, ataması yapılanların atamaları iptal edilecektir.)",
+      "Başkanlığımızın tüm hizmet birimlerinde, gece ve gündüz, iç ve dış mekânlarında 24 saat esasına göre vardiyalı sistemde çalışmaya engel durumu bulunmamak,",
+      "Son başvuru tarihi itibarıyla 35 yaşını doldurmamış olmak.",
+      "Herhangi bir lisans bölümünden mezunu olmak."
+     ]
+    },
+    {
+     "unvan": "Destek Personeli (Temizlik Görevlisi)",
+     "adet": 20,
+     "iller": [
+      "İSTANBUL"
+     ],
+     "ogrenim": "ortaogretim",
+     "sinav": "Uygulamalı Sınav + Sözlü Sınav",
+     "maddeler": [
+      "Son başvuru tarihi itibarıyla 40 yaşını doldurmamış olmak.",
+      "En az ortaöğretim (lise) ve dengi okul mezunu olmak."
+     ]
+    },
+    {
+     "unvan": "Destek Personeli (Temizlik Görevlisi)",
+     "adet": 5,
+     "iller": [
+      "EDİRNE"
+     ],
+     "ogrenim": "ortaogretim",
+     "sinav": "Uygulamalı Sınav + Sözlü Sınav",
+     "maddeler": [
+      "Son başvuru tarihi itibarıyla 40 yaşını doldurmamış olmak.",
+      "En az ortaöğretim (lise) ve dengi okul mezunu olmak."
+     ]
+    }
+   ],
+   "belge_ogrenim": [
+    "lisans",
+    "onlisans",
+    "ortaogretim"
+   ],
+   "puan_turleri": [
+    "P3"
+   ]
   },
   {
    "id": "iskur-ce2ccce684a67cfe5ec42653",
@@ -9231,7 +9479,7 @@
      "link": "https://yerelyonetimler.csb.gov.tr/ankara-illi-pursaklar-belediye-baskanligina-ilk-defa-atanmak-uzere-zabita-memuru-alimi-ilani-duyuru-477502"
     }
    ],
-   "detay_guncelleme": "2026-10-12T19:23:50+03:00",
+   "detay_guncelleme": "2026-10-12T19:59:35+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "csb-477502",
@@ -9289,7 +9537,7 @@
      "link": "https://www.iskur.gov.tr/medya/4j0dwbbo/gelir-idaresi-ba%C5%9Fkanl%C4%B1%C4%9F%C4%B1-gelir-uzman-yard%C4%B1mc%C4%B1l%C4%B1%C4%9F%C4%B1-s%C4%B1nav-ilan%C4%B1-23102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-12T19:23:50+03:00",
+   "detay_guncelleme": "2026-10-12T19:59:35+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-ee701ad45d382400f44d53e1"
@@ -9326,7 +9574,7 @@
      "link": "https://yerelyonetimler.csb.gov.tr/aydin-ili-didim-belediye-baskanligina-ilk-defa-atanmak-uzere-zabita-memuru-alimi-ilani-duyuru-477598"
     }
    ],
-   "detay_guncelleme": "2026-10-12T19:23:53+03:00",
+   "detay_guncelleme": "2026-10-12T19:59:43+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "csb-477598",
@@ -9376,7 +9624,7 @@
      "link": "https://www.iskur.gov.tr/medya/wx1p1ned/isparta-bat%C4%B1-akdeniz-kalk%C4%B1nma-ajans%C4%B1-personel-al%C4%B1m-ilan%C4%B1-23102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-12T19:24:01+03:00",
+   "detay_guncelleme": "2026-10-12T19:59:55+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-23bb5b4d65d3d7cab7bc3531"
@@ -9701,19 +9949,20 @@
    "sartlar": [
     {
      "kadro": "VAKIF UZMAN YARDIMCISI (ARAP DİLİ VE EDEBİYATI)",
-     "metin": "Ölçme, Seçme ve Yerleştirme Merkezi (ÖSYM) tarafından 2025 ve 2026 yıllarında yapılan Kamu Personeli Seçme Sınavlarının birinden KPSS P3 puan türünden tüm gruplar için 70 (yetmiş) ve…\nEn az 4 yıllık lisans eğitimi veren fakültelerin Arap Dili ve Edebiyatı bölümünden veya bu bölüme denkliği yetkili makamlarca kabul edilen yurt içi ya da yurt dışındaki yükseköğretim…"
+     "metin": "Ölçme, Seçme ve Yerleştirme Merkezi (ÖSYM) tarafından 2025 ve 2026 yıllarında yapılan Kamu Personeli Seçme Sınavlarının birinden KPSS P3 puan türünden tüm gruplar için 70 (yetmiş) ve üzerinde puan almış olmak. (Son sıradaki adayla aynı puana sahip adaylar da sınava kabul edilir.),\nEn az 4 yıllık lisans eğitimi veren fakültelerin Arap Dili ve Edebiyatı bölümünden veya bu bölüme denkliği yetkili makamlarca kabul edilen yurt içi ya da yurt dışındaki yükseköğretim kurumlarının ilgili bölümlerinden mezun olmak,"
     }
    ],
    "sart_kadro_sayisi": 2,
    "basvuru_notu": "2.2. Adaylar giriş sınavı başvurularını, 12/10/2026 - 25/10/2026 tarihleri arasında e-Devlet Kariyer Kapısı Kamu İşe Alım Platformu (https://kariyerkapisi.gov.tr) üzerinden istenilen bilgi ve belgeleri yükleyerek gerçekleştireceklerdir. Şahsen veya posta yoluyla yapılan, başvuru şartlarını taşımayan, eksik ve yanlış evrakla yapılan başvurular işleme alınmayacaktır.",
-   "detay_guncelleme": "2026-10-12T15:53:20+03:00",
+   "detay_guncelleme": "2026-10-12T19:37:17+03:00",
    "ogrenim": [
     "lisans"
    ],
    "iller": [
     "Ankara"
    ],
-   "kpss": "kpss"
+   "kpss": "kpss",
+   "kk_detay_surumu": 2
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=826fbdb8-f082-4294-9ac6-cd0abd98a7c9",
@@ -9756,13 +10005,14 @@
    ],
    "sart_kadro_sayisi": 6,
    "basvuru_notu": "Başvurular elektronik ortamda 19.10.2026 tarihinde başlayacak olup, 26.10.2026 tarihi saat 18.00'e kadar alınacaktır. Sınava katılmak isteyen adaylar, e-Devlet üzerinden erişim sağlanan https://kariyerkapisi.gov.tr/isealim adresinden başvurularını gerçekleştirecektir. İlanda belirtilen şartlara uygun olmayan başvurular ile süresi içinde yapılmayan başvurular dikkate alınmayacaktır. Posta ile veya diğer şekillerde yapılan müracaatlar kabul…",
-   "detay_guncelleme": "2026-10-12T09:09:53+03:00",
+   "detay_guncelleme": "2026-10-12T19:37:18+03:00",
    "ogrenim": [
     "lisans"
    ],
    "iller": [
     "Ankara"
-   ]
+   ],
+   "kk_detay_surumu": 2
   },
   {
    "id": "sbb-2be96cc2fa6bdded067b9816",
@@ -9909,13 +10159,14 @@
    ],
    "sart_kadro_sayisi": 2,
    "basvuru_notu": "(2) Başvurular, e-Devlet üzerinden Savunma Sanayii Başkanlığı- Kariyer Kapısı (https://kariyerkapisi.gov.tr/isealim) adresinden elektronik ortamda başvuruda istenilen belgeleri de sisteme yüklemek suretiyle alınacaktır. Şahsen, kargo ya da posta yoluyla yapılan başvurular kabul edilmeyecektir.",
-   "detay_guncelleme": "2026-10-12T09:09:54+03:00",
+   "detay_guncelleme": "2026-10-12T19:37:18+03:00",
    "ogrenim": [
     "lisans"
    ],
    "iller": [
     "Ankara"
-   ]
+   ],
+   "kk_detay_surumu": 2
   },
   {
    "id": "sbb-3aa4736db5de6f1d64227873",
@@ -10115,7 +10366,8 @@
    "sartlar": [],
    "sart_kadro_sayisi": 0,
    "basvuru_notu": "",
-   "detay_guncelleme": "2026-10-12T09:36:56+03:00"
+   "detay_guncelleme": "2026-10-12T19:37:19+03:00",
+   "kk_detay_surumu": 2
   },
   {
    "id": "sbb-e156aab44419d790579200de",
@@ -10191,19 +10443,20 @@
    "sartlar": [
     {
      "kadro": "UZMAN YARDIMCISI ",
-     "metin": "- ÖSYM tarafından 2025 veya 2026 yıllarında yapılan Kamu Personel Seçme Sınavında (KPSS), KPSSP1, KPSSP2, KPSSP3, KPSSP25, KPSSP26, KPSSP27, KPSSP28 ve KPSSP45 puan türlerinin…\n- Üniversitelerin 4 yıllık eğitim veren Siyasal Bilgiler, İktisadi ve İdari Bilimler, İktisat, İşletme, İşletme ve Ekonomi, İşletme ve Yönetim Bilimleri, Hukuk, Fen, Fen-Edebiyat,…"
+     "metin": "- ÖSYM tarafından 2025 veya 2026 yıllarında yapılan Kamu Personel Seçme Sınavında (KPSS), KPSSP1, KPSSP2, KPSSP3, KPSSP25, KPSSP26, KPSSP27, KPSSP28 ve KPSSP45 puan türlerinin herhangi birinden 75 (Yetmişbeş) ve üzerinde olmak kaydıyla başvuruda bulunanlardan en yüksek puanlı 800 kişi içerisinde bulunmak (Eşit puan almış olmaları nedeniyle 800 üncü sıradaki aday sayısının birden fazla olması…\n- Üniversitelerin 4 yıllık eğitim veren Siyasal Bilgiler, İktisadi ve İdari Bilimler, İktisat, İşletme, İşletme ve Ekonomi, İşletme ve Yönetim Bilimleri, Hukuk, Fen, Fen-Edebiyat, Mühendislik, Ticari Bilimler, İktisadi, İdari ve Sosyal Bilimler, Uygulamalı Bilimler, Yönetim Bilimleri Fakültelerinin ve 4 yıllık eğitim veren Bankacılık ve Sigortacılık, Turizm İşletmeciliği ve Bilişim Bilimleri, Uygulamalı Bilimler, Uygulamalı Teknoloji ve İşletmecilik, Uygulamalı Yabancı Diller Yüksekokullarının bölümleri olan Aktüerya, Aktüerya Bilimleri, Bankacılık, Bankacılık ve Finans, Bankacılık ve…"
     }
    ],
    "sart_kadro_sayisi": 1,
    "basvuru_notu": "",
-   "detay_guncelleme": "2026-10-12T12:06:53+03:00",
+   "detay_guncelleme": "2026-10-12T19:37:20+03:00",
    "ogrenim": [
     "lisans"
    ],
    "iller": [
     "Ankara"
    ],
-   "kpss": "kpss"
+   "kpss": "kpss",
+   "kk_detay_surumu": 2
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=ac9395a0-1096-4384-abba-76719301f64a",
@@ -10230,7 +10483,7 @@
    ],
    "sart_kadro_sayisi": 3,
    "basvuru_notu": "Sadece elektronik ortamda yapılan başvurular geçerli olup ilanda belirtilen şartlara uygun olmayan başvurular ile elden, eposta veya posta yoluyla yapılacak başvurular kabul edilmeyecektir.",
-   "detay_guncelleme": "2026-10-12T09:09:55+03:00",
+   "detay_guncelleme": "2026-10-12T19:37:21+03:00",
    "kaynaklar": [
     {
      "ad": "Kariyer Kapısı",
@@ -10251,7 +10504,8 @@
     "Bolu",
     "Düzce"
    ],
-   "kpss": "kpss"
+   "kpss": "kpss",
+   "kk_detay_surumu": 2
   },
   {
    "id": "iskur-427041e176b4b5fb14fbd125",
@@ -10270,7 +10524,7 @@
      "link": "https://www.iskur.gov.tr/medya/kqjkfztt/kocaeli-do%C4%9Fu-marmara-kalk%C4%B1nma-ajans%C4%B1-personel-al%C4%B1m-ilan%C4%B1-27102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-12T19:24:12+03:00",
+   "detay_guncelleme": "2026-10-12T20:00:11+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-427041e176b4b5fb14fbd125"
@@ -10334,7 +10588,7 @@
      "link": "https://yerelyonetimler.csb.gov.tr/osmaniye-ili-atalan-belediye-baskanligina-ilk-defa-atanmak-uzere-sozlesmeli-personel-alim-ilani-duyuru-477826"
     }
    ],
-   "detay_guncelleme": "2026-10-12T19:24:30+03:00",
+   "detay_guncelleme": "2026-10-12T20:00:34+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "csb-477826",
@@ -10508,7 +10762,7 @@
      "link": "https://yerelyonetimler.csb.gov.tr/kirsehir-ili-mucur-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-477599"
     }
    ],
-   "detay_guncelleme": "2026-10-12T19:24:08+03:00",
+   "detay_guncelleme": "2026-10-12T20:00:05+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "csb-477599",
@@ -10573,11 +10827,11 @@
    "sartlar": [
     {
      "kadro": "FON DENETÇİ YARDIMCILIĞI",
-     "metin": "• ÖSYM tarafından (A) grubu kadrolar için 2025 ve 2026 yılında yapılan Kamu Personel Seçme Sınavında (KPSS), KPSSP8, KPSSP9, KPSSP11, KPSSP16, KPSSP17, KPSSP18, KPSSP21, KPSSP22,…\n• Üniversitelerin en az 4 (Dört) yıl süreli eğitim veren siyasal bilgiler, hukuk, iktisadi ve idari bilimler, iktisat ve işletme, bankacılık, bankacılık ve finans fakülteleri ve…"
+     "metin": "• ÖSYM tarafından (A) grubu kadrolar için 2025 ve 2026 yılında yapılan Kamu Personel Seçme Sınavında (KPSS), KPSSP8, KPSSP9, KPSSP11, KPSSP16, KPSSP17, KPSSP18, KPSSP21, KPSSP22, KPSSP23, KPSSP26, KPSSP27, KPSSP28, KPSSP31, KPSSP32, KPSSP33, KPSSP37, KPSSP38, KPSSP41, KPSSP42, KPSSP43, KPSSP46, KPSSP47 ve KPSSP48 puan türlerinin birinden en az 75 (Yetmişbeş) puan almış olmak,\n• Üniversitelerin en az 4 (Dört) yıl süreli eğitim veren siyasal bilgiler, hukuk, iktisadi ve idari bilimler, iktisat ve işletme, bankacılık, bankacılık ve finans fakülteleri ve yüksekokulları ile mühendislik ve fen edebiyat fakültelerinin bilgisayar, yazılım, bilgisayar ve yazılım, endüstri, elektrik, elektronik, elektrik ve elektronik, elektronik ve haberleşme, mekatronik, bilgisayar sistemleri ve teknolojileri, bilgisayar sistemleri ve ağları, istatistik, matematik ve ekonometri bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulu tarafından onaylanmış yurt içindeki veya yurt…"
     },
     {
      "kadro": "FON UZMAN YARDIMCILIĞI",
-     "metin": "• ÖSYM tarafından (A) grubu kadrolar için 2025 ve 2026 yılında yapılan Kamu Personel Seçme Sınavında (KPSS), KPSSP8, KPSSP9, KPSSP11, KPSSP16, KPSSP17, KPSSP18, KPSSP21, KPSSP22,…\n• Üniversitelerin en az 4 (Dört) yıl süreli eğitim veren siyasal bilgiler, hukuk, iktisadi ve idari bilimler, iktisat ve işletme, bankacılık, bankacılık ve finans fakülteleri ve…"
+     "metin": "• ÖSYM tarafından (A) grubu kadrolar için 2025 ve 2026 yılında yapılan Kamu Personel Seçme Sınavında (KPSS), KPSSP8, KPSSP9, KPSSP11, KPSSP16, KPSSP17, KPSSP18, KPSSP21, KPSSP22, KPSSP23, KPSSP26, KPSSP27, KPSSP28, KPSSP31, KPSSP32, KPSSP33, KPSSP37, KPSSP38, KPSSP41, KPSSP42, KPSSP43, KPSSP46, KPSSP47 ve KPSSP48 puan türlerinin birinden en az 75 (Yetmişbeş) puan almış olmak,\n• Üniversitelerin en az 4 (Dört) yıl süreli eğitim veren siyasal bilgiler, hukuk, iktisadi ve idari bilimler, iktisat ve işletme, bankacılık, bankacılık ve finans fakülteleri ve yüksekokulları ile mühendislik ve fen edebiyat fakültelerinin bilgisayar, yazılım, bilgisayar ve yazılım, endüstri, elektrik, elektronik, elektrik ve elektronik, elektronik ve haberleşme, mekatronik, bilgisayar sistemleri ve teknolojileri, bilgisayar sistemleri ve ağları, istatistik, matematik ve ekonometri bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulu tarafından onaylanmış yurt içindeki veya yurt…"
     },
     {
      "kadro": "FON AVUKATLIĞI",
@@ -10586,14 +10840,15 @@
    ],
    "sart_kadro_sayisi": 3,
    "basvuru_notu": "",
-   "detay_guncelleme": "2026-10-12T08:37:05+03:00",
+   "detay_guncelleme": "2026-10-12T19:37:21+03:00",
    "ogrenim": [
     "lisans"
    ],
    "iller": [
     "İstanbul"
    ],
-   "kpss": "kpss"
+   "kpss": "kpss",
+   "kk_detay_surumu": 2
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=eff11df8-6568-4b54-9deb-2865aa9ac767",
@@ -10616,7 +10871,7 @@
    ],
    "sart_kadro_sayisi": 2,
    "basvuru_notu": "Sadece elektronik ortamda yapılan başvurular geçerli olup ilanda belirtilen şartlara uygun olmayan başvurular ile elden, e-posta veya posta yoluyla yapılacak başvurular kabul edilmeyecektir.",
-   "detay_guncelleme": "2026-10-12T09:09:55+03:00",
+   "detay_guncelleme": "2026-10-12T19:37:22+03:00",
    "kaynaklar": [
     {
      "ad": "Kariyer Kapısı",
@@ -10639,7 +10894,8 @@
     "Antalya",
     "Burdur",
     "Isparta"
-   ]
+   ],
+   "kk_detay_surumu": 2
   },
   {
    "id": "iskur-20df4e86aedf099d725ee262",
@@ -10658,7 +10914,7 @@
      "link": "https://www.iskur.gov.tr/medya/horguglp/istanbul-bueyuek%C5%9Fehir-belediyesi-iett-i%C5%9Fletmeleri-genel-mueduerlue%C4%9Fue-memur-al%C4%B1m-ilan%C4%B1-02112026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-12T19:24:04+03:00",
+   "detay_guncelleme": "2026-10-12T20:00:00+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-20df4e86aedf099d725ee262"
@@ -10869,14 +11125,27 @@
     {
      "kadro": "Yapay Zekâ Geliştirme Uzmanı (2 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 2 Katına Kadar)",
      "metin": "konularında en az 3 yıl tecrübe sahibi olmak,"
+    },
+    {
+     "kadro": "Ağ Güvenlik Uzmanı (3 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 2 Katına Kadar)",
+     "metin": "Firewall, Intrusion Prevention System (IPS), URL Filtering, Mail Gateway, Antivirüs, Sandbox ve DoS/DDoS önleme cihazlarının kurulum, yapılandırma ve yönetiminde bilgi ve tecrübe sahibi olmak,"
+    },
+    {
+     "kadro": "Sistem Uzmanı (2 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 2 Katına Kadar)",
+     "metin": "Microsoft Active Directory, DNS, DHCP, Dosya Sunucusu (File Server) ve Exchange Server servislerinin kurulum, yapılandırma ve yönetiminde tecrübe sahibi olmak,"
+    },
+    {
+     "kadro": "Yazılım Geliştirme Uzmanı (2 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 2 Katına Kadar)",
+     "metin": "Microsoft.NET teknolojilerine ve özellikle C# programlama diline hâkim olmak ve bu konularda en az 3 yıl tecrübe sahibi olmak,"
     }
    ],
    "sart_kadro_sayisi": 6,
    "basvuru_notu": "Bu duyuruda belirtilen esaslara uygun olmayan, posta yolu veya şahsen müracaat şeklinde yapılan başvurular kabul edilmeyecektir. Müracaatların sona ermesinden sonra adayın başvuru bilgilerinde kesinlikle değişiklik yapılmayacaktır. Başvuru işleminin hatasız, eksiksiz ve duyuruda belirtilen hususlara uygun olarak yapılmasından adayın kendisi sorumlu olacaktır. Adaylardan gerekli durumlarda; sisteme yüklenen belgelerin asılları istenilebilecektir.",
-   "detay_guncelleme": "2026-10-12T11:36:48+03:00",
+   "detay_guncelleme": "2026-10-12T19:37:23+03:00",
    "iller": [
     "İstanbul"
-   ]
+   ],
+   "kk_detay_surumu": 2
   },
   {
    "id": "csb-477761",
@@ -10956,7 +11225,7 @@
      "link": "https://www.iskur.gov.tr/medya/ey3kjlcv/istanbul-kalk%C4%B1nma-ajans%C4%B1-personel-al%C4%B1m-ilan%C4%B1-02112026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-12T19:24:04+03:00",
+   "detay_guncelleme": "2026-10-12T20:00:00+03:00",
    "iskur_detay_surumu": 2,
    "iskur_belge_sha256": "5a485dda9faf140bf2948bef934c5ff4e01e0b26fd279a0c25840ef054b4e6f6",
    "iskur_detay_guncelleme": "2026-10-12T10:12:23+03:00",
@@ -11049,7 +11318,7 @@
      "link": "https://www.iskur.gov.tr/medya/vldigvnk/a%C4%9Fr%C4%B1-ele%C5%9Fkirt-belediyesi-memur-al%C4%B1m-ilan%C4%B1-04112026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-12T19:23:47+03:00",
+   "detay_guncelleme": "2026-10-12T19:59:30+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-0ca1c1811f87d2184aafb65b"
@@ -11101,7 +11370,7 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-12T19:24:19+03:00",
+   "detay_guncelleme": "2026-10-12T20:00:21+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-5a5a6b5acc24bdec945de41f",
@@ -11226,7 +11495,7 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-12T19:24:23+03:00",
+   "detay_guncelleme": "2026-10-12T20:00:25+03:00",
    "ilk_gorulme": "2026-10-02T09:52:47+03:00",
    "kaynak_kimlikleri": [
     "iskur-56961c753a205497cf8368a3",
@@ -11465,7 +11734,7 @@
      "link": "https://www.iskur.gov.tr/medya/052pz2bi/tuerkiye-turizm-tan%C4%B1t%C4%B1m-ve-geli%C5%9Ftirme-ajans%C4%B1-personel-al%C4%B1m-ilan%C4%B1-05112026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-12T19:23:50+03:00",
+   "detay_guncelleme": "2026-10-12T19:59:35+03:00",
    "sartlar": [
     {
      "kadro": "Belgede belirtilen koşullar",
@@ -11521,7 +11790,8 @@
    "sartlar": [],
    "sart_kadro_sayisi": 0,
    "basvuru_notu": "",
-   "detay_guncelleme": "2026-10-12T09:09:57+03:00"
+   "detay_guncelleme": "2026-10-12T19:37:24+03:00",
+   "kk_detay_surumu": 2
   },
   {
    "id": "iskur-c322e5601259e08082548c73",
@@ -11548,7 +11818,7 @@
      "link": "https://yerelyonetimler.csb.gov.tr/konya-ili-celtik-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-477772"
     }
    ],
-   "detay_guncelleme": "2026-10-12T19:24:16+03:00",
+   "detay_guncelleme": "2026-10-12T20:00:16+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "csb-477772",
@@ -11876,16 +12146,17 @@
    "sartlar": [
     {
      "kadro": "UZMAN PERSONEL 1",
-     "metin": "KPSS Puanı ile Başvuracak Uzman Personel Adayları İçin Asgari Şartlar\nEn az dört yıllık lisans eğitimi veren yükseköğretim kurumlarının veya bunlara denkliği YÖK tarafından kabul edilen yurt içindeki veya yurt dışındaki yükseköğretim kurumlarının Tablo…"
+     "metin": "KPSS Puanı ile Başvuracak Uzman Personel Adayları İçin Asgari Şartlar\nEn az dört yıllık lisans eğitimi veren yükseköğretim kurumlarının veya bunlara denkliği YÖK tarafından kabul edilen yurt içindeki veya yurt dışındaki yükseköğretim kurumlarının Tablo 1’de belirtilen bölümlerinden mezun olmak,"
     }
    ],
    "sart_kadro_sayisi": 3,
    "basvuru_notu": "Sadece elektronik ortamda yapılan başvurular geçerli olup, ilanda belirtilen şartları sağlamayan başvurular ile elden, e-posta veya posta yoluyla yapılacak başvurular kabul edilmeyecektir.",
-   "detay_guncelleme": "2026-10-12T10:07:14+03:00",
+   "detay_guncelleme": "2026-10-12T19:37:24+03:00",
    "ogrenim": [
     "lisans"
    ],
-   "kpss": "kpss"
+   "kpss": "kpss",
+   "kk_detay_surumu": 2
   },
   {
    "id": "sbb-9c31b73e8bf1ca0dcd1af3df",
@@ -13676,22 +13947,22 @@
  ],
  "kaynak_durumlari": {
   "sbb": {
-   "kontrol": "2026-10-12T19:23:41+03:00",
+   "kontrol": "2026-10-12T19:59:20+03:00",
    "ilan_sayisi": 113,
    "hata_sayisi": 0,
-   "yerel_kontrol": "2026-10-12T16:06:43.975389+00:00",
+   "yerel_kontrol": "2026-10-12T16:36:44.486105+00:00",
    "calisma_yeri": "yerel"
   },
   "iskur": {
-   "kontrol": "2026-10-12T19:24:31+03:00",
+   "kontrol": "2026-10-12T20:00:34+03:00",
    "ilan_sayisi": 31,
    "hata_sayisi": 0
   },
   "csb": {
-   "kontrol": "2026-10-12T19:24:31+03:00",
+   "kontrol": "2026-10-12T20:00:34+03:00",
    "ilan_sayisi": 24,
    "hata_sayisi": 0,
-   "yerel_kontrol": "2026-10-12T16:06:45.344585+00:00",
+   "yerel_kontrol": "2026-10-12T16:36:45.942602+00:00",
    "calisma_yeri": "yerel"
   }
  }
