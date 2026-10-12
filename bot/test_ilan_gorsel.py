@@ -29,7 +29,7 @@ class GorselTests(unittest.TestCase):
 
     def test_meslek_eslemesi(self):
         from meslek_gorseli import meslek_no
-        beklenen={'Zabıta Memuru':7,'İtfaiye Eri':8,'Şoför':9,'Sürücü':9,'Mühendis':14,'Mimar':15,'Tekniker':16,
+        beklenen={'Muvazzaf Subay':0,'Astsubay':0,'Uzman Erbaş':0,'Polis Memuru':0,'Zabıta Memuru':7,'İtfaiye Eri':8,'Şoför':9,'Sürücü':9,'Mühendis':14,'Mimar':15,'Tekniker':16,
                   'Elektrik Teknisyeni':17,'Elektrik Mühendisi':14,'Öğretim Görevlisi':18,'Araştırma Görevlisi':18,
                   'Öğretmen':19,'Kütüphaneci':20,'Avukat':21,'Büro Personeli':22,'Veri Hazırlama ve Kontrol İşletmeni':22,
                   'Müfettiş Yardımcısı':23,'Sürekli İşçi':24,'Bahçıvan':25,'Orman Muhafaza Memuru':26,
