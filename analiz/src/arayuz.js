@@ -203,6 +203,14 @@ function ciz(d){
     kok.appendChild(h('p','bos hata-mesaj',nt.join(' ')))
   }
   var k=d.kpi,yg=k.yeni+k.geri;
+  if(k.erisim){
+    // Kaç farklı kişiye ulaşıyoruz: cihaz bazında, dönem içinde tekrar sayılmadan (seçili aralıktan bağımsız).
+    var E=k.erisim,eb=h('div','kpi');
+    [['Bugün farklı kişi',tr(E.bugun),'bugün siteye giren'],['Bu hafta farklı kişi',tr(E.hafta),'pazartesiden beri'],['Bu ay farklı kişi',tr(E.ay),'ayın başından beri'],
+     ['Toplam ulaşılan kişi',tr(E.toplam),E.baslangic?E.baslangic+' tarihinden beri':'ölçüm yeni başladı']].forEach(function(a){
+      var c=h('div');c.appendChild(h('span',null,a[0]));c.appendChild(h('strong',null,a[1]));c.appendChild(h('em',null,a[2]));eb.appendChild(c)});
+    kok.appendChild(h('h2','bolum','Kaç kişiye ulaşıyoruz'));kok.appendChild(eb);
+  }
   var kp=h('div','kpi');
   [['Tekil ziyaretçi',tr(k.ziyaretci),d.aralik.adet>1?'günlük tekil sayıların toplamı':'bugün'],['Oturum',tr(k.oturum),''],['Sayfa görüntüleme',tr(k.sayfa),k.oturum?(k.sayfa/k.oturum).toFixed(1).replace('.',',')+' sayfa / oturum':''],
    ['Ort. etkin süre',sure(k.etkinSaniyeOrt),'oturum başına, sekme açık ve etkileşimliyken'],['Hemen çıkma',yuzde(k.hemenCikma),'tek sayfa, etkileşimsiz oturum'],

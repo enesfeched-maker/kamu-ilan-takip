@@ -13,6 +13,7 @@ const YOL = /^\/[A-Za-z0-9/._~%+-]*$/;
 const GIZLI = '[temizlendi]';
 
 const kes = (s, n) => String(s).slice(0, n);
+export const DONEM_BIT = { g: 2, h: 4, a: 8, i: 16 };
 
 export function metinTemizle(v, n, kucuk = false) {
   if (typeof v !== 'string') return null;
@@ -65,7 +66,11 @@ export function olayDogrula(o) {
   const t = o.t;
   const p = yolTemizle(o.p);
   if (!p) return null;
-  const e = { t, p, sy: null, v: null, k: null, a: null, h: null, x: null, n: null, n2: null, f: o.f === 1 || o.f === true };
+  const e = { t, p, sy: null, v: null, k: null, a: null, h: null, x: null, n: null, n2: null, f: o.f === 1 || o.f === true, d: 0 };
+  // Erişim bayrakları (istemci: dönemin ilk ziyareti): g=gün 2, h=hafta 4, a=ay 8, i=cihazın ilk ziyareti 16.
+  if (t === 'sayfa' && e.f && typeof o.d === 'string' && /^[ghai]{1,4}$/.test(o.d)) {
+    for (const c of new Set(o.d)) e.d |= DONEM_BIT[c];
+  }
   if (t === '404') {
     e.sy = '404';
     e.x = kes(p, 100);

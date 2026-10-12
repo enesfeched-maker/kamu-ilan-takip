@@ -33,7 +33,7 @@ const ilkOturum = (boyut, ifade, ek = '', k2 = "''") => ({
 
 export const METRIKLER = [
   { boyut: 'genel', sql: `SELECT ${SUT("''")}, 0 AS toplam FROM olaylar WHERE t = 'sayfa' AND {G} GROUP BY gun` },
-  { boyut: 'yeni_geri', sql: `SELECT ${SUT("CASE yeni WHEN 1 THEN 'yeni' ELSE 'geri' END")}, 0 AS toplam FROM olaylar WHERE ilk = 1 AND {G} GROUP BY gun, k1` },
+  { boyut: 'yeni_geri', sql: `SELECT ${SUT("CASE yeni & 1 WHEN 1 THEN 'yeni' ELSE 'geri' END")}, 0 AS toplam FROM olaylar WHERE ilk = 1 AND {G} GROUP BY gun, k1` },
   { boyut: 'etkin', sql: `SELECT ${SUT("''")}, SUM(n * COALESCE(n2, 1)) AS toplam FROM olaylar WHERE t = 'aktif' AND {G} GROUP BY gun` },
   {
     boyut: 'oturum_ozet',
@@ -110,6 +110,9 @@ export const METRIKLER = [
   { boyut: 'kaydirma', sql: `SELECT gun, CAST(n AS TEXT) AS k1, sy || CASE WHEN h = 'm' THEN '|m' ELSE '' END AS k2, SUM(COALESCE(n2, 1)) AS say, COUNT(DISTINCT zv) AS tekil, COUNT(DISTINCT os) AS oturum, 0 AS toplam FROM olaylar WHERE t = 'kaydirma' AND {G} GROUP BY gun, n, k2 ORDER BY say DESC {L}` },
   { boyut: 'hata', sql: grup(SUT('x', "COALESCE(h, '')"), "t = 'hata'", 'x, h') },
   { boyut: 'yok404', sql: grup(SUT('p'), "t = '404'", 'p') },
+  // Erişim: dönemin ilk ziyareti bayrakları. say = bugün ilk kez gelen cihaz (günlük kişi), tekil = haftanın ilki, oturum = ayın ilki,
+  // toplam = hiç gelmemiş cihaz. Günler toplanınca hafta/ay için tekrar sayım olmaz (cihaz dönem başına bir kez işaretlenir).
+  { boyut: 'erisim', sql: `SELECT gun, 'erisim' AS k1, '' AS k2, SUM((yeni & 2) > 0) AS say, SUM((yeni & 4) > 0) AS tekil, SUM((yeni & 8) > 0) AS oturum, SUM((yeni & 16) > 0) AS toplam FROM olaylar WHERE ilk = 1 AND {G} GROUP BY gun` },
   { boyut: 'lcp', sql: medyan('n', 'lcp') },
   { boyut: 'ttfb', sql: medyan('n2', 'ttfb') },
 ];
@@ -190,6 +193,29 @@ export async function aralikOku(db, bas, bit) {
   okumaGunlugu('panel/veri', ozetli, sonuc);
   const ham = satirlarBirlesik(sonuc);
   return [...satirlar(ozetli, null).map((r, i) => ({ ...r, boyut: ozetli.results[i].boyut })), ...ham];
+}
+
+// Sabit dönemler için erişim (seçili aralıktan bağımsız): bugün, bu hafta (Pzt'den), bu ay, ölçüm başından beri.
+export async function erisimOku(db, bugunGun) {
+  const oz = await db.prepare("SELECT gun, say, tekil, oturum, toplam FROM ozet WHERE boyut = 'erisim'").all();
+  const ham = await db.prepare(`SELECT gun, SUM((yeni & 2) > 0) AS say, SUM((yeni & 4) > 0) AS tekil, SUM((yeni & 8) > 0) AS oturum,
+    SUM((yeni & 16) > 0) AS toplam FROM olaylar WHERE ilk = 1 AND ts >= ? AND gun NOT IN (SELECT gun FROM ozet_gun) GROUP BY gun`)
+    .bind(gunBasSn(bugunGun) - 3 * 86400).all();
+  okumaGunlugu('panel/erisim', oz, ham);
+  const gunler = new Map();
+  for (const r of [...(oz.results || []), ...(ham.results || [])]) gunler.set(r.gun, r);
+  const t = new Date(Date.parse(bugunGun + 'T00:00:00Z'));
+  const pzt = new Date(t.getTime() - ((t.getUTCDay() + 6) % 7) * 86400000).toISOString().slice(0, 10);
+  const ay = bugunGun.slice(0, 7);
+  const s = { bugun: 0, hafta: 0, ay: 0, toplam: 0, baslangic: null };
+  for (const [g, r] of gunler) {
+    if (g === bugunGun) s.bugun += Number(r.say || 0);
+    if (g >= pzt && g <= bugunGun) s.hafta += Number(r.tekil || 0);
+    if (g.slice(0, 7) === ay && g <= bugunGun) s.ay += Number(r.oturum || 0);
+    s.toplam += Number(r.toplam || 0);
+    if (Number(r.toplam || 0) > 0 && (!s.baslangic || g < s.baslangic)) s.baslangic = g;
+  }
+  return s;
 }
 
 // Satırları anahtara göre toplar (günler birleşir).

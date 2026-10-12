@@ -147,7 +147,7 @@ export async function topla(request, env, simdiMs = Date.now(), rastgele = Math.
     const oz = ilk ? oturumOzellikleri : {};
     const deger = {
       ts: simdiSn, gun, saat, hg, zv, os: paket.oturum, t: e.t, p: e.p, sy: e.sy, v: e.v, k: e.k, a: e.a, h: e.h, x: e.x, n: e.n, n2: e.n2,
-      ilk, yeni: ilk ? (paket.geri ? 0 : 1) : null,
+      ilk, yeni: ilk ? ((paket.geri ? 0 : 1) | (e.d || 0)) : null,   // bit0 yeni; 2/4/8/16 dönem bayrakları (dogrula.DONEM_BIT)
       ulke: null, bolge: null, sehir: null, cihaz: null, tarayici: null, isletim: null, gen: null, dil: null, kaynak: null, rhost: null, us: null, um: null, uc: null,
       ...oz,
     };

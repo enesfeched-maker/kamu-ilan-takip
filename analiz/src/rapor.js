@@ -1,5 +1,5 @@
 // Panel verisi: ham/özet satırlarından tek bir JSON gövdesi üretir.
-import { aralikOku, birlestir } from './sorgu.js';
+import { aralikOku, birlestir, erisimOku } from './sorgu.js';
 import { aralikCoz, gunListesi } from './zaman.js';
 import { okumaGunlugu } from './onbellek.js';
 
@@ -61,7 +61,10 @@ export async function raporUret(env, aralik, simdiMs = Date.now(), adlariGetir =
   const oturumToplam = hemen + (oz.diger || 0);
   const yg = Object.fromEntries(B('yeni_geri').map((r) => [r.k1, r.tekil]));
 
+  let erisim = null;
+  try { erisim = await erisimOku(env.DB, bit); } catch (e) { erisim = null; }   // erişim kartı eksik kalır, rapor bozulmaz
   const kpi = {
+    erisim,
     ziyaretci: genel.tekil,
     oturum: genel.oturum,
     sayfa: genel.say,

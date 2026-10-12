@@ -8,10 +8,17 @@ const dogrula = (o) => paketDogrula(JSON.stringify(o));
 test('geçerli paket kabul edilir, bilinmeyen alanlar atılır', () => {
   const p = dogrula(paket([{ t: 'sayfa', p: '/', v: 'bugun', f: 1, kimlik: 'x', email: 'a@b.c' }], { evil: 1 }));
   assert.equal(p.olaylar.length, 1);
-  assert.deepEqual(Object.keys(p.olaylar[0]).sort(), ['a', 'f', 'h', 'k', 'n', 'n2', 'p', 'sy', 't', 'v', 'x']);
+  assert.deepEqual(Object.keys(p.olaylar[0]).sort(), ['a', 'd', 'f', 'h', 'k', 'n', 'n2', 'p', 'sy', 't', 'v', 'x']);
   assert.equal(p.rhost, 'google.com');
   assert.equal(p.dil, 'tr-tr');
   assert.equal(p.evil, undefined);
+});
+
+test('erişim bayrakları: yalnız oturumun ilk sayfasında, bilinen harfler bit maskesine', () => {
+  assert.equal(olayDogrula({ t: 'sayfa', p: '/', f: 1, d: 'igha' }).d, 2 | 4 | 8 | 16);
+  assert.equal(olayDogrula({ t: 'sayfa', p: '/', f: 1, d: 'g' }).d, 2);
+  assert.equal(olayDogrula({ t: 'sayfa', p: '/', d: 'g' }).d, 0);          // ilk sayfa değil
+  assert.equal(olayDogrula({ t: 'sayfa', p: '/', f: 1, d: 'gx' }).d, 0);   // bilinmeyen harf: hiç sayılmaz
 });
 
 test('zarf doğrulaması: oturum kodu, olay sayısı, bayt sınırı, bozuk JSON', () => {
