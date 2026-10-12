@@ -1,9 +1,9 @@
 {
  "schema": 1,
- "guncelleme": "2026-10-12T05:07:01.272350+00:00",
+ "guncelleme": "2026-10-12T05:37:01.538249+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-10-12T05:07:04.057839+00:00",
+   "kontrol": "2026-10-12T05:37:02.439320+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -4655,7 +4655,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-10-12T05:07:05.847339+00:00",
+   "kontrol": "2026-10-12T05:37:04.121615+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -6481,6 +6481,33 @@
    "sart_kadro_sayisi": 2,
    "basvuru_notu": "2.2. Adaylar giriş sınavı başvurularını, 12/10/2026 - 25/10/2026 tarihleri arasında e-Devlet Kariyer Kapısı Kamu İşe Alım Platformu (https://kariyerkapisi.gov.tr) üzerinden istenilen bilgi ve belgeleri yükleyerek gerçekleştireceklerdir. Şahsen veya posta yoluyla yapılan, başvuru şartlarını taşımayan, eksik ve yanlış evrakla yapılan başvurular işleme alınmayacaktır.",
    "detay_guncelleme": "2026-10-12T00:36:46+03:00"
+  },
+  "https://kariyerkapisi.gov.tr/IlanDetay?i=d72bc5ed-a952-4452-9fea-b05616038765": {
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/35e398d1-2cbb-4fea-983c-a76e0b2c06a5.png",
+   "son_tarih": "2026-10-30",
+   "son_zaman": "2026-10-30T17:00:00+03:00",
+   "baslangic_zaman": "2026-10-12T08:00:00+03:00",
+   "yer": "İSTANBUL / ŞİŞLİ",
+   "kadro": "Toplam 75 kişi — 10 FON DENETÇİ YRD • 45 FON UZMAN YARDIMCISI • 20 FON AVUKATI",
+   "ilan_turu": "A Grubu Memur (Kariyer Meslek)",
+   "ozet": "Tasarruf Mevduatı Sigorta Fonu İstanbul Merkez teşkilatında istihdam edilmek üzere, 9 uncu dereceden; 10 (On) Fon denetçi yardımcısı, 45 (Kırkbeş) Fon uzman yardımcısı ve 20 (Yirmi) Fon avukatı kadrosuna atama yapılmak amacıyla yazılı ve sözlü giriş sınavı yapılacaktır.",
+   "sartlar": [
+    {
+     "kadro": "FON DENETÇİ YARDIMCILIĞI",
+     "metin": "• ÖSYM tarafından (A) grubu kadrolar için 2025 ve 2026 yılında yapılan Kamu Personel Seçme Sınavında (KPSS), KPSSP8, KPSSP9, KPSSP11, KPSSP16, KPSSP17, KPSSP18, KPSSP21, KPSSP22,…\n• Üniversitelerin en az 4 (Dört) yıl süreli eğitim veren siyasal bilgiler, hukuk, iktisadi ve idari bilimler, iktisat ve işletme, bankacılık, bankacılık ve finans fakülteleri ve…"
+    },
+    {
+     "kadro": "FON UZMAN YARDIMCILIĞI",
+     "metin": "• ÖSYM tarafından (A) grubu kadrolar için 2025 ve 2026 yılında yapılan Kamu Personel Seçme Sınavında (KPSS), KPSSP8, KPSSP9, KPSSP11, KPSSP16, KPSSP17, KPSSP18, KPSSP21, KPSSP22,…\n• Üniversitelerin en az 4 (Dört) yıl süreli eğitim veren siyasal bilgiler, hukuk, iktisadi ve idari bilimler, iktisat ve işletme, bankacılık, bankacılık ve finans fakülteleri ve…"
+    },
+    {
+     "kadro": "FON AVUKATLIĞI",
+     "metin": "• ÖSYM tarafından (B) grubu kadrolar için 2026 yılında yapılan Kamu Personel Seçme Sınavında (KPSS), KPSSP3 puan türünden en az 70 (Yetmiş) puan almış olmak,\n• Üniversitelerin en az 4 (Dört) yıl süreli hukuk fakülteleri ile bunlara denkliği Yükseköğretim Kurulu tarafından onaylanmış yurt dışındaki yükseköğretim kurumlarından mezun olmak,"
+    }
+   ],
+   "sart_kadro_sayisi": 3,
+   "basvuru_notu": "",
+   "detay_guncelleme": "2026-10-12T08:37:05+03:00"
   }
  },
  "logolar": {
