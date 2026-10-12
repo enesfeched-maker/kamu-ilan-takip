@@ -101,6 +101,20 @@ class AsamaliBasvuruTests(unittest.TestCase):
         self.assertIn('#Edirne', e)
         self.assertIn('#İstanbul', e)
 
+    def test_sart_maddesi_sadelesir(self):
+        s = site_uret.sade_madde
+        self.assertEqual(s('ÖSYM tarafından 2025 ve 2026 yılında yapılan Kamu Personeli Seçme Sınavında KPSS P3 puan türünde en az 60 '
+                           '(altmış) puan almış olmak.'), '2025-2026 KPSS P3 en az 60 puan almış olmak.')
+        self.assertEqual(s('10/6/2004 tarihli ve 5188 sayılı Özel Güvenlik Hizmetlerine Dair Kanun’un 10 uncu maddesinde belirtiler '
+                           'şartlar ile “Özel Güvenlik Görevlileri Sağlık Şartları Yönetmeliği’nde belirtilen sağlık şartlarına sahip olmak,'),
+                         'Özel Güvenlik Görevlileri Sağlık Şartları Yönetmeliği’nde belirtilen sağlık şartlarına sahip olmak.')
+        self.assertEqual(s('Silahlı Güvenlik Kimlik Kartına sahip olmak. (Ancak, sözlü sınav sonucunda atanmaya hak kazananlara ilişkin '
+                           'nihai liste ilan edildikten itibaren evrak ibraz süresi içerisinde belge sunulmalıdır.)'),
+                         'Silahlı Güvenlik Kimlik Kartına sahip olmak.')
+        self.assertEqual(s('İnşaat Mühendisliği lisans bölümünden ya da buna denkliği Yükseköğretim Kurulunca kabul edilmiş '
+                           'yurtdışındaki Yükseköğretim Kurumlarından mezun olmak.'), 'İnşaat Mühendisliği lisans bölümünden mezun olmak.')
+        self.assertEqual(s('Son başvuru tarihi itibarıyla 35 yaşını doldurmamış olmak.'), 'Son başvuru tarihi itibarıyla 35 yaşını doldurmamış olmak.')
+
     def test_kaynak_sirasi_ve_birlestirme(self):
         sbb = {'id': 'sbb-' + 'd' * 24, 'kaynak_turu': 'sbb', 'kadro': 'TAPU VE KADASTRO SÖZLEŞMELİ BİLİŞİM PERSONELİ ALIMI',
                'son_tarih': '2026-10-19', 'sartlar': [{'metin': 'x'}]}
