@@ -909,7 +909,12 @@ def main():
         urls += puan_sayfalarini_uret(docs, BASE)
     except Exception as hata:
         print(f'Uyarı: taban puanı sayfaları üretilemedi: {hata}')
-    (docs / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+esc(u)+'</loc></url>' for u in urls)+'</urlset>\n', encoding='utf-8')
+    if BASE + 'puanlar/' not in urls:
+        urls.insert(1, BASE + 'puanlar/')   # tercih robotu sayfası haritada yoktu
+    bugun = datetime.now(TR).date().isoformat()   # ana sayfa her gün değişir; Google'a tazelik sinyali
+    (docs / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+                                      + ''.join('<url><loc>' + esc(u) + '</loc>' + (f'<lastmod>{bugun}</lastmod>' if u == BASE else '') + '</url>' for u in urls)
+                                      + '</urlset>\n', encoding='utf-8')
     bot = bot_ilanlari(data.get('ilanlar', []))
     (docs / 'bot-ilanlar.json').write_text(json.dumps(bot, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
     try:
