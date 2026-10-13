@@ -1,9 +1,9 @@
 {
  "schema": 1,
- "guncelleme": "2026-10-13T06:06:42.323408+00:00",
+ "guncelleme": "2026-10-13T06:36:44.522977+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-10-13T06:06:42.884245+00:00",
+   "kontrol": "2026-10-13T06:36:45.113676+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -4470,7 +4470,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-10-13T06:06:44.336635+00:00",
+   "kontrol": "2026-10-13T06:36:46.515790+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -6879,6 +6879,54 @@
    "puan_turleri": [
     "P3"
    ]
+  },
+  "https://kariyerkapisi.gov.tr/IlanDetay?i=cb266bf7-8022-4349-b285-053be1f91922": {
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/1b9659f5-a37d-40d9-994d-1f6a51c7234c.png",
+   "son_tarih": "2026-10-27",
+   "son_zaman": "2026-10-27T23:59:00+03:00",
+   "baslangic_zaman": "2026-10-13T09:00:00+03:00",
+   "yer": "İSTANBUL",
+   "kadro": "Toplam 25 kişi — 12 DESTEK PERSONELİ • 12 KORUMA VE GÜVENLİK GÖREVLİSİ • 1 TEKNİSYEN",
+   "ilan_turu": "Sözleşmeli Personel İlanları",
+   "ozet": "657 sayılı Devlet Memurları Kanunu'nun 4 üncü maddesinin (B) fıkrası ile 06.06.1978 tarih ve 7/15754 sayılı Bakanlar Kurulu Kararı ile yürürlüğe konulan Sözleşmeli Personel Çalıştırılmasına İlişkin Esaslar'ın Ek 2 nci maddesinin (c) bendi çerçevesinde; Üniversitemiz birimlerinde 2024 KPSS (B) grubundan istihdam edilmek üzere aşağıdaki tabloda belirtilen pozisyonlara yazılı ve/veya sözlü sınav başarı sırasına göre toplam 25 adet sözleşmeli personel alınacaktır.",
+   "sartlar": [
+    {
+     "kadro": "Destek Personeli DP-1",
+     "metin": "2024 KPSS P94 puan türünden 55 ve üzeri puan almış olmak.\nLise veya dengi okul mezunu olmak."
+    },
+    {
+     "kadro": "Koruma ve Güvenlik Görevlisi (KGG-1) Önlisans -Erkek",
+     "metin": "2024 KPSS P93 puan türünden 60 ve üzeri puan almış olmak.\nHerhangi bir önlisans programından mezunu olmak"
+    },
+    {
+     "kadro": "Teknisyen (TKN-1)",
+     "metin": "2024 KPSS P94 puan türünden 60 ve üzeri puan almış olmak.\nOrtaöğretim Kurumlarının (lise ve dengi) Tesisat Teknolojisi ve İklimlendirme Alanı ve Dallarından mezun olmak."
+    }
+   ],
+   "sart_kadro_sayisi": 4,
+   "basvuru_notu": "Bu duyuruda belirtilen esaslara uygun olmayan, posta yolu veya şahsen müracaat şeklinde yapılan başvurular kabul edilmeyecektir.",
+   "detay_guncelleme": "2026-10-13T09:36:47+03:00",
+   "kk_detay_surumu": 2
+  },
+  "https://kariyerkapisi.gov.tr/IlanDetay?i=11272843-b0f1-470e-af31-cc176fa0e5d4": {
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/f4585584-ae3e-4781-8db7-27b95460c8c6.png",
+   "son_tarih": "2026-11-13",
+   "son_zaman": "2026-11-13T23:59:00+03:00",
+   "baslangic_zaman": "2026-11-02T08:00:00+03:00",
+   "yer": "KONYA-KARAMAN",
+   "kadro": "1 UZMAN",
+   "ilan_turu": "Sözleşmeli Personel İlanları",
+   "ozet": "Mevlana Kalkınma Ajansı (MEVKA), TR52 Konya-Karaman Bölgesinde faaliyet göstermekte olup, Ajans merkezi Konya ilidir. 4 sayılı Bakanlıklara Bağlı, İlgili, İlişkili Kurum ve Kuruluşlar ile Diğer Kurum ve Kuruluşların Teşkilatı Hakkında Cumhurbaşkanlığı Kararnamesi ve Kalkınma Ajansları Personel Yönetmeliği hükümleri uyarınca yapılacak yarışma sınavı ile Ajansımızda “1 (bir) Uzman Personel” istihdam edilecektir. Sınavda başarılı olan aday, Konya veya Karaman illerinden herhangi birinde görevlendirilebilecektir.",
+   "sartlar": [
+    {
+     "kadro": "Personel Alım İlanı-İnşaat Mühendisliği (1 Uzman)",
+     "metin": "Öğrenci Seçme ve Yerleştirme Merkezi (ÖSYM) tarafından yapılan ve son başvuru tarihi itibariyle geçerliliği bulunan Kamu Personeli Seçme Sınavı (KPSS)’ndan mezun olduğu öğrenim dalı itibarıyla Tablo 2’de belirtilen puan türlerinin birinden en az 80 (seksen) puan almış olmak.\nEn az dört yıllık lisans eğitimi veren yükseköğretim kurumlarının veya bunlara denkliği YÖK tarafından kabul edilen yurt içindeki veya yurt dışındaki yükseköğretim kurumlarından Tablo 2’de belirtilen bölümden lisans düzeyinde mezun olmak,"
+    }
+   ],
+   "sart_kadro_sayisi": 1,
+   "basvuru_notu": "Sadece elektronik ortamda yapılan başvurular geçerli olup ilanda belirtilen şartlara uygun olmayan başvurular ile elden, e-posta veya posta yoluyla yapılacak başvurular kabul edilmeyecektir.",
+   "detay_guncelleme": "2026-10-13T09:36:48+03:00",
+   "kk_detay_surumu": 2
   }
  },
  "logolar": {
