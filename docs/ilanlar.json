@@ -1,5 +1,5 @@
 {
- "guncelleme": "2026-10-13T09:16:16+03:00",
+ "guncelleme": "2026-10-13T09:23:22+03:00",
  "ilanlar": [
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=9c82aab5-022e-43c8-b7f1-e6cf329d205b",
@@ -13547,7 +13547,7 @@
    "kurum": "İSTANBUL TEKNİK ÜNİVERSİTESİ REKTÖRLÜĞÜ",
    "ilan_turu": "Sözleşmeli Personel İlanları",
    "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=cb266bf7-8022-4349-b285-053be1f91922",
-   "son_tarih": null,
+   "son_tarih": "",
    "ilk_gorulme": "2026-10-13T09:13:50+03:00",
    "kaynaklar": [
     {
@@ -13676,6 +13676,7 @@
   "sbb-1a8720ee52f99de292a259e0",
   "sbb-1af8cf46e78ee947c84f2f8c",
   "sbb-1b9270816a86ebf86b702b5b",
+  "sbb-1dc255df7337b5a3f78c2d17",
   "sbb-1def1b8d97a4370abc1083d3",
   "sbb-20fbbd22c15a3e2797a5153b",
   "sbb-2244a2ef6d6890502149fd23",
@@ -13815,8 +13816,7 @@
   "sbb-ffbba5c3ef2b2c84c00bb8e2"
  ],
  "telegram_bekleyen": [
-  "https://kariyerkapisi.gov.tr/IlanDetay?i=cb266bf7-8022-4349-b285-053be1f91922",
-  "sbb-1dc255df7337b5a3f78c2d17"
+  "https://kariyerkapisi.gov.tr/IlanDetay?i=cb266bf7-8022-4349-b285-053be1f91922"
  ],
  "telegram_yayin_surumu": 2,
  "telegram_mesajlari": {
@@ -13840,6 +13840,7 @@
   "iskur-6c0565cdb31b4595f797e950": 288,
   "iskur-9fece49766cbf82ae3e58d14": 320,
   "iskur-beceb4b88f33dcb12811b07a": 321,
+  "sbb-1dc255df7337b5a3f78c2d17": 328,
   "sbb-25dc07af54e14d911de09cb0": 302,
   "sbb-2fecfe789ec2e94bc8a58047": 304,
   "sbb-3aa4736db5de6f1d64227873": 319,
