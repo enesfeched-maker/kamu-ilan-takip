@@ -371,10 +371,28 @@ def kopya_bul(ilanlar):
                     say[h] = say.get(h, 0) + 1
         return all(n == 1 for n in say.values())
 
+    def detaysiz_tekil(a, b):
+        """Kariyer Kapısı ayrıntısı henüz okunmamış kayıt (son tarih ve kadro yok): belediye dışı kurumun her kaynakta TEK
+        kaydı varsa öteki kaynaktaki ilanla aynıdır. 13 Ekim 2026: Mevlana KA, ayrıntı gelene kadar sitede iki kez göründü.
+        Ayrıntı okununca eşleşme olağan kurallarla yeniden kurulur."""
+        x = a if not a.get('son_tarih') else b
+        y = b if x is a else a
+        bx, by = bilgi[x['id']], bilgi[y['id']]
+        if x.get('son_tarih') or x.get('kadro') or _toplam(x) or bx['host'] != {KK} or not y.get('son_tarih'):
+            return False
+        if bx['kan'].endswith(' belediye') or not (bx['cekirdek'] and bx['cekirdek'] == by['cekirdek']):
+            return False
+        say = {}
+        for c in aday:
+            if bilgi[c['id']]['cekirdek'] == bx['cekirdek']:
+                for h in bilgi[c['id']]['host']:
+                    say[h] = say.get(h, 0) + 1
+        return all(n == 1 for n in say.values())
+
     def guclu(a, b):
         if _takma_ad(a, b) or _ayni_ilan(a, b) and not (bilgi[a['id']]['host'] & bilgi[b['id']]['host']):
             return True
-        return temel(a, b) and tarih_uyumlu(a, b) and kadro_uyumlu(a, b)
+        return temel(a, b) and tarih_uyumlu(a, b) and (kadro_uyumlu(a, b) or detaysiz_tekil(a, b))
 
     atanan, gruplar = {}, {}
     for r in siralama:

@@ -203,6 +203,14 @@ class KalanKopyaTests(unittest.TestCase):
         iskur['son_tarih'] = '2026-11-20'
         self.assertNotIn(iskur['id'], kopya.kopya_bul([kk, sbb, iskur])['kopya_of'])
 
+    def test_ayrintisi_okunmamis_kk_kaydi_kurumun_tek_ilaniyla_birlesir(self):
+        kk = kk_kayit(9, 'MEVLANA KALKINMA AJANSI', 'MEVLANA KALKINMA AJANSI - Personel Alım İlanı-İnşaat Mühendisliği (1 Uzman)', '', kadro='')
+        sbb = sbb_kayit(9, 'MEVLANA KALKINMA AJANSI', '1 UZMAN PERSONEL ALACAK', son='2026-11-13')
+        self.assertEqual(len(kopya.kopya_bul([kk, sbb])['kopya_of']), 1)
+        ikinci = sbb_kayit(10, 'MEVLANA KALKINMA AJANSI', '2 DESTEK PERSONELİ ALACAK', son='2026-12-01')
+        self.assertNotIn(kk['id'], kopya.kopya_bul([kk, sbb, ikinci])['kopya_of'])   # kurumun iki ilanı varsa hangisi belli değil
+        self.assertNotIn(kk['id'], kopya.kopya_bul([kk, sbb, ikinci])['kopya_of'].values())
+
     def test_genel_baslikli_belediyede_birlesmez(self):
         sbb = sbb_kayit(1, 'ÇUKURKUYU (NİĞDE) BELEDİYE BAŞKANLIĞI', '1 MEMUR ALACAK', son='2026-10-27')
         iskur = iskur_kayit(1, 'Niğde Çukurkuyu Belediyesi', 'Niğde Çukurkuyu Belediyesi Personel Alım İlanı', '2026-10-27', yer='Niğde', iller=['Niğde'])
