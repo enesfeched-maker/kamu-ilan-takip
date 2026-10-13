@@ -1,5 +1,5 @@
 {
- "guncelleme": "2026-10-13T10:21:36+03:00",
+ "guncelleme": "2026-10-13T10:27:13+03:00",
  "ilanlar": [
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=9c82aab5-022e-43c8-b7f1-e6cf329d205b",
@@ -12237,57 +12237,6 @@
    "kpss": "kpss"
   },
   {
-   "id": "csb-478164",
-   "baslik": "SARIİDRİS BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE ZABITA MEMURU ALIMI İLANI",
-   "kurum": "SARIİDRİS BELEDİYE BAŞKANLIĞI",
-   "kadro": "1 Zabıta Memuru",
-   "ilan_turu": "Memur",
-   "son_tarih": "2026-11-20",
-   "kaynak": "ÇŞB Yerel Yönetimler",
-   "kaynak_turu": "csb",
-   "link": "https://yerelyonetimler.csb.gov.tr/isparta-ili-sariidris-belediye-baskanligina-ilk-defa-atanmak-uzere-zabita-memuru-alimi-ilani-duyuru-478164",
-   "kaynaklar": [
-    {
-     "ad": "ÇŞB Yerel Yönetimler",
-     "link": "https://yerelyonetimler.csb.gov.tr/isparta-ili-sariidris-belediye-baskanligina-ilk-defa-atanmak-uzere-zabita-memuru-alimi-ilani-duyuru-478164"
-    },
-    {
-     "ad": "SBB Kamu İlan",
-     "link": "https://kamuilan.sbb.gov.tr/"
-    }
-   ],
-   "yayim_tarihi": "2026-10-09",
-   "detay_guncelleme": "2026-10-12T21:39:33+03:00",
-   "csb_detay_surumu": 4,
-   "ozet": "Isparta ili Sarıidris Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Belediye Zabıta Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadroya açıktan atama yoluyla zabıta memuru alımı yapılacaktır. Son başvuru: 20.11.2026.",
-   "belgeler": [
-    {
-     "ad": "09-10-2026-Sar-idris-Belediye-Ba-kanl-lk-Defa-Atanmak-zere-Zab-ta-Memuru-Al-m-lan-20261009162811.docx",
-     "link": "https://webdosya.csb.gov.tr/v2/yerelyonetimler/2026/10/09-10-2026-Sar-idris-Belediye-Ba-kanl-lk-Defa-Atanmak-zere-Zab-ta-Memuru-Al-m-lan-20261009162811.docx"
-    }
-   ],
-   "yer": "Isparta",
-   "sartlar": [
-    {
-     "kadro": "Zabıta Memuru · 1 kadro",
-     "metin": "KPSS P3 puan türünden en az 70 puan. Hizmet sınıfı GİH, 10. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren fakültelerin bankacılık ve finans, finans matematiği, finansal ekonometri programlarının birinden mezun olmak. En az (B) sınıfı sürücü belgesine sahip olmak."
-    }
-   ],
-   "ilk_gorulme": "2026-10-09T17:28:05+03:00",
-   "kaynak_kimlikleri": [
-    "csb-478164",
-    "sbb-b86634a05b9426ed1e384cf2"
-   ],
-   "ogrenim": [
-    "lisans"
-   ],
-   "kategori": "belediye",
-   "iller": [
-    "Isparta"
-   ],
-   "kpss": "kpss"
-  },
-  {
    "id": "iskur-c2eb8c0816172f89126a78a8",
    "baslik": "Isparta Sarıidris Belediyesi Zabıta Memuru Alım İlanı",
    "kurum": "Isparta Sarıidris Belediyesi",
@@ -12302,6 +12251,14 @@
     {
      "ad": "İŞKUR",
      "link": "https://www.iskur.gov.tr/medya/y10nqmvc/isparta-sar%C4%B1idris-belediyesi-zab%C4%B1ta-memuru-al%C4%B1m-ilan%C4%B1-20112026.pdf"
+    },
+    {
+     "ad": "ÇŞB Yerel Yönetimler",
+     "link": "https://yerelyonetimler.csb.gov.tr/isparta-ili-sariidris-belediye-baskanligina-ilk-defa-atanmak-uzere-zabita-memuru-alimi-ilani-duyuru-478164"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
    "detay_guncelleme": "2026-10-13T10:20:32+03:00",
@@ -12328,7 +12285,9 @@
    "baslangic_zaman": "2026-11-18T00:00:00+03:00",
    "ilk_gorulme": "2026-10-13T10:21:11+03:00",
    "kaynak_kimlikleri": [
-    "iskur-c2eb8c0816172f89126a78a8"
+    "csb-478164",
+    "iskur-c2eb8c0816172f89126a78a8",
+    "sbb-b86634a05b9426ed1e384cf2"
    ],
    "ogrenim": [
     "lisans"
@@ -13752,6 +13711,7 @@
   "iskur-bb8e6aa8951d08b2725df442",
   "iskur-bdd72d200fb73e41048a3a70",
   "iskur-beceb4b88f33dcb12811b07a",
+  "iskur-c2eb8c0816172f89126a78a8",
   "iskur-c322e5601259e08082548c73",
   "iskur-c87f9628d86934195c827cdb",
   "iskur-ce2ccce684a67cfe5ec42653",
@@ -13917,8 +13877,7 @@
   "sbb-ffbba5c3ef2b2c84c00bb8e2"
  ],
  "telegram_bekleyen": [
-  "iskur-48ae81d78be9ead4ae15005a",
-  "iskur-c2eb8c0816172f89126a78a8"
+  "iskur-48ae81d78be9ead4ae15005a"
  ],
  "telegram_yayin_surumu": 2,
  "telegram_mesajlari": {
@@ -14038,7 +13997,6 @@
   "csb-478081",
   "csb-478083",
   "csb-478163",
-  "csb-478164",
   "csb-478165",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=0ad1bd8f-f6ad-4a03-8f10-7a42c33cf44a",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=11272843-b0f1-470e-af31-cc176fa0e5d4",
