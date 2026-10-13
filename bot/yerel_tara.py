@@ -191,5 +191,5 @@ if __name__=='__main__':
     try:
         main()
     except Exception as exc:
-        print('Yerel tarama tamamlanamadı:',str(exc) if isinstance(exc,RuntimeError) else type(exc).__name__)
+        print('Yerel tarama tamamlanamadı:',str(exc) if isinstance(exc,RuntimeError) else f'{type(exc).__name__}: {str(exc)[:200]}')
         raise SystemExit(1)
