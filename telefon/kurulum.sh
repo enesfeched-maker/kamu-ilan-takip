@@ -37,19 +37,21 @@ else
 fi
 
 echo "5/5 30 dakikada bir çalışma ayarlanıyor..."
-chmod +x "$KLASOR/telefon/calistir.sh"
-( crontab -l 2>/dev/null | grep -v 'telefon/calistir.sh' ; echo "6,36 * * * * $KLASOR/telefon/calistir.sh" ) | crontab -
-sv-enable crond >/dev/null 2>&1 || true
+chmod +x "$KLASOR/telefon/calistir.sh" "$KLASOR/telefon/dongu.sh"
+# cron telefon uyurken çalışmadı (13 Ekim 2026); yerine uyanık tutulan (wake lock) bir döngü kullanılır.
+crontab -l 2>/dev/null | grep -v 'telefon/calistir.sh' | crontab - 2>/dev/null || true
+sv-disable crond >/dev/null 2>&1 || true
+pkill crond 2>/dev/null || true
 mkdir -p "$HOME/.termux/boot"
 cat > "$HOME/.termux/boot/kamu-ilan.sh" <<'EOF'
 #!/data/data/com.termux/files/usr/bin/sh
 termux-wake-lock
-. $PREFIX/etc/profile
-sv-enable crond
+nohup bash "$HOME/kamu-ilan-takip/telefon/dongu.sh" >/dev/null 2>&1 &
 EOF
 chmod +x "$HOME/.termux/boot/kamu-ilan.sh"
 termux-wake-lock || true
-
-echo "İlk tarama deneniyor..."
-"$KLASOR/telefon/calistir.sh" && tail -n 6 "$HOME/kamu-ilan-tarama.log"
-echo "Kurulum tamam. Termux'u kapatabilirsin; bildirimde 'wake lock' yazısı kalmalı."
+nohup bash "$KLASOR/telefon/dongu.sh" >/dev/null 2>&1 &
+sleep 5
+echo "Kurulum tamam; ilk tarama şimdi arka planda çalışıyor."
+echo "Kontrol için:  tail -n 6 ~/kamu-ilan-tarama.log"
+echo "Termux'u kapatabilirsin; bildirimde 'wake lock' yazısı kalmalı."
