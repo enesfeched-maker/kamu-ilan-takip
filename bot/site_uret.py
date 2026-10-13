@@ -648,6 +648,45 @@ def bot_ilanlari(ilanlar, simdi=None):
     return {'guncelleme': simdi.isoformat(timespec='seconds'), 'ilanlar': sonuc}
 
 
+GUVENLI_KIMLIK = r'(?:(?:sbb|iskur)-[a-f0-9]{24}|csb-\d{4,9})'
+
+
+def _sayfa_anahtari(kimlik):
+    """Kimliğin ilan/<anahtar>/ adresi: Kariyer Kapısı bağlantısında UUID, diğer kaynaklarda kimliğin kendisi; güvensizse None."""
+    import uuid
+    if re.fullmatch(GUVENLI_KIMLIK, kimlik or ''):
+        return kimlik
+    try:
+        return str(uuid.UUID(parse_qs(urlparse(kimlik or '').query).get('i', [''])[0]))
+    except ValueError:
+        return None
+
+
+def yonlendirme_sayfasi(hedef):
+    return (f'<!doctype html><html lang="tr"><head><meta charset="utf-8"><title>İlan taşındı — KPSS Tercihi</title>'
+            f'<meta name="robots" content="noindex"><link rel="canonical" href="{esc(hedef)}">'
+            f'<meta http-equiv="refresh" content="0;url={esc(hedef)}"></head>'
+            f'<body><p>Bu ilan yeni adresine taşındı: <a href="{esc(hedef)}">{esc(hedef)}</a></p></body></html>')
+
+
+def yonlendirmeleri_yaz(docs, ilanlar, sayfali):
+    """Kaynaklar birleşince kalıcı kimlik değişebilir (ÇŞB -> İŞKUR); eski kimliğin adresi Telegram'da paylaşılmış olabilir.
+    Sayfası olan her ilanın takma adlarına, yeni sayfaya yönlendiren küçük bir sayfa yazılır (asıl sayfaların üzerine yazılmaz)."""
+    n = 0
+    for item in ilanlar:
+        asil = _sayfa_anahtari(item.get('id'))
+        if asil not in sayfali:
+            continue
+        for kimlik in item.get('kaynak_kimlikleri') or []:
+            eski = _sayfa_anahtari(kimlik)
+            if not eski or eski == asil or eski in sayfali:
+                continue
+            (docs / 'ilan' / eski).mkdir(parents=True, exist_ok=True)
+            (docs / 'ilan' / eski / 'index.html').write_text(yonlendirme_sayfasi(BASE + 'ilan/' + asil + '/'), encoding='utf-8')
+            n += 1
+    print(f'{n} eski ilan bağlantısı yönlendirildi.')
+
+
 def _sayfayi_kaldir(docs, item):
     """Önceden üretilmiş akademik ilan sayfasını siler (yalnız ilan/<kimlik>/ altında, güvenli kimliklerde)."""
     import re
@@ -903,6 +942,10 @@ def main():
         (folder / 'index.html').write_text(content, encoding='utf-8')
         urls.append(BASE + 'ilan/' + key + '/')
         count += 1
+    try:
+        yonlendirmeleri_yaz(docs, data.get('ilanlar', []), {u[len(BASE) + 5:-1] for u in urls if u.startswith(BASE + 'ilan/')})
+    except Exception as hata:
+        print(f'Uyarı: eski ilan bağlantıları yönlendirilemedi: {hata}')
     urls += kurum_adresleri
     try:
         from puan_sayfalari import puan_sayfalarini_uret

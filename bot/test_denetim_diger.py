@@ -228,6 +228,33 @@ class IptalDuyurusuTests(unittest.TestCase):
             self.assertNotIn('ilanı ilanı', ilan_bot.duyuru_metni(d, yanit, True).lower())
 
 
+class KalicilikTest(unittest.TestCase):
+    def test_birlesmede_ilk_gorulme_en_eskisi_kalir(self):
+        from ek_kaynaklar import merge_sources
+        eski = {'id': 'csb-478164', 'kaynak_turu': 'csb', 'kurum': 'Sarıidris', 'baslik': 'x', 'ilk_gorulme': '2026-10-09T17:28:05+03:00'}
+        yeni = {'id': 'iskur-' + 'c' * 24, 'kaynak_turu': 'iskur', 'kurum': 'Sarıidris', 'baslik': 'y', 'link': 'https://www.iskur.gov.tr/a.pdf',
+                'kaynak_kimlikleri': ['csb-478164'], 'ilk_gorulme': '2026-10-13T10:21:11+03:00'}
+        sonuc = merge_sources([yeni], {'csb-478164': eski})
+        self.assertEqual(len(sonuc), 1)
+        self.assertEqual(sonuc[0]['ilk_gorulme'], '2026-10-09T17:28:05+03:00')
+
+    def test_eski_kimlik_adresi_yeni_sayfaya_yonlendirilir(self):
+        import tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as d:
+            docs = Path(d)
+            asil = 'iskur-' + 'c' * 24
+            kk = 'https://kariyerkapisi.gov.tr/IlanDetay?i=11272843-b0f1-470e-af31-cc176fa0e5d4'
+            ilan = {'id': asil, 'kaynak_kimlikleri': [asil, 'csb-478164', kk, '../kotu']}
+            site_uret.yonlendirmeleri_yaz(docs, [ilan], {asil})
+            sayfa = (docs / 'ilan' / 'csb-478164' / 'index.html').read_text(encoding='utf-8')
+            self.assertIn(f'url={site_uret.BASE}ilan/{asil}/', sayfa)
+            self.assertIn('noindex', sayfa)
+            self.assertTrue((docs / 'ilan' / '11272843-b0f1-470e-af31-cc176fa0e5d4' / 'index.html').is_file())
+            self.assertFalse((docs / 'ilan' / asil).exists())   # asıl sayfanın üzerine yazılmaz
+            self.assertFalse((docs / 'kotu').exists())
+
+
 class DetayBekletmeTest(unittest.TestCase):
     def test_kk_disi_kaynaklar_resmi_ayrintiyi_beklemez(self):
         import ilan_bot
