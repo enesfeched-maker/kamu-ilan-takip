@@ -846,6 +846,13 @@ def detay_taze(ilan):
         return False
 
 
+def detay_bekletir(ilan, cfg):
+    """Kanal gönderimi resmi Kariyer Kapısı ayrıntısını bekliyor mu? SBB/İŞKUR/ÇŞB kayıtları bu ayrıntıyı hiç almaz;
+    13 Ekim 2026: kk_detay_surumu kontrolü bu kayıtları da süresiz bekletiyordu (Mevlana KA paylaşılmadı)."""
+    return bool(cfg.get('resmi_detaylari_oku', False)) and ilan.get('kaynak_turu') not in ('sbb', 'iskur', 'csb') \
+        and not detay_taze(ilan)
+
+
 # ------------------------------------------------------------------- Ana akış
 def yukle(yol):
     if yol.exists():
@@ -1148,7 +1155,7 @@ def main():
             print(f"Telegram'a akşam kartı gönderildi: {len(i)} yayımlanan ilan")
             time.sleep(3.2)
             continue
-        if cfg.get('resmi_detaylari_oku', False) and not detay_taze(i):
+        if detay_bekletir(i, cfg):
             # Resmi servise geçici erişim sorunu: ilan sırada kalır, iş başarısız sayılmaz.
             ertelenen += 1
             continue

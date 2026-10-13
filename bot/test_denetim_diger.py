@@ -228,5 +228,15 @@ class IptalDuyurusuTests(unittest.TestCase):
             self.assertNotIn('ilanı ilanı', ilan_bot.duyuru_metni(d, yanit, True).lower())
 
 
+class DetayBekletmeTest(unittest.TestCase):
+    def test_kk_disi_kaynaklar_resmi_ayrintiyi_beklemez(self):
+        import ilan_bot
+        cfg = {'resmi_detaylari_oku': True}
+        for kaynak in ('sbb', 'iskur', 'csb'):
+            self.assertFalse(ilan_bot.detay_bekletir({'kaynak_turu': kaynak, 'detay_guncelleme': '2026-10-13T00:06:48+03:00'}, cfg))
+        self.assertTrue(ilan_bot.detay_bekletir({'id': 'kk', 'detay_guncelleme': '2000-01-01T00:00:00+03:00'}, cfg))
+        self.assertFalse(ilan_bot.detay_bekletir({'id': 'kk'}, {}))
+
+
 if __name__ == '__main__':
     unittest.main()
