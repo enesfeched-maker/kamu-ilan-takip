@@ -466,5 +466,10 @@ def merge_sources(records, previous):
             if kaynak_kayit.get('iptal_edildi') and not merged.get('iptal_edildi'):
                 merged['iptal_edildi']=kaynak_kayit['iptal_edildi']
         merged['kaynak_kimlikleri']=sorted(set(chosen.get('kaynak_kimlikleri',[])+prior.get('kaynak_kimlikleri',[])+item.get('kaynak_kimlikleri',[])+[item['id'],ident]))
+        # İlk görülme en eskisi kalır: kalıcı kimlik yeni kayda (örn. ÇŞB -> İŞKUR) geçince ilan "bugün yayımlandı" görünmesin
+        # (13 Ekim 2026: 9 Ekim'den beri açık Sarıidris Belediyesi listede 13 Ekim'e düştü).
+        ilkler=[o.get('ilk_gorulme') for o in (chosen,prior,item) if o.get('ilk_gorulme')]
+        if ilkler:
+            merged['ilk_gorulme']=min(ilkler)
         result[ident]=merged
     return list(result.values())
