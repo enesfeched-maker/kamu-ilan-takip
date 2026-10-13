@@ -8,11 +8,14 @@ JETON="$HOME/.kamu-github-token"
 
 echo "1/5 Paketler kuruluyor (birkaç dakika sürebilir)..."
 yes | pkg update -y >/dev/null 2>&1 || true
-pkg install -y python git python-pillow cronie termux-services >/dev/null
+pkg install -y python git python-pillow python-cryptography cronie termux-services >/dev/null
+# cryptography telefonda derlenemez (Rust ister): hazır Termux paketinden gelir, pip yeniden kurmaya çalışmasın.
 
 echo "2/5 Python kütüphaneleri kuruluyor..."
-pip install -q beautifulsoup4==4.13.5 pypdf==6.0.0 pdfminer.six
-pip install -q pdfplumber==0.11.7 2>/dev/null || pip install -q --no-deps pdfplumber==0.11.7 || true
+pip install -q beautifulsoup4==4.13.5 pypdf==6.0.0
+# PDF tablo okuyucu isteğe bağlı: kurulamazsa tarama tablosuz devam eder.
+pip install -q charset-normalizer pdfminer.six 2>/dev/null || true
+pip install -q --no-deps pdfplumber==0.11.7 2>/dev/null || true
 
 echo "3/5 Kod indiriliyor..."
 if [ -d "$KLASOR/.git" ]; then
