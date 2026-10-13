@@ -1,9 +1,9 @@
 {
  "schema": 1,
- "guncelleme": "2026-10-13T07:06:41.533580+00:00",
+ "guncelleme": "2026-10-13T07:36:45.966240+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-10-13T07:08:51.281776+00:00",
+   "kontrol": "2026-10-13T07:36:59.826469+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -174,6 +174,66 @@
      "sbb_detay_surumu": 6
     },
     {
+     "id": "sbb-1fe4581bae8a2a6c101212b4",
+     "baslik": "ORTA KARADENİZ KALKINMA AJANSI - 5 ALACAK",
+     "kurum": "ORTA KARADENİZ KALKINMA AJANSI",
+     "kadro": "5 ALACAK",
+     "ilan_turu": "Kamu Personeli",
+     "son_tarih": "2026-11-22",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 2 Kasım - 22 Kasım)",
+     "baslangic_zaman": "2026-11-02T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-10-13T10:36:47+03:00",
+     "belge_ozeti": "f4c0b08daca1a1959808f3e134ce95af5b17f2c1c323fe0ff274ec26caf94b9e",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "5 alımı. Son başvuru: 22.11.2026. Tablo 3: Elektronik ortamda yapılacak başvurularda adaylar için hazırlanan kontrol listesi Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "b) 2025 veya 2026 yılında yapılan KPSS ’den Tablo 2’de yer alan ilgili puan türünden en az 70 (yetmiş) puan almış olmak,"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "Tablo 2: Destek Personeli Adayları İçin İstenen Mezuniyet Alanları 2025-2026 Alınacak Sözlü Sınava Bölümler KPSS Puan Alım türü Destek Personeli Çağrılacak Aday Türü Sayısı Sayısı Ekonomi, İktisat, İşletme, P1, P2, P3 Maliye, puanlarından KPSS 1 (bir) 5 (beş) Kamu Yönetimi, herhangi biri Siyaset Bilimi ve Kamu Yönetimi,"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "b) Ölçme, Seçme ve Yerleştirme Merkezi (ÖSYM) tarafından 2025 veya 2026 yıllarında yapılan Kamu Personeli Seçme Sınavından mezun oldukları öğrenim dalları itibarıyla Tablo 1’de gösterilen ilgili puan türlerinden son başvuru tarihi itibarıyla en az 80 (seksen) puan almış olmak,"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "a) KPSS şartı aranmaksızın iş tecrübesiyle başvuruda bulunacak adayların, en az dört yıllık lisans eğitimi veren yükseköğretim kurumlarının veya bunlara denkliği Yükseköğretim Kurulunca (YÖK) kabul edilen yurt içindeki veya yurt dışındaki yükseköğretim kurumlarından Tablo 1’de belirtilen bölümlerden lisans düzeyinde mezun olmaları,"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "c) Kamu kesimi veya özel kesimde aşağıdaki konularda en az 5 (beş) yıl fiilen başarılı olarak çalışmış ve başvuru tarihi itibarıyla 50 yaşını doldurmamış olma ları:"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "a) Üniversitelerin Tablo 2’de yer alan bölümlerinden veya bunlara denkliği Yükseköğretim Kurulu’nca kabul edilen yurt içindeki veya yurt dışındaki yükseköğretim kurumlarından lisans düzeyinde mezun olmak."
+      }
+     ],
+     "basvuru_notu": "Başvurular, e-Devlet - Orta Karadeniz Kalkınma Ajansı - Kariyer Kapısı Kamu İşe Sınav Başvuru Adresi Alım veya Kariyer Kapısı https://kariyerkapisi.gov.tr adresi üzerinden yapılacaktır.",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/f4c0b08daca1a1959808f3e134ce95af5b17f2c1c323fe0ff274ec26caf94b9e.pdf",
+     "belge_sha256": "f4c0b08daca1a1959808f3e134ce95af5b17f2c1c323fe0ff274ec26caf94b9e",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "puan_turleri": [
+      "P3",
+      "P48"
+     ],
+     "belge_ogrenim": [
+      "lisans"
+     ]
+    },
+    {
      "id": "sbb-c9fc916289b6932f8c577d45",
      "baslik": "İSTANBUL KALKINMA AJANSI - 5 UZMAN ALACAK",
      "kurum": "İSTANBUL KALKINMA AJANSI",
@@ -327,8 +387,8 @@
      "donem": "( 16 Ekim - 19 Ekim)",
      "baslangic_zaman": "2026-11-16T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-12T22:36:42+03:00",
-     "belge_ozeti": "4e1a210f731ccfff4f39b4917f931c3a72bb1e0fe9c6a8958fcf542d0e50c269",
+     "detay_guncelleme": "2026-10-13T10:36:49+03:00",
+     "belge_ozeti": "49c92c7b66d2be9c4a732dd21864cbaa55ef0178f402bab36f440fc3dcb7397a",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -359,8 +419,8 @@
       }
      ],
      "basvuru_notu": "a) Elektronik ortamda başvurular, 16/11/2026-19/11/2026 tarihleri arasında istenilen belgeler eklenmek suretiyle Belediyemizin insankaynaklari@kesan.bel.tr mail adresine yapılacaktır.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/4e1a210f731ccfff4f39b4917f931c3a72bb1e0fe9c6a8958fcf542d0e50c269.pdf",
-     "belge_sha256": "4e1a210f731ccfff4f39b4917f931c3a72bb1e0fe9c6a8958fcf542d0e50c269",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/49c92c7b66d2be9c4a732dd21864cbaa55ef0178f402bab36f440fc3dcb7397a.pdf",
+     "belge_sha256": "49c92c7b66d2be9c4a732dd21864cbaa55ef0178f402bab36f440fc3dcb7397a",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "yer": "Edirne",
@@ -1823,8 +1883,8 @@
      "donem": "( 5 Ekim - 20 Ekim)",
      "baslangic_zaman": "2026-10-05T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-12T22:36:47+03:00",
-     "belge_ozeti": "7fd9133aa475a37e9a023424913c8a9dbe82d7ff169a9a85bcf8488db5e5abb1",
+     "detay_guncelleme": "2026-10-13T10:36:53+03:00",
+     "belge_ozeti": "35cd542fd8d7f8c7308ff4d5580e2fb120fb2f345df2e18f56abb6075a6c0055",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1859,8 +1919,8 @@
       }
      ],
      "basvuru_notu": "Bu durumda olan adaylar, aldığı tutanak ile MSB Personel Temin Daire Başkanlığına tekrar ve şahsen başvurarak sevk yazısını yenileyebilecektir. (ç) Sağlık kuruluşu tarafından düzenlenen ön bildirim raporunuzun karar hanesinde belirtilen ifadelerin ve bilgilerin kontrol etmeniz önem arz etmektedir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/7fd9133aa475a37e9a023424913c8a9dbe82d7ff169a9a85bcf8488db5e5abb1.pdf",
-     "belge_sha256": "7fd9133aa475a37e9a023424913c8a9dbe82d7ff169a9a85bcf8488db5e5abb1",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/35cd542fd8d7f8c7308ff4d5580e2fb120fb2f345df2e18f56abb6075a6c0055.pdf",
+     "belge_sha256": "35cd542fd8d7f8c7308ff4d5580e2fb120fb2f345df2e18f56abb6075a6c0055",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
     },
@@ -4543,7 +4603,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-10-13T07:09:18.239476+00:00",
+   "kontrol": "2026-10-13T07:37:01.546076+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
