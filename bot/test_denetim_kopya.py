@@ -118,3 +118,11 @@ class KopyaEslesmeTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+class EnstituKurumTest(unittest.TestCase):
+    def test_tse_iskur_kurumu_ve_yazim_farki(self):
+        # 14 Ekim 2026: TSE ilanı İŞKUR (kurum okunamadı), Kariyer Kapısı ('STANDARDLARI') ve SBB'de üç ayrı ilan göründü.
+        import kurum_sayfasi as ks
+        self.assertEqual(ek.institution('Türk Standartları Enstitüsü Sözleşmeli Bilişim Personeli Sınav İlanı'),
+                         'Türk Standartları Enstitüsü')
+        self.assertEqual(ks.kurum_kanonik('TÜRK STANDARDLARI ENSTİTÜSÜ'), ks.kurum_kanonik('TÜRK STANDARTLARI ENSTİTÜSÜ'))

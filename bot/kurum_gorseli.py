@@ -13,7 +13,7 @@ LIBRARY=Path(__file__).resolve().parents[1]/'docs/assets/kurum-logolari'
 HOSTS={'kariyerkapisi.gov.tr','cdn.e-devlet.gov.tr'}
 
 
-YAZIM_HATALARI={'pasof':'posof'}   # kaynaklardaki bilinen kurum adı yazım hataları
+YAZIM_HATALARI={'pasof':'posof','standardlari':'standartlari'}   # kaynaklardaki bilinen kurum adı yazım hataları
 
 
 def kurum_anahtari(name):
