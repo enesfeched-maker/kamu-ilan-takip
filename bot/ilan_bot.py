@@ -614,17 +614,24 @@ def kopyasiz(secilen, ilanlar):
         except Exception:
             return 0
 
+    from kopya import _hostlar
     gruplar, sira = {}, []
     for i in secilen:
         k = kurum_kimligi(i)
-        anahtarlar = {('g', kof.get(i['id'], i['id'])), ('k', i.get('son_tarih'), k[:2] if k else i['id'])}
-        hedef = next((g for g in sira if gruplar[g]['anahtar'] & anahtarlar), None)
+        grup = ('g', kof.get(i['id'], i['id']))
+        kurum_gun = ('k', i.get('son_tarih'), k[:2] if k else i['id'])
+        hostlar = _hostlar(i)
+        # Aynı kurum + aynı son gün yalnız FARKLI kaynaktan geliyorsa kopya sayılır. 14 Ekim 2026: SBB'deki iki ayrı MSB ilanı
+        # (Deniz Kuvvetleri ve TSK subay alımı, ikisi de 2 Kasım) tek ilana indirilmiş, akşam kartında biri görünmemişti.
+        hedef = next((g for g in sira if grup in gruplar[g]['anahtar']
+                      or (kurum_gun in gruplar[g]['anahtar'] and not (gruplar[g]['host'] & hostlar))), None)
         if hedef is None:
-            gruplar[i['id']] = {'anahtar': anahtarlar, 'kayit': i}
+            gruplar[i['id']] = {'anahtar': {grup, kurum_gun}, 'kayit': i, 'host': set(hostlar)}
             sira.append(i['id'])
             continue
         g = gruplar[hedef]
-        g['anahtar'] |= anahtarlar
+        g['anahtar'] |= {grup, kurum_gun}
+        g['host'] |= hostlar
         if ayrintili(i) > ayrintili(g['kayit']):
             g['kayit'] = i
     return [gruplar[g]['kayit'] for g in sira]
@@ -688,13 +695,15 @@ def aksam_mesaj(ilanlar):
     return metin
 
 
+from ek_kaynaklar import KURUM_KISALTMALARI
+KISA_AD = {ad: kisa for kisa, ad in KURUM_KISALTMALARI.items()}   # düğmede yer kazanmak için: Milli Savunma Bakanlığı -> MSB
 AKSAM_DUGME_EN_COK = 7   # kartta görünen satır sayısı kadar (kart_tasarimlari.TOPLU_EN_COK_SATIR)
 
 
 def aksam_dugmeleri(ilanlar, logolar, site_url):
     """Kartın satır sırasıyla (logolu ilanlar önce) ilan başına düğme: 'Kurum · N kişi' -> sitedeki ilan sayfası.
     Görsel tıklanamadığı için kişi ilgilendiği ilana buradan tek dokunuşla gider."""
-    from kart_tasarimlari import veri as kart_verisi, kisa_kurum
+    from kart_tasarimlari import veri as kart_verisi, kisa_kurum, toplu_satir
     sirali = [x for x, l in zip(ilanlar, logolar) if l] + [x for x, l in zip(ilanlar, logolar) if not l]
     sonuc = []
     for i in sirali[:AKSAM_DUGME_EN_COK]:
@@ -703,7 +712,14 @@ def aksam_dugmeleri(ilanlar, logolar, site_url):
         except ValueError:
             continue
         v = kart_verisi(i)
-        yazi = kisa_kurum(v['kurum']) + (f" · {v['toplam']} kişi" if v['toplam'] else '')
+        # kişi sayısı yoksa kısaltılmış kadro adı: aynı kurumun iki ilanı (MSB Deniz / TSK) düğmede ayırt edilsin
+        kurum = KISA_AD.get(kisa_kurum(v['kurum']), kisa_kurum(v['kurum']))
+        if v['toplam']:
+            yazi = f"{kurum} · {v['toplam']} kişi"
+        else:
+            kadro = re.sub(r'\b20\d\d\s+Yılı\s*|\s*Temini\b|\s*Komutanlığına\b|\bEn Az .{0,60}?Mezunlarından\s*', ' ', toplu_satir(i)[1])
+            yazi = f"{kurum} · {' '.join(kadro.split())}"
+
         sonuc.append((yazi if len(yazi) <= 60 else yazi[:59] + '…', adres))
     return sonuc
 
