@@ -94,10 +94,10 @@ class TopluKartTesti(unittest.TestCase):
         for n in (1, 4, 7, 12):
             im = Image.open(io.BytesIO(kt.toplu_son_gun_karti(self.liste(n), SIMDI)))
             self.assertEqual(im.width, 1080)
-            self.assertLessEqual(im.height, 1350)
+            self.assertLessEqual(im.height, kt.TG_EN_COK_Y)   # Telegram mobilde daha uzun görselin altını kırpar
             boylar.append(im.height)
         self.assertEqual(boylar, sorted(boylar))  # az ilanda kısa kart
-        self.assertEqual(boylar[-1], 1350)
+        self.assertEqual(boylar[-1], kt.TG_EN_COK_Y)
 
     def test_satir_bilgisi_kurum_ve_kadro(self):
         kurum, kadro = kt.toplu_satir(self.liste(1)[0])
@@ -109,7 +109,7 @@ class TopluKartTesti(unittest.TestCase):
     def test_rozet_renkleri_bugun_yarin_kirmizi_diger_turuncu(self):
         def renk(gun):
             im = Image.open(io.BytesIO(kt.toplu_son_gun_karti(self.liste(1, gun), SIMDI))).convert('RGB')
-            return im.getpixel((1080 - kt.KENAR - 20, 40 + 170 + 10 + 75))  # tek satır başlık + ilk satırın ortası
+            return im.getpixel((1080 - kt.KENAR - 20, 28 + 150 + 6 + 66))  # tek satır başlık + ilk satırın ortası
         kirmizi, turuncu = tuple(int(kt.KIRMIZI[i:i + 2], 16) for i in (1, 3, 5)), tuple(int(kt.TURUNCU[i:i + 2], 16) for i in (1, 3, 5))
         self.assertEqual(renk(0), kirmizi)
         self.assertEqual(renk(1), kirmizi)
@@ -231,3 +231,21 @@ class YaziTipiTesti(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class AksamKartiTesti(unittest.TestCase):
+    def test_koyu_tema_ve_kirmizi_yalniz_acil(self):
+        from datetime import timedelta
+        yakin = ilan(id='a', kurum='Yakın Belediyesi', kadro='Toplam 3 kişi — 3 Zabıta Memuru',
+                     son_tarih=(SIMDI + timedelta(days=2)).date().isoformat())
+        uzak = ilan(id='b', kurum='Uzak Belediyesi', kadro='Toplam 3 kişi — 3 Zabıta Memuru',
+                    son_tarih=(SIMDI + timedelta(days=30)).date().isoformat())
+        im = Image.open(io.BytesIO(kt.yeni_ilanlar_karti([yakin, uzak], SIMDI))).convert('RGB')
+        self.assertLess(sum(im.getpixel((5, 5))), 60)   # akşam kartı koyu zeminli
+        kirmizi = tuple(int(kt.KIRMIZI_YAZI[i:i + 2], 16) for i in (1, 3, 5))
+        satir_h = 132
+        def kirmizi_var(n):
+            y0 = 28 + 150 + 6 + n * satir_h
+            return any(im.getpixel((x, y)) == kirmizi for x in range(700, 1016, 2) for y in range(y0, y0 + satir_h, 2))
+        self.assertTrue(kirmizi_var(0))
+        self.assertFalse(kirmizi_var(1))
