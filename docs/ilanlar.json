@@ -1,5 +1,5 @@
 {
- "guncelleme": "2026-10-14T10:51:54+03:00",
+ "guncelleme": "2026-10-14T11:01:56+03:00",
  "ilanlar": [
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=9c82aab5-022e-43c8-b7f1-e6cf329d205b",
@@ -12546,61 +12546,6 @@
    ]
   },
   {
-   "id": "csb-478163",
-   "baslik": "KEŞAN BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
-   "kurum": "KEŞAN BELEDİYE BAŞKANLIĞI",
-   "kadro": "2 Mühendis",
-   "ilan_turu": "Memur",
-   "son_tarih": "2026-11-19",
-   "kaynak": "ÇŞB Yerel Yönetimler",
-   "kaynak_turu": "csb",
-   "link": "https://yerelyonetimler.csb.gov.tr/edirne-ili-kesan-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-478163",
-   "kaynaklar": [
-    {
-     "ad": "ÇŞB Yerel Yönetimler",
-     "link": "https://yerelyonetimler.csb.gov.tr/edirne-ili-kesan-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-478163"
-    },
-    {
-     "ad": "SBB Kamu İlan",
-     "link": "https://kamuilan.sbb.gov.tr/"
-    }
-   ],
-   "yayim_tarihi": "2026-10-09",
-   "detay_guncelleme": "2026-10-13T22:43:56+03:00",
-   "csb_detay_surumu": 4,
-   "ozet": "Edirne ili Keşan Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır. Son başvuru: 19.11.2026.",
-   "belgeler": [
-    {
-     "ad": "09-10-2026-Ke-an-Belediye-Ba-kanl-na-lk-Defa-Atanmak-zere-Memur-Al-m-lan-20261009162642.docx",
-     "link": "https://webdosya.csb.gov.tr/v2/yerelyonetimler/2026/10/09-10-2026-Ke-an-Belediye-Ba-kanl-na-lk-Defa-Atanmak-zere-Memur-Al-m-lan-20261009162642.docx"
-    }
-   ],
-   "yer": "Edirne",
-   "sartlar": [
-    {
-     "kadro": "Mühendis · 1 kadro",
-     "metin": "KPSS P3 puan türünden en az 70 puan. Hizmet sınıfı TH, 8. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren fakültelerin inşaat mühendisliği programından mezun olmak."
-    },
-    {
-     "kadro": "Mühendis · 1 kadro",
-     "metin": "KPSS P3 puan türünden en az 70 puan. Hizmet sınıfı TH, 8. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren fakültelerin elektrik- elektronik mühendisliği programından mezun olmak."
-    }
-   ],
-   "ilk_gorulme": "2026-10-09T17:28:05+03:00",
-   "kaynak_kimlikleri": [
-    "csb-478163",
-    "sbb-3c7e506b0b47e9c46bcd7fe6"
-   ],
-   "ogrenim": [
-    "lisans"
-   ],
-   "kategori": "belediye",
-   "iller": [
-    "Edirne"
-   ],
-   "kpss": "kpss"
-  },
-  {
    "id": "iskur-3161393ea90114b808aceb51",
    "baslik": "Edirne Keşan Belediyesi Memur Alım İlanı",
    "kurum": "Edirne Keşan Belediyesi",
@@ -12615,6 +12560,14 @@
     {
      "ad": "İŞKUR",
      "link": "https://www.iskur.gov.tr/medya/sn5bzwct/edirne-ke%C5%9Fan-belediyesi-memur-al%C4%B1m-ilan%C4%B1-19112026.pdf"
+    },
+    {
+     "ad": "ÇŞB Yerel Yönetimler",
+     "link": "https://yerelyonetimler.csb.gov.tr/edirne-ili-kesan-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-478163"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
    "detay_guncelleme": "2026-10-14T10:47:19+03:00",
@@ -12635,9 +12588,11 @@
    "iskur_belge_sha256": "5be663ed6d7d8bbc93cc8c4ac6dcc443e508a2e0c6feab67a8178b3a0ec9deea",
    "iskur_detay_guncelleme": "2026-10-14T10:48:14+03:00",
    "baslangic_zaman": "2026-11-16T00:00:00+03:00",
-   "ilk_gorulme": "2026-10-14T10:48:14+03:00",
+   "ilk_gorulme": "2026-10-09T17:28:05+03:00",
    "kaynak_kimlikleri": [
-    "iskur-3161393ea90114b808aceb51"
+    "csb-478163",
+    "iskur-3161393ea90114b808aceb51",
+    "sbb-3c7e506b0b47e9c46bcd7fe6"
    ],
    "ogrenim": [
     "lisans"
@@ -14201,6 +14156,7 @@
   "iskur-20df4e86aedf099d725ee262",
   "iskur-23bb5b4d65d3d7cab7bc3531",
   "iskur-2c1f6248f41bf93601b7b619",
+  "iskur-3161393ea90114b808aceb51",
   "iskur-3677dcc131f29000f124a17e",
   "iskur-372564423bd22d94fde88cb4",
   "iskur-3b7504f32c379b237fe86abd",
@@ -14343,6 +14299,7 @@
   "sbb-a5af58883b877a31fdf32b1f",
   "sbb-a69af1b197a461962692610d",
   "sbb-a90a61b08aebbd316071a160",
+  "sbb-a9f4b417a5be30c079cc3eab",
   "sbb-a9fa876c2c8808fb5e6d4bc0",
   "sbb-aaae2ed4a77586932d827f7d",
   "sbb-ad7e8dd467d5e49bfbfebd87",
@@ -14396,9 +14353,7 @@
   "sbb-ffbba5c3ef2b2c84c00bb8e2"
  ],
  "telegram_bekleyen": [
-  "iskur-01c8b814c37c00ddcec7858b",
-  "iskur-3161393ea90114b808aceb51",
-  "sbb-a9f4b417a5be30c079cc3eab"
+  "iskur-01c8b814c37c00ddcec7858b"
  ],
  "telegram_yayin_surumu": 2,
  "telegram_mesajlari": {
@@ -14435,6 +14390,7 @@
   "sbb-89c8b060891cf9aed29dbcdc": 280,
   "sbb-8f95a85a84773c07862778cf": 332,
   "sbb-9ed3758a19cd1983ad11eee0": 305,
+  "sbb-a9f4b417a5be30c079cc3eab": 334,
   "sbb-aaae2ed4a77586932d827f7d": 312,
   "sbb-b0dc4cbe8c3b5ea169828109": 306,
   "sbb-cbaa38524cf24d4c6fa9b46f": 292,
@@ -14519,7 +14475,6 @@
   "csb-478009",
   "csb-478081",
   "csb-478083",
-  "csb-478163",
   "csb-478165",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=0ad1bd8f-f6ad-4a03-8f10-7a42c33cf44a",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=11272843-b0f1-470e-af31-cc176fa0e5d4",
