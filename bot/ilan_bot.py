@@ -1026,6 +1026,7 @@ def main():
                 continue
             local_detail=yerel.get('detaylar',{}).get(i['id'],{})
             if detay_taze(local_detail) and (local_detail.get('detay_guncelleme','')>i.get('detay_guncelleme','')):
+                i.pop('kadro_ortak', None)   # yeni okumada ortak koşul kalmadıysa eskisi sayfada kalmasın
                 i.update(local_detail)
             if detay_taze(i):
                 continue

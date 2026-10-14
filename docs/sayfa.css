@@ -344,3 +344,4 @@ th.sayi{background:var(--surface-2);color:var(--muted);font-size:12px;letter-spa
 .sb-devam{margin-top:6px}
 .sb-devam summary{cursor:pointer;font-weight:650;font-size:14px;color:var(--ink);padding:6px 0}
 .sb-kaynak{font-size:14px;color:var(--muted)}
+.kk-bb{margin:12px 0 0;font-size:13px;font-weight:700;color:var(--ink)}.kk-bb+ul{margin-top:4px}.kk-bb.kk-tercih{color:var(--muted)}.kk-ortak .kk-bb:first-child{margin-top:0}.kk-ortak ul{margin:4px 0 0}.kk .sb-devam ul,.kk-ortak .sb-devam ul{margin-top:4px}

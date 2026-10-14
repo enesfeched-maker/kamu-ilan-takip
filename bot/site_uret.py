@@ -18,7 +18,7 @@ TR = timezone(timedelta(hours=3))
 KART_GENISLIK = 720
 LOGO_BOYUT = 128
 EN_COK_LOGO_INDIRME = 150
-CSS_SURUM = 20
+CSS_SURUM = 21
 LOGO_SURUM = 2
 ACIK_ZEMIN, KOYU_ZEMIN = '#F6F6F1', '#0D0E0C'
 ANALIZ_SURUM = 3  # docs/a.js (çerezsiz ziyaret istatistiği) önbellek sürümü
@@ -252,14 +252,52 @@ def sade_madde(m):
     return m[:1].upper() + m[1:] if m else m
 
 
-def _kk_kadro_kartlari(kadrolar, kaynak):
-    """Kariyer Kapısı kadro ayrıntısından kadro kartları (PDF kartlarıyla aynı görünüm): ünvan + kişi sayısı, şart maddelerinin
-    TAMAMI, altta öğrenim, görev yeri (il başına kişi), sınav usulü. Aynı ünvan ve aynı şartlı il grupları tek kartta birleşir."""
+def _bolum_html(bolumler, gorunen=6):
+    """Başlıklı koşul bölümleri: [[başlık, [madde]]]. İlk `gorunen` madde açık, kalanı 'Tamamını göster' altında katlanır
+    (kısa listede katlama yapılmaz). 'Tercihen' bölümleri zorunlu şartlardan ayrı işaretlenir."""
+    # Önce kadroya özgü şartlar, sonra tercih nedenleri, en son herkese uyan genel şartlar (Türk vatandaşı olmak …):
+    # okuyan kişi asıl eleyici şartı ilk bakışta görsün.
+    def sira(b):
+        return 2 if re.search(r'(?i)genel', b or '') and not re.search(r'(?i)özel|ozel', b or '') else 1 if re.match(r'(?i)\W*tercih', b or '') or re.search(r'(?i)tercih nedenleri', b or '') else 0
+    bolumler = sorted(bolumler, key=lambda bm: sira(bm[0]))
+    duz = [(b, m) for b, ms in bolumler for m in ms if sade_madde(m)]
+    if len(duz) <= gorunen + 2:
+        gorunen = len(duz)
+
+    def yaz(parca, onceki=None):
+        html_, acik = '', None
+        for b, m in parca:
+            if b != acik:
+                if acik is not None:
+                    html_ += '</ul>'
+                tercih = sira(b) == 1
+                html_ += (f'<p class="kk-bb{" kk-tercih" if tercih else ""}">{esc(b)}</p>' if b and b != onceki else '') + '<ul>'
+                acik, onceki = b, None
+            html_ += f'<li>{esc(sade_madde(m))}</li>'
+        return html_ + ('</ul>' if acik is not None else '')
+    ilk, kalan = duz[:gorunen], duz[gorunen:]
+    html_ = yaz(ilk)
+    if kalan:
+        html_ += (f'<details class="sb-devam"><summary>Tamamını göster ({len(kalan)} madde daha)</summary>'
+                  f'{yaz(kalan, ilk[-1][0] if ilk else None)}</details>')
+    return html_
+
+
+def _kk_kadro_kartlari(kadrolar, kaynak, ortak=None):
+    """Kariyer Kapısı kadro ayrıntısından kadro kartları (PDF kartlarıyla aynı görünüm): ünvan + kişi sayısı, kadroya özgü
+    koşullar başlıklı bölümler hâlinde, altta öğrenim, görev yeri (il başına kişi), sınav usulü. Tüm kadrolarda aynı olan
+    koşullar (`ortak`) kartların altında bir kez gösterilir. Aynı ünvan ve aynı şartlı il grupları tek kartta birleşir."""
     gruplar = {}
     for k in kadrolar:
-        anahtar = (k['unvan'], tuple(k.get('maddeler') or ()))
-        g = gruplar.setdefault(anahtar, {'unvan': k['unvan'], 'adet': 0, 'iller': {}, 'ogrenim': k.get('ogrenim'),
-                                         'sinav': k.get('sinav'), 'maddeler': list(k.get('maddeler') or [])})
+        bolumler = k.get('bolumler') or ([['', list(k['maddeler'])]] if k.get('maddeler') else [])
+        # 'Kıdemli Sistem Uzmanı (2 Kişi - Tam Zamanlı, Aylık Brüt … 4 Katına Kadar)': kişi sayısı rozette, çalışma biçimi ayrı satırda
+        unvan, calisma = k['unvan'], ''
+        m = re.search(r'\s*\(\s*\d+\s*(?:\([^)]*\)\s*)?ki[şs]i\b([^()]*)\)\s*$', unvan, re.I)
+        if m:
+            unvan, calisma = unvan[:m.start()].strip(), m.group(1).strip(' -–,')
+        anahtar = (unvan, calisma, json.dumps(bolumler, ensure_ascii=False))
+        g = gruplar.setdefault(anahtar, {'unvan': unvan, 'adet': 0, 'iller': {}, 'ogrenim': k.get('ogrenim'),
+                                         'sinav': k.get('sinav'), 'bolumler': bolumler, 'calisma': calisma})
         g['adet'] += k.get('adet') or 0
         for il in k.get('iller') or []:
             g['iller'][il] = g['iller'].get(il, 0) + (k.get('adet') or 0)
@@ -273,15 +311,20 @@ def _kk_kadro_kartlari(kadrolar, kaynak):
             alt.append(f'<span><em>Görev yeri</em> {esc(yer)}</span>')
         if g['sinav']:
             alt.append(f'<span><em>Sınav</em> {esc(g["sinav"])}</span>')
-        maddeler = ''.join(f'<li>{esc(sade_madde(m))}</li>' for m in g['maddeler'] if sade_madde(m))
+        if g['calisma']:
+            alt.append(f'<span><em>Çalışma</em> {esc(g["calisma"])}</span>')
+        maddeler = _bolum_html(g['bolumler'])
         kartlar += (f'<div class="kk"><div class="kk-bas"><strong>{esc(_unvan_duzgun(g["unvan"]))}</strong>'
                     + (f'<span class="kk-adet">{g["adet"]} kişi</span>' if g['adet'] else '') + '</div>'
-                    + (f'<ul>{maddeler}</ul>' if maddeler else '<p class="kk-yok">Şartlar için resmî ilana bak.</p>')
+                    + (maddeler if maddeler else '' if ortak else '<p class="kk-yok">Şartlar için resmî ilana bak.</p>')
                     + (f'<div class="kk-alt">{"".join(alt)}</div>' if alt else '') + '</div>')
-    baglanti = (f'<li>Genel şartların tamamı ve istenen belgeler: <a class="yazi-link" href="{esc(kaynak)}" target="_blank" '
-                f'rel="noopener noreferrer">resmî ilan ↗</a></li>') if kaynak else ''
-    return (f'<h2>Kadrolar ve başvuru koşulları</h2><div class="kk-liste">{kartlar}</div>'
-            + (f'<div class="kk-ortak"><ul>{baglanti}</ul></div>' if baglanti else ''))
+    baglanti = (f'<p class="sb-kaynak">Başvuru belgeleri ve şartların tamamı: <a class="yazi-link" href="{esc(kaynak)}" target="_blank" '
+                f'rel="noopener noreferrer">resmî ilan ↗</a></p>') if kaynak else ''
+    ortak_html = _bolum_html(ortak or [], 8)
+    tek = len(gruplar) == 1
+    return (f'<h2>{"Başvuru koşulları" if tek and not ortak else "Kadrolar ve başvuru koşulları"}</h2><div class="kk-liste">{kartlar}</div>'
+            + (f'<div class="kk-ortak"><h3>Tüm kadrolar için ortak koşullar</h3>{ortak_html}</div>' if ortak_html else '')
+            + baglanti)
 
 
 def _pdf_sart_bolumleri(item):
@@ -570,7 +613,7 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
     if pdf_satirlari:
         tablo = _kadro_kartlari(item, pdf_satirlari, document_url(item))
     elif kk_kadrolar:
-        tablo = _kk_kadro_kartlari(kk_kadrolar, document_url(item) or item.get('link'))
+        tablo = _kk_kadro_kartlari(kk_kadrolar, document_url(item) or item.get('link'), item.get('kadro_ortak'))
     elif sart_bolumleri:
         tablo = _kadro_tablosu(item, kosulsuz=True) + _sart_bolumleri_html(sart_bolumleri, document_url(item))
     else:
