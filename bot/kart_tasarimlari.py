@@ -519,15 +519,32 @@ def ilan_karti(ilan, logo=None, simdi=None, hatirlatma=False):
 TOPLU_EN_COK_SATIR = 7
 
 
+def kisa_ozet(metin):
+    """Kadro sayısı olmayan ilanın başlık özetini kısa ve net yazar (14 Ekim 2026 kullanıcı: 'Deniz Kuvvetleri Muvazzaf Subay
+    gibi kısa ve net'): yıl, 'Temini/Alımı/İlanı/Adayı', 'En az dört yıl süreli … mezunlarından' gibi kalıplar atılır;
+    'Türk Silahlı Kuvvetleri' -> 'TSK', 'Deniz Kuvvetleri Komutanlığına … Deniz Sınıfı' -> 'Deniz Kuvvetleri'."""
+    m = ' ' + ' '.join(str(metin or '').split()) + ' '
+    m = re.sub(r'(?i)\b20\d\d\s+yılı\b', ' ', m)
+    m = re.sub(r'(?i)\ben az\b.{0,80}?\bmezunlarından\b', ' ', m)
+    m = re.sub(r'(?i)\bTürk Silahlı Kuvvetler(?:i|ine|inin)\b', 'TSK', m)
+    m = re.sub(r'(?i)\b(\w+) Kuvvetleri Komutanlığına\b', r'\1 Kuvvetleri', m)
+    # (?i) 'İ' ile 'i'yi eşlemez: büyük/küçük biçimler ayrı yazılır
+    m = re.sub(r'\b(?:[Tt]emini|TEMİNİ|[Aa]lım [İi]lanı|[Aa]lımı|ALIMI|[İi]lanı|İLANI|[Aa]dayı|ADAYI|[Aa]dayları|[Aa]lacak|[Aa]lınacaktır)\b', ' ', m)
+    for kelime in re.findall(r'\b(\w+) Sınıfı\b', m):   # 'Deniz Kuvvetleri Deniz Sınıfı' -> 'Deniz Kuvvetleri'
+        if len(re.findall(r'\b' + re.escape(kelime) + r'\b', m)) > 1:
+            m = re.sub(r'\s*\b' + re.escape(kelime) + r' Sınıfı\b', ' ', m, count=1)
+    return ' '.join(m.split()).strip(' ,-–') or ' '.join(str(metin or '').split())
+
+
 def toplu_satir(ilan):
     """Toplu kart satırı için (kurum, kadro özeti); yalnız kayıttaki bilgi."""
     v = veri(ilan)
-    kadrolar = [f'{k["adet"]} {k["ad"]}' if k['adet'] else k['ad']
+    kadrolar = [f'{k["adet"]} {k["ad"]}' if k['adet'] else kisa_ozet(k['ad'])
                 for k in sorted(v['kadrolar'], key=lambda k: -(k['adet'] or 0))]   # en kalabalık kadrolar önce
     if kadrolar:
         kadro = ', '.join(kadrolar[:2]) + (f' +{len(kadrolar) - 2}' if len(kadrolar) > 2 else '')
     else:
-        kadro = v['baslik_ozeti']
+        kadro = kisa_ozet(v['baslik_ozeti'])
     return v['kurum'], kadro
 
 

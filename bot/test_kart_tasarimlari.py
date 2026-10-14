@@ -249,3 +249,11 @@ class AksamKartiTesti(unittest.TestCase):
             return any(im.getpixel((x, y)) == kirmizi for x in range(700, 1016, 2) for y in range(y0, y0 + satir_h, 2))
         self.assertTrue(kirmizi_var(0))
         self.assertFalse(kirmizi_var(1))
+
+class KisaOzetTesti(unittest.TestCase):
+    def test_kisa_ve_net(self):
+        self.assertEqual(kt.kisa_ozet('Deniz Kuvvetleri Komutanlığına 2026 Yılı Deniz Sınıfı Muvazzaf Subay Adayı Temini'),
+                         'Deniz Kuvvetleri Muvazzaf Subay')
+        self.assertEqual(kt.kisa_ozet('Türk Silahlı Kuvvetlerine En Az Dört Yıl Süreli Fakülte veya Yüksekokul Mezunlarından '
+                                      '2026 Yılı Muvazzaf Subay Adayı Temini'), 'TSK Muvazzaf Subay')
+        self.assertEqual(kt.kisa_ozet('Sözleşmeli Bilişim Personeli Alım İlanı'), 'Sözleşmeli Bilişim Personeli')

@@ -688,10 +688,12 @@ def aksam_mesaj(ilanlar):
     """Akşam kartının metni: sayı satırı + en kalabalık ilan (bildirim önizlemesinde görünen tek şey bu metin)."""
     from kart_tasarimlari import veri as kart_verisi, kisa_kurum
     kadro = sabah_toplam_kadro(ilanlar)
-    metin = f"🆕 <b>Bugün yayımlanan {len(ilanlar)} ilan</b>" + (f" · {kadro} kadro" if kadro else "")
+    metin = (f"🆕 <b>Bugün {len(ilanlar)} yeni kamu ilanı yayımlandı</b>" if len(ilanlar) > 1 else "🆕 <b>Bugün 1 yeni kamu ilanı yayımlandı</b>") \
+        + (f" · {kadro} kadro" if kadro else "")
     enler = sorted(((kart_verisi(i)['toplam'] or 0, i) for i in ilanlar), key=lambda x: -x[0])
     if len(ilanlar) > 1 and enler and enler[0][0]:
-        metin += f"\nEn kalabalık: {html.escape(kisa_kurum(kart_verisi(enler[0][1])['kurum']))} · {enler[0][0]} kişi"
+        metin += f"\n🏆 En kalabalık: {html.escape(kisa_kurum(kart_verisi(enler[0][1])['kurum']))}, {enler[0][0]} kişi"
+    metin += "\n\n👇 İlgilendiğin ilana dokun; şartları, kadroları ve başvuru bağlantısını gör."
     return metin
 
 
@@ -717,8 +719,7 @@ def aksam_dugmeleri(ilanlar, logolar, site_url):
         if v['toplam']:
             yazi = f"{kurum} · {v['toplam']} kişi"
         else:
-            kadro = re.sub(r'\b20\d\d\s+Yılı\s*|\s*Temini\b|\s*Komutanlığına\b|\bEn Az .{0,60}?Mezunlarından\s*', ' ', toplu_satir(i)[1])
-            yazi = f"{kurum} · {' '.join(kadro.split())}"
+            yazi = f"{kurum} · {toplu_satir(i)[1]}"
 
         sonuc.append((yazi if len(yazi) <= 60 else yazi[:59] + '…', adres))
     return sonuc
