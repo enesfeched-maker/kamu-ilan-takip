@@ -10,7 +10,8 @@ from resmi_ag import url_ac
 
 TR = timezone(timedelta(hours=3))
 API = "https://api.kariyerkapisi.gov.tr/api/"
-SURUM = 2   # 2: tüm kadroların tam ayrıntısı (kadro_detay); eski sürümle okunmuş kayıt taze sayılmaz, yeniden okunur
+SURUM = 3   # 2: tüm kadroların tam ayrıntısı (kadro_detay); 3: biçimden bağımsız koşul bölümleri + ortak koşullar (kosul_ayristir)
+# eski sürümle okunmuş kayıt taze sayılmaz, yeniden okunur
 
 
 def satirlar(metin):
@@ -149,14 +150,23 @@ def detay_coz(ana, alt):
             "basvuru_notu": kisalt(notlar[0], 450) if notlar else "",
             "detay_guncelleme": datetime.now(TR).isoformat(timespec="seconds"), "kk_detay_surumu": SURUM}
     # Her kadronun tam bilgisi; öğrenim düzeyleri ve puan türleri TÜM kadrolardan (ilk birkaçından değil).
+    # Koşullar biçimden bağımsız bölümlere ayrılır; tüm kadrolarda aynı olan maddeler bir kez (kadro_ortak) tutulur.
+    from kosul_ayristir import ayir
     ayrinti = [kadro_ayrintisi(rol) for rol in alt]
-    if any(a['maddeler'] or a['ogrenim'] for a in ayrinti):
+    ortak, ozel = ayir([rol.get('ilanMetni') for rol in alt])
+    for a, bl in zip(ayrinti, ozel):
+        a['bolumler'] = bl
+        a['maddeler'] = [m for _, ms in bl for m in ms]
+    ortak_metin = ' '.join(m for _, ms in ortak for m in ms)
+    if ortak:
+        sonuc['kadro_ortak'] = ortak
+    if any(a['maddeler'] or a['ogrenim'] for a in ayrinti) or ortak:
         from siniflandir import ogrenim_seviyeleri
         duzeyler, puanlar = set(), set()
         for a in ayrinti:
-            metin = ' '.join(a['maddeler']) + ' ' + a['sinav']
+            metin = ' '.join(a['maddeler']) + ' ' + a['sinav'] + ' ' + ortak_metin
             duzeyler.update([a['ogrenim']] if a['ogrenim'] else ogrenim_seviyeleri({'ozet': metin}))
-            puanlar.update(re.findall(r'\bP(\d{1,2})\b', metin))
+            puanlar.update(re.findall(r'(?:KPSS\s?-?|\b)P\s?-?(\d{1,3})\b', metin))   # P3, KPSSP3, KPSSP-4, (P94)
         sonuc['kadro_detay'] = ayrinti
         if duzeyler:
             sonuc['belge_ogrenim'] = [d for d in ('lisans', 'onlisans', 'ortaogretim') if d in duzeyler]
