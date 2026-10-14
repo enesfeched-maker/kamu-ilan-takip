@@ -26,6 +26,26 @@ class SiteTests(unittest.TestCase):
         html = detail_page(item, simdi=datetime(2026, 10, 5, tzinfo=TR))[1]
         self.assertNotIn('d-alt', html)  # alt başlık kaldırıldı (sade sayfa)
 
+    def test_google_is_ilani_yapisal_verisi(self):
+        import json, re
+        item = {'baslik': 'ADALET BAKANLIĞI - 150 İCRA MÜDÜR YARDIMCISI ALACAK.', 'kurum': 'ADALET BAKANLIĞI', 'kadro': '150 İCRA MÜDÜR YARDIMCISI ALACAK.',
+                'link': 'https://kariyerkapisi.gov.tr/IlanDetay?i=11111111-1111-4111-8111-111111111111', 'son_tarih': '2026-10-20', 'ilk_gorulme': '2026-10-01T10:00:00+03:00'}
+        simdi = datetime(2026, 10, 5, tzinfo=TR)
+        html = detail_page(item, simdi=simdi)[1]
+        veriler = [json.loads(m) for m in re.findall(r'<script type="application/ld\+json">(.*?)</script>', html)]
+        is_ = next(v for v in veriler if v['@type'] == 'JobPosting')
+        self.assertEqual(is_['hiringOrganization']['name'], 'Adalet Bakanlığı')
+        self.assertEqual(is_['datePosted'], '2026-10-01')
+        self.assertTrue(is_['validThrough'].startswith('2026-10-20T23:59'))
+        self.assertTrue(any(v['@type'] == 'BreadcrumbList' for v in veriler))
+        self.assertIn('<title>Adalet Bakanlığı', html)
+        self.assertIn('Son başvuru: 20 Ekim 2026', html)
+        # süresi dolmuş ilan ve başka kaynaktaki kopya Google İş İlanları'na girmez; kopya esas kayda kanonik bağlanır
+        self.assertNotIn('JobPosting', detail_page(item, simdi=datetime(2026, 10, 21, tzinfo=TR))[1])
+        kopya = detail_page(item, simdi=simdi, kopya={'rol': 'ikincil', 'birincil': 'esas-kayit'})[1]
+        self.assertNotIn('JobPosting', kopya)
+        self.assertIn('rel="canonical" href="https://kpsstercihi.com/ilan/esas-kayit/"', kopya)
+
     def test_bot_ilanlari(self):
         simdi = datetime(2026, 5, 10, 12, 0, tzinfo=TR)
         kk = 'https://kariyerkapisi.gov.tr/IlanDetay?i=11111111-1111-4111-8111-111111111111'

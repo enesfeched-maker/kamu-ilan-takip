@@ -440,6 +440,88 @@ def hero_html(item, gorsel, kayit, simdi, kok='../../'):
             f'<h1 id="dh-baslik">{esc(h1)}</h1></div></div>{afis}{bilgi}</section>')
 
 
+def _tarih_yazi(d):
+    import kurum_sayfasi as ks
+    d = d.astimezone(TR)
+    return f'{d.day} {ks.AY[d.month - 1]} {d.year}'
+
+
+def _arama_metinleri(item, alanlar, end, kayit, yedek):
+    """(title, description): Google'da aranan biçim — 'Kurum Unvan Alımı 2026', açıklamada son başvuru, yer, öğrenim, KPSS."""
+    import kurum_sayfasi as ks
+    import liste_verisi
+    kurum = ks.kurum_adi(item.get('kurum')) if (item.get('kurum') or '').strip() else ''
+    manset = liste_verisi.baslik_temiz(alanlar.get('manset') or '').strip()
+    ilan_sozu = bool(re.search(r'al[ıi]m|ilan|s[ıi]nav|duyuru|temin', ks.kurum_anahtari(manset)))
+    if not (kurum and manset):
+        baslik = yedek
+    else:
+        yil = '' if re.search(r'\b20\d\d\b', manset) else f' {(end or datetime.now(TR)).astimezone(TR).year}'
+        baslik = f'{kurum} {manset}{"" if ilan_sozu else " Alımı"}{yil}'
+    parcalar = [f'{kurum + " " if kurum else ""}{manset or yedek}{"" if ilan_sozu or not manset else " alım ilanı"}'.strip()]
+    if end:
+        parcalar.append('Son başvuru: ' + _tarih_yazi(end))
+    yer = ks.yer_metni(item, (kayit or {}).get('il') or '')
+    if yer:
+        parcalar.append('Yer: ' + yer)
+    ogr = [ks.LEVELS[o] for o in ((kayit or {}).get('ogrenim') or item.get('ogrenim') or []) if o in ks.LEVELS]
+    if ogr:
+        parcalar.append('Öğrenim: ' + ', '.join(ogr))
+    pt = (kayit or {}).get('puan_turleri') or liste_verisi.puan_turleri(item)
+    if pt:
+        parcalar.append('KPSS: ' + ', '.join(pt[:3]))
+    aciklama = '. '.join(parcalar) + '. Kadrolar, şartlar ve resmî başvuru bağlantısı.'
+    return f'{baslik} | KPSS Tercihi', (aciklama if len(aciklama) <= 300 else aciklama[:297].rsplit(' ', 1)[0] + '…')
+
+
+def _ld(veri):
+    return ('<script type="application/ld+json">' + json.dumps(veri, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c').replace('>', '\\u003e')
+            + '</script>')
+
+
+def yapisal_veri(item, canonical, end, alanlar, kayit, gorsel, simdi, is_ilani):
+    """Kırıntı (BreadcrumbList) her ilanda; JobPosting yalnız başvurusu açık, son tarihi belli, esas kayıtta (Google İş İlanları).
+    Süresi dolan ilan sayfası her derlemede yeniden yazıldığı için JobPosting kendiliğinden kalkar."""
+    import kurum_sayfasi as ks
+    kirinti = [{'@type': 'ListItem', 'position': 1, 'name': 'Ana sayfa', 'item': BASE},
+               {'@type': 'ListItem', 'position': 2, 'name': 'İlanlar', 'item': BASE + '#ilanlar'}]
+    kurum = ks.kurum_adi(item.get('kurum')) if (item.get('kurum') or '').strip() else ''
+    if kurum:
+        slug = (gorsel or {}).get('kurum_slug') or ks.kurum_slug(item['kurum'])
+        kirinti.append({'@type': 'ListItem', 'position': 3, 'name': kurum, 'item': BASE + 'kurum/' + slug + '/'})
+    kirinti.append({'@type': 'ListItem', 'position': len(kirinti) + 1, 'name': item.get('baslik') or 'İlan', 'item': canonical})
+    sonuc = _ld({'@context': 'https://schema.org', '@type': 'BreadcrumbList', 'itemListElement': kirinti})
+    if not (is_ilani and kurum and end and end > simdi):
+        return sonuc
+    metin = [item.get('kadro'), item.get('ozet'), item.get('basvuru_notu')]
+    metin += [f'{s.get("kadro")}: {s.get("metin")}' for s in item.get('sartlar') or [] if isinstance(s, dict) and s.get('metin')][:5]
+    aciklama = ''.join(f'<p>{esc(m)}</p>' for m in dict.fromkeys(m for m in metin if m))
+    if len(aciklama) < 60:
+        aciklama += f'<p>{esc(kurum)} tarafından yayımlanan kamu personel alım ilanı. Başvuru şartları ve kadrolar resmî ilandadır.</p>'
+    yayim = item.get('baslangic_zaman') or item.get('ilk_gorulme') or simdi.isoformat()
+    try:
+        yayim = min(datetime.fromisoformat(yayim), simdi).astimezone(TR).date().isoformat()
+    except ValueError:
+        yayim = simdi.date().isoformat()
+    adres = {'@type': 'PostalAddress', 'addressCountry': 'TR'}
+    il = (kayit or {}).get('il') or ''
+    if il:
+        adres['addressRegion'] = il
+    import liste_verisi
+    unvan = re.sub(r'^\d+\s+', '', liste_verisi.baslik_temiz(alanlar.get('manset') or '')).strip()
+    is_ = {'@context': 'https://schema.org', '@type': 'JobPosting', 'title': unvan or item.get('baslik'),
+           'description': aciklama, 'datePosted': yayim, 'validThrough': end.isoformat(timespec='seconds'),
+           'employmentType': 'FULL_TIME', 'directApply': False, 'url': canonical,
+           'hiringOrganization': {'@type': 'Organization', 'name': kurum},
+           'jobLocation': {'@type': 'Place', 'address': adres},
+           'identifier': {'@type': 'PropertyValue', 'name': 'KPSS Tercihi', 'value': item.get('id') or canonical}}
+    if (gorsel or {}).get('logo'):
+        is_['hiringOrganization']['logo'] = BASE + gorsel['logo']
+    if alanlar.get('toplam'):
+        is_['totalJobOpenings'] = alanlar['toplam']
+    return sonuc + _ld(is_)
+
+
 def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=None):
     from siniflandir import akademik_ilan
     if akademik_ilan(item):
@@ -512,7 +594,10 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
     for belge in item.get('belgeler', [])[:3]:
         if str(belge.get('link', '')).startswith('https://webdosya.csb.gov.tr/v2/yerelyonetimler/'):
             diger += f'<p><a class="yazi-link" href="{esc(belge["link"])}" target="_blank" rel="noopener noreferrer">Duyuru eki: {esc(belge.get("ad"))} ↗</a></p>'
-    description = (item.get('kurum', '') + ' — ' + (item.get('kadro') or title))[:190]
+    ikincil = (kopya or {}).get('rol') == 'ikincil'
+    if ikincil:   # başka kaynaktaki kopya: Google tek sayfayı (esas kaydı) dizinler
+        canonical = BASE + 'ilan/' + kopya['birincil'] + '/'
+    title, description = _arama_metinleri(item, alanlar, end, kayit, title)
     og_gorsel = ''
     if gorsel.get('kart'):
         kart_url = esc(BASE + gorsel['kart'])
@@ -535,10 +620,12 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
         benzer_html = ('<section class="benzer"><div class="bolum-bas"><h2>Benzer ilanlar</h2></div><div class="liste">'
                        + ''.join(ks.satir_html(k, simdi, '../../') for k in benzer[:5]) + '</div></section>')
     kok = '../../'
+    is_ilani = acik_ilan and not ikincil and not (kayit or {}).get('kurum_ici')
+    og_gorsel += yapisal_veri(item, canonical, end, alanlar, kayit, gorsel, simdi, is_ilani)
     govde = (f'<main id="icerik" class="wrap"><article class="d-bas"><nav class="crumbs" aria-label="Konum"><a href="{kok}">Ana sayfa</a><span aria-hidden="true">/</span><a href="{kok}#ilanlar">İlanlar</a>{kurum_kirinti}</nav>'
              f'{hero_html(item, gorsel, kayit, simdi)}{kurum_ici_not}{kopya_ust}{cta}{kopya_alt}</article>'
              f'<div class="d-ana"><section class="d-bolum">{sections}{bolum}{diger}</section>{benzer_html}</div></main>')
-    return key, (sayfa_basi(f'{title} | KPSS Tercihi', description, canonical, kok, 'article', og_gorsel, og_baslik=title)
+    return key, (sayfa_basi(title, description, canonical, kok, 'article', og_gorsel, og_baslik=title)
                  + f'<body class="detail-page"><a class="skip" href="#icerik">İçeriğe geç</a>{ust_html(kok)}{govde}{alt_html(kok)}</body></html>')
 
 
@@ -910,6 +997,7 @@ def main():
     paylasilan = set(data.get('telegram_gonderilen') or [])
     kayit_haritasi = {k['key']: k for k in kayitlar}
     gorunen = [k for k in kayitlar if not k.get('kopya_of')]
+    sayfa_anahtarlari, degisim = set(), {}
     for item in data.get('ilanlar', []):
         result = detail_page(item)
         if not result:
@@ -940,10 +1028,13 @@ def main():
         folder = docs / 'ilan' / key
         folder.mkdir(parents=True, exist_ok=True)
         (folder / 'index.html').write_text(content, encoding='utf-8')
-        urls.append(BASE + 'ilan/' + key + '/')
+        sayfa_anahtarlari.add(key)
+        if (sayfa_kopya or {}).get('rol') != 'ikincil':   # kopya sayfası esas kayda kanonik bağlanır, haritaya girmez
+            urls.append(BASE + 'ilan/' + key + '/')
+            degisim[urls[-1]] = max(str(item.get(a) or '')[:10] for a in ('ilk_gorulme', 'detay_guncelleme', 'guncelleme'))
         count += 1
     try:
-        yonlendirmeleri_yaz(docs, data.get('ilanlar', []), {u[len(BASE) + 5:-1] for u in urls if u.startswith(BASE + 'ilan/')})
+        yonlendirmeleri_yaz(docs, data.get('ilanlar', []), sayfa_anahtarlari)
     except Exception as hata:
         print(f'Uyarı: eski ilan bağlantıları yönlendirilemedi: {hata}')
     urls += kurum_adresleri
@@ -960,13 +1051,16 @@ def main():
         (docs / 'sss').mkdir(exist_ok=True)
         (docs / 'sss' / 'index.html').write_text(sss_html, encoding='utf-8')
         urls.insert(2, sss_url)
-        sayfali = {u[len(BASE) + 5:-1] for u in urls if u.startswith(BASE + 'ilan/')}
+        sayfali = sayfa_anahtarlari
         (docs / 'llms.txt').write_text(yz_gorunurluk.llms_metni(gorunen, BASE, datetime.now(TR), sayfali), encoding='utf-8')
     except Exception as hata:
         print(f'Uyarı: llms.txt / SSS üretilemedi: {hata}')
     bugun = datetime.now(TR).date().isoformat()   # ana sayfa her gün değişir; Google'a tazelik sinyali
+    degisim[BASE] = bugun
     (docs / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
-                                      + ''.join('<url><loc>' + esc(u) + '</loc>' + (f'<lastmod>{bugun}</lastmod>' if u == BASE else '') + '</url>' for u in urls)
+                                      + ''.join('<url><loc>' + esc(u) + '</loc>'
+                                                + (f'<lastmod>{degisim[u]}</lastmod>' if re.fullmatch(r'\d{4}-\d{2}-\d{2}', degisim.get(u, '')) else '')
+                                                + '</url>' for u in dict.fromkeys(urls))
                                       + '</urlset>\n', encoding='utf-8')
     bot = bot_ilanlari(data.get('ilanlar', []))
     (docs / 'bot-ilanlar.json').write_text(json.dumps(bot, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
