@@ -258,7 +258,7 @@ def _bolum_html(bolumler, gorunen=6):
     # Önce kadroya özgü şartlar, sonra tercih nedenleri, en son herkese uyan genel şartlar (Türk vatandaşı olmak …):
     # okuyan kişi asıl eleyici şartı ilk bakışta görsün.
     def sira(b):
-        return 2 if re.search(r'(?i)genel', b or '') and not re.search(r'(?i)özel|ozel', b or '') else 1 if re.match(r'(?i)\W*tercih', b or '') or re.search(r'(?i)tercih nedenleri', b or '') else 0
+        return 2 if re.search(r'(?i)genel\s+(?:şart|koşul)', b or '') and not re.search(r'(?i)özel|ozel', b or '') else 1 if re.match(r'(?i)\W*tercih', b or '') or re.search(r'(?i)tercih nedenleri', b or '') else 0
     bolumler = sorted(bolumler, key=lambda bm: sira(bm[0]))
     duz = [(b, m) for b, ms in bolumler for m in ms if sade_madde(m)]
     if len(duz) <= gorunen + 2:
