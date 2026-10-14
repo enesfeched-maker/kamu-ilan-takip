@@ -132,7 +132,7 @@ def institution(title):
     # Keep the actual named institution; never infer a workplace from its city name.
     if kisaltma_kurumu(title):
         return kisaltma_kurumu(title)
-    m = re.match(r'(.+?\b(?:Belediye Başkanlığı|Belediyesi|Üniversitesi|Kurumu Başkanlığı|Kalkınma Ajansı|Ajansı|Kurumu|Birliği|Bakanlığı|Genel Müdürlüğü|Başkanlığı))\b',title,re.I)
+    m = re.match(r'(.+?\b(?:Belediye Başkanlığı|Belediyesi|Üniversitesi|Kurumu Başkanlığı|Kalkınma Ajansı|Ajansı|Enstitüsü|Kurumu|Birliği|Bakanlığı|Genel Müdürlüğü|Başkanlığı))\b',title,re.I)
     if m:
         org=clean(m.group(1))
         # "İstanbul Büyükşehir Belediyesi İETT İşletmeleri Genel Müdürlüğü": ilanı veren en özgül birimdir.
