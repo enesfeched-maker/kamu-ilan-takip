@@ -22,7 +22,7 @@ def github(path,method='GET',payload=None,token=''):
     headers={'Accept':'application/vnd.github+json','User-Agent':'KamuIlanTakip-local','X-GitHub-Api-Version':'2022-11-28'}
     if token:
         headers['Authorization']='Bearer '+token
-    request=urllib.request.Request(API+path,method=method,headers=headers,
+    request=urllib.request.Request(path if path.startswith('https://') else API+path,method=method,headers=headers,
         data=json.dumps(payload).encode() if payload is not None else None)
     try:
         with urllib.request.urlopen(request,timeout=30) as r:
@@ -33,10 +33,16 @@ def github(path,method='GET',payload=None,token=''):
         raise RuntimeError('GitHub HTTP '+str(exc.code)) from None
 
 
-def decode(blob):
+def decode(blob,token=''):
+    """Contents API yanıtını çözer. 1 MB'tan büyük dosyada içerik boş gelir (encoding 'none'); o zaman dosya git blob
+    servisinden (100 MB'a kadar) okunur. 14 Ekim 2026: yerel-kaynaklar.json 1,6 MB'a çıkınca telefon ve bilgisayar
+    taraması 'JSONDecodeError' ile 18:30'dan sonra durmuştu."""
     if not blob:
         return {}
-    return json.loads(base64.b64decode(blob['content']))
+    icerik=blob.get('content') or ''
+    if not icerik.strip() and blob.get('sha'):
+        icerik=github('https://api.github.com/repos/'+REPO+'/git/blobs/'+blob['sha'],token=token)['content']
+    return json.loads(base64.b64decode(icerik))
 
 
 def collect(registry,old):
@@ -166,8 +172,8 @@ def main():
         token=load_token()
     if not args.preview and not token:
         raise RuntimeError('GitHub bağlantısı henüz kurulmadı. Yerel kurulum penceresini tamamlayın.')
-    registry=decode(github('docs/ilanlar.json',token=token))
-    old=decode(github(REMOTE_PATH,token=token))
+    registry=decode(github('docs/ilanlar.json',token=token),token)
+    old=decode(github(REMOTE_PATH,token=token),token)
     snapshot=collect(registry,old)
     local=ROOT/'local-data';local.mkdir(exist_ok=True)
     (local/'son-kontrol.json').write_text(json.dumps(snapshot,ensure_ascii=False,indent=1),encoding='utf-8')
