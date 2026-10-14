@@ -67,3 +67,13 @@ class IndexNowTest(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+class BilgiSayfalariTest(unittest.TestCase):
+    def test_gizlilik_ve_hakkimizda_statik(self):
+        import bilgi_sayfalari
+        adres, html = bilgi_sayfalari.sayfa('gizlilik', 'https://kpsstercihi.com/')
+        self.assertEqual(adres, 'https://kpsstercihi.com/gizlilik/')
+        self.assertIn('Google AdSense', html)
+        self.assertIn('rel="canonical" href="https://kpsstercihi.com/gizlilik/"', html)
+        self.assertIn('href="../gizlilik/"', html)   # alt bilgi bağlantısı
+        self.assertIn('Telegram', bilgi_sayfalari.sayfa('hakkimizda', 'https://kpsstercihi.com/')[1])

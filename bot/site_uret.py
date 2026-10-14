@@ -74,7 +74,7 @@ def alt_html(kok, yil=None):
     yil = yil or datetime.now(TR).year
     return (f'<footer class="ab"><div class="ab-ic"><div class="ab-marka"><img src="{kok}assets/logo-96.webp?v={LOGO_SURUM}" alt="" width="36" height="36">'
             f'<div><strong>KPSS Tercihi</strong><span>Kamu ilanları, sade ve tek yerde</span></div></div>'
-            f'<nav class="ab-linkler" aria-label="Alt bilgi"><a href="https://t.me/kpsstercihi" target="_blank" rel="noopener" data-a="telegram" data-a-x="alt">Telegram</a><a href="{kok}sss/">Sık sorulanlar</a><a href="{kok}#bilgi/gizlilik">Gizlilik</a></nav>'
+            f'<nav class="ab-linkler" aria-label="Alt bilgi"><a href="https://t.me/kpsstercihi" target="_blank" rel="noopener" data-a="telegram" data-a-x="alt">Telegram</a><a href="{kok}sss/">Sık sorulanlar</a><a href="{kok}hakkimizda/">Hakkımızda</a><a href="{kok}gizlilik/">Gizlilik</a></nav>'
             f'<p class="ab-not">© <span id="yil">{yil}</span> KPSS Tercihi</p></div></footer>')
 
 
@@ -1051,6 +1051,8 @@ def main():
         (docs / 'sss').mkdir(exist_ok=True)
         (docs / 'sss' / 'index.html').write_text(sss_html, encoding='utf-8')
         urls.insert(2, sss_url)
+        import bilgi_sayfalari   # gizlilik / hakkımızda: AdSense ve Google için ayrı, taranabilir adresler
+        urls += bilgi_sayfalari.yaz(docs, BASE)
         sayfali = sayfa_anahtarlari
         (docs / 'llms.txt').write_text(yz_gorunurluk.llms_metni(gorunen, BASE, datetime.now(TR), sayfali), encoding='utf-8')
     except Exception as hata:
