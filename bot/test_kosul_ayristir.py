@@ -54,6 +54,9 @@ class KadroKartiTest(unittest.TestCase):
         self.assertIn('Tüm kadrolar için ortak koşullar', html)
         self.assertIn('Tamamını göster (7 madde daha)', html)
         self.assertLess(html.index('Şart 0'), html.index('Türk vatandaşı'))   # özel şartlar genel şartlardan önce
+        html = site_uret._kk_kadro_kartlari([{'unvan': 'Uzman', 'bolumler': [['Genel Nitelikler', ['Linux bilmek.']],
+                                                                              ['Tercihen', ['Docker bilmek.']]]}], '')
+        self.assertLess(html.index('Linux'), html.index('Docker'))   # 'Genel Nitelikler' asıl şarttır, tercihten önce
 
 
 if __name__ == '__main__':
