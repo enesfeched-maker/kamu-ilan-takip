@@ -1,9 +1,9 @@
 {
  "schema": 1,
- "guncelleme": "2026-10-14T07:34:01.115401+00:00",
+ "guncelleme": "2026-10-14T08:42:23.362690+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-10-14T07:34:01.720902+00:00",
+   "kontrol": "2026-10-14T08:47:27.589114+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -255,8 +255,8 @@
      "donem": "( 13 Ekim - 28 Ekim)",
      "baslangic_zaman": "2026-10-13T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:37:26+03:00",
-     "belge_ozeti": "913bb66049d4d4fd2a0d521276839dac98e595a1a43c6aefefa66fef1c93b6d4",
+     "detay_guncelleme": "2026-10-14T11:42:25+03:00",
+     "belge_ozeti": "9a5697c0d7c53c9ca1d51ce13b0dfd007c03935fcdbbee6b722b681ff7041aa3",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -279,13 +279,73 @@
       }
      ],
      "basvuru_notu": "Adaylar, Üniversitemizin https://akds.erbakan.edu.tr adresinden elektronik ortamda başvurularını yaptıktan sonra alacakları “Öğretim Elemanı Başvuru Formu” ve aşağıda istenilen belgeler ile birlikte ilgili birimlere şahsen veya posta yolu i le başvurabileceklerdir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/913bb66049d4d4fd2a0d521276839dac98e595a1a43c6aefefa66fef1c93b6d4.pdf",
-     "belge_sha256": "913bb66049d4d4fd2a0d521276839dac98e595a1a43c6aefefa66fef1c93b6d4",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/9a5697c0d7c53c9ca1d51ce13b0dfd007c03935fcdbbee6b722b681ff7041aa3.pdf",
+     "belge_sha256": "9a5697c0d7c53c9ca1d51ce13b0dfd007c03935fcdbbee6b722b681ff7041aa3",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "belge_ogrenim": [
       "lisans",
       "onlisans"
+     ]
+    },
+    {
+     "id": "sbb-1fe4581bae8a2a6c101212b4",
+     "baslik": "ORTA KARADENİZ KALKINMA AJANSI - 5 ALACAK",
+     "kurum": "ORTA KARADENİZ KALKINMA AJANSI",
+     "kadro": "5 ALACAK",
+     "ilan_turu": "Kamu Personeli",
+     "son_tarih": "2026-11-22",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 2 Kasım - 22 Kasım)",
+     "baslangic_zaman": "2026-11-02T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-10-14T11:42:28+03:00",
+     "belge_ozeti": "6f8045b41b0017398d148f95fd484fd8b7396dca430089a35f83c3200c63887d",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "5 alımı. Son başvuru: 22.11.2026. Tablo 3: Elektronik ortamda yapılacak başvurularda adaylar için hazırlanan kontrol listesi Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "b) 2025 veya 2026 yılında yapılan KPSS ’den Tablo 2’de yer alan ilgili puan türünden en az 70 (yetmiş) puan almış olmak,"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "Tablo 2: Destek Personeli Adayları İçin İstenen Mezuniyet Alanları 2025-2026 Alınacak Sözlü Sınava Bölümler KPSS Puan Alım türü Destek Personeli Çağrılacak Aday Türü Sayısı Sayısı Ekonomi, İktisat, İşletme, P1, P2, P3 Maliye, puanlarından KPSS 1 (bir) 5 (beş) Kamu Yönetimi, herhangi biri Siyaset Bilimi ve Kamu Yönetimi,"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "b) Ölçme, Seçme ve Yerleştirme Merkezi (ÖSYM) tarafından 2025 veya 2026 yıllarında yapılan Kamu Personeli Seçme Sınavından mezun oldukları öğrenim dalları itibarıyla Tablo 1’de gösterilen ilgili puan türlerinden son başvuru tarihi itibarıyla en az 80 (seksen) puan almış olmak,"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "a) KPSS şartı aranmaksızın iş tecrübesiyle başvuruda bulunacak adayların, en az dört yıllık lisans eğitimi veren yükseköğretim kurumlarının veya bunlara denkliği Yükseköğretim Kurulunca (YÖK) kabul edilen yurt içindeki veya yurt dışındaki yükseköğretim kurumlarından Tablo 1’de belirtilen bölümlerden lisans düzeyinde mezun olmaları,"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "c) Kamu kesimi veya özel kesimde aşağıdaki konularda en az 5 (beş) yıl fiilen başarılı olarak çalışmış ve başvuru tarihi itibarıyla 50 yaşını doldurmamış olma ları:"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "a) Üniversitelerin Tablo 2’de yer alan bölümlerinden veya bunlara denkliği Yükseköğretim Kurulu’nca kabul edilen yurt içindeki veya yurt dışındaki yükseköğretim kurumlarından lisans düzeyinde mezun olmak."
+      }
+     ],
+     "basvuru_notu": "Başvurular, e-Devlet - Orta Karadeniz Kalkınma Ajansı - Kariyer Kapısı Kamu İşe Sınav Başvuru Adresi Alım veya Kariyer Kapısı https://kariyerkapisi.gov.tr adresi üzerinden yapılacaktır.",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/6f8045b41b0017398d148f95fd484fd8b7396dca430089a35f83c3200c63887d.pdf",
+     "belge_sha256": "6f8045b41b0017398d148f95fd484fd8b7396dca430089a35f83c3200c63887d",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "puan_turleri": [
+      "P3",
+      "P48"
+     ],
+     "belge_ogrenim": [
+      "lisans"
      ]
     },
     {
@@ -342,66 +402,6 @@
      "sbb_detay_surumu": 6
     },
     {
-     "id": "sbb-1fe4581bae8a2a6c101212b4",
-     "baslik": "ORTA KARADENİZ KALKINMA AJANSI - 5 ALACAK",
-     "kurum": "ORTA KARADENİZ KALKINMA AJANSI",
-     "kadro": "5 ALACAK",
-     "ilan_turu": "Kamu Personeli",
-     "son_tarih": "2026-11-22",
-     "kaynak": "SBB Kamu İlan",
-     "kaynak_turu": "sbb",
-     "donem": "( 2 Kasım - 22 Kasım)",
-     "baslangic_zaman": "2026-11-02T00:00:00+03:00",
-     "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:37:37+03:00",
-     "belge_ozeti": "f5b1305fb77178719996c30a762ac8c8a28d11797aaf67f7187bd44b532d2c78",
-     "kaynaklar": [
-      {
-       "ad": "SBB Kamu İlan",
-       "link": "https://kamuilan.sbb.gov.tr/"
-      }
-     ],
-     "ozet": "5 alımı. Son başvuru: 22.11.2026. Tablo 3: Elektronik ortamda yapılacak başvurularda adaylar için hazırlanan kontrol listesi Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
-     "sartlar": [
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "b) 2025 veya 2026 yılında yapılan KPSS ’den Tablo 2’de yer alan ilgili puan türünden en az 70 (yetmiş) puan almış olmak,"
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "Tablo 2: Destek Personeli Adayları İçin İstenen Mezuniyet Alanları 2025-2026 Alınacak Sözlü Sınava Bölümler KPSS Puan Alım türü Destek Personeli Çağrılacak Aday Türü Sayısı Sayısı Ekonomi, İktisat, İşletme, P1, P2, P3 Maliye, puanlarından KPSS 1 (bir) 5 (beş) Kamu Yönetimi, herhangi biri Siyaset Bilimi ve Kamu Yönetimi,"
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "b) Ölçme, Seçme ve Yerleştirme Merkezi (ÖSYM) tarafından 2025 veya 2026 yıllarında yapılan Kamu Personeli Seçme Sınavından mezun oldukları öğrenim dalları itibarıyla Tablo 1’de gösterilen ilgili puan türlerinden son başvuru tarihi itibarıyla en az 80 (seksen) puan almış olmak,"
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "a) KPSS şartı aranmaksızın iş tecrübesiyle başvuruda bulunacak adayların, en az dört yıllık lisans eğitimi veren yükseköğretim kurumlarının veya bunlara denkliği Yükseköğretim Kurulunca (YÖK) kabul edilen yurt içindeki veya yurt dışındaki yükseköğretim kurumlarından Tablo 1’de belirtilen bölümlerden lisans düzeyinde mezun olmaları,"
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "c) Kamu kesimi veya özel kesimde aşağıdaki konularda en az 5 (beş) yıl fiilen başarılı olarak çalışmış ve başvuru tarihi itibarıyla 50 yaşını doldurmamış olma ları:"
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "a) Üniversitelerin Tablo 2’de yer alan bölümlerinden veya bunlara denkliği Yükseköğretim Kurulu’nca kabul edilen yurt içindeki veya yurt dışındaki yükseköğretim kurumlarından lisans düzeyinde mezun olmak."
-      }
-     ],
-     "basvuru_notu": "Başvurular, e-Devlet - Orta Karadeniz Kalkınma Ajansı - Kariyer Kapısı Kamu İşe Sınav Başvuru Adresi Alım veya Kariyer Kapısı https://kariyerkapisi.gov.tr adresi üzerinden yapılacaktır.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/f5b1305fb77178719996c30a762ac8c8a28d11797aaf67f7187bd44b532d2c78.pdf",
-     "belge_sha256": "f5b1305fb77178719996c30a762ac8c8a28d11797aaf67f7187bd44b532d2c78",
-     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 6,
-     "puan_turleri": [
-      "P3",
-      "P48"
-     ],
-     "belge_ogrenim": [
-      "lisans"
-     ]
-    },
-    {
      "id": "sbb-a802b9f993bd17b9a9c27756",
      "baslik": "ONDOKUZ MAYIS ÜNİVERSİTESİ - 35 ÖĞRETİM ÜYESİ ALACAK",
      "kurum": "ONDOKUZ MAYIS ÜNİVERSİTESİ",
@@ -454,8 +454,8 @@
      "donem": "( 13 Ekim - 27 Ekim)",
      "baslangic_zaman": "2026-10-13T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:56:14+03:00",
-     "belge_ozeti": "049ff7cb77d440bd7bdb3c0e99208911b459ad63e721636de42d07b779ed5704",
+     "detay_guncelleme": "2026-10-14T11:42:33+03:00",
+     "belge_ozeti": "86115becb1b4958bb67d2db0aabd66e12595ce47764eec90fcfa6868a9313ea8",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -465,8 +465,8 @@
      "ozet": "25 SÖZLEŞMELİ PERSONEL alımı. Son başvuru: 27.10.2026. Özel şartlar aşağıdaki ilan belgesinde yer alıyor.",
      "sartlar": [],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/049ff7cb77d440bd7bdb3c0e99208911b459ad63e721636de42d07b779ed5704.pdf",
-     "belge_sha256": "049ff7cb77d440bd7bdb3c0e99208911b459ad63e721636de42d07b779ed5704",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/86115becb1b4958bb67d2db0aabd66e12595ce47764eec90fcfa6868a9313ea8.pdf",
+     "belge_sha256": "86115becb1b4958bb67d2db0aabd66e12595ce47764eec90fcfa6868a9313ea8",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
     },
@@ -482,8 +482,8 @@
      "donem": "( 12 Ekim - 26 Ekim)",
      "baslangic_zaman": "2026-10-12T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:37:54+03:00",
-     "belge_ozeti": "f52f2d5cd32241dcdb29348f0af1566ea612e6fbeaf0005f8c3a6561829bdfd6",
+     "detay_guncelleme": "2026-10-14T11:42:34+03:00",
+     "belge_ozeti": "8d1b42ce0ee97afe3e5ca1aa1c10ec1b1eee9f15a1d77310ad65c5e07c5b7773",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -518,8 +518,8 @@
       }
      ],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/f52f2d5cd32241dcdb29348f0af1566ea612e6fbeaf0005f8c3a6561829bdfd6.pdf",
-     "belge_sha256": "f52f2d5cd32241dcdb29348f0af1566ea612e6fbeaf0005f8c3a6561829bdfd6",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/8d1b42ce0ee97afe3e5ca1aa1c10ec1b1eee9f15a1d77310ad65c5e07c5b7773.pdf",
+     "belge_sha256": "8d1b42ce0ee97afe3e5ca1aa1c10ec1b1eee9f15a1d77310ad65c5e07c5b7773",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
     },
@@ -782,8 +782,8 @@
      "donem": "( 16 Ekim - 19 Ekim)",
      "baslangic_zaman": "2026-11-16T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:37:52+03:00",
-     "belge_ozeti": "2bc8a77d7d7304ee48ab0bae329caea119a55eec441ded05f0353fa51c2a51f0",
+     "detay_guncelleme": "2026-10-14T11:42:36+03:00",
+     "belge_ozeti": "d2bf2585fd1d6372862b70f8b2818e91e8fc24d83b94fcf331ffde757127fe7a",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -814,8 +814,8 @@
       }
      ],
      "basvuru_notu": "a) Elektronik ortamda başvurular, 16/11/2026-19/11/2026 tarihleri arasında istenilen belgeler eklenmek suretiyle Belediyemizin insankaynaklari@kesan.bel.tr mail adresine yapılacaktır.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/2bc8a77d7d7304ee48ab0bae329caea119a55eec441ded05f0353fa51c2a51f0.pdf",
-     "belge_sha256": "2bc8a77d7d7304ee48ab0bae329caea119a55eec441ded05f0353fa51c2a51f0",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/d2bf2585fd1d6372862b70f8b2818e91e8fc24d83b94fcf331ffde757127fe7a.pdf",
+     "belge_sha256": "d2bf2585fd1d6372862b70f8b2818e91e8fc24d83b94fcf331ffde757127fe7a",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "yer": "Edirne",
@@ -838,8 +838,8 @@
      "donem": "( 12 Ekim - 26 Ekim)",
      "baslangic_zaman": "2026-10-12T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:37:44+03:00",
-     "belge_ozeti": "b145898d840ec3b9e9a322fab5a779eb08f653f3965d6eab23de1367349fa532",
+     "detay_guncelleme": "2026-10-14T11:42:51+03:00",
+     "belge_ozeti": "b0b4d77a9edf21f08f86ee27a5e1dcd9800317f078e8501b13da8657247936f0",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -858,8 +858,8 @@
       }
      ],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/b145898d840ec3b9e9a322fab5a779eb08f653f3965d6eab23de1367349fa532.pdf",
-     "belge_sha256": "b145898d840ec3b9e9a322fab5a779eb08f653f3965d6eab23de1367349fa532",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/b0b4d77a9edf21f08f86ee27a5e1dcd9800317f078e8501b13da8657247936f0.pdf",
+     "belge_sha256": "b0b4d77a9edf21f08f86ee27a5e1dcd9800317f078e8501b13da8657247936f0",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "puan_turleri": [
@@ -868,6 +868,101 @@
      ],
      "belge_ogrenim": [
       "lisans"
+     ]
+    },
+    {
+     "id": "sbb-5681cd6adcb3be4bf8184f42",
+     "baslik": "MİLLİ SAVUNMA BAKANLIĞI - DENİZ KUVVETLERİ KOMUTANLIĞINA 2026 YILI DENİZ SINIFI MUVAZZAF SUBAY ADAYI TEMİNİ",
+     "kurum": "MİLLİ SAVUNMA BAKANLIĞI",
+     "kadro": "DENİZ KUVVETLERİ KOMUTANLIĞINA 2026 YILI DENİZ SINIFI MUVAZZAF SUBAY ADAYI TEMİNİ",
+     "ilan_turu": "Kamu Personeli",
+     "son_tarih": "2026-11-02",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 12 Ekim - 2 Kasım)",
+     "baslangic_zaman": "2026-10-12T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-10-14T11:43:16+03:00",
+     "belge_ozeti": "04cf1aff441cf49808b6fe0c22f125681bca6ef1a1eff8b183b85c2021ce8770",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "DENİZ KUVVETLERİ KOMUTANLIĞINA 2026 YILI DENİZ SINIFI MUVAZZAF SUBAY ADAYI TEMİNİ. Son başvuru: 02.11.2026. Şahsen, posta kanalıyla, dilekçeyle veya diğer şekillerde yapılacak başvurular kabul edilmeyecektir. (2) Adaylar https://personeltemin.msb.gov.tr sitesine girdikten sonra e-devlet şifresi ile başvuru ekranını açacaktır. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Sınav puanı koşulu · kadroya göre muafiyetler için belgeyi inceleyin",
+       "metin": "Yükle’ butonuna tıklayarak, önceden taratılmış denklik belgesini sisteme yükleyecektir, söz konusu belgeyi sisteme yüklemeyen adayların başvuruları kabul edilmeyecektir.) -7- (4) Deniz Kuvvetleri Komutanlığı Deniz Sınıfı Muvazzaf Subay aday adaylarından KPSS puanı istenmeyecek ve MSB.lığınca yapılacak/yaptırılacak genel kültür sınavından en az 50 puan alanlar değerlendirmeye alınacaktır."
+      }
+     ],
+     "basvuru_notu": "Bu durumda olan adaylar, aldığı tutanak ile MSB Personel Temin Daire Başkanlığına tekrar ve şahsen başvurarak sevk yazısını yenileyebilecektir. (ç) Sağlık kuruluşu tarafından düzenlenen ön bildirim raporunuzun karar hanesinde belirtilen ifadelerin ve bilgilerin kontrol etmeniz önem arz etmektedir.",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/04cf1aff441cf49808b6fe0c22f125681bca6ef1a1eff8b183b85c2021ce8770.pdf",
+     "belge_sha256": "04cf1aff441cf49808b6fe0c22f125681bca6ef1a1eff8b183b85c2021ce8770",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "belge_kpss": "kpsssiz"
+    },
+    {
+     "id": "sbb-a5bf514188b4015ee043b5da",
+     "baslik": "MİLLİ SARAYLAR İDARESİ BAŞKANLIĞI - 158 SÖZLEŞMELİ PERSONEL ALACAK",
+     "kurum": "MİLLİ SARAYLAR İDARESİ BAŞKANLIĞI",
+     "kadro": "158 SÖZLEŞMELİ PERSONEL ALACAK",
+     "ilan_turu": "Sözleşmeli Personel",
+     "son_tarih": "2026-10-22",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 12 Ekim - 22 Ekim)",
+     "baslangic_zaman": "2026-10-12T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-10-14T11:43:27+03:00",
+     "belge_ozeti": "9d4fe9b69a0ac376f9fb7c470beb98f7866f246cf6178ec3866b7c994836fdbd",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "158 SÖZLEŞMELİ PERSONEL alımı. Son başvuru: 22.10.2026. Başvurular, Kariyer Kapısı (https://kariyerkapisi.gov.tr/isealim) internet sitesinden e- Devlet şifresi ile elektronik ortamda yapılacaktır. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "1.Grup: Unvanı: Büro Personeli Kadro Adedi: 1 Görev İli : İstanbul Sınav Usulü: KPSS P3 + Sözlü Sınav Özel Şartları: 1- ÖSYM tarafından 2025 ve 2026 yılında yapılan Kamu Personeli Seçme Sınavlarında KPSS P3 puan türünde en az 60 (altmış) puan almış olmak. 2- Son başvuru tarihi itibarıyla 35 yaşını doldurmamış olmak. 3- İşletme, Yönetim Bilimleri, İktisat, Maliye, Çalışma Ekonomisi ve Endüstri İlişkileri, Kamu Yönetimi, Siyaset Bilimi, Siyaset Bilimi ve Kamu Yönetimi, Siyaset Bilimi ve Uluslararası İlişkiler bölümlerinden birinden mezun ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurtdışındaki Yükseköğretim Kurumlarından mezun olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "3.Grup: Unvanı: Mühendis (İnşaat) Kadro Adedi: 1 Görev İli : İstanbul Sınav Usulü: KPSS P3 + Sözlü Sınav Özel Şartları: 1- ÖSYM tarafından 2025 ve 2026 yılında yapılan Kamu Personeli Seçme Sınavlarında KPSS P3 puan türünde en az 60 (altmış) puan almış olmak. 2- Son başvuru tarihi itibarıyla 35 yaşını doldurmamış olmak. 3- Üniversitelerin İnşaat Mühendisliği lisans bölümünden ya da buna denkliği Yükseköğretim Kurulunca kabul edilmiş yurtdışındaki Yükseköğretim Kurumlarından mezun olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "6.Grup Unvanı: Diğer Teknik Hizmet Personeli (El Dekoru ve Seramik Üretimi) Kadro Adedi: 11 Görev İli : İstanbul Öğrenim Grubu: Lisans Sınav Usulü: Uygulamalı Sınav + Sözlü Sınav Özel Şartları: 1- Son başvuru tarihi itibarıyla 40 yaşını doldurmamış olmak. 2- Lisans bölümlerinin Geleneksel Türk Sanatları, Geleneksel Sanatlar, Geleneksel Türk El Sanatları, Geleneksel El Sanatları, Resim, Seramik, Seramik Sanatları, Seramik Tasarımı, Seramik ve Cam, Seramik ve Cam Tasarımı, Seramik-Cam, Bileşik Sanatlar, El Sanatları, El Sanatları Tasarımı ve Üretimi bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurtdışındaki Yükseköğretim Kurumlarından mezun olmak"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "7.Grup Unvanı: Tekniker (El Dekoru ve Seramik Üretimi) Kadro Adedi: 5 Görev İli : İstanbul Öğrenim Grubu: Ön Lisans Sınav Usulü: Uygulamalı Sınav + Sözlü Sınav Özel Şartları: 1- Son başvuru tarihi itibarıyla 40 yaşını doldurmamış olmak. 2- Meslek Yüksek Okullarının Geleneksel El Sanatları, Seramik, Çini İşlemeciliği, Seramik ve Cam, Seramik, Cam ve Çinicilik, Geleneksel Türk El Sanatları, El Sanatları, Seramik-Cam bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurtdışındaki Yükseköğretim Kurumlarından mezun olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "10.Grup Unvanı : Destek Personeli (Temizlik Görevlisi) Kadro Adedi : 20 Görev İli : İstanbul Öğrenim Grubu: Lise Sınav Usulü : Uygulamalı Sınav + Sözlü Sınav Özel Şartları : 1- Son başvuru tarihi itibarıyla 40 yaşını doldurmamış olmak. 2- En az ortaöğretim (lise) ve dengi okul mezunu olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "11.Grup Unvanı : Destek Personeli (Temizlik Görevlisi) Kadro Adedi : 5 Görev İli : Edirne Öğrenim Grubu: Lise Sınav Usulü : Uygulamalı Sınav + Sözlü Sınav Özel Şartları : 1- Son başvuru tarihi itibarıyla 40 yaşını doldurmamış olmak. 2- En az ortaöğretim (lise) ve dengi okul mezunu olmak."
+      }
+     ],
+     "basvuru_notu": "Başkanlığımıza şahsen, kargo ya da posta yoluyla yapılan başvurular kabul edilmeyecektir.",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/9d4fe9b69a0ac376f9fb7c470beb98f7866f246cf6178ec3866b7c994836fdbd.pdf",
+     "belge_sha256": "9d4fe9b69a0ac376f9fb7c470beb98f7866f246cf6178ec3866b7c994836fdbd",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "puan_turleri": [
+      "P3"
+     ],
+     "belge_ogrenim": [
+      "lisans",
+      "onlisans",
+      "ortaogretim"
      ]
     },
     {
@@ -882,8 +977,8 @@
      "donem": "( 12 Ekim - 26 Ekim)",
      "baslangic_zaman": "2026-10-12T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:37:57+03:00",
-     "belge_ozeti": "b0d5cb0bba28abe74b7806a2f55500596e1510e95c6c579c6c4e074e5d2b9f59",
+     "detay_guncelleme": "2026-10-14T11:43:33+03:00",
+     "belge_ozeti": "8fc4df3a2a20604ff0c6aa45239afaed0dc1e355cb82d25d996bd72a115b466c",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -918,8 +1013,8 @@
       }
      ],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/b0d5cb0bba28abe74b7806a2f55500596e1510e95c6c579c6c4e074e5d2b9f59.pdf",
-     "belge_sha256": "b0d5cb0bba28abe74b7806a2f55500596e1510e95c6c579c6c4e074e5d2b9f59",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/8fc4df3a2a20604ff0c6aa45239afaed0dc1e355cb82d25d996bd72a115b466c.pdf",
+     "belge_sha256": "8fc4df3a2a20604ff0c6aa45239afaed0dc1e355cb82d25d996bd72a115b466c",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
     },
@@ -978,8 +1073,8 @@
      "donem": "( 9 Ekim - 23 Ekim)",
      "baslangic_zaman": "2026-10-09T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:38:04+03:00",
-     "belge_ozeti": "573700ef682e95e9aa6abe6379b64c7f7685cd265fe0e75d687f9fdcd73393aa",
+     "detay_guncelleme": "2026-10-14T11:43:34+03:00",
+     "belge_ozeti": "69875cbe54515e38d9b808e5e05cc6b8bae4db33bc88183466bfc9498ec02c79",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -994,8 +1089,8 @@
       }
      ],
      "basvuru_notu": "6) Online olarak yapılan başvurular için istenen tüm bilgi ve belgeler ile atama için gerekli belgelerin onaylı örnekleri Üniversitemiz birimleri tarafından gerektiğinde adaylardan fiziksel olarak istenebilecektir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/573700ef682e95e9aa6abe6379b64c7f7685cd265fe0e75d687f9fdcd73393aa.pdf",
-     "belge_sha256": "573700ef682e95e9aa6abe6379b64c7f7685cd265fe0e75d687f9fdcd73393aa",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/69875cbe54515e38d9b808e5e05cc6b8bae4db33bc88183466bfc9498ec02c79.pdf",
+     "belge_sha256": "69875cbe54515e38d9b808e5e05cc6b8bae4db33bc88183466bfc9498ec02c79",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "belge_ogrenim": [
@@ -1014,8 +1109,8 @@
      "donem": "( 12 Ekim - 26 Ekim)",
      "baslangic_zaman": "2026-10-12T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:38:06+03:00",
-     "belge_ozeti": "37963f4c4f5502397eb32ba137304a78417ab62fc52f1cd6a551b3b9db563140",
+     "detay_guncelleme": "2026-10-14T11:43:37+03:00",
+     "belge_ozeti": "b59e7ee90a1a6871b8841504020696e65c4b20978468c8a2ecab417a79844f82",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1030,8 +1125,8 @@
       }
      ],
      "basvuru_notu": "Başvuru Tarihi, Yeri ve Şekli (1)Başvurular, 12 Ekim 2026, Pazartesi günü saat 10:00'da başlayıp 26 Ekim 2026, Pazartesi günü saat 23:59 itibarıyla sona erecektir. (2)Başvurular, e-Devlet üzerinden Savunma Sanayii Başkanlığı- Kariyer Kapısı (https://kariyerkapisi.gov.tr/isealim) adresinden elektronik ortamda başvuruda istenilen belgeleri de sisteme yüklemek suretiyle alınacaktır.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/37963f4c4f5502397eb32ba137304a78417ab62fc52f1cd6a551b3b9db563140.pdf",
-     "belge_sha256": "37963f4c4f5502397eb32ba137304a78417ab62fc52f1cd6a551b3b9db563140",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/b59e7ee90a1a6871b8841504020696e65c4b20978468c8a2ecab417a79844f82.pdf",
+     "belge_sha256": "b59e7ee90a1a6871b8841504020696e65c4b20978468c8a2ecab417a79844f82",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "belge_ogrenim": [
@@ -1050,8 +1145,8 @@
      "donem": "( 9 Ekim - 23 Ekim)",
      "baslangic_zaman": "2026-10-09T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:38:08+03:00",
-     "belge_ozeti": "1099a7c1dff865095fac9db5c4e875e9c59010136c332df1af5156b60864044f",
+     "detay_guncelleme": "2026-10-14T11:43:39+03:00",
+     "belge_ozeti": "24b9944be865e96f695a571a58d14ffe639fd95cbfb887c032dfa11b1081b80d",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1066,8 +1161,8 @@
       }
      ],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/1099a7c1dff865095fac9db5c4e875e9c59010136c332df1af5156b60864044f.pdf",
-     "belge_sha256": "1099a7c1dff865095fac9db5c4e875e9c59010136c332df1af5156b60864044f",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/24b9944be865e96f695a571a58d14ffe639fd95cbfb887c032dfa11b1081b80d.pdf",
+     "belge_sha256": "24b9944be865e96f695a571a58d14ffe639fd95cbfb887c032dfa11b1081b80d",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
     },
@@ -1083,8 +1178,8 @@
      "donem": "( 9 Ekim - 23 Ekim)",
      "baslangic_zaman": "2026-10-09T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:38:10+03:00",
-     "belge_ozeti": "b6feadaf49517afadf874c7704994266b71ce6cc13d574510d22f2be38efbd52",
+     "detay_guncelleme": "2026-10-14T11:43:41+03:00",
+     "belge_ozeti": "727d25801e92074f265f22aa006d42fc267713a1e5c9182ba007c0ea70bf6894",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1095,41 +1190,11 @@
      "ozet": "YOZGAT BOZOK ÜNİVERSİTESİ REKTÖRLÜĞÜNDEN 22.09.2026 tarihli ve 33378 sayılı Resmî Gazete’de aslına uygun olarak yayımlanan 9680/1-1 nolu öğretim üyesi ilanımızda yer alan Tıp Fakültesi Ortopedi ve Travmatoloji anabilim dalı doktor öğretim üyesi alım ilanı iptal edilmiştir.",
      "sartlar": [],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/b6feadaf49517afadf874c7704994266b71ce6cc13d574510d22f2be38efbd52.pdf",
-     "belge_sha256": "b6feadaf49517afadf874c7704994266b71ce6cc13d574510d22f2be38efbd52",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/727d25801e92074f265f22aa006d42fc267713a1e5c9182ba007c0ea70bf6894.pdf",
+     "belge_sha256": "727d25801e92074f265f22aa006d42fc267713a1e5c9182ba007c0ea70bf6894",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "duyuru_cumlesi": "YOZGAT BOZOK ÜNİVERSİTESİ REKTÖRLÜĞÜNDEN 22.09.2026 tarihli ve 33378 sayılı Resmî Gazete’de aslına uygun olarak yayımlanan 9680/1-1 nolu öğretim üyesi ilanımızda yer alan Tıp Fakültesi Ortopedi ve Travmatoloji anabilim dalı doktor öğretim üyesi alım ilanı iptal edilmiştir."
-    },
-    {
-     "id": "sbb-10e89a0b12c540895290e634",
-     "baslik": "İSTANBUL MEDENİYET ÜNİVERSİTESİ - İPTAL İLANI",
-     "kurum": "İSTANBUL MEDENİYET ÜNİVERSİTESİ",
-     "kadro": "İPTAL İLANI",
-     "ilan_turu": "Kamu Personeli",
-     "son_tarih": "2026-10-15",
-     "kaynak": "SBB Kamu İlan",
-     "kaynak_turu": "sbb",
-     "donem": "( 9 Ekim - 15 Ekim)",
-     "baslangic_zaman": "2026-10-09T00:00:00+03:00",
-     "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-14T03:26:08+03:00",
-     "belge_ozeti": "ea3823025df5b8869b696a74dc993b721d705801e4446270a3d055eddc8f6b0b",
-     "kaynaklar": [
-      {
-       "ad": "SBB Kamu İlan",
-       "link": "https://kamuilan.sbb.gov.tr/"
-      }
-     ],
-     "duyuru_turu": "İptal duyurusu",
-     "ozet": "İstanbul Medeniyet Üniversitesi Rektörlüğünden: İPTAL İLANI 01.10.2026 tarihli ve 33387 sayılı R esmî Gazete’de yayımlanan Akademik Personel Alım ilanımızdaki 30. sırada bulunan aşağıda belirtilen kadro İPTAL edilmiştir.",
-     "sartlar": [],
-     "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/ea3823025df5b8869b696a74dc993b721d705801e4446270a3d055eddc8f6b0b.pdf",
-     "belge_sha256": "ea3823025df5b8869b696a74dc993b721d705801e4446270a3d055eddc8f6b0b",
-     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 6,
-     "duyuru_cumlesi": "İstanbul Medeniyet Üniversitesi Rektörlüğünden: İPTAL İLANI 01.10.2026 tarihli ve 33387 sayılı R esmî Gazete’de yayımlanan Akademik Personel Alım ilanımızdaki 30. sırada bulunan aşağıda belirtilen kadro İPTAL edilmiştir."
     },
     {
      "id": "sbb-a6c033a9a6e91c751c6767cf",
@@ -1143,8 +1208,8 @@
      "donem": "( 9 Ekim - 23 Ekim)",
      "baslangic_zaman": "2026-10-09T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:37:58+03:00",
-     "belge_ozeti": "7bdf4931cbce593d02ed6cccd1bd52f30a10a40aef74ac7c659852d1ee8ea528",
+     "detay_guncelleme": "2026-10-14T11:43:43+03:00",
+     "belge_ozeti": "558ede9f9b17aded22842b861f03ae97456dc06a5b8f4ee0aaff92cb7622f0f6",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1179,10 +1244,40 @@
       }
      ],
      "basvuru_notu": "7) Online olarak yapılan başvurular için istenen tüm bilgi ve belgeler ile atama için gerekli belgelerin onaylı örnekleri Üniversitemiz birimleri tarafından gerektiğinde adaylardan fiziksel olarak istenebilecektir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/7bdf4931cbce593d02ed6cccd1bd52f30a10a40aef74ac7c659852d1ee8ea528.pdf",
-     "belge_sha256": "7bdf4931cbce593d02ed6cccd1bd52f30a10a40aef74ac7c659852d1ee8ea528",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/558ede9f9b17aded22842b861f03ae97456dc06a5b8f4ee0aaff92cb7622f0f6.pdf",
+     "belge_sha256": "558ede9f9b17aded22842b861f03ae97456dc06a5b8f4ee0aaff92cb7622f0f6",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
+    },
+    {
+     "id": "sbb-10e89a0b12c540895290e634",
+     "baslik": "İSTANBUL MEDENİYET ÜNİVERSİTESİ - İPTAL İLANI",
+     "kurum": "İSTANBUL MEDENİYET ÜNİVERSİTESİ",
+     "kadro": "İPTAL İLANI",
+     "ilan_turu": "Kamu Personeli",
+     "son_tarih": "2026-10-15",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 9 Ekim - 15 Ekim)",
+     "baslangic_zaman": "2026-10-09T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-10-14T03:26:08+03:00",
+     "belge_ozeti": "ea3823025df5b8869b696a74dc993b721d705801e4446270a3d055eddc8f6b0b",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "duyuru_turu": "İptal duyurusu",
+     "ozet": "İstanbul Medeniyet Üniversitesi Rektörlüğünden: İPTAL İLANI 01.10.2026 tarihli ve 33387 sayılı R esmî Gazete’de yayımlanan Akademik Personel Alım ilanımızdaki 30. sırada bulunan aşağıda belirtilen kadro İPTAL edilmiştir.",
+     "sartlar": [],
+     "basvuru_notu": "",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/ea3823025df5b8869b696a74dc993b721d705801e4446270a3d055eddc8f6b0b.pdf",
+     "belge_sha256": "ea3823025df5b8869b696a74dc993b721d705801e4446270a3d055eddc8f6b0b",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "duyuru_cumlesi": "İstanbul Medeniyet Üniversitesi Rektörlüğünden: İPTAL İLANI 01.10.2026 tarihli ve 33387 sayılı R esmî Gazete’de yayımlanan Akademik Personel Alım ilanımızdaki 30. sırada bulunan aşağıda belirtilen kadro İPTAL edilmiştir."
     },
     {
      "id": "sbb-ebbf24ff3fec3a0d6057e0f0",
@@ -1196,8 +1291,8 @@
      "donem": "( 8 Ekim - 22 Ekim)",
      "baslangic_zaman": "2026-10-08T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:38:13+03:00",
-     "belge_ozeti": "70726fb6287bc2abf612596ae761f1532773b0fc37110ba773b00f42c0665401",
+     "detay_guncelleme": "2026-10-14T11:43:45+03:00",
+     "belge_ozeti": "b81afd40b3dc070adced45f488012c612182e6f047dddcfd8ebce7534b569413",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1213,8 +1308,8 @@
       }
      ],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/70726fb6287bc2abf612596ae761f1532773b0fc37110ba773b00f42c0665401.pdf",
-     "belge_sha256": "70726fb6287bc2abf612596ae761f1532773b0fc37110ba773b00f42c0665401",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/b81afd40b3dc070adced45f488012c612182e6f047dddcfd8ebce7534b569413.pdf",
+     "belge_sha256": "b81afd40b3dc070adced45f488012c612182e6f047dddcfd8ebce7534b569413",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "duyuru_cumlesi": ""
@@ -1231,8 +1326,8 @@
      "donem": "( 19 Ekim - 2 Kasım)",
      "baslangic_zaman": "2026-10-19T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:38:15+03:00",
-     "belge_ozeti": "bd65d8e1fa52da770ade8c79a7aba18e72f6d3c705a52c2dffb787680cd1e098",
+     "detay_guncelleme": "2026-10-14T11:43:47+03:00",
+     "belge_ozeti": "975abf88000b60a453668f03b318810a25d18565feff974e95daf0015f9b7072",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1255,56 +1350,11 @@
       }
      ],
      "basvuru_notu": "İSTENİLEN BELGELER - BAŞVURU ŞEKLİ - YERİ – TARİHİ Adaylar, başvurularını 19.10.2026 (00:00) - 02.11.2026 (23:59) tarihleri arasında e-Devlet aracılığıyla Kariyer Kapısı (https://kariyerkapisi.gov.tr/isealim) üzerinden giriş yaparak elektronik ortamda yapacaktır.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/bd65d8e1fa52da770ade8c79a7aba18e72f6d3c705a52c2dffb787680cd1e098.pdf",
-     "belge_sha256": "bd65d8e1fa52da770ade8c79a7aba18e72f6d3c705a52c2dffb787680cd1e098",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/975abf88000b60a453668f03b318810a25d18565feff974e95daf0015f9b7072.pdf",
+     "belge_sha256": "975abf88000b60a453668f03b318810a25d18565feff974e95daf0015f9b7072",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "puan_turleri": [
-      "P3"
-     ],
-     "belge_ogrenim": [
-      "lisans"
-     ]
-    },
-    {
-     "id": "sbb-dd6cb2fdc71babe726d5b4fa",
-     "baslik": "TÜRK PATENT VE MARKA KURUMU - SÖZLEŞMELİ BİLİŞİM PERSONELİ SINAV ALIM İLANI",
-     "kurum": "TÜRK PATENT VE MARKA KURUMU",
-     "kadro": "SÖZLEŞMELİ BİLİŞİM PERSONELİ SINAV ALIM İLANI",
-     "ilan_turu": "Bilişim Personeli",
-     "son_tarih": "2026-10-22",
-     "kaynak": "SBB Kamu İlan",
-     "kaynak_turu": "sbb",
-     "donem": "( 7 Ekim - 22 Ekim)",
-     "baslangic_zaman": "2026-10-07T00:00:00+03:00",
-     "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:38:17+03:00",
-     "belge_ozeti": "1df91040c8d63e24142c20adeaa67cfdc853e56b93ea9939e694e69a3b363bb2",
-     "kaynaklar": [
-      {
-       "ad": "SBB Kamu İlan",
-       "link": "https://kamuilan.sbb.gov.tr/"
-      }
-     ],
-     "ozet": "SÖZLEŞMELİ BİLİŞİM PERSONELİ SINAV ALIM İLANI. Son başvuru: 22.10.2026. a) Adaylar, 07.10.2026 tarihinde başlayıp 22.10.2026 tarihinde saat 23.59.59’da sona erecek başvuru süresi içinde, e-Devlet Kapısı üzerinden “Türk Patent ve Marka Kurumu–Kariyer Kapısı Kamu İşe Alım” hizmetine veya https://kariyerkapisi.gov.tr/isealim adresine giriş yaparak elektronik ortamda başvuracaktır. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
-     "sartlar": [
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "b) Fakültelerin dört yıllık bilgisayar mühendisliği, yazılım mühendisliği, elektrik mühendisliği, elektronik mühendisliği, elektrik ve elektronik mühendisliği bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurt dışındaki yükseköğretim kurumlarından mezun olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "c) Yazılım, yazılım tasarımı ve geliştirilmesi ile bu sürecin yönetimi alanında veya büyük ölçekli ağ sistemlerinin kurulumu ve yönetimi alanında en az 5 (beş) yıllık mesleki tecrübeye sahip olmak. Mesleki tecrübenin belirlenmesinde; bilişim personeli olarak 657 sayılı Kanuna tabi kadrolu veya aynı Kanunun 4 üncü maddesinin (B) bendi ya da 399 sayılı Kanun Hükmünde Kararnameye tabi sözleşmeli statüdeki hizmetler ile özel kesimde sosyal güvenlik kurumlarına prim ödenmek sureti yle işçi statüsünde bilişim personeli olarak geçtiği belgelenen hizmet süreleri dikkate alınır. Mesleki tecrübe sürelerinin hesabında lisans mezuniyeti sonrasındaki hizmetler esas alınır."
-      }
-     ],
-     "basvuru_notu": "Şahsen, posta yolu yla veya diğer yöntemlerle yapılan başvurular kabul edilmeyecektir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/1df91040c8d63e24142c20adeaa67cfdc853e56b93ea9939e694e69a3b363bb2.pdf",
-     "belge_sha256": "1df91040c8d63e24142c20adeaa67cfdc853e56b93ea9939e694e69a3b363bb2",
-     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 6,
-     "puan_turleri": [
-      "P1",
-      "P2",
       "P3"
      ],
      "belge_ogrenim": [
@@ -1323,8 +1373,8 @@
      "donem": "( 7 Ekim - 16 Ekim)",
      "baslangic_zaman": "2026-10-07T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:38:24+03:00",
-     "belge_ozeti": "f6b6dbcfd4fa4f129211930e4690dd2cdbe3c2b138c321903fb41ff8deeb7125",
+     "detay_guncelleme": "2026-10-14T11:43:51+03:00",
+     "belge_ozeti": "b680183bccde51ff4c15b4434e540023ff4f7757299d887636279ab193ab62bd",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1340,11 +1390,56 @@
       }
      ],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/f6b6dbcfd4fa4f129211930e4690dd2cdbe3c2b138c321903fb41ff8deeb7125.pdf",
-     "belge_sha256": "f6b6dbcfd4fa4f129211930e4690dd2cdbe3c2b138c321903fb41ff8deeb7125",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/b680183bccde51ff4c15b4434e540023ff4f7757299d887636279ab193ab62bd.pdf",
+     "belge_sha256": "b680183bccde51ff4c15b4434e540023ff4f7757299d887636279ab193ab62bd",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "duyuru_cumlesi": "Atatürk Üniversitesi Rektörlüğünden: DÜZELTME İLANI (Araştırma Görevlisi ve Öğretim Görevlisi Alım İlanına Ait) 02.10.2026 tarihli ve 33388 sayılı R esmî Gazete’de aslına uygun olarak yayımlanan Üniversitemiz birimine alınacak akademik kadroya ait ilanımızda , Kâzım Karabekir Eğitim Fakültesi Matematik Eğitimi Anabilim Dalına ait kadromuz aşağıdaki şekilde düzeltilmiştir."
+    },
+    {
+     "id": "sbb-dd6cb2fdc71babe726d5b4fa",
+     "baslik": "TÜRK PATENT VE MARKA KURUMU - SÖZLEŞMELİ BİLİŞİM PERSONELİ SINAV ALIM İLANI",
+     "kurum": "TÜRK PATENT VE MARKA KURUMU",
+     "kadro": "SÖZLEŞMELİ BİLİŞİM PERSONELİ SINAV ALIM İLANI",
+     "ilan_turu": "Bilişim Personeli",
+     "son_tarih": "2026-10-22",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 7 Ekim - 22 Ekim)",
+     "baslangic_zaman": "2026-10-07T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-10-14T11:43:52+03:00",
+     "belge_ozeti": "6f3905dfff2aa1d5e2d393fe8b40bab0d548f1f8b4089c6efc39fbbc937769b8",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "SÖZLEŞMELİ BİLİŞİM PERSONELİ SINAV ALIM İLANI. Son başvuru: 22.10.2026. a) Adaylar, 07.10.2026 tarihinde başlayıp 22.10.2026 tarihinde saat 23.59.59’da sona erecek başvuru süresi içinde, e-Devlet Kapısı üzerinden “Türk Patent ve Marka Kurumu–Kariyer Kapısı Kamu İşe Alım” hizmetine veya https://kariyerkapisi.gov.tr/isealim adresine giriş yaparak elektronik ortamda başvuracaktır. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "b) Fakültelerin dört yıllık bilgisayar mühendisliği, yazılım mühendisliği, elektrik mühendisliği, elektronik mühendisliği, elektrik ve elektronik mühendisliği bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurt dışındaki yükseköğretim kurumlarından mezun olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "c) Yazılım, yazılım tasarımı ve geliştirilmesi ile bu sürecin yönetimi alanında veya büyük ölçekli ağ sistemlerinin kurulumu ve yönetimi alanında en az 5 (beş) yıllık mesleki tecrübeye sahip olmak. Mesleki tecrübenin belirlenmesinde; bilişim personeli olarak 657 sayılı Kanuna tabi kadrolu veya aynı Kanunun 4 üncü maddesinin (B) bendi ya da 399 sayılı Kanun Hükmünde Kararnameye tabi sözleşmeli statüdeki hizmetler ile özel kesimde sosyal güvenlik kurumlarına prim ödenmek sureti yle işçi statüsünde bilişim personeli olarak geçtiği belgelenen hizmet süreleri dikkate alınır. Mesleki tecrübe sürelerinin hesabında lisans mezuniyeti sonrasındaki hizmetler esas alınır."
+      }
+     ],
+     "basvuru_notu": "Şahsen, posta yolu yla veya diğer yöntemlerle yapılan başvurular kabul edilmeyecektir.",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/6f3905dfff2aa1d5e2d393fe8b40bab0d548f1f8b4089c6efc39fbbc937769b8.pdf",
+     "belge_sha256": "6f3905dfff2aa1d5e2d393fe8b40bab0d548f1f8b4089c6efc39fbbc937769b8",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "puan_turleri": [
+      "P1",
+      "P2",
+      "P3"
+     ],
+     "belge_ogrenim": [
+      "lisans"
+     ]
     },
     {
      "id": "sbb-23194c78117910f49a03f95b",
@@ -1358,8 +1453,8 @@
      "donem": "( 7 Ekim - 21 Ekim)",
      "baslangic_zaman": "2026-10-07T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:38:22+03:00",
-     "belge_ozeti": "de5ed22aca7eb39165607913a57801af3c0899741e511beba813f2b1b60b852d",
+     "detay_guncelleme": "2026-10-14T11:43:54+03:00",
+     "belge_ozeti": "1a88bbeb23829100d92a83f1d202b6a623577306b54d37e126d9c6ac7087204a",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1369,61 +1464,12 @@
      "ozet": "2 ÖĞRETİM ELEMANI alımı. Son başvuru: 21.10.2026. ÖĞRETİM GÖREVLİSİ SÜREÇ TAKVİMİ Duyuru Başlama Tarihi : 07.10.2026 Son Başvuru Tarihi : 21.10.2026 Ön Değerlendirme Tarihi : 27.10.2026 Sözlü Sınav Giriş Tarihi : 02.11.2026 Yazılı Sınav Giriş Tarihi : 05.11.2026 (02.11.2026 tarihinde ya pılacak sözlü sınavdan en az 60 puan ve üzeri alan adaylar katılabilecektir.) Sonuç Duyuru Tarihi : 09.11.2026 Başvuru Tipi : Şahsen / Posta Sonuçların Açıklanacağı Web Adresi : www.bogazici.edu.tr BAŞVURULAR; Yabancı Diller Yüksekokulu Müdürlüğü’ne yapılacaktır. Özel şartlar aşağıdaki ilan belgesinde yer alıyor.",
      "sartlar": [],
      "basvuru_notu": "Başvuru için ''Akademik Görev için Müracaat Formu'' https://bog azici.edu.tr/tr/pages/formlar/343 adresinden indirilip eksiksiz olarak doldurularak ilgili birimlere şahsen veya posta ile yapılmalıdır.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/de5ed22aca7eb39165607913a57801af3c0899741e511beba813f2b1b60b852d.pdf",
-     "belge_sha256": "de5ed22aca7eb39165607913a57801af3c0899741e511beba813f2b1b60b852d",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/1a88bbeb23829100d92a83f1d202b6a623577306b54d37e126d9c6ac7087204a.pdf",
+     "belge_sha256": "1a88bbeb23829100d92a83f1d202b6a623577306b54d37e126d9c6ac7087204a",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "belge_ogrenim": [
       "lisans"
-     ]
-    },
-    {
-     "id": "sbb-d3b90c876e6dae4eea84e465",
-     "baslik": "SAKARYA UYGULAMALI BİLİMLER ÜNİVERSİTESİ - 4 ÖĞRETİM ELEMANI ALACAK",
-     "kurum": "SAKARYA UYGULAMALI BİLİMLER ÜNİVERSİTESİ",
-     "kadro": "4 ÖĞRETİM ELEMANI ALACAK",
-     "ilan_turu": "Öğretim Elemanı",
-     "son_tarih": "2026-10-21",
-     "kaynak": "SBB Kamu İlan",
-     "kaynak_turu": "sbb",
-     "donem": "( 7 Ekim - 21 Ekim)",
-     "baslangic_zaman": "2026-10-07T00:00:00+03:00",
-     "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:38:52+03:00",
-     "belge_ozeti": "1d1db2b59f0a0ba2589161f3321a623dca5b1dacd85e01e526f7979c7fd7758b",
-     "kaynaklar": [
-      {
-       "ad": "SBB Kamu İlan",
-       "link": "https://kamuilan.sbb.gov.tr/"
-      }
-     ],
-     "ozet": "4 ÖĞRETİM ELEMANI alımı. Son başvuru: 21.10.2026. Ünvan Dil Özel Şartlar Başvuru Adresi Denizcilik Meslek Yüksekokulu Gemi ve Gemi Makineleri Mühendisliği,İnşaatı Gemi ve Deniz Motorlu Araçlar ve Ulaştırma Teknolojileri Bölümü 1 2 Öğr. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
-     "sartlar": [
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "2- ALES'ten en az 70, Yükseköğretim Kurulu tarafından kabul edilen merkezi yabancı dil sınavından en az 50 puan veya kabul edilen bir eşdeğerliğisınavdan bu puan muadili bir puan almış olmak gerekir. Merkezi sınav muafiyetinden yararlanmayı talep edenlerin ön değerlendirme ve nihai değerlendirme aşamalarında ALES puanı 70 olarak kabul edilir."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "4- Öğretim görevlisi kadrosuna başvuracak adaylarda en az tezli yüksek lisans derecesine sahip olmak veya lisans ve yüksek lisans derecesini birlikte veren programlardan mezun olmak şartı aranır."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "2- Meslek yüksekokullarının, bu yönetmeliğin 6. maddesinin 4. fıkrası kapsamındaki öğretim görevlisi haricindeki öğretimkadroları elemanı kadrolarına yapılacak başvurularda yabancı dil şartı aranmaz."
-      },
-      {
-       "kadro": "Sınav puanı koşulu · kadroya göre muafiyetler için belgeyi inceleyin",
-       "metin": "2- ALES'ten en az 70, Yükseköğretim Kurulu tarafından kabul edilen merkezi yabancı dil sınavından en az 50 puan veya kabul edilen bir eşdeğerliğisınavdan bu puan muadili bir puan almış olmak gerekir."
-      }
-     ],
-     "basvuru_notu": "Başvurular şahsen veya posta ile yapılacak olup süresi içinde yapılmayan ya da eksik belgeli yapılan başvurular değerlendirmeye alınmayacaktır (e-posta ile başvurular kabul edilmeyecektir).",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/1d1db2b59f0a0ba2589161f3321a623dca5b1dacd85e01e526f7979c7fd7758b.pdf",
-     "belge_sha256": "1d1db2b59f0a0ba2589161f3321a623dca5b1dacd85e01e526f7979c7fd7758b",
-     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 6,
-     "belge_ogrenim": [
-      "lisans",
-      "onlisans"
      ]
     },
     {
@@ -1438,8 +1484,8 @@
      "donem": "( 7 Ekim - 21 Ekim)",
      "baslangic_zaman": "2026-10-07T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:38:23+03:00",
-     "belge_ozeti": "b2d94f71e087c8046c5f46fd30442b770b22212fd91a2b783d49d1040fb5ef73",
+     "detay_guncelleme": "2026-10-14T11:43:55+03:00",
+     "belge_ozeti": "17fd8fb25ce42eda0f576ac67636d981a1d98f125f7222a57d604b02a73ac810",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1454,8 +1500,8 @@
       }
      ],
      "basvuru_notu": "2) Sistem üzerinden tamamlanmayan taslak durumundaki başvurular, ilanda belirtilen şartları taşımayan, eksik bilgi/belgesi olan adayların başvuruları kabul edilmeyecektir. (Online olarak yapılan başvurular için istenen tüm bilgi ve belgeler gerektiğinde adaylardan fiziksel olarak istenebilecektir.)",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/b2d94f71e087c8046c5f46fd30442b770b22212fd91a2b783d49d1040fb5ef73.pdf",
-     "belge_sha256": "b2d94f71e087c8046c5f46fd30442b770b22212fd91a2b783d49d1040fb5ef73",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/17fd8fb25ce42eda0f576ac67636d981a1d98f125f7222a57d604b02a73ac810.pdf",
+     "belge_sha256": "17fd8fb25ce42eda0f576ac67636d981a1d98f125f7222a57d604b02a73ac810",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
     },
@@ -1471,8 +1517,8 @@
      "donem": "( 7 Ekim - 21 Ekim)",
      "baslangic_zaman": "2026-10-07T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:38:19+03:00",
-     "belge_ozeti": "941bd55be64f1123adbaf2d47b201bb6174e2e1cf126a9685a2a82d130eceb6f",
+     "detay_guncelleme": "2026-10-14T11:43:58+03:00",
+     "belge_ozeti": "a9b4cbb6b7727d57d252bf239f134b48accd9156b2c755d9340eaeb58280492e",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1507,12 +1553,61 @@
       }
      ],
      "basvuru_notu": "USB içerikleri: -Başvuru dilekçesi (imzalı), -Özgeçmiş ve yayın listesi, -Yabancı Dil Belgesi, -Diplomalar, -Doçentlik Belgesi, -Akademik Yükseltilme ve Atamada Değerlendirmeye Alınan Faaliyetler ve Puan Hesaplaması Formu, -Tüm Bilimsel yayın, çalışma ve faaliyetler. * Bütün kadrolara başvuracak adayların Devlet hizmetine girmede aranan niteliklere sahip olmaları gerekmektedir. * Bütün kadrolara başvuru süresi bu ilanın Resmi Gazete’de yayım tarihinden itibaren 15 gündür. * E-devlet üzerinden alınabilecek kare kodlu belgeler kabul edilecektir. * Adaylar ilan edilen kadrolardan ancak birine başvurabilirler.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/941bd55be64f1123adbaf2d47b201bb6174e2e1cf126a9685a2a82d130eceb6f.pdf",
-     "belge_sha256": "941bd55be64f1123adbaf2d47b201bb6174e2e1cf126a9685a2a82d130eceb6f",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/a9b4cbb6b7727d57d252bf239f134b48accd9156b2c755d9340eaeb58280492e.pdf",
+     "belge_sha256": "a9b4cbb6b7727d57d252bf239f134b48accd9156b2c755d9340eaeb58280492e",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "belge_ogrenim": [
       "lisans"
+     ]
+    },
+    {
+     "id": "sbb-d3b90c876e6dae4eea84e465",
+     "baslik": "SAKARYA UYGULAMALI BİLİMLER ÜNİVERSİTESİ - 4 ÖĞRETİM ELEMANI ALACAK",
+     "kurum": "SAKARYA UYGULAMALI BİLİMLER ÜNİVERSİTESİ",
+     "kadro": "4 ÖĞRETİM ELEMANI ALACAK",
+     "ilan_turu": "Öğretim Elemanı",
+     "son_tarih": "2026-10-21",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 7 Ekim - 21 Ekim)",
+     "baslangic_zaman": "2026-10-07T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-10-14T11:44:01+03:00",
+     "belge_ozeti": "12d87f0ab0d073eeef188dde27da349de67850fa4b25bb9ada6fbfba60708cbf",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "4 ÖĞRETİM ELEMANI alımı. Son başvuru: 21.10.2026. Ünvan Dil Özel Şartlar Başvuru Adresi Denizcilik Meslek Yüksekokulu Gemi ve Gemi Makineleri Mühendisliği,İnşaatı Gemi ve Deniz Motorlu Araçlar ve Ulaştırma Teknolojileri Bölümü 1 2 Öğr. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "2- ALES'ten en az 70, Yükseköğretim Kurulu tarafından kabul edilen merkezi yabancı dil sınavından en az 50 puan veya kabul edilen bir eşdeğerliğisınavdan bu puan muadili bir puan almış olmak gerekir. Merkezi sınav muafiyetinden yararlanmayı talep edenlerin ön değerlendirme ve nihai değerlendirme aşamalarında ALES puanı 70 olarak kabul edilir."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "4- Öğretim görevlisi kadrosuna başvuracak adaylarda en az tezli yüksek lisans derecesine sahip olmak veya lisans ve yüksek lisans derecesini birlikte veren programlardan mezun olmak şartı aranır."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "2- Meslek yüksekokullarının, bu yönetmeliğin 6. maddesinin 4. fıkrası kapsamındaki öğretim görevlisi haricindeki öğretimkadroları elemanı kadrolarına yapılacak başvurularda yabancı dil şartı aranmaz."
+      },
+      {
+       "kadro": "Sınav puanı koşulu · kadroya göre muafiyetler için belgeyi inceleyin",
+       "metin": "2- ALES'ten en az 70, Yükseköğretim Kurulu tarafından kabul edilen merkezi yabancı dil sınavından en az 50 puan veya kabul edilen bir eşdeğerliğisınavdan bu puan muadili bir puan almış olmak gerekir."
+      }
+     ],
+     "basvuru_notu": "Başvurular şahsen veya posta ile yapılacak olup süresi içinde yapılmayan ya da eksik belgeli yapılan başvurular değerlendirmeye alınmayacaktır (e-posta ile başvurular kabul edilmeyecektir).",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/12d87f0ab0d073eeef188dde27da349de67850fa4b25bb9ada6fbfba60708cbf.pdf",
+     "belge_sha256": "12d87f0ab0d073eeef188dde27da349de67850fa4b25bb9ada6fbfba60708cbf",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "belge_ogrenim": [
+      "lisans",
+      "onlisans"
      ]
     },
     {
@@ -1527,8 +1622,8 @@
      "donem": "( 7 Ekim - 21 Ekim)",
      "baslangic_zaman": "2026-10-07T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:56:15+03:00",
-     "belge_ozeti": "00f72ac6805b4748b0be85ebf034c20c0bd68394fe9913d86a6f9566cd403e56",
+     "detay_guncelleme": "2026-10-14T11:44:02+03:00",
+     "belge_ozeti": "181bfcdadd842cc465f7d7328813d375723728f310bb08ef629f2c41ef9e6e18",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1538,66 +1633,10 @@
      "ozet": "11 ÖĞRETİM ÜYESİ alımı. Son başvuru: 21.10.2026. Başvurular şahsen veya posta ile yapılacak olup süresi içinde yapılmayan ya da eksik belgeli yapılan başvurular değerlendirmeye alınmayacaktır (e-posta ile başvurular kabul edilmeyecektir). birimin İlgiliyazı işlerine teslim edilmeyen, farklı bir birime veya yere ulaşan başvuru evrakları değerlendirmeye alınmayacaktır. Özel şartlar aşağıdaki ilan belgesinde yer alıyor.",
      "sartlar": [],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/00f72ac6805b4748b0be85ebf034c20c0bd68394fe9913d86a6f9566cd403e56.pdf",
-     "belge_sha256": "00f72ac6805b4748b0be85ebf034c20c0bd68394fe9913d86a6f9566cd403e56",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/181bfcdadd842cc465f7d7328813d375723728f310bb08ef629f2c41ef9e6e18.pdf",
+     "belge_sha256": "181bfcdadd842cc465f7d7328813d375723728f310bb08ef629f2c41ef9e6e18",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
-    },
-    {
-     "id": "sbb-0b9c96d4ed82c2f3f352c732",
-     "baslik": "AKDENİZ ÜNİVERSİTESİ - 7 ÖĞRETİM ELEMANI ALACAK",
-     "kurum": "AKDENİZ ÜNİVERSİTESİ",
-     "kadro": "7 ÖĞRETİM ELEMANI ALACAK",
-     "ilan_turu": "Öğretim Elemanı",
-     "son_tarih": "2026-10-20",
-     "kaynak": "SBB Kamu İlan",
-     "kaynak_turu": "sbb",
-     "donem": "( 6 Ekim - 20 Ekim)",
-     "baslangic_zaman": "2026-10-06T00:00:00+03:00",
-     "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:39:00+03:00",
-     "belge_ozeti": "9240189783542a7265e2f81d690837f739e66d26f40d64ec2e607c3db4958938",
-     "kaynaklar": [
-      {
-       "ad": "SBB Kamu İlan",
-       "link": "https://kamuilan.sbb.gov.tr/"
-      }
-     ],
-     "ozet": "7 ÖĞRETİM ELEMANI alımı. Son başvuru: 20.10.2026. Başvuru Adresi Başvurular İlgili Birime Yapılacaktır. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
-     "sartlar": [
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "ÇOCUK SAĞLIĞI VE Neonatoloji bilim dalında Doçentlik unvanı almış 5 TIP FAKÜLTESİ DAHİLİ TIP BİLİMLERİ HASTALIKLARI DOÇENT 1 1 olmak. Prematüre retinopatisi ve diyabetik anne bebekleri alanında bilimsel çalışmalar yapmış olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "ÖZEL ŞARTLAR Öğretim görevlisi kadrosuna başvuracak adaylarda en az tezli yüksek lisans derecesine sahip olmak veya lisans ve yüksek lisans derecesini birlikte veren programlardan mezun olmak şartı aranır."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "ANA BİLİM ALES YABANCI S.N. BİRİM BÖLÜM DALI/PROGRAM ÜNVAN DER. ADET PUAN PUAN DİL İLAN ŞARTLARI TÜRÜ PUANI Kadın Hastalıkları ve Doğum ÖĞRETİM Uzmanı olmak. Üremeye CERRAHİ TIP KADIN GÖREVLİSİ Yardımcı Tedavi Klinik 1 TIP FAKÜLTESİ HASTALIKLARI 1 1 SAYISAL 70 50 Uygulamaları Sertifikalı Eğitim BİLİMLERİ VE DOĞUM (UYGULAMALI Programını tamamlamış olmak. BİRİM) Üremeye Yardımcı Tedavi Merkezini yönetmek için gerekli sertifikaya sahip olmak. ÖĞRETİM İç Hastalıkları uzmanı olmak. 2 TIP FAKÜLTESİ DAHİLİ TIP İÇ GÖREVLİSİ 1 1 SAYISAL 70 50 Yoğun bakım yan dal uzmanı BİLİMLERİ HASTALIKLARI (UYGULAMALI olmak. BİRİM)"
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "2- ALES’ten en az 70 puan almış olmak gerekir."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "5- Meslek yüksekokulu haricindeki kadrolarda Yükseköğretim Kurulu tarafından kabul edilen merkezi yabancı dil sınavından en az 50 puan veya eşdeğerliği kabul edilen bir sınavdan bu puan muadili bir puan almış olmak gerekir."
-      },
-      {
-       "kadro": "Sınav puanı koşulu · kadroya göre muafiyetler için belgeyi inceleyin",
-       "metin": "2- ALES’ten en az 70 puan almış olmak gerekir."
-      }
-     ],
-     "basvuru_notu": "1- Başvurular ilanda belirtilen kadro birimine şahsen veya posta yoluyla yapılacaktır. Süresi içinde yapılmayan başvurular kabul edilmeyecektir. Posta yoluyla yapılacak başvuruların son başvuru tarihi mesai bitimine kadar başvuru yapılacak ilgili birimin Dekanlığına/Müdürlüğüne ulaşması gerekmektedir. Postadaki gecikmelerden Üniversitemiz sorumlu değildir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/9240189783542a7265e2f81d690837f739e66d26f40d64ec2e607c3db4958938.pdf",
-     "belge_sha256": "9240189783542a7265e2f81d690837f739e66d26f40d64ec2e607c3db4958938",
-     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 6,
-     "belge_ogrenim": [
-      "lisans"
-     ]
     },
     {
      "id": "sbb-0ba445a317e15b37e04d2973",
@@ -1611,8 +1650,8 @@
      "donem": "( 6 Ekim - 20 Ekim)",
      "baslangic_zaman": "2026-10-06T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:39:03+03:00",
-     "belge_ozeti": "8c72880c5d43746233ffccaa246739ecc6cde77f5eaed17e5079671ec86049ce",
+     "detay_guncelleme": "2026-10-14T11:44:04+03:00",
+     "belge_ozeti": "f201f403552c4fb4dd86f1faa0dba9d5cd75e7e81df407ee61d6a9c645f8b15c",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1647,8 +1686,8 @@
       }
      ],
      "basvuru_notu": "Başvuruların 06/10/2026 ilan tarihi itibarı ile 15 (on beş) gün içerisinde (20/10/2026 tarihi mesai bitimine kadar) şahsen veya postayla yapılması gerekmektedir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/8c72880c5d43746233ffccaa246739ecc6cde77f5eaed17e5079671ec86049ce.pdf",
-     "belge_sha256": "8c72880c5d43746233ffccaa246739ecc6cde77f5eaed17e5079671ec86049ce",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/f201f403552c4fb4dd86f1faa0dba9d5cd75e7e81df407ee61d6a9c645f8b15c.pdf",
+     "belge_sha256": "f201f403552c4fb4dd86f1faa0dba9d5cd75e7e81df407ee61d6a9c645f8b15c",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
     },
@@ -1664,8 +1703,8 @@
      "donem": "( 6 Ekim - 16 Ekim)",
      "baslangic_zaman": "2026-10-06T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:38:54+03:00",
-     "belge_ozeti": "06c649af55faacb766f8cb12b6098541ae7ae3516c519e560691181f1f4071a7",
+     "detay_guncelleme": "2026-10-14T11:44:06+03:00",
+     "belge_ozeti": "58c006a491380327d2b6dfd41a6178b314ab1645e1b5f20d84a33a3b1427d6b5",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1676,8 +1715,8 @@
      "ozet": "29.08.2026 tarihli ve 33355 sayılı Resmî Gazete’de yayımlanan ilk defa atanmak üzere sözleşmeli personel (Ziraat Mühendisi) alım ilanı iptal edilmiştir.",
      "sartlar": [],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/06c649af55faacb766f8cb12b6098541ae7ae3516c519e560691181f1f4071a7.pdf",
-     "belge_sha256": "06c649af55faacb766f8cb12b6098541ae7ae3516c519e560691181f1f4071a7",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/58c006a491380327d2b6dfd41a6178b314ab1645e1b5f20d84a33a3b1427d6b5.pdf",
+     "belge_sha256": "58c006a491380327d2b6dfd41a6178b314ab1645e1b5f20d84a33a3b1427d6b5",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "duyuru_cumlesi": "29.08.2026 tarihli ve 33355 sayılı Resmî Gazete’de yayımlanan ilk defa atanmak üzere sözleşmeli personel (Ziraat Mühendisi) alım ilanı iptal edilmiştir."
@@ -1694,8 +1733,8 @@
      "donem": "( 6 Ekim - 16 Ekim)",
      "baslangic_zaman": "2026-10-06T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:38:56+03:00",
-     "belge_ozeti": "bfb955674a1a88f97c844e2ad12de6c56d6c91d3547663e9f8164de2dd8cbbba",
+     "detay_guncelleme": "2026-10-14T11:44:06+03:00",
+     "belge_ozeti": "9b6f107875f113eeddd475e5b0054b6ad3d4c036849bdf06f8955e672d096bed",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1706,8 +1745,8 @@
      "ozet": "Rize Belediye Başkanlığından: İPTAL İLANI 29.08.2026 tarihli ve 33355 sayılı Resmî Gazete’de yayımlanan ilk defa atanmak üzere sözleşmeli personel (Jeoloji Mühendisi) alım ilanı iptal edilmiştir.",
      "sartlar": [],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/bfb955674a1a88f97c844e2ad12de6c56d6c91d3547663e9f8164de2dd8cbbba.pdf",
-     "belge_sha256": "bfb955674a1a88f97c844e2ad12de6c56d6c91d3547663e9f8164de2dd8cbbba",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/9b6f107875f113eeddd475e5b0054b6ad3d4c036849bdf06f8955e672d096bed.pdf",
+     "belge_sha256": "9b6f107875f113eeddd475e5b0054b6ad3d4c036849bdf06f8955e672d096bed",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "duyuru_cumlesi": "Rize Belediye Başkanlığından: İPTAL İLANI 29.08.2026 tarihli ve 33355 sayılı Resmî Gazete’de yayımlanan ilk defa atanmak üzere sözleşmeli personel (Jeoloji Mühendisi) alım ilanı iptal edilmiştir."
@@ -1724,8 +1763,8 @@
      "donem": "( 2 Kasım - 4 Kasım)",
      "baslangic_zaman": "2026-11-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:38:53+03:00",
-     "belge_ozeti": "7ede0497b9dbe56c3b5a139da270e0da9d6ecfc4747f46820c0e1724ad35137f",
+     "detay_guncelleme": "2026-10-14T11:44:07+03:00",
+     "belge_ozeti": "ae64a616624d0e8a3c41823b58189a4a8ce4c5026bf446e849001961d1841249",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1736,11 +1775,67 @@
      "ozet": "Muş İli Malazgirt Belediye Başkanlığından: DÜZELTME İLANI 20/09/2026 tarihli ve 33376 sayılı Resmî Gazete’de yayımlanan İ lk Defa Atanmak Üzere Memur Alım İlanında yer alan; BAŞVURU YERİ, TARİHİ, ŞEKLİ VE SÜRESİ: 4 üncü maddesinin, a) fıkrası “Elektronik ortamda başvurular, 02/11/2026-04/11/202 6 tarihleri arasında istenilen belgeler eklenmek suretiyle Belediyemizin malazgirt-b elediyesi@hotmail.com mail adresine yapılacaktır.” şeklinde düzeltilmiştir.",
      "sartlar": [],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/7ede0497b9dbe56c3b5a139da270e0da9d6ecfc4747f46820c0e1724ad35137f.pdf",
-     "belge_sha256": "7ede0497b9dbe56c3b5a139da270e0da9d6ecfc4747f46820c0e1724ad35137f",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/ae64a616624d0e8a3c41823b58189a4a8ce4c5026bf446e849001961d1841249.pdf",
+     "belge_sha256": "ae64a616624d0e8a3c41823b58189a4a8ce4c5026bf446e849001961d1841249",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "duyuru_cumlesi": "Muş İli Malazgirt Belediye Başkanlığından: DÜZELTME İLANI 20/09/2026 tarihli ve 33376 sayılı Resmî Gazete’de yayımlanan İ lk Defa Atanmak Üzere Memur Alım İlanında yer alan; BAŞVURU YERİ, TARİHİ, ŞEKLİ VE SÜRESİ: 4 üncü maddesinin, a) fıkrası “Elektronik ortamda başvurular, 02/11/2026-04/11/202 6 tarihleri arasında istenilen belgeler eklenmek suretiyle Belediyemizin malazgirt-b elediyesi@hotmail.com mail adresine yapılacaktır.” şeklinde düzeltilmiştir."
+    },
+    {
+     "id": "sbb-0b9c96d4ed82c2f3f352c732",
+     "baslik": "AKDENİZ ÜNİVERSİTESİ - 7 ÖĞRETİM ELEMANI ALACAK",
+     "kurum": "AKDENİZ ÜNİVERSİTESİ",
+     "kadro": "7 ÖĞRETİM ELEMANI ALACAK",
+     "ilan_turu": "Öğretim Elemanı",
+     "son_tarih": "2026-10-20",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 6 Ekim - 20 Ekim)",
+     "baslangic_zaman": "2026-10-06T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-10-14T11:44:08+03:00",
+     "belge_ozeti": "5cad6c58160d90746202239b0642b6cd7a2e576f98f14709e661697b875e7097",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "7 ÖĞRETİM ELEMANI alımı. Son başvuru: 20.10.2026. Başvuru Adresi Başvurular İlgili Birime Yapılacaktır. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "ÇOCUK SAĞLIĞI VE Neonatoloji bilim dalında Doçentlik unvanı almış 5 TIP FAKÜLTESİ DAHİLİ TIP BİLİMLERİ HASTALIKLARI DOÇENT 1 1 olmak. Prematüre retinopatisi ve diyabetik anne bebekleri alanında bilimsel çalışmalar yapmış olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "ÖZEL ŞARTLAR Öğretim görevlisi kadrosuna başvuracak adaylarda en az tezli yüksek lisans derecesine sahip olmak veya lisans ve yüksek lisans derecesini birlikte veren programlardan mezun olmak şartı aranır."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "ANA BİLİM ALES YABANCI S.N. BİRİM BÖLÜM DALI/PROGRAM ÜNVAN DER. ADET PUAN PUAN DİL İLAN ŞARTLARI TÜRÜ PUANI Kadın Hastalıkları ve Doğum ÖĞRETİM Uzmanı olmak. Üremeye CERRAHİ TIP KADIN GÖREVLİSİ Yardımcı Tedavi Klinik 1 TIP FAKÜLTESİ HASTALIKLARI 1 1 SAYISAL 70 50 Uygulamaları Sertifikalı Eğitim BİLİMLERİ VE DOĞUM (UYGULAMALI Programını tamamlamış olmak. BİRİM) Üremeye Yardımcı Tedavi Merkezini yönetmek için gerekli sertifikaya sahip olmak. ÖĞRETİM İç Hastalıkları uzmanı olmak. 2 TIP FAKÜLTESİ DAHİLİ TIP İÇ GÖREVLİSİ 1 1 SAYISAL 70 50 Yoğun bakım yan dal uzmanı BİLİMLERİ HASTALIKLARI (UYGULAMALI olmak. BİRİM)"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "2- ALES’ten en az 70 puan almış olmak gerekir."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "5- Meslek yüksekokulu haricindeki kadrolarda Yükseköğretim Kurulu tarafından kabul edilen merkezi yabancı dil sınavından en az 50 puan veya eşdeğerliği kabul edilen bir sınavdan bu puan muadili bir puan almış olmak gerekir."
+      },
+      {
+       "kadro": "Sınav puanı koşulu · kadroya göre muafiyetler için belgeyi inceleyin",
+       "metin": "2- ALES’ten en az 70 puan almış olmak gerekir."
+      }
+     ],
+     "basvuru_notu": "1- Başvurular ilanda belirtilen kadro birimine şahsen veya posta yoluyla yapılacaktır. Süresi içinde yapılmayan başvurular kabul edilmeyecektir. Posta yoluyla yapılacak başvuruların son başvuru tarihi mesai bitimine kadar başvuru yapılacak ilgili birimin Dekanlığına/Müdürlüğüne ulaşması gerekmektedir. Postadaki gecikmelerden Üniversitemiz sorumlu değildir.",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/5cad6c58160d90746202239b0642b6cd7a2e576f98f14709e661697b875e7097.pdf",
+     "belge_sha256": "5cad6c58160d90746202239b0642b6cd7a2e576f98f14709e661697b875e7097",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "belge_ogrenim": [
+      "lisans"
+     ]
     },
     {
      "id": "sbb-9ed3758a19cd1983ad11eee0",
@@ -1754,8 +1849,8 @@
      "donem": "( 19 Ekim - 23 Ekim)",
      "baslangic_zaman": "2026-10-19T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:39:05+03:00",
-     "belge_ozeti": "5b7bfadd635d239863ed59a76685445b8d13dc2926e26c4226359e5a72b0e29f",
+     "detay_guncelleme": "2026-10-14T11:44:11+03:00",
+     "belge_ozeti": "cd175bfca55a069c6b6f18e730fceb3dcd32caad2411b2e86637cfd1733d9162",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1774,8 +1869,8 @@
       }
      ],
      "basvuru_notu": "a) Şahsen veya posta yoluyla yapılan başvurular kabul edilmeyecektir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/5b7bfadd635d239863ed59a76685445b8d13dc2926e26c4226359e5a72b0e29f.pdf",
-     "belge_sha256": "5b7bfadd635d239863ed59a76685445b8d13dc2926e26c4226359e5a72b0e29f",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/cd175bfca55a069c6b6f18e730fceb3dcd32caad2411b2e86637cfd1733d9162.pdf",
+     "belge_sha256": "cd175bfca55a069c6b6f18e730fceb3dcd32caad2411b2e86637cfd1733d9162",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "puan_turleri": [
@@ -1783,61 +1878,41 @@
      ]
     },
     {
-     "id": "sbb-8a0689d21d29fa83a57eecf5",
-     "baslik": "KIRŞEHİR AHİ EVRAN ÜNİVERSİTESİ - 15 ÖĞRETİM ELEMANI ALACAK",
-     "kurum": "KIRŞEHİR AHİ EVRAN ÜNİVERSİTESİ",
-     "kadro": "15 ÖĞRETİM ELEMANI ALACAK",
-     "ilan_turu": "Öğretim Elemanı",
-     "son_tarih": "2026-10-19",
+     "id": "sbb-46734a52a4045202658b0bf7",
+     "baslik": "ADALET BAKANLIĞI - 150 İCRA MÜDÜR VE İCRA MÜDÜR YARDIMCISI ALACAK.",
+     "kurum": "ADALET BAKANLIĞI",
+     "kadro": "150 İCRA MÜDÜR VE İCRA MÜDÜR YARDIMCISI ALACAK.",
+     "ilan_turu": "Kamu Personeli",
+     "son_tarih": "2026-10-26",
      "kaynak": "SBB Kamu İlan",
      "kaynak_turu": "sbb",
-     "donem": "( 5 Ekim - 19 Ekim)",
-     "baslangic_zaman": "2026-10-05T00:00:00+03:00",
+     "donem": "( 20 Ekim - 26 Ekim)",
+     "baslangic_zaman": "2026-10-20T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:39:21+03:00",
-     "belge_ozeti": "98f86487e005937d024e5e3ecdd69e7e342387dd6838299c2b894e3ee765cfbf",
+     "detay_guncelleme": "2026-10-14T11:44:16+03:00",
+     "belge_ozeti": "a8e03f6d1afc13b5ab343267fc3460322b75e2e780b866df82a9d9c7a82cf474",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
        "link": "https://kamuilan.sbb.gov.tr/"
       }
      ],
-     "ozet": "15 ÖĞRETİM ELEMANI alımı. Son başvuru: 19.10.2026. İLAN TARİHİ 05.10.2026 SON BAŞVURU TARİHİ 19.10.2026 ÖNDEĞERLENDİRME SONUÇ AÇIKLAMATARİHİ 26.10.2026 SINAV GİRİŞ TARİHİ 03.11.2026 SONUÇ AÇIKLAMA TARİHİ 10.11.2026 SONUÇ AÇIKLANACIĞI https://basvuru.ahievran.edu.tr/ ve https://www.ahievran.edu.tr/ İNTERNET ADRESİ BAŞVURU YERİ https://basvuru.ahievran.edu.tr/ BAŞVURU ŞEKLİ Online Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "ozet": "150 İCRA MÜDÜR VE İCRA MÜDÜR YARDIMCISI alımı. Son başvuru: 26.10.2026. 13- ÖSYM Aday İşlemleri Sistemine erişim için şifresini unutan adaylar, Sınav Koordinatörleri/yetkili Başvuru Merkezlerine sınava giriş için gereken kimlik belgesinin aslı ile şahsen başvurarak ücreti karşılığında yeni şifrelerini edinebileceklerdir. Şifrenin edinilmesi ile ilgili ayrıntılı bilgi ÖSYM’nin internet sayfasında bulunmaktadır. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
      "sartlar": [
       {
-       "kadro": "İlan no 9001 · kadro ve özel şartlar",
-       "metin": "Rektörlük Uluslararası İlişkiler veya Siyaset Bilimi ve (Teknoloji Öğretim Uluslararası İlişkiler tezli yüksek lisans Rektörlük Transfer Ofisi Görevlisi yapmış olup; E-Devlet onaylı ISO 8 Uygulama ve (Uygulamalı 1 3 70 50 9001:2015 Kalite Yönetim Sistemi ve Araştırma Alanlar) Avrupa Birliği Proje Hazırlama ve Merkezi ) Yönetimi sertifikalarına sahip olmak."
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "b) Yazılı sınavın yapıldığı yılın ocak ayının birinci günü itibariyle otuz beş yaşını doldurmamış olmak, (Doğum tarihi: 01/01/1991 ve daha sonra olanlar)"
       },
       {
        "kadro": "Belgede belirtilen koşullar",
-       "metin": "D-MUAFİYET 1. Doktora veya tıpta, diş hekimliğinde, eczacılıkta ve veteriner hekimlikte uzmanlık ya da sanatta yeterlik eğitimini tamamlamış olanlarda, meslek yüksekokullarının Yükseköğretim Kurulu tarafından belirlenen uzmanlık alanlarına atanacak olanlarda, yükseköğretim kurumlarında öğretim elemanı kadrolarında çalışmış veya çalışmakta olanlarda merkezi sınav şartı aranmaz. 2. Meslek yüksekokullarının, bu Yönetmeliğin 6 ncı maddesinin dördüncü fıkrası kapsamındaki öğretim görevlisi kadroları haricindeki öğretim elemanı kadrolarına yapılacak başvurularda yabancı dil şartı aranmaz."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "Öğretim İlahiyat Fakültesi lisans mezunu olup; Tezli İlahiyat Temel İslam Arap Dili ve Görevlisi yüksek lisansını Temel İslam Bilimleri 1 Fakültesi Bilimleri Belagatı (Ders 1 3 70 85 alanında yapmış olmak. (Arapça derslerini Verecek) vermek üzere yabancı dil şartını Arapçadan sağlamış olmak)"
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "Öğretim İnşaat Mühendisliği alanında lisans ve tezli Kaman Meslek İnşaat İnşaat Görevlisi yüksek lisans mezunu olup; Yüksek lisans 2 Yüksekokulu Teknolojisi (Ders 1 3 70 sonrası ilgili alanda en az 2 (iki) yıl mesleki Verecek) deneyime sahip olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "Mimarlık, İnşaat Mühendisliği, Ulaştırma Mühendisliği, Yapı Öğretmenliği, Şehir ve Öğretim Bölge Planlama, Makine Mühendisliği, Kaman Meslek Akıllı Altyapılar Görevlisi Harita Mühendisliği, Jeoloji Mühendisliği 3 Yüksekokulu İnşaat Teknikerliği (Ders 1 3 70 veya Jeofizik Mühendisliği lisans mezunu Verecek) olup; tezli yüksek lisans yapmış olmak ve lisans sonrası olmak kaydıyla Akıllı Altyapılar alanında sektör deneyimine sahip olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "Yazılım, Öğretim Lisans ve tezli yüksek lisans mezunu olup; Mucur Meslek Uygulama Oyun Geliştirme Görevlisi ilgili alanda (Oyun Geliştirme ve 5 Yüksekokulu Geliştirme ve ve Programlama (Ders 1 3 70 Programlama) lisans sonrası en az 3 (üç) yıl Çözümleme Verecek) mesleki deneyime sahip olmak."
+       "metin": "c) Hukuk fakültesi, adalet meslek yüksekokulu, meslek yüksekokullarının adalet bölümü veya adalet meslek eğitimi ön lisans programı mezunu olmak, öğrenim yabancı ülkede yapılmış ise denklik belgesi almış olmak,"
       }
      ],
-     "basvuru_notu": "Dilekçe (Dilekçe form örneğine online başvuru sisteminde ulaşılabilmektedir.) Başvurdukları Bölüm/Anabilim Dalı/Program Adı, Kadro Ünvanı, T.C.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/98f86487e005937d024e5e3ecdd69e7e342387dd6838299c2b894e3ee765cfbf.pdf",
-     "belge_sha256": "98f86487e005937d024e5e3ecdd69e7e342387dd6838299c2b894e3ee765cfbf",
+     "basvuru_notu": "4- Sınava başvurular 20-26 Ekim 2026 tarihleri arasında, elektronik ortamda ÖSYM başvuru merkezleri aracılığıyla veya bireysel olarak internet aracılığıyla (ÖSYM’nin https://ais.osym .gov.tr internet adresinden) alınacaktır.",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/a8e03f6d1afc13b5ab343267fc3460322b75e2e780b866df82a9d9c7a82cf474.pdf",
+     "belge_sha256": "a8e03f6d1afc13b5ab343267fc3460322b75e2e780b866df82a9d9c7a82cf474",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 6,
-     "belge_ogrenim": [
-      "lisans",
-      "onlisans"
-     ]
+     "sbb_detay_surumu": 6
     },
     {
      "id": "sbb-cbaa38524cf24d4c6fa9b46f",
@@ -1851,8 +1926,8 @@
      "donem": "( 5 Ekim - 20 Ekim)",
      "baslangic_zaman": "2026-10-05T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:39:31+03:00",
-     "belge_ozeti": "facab2d58b41b38b20337b5c5ab682d3a7937c1139772ce3a6321e237a1601aa",
+     "detay_guncelleme": "2026-10-14T11:44:24+03:00",
+     "belge_ozeti": "f0af3c81a9412f7cc55b5148e9e934d1871ae474b4962fd145e0e6b8389fc34c",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1862,8 +1937,8 @@
      "ozet": "2026 YILI TABİP, DİŞ TABİBİ SINIFI SÖZLEŞMELİ/MUVAZZAF SUBAY VE ÖZEL NİTELİKLİ BEDEN EĞİTİMİ ÖĞRETMENİ SINIFI MUVAZZAF SUBAY ADAYI TEMİNİ. Son başvuru: 20.10.2026. Şahsen, posta kanalı ile, dilekçe ile veya diğer şekil lerde yapılacak başvurular kabul edilmeyecektir. (2) Adaylar https://personeltemin.msb.gov.tr sitesine girdikten sonra e-devlet şifresi ile başvuru ekranını açacaktır. Özel şartlar aşağıdaki ilan belgesinde yer alıyor.",
      "sartlar": [],
      "basvuru_notu": "Bu durumda olan adaylar, aldığı tutanak ile MSB Personel Temin Daire Başkanlığına tekrar ve şahsen başvurarak sevk yazısını yenileyebilecektir. (ç) Sağlık kuruluşu tarafından düzenlenen ön bildirim raporunuzun karar hanesinde belirtilen ifadelerin ve bilgilerin kontrol etmeniz önem arz etmektedir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/facab2d58b41b38b20337b5c5ab682d3a7937c1139772ce3a6321e237a1601aa.pdf",
-     "belge_sha256": "facab2d58b41b38b20337b5c5ab682d3a7937c1139772ce3a6321e237a1601aa",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/f0af3c81a9412f7cc55b5148e9e934d1871ae474b4962fd145e0e6b8389fc34c.pdf",
+     "belge_sha256": "f0af3c81a9412f7cc55b5148e9e934d1871ae474b4962fd145e0e6b8389fc34c",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "belge_ogrenim": [
@@ -1883,8 +1958,8 @@
      "donem": "( 5 Ekim - 20 Ekim)",
      "baslangic_zaman": "2026-10-05T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:39:40+03:00",
-     "belge_ozeti": "8dfc6ba5f84b71f02835d449b41f6903352d98238f954044fdb96621d7ec2378",
+     "detay_guncelleme": "2026-10-14T11:44:47+03:00",
+     "belge_ozeti": "f06670464931126c122d67cf14e05c70a112eb8c9d396c93fd3a505cff3d31b1",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1919,8 +1994,8 @@
       }
      ],
      "basvuru_notu": "Bu durumda olan adaylar, aldığı tutanak ile MSB Personel Temin Daire Başkanlığına tekrar ve şahsen başvurarak sevk yazısını yenileyebilecektir. (ç) Sağlık kuruluşu tarafından düzenlenen ön bildirim raporunuzun karar hanesinde belirtilen ifadelerin ve bilgilerin kontrol etmeniz önem arz etmektedir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/8dfc6ba5f84b71f02835d449b41f6903352d98238f954044fdb96621d7ec2378.pdf",
-     "belge_sha256": "8dfc6ba5f84b71f02835d449b41f6903352d98238f954044fdb96621d7ec2378",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/f06670464931126c122d67cf14e05c70a112eb8c9d396c93fd3a505cff3d31b1.pdf",
+     "belge_sha256": "f06670464931126c122d67cf14e05c70a112eb8c9d396c93fd3a505cff3d31b1",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
     },
@@ -1936,8 +2011,8 @@
      "donem": "( 5 Ekim - 19 Ekim)",
      "baslangic_zaman": "2026-10-05T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:39:24+03:00",
-     "belge_ozeti": "7c99356a658c96cf272b38f832ad04be95d61bf35cc8bf45e04d09026230567e",
+     "detay_guncelleme": "2026-10-14T11:45:09+03:00",
+     "belge_ozeti": "3d826e71422614be1a4a7e9eaf9d270ba1dd6242b56432b88eeeadd0762445b8",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1956,8 +2031,8 @@
       }
      ],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/7c99356a658c96cf272b38f832ad04be95d61bf35cc8bf45e04d09026230567e.pdf",
-     "belge_sha256": "7c99356a658c96cf272b38f832ad04be95d61bf35cc8bf45e04d09026230567e",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/3d826e71422614be1a4a7e9eaf9d270ba1dd6242b56432b88eeeadd0762445b8.pdf",
+     "belge_sha256": "3d826e71422614be1a4a7e9eaf9d270ba1dd6242b56432b88eeeadd0762445b8",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "puan_turleri": [
@@ -1968,43 +2043,6 @@
       "onlisans",
       "ortaogretim"
      ]
-    },
-    {
-     "id": "sbb-46734a52a4045202658b0bf7",
-     "baslik": "ADALET BAKANLIĞI - 150 İCRA MÜDÜR VE İCRA MÜDÜR YARDIMCISI ALACAK.",
-     "kurum": "ADALET BAKANLIĞI",
-     "kadro": "150 İCRA MÜDÜR VE İCRA MÜDÜR YARDIMCISI ALACAK.",
-     "ilan_turu": "Kamu Personeli",
-     "son_tarih": "2026-10-26",
-     "kaynak": "SBB Kamu İlan",
-     "kaynak_turu": "sbb",
-     "donem": "( 20 Ekim - 26 Ekim)",
-     "baslangic_zaman": "2026-10-20T00:00:00+03:00",
-     "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:39:08+03:00",
-     "belge_ozeti": "f5bbd23fa870f1e7a95a842c4849873550c9c4770a139e626a357f51bc58f7d6",
-     "kaynaklar": [
-      {
-       "ad": "SBB Kamu İlan",
-       "link": "https://kamuilan.sbb.gov.tr/"
-      }
-     ],
-     "ozet": "150 İCRA MÜDÜR VE İCRA MÜDÜR YARDIMCISI alımı. Son başvuru: 26.10.2026. 13- ÖSYM Aday İşlemleri Sistemine erişim için şifresini unutan adaylar, Sınav Koordinatörleri/yetkili Başvuru Merkezlerine sınava giriş için gereken kimlik belgesinin aslı ile şahsen başvurarak ücreti karşılığında yeni şifrelerini edinebileceklerdir. Şifrenin edinilmesi ile ilgili ayrıntılı bilgi ÖSYM’nin internet sayfasında bulunmaktadır. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
-     "sartlar": [
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "b) Yazılı sınavın yapıldığı yılın ocak ayının birinci günü itibariyle otuz beş yaşını doldurmamış olmak, (Doğum tarihi: 01/01/1991 ve daha sonra olanlar)"
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "c) Hukuk fakültesi, adalet meslek yüksekokulu, meslek yüksekokullarının adalet bölümü veya adalet meslek eğitimi ön lisans programı mezunu olmak, öğrenim yabancı ülkede yapılmış ise denklik belgesi almış olmak,"
-      }
-     ],
-     "basvuru_notu": "4- Sınava başvurular 20-26 Ekim 2026 tarihleri arasında, elektronik ortamda ÖSYM başvuru merkezleri aracılığıyla veya bireysel olarak internet aracılığıyla (ÖSYM’nin https://ais.osym .gov.tr internet adresinden) alınacaktır.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/f5bbd23fa870f1e7a95a842c4849873550c9c4770a139e626a357f51bc58f7d6.pdf",
-     "belge_sha256": "f5bbd23fa870f1e7a95a842c4849873550c9c4770a139e626a357f51bc58f7d6",
-     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 6
     },
     {
      "id": "sbb-2ab4ade78beb072a71ae1bb0",
@@ -2018,8 +2056,8 @@
      "donem": "( 5 Ekim - 19 Ekim)",
      "baslangic_zaman": "2026-10-05T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:39:26+03:00",
-     "belge_ozeti": "281db47f1acff3fa875466fb625d2113404f7a098c0a48bf944791830310bf20",
+     "detay_guncelleme": "2026-10-14T11:45:12+03:00",
+     "belge_ozeti": "d0806f9c4605c12179af5c367808e8d4474add487aa5a6d25b776b37c6a495a5",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -2050,8 +2088,8 @@
       }
      ],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/281db47f1acff3fa875466fb625d2113404f7a098c0a48bf944791830310bf20.pdf",
-     "belge_sha256": "281db47f1acff3fa875466fb625d2113404f7a098c0a48bf944791830310bf20",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/d0806f9c4605c12179af5c367808e8d4474add487aa5a6d25b776b37c6a495a5.pdf",
+     "belge_sha256": "d0806f9c4605c12179af5c367808e8d4474add487aa5a6d25b776b37c6a495a5",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "puan_turleri": [
@@ -2075,8 +2113,8 @@
      "donem": "( 5 Ekim - 19 Ekim)",
      "baslangic_zaman": "2026-10-05T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:39:12+03:00",
-     "belge_ozeti": "da09e5af88bef2e4498efae339fa0759f7e1a9463d2b9c648811dd8af9b7f7ba",
+     "detay_guncelleme": "2026-10-14T11:45:15+03:00",
+     "belge_ozeti": "87e3ad9dd1ee69dab8cb1e63f65f2ec203ab1c85ca481a0dca5305f50415b513",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -2095,8 +2133,8 @@
       }
      ],
      "basvuru_notu": "Dilekçe, ıslak imzalı ola rak taranarak online başvuru sistemine yüklenmelidir.)  Özgeçmiş ve yayın listesi ile ilan açıklamasında belirtilen alanlar başta olmak üzere tüm bilimsel çalışma ve yayınlara ait tüm bilgi ve belgeler (Tüm belgelerin online başvuru sistemine yüklenmesi gerekmektedir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/da09e5af88bef2e4498efae339fa0759f7e1a9463d2b9c648811dd8af9b7f7ba.pdf",
-     "belge_sha256": "da09e5af88bef2e4498efae339fa0759f7e1a9463d2b9c648811dd8af9b7f7ba",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/87e3ad9dd1ee69dab8cb1e63f65f2ec203ab1c85ca481a0dca5305f50415b513.pdf",
+     "belge_sha256": "87e3ad9dd1ee69dab8cb1e63f65f2ec203ab1c85ca481a0dca5305f50415b513",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
     },
@@ -2112,8 +2150,8 @@
      "donem": "( 5 Ekim - 19 Ekim)",
      "baslangic_zaman": "2026-10-05T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:39:28+03:00",
-     "belge_ozeti": "42d4833b57b68c5f6f49195263573bf50a634f43cbfc5d78e8ad53d89e705ff8",
+     "detay_guncelleme": "2026-10-14T11:45:18+03:00",
+     "belge_ozeti": "4ba97201b8f3990bb51820e6259e2e02f9dda231034d948893a66315dca66732",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -2128,10 +2166,67 @@
       }
      ],
      "basvuru_notu": "Başvuruda istenen aşağıda be lirtilen belgelerin https://ilan .hacibayram.edu.tr adresi üzerinden elektronik olarak sisteme y üklenmesi gerekmektedir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/42d4833b57b68c5f6f49195263573bf50a634f43cbfc5d78e8ad53d89e705ff8.pdf",
-     "belge_sha256": "42d4833b57b68c5f6f49195263573bf50a634f43cbfc5d78e8ad53d89e705ff8",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/4ba97201b8f3990bb51820e6259e2e02f9dda231034d948893a66315dca66732.pdf",
+     "belge_sha256": "4ba97201b8f3990bb51820e6259e2e02f9dda231034d948893a66315dca66732",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
+    },
+    {
+     "id": "sbb-8a0689d21d29fa83a57eecf5",
+     "baslik": "KIRŞEHİR AHİ EVRAN ÜNİVERSİTESİ - 15 ÖĞRETİM ELEMANI ALACAK",
+     "kurum": "KIRŞEHİR AHİ EVRAN ÜNİVERSİTESİ",
+     "kadro": "15 ÖĞRETİM ELEMANI ALACAK",
+     "ilan_turu": "Öğretim Elemanı",
+     "son_tarih": "2026-10-19",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 5 Ekim - 19 Ekim)",
+     "baslangic_zaman": "2026-10-05T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-10-14T11:45:20+03:00",
+     "belge_ozeti": "5a608e922849d0a39f58f67edd4fa66dddbf9f65a6a0d0c7d461c905a6b50c10",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "15 ÖĞRETİM ELEMANI alımı. Son başvuru: 19.10.2026. İLAN TARİHİ 05.10.2026 SON BAŞVURU TARİHİ 19.10.2026 ÖNDEĞERLENDİRME SONUÇ AÇIKLAMATARİHİ 26.10.2026 SINAV GİRİŞ TARİHİ 03.11.2026 SONUÇ AÇIKLAMA TARİHİ 10.11.2026 SONUÇ AÇIKLANACIĞI https://basvuru.ahievran.edu.tr/ ve https://www.ahievran.edu.tr/ İNTERNET ADRESİ BAŞVURU YERİ https://basvuru.ahievran.edu.tr/ BAŞVURU ŞEKLİ Online Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "İlan no 9001 · kadro ve özel şartlar",
+       "metin": "Rektörlük Uluslararası İlişkiler veya Siyaset Bilimi ve (Teknoloji Öğretim Uluslararası İlişkiler tezli yüksek lisans Rektörlük Transfer Ofisi Görevlisi yapmış olup; E-Devlet onaylı ISO 8 Uygulama ve (Uygulamalı 1 3 70 50 9001:2015 Kalite Yönetim Sistemi ve Araştırma Alanlar) Avrupa Birliği Proje Hazırlama ve Merkezi ) Yönetimi sertifikalarına sahip olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "D-MUAFİYET 1. Doktora veya tıpta, diş hekimliğinde, eczacılıkta ve veteriner hekimlikte uzmanlık ya da sanatta yeterlik eğitimini tamamlamış olanlarda, meslek yüksekokullarının Yükseköğretim Kurulu tarafından belirlenen uzmanlık alanlarına atanacak olanlarda, yükseköğretim kurumlarında öğretim elemanı kadrolarında çalışmış veya çalışmakta olanlarda merkezi sınav şartı aranmaz. 2. Meslek yüksekokullarının, bu Yönetmeliğin 6 ncı maddesinin dördüncü fıkrası kapsamındaki öğretim görevlisi kadroları haricindeki öğretim elemanı kadrolarına yapılacak başvurularda yabancı dil şartı aranmaz."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "Öğretim İlahiyat Fakültesi lisans mezunu olup; Tezli İlahiyat Temel İslam Arap Dili ve Görevlisi yüksek lisansını Temel İslam Bilimleri 1 Fakültesi Bilimleri Belagatı (Ders 1 3 70 85 alanında yapmış olmak. (Arapça derslerini Verecek) vermek üzere yabancı dil şartını Arapçadan sağlamış olmak)"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "Öğretim İnşaat Mühendisliği alanında lisans ve tezli Kaman Meslek İnşaat İnşaat Görevlisi yüksek lisans mezunu olup; Yüksek lisans 2 Yüksekokulu Teknolojisi (Ders 1 3 70 sonrası ilgili alanda en az 2 (iki) yıl mesleki Verecek) deneyime sahip olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "Mimarlık, İnşaat Mühendisliği, Ulaştırma Mühendisliği, Yapı Öğretmenliği, Şehir ve Öğretim Bölge Planlama, Makine Mühendisliği, Kaman Meslek Akıllı Altyapılar Görevlisi Harita Mühendisliği, Jeoloji Mühendisliği 3 Yüksekokulu İnşaat Teknikerliği (Ders 1 3 70 veya Jeofizik Mühendisliği lisans mezunu Verecek) olup; tezli yüksek lisans yapmış olmak ve lisans sonrası olmak kaydıyla Akıllı Altyapılar alanında sektör deneyimine sahip olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "Yazılım, Öğretim Lisans ve tezli yüksek lisans mezunu olup; Mucur Meslek Uygulama Oyun Geliştirme Görevlisi ilgili alanda (Oyun Geliştirme ve 5 Yüksekokulu Geliştirme ve ve Programlama (Ders 1 3 70 Programlama) lisans sonrası en az 3 (üç) yıl Çözümleme Verecek) mesleki deneyime sahip olmak."
+      }
+     ],
+     "basvuru_notu": "Dilekçe (Dilekçe form örneğine online başvuru sisteminde ulaşılabilmektedir.) Başvurdukları Bölüm/Anabilim Dalı/Program Adı, Kadro Ünvanı, T.C.",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/5a608e922849d0a39f58f67edd4fa66dddbf9f65a6a0d0c7d461c905a6b50c10.pdf",
+     "belge_sha256": "5a608e922849d0a39f58f67edd4fa66dddbf9f65a6a0d0c7d461c905a6b50c10",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "belge_ogrenim": [
+      "lisans",
+      "onlisans"
+     ]
     },
     {
      "id": "sbb-c780dcb39c8535554ca6277e",
@@ -2145,8 +2240,8 @@
      "donem": "( 3 Ekim - 17 Ekim)",
      "baslangic_zaman": "2026-10-03T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:39:51+03:00",
-     "belge_ozeti": "1f51b86ecb6fca52e74fb52df4d48bba4c6dcc0b821e458e93562c5286ff1180",
+     "detay_guncelleme": "2026-10-14T11:45:23+03:00",
+     "belge_ozeti": "3c92669825a96bc76321767c01992a881d2f16776dd3cf3d952e2f4e4fdbb4ea",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -2169,163 +2264,8 @@
       }
      ],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/1f51b86ecb6fca52e74fb52df4d48bba4c6dcc0b821e458e93562c5286ff1180.pdf",
-     "belge_sha256": "1f51b86ecb6fca52e74fb52df4d48bba4c6dcc0b821e458e93562c5286ff1180",
-     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 6
-    },
-    {
-     "id": "sbb-d899263a3b730dcfad84ae2f",
-     "baslik": "AYDIN ADNAN MENDERES ÜNİVERSİTESİ - 84 ÖĞRETİM ELEMANI ALACAK",
-     "kurum": "AYDIN ADNAN MENDERES ÜNİVERSİTESİ",
-     "kadro": "84 ÖĞRETİM ELEMANI ALACAK",
-     "ilan_turu": "Öğretim Elemanı",
-     "son_tarih": "2026-10-16",
-     "kaynak": "SBB Kamu İlan",
-     "kaynak_turu": "sbb",
-     "donem": "( 2 Ekim - 16 Ekim)",
-     "baslangic_zaman": "2026-10-02T00:00:00+03:00",
-     "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:40:08+03:00",
-     "belge_ozeti": "2d0e38598e8d6c3c7907b4100c8357bdac9603a6fcffe7601d052eaef180a94e",
-     "kaynaklar": [
-      {
-       "ad": "SBB Kamu İlan",
-       "link": "https://kamuilan.sbb.gov.tr/"
-      }
-     ],
-     "ozet": "84 ÖĞRETİM ELEMANI alımı. Son başvuru: 16.10.2026. İLAN TAKVİMİ İlk Başvuru Tarihi : 02.10.2026 Son Başvuru Tarihi : 16.10.2026 (Mesai Bitimi) Ön Değerlendirme İlan Tarihi : 22.10.2026 Giriş Sınav Tarihi : 30.10.2026 Nihai Değerlendirme Tarihi : 06.11.2026 Başvuru Tipi : Şahsen / Posta Başvurunun Yapılacağı Yer : Her kadro için ilan metninde belirtilen birime başvuru yapılacaktır. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
-     "sartlar": [
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "2- ALES’ten en az 70 puan almış olmak gerekli olup, merkezi sınav muafiyetinden yararlanmayı talep edenlerin ön değerlendirme ve nihai değerlendirme aşamalarında ALES puanı 70 olarak kabul edilir."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "4- Öğretim Görevlisi kadrosuna başvuracak adaylarda en az tezli yüksek lisans derecesine sahip olmak veya lisans ve yüksek lisans derecesini birlikte veren programlardan mezun olmak şartı aranır."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "a) Doktora veya tıpta, diş hekimliğinde, eczacılıkta ve veteriner hekimlikte uzmanlık ya da sanatta yeterlik eğitimini tamamlamış olanlarda, meslek yüksekokullarının Yükseköğretim Kurulu tarafından belirlenen uzmanlık alanlarına atanacak olanlarda, yükseköğretim kurumlarında öğretim elemanı kadrolarında çalışmış veya çalışmakta olanlarda merkezi sınav şartı aranmaz."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "b) Meslek yüksekokullarının, Öğretim Üyesi Dışındaki Öğretim Elemanı Kadrolarına Yapılacak Atamalarda Uygulanacak Merkezi Sınav ile Giriş Sınavlarına İlişkin Usul ve Esaslar Hakkında Yönetmelik’in 6 ncı maddesinin 4 üncü fıkrası kapsamındaki Öğretim Görevlisi kadroları haricindeki Öğretim Görevlisi kadrolarına yapılacak başvurularda yabancı dil şartı aranmaz."
-      },
-      {
-       "kadro": "Sınav puanı koşulu · kadroya göre muafiyetler için belgeyi inceleyin",
-       "metin": "2- ALES’ten en az 70 puan almış olmak gerekli olup, merkezi sınav muafiyetinden yararlanmayı talep edenlerin ön değerlendirme ve nihai değerlendirme aşamalarında ALES puanı 70 olarak kabul edilir."
-      }
-     ],
-     "basvuru_notu": "Onaysız belgeler geçersiz kabul edilir.  Başvurular ilanda belirtilen başvuru adreslerine şahsen veya posta yoluyla yapılabilir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/2d0e38598e8d6c3c7907b4100c8357bdac9603a6fcffe7601d052eaef180a94e.pdf",
-     "belge_sha256": "2d0e38598e8d6c3c7907b4100c8357bdac9603a6fcffe7601d052eaef180a94e",
-     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 6,
-     "belge_ogrenim": [
-      "lisans",
-      "onlisans"
-     ]
-    },
-    {
-     "id": "sbb-bed1e46c6394edaa326dea22",
-     "baslik": "ÇANAKKALE ONSEKİZ MART ÜNİVERSİTESİ - ÇANAKKALE ONSEKİZ MART ÜNİVERSİTESİ 3 ÖĞRETİM ELEMANI ALACAK",
-     "kurum": "ÇANAKKALE ONSEKİZ MART ÜNİVERSİTESİ",
-     "kadro": "ÇANAKKALE ONSEKİZ MART ÜNİVERSİTESİ 3 ÖĞRETİM ELEMANI ALACAK",
-     "ilan_turu": "Öğretim Elemanı",
-     "son_tarih": "2026-10-16",
-     "kaynak": "SBB Kamu İlan",
-     "kaynak_turu": "sbb",
-     "donem": "( 2 Ekim - 16 Ekim)",
-     "baslangic_zaman": "2026-10-02T00:00:00+03:00",
-     "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:40:32+03:00",
-     "belge_ozeti": "a615ce8d3da9a40105abbd256e5f329bd8ea79ea3e6f7b0354a9d1349cf9349e",
-     "kaynaklar": [
-      {
-       "ad": "SBB Kamu İlan",
-       "link": "https://kamuilan.sbb.gov.tr/"
-      }
-     ],
-     "ozet": "ÇANAKKALE ONSEKİZ MART ÜNİVERSİTESİ 3 ÖĞRETİM ELEMANI alımı. Son başvuru: 16.10.2026. Başvurular ilanın Resmi Gazete'de yayımlandığı tarihten itibaren 15 gün içerisinde sadece online olarak (https://ilan.comu.edu.tr/) adresinden kabul edilecek ve bu link üzerinden işlemler yürütülecektir. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
-     "sartlar": [
-      {
-       "kadro": "Belgedeki kadro koşullarından alıntı",
-       "metin": "Öğretim görevlisi kadrosuna başvuracak adaylarda en az tezli yüksek lisans derecesine sahip olmak veya lisans ve yüksek lisans derecesini birlikte veren programlardan mezun olmak şartı aranır."
-      },
-      {
-       "kadro": "Belgedeki kadro koşullarından alıntı",
-       "metin": "Meslek yüksekokullarının Yükseköğretim Kurulu tarafından belirlenen uzmanlık alanıyla doğrudan ilgili lisans mezuniyeti bulunmayan alanlardaki programların öğretim görevlisi kadrolarına başvuracak adaylarda, en az lisans mezunu olup belgelendirmek kaydıyla alanında en az iki yıl tecrübe sahibi olmak şartı aranır."
-      },
-      {
-       "kadro": "Belgedeki kadro koşullarından alıntı",
-       "metin": "Meslek yüksekokullarının Yükseköğretim Kurulu tarafından belirlenen uzmanlık alanlarındaki uygulamalı dersleri vermek üzere istihdam edilecek öğretim görevlilerinde, her program için Yükseköğretim Kurulu tarafından karar verilen sayıdaki öğretim görevlisi kadrosu için geçerli olmak üzere, lisans mezunu olup belgelendirmek kaydıyla uygulama alanında en az dört yıl mesleki tecrübe sahibi olmak şartı aranır."
-      },
-      {
-       "kadro": "Sınav puanı koşulu · kadroya göre muafiyetler için belgeyi inceleyin",
-       "metin": "GENEL ŞARTLAR 1. a) 657 sayılı Devlet Memurları Kanununun 48. maddesinde belirtilen şartları taşımak, b) ALES’ten en az 70 Yükseköğretim Kurulu tarafından kabul edilen merkezi yabancı dil sınavından en az 50 puan veya eşdeğerliği kabul edilen bir sınavdan bu puan muadili bir puan almış olmak gerekir."
-      }
-     ],
-     "basvuru_notu": "Sistem üzerinden tamamlanmayan taslak durumundaki başvurular, belirtilen şartları taşımayan, eksik bilgi/belgesi olan adayların başvuruları kabul edilmeyecektir. (Online olarak yapılan başvurular için istenen tüm bilgi ve belgeler gerektiğinde Rektörlüğümüzce adaylardan fiziksel olarak istenebilecektir.) Bir adayın sadece 1 kadroya başvurma hakkı vardır.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/a615ce8d3da9a40105abbd256e5f329bd8ea79ea3e6f7b0354a9d1349cf9349e.pdf",
-     "belge_sha256": "a615ce8d3da9a40105abbd256e5f329bd8ea79ea3e6f7b0354a9d1349cf9349e",
-     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 6,
-     "belge_ogrenim": [
-      "lisans",
-      "onlisans"
-     ]
-    },
-    {
-     "id": "sbb-ba488efdff295505612d40b4",
-     "baslik": "ÇANKIRI KARATEKİN ÜNİVERSİTESİ - 9 ÖĞRETİM ELEMANI ALACAK",
-     "kurum": "ÇANKIRI KARATEKİN ÜNİVERSİTESİ",
-     "kadro": "9 ÖĞRETİM ELEMANI ALACAK",
-     "ilan_turu": "Öğretim Elemanı",
-     "son_tarih": "2026-10-16",
-     "kaynak": "SBB Kamu İlan",
-     "kaynak_turu": "sbb",
-     "donem": "( 2 Ekim - 16 Ekim)",
-     "baslangic_zaman": "2026-10-02T00:00:00+03:00",
-     "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:40:37+03:00",
-     "belge_ozeti": "b5bd9dd1123054ffaf17672ad7e15aa06bfa7a872af1f5c59b4f54a725fae660",
-     "kaynaklar": [
-      {
-       "ad": "SBB Kamu İlan",
-       "link": "https://kamuilan.sbb.gov.tr/"
-      }
-     ],
-     "ozet": "9 ÖĞRETİM ELEMANI alımı. Son başvuru: 16.10.2026. ÖĞRETİM ÜYESİ KADROSUNA BAŞVURACAK ADAYLAR; Çankırı Karatekin Üniversitesi Öğretim Üyeliğine Yükseltilme ve Atanma Yönergesinde belirtilen asgari başvuru koşullarını sağlamalıdır.* Başvurulan Birim, Bölüm ve Anabilim Dalı/Programı Belirten Dilekçe ve Akademik Personel Başvuru Formu https://personel.karatekin.edu.tr adresinden temin edilerek başvuru sahibi tarafından imzalanıp https://ilan.karatekin.edu.tr adresinde online başvuru sistemine yüklenecektir. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
-     "sartlar": [
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "Doçentliğini İdare Hukuku alanında almış olmak. İdari usul, idarenin sorumluluğu ve idari HUKUK FAKÜLTESİ KAMU HUKUKU İDARE HUKUKU DOÇENT 2 1 yargılama hukukunda deliller konularında akademik çalışmaları olmak. Yükseköğretim Kurumlarında en az 10 (on) yıl çalışma deneyimine sahip olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "Doktorasını Bilgisayar Mühendisliği alanında almış olmak. Çevik yazılım geliştirme DR.ÖĞR. ortamlarında efor tahmini, doğal dil işleme ve makine öğrenmesi tekniklerinin yazılım MÜHENDİSLİK FAKÜLTESİ BİLGİSAYAR MÜHENDİSLİĞİ BİLGİSAYAR YAZILIMI ÜYESİ 3 1 mühendisliği problemlerine uygulanması ile CMMI tabanlı yazılım süreç iyileştirme konularında akademik çalışmaları olmak. Yükseköğretim Kurumlarında en az 5 (beş) yıl çalışma deneyimine sahip olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "DR.ÖĞR. Doktorasını Ergoterapi alanında almış olmak. Geriatrik bireylereyönelik yardımcı teknoloji, SAĞLIK BİLİMLERİ FAKÜLTESİ ERGOTERAPİ ERGOTERAPİ ÜYESİ 3 1 çevresel düzenlemeler ve duyusal işlemleme konularında akademik çalışmaları olmak. Yükseköğretim kurumlarında en az 5 (beş) yıl çalışma deneyimine sahip olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "Doktorasını Fizyoterapi ve Rehabilitasyon alanında almış olmak. Serebral palsili çocuklarda SAĞLIK BİLİMLERİ FAKÜLTESİ FİZYOTERAPİ VE PEDİATRİK REHABİLİTASYON DR.ÖĞR. 3 1 gövdekontrolüvefonksiyonellik, sağlıklı genç yetişkinlerde ikinokta diskriminasyon duyusuve RAHABİLİTASYON ÜYESİ nörolojik rehabilitasyon alanında sistematik derleme ve meta-analiz konularında çalışmalar yapmış olmak. Yükseköğretim Kurumlarında en az 10 (on) yıl çalışma deneyimine sahip olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "ÖĞRETİM HEMŞİRELİK VEYA BİLGİSAYAR TEKNOLOJİSİ VE BİLİŞİM 2026 TIBBİ VERİ İŞLEME GÖREVLİSİ SAYISAL SİSTEMLERİ LİSANS MEZUNU OLUP, BU ALANLARDAN BİRİNDE TEZLİ 02/01 ÇERKEŞ MESLEK YÜKSEKOKULU İSTATİSTİK TEKNİKERLİĞİ (DERS 6 1 (SAY) MUAF YÜKSEK LİSANS YAPMIŞ OLMAK, LİSANS SONRASI OLMAK KAYDIYLA VERECEK) TIBBİ VERİ İŞLEME TEKNİKERLİĞİ ALANINDA EN AZ 5 (BEŞ) YIL SEKTÖR DENEYİMİNE SAHİP OLMAK."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "2- Meslek yüksekokullarının, bu Yönetmeliğin 6. maddesinin 4. fıkrası kapsamındaki öğretim görevlisi kadroları haricindeki öğretim elemanı kadrolarına yapılacak başvurularda yabancı dil ş artı aranmaz. BAŞVURUDA İSTENİLEN BELGELER Öğretim Görevlisi ve Araştırma Görevlisi kadrolarına başvuracak adaylardan istenilen belgeler; 1 - Başvurulan unvan, birim, bölüm, programı ile ilan numarası ve iletişim bilgilerinin eksiksiz şekilde doldurul arak imzalanan Dilekçe ve Başvuru Formu (https://personel.karatekin.edu.tr adresinden başvuru başlama tarihi itibari ile temin edilebilir) . 2 - Özgeçmiş, 3 - ALES Sonuç Belgesi (Sınav sonuçları açıklandığı tarihten itibaren 5 yıl geçerlidir) ,"
-      }
-     ],
-     "basvuru_notu": "Yukarıda istenilen bilgi ve belgeler ile https://ilan.karatekin.edu.tr adresinden online başvuru yapabileceklerdir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/b5bd9dd1123054ffaf17672ad7e15aa06bfa7a872af1f5c59b4f54a725fae660.pdf",
-     "belge_sha256": "b5bd9dd1123054ffaf17672ad7e15aa06bfa7a872af1f5c59b4f54a725fae660",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/3c92669825a96bc76321767c01992a881d2f16776dd3cf3d952e2f4e4fdbb4ea.pdf",
+     "belge_sha256": "3c92669825a96bc76321767c01992a881d2f16776dd3cf3d952e2f4e4fdbb4ea",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
     },
@@ -2341,8 +2281,8 @@
      "donem": "( 2 Ekim - 16 Ekim)",
      "baslangic_zaman": "2026-10-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:40:12+03:00",
-     "belge_ozeti": "cf7437a94868b23e904980e76bc915114082fbece08b295b169fcd3f790e8338",
+     "detay_guncelleme": "2026-10-14T11:45:24+03:00",
+     "belge_ozeti": "a62e1a132b5892d3a956ea0596b11593861e8bc088cc5e6a7dcdf7471feb287a",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -2369,8 +2309,8 @@
       }
      ],
      "basvuru_notu": "2- Öğretim Üyeliği Başvuru Sistem i’ne yüklenen belgeler arasınd a yer alan “Başvuru Dilekçesi”, elektronik imzalı (e-imza) olar ak yüklenmesi halinde doğrulanabilir nitelikte olmalı; ıslak imzalı olarak dü zenlenmesi halinde ise başvuru sü resi içerisinde ilgili birime şahsen veya posta yoluyla ulaştırılmalıdır.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/cf7437a94868b23e904980e76bc915114082fbece08b295b169fcd3f790e8338.pdf",
-     "belge_sha256": "cf7437a94868b23e904980e76bc915114082fbece08b295b169fcd3f790e8338",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/a62e1a132b5892d3a956ea0596b11593861e8bc088cc5e6a7dcdf7471feb287a.pdf",
+     "belge_sha256": "a62e1a132b5892d3a956ea0596b11593861e8bc088cc5e6a7dcdf7471feb287a",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "belge_ogrenim": [
@@ -2390,8 +2330,8 @@
      "donem": "( 2 Ekim - 16 Ekim)",
      "baslangic_zaman": "2026-10-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:40:00+03:00",
-     "belge_ozeti": "b6cc9df1d4a8174c7bc0586d07667b84859879955bc51a4c25ed4c8c0e7b7f81",
+     "detay_guncelleme": "2026-10-14T11:45:27+03:00",
+     "belge_ozeti": "249330c11c64e5aa019e2049e9ac38bef761b93a4449754c4ec25e51c5c71aef",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -2401,8 +2341,8 @@
      "ozet": "9 ÖĞRETİM ÜYESİ alımı. Son başvuru: 16.10.2026. BAŞVURU SÜRECİ: Başvuru şartları için “Adıyaman Üniversitesi Akademik Yükseltilme ve Atanma İlkeleri Yönergesi’nin hükümleri geçerlidir. Müracaatlar ilan tarihinden itibaren 15 gün içerisinde yapılmalıdır. Başvurular https://basvuruilan.adiyaman.edu.tr/apply/index?continue adresinden on-line olarak yapılacaktır; Şahsen veya posta yoluyla başvurular kabul edilmeyecektir. Özel şartlar aşağıdaki ilan belgesinde yer alıyor.",
      "sartlar": [],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/b6cc9df1d4a8174c7bc0586d07667b84859879955bc51a4c25ed4c8c0e7b7f81.pdf",
-     "belge_sha256": "b6cc9df1d4a8174c7bc0586d07667b84859879955bc51a4c25ed4c8c0e7b7f81",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/249330c11c64e5aa019e2049e9ac38bef761b93a4449754c4ec25e51c5c71aef.pdf",
+     "belge_sha256": "249330c11c64e5aa019e2049e9ac38bef761b93a4449754c4ec25e51c5c71aef",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "belge_ogrenim": [
@@ -2421,8 +2361,8 @@
      "donem": "( 2 Ekim - 16 Ekim)",
      "baslangic_zaman": "2026-10-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:40:29+03:00",
-     "belge_ozeti": "20ecc9fdf99291373428bb2ae17e0c8f09b92120e865226f4460c710d5eefbbf",
+     "detay_guncelleme": "2026-10-14T11:45:28+03:00",
+     "belge_ozeti": "479d22d677fba4bd128a95133a1cd40ec510261d0d305a33c9ce1c5b249ddd29",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -2441,8 +2381,8 @@
       }
      ],
      "basvuru_notu": "Sistem üzerinden tamamlanmayan taslak durumundaki başvurular, belirtilen şartları taşımayan, eksik bilgi/belgesi olan adayların başvuruları kabul edilmeyecektir. (Online olarak yapılan başvurular için istenen tüm bilgi ve belgeler gerektiğinde Rektörlüğümüzce adaylardan fiziksel olarak istenebilecektir.) 1.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/20ecc9fdf99291373428bb2ae17e0c8f09b92120e865226f4460c710d5eefbbf.pdf",
-     "belge_sha256": "20ecc9fdf99291373428bb2ae17e0c8f09b92120e865226f4460c710d5eefbbf",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/479d22d677fba4bd128a95133a1cd40ec510261d0d305a33c9ce1c5b249ddd29.pdf",
+     "belge_sha256": "479d22d677fba4bd128a95133a1cd40ec510261d0d305a33c9ce1c5b249ddd29",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "belge_ogrenim": [
@@ -2462,8 +2402,8 @@
      "donem": "( 2 Ekim - 16 Ekim)",
      "baslangic_zaman": "2026-10-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:40:42+03:00",
-     "belge_ozeti": "aea92411281c34b70523c79e2a7a722e2e524590521569cc7ddfaa0fff5ef8e8",
+     "detay_guncelleme": "2026-10-14T11:45:30+03:00",
+     "belge_ozeti": "cc6f584645ae24338c9e9242e1a835a44ad6b721bdd75804f2609517b324d97b",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -2554,8 +2494,8 @@
       }
      ],
      "basvuru_notu": "1- Başvurular Üniversitemiz İnsan Kaynakları Başvuru Sistemi'nden (https://ikbasvuru.sdu.edu.tr) çevrimiçi (online) yapılacaktır.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/aea92411281c34b70523c79e2a7a722e2e524590521569cc7ddfaa0fff5ef8e8.pdf",
-     "belge_sha256": "aea92411281c34b70523c79e2a7a722e2e524590521569cc7ddfaa0fff5ef8e8",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/cc6f584645ae24338c9e9242e1a835a44ad6b721bdd75804f2609517b324d97b.pdf",
+     "belge_sha256": "cc6f584645ae24338c9e9242e1a835a44ad6b721bdd75804f2609517b324d97b",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "belge_ogrenim": [
@@ -2574,8 +2514,8 @@
      "donem": "( 2 Ekim - 16 Ekim)",
      "baslangic_zaman": "2026-10-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:40:27+03:00",
-     "belge_ozeti": "950eb95e6b4369350d007d736848089bea59ac538202f04ce285a69d23726ce5",
+     "detay_guncelleme": "2026-10-14T11:45:33+03:00",
+     "belge_ozeti": "bb189320b571329641722964d6998ea4f9a1aa6bfe9b6970365b2fe1f7325a2e",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -2585,8 +2525,8 @@
      "ozet": "1 ÖĞRETİM ÜYESİ alımı. Son başvuru: 16.10.2026. Özel şartlar aşağıdaki ilan belgesinde yer alıyor.",
      "sartlar": [],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/950eb95e6b4369350d007d736848089bea59ac538202f04ce285a69d23726ce5.pdf",
-     "belge_sha256": "950eb95e6b4369350d007d736848089bea59ac538202f04ce285a69d23726ce5",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/bb189320b571329641722964d6998ea4f9a1aa6bfe9b6970365b2fe1f7325a2e.pdf",
+     "belge_sha256": "bb189320b571329641722964d6998ea4f9a1aa6bfe9b6970365b2fe1f7325a2e",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
     },
@@ -2602,8 +2542,8 @@
      "donem": "( 2 Ekim - 19 Ekim)",
      "baslangic_zaman": "2026-10-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:40:39+03:00",
-     "belge_ozeti": "fd3b53f26a230a3c26460445da07430d7d484ef18d9dc54e647fd1121323fba8",
+     "detay_guncelleme": "2026-10-14T11:45:34+03:00",
+     "belge_ozeti": "073c2b2250873c618e072bdb556803999b77f5ab70e52ab4d310cbe83e7c91fc",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -2613,8 +2553,8 @@
      "ozet": "7 ÖĞRETİM ÜYESİ alımı. Son başvuru: 19.10.2026. 1) Profesör kadrolarına müracaat edecek adaylar; Personel Adayı Formları https://personel.usak.edu.tr/menu/43112 adresinde bul unan öğretim üyesi başvuru formları ve ekleri ile birlikte bilimsel çalışma ve yay ınlarını kapsayan 7 (yedi) adet salt okunur USB ile Üniversitem iz Rektörlük Personel Daire Başkanlığına şahsen başvuracaklardır. Özel şartlar aşağıdaki ilan belgesinde yer alıyor.",
      "sartlar": [],
      "basvuru_notu": "2) Doçent kadrolarına müracaat edecek adaylar; Personel Adayı F ormları https://personel.usak.edu.tr/menu/43112 adresinde bulun an öğretim üyesi başvuru formları ve ekleri ile birlikte bilimsel çalışma ve yay ınlarını kapsayan 5 (beş) adet salt okunur USB ile Üniversitemi z Rektörlük Personel Daire Başkanlığına şahsen başvuracaklardır.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/fd3b53f26a230a3c26460445da07430d7d484ef18d9dc54e647fd1121323fba8.pdf",
-     "belge_sha256": "fd3b53f26a230a3c26460445da07430d7d484ef18d9dc54e647fd1121323fba8",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/073c2b2250873c618e072bdb556803999b77f5ab70e52ab4d310cbe83e7c91fc.pdf",
+     "belge_sha256": "073c2b2250873c618e072bdb556803999b77f5ab70e52ab4d310cbe83e7c91fc",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
     },
@@ -2630,8 +2570,8 @@
      "donem": "( 2 Ekim - 15 Ekim)",
      "baslangic_zaman": "2026-10-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:40:46+03:00",
-     "belge_ozeti": "c463ff05bb152c3b1809b30c276e8da326f3d0124e670386bfa307ad84919fa7",
+     "detay_guncelleme": "2026-10-14T11:45:35+03:00",
+     "belge_ozeti": "488032c382203c8bdfb42283cc5e8f75d628d5eaece3e816c85525819ef35ace",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -2655,8 +2595,8 @@
       }
      ],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/c463ff05bb152c3b1809b30c276e8da326f3d0124e670386bfa307ad84919fa7.pdf",
-     "belge_sha256": "c463ff05bb152c3b1809b30c276e8da326f3d0124e670386bfa307ad84919fa7",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/488032c382203c8bdfb42283cc5e8f75d628d5eaece3e816c85525819ef35ace.pdf",
+     "belge_sha256": "488032c382203c8bdfb42283cc5e8f75d628d5eaece3e816c85525819ef35ace",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "duyuru_cumlesi": "YILDIZ TEKNİK ÜNİVERSİTESİ REKTÖRLÜĞÜ'NDEN DÜZELTME İLANI : 01.10.2026 tarihli ve 33387 sayılı Resmi Gazetede yayımlanan Öğretim Üyesi Kadro İlanımızda yer alan öğretim üyesi kadrolarının nitelikleri aşağıdaki şekilde değiştirilmiştir."
@@ -2673,8 +2613,8 @@
      "donem": "( 2 Ekim - 16 Ekim)",
      "baslangic_zaman": "2026-10-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:40:49+03:00",
-     "belge_ozeti": "0dee26007b3f8eb4508fce2de57239e16ec1a7e3c5a5e25a60aa75a23d4ce3c6",
+     "detay_guncelleme": "2026-10-14T11:45:37+03:00",
+     "belge_ozeti": "18afa307c7517ad07429199599ca7805615a866ca32ad675fd4a3dc9f078c8d9",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -2709,8 +2649,8 @@
       }
      ],
      "basvuru_notu": "2- Yukarıda belirtilen şartları taşıyan adayların başvuruları sadece online olarak https://ilan.yyu.edu.tr adresinden kabul edilecek ve bu link üzerinden işlemler yürütülecektir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/0dee26007b3f8eb4508fce2de57239e16ec1a7e3c5a5e25a60aa75a23d4ce3c6.pdf",
-     "belge_sha256": "0dee26007b3f8eb4508fce2de57239e16ec1a7e3c5a5e25a60aa75a23d4ce3c6",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/18afa307c7517ad07429199599ca7805615a866ca32ad675fd4a3dc9f078c8d9.pdf",
+     "belge_sha256": "18afa307c7517ad07429199599ca7805615a866ca32ad675fd4a3dc9f078c8d9",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
     },
@@ -2726,8 +2666,8 @@
      "donem": "( 2 Ekim - 16 Ekim)",
      "baslangic_zaman": "2026-10-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:40:23+03:00",
-     "belge_ozeti": "c241b8be7f176a50c4770ea5482930c6ea956924a5f19e4dd6b50501ce9f0219",
+     "detay_guncelleme": "2026-10-14T11:45:42+03:00",
+     "belge_ozeti": "bc484c1593f23d06e7b25802f76c51f0c453055df32c397bf3770ecdbc36f4d1",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -2762,8 +2702,8 @@
       }
      ],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/c241b8be7f176a50c4770ea5482930c6ea956924a5f19e4dd6b50501ce9f0219.pdf",
-     "belge_sha256": "c241b8be7f176a50c4770ea5482930c6ea956924a5f19e4dd6b50501ce9f0219",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/bc484c1593f23d06e7b25802f76c51f0c453055df32c397bf3770ecdbc36f4d1.pdf",
+     "belge_sha256": "bc484c1593f23d06e7b25802f76c51f0c453055df32c397bf3770ecdbc36f4d1",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "puan_turleri": [
@@ -2787,8 +2727,8 @@
      "donem": "( 2 Ekim - 16 Ekim)",
      "baslangic_zaman": "2026-10-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:40:16+03:00",
-     "belge_ozeti": "74fd9a2aa84d864daebe3dcc44ee2b8ac68cd0462f57b766883e4fa693eb45c0",
+     "detay_guncelleme": "2026-10-14T11:45:45+03:00",
+     "belge_ozeti": "8d3e253535a6e5d336bc2e43d5fe9fcb0a25e2f840ef810bf742a50cbd9a1b12",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -2815,14 +2755,169 @@
       }
      ],
      "basvuru_notu": "2- Öğretim Üyeliği Başvuru Sistem i’ne yüklenen belgeler arasınd a yer alan “Başvuru Dilekçesi”, elektronik imzalı (e-imza) olar ak yüklenmesi halinde doğrulanabilir nitelikte olmalı; ıslak imzalı olarak dü zenlenmesi halinde ise başvuru sü resi içerisinde ilgili birime şahsen veya posta yoluyla ulaştırılmalıdır.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/74fd9a2aa84d864daebe3dcc44ee2b8ac68cd0462f57b766883e4fa693eb45c0.pdf",
-     "belge_sha256": "74fd9a2aa84d864daebe3dcc44ee2b8ac68cd0462f57b766883e4fa693eb45c0",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/8d3e253535a6e5d336bc2e43d5fe9fcb0a25e2f840ef810bf742a50cbd9a1b12.pdf",
+     "belge_sha256": "8d3e253535a6e5d336bc2e43d5fe9fcb0a25e2f840ef810bf742a50cbd9a1b12",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "belge_ogrenim": [
       "lisans",
       "onlisans"
      ]
+    },
+    {
+     "id": "sbb-d899263a3b730dcfad84ae2f",
+     "baslik": "AYDIN ADNAN MENDERES ÜNİVERSİTESİ - 84 ÖĞRETİM ELEMANI ALACAK",
+     "kurum": "AYDIN ADNAN MENDERES ÜNİVERSİTESİ",
+     "kadro": "84 ÖĞRETİM ELEMANI ALACAK",
+     "ilan_turu": "Öğretim Elemanı",
+     "son_tarih": "2026-10-16",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 2 Ekim - 16 Ekim)",
+     "baslangic_zaman": "2026-10-02T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-10-14T11:45:48+03:00",
+     "belge_ozeti": "b6017eaa7df3d7804146a8762c050cbe1f1fe5f7ee55c82000724a3d7cafe478",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "84 ÖĞRETİM ELEMANI alımı. Son başvuru: 16.10.2026. İLAN TAKVİMİ İlk Başvuru Tarihi : 02.10.2026 Son Başvuru Tarihi : 16.10.2026 (Mesai Bitimi) Ön Değerlendirme İlan Tarihi : 22.10.2026 Giriş Sınav Tarihi : 30.10.2026 Nihai Değerlendirme Tarihi : 06.11.2026 Başvuru Tipi : Şahsen / Posta Başvurunun Yapılacağı Yer : Her kadro için ilan metninde belirtilen birime başvuru yapılacaktır. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "2- ALES’ten en az 70 puan almış olmak gerekli olup, merkezi sınav muafiyetinden yararlanmayı talep edenlerin ön değerlendirme ve nihai değerlendirme aşamalarında ALES puanı 70 olarak kabul edilir."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "4- Öğretim Görevlisi kadrosuna başvuracak adaylarda en az tezli yüksek lisans derecesine sahip olmak veya lisans ve yüksek lisans derecesini birlikte veren programlardan mezun olmak şartı aranır."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "a) Doktora veya tıpta, diş hekimliğinde, eczacılıkta ve veteriner hekimlikte uzmanlık ya da sanatta yeterlik eğitimini tamamlamış olanlarda, meslek yüksekokullarının Yükseköğretim Kurulu tarafından belirlenen uzmanlık alanlarına atanacak olanlarda, yükseköğretim kurumlarında öğretim elemanı kadrolarında çalışmış veya çalışmakta olanlarda merkezi sınav şartı aranmaz."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "b) Meslek yüksekokullarının, Öğretim Üyesi Dışındaki Öğretim Elemanı Kadrolarına Yapılacak Atamalarda Uygulanacak Merkezi Sınav ile Giriş Sınavlarına İlişkin Usul ve Esaslar Hakkında Yönetmelik’in 6 ncı maddesinin 4 üncü fıkrası kapsamındaki Öğretim Görevlisi kadroları haricindeki Öğretim Görevlisi kadrolarına yapılacak başvurularda yabancı dil şartı aranmaz."
+      },
+      {
+       "kadro": "Sınav puanı koşulu · kadroya göre muafiyetler için belgeyi inceleyin",
+       "metin": "2- ALES’ten en az 70 puan almış olmak gerekli olup, merkezi sınav muafiyetinden yararlanmayı talep edenlerin ön değerlendirme ve nihai değerlendirme aşamalarında ALES puanı 70 olarak kabul edilir."
+      }
+     ],
+     "basvuru_notu": "Onaysız belgeler geçersiz kabul edilir.  Başvurular ilanda belirtilen başvuru adreslerine şahsen veya posta yoluyla yapılabilir.",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/b6017eaa7df3d7804146a8762c050cbe1f1fe5f7ee55c82000724a3d7cafe478.pdf",
+     "belge_sha256": "b6017eaa7df3d7804146a8762c050cbe1f1fe5f7ee55c82000724a3d7cafe478",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "belge_ogrenim": [
+      "lisans",
+      "onlisans"
+     ]
+    },
+    {
+     "id": "sbb-bed1e46c6394edaa326dea22",
+     "baslik": "ÇANAKKALE ONSEKİZ MART ÜNİVERSİTESİ - ÇANAKKALE ONSEKİZ MART ÜNİVERSİTESİ 3 ÖĞRETİM ELEMANI ALACAK",
+     "kurum": "ÇANAKKALE ONSEKİZ MART ÜNİVERSİTESİ",
+     "kadro": "ÇANAKKALE ONSEKİZ MART ÜNİVERSİTESİ 3 ÖĞRETİM ELEMANI ALACAK",
+     "ilan_turu": "Öğretim Elemanı",
+     "son_tarih": "2026-10-16",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 2 Ekim - 16 Ekim)",
+     "baslangic_zaman": "2026-10-02T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-10-14T11:45:55+03:00",
+     "belge_ozeti": "46114abfd6022ae934e53413d3cfc520a8e7d584a2b31feaa201484dd63c924c",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "ÇANAKKALE ONSEKİZ MART ÜNİVERSİTESİ 3 ÖĞRETİM ELEMANI alımı. Son başvuru: 16.10.2026. Başvurular ilanın Resmi Gazete'de yayımlandığı tarihten itibaren 15 gün içerisinde sadece online olarak (https://ilan.comu.edu.tr/) adresinden kabul edilecek ve bu link üzerinden işlemler yürütülecektir. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgedeki kadro koşullarından alıntı",
+       "metin": "Öğretim görevlisi kadrosuna başvuracak adaylarda en az tezli yüksek lisans derecesine sahip olmak veya lisans ve yüksek lisans derecesini birlikte veren programlardan mezun olmak şartı aranır."
+      },
+      {
+       "kadro": "Belgedeki kadro koşullarından alıntı",
+       "metin": "Meslek yüksekokullarının Yükseköğretim Kurulu tarafından belirlenen uzmanlık alanıyla doğrudan ilgili lisans mezuniyeti bulunmayan alanlardaki programların öğretim görevlisi kadrolarına başvuracak adaylarda, en az lisans mezunu olup belgelendirmek kaydıyla alanında en az iki yıl tecrübe sahibi olmak şartı aranır."
+      },
+      {
+       "kadro": "Belgedeki kadro koşullarından alıntı",
+       "metin": "Meslek yüksekokullarının Yükseköğretim Kurulu tarafından belirlenen uzmanlık alanlarındaki uygulamalı dersleri vermek üzere istihdam edilecek öğretim görevlilerinde, her program için Yükseköğretim Kurulu tarafından karar verilen sayıdaki öğretim görevlisi kadrosu için geçerli olmak üzere, lisans mezunu olup belgelendirmek kaydıyla uygulama alanında en az dört yıl mesleki tecrübe sahibi olmak şartı aranır."
+      },
+      {
+       "kadro": "Sınav puanı koşulu · kadroya göre muafiyetler için belgeyi inceleyin",
+       "metin": "GENEL ŞARTLAR 1. a) 657 sayılı Devlet Memurları Kanununun 48. maddesinde belirtilen şartları taşımak, b) ALES’ten en az 70 Yükseköğretim Kurulu tarafından kabul edilen merkezi yabancı dil sınavından en az 50 puan veya eşdeğerliği kabul edilen bir sınavdan bu puan muadili bir puan almış olmak gerekir."
+      }
+     ],
+     "basvuru_notu": "Sistem üzerinden tamamlanmayan taslak durumundaki başvurular, belirtilen şartları taşımayan, eksik bilgi/belgesi olan adayların başvuruları kabul edilmeyecektir. (Online olarak yapılan başvurular için istenen tüm bilgi ve belgeler gerektiğinde Rektörlüğümüzce adaylardan fiziksel olarak istenebilecektir.) Bir adayın sadece 1 kadroya başvurma hakkı vardır.",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/46114abfd6022ae934e53413d3cfc520a8e7d584a2b31feaa201484dd63c924c.pdf",
+     "belge_sha256": "46114abfd6022ae934e53413d3cfc520a8e7d584a2b31feaa201484dd63c924c",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "belge_ogrenim": [
+      "lisans",
+      "onlisans"
+     ]
+    },
+    {
+     "id": "sbb-ba488efdff295505612d40b4",
+     "baslik": "ÇANKIRI KARATEKİN ÜNİVERSİTESİ - 9 ÖĞRETİM ELEMANI ALACAK",
+     "kurum": "ÇANKIRI KARATEKİN ÜNİVERSİTESİ",
+     "kadro": "9 ÖĞRETİM ELEMANI ALACAK",
+     "ilan_turu": "Öğretim Elemanı",
+     "son_tarih": "2026-10-16",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 2 Ekim - 16 Ekim)",
+     "baslangic_zaman": "2026-10-02T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-10-14T11:45:58+03:00",
+     "belge_ozeti": "8926c5204df9ffe3631f2d77a8812e603fce65367ac0d1620d6b116d6757f3c4",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "9 ÖĞRETİM ELEMANI alımı. Son başvuru: 16.10.2026. ÖĞRETİM ÜYESİ KADROSUNA BAŞVURACAK ADAYLAR; Çankırı Karatekin Üniversitesi Öğretim Üyeliğine Yükseltilme ve Atanma Yönergesinde belirtilen asgari başvuru koşullarını sağlamalıdır.* Başvurulan Birim, Bölüm ve Anabilim Dalı/Programı Belirten Dilekçe ve Akademik Personel Başvuru Formu https://personel.karatekin.edu.tr adresinden temin edilerek başvuru sahibi tarafından imzalanıp https://ilan.karatekin.edu.tr adresinde online başvuru sistemine yüklenecektir. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "Doçentliğini İdare Hukuku alanında almış olmak. İdari usul, idarenin sorumluluğu ve idari HUKUK FAKÜLTESİ KAMU HUKUKU İDARE HUKUKU DOÇENT 2 1 yargılama hukukunda deliller konularında akademik çalışmaları olmak. Yükseköğretim Kurumlarında en az 10 (on) yıl çalışma deneyimine sahip olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "Doktorasını Bilgisayar Mühendisliği alanında almış olmak. Çevik yazılım geliştirme DR.ÖĞR. ortamlarında efor tahmini, doğal dil işleme ve makine öğrenmesi tekniklerinin yazılım MÜHENDİSLİK FAKÜLTESİ BİLGİSAYAR MÜHENDİSLİĞİ BİLGİSAYAR YAZILIMI ÜYESİ 3 1 mühendisliği problemlerine uygulanması ile CMMI tabanlı yazılım süreç iyileştirme konularında akademik çalışmaları olmak. Yükseköğretim Kurumlarında en az 5 (beş) yıl çalışma deneyimine sahip olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "DR.ÖĞR. Doktorasını Ergoterapi alanında almış olmak. Geriatrik bireylereyönelik yardımcı teknoloji, SAĞLIK BİLİMLERİ FAKÜLTESİ ERGOTERAPİ ERGOTERAPİ ÜYESİ 3 1 çevresel düzenlemeler ve duyusal işlemleme konularında akademik çalışmaları olmak. Yükseköğretim kurumlarında en az 5 (beş) yıl çalışma deneyimine sahip olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "Doktorasını Fizyoterapi ve Rehabilitasyon alanında almış olmak. Serebral palsili çocuklarda SAĞLIK BİLİMLERİ FAKÜLTESİ FİZYOTERAPİ VE PEDİATRİK REHABİLİTASYON DR.ÖĞR. 3 1 gövdekontrolüvefonksiyonellik, sağlıklı genç yetişkinlerde ikinokta diskriminasyon duyusuve RAHABİLİTASYON ÜYESİ nörolojik rehabilitasyon alanında sistematik derleme ve meta-analiz konularında çalışmalar yapmış olmak. Yükseköğretim Kurumlarında en az 10 (on) yıl çalışma deneyimine sahip olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "ÖĞRETİM HEMŞİRELİK VEYA BİLGİSAYAR TEKNOLOJİSİ VE BİLİŞİM 2026 TIBBİ VERİ İŞLEME GÖREVLİSİ SAYISAL SİSTEMLERİ LİSANS MEZUNU OLUP, BU ALANLARDAN BİRİNDE TEZLİ 02/01 ÇERKEŞ MESLEK YÜKSEKOKULU İSTATİSTİK TEKNİKERLİĞİ (DERS 6 1 (SAY) MUAF YÜKSEK LİSANS YAPMIŞ OLMAK, LİSANS SONRASI OLMAK KAYDIYLA VERECEK) TIBBİ VERİ İŞLEME TEKNİKERLİĞİ ALANINDA EN AZ 5 (BEŞ) YIL SEKTÖR DENEYİMİNE SAHİP OLMAK."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "2- Meslek yüksekokullarının, bu Yönetmeliğin 6. maddesinin 4. fıkrası kapsamındaki öğretim görevlisi kadroları haricindeki öğretim elemanı kadrolarına yapılacak başvurularda yabancı dil ş artı aranmaz. BAŞVURUDA İSTENİLEN BELGELER Öğretim Görevlisi ve Araştırma Görevlisi kadrolarına başvuracak adaylardan istenilen belgeler; 1 - Başvurulan unvan, birim, bölüm, programı ile ilan numarası ve iletişim bilgilerinin eksiksiz şekilde doldurul arak imzalanan Dilekçe ve Başvuru Formu (https://personel.karatekin.edu.tr adresinden başvuru başlama tarihi itibari ile temin edilebilir) . 2 - Özgeçmiş, 3 - ALES Sonuç Belgesi (Sınav sonuçları açıklandığı tarihten itibaren 5 yıl geçerlidir) ,"
+      }
+     ],
+     "basvuru_notu": "Yukarıda istenilen bilgi ve belgeler ile https://ilan.karatekin.edu.tr adresinden online başvuru yapabileceklerdir.",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/8926c5204df9ffe3631f2d77a8812e603fce65367ac0d1620d6b116d6757f3c4.pdf",
+     "belge_sha256": "8926c5204df9ffe3631f2d77a8812e603fce65367ac0d1620d6b116d6757f3c4",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6
     },
     {
      "id": "sbb-20fbbd22c15a3e2797a5153b",
@@ -2836,8 +2931,8 @@
      "donem": "( 1 Ekim - 15 Ekim)",
      "baslangic_zaman": "2026-10-01T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:41:05+03:00",
-     "belge_ozeti": "72e7a132c3d828380704d078902e5b3b8ef2897f5f7e8688b8b88393cfba7b84",
+     "detay_guncelleme": "2026-10-14T11:46:02+03:00",
+     "belge_ozeti": "4c071cc07505e84bb019fe20368624b6d1fc5af7dd2a0ea9f2ff0396d9c0f5cb",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -2864,8 +2959,8 @@
       }
      ],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/72e7a132c3d828380704d078902e5b3b8ef2897f5f7e8688b8b88393cfba7b84.pdf",
-     "belge_sha256": "72e7a132c3d828380704d078902e5b3b8ef2897f5f7e8688b8b88393cfba7b84",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/4c071cc07505e84bb019fe20368624b6d1fc5af7dd2a0ea9f2ff0396d9c0f5cb.pdf",
+     "belge_sha256": "4c071cc07505e84bb019fe20368624b6d1fc5af7dd2a0ea9f2ff0396d9c0f5cb",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "belge_ogrenim": [
@@ -2884,8 +2979,8 @@
      "donem": "( 1 Ekim - 15 Ekim)",
      "baslangic_zaman": "2026-10-01T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:40:59+03:00",
-     "belge_ozeti": "008b2fdc935c995eec2440008e600c45fc132bc33a17020e2adbcf470614d684",
+     "detay_guncelleme": "2026-10-14T11:46:04+03:00",
+     "belge_ozeti": "d9555f8cb24a3ba9c548b131409609d13110fac9a0ef7f695dc3735083e2d66a",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -2920,8 +3015,8 @@
       }
      ],
      "basvuru_notu": "Yıldız Teknik Üniversitesi personeli olmayan ve ilan edilen ilgili kadrolara başvurmak isteyenler https://aydek.yildiz.edu.tr/Home/OnBasvuru adresinden şifre talep formu ile TC kimlik numarası, ad ve soyadı bilgilerini belirterek geçici kullanıcı adı ve şifre edinme başvurusunu çevrimiçi olarak gerçekleştirebileceklerdir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/008b2fdc935c995eec2440008e600c45fc132bc33a17020e2adbcf470614d684.pdf",
-     "belge_sha256": "008b2fdc935c995eec2440008e600c45fc132bc33a17020e2adbcf470614d684",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/d9555f8cb24a3ba9c548b131409609d13110fac9a0ef7f695dc3735083e2d66a.pdf",
+     "belge_sha256": "d9555f8cb24a3ba9c548b131409609d13110fac9a0ef7f695dc3735083e2d66a",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
     },
@@ -2937,8 +3032,8 @@
      "donem": "( 1 Ekim - 15 Ekim)",
      "baslangic_zaman": "2026-10-01T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:40:53+03:00",
-     "belge_ozeti": "38dd15b4c15acddb2002e7c4099769edf507e2d9cd4c22fbc65d3146587bbe34",
+     "detay_guncelleme": "2026-10-14T11:46:07+03:00",
+     "belge_ozeti": "76e4fb12e4cb4cbdc96a63d23abfae8989bd69f5dcb3f93ff02be62a603e45c0",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -2961,8 +3056,8 @@
       }
      ],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/38dd15b4c15acddb2002e7c4099769edf507e2d9cd4c22fbc65d3146587bbe34.pdf",
-     "belge_sha256": "38dd15b4c15acddb2002e7c4099769edf507e2d9cd4c22fbc65d3146587bbe34",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/76e4fb12e4cb4cbdc96a63d23abfae8989bd69f5dcb3f93ff02be62a603e45c0.pdf",
+     "belge_sha256": "76e4fb12e4cb4cbdc96a63d23abfae8989bd69f5dcb3f93ff02be62a603e45c0",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
     },
@@ -2978,8 +3073,8 @@
      "donem": "( 30 Eylül - 14 Ekim)",
      "baslangic_zaman": "2026-09-30T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:41:10+03:00",
-     "belge_ozeti": "52245a5bb5f3866529baeda3a6ae698073d10937b416c2d6b95fc842a913cc7f",
+     "detay_guncelleme": "2026-10-14T11:46:11+03:00",
+     "belge_ozeti": "468652896864beae5175442c107fb238944ceb6bc0d226792a313c058efd3d00",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -3002,8 +3097,8 @@
       }
      ],
      "basvuru_notu": "Adaylar başvurmak istediği ilanı seçtikten sonra aşağıda yer alan belgeleri ilgili alanlara yükleyip “Başvuru Yap” butonuna tıklandığında çevrimiçi (online) başvurularını tamamlamış olacaklardır. ● Adaylar sadece bir kadro ilanına başvuru yapabilecektir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/52245a5bb5f3866529baeda3a6ae698073d10937b416c2d6b95fc842a913cc7f.pdf",
-     "belge_sha256": "52245a5bb5f3866529baeda3a6ae698073d10937b416c2d6b95fc842a913cc7f",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/468652896864beae5175442c107fb238944ceb6bc0d226792a313c058efd3d00.pdf",
+     "belge_sha256": "468652896864beae5175442c107fb238944ceb6bc0d226792a313c058efd3d00",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "belge_ogrenim": [
@@ -3023,8 +3118,8 @@
      "donem": "( 2 Kasım - 4 Kasım)",
      "baslangic_zaman": "2026-11-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:41:41+03:00",
-     "belge_ozeti": "11bbcfa7bf53153c2d80f3c5d229133703b986f5a6f6232f16636c037f20bbc1",
+     "detay_guncelleme": "2026-10-14T11:46:14+03:00",
+     "belge_ozeti": "953af13f2232bb5967ab04657b473bb1ddd436e949be6fcc9bd777b84199fafb",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -3047,8 +3142,8 @@
       }
      ],
      "basvuru_notu": "a) Elektronik ortamda başvurular, 02/11/2026-04/11/2026 tarihleri arasında istenilen belgeler eklenmeksuretiyleBelediyemizinposofbelediyesi@hotmail.commailadresineyapılacaktır.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/11bbcfa7bf53153c2d80f3c5d229133703b986f5a6f6232f16636c037f20bbc1.pdf",
-     "belge_sha256": "11bbcfa7bf53153c2d80f3c5d229133703b986f5a6f6232f16636c037f20bbc1",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/953af13f2232bb5967ab04657b473bb1ddd436e949be6fcc9bd777b84199fafb.pdf",
+     "belge_sha256": "953af13f2232bb5967ab04657b473bb1ddd436e949be6fcc9bd777b84199fafb",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "yer": "Ardahan",
@@ -3071,8 +3166,8 @@
      "donem": "( 2 Kasım - 6 Kasım)",
      "baslangic_zaman": "2026-11-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:41:44+03:00",
-     "belge_ozeti": "7af8f729b8c0e8f77aaef1d1c214f6f05e10320f809a5cb60da1ec417cfb44b7",
+     "detay_guncelleme": "2026-10-14T11:46:16+03:00",
+     "belge_ozeti": "70b3db75a3e92b5e064d75b18aa79ec3f12be90747c08f1e3f080e549b02f994",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -3099,8 +3194,8 @@
       }
      ],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/7af8f729b8c0e8f77aaef1d1c214f6f05e10320f809a5cb60da1ec417cfb44b7.pdf",
-     "belge_sha256": "7af8f729b8c0e8f77aaef1d1c214f6f05e10320f809a5cb60da1ec417cfb44b7",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/70b3db75a3e92b5e064d75b18aa79ec3f12be90747c08f1e3f080e549b02f994.pdf",
+     "belge_sha256": "70b3db75a3e92b5e064d75b18aa79ec3f12be90747c08f1e3f080e549b02f994",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "yer": "İstanbul",
@@ -3123,8 +3218,8 @@
      "donem": "( 9 Kasım - 13 Kasım)",
      "baslangic_zaman": "2026-11-09T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:41:48+03:00",
-     "belge_ozeti": "b481656d0cfcb00a0960a448b0f3f1275a5f0376046772656d68ad0cc2f466d4",
+     "detay_guncelleme": "2026-10-14T11:46:18+03:00",
+     "belge_ozeti": "177a62c5ac0f702a84137dbf31600c6f7d564cf5938c59cc00131c2c0e4a6bc0",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -3159,8 +3254,8 @@
       }
      ],
      "basvuru_notu": "f) Hangi kadroya başvuracağına dair dilekçesi. (Adaylar şartlarını sağladığı yalnızca bir kadroya başvuru yapabileceklerdir.) Zabıta memuru kadroları hariç olmak üzere belirtilen başvuru tarihlerinde elektronik ortamda veya iadeli taahhütlü posta yoluyla yapılan başvurularda fotokopisi gönderilen belgelerin aslının sınav tarihine kadar Kurumumuza ibraz edilmesi gerekmektedir. (Aslı ibraz edilmek kaydıyla suretleri Belediyemizce tasdik edilecektir.) 4. BAŞVURU YERİ, TARİHİ, ŞEKLİ VE SÜRESİ: Memur kadrosu için;",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/b481656d0cfcb00a0960a448b0f3f1275a5f0376046772656d68ad0cc2f466d4.pdf",
-     "belge_sha256": "b481656d0cfcb00a0960a448b0f3f1275a5f0376046772656d68ad0cc2f466d4",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/177a62c5ac0f702a84137dbf31600c6f7d564cf5938c59cc00131c2c0e4a6bc0.pdf",
+     "belge_sha256": "177a62c5ac0f702a84137dbf31600c6f7d564cf5938c59cc00131c2c0e4a6bc0",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "yer": "İstanbul",
@@ -3185,8 +3280,8 @@
      "donem": "( 12 Ekim - 19 Ekim)",
      "baslangic_zaman": "2026-10-12T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:41:50+03:00",
-     "belge_ozeti": "13ea9ad6517153b38392307ad69a466d5b9ad390560a8a4145ceffabd2af6255",
+     "detay_guncelleme": "2026-10-14T11:46:21+03:00",
+     "belge_ozeti": "1678979b37b6357dfa6bb83a542b00a5dd3cfb33a8e36b8cb236bbb8fc160c2f",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -3209,8 +3304,8 @@
       }
      ],
      "basvuru_notu": "Şahsen, kargo ya da posta yoluyla yapılan başvurular kabul edilmeyecektir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/13ea9ad6517153b38392307ad69a466d5b9ad390560a8a4145ceffabd2af6255.pdf",
-     "belge_sha256": "13ea9ad6517153b38392307ad69a466d5b9ad390560a8a4145ceffabd2af6255",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/1678979b37b6357dfa6bb83a542b00a5dd3cfb33a8e36b8cb236bbb8fc160c2f.pdf",
+     "belge_sha256": "1678979b37b6357dfa6bb83a542b00a5dd3cfb33a8e36b8cb236bbb8fc160c2f",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "puan_turleri": [
@@ -3232,8 +3327,8 @@
      "donem": "( 2 Kasım - 6 Kasım)",
      "baslangic_zaman": "2026-11-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:42:03+03:00",
-     "belge_ozeti": "edf273aa1e6a43025c88c916f0441d9e22e2522e6ed0c43004fda3c90d61987e",
+     "detay_guncelleme": "2026-10-14T11:46:26+03:00",
+     "belge_ozeti": "8286c409c37b83c2159b9ce73928ddd73f041ff6665ccc913501bb451ad8ca5d",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -3264,8 +3359,8 @@
       }
      ],
      "basvuru_notu": "a) Elektronik ortamda başvurular, 02/11/2026 – 06/11/2026 tarihleri arasında istenilen belgeler eklenmek suretiyle Belediyemizin celtikbelediyesi@celtik.bel.tr a dresine yapılacaktır.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/edf273aa1e6a43025c88c916f0441d9e22e2522e6ed0c43004fda3c90d61987e.pdf",
-     "belge_sha256": "edf273aa1e6a43025c88c916f0441d9e22e2522e6ed0c43004fda3c90d61987e",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/8286c409c37b83c2159b9ce73928ddd73f041ff6665ccc913501bb451ad8ca5d.pdf",
+     "belge_sha256": "8286c409c37b83c2159b9ce73928ddd73f041ff6665ccc913501bb451ad8ca5d",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "puan_turleri": [
@@ -3287,8 +3382,8 @@
      "donem": "( 25 Eylül - 8 Aralık)",
      "baslangic_zaman": "2026-09-25T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:41:59+03:00",
-     "belge_ozeti": "b3647c8ac678d859af62f89015491ca1e4b5def1ccb232280df67dc625a6fcc6",
+     "detay_guncelleme": "2026-10-14T11:46:28+03:00",
+     "belge_ozeti": "ebd811bbefd9c069da002c6c989089c9f35d631d83afc19fb20825b31e5d212c",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -3311,8 +3406,8 @@
       }
      ],
      "basvuru_notu": "Hizmet Belgesi (Halen bir kamu kurumunda çalışmakta olanlar ile ayrılmış olanlar için), ÖĞRETİM GÖREVLİSİ BAŞVURU YERİ VE ŞEKLİ Başvuru, Eskişehir Teknik Üniversitesi Personel Daire Başkanlığı (Rektörlük Binası), İki Eylül Kampüsü-ESKİŞEHİR adresine başvuru formu ve ekleriyle birlikte “şahsen veya postayla” yapılacaktır.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/b3647c8ac678d859af62f89015491ca1e4b5def1ccb232280df67dc625a6fcc6.pdf",
-     "belge_sha256": "b3647c8ac678d859af62f89015491ca1e4b5def1ccb232280df67dc625a6fcc6",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/ebd811bbefd9c069da002c6c989089c9f35d631d83afc19fb20825b31e5d212c.pdf",
+     "belge_sha256": "ebd811bbefd9c069da002c6c989089c9f35d631d83afc19fb20825b31e5d212c",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
     },
@@ -3328,8 +3423,8 @@
      "donem": "( 23 Ekim - 27 Ekim)",
      "baslangic_zaman": "2026-10-23T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:42:07+03:00",
-     "belge_ozeti": "a3d35ec50327a0661af83554944574052a83258bdfd2e57c2479e68297dc1305",
+     "detay_guncelleme": "2026-10-14T11:46:30+03:00",
+     "belge_ozeti": "19be99236c6701bdc64182674ac3a198f84a0e9b7eee2a3dee448e46d5ead7fc",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -3364,8 +3459,8 @@
       }
      ],
      "basvuru_notu": "a) Elektronik ortamda başvurular; 23/10/2026 – 27/10/2026 tarihleri arasında istenen belgeler eklenmek suretiyle Belediyemizin muhasebe@atalan.bel.tr adresine yapılacaktır.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/a3d35ec50327a0661af83554944574052a83258bdfd2e57c2479e68297dc1305.pdf",
-     "belge_sha256": "a3d35ec50327a0661af83554944574052a83258bdfd2e57c2479e68297dc1305",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/19be99236c6701bdc64182674ac3a198f84a0e9b7eee2a3dee448e46d5ead7fc.pdf",
+     "belge_sha256": "19be99236c6701bdc64182674ac3a198f84a0e9b7eee2a3dee448e46d5ead7fc",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "yer": "Osmaniye",
@@ -3388,8 +3483,8 @@
      "donem": "( 2 Kasım - 4 Kasım)",
      "baslangic_zaman": "2026-11-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:42:16+03:00",
-     "belge_ozeti": "9ae92987b326b7ceb7982e96479b973d7977ae02b54e4c6daaa71fd44f0453d2",
+     "detay_guncelleme": "2026-10-14T11:46:33+03:00",
+     "belge_ozeti": "059672a0374d1335bf45c755896600226ddb2bd23dfb44a5d5f0a69dc1879f52",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -3416,8 +3511,8 @@
       }
      ],
      "basvuru_notu": "b) Şahsen veya iadeli taahhütlü posta yolu ile yapılacak başvurular, yukarıdaki başvuru tarihleri arasında mesai bitimine kadar (mesai günlerinde saat 08:30.-17:00 arasında) başvuru formu eksiksiz ve doğru şekilde doldurularak ve başvuru esnasında istenilen diğer belgeler eklenmek suretiyle Müftü Selim Mah. Cumhuriyet Cad. No:104 adresindeki Eleşkirt Belediye Başkanlığı Yazı İşleri Müdürlüğü birimine yapabileceklerd ir. (Geciken postalardan Belediyemiz sorumlu olmayacaktır.)",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/9ae92987b326b7ceb7982e96479b973d7977ae02b54e4c6daaa71fd44f0453d2.pdf",
-     "belge_sha256": "9ae92987b326b7ceb7982e96479b973d7977ae02b54e4c6daaa71fd44f0453d2",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/059672a0374d1335bf45c755896600226ddb2bd23dfb44a5d5f0a69dc1879f52.pdf",
+     "belge_sha256": "059672a0374d1335bf45c755896600226ddb2bd23dfb44a5d5f0a69dc1879f52",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "yer": "Ağrı",
@@ -3440,8 +3535,8 @@
      "donem": "( 2 Kasım - 4 Kasım)",
      "baslangic_zaman": "2026-11-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:42:10+03:00",
-     "belge_ozeti": "7c522abc5615b287b54cd41be01b0199f14eeb9fbd68d7cad5a97f10c59013b5",
+     "detay_guncelleme": "2026-10-14T11:46:35+03:00",
+     "belge_ozeti": "6eca2d6b0b16fb697818bd9a0a9b499efbe7f70a05fdc63c0f82f207c2b552b3",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -3468,8 +3563,8 @@
       }
      ],
      "basvuru_notu": "f) Hangikadroyabaşvuracağınadairdilekçesi(Adaylarşartlarınısağladığıyalnızcabirkadroya başvuruyapabileceklerdir). Belirtilenbaşvurutarihlerindeelektronikortamdaveyapostayoluylayapılanbaşvurularda fotokopisi gönderilen belgelerin aslının sınav tarihine kadar Kurumumuza ibraz edilmesi gerekmektedir.(AslıibrazedilmekkaydıylasuretleriBelediyemizcetasdikedilecektir.) 4.BAŞVURUYERİ,TARİHİ,ŞEKLİVESÜRESİ: Adaylar,sözlüsınavakatılabilmekiçin;",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/7c522abc5615b287b54cd41be01b0199f14eeb9fbd68d7cad5a97f10c59013b5.pdf",
-     "belge_sha256": "7c522abc5615b287b54cd41be01b0199f14eeb9fbd68d7cad5a97f10c59013b5",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/6eca2d6b0b16fb697818bd9a0a9b499efbe7f70a05fdc63c0f82f207c2b552b3.pdf",
+     "belge_sha256": "6eca2d6b0b16fb697818bd9a0a9b499efbe7f70a05fdc63c0f82f207c2b552b3",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "yer": "Muş",
@@ -3492,8 +3587,8 @@
      "donem": "( 12 Ekim - 27 Ekim)",
      "baslangic_zaman": "2026-10-12T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:42:12+03:00",
-     "belge_ozeti": "d3f5030a0e9c33a65f37c2296859b9f27e1146df4fd9e619139f8b3dc7a77e36",
+     "detay_guncelleme": "2026-10-14T11:46:37+03:00",
+     "belge_ozeti": "aeacf38828c717515a85c75329d6c4e8b5dab36c654c049e5a31222ac5fa0016",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -3516,8 +3611,8 @@
       }
      ],
      "basvuru_notu": "Başvurular, \"Başvuru Formu\" eksiksiz ve doğru bir şekilde doldurulmak suretiyle elektronik ortamda yapılacaktır. Adayların, yukarıda belirtilen sınav giriş şartları ve tercih nedenlerine dair kanıtlayıcı bilgi ve belgeleri elektronik ortamda başvuru formunun ilgili bölümlerine eklemeleri zorunludur.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/d3f5030a0e9c33a65f37c2296859b9f27e1146df4fd9e619139f8b3dc7a77e36.pdf",
-     "belge_sha256": "d3f5030a0e9c33a65f37c2296859b9f27e1146df4fd9e619139f8b3dc7a77e36",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/aeacf38828c717515a85c75329d6c4e8b5dab36c654c049e5a31222ac5fa0016.pdf",
+     "belge_sha256": "aeacf38828c717515a85c75329d6c4e8b5dab36c654c049e5a31222ac5fa0016",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "puan_turleri": [
@@ -3540,8 +3635,8 @@
      "donem": "( 26 Ekim - 2 Kasım)",
      "baslangic_zaman": "2026-10-26T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:42:18+03:00",
-     "belge_ozeti": "b5b62ee78cc6647f6151f37dd7cb252b09fdd87e4e5d257b762e30f7cecc0606",
+     "detay_guncelleme": "2026-10-14T11:46:40+03:00",
+     "belge_ozeti": "530c888287cc89e1d03cc71c1054860d880d7691e01e7567636c56806ac0c9af",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -3576,8 +3671,8 @@
       }
      ],
      "basvuru_notu": "4. BAŞVURU YERİ, TARİHİ, ŞEKLİ VE SÜRESİ: Adaylar, sözlü sınava katılabilmek için; a) Elektronik ortamda başvurular, 26/10/2026-02/11/2026 tarihleri arasında istenilen belgeler eklenmek suretiyle (https://www.turkiye.gov.tr/etvt-is-basvurusu) adresine yapılacaktır. b) Adayların, başvuru formunu eksiksiz ve doğru olarak doldurmaları gerekmektedir. Eksik bilgi ve belgelerle ya da nitelikleri uygun olmadığı halde yapılan başvurular Kurumumuzca değerlendirmeye alınmayacaktır.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/b5b62ee78cc6647f6151f37dd7cb252b09fdd87e4e5d257b762e30f7cecc0606.pdf",
-     "belge_sha256": "b5b62ee78cc6647f6151f37dd7cb252b09fdd87e4e5d257b762e30f7cecc0606",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/530c888287cc89e1d03cc71c1054860d880d7691e01e7567636c56806ac0c9af.pdf",
+     "belge_sha256": "530c888287cc89e1d03cc71c1054860d880d7691e01e7567636c56806ac0c9af",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "puan_turleri": [
@@ -3599,8 +3694,8 @@
      "donem": "( 5 Ekim - 20 Ekim)",
      "baslangic_zaman": "2026-10-05T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:42:21+03:00",
-     "belge_ozeti": "c3cb428916d65110fad7a1065ce4df2b511182d16775a18fefe24b10f3f8f480",
+     "detay_guncelleme": "2026-10-14T11:46:43+03:00",
+     "belge_ozeti": "898332d4b18bdb68aa053c5985cb937c921b0e1734251a3c45d50488f17985ef",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -3615,8 +3710,8 @@
       }
      ],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/c3cb428916d65110fad7a1065ce4df2b511182d16775a18fefe24b10f3f8f480.pdf",
-     "belge_sha256": "c3cb428916d65110fad7a1065ce4df2b511182d16775a18fefe24b10f3f8f480",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/898332d4b18bdb68aa053c5985cb937c921b0e1734251a3c45d50488f17985ef.pdf",
+     "belge_sha256": "898332d4b18bdb68aa053c5985cb937c921b0e1734251a3c45d50488f17985ef",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "belge_ogrenim": [
@@ -3636,8 +3731,8 @@
      "donem": "( 12 Ekim - 26 Ekim)",
      "baslangic_zaman": "2026-10-12T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:42:24+03:00",
-     "belge_ozeti": "4d2e829515e832d552fad7623f1718e9ccbdc3714c48d6aa770754abb5552073",
+     "detay_guncelleme": "2026-10-14T11:46:47+03:00",
+     "belge_ozeti": "73eb4479964bd9d7b7810b43085cf2ee82853ff0d8bcd1875dc49e80f538efdb",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -3660,8 +3755,8 @@
       }
      ],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/4d2e829515e832d552fad7623f1718e9ccbdc3714c48d6aa770754abb5552073.pdf",
-     "belge_sha256": "4d2e829515e832d552fad7623f1718e9ccbdc3714c48d6aa770754abb5552073",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/73eb4479964bd9d7b7810b43085cf2ee82853ff0d8bcd1875dc49e80f538efdb.pdf",
+     "belge_sha256": "73eb4479964bd9d7b7810b43085cf2ee82853ff0d8bcd1875dc49e80f538efdb",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "puan_turleri": [
@@ -3687,8 +3782,8 @@
      "donem": "( 12 Ekim - 19 Ekim)",
      "baslangic_zaman": "2026-10-12T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:42:28+03:00",
-     "belge_ozeti": "2eac8937f686552c8be7c255f6e0281d0e2ec7cd1b2108552a1eb3c96e700052",
+     "detay_guncelleme": "2026-10-14T11:46:50+03:00",
+     "belge_ozeti": "6f1afb52dc627476dcdf9f378af38604330eb121f2104f3d78cc4a9deacb8a45",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -3723,8 +3818,8 @@
       }
      ],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/2eac8937f686552c8be7c255f6e0281d0e2ec7cd1b2108552a1eb3c96e700052.pdf",
-     "belge_sha256": "2eac8937f686552c8be7c255f6e0281d0e2ec7cd1b2108552a1eb3c96e700052",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/6f1afb52dc627476dcdf9f378af38604330eb121f2104f3d78cc4a9deacb8a45.pdf",
+     "belge_sha256": "6f1afb52dc627476dcdf9f378af38604330eb121f2104f3d78cc4a9deacb8a45",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "belge_ogrenim": [
@@ -3743,8 +3838,8 @@
      "donem": "( 23 Ekim - 27 Ekim)",
      "baslangic_zaman": "2026-10-23T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:42:35+03:00",
-     "belge_ozeti": "6e4db3e1184f9398a3d8833559a84a4f470049d06a403f2cacd4d0414c09951f",
+     "detay_guncelleme": "2026-10-14T11:46:54+03:00",
+     "belge_ozeti": "98abe3cac327215c3a54e301d229fd701feb668ef73e8158d1eeb6bfa8c89319",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -3767,8 +3862,8 @@
       }
      ],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/6e4db3e1184f9398a3d8833559a84a4f470049d06a403f2cacd4d0414c09951f.pdf",
-     "belge_sha256": "6e4db3e1184f9398a3d8833559a84a4f470049d06a403f2cacd4d0414c09951f",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/98abe3cac327215c3a54e301d229fd701feb668ef73e8158d1eeb6bfa8c89319.pdf",
+     "belge_sha256": "98abe3cac327215c3a54e301d229fd701feb668ef73e8158d1eeb6bfa8c89319",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "yer": "Niğde",
@@ -3791,8 +3886,8 @@
      "donem": "( 19 Ekim - 26 Ekim)",
      "baslangic_zaman": "2026-10-19T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:42:42+03:00",
-     "belge_ozeti": "e1b1a8a75950936b88beb05ef6ef1eb204938c67e934caed31a732a495f2c7d7",
+     "detay_guncelleme": "2026-10-14T11:46:57+03:00",
+     "belge_ozeti": "a371c0d996e019f3a94b4560340c92665148d9068381b3bfa84754c24b7cc8c0",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -3827,8 +3922,8 @@
       }
      ],
      "basvuru_notu": "SINAV BAŞVURUSU Başvurular elektronik ortamda 19.10.2026 tarihinde başlayacak olup, 26.10.2026 tarihi saat 18.00'e kadar alınacaktır.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/e1b1a8a75950936b88beb05ef6ef1eb204938c67e934caed31a732a495f2c7d7.pdf",
-     "belge_sha256": "e1b1a8a75950936b88beb05ef6ef1eb204938c67e934caed31a732a495f2c7d7",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/a371c0d996e019f3a94b4560340c92665148d9068381b3bfa84754c24b7cc8c0.pdf",
+     "belge_sha256": "a371c0d996e019f3a94b4560340c92665148d9068381b3bfa84754c24b7cc8c0",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "belge_ogrenim": [
@@ -3847,8 +3942,8 @@
      "donem": "( 16 Ekim - 21 Ekim)",
      "baslangic_zaman": "2026-10-16T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:42:38+03:00",
-     "belge_ozeti": "4cd9396ffdcf8e62991d41a7d1a70bd52b7d56e884b57a29b9129eef9dc4608e",
+     "detay_guncelleme": "2026-10-14T11:46:59+03:00",
+     "belge_ozeti": "d2a3e5a5fee2c5077b707327c4a61ddd9a295346810387785b6e3d159c4f51ed",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -3867,8 +3962,8 @@
       }
      ],
      "basvuru_notu": "a) Elektronikortamdabaşvurular,16/10/2026-21/10/2026tarihleriarasındaistenilenbelgeler eklenmek suretiyle Belediyemizin elmakayabelediyesi49@gmail.com mail adresine gönderebilirler. b)Şahsenveyaiadelitaahhütlüpostayoluileyapılacakbaşvurular,yukarıdakibaşvurutarihleri arasındamesaibitiminekadar(mesaigünlerindesaat08.00-17.00arasında)başvuruformu eksiksizvedoğruşekildedoldurularakvebaşvuruesnasındaistenilendiğerbelgelereklenmek suretiyle Cumhuriyet Mahallesi Alpaslan Cad. No:63 Elmakaya-Bulanık adresindeki ElmakayaBelediyeBaşkanlığıYazıİşleriMüdürlüğübirimineyapabileceklerdir.(Geciken postalardanBelediyemizsorumluolmayacaktır.)",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/4cd9396ffdcf8e62991d41a7d1a70bd52b7d56e884b57a29b9129eef9dc4608e.pdf",
-     "belge_sha256": "4cd9396ffdcf8e62991d41a7d1a70bd52b7d56e884b57a29b9129eef9dc4608e",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/d2a3e5a5fee2c5077b707327c4a61ddd9a295346810387785b6e3d159c4f51ed.pdf",
+     "belge_sha256": "d2a3e5a5fee2c5077b707327c4a61ddd9a295346810387785b6e3d159c4f51ed",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "yer": "Muş",
@@ -3891,8 +3986,8 @@
      "donem": "( 12 Ekim - 31 Ekim)",
      "baslangic_zaman": "2026-10-12T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:42:55+03:00",
-     "belge_ozeti": "2c83afba6e81be0b913d640e5f84943e30422f432f333bc83e8871335850faf8",
+     "detay_guncelleme": "2026-10-14T11:47:02+03:00",
+     "belge_ozeti": "9e1c267b45e0e12161d208b6f8bcf3aa5e1cc2c2ac940dc62226e84f1301d236",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -3907,8 +4002,8 @@
       }
      ],
      "basvuru_notu": "Adayların, kanıtlayıcı bilgi ve belgeleri elektronik ortamda taratıp başvuru formunun ilgili bölümlerine eklemeleri zorunludu r.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/2c83afba6e81be0b913d640e5f84943e30422f432f333bc83e8871335850faf8.pdf",
-     "belge_sha256": "2c83afba6e81be0b913d640e5f84943e30422f432f333bc83e8871335850faf8",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/9e1c267b45e0e12161d208b6f8bcf3aa5e1cc2c2ac940dc62226e84f1301d236.pdf",
+     "belge_sha256": "9e1c267b45e0e12161d208b6f8bcf3aa5e1cc2c2ac940dc62226e84f1301d236",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
     },
@@ -3924,8 +4019,8 @@
      "donem": "( 26 Ekim - 28 Ekim)",
      "baslangic_zaman": "2026-10-26T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:42:47+03:00",
-     "belge_ozeti": "0faf3237fde48d15ea83b2e368e7c86a771336898de83fa34bc243aa1cdc9e24",
+     "detay_guncelleme": "2026-10-14T11:47:07+03:00",
+     "belge_ozeti": "93f90c39900042526a73bafbe3beb1617c77fcd5b0da4302954a246d51bf6475",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -3956,8 +4051,8 @@
       }
      ],
      "basvuru_notu": "a) Elektronik ortamda başvurular, 26/10/2026- 28/10/2026 tarihleri arasında istenilen belgeler eklenmek suretiyle Belediyemizin mucurinsankaynaklari@mucur.bel.tr adresine yapılacaktır",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/0faf3237fde48d15ea83b2e368e7c86a771336898de83fa34bc243aa1cdc9e24.pdf",
-     "belge_sha256": "0faf3237fde48d15ea83b2e368e7c86a771336898de83fa34bc243aa1cdc9e24",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/93f90c39900042526a73bafbe3beb1617c77fcd5b0da4302954a246d51bf6475.pdf",
+     "belge_sha256": "93f90c39900042526a73bafbe3beb1617c77fcd5b0da4302954a246d51bf6475",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "yer": "Kırşehir",
@@ -3980,8 +4075,8 @@
      "donem": "( 19 Ekim - 23 Ekim)",
      "baslangic_zaman": "2026-10-19T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:42:50+03:00",
-     "belge_ozeti": "e730054f3a05c7971a43225bf3a1de0fc5901005b1f45742be5a24c809b2fea6",
+     "detay_guncelleme": "2026-10-14T11:47:10+03:00",
+     "belge_ozeti": "032926beda17f0569739dc119f63a4a6abcaa6026f750fa812fc29edc5526451",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -4000,8 +4095,8 @@
       }
      ],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/e730054f3a05c7971a43225bf3a1de0fc5901005b1f45742be5a24c809b2fea6.pdf",
-     "belge_sha256": "e730054f3a05c7971a43225bf3a1de0fc5901005b1f45742be5a24c809b2fea6",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/032926beda17f0569739dc119f63a4a6abcaa6026f750fa812fc29edc5526451.pdf",
+     "belge_sha256": "032926beda17f0569739dc119f63a4a6abcaa6026f750fa812fc29edc5526451",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "yer": "Aydın",
@@ -4024,8 +4119,8 @@
      "donem": "( 20 Ekim - 22 Ekim)",
      "baslangic_zaman": "2026-10-20T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:42:52+03:00",
-     "belge_ozeti": "8d91b40c345cb8be513f8d08abecfcd8531c1039d932262854107f49a0b24797",
+     "detay_guncelleme": "2026-10-14T11:47:11+03:00",
+     "belge_ozeti": "cd1b75bd1fb8d0ac187edbed32eac6003a6ae8d47398a1dfbbe42cf3d245b466",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -4044,8 +4139,8 @@
       }
      ],
      "basvuru_notu": "b) Şahsenveyaiadelitaahhütlüpostayoluileyapılacakbaşvurular,yukarıdakibaşvurutarihleri arasında mesai bitimine kadar (mesai günlerinde saat 08:30/12:30-13:30-17:30 arasında) başvuruformueksiksizvedoğruşekildedoldurularakvebaşvuruesnasındaistenilendiğer belgelereklenmeksuretiyleKitirlerMah.EskiHükümetSok.No:2Gerede/BOLUadresindeki GeredeBelediyeBaşkanlığıİnsanKaynaklarıveEğitimMüdürlüğübirimineyapabileceklerdir. (GecikenpostalardanBelediyemizsorumluolmayacaktır.)",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/8d91b40c345cb8be513f8d08abecfcd8531c1039d932262854107f49a0b24797.pdf",
-     "belge_sha256": "8d91b40c345cb8be513f8d08abecfcd8531c1039d932262854107f49a0b24797",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/cd1b75bd1fb8d0ac187edbed32eac6003a6ae8d47398a1dfbbe42cf3d245b466.pdf",
+     "belge_sha256": "cd1b75bd1fb8d0ac187edbed32eac6003a6ae8d47398a1dfbbe42cf3d245b466",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "yer": "Bolu",
@@ -4068,8 +4163,8 @@
      "donem": "( 19 Ekim - 23 Ekim)",
      "baslangic_zaman": "2026-10-19T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:42:59+03:00",
-     "belge_ozeti": "b626c37bea29ce7d116b240d55987cf95291988f5893ce31664dc3d13220e87d",
+     "detay_guncelleme": "2026-10-14T11:47:13+03:00",
+     "belge_ozeti": "02c5930681722af742353f0ca7ea238953507f5362e83eba9c94e0d9d0f7e858",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -4092,8 +4187,8 @@
       }
      ],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/b626c37bea29ce7d116b240d55987cf95291988f5893ce31664dc3d13220e87d.pdf",
-     "belge_sha256": "b626c37bea29ce7d116b240d55987cf95291988f5893ce31664dc3d13220e87d",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/02c5930681722af742353f0ca7ea238953507f5362e83eba9c94e0d9d0f7e858.pdf",
+     "belge_sha256": "02c5930681722af742353f0ca7ea238953507f5362e83eba9c94e0d9d0f7e858",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "yer": "Ankara",
@@ -4116,8 +4211,8 @@
      "donem": "( 19 Ekim - 21 Ekim)",
      "baslangic_zaman": "2026-10-19T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:43:04+03:00",
-     "belge_ozeti": "e7c054535bf70726025af497880c78b9f504b8c9f533b2d8daa42df2074f17ca",
+     "detay_guncelleme": "2026-10-14T11:47:16+03:00",
+     "belge_ozeti": "a7e383f75d88f77d45a1d8783f582d04154dc3df20f4d6187b439998de8f7615",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -4152,8 +4247,8 @@
       }
      ],
      "basvuru_notu": "BAŞVURU YERİ, TARİHİ, ŞEKLİ VE SÜRESİ: Adaylar, sözlü ve uygulamalı sınava katılabilmek için; a) 19/10/2026 tarihinden 21/10/2026 tarihi mesai bitimine kadar, yukarıda sayılan belgeler ile birlikte, boy ve kilo ölçümünü yapmak üzere Karşıyaka Mahallesi Atatürk Caddesi No:2 Aralık/Iğdır adresindeki Aralık Belediye Başkanlığı Yazı İşleri Müdürlüğü birimine şahsen müracaat ederek başvuru sürecini tamamlayacaklardır. b) Başvurular şahsen yapılacaktır.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/e7c054535bf70726025af497880c78b9f504b8c9f533b2d8daa42df2074f17ca.pdf",
-     "belge_sha256": "e7c054535bf70726025af497880c78b9f504b8c9f533b2d8daa42df2074f17ca",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/a7e383f75d88f77d45a1d8783f582d04154dc3df20f4d6187b439998de8f7615.pdf",
+     "belge_sha256": "a7e383f75d88f77d45a1d8783f582d04154dc3df20f4d6187b439998de8f7615",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "yer": "Iğdır",
@@ -4178,8 +4273,8 @@
      "donem": "( 19 Ekim - 21 Ekim)",
      "baslangic_zaman": "2026-10-19T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:43:01+03:00",
-     "belge_ozeti": "aca125becd35f3dd7e680c9c11d8922065e43f1fa479c06273f041fb23835c04",
+     "detay_guncelleme": "2026-10-14T11:47:19+03:00",
+     "belge_ozeti": "1f898e541a3093a18f8b4012eaa8b3b3d403da563839936358677d5781a44947",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -4206,8 +4301,8 @@
       }
      ],
      "basvuru_notu": "a) Elektronik ortamda başvurular, 19/10/2026-21/10/2026 tarihleri arasında istenilen belgeler eklenmek suretiyle Belediyemizin taskestibelediye@gmail.com mail adresine yapılacaktır.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/aca125becd35f3dd7e680c9c11d8922065e43f1fa479c06273f041fb23835c04.pdf",
-     "belge_sha256": "aca125becd35f3dd7e680c9c11d8922065e43f1fa479c06273f041fb23835c04",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/1f898e541a3093a18f8b4012eaa8b3b3d403da563839936358677d5781a44947.pdf",
+     "belge_sha256": "1f898e541a3093a18f8b4012eaa8b3b3d403da563839936358677d5781a44947",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "yer": "Bolu",
@@ -4230,8 +4325,8 @@
      "donem": "( 20 Ekim - 22 Ekim)",
      "baslangic_zaman": "2026-10-20T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-13T22:43:11+03:00",
-     "belge_ozeti": "29c933e55c5720244b28b67959df454e4b842f0152a9b438474e5756ce531025",
+     "detay_guncelleme": "2026-10-14T11:47:23+03:00",
+     "belge_ozeti": "2442452f66cb58668dbce56bc3d40be36ec1f6074949676de530cb9f11427aab",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -4258,8 +4353,8 @@
       }
      ],
      "basvuru_notu": "- Sınava ön başvurular 20-22 Ekim 2026 tarihleri arasında, nihai başvurular ise 30 Ekim - 3 Kasım 2026 tarihleri arasında alınacaktır. 30 Ekim - 3 Kasım 2026 tarihleri arasında ÖSYM’ye başvurusunu yapamayan adaylar için Geç Başvuru Günü 6 Kasım 2026 tarihi olacaktır.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/29c933e55c5720244b28b67959df454e4b842f0152a9b438474e5756ce531025.pdf",
-     "belge_sha256": "29c933e55c5720244b28b67959df454e4b842f0152a9b438474e5756ce531025",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/2442452f66cb58668dbce56bc3d40be36ec1f6074949676de530cb9f11427aab.pdf",
+     "belge_sha256": "2442452f66cb58668dbce56bc3d40be36ec1f6074949676de530cb9f11427aab",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "puan_turleri": [
@@ -4277,7 +4372,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-10-14T07:34:03.682247+00:00",
+   "kontrol": "2026-10-14T08:48:06.602772+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -4297,7 +4392,7 @@
       }
      ],
      "yayim_tarihi": "2026-10-09",
-     "detay_guncelleme": "2026-10-13T22:43:46+03:00",
+     "detay_guncelleme": "2026-10-14T11:47:31+03:00",
      "csb_detay_surumu": 4,
      "ozet": "Isparta ili Sarıidris Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Belediye Zabıta Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadroya açıktan atama yoluyla zabıta memuru alımı yapılacaktır. Son başvuru: 20.11.2026.",
      "belgeler": [
@@ -4331,7 +4426,7 @@
       }
      ],
      "yayim_tarihi": "2026-10-09",
-     "detay_guncelleme": "2026-10-13T22:43:56+03:00",
+     "detay_guncelleme": "2026-10-14T11:47:33+03:00",
      "csb_detay_surumu": 4,
      "ozet": "Edirne ili Keşan Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır. Son başvuru: 19.11.2026.",
      "belgeler": [
@@ -4369,7 +4464,7 @@
       }
      ],
      "yayim_tarihi": "2026-10-09",
-     "detay_guncelleme": "2026-10-13T22:44:10+03:00",
+     "detay_guncelleme": "2026-10-14T11:47:35+03:00",
      "csb_detay_surumu": 4,
      "ozet": "Nevşehir ili Ortahisar Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır. Son başvuru: 02.10.2026.",
      "belgeler": [
@@ -4404,7 +4499,7 @@
       }
      ],
      "yayim_tarihi": "2026-10-06",
-     "detay_guncelleme": "2026-10-13T22:44:11+03:00",
+     "detay_guncelleme": "2026-10-14T11:47:36+03:00",
      "csb_detay_surumu": 4,
      "ozet": "Rize Belediyesinin 02/10/2026 tarihli ve 49030 sayılı yazısına istinaden ilk defa atanmak üzere sözleşmeli personel (Jeoloji Mühendisi) alım ilanı iptal edilmiştir.",
      "belgeler": [],
@@ -4428,7 +4523,7 @@
       }
      ],
      "yayim_tarihi": "2026-10-06",
-     "detay_guncelleme": "2026-10-13T22:44:16+03:00",
+     "detay_guncelleme": "2026-10-14T11:47:36+03:00",
      "csb_detay_surumu": 4,
      "ozet": "Rize Belediyesinin 02/10/2026 tarihli ve 49031 sayılı yazısına istinaden ilk defa atanmak üzere sözleşmeli personel (Ziraat Mühendisi) alım ilanı iptal edilmiştir.",
      "belgeler": [],
@@ -4452,7 +4547,7 @@
       }
      ],
      "yayim_tarihi": "2026-10-06",
-     "detay_guncelleme": "2026-10-13T22:44:23+03:00",
+     "detay_guncelleme": "2026-10-14T11:47:38+03:00",
      "csb_detay_surumu": 4,
      "ozet": "Muş ili Malazgirt Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır. Son başvuru: 04.11.2026.",
      "belgeler": [
@@ -4499,7 +4594,7 @@
       }
      ],
      "yayim_tarihi": "2026-10-01",
-     "detay_guncelleme": "2026-10-13T22:44:25+03:00",
+     "detay_guncelleme": "2026-10-14T11:47:39+03:00",
      "csb_detay_surumu": 4,
      "ozet": "Rize Belediyesinin 30/09/2026 tarihli ve 48847 sayılı yazısına istinaden ilk defa atanmak üzere sözleşmeli personel (tekniker) alım ilanı iptal edilmiştir",
      "belgeler": [],
@@ -4523,7 +4618,7 @@
       }
      ],
      "yayim_tarihi": "2026-09-29",
-     "detay_guncelleme": "2026-10-13T22:44:34+03:00",
+     "detay_guncelleme": "2026-10-14T11:47:40+03:00",
      "csb_detay_surumu": 4,
      "ozet": "Rize Belediyesinin 23/09/2026 tarihli ve 48367 sayılı yazısına istinaden ilk defa atanmak üzere sözleşmeli personel (Gıda Mühendisi) alım ilanı iptal edilmiştir.",
      "belgeler": [],
@@ -4547,7 +4642,7 @@
       }
      ],
      "yayim_tarihi": "2026-09-29",
-     "detay_guncelleme": "2026-10-13T22:44:49+03:00",
+     "detay_guncelleme": "2026-10-14T11:47:42+03:00",
      "csb_detay_surumu": 4,
      "ozet": "İstanbul ili Şile Belediye Başkanlığı bünyesinde 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği ile Belediye Zabıta Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla, belirtilen boş kadrolara açıktan atama yoluyla memur ve zabıta memuru alınacaktır. Son başvuru: 13.11.2026.",
      "belgeler": [
@@ -4585,7 +4680,7 @@
       }
      ],
      "yayim_tarihi": "2026-09-29",
-     "detay_guncelleme": "2026-10-13T22:44:50+03:00",
+     "detay_guncelleme": "2026-10-14T11:47:43+03:00",
      "csb_detay_surumu": 4,
      "ozet": "İstanbul ili Şile Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Belediye Zabıta Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla zabıta memuru alımı yapılacaktır. Son başvuru: 06.11.2026.",
      "belgeler": [
@@ -4619,7 +4714,7 @@
       }
      ],
      "yayim_tarihi": "2026-09-29",
-     "detay_guncelleme": "2026-10-13T22:44:51+03:00",
+     "detay_guncelleme": "2026-10-14T11:47:45+03:00",
      "csb_detay_surumu": 4,
      "ozet": "Niğde ili Çukurkuyu Belediyesinin 21.09.2026 tarihli ve 5651 sayılı yazısına istinaden ilk defa zabıta memuru alımı ilanı iptal edildi.",
      "belgeler": [],
@@ -4643,7 +4738,7 @@
       }
      ],
      "yayim_tarihi": "2026-09-29",
-     "detay_guncelleme": "2026-10-13T22:44:52+03:00",
+     "detay_guncelleme": "2026-10-14T11:47:46+03:00",
      "csb_detay_surumu": 4,
      "ozet": "Zonguldak Belediyesinin 24.09.2026 tarihli ve 190079 sayılı yazısına istinaden ilk defa zabıta memuru alımı ilanı iptal edilmiştir.",
      "belgeler": [],
@@ -4667,7 +4762,7 @@
       }
      ],
      "yayim_tarihi": "2026-09-23",
-     "detay_guncelleme": "2026-10-13T22:44:54+03:00",
+     "detay_guncelleme": "2026-10-14T11:47:48+03:00",
      "csb_detay_surumu": 4,
      "ozet": "Osmaniye ili Atalan Belediye Başkanlığı bünyesinde 5393 sayılı Belediye Kanununun 49 uncu maddesi ile Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla, belirtilen boş pozisyona tam zamanlı sözleşmeli personel alınacaktır Son başvuru: 27.10.2026.",
      "belgeler": [
@@ -4701,7 +4796,7 @@
       }
      ],
      "yayim_tarihi": "2026-09-21",
-     "detay_guncelleme": "2026-10-13T22:44:55+03:00",
+     "detay_guncelleme": "2026-10-14T11:47:49+03:00",
      "csb_detay_surumu": 4,
      "ozet": "Rize Belediyesinin 16.09.2026 tarihli ve 47818 sayılı yazısına istinaden ilk defa sözleşmeli personel (Çevre Mühendisi) alım ilanı iptal edilmiştir.",
      "belgeler": [],
@@ -4725,7 +4820,7 @@
       }
      ],
      "yayim_tarihi": "2026-09-14",
-     "detay_guncelleme": "2026-10-13T22:44:55+03:00",
+     "detay_guncelleme": "2026-10-14T11:47:50+03:00",
      "csb_detay_surumu": 4,
      "ozet": "Rize Belediyesinin 11/09/2026 tarihli ve 47570 sayılı yazısına istinaden ilk defa sözleşmeli personel (mimar) alım ilanı iptal edilmiştir",
      "belgeler": [],
@@ -4749,7 +4844,7 @@
       }
      ],
      "yayim_tarihi": "2026-09-14",
-     "detay_guncelleme": "2026-10-13T22:44:57+03:00",
+     "detay_guncelleme": "2026-10-14T11:47:52+03:00",
      "csb_detay_surumu": 4,
      "ozet": "Rize Belediyesinin 09/09/2026 tarihli ve 47452 sayılı yazısına istinaden ilk defa sözleşmeli personel (peyzaj mimarı) alım ilanı iptal edilmiştir.",
      "belgeler": [],
@@ -4773,7 +4868,7 @@
       }
      ],
      "yayim_tarihi": "2026-09-14",
-     "detay_guncelleme": "2026-10-13T22:45:00+03:00",
+     "detay_guncelleme": "2026-10-14T11:47:54+03:00",
      "csb_detay_surumu": 4,
      "ozet": "Üsküdar Belediyesinin 11/09/2026 tarihli ve 480167 sayılı yazısına istinaden ilk defa memur ve zabıta memuru alım ilanı iptal edilmiştir.",
      "belgeler": [],
@@ -4797,7 +4892,7 @@
       }
      ],
      "yayim_tarihi": "2026-09-14",
-     "detay_guncelleme": "2026-10-13T22:45:06+03:00",
+     "detay_guncelleme": "2026-10-14T11:47:56+03:00",
      "csb_detay_surumu": 4,
      "ozet": "Bolu ili Gerede Belediye Başkanlığı bünyesinde 5393 sayılı Belediye Kanununun 49 uncu maddesi ile Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla, belirtilen boş pozisyona tam zamanlı sözleşmeli personel alınacaktır. Son başvuru: 22.10.2026.",
      "belgeler": [
@@ -4831,7 +4926,7 @@
       }
      ],
      "yayim_tarihi": "2026-09-14",
-     "detay_guncelleme": "2026-10-13T22:45:16+03:00",
+     "detay_guncelleme": "2026-10-14T11:47:57+03:00",
      "csb_detay_surumu": 4,
      "ozet": "Kırşehir ili Mucur Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır. Son başvuru: 28.10.2026.",
      "belgeler": [
@@ -4865,7 +4960,7 @@
       }
      ],
      "yayim_tarihi": "2026-09-14",
-     "detay_guncelleme": "2026-10-13T22:45:26+03:00",
+     "detay_guncelleme": "2026-10-14T11:47:59+03:00",
      "csb_detay_surumu": 4,
      "ozet": "Aydın ili Didim Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanunu’na tabi olarak istihdam edilmek üzere; Belediye Zabıta Yönetmeliği hükümlerine göre aşağıda kadro unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla zabıta memuru alımı yapılacaktır. Son başvuru: 23.10.2026.",
      "belgeler": [
@@ -4899,7 +4994,7 @@
       }
      ],
      "yayim_tarihi": "2026-09-14",
-     "detay_guncelleme": "2026-10-13T22:45:31+03:00",
+     "detay_guncelleme": "2026-10-14T11:48:01+03:00",
      "csb_detay_surumu": 4,
      "ozet": "Muş ili Elmakaya Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır Son başvuru: 21.10.2026.",
      "belgeler": [
@@ -4933,7 +5028,7 @@
       }
      ],
      "yayim_tarihi": "2026-09-10",
-     "detay_guncelleme": "2026-10-13T22:45:36+03:00",
+     "detay_guncelleme": "2026-10-14T11:48:02+03:00",
      "csb_detay_surumu": 4,
      "ozet": "Ankara ili Pursaklar Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Belediye Zabıta Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla zabıta memuru alımı yapılacaktır. Son başvuru: 23.10.2026.",
      "belgeler": [
@@ -4975,7 +5070,7 @@
       }
      ],
      "yayim_tarihi": "2026-09-09",
-     "detay_guncelleme": "2026-10-13T22:45:40+03:00",
+     "detay_guncelleme": "2026-10-14T11:48:04+03:00",
      "csb_detay_surumu": 4,
      "ozet": "Bolu ili Taşkesti Belediye Başkanlığı bünyesinde 5393 sayılı Belediye Kanununun 49 uncu maddesi ile Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla, belirtilen boş pozisyona tam zamanlı sözleşmeli personel alınacaktır. Son başvuru: 21.10.2026.",
      "belgeler": [
@@ -5009,7 +5104,7 @@
       }
      ],
      "yayim_tarihi": "2026-09-09",
-     "detay_guncelleme": "2026-10-13T22:45:41+03:00",
+     "detay_guncelleme": "2026-10-14T11:48:06+03:00",
      "csb_detay_surumu": 4,
      "ozet": "Iğdır ili Aralık Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanunu’na tabi olarak istihdam edilmek üzere; Belediye İtfaiye Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla itfaiye eri alımı yapılacaktır Son başvuru: 21.10.2026.",
      "belgeler": [
@@ -6712,7 +6807,7 @@
    ],
    "sart_kadro_sayisi": 4,
    "basvuru_notu": "Bu duyuruda belirtilen esaslara uygun olmayan, posta yolu veya şahsen müracaat şeklinde yapılan başvurular kabul edilmeyecektir.",
-   "detay_guncelleme": "2026-10-13T22:45:42+03:00",
+   "detay_guncelleme": "2026-10-14T11:48:07+03:00",
    "kk_detay_surumu": 2
   },
   "https://kariyerkapisi.gov.tr/IlanDetay?i=11272843-b0f1-470e-af31-cc176fa0e5d4": {
@@ -6732,7 +6827,7 @@
    ],
    "sart_kadro_sayisi": 1,
    "basvuru_notu": "Sadece elektronik ortamda yapılan başvurular geçerli olup ilanda belirtilen şartlara uygun olmayan başvurular ile elden, e-posta veya posta yoluyla yapılacak başvurular kabul edilmeyecektir.",
-   "detay_guncelleme": "2026-10-13T22:45:43+03:00",
+   "detay_guncelleme": "2026-10-14T11:48:08+03:00",
    "kk_detay_surumu": 2
   },
   "https://kariyerkapisi.gov.tr/IlanDetay?i=db21f412-186a-4d5c-bc46-03dff9ea17fb": {
