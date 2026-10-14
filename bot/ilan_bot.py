@@ -329,9 +329,10 @@ def utm_ekle(url, site_url, ortam='kanal'):
     return govde + ('&' if '?' in govde else '?') + 'utm_source=telegram&utm_medium=' + ortam + kare + parca
 
 
-def telegram_gonder(token, chat_id, metin, ilan_linki="", site_url="", foto=None, yanit=None):
+def telegram_gonder(token, chat_id, metin, ilan_linki="", site_url="", foto=None, yanit=None, ek_dugmeler=()):
     """Gönderir; başarıda Telegram message_id'sini (yoksa True), başarısızlıkta False döndürür.
-    yanit: bir mesaja yanıt olarak göndermek için message_id (mesaj silinmişse yine de gönderilir)."""
+    yanit: bir mesaja yanıt olarak göndermek için message_id (mesaj silinmişse yine de gönderilir).
+    ek_dugmeler: [(yazı, site adresi)] — site düğmesinin üstünde, her biri ayrı satır (akşam kartında ilan başına)."""
     url = f"https://api.telegram.org/bot{token}/{'sendPhoto' if foto else 'sendMessage'}"
     alanlar = {
         "chat_id": chat_id,
@@ -343,6 +344,8 @@ def telegram_gonder(token, chat_id, metin, ilan_linki="", site_url="", foto=None
     if ilan_linki:
         label='🔎 İlanı incele'
         dugmeler.append([{"text": label, "url": utm_ekle(ilan_linki, site_url)}])
+    for yazi, adres in ek_dugmeler or ():
+        dugmeler.append([{"text": yazi, "url": utm_ekle(adres, site_url)}])
     if site_url:
         dugmeler.append([{"text": "🌐 Tüm kamu ilanları", "url": utm_ekle(site_url, site_url)}])
     if dugmeler:
@@ -611,17 +614,24 @@ def kopyasiz(secilen, ilanlar):
         except Exception:
             return 0
 
+    from kopya import _hostlar
     gruplar, sira = {}, []
     for i in secilen:
         k = kurum_kimligi(i)
-        anahtarlar = {('g', kof.get(i['id'], i['id'])), ('k', i.get('son_tarih'), k[:2] if k else i['id'])}
-        hedef = next((g for g in sira if gruplar[g]['anahtar'] & anahtarlar), None)
+        grup = ('g', kof.get(i['id'], i['id']))
+        kurum_gun = ('k', i.get('son_tarih'), k[:2] if k else i['id'])
+        hostlar = _hostlar(i)
+        # Aynı kurum + aynı son gün yalnız FARKLI kaynaktan geliyorsa kopya sayılır. 14 Ekim 2026: SBB'deki iki ayrı MSB ilanı
+        # (Deniz Kuvvetleri ve TSK subay alımı, ikisi de 2 Kasım) tek ilana indirilmiş, akşam kartında biri görünmemişti.
+        hedef = next((g for g in sira if grup in gruplar[g]['anahtar']
+                      or (kurum_gun in gruplar[g]['anahtar'] and not (gruplar[g]['host'] & hostlar))), None)
         if hedef is None:
-            gruplar[i['id']] = {'anahtar': anahtarlar, 'kayit': i}
+            gruplar[i['id']] = {'anahtar': {grup, kurum_gun}, 'kayit': i, 'host': set(hostlar)}
             sira.append(i['id'])
             continue
         g = gruplar[hedef]
-        g['anahtar'] |= anahtarlar
+        g['anahtar'] |= {grup, kurum_gun}
+        g['host'] |= hostlar
         if ayrintili(i) > ayrintili(g['kayit']):
             g['kayit'] = i
     return [gruplar[g]['kayit'] for g in sira]
@@ -675,9 +685,44 @@ def aksam_yeniler(ilanlar, cfg, zaman):
 
 
 def aksam_mesaj(ilanlar):
-    """Akşam kartının metni: tek satır (ayrıntı görselde, site düğmede)."""
+    """Akşam kartının metni: sayı satırı + en kalabalık ilan (bildirim önizlemesinde görünen tek şey bu metin)."""
+    from kart_tasarimlari import veri as kart_verisi, kisa_kurum
     kadro = sabah_toplam_kadro(ilanlar)
-    return f"🆕 <b>Bugün yayımlanan {len(ilanlar)} ilan</b>" + (f" · {kadro} kadro" if kadro else "")
+    metin = (f"🆕 <b>Bugün {len(ilanlar)} yeni kamu ilanı yayımlandı</b>" if len(ilanlar) > 1 else "🆕 <b>Bugün 1 yeni kamu ilanı yayımlandı</b>") \
+        + (f" · {kadro} kadro" if kadro else "")
+    enler = sorted(((kart_verisi(i)['toplam'] or 0, i) for i in ilanlar), key=lambda x: -x[0])
+    if len(ilanlar) > 1 and enler and enler[0][0]:
+        metin += f"\n🏆 En kalabalık: {html.escape(kisa_kurum(kart_verisi(enler[0][1])['kurum']))}, {enler[0][0]} kişi"
+    metin += "\n\n👇 İlgilendiğin ilana dokun; şartları, kadroları ve başvuru bağlantısını gör."
+    return metin
+
+
+from ek_kaynaklar import KURUM_KISALTMALARI
+KISA_AD = {ad: kisa for kisa, ad in KURUM_KISALTMALARI.items()}   # düğmede yer kazanmak için: Milli Savunma Bakanlığı -> MSB
+AKSAM_DUGME_EN_COK = 7   # kartta görünen satır sayısı kadar (kart_tasarimlari.TOPLU_EN_COK_SATIR)
+
+
+def aksam_dugmeleri(ilanlar, logolar, site_url):
+    """Kartın satır sırasıyla (logolu ilanlar önce) ilan başına düğme: 'Kurum · N kişi' -> sitedeki ilan sayfası.
+    Görsel tıklanamadığı için kişi ilgilendiği ilana buradan tek dokunuşla gider."""
+    from kart_tasarimlari import veri as kart_verisi, kisa_kurum, toplu_satir
+    sirali = [x for x, l in zip(ilanlar, logolar) if l] + [x for x, l in zip(ilanlar, logolar) if not l]
+    sonuc = []
+    for i in sirali[:AKSAM_DUGME_EN_COK]:
+        try:
+            adres = ilan_sayfasi(i, site_url)
+        except ValueError:
+            continue
+        v = kart_verisi(i)
+        # kişi sayısı yoksa kısaltılmış kadro adı: aynı kurumun iki ilanı (MSB Deniz / TSK) düğmede ayırt edilsin
+        kurum = KISA_AD.get(kisa_kurum(v['kurum']), kisa_kurum(v['kurum']))
+        if v['toplam']:
+            yazi = f"{kurum} · {v['toplam']} kişi"
+        else:
+            yazi = f"{kurum} · {toplu_satir(i)[1]}"
+
+        sonuc.append((yazi if len(yazi) <= 60 else yazi[:59] + '…', adres))
+    return sonuc
 
 
 def sabah_yeniler(ilanlar, gonderilen, cfg, zaman):
@@ -1141,13 +1186,19 @@ def main():
             if a.dry_run:
                 print('--- (önizleme, gönderilmedi) ---\n' + metin + '\n')
                 continue
+            logolar = [kurum_logosu(x) for x in i]
             try:
                 from kart_tasarimlari import yeni_ilanlar_karti
-                foto = yeni_ilanlar_karti(i, simdi(), [kurum_logosu(x) for x in i])
+                foto = yeni_ilanlar_karti(i, simdi(), logolar)
             except Exception as exc:
                 print(f'Akşam kartı oluşturulamadı ({type(exc).__name__}); yalnız metin gönderilecek.', file=sys.stderr)
                 foto = None
-            mid = telegram_gonder(token, chat_id, metin, '', site_url, foto=foto) if (token and chat_id) else False
+            try:
+                ek = aksam_dugmeleri(i, logolar, site_url)
+            except Exception as exc:
+                print(f'Akşam ilan düğmeleri hazırlanamadı ({type(exc).__name__}).', file=sys.stderr)
+                ek = []
+            mid = telegram_gonder(token, chat_id, metin, '', site_url, foto=foto, ek_dugmeler=ek) if (token and chat_id) else False
             if not mid:
                 hata = True
                 break

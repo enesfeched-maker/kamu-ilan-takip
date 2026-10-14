@@ -554,7 +554,7 @@ class AksamKartiTests(unittest.TestCase):
         with patch.object(ilan_bot, 'simdi', return_value=an):
             sonuc = ilan_bot.aksam_yeniler(ilanlar, {}, an)
         self.assertEqual({i['id'] for i in sonuc}, {'i2', 'i3'})
-        self.assertIn('Bugün yayımlanan 2 ilan', ilan_bot.aksam_mesaj(sonuc))
+        self.assertIn('Bugün 2 yeni kamu ilanı yayımlandı', ilan_bot.aksam_mesaj(sonuc))
 
 
 class GununSozuTests(unittest.TestCase):
