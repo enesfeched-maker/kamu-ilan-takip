@@ -1,5 +1,5 @@
 {
- "guncelleme": "2026-10-15T16:24:24+03:00",
+ "guncelleme": "2026-10-15T17:45:19+03:00",
  "ilanlar": [
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=9c82aab5-022e-43c8-b7f1-e6cf329d205b",
@@ -3741,7 +3741,23 @@
    "ogrenim": [
     "ortaogretim"
    ],
-   "kpss": "kpss"
+   "kpss": "kpss",
+   "duzeltmeler": [
+    {
+     "id": "sbb-456705609dc40fbb2767174f",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "tur": "diger",
+     "cumle": "",
+     "tarih": "2026-09-26"
+    },
+    {
+     "id": "csb-477402",
+     "link": "https://yerelyonetimler.csb.gov.tr/kirsehir-ili-mucur-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-ve-itfaiye-eri-alimi-duzeltme-ilani-duyuru-477402",
+     "tur": "diger",
+     "cumle": "",
+     "tarih": "2026-10-02"
+    }
+   ]
   },
   {
    "id": "sbb-30ebc2e50588b1da8b58302f",
@@ -3846,6 +3862,22 @@
    ],
    "iller": [
     "Kırşehir"
+   ],
+   "duzeltmeler": [
+    {
+     "id": "sbb-456705609dc40fbb2767174f",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "tur": "diger",
+     "cumle": "",
+     "tarih": "2026-09-26"
+    },
+    {
+     "id": "csb-477402",
+     "link": "https://yerelyonetimler.csb.gov.tr/kirsehir-ili-mucur-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-ve-itfaiye-eri-alimi-duzeltme-ilani-duyuru-477402",
+     "tur": "diger",
+     "cumle": "",
+     "tarih": "2026-10-02"
+    }
    ]
   },
   {
@@ -8811,7 +8843,7 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-15T16:23:21+03:00",
+   "detay_guncelleme": "2026-10-15T17:42:10+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-edc2d470694c21853b0687e1",
@@ -10270,7 +10302,7 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-15T16:23:00+03:00",
+   "detay_guncelleme": "2026-10-15T17:41:46+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-372564423bd22d94fde88cb4",
@@ -10588,7 +10620,7 @@
      "link": "https://yerelyonetimler.csb.gov.tr/bolu-ili-taskesti-belediye-baskanligina-ilk-defa-atanmak-uzere-sozlesmeli-personel-alim-ilani-duyuru-477478"
     }
    ],
-   "detay_guncelleme": "2026-10-15T16:23:08+03:00",
+   "detay_guncelleme": "2026-10-15T17:41:56+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "csb-477478",
@@ -10638,7 +10670,7 @@
      "link": "https://www.iskur.gov.tr/medya/0zyoftxs/mu%C5%9F-elmakaya-belediyesi-memur-al%C4%B1m-ilan%C4%B1-21102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-15T16:23:37+03:00",
+   "detay_guncelleme": "2026-10-15T17:42:29+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-3f593d9e3c71078c698a111a"
@@ -10686,7 +10718,7 @@
      "link": "https://www.iskur.gov.tr/medya/lntnwe1n/i%C4%9Fd%C4%B1r-aral%C4%B1k-belediyesi-itfaiye-eri-al%C4%B1m-ilan%C4%B1-21102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-15T16:23:49+03:00",
+   "detay_guncelleme": "2026-10-15T17:42:43+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-9d4d97ec470c2efcf5b3e55c"
@@ -11113,7 +11145,7 @@
      "link": "https://yerelyonetimler.csb.gov.tr/bolu-ili-gerede-belediye-baskanligina-ilk-defa-atanmak-uzere-sozlesmeli-personel-alim-ilani-duyuru-477600"
     }
    ],
-   "detay_guncelleme": "2026-10-15T16:23:08+03:00",
+   "detay_guncelleme": "2026-10-15T17:41:56+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "csb-477600",
@@ -11751,7 +11783,7 @@
      "link": "https://yerelyonetimler.csb.gov.tr/ankara-illi-pursaklar-belediye-baskanligina-ilk-defa-atanmak-uzere-zabita-memuru-alimi-ilani-duyuru-477502"
     }
    ],
-   "detay_guncelleme": "2026-10-15T16:23:00+03:00",
+   "detay_guncelleme": "2026-10-15T17:41:46+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "csb-477502",
@@ -11809,7 +11841,7 @@
      "link": "https://www.iskur.gov.tr/medya/4j0dwbbo/gelir-idaresi-ba%C5%9Fkanl%C4%B1%C4%9F%C4%B1-gelir-uzman-yard%C4%B1mc%C4%B1l%C4%B1%C4%9F%C4%B1-s%C4%B1nav-ilan%C4%B1-23102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-15T16:23:00+03:00",
+   "detay_guncelleme": "2026-10-15T17:41:46+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-ee701ad45d382400f44d53e1"
@@ -11846,7 +11878,7 @@
      "link": "https://yerelyonetimler.csb.gov.tr/aydin-ili-didim-belediye-baskanligina-ilk-defa-atanmak-uzere-zabita-memuru-alimi-ilani-duyuru-477598"
     }
    ],
-   "detay_guncelleme": "2026-10-15T16:23:05+03:00",
+   "detay_guncelleme": "2026-10-15T17:41:51+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "csb-477598",
@@ -11896,7 +11928,7 @@
      "link": "https://www.iskur.gov.tr/medya/wx1p1ned/isparta-bat%C4%B1-akdeniz-kalk%C4%B1nma-ajans%C4%B1-personel-al%C4%B1m-ilan%C4%B1-23102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-15T16:23:17+03:00",
+   "detay_guncelleme": "2026-10-15T17:42:05+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-23bb5b4d65d3d7cab7bc3531"
@@ -12360,7 +12392,7 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-15T16:23:00+03:00",
+   "detay_guncelleme": "2026-10-15T17:41:46+03:00",
    "iskur_detay_surumu": 2,
    "iskur_belge_sha256": "6df125237e1be229b413cf44b445085af307aae07a3b2cc2e7e32619b858a8f1",
    "iskur_detay_guncelleme": "2026-10-14T10:48:10+03:00",
@@ -13906,7 +13938,7 @@
      "link": "https://www.iskur.gov.tr/medya/kqjkfztt/kocaeli-do%C4%9Fu-marmara-kalk%C4%B1nma-ajans%C4%B1-personel-al%C4%B1m-ilan%C4%B1-27102026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-15T16:23:28+03:00",
+   "detay_guncelleme": "2026-10-15T17:42:19+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-427041e176b4b5fb14fbd125"
@@ -13970,7 +14002,7 @@
      "link": "https://yerelyonetimler.csb.gov.tr/osmaniye-ili-atalan-belediye-baskanligina-ilk-defa-atanmak-uzere-sozlesmeli-personel-alim-ilani-duyuru-477826"
     }
    ],
-   "detay_guncelleme": "2026-10-15T16:23:54+03:00",
+   "detay_guncelleme": "2026-10-15T17:42:48+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "csb-477826",
@@ -14420,7 +14452,7 @@
      "link": "https://yerelyonetimler.csb.gov.tr/kirsehir-ili-mucur-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-477599"
     }
    ],
-   "detay_guncelleme": "2026-10-15T16:23:25+03:00",
+   "detay_guncelleme": "2026-10-15T17:42:14+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "csb-477599",
@@ -15496,7 +15528,7 @@
      "link": "https://www.iskur.gov.tr/medya/horguglp/istanbul-bueyuek%C5%9Fehir-belediyesi-iett-i%C5%9Fletmeleri-genel-mueduerlue%C4%9Fue-memur-al%C4%B1m-ilan%C4%B1-02112026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-15T16:23:21+03:00",
+   "detay_guncelleme": "2026-10-15T17:42:10+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-20df4e86aedf099d725ee262"
@@ -16138,7 +16170,7 @@
      "link": "https://www.iskur.gov.tr/medya/ey3kjlcv/istanbul-kalk%C4%B1nma-ajans%C4%B1-personel-al%C4%B1m-ilan%C4%B1-02112026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-15T16:23:21+03:00",
+   "detay_guncelleme": "2026-10-15T17:42:10+03:00",
    "iskur_detay_surumu": 2,
    "iskur_belge_sha256": "5a485dda9faf140bf2948bef934c5ff4e01e0b26fd279a0c25840ef054b4e6f6",
    "iskur_detay_guncelleme": "2026-10-12T10:12:23+03:00",
@@ -16302,7 +16334,7 @@
      "link": "https://www.iskur.gov.tr/medya/vldigvnk/a%C4%9Fr%C4%B1-ele%C5%9Fkirt-belediyesi-memur-al%C4%B1m-ilan%C4%B1-04112026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-15T16:22:55+03:00",
+   "detay_guncelleme": "2026-10-15T17:41:41+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-0ca1c1811f87d2184aafb65b"
@@ -16354,7 +16386,7 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-15T16:23:37+03:00",
+   "detay_guncelleme": "2026-10-15T17:42:29+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "iskur-5a5a6b5acc24bdec945de41f",
@@ -16392,7 +16424,17 @@
     "lisans"
    ],
    "kpss": "kpss",
-   "baslangic_zaman": "2026-11-02T00:00:00+03:00"
+   "baslangic_zaman": "2026-11-02T00:00:00+03:00",
+   "duzeltmeler": [
+    {
+     "id": "sbb-b0dc4cbe8c3b5ea169828109",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "tur": "tarih",
+     "cumle": "Elektronik ortamda başvurular, 02/11/2026-04/11/2026 tarihleri arasında istenilen belgeler eklenmek suretiyle Belediyemizin malazgirt-b elediyesi@hotmail.com mail adresine yapılacaktır.",
+     "tarih": "2026-10-08",
+     "yeni_son_tarih": "2026-11-04"
+    }
+   ]
   },
   {
    "id": "sbb-b79b5a2fa5f2a1036a2ea5bc",
@@ -16479,7 +16521,7 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-15T16:23:45+03:00",
+   "detay_guncelleme": "2026-10-15T17:42:39+03:00",
    "ilk_gorulme": "2026-09-30T14:41:01+03:00",
    "kaynak_kimlikleri": [
     "iskur-56961c753a205497cf8368a3",
@@ -16549,7 +16591,10 @@
     "csb-478077",
     "sbb-b0dc4cbe8c3b5ea169828109"
    ],
-   "kategori": "belediye"
+   "kategori": "belediye",
+   "duzeltme_of": "iskur-5a5a6b5acc24bdec945de41f",
+   "duzeltme_degisen": "tarih",
+   "duzeltme_yeni_tarih": "2026-11-04"
   },
   {
    "id": "csb-477947",
@@ -16699,6 +16744,16 @@
    ],
    "ogrenim": [
     "lisans"
+   ],
+   "duzeltmeler": [
+    {
+     "id": "sbb-b0dc4cbe8c3b5ea169828109",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "tur": "tarih",
+     "cumle": "Elektronik ortamda başvurular, 02/11/2026-04/11/2026 tarihleri arasında istenilen belgeler eklenmek suretiyle Belediyemizin malazgirt-b elediyesi@hotmail.com mail adresine yapılacaktır.",
+     "tarih": "2026-10-08",
+     "yeni_son_tarih": "2026-11-04"
+    }
    ]
   },
   {
@@ -16718,7 +16773,7 @@
      "link": "https://www.iskur.gov.tr/medya/052pz2bi/tuerkiye-turizm-tan%C4%B1t%C4%B1m-ve-geli%C5%9Ftirme-ajans%C4%B1-personel-al%C4%B1m-ilan%C4%B1-05112026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-15T16:23:00+03:00",
+   "detay_guncelleme": "2026-10-15T17:41:46+03:00",
    "sartlar": [
     {
      "kadro": "Belgede belirtilen koşullar",
@@ -16802,7 +16857,7 @@
      "link": "https://yerelyonetimler.csb.gov.tr/konya-ili-celtik-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-477772"
     }
    ],
-   "detay_guncelleme": "2026-10-15T16:23:33+03:00",
+   "detay_guncelleme": "2026-10-15T17:42:23+03:00",
    "ilk_gorulme": "2026-09-26T20:25:31+03:00",
    "kaynak_kimlikleri": [
     "csb-477772",
@@ -17432,7 +17487,7 @@
      "link": "https://www.iskur.gov.tr/medya/tnidpj5u/mevlana-kalk%C4%B1nma-ajans%C4%B1-personel-al%C4%B1m-ilan%C4%B1-13112026.pdf"
     }
    ],
-   "detay_guncelleme": "2026-10-15T16:23:33+03:00",
+   "detay_guncelleme": "2026-10-15T17:42:23+03:00",
    "iskur_detay_surumu": 2,
    "iskur_belge_sha256": "ae9dc23ff928a676ee16ccf5599df414ded4cde59383e737d4864754992724f5",
    "iskur_detay_guncelleme": "2026-10-13T10:21:10+03:00",
@@ -17469,7 +17524,7 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-15T16:23:13+03:00",
+   "detay_guncelleme": "2026-10-15T17:42:00+03:00",
    "kadro": "2 Mühendis",
    "sartlar": [
     {
@@ -17527,7 +17582,7 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-15T16:23:17+03:00",
+   "detay_guncelleme": "2026-10-15T17:42:05+03:00",
    "kadro": "1 Zabıta Memuru",
    "sartlar": [
     {
@@ -17746,7 +17801,7 @@
      "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
-   "detay_guncelleme": "2026-10-15T16:23:41+03:00",
+   "detay_guncelleme": "2026-10-15T17:42:34+03:00",
    "sartlar": [
     {
      "kadro": "Belgede belirtilen koşullar",
@@ -18511,7 +18566,16 @@
     "lisans"
    ],
    "kategori": "belediye",
-   "kpss": "kpss"
+   "kpss": "kpss",
+   "duzeltmeler": [
+    {
+     "id": "csb-478165",
+     "link": "https://yerelyonetimler.csb.gov.tr/nevsehir-ili-ortahisar-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alimi-duzeltme-ilani-duyuru-478165",
+     "tur": "diger",
+     "cumle": "",
+     "tarih": "2026-10-09"
+    }
+   ]
   },
   {
    "id": "sbb-88a9760a607c548d73c7b5c9",
@@ -18916,7 +18980,9 @@
    ],
    "ogrenim": [
     "ortaogretim"
-   ]
+   ],
+   "duzeltme_of": "iskur-ced29e58351712e81082b7e6",
+   "duzeltme_degisen": "diger"
   },
   {
    "id": "sbb-89c8b060891cf9aed29dbcdc",
@@ -19708,22 +19774,22 @@
  ],
  "kaynak_durumlari": {
   "sbb": {
-   "kontrol": "2026-10-15T16:22:48+03:00",
+   "kontrol": "2026-10-15T17:41:32+03:00",
    "ilan_sayisi": 100,
    "hata_sayisi": 0,
-   "yerel_kontrol": "2026-10-15T13:05:15.177974+00:00",
+   "yerel_kontrol": "2026-10-15T14:06:31.337412+00:00",
    "calisma_yeri": "yerel"
   },
   "iskur": {
-   "kontrol": "2026-10-15T16:23:54+03:00",
+   "kontrol": "2026-10-15T17:42:48+03:00",
    "ilan_sayisi": 36,
    "hata_sayisi": 0
   },
   "csb": {
-   "kontrol": "2026-10-15T16:23:54+03:00",
+   "kontrol": "2026-10-15T17:42:48+03:00",
    "ilan_sayisi": 24,
    "hata_sayisi": 0,
-   "yerel_kontrol": "2026-10-15T13:05:16.828482+00:00",
+   "yerel_kontrol": "2026-10-15T14:06:32.744514+00:00",
    "calisma_yeri": "yerel"
   }
  }
