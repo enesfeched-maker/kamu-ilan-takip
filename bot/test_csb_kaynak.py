@@ -378,7 +378,7 @@ class AkisTesti(unittest.TestCase):
             k=csb.duyuru_oku(s)
         metin=ilan_bot.mesaj_olustur(k,'https://kpsstercihi.com/')
         self.assertIn('📌 <b>İptal duyurusu</b>',metin)
-        self.assertIn('Kaynak: ÇŞB Yerel Yönetimler',metin)
+        self.assertNotIn('Kaynak:',metin)   # 15 Ekim 2026: kaynak satırı kaldırıldı
         self.assertIn('Resmi ilan üzerinden kontrol edin',metin)
         self.assertEqual(ilan_bot.toplu_secim([dict(k,son_tarih=ilan_bot.simdi().date().isoformat())],{k['id']},{}),[])
         ilan_bot.siniflandir(k)

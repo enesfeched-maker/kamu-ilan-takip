@@ -515,6 +515,25 @@ def ilan_karti(ilan, logo=None, simdi=None, hatirlatma=False):
     return tasarim(ilan, logo, simdi, hatirlatma)
 
 
+def telegram_karti(ilan, logo=None, simdi=None, hatirlatma=False):
+    """Kanal için 1080xTG_EN_COK_Y: Telegram mobilde 4:5 kartın altını (kpsstercihi.com şeridi) kırpıyordu (15 Ekim 2026).
+    Afişte fotoğrafın boş üst kısmı kesilir; bilette üstte kurum başlığı olduğundan kart küçültülüp ortalanır, kenar
+    şeritleri kartın kenar renkleriyle doldurulur. Site ve Instagram 1080x1350 kartı kullanmaya devam eder."""
+    with Image.open(io.BytesIO(ilan_karti(ilan, logo, simdi, hatirlatma))) as im:
+        im = im.convert('RGB')
+        if tasarim_secimi(ilan) != 'bilet':
+            return jpeg_png(im.crop((0, Y - TG_EN_COK_Y, G, Y)))
+        olcek = TG_EN_COK_Y / Y
+        kucuk = im.resize((round(G * olcek), TG_EN_COK_Y), Image.Resampling.LANCZOS)
+        tuval = Image.new('RGB', (G, TG_EN_COK_Y), ACIK)
+        x = (G - kucuk.width) // 2
+        tuval.paste(kucuk.crop((0, 0, 1, TG_EN_COK_Y)).resize((x, TG_EN_COK_Y)), (0, 0))
+        tuval.paste(kucuk.crop((kucuk.width - 1, 0, kucuk.width, TG_EN_COK_Y)).resize((G - x - kucuk.width, TG_EN_COK_Y)),
+                    (x + kucuk.width, 0))
+        tuval.paste(kucuk, (x, 0))
+        return jpeg_png(tuval)
+
+
 # ---------------------------------------------------------------- Toplu son gün kartı (Bilet dili)
 TOPLU_EN_COK_SATIR = 7
 

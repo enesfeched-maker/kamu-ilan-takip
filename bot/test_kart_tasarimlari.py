@@ -257,3 +257,9 @@ class KisaOzetTesti(unittest.TestCase):
         self.assertEqual(kt.kisa_ozet('Türk Silahlı Kuvvetlerine En Az Dört Yıl Süreli Fakülte veya Yüksekokul Mezunlarından '
                                       '2026 Yılı Muvazzaf Subay Adayı Temini'), 'TSK Muvazzaf Subay')
         self.assertEqual(kt.kisa_ozet('Sözleşmeli Bilişim Personeli Alım İlanı'), 'Sözleşmeli Bilişim Personeli')
+
+class TelegramKartiTesti(unittest.TestCase):
+    def test_telegram_karti_kirpilmayan_boyda(self):
+        for kadro in ('Toplam 5 kişi — 5 Zabıta Memuru', 'Toplam 6 kişi — 2 Sekreter • 2 Şoför • 2 Hemşire'):
+            im = Image.open(io.BytesIO(kt.telegram_karti(ilan(kadro=kadro), simdi=SIMDI)))
+            self.assertEqual(im.size, (1080, kt.TG_EN_COK_Y))
