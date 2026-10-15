@@ -817,14 +817,30 @@ PAZAR_SOZLERI = (
 )
 
 
+# 15 Ekim 2026: hafta içi her sabah farklı, samimi iki satır (aynı söz her gün tekrarlanmasın).
+HAFTA_ICI_SOZLERI = (
+    "Yeni bir gün, yeni bir fırsat.\nKahveni al, ilanlara birlikte bakalım.",
+    "Bugün belki de beklediğin ilanın günü.\nÇayını koy, birlikte göz atalım.",
+    "Emeklerin bir gün mutlaka karşılığını bulacak.\nBugünün ilanları seni bekliyor.",
+    "Küçük adımlar büyük kapılar açar.\nBugün de bir adım daha atalım.",
+    "Güne güzel bir haberle başlamak dileğiyle.\nİlanlara birlikte bakalım mı?",
+    "Hayalindeki kadro bir ilan uzağında olabilir.\nBugün neler var, beraber bakalım.",
+    "Sabrın ve emeğin en güzel karşılığını bulsun.\nGünün ilanları hazır.",
+    "Yorulduğun günler de geçecek, inan.\nBugünün fırsatlarına birlikte bakalım.",
+    "Her başvuru, hedefe biraz daha yakınlaşmak demek.\nBugün de buradayız.",
+    "Güzel bir gün olsun, güzel haberler gelsin.\nKahveler hazırsa ilanlara geçelim.",
+)
+
+
 def gunun_sozu(zaman):
-    """Sabah özetinin ilk satırı: hafta içi sabit, cumartesi dilek, pazar haftalık sırayla (11 Ekim 2026 = ilk söz)."""
+    """Sabah özetinin ilk satırı: hafta içi her gün sıradaki söz (15 Ekim 2026 = ilk söz), cumartesi dilek,
+    pazar haftalık sırayla (11 Ekim 2026 = ilk söz)."""
     gun = zaman.weekday()
     if gun == 6:
         return PAZAR_SOZLERI[((zaman.date() - date(2026, 10, 11)).days // 7) % len(PAZAR_SOZLERI)]
     if gun == 5:
         return "Emeğimizin boşa gitmemesi dileğiyle, iyi hafta sonları."
-    return "Yeni bir gün, yeni bir fırsat.\nKahveni al, ilanlara birlikte bakalım."
+    return HAFTA_ICI_SOZLERI[(zaman.date() - date(2026, 10, 15)).days % len(HAFTA_ICI_SOZLERI)]
 
 
 def sabah_mesaj(yeniler, son_gun, acik_sayisi, site_url, zaman, aranan=None):
