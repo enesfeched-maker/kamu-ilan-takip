@@ -565,7 +565,9 @@ class GununSozuTests(unittest.TestCase):
         self.assertEqual(ilan_bot.gunun_sozu(pazar + timedelta(days=7)), ilan_bot.PAZAR_SOZLERI[1])
         self.assertEqual(ilan_bot.gunun_sozu(pazar + timedelta(days=21)), ilan_bot.PAZAR_SOZLERI[0])
         self.assertIn('hafta sonları', ilan_bot.gunun_sozu(pazar - timedelta(days=1)))
-        self.assertEqual(ilan_bot.gunun_sozu(pazar + timedelta(days=1)), 'Yeni bir gün, yeni bir fırsat.\nKahveni al, ilanlara birlikte bakalım.')
+        sozler = {ilan_bot.gunun_sozu(pazar + timedelta(days=g)) for g in range(1, 6)}   # hafta içi her gün farklı
+        self.assertEqual(len(sozler), 5)
+        self.assertTrue(sozler <= set(ilan_bot.HAFTA_ICI_SOZLERI))
 
     def test_sabah_mesajinda_basligin_altinda(self):
         an = datetime(2026, 10, 11, 9, tzinfo=ilan_bot.TR)
