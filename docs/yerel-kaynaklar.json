@@ -1,9 +1,9 @@
 {
  "schema": 1,
- "guncelleme": "2026-10-15T05:49:53.253777+00:00",
+ "guncelleme": "2026-10-15T06:20:22.153966+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-10-15T05:49:54.039870+00:00",
+   "kontrol": "2026-10-15T06:20:24.536122+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -36,6 +36,62 @@
      "basvuru_notu": "",
      "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/bcf366a472304683af73e49506b643196884c4b0edc6b6346328d67c7c5b670d.pdf",
      "belge_sha256": "bcf366a472304683af73e49506b643196884c4b0edc6b6346328d67c7c5b670d",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "belge_ogrenim": [
+      "lisans"
+     ]
+    },
+    {
+     "id": "sbb-6acbe55be4ec1f3c685ca393",
+     "baslik": "İNÖNÜ ÜNİVERSİTESİ - 3 ÖĞRETİM ELEMANI ALACAK",
+     "kurum": "İNÖNÜ ÜNİVERSİTESİ",
+     "kadro": "3 ÖĞRETİM ELEMANI ALACAK",
+     "ilan_turu": "Öğretim Elemanı",
+     "son_tarih": "2026-10-30",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 15 Ekim - 30 Ekim)",
+     "baslangic_zaman": "2026-10-15T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-10-15T09:20:23+03:00",
+     "belge_ozeti": "ab5e29f767ec0d0b7745d8f84096c91b1b423081f4d3141d7a933688cd6d1ede",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "3 ÖĞRETİM ELEMANI alımı. Son başvuru: 30.10.2026. Kabul Edilecek Başvuru Şekli Şahsen veya Posta ile Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "YDS, S.NO BİRİMİ BÖLÜMÜ ANA BİLİM DALI UNVANI ADET DRC YÖKDİL ALES AÇIKLAMA veya EŞDEĞERİ Çin dili ve edebiyatı, Çin dili ve kültürü, sinoloji 1 Yabancı Diller Yabancı Diller Yabancı Diller Öğretim Görevlisi 1 3 85 70 veya Çince mütercim ve tercümanlık Yüksekokulu Bölümü (Çince) (Söz) bölümlerinin birinden lisans mezunu olup tezli yüksek lisans yapmış olmak. 70 Lisansüstü eğitimini halk sağlığı alanında yapmış Sağlık Hizmetleri Tıbbi Hizmetler Tıbbi (Say) olup tıbbi dokümantasyon alanında çalışmaları 2 Meslek ve Teknikler Dokümantasyon Öğretim Görevlisi 1 3 (Söz) olmak. Yükseköğretim kurumlarında en az 5 yıl Yüksekokulu ve Sekreterlik (EA) ders verme deneyimine sahip olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "Doktora mezunu olup gençlik üzerine çalışma Öğretim Görevlisi 50 70 yapmış olmak. Yükseköğretim Kurulu 3 Rektörlük Kariyer Merkezi (Uygulamalı Birim) 1 3 (İngilizce) (EA) Başkanlığınca eş değerliliği kabul edilen ikinci (Söz) bir yabancı dil sınavından en az 50 puan almış olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "1-Doktora veya tıpta, diş hekimliğinde, eczacılıkta ve veteriner hekimlikte uzmanlık ya da sanatta yeterlik eğitimini tamamlamış olanlarda, meslek yüksekokullarının Yükseköğretim Kurulu tarafından belirlenen uzmanlık alanlarına atanacak olanlarda, yükseköğretim kurumlarında öğretim elemanı kadrolarında çalışmış veya çalışmakta olanlarda merkezi sınav şartı aranmaz. 2- Genel Şartlar Başlığı altında yer alan 4. madde kapsamındaki öğretim görevlisi kadroları haricindeki Meslek Yüksekokullarının öğretim elemanı kadrolarına yapılacak başvurularda yabancı dil şartı aranmaz."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "2- ALES’ten en az 70, Yükseköğretim Kurulu tarafından kabul edilen merkezi yabancı dil sınavından en az 50 puan veya eşdeğerliği kabul edilen bir sınavdan bu puan muadili bir puan almış olmak gerekir. Merkezi sınav muafiyetinden yararlanmayı talep edenlerin ön değerlendirme ve nihai değerlendirme aşamalarında ALES puanı 70 olarak kabul edilir."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "13- İdarenin ilan yayım sürecinde değişiklik yapma hakkı saklıdır. MUAFİYET 1-Doktora veya tıpta, diş hekimliğinde, eczacılıkta ve veteriner hekimlikte uzmanlık ya da sanatta yeterlik eğitimini tamamlamış olanlarda, meslek yüksekokullarının Yükseköğretim Kurulu tarafından belirlenen uzmanlık alanlarına atanacak olanlarda, yükseköğretim kurumlarında öğretim elemanı kadrolarında çalışmış veya çalışmakta olanlarda merkezi sınav şartı aranmaz."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "2- Genel Şartlar Başlığı altında yer alan 4. madde kapsamındaki öğretim görevlisi kadroları haricindeki Meslek Yüksekokullarının öğretim elemanı kadrolarına yapılacak başvurularda yabancı dil şartı aranmaz."
+      }
+     ],
+     "basvuru_notu": "Başvuru Adresi Kadronun bulunduğu ilgili birimlere yapılacaktır.",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/ab5e29f767ec0d0b7745d8f84096c91b1b423081f4d3141d7a933688cd6d1ede.pdf",
+     "belge_sha256": "ab5e29f767ec0d0b7745d8f84096c91b1b423081f4d3141d7a933688cd6d1ede",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "belge_ogrenim": [
@@ -89,8 +145,8 @@
      "donem": "( 14 Ekim - 24 Ekim)",
      "baslangic_zaman": "2026-10-14T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-14T20:58:16+03:00",
-     "belge_ozeti": "7715cc0b1d5f03e58cc57755966ad95b8b73c618a9041ffc1f2a10c511bdde0a",
+     "detay_guncelleme": "2026-10-15T09:20:24+03:00",
+     "belge_ozeti": "16ea2d020c29cd902e42a1335a11ddf958f5a13ebdcc19f59bceb7df68c1888e",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -110,41 +166,48 @@
       }
      ],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/7715cc0b1d5f03e58cc57755966ad95b8b73c618a9041ffc1f2a10c511bdde0a.pdf",
-     "belge_sha256": "7715cc0b1d5f03e58cc57755966ad95b8b73c618a9041ffc1f2a10c511bdde0a",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/16ea2d020c29cd902e42a1335a11ddf958f5a13ebdcc19f59bceb7df68c1888e.pdf",
+     "belge_sha256": "16ea2d020c29cd902e42a1335a11ddf958f5a13ebdcc19f59bceb7df68c1888e",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "duyuru_cumlesi": "Adana Alparslan Türkeş Bilim ve Teknoloji Üniversitesi Rektörlüğünden: İPTAL İLANI 20.09.2026 tarihli ve 33376 sayılı Resmî Gazete’de yayımlanan Ü niversitemiz Öğretim Üyesi Alım ilanımızda aşağıda belirtilen 14 Sıra Nolu Bilgisaya r ve Bilişim Fakültesi Bilgi Güvenliği Teknolojisi Bölümü B ilgi Güvenliği Teknolojisi Anabil im Dalı 1 (bir) adet Doktor Öğretim Üyesi ve 15 Sıra Nolu Bilgisayar ve Bilişim Fakültesi Bilişim Sistemleri ve Teknolojileri Bölümü Bilişim Sistemleri ve Teknolojileri Anabilim Dalı 1 (bir ) a d e t D o k t o r Ö ğ r e t i m Ü y e s i kadrosu ilanı iptal edilmiştir."
     },
     {
-     "id": "sbb-8c47c87928e2a3ff3b32134b",
-     "baslik": "BALIKESİR ÜNİVERSİTESİ - İPTAL İLANI",
-     "kurum": "BALIKESİR ÜNİVERSİTESİ",
-     "kadro": "İPTAL İLANI",
-     "ilan_turu": "Kamu Personeli",
-     "son_tarih": "2026-10-15",
+     "id": "sbb-5a7be7ed19c9ea8924ae799a",
+     "baslik": "ONDOKUZ MAYIS ÜNİVERSİTESİ - 2 DOKTOR ÖĞRETİM ÜYESİ İLANININ AÇIKLAMA KISMI GÜNCELLENMİŞTİR",
+     "kurum": "ONDOKUZ MAYIS ÜNİVERSİTESİ",
+     "kadro": "2 DOKTOR ÖĞRETİM ÜYESİ İLANININ AÇIKLAMA KISMI GÜNCELLENMİŞTİR",
+     "ilan_turu": "Öğretim Üyesi",
+     "son_tarih": "2026-10-27",
      "kaynak": "SBB Kamu İlan",
      "kaynak_turu": "sbb",
-     "donem": "( 14 Ekim - 15 Ekim)",
+     "donem": "( 14 Ekim - 27 Ekim)",
      "baslangic_zaman": "2026-10-14T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-14T21:31:32+03:00",
-     "belge_ozeti": "b90820ee196afc7fca775af0a4f4188694feaa5482b809707b0fa5b467c9c939",
+     "detay_guncelleme": "2026-10-14T21:31:31+03:00",
+     "belge_ozeti": "da6cfe9d75d61cf748eb6166d7086d14b715dd246594f90496268fa6412e134c",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
        "link": "https://kamuilan.sbb.gov.tr/"
       }
      ],
-     "duyuru_turu": "İptal duyurusu",
-     "ozet": "14 Ekim 2026 ÇARŞAMBA Resmî Gazete Sayı : 33400 Balıkesir Üniversitesi Rektörlüğünden: ĠPTAL ĠLANI 28.09.2026 tarih ve 33384 sayılı Resmi Gazetede yayımlanan Üniversitemiz Necatibey Eğitim Fakültesi Eğitim Bilimleri Bölümü Rehberlik ve Psikolojik Danışmanlık Anabilim Dalı Profesör kadrosu Rektörlüğümüzce iptal edilmiştir.",
-     "sartlar": [],
+     "ozet": "2 DOKTOR ÖĞRETİM ÜYESİ İLANININ AÇIKLAMA KISMI GÜNCELLENMİŞTİR. Son başvuru: 27.10.2026. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "İLAN ADET ÜNVAN BİRİM ANA BİLİM DALI/ANA AÇIKLAMA NO SANAT DALI/PROGRAM Doktor 2026/111 1 Öğretim Fen Fakültesi Yazılım Geliştirme Bilgisayar Mühendisliği alanında yüksek lisans yapmış olmak. Bayesçi makine Üyesi öğrenmesi konusunda yayını olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "Doktor Toprak Bilimi ve Bitki Besleme alanında doktora yapmış olmak. Toprakta abiyotik 2026/130 1 Öğretim Ziraat Fakültesi Toprak stres faktörleri, ağır metaller, katyonların tutulmasında matematiksel modeller Üyesi konularında yayını olmak."
+      }
+     ],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/b90820ee196afc7fca775af0a4f4188694feaa5482b809707b0fa5b467c9c939.pdf",
-     "belge_sha256": "b90820ee196afc7fca775af0a4f4188694feaa5482b809707b0fa5b467c9c939",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/da6cfe9d75d61cf748eb6166d7086d14b715dd246594f90496268fa6412e134c.pdf",
+     "belge_sha256": "da6cfe9d75d61cf748eb6166d7086d14b715dd246594f90496268fa6412e134c",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 6,
-     "duyuru_cumlesi": "14 Ekim 2026 ÇARŞAMBA Resmî Gazete Sayı : 33400 Balıkesir Üniversitesi Rektörlüğünden: ĠPTAL ĠLANI 28.09.2026 tarih ve 33384 sayılı Resmi Gazetede yayımlanan Üniversitemiz Necatibey Eğitim Fakültesi Eğitim Bilimleri Bölümü Rehberlik ve Psikolojik Danışmanlık Anabilim Dalı Profesör kadrosu Rektörlüğümüzce iptal edilmiştir."
+     "sbb_detay_surumu": 6
     },
     {
      "id": "sbb-8f95a85a84773c07862778cf",
@@ -210,41 +273,34 @@
      ]
     },
     {
-     "id": "sbb-5a7be7ed19c9ea8924ae799a",
-     "baslik": "ONDOKUZ MAYIS ÜNİVERSİTESİ - 2 DOKTOR ÖĞRETİM ÜYESİ İLANININ AÇIKLAMA KISMI GÜNCELLENMİŞTİR",
-     "kurum": "ONDOKUZ MAYIS ÜNİVERSİTESİ",
-     "kadro": "2 DOKTOR ÖĞRETİM ÜYESİ İLANININ AÇIKLAMA KISMI GÜNCELLENMİŞTİR",
-     "ilan_turu": "Öğretim Üyesi",
-     "son_tarih": "2026-10-27",
+     "id": "sbb-8c47c87928e2a3ff3b32134b",
+     "baslik": "BALIKESİR ÜNİVERSİTESİ - İPTAL İLANI",
+     "kurum": "BALIKESİR ÜNİVERSİTESİ",
+     "kadro": "İPTAL İLANI",
+     "ilan_turu": "Kamu Personeli",
+     "son_tarih": "2026-10-15",
      "kaynak": "SBB Kamu İlan",
      "kaynak_turu": "sbb",
-     "donem": "( 14 Ekim - 27 Ekim)",
+     "donem": "( 14 Ekim - 15 Ekim)",
      "baslangic_zaman": "2026-10-14T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-14T21:31:31+03:00",
-     "belge_ozeti": "da6cfe9d75d61cf748eb6166d7086d14b715dd246594f90496268fa6412e134c",
+     "detay_guncelleme": "2026-10-14T21:31:32+03:00",
+     "belge_ozeti": "b90820ee196afc7fca775af0a4f4188694feaa5482b809707b0fa5b467c9c939",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
        "link": "https://kamuilan.sbb.gov.tr/"
       }
      ],
-     "ozet": "2 DOKTOR ÖĞRETİM ÜYESİ İLANININ AÇIKLAMA KISMI GÜNCELLENMİŞTİR. Son başvuru: 27.10.2026. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
-     "sartlar": [
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "İLAN ADET ÜNVAN BİRİM ANA BİLİM DALI/ANA AÇIKLAMA NO SANAT DALI/PROGRAM Doktor 2026/111 1 Öğretim Fen Fakültesi Yazılım Geliştirme Bilgisayar Mühendisliği alanında yüksek lisans yapmış olmak. Bayesçi makine Üyesi öğrenmesi konusunda yayını olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "Doktor Toprak Bilimi ve Bitki Besleme alanında doktora yapmış olmak. Toprakta abiyotik 2026/130 1 Öğretim Ziraat Fakültesi Toprak stres faktörleri, ağır metaller, katyonların tutulmasında matematiksel modeller Üyesi konularında yayını olmak."
-      }
-     ],
+     "duyuru_turu": "İptal duyurusu",
+     "ozet": "14 Ekim 2026 ÇARŞAMBA Resmî Gazete Sayı : 33400 Balıkesir Üniversitesi Rektörlüğünden: ĠPTAL ĠLANI 28.09.2026 tarih ve 33384 sayılı Resmi Gazetede yayımlanan Üniversitemiz Necatibey Eğitim Fakültesi Eğitim Bilimleri Bölümü Rehberlik ve Psikolojik Danışmanlık Anabilim Dalı Profesör kadrosu Rektörlüğümüzce iptal edilmiştir.",
+     "sartlar": [],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/da6cfe9d75d61cf748eb6166d7086d14b715dd246594f90496268fa6412e134c.pdf",
-     "belge_sha256": "da6cfe9d75d61cf748eb6166d7086d14b715dd246594f90496268fa6412e134c",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/b90820ee196afc7fca775af0a4f4188694feaa5482b809707b0fa5b467c9c939.pdf",
+     "belge_sha256": "b90820ee196afc7fca775af0a4f4188694feaa5482b809707b0fa5b467c9c939",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 6
+     "sbb_detay_surumu": 6,
+     "duyuru_cumlesi": "14 Ekim 2026 ÇARŞAMBA Resmî Gazete Sayı : 33400 Balıkesir Üniversitesi Rektörlüğünden: ĠPTAL ĠLANI 28.09.2026 tarih ve 33384 sayılı Resmi Gazetede yayımlanan Üniversitemiz Necatibey Eğitim Fakültesi Eğitim Bilimleri Bölümü Rehberlik ve Psikolojik Danışmanlık Anabilim Dalı Profesör kadrosu Rektörlüğümüzce iptal edilmiştir."
     },
     {
      "id": "sbb-033c722678fc5975483f2d90",
@@ -4426,7 +4482,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-10-15T05:49:55.534775+00:00",
+   "kontrol": "2026-10-15T06:20:26.155570+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -17401,6 +17457,295 @@
    ],
    "belge_ogrenim": [
     "lisans"
+   ]
+  },
+  "https://kariyerkapisi.gov.tr/IlanDetay?i=fa2227c2-e4f6-43fe-b45f-82552f7277aa": {
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/84c2ad17-3aeb-4644-9240-9d403a3306d7.png",
+   "son_tarih": "2026-11-08",
+   "son_zaman": "2026-11-08T17:30:00+03:00",
+   "baslangic_zaman": "2026-10-30T08:30:00+03:00",
+   "yer": "ANKARA / YENİMAHALLE",
+   "kadro": "Toplam 21 kişi — 2 MÜDÜR YARDIMCISI • 5 ŞEF • 12 BİLGİSAYAR İŞLETMENİ • 2 MEMUR",
+   "ilan_turu": "Görevde Yükselme ve Unvan Değişikliği İlanları",
+   "ozet": "1) En az iki yıllık yüksekokul mezunu olmak veya 18/04/1999 tarihinde görevde olmak kaydıyla aynı tarih itibariyle lise mezunu olmak,",
+   "sartlar": [],
+   "sart_kadro_sayisi": 9,
+   "basvuru_notu": "3) Görevde Yükselme Sınavında başarılı olmalarına rağmen, ilan edilen kadro sayısı nedeniyle ataması yapılamayacak personelden en fazla asıl aday sayısı kadar personel, Müdürlükçe ihtiyaç duyulması halinde başarı sıralaması listesinde yedek olarak belirlenebilir. Unvan değişikliğine tabi bu kadrolar için de kıyasen bu madde hükümleri uygulanır.",
+   "detay_guncelleme": "2026-10-15T09:20:27+03:00",
+   "kk_detay_surumu": 3,
+   "kadro_detay": [
+    {
+     "unvan": "Görevde Yükselme Müdür Yardımcısı",
+     "adet": 2,
+     "iller": [
+      "ANKARA / YENİMAHALLE"
+     ],
+     "ogrenim": "",
+     "sinav": "",
+     "maddeler": [
+      "Müdür Yardımcısı Kadrosu İçin Sıra No Konular",
+      "4735 Sayılı Kamu İhale Sözleşmeleri Kanunu",
+      "5510 Sayılı Sosyal Sigortalar ve Genel Sağlık Sigortası Kanunu",
+      "4483 Sayılı Memurlar ve Diğer Kamu Görevlilerinin Yargılanması Hakkında Kanun",
+      "5176 sayılı Kamu Görevlileri Etik Kurulu Kurulması ve Bazı Kanunlarda Değişiklik Yapılması Hakkında Kanun ve İlgili Yönetmelik",
+      "5996 Sayılı Veteriner Hizmetleri Bitki Sağlığı Gıda ve Yem Kanunu",
+      "Temel Hukuk"
+     ],
+     "bolumler": [
+      [
+       "",
+       [
+        "Müdür Yardımcısı Kadrosu İçin Sıra No Konular",
+        "4735 Sayılı Kamu İhale Sözleşmeleri Kanunu",
+        "5510 Sayılı Sosyal Sigortalar ve Genel Sağlık Sigortası Kanunu",
+        "4483 Sayılı Memurlar ve Diğer Kamu Görevlilerinin Yargılanması Hakkında Kanun",
+        "5176 sayılı Kamu Görevlileri Etik Kurulu Kurulması ve Bazı Kanunlarda Değişiklik Yapılması Hakkında Kanun ve İlgili Yönetmelik",
+        "5996 Sayılı Veteriner Hizmetleri Bitki Sağlığı Gıda ve Yem Kanunu",
+        "Temel Hukuk"
+       ]
+      ]
+     ]
+    },
+    {
+     "unvan": "Görevde Yükselme Şef",
+     "adet": 5,
+     "iller": [
+      "ANKARA / YENİMAHALLE"
+     ],
+     "ogrenim": "",
+     "sinav": "",
+     "maddeler": [
+      "Şef Kadrosu İçin Sıra No Konular",
+      "4735 sayılı Kamu İhale Sözleşmeleri Kanunu",
+      "6245 Sayılı Harcırah Kanunu",
+      "Kamu Zararlarının Tahsiline İlişkin Usul ve Esaslar Hakkında Yönetmelik",
+      "Devlet Memurları Disiplin Yönetmeliği",
+      "Devlet Memurlarının Şikayet ve Müracaatları Hakkında Yönetmelik",
+      "Atatürk Orman Çiftliği Müdürlüğü Personeli Görevde Yükselme ve Unvan Değişikliği Yönetmeliği",
+      "Temel Bilgisayar Kullanımı"
+     ],
+     "bolumler": [
+      [
+       "",
+       [
+        "Şef Kadrosu İçin Sıra No Konular",
+        "4735 sayılı Kamu İhale Sözleşmeleri Kanunu",
+        "6245 Sayılı Harcırah Kanunu",
+        "Kamu Zararlarının Tahsiline İlişkin Usul ve Esaslar Hakkında Yönetmelik",
+        "Devlet Memurları Disiplin Yönetmeliği",
+        "Devlet Memurlarının Şikayet ve Müracaatları Hakkında Yönetmelik",
+        "Atatürk Orman Çiftliği Müdürlüğü Personeli Görevde Yükselme ve Unvan Değişikliği Yönetmeliği",
+        "Temel Bilgisayar Kullanımı"
+       ]
+      ]
+     ]
+    },
+    {
+     "unvan": "Görevde Yükselme Bilgisayar İşletmeni",
+     "adet": 7,
+     "iller": [
+      "ANKARA / YENİMAHALLE"
+     ],
+     "ogrenim": "",
+     "sinav": "",
+     "maddeler": [
+      "Bilgisayar İşletmeni Kadrosu İçin Sıra No Konular",
+      "Temel Bilgisayar Kullanımı",
+      "Microsoft Word",
+      "Microsoft Excel",
+      "Microsoft Powerpoint",
+      "Kurumsal Kaynak Planlama Yazılımı"
+     ],
+     "bolumler": [
+      [
+       "",
+       [
+        "Bilgisayar İşletmeni Kadrosu İçin Sıra No Konular",
+        "Temel Bilgisayar Kullanımı",
+        "Microsoft Word",
+        "Microsoft Excel",
+        "Microsoft Powerpoint",
+        "Kurumsal Kaynak Planlama Yazılımı"
+       ]
+      ]
+     ]
+    },
+    {
+     "unvan": "Görevde Yükselme Bilgisayar İşletmeni",
+     "adet": 2,
+     "iller": [
+      "ANKARA / YENİMAHALLE"
+     ],
+     "ogrenim": "",
+     "sinav": "",
+     "maddeler": [
+      "Bilgisayar İşletmeni Kadrosu İçin Sıra No Konular",
+      "Temel Bilgisayar Kullanımı",
+      "Microsoft Word",
+      "Microsoft Excel",
+      "Microsoft Powerpoint",
+      "Kurumsal Kaynak Planlama Yazılımı"
+     ],
+     "bolumler": [
+      [
+       "",
+       [
+        "Bilgisayar İşletmeni Kadrosu İçin Sıra No Konular",
+        "Temel Bilgisayar Kullanımı",
+        "Microsoft Word",
+        "Microsoft Excel",
+        "Microsoft Powerpoint",
+        "Kurumsal Kaynak Planlama Yazılımı"
+       ]
+      ]
+     ]
+    },
+    {
+     "unvan": "Görevde Yükselme Bilgisayar İşletmeni",
+     "adet": 1,
+     "iller": [
+      "ANKARA / YENİMAHALLE"
+     ],
+     "ogrenim": "",
+     "sinav": "",
+     "maddeler": [
+      "Bilgisayar İşletmeni Kadrosu İçin Sıra No Konular",
+      "Temel Bilgisayar Kullanımı",
+      "Microsoft Word",
+      "Microsoft Excel",
+      "Microsoft Powerpoint",
+      "Kurumsal Kaynak Planlama Yazılımı"
+     ],
+     "bolumler": [
+      [
+       "",
+       [
+        "Bilgisayar İşletmeni Kadrosu İçin Sıra No Konular",
+        "Temel Bilgisayar Kullanımı",
+        "Microsoft Word",
+        "Microsoft Excel",
+        "Microsoft Powerpoint",
+        "Kurumsal Kaynak Planlama Yazılımı"
+       ]
+      ]
+     ]
+    },
+    {
+     "unvan": "Görevde Yükselme Bilgisayar İşletmeni",
+     "adet": 1,
+     "iller": [
+      "ANKARA / YENİMAHALLE"
+     ],
+     "ogrenim": "",
+     "sinav": "",
+     "maddeler": [
+      "Bilgisayar İşletmeni Kadrosu İçin Sıra No Konular",
+      "Temel Bilgisayar Kullanımı",
+      "Microsoft Word",
+      "Microsoft Excel",
+      "Microsoft Powerpoint",
+      "Kurumsal Kaynak Planlama Yazılımı"
+     ],
+     "bolumler": [
+      [
+       "",
+       [
+        "Bilgisayar İşletmeni Kadrosu İçin Sıra No Konular",
+        "Temel Bilgisayar Kullanımı",
+        "Microsoft Word",
+        "Microsoft Excel",
+        "Microsoft Powerpoint",
+        "Kurumsal Kaynak Planlama Yazılımı"
+       ]
+      ]
+     ]
+    },
+    {
+     "unvan": "Görevde Yükselme Bilgisayar İşletmeni",
+     "adet": 1,
+     "iller": [
+      "ANKARA / YENİMAHALLE"
+     ],
+     "ogrenim": "",
+     "sinav": "",
+     "maddeler": [
+      "Bilgisayar İşletmeni Kadrosu İçin Sıra No Konular",
+      "Temel Bilgisayar Kullanımı",
+      "Microsoft Word",
+      "Microsoft Excel",
+      "Microsoft Powerpoint",
+      "Kurumsal Kaynak Planlama Yazılımı"
+     ],
+     "bolumler": [
+      [
+       "",
+       [
+        "Bilgisayar İşletmeni Kadrosu İçin Sıra No Konular",
+        "Temel Bilgisayar Kullanımı",
+        "Microsoft Word",
+        "Microsoft Excel",
+        "Microsoft Powerpoint",
+        "Kurumsal Kaynak Planlama Yazılımı"
+       ]
+      ]
+     ]
+    },
+    {
+     "unvan": "Görevde Yükselme Memur",
+     "adet": 1,
+     "iller": [
+      "ANKARA / YENİMAHALLE"
+     ],
+     "ogrenim": "",
+     "sinav": "",
+     "maddeler": [
+      "Memur Kadrosu İçin Sıra No Konular",
+      "5176 sayılı Kamu Görevlileri Etik Kurulu Kurulması ve Bazı Kanunlarda Değişiklik Yapılması Hakkında Kanun ve İlgili Yönetmelik",
+      "Atatürk Orman Çiftliği Müdürlüğü Personeli Görevde Yükselme ve Unvan Değişikliği Yönetmeliği",
+      "Temel Bilgisayar Kullanımı",
+      "4483 Sayılı Memurlar ve Diğer Kamu Görevlilerinin Yargılanması Hakkında Kanun"
+     ],
+     "bolumler": [
+      [
+       "",
+       [
+        "Memur Kadrosu İçin Sıra No Konular",
+        "5176 sayılı Kamu Görevlileri Etik Kurulu Kurulması ve Bazı Kanunlarda Değişiklik Yapılması Hakkında Kanun ve İlgili Yönetmelik",
+        "Atatürk Orman Çiftliği Müdürlüğü Personeli Görevde Yükselme ve Unvan Değişikliği Yönetmeliği",
+        "Temel Bilgisayar Kullanımı",
+        "4483 Sayılı Memurlar ve Diğer Kamu Görevlilerinin Yargılanması Hakkında Kanun"
+       ]
+      ]
+     ]
+    },
+    {
+     "unvan": "Görevde Yükselme Memur",
+     "adet": 1,
+     "iller": [
+      "ANKARA / YENİMAHALLE"
+     ],
+     "ogrenim": "",
+     "sinav": "",
+     "maddeler": [
+      "Memur Kadrosu İçin Sıra No Konular",
+      "5176 sayılı Kamu Görevlileri Etik Kurulu Kurulması ve Bazı Kanunlarda Değişiklik Yapılması Hakkında Kanun ve İlgili Yönetmelik",
+      "Atatürk Orman Çiftliği Müdürlüğü Personeli Görevde Yükselme ve Unvan Değişikliği Yönetmeliği",
+      "Temel Bilgisayar Kullanımı",
+      "4483 Sayılı Memurlar ve Diğer Kamu Görevlilerinin Yargılanması Hakkında Kanun"
+     ],
+     "bolumler": [
+      [
+       "",
+       [
+        "Memur Kadrosu İçin Sıra No Konular",
+        "5176 sayılı Kamu Görevlileri Etik Kurulu Kurulması ve Bazı Kanunlarda Değişiklik Yapılması Hakkında Kanun ve İlgili Yönetmelik",
+        "Atatürk Orman Çiftliği Müdürlüğü Personeli Görevde Yükselme ve Unvan Değişikliği Yönetmeliği",
+        "Temel Bilgisayar Kullanımı",
+        "4483 Sayılı Memurlar ve Diğer Kamu Görevlilerinin Yargılanması Hakkında Kanun"
+       ]
+      ]
+     ]
+    }
    ]
   }
  },
