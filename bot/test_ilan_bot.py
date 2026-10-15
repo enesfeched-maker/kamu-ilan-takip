@@ -477,7 +477,7 @@ class IlanGorseliTesti(unittest.TestCase):
         import io
         from PIL import Image
         foto = ilan_bot.ilan_gorseli(self.ILAN, False)
-        self.assertEqual(Image.open(io.BytesIO(foto)).size, (1080, 1350))
+        self.assertEqual(Image.open(io.BytesIO(foto)).size, (1080, 1160))   # Telegram kırpmasın
 
     def test_yeni_kart_hata_verirse_eski_karta_duser(self):
         import io

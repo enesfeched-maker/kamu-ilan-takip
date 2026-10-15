@@ -230,9 +230,7 @@ def mesaj_olustur(ilan, site_url, hatirlatma=False):
         satirlar.append(f"📅 <b>Son başvuru:</b> {tarih_yaz(ilan['son_tarih'])}{saat}")
     else:
         satirlar.extend(["", "⏳ <b>Son başvuru:</b> Resmi ilan üzerinden kontrol edin."])
-    satirlar.extend(["", "İlan ayrıntıları ve başvuru bilgileri sitemizde ↓"])
-    if ilan.get('kaynak_turu') in ('sbb','iskur','csb'):
-        satirlar.append(f"<i>Kaynak: {e(ilan['kaynak'])}</i>")
+    # 15 Ekim 2026 kullanıcı kararı: 'İlan ayrıntıları sitemizde ↓' ve 'Kaynak: …' satırları gereksiz (düğme ve kart yeterli)
     etiket = " ".join(etiketler(ilan))
     if etiket:
         satirlar.extend(["", e(etiket)])
@@ -310,8 +308,6 @@ def duyuru_metni(duyuru, orijinale_yanit, tam=True, referans=None):
             satirlar.append(e(cumle))
         if not iptal and duyuru.get('son_tarih'):
             satirlar.append(f"📅 <b>Son başvuru:</b> {tarih_yaz(duyuru['son_tarih'])}")
-    if duyuru.get('kaynak_turu') in ('sbb', 'iskur', 'csb') and duyuru.get('kaynak'):
-        satirlar.append(f"<i>Kaynak: {e(duyuru['kaynak'])}</i>")
     return "\n".join(satirlar)
 
 
@@ -920,8 +916,8 @@ def telegram_icin_uygun(ilan, dahil, haric):
 def ilan_gorseli(i, hatirlatma, logo=None):
     """Telegram kartı: yeni tasarım (afiş/bilet); hata olursa eski kart ile devam eder (gönderim aksamasın)."""
     try:
-        from kart_tasarimlari import ilan_karti
-        return ilan_karti(i, logo=logo, hatirlatma=hatirlatma)
+        from kart_tasarimlari import telegram_karti
+        return telegram_karti(i, logo=logo, hatirlatma=hatirlatma)
     except Exception as exc:
         print(f'Yeni ilan kartı oluşturulamadı ({type(exc).__name__}); eski kart kullanılıyor.', file=sys.stderr)
     tarih = tarih_yaz(i['son_tarih']) if i.get('son_tarih') else 'Resmi ilandan kontrol edin'

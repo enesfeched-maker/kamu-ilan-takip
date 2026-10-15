@@ -215,7 +215,7 @@ class IptalYanitiTesti(Dugum):
         self.assertIsNone(k.get('foto'))
         self.assertIn('❌ <b>Bu ilan iptal edilmiştir.</b>', a[2])
         self.assertIn('iptal edilmiştir', a[2].split('\n')[1])  # resmî açıklama özeti
-        self.assertIn('Kaynak: ÇŞB Yerel Yönetimler', a[2])
+        self.assertNotIn('Kaynak:', a[2])   # 15 Ekim 2026: kaynak satırı kaldırıldı
         self.assertNotIn('İptal:', a[2])
         durum = self.durum()
         self.assertEqual(self.kayit('k1')['iptal_edildi'], 'csb-1')
