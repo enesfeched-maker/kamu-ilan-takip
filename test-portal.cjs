@@ -204,7 +204,7 @@ assert.match(B.loc.href,/\?il=ankara&sb=14&uygun=0#ilanlar$/,'shareable URL kept
 const C=make({href:'https://kpsstercihi.com/?q=zab%C4%B1ta#takvim'});await tick();
 assert.equal(C.run('tab'),'takvim','explicit hash tab wins over query');assert.equal(C.run('F.q'),'zabıta');
 const D=make({href:'https://kpsstercihi.com/?g=bugun'});await tick();assert.equal(D.run('tab'),'bugun');assert.equal(D.run('queryHas(new URL(location.href).search)'),false);
-const SD=h=>D.run('sourceDocument({belge_kopyasi:"'+h+'"})');{const p='aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.pdf';assert.equal(SD('https://kpsstercihi.com/belgeler/sbb/'+p),'https://kpsstercihi.com/belgeler/sbb/'+p,'yeni alan adi kabul');assert.equal(SD('https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/'+p),'https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/'+p,'eski onek kabul');assert.equal(SD('https://evil.test/belgeler/sbb/'+p),null,'yabanci alan reddedilir');}
+const SD=h=>D.run('sourceDocument({belge_kopyasi:"'+h+'"})');{const p='aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.pdf';assert.equal(SD('https://kpsstercihi.com/belgeler/sbb/'+p),'https://kpsstercihi.com/belgeler/sbb/'+p,'yeni alan adi kabul');assert.equal(SD('https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/'+p),'https://kpsstercihi.com/belgeler/sbb/'+p,'eski onek kendi alan adina cevrilir');assert.equal(SD('https://evil.test/belgeler/sbb/'+p),null,'yabanci alan reddedilir');}
 // ---- Geri/ileri: yalnız sorgu değişse de sekme ve süzgeç eşitlenir (popstate)
 const P=make({href:'https://kpsstercihi.com/#bugun'});await tick();
 assert.equal(P.run('tab'),'bugun');assert.ok(P.ctx.__h.popstate&&P.ctx.__h.popstate.length,'popstate listener registered');

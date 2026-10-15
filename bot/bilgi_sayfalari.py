@@ -2,7 +2,7 @@
 Ana sayfadaki '#bilgi/...' görünümleri JavaScript ile açılır; Google ve AdSense incelemesi ayrı adreste düz HTML görür.
 Metin docs/portal.js 'bilgi/gizlilik' ve 'bilgi/hakkimizda' ile aynı tutulur."""
 
-ILETISIM = 'https://github.com/enesfeched-maker/kamu-ilan-takip/issues/new'
+ILETISIM = 'https://t.me/kpsstercihi'
 
 SAYFALAR = {
     'gizlilik': ('Gizlilik politikası', 'KPSS Tercihi gizlilik politikası: tarayıcıda saklanan bilgiler, çerezsiz ziyaret istatistikleri ve Google AdSense reklamları.',
@@ -10,8 +10,8 @@ SAYFALAR = {
         ('Bu cihazda saklanan bilgiler', 'Kaydettiğin ilanların kimlikleri, profilin (öğrenim düzeyi, puan, iller), son ziyaret zamanın ve renk teması '
          'tercihin tarayıcının yerel depolamasında tutulur. Bunlar başka cihazlara taşınmaz ve sunucumuza gönderilmez. Tarayıcı verilerini silerek '
          'ya da ana sayfadaki Gizlilik bölümündeki düğmeyle temizleyebilirsin.'),
-        ('Dış bağlantılar ve barındırma', 'Resmî başvuru sayfası, Telegram ve GitHub bağlantıları kendi hizmetlerine yönlendirir. Bu hizmetlerin veri '
-         'uygulamaları ayrıdır. Site dosyaları GitHub Pages üzerinden sunulur; barındırma hizmeti teknik erişim kayıtlarını işleyebilir.'),
+        ('Dış bağlantılar ve barındırma', 'Resmî başvuru sayfası ve Telegram bağlantıları kendi hizmetlerine yönlendirir. Bu hizmetlerin veri '
+         'uygulamaları ayrıdır. Site dosyaları bir barındırma hizmeti üzerinden sunulur; bu hizmet teknik erişim kayıtlarını işleyebilir.'),
         ('Ziyaret istatistikleri', 'Hangi sayfaların ve özelliklerin kullanıldığını anlamak için anonim ve çerezsiz ziyaret istatistikleri toplanır; '
          'IP adresin saklanmaz, kişisel veri toplanmaz ve seni sonraki günlerde tanıyacak bir kimlik tutulmaz. Tarayıcında “Do Not Track” ya da '
          'Global Privacy Control (GPC) açıksa hiç ölçüm yapılmaz. Bu ölçüm verisi üçüncü taraflarla paylaşılmaz.'),
@@ -20,7 +20,7 @@ SAYFALAR = {
          'ortaklarının bu siteye ve/veya internetteki diğer sitelere yaptığın ziyaretlere göre reklam göstermesini sağlar. Kişiselleştirilmiş reklamları '
          'Google Reklam Ayarları’ndan (adssettings.google.com) kapatabilir, üçüncü taraf çerezlerini www.aboutads.info üzerinden yönetebilirsin. '
          'Ayrıntılar: policies.google.com/technologies/ads'),
-        ('İletişim', 'Gizlilikle ilgili soruların için GitHub üzerindeki bildirim sayfasını ya da Telegram kanalımızı (@kpsstercihi) kullanabilirsin.'),
+        ('İletişim', 'Gizlilikle ilgili soruların için Telegram kanalımızı (@kpsstercihi) kullanabilirsin.'),
     ]),
     'hakkimizda': ('Hakkımızda', 'KPSS Tercihi nedir, ilanlar hangi resmî kaynaklardan derlenir, nasıl iletişim kurulur?',
                    'KPSS Tercihi, kamu personel ilanlarını daha kolay incelemek ve takip etmek için hazırlanmış bağımsız bir rehberdir.', [
@@ -31,8 +31,7 @@ SAYFALAR = {
          'Telegram kanalımızda (@kpsstercihi) da paylaşılır.'),
         ('Resmî bir hizmet mi?', 'Hayır. Herhangi bir kamu kurumuna bağlı değiliz. Başvuru kabul etmeyiz, aday uygunluğu değerlendirmeyiz. Güncel ve '
          'bağlayıcı bilgi için resmî ilanı esas al.'),
-        ('İletişim', 'Hatalı bir ilan, öneri ya da iş birliği için GitHub bildirim sayfasından yazabilir veya Telegram kanalımız (@kpsstercihi) '
-         'üzerinden ulaşabilirsin. Herkese açık bildirimlere kimlik, özgeçmiş veya başvuru belgesi ekleme.'),
+        ('İletişim', 'Hatalı bir ilan, öneri ya da iş birliği için Telegram kanalımız (@kpsstercihi) üzerinden ulaşabilirsin.'),
     ]),
 }
 
@@ -43,8 +42,7 @@ def sayfa(ad, base):
     baslik, aciklama, giris, bolumler = SAYFALAR[ad]
     canonical = base + ad + '/'
     maddeler = ''.join(f'<section class="bolum"><h2>{su.esc(b)}</h2><p>{su.esc(m)}</p></section>' for b, m in bolumler)
-    maddeler += (f'<p><a class="yazi-link" href="{ILETISIM}" target="_blank" rel="noopener">İletişim / bildirim sayfası ↗</a> · '
-                 f'<a class="yazi-link" href="https://t.me/kpsstercihi" target="_blank" rel="noopener">Telegram ↗</a></p>')
+    maddeler += f'<p><a class="yazi-link" href="{ILETISIM}" target="_blank" rel="noopener">Telegram ↗</a></p>'
     html = (su.sayfa_basi(f'{baslik} — KPSS Tercihi', aciklama, su.esc(canonical), '../',
                           ek_head=f'<meta property="og:url" content="{su.esc(canonical)}">')
             + f'<body class="kurum-page"><a class="skip" href="#icerik">İçeriğe geç</a>{su.ust_html("../")}'
