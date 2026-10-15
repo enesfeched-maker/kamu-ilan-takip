@@ -342,6 +342,7 @@ def kayit(item, gorsel, tablolar, simdi, harita=None):
         'ogrenim_cikarim': cikarim, 'kurum_ici': kurum_ici, 'bolum_kisiti': bolum_kisitli(item),
         'son_tarih': item.get('son_tarih'), 'son_zaman': item.get('son_zaman'),
         'baslangic_zaman': item.get('baslangic_zaman'), 'ilk_gorulme': item.get('ilk_gorulme'), 'durum': cls,
+        'duzeltildi': bool(item.get('duzeltmeler')),
     }
     return {k: v for k, v in kay.items() if v not in (None, '', 0) or k in ('ek', 'ogrenim', 'iller', 'meslek', 'puan_turleri', 'unvanlar')}
 
@@ -354,6 +355,8 @@ def grup_birlestir(birincil, ikincil):
     """Kopya grubunda birincil satırın öğrenim, puan türü, il ve taban referansı bilgisi ikincillerle birleştirilir
     (birincil metinde düzey yazmıyor ama aynı ilanın başka kaynaktaki kaydı yazıyor olabilir); hiçbir değer silinmez."""
     uyeler = [birincil, *ikincil]
+    if any(u.get('duzeltildi') for u in ikincil):
+        birincil['duzeltildi'] = True   # düzeltme kopyalardan birine bağlanmış olabilir
     for alan in ('son_zaman', 'baslangic_zaman'):   # aynı gün için saat bilgisi yalnız kopyada olabilir (Bahçe 17:00, TİBU 13:00)
         if not birincil.get(alan):
             ikiz = next((u for u in ikincil if u.get(alan) and u.get('son_tarih') == birincil.get('son_tarih')), None)

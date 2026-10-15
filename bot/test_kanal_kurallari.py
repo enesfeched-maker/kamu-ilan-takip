@@ -284,6 +284,43 @@ class IptalYanitiTesti(Dugum):
                 self.assertIn('csb-2', self.durum()['telegram_gonderilen'])
                 self.assertNotIn('iptal_edildi', self.kayit('k1'))
 
+    DUZ = ('Rize Belediyesinin ilanında yer alan 4 üncü maddesi “Başvurular 02/11/2026-04/11/202 6 tarihleri arasında '
+           'e-posta ile yapılacaktır.” şeklinde düzeltilmiştir.')
+
+    def test_tarih_degisen_duzeltme_orijinale_yanit_ve_tarih_guncellenir(self):
+        # 15 Ekim 2026: başvuru tarihi/şekli değiştiyse orijinal mesaja kısa yanıt; site ve kartlar yeni tarihi kullanır
+        self.senaryo([ilan('k1')], duy=duyuru('csb-2', 'Düzeltme / süre değişikliği', ozet=self.DUZ,
+                                               baslik='RİZE BELEDİYESİ TEKNİKER ALIMI DÜZELTME İLANI'))
+        self.assertEqual(self.calistir(), 1)
+        a, k = self.cagrilar[0]
+        self.assertEqual(k.get('yanit'), 500)
+        self.assertTrue(a[2].startswith('📝 <b>Başvuru tarihi değişti</b>'))
+        self.assertIn('Yeni son başvuru', a[2])
+        self.assertEqual(len(a[2].split('\n')), 2)
+        self.assertTrue(a[3].endswith('/ilan/k1/'))   # düğme orijinal ilanı açar
+        k1 = self.kayit('k1')
+        self.assertEqual(k1['son_tarih'], '2026-11-04')
+        self.assertEqual(k1['duzeltmeler'][0]['tur'], 'tarih')
+        self.assertEqual(self.kayit('csb-2')['duzeltme_of'], 'k1')
+        self.assertEqual(self.calistir(), 0)   # aynı düzeltme bir kez
+        self.assertEqual(self.kayit('k1')['son_tarih'], '2026-11-04')
+
+    def test_basvuru_sekli_degisen_duzeltme_kisa_yanit(self):
+        metin = 'Rize Belediyesinin ilanında yer alan madde “Başvurular şahsen İnsan Kaynakları Müdürlüğüne yapılacaktır.” şeklinde düzeltilmiştir.'
+        self.senaryo([ilan('k1')], duy=duyuru('csb-2', 'Düzeltme / süre değişikliği', ozet=metin,
+                                               baslik='RİZE BELEDİYESİ TEKNİKER ALIMI DÜZELTME İLANI'))
+        self.assertEqual(self.calistir(), 1)
+        metin_ = self.cagrilar[0][0][2]
+        self.assertTrue(metin_.startswith('📝 <b>Başvuru şekli değişti</b>\nBaşvurular şahsen'))
+        self.assertEqual(self.kayit('k1')['son_tarih'], gun(20)[:10])   # tarih yoksa dokunulmaz
+
+    def test_tarihli_duzeltme_orijinal_paylasilmadiysa_sessiz(self):
+        self.senaryo([ilan('k1')], duy=duyuru('csb-2', 'Düzeltme / süre değişikliği', ozet=self.DUZ,
+                                               baslik='RİZE BELEDİYESİ TEKNİKER ALIMI DÜZELTME İLANI'), mesajlar={})
+        self.assertEqual(self.calistir(), 0)
+        self.assertIn('csb-2', self.durum()['telegram_gonderilen'])
+        self.assertEqual(self.kayit('k1')['son_tarih'], '2026-11-04')   # site yine de güncel tarihi gösterir
+
     def test_ayni_calistirmada_once_ilan_sonra_iptal_yanit_verir(self):
         orijinal = ilan('k1', kaynak_turu=None, son_tarih=gun(10)[:10])
         self.yaz([orijinal, duyuru()])
