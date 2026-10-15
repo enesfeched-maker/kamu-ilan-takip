@@ -360,6 +360,9 @@ def _kopya_notlari(kopya):
     """(ikincil kayıt için üst not, birincil kayıt için kaynak satırı) — kopya: kopya.sayfa_bilgisi() çıktısı ya da None."""
     if not kopya:
         return '', ''
+    if kopya.get('rol') == 'duzeltme':
+        return (f'<p class="not uyari"><strong>Bu bir düzeltme duyurusudur.</strong> '
+                f'<a class="yazi-link" href="../{esc(kopya["birincil"])}/">Düzeltilen ilanın güncel sayfası →</a></p>'), ''
     if kopya.get('rol') == 'ikincil':
         return (f'<p class="not kopya-not"><strong>Bu ilan başka bir kaynakta da yayımlandı.</strong> '
                 f'<a class="yazi-link" href="../{esc(kopya["birincil"])}/">Bu ilanın daha ayrıntılı kaydı →</a></p>'), ''
@@ -368,6 +371,32 @@ def _kopya_notlari(kopya):
     if len(adlar) < 2 or not baglar:
         return '', ''
     return '', f'<p class="d-kaynaklar">Bu ilan {len(adlar)} kaynakta yayımlandı: {baglar}</p>'
+
+
+_DUZELTME_BASLIK = {'tarih': 'Başvuru tarihi değişti', 'basvuru': 'Başvuru şekli değişti'}
+
+
+def _duzeltme_kutusu(item):
+    """Orijinal ilan sayfasında düzeltme uyarısı (duzeltme.uygula): ne değişti + resmî metindeki yeni hâl + resmî duyuru."""
+    from urllib.parse import urlparse
+    kutular = ''
+    for d in item.get('duzeltmeler') or []:
+        baslik = _DUZELTME_BASLIK.get(d.get('tur'), 'Bu ilanda düzeltme yapıldı')
+        satir = f'<strong>⚠️ {esc(baslik)}.</strong>'
+        if d.get('yeni_son_tarih'):
+            try:
+                y = datetime.fromisoformat(d['yeni_son_tarih'])
+                satir += f' Yeni son başvuru: <strong>{y.strftime("%d.%m.%Y")}</strong>.'
+            except ValueError:
+                pass
+        if d.get('cumle'):
+            satir += f' <span class="muted">“{esc(d["cumle"])}”</span>'
+        link = str(d.get('link') or '')
+        u = urlparse(link)
+        if u.scheme == 'https' and u.hostname in {'kariyerkapisi.gov.tr', 'kamuilan.sbb.gov.tr', 'www.iskur.gov.tr', 'iskur.gov.tr', 'yerelyonetimler.csb.gov.tr'}:
+            satir += f' <a class="yazi-link" href="{esc(link)}" target="_blank" rel="noopener noreferrer">Resmî düzeltme ↗</a>'
+        kutular += f'<p class="not uyari duzeltme-not">{satir}</p>'
+    return kutular
 
 
 def benzer_ilanlar(kayit, kayitlar, en_cok=5):
@@ -606,6 +635,7 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
     sections = ''
     if item.get('iptal_edildi'):
         sections += '<p class="not uyari"><strong>İptal edildi.</strong> Bu ilan için resmî iptal duyurusu yayımlandı. Başvuru yapmadan önce resmî kaynağı kontrol et.</p>'
+    duzeltme_kutusu = _duzeltme_kutusu(item)
     from sbb_detay import document_url
     pdf_satirlari = _pdf_kadrolari(item)
     kk_kadrolar = [] if pdf_satirlari else [k for k in item.get('kadro_detay') or [] if isinstance(k, dict) and k.get('unvan')]
@@ -637,8 +667,8 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
     for belge in item.get('belgeler', [])[:3]:
         if str(belge.get('link', '')).startswith('https://webdosya.csb.gov.tr/v2/yerelyonetimler/'):
             diger += f'<p><a class="yazi-link" href="{esc(belge["link"])}" target="_blank" rel="noopener noreferrer">Duyuru eki: {esc(belge.get("ad"))} ↗</a></p>'
-    ikincil = (kopya or {}).get('rol') == 'ikincil'
-    if ikincil:   # başka kaynaktaki kopya: Google tek sayfayı (esas kaydı) dizinler
+    ikincil = (kopya or {}).get('rol') in ('ikincil', 'duzeltme')
+    if ikincil:   # başka kaynaktaki kopya ya da düzeltme duyurusu: Google tek sayfayı (esas kaydı) dizinler
         canonical = BASE + 'ilan/' + kopya['birincil'] + '/'
     title, description = _arama_metinleri(item, alanlar, end, kayit, title)
     og_gorsel = ''
@@ -666,7 +696,7 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
     is_ilani = acik_ilan and not ikincil and not (kayit or {}).get('kurum_ici')
     og_gorsel += yapisal_veri(item, canonical, end, alanlar, kayit, gorsel, simdi, is_ilani)
     govde = (f'<main id="icerik" class="wrap"><article class="d-bas"><nav class="crumbs" aria-label="Konum"><a href="{kok}">Ana sayfa</a><span aria-hidden="true">/</span><a href="{kok}#ilanlar">İlanlar</a>{kurum_kirinti}</nav>'
-             f'{hero_html(item, gorsel, kayit, simdi)}{kurum_ici_not}{kopya_ust}{cta}{kopya_alt}</article>'
+             f'{hero_html(item, gorsel, kayit, simdi)}{kurum_ici_not}{duzeltme_kutusu}{kopya_ust}{cta}{kopya_alt}</article>'
              f'<div class="d-ana"><section class="d-bolum">{sections}{bolum}{diger}</section>{benzer_html}</div></main>')
     return key, (sayfa_basi(title, description, canonical, kok, 'article', og_gorsel, og_baslik=title)
                  + f'<body class="detail-page"><a class="skip" href="#icerik">İçeriğe geç</a>{ust_html(kok)}{govde}{alt_html(kok)}</body></html>')
@@ -1066,13 +1096,19 @@ def main():
         except Exception as hata:
             sayfa_kopya = None
             print(f'Uyarı: kopya notu yazılamadı ({result[0]}): {hata}')
+        orijinal = kimlik_harita.get(item.get('duzeltme_of'))
+        if orijinal is not None:   # düzeltme duyurusu ayrı ilan gibi dizinlenmez; orijinal (ya da onun esas kaydı) kanoniktir
+            orijinal = kimlik_harita.get((kopyalar.get('kopya_of') or {}).get(orijinal.get('id')), orijinal)
+            o_sayfa = detail_page(orijinal)
+            if o_sayfa:
+                sayfa_kopya = {'rol': 'duzeltme', 'birincil': o_sayfa[0]}
         result = detail_page(item, gorseller.get(result[0]), kayit, benzer, None, sayfa_kopya)
         key, content = result
         folder = docs / 'ilan' / key
         folder.mkdir(parents=True, exist_ok=True)
         (folder / 'index.html').write_text(content, encoding='utf-8')
         sayfa_anahtarlari.add(key)
-        if (sayfa_kopya or {}).get('rol') != 'ikincil':   # kopya sayfası esas kayda kanonik bağlanır, haritaya girmez
+        if (sayfa_kopya or {}).get('rol') not in ('ikincil', 'duzeltme'):   # kopya/düzeltme sayfası esas kayda kanonik bağlanır, haritaya girmez
             urls.append(BASE + 'ilan/' + key + '/')
             degisim[urls[-1]] = max(str(item.get(a) or '')[:10] for a in ('ilk_gorulme', 'detay_guncelleme', 'guncelleme'))
         count += 1

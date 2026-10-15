@@ -276,6 +276,13 @@ def duyuru_metni(duyuru, orijinale_yanit, tam=True, referans=None):
     satirlar = []
     kadro = okunakli_baslik(kadro_adi(duyuru)) if iptal else ''
     cumle = resmi_cumle_kisa(duyuru)
+    if orijinale_yanit and not iptal and duyuru.get('duzeltme_degisen') in ('tarih', 'basvuru'):
+        # 15 Ekim 2026: kısa ve net — yalnız ne değişti
+        if duyuru.get('duzeltme_yeni_tarih'):
+            return f"📝 <b>Başvuru tarihi değişti</b>\n📅 <b>Yeni son başvuru:</b> {tarih_yaz(duyuru['duzeltme_yeni_tarih'])}"
+        from duzeltme import duzeltilen_kisim, _bitisik
+        kisim = _bitisik(duzeltilen_kisim(duyuru))
+        return "📝 <b>Başvuru şekli değişti</b>" + (f"\n{e(kisalt(_bas_harf_buyut(kisim), 220))}" if kisim else '')
     if orijinale_yanit:
         if iptal and not tam:
             satirlar.append(f"❌ <b>Bu ilandaki {e(kadro or 'bazı kadroların')} alımı iptal edilmiştir.</b>")
@@ -495,8 +502,7 @@ def duyuru_karari(duyuru, ilanlar, mesajlar, yanitlar, bugun, gonderilen=None):
     referans: kanalda paylaşılmış ama mesaj kaydı olmayan tek orijinal (yanıt verilemez; metinde 📌 ile gösterilir)."""
     tur = 'iptal' if duyuru_turu_iptal_mi(duyuru) else 'duzeltme'
     if tur == 'duzeltme':
-        # 9 Ekim 2026 kararı: düzeltme duyuruları kanalda paylaşılmaz; yalnız iptaller orijinal ilana yanıt olarak gider.
-        return {'islem': 'sessiz', 'sebep': 'düzeltme duyuruları paylaşılmıyor', 'referans': None}
+        return duzeltme_karari(duyuru, ilanlar, mesajlar, yanitlar, bugun)
     if akademik_ilan(duyuru):
         return {'islem': 'sessiz', 'sebep': 'akademik duyuru', 'referans': None}
     adaylar = orijinal_ara(duyuru, ilanlar, mesajlar, bugun)
@@ -536,6 +542,24 @@ def duyuru_karari(duyuru, ilanlar, mesajlar, yanitlar, bugun, gonderilen=None):
         return {'islem': 'sessiz', 'sebep': 'aynı olay (düz metin) son 30 günde bildirildi', 'referans': None}
     tam = tam_iptal(duyuru, referans) if referans else None
     return {'islem': 'gonder', 'orijinal': None, 'referans': referans, 'tam': tam, 'yaz': anahtar}
+
+
+def duzeltme_karari(duyuru, ilanlar, mesajlar, yanitlar, bugun):
+    """Düzeltme duyuruları kanalda paylaşılmaz (9 Ekim 2026). 15 Ekim 2026 istisnası: başvuru TARİHİ ya da başvuru
+    ŞEKLİ değiştiyse ve orijinal ilan kanalda paylaşılmışsa, orijinal mesaja tek satırlık yanıt gider.
+    Bağlantı duzeltme.uygula()'nın yazdığı 'duzeltme_of' alanından gelir (ihtiyatlı eşleştirme)."""
+    degisen = duyuru.get('duzeltme_degisen')
+    if degisen not in ('tarih', 'basvuru'):
+        return {'islem': 'sessiz', 'sebep': 'düzeltme duyuruları paylaşılmıyor', 'referans': None}
+    o = next((i for i in ilanlar if i.get('id') == duyuru.get('duzeltme_of')), None)
+    if o is None or akademik_ilan(o) or not mesaj_kimligi(o, mesajlar):
+        return {'islem': 'sessiz', 'sebep': 'orijinal ilan kanalda paylaşılmadı', 'referans': None}
+    if suresi_doldu(o):
+        return {'islem': 'sessiz', 'sebep': 'orijinal ilanın süresi doldu', 'referans': None}
+    anahtarlar = yanit_anahtarlari('duzeltme', o, False, f"{degisen}:{duyuru.get('duzeltme_yeni_tarih') or ''}")
+    if any(k in yanitlar for k in anahtarlar):
+        return {'islem': 'sessiz', 'sebep': 'aynı düzeltme daha önce bildirildi', 'referans': None}
+    return {'islem': 'gonder', 'orijinal': o, 'referans': None, 'tam': True, 'yaz': anahtarlar[0]}
 
 
 TOPLU_SINIR = 950  # sendPhoto başlık sınırı 1024 görünür karakter
@@ -1106,6 +1130,12 @@ def main():
                 continue
             if cumle is not None:
                 i['duyuru_cumlesi'] = cumle
+    # Düzeltmeleri orijinal ilana bağla (sitede uyarı; açıkça verilen yeni son tarih orijinale işlenir).
+    try:
+        import duzeltme
+        print(f'{duzeltme.uygula(list(mevcut.values()), simdi().date())} düzeltme duyurusu orijinal ilana bağlandı.')
+    except Exception as exc:
+        print(f'Uyarı: düzeltmeler bağlanamadı ({type(exc).__name__}: {str(exc)[:160]})', file=sys.stderr)
     yeniler = [i for i in gelen if i['id'] in yeni_ids and i['id'] in birlesik_ids]
 
     # 3) Telegram: sınırı aşan ve başarısız olan gönderimleri sonraki taramaya sakla.
@@ -1223,7 +1253,8 @@ def main():
                 print('--- (önizleme, gönderilmedi) ---\n' + metin + '\n')
                 continue
             try:
-                hedef = ilan_sayfasi(i, site_url)
+                # düzeltme sayfası orijinale bağlı: düğme doğrudan güncel bilgili orijinal ilan sayfasını açar
+                hedef = ilan_sayfasi(orijinal if (orijinal is not None and not duyuru_turu_iptal_mi(i)) else i, site_url)
             except ValueError:
                 hedef = ''
             mid = telegram_gonder(token, chat_id, metin, hedef, site_url, yanit=yanit) if (token and chat_id) else False
