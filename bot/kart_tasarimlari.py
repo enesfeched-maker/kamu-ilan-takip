@@ -612,7 +612,7 @@ LISTE_RENK = {
 ACIL_GUN = 3   # son başvuruya bu kadar ya da daha az gün kalan tarih kırmızı; ötekiler gri (kırmızı aciliyet demek)
 
 
-def liste_karti(ilanlar, baslik, simdi=None, logolar=None, tur='yeni', koyu=False):
+def liste_karti(ilanlar, baslik, simdi=None, logolar=None, tur='yeni', koyu=False, rozetler=None):
     """Toplu liste kartı (1080 genişlik, en çok TG_EN_COK_Y boy): üstte başlık + sağda tarih; her satırda kurum logosu, kurum,
     kadro; sağda tur='yeni' ise kişi sayısı + son tarih (yalnız son ACIL_GUN gün kırmızı), tur='son_gun' ise kalan gün rozeti.
     Logosu olmayan ilanlar sona alınır; en çok TOPLU_EN_COK_SATIR satır + '+N ilan daha'. koyu: akşam (gece teması).
@@ -682,9 +682,10 @@ def liste_karti(ilanlar, baslik, simdi=None, logolar=None, tur='yeni', koyu=Fals
             son_renk = KIRMIZI_YAZI if acil else R['soluk']
             sw = round(d.textlength(son, font=fs)) if son else 0
             toplam = veri(ilan)['toplam']
-            if toplam:
+            ozel = (rozetler or {}).get(ilan.get('id'))   # ör. puan kartında 'P3 · 50'
+            if ozel or toplam:
                 f = F(32, True)
-                metin = f'{toplam} kişi'
+                metin = ozel or f'{toplam} kişi'
                 w = round(d.textlength(metin, font=f)) + 36
                 d.rounded_rectangle((sag - w, orta - 46, sag, orta + 4), radius=25, fill=R['kisi_zemin'])
                 d.text((sag - w / 2, orta - 20), metin, font=f, fill=R['kisi_yazi'], anchor='mm')

@@ -1056,10 +1056,11 @@
   },
   "mus malazgirt belediye": {
     "dosya": "malazgirt-resmi.png",
-    "kaynak": "https://malazgirt.bel.tr/",
+    "kaynak": "https://www.ilan.gov.tr/ilan/2229184",
+    "orijinal": "https://medya.ilan.gov.tr/AdvertiserLogo/600a9d4846bcc442247e4661.png",
     "boyut": [
-      750,
-      370
+      200,
+      200
     ]
   },
   "nevsehir ortahisar belediye": {
@@ -1334,6 +1335,15 @@
     "boyut": [
       400,
       400
+    ]
+  },
+  "malazgirt belediye": {
+    "dosya": "malazgirt-resmi.png",
+    "kaynak": "https://www.ilan.gov.tr/ilan/2229184",
+    "orijinal": "https://medya.ilan.gov.tr/AdvertiserLogo/600a9d4846bcc442247e4661.png",
+    "boyut": [
+      200,
+      200
     ]
   }
 }
