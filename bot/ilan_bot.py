@@ -715,16 +715,21 @@ def aksam_yeniler(ilanlar, cfg, zaman):
 
 
 def aksam_mesaj(ilanlar):
-    """Akşam kartının metni: sayı satırı + en kalabalık ilan (bildirim önizlemesinde görünen tek şey bu metin)."""
-    from kart_tasarimlari import veri as kart_verisi, kisa_kurum
+    """Akşam kartının metni (bildirim önizlemesinde görünen tek şey): günün yoğunluğuna göre sıcak bir başlık + tek cümle.
+    16 Ekim 2026: 'gözünden kaçmasın' tonu; yoğun gün (AKSAM_YOGUN_ESIK+ ilan) ayrıca vurgulanır."""
     kadro = sabah_toplam_kadro(ilanlar)
-    metin = (f"🆕 <b>Bugün {len(ilanlar)} yeni kamu ilanı yayımlandı</b>" if len(ilanlar) > 1 else "🆕 <b>Bugün 1 yeni kamu ilanı yayımlandı</b>") \
-        + (f" · {kadro} kadro" if kadro else "")
-    enler = sorted(((kart_verisi(i)['toplam'] or 0, i) for i in ilanlar), key=lambda x: -x[0])
-    if len(ilanlar) > 1 and enler and enler[0][0]:
-        metin += f"\n🏆 En kalabalık: {html.escape(kisa_kurum(kart_verisi(enler[0][1])['kurum']))}, {enler[0][0]} kişi"
-    metin += "\n\n👇 İlgilendiğin ilana dokun; şartları, kadroları ve başvuru bağlantısını gör."
-    return metin
+    n = len(ilanlar)
+    ek = f" · {kadro} kadro" if kadro else ""
+    if n >= AKSAM_YOGUN_ESIK:
+        metin = f"🌙 <b>Bugün yoğun bir gündü: {n} yeni kamu ilanı</b>{ek}\nGözünden kaçan olmasın diye hepsini senin için bir araya topladım."
+    elif n > 1:
+        metin = f"🌙 <b>Bugün {n} yeni kamu ilanı yayımlandı</b>{ek}\nGözünden kaçan olmasın diye hepsini senin için bir araya topladım."
+    else:
+        metin = f"🌙 <b>Bugün 1 yeni kamu ilanı yayımlandı</b>{ek}\nGözünden kaçmasın diye akşam bir kez daha hatırlatmak istedim."
+    return metin + "\n\n👇 Merak ettiğin ilana dokunman yeterli."
+
+
+AKSAM_YOGUN_ESIK = 5
 
 
 from ek_kaynaklar import KURUM_KISALTMALARI
@@ -732,24 +737,49 @@ KISA_AD = {ad: kisa for kisa, ad in KURUM_KISALTMALARI.items()}   # düğmede ye
 AKSAM_DUGME_EN_COK = 7   # kartta görünen satır sayısı kadar (kart_tasarimlari.TOPLU_EN_COK_SATIR)
 
 
+DUGME_KISA = {'Türk Akreditasyon Kurumu': 'TÜRKAK', 'İskenderun Teknik Üniversitesi': 'İSTE', 'Türk Standardları Enstitüsü': 'TSE',
+              'Jandarma Genel Komutanlığı': 'Jandarma', 'Jandarma ve Sahil Güvenlik Akademisi': 'JSGA', 'Türk Patent ve Marka Kurumu': 'TÜRKPATENT'}
+
+
+def dugme_kurumu(kurum):
+    """Düğme için kısa kurum adı: bilinen kısaltma (MSB, TÜRKAK); yoksa 'Başkanlığı/Genel Müdürlüğü' atılır,
+    'Büyükşehir Belediyesi' -> 'BŞB', 'Belediyesi' -> 'Bld.', 'Üniversitesi' -> 'Üni.'"""
+    from kart_tasarimlari import kisa_kurum
+    tam = kisa_kurum(kurum)
+    for ad in (tam, re.sub(r'\s+Başkanlığı$', '', tam)):
+        if ad in KISA_AD or ad + ' Başkanlığı' in KISA_AD:
+            return KISA_AD.get(ad) or KISA_AD[ad + ' Başkanlığı']
+        if ad in DUGME_KISA:
+            return DUGME_KISA[ad]
+    ad = re.sub(r'\s+(?:Başkanlığı|Genel Müdürlüğü|Genel Sekreterliği)$', '', tam)
+    ad = re.sub(r'\s+Büyükşehir Belediyesi$', ' BŞB', ad)
+    ad = re.sub(r'\s+Belediyesi$', ' Bld.', ad)
+    return re.sub(r'\s+Üniversitesi$', ' Üni.', ad)
+
+
+def kisa_kadro(ad, kurum):
+    """Aynı kurumun ilanlarını ayırt eden kısa kadro: kurum adındaki sözcükler atılır, 'Yardımcısı' -> 'Yrd.'"""
+    kurum_sozcukleri = {w.casefold() for w in (kurum or '').split()}
+    sozcukler = [w for w in ad.split() if w.casefold() not in kurum_sozcukleri] or ad.split()
+    return re.sub(r'\bYardımcısı\b', 'Yrd.', ' '.join(sozcukler))
+
+
 def aksam_dugmeleri(ilanlar, logolar, site_url):
-    """Kartın satır sırasıyla (logolu ilanlar önce) ilan başına düğme: 'Kurum · N kişi' -> sitedeki ilan sayfası.
+    """Kartın satır sırasıyla (logolu ilanlar önce) ilan başına düğme: 'Kurum' -> sitedeki ilan sayfası.
     Görsel tıklanamadığı için kişi ilgilendiği ilana buradan tek dokunuşla gider."""
     from kart_tasarimlari import veri as kart_verisi, kisa_kurum, toplu_satir
     sirali = [x for x, l in zip(ilanlar, logolar) if l] + [x for x, l in zip(ilanlar, logolar) if not l]
     sonuc = []
-    for i in sirali[:AKSAM_DUGME_EN_COK]:
+    secilen = sirali[:AKSAM_DUGME_EN_COK]
+    kurumlar = [dugme_kurumu(kart_verisi(i)['kurum']) for i in secilen]
+    for i, kurum in zip(secilen, kurumlar):
         try:
             adres = ilan_sayfasi(i, site_url)
         except ValueError:
             continue
-        v = kart_verisi(i)
-        # kişi sayısı yoksa kısaltılmış kadro adı: aynı kurumun iki ilanı (MSB Deniz / TSK) düğmede ayırt edilsin
-        kurum = KISA_AD.get(kisa_kurum(v['kurum']), kisa_kurum(v['kurum']))
-        if v['toplam']:
-            yazi = f"{kurum} · {v['toplam']} kişi"
-        else:
-            yazi = f"{kurum} · {toplu_satir(i)[1]}"
+        # 16 Ekim 2026: düğmede yalnız kısaltılmış kurum adı; aynı kurumun iki ilanı varsa kısa kadro adı eklenir (MSB Deniz / TSK)
+        ilk_kadro = next((k['ad'] for k in kart_verisi(i).get('kadrolar') or [] if k.get('ad')), '') or re.sub(r'^\d+\s+', '', toplu_satir(i)[1])
+        yazi = kurum if kurumlar.count(kurum) == 1 else f"{kurum} · {kisa_kadro(ilk_kadro, kart_verisi(i)['kurum'])}"
 
         sonuc.append((yazi if len(yazi) <= 60 else yazi[:59] + '…', adres))
     return sonuc
