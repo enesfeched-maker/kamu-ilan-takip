@@ -100,7 +100,9 @@ def _kadrolar(ilan):
     sonuc = []
     for parca in meslekler(ilan.get('kadro')):
         adet, ad = adet_ayir(parca)
-        sonuc.append({'adet': adet, 'ad': _fiilsiz(_baslik(ad)), 'no': meslek_no(ad, ilan.get('kurum'))})
+        ad_ = re.sub(r'\b(Uzman)ı (Yardımcı)', r'\1 \2', _fiilsiz(_baslik(ad)))   # SBB yazım hatası
+        ad_ = re.sub(r'^Adet\s+', '', ad_)   # '2 Adet Sözleşmeli Bilişim Personeli'
+        sonuc.append({'adet': adet, 'ad': ad_, 'no': meslek_no(ad, ilan.get('kurum'))})
     if not sonuc:
         m = re.search(BASLIK_ADET + r'\s+([^\d]+?)\s+(?:alacak|alınacak|alim|alım)', _baslik_ozeti(ilan), re.I)
         if m:
@@ -599,6 +601,7 @@ def harf_rozeti(d, kurum, kutu):
 def kisa_kurum(kurum):
     """Liste kartında yer kazanmak için: 'X Üniversitesi Rektörlüğü' -> 'X Üniversitesi', 'X Belediye Başkanlığı' -> 'X Belediyesi'."""
     kurum = re.sub(r'\s+Rektörlüğü$', '', kurum)
+    kurum = re.sub(r'(Kurumu)\s+Genel Sekreterliği$', r'\1', kurum)   # 'Türk Akreditasyon Kurumu Genel Sekreterliği'
     return re.sub(r'\s+Belediye Başkanlığı$', ' Belediyesi', kurum)
 
 
