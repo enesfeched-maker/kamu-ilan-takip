@@ -27,7 +27,7 @@ KURUM_IL = (
     ('bankacilik duzenleme ve denetleme kurumu', 'İstanbul'), ('bddk', 'İstanbul'),
     ('sigortacilik ve ozel emeklilik duzenleme ve denetleme kurumu', 'İstanbul'), ('seddk', 'İstanbul'),
     ('tasarruf mevduati sigorta fonu', 'İstanbul'), ('tmsf', 'İstanbul'), ('kiyi emniyeti', 'İstanbul'),
-    ('turkiye varlik fonu', 'İstanbul'), ('inebolu', 'Kastamonu'),
+    ('turkiye varlik fonu', 'İstanbul'), ('inebolu', 'Kastamonu'), ('iskenderun', 'Hatay'),
 )
 # İli yazmayan merkezî kamu kurumu (bakanlık, başkanlık, genel müdürlük, kurum/kurul, yüksek yargı) Ankara merkezlidir.
 # Belediye, üniversite, kalkınma ajansı gibi yerel kurumlara varsayılan il verilmez.
