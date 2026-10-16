@@ -182,7 +182,8 @@ def temiz_baslik(i):
 
 
 def _ve_kucuk(s):
-    """Cümle ortasındaki Ve/İle/Veya küçük yazılır."""
+    """Cümle ortasındaki Ve/İle/Veya küçük yazılır; SBB yazım hatası 'Uzmanı Yardımcısı' -> 'Uzman Yardımcısı'."""
+    s = re.sub(r'\b(Uzman)ı (Yardımcı)', r'\1 \2', s)
     return re.sub(r'(?<=\S )(Ve|İle|Veya)(?= )', lambda m: 'ile' if m.group(1) == 'İle' else m.group(1).lower(), s)
 
 
