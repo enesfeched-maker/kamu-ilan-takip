@@ -388,8 +388,8 @@ if(f.yeni&&!isNew(o))return false;
 return aramaUyar(o,f,bulanik);}
 function sortRows(list,f){
 const byDl=(a,b)=>Number(closed(a))-Number(closed(b))||(a.son_tarih||'9999').localeCompare(b.son_tarih||'9999')||a.kurum.localeCompare(b.kurum,'tr');
-/* Liste yayın gününe göre gruplanıp ilk sayfası kesildiği için varsayılan sıra en yeni gün önce; gün içinde son başvuruya göre. */
-const gun=o=>o.ilk_gorulme?istDate(Date.parse(o.ilk_gorulme)):'',byGun=(a,b)=>gun(b).localeCompare(gun(a))||byDl(a,b);
+/* Liste yayın gününe göre gruplanıp ilk sayfası kesildiği için varsayılan sıra en yeni gün önce; gün içinde de en yeni yayımlanan üstte. */
+const gun=o=>o.ilk_gorulme?istDate(Date.parse(o.ilk_gorulme)):'',byGun=(a,b)=>gun(b).localeCompare(gun(a))||(Date.parse(b.ilk_gorulme)||0)-(Date.parse(a.ilk_gorulme)||0)||byDl(a,b);
 const cmp=f.sira==='yeni'?(a,b)=>(Date.parse(b.ilk_gorulme)||0)-(Date.parse(a.ilk_gorulme)||0):f.sira==='kurum'?(a,b)=>a.kurum.localeCompare(b.kurum,'tr'):f.sb==='yakinda'?(a,b)=>(Date.parse(a.baslangic_zaman)||0)-(Date.parse(b.baslangic_zaman)||0):byGun;
 return list.slice().sort(cmp);}
 const uygunAcik=(f,pr)=>!!pr&&f.uygun===true;
