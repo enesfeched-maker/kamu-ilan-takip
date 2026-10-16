@@ -149,7 +149,7 @@ def _uygun(item):
 
 
 KURUM_TAKMA = {'iett': 'elektrik tramvay tunel'}   # kısaltma -> adın ayırt edici sözcükleri
-KURUM_GENEL = {'ve', 'ile', 'genel', 'mudurlugu', 'kurumu', 'kurulu', 'cumhurbaskanligi', 'baskanlik'}
+KURUM_GENEL = {'ve', 'ile', 'genel', 'mudurlugu', 'sekreterligi', 'kurumu', 'kurulu', 'cumhurbaskanligi', 'baskanlik'}
 BASLIK_GENEL = {'ve', 'ile', 'veya', 'alim', 'alimi', 'ilani', 'duyurusu', 'personel', 'sinav', 'sinavi', 'yili', 'yilinda',
                 'alacak', 'alinacak', 'ilk', 'defa', 'atanmak', 'uzere', 'aciktan', 'temin', 'edecektir', 'adet', 'kisi',
                 'toplam', 'sozlesmeli', 'mevcut'}

@@ -161,6 +161,7 @@ class CokKaynakliKopyaTests(unittest.TestCase):
         self.assertEqual(c('Cumhurbaşkanlığı İletişim Başkanlığı'), c('İLETİŞİM BAŞKANLIĞI'))
         self.assertEqual(c('Doğu Marmara Kalkınma Ajansı (MARKA)'), c('DOĞU MARMARA KALKINMA AJANSI'))
         self.assertEqual(c('Bahçe (OSMANİYE) Belediye Başkanlığı'), c('Osmaniye Bahçe Belediyesi'))
+        self.assertEqual(c('TÜRK AKREDİTASYON KURUMU GENEL SEKRETERLİĞİ'), c('TÜRK AKREDİTASYON KURUMU'))   # 16 Ekim 2026: sitede iki kez
         self.assertNotEqual(c('Göç İdaresi Başkanlığı'), c('Gelir İdaresi Başkanlığı'))
         self.assertNotEqual(c('Ankara Kalkınma Ajansı'), c('İzmir Kalkınma Ajansı'))
 
