@@ -40,6 +40,14 @@ class SiteTests(unittest.TestCase):
         self.assertTrue(any(v['@type'] == 'BreadcrumbList' for v in veriler))
         self.assertIn('<title>Adalet Bakanlığı', html)
         self.assertIn('Son başvuru: 20 Ekim 2026', html)
+        self.assertEqual(is_['jobLocation']['address']['addressCountry'], 'TR')
+        # il bilinince addressRegion + addressLocality; çok illi ilanda il başına bir yer
+        def yer(kayit):
+            h = detail_page(item, simdi=simdi, kayit=kayit)[1]
+            return next(v for v in (json.loads(m) for m in re.findall(r'<script type="application/ld\+json">(.*?)</script>', h)) if v['@type'] == 'JobPosting')['jobLocation']
+        self.assertEqual(yer({'il': 'İzmir'})['address']['addressRegion'], 'İzmir')
+        self.assertEqual(yer({'il': 'İzmir'})['address']['addressLocality'], 'İzmir')
+        self.assertEqual([y['address']['addressRegion'] for y in yer({'il': 'Birden çok il', 'iller': ['Ankara', 'Bursa']})], ['Ankara', 'Bursa'])
         # süresi dolmuş ilan ve başka kaynaktaki kopya Google İş İlanları'na girmez; kopya esas kayda kanonik bağlanır
         self.assertNotIn('JobPosting', detail_page(item, simdi=datetime(2026, 10, 21, tzinfo=TR))[1])
         kopya = detail_page(item, simdi=simdi, kopya={'rol': 'ikincil', 'birincil': 'esas-kayit'})[1]

@@ -575,17 +575,20 @@ def yapisal_veri(item, canonical, end, alanlar, kayit, gorsel, simdi, is_ilani):
         yayim = min(datetime.fromisoformat(yayim), simdi).astimezone(TR).date().isoformat()
     except ValueError:
         yayim = simdi.date().isoformat()
-    adres = {'@type': 'PostalAddress', 'addressCountry': 'TR'}
-    il = (kayit or {}).get('il') or ''
-    if il:
-        adres['addressRegion'] = il
+    # Search Console 'addressRegion/addressLocality eksik': il (Türkiye'de il = şehir) her iki alana; çok illi ilanda il başına bir yer
+    iller = [i for i in dict.fromkeys(list((kayit or {}).get('iller') or []) + [(kayit or {}).get('il') or ''])
+             if i and ks.kurum_anahtari(i) in ks.IL_ADI][:10]
+    if not iller:   # il bilinmiyorsa kurum adında geçen il ('Ankara Üniversitesi')
+        iller = [ks.IL_ADI[w] for w in ks.kurum_anahtari(kurum).split() if w in ks.IL_ADI][:1]
+    yerler = [{'@type': 'Place', 'address': {'@type': 'PostalAddress', 'addressCountry': 'TR', 'addressRegion': i, 'addressLocality': i}}
+              for i in iller] or [{'@type': 'Place', 'address': {'@type': 'PostalAddress', 'addressCountry': 'TR'}}]
     import liste_verisi
     unvan = re.sub(r'^\d+\s+', '', liste_verisi.baslik_temiz(alanlar.get('manset') or '')).strip()
     is_ = {'@context': 'https://schema.org', '@type': 'JobPosting', 'title': unvan or item.get('baslik'),
            'description': aciklama, 'datePosted': yayim, 'validThrough': end.isoformat(timespec='seconds'),
            'employmentType': 'FULL_TIME', 'directApply': False, 'url': canonical,
            'hiringOrganization': {'@type': 'Organization', 'name': kurum},
-           'jobLocation': {'@type': 'Place', 'address': adres},
+           'jobLocation': yerler[0] if len(yerler) == 1 else yerler,
            'identifier': {'@type': 'PropertyValue', 'name': 'KPSS Tercihi', 'value': item.get('id') or canonical}}
     if (gorsel or {}).get('logo'):
         is_['hiringOrganization']['logo'] = BASE + gorsel['logo']
