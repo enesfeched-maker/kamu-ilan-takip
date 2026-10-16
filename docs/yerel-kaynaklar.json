@@ -1,9 +1,9 @@
 {
  "schema": 1,
- "guncelleme": "2026-10-16T07:06:59.495600+00:00",
+ "guncelleme": "2026-10-16T07:38:01.801308+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-10-16T07:07:05.790978+00:00",
+   "kontrol": "2026-10-16T07:38:07.850462+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -231,6 +231,45 @@
      "sbb_detay_surumu": 6,
      "puan_turleri": [
       "P2"
+     ],
+     "belge_ogrenim": [
+      "lisans"
+     ]
+    },
+    {
+     "id": "sbb-838c1ad20b87efb0ed63d6c7",
+     "baslik": "TÜRK AKREDİTASYON KURUMU - 2 ALACAK",
+     "kurum": "TÜRK AKREDİTASYON KURUMU",
+     "kadro": "2 ALACAK",
+     "ilan_turu": "Kamu Personeli",
+     "son_tarih": "2026-10-31",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 16 Ekim - 31 Ekim)",
+     "baslangic_zaman": "2026-10-16T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-10-16T10:38:03+03:00",
+     "belge_ozeti": "e4ce13ff740e2b54e714630b68c678786ae824f3eaa60a7f6c5d85d4cd1d64b3",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "2 alımı. Son başvuru: 31.10.2026. 2-BAŞVURU ŞEKLİ, YERİ VE TARİHİ Sınav başvuruları, 16 /10/ 2026 günü başlayacak ve 31 /10/ 2026 günü saat 23:59’da sona erecektir. Başvurular, e-Devlet üzerinden Türk Akreditasyon Kurumu-Kariyer Kapısı Kamu İşe Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "b) Fakültelerin dört yıllık bilgisayar mühendisliği, yazılım mühendisliği, elektrik mühendisliği, elektronik mühendisliği, elektrik ve elektronik mühendisliği ve endüstri mühendisliği bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurt dışındaki yükseköğretim kurumlarından mezun olmak,"
+      }
+     ],
+     "basvuru_notu": "d) Lisans diploması veya e-devlet üzerinden temin edilebilecek mezun belgesi; yurt dışındaki öğretim kurumlarından mezun olan adaylar için ise son başvuru tarihi itibarıyla Yükseköğretim Kurulu tarafından onaylanmış diploma denklik belgesi,",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/e4ce13ff740e2b54e714630b68c678786ae824f3eaa60a7f6c5d85d4cd1d64b3.pdf",
+     "belge_sha256": "e4ce13ff740e2b54e714630b68c678786ae824f3eaa60a7f6c5d85d4cd1d64b3",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "puan_turleri": [
+      "P3"
      ],
      "belge_ogrenim": [
       "lisans"
@@ -471,8 +510,8 @@
      "donem": "( 14 Ekim - 27 Ekim)",
      "baslangic_zaman": "2026-10-14T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-15T22:12:17+03:00",
-     "belge_ozeti": "cb8a00871c0bbe7070c320335303952e6e0bb96548f47bec8ba41317a88a4016",
+     "detay_guncelleme": "2026-10-16T10:38:07+03:00",
+     "belge_ozeti": "736cb8a28157285a5b67c6338de66aa2ea167a78b21e2826e2e33a9272f86dcf",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -491,8 +530,8 @@
       }
      ],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/cb8a00871c0bbe7070c320335303952e6e0bb96548f47bec8ba41317a88a4016.pdf",
-     "belge_sha256": "cb8a00871c0bbe7070c320335303952e6e0bb96548f47bec8ba41317a88a4016",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/736cb8a28157285a5b67c6338de66aa2ea167a78b21e2826e2e33a9272f86dcf.pdf",
+     "belge_sha256": "736cb8a28157285a5b67c6338de66aa2ea167a78b21e2826e2e33a9272f86dcf",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
     },
@@ -4563,7 +4602,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-10-16T07:07:09.039916+00:00",
+   "kontrol": "2026-10-16T07:38:09.670942+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
