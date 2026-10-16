@@ -40,7 +40,11 @@ class SiteTests(unittest.TestCase):
         self.assertTrue(any(v['@type'] == 'BreadcrumbList' for v in veriler))
         self.assertIn('<title>Adalet Bakanlığı', html)
         self.assertIn('Son başvuru: 20 Ekim 2026', html)
-        self.assertEqual(is_['jobLocation']['address']['addressCountry'], 'TR')
+        self.assertEqual(is_['jobLocation']['address']['addressRegion'], 'Ankara')   # il yazmayan bakanlık: merkezi Ankara
+        import liste_verisi as lv
+        self.assertEqual([lv.merkez_il({'kurum': k}) for k in ('Tasarruf Mevduatı Sigorta Fonu', 'Devlet Arşivleri Başkanlığı', 'İnebolu Belediye Başkanlığı',
+                                                              'Hacettepe Üniversitesi Rektörlüğü', 'Gençlik ve Spor İl Müdürlüğü')],
+                         ['İstanbul', 'Ankara', 'Kastamonu', '', ''])
         # il bilinince addressRegion + addressLocality; çok illi ilanda il başına bir yer
         def yer(kayit):
             h = detail_page(item, simdi=simdi, kayit=kayit)[1]
