@@ -1289,7 +1289,11 @@ def main():
             print(f"Telegram'a akşam kartı gönderildi: {len(i)} yayımlanan ilan")
             time.sleep(3.2)
             continue
-        if detay_bekletir(i, cfg):
+        elle_alan = ((cfg.get('elle') or {}).get('alanlar') or {}).get(i.get('id'))
+        if elle_alan and elle_alan.get('son_tarih') and elle_alan.get('kadro'):
+            # 16 Ekim 2026: ayrıntı servisi yanıt vermeyen ilanın bilgileri resmî sayfadan elle girildiyse beklemeden gönderilir
+            i = dict(i, **{k: v for k, v in elle_alan.items() if not k.startswith('_')})
+        elif detay_bekletir(i, cfg):
             # Resmi servise geçici erişim sorunu: ilan sırada kalır, iş başarısız sayılmaz.
             ertelenen += 1
             continue
