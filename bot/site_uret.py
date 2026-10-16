@@ -578,11 +578,11 @@ def yapisal_veri(item, canonical, end, alanlar, kayit, gorsel, simdi, is_ilani):
     # Search Console 'addressRegion/addressLocality eksik': il (Türkiye'de il = şehir) her iki alana; çok illi ilanda il başına bir yer
     iller = [i for i in dict.fromkeys(list((kayit or {}).get('iller') or []) + [(kayit or {}).get('il') or ''])
              if i and ks.kurum_anahtari(i) in ks.IL_ADI][:10]
-    if not iller:   # il bilinmiyorsa kurum adında geçen il ('Ankara Üniversitesi')
-        iller = [ks.IL_ADI[w] for w in ks.kurum_anahtari(kurum).split() if w in ks.IL_ADI][:1]
+    import liste_verisi
+    if not iller:   # il yazmayan ilanda kurumun merkezi ('Ankara Üniversitesi' -> Ankara, bakanlık -> Ankara, TMSF -> İstanbul)
+        iller = [i for i in [liste_verisi.merkez_il(item)] if i]
     yerler = [{'@type': 'Place', 'address': {'@type': 'PostalAddress', 'addressCountry': 'TR', 'addressRegion': i, 'addressLocality': i}}
               for i in iller] or [{'@type': 'Place', 'address': {'@type': 'PostalAddress', 'addressCountry': 'TR'}}]
-    import liste_verisi
     unvan = re.sub(r'^\d+\s+', '', liste_verisi.baslik_temiz(alanlar.get('manset') or '')).strip()
     is_ = {'@context': 'https://schema.org', '@type': 'JobPosting', 'title': unvan or item.get('baslik'),
            'description': aciklama, 'datePosted': yayim, 'validThrough': end.isoformat(timespec='seconds'),

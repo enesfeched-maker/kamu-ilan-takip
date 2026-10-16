@@ -26,7 +26,25 @@ KURUM_IL = (
     ('tarsus universitesi', 'Mersin'), ('turkiye taskomuru kurumu', 'Zonguldak'),
     ('bankacilik duzenleme ve denetleme kurumu', 'İstanbul'), ('bddk', 'İstanbul'),
     ('sigortacilik ve ozel emeklilik duzenleme ve denetleme kurumu', 'İstanbul'), ('seddk', 'İstanbul'),
+    ('tasarruf mevduati sigorta fonu', 'İstanbul'), ('tmsf', 'İstanbul'), ('kiyi emniyeti', 'İstanbul'),
+    ('turkiye varlik fonu', 'İstanbul'), ('inebolu', 'Kastamonu'),
 )
+# İli yazmayan merkezî kamu kurumu (bakanlık, başkanlık, genel müdürlük, kurum/kurul, yüksek yargı) Ankara merkezlidir.
+# Belediye, üniversite, kalkınma ajansı gibi yerel kurumlara varsayılan il verilmez.
+MERKEZI_KURUM = re.compile(r'\b(?:bakanlığı|başkanlığı|müdürlüğü|sekreterliği|kurumu|kurulu|yargıtay|danıştay|sayıştay|'
+                           r'komutanlığı|akademisi)\b')
+YEREL_KURUM = re.compile(r'\b(?:belediye\w*|üniversite\w*|kalkınma ajansı|il özel idaresi|valiliği|kaymakamlığı|il müdürlüğü|'
+                         r'bölge müdürlüğü)\b')
+
+
+def merkez_il(item):
+    """Kurumun merkezinin bulunduğu il (yapısal veri için): adda/haritada/özette geçen il; yoksa merkezî kurumsa Ankara; yoksa ''."""
+    il = il_cikar(item)
+    if il:
+        return il
+    from siniflandir import kucuk
+    kurum = kucuk(' '.join(str(item.get('kurum') or '').split()))
+    return 'Ankara' if MERKEZI_KURUM.search(kurum) and not YEREL_KURUM.search(kurum) else ''
 OZET_IL_PARANTEZ = re.compile(r'\(([A-ZÇĞİÖŞÜ][a-zçğıöşü]+)\)')
 OZET_IL_GOREV = re.compile(r'(\w+?)(?:da|de|ta|te) görev yapmak üzere')
 
