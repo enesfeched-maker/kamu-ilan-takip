@@ -170,6 +170,21 @@ class CokKaynakliKopyaTests(unittest.TestCase):
         b = iskur_kayit(1, 'Gelir İdaresi Başkanlığı', 'Gelir İdaresi Başkanlığı 3 Uzman Yardımcısı', '2026-10-20')
         self.assertEqual(kopya.kopya_bul([a, b])['kopya_of'], {})
 
+    def test_unvansiz_sbb_kaydi_alacak_unvan_sayilmaz(self):
+        # 16 Ekim 2026: SBB 'TÜRK AKREDİTASYON KURUMU - 2 ALACAK' kaydında 'Alacak' unvan sanıldı, kanala ikinci kez gitti
+        self.assertEqual(ks.kadrolar({'kadro': '2 ALACAK', 'baslik': 'TÜRK AKREDİTASYON KURUMU - 2 ALACAK', 'kurum': 'TÜRK AKREDİTASYON KURUMU'}), [])
+        self.assertEqual(ks.kadrolar({'kadro': '3 MEMUR ALACAK'}), [(3, 'Memur')])
+
+    def test_unvansiz_sbb_kaydi_kanala_gitmez(self):
+        import ilan_bot
+        k = {'id': 'sbb-x', 'kaynak_turu': 'sbb', 'kurum': 'TÜRK AKREDİTASYON KURUMU', 'baslik': 'TÜRK AKREDİTASYON KURUMU - 2 ALACAK',
+             'kadro': '2 ALACAK', 'son_tarih': '2999-10-31'}
+        bekleyen = {'sbb-x'}
+        self.assertEqual(ilan_bot.telegram_sirasi({'sbb-x': k}, [k], [], set(), bekleyen, False, False, {}), [])
+        self.assertEqual(bekleyen, {'sbb-x'})   # silinmez, unvan okununca gider
+        k['kadro'] = '2 BİLİŞİM PERSONELİ ALACAK'
+        self.assertEqual([i['id'] for i in ilan_bot.telegram_sirasi({'sbb-x': k}, [k], [], set(), bekleyen, False, False, {})], ['sbb-x'])
+
 
 class KalanKopyaTests(unittest.TestCase):
     def test_toplam_virgullu_sbb_kadro(self):

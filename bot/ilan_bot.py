@@ -447,6 +447,11 @@ def kopyalari_ele(uygun, mevcut, gonderilen, bekleyen):
     return kalan
 
 
+def unvanli(i):
+    import kurum_sayfasi
+    return bool(kurum_sayfasi.kadrolar(i))
+
+
 def telegram_sirasi(mevcut, gelen, yeniler, gonderilen, bekleyen, ilk_calisma, duyur_mevcut, cfg):
     """Yeni/mevcut ilanları sıraya ekler; başarıyla gönderilenleri tekrar eklemez."""
     canli = {i['id'] for i in gelen}
@@ -477,6 +482,11 @@ def telegram_sirasi(mevcut, gelen, yeniler, gonderilen, bekleyen, ilk_calisma, d
             # Kurumu okunamayan kayıt başka kaynaktaki kopyasıyla eşleştirilemez (12 Ekim 2026: TMSF iki kez paylaşıldı):
             # kanala gitmez, sırada bekler; kurum adı sonradan okunursa normal akışla paylaşılır.
             print(f"Kanala gönderilmedi (kurum adı okunamadı): {i['baslik']}")
+            continue
+        if i.get('kaynak_turu') == 'sbb' and not i.get('duyuru_turu') and not unvanli(i):
+            # Unvansız SBB kaydı ('… - 2 ALACAK') kanalda anlamsız görünür ve kopyası zor eşleşir (16 Ekim 2026: Akreditasyon
+            # bilişim ilanı ikinci kez gitti): sırada bekler; unvan okunursa ya da kopyası paylaşılırsa normal akış sürer.
+            print(f"Kanala gönderilmedi (unvan okunamadı): {i['baslik']}")
             continue
         if telegram_icin_uygun(i, dahil, haric):
             uygun.append(i)
