@@ -738,7 +738,8 @@ AKSAM_DUGME_EN_COK = 7   # kartta görünen satır sayısı kadar (kart_tasariml
 
 
 DUGME_KISA = {'Türk Akreditasyon Kurumu': 'TÜRKAK', 'İskenderun Teknik Üniversitesi': 'İSTE', 'Türk Standardları Enstitüsü': 'TSE',
-              'Jandarma Genel Komutanlığı': 'Jandarma', 'Jandarma ve Sahil Güvenlik Akademisi': 'JSGA', 'Türk Patent ve Marka Kurumu': 'TÜRKPATENT'}
+              'Jandarma Genel Komutanlığı': 'Jandarma', 'Jandarma ve Sahil Güvenlik Akademisi': 'JSGA', 'Türk Patent ve Marka Kurumu': 'TÜRKPATENT',
+              'Kültür ve Turizm Bakanlığı': 'KTB'}
 
 
 def dugme_kurumu(kurum):
