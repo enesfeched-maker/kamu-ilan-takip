@@ -1,5 +1,5 @@
 {
- "guncelleme": "2026-10-17T00:15:11+03:00",
+ "guncelleme": "2026-10-17T00:28:44+03:00",
  "ilanlar": [
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=9c82aab5-022e-43c8-b7f1-e6cf329d205b",
@@ -11804,11 +11804,11 @@
    "kaynak_kimlikleri": [
     "sbb-a181e8ce27afe9680ef2f784"
    ],
+   "kategori": "belediye",
+   "kpss": "kpss",
    "duzeltme_of": "iskur-bb8e6aa8951d08b2725df442",
    "duzeltme_degisen": "tarih",
-   "duzeltme_yeni_tarih": "2026-11-18",
-   "kategori": "belediye",
-   "kpss": "kpss"
+   "duzeltme_yeni_tarih": "2026-11-18"
   },
   {
    "id": "iskur-ce2ccce684a67cfe5ec42653",
@@ -21266,6 +21266,7 @@
   "sbb-9c31b73e8bf1ca0dcd1af3df",
   "sbb-9ed3758a19cd1983ad11eee0",
   "sbb-a091d9586feae0e1ef32dab7",
+  "sbb-a181e8ce27afe9680ef2f784",
   "sbb-a1b920fe98f44f8e989fea1e",
   "sbb-a1c877c33f7b4889a05df648",
   "sbb-a21e202aaaa4becb8c8abdd8",
@@ -21328,9 +21329,7 @@
   "sbb-fefad4b939608db5c1d8a19c",
   "sbb-ffbba5c3ef2b2c84c00bb8e2"
  ],
- "telegram_bekleyen": [
-  "sbb-a181e8ce27afe9680ef2f784"
- ],
+ "telegram_bekleyen": [],
  "telegram_yayin_surumu": 2,
  "telegram_mesajlari": {
   "csb-472497": 307,
