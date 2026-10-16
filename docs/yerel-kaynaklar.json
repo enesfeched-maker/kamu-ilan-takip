@@ -1,9 +1,9 @@
 {
  "schema": 1,
- "guncelleme": "2026-10-16T14:52:50.322103+00:00",
+ "guncelleme": "2026-10-16T15:23:12.042295+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-10-16T14:52:50.732202+00:00",
+   "kontrol": "2026-10-16T15:23:12.488847+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -4637,7 +4637,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-10-16T14:52:52.059903+00:00",
+   "kontrol": "2026-10-16T15:23:13.545408+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -18777,6 +18777,454 @@
    ],
    "belge_ogrenim": [
     "lisans"
+   ]
+  },
+  "https://kariyerkapisi.gov.tr/IlanDetay?i=a6d18ac1-8799-4f76-b4f5-418ceb8c735e": {
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/b3648e8c-54c8-4622-a40d-66cc220f15c3.png",
+   "son_tarih": "2026-10-26",
+   "son_zaman": "2026-10-26T23:59:00+03:00",
+   "baslangic_zaman": "2026-10-19T00:00:00+03:00",
+   "yer": "BAKANLIK MERKEZ TEŞKİLATI",
+   "kadro": "10 SÖZLEŞMELİ BİLİŞİM PERSONELİ",
+   "ilan_turu": "Sözleşmeli Personel İlanları",
+   "ozet": "Kültür ve Turizm Bakanlığı, Bilgi Teknolojileri Genel Müdürlüğü bünyesinde istihdam edilmek üzere, 375 sayılı Kanun Hükmünde Kararnamenin Ek 6’ncı maddesi ve Kamu Kurum ve Kuruluşlarının Büyük Ölçekli Bilgi İşlem Birimlerinde Sözleşmeli Bilişim Personeli İstihdamına İlişkin Esas ve Usuller Hakkında Yönetmelik'in 8’inci maddesi uyarınca, Bakanlığımızca gerçekleştirilecek sözlü sınav başarı sırasına göre yapılacak yerleştirme ile 10 (on) adet Sözleşmeli Bilişim Personeli alınacaktır.",
+   "sartlar": [
+    {
+     "kadro": "A Grubu Kıdemli Sistem Uzmanı (1 Kişi- Tam Zamanlı -Aylık Brüt Sözleşme Ücret Tavanının 4 Katına Kadar)",
+     "metin": "Microsoft Windows Server 2016, 2019, 2022 ve üzeri işletim sistemlerinin kurulumu, yükseltilmesi, yönetimi, yüksek erişilebilirlik, performans optimizasyonu ve sorun giderme konularında ileri seviyede bilgi ve deneyim sahibi olmak."
+    }
+   ],
+   "sart_kadro_sayisi": 9,
+   "basvuru_notu": "Adaylar başvurularını 19.10.2026(00.00)-26.10.2026(23.59) tarihleri arasında e-Devlet aracılığıyla Kariyer Kapısı https://kariyerkapisi.gov.tr/isealim üzerinden gerçekleştirilecek olup duyuruda belirtilen süre içinde şahsen veya posta yoluyla yapılan başvurular kabul edilmeyecektir.",
+   "detay_guncelleme": "2026-10-16T18:23:14+03:00",
+   "kk_detay_surumu": 3,
+   "kadro_detay": [
+    {
+     "unvan": "A Grubu Kıdemli Sistem Uzmanı (1 Kişi- Tam Zamanlı -Aylık Brüt Sözleşme Ücret Tavanının 4 Katına Kadar)",
+     "adet": 1,
+     "iller": [
+      "BAKANLIK MERKEZ TEŞKİLATI"
+     ],
+     "ogrenim": "",
+     "sinav": "",
+     "maddeler": [
+      "En az 1.000 (bin) iç veya 10.000 (on bin) dış kullanıcıya hizmet veren kamu kurumları veya büyük ölçekli özel sektör kuruluşlarında sistem yönetimi alanında en az 5 (beş) yıl çalışmış olmak.",
+      "Microsoft Windows Server 2016, 2019, 2022 ve üzeri işletim sistemlerinin kurulumu, yükseltilmesi, yönetimi, yüksek erişilebilirlik, performans optimizasyonu ve sorun giderme konularında ileri seviyede bilgi ve deneyim sahibi olmak.",
+      "Active Directory Domain Services (AD DS) mimarisinin tasarımı, kurulumu ve yönetimi konusunda ileri seviyede bilgi sahibi olmak.",
+      "Multi-Domain, Multi-Site, Forest yapıları, FSMO Rolleri, Replication, Trust, Global Catalog, Sites and Services, Metadata Cleanup, RID Pool, USN Rollback ve Group Policy mimarilerinin yönetiminde deneyim sahibi olmak.",
+      "Active Directory güvenliği kapsamında LAPS, Windows LAPS, gMSA, LDAP, Kerberos, NTLM, PKI, Active Directory Certificate Services (AD CS) ve kimlik doğrulama süreçleri hakkında bilgi sahibi olmak.",
+      "PowerShell kullanarak Active Directory, Windows Server ve Microsoft 365 yönetimine yönelik otomasyonlar geliştirmiş olmak.",
+      "Tercihen Microsoft Intune, Autopilot, Conditional Access ve MFA politikalarının yönetiminde görev almış olmak.",
+      "VMware ESXi, VMware vCenter veya Microsoft Hyper-V sanallaştırma altyapılarının kurulumu, yönetimi ve bakımında ileri seviyede bilgi sahibi olmak.",
+      "VMware Cluster, HA, DRS, vMotion, Storage vMotion ve Snapshot yönetimi konusunda deneyim sahibi olmak.",
+      "NAS (QNAP, Synology vb.) depolama sistemleri ve kurumsal yedekleme mimarileri konusunda bilgi sahibi olmak.",
+      "TCP/IP, DNS, DHCP, VLAN, VPN, Routing ve Switching konularında ileri seviyede bilgi sahibi olmak.",
+      "Firewall kurulumu, güvenlik politikalarının oluşturulması, SSL VPN, IPS, NAT ve Web Filtering yönetimi konusunda deneyim sahibi olmak.",
+      "Tercihen FortiGate Firewall yönetimi konusunda bilgi sahibi olmak.",
+      "Microsoft SQL Server kurulumu, yedekleme ve temel yönetim süreçleri hakkında bilgi sahibi olmak.",
+      "Sunucu donanımları (HPE, Dell vb.), RAID yapıları, iLO/iDRAC yönetimi ve firmware güncellemeleri konusunda deneyim sahibi olmak.",
+      "Bilgi güvenliği, KVKK, Endpoint Security, EDR/XDR ve çok faktörlü kimlik doğrulama (MFA) çözümleri hakkında bilgi sahibi olmak.",
+      "Teknik dokümantasyon hazırlama, sistem envanteri oluşturma ve değişiklik yönetimi süreçlerinde deneyim sahibi olmak.",
+      "Analitik düşünme, problem çözme, ekip çalışmasına yatkınlık ve güçlü iletişim becerilerine sahip olmak.",
+      "Microsoft Certified (Windows Server, Microsoft 365, Azure Administrator vb.) sertifikalarına sahip olmak. ii. PAM, Grafana ürünleri hakkında bilgi ve tecrübe sahibi olmak. iii. VMware VCP sertifikasına sahip olmak. iv. Veeam VMCE sertifikasına sahip olmak.",
+      "Microsoft Defender for Identity, Defender for Endpoint ve Microsoft Sentinel ürünleri konusunda deneyim sahibi olmak. vi. SCCM (MECM) veya Microsoft Intune ile istemci yönetimi konusunda deneyim sahibi olmak. vii. Linux sunucu yönetimi konusunda temel veya orta seviyede bilgi sahibi olmak. viii. HPE Aruba veya Cisco switch yönetimi konusunda deneyim sahibi olmak. ix. Güvenlik Duvarı, SSL VPN, Site to Site VPN, IPS,NAC, DDOS Atak Önleme, WAF, Veritabanı Güvenlik Duvarı ve DNS Güvenliği hakkında bilgi sahibi olmak."
+     ],
+     "bolumler": [
+      [
+       "",
+       [
+        "En az 1.000 (bin) iç veya 10.000 (on bin) dış kullanıcıya hizmet veren kamu kurumları veya büyük ölçekli özel sektör kuruluşlarında sistem yönetimi alanında en az 5 (beş) yıl çalışmış olmak.",
+        "Microsoft Windows Server 2016, 2019, 2022 ve üzeri işletim sistemlerinin kurulumu, yükseltilmesi, yönetimi, yüksek erişilebilirlik, performans optimizasyonu ve sorun giderme konularında ileri seviyede bilgi ve deneyim sahibi olmak.",
+        "Active Directory Domain Services (AD DS) mimarisinin tasarımı, kurulumu ve yönetimi konusunda ileri seviyede bilgi sahibi olmak.",
+        "Multi-Domain, Multi-Site, Forest yapıları, FSMO Rolleri, Replication, Trust, Global Catalog, Sites and Services, Metadata Cleanup, RID Pool, USN Rollback ve Group Policy mimarilerinin yönetiminde deneyim sahibi olmak.",
+        "Active Directory güvenliği kapsamında LAPS, Windows LAPS, gMSA, LDAP, Kerberos, NTLM, PKI, Active Directory Certificate Services (AD CS) ve kimlik doğrulama süreçleri hakkında bilgi sahibi olmak.",
+        "PowerShell kullanarak Active Directory, Windows Server ve Microsoft 365 yönetimine yönelik otomasyonlar geliştirmiş olmak.",
+        "Tercihen Microsoft Intune, Autopilot, Conditional Access ve MFA politikalarının yönetiminde görev almış olmak.",
+        "VMware ESXi, VMware vCenter veya Microsoft Hyper-V sanallaştırma altyapılarının kurulumu, yönetimi ve bakımında ileri seviyede bilgi sahibi olmak.",
+        "VMware Cluster, HA, DRS, vMotion, Storage vMotion ve Snapshot yönetimi konusunda deneyim sahibi olmak.",
+        "NAS (QNAP, Synology vb.) depolama sistemleri ve kurumsal yedekleme mimarileri konusunda bilgi sahibi olmak.",
+        "TCP/IP, DNS, DHCP, VLAN, VPN, Routing ve Switching konularında ileri seviyede bilgi sahibi olmak.",
+        "Firewall kurulumu, güvenlik politikalarının oluşturulması, SSL VPN, IPS, NAT ve Web Filtering yönetimi konusunda deneyim sahibi olmak.",
+        "Tercihen FortiGate Firewall yönetimi konusunda bilgi sahibi olmak.",
+        "Microsoft SQL Server kurulumu, yedekleme ve temel yönetim süreçleri hakkında bilgi sahibi olmak.",
+        "Sunucu donanımları (HPE, Dell vb.), RAID yapıları, iLO/iDRAC yönetimi ve firmware güncellemeleri konusunda deneyim sahibi olmak.",
+        "Bilgi güvenliği, KVKK, Endpoint Security, EDR/XDR ve çok faktörlü kimlik doğrulama (MFA) çözümleri hakkında bilgi sahibi olmak.",
+        "Teknik dokümantasyon hazırlama, sistem envanteri oluşturma ve değişiklik yönetimi süreçlerinde deneyim sahibi olmak.",
+        "Analitik düşünme, problem çözme, ekip çalışmasına yatkınlık ve güçlü iletişim becerilerine sahip olmak."
+       ]
+      ],
+      [
+       "Tercihen",
+       [
+        "Microsoft Certified (Windows Server, Microsoft 365, Azure Administrator vb.) sertifikalarına sahip olmak. ii. PAM, Grafana ürünleri hakkında bilgi ve tecrübe sahibi olmak. iii. VMware VCP sertifikasına sahip olmak. iv. Veeam VMCE sertifikasına sahip olmak.",
+        "Microsoft Defender for Identity, Defender for Endpoint ve Microsoft Sentinel ürünleri konusunda deneyim sahibi olmak. vi. SCCM (MECM) veya Microsoft Intune ile istemci yönetimi konusunda deneyim sahibi olmak. vii. Linux sunucu yönetimi konusunda temel veya orta seviyede bilgi sahibi olmak. viii. HPE Aruba veya Cisco switch yönetimi konusunda deneyim sahibi olmak. ix. Güvenlik Duvarı, SSL VPN, Site to Site VPN, IPS,NAC, DDOS Atak Önleme, WAF, Veritabanı Güvenlik Duvarı ve DNS Güvenliği hakkında bilgi sahibi olmak."
+       ]
+      ]
+     ]
+    },
+    {
+     "unvan": "A Grubu Kıdemli Veritabanı Yöneticisi (1 Kişi, Tam Zamanlı- Aylık Brüt Sözleşme Ücret Tavanının 4 Katına Kadar)",
+     "adet": 1,
+     "iller": [
+      "BAKANLIK MERKEZ TEŞKİLATI"
+     ],
+     "ogrenim": "",
+     "sinav": "",
+     "maddeler": [
+      "Büyük ölçekli bilgi işlem birimlerinde uygulama geliştirme, veri yönetimi veya veritabanı sistemleri alanlarında en az 5(beş) yıl çalışmış olmak.",
+      "Microsoft SQL Server ve PostgreSQL veritabanlarının yönetimi, kurulumu, konfigürasyonu, bakım, yedekleme ve geri yükleme, sürüm yükseltme, yama yönetimi ve sorun giderme süreçleri hakkında bilgi ve tecrübe sahibi olmak.",
+      "T-SQL konusunda ileri seviyede, PL/pgSQL konusunda bilgi sahibi olmak.",
+      "SQL sorgularının analiz edilmesi, Execution Plan değerlendirilmesi, indeks analizi, sorgu ve kaynak kullanımının optimizasyonu ile SQL Performance Tuning konularında bilgi ve tecrübe sahibi olmak.",
+      "Microsoft SQL Server Query Store, Dynamic Management Views (DMV), blocking, locking, deadlock, log analizi ve uzun süren sorguların analiz edilmesi konularında bilgi sahibi olmak.",
+      "Veritabanlarında indeks yönetimi, istatistik yönetimi, bakım işlemleri ve performans iyileştirme süreçleri konusunda bilgi ve tecrübe sahibi olmak.",
+      "Microsoft SQL Server Always On Availability Groups ve Failover Cluster ile PostgreSQL High Availability, Replication ve Failover teknolojileri hakkında bilgi sahibi olmak.",
+      "PostgreSQL Streaming Replication, Logical Replication ve connection pooling teknolojileri hakkında bilgi sahibi olmak.",
+      "Veritabanlarında kapasite planlama, CPU, bellek, disk I/O, bağlantı kullanımı ve benzeri sistem kaynaklarının izlenmesi ile performans sorunlarının analiz edilmesi konularında bilgi sahibi olmak.",
+      "Microsoft SQL Server, PostgreSQL veya farklı veri kaynakları arasında veri aktarımı, veri dönüştürme, ETL, veri migrasyonu ve platformlar arası veri aktarımı süreçlerinde bilgi ve tecrübe sahibi olmak.",
+      "ETL süreçlerinin tasarlanması, veri doğrulama, veri temizleme, toplu veri aktarımı, hata yönetimi ve veri bütünlüğünün korunması konularında bilgi ve tecrübe sahibi olmak.",
+      "Yazılım geliştirme ekiplerinin ihtiyaçları doğrultusunda veritabanı şema tasarımı ve değişikliklerinin gerçekleştirilmesi, sorguların iyileştirilmesi ve uygulama-veritabanı performans sorunlarının çözülmesi konularında bilgi ve tecrübe sahibi olmak.",
+      "ORM teknolojileri ile ilişkisel veritabanlarının kullanımında üretilen SQL sorgularının analiz edilmesi ve uygulama kaynaklı veritabanı performans sorunlarının tespit edilmesi konularında bilgi sahibi olmak. Uygulama ve veri kaynakları arasında veri entegrasyonu, veri aktarımı ve veri senkronizasyonu süreçlerinde bilgi ve tecrübe sahibi olmak.",
+      "REST API, SOAP/Web Services veya benzeri teknolojiler kullanılarak gerçekleştirilen kurumsal sistem entegrasyonları ile sistemler arası veri alışverişi süreçlerinde bilgi ve tecrübe sahibi olmak.",
+      "Veritabanı işlemleri, veri aktarımı ve operasyonel ihtiyaçlara yönelik SQL, PowerShell, Shell Script veya benzeri araçlarla otomasyon ve betik geliştirme konusunda bilgi sahibi olmak.",
+      "Teknik dokümantasyon hazırlama, yapılan işlemleri kayıt altına alma, üretim ortamı değişikliklerini kontrollü şekilde gerçekleştirme ve yazılım, sistem ve diğer teknik ekiplerle koordineli çalışma konularında bilgi ve tecrübe sahibi olmak.",
+      "Prometheus, Grafana, Zabbix veya benzeri izleme sistemleri hakkında bilgi sahibi olmak. ii. SSIS veya farklı ETL/veri aktarım teknolojileri konusunda bilgi ve tecrübe sahibi olmak. iii. Veri ambarı, raporlama ve analitik veri modelleri konusunda bilgi sahibi olmak. Power BI veya benzeri raporlama araçlarını kullanmış olmak. iv. Entity Framework, Entity Framework Core veya benzeri ORM teknolojileri konusunda bilgi ve tecrübe sahibi olmak."
+     ],
+     "bolumler": [
+      [
+       "",
+       [
+        "Büyük ölçekli bilgi işlem birimlerinde uygulama geliştirme, veri yönetimi veya veritabanı sistemleri alanlarında en az 5(beş) yıl çalışmış olmak.",
+        "Microsoft SQL Server ve PostgreSQL veritabanlarının yönetimi, kurulumu, konfigürasyonu, bakım, yedekleme ve geri yükleme, sürüm yükseltme, yama yönetimi ve sorun giderme süreçleri hakkında bilgi ve tecrübe sahibi olmak.",
+        "T-SQL konusunda ileri seviyede, PL/pgSQL konusunda bilgi sahibi olmak.",
+        "SQL sorgularının analiz edilmesi, Execution Plan değerlendirilmesi, indeks analizi, sorgu ve kaynak kullanımının optimizasyonu ile SQL Performance Tuning konularında bilgi ve tecrübe sahibi olmak.",
+        "Microsoft SQL Server Query Store, Dynamic Management Views (DMV), blocking, locking, deadlock, log analizi ve uzun süren sorguların analiz edilmesi konularında bilgi sahibi olmak.",
+        "Veritabanlarında indeks yönetimi, istatistik yönetimi, bakım işlemleri ve performans iyileştirme süreçleri konusunda bilgi ve tecrübe sahibi olmak.",
+        "Microsoft SQL Server Always On Availability Groups ve Failover Cluster ile PostgreSQL High Availability, Replication ve Failover teknolojileri hakkında bilgi sahibi olmak.",
+        "PostgreSQL Streaming Replication, Logical Replication ve connection pooling teknolojileri hakkında bilgi sahibi olmak.",
+        "Veritabanlarında kapasite planlama, CPU, bellek, disk I/O, bağlantı kullanımı ve benzeri sistem kaynaklarının izlenmesi ile performans sorunlarının analiz edilmesi konularında bilgi sahibi olmak.",
+        "Microsoft SQL Server, PostgreSQL veya farklı veri kaynakları arasında veri aktarımı, veri dönüştürme, ETL, veri migrasyonu ve platformlar arası veri aktarımı süreçlerinde bilgi ve tecrübe sahibi olmak.",
+        "ETL süreçlerinin tasarlanması, veri doğrulama, veri temizleme, toplu veri aktarımı, hata yönetimi ve veri bütünlüğünün korunması konularında bilgi ve tecrübe sahibi olmak.",
+        "Yazılım geliştirme ekiplerinin ihtiyaçları doğrultusunda veritabanı şema tasarımı ve değişikliklerinin gerçekleştirilmesi, sorguların iyileştirilmesi ve uygulama-veritabanı performans sorunlarının çözülmesi konularında bilgi ve tecrübe sahibi olmak.",
+        "ORM teknolojileri ile ilişkisel veritabanlarının kullanımında üretilen SQL sorgularının analiz edilmesi ve uygulama kaynaklı veritabanı performans sorunlarının tespit edilmesi konularında bilgi sahibi olmak. Uygulama ve veri kaynakları arasında veri entegrasyonu, veri aktarımı ve veri senkronizasyonu süreçlerinde bilgi ve tecrübe sahibi olmak.",
+        "REST API, SOAP/Web Services veya benzeri teknolojiler kullanılarak gerçekleştirilen kurumsal sistem entegrasyonları ile sistemler arası veri alışverişi süreçlerinde bilgi ve tecrübe sahibi olmak.",
+        "Veritabanı işlemleri, veri aktarımı ve operasyonel ihtiyaçlara yönelik SQL, PowerShell, Shell Script veya benzeri araçlarla otomasyon ve betik geliştirme konusunda bilgi sahibi olmak.",
+        "Teknik dokümantasyon hazırlama, yapılan işlemleri kayıt altına alma, üretim ortamı değişikliklerini kontrollü şekilde gerçekleştirme ve yazılım, sistem ve diğer teknik ekiplerle koordineli çalışma konularında bilgi ve tecrübe sahibi olmak."
+       ]
+      ],
+      [
+       "Tercihen",
+       [
+        "Prometheus, Grafana, Zabbix veya benzeri izleme sistemleri hakkında bilgi sahibi olmak. ii. SSIS veya farklı ETL/veri aktarım teknolojileri konusunda bilgi ve tecrübe sahibi olmak. iii. Veri ambarı, raporlama ve analitik veri modelleri konusunda bilgi sahibi olmak. Power BI veya benzeri raporlama araçlarını kullanmış olmak. iv. Entity Framework, Entity Framework Core veya benzeri ORM teknolojileri konusunda bilgi ve tecrübe sahibi olmak."
+       ]
+      ]
+     ]
+    },
+    {
+     "unvan": "B Grubu Kıdemli Yazılım Geliştirme Uzmanı (1 Kişi, Tam Zamanlı- Aylık Brüt Sözleşme Ücret Tavanının 3 Katına Kadar)",
+     "adet": 1,
+     "iller": [
+      "BAKANLIK MERKEZ TEŞKİLATI"
+     ],
+     "ogrenim": "",
+     "sinav": "",
+     "maddeler": [
+      "Kullanıcı sayısı 5.000'den fazla olan büyük çaplı en az bir (1) adet projede görev almış olmak, yazılım geliştirme alanında en az 5 (beş) yıl çalışmış olmak.",
+      "C# ve Perl dilleri ile uygulama geliştirmiş olmak.",
+      "Yazılım mimari gereksinimlerinin belirlenmesi, tasarım, geliştirme ve alt yapının teknolojik gelişmelere uyarlanması konusunda tecrübe sahibi olmak.",
+      "Windows Servisleri, Web API ve Web Servisleri (SOAP, WCF, REST) teknolojileri konusunda tecrübe sahibi olmak.",
+      "Mikro servis mimarisi hakkında tecrübe sahibi olmak.",
+      "JavaScript, Typescript ve Javascript framework kütüphanelerinden en az ikisinde tecrübe sahibi olmak.",
+      "Dağıtık ön bellek mimarilerinin (Redis, MEMCACHED vb) kullanımı konusunda tecrübe sahibi olmak.",
+      "SQL Server ve MYSQL ilişkisel veritabanları konusunda deneyimli, stored procedure, trigger yazma konusunda tecrübe sahibi olmak.",
+      "Kod güvenliği, kod düzenleme (Refactoring), kodlama standartları ve standartların uygulanması konusunda bilgi ve deneyim sahibi olmak.",
+      "Web teknolojileri performans ve güvenlik konularında tecrübe sahibi olmak.",
+      "Yazılım Yaşam Döngüsü hakkında bilgi sahibi olmak.",
+      "Agile yazılım geliştirme metodolojilerine hâkim olmak.",
+      "TFS, GIT, SVN gibi kaynak kod kontrol yönetim araçları ile çalışmış olmak.",
+      "Cross Platform Uygulama Geliştirme ve Enterprise Container Platform (Docker, Exalogic) konusunda bilgi ve tecrübe sahibi olmak."
+     ],
+     "bolumler": [
+      [
+       "",
+       [
+        "Kullanıcı sayısı 5.000'den fazla olan büyük çaplı en az bir (1) adet projede görev almış olmak, yazılım geliştirme alanında en az 5 (beş) yıl çalışmış olmak.",
+        "C# ve Perl dilleri ile uygulama geliştirmiş olmak.",
+        "Yazılım mimari gereksinimlerinin belirlenmesi, tasarım, geliştirme ve alt yapının teknolojik gelişmelere uyarlanması konusunda tecrübe sahibi olmak.",
+        "Windows Servisleri, Web API ve Web Servisleri (SOAP, WCF, REST) teknolojileri konusunda tecrübe sahibi olmak.",
+        "Mikro servis mimarisi hakkında tecrübe sahibi olmak.",
+        "JavaScript, Typescript ve Javascript framework kütüphanelerinden en az ikisinde tecrübe sahibi olmak.",
+        "Dağıtık ön bellek mimarilerinin (Redis, MEMCACHED vb) kullanımı konusunda tecrübe sahibi olmak.",
+        "SQL Server ve MYSQL ilişkisel veritabanları konusunda deneyimli, stored procedure, trigger yazma konusunda tecrübe sahibi olmak.",
+        "Kod güvenliği, kod düzenleme (Refactoring), kodlama standartları ve standartların uygulanması konusunda bilgi ve deneyim sahibi olmak.",
+        "Web teknolojileri performans ve güvenlik konularında tecrübe sahibi olmak.",
+        "Yazılım Yaşam Döngüsü hakkında bilgi sahibi olmak.",
+        "Agile yazılım geliştirme metodolojilerine hâkim olmak.",
+        "TFS, GIT, SVN gibi kaynak kod kontrol yönetim araçları ile çalışmış olmak.",
+        "Cross Platform Uygulama Geliştirme ve Enterprise Container Platform (Docker, Exalogic) konusunda bilgi ve tecrübe sahibi olmak."
+       ]
+      ]
+     ]
+    },
+    {
+     "unvan": "B Grubu Kıdemli Ağ Yönetimi Uzmanı (1 Kişi- Tam Zamanlı- Aylık Brüt Sözleşme Ücret Tavanının 3 Katına Kadar)",
+     "adet": 1,
+     "iller": [
+      "BAKANLIK MERKEZ TEŞKİLATI"
+     ],
+     "ogrenim": "",
+     "sinav": "",
+     "maddeler": [
+      "Büyük ölçekli bilgi işlem birimlerinde veya en az 1.000 iç veya 10.000 dış kullanıcısı bulunan özel sektördeki kurumsal sistemlerde en az 5 (beş) yıl çalışmış olmak.",
+      "Büyük ölçekli veri merkezinde konuşlandırılmış kurumsal (enterprise) seviyedeki omurga yönlendirici ile uç birimlerde konuşlandırılmış yönlendirici, omurga anahtar ve kenar anahtar sistemleri için bilişim ağları yöneticisi tecrübesine sahibi olmak.",
+      "Geniş Alan Ağları (WAN) ve Yerel Alan Ağları (LAN) kablolama teknikleri hakkında bilgi sahibi olmak.",
+      "Yerel Alan Ağı (LAN), Geniş Alan Ağı (WAN), Kablosuz Yerel Alan Ağı (WLAN), Sanal Özel Ağ (VPN), Dinamik Yönlendirme Protokolleri, SSL, DHCP, DNS, Proxy, Bant Genişliği Yönetimi ve IEEE 802.1x teknolojileri konusunda bilgi ve tecrübe sahibi olmak.",
+      "Kablosuz ağ cihazları kurulumu, yönetimi ve güvenliği konularında bilgi ve deneyim sahibi olmak.",
+      "IP telefon ve VoIP teknolojileri hakkında bilgi ve tecrübe sahibi olmak.",
+      "Altyapı donanımları hakkında bilgi ve tecrübe sahibi olmak.",
+      "4G/5G Mobil APN bağlantıları hakkında bilgi ve tecrübe sahibi olmak.",
+      "Network izleme ve raporlama konularında tecrübe sahibi olmak."
+     ],
+     "bolumler": [
+      [
+       "",
+       [
+        "Büyük ölçekli bilgi işlem birimlerinde veya en az 1.000 iç veya 10.000 dış kullanıcısı bulunan özel sektördeki kurumsal sistemlerde en az 5 (beş) yıl çalışmış olmak.",
+        "Büyük ölçekli veri merkezinde konuşlandırılmış kurumsal (enterprise) seviyedeki omurga yönlendirici ile uç birimlerde konuşlandırılmış yönlendirici, omurga anahtar ve kenar anahtar sistemleri için bilişim ağları yöneticisi tecrübesine sahibi olmak.",
+        "Geniş Alan Ağları (WAN) ve Yerel Alan Ağları (LAN) kablolama teknikleri hakkında bilgi sahibi olmak.",
+        "Yerel Alan Ağı (LAN), Geniş Alan Ağı (WAN), Kablosuz Yerel Alan Ağı (WLAN), Sanal Özel Ağ (VPN), Dinamik Yönlendirme Protokolleri, SSL, DHCP, DNS, Proxy, Bant Genişliği Yönetimi ve IEEE 802.1x teknolojileri konusunda bilgi ve tecrübe sahibi olmak.",
+        "Kablosuz ağ cihazları kurulumu, yönetimi ve güvenliği konularında bilgi ve deneyim sahibi olmak.",
+        "IP telefon ve VoIP teknolojileri hakkında bilgi ve tecrübe sahibi olmak.",
+        "Altyapı donanımları hakkında bilgi ve tecrübe sahibi olmak.",
+        "4G/5G Mobil APN bağlantıları hakkında bilgi ve tecrübe sahibi olmak.",
+        "Network izleme ve raporlama konularında tecrübe sahibi olmak."
+       ]
+      ]
+     ]
+    },
+    {
+     "unvan": "B Grubu Kıdemli Siber Güvenlik Uzmanı (1 Kişi- Aylık Brüt Sözleşme Ücret Tavanının 3 Katına Kadar)",
+     "adet": 1,
+     "iller": [
+      "BAKANLIK MERKEZ TEŞKİLATI"
+     ],
+     "ogrenim": "",
+     "sinav": "",
+     "maddeler": [
+      "Büyük ölçekli bilgi işlem birimlerinde veya en az 10.000 iç veya dış kullanıcısı bulunan kamu veya özel sektör kurumsal sistemlerinde, siber güvenlik alanında, en az 5 (beş) yıl çalışmış olmak.",
+      "Linux ve Microsoft sunucu işletim sistemlerinde güvenlik yapılandırması, yetkilendirme, log yönetimi ve sistem güvenliği konularında bilgi ve tecrübe sahibi olmak.",
+      "Kurumsal ağ güvenliği mimarileri hakkında bilgi sahibi olmak; Firewall, IDS/IPS ve Web Application Firewall (WAF) sistemlerinin çalışma prensipleri ve yönetimi konusunda deneyim sahibi olmak.",
+      "SIEM sistemleri üzerinde log toplama, olay korelasyonu oluşturma ve güvenlik olaylarının analizi konularında bilgi ve tecrübe sahibi olmak.",
+      "Zafiyet tarama ve sızma testi araçlarını (Nessus, Acunetix, Burp Suite, Nmap, OpenVAS vb.) kullanarak güvenlik açıklarının tespit edilmesi ve raporlanması konularında deneyim sahibi olmak.",
+      "Ağ protokolleri ve TCP/IP mimarisi hakkında bilgi sahibi olmak ve ağ trafiği üzerinde güvenlik analizi yapabilecek teknik yetkinliğe sahip olmak.",
+      "Ağ trafiği ve protokol analizi araçlarını (Wireshark, tcpdump vb.) kullanarak anomali veya saldırı tespiti yapabilecek bilgi ve tecrübeye sahip olmak.",
+      "Zafiyet yönetimi, sızma testi ve tehdit istihbaratı süreçleri hakkında bilgi sahibi olmak ve bu süreçlerde görev almış olmak.",
+      "Kurumsal siber güvenlik ürünlerinin (E-posta güvenliği, uç nokta güvenliği, veri kaybı önleme vb.) çalışma prensipleri hakkında bilgi sahibi olmak.",
+      "ISO/IEC 27001 Bilgi Güvenliği Yönetim Sistemi ve Bilgi ve İletişim Güvenliği Rehberi kapsamında yürütülen bilgi güvenliği süreçleri hakkında bilgi sahibi olmak.",
+      "Analitik düşünme yeteneğine sahip olmak. Güvenlik olaylarını analiz ederek çözüm üretebilmek.",
+      "Takım çalışmasına yatkın, iletişim becerileri güçlü ve disiplinli olmak.",
+      "Tercihen sistem-sunucu yönetimi konusunda deneyimli olmak.",
+      "Tercihen CEH, TS/EN ISO 27001 Baş Denetçi, CCNA ve CCNP sertifikalarına sahip olmak."
+     ],
+     "bolumler": [
+      [
+       "",
+       [
+        "Büyük ölçekli bilgi işlem birimlerinde veya en az 10.000 iç veya dış kullanıcısı bulunan kamu veya özel sektör kurumsal sistemlerinde, siber güvenlik alanında, en az 5 (beş) yıl çalışmış olmak.",
+        "Linux ve Microsoft sunucu işletim sistemlerinde güvenlik yapılandırması, yetkilendirme, log yönetimi ve sistem güvenliği konularında bilgi ve tecrübe sahibi olmak.",
+        "Kurumsal ağ güvenliği mimarileri hakkında bilgi sahibi olmak; Firewall, IDS/IPS ve Web Application Firewall (WAF) sistemlerinin çalışma prensipleri ve yönetimi konusunda deneyim sahibi olmak.",
+        "SIEM sistemleri üzerinde log toplama, olay korelasyonu oluşturma ve güvenlik olaylarının analizi konularında bilgi ve tecrübe sahibi olmak.",
+        "Zafiyet tarama ve sızma testi araçlarını (Nessus, Acunetix, Burp Suite, Nmap, OpenVAS vb.) kullanarak güvenlik açıklarının tespit edilmesi ve raporlanması konularında deneyim sahibi olmak.",
+        "Ağ protokolleri ve TCP/IP mimarisi hakkında bilgi sahibi olmak ve ağ trafiği üzerinde güvenlik analizi yapabilecek teknik yetkinliğe sahip olmak.",
+        "Ağ trafiği ve protokol analizi araçlarını (Wireshark, tcpdump vb.) kullanarak anomali veya saldırı tespiti yapabilecek bilgi ve tecrübeye sahip olmak.",
+        "Zafiyet yönetimi, sızma testi ve tehdit istihbaratı süreçleri hakkında bilgi sahibi olmak ve bu süreçlerde görev almış olmak.",
+        "Kurumsal siber güvenlik ürünlerinin (E-posta güvenliği, uç nokta güvenliği, veri kaybı önleme vb.) çalışma prensipleri hakkında bilgi sahibi olmak.",
+        "ISO/IEC 27001 Bilgi Güvenliği Yönetim Sistemi ve Bilgi ve İletişim Güvenliği Rehberi kapsamında yürütülen bilgi güvenliği süreçleri hakkında bilgi sahibi olmak.",
+        "Analitik düşünme yeteneğine sahip olmak. Güvenlik olaylarını analiz ederek çözüm üretebilmek.",
+        "Takım çalışmasına yatkın, iletişim becerileri güçlü ve disiplinli olmak.",
+        "Tercihen sistem-sunucu yönetimi konusunda deneyimli olmak.",
+        "Tercihen CEH, TS/EN ISO 27001 Baş Denetçi, CCNA ve CCNP sertifikalarına sahip olmak."
+       ]
+      ]
+     ]
+    },
+    {
+     "unvan": "C Grubu Sistem Uzmanı (2 Kişi, Tam Zamanlı- Aylık Brüt Sözleşme Ücret Tavanının 2 Katına Kadar)",
+     "adet": 2,
+     "iller": [
+      "BAKANLIK MERKEZ TEŞKİLATI"
+     ],
+     "ogrenim": "",
+     "sinav": "",
+     "maddeler": [
+      "Büyük ölçekli bilgi işlem birimlerinde veya en az 1.000 iç veya 10.000 dış kullanıcısı bulunan özel sektördeki kurumsal sistemlerde en az 3 (üç) yıl çalışmış olmak.",
+      "Microsoft ürün ve servisleri olan Microsoft Exchange, Active Directory, GPO, DNS, WSUS, DHCP, Hyper-V, File Server, Remote Desktop mimarisi, Windows işletim sistemlerinin kurulum, konfigürasyon, güncelleme ve sorun çözümlemesi hakkında bilgi ve tecrübe sahibi olmak.",
+      "Web sunucusu kurulumu, yapılandırması ve yönetimi konusunda bilgi sahibi olmak. (Nginx, Apache, IIS vb.)",
+      "Red Hat, CentOS, Ubuntu gibi Linux işletim sistemlerinin kurulum, konfigürasyon ve yönetiminde tecrübe sahibi olmak.",
+      "İşletim sistemlerinin güvenliği, performans analizi, log analizi ve güncellemelerinin yapılması konularında bilgi ve tecrübe sahibi olmak.",
+      "VMware sanallaştırma platformu hakkında bilgi ve tecrübe sahibi olmak.",
+      "Powershell scripting konusunda bilgi ve tecrübe sahibi olmak.",
+      "Yedekleme altyapıları kurulumu, yönetimi ve sorunlarının giderilmesi konularında bilgi ve tecrübe sahibi olmak.",
+      "Git tabanlı versiyon kontrol sistemleri hakkında bilgi ve tecrübe sahibi olmak.",
+      "Kubernetes gibi container mimarilerinde tecrübe sahibi olmak. ii. DevOps ve CI/CD süreçleri hakkında bilgi sahibi olmak."
+     ],
+     "bolumler": [
+      [
+       "",
+       [
+        "Büyük ölçekli bilgi işlem birimlerinde veya en az 1.000 iç veya 10.000 dış kullanıcısı bulunan özel sektördeki kurumsal sistemlerde en az 3 (üç) yıl çalışmış olmak.",
+        "Microsoft ürün ve servisleri olan Microsoft Exchange, Active Directory, GPO, DNS, WSUS, DHCP, Hyper-V, File Server, Remote Desktop mimarisi, Windows işletim sistemlerinin kurulum, konfigürasyon, güncelleme ve sorun çözümlemesi hakkında bilgi ve tecrübe sahibi olmak.",
+        "Web sunucusu kurulumu, yapılandırması ve yönetimi konusunda bilgi sahibi olmak. (Nginx, Apache, IIS vb.)",
+        "Red Hat, CentOS, Ubuntu gibi Linux işletim sistemlerinin kurulum, konfigürasyon ve yönetiminde tecrübe sahibi olmak.",
+        "İşletim sistemlerinin güvenliği, performans analizi, log analizi ve güncellemelerinin yapılması konularında bilgi ve tecrübe sahibi olmak.",
+        "VMware sanallaştırma platformu hakkında bilgi ve tecrübe sahibi olmak.",
+        "Powershell scripting konusunda bilgi ve tecrübe sahibi olmak.",
+        "Yedekleme altyapıları kurulumu, yönetimi ve sorunlarının giderilmesi konularında bilgi ve tecrübe sahibi olmak.",
+        "Git tabanlı versiyon kontrol sistemleri hakkında bilgi ve tecrübe sahibi olmak."
+       ]
+      ],
+      [
+       "Tercihen",
+       [
+        "Kubernetes gibi container mimarilerinde tecrübe sahibi olmak. ii. DevOps ve CI/CD süreçleri hakkında bilgi sahibi olmak."
+       ]
+      ]
+     ]
+    },
+    {
+     "unvan": "C Grubu Ürün Yönetimi ve İş Analizi Uzmanı (1 Kişi, Tam Zamanlı, Aylık Brüt Sözleşme Ücret Tavanının 2 Katına Kadar)",
+     "adet": 1,
+     "iller": [
+      "BAKANLIK MERKEZ TEŞKİLATI"
+     ],
+     "ogrenim": "",
+     "sinav": "",
+     "maddeler": [
+      "Büyük ölçekli Proje yönetimi, ürün yönetimi, strateji geliştirme ve/veya analiz tasarım konularında en az 3 (üç) yıl çalışmış olmak.",
+      "Ürün yönetimi ve strateji geliştirme, ihtiyaçlar çerçevesinde ürün vizyonunu ve stratejisini oluşturmak ve yönetmek konularında bilgi ve tecrübe sahibi olmak.",
+      "Proje Yönetimi araçları (MS Project vb.) hakkında iyi derecede bilgi ve tecrübe sahibi olmak.",
+      "Paydaş yönetimi yapmak, ihtiyaçlar sahipleri ve yazılım ekipleri arasında koordinasyon sağlama konusunda bilgi ve tecrübe sahibi olmak.",
+      "Mockup ve prototipler oluşturmak, kullanıcı deneyimi konularında bilgi ve tecrübe sahibi olmak.",
+      "İş süreçlerini analiz etmek, iyileştirme önerileri geliştirmek ve uygulanmasını sağlama konusunda bilgi ve tecrübe sahibi olmak.",
+      "UML, Yazılım süreçleri, analiz ve test metodolojileri alanında bilgi sahibi olmak.",
+      "Trello, OpenProject gibi proje yönetim araçlarından en az birini kullanarak iş kartlarını oluşturmak ve takibini yapmak konularında tecrübe sahibi olmak.",
+      "Agile (Çevik) proje yönetimi hakkında bilgi ve tecrübe sahibi olmak.",
+      "Profesyonel Scrum Ürün Sahibi (PSPO I) sertifikasına sahip olmak.",
+      "Ürün performansını izlemek, analiz etmek, anlık testler yapmak ve raporlamak.",
+      "Dokümantasyon becerisi ve alışkanlığı sahibi olmak.",
+      "Analitik düşünce yapısına sahip olmak.",
+      "Takım çalışmasına yatkın olmak.",
+      "Yazılım geliştirme konusunda bilgi ve tecrübe sahibi olmak. ii. ERP(Kurumsal Kaynak Planlama), YBS(Yönetim Bilgi Sistemi) projelerinde görev almış olmak. iii. Veri entegrasyonu projelerinde bilgi ve tecrübe sahibi olmak. iv. İlişkisel veritabanı tasarımı ve kullanımı konusunda bilgi ve tecrübe sahibi olmak."
+     ],
+     "bolumler": [
+      [
+       "",
+       [
+        "Büyük ölçekli Proje yönetimi, ürün yönetimi, strateji geliştirme ve/veya analiz tasarım konularında en az 3 (üç) yıl çalışmış olmak.",
+        "Ürün yönetimi ve strateji geliştirme, ihtiyaçlar çerçevesinde ürün vizyonunu ve stratejisini oluşturmak ve yönetmek konularında bilgi ve tecrübe sahibi olmak.",
+        "Proje Yönetimi araçları (MS Project vb.) hakkında iyi derecede bilgi ve tecrübe sahibi olmak.",
+        "Paydaş yönetimi yapmak, ihtiyaçlar sahipleri ve yazılım ekipleri arasında koordinasyon sağlama konusunda bilgi ve tecrübe sahibi olmak.",
+        "Mockup ve prototipler oluşturmak, kullanıcı deneyimi konularında bilgi ve tecrübe sahibi olmak.",
+        "İş süreçlerini analiz etmek, iyileştirme önerileri geliştirmek ve uygulanmasını sağlama konusunda bilgi ve tecrübe sahibi olmak.",
+        "UML, Yazılım süreçleri, analiz ve test metodolojileri alanında bilgi sahibi olmak.",
+        "Trello, OpenProject gibi proje yönetim araçlarından en az birini kullanarak iş kartlarını oluşturmak ve takibini yapmak konularında tecrübe sahibi olmak.",
+        "Agile (Çevik) proje yönetimi hakkında bilgi ve tecrübe sahibi olmak.",
+        "Profesyonel Scrum Ürün Sahibi (PSPO I) sertifikasına sahip olmak.",
+        "Ürün performansını izlemek, analiz etmek, anlık testler yapmak ve raporlamak.",
+        "Dokümantasyon becerisi ve alışkanlığı sahibi olmak.",
+        "Analitik düşünce yapısına sahip olmak.",
+        "Takım çalışmasına yatkın olmak."
+       ]
+      ],
+      [
+       "Tercihen",
+       [
+        "Yazılım geliştirme konusunda bilgi ve tecrübe sahibi olmak. ii. ERP(Kurumsal Kaynak Planlama), YBS(Yönetim Bilgi Sistemi) projelerinde görev almış olmak. iii. Veri entegrasyonu projelerinde bilgi ve tecrübe sahibi olmak. iv. İlişkisel veritabanı tasarımı ve kullanımı konusunda bilgi ve tecrübe sahibi olmak."
+       ]
+      ]
+     ]
+    },
+    {
+     "unvan": "C Grubu Siber Güvenlik Uzmanı (1 Kişi- Aylık Brüt Sözleşme Ücret Tavanının 2 Katına Kadar)",
+     "adet": 1,
+     "iller": [
+      "BAKANLIK MERKEZ TEŞKİLATI"
+     ],
+     "ogrenim": "",
+     "sinav": "",
+     "maddeler": [
+      "Büyük ölçekli bilgi işlem birimlerinde veya en az 5.000 iç veya dış kullanıcısı bulunan kamu veya özel sektördeki kurumsal sistemlerde en az 3 (üç) yıl tecrübe sahibi olmak.",
+      "Bilgi Güvenliği standartları, regülasyonları ve bunlara uyum alanlarında tecrübeli olmak.",
+      "ISO 27001, KVKK, CBDDO BG Rehber süreçlerinde tecrübe sahibi olmak.",
+      "SIEM platformları ile korelasyon kuralları, uyarılar, panolar ve raporlar oluşturma konularında bilgi sahibi olmak.",
+      "Zafiyet Yönetimi, Sızma Testleri ve Tehdit İstihbaratı süreçlerinde yer almış olmak.",
+      "Sistemler ve ağ üzerindeki açıklıkların giderilmesi konusunda deneyimli olmak.",
+      "Firewall, E-Mail Gateway, Web Gateway, Antivirüs, EDR, DLP, PAM, SIEM vb. Ağ ve Siber Güvenlik ürünleri hakkında deneyimi olmak.",
+      "Firewall, WAF gibi ağ güvenlik cihazlarının kurulumu, konfigürasyonu ve yönetiminde en az 1(bir) yıl deneyimli olmak.",
+      "Tercihen sistem-sunucu yönetimi konusunda deneyimli olmak.",
+      "Tercihen CEH, TS/EN ISO 27001 Baş Denetçi, CCNA ve CCNP sertifikalarına sahip olmak."
+     ],
+     "bolumler": [
+      [
+       "",
+       [
+        "Büyük ölçekli bilgi işlem birimlerinde veya en az 5.000 iç veya dış kullanıcısı bulunan kamu veya özel sektördeki kurumsal sistemlerde en az 3 (üç) yıl tecrübe sahibi olmak.",
+        "Bilgi Güvenliği standartları, regülasyonları ve bunlara uyum alanlarında tecrübeli olmak.",
+        "ISO 27001, KVKK, CBDDO BG Rehber süreçlerinde tecrübe sahibi olmak.",
+        "SIEM platformları ile korelasyon kuralları, uyarılar, panolar ve raporlar oluşturma konularında bilgi sahibi olmak.",
+        "Zafiyet Yönetimi, Sızma Testleri ve Tehdit İstihbaratı süreçlerinde yer almış olmak.",
+        "Sistemler ve ağ üzerindeki açıklıkların giderilmesi konusunda deneyimli olmak.",
+        "Firewall, E-Mail Gateway, Web Gateway, Antivirüs, EDR, DLP, PAM, SIEM vb. Ağ ve Siber Güvenlik ürünleri hakkında deneyimi olmak.",
+        "Firewall, WAF gibi ağ güvenlik cihazlarının kurulumu, konfigürasyonu ve yönetiminde en az 1(bir) yıl deneyimli olmak.",
+        "Tercihen sistem-sunucu yönetimi konusunda deneyimli olmak.",
+        "Tercihen CEH, TS/EN ISO 27001 Baş Denetçi, CCNA ve CCNP sertifikalarına sahip olmak."
+       ]
+      ]
+     ]
+    },
+    {
+     "unvan": "C Grubu Yazılım Geliştirme Uzmanı (1 Kişi- Tam Zamanlı- Aylık Brüt Sözleşme Ücret Tavanının 2 Katına Kadar)",
+     "adet": 1,
+     "iller": [
+      "BAKANLIK MERKEZ TEŞKİLATI"
+     ],
+     "ogrenim": "",
+     "sinav": "",
+     "maddeler": [
+      "Kullanıcı sayısı 5.000'den fazla olan büyük çaplı en az bir (1) adet projede görev almış olmak. en az 3 (üç) yıl çalışmış olmak.",
+      "C#, ASP.NET MVC, ASP.NET Core teknolojileri ile uygulama geliştirmiş olmak.",
+      "Windows Servisleri, Web API ve WMS, WFS, WMTS vb. OGC tarafından yayınlanmış veri transferi standartları hakkında bilgi sahibi olmak.",
+      "Coğrafi veri tipleri ile coğrafi verinin taşınması ve saklanması için tanımlanan veri formatları hakkında bilgi sahibi olmak.",
+      "Ticari veya açık kaynak kodlu bir coğrafi sunucu (GeoServer vb.) üzerinden coğrafi veri kaynağına bağlanarak istenilen iletişim standartlarında veri sunma konusunda bilgi/tecrübe sahibi olmak.",
+      "Openlayers ve/veya Leaflet kütüphanelerini kullanarak uygulama geliştirmiş olmak.",
+      "Vektör veri üzerinde yapılan temel coğrafi analizler konusunda bilgi sahibi olmak.",
+      "Tematik harita ve/veya yoğunluk haritaları hazırlayabilecek bilgi sahibi olmak.",
+      "SOAP (XML Web Service) veya REST tabanlı orta katman servisleri ile coğrafi veri transferi yapabilecek bilgi sahibi olmak.",
+      "PostgreSQL ve MS SQL Server veri tabanlarından en az biri üzerinde coğrafi veri yönetimi konularında bilgi sahibi olmak.",
+      "JavaScript, Typescript, Javascript framework kütüphanelerinden en az birinde (Vue, Angular, React, Jquery), CSS3, HTML5 gibi Web Teknolojileri konusunda tecrübe sahibi olmak.",
+      "Web teknolojileri güvenliği ve yazılım testleri konusunda temel bilgi sahibi olmak.",
+      "TFS, GIT, SVN gibi kaynak kod kontrol yönetim araçları ile çalışmış olmak."
+     ],
+     "bolumler": [
+      [
+       "",
+       [
+        "Kullanıcı sayısı 5.000'den fazla olan büyük çaplı en az bir (1) adet projede görev almış olmak. en az 3 (üç) yıl çalışmış olmak.",
+        "C#, ASP.NET MVC, ASP.NET Core teknolojileri ile uygulama geliştirmiş olmak.",
+        "Windows Servisleri, Web API ve WMS, WFS, WMTS vb. OGC tarafından yayınlanmış veri transferi standartları hakkında bilgi sahibi olmak.",
+        "Coğrafi veri tipleri ile coğrafi verinin taşınması ve saklanması için tanımlanan veri formatları hakkında bilgi sahibi olmak.",
+        "Ticari veya açık kaynak kodlu bir coğrafi sunucu (GeoServer vb.) üzerinden coğrafi veri kaynağına bağlanarak istenilen iletişim standartlarında veri sunma konusunda bilgi/tecrübe sahibi olmak.",
+        "Openlayers ve/veya Leaflet kütüphanelerini kullanarak uygulama geliştirmiş olmak.",
+        "Vektör veri üzerinde yapılan temel coğrafi analizler konusunda bilgi sahibi olmak.",
+        "Tematik harita ve/veya yoğunluk haritaları hazırlayabilecek bilgi sahibi olmak.",
+        "SOAP (XML Web Service) veya REST tabanlı orta katman servisleri ile coğrafi veri transferi yapabilecek bilgi sahibi olmak.",
+        "PostgreSQL ve MS SQL Server veri tabanlarından en az biri üzerinde coğrafi veri yönetimi konularında bilgi sahibi olmak.",
+        "JavaScript, Typescript, Javascript framework kütüphanelerinden en az birinde (Vue, Angular, React, Jquery), CSS3, HTML5 gibi Web Teknolojileri konusunda tecrübe sahibi olmak.",
+        "Web teknolojileri güvenliği ve yazılım testleri konusunda temel bilgi sahibi olmak.",
+        "TFS, GIT, SVN gibi kaynak kod kontrol yönetim araçları ile çalışmış olmak."
+       ]
+      ]
+     ]
+    }
    ]
   }
  },
