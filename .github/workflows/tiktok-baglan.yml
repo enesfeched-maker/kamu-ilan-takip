@@ -1,0 +1,52 @@
+name: TikTok bağla
+
+# TikTok izin ekranından sonra tarayıcı https://kpsstercihi.com/?code=... adresine döner.
+# O adresin tamamı (ya da yalnız code değeri) buraya yapıştırılır; kod tek kullanımlıktır ve birkaç dakikada geçersizleşir.
+# Kod yenileme anahtarına çevrilir ve TT_YENILEME_ANAHTARI sırrına yazılır (SOSYAL_GH_ANAHTARI gerekir).
+on:
+  workflow_dispatch:
+    inputs:
+      kod:
+        description: TikTok'un döndüğü adres (kpsstercihi.com/?code=...) ya da code değeri
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  bagla:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kodu anahtara çevir
+        env:
+          KOD: ${{ inputs.kod }}
+          TT_ISTEMCI_ANAHTARI: ${{ secrets.TT_ISTEMCI_ANAHTARI }}
+          TT_ISTEMCI_SIRRI: ${{ secrets.TT_ISTEMCI_SIRRI }}
+          SOSYAL_GH_ANAHTARI: ${{ secrets.SOSYAL_GH_ANAHTARI }}
+        run: |
+          python3 - <<'PY'
+          import json, os, subprocess, urllib.error, urllib.parse, urllib.request
+          for ad in ('TT_ISTEMCI_ANAHTARI', 'TT_ISTEMCI_SIRRI', 'SOSYAL_GH_ANAHTARI'):
+              if not os.environ.get(ad):
+                  raise SystemExit(f'{ad} sırrı tanımlı değil.')
+          kod = os.environ['KOD'].strip()
+          if 'code=' in kod:
+              kod = urllib.parse.parse_qs(urllib.parse.urlparse(kod).query)['code'][0]
+          else:
+              kod = urllib.parse.unquote(kod)
+          veri = urllib.parse.urlencode({'client_key': os.environ['TT_ISTEMCI_ANAHTARI'], 'client_secret': os.environ['TT_ISTEMCI_SIRRI'],
+                                         'code': kod, 'grant_type': 'authorization_code',
+                                         'redirect_uri': 'https://kpsstercihi.com/'}).encode()
+          req = urllib.request.Request('https://open.tiktokapis.com/v2/oauth/token/', data=veri,
+                                       headers={'Content-Type': 'application/x-www-form-urlencoded'})
+          try:
+              yanit = json.load(urllib.request.urlopen(req, timeout=30))
+          except urllib.error.HTTPError as h:
+              yanit = json.loads(h.read() or b'{}')
+          if 'refresh_token' not in yanit:
+              raise SystemExit('TikTok kodu anahtara çeviremedi: ' + str(yanit.get('error_description') or yanit.get('error') or yanit))
+          subprocess.run(['gh', 'secret', 'set', 'TT_YENILEME_ANAHTARI', '--repo', os.environ['GITHUB_REPOSITORY']],
+                         input=yanit['refresh_token'], text=True, check=True,
+                         env=dict(os.environ, GH_TOKEN=os.environ['SOSYAL_GH_ANAHTARI']))
+          print(f"TikTok bağlandı. Kapsam: {yanit.get('scope')}; anahtar {int(yanit.get('refresh_expires_in') or 0) // 86400} gün geçerli.")
+          PY
