@@ -150,6 +150,20 @@ class Yayin(unittest.TestCase):
         self.assertEqual(sonuc, {'id': 'p1'})
         self.assertTrue(any('rupload.facebook.com' in c and c.endswith('/k1') for c in cagrilar))
 
+    def test_youtube_yanlis_kanala_yuklemez(self):
+        def sahte(url, **kw):
+            if 'oauth2' in url:
+                return {'access_token': 'e'}
+            if 'channels' in url:
+                return {'items': [{'snippet': {'title': 'Glow Haven'}}]}
+            raise AssertionError('yükleme denenmemeliydi: ' + url)
+
+        with tempfile.TemporaryDirectory() as t, mock.patch.object(y, '_istek', side_effect=sahte), \
+                mock.patch.dict(os.environ, {'YT_KANAL': 'Kpss Tercihi'}):
+            self.klasor(t)
+            with self.assertRaisesRegex(y.YayinHatasi, 'Glow Haven'):
+                y.youtube(Path(t) / 'reel.mp4', {'baslik': 'B', 'aciklama': 'A'}, ortam=('a', 'b', 'c'))
+
     def test_tiktok_taslak_gelen_kutusuna(self):
         def sahte(url, **kw):
             if 'oauth/token' in url:

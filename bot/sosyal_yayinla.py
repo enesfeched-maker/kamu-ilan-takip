@@ -119,6 +119,13 @@ def youtube(video, metin, ortam=None):
     istemci, sir, yenileme = kimlik
     erisim = _istek('https://oauth2.googleapis.com/token', veri={
         'client_id': istemci, 'client_secret': sir, 'refresh_token': yenileme, 'grant_type': 'refresh_token'})['access_token']
+    beklenen = os.environ.get('YT_KANAL', '').strip()
+    if beklenen:  # yanlış kanala yüklemeyi önler (anahtar youtube.readonly kapsamını da içermeli)
+        kanallar = _istek('https://www.googleapis.com/youtube/v3/channels?part=snippet&mine=true',
+                          basliklar={'Authorization': f'Bearer {erisim}'}).get('items') or []
+        adlar = [(c.get('snippet') or {}).get('title', '') for c in kanallar]
+        if beklenen.casefold() not in [a.casefold() for a in adlar]:
+            raise YayinHatasi(f'Anahtar "{beklenen}" kanalına ait değil ({", ".join(adlar) or "kanal yok"}); yüklenmedi.')
     veri = Path(video).read_bytes()
     govde = {
         'snippet': {'title': metin['baslik'][:100], 'description': metin['aciklama'][:4900],
