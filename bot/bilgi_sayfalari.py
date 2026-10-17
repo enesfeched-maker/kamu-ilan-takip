@@ -20,7 +20,23 @@ SAYFALAR = {
          'ortaklarının bu siteye ve/veya internetteki diğer sitelere yaptığın ziyaretlere göre reklam göstermesini sağlar. Kişiselleştirilmiş reklamları '
          'Google Reklam Ayarları’ndan (adssettings.google.com) kapatabilir, üçüncü taraf çerezlerini www.aboutads.info üzerinden yönetebilirsin. '
          'Ayrıntılar: policies.google.com/technologies/ads'),
+        ('Sosyal medya hesaplarımız', 'Instagram, YouTube ve TikTok hesaplarımızdaki paylaşımlar, bu platformların resmî paylaşım '
+         'arayüzleriyle yalnız kendi hesaplarımıza yapılır. Bu bağlantılar üzerinden takipçilerin ya da ziyaretçilerin kişisel verisi '
+         'toplanmaz, saklanmaz, paylaşılmaz.'),
         ('İletişim', 'Gizlilikle ilgili soruların için Telegram kanalımızı (@kpsstercihi) kullanabilirsin.'),
+    ]),
+    'kullanim-kosullari': ('Kullanım koşulları', 'KPSS Tercihi kullanım koşulları: hizmetin kapsamı, bilgilerin doğruluğu ve sorumluluk.',
+                           'KPSS Tercihi’ni ve sosyal medya hesaplarımızı kullanarak aşağıdaki koşulları kabul etmiş olursun.', [
+        ('Hizmetin kapsamı', 'KPSS Tercihi, resmî kaynaklarda yayımlanan kamu personel ilanlarını derleyen ücretsiz ve bağımsız bir rehberdir. '
+         'Üyelik gerektirmez; başvuru almaz, aracılık yapmaz.'),
+        ('Bilgilerin doğruluğu', 'İlanlar resmî kaynaklardan otomatik olarak derlenir ve gecikebilir ya da eksik olabilir. Başvurmadan önce '
+         'güncel ve bağlayıcı bilgi için ilgili kurumun resmî ilanını esas al. Taban puanları ÖSYM’nin yayımladığı sayısal bilgilerden derlenir '
+         've geçmiş dönemleri gösterir; gelecek yerleştirmeler için garanti değildir.'),
+        ('Sorumluluk', 'Sitedeki ya da sosyal medya paylaşımlarımızdaki bilgilere dayanarak yapılan başvuru ve tercihlerden doğan sonuçlardan '
+         'KPSS Tercihi sorumlu tutulamaz.'),
+        ('İçerik kullanımı', 'Paylaşımlarımızı kaynak göstererek paylaşabilirsin. İlan metinleri ve resmî belgeler ilgili kurumlara aittir.'),
+        ('Değişiklikler', 'Bu koşullar gerektiğinde güncellenebilir; güncel metin her zaman bu sayfadadır.'),
+        ('İletişim', 'Soruların için Telegram kanalımız (@kpsstercihi) üzerinden ulaşabilirsin.'),
     ]),
     'hakkimizda': ('Hakkımızda', 'KPSS Tercihi nedir, ilanlar hangi resmî kaynaklardan derlenir, nasıl iletişim kurulur?',
                    'KPSS Tercihi, kamu personel ilanlarını daha kolay incelemek ve takip etmek için hazırlanmış bağımsız bir rehberdir.', [

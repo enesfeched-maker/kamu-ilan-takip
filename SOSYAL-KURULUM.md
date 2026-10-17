@@ -46,12 +46,21 @@ GitHub → Settings (hesap) → Developer settings → **Fine-grained tokens** �
 ## 4. TikTok
 
 1. https://developers.tiktok.com → TikTok hesabıyla giriş → **Manage apps → Connect an app**.
-2. Ürünler: **Login Kit** + **Content Posting API**; kapsamlar `user.info.basic`, `video.upload`
-   (inceleme sonrası `video.publish`).
-3. Bağlantı adımında yönlendirme ve kodu anahtara çevirme işini birlikte yapacağız.
-4. Sırlar: `TT_ISTEMCI_ANAHTARI`, `TT_ISTEMCI_SIRRI`, `TT_YENILEME_ANAHTARI`.
-5. İnceleme bitene kadar video her gün TikTok'ta **gelen kutusuna taslak** olarak düşer: popüler bir ses
-   seçip paylaşmak tek dokunuş. İnceleme onaylanınca depo değişkeni `TT_MOD=dogrudan` yapılır.
+   Uygulama bilgileri: web sitesi `https://kpsstercihi.com`, gizlilik `https://kpsstercihi.com/gizlilik/`,
+   kullanım koşulları `https://kpsstercihi.com/kullanim-kosullari/`.
+2. Uygulamada **Sandbox** sekmesi → yeni sandbox → **Target users** bölümüne kendi TikTok hesabını ekle.
+3. Ürünler: **Login Kit** (Redirect URI: `https://kpsstercihi.com/`) + **Content Posting API**;
+   kapsamlar `user.info.basic`, `video.upload`.
+4. Sandbox'ın **Client key** ve **Client secret** değerlerini `TT_ISTEMCI_ANAHTARI`, `TT_ISTEMCI_SIRRI` sırrı olarak gir.
+   (`SOSYAL_GH_ANAHTARI` da tanımlı olmalı.)
+5. Tarayıcıda şu adresi aç (`ISTEMCI_ANAHTARI` yerine client key):
+   `https://www.tiktok.com/v2/auth/authorize/?client_key=ISTEMCI_ANAHTARI&scope=user.info.basic,video.upload&response_type=code&redirect_uri=https%3A%2F%2Fkpsstercihi.com%2F&state=kpss`
+   → izin ver → tarayıcı kpsstercihi.com'a döner; adres çubuğundaki adresin tamamını kopyala.
+6. Actions → **TikTok bağla** → Run workflow → adresi yapıştır (kod birkaç dakikada geçersizleşir).
+   `TT_YENILEME_ANAHTARI` kendiliğinden kaydedilir.
+7. Video her gün TikTok'ta **gelen kutusuna taslak** olarak düşer: popüler bir ses seçip paylaşmak tek dokunuş.
+   Uygulama incelemesi (Submit for review) onaylanınca üretim anahtarları girilir ve depo değişkeni
+   `TT_MOD=dogrudan` yapılır.
 
 ## Elle çalıştırma
 
