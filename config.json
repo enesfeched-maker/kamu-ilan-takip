@@ -14,6 +14,22 @@
   "max_mesaj_per_calisma": 1,
   "telegram_yayin_surumu": 2,
   "telegram_sessiz_bitis": "2026-10-09T09:00:00+03:00",
+  "sosyal": {
+    "haberler": [
+      {
+        "id": "saglik-38bin",
+        "tarih": "2026-10-17",
+        "etiket": "SON DAKİKA",
+        "manset": ["38 BİN SAĞLIK", "PERSONELİ ALINACAK"],
+        "alinti": "2026 yılı bitmeden 38 bin hekim dışı sağlık personeli alım ilanına çıkacağımızın müjdesini paylaşıyorum.",
+        "kaynak": "— Cumhurbaşkanı Erdoğan, 17 Ekim 2026",
+        "foto_no": 2,
+        "baslik": "Müjde: 38 Bin Sağlık Personeli Alınacak",
+        "metin": "🩺 Cumhurbaşkanı Erdoğan: 2026 bitmeden 38 bin hekim dışı sağlık personeli alım ilanına çıkılacak.\nHemşire, ebe, sağlık teknikeri, diyetisyen, fizyoterapist, psikolog, biyolog, odyolog ve büro/destek personeli kapsamda.\nBranş dağılımı ve takvim açıklanınca hemen paylaşacağım.",
+        "etiketler": ["#sağlıkbakanlığı", "#sağlıkpersoneli", "#sondakika"]
+      }
+    ]
+  },
   "elle": {
     "_not": "Kullanicinin elle kararlari (12 Ekim 2026): Istanbul Kalkinma Ajansi ilani ISKUR kaydiyla kalir, Kariyer Kapisi kopyasi gizlenir; ISKUR'un yanlis son tarihi (2 Kasim = basvuru baslangici) Kariyer Kapisi'ndaki 2-22 Kasim ile duzeltilir.",
     "gizle": [

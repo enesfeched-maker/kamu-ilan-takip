@@ -1,0 +1,89 @@
+name: Sosyal medya paylaşımı
+
+# Günde iki paylaşım: Instagram Reels, YouTube Shorts, TikTok. İçerik bot/sosyal_motor.py, yayın bot/sosyal_yayinla.py.
+# Her çıktı (kareler, video, açıklama) "sosyal-..." sürümü olarak saklanır: telefondan önizleme için.
+on:
+  schedule:
+    - cron: "30 5 * * *"    # 08:30 TR
+    - cron: "30 17 * * *"   # 20:30 TR
+  workflow_dispatch:
+    inputs:
+      vakit:
+        description: sabah, aksam ya da otomatik (saate göre)
+        type: choice
+        options: [otomatik, sabah, aksam]
+        default: otomatik
+      yayinla:
+        description: Platformlara gönder (kapalıysa yalnız önizleme sürümü; geçmişe yazılmaz)
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sosyal
+  cancel-in-progress: false
+
+jobs:
+  paylas:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install Pillow==11.3.0 beautifulsoup4==4.13.5 pypdf==6.0.0 pdfplumber==0.11.7 imageio-ffmpeg==0.6.0
+      - name: Vakit
+        id: v
+        run: |
+          V="${{ inputs.vakit }}"
+          if [ -z "$V" ] || [ "$V" = "otomatik" ]; then
+            if [ "$(TZ=Europe/Istanbul date +%H)" -lt 14 ]; then V=sabah; else V=aksam; fi
+          fi
+          echo "vakit=$V" >> "$GITHUB_OUTPUT"
+          echo "etiket=sosyal-$(TZ=Europe/Istanbul date +%Y%m%d)-$V" >> "$GITHUB_OUTPUT"
+      - name: İçerik üret
+        id: uret
+        run: python bot/sosyal_motor.py --vakit "${{ steps.v.outputs.vakit }}" --cikti sosyal-cikti
+      - name: Önizleme sürümü
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ETIKET: ${{ steps.v.outputs.etiket }}
+        run: |
+          python -c "import json;d=json.load(open('sosyal-cikti/paylasim.json',encoding='utf-8'));open('notlar.md','w',encoding='utf-8').write(d['baslik']+'\n\n'+d['aciklama'])"
+          gh release delete "$ETIKET" --yes --cleanup-tag 2>/dev/null || true
+          gh release create "$ETIKET" sosyal-cikti/* --title "$ETIKET" --notes-file notlar.md --prerelease
+          # en yeni 30 paylaşım saklanır
+          gh release list --limit 200 --json tagName -q '.[].tagName' | grep '^sosyal-' | sort -r | tail -n +31 \
+            | xargs -r -n1 gh release delete --yes --cleanup-tag
+      - name: Yayınla
+        if: inputs.yayinla != false
+        env:
+          IG_KULLANICI_ID: ${{ secrets.IG_KULLANICI_ID }}
+          IG_ERISIM_ANAHTARI: ${{ secrets.IG_ERISIM_ANAHTARI }}
+          YT_ISTEMCI_KIMLIGI: ${{ secrets.YT_ISTEMCI_KIMLIGI }}
+          YT_ISTEMCI_SIRRI: ${{ secrets.YT_ISTEMCI_SIRRI }}
+          YT_YENILEME_ANAHTARI: ${{ secrets.YT_YENILEME_ANAHTARI }}
+          TT_ISTEMCI_ANAHTARI: ${{ secrets.TT_ISTEMCI_ANAHTARI }}
+          TT_ISTEMCI_SIRRI: ${{ secrets.TT_ISTEMCI_SIRRI }}
+          TT_YENILEME_ANAHTARI: ${{ secrets.TT_YENILEME_ANAHTARI }}
+          TT_MOD: ${{ vars.TT_MOD }}
+          SOSYAL_GH_ANAHTARI: ${{ secrets.SOSYAL_GH_ANAHTARI }}
+        run: |
+          EK=""
+          if [ "$(date +%u)" = "1" ] && [ "${{ steps.v.outputs.vakit }}" = "sabah" ]; then EK="--instagram-yenile"; fi
+          python bot/sosyal_yayinla.py sosyal-cikti $EK
+      - name: Paylaşım geçmişini kaydet
+        if: always() && steps.uret.outcome == 'success' && inputs.yayinla != false
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sosyal/gecmis.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Sosyal paylaşım geçmişi (${{ steps.v.outputs.etiket }}) [skip ci]"
+          for i in 1 2 3 4 5; do
+            git pull --rebase -q origin main && git push -q origin HEAD:main && exit 0
+            sleep 5
+          done
+          exit 1
