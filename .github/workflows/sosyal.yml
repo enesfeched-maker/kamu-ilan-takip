@@ -77,6 +77,11 @@ jobs:
       - name: Paylaşım geçmişini kaydet
         if: always() && steps.uret.outcome == 'success' && inputs.yayinla != false
         run: |
+          # Bağlı platformların hepsi hata verdiyse konu "paylaşıldı" sayılmaz; sonraki çalışmada yeniden denenir.
+          if ! python -c "import json,pathlib,sys;p=pathlib.Path('sosyal-cikti/sonuc.json');s=json.loads(p.read_text(encoding='utf-8')) if p.exists() else {};sys.exit(0 if not s or any('hata' not in v for v in s.values()) else 1)"; then
+            echo "Hiçbir platformda paylaşılamadı; geçmişe yazılmadı."
+            exit 0
+          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add sosyal/gecmis.json
