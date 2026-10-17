@@ -135,7 +135,8 @@ def youtube(video, metin, ortam=None):
         raise YayinHatasi('YouTube yükleme adresi alınamadı')
     sonuc = _istek(yer, veri=veri, yontem='PUT', zaman_asimi=600,
                    basliklar={'Authorization': f'Bearer {erisim}', 'Content-Type': 'video/mp4'})
-    return {'id': sonuc.get('id'), 'gorunurluk': (sonuc.get('status') or {}).get('privacyStatus')}
+    return {'id': sonuc.get('id'), 'kanal': (sonuc.get('snippet') or {}).get('channelTitle'),
+            'gorunurluk': (sonuc.get('status') or {}).get('privacyStatus')}
 
 
 # ---------------------------------------------------------------- TikTok
