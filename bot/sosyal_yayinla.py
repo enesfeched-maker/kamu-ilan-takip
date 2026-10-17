@@ -121,8 +121,12 @@ def youtube(video, metin, ortam=None):
         'client_id': istemci, 'client_secret': sir, 'refresh_token': yenileme, 'grant_type': 'refresh_token'})['access_token']
     beklenen = os.environ.get('YT_KANAL', '').strip()
     if beklenen:  # yanlış kanala yüklemeyi önler (anahtar youtube.readonly kapsamını da içermeli)
-        kanallar = _istek('https://www.googleapis.com/youtube/v3/channels?part=snippet&mine=true',
-                          basliklar={'Authorization': f'Bearer {erisim}'}).get('items') or []
+        try:
+            kanallar = _istek('https://www.googleapis.com/youtube/v3/channels?part=snippet&mine=true',
+                              basliklar={'Authorization': f'Bearer {erisim}'}).get('items') or []
+        except YayinHatasi:
+            izinler = _istek('https://oauth2.googleapis.com/tokeninfo?access_token=' + urllib.parse.quote(erisim)).get('scope')
+            raise YayinHatasi(f'Kanal doğrulanamadı; anahtarın izinleri: {izinler}. youtube.readonly ya da youtube gerekir.') from None
         adlar = [(c.get('snippet') or {}).get('title', '') for c in kanallar]
         if beklenen.casefold() not in [a.casefold() for a in adlar]:
             raise YayinHatasi(f'Anahtar "{beklenen}" kanalına ait değil ({", ".join(adlar) or "kanal yok"}); yüklenmedi.')
