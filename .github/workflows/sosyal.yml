@@ -65,6 +65,7 @@ jobs:
           YT_ISTEMCI_KIMLIGI: ${{ secrets.YT_ISTEMCI_KIMLIGI }}
           YT_ISTEMCI_SIRRI: ${{ secrets.YT_ISTEMCI_SIRRI }}
           YT_YENILEME_ANAHTARI: ${{ secrets.YT_YENILEME_ANAHTARI }}
+          YT_KANAL: ${{ vars.YT_KANAL }}
           TT_ISTEMCI_ANAHTARI: ${{ secrets.TT_ISTEMCI_ANAHTARI }}
           TT_ISTEMCI_SIRRI: ${{ secrets.TT_ISTEMCI_SIRRI }}
           TT_YENILEME_ANAHTARI: ${{ secrets.TT_YENILEME_ANAHTARI }}
