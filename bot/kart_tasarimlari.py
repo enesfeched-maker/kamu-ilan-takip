@@ -630,7 +630,7 @@ def liste_karti(ilanlar, baslik, simdi=None, logolar=None, tur='yeni', koyu=Fals
     tarih_w = 210
     olcu = ImageDraw.Draw(Image.new('RGB', (1, 1)))
     satirlar, yz = sigdir(olcu, baslik, True, [58, 54, 50, 46, 44], sag - KENAR - tarih_w, 1)
-    if len(satirlar) > 1 or olcu.textlength(satirlar[0], font=yz) > sag - KENAR - tarih_w:
+    if len(satirlar) > 1 or satirlar[0].endswith('…') or olcu.textlength(satirlar[0], font=yz) > sag - KENAR - tarih_w:
         satirlar, yz = sigdir(olcu, baslik, True, [54, 50], sag - KENAR - tarih_w, 2)
     bh = 150 if len(satirlar) == 1 else 200
     dis, sh, golge = 28, 84, 20
