@@ -150,7 +150,7 @@ def haber_adaylari(cfg, simdi):
             gun = datetime.fromisoformat(h['tarih']).date()
         except (KeyError, ValueError):
             continue
-        if not 0 <= (simdi.date() - gun).days <= 1:
+        if not 0 <= (simdi.date() - gun).days <= int(h.get('gun') or 1):   # 'gun': haberin kaç gün güncel sayılacağı
             continue
         sonuc.append({
             'tur': 'haber', 'anahtar': f'haber:{h.get("id") or h["tarih"]}', 'puan': 100, 'ilanlar': [],
