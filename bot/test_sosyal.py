@@ -151,11 +151,29 @@ class Yayin(unittest.TestCase):
                 return {'id': 'p1'}
             return {}
 
-        with tempfile.TemporaryDirectory() as t, mock.patch.object(y, '_istek', side_effect=sahte):
+        with tempfile.TemporaryDirectory() as t, mock.patch.object(y, '_istek', side_effect=sahte), \
+                mock.patch.dict(os.environ, {'VIDEO_URL': ''}):
             self.klasor(t)
             sonuc = y.instagram(Path(t) / 'reel.mp4', {'aciklama': 'A'}, ortam=('42', 'anahtar'))
         self.assertEqual(sonuc, {'id': 'p1'})
         self.assertTrue(any('rupload.facebook.com' in c and c.endswith('/k1') for c in cagrilar))
+
+    def test_instagram_video_adresiyle(self):
+        alanlar, cagrilar = {}, []
+
+        def sahte(url, veri=None, **kw):
+            cagrilar.append(url)
+            if url.endswith('/media'):
+                alanlar.update(veri)
+                return {'id': 'k1'}
+            return {'status_code': 'FINISHED'} if 'status_code' in url else {'id': 'p1'}
+
+        with tempfile.TemporaryDirectory() as t, mock.patch.object(y, '_istek', side_effect=sahte), \
+                mock.patch.dict(os.environ, {'VIDEO_URL': 'https://ornek/reel.mp4'}):
+            self.klasor(t)
+            self.assertEqual(y.instagram(Path(t) / 'reel.mp4', {'aciklama': 'A'}, ortam=('42', 'x')), {'id': 'p1'})
+        self.assertEqual(alanlar['video_url'], 'https://ornek/reel.mp4')
+        self.assertFalse(any('rupload' in c for c in cagrilar))
 
     def test_youtube_yanlis_kanala_yuklemez(self):
         def sahte(url, **kw):

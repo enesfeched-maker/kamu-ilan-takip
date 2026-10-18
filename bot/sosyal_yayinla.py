@@ -74,15 +74,19 @@ def instagram(video, metin, ortam=None):
     if not ig_id:
         return None
     taban = f'https://graph.instagram.com/{IG_SURUM}'
-    kap = _istek(f'{taban}/{ig_id}/media', veri={'media_type': 'REELS', 'upload_type': 'resumable',
-                                                 'caption': metin['aciklama'], 'share_to_feed': 'true',
-                                                 'access_token': anahtar})
+    # Instagram Login API videoyu herkese açık adresten çeker (VIDEO_URL: önizleme sürümündeki reel.mp4);
+    # adres yoksa doğrudan yükleme (resumable) denenir.
+    video_url = os.environ.get('VIDEO_URL', '').strip()
+    alanlar = {'media_type': 'REELS', 'caption': metin['aciklama'], 'share_to_feed': 'true', 'access_token': anahtar}
+    alanlar.update({'video_url': video_url} if video_url else {'upload_type': 'resumable'})
+    kap = _istek(f'{taban}/{ig_id}/media', veri=alanlar)
     kap_id = kap.get('id')
     if not kap_id:
         raise YayinHatasi(f'Instagram kapsayıcı oluşturulamadı: {kap}')
-    veri = Path(video).read_bytes()
-    _istek(f'https://rupload.facebook.com/ig-api-upload/{IG_SURUM}/{kap_id}', veri=veri,
-           basliklar={'Authorization': f'OAuth {anahtar}', 'offset': '0', 'file_size': str(len(veri))}, zaman_asimi=600)
+    if not video_url:
+        veri = Path(video).read_bytes()
+        _istek(f'https://rupload.facebook.com/ig-api-upload/{IG_SURUM}/{kap_id}', veri=veri,
+               basliklar={'Authorization': f'OAuth {anahtar}', 'offset': '0', 'file_size': str(len(veri))}, zaman_asimi=600)
     for _ in range(60):  # en çok ~5 dk işleme beklenir
         durum = _istek(f'{taban}/{kap_id}?fields=status_code,status&access_token={urllib.parse.quote(anahtar)}')
         kod = durum.get('status_code')

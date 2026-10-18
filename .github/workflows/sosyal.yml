@@ -72,6 +72,7 @@ jobs:
           TT_YENILEME_ANAHTARI: ${{ secrets.TT_YENILEME_ANAHTARI }}
           TT_MOD: ${{ vars.TT_MOD }}
           SOSYAL_GH_ANAHTARI: ${{ secrets.SOSYAL_GH_ANAHTARI }}
+          VIDEO_URL: https://github.com/${{ github.repository }}/releases/download/${{ steps.v.outputs.etiket }}/reel.mp4
         run: |
           EK=""
           if [ "$(date +%u)" = "1" ] && [ "${{ steps.v.outputs.vakit }}" = "sabah" ]; then EK="--instagram-yenile"; fi
