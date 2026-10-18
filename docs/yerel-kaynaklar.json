@@ -1,9 +1,9 @@
 {
  "schema": 1,
- "guncelleme": "2026-10-18T19:09:41.225357+00:00",
+ "guncelleme": "2026-10-18T19:40:07.822341+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-10-18T19:09:41.698073+00:00",
+   "kontrol": "2026-10-18T19:40:10.442770+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -142,8 +142,8 @@
      "donem": "( 16 Ekim - 30 Ekim)",
      "baslangic_zaman": "2026-10-16T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-18T10:17:05+03:00",
-     "belge_ozeti": "0b9c46d9a6d869cc3151b3dbbb507683c74067ceaafabdf2cd3a6171eb804a4f",
+     "detay_guncelleme": "2026-10-18T22:40:08+03:00",
+     "belge_ozeti": "940ad92c5abdefef115b7f92d8e984a70cbf07e718bd1719009ca4668da34b5c",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -178,8 +178,8 @@
       }
      ],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/0b9c46d9a6d869cc3151b3dbbb507683c74067ceaafabdf2cd3a6171eb804a4f.pdf",
-     "belge_sha256": "0b9c46d9a6d869cc3151b3dbbb507683c74067ceaafabdf2cd3a6171eb804a4f",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/940ad92c5abdefef115b7f92d8e984a70cbf07e718bd1719009ca4668da34b5c.pdf",
+     "belge_sha256": "940ad92c5abdefef115b7f92d8e984a70cbf07e718bd1719009ca4668da34b5c",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
     },
@@ -507,8 +507,8 @@
      "donem": "( 15 Ekim - 29 Ekim)",
      "baslangic_zaman": "2026-10-15T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-18T10:17:06+03:00",
-     "belge_ozeti": "93cb4833caa7efd84db414a8dce68f0863753b153686f735bab88945c0b75f68",
+     "detay_guncelleme": "2026-10-18T22:40:10+03:00",
+     "belge_ozeti": "332071d26226a637108783a9c88d4ec680408b2c773da16ce512484e2e4b5ad0",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -523,8 +523,8 @@
       }
      ],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/93cb4833caa7efd84db414a8dce68f0863753b153686f735bab88945c0b75f68.pdf",
-     "belge_sha256": "93cb4833caa7efd84db414a8dce68f0863753b153686f735bab88945c0b75f68",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/332071d26226a637108783a9c88d4ec680408b2c773da16ce512484e2e4b5ad0.pdf",
+     "belge_sha256": "332071d26226a637108783a9c88d4ec680408b2c773da16ce512484e2e4b5ad0",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "belge_ogrenim": [
@@ -3968,7 +3968,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-10-18T19:09:42.932377+00:00",
+   "kontrol": "2026-10-18T19:40:12.190243+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
