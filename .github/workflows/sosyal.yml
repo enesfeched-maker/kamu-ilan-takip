@@ -58,7 +58,7 @@ jobs:
           gh release list --limit 200 --json tagName -q '.[].tagName' | grep '^sosyal-' | sort -r | tail -n +31 \
             | xargs -r -n1 gh release delete --yes --cleanup-tag
       - name: Yayınla
-        if: inputs.yayinla != false
+        if: github.event_name == 'schedule' || inputs.yayinla
         env:
           IG_KULLANICI_ID: ${{ secrets.IG_KULLANICI_ID }}
           IG_ERISIM_ANAHTARI: ${{ secrets.IG_ERISIM_ANAHTARI }}
@@ -76,7 +76,7 @@ jobs:
           if [ "$(date +%u)" = "1" ] && [ "${{ steps.v.outputs.vakit }}" = "sabah" ]; then EK="--instagram-yenile"; fi
           python bot/sosyal_yayinla.py sosyal-cikti $EK
       - name: Paylaşım geçmişini kaydet
-        if: always() && steps.uret.outcome == 'success' && inputs.yayinla != false
+        if: always() && steps.uret.outcome == 'success' && (github.event_name == 'schedule' || inputs.yayinla)
         run: |
           # Bağlı platformların hepsi hata verdiyse konu "paylaşıldı" sayılmaz; sonraki çalışmada yeniden denenir.
           if ! python -c "import json,pathlib,sys;p=pathlib.Path('sosyal-cikti/sonuc.json');s=json.loads(p.read_text(encoding='utf-8')) if p.exists() else {};sys.exit(0 if not s or any('hata' not in v for v in s.values()) else 1)"; then
