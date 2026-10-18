@@ -42,6 +42,12 @@ class Ayristirma(unittest.TestCase):
         kadro = duyuru(duyuru_cumlesi='Tabloda “Zabıta Memuru kadrosu için KPSS P3 puanı 70 olarak” şeklinde düzeltilmiştir.')
         self.assertEqual(duzeltme.degisiklik(kadro), ('diger', None))
 
+    def test_degerlendirme_takvimi_basvuru_tarihi_sayilmaz(self):
+        ortahisar = duyuru(duyuru_cumlesi='5 inci maddesinin, c) fıkrası “Sınava girmeye hak kazanan adaylar KPSS puanları i le '
+                                          'sınav yeri ve zamanı başvuruların değerlendirilmesin i müteakip 18/11/2026 tarihinde '
+                                          'Belediyemizin web sayfasında ilan edilecektir.” şeklinde düzeltilmiştir.')
+        self.assertEqual(duzeltme.degisiklik(ortahisar), ('diger', None))
+
 
 class Baglama(unittest.TestCase):
     def test_tek_ilana_baglanir_tarih_guncellenir_ve_tekrar_ayni(self):
