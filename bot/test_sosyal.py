@@ -131,6 +131,13 @@ class Yayin(unittest.TestCase):
         self.assertEqual(sonuc['youtube'], {'id': 'v1'})
         self.assertIn('bozuk', sonuc['instagram']['hata'])
 
+    def test_kapali_platform_atlanir(self):
+        ortam = {'YT_ISTEMCI_KIMLIGI': 'a', 'YT_ISTEMCI_SIRRI': 'b', 'YT_YENILEME_ANAHTARI': 'c', 'SOSYAL_KAPALI': 'youtube'}
+        with tempfile.TemporaryDirectory() as t, mock.patch.dict(os.environ, ortam, clear=True), \
+                mock.patch.object(y, '_istek', side_effect=AssertionError('istek atılmamalı')):
+            self.klasor(t)
+            self.assertEqual(y.yayinla(t), ({}, False))
+
     def test_instagram_akisi(self):
         cagrilar = []
 

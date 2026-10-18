@@ -198,7 +198,11 @@ def yayinla(klasor):
     metin = json.loads((klasor / 'paylasim.json').read_text(encoding='utf-8'))
     video = klasor / 'reel.mp4'
     sonuclar, hatali = {}, False
+    kapali = {p.strip().lower() for p in os.environ.get('SOSYAL_KAPALI', '').split(',') if p.strip()}
     for ad, islev in PLATFORMLAR:
+        if ad in kapali:  # depo değişkeni SOSYAL_KAPALI=youtube,tiktok: anahtar olsa da atlanır
+            print(f'{ad}: kapalı, atlandı.')
+            continue
         try:
             sonuc = islev(video, metin)
         except Exception as hata:  # bir platformun hatası diğerlerini durdurmaz
