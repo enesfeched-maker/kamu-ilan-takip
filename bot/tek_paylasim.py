@@ -30,10 +30,19 @@ def govde_hazirla(tanim, chat_id):
     return b''.join(parca), 'multipart/form-data; boundary=' + sinir
 
 
+def metin_govdesi(tanim, chat_id):
+    """Görselsiz paylaşım (ör. düzeltme duyurusu): sendMessage, bağlantı önizlemesi kapalı."""
+    klavye = [[{'text': y, 'url': utm_ekle(u, SITE)} for y, u in satir] for satir in tanim['dugmeler']]
+    return json.dumps({'chat_id': chat_id, 'text': tanim['metin'], 'parse_mode': 'HTML',
+                       'link_preview_options': {'is_disabled': True},
+                       'reply_markup': {'inline_keyboard': klavye}}, ensure_ascii=False).encode(), 'application/json'
+
+
 def main(yol):
     tanim = json.loads((ROOT / yol).read_text(encoding='utf-8'))
-    govde, tur = govde_hazirla(tanim, os.environ['TELEGRAM_CHAT_ID'])
-    istek = urllib.request.Request(f"https://api.telegram.org/bot{os.environ['TELEGRAM_BOT_TOKEN']}/sendPhoto",
+    hazirla, yontem = (govde_hazirla, 'sendPhoto') if tanim.get('foto') else (metin_govdesi, 'sendMessage')
+    govde, tur = hazirla(tanim, os.environ['TELEGRAM_CHAT_ID'])
+    istek = urllib.request.Request(f"https://api.telegram.org/bot{os.environ['TELEGRAM_BOT_TOKEN']}/{yontem}",
                                    data=govde, headers={'Content-Type': tur})
     with urllib.request.urlopen(istek, timeout=60) as r:
         sonuc = json.load(r)

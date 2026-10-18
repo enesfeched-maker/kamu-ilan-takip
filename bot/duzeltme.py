@@ -47,6 +47,10 @@ def degisiklik(duyuru):
     if not kisim:
         return 'diger', None
     n = norm(kisim)
+    # 18 Ekim 2026 (Ortahisar): "başvuruların değerlendirilmesini müteakip 18/11/2026 tarihinde ... ilan edilecektir"
+    # başvuru tarihi değil; değerlendirme / sınav duyurusu takvimidir.
+    if re.search(r'degerlendirilmes|ilan edilecek|sinava gir|sinav (?:yeri|tarihi|zamani)|sozlu sinav|mulakat', n):
+        return 'diger', None
     basvuru = 'basvuru' in n or 'muracaat' in n
     tarihler = _tarihler(kisim)
     if basvuru and tarihler and 'tarih' in n:
