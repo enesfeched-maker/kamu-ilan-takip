@@ -75,6 +75,18 @@ class KonuSecimi(unittest.TestCase):
         self.assertEqual(metin['etiketler'][0], '#kpsssonuçları')
         self.assertIn('…ve 3 ilan daha', metin['aciklama'])
 
+    def test_muzik_sec_son_calinani_tekrarlamaz(self):
+        with tempfile.TemporaryDirectory() as t:
+            self.assertIsNone(m.muzik_sec([], 'x', Path(t)))
+            for ad in ('a.mp3', 'b.mp3', 'not.txt'):
+                (Path(t) / ad).write_bytes(b'0')
+            secilen = {m.muzik_sec([{'muzik': 'a.mp3'}], str(n), Path(t)).name for n in range(20)}
+        self.assertEqual(secilen, {'b.mp3'})
+
+    def test_aciklamada_soru_var(self):
+        konu = {'tur': 'rehber', 'baslik': 'B', 'giris': 'g', 'satirlar': [], 'etiketler': []}
+        self.assertIn('👇', m.metin_olustur(konu, 'sabah', self.simdi)['aciklama'])
+
     def test_rehber_puan_verisinden_uretir(self):
         with tempfile.TemporaryDirectory() as t:
             (Path(t) / 'puanlar').mkdir()
@@ -100,6 +112,15 @@ class Tasarim(unittest.TestCase):
         kare = st.kapanis()
         sayi = sum(1 for _ in st.video_kareleri([kare, kare], ilk=1.0, sonraki=0.5))
         self.assertEqual(sayi, st.FPS + st.FPS // 2)
+
+    def test_ses_girdisi_ve_sure(self):
+        self.assertAlmostEqual(st.video_suresi(3, ilk=1.0, sonraki=0.5), 2.0)
+        girdi, filtre = st.ses_girdisi(None, 5)
+        self.assertIn('anullsrc=r=44100:cl=stereo', girdi)
+        self.assertEqual(filtre, [])
+        girdi, filtre = st.ses_girdisi('parca.mp3', 10)
+        self.assertEqual(girdi[:3], ['-stream_loop', '-1', '-i'])
+        self.assertIn('afade=t=out:st=9.00', filtre[1])
 
     def test_kisa_kurum(self):
         self.assertEqual(st.kisa_kurum('ŞİLE BELEDİYE BAŞKANLIĞI'), 'Şile Belediyesi')

@@ -224,7 +224,14 @@ def kapanis():
 
 
 # ---------------------------------------------------------------- video
-def video_kareleri(kareler, ilk=3.0, sonraki=2.6):
+ILK_SURE, SONRAKI_SURE = 2.6, 2.1   # kısa video = yüksek izlenme tamamlama oranı (algoritmanın ana ölçütü)
+
+
+def video_suresi(kare_sayisi, ilk=ILK_SURE, sonraki=SONRAKI_SURE):
+    return (int(FPS * ilk) + int(FPS * sonraki) * max(0, kare_sayisi - 1)) / FPS
+
+
+def video_kareleri(kareler, ilk=ILK_SURE, sonraki=SONRAKI_SURE):
     """Her kare girişte hafif yakınlaşarak oturur; dikey tuvalin ortasında, üst/alt sarı."""
     for n, im in enumerate(kareler):
         sure = ilk if n == 0 else sonraki
@@ -238,14 +245,24 @@ def video_kareleri(kareler, ilk=3.0, sonraki=2.6):
             yield z
 
 
-def video_yaz(kareler, yol, ffmpeg=None):
-    """MP4 (H.264, yuv420p, sessiz). ffmpeg verilmezse imageio-ffmpeg'in ikilisi kullanılır."""
+def ses_girdisi(muzik, sure):
+    """ffmpeg ses girdisi ve filtresi: müzik varsa döngülü, başta 0,4 sn açılıp sonda 1 sn kısılarak biter; yoksa sessiz iz."""
+    if not muzik:
+        return ['-f', 'lavfi', '-i', 'anullsrc=r=44100:cl=stereo'], []
+    return (['-stream_loop', '-1', '-i', str(muzik)],
+            ['-af', f'afade=t=in:d=0.4,afade=t=out:st={max(0.0, sure - 1):.2f}:d=1,volume=0.85'])
+
+
+def video_yaz(kareler, yol, ffmpeg=None, muzik=None):
+    """MP4 (H.264, yuv420p). muzik: telifsiz parça yolu (yoksa sessiz). ffmpeg verilmezse imageio-ffmpeg kullanılır."""
     if ffmpeg is None:
         import imageio_ffmpeg
         ffmpeg = imageio_ffmpeg.get_ffmpeg_exe()
+    sure = video_suresi(len(kareler))
+    girdi, filtre = ses_girdisi(muzik, sure)
     p = subprocess.Popen([ffmpeg, '-y', '-loglevel', 'error', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-s', f'{VW}x{VH}',
-                          '-r', str(FPS), '-i', '-', '-f', 'lavfi', '-i', 'anullsrc=r=44100:cl=stereo', '-shortest',
-                          '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '21', '-c:a', 'aac', '-b:a', '64k',
+                          '-r', str(FPS), '-i', '-', *girdi, '-map', '0:v', '-map', '1:a', *filtre, '-t', f'{sure:.2f}',
+                          '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '21', '-c:a', 'aac', '-b:a', '128k',
                           '-movflags', '+faststart', str(yol)], stdin=subprocess.PIPE)
     try:
         for z in video_kareleri(kareler):
