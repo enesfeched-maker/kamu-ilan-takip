@@ -1,11 +1,11 @@
 name: Sosyal medya paylaşımı
 
-# Günde iki paylaşım: Instagram Reels, YouTube Shorts, TikTok. İçerik bot/sosyal_motor.py, yayın bot/sosyal_yayinla.py.
+# Günde iki paylaşım (öğle ~12:30, akşam ~21:00): Instagram Reels, YouTube Shorts, TikTok. İçerik bot/sosyal_motor.py, yayın bot/sosyal_yayinla.py.
 # Her çıktı (kareler, video, açıklama) "sosyal-..." sürümü olarak saklanır: telefondan önizleme için.
 on:
   schedule:
-    - cron: "30 5 * * *"    # 08:30 TR
-    - cron: "30 17 * * *"   # 20:30 TR
+    - cron: "20 9 * * *"    # ~12:30 TR öğle (Reels için en güçlü gündüz dilimi; GitHub 5–15 dk gecikir)
+    - cron: "50 17 * * *"   # ~21:00 TR akşam (Instagram ve TikTok'un en yoğun saati)
   workflow_dispatch:
     inputs:
       vakit:

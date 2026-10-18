@@ -331,6 +331,25 @@ def konu_sec(adaylar, gecmis, simdi, trend_basliklari=()):
     return max(uygun, key=lambda x: x[0])[1]
 
 
+SORULAR = {
+    'genel': ['Sen hangisine başvurmayı düşünüyorsun? 👇', 'Bu ilanlardan sana uygun olan var mı? 👇'],
+    'rehber': ['Senin puanın kaç, hangi kadroyu düşünüyorsun? 👇', 'Listede seni şaşırtan bir kadro oldu mu? 👇'],
+    'haber': ['Sen bu alımı bekleyenlerden misin? 👇', 'Hangi branşta kaç kadro açılmasını bekliyorsun? 👇'],
+    'son_gun': ['Başvurunu yaptın mı, yoksa son güne mi bıraktın? 👇', 'Sen hangisine başvurdun? 👇'],
+}
+MUZIK_KLASORU = ROOT / 'sosyal' / 'muzik'
+
+
+def muzik_sec(gecmis, tohum, klasor=MUZIK_KLASORU):
+    """Telifsiz parçalardan biri; son 3 paylaşımda çalınanlar mümkünse tekrarlanmaz. Klasör boşsa None (sessiz video)."""
+    parcalar = sorted(p for p in Path(klasor).glob('*') if p.suffix.lower() in ('.mp3', '.m4a', '.wav', '.aac'))
+    if not parcalar:
+        return None
+    son = {g.get('muzik') for g in gecmis[-3:]}
+    taze = [p for p in parcalar if p.name not in son] or parcalar
+    return _sec(taze, tohum)
+
+
 def metin_olustur(konu, vakit, simdi):
     etiketler = _etiketler(konu['etiketler'], konu.get('trend'))
     govde = [konu['giris']] + konu['satirlar'][:6]
@@ -338,8 +357,10 @@ def metin_olustur(konu, vakit, simdi):
         govde.append(f'…ve {len(konu["satirlar"]) - 6} ilan daha')
     kapanis = _sec(['Tüm ilanlar ve son başvuru tarihleri kpsstercihi.com\'da 💛',
                     'Bütün kamu ilanlarını tek yerde görmek için: kpsstercihi.com 💛'], f'{simdi.date()}{vakit}k')
-    takip = 'Takipte kalırsan yeni ilanlar ilk senin önüne düşer.'
-    aciklama = '\n'.join(govde) + f'\n\n{kapanis}\n{takip}\n\n' + ' '.join(etiketler)
+    # Yorum ve paylaşım (DM) algoritmanın en güçlü sinyalleri: emir kipi yerine soru ve sıcak bir öneri.
+    soru = _sec(SORULAR.get(konu.get('tur'), SORULAR['genel']), f'{simdi.date()}{vakit}s')
+    takip = 'Başvuracak bir arkadaşın varsa ona da gönderebilirsin; takipte kalırsan yeni ilanlar ilk senin önüne düşer.'
+    aciklama = '\n'.join(govde) + f'\n\n{soru}\n\n{kapanis}\n{takip}\n\n' + ' '.join(etiketler)
     baslik = konu['baslik']
     baslik = (baslik if len(baslik) <= 90 else baslik[:89].rstrip() + '…') + ' #shorts'
     return {'baslik': baslik, 'aciklama': aciklama[:2150], 'etiketler': etiketler}
@@ -366,14 +387,16 @@ def uret(vakit, cikti, simdi=None, cfg=None, docs=ROOT / 'docs', gecmis_yolu=GEC
     kareler = konu['kareler'](kurum_logosu)
     for n, im in enumerate(kareler, 1):
         im.save(cikti / f'{n:02d}.png', optimize=True)
+    muzik = muzik_sec(gecmis, f'{simdi.date()}{vakit}m')
     if video:
-        st.video_yaz(kareler, cikti / 'reel.mp4')
+        st.video_yaz(kareler, cikti / 'reel.mp4', muzik=muzik)
     metin = metin_olustur(konu, vakit, simdi)
     ozet = {'tur': konu['tur'], 'anahtar': konu['anahtar'], 'vakit': vakit, 'zaman': simdi.isoformat(timespec='seconds'),
-            'kare': len(kareler), 'trend': konu.get('trend'), 'ilgili_trendler': tb[:10], **metin}
+            'kare': len(kareler), 'trend': konu.get('trend'), 'ilgili_trendler': tb[:10],
+            'muzik': muzik.name if muzik else None, **metin}
     (cikti / 'paylasim.json').write_text(json.dumps(ozet, ensure_ascii=False, indent=1), encoding='utf-8')
     gecmis_yaz(gecmis, {'zaman': ozet['zaman'], 'vakit': vakit, 'tur': konu['tur'], 'anahtar': konu['anahtar'],
-                        'ilanlar': konu['ilanlar']}, gecmis_yolu)
+                        'ilanlar': konu['ilanlar'], 'muzik': ozet['muzik']}, gecmis_yolu)
     print(f'Konu: {konu["anahtar"]} ({len(kareler)} kare)')
     return ozet
 
