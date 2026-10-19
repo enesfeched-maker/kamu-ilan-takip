@@ -585,6 +585,18 @@ def calisma_limiti(cfg, bekleyen_sayisi):
     return limit
 
 
+def metinsiz_mi(cfg, zaman):
+    """19 Ekim 2026 kullanıcı denemesi: config 'telegram_metinsiz_bitis' (ISO) gelene kadar ilan gönderileri yalnız kart
+    görseli ve düğmelerle gider (altında metin yok). Akşam/sabah kartları ve duyuru yanıtları etkilenmez."""
+    bitis = cfg.get('telegram_metinsiz_bitis')
+    if not bitis:
+        return False
+    try:
+        return zaman < datetime.fromisoformat(bitis)
+    except (TypeError, ValueError):
+        return False
+
+
 def sessiz_donemde(cfg, zaman):
     """config 'telegram_sessiz_bitis' (ISO, saat dilimli) gelene kadar kanala hiçbir şey gönderilmez."""
     bitis = cfg.get('telegram_sessiz_bitis')
@@ -1333,7 +1345,7 @@ def main():
                   f"{' (orijinal ilana yanıt)' if orijinal is not None else ''}: {i['baslik']}")
             time.sleep(3.2)
             continue
-        metin = mesaj_olustur(i, site_url)
+        metin = '' if metinsiz_mi(cfg, simdi()) else mesaj_olustur(i, site_url)
         if a.dry_run:
             print('--- (önizleme, gönderilmedi) ---\n' + metin + '\n')
             continue
