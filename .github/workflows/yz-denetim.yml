@@ -1,0 +1,45 @@
+name: Yapay zekâ denetimi
+
+# Gemini, açık ilanları resmî belgeden bağımsız okur ve botun çıkardığı bilgilerle karşılaştırır (bot/yz_denetim.py).
+# Gözlem modu: hiçbir ilanı durdurmaz; sonuçlar denetim/yz.json'a yazılır.
+on:
+  schedule:
+    - cron: "15 * * * *"   # saatte bir; her çalışmada en çok 8 ilan (ücretsiz kota)
+  workflow_dispatch:
+    inputs:
+      en_cok:
+        description: Bu çalışmada en çok kaç ilan denetlensin
+        default: "8"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: yz-denetim
+  cancel-in-progress: false
+
+jobs:
+  denetle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install Pillow==11.3.0 beautifulsoup4==4.13.5 pypdf==6.0.0 pdfplumber==0.11.7
+      - name: Denetle
+        env:
+          GEMINI_ANAHTARI: ${{ secrets.GEMINI_ANAHTARI }}
+        run: python bot/yz_denetim.py --en-cok "${{ inputs.en_cok || '8' }}"
+      - name: Sonuçları kaydet
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add denetim/yz.json 2>/dev/null || exit 0
+          git diff --cached --quiet && exit 0
+          git commit -m "Yapay zekâ denetimi [skip ci]"
+          for i in 1 2 3 4 5; do
+            git pull --rebase -q origin main && git push -q origin HEAD:main && exit 0
+            sleep 5
+          done
+          exit 1
