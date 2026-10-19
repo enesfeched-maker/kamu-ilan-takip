@@ -523,12 +523,29 @@ def kurum_sayfasi(kan, liste, slug, gorseller, simdi, tablolar=None, harita=None
                        + ''.join(_gecmis_satir(i, simdi, kok) for i, _ in gecmis)
                        + '</tbody></table></div><p class="kp-note">Düzeltme/iptal duyuruları ile sona eren ilanlar arşiv amacıyla gösterilir. Güncel bilgi için resmî kaynağı esas al.</p></section>')
     kadro_yazi = SAYI_YAZ(toplam_kadro) if toplam_kadro else '—'
+    zengin, ek_head = '', ''
+    try:   # siteye özgü içerik: KPSS yerleştirme geçmişi + takip özeti; ikisi de yoksa ve açık ilan yoksa sayfa dizinlenmez
+        import kurum_zengin
+        docs = su.ROOT / 'docs'
+        zengin = kurum_zengin.takip_ozeti_html(ad, tum) + kurum_zengin.yerlestirme_html(kan, docs)
+        if not kurum_dizinlenir(kan, liste, simdi, docs):
+            ek_head = '<meta name="robots" content="noindex,follow">'
+    except Exception as hata:
+        print(f'Uyarı: kurum sayfası ek içeriği üretilemedi ({slug}): {hata}')
     icerik = f'''<section class="kp-hero"><div class="wrap"><nav class="crumbs" aria-label="Konum"><a href="{kok}">Ana sayfa</a><span aria-hidden="true">/</span><a href="{kok}#ilanlar">İlanlar</a><span aria-hidden="true">/</span><span>{esc(ad)}</span></nav>
 <div class="kp-id">{logo}<div><span class="eyebrow">Kurum</span><h1>{esc(ad)}</h1>{ozet}{adlar}</div></div>
 <div class="kp-stats"><div><strong>{len(acik)}</strong><span>açık ilan</span></div><div><strong>{kadro_yazi}</strong><span>bilinen kadro</span></div><div><strong>{len(liste)}</strong><span>toplam kayıt</span></div></div>
 <div class="kp-actions"><a class="btn btn-tg btn-buyuk" href="https://t.me/kpsstercihi" target="_blank" rel="noopener" data-a="telegram" data-a-x="kurum">Telegram'da takip et ↗</a></div></div></section>
-<main id="icerik" class="wrap kp-main"><section class="bolum"><div class="bolum-bas"><h2>Başvurusu açık ilanlar <span class="sayi">{len(acik)}</span></h2></div>{acik_blok}</section>{gecmis_blok}</main>'''
-    return su.sayfa_kabugu(baslik + ' | KPSS Tercihi', aciklama, canonical, icerik, 'kurum-page', baslik)
+<main id="icerik" class="wrap kp-main"><section class="bolum"><div class="bolum-bas"><h2>Başvurusu açık ilanlar <span class="sayi">{len(acik)}</span></h2></div>{acik_blok}</section>{zengin}{gecmis_blok}</main>'''
+    return su.sayfa_kabugu(baslik + ' | KPSS Tercihi', aciklama, canonical, icerik, 'kurum-page', baslik, ek_head)
+
+
+def kurum_dizinlenir(kan, liste, simdi, docs):
+    """Arama dizinine yalnız açık ilanı ya da KPSS yerleştirme geçmişi olan kurum sayfası girer."""
+    if any(durum(i, simdi)[1] in ACIK for i in liste if not i.get('duyuru_turu')):
+        return True
+    import kurum_zengin
+    return bool(kurum_zengin.yerlestirmeler(kan, docs))
 
 
 def kurum_sayfalarini_uret(ilanlar, docs, gorseller, simdi=None, kopyalar=None):
@@ -557,6 +574,11 @@ def kurum_sayfalarini_uret(ilanlar, docs, gorseller, simdi=None, kopyalar=None):
             print(f'Uyarı: kurum sayfası üretilemedi ({slug}): {hata}')
             shutil.rmtree(klasor, ignore_errors=True)
             continue
-        adresler.append(su.BASE + 'kurum/' + slug + '/')
+        try:
+            dizin = kurum_dizinlenir(kan, liste, simdi, docs)
+        except Exception:
+            dizin = True
+        if dizin:
+            adresler.append(su.BASE + 'kurum/' + slug + '/')
         basarili.add(kan)
     return gruplar, slugler, adresler, basarili

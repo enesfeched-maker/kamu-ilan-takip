@@ -74,7 +74,7 @@ def alt_html(kok, yil=None):
     yil = yil or datetime.now(TR).year
     return (f'<footer class="ab"><div class="ab-ic"><div class="ab-marka"><img src="{kok}assets/logo-96.webp?v={LOGO_SURUM}" alt="" width="36" height="36">'
             f'<div><strong>KPSS Tercihi</strong><span>Kamu ilanları, sade ve tek yerde</span></div></div>'
-            f'<nav class="ab-linkler" aria-label="Alt bilgi"><a href="https://t.me/kpsstercihi" target="_blank" rel="noopener" data-a="telegram" data-a-x="alt">Telegram</a><a href="{kok}sss/">Sık sorulanlar</a><a href="{kok}hakkimizda/">Hakkımızda</a><a href="{kok}gizlilik/">Gizlilik</a><a href="{kok}kullanim-kosullari/">Kullanım koşulları</a></nav>'
+            f'<nav class="ab-linkler" aria-label="Alt bilgi"><a href="https://t.me/kpsstercihi" target="_blank" rel="noopener" data-a="telegram" data-a-x="alt">Telegram</a><a href="{kok}rehber/">Rehberler</a><a href="{kok}sss/">Sık sorulanlar</a><a href="{kok}hakkimizda/">Hakkımızda</a><a href="{kok}gizlilik/">Gizlilik</a><a href="{kok}kullanim-kosullari/">Kullanım koşulları</a></nav>'
             f'<p class="ab-not">© <span id="yil">{yil}</span> KPSS Tercihi</p></div></footer>')
 
 
@@ -107,10 +107,10 @@ def _kurum_bloklari(item, gorsel, logo_html):
     return hero, kirinti, yan
 
 
-def sayfa_kabugu(baslik, aciklama, canonical, icerik, govde_sinifi='', og_baslik=None):
+def sayfa_kabugu(baslik, aciklama, canonical, icerik, govde_sinifi='', og_baslik=None, ek_head=''):
     """Kurum sayfaları için ortak iskelet (ilan sayfasıyla aynı üst/alt bölüm)."""
     kok = '../../'
-    return (sayfa_basi(baslik, aciklama, canonical, kok, og_baslik=og_baslik)
+    return (sayfa_basi(baslik, aciklama, canonical, kok, ek_head=ek_head, og_baslik=og_baslik)
             + f'<body class="{govde_sinifi}"><a class="skip" href="#icerik">İçeriğe geç</a>{ust_html(kok)}{icerik}{alt_html(kok)}'
               f'<noscript><div class="not wrap">Bazı özellikler (kaydetme, kalan gün) için JavaScript gerekir.</div></noscript></body></html>')
 
@@ -597,6 +597,22 @@ def yapisal_veri(item, canonical, end, alanlar, kayit, gorsel, simdi, is_ilani):
     return sonuc + _ld(is_)
 
 
+ESKI_ILAN_GUN = 30   # son başvurusu bu kadar gün önce geçen ilan sayfası arama dizininden çıkar (sayfa açık kalır)
+
+
+def dizinlenmez(item, simdi=None):
+    """19 Ekim 2026 (AdSense 'düşük değerli içerik'): arama motoruna yalnız işe yarar ilan sayfaları gösterilir.
+    noindex: iptal/düzeltme duyurusu, son başvurusu ESKI_ILAN_GUN'den önce geçmiş ilan, kadro/şart/özet hiç okunamamış kayıt."""
+    simdi = (simdi or datetime.now(TR)).astimezone(TR)
+    if item.get('duyuru_turu') or item.get('iptal_edildi'):
+        return True
+    son = _bitis(item)
+    if son and son < simdi - timedelta(days=ESKI_ILAN_GUN):
+        return True
+    icerik = ('kadro', 'ozet', 'sartlar', 'kadro_detay', 'duyuru_cumlesi', 'basvuru_notu', 'belge_kopyasi')
+    return not any(item.get(a) for a in icerik)
+
+
 def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=None):
     from siniflandir import akademik_ilan
     if akademik_ilan(item):
@@ -658,6 +674,11 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
         bolum += tablo
     elif item.get('kadro'):
         bolum += f'<h2>Kadro ve kontenjan</h2><p>{esc(item["kadro"])}</p>'
+    try:   # geçmiş KPSS taban puanları: resmî ilanda olmayan, siteye özgü bilgi
+        import ilan_taban
+        bolum += ilan_taban.bolum_html(item, ROOT / 'docs')
+    except Exception as hata:
+        print(f'Uyarı: taban puanı bölümü üretilemedi ({item.get("id")}): {hata}')
     diger = ''
     from basvuru_penceresi import asama_yazisi
     if item.get('basvuru_asamalari') and asama_yazisi(item['basvuru_asamalari']):
@@ -698,6 +719,8 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
     kok = '../../'
     is_ilani = acik_ilan and not ikincil and not (kayit or {}).get('kurum_ici')
     og_gorsel += yapisal_veri(item, canonical, end, alanlar, kayit, gorsel, simdi, is_ilani)
+    if dizinlenmez(item, simdi):
+        og_gorsel += '<meta name="robots" content="noindex,follow">'
     govde = (f'<main id="icerik" class="wrap"><article class="d-bas"><nav class="crumbs" aria-label="Konum"><a href="{kok}">Ana sayfa</a><span aria-hidden="true">/</span><a href="{kok}#ilanlar">İlanlar</a>{kurum_kirinti}</nav>'
              f'{hero_html(item, gorsel, kayit, simdi)}{kurum_ici_not}{duzeltme_kutusu}{kopya_ust}{cta}{kopya_alt}</article>'
              f'<div class="d-ana"><section class="d-bolum">{sections}{bolum}{diger}</section>{benzer_html}</div></main>')
@@ -1111,7 +1134,7 @@ def main():
         folder.mkdir(parents=True, exist_ok=True)
         (folder / 'index.html').write_text(content, encoding='utf-8')
         sayfa_anahtarlari.add(key)
-        if (sayfa_kopya or {}).get('rol') not in ('ikincil', 'duzeltme'):   # kopya/düzeltme sayfası esas kayda kanonik bağlanır, haritaya girmez
+        if (sayfa_kopya or {}).get('rol') not in ('ikincil', 'duzeltme') and not dizinlenmez(item):   # kopya/düzeltme ve zayıf sayfa haritaya girmez
             urls.append(BASE + 'ilan/' + key + '/')
             degisim[urls[-1]] = max(str(item.get(a) or '')[:10] for a in ('ilk_gorulme', 'detay_guncelleme', 'guncelleme'))
         count += 1
@@ -1135,6 +1158,8 @@ def main():
         urls.insert(2, sss_url)
         import bilgi_sayfalari   # gizlilik / hakkımızda: AdSense ve Google için ayrı, taranabilir adresler
         urls += bilgi_sayfalari.yaz(docs, BASE)
+        import rehberler   # özgün rehber yazıları (/rehber/)
+        urls += rehberler.yaz(docs, BASE)
         sayfali = sayfa_anahtarlari
         (docs / 'llms.txt').write_text(yz_gorunurluk.llms_metni(gorunen, BASE, datetime.now(TR), sayfali), encoding='utf-8')
     except Exception as hata:
