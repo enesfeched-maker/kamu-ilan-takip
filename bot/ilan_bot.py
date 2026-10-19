@@ -237,6 +237,23 @@ def mesaj_olustur(ilan, site_url, hatirlatma=False):
     return "\n".join(satirlar)
 
 
+def tek_satir(ilan):
+    """20 Ekim 2026: metinsiz kartın altında tek satır (Telegram araması ve bildirim önizlemesi için)."""
+    e = html.escape
+    parca = [f"<b>{e(kisalt(okunakli_baslik(ilan.get('kurum') or kisa_baslik(ilan)), 80))}</b>"]
+    try:
+        from kart_tasarimlari import veri as kart_verisi
+        toplam = kart_verisi(ilan)['toplam']
+    except Exception:
+        toplam = None
+    if toplam:
+        parca.append(f"{toplam} kişi")
+    etiket = " ".join(etiketler(ilan)[:4])
+    if etiket:
+        parca.append(e(etiket))
+    return " · ".join(parca)
+
+
 def duyuru_turu_iptal_mi(duyuru):
     return 'iptal' in norm(duyuru.get('duyuru_turu'))
 
@@ -538,8 +555,30 @@ def tekrarlari_ele(uygun, mevcut, gonderilen, bekleyen):
     return kalan
 
 
-def logolu_olanlar(gonderilecek, logo_bul=None):
+LOGO_BEKLEME = timedelta(hours=3)
+
+
+def logo_beklemesi_doldu(i, simdi_=None):
+    try:
+        ilk = datetime.fromisoformat(i.get('ilk_gorulme') or '')
+    except ValueError:
+        return False   # ilk görülme bilinmiyorsa logo beklenir
+    ilk = ilk if ilk.tzinfo else ilk.replace(tzinfo=TR)
+    return (simdi_ or simdi()) - ilk >= LOGO_BEKLEME
+
+
+def kurum_amblemi(i):
+    """Logo bulunamayan kurum için baş harfli amblem (PNG); yapılamazsa None."""
+    try:
+        from kart_tasarimlari import bas_harf_amblemi
+        return bas_harf_amblemi(i.get('kurum') or i.get('baslik') or '')
+    except Exception:
+        return None
+
+
+def logolu_olanlar(gonderilecek, logo_bul=None, simdi_=None):
     """Kurum logosu bulunamayan ilan kanala gitmez; sırada bekler (logo eklenince sonraki taramada gönderilir).
+    20 Ekim 2026: 3 saatte logo bulunamazsa ilan kaçmasın diye kurumun baş harfli amblemiyle gider.
     Duyurular (iptal/düzeltme yanıtları) görselsiz gittiği için etkilenmez."""
     logo_bul = logo_bul or kurum_logosu
     kalan, logosuz = [], []
@@ -551,6 +590,9 @@ def logolu_olanlar(gonderilecek, logo_bul=None):
             logo = logo_bul(i)
         except Exception:
             logo = None
+        if not logo and logo_beklemesi_doldu(i, simdi_):
+            print(f"::warning::Logo 3 saatte bulunamadı, baş harfli amblemle gönderilecek: {i.get('kurum')} — {i['baslik']}")
+            logo = True
         (kalan if logo else logosuz).append(i)
     for i in logosuz:
         print(f"::warning::Kanala gönderilmedi (kurum logosu yok, logo eklenince gönderilecek): {i.get('kurum')} — {i['baslik']}")
@@ -701,6 +743,7 @@ def duzeltme_karari(duyuru, ilanlar, mesajlar, yanitlar, bugun):
     return {'islem': 'gonder', 'orijinal': o, 'referans': None, 'tam': True, 'yaz': anahtarlar[0]}
 
 
+ILAN_ARASI_SN = 150   # 20 Ekim 2026: taramada en çok 3 ilan, aralarında 2,5 dk (kanal dağınık görünmesin)
 TOPLU_SINIR = 950  # sendPhoto başlık sınırı 1024 görünür karakter
 
 
@@ -1374,6 +1417,13 @@ def main():
                 i['duyuru_cumlesi'] = cumle
     # Düzeltmeleri orijinal ilana bağla (sitede uyarı; açıkça verilen yeni son tarih orijinale işlenir).
     try:
+        import yz_isle   # 20 Ekim 2026: botun yeni ilan sandığı süre uzatmasını Gemini yakalar
+        for i in mevcut.values():
+            if yz_isle.sure_uzatma_isaretle(i):
+                print(f"Gemini süre uzatması olarak okudu: {i['baslik']}")
+    except Exception as exc:
+        print(f'Uyarı: süre uzatmaları işaretlenemedi ({type(exc).__name__})', file=sys.stderr)
+    try:
         import duzeltme
         print(f'{duzeltme.uygula(list(mevcut.values()), simdi().date())} düzeltme duyurusu orijinal ilana bağlandı.')
     except Exception as exc:
@@ -1428,6 +1478,7 @@ def main():
     hata = False
     adet = 0
     ertelenen = 0
+    ilan_gonderildi = False
 
     def mesaj_kaydet(kimlik, mid):
         if isinstance(mid, int) and not isinstance(mid, bool):
@@ -1525,12 +1576,12 @@ def main():
                   f"{' (orijinal ilana yanıt)' if orijinal is not None else ''}: {i['baslik']}")
             time.sleep(3.2)
             continue
-        metin = '' if metinsiz_mi(cfg, simdi()) else mesaj_olustur(i, site_url)
+        metin = tek_satir(i) if metinsiz_mi(cfg, simdi()) else mesaj_olustur(i, site_url)
         if a.dry_run:
             print('--- (önizleme, gönderilmedi) ---\n' + metin + '\n')
             continue
         try:
-            foto = ilan_gorseli(i, False, kurum_logosu(i))
+            foto = ilan_gorseli(i, False, kurum_logosu(i) or kurum_amblemi(i))
         except Exception as exc:
             print(f'İlan görseli oluşturulamadı ({type(exc).__name__}); gönderim ertelendi.', file=sys.stderr)
             hata = True
@@ -1541,8 +1592,11 @@ def main():
             print('Site ayrıntı bağlantısı hazırlanamadı; gönderim ertelendi.',file=sys.stderr)
             hata=True
             continue
+        if ilan_gonderildi:
+            time.sleep(ILAN_ARASI_SN)
         mid = telegram_gonder(token, chat_id, metin, hedef, site_url, foto=foto,
                               dugme_yazisi=ilan_dugmesi(i)) if (token and chat_id) else False
+        ilan_gonderildi = True
         if not mid:
             hata = True
             break
