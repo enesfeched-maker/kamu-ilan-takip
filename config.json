@@ -21,33 +21,52 @@
         "tarih": "2026-10-17",
         "gun": 5,
         "etiket": "SON DAKİKA",
-        "manset": ["38 BİN SAĞLIK", "PERSONELİ ALINACAK"],
+        "manset": [
+          "38 BİN SAĞLIK",
+          "PERSONELİ ALINACAK"
+        ],
         "alinti": "2026 yılı bitmeden 38 bin hekim dışı sağlık personeli alım ilanına çıkacağımızın müjdesini paylaşıyorum.",
         "kaynak": "— Cumhurbaşkanı Erdoğan, 17 Ekim 2026",
         "foto_no": 2,
         "baslik": "Müjde: 38 Bin Sağlık Personeli Alınacak",
         "metin": "🩺 Cumhurbaşkanı Erdoğan: 2026 bitmeden 38 bin hekim dışı sağlık personeli alım ilanına çıkılacak.\nHemşire, ebe, sağlık teknikeri, diyetisyen, fizyoterapist, psikolog, biyolog, odyolog ve büro/destek personeli kapsamda.\nBranş dağılımı ve takvim açıklanınca hemen paylaşacağım.",
-        "etiketler": ["#sağlıkbakanlığı", "#sağlıkpersoneli", "#sondakika"]
+        "etiketler": [
+          "#sağlıkbakanlığı",
+          "#sağlıkpersoneli",
+          "#sondakika"
+        ]
       }
     ]
   },
   "elle": {
     "_not": "Kullanicinin elle kararlari (12 Ekim 2026): Istanbul Kalkinma Ajansi ilani ISKUR kaydiyla kalir, Kariyer Kapisi kopyasi gizlenir; ISKUR'un yanlis son tarihi (2 Kasim = basvuru baslangici) Kariyer Kapisi'ndaki 2-22 Kasim ile duzeltilir.",
     "gizle": [
-      "https://kariyerkapisi.gov.tr/IlanDetay?i=c1ab5cba-d22b-40ab-b89b-1d27431a422c"
+      "https://kariyerkapisi.gov.tr/IlanDetay?i=c1ab5cba-d22b-40ab-b89b-1d27431a422c",
+      "sbb-24c9bb297ddcd48d3ccc1aa2",
+      "sbb-f444cce2b9f1fa1a8ec71292",
+      "sbb-d899f32eaa9140b2a3b909d2",
+      "iskur-83eb8530b668c43b12af5245"
     ],
     "alanlar": {
       "sbb-4ff1ffce4a1f868025e826e0": {
-        "ogrenim": ["lisans"],
-        "belge_ogrenim": ["lisans"]
+        "ogrenim": [
+          "lisans"
+        ],
+        "belge_ogrenim": [
+          "lisans"
+        ]
       },
       "iskur-beceb4b88f33dcb12811b07a": {
         "son_tarih": "2026-11-22",
         "son_zaman": "2026-11-22T23:59:00+03:00",
         "baslangic_zaman": "2026-11-02T00:00:00+03:00",
         "kadro": "5 UZMAN",
-        "ogrenim": ["lisans"],
-        "belge_ogrenim": ["lisans"],
+        "ogrenim": [
+          "lisans"
+        ],
+        "belge_ogrenim": [
+          "lisans"
+        ],
         "kpss": "kpss"
       },
       "https://kariyerkapisi.gov.tr/IlanDetay?i=a6d18ac1-8799-4f76-b4f5-418ceb8c735e": {
@@ -57,17 +76,62 @@
         "son_zaman": "2026-10-26T23:59:00+03:00",
         "baslangic_zaman": "2026-10-19T00:00:00+03:00",
         "yer": "ANKARA / ALTINDAĞ",
-        "iller": ["Ankara"],
-        "ogrenim": ["lisans"],
-        "belge_ogrenim": ["lisans"],
+        "iller": [
+          "Ankara"
+        ],
+        "ogrenim": [
+          "lisans"
+        ],
+        "belge_ogrenim": [
+          "lisans"
+        ],
         "kpss": "kpss",
-        "puan_turleri": ["P3"],
+        "puan_turleri": [
+          "P3"
+        ],
         "ozet": "Kültür ve Turizm Bakanlığı Bilgi Teknolojileri Genel Müdürlüğü bünyesinde istihdam edilmek üzere, sözlü sınav başarı sırasına göre 10 sözleşmeli bilişim personeli alınacaktır. Sözlü sınava çağrı sıralaması KPSS P3 puanının %70'i ile YDS (İngilizce) puanının %30'u toplanarak yapılır; KPSS P3 puanı 70'in altında olan ya da KPSS belgesi olmayanların puanı 70 sayılır. Başvurular 19–26 Ekim 2026 (23:59) arasında e-Devlet üzerinden Kariyer Kapısı'ndan yapılır.",
         "sartlar": [
-          {"kadro": "Genel şartlar", "metin": "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik ya da endüstri mühendisliği bölümlerinden mezun olmak. Diğer mühendislik bölümleri ile fen-edebiyat ve eğitim fakültelerinin bilgisayar/teknoloji bölümleri, istatistik, matematik ve fizik mezunları yalnız C Grubu pozisyonlara başvurabilir."},
-          {"kadro": "Mesleki tecrübe", "metin": "Ücret tavanının 2 katı için en az 3 yıl, 3 ve 4 katı için en az 5 yıl mesleki tecrübe. Güncel programlama dillerinden en az ikisini bildiğini belgelemek (transkript kabul edilir)."},
-          {"kadro": "Sınav takvimi", "metin": "Başvuru: 19–26 Ekim 2026. Sınava girecek adayların ilanı: 5 Kasım 2026. Sözlü sınav: 23–27 Kasım 2026."}
+          {
+            "kadro": "Genel şartlar",
+            "metin": "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik ya da endüstri mühendisliği bölümlerinden mezun olmak. Diğer mühendislik bölümleri ile fen-edebiyat ve eğitim fakültelerinin bilgisayar/teknoloji bölümleri, istatistik, matematik ve fizik mezunları yalnız C Grubu pozisyonlara başvurabilir."
+          },
+          {
+            "kadro": "Mesleki tecrübe",
+            "metin": "Ücret tavanının 2 katı için en az 3 yıl, 3 ve 4 katı için en az 5 yıl mesleki tecrübe. Güncel programlama dillerinden en az ikisini bildiğini belgelemek (transkript kabul edilir)."
+          },
+          {
+            "kadro": "Sınav takvimi",
+            "metin": "Başvuru: 19–26 Ekim 2026. Sınava girecek adayların ilanı: 5 Kasım 2026. Sözlü sınav: 23–27 Kasım 2026."
+          }
         ]
+      },
+      "https://kariyerkapisi.gov.tr/IlanDetay?i=e53c369b-3913-48dc-8e41-be3a6392c249": {
+        "_not": "19 Ekim 2026: SBB ayni ilani 3 ayri satir (3 surekli, 5 engelli, 1 eski hukumlu isci) verdi; tek ilan olarak birlestirildi, SBB satirlari gizlendi.",
+        "kadro": "Toplam 9 kişi — 3 Sürekli İşçi • 5 Engelli İşçi • 1 Eski Hükümlü İşçi (Büro Personeli)",
+        "son_tarih": "2026-10-23",
+        "son_zaman": "2026-10-23T23:59:00+03:00",
+        "baslangic_zaman": "2026-10-19T00:00:00+03:00",
+        "yer": "İSTANBUL",
+        "iller": [
+          "İstanbul"
+        ],
+        "ogrenim": [
+          "lisans",
+          "onlisans"
+        ],
+        "belge_ogrenim": [
+          "lisans",
+          "onlisans"
+        ],
+        "ozet": "Kıyı Emniyeti Genel Müdürlüğü 9 işçi alacak: 3 sürekli işçi, 5 engelli işçi (en az %40 engelli sağlık kurulu raporu) ve 1 eski hükümlü işçi (büro personeli). Başvurular 19–23 Ekim 2026 arasında yalnız Türkiye İş Kurumu (İŞKUR) web sayfasından ya da İŞKUR hizmet merkezlerine şahsen gidilerek yapılır; kuruma yapılan başvurular geçersizdir."
+      },
+      "sbb-526ff55537d8578a927e5bc7": {
+        "_not": "19 Ekim 2026: SBB kaydi unvansiz (11 ALACAK); ISKUR basligi Sozlesmeli Bilisim Personeli Sinav Ilani.",
+        "kadro": "11 Sözleşmeli Bilişim Personeli",
+        "iller": [
+          "Ankara"
+        ],
+        "yer": "ANKARA"
       }
     }
   }

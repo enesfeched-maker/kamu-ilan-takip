@@ -347,7 +347,27 @@ def kopya_bul(ilanlar):
         if _unvanlar(a) and _unvanlar(b):
             return ortak
         return (ortak or bool(_toplam(a) and _toplam(a) == _toplam(b)) or _belgede_unvan_gecer(a, b) or _belgede_unvan_gecer(b, a)
-                or _genel_baslikli_tekil(a, b))
+                or _genel_baslikli_tekil(a, b) or _unvansiz_tekil(a, b))
+
+    def _unvansiz_tekil(a, b):
+        """19 Ekim 2026: iki tarafta da unvan yok (SBB 'TÜRKİYE İŞ KURUMU GENEL MÜDÜRLÜĞÜ - 11 ALACAK', İŞKUR 'Sözleşmeli
+        Bilişim Personeli sınavı'): belediye dışı aynı kurum çekirdeği, AYNI son tarih ve o gün o kurumun her kaynakta tek
+        kaydı varsa aynı ilandır."""
+        if _unvanlar(a) or _unvanlar(b):
+            return False
+        ba, bb = bilgi[a['id']], bilgi[b['id']]
+        if ba['kan'].endswith(' belediye') or not (ba['cekirdek'] and ba['cekirdek'] == bb['cekirdek']):
+            return False
+        son = a.get('son_tarih')
+        if not son or son != b.get('son_tarih'):
+            return False
+        say = {}
+        for c in aday:
+            bc = bilgi[c['id']]
+            if bc['cekirdek'] == ba['cekirdek'] and c.get('son_tarih') == son:
+                for h in bc['host']:
+                    say[h] = say.get(h, 0) + 1
+        return all(n == 1 for n in say.values())
 
     def _genel_baslikli_tekil(a, b):
         """Bir tarafta kadro de unvan de yok ('X Ajansı Personel Alım İlanı'): belediye dışı kurumda, aynı son tarihte, o kurumun her

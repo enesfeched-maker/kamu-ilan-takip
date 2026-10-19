@@ -13,6 +13,7 @@ TR = timezone(timedelta(hours=3))
 ACIK = ('ok', 'soon', 'urgent', 'today', 'none', 'upcoming', 'belirsiz')
 EN_AZ_KAYIT = 5          # taban referansı için aynı unvanda en az bu kadar yerleşme
 TAKVIM_GUN = 45
+TARIHSIZ_EN_COK_GUN = 14   # son tarihi okunamamış kayıt ilk görüldükten bu kadar gün sonra listeden düşer
 PUAN_RE = re.compile(r'\bKPSS\s*P\s?(\d{1,3})\b|\bP(\d{1,3})\s*puan', re.I)
 SEVIYE_SIRASI = ('lisans', 'onlisans', 'ortaogretim')
 # Öğrenim çıkarımı (derleme zamanı): metinde düzey yazmayan ilanlar "tüm düzeylere uygun" sayılmasın.
@@ -331,6 +332,11 @@ def kayit(item, gorsel, tablolar, simdi, harita=None):
     metin, cls = ks.durum(item, simdi)
     if cls not in ACIK or item.get('duyuru_turu') or item.get('iptal_edildi'):
         return None
+    # 19 Ekim 2026: son tarihi hiç okunamamış kayıt (ör. ayrıntısı alınamayan Eylül ilanları) süresiz "açık" görünmesin;
+    # kamu ilanlarının başvuru süresi nadiren iki haftayı geçer.
+    ilk = _tr_tarih(item.get('ilk_gorulme'))
+    if cls == 'belirsiz' and not item.get('son_tarih') and ilk and (simdi.astimezone(TR).date() - ilk).days >= TARIHSIZ_EN_COK_GUN:
+        return None
     a = ks.kart_alanlari(item)
     key = ks.anahtar(item)
     g = gorsel or {}
@@ -350,9 +356,12 @@ def kayit(item, gorsel, tablolar, simdi, harita=None):
     iller = item.get('iller') or []
     if not iller and _il_gecerli(il) and il == il_cikar(item):
         iller = [il]   # kurum adı/özetten çıkarılan il, tarayıcıda ve ayrıntı sayfasında iller gibi kullanılır
+    manset = baslik_temiz(a['manset'])
+    if re.fullmatch(r'\d+', manset.strip()):   # tek başına sayı ('11'): kopyası yoksa en azından anlamlı olsun
+        manset = f'{manset.strip()} Personel'
     kay = {
         'key': key, 'id': item.get('id') if item.get('id') != key else None,
-        'manset': baslik_temiz(a['manset']), 'ek': a.get('ek', 0), 'toplam': a.get('toplam'),
+        'manset': manset, 'ek': a.get('ek', 0), 'toplam': a.get('toplam'),
         'meslek': a.get('meslek') or [], 'logo': g.get('logo'),
         'kurum': ks.kurum_adi(item.get('kurum')), 'kurum_slug': g.get('kurum_slug') or ks.kurum_slug(item.get('kurum')),
         'il': il, 'iller': iller,
@@ -373,6 +382,11 @@ def grup_birlestir(birincil, ikincil):
     """Kopya grubunda birincil satırın öğrenim, puan türü, il ve taban referansı bilgisi ikincillerle birleştirilir
     (birincil metinde düzey yazmıyor ama aynı ilanın başka kaynaktaki kaydı yazıyor olabilir); hiçbir değer silinmez."""
     uyeler = [birincil, *ikincil]
+    if re.fullmatch(r'\d+(?: Personel)?', str(birincil.get('manset') or '').strip()):
+        # 19 Ekim 2026: SBB '11 ALACAK' gibi unvansız kayıtta manşet yalnız sayı kalır; kopyadaki anlamlı başlık kullanılır.
+        ad = next((u['manset'] for u in ikincil if u.get('manset') and not re.fullmatch(r'\d+(?: Personel)?', str(u['manset']).strip())), '')
+        if ad:
+            birincil['manset'] = re.sub(r'\s+(?:sınavı|alımı)$', '', ad, flags=re.I)
     if any(u.get('duzeltildi') for u in ikincil):
         birincil['duzeltildi'] = True   # düzeltme kopyalardan birine bağlanmış olabilir
     for alan in ('son_zaman', 'baslangic_zaman'):   # aynı gün için saat bilgisi yalnız kopyada olabilir (Bahçe 17:00, TİBU 13:00)

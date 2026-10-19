@@ -2001,7 +2001,9 @@
    "iller": [
     "Nevşehir"
    ],
-   "kpss": "kpss"
+   "kpss": "kpss",
+   "duzeltme_of": "iskur-bb8e6aa8951d08b2725df442",
+   "duzeltme_degisen": "diger"
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=30329a62-04f3-445a-985f-f6a0b8c2e1b7",
@@ -2207,6 +2209,15 @@
    "kategori": "saglik",
    "iller": [
     "Tekirdağ"
+   ],
+   "duzeltmeler": [
+    {
+     "id": "sbb-a69af1b197a461962692610d",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "tur": "diger",
+     "cumle": "",
+     "tarih": "2026-09-26"
+    }
    ]
   },
   {
@@ -2448,7 +2459,9 @@
     "onlisans",
     "ortaogretim"
    ],
-   "duyuru_cumlesi": ""
+   "duyuru_cumlesi": "",
+   "duzeltme_of": "https://kariyerkapisi.gov.tr/IlanDetay?i=ec8cb14d-917f-4d65-951b-281faac1f564",
+   "duzeltme_degisen": "diger"
   },
   {
    "id": "sbb-cf0ab108a51eb8616627b01b",
@@ -3593,7 +3606,9 @@
    ],
    "kategori": "belediye",
    "kpss": "kpss",
-   "duyuru_cumlesi": ""
+   "duyuru_cumlesi": "",
+   "duzeltme_of": "iskur-ced29e58351712e81082b7e6",
+   "duzeltme_degisen": "diger"
   },
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=b4372970-fdd6-4cf9-a92d-cc3f9865a634",
@@ -19583,7 +19598,7 @@
    "kurum": "Nevşehir Ortahisar Belediyesi",
    "yer": "Nevşehir",
    "ilan_turu": "Memur",
-   "son_tarih": "2026-11-18",
+   "son_tarih": "2026-10-02",
    "link": "https://www.iskur.gov.tr/medya/xt0fsrvg/nev%C5%9Fehir-ortahisar-belediyesi-memur-al%C4%B1m-ilan%C4%B1-02102026.pdf",
    "kaynak": "İŞKUR",
    "kaynak_turu": "iskur",
@@ -19602,6 +19617,7 @@
    "iller": [
     "Nevşehir"
    ],
+   "son_zaman": "2026-10-02T17:00:00+03:00",
    "duzeltmeler": [
     {
      "id": "csb-478165",
@@ -19613,15 +19629,11 @@
     {
      "id": "sbb-a181e8ce27afe9680ef2f784",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "tur": "tarih",
+     "tur": "diger",
      "cumle": "Sınava girmeye hak kazanan adaylar KPSS puanları i le sınav yeri ve zamanı başvuruların değerlendirilmesin i müteakip 18/11/2026 tarihinde Belediyemizin web sayfası https://www.ortahisar.bel.tr adresinde ilan edilecektir.",
-     "tarih": "2026-10-17",
-     "yeni_son_tarih": "2026-11-18"
+     "tarih": "2026-10-17"
     }
-   ],
-   "ilk_son_tarih": "2026-10-02",
-   "duzeltilen_son_tarih": "2026-11-18",
-   "ilk_son_zaman": "2026-10-02T17:00:00+03:00"
+   ]
   },
   {
    "id": "iskur-3161393ea90114b808aceb51",
