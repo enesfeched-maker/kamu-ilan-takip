@@ -444,6 +444,15 @@ class TelegramDeliveryTests(unittest.TestCase):
         self.assertIn(b'name="photo"', request.data)
         self.assertIn(b'PNGDATA', request.data)
         self.assertIn(b'inline_keyboard', request.data)
+        self.assertIn('"style": "success"'.encode(), request.data)
+
+    def test_ilan_dugmesi_son_gunu_soyler(self):
+        from datetime import date
+        bugun = date(2026, 10, 19)
+        self.assertEqual(ilan_bot.ilan_dugmesi({'son_tarih': '2026-10-28'}, bugun), '⏳ Son gün 28 Ekim — Hemen incele')
+        self.assertEqual(ilan_bot.ilan_dugmesi({'son_tarih': '2026-10-20'}, bugun), '⏳ Yarın son gün — Hemen incele')
+        self.assertEqual(ilan_bot.ilan_dugmesi({'son_tarih': '2026-10-19'}, bugun), '⏳ Bugün son gün — Hemen incele')
+        self.assertEqual(ilan_bot.ilan_dugmesi({}, bugun), '👉 Hemen incele')
 
 
 class EtiketTests(unittest.TestCase):
