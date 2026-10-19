@@ -73,6 +73,7 @@ class Dugum(unittest.TestCase):
              patch.object(ilan_bot, 'rss_coz', return_value=simdi_ilanlar), \
              patch.object(ilan_bot, 'telegram_gonder', side_effect=gonder), \
              patch.object(ilan_bot, 'kurum_logosu', return_value=None), \
+             patch.object(ilan_bot, 'logolu_olanlar', side_effect=lambda g: g), \
              patch.object(ilan_bot, 'ilan_sayfasi', side_effect=lambda i, s: BASE + 'ilan/' + i['id'] + '/'), \
              patch.object(ilan_bot, 'yerel_oku', return_value={}), \
              patch.object(ilan_bot.time, 'sleep'), \

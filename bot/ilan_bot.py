@@ -447,6 +447,95 @@ def kopyalari_ele(uygun, mevcut, gonderilen, bekleyen):
     return kalan
 
 
+def _parmak_izi(i):
+    """(kurum anahtarı, son tarih, toplam kişi, unvanlar): kaynak ve kimlik farklı olsa da aynı ilanı tanımak için."""
+    import kurum_sayfasi
+    from kurum_gorseli import kurum_anahtari
+    from siniflandir import kucuk
+    kadro = kurum_sayfasi.kadrolar(i)
+    adetler = [a for a, _ in kadro]
+    toplam = sum(adetler) if adetler and all(isinstance(a, int) for a in adetler) else None
+    return (kurum_anahtari(i.get('kurum') or ''), str(i.get('son_tarih') or '')[:10], toplam,
+            {kucuk(ad) for _, ad in kadro if ad})
+
+
+GENEL_BASLIK_KELIMELERI = {'alacak', 'alınacak', 'alım', 'alımı', 'ilanı', 'ilan', 'personel', 'personeli', 'yılı',
+                           'duyurusu', 'kişi', 'adet', 'sözleşmeli', 'kadrolu', 'açıktan', 'için', 'ile', 've'}
+
+
+def _baslik_kokleri(i):
+    """Başlığın kurum adı ve genel sözcükler ('personel alım ilanı', yıl, sayı) atılmış kelimeleri."""
+    from siniflandir import kucuk
+    baslik = kucuk(i.get('baslik') or '')
+    kurum = kucuk(i.get('kurum') or '')
+    if kurum and baslik.startswith(kurum):
+        baslik = baslik[len(kurum):]
+    return {w for w in re.findall(r'\w+', baslik) if len(w) > 2 and not w.isdigit() and w not in GENEL_BASLIK_KELIMELERI}
+
+
+def ayni_ilan_mi(a, b):
+    """Aynı kurum ve aynı son tarihli iki kayıt aynı ilan mı? Kişi sayıları biliniyorsa eşit ve unvanları ortak olmalı;
+    bilinmiyorsa başlıklar benzer olmalı ya da biri genel başlıklı ('Personel alım ilanı') olmalı."""
+    k1, s1, t1, u1 = _parmak_izi(a)
+    k2, s2, t2, u2 = _parmak_izi(b)
+    if not (k1 and s1) or (k1, s1) != (k2, s2):
+        return False
+    if t1 and t2:
+        return t1 == t2 and (not u1 or not u2 or bool(u1 & u2))
+    b1, b2 = _baslik_kokleri(a), _baslik_kokleri(b)
+    if not b1 or not b2:
+        return True
+    return len(b1 & b2) / len(b1 | b2) >= 0.5
+
+
+def onceden_paylasilmis(i, mevcut, gonderilen):
+    """Aynı ilan (ayni_ilan_mi) kanalda zaten paylaşıldıysa paylaşılan kaydın kimliği; yoksa None.
+    kopya.kopya_bul'un kaçırdığı durumlar için ikinci kilit (aynı ilan 2-3 kez paylaşılmasın)."""
+    for kimlik in gonderilen:
+        g = mevcut.get(kimlik)
+        if not g or kimlik == i['id'] or g.get('duyuru_turu') or not paylasildi(g, gonderilen):
+            continue
+        if ayni_ilan_mi(i, g):
+            return kimlik
+    return None
+
+
+def tekrarlari_ele(uygun, mevcut, gonderilen, bekleyen):
+    kalan = []
+    for i in uygun:
+        try:
+            esi = onceden_paylasilmis(i, mevcut, gonderilen)
+        except Exception as hata:   # denetim hatası gönderimi durdurmaz; kopya_bul yine çalışmıştır
+            print(f'Uyarı: tekrar denetimi yapılamadı ({type(hata).__name__}): {i["baslik"]}', file=sys.stderr)
+            esi = None
+        if esi:
+            gonderilen.add(i['id'])
+            bekleyen.discard(i['id'])
+            print(f"Tekrar paylaşım atlandı (aynı kurum, son tarih ve kişi sayısıyla zaten paylaşıldı): {i['baslik']}")
+            continue
+        kalan.append(i)
+    return kalan
+
+
+def logolu_olanlar(gonderilecek, logo_bul=None):
+    """Kurum logosu bulunamayan ilan kanala gitmez; sırada bekler (logo eklenince sonraki taramada gönderilir).
+    Duyurular (iptal/düzeltme yanıtları) görselsiz gittiği için etkilenmez."""
+    logo_bul = logo_bul or kurum_logosu
+    kalan, logosuz = [], []
+    for i in gonderilecek:
+        if i.get('duyuru_turu'):
+            kalan.append(i)
+            continue
+        try:
+            logo = logo_bul(i)
+        except Exception:
+            logo = None
+        (kalan if logo else logosuz).append(i)
+    for i in logosuz:
+        print(f"::warning::Kanala gönderilmedi (kurum logosu yok, logo eklenince gönderilecek): {i.get('kurum')} — {i['baslik']}")
+    return kalan
+
+
 def unvanli(i):
     import kurum_sayfasi
     return bool(kurum_sayfasi.kadrolar(i))
@@ -490,7 +579,8 @@ def telegram_sirasi(mevcut, gelen, yeniler, gonderilen, bekleyen, ilk_calisma, d
             continue
         if telegram_icin_uygun(i, dahil, haric):
             uygun.append(i)
-    uygun = kopyalari_ele([i for i in uygun if not i.get('duyuru_turu')], mevcut, gonderilen, bekleyen) + [i for i in uygun if i.get('duyuru_turu')]
+    ilanlar = kopyalari_ele([i for i in uygun if not i.get('duyuru_turu')], mevcut, gonderilen, bekleyen)
+    uygun = tekrarlari_ele(ilanlar, mevcut, gonderilen, bekleyen) + [i for i in uygun if i.get('duyuru_turu')]
     return sorted(uygun, key=lambda i: (i.get('son_tarih') or '9999', i.get('kurum', ''), i['baslik']))
 
 
@@ -1221,6 +1311,8 @@ def main():
     bekleyen = {aliases.get(x,x) for x in bekleyen}
     gonderilecek = telegram_sirasi(mevcut, gelen, yeniler, gonderilen, bekleyen,
                                   ilk_calisma, a.duyur_mevcut, cfg)
+    if not a.prepare:   # logosuz ilan sıranın başını tıkamasın diye sınırdan önce ayıklanır
+        gonderilecek = logolu_olanlar(gonderilecek)
     # İlan başına hatırlatma kaldırıldı (geçmiş hatirlatilan korunur, yeni kayıt eklenmez);
     # yerine günde bir kez sabah özeti (yeni ilanlar + son başvurusu yaklaşanlar + açık ilan sayısı) gönderilir.
     mesajlar = dict(veri.get('telegram_mesajlari', {}))
