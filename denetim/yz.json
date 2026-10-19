@@ -127,6 +127,63 @@
    "toplam": null
   }
  },
+ "sbb-24c9bb297ddcd48d3ccc1aa2": {
+  "zaman": "2026-10-19T21:51:57+03:00",
+  "surum": 2,
+  "model": "gemini-3.8-flash",
+  "kaynak": "pdf",
+  "imza": "d290898833229a54",
+  "baslik": "KIYI EMNİYETİ GENEL MÜDÜRLÜĞÜ - 1 ESKİ HüKüMLÜ İŞÇİ ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Büro Personeli (Memur) (Eski Hükümlü/TMY)",
+     "kosullar": [
+      "Herhangi bir ön lisans programından mezun olmak",
+      "Eski hükümlü veya terörle mücadelede malul sayılmayacak şekilde yaralanan olduğunu belgelendirmek",
+      "Son başvuru tarihi itibarıyla 36 yaşından gün almamış olmak",
+      "Sosyal Güvenlik Kurumundan emeklilik, yaşlılık veya malullük aylığı almamış olmak",
+      "Güvenlik soruşturması ve arşiv araştırması olumlu sonuçlanmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": "İstanbul",
+     "ogrenim": "onlisans",
+     "puan_turu": "KPSSP93"
+    }
+   ],
+   "ogrenim": [
+    "onlisans"
+   ],
+   "puan_turleri": [
+    "KPSSP93"
+   ],
+   "ortak_kosullar": [
+    "Son başvuru tarihi itibarıyla 36 yaşından gün almamış olmak",
+    "Sosyal Güvenlik Kurumundan emeklilik, yaşlılık veya malullük aylığı almamış olmak",
+    "Eski hükümlü veya terörle mücadelede malul sayılmayacak şekilde yaralanan belgesine sahip olmak",
+    "Sözlü sınavda başarılı sayılmak için en az 60 puan almış olmak",
+    "Güvenlik soruşturması ve arşiv araştırması olumlu olmak"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": null,
+   "basvuru_adresi": "https://esube.iskur.gov.tr/Istihdam/AcikIsIlanAra.aspx",
+   "basvuru_yeri": "iskur",
+   "en_dusuk_puan": null,
+   "iller": [
+    "İstanbul"
+   ],
+   "kpss_gerekli": true,
+   "kurum": "Kıyı Emniyeti Genel Müdürlüğü",
+   "ozet": "Kıyı Emniyeti Genel Müdürlüğü, İstanbul'da istihdam edilmek üzere 1 daimi eski hükümlü/TMY Büro Personeli alacaktır. Başvurular İŞKUR üzerinden yapılacaktır.",
+   "son_basvuru_saati": null,
+   "son_basvuru_tarihi": null,
+   "toplam": 1
+  }
+ },
  "sbb-526ff55537d8578a927e5bc7": {
   "zaman": "2026-10-19T20:48:51+03:00",
   "surum": 2,
@@ -305,11 +362,11 @@
   }
  },
  "sbb-c799c2bf65cf136277930882": {
-  "zaman": "2026-10-19T19:49:17+03:00",
-  "surum": 1,
-  "model": "gemini-3.7-flash",
+  "zaman": "2026-10-19T21:51:57+03:00",
+  "surum": 2,
+  "model": "gemini-3.8-flash",
   "kaynak": "pdf",
-  "imza": "ae8b9bd7d4160c5c",
+  "imza": "32b03501ee613708",
   "baslik": "ORTA ANADOLU KALKINMA AJANSI - 6 UZMAN, 1 DESTEK PERSONELİ ALACAK",
   "farklar": [
    [
@@ -362,19 +419,56 @@
    "kadrolar": [
     {
      "unvan": "Uzman Personel - 1",
-     "adet": 1
+     "kosullar": [
+      "Şehir ve Bölge Planlama, Mimarlık, Endüstriyel Tasarım Müh., Çevre Müh. lisans mezunu olmak",
+      "2025 veya 2026 KPSS ilgili puan türünden en az 80 puan almış olmak",
+      "Son 5 yıl içinde İngilizce YDS'den en az C düzeyinde veya eşdeğeri puan almış olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 80.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSS P1, P2, P3"
     },
     {
      "unvan": "Uzman Personel - 2",
-     "adet": 2
+     "kosullar": [
+      "Uzman-1 hariç diğer Mühendislik lisans programlarından mezun olmak",
+      "2025 veya 2026 KPSS ilgili puan türünden en az 80 puan almış olmak",
+      "Son 5 yıl içinde İngilizce YDS'den en az C düzeyinde veya eşdeğeri puan almış olmak"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": 80.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSS P1, P2, P3"
     },
     {
      "unvan": "Uzman Personel - 3",
-     "adet": 3
+     "kosullar": [
+      "İktisat, İşletme, Maliye, Uluslararası İlişkiler, İstatistik, Kamu Yönetimi lisans mezunu olmak",
+      "Siyaset Bilimi, Ekonomi veya Ekonometri lisans mezunu olmak",
+      "2025 veya 2026 KPSS ilgili puan türünden en az 80 puan almış olmak",
+      "Son 5 yıl içinde İngilizce YDS'den en az C düzeyinde veya eşdeğeri puan almış olmak"
+     ],
+     "adet": 3,
+     "en_dusuk_puan": 80.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSS P11-P48"
     },
     {
      "unvan": "Destek Personeli (Büro Görevlisi)",
-     "adet": 1
+     "kosullar": [
+      "İktisat, İşletme, Maliye, Kamu Yönetimi, Uluslararası İlişkiler lisans mezunu olmak",
+      "İletişim, Grafik Tasarım, Radyo Sinema ve TV, Gazetecilik lisans mezunu olmak",
+      "2025 veya 2026 KPSS ilgili puan türünden en az 70 puan almış olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSS P1-P48"
     }
    ],
    "ogrenim": [
@@ -417,22 +511,20 @@
     "KPSS P47",
     "KPSS P48"
    ],
-   "sartlar": [
-    "Türkiye Cumhuriyeti vatandaşı olmak ve kamu haklarından mahrum bulunmamak.",
-    "Belirtilen suçlardan hüküm giymemiş olmak.",
-    "Güvenlik soruşturması ve/veya arşiv araştırması yapılmış olmak.",
-    "Askerlikle ilgisi bulunmamak, askerlik hizmetini yapmış, ertelenmiş veya muaf olmak.",
-    "İlgili 4 yıllık lisans programlarından mezun olmak.",
-    "2025 veya 2026 KPSS'den Uzman kadroları için en az 80, Destek Personeli için en az 70 puan almış olmak.",
-    "Uzman personel adayları için İngilizce YDS'den son 5 yıl içinde en az C seviyesinde puan almış olmak.",
-    "Kayseri, Sivas ve Yozgat illerinde çalışmayı kabul ve taahhüt etmek, seyahat engeli bulunmamak."
+   "ortak_kosullar": [
+    "Türkiye Cumhuriyeti vatandaşı olmak ve kamu haklarından mahrum bulunmamak",
+    "Askerlikle ilişiği bulunmamak, muvazzaf hizmetini yapmış, ertelenmiş veya yedek sınıfta olmak",
+    "Az tehlikeli işyerlerinde çalışmaya engel sağlık durumu bulunmamak",
+    "Kayseri, Sivas ve Yozgat illerinden Ajansın uygun göreceği yerde çalışmayı taahhüt etmek",
+    "Sınav sözlü (mülakat) usulü ile yapılacaktır"
    ],
    "akademik": false,
    "iptal_veya_duzeltme": false,
    "okunabilirlik": "iyi",
    "baslangic_tarihi": "2026-11-09",
+   "basvuru_adresi": "https://kariyerkapisi.gov.tr/isealim",
    "basvuru_yeri": "kariyer_kapisi",
-   "en_dusuk_puan": 70,
+   "en_dusuk_puan": 70.0,
    "iller": [
     "Kayseri",
     "Sivas",
@@ -440,9 +532,65 @@
    ],
    "kpss_gerekli": true,
    "kurum": "T.C. Orta Anadolu Kalkınma Ajansı",
+   "ozet": "Orta Anadolu Kalkınma Ajansı, Kayseri, Sivas ve Yozgat illerinde görevlendirilmek üzere 6 uzman ve 1 destek personeli alıyor. Başvurular 09/11/2026 - 03/12/2026 tarihleri arasında Kariyer Kapısı üzerinden yapılacaktır.",
    "son_basvuru_saati": "23:59",
    "son_basvuru_tarihi": "2026-12-03",
    "toplam": 7
+  }
+ },
+ "sbb-d899f32eaa9140b2a3b909d2": {
+  "zaman": "2026-10-19T21:51:57+03:00",
+  "surum": 2,
+  "model": "gemini-3.6-flash",
+  "kaynak": "pdf",
+  "imza": "8df3681641235a2d",
+  "baslik": "KIYI EMNİYETİ GENEL MÜDÜRLÜĞÜ - 3 SüREKLİ İŞÇİ ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Deniz Trafik Operatörü",
+     "kosullar": [
+      "Denizcilik alanında lisans düzeyinde eğitim veren yükseköğretim kurumlarından mezun olmak.",
+      "En az Uzakyol Birinci Zabit yeterlilik belgesine ve en az 1 yıl deniz hizmeti tecrübesine sahip olmak.",
+      "YDS'den en az 60 veya Denizcilik İngilizcesi sınavından en az 75 puan almış olmak.",
+      "Sosyal güvenlik kurumlarından emekliye ayrılmış olmamak."
+     ],
+     "adet": 3,
+     "en_dusuk_puan": null,
+     "il": "Mersin",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP3"
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "KPSSP3"
+   ],
+   "ortak_kosullar": [
+    "Türk vatandaşı olmak ve medeni hakları kullanma ehliyetine sahip olmak.",
+    "Belirtilen suçlardan veya 2 yıl veya daha fazla süreyle hapis cezasından mahkûm olmamak.",
+    "Güvenlik soruşturması ve arşiv araştırması olumlu sonuçlanmak.",
+    "Görevini devamlı yapmasına engel sağlık sorunu bulunmamak."
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": null,
+   "basvuru_adresi": "https://esube.iskur.gov.tr/Istihdam/AcikIsIlanAra.aspx",
+   "basvuru_yeri": "iskur",
+   "en_dusuk_puan": null,
+   "iller": [
+    "Mersin"
+   ],
+   "kpss_gerekli": true,
+   "kurum": "KIYI EMNİYETİ GENEL MÜDÜRLÜĞÜ",
+   "ozet": "Kıyı Emniyeti Genel Müdürlüğü Mersin ilinde istihdam edilmek üzere 3 adet daimi işçi statüsünde Deniz Trafik Operatörü alacaktır. Başvurular İŞKUR internet sitesi veya İŞKUR Hizmet Merkezleri üzerinden yapılacaktır.",
+   "son_basvuru_saati": null,
+   "son_basvuru_tarihi": null,
+   "toplam": 3
   }
  },
  "sbb-f444cce2b9f1fa1a8ec71292": {
