@@ -771,8 +771,16 @@ function applyTheme(){const dark=window.kitKoyu?window.kitKoyu():readStore('kit-
 async function loadSponsors(){try{const r=await fetch('sponsors.json',{cache:'no-store'});if(!r.ok)return;const cfg=await r.json();if(!cfg.enabled)return;for(const placement of ['sidebar','feed']){const s=cfg[placement],url=s&&safeURL(s.url);if(!s||!url||!s.title)continue;const box=E('aside','sponsor');box.setAttribute('aria-label','Reklam');box.append(E('span','eyebrow','REKLAM · SPONSORLU'));const a=external(url,s.title,'');a.rel='sponsored noopener noreferrer';box.append(a,E('p','',s.description||''));adBox[placement].replaceChildren(box);adBox[placement].hidden=false;}}catch{/* Optional sponsorship cannot break listing discovery. */}}
 async function getJSON(url,cache){const r=await fetch(url,{cache});if(!r.ok)throw Error(url);return r.json();}
 let sec=new Map(),lmap=new Map(),fmap=new Map(),iids=new Set(),lids=new Set(),fullPromise=null,fullFailed=false,sig='';
+/* Ani müdahale (19 Ekim 2026): docs/mudahale.json depoda güncellenince site yeniden derlenmeden 1–2 dakikada uygulanır.
+   {gizle:[anahtar], alanlar:{anahtar:{manset,son_tarih,toplam,il}}}. Erişilemezse liste olduğu gibi gösterilir. */
+const MUDAHALE_URL='https://raw.githubusercontent.com/enesfeched-maker/kamu-ilan-takip/main/docs/mudahale.json';
+async function mudahaleYukle(){const ac=typeof AbortController==='function'?new AbortController():null,zm=ac?setTimeout(()=>ac.abort(),2500):null;
+try{const r=await fetch(MUDAHALE_URL+'?v='+Math.floor(Date.now()/60000),ac?{signal:ac.signal,cache:'no-store'}:{cache:'no-store'});if(!r.ok)return null;const m=await r.json();
+return{gizle:new Set(Array.isArray(m.gizle)?m.gizle.filter(k=>typeof k==='string'):[]),alanlar:m.alanlar&&typeof m.alanlar==='object'?m.alanlar:{}};}catch{return null;}finally{if(zm)clearTimeout(zm);}}
+function mudahaleUygula(liste,m){if(!m)return liste;const IZIN=['manset','son_tarih','son_zaman','toplam','il'];
+return liste.filter(o=>o&&!m.gizle.has(o.key)&&!(o.kopya_of&&m.gizle.has(o.kopya_of))).map(o=>{const a=m.alanlar[o.key];if(!a||typeof a!=='object')return o;const y={...o};for(const k of IZIN)if(k in a)y[k]=a[k];return y;});}
 async function loadListe(){
-try{const d=await getJSON('liste.json','no-cache');if(!d||!Array.isArray(d.ilanlar))throw Error('shape');
+try{const[d,m]=await Promise.all([getJSON('liste.json','no-cache'),mudahaleYukle()]);if(!d||!Array.isArray(d.ilanlar))throw Error('shape');d.ilanlar=mudahaleUygula(d.ilanlar,m);
 listeTum=d.ilanlar.map(cleanL).filter(Boolean);listeVar=true;listeZaman=typeof d.guncelleme==='string'&&!isNaN(Date.parse(d.guncelleme))?d.guncelleme:'';lmap=new Map(listeTum.map(o=>[o.key,o]));
 /* Kopya (kaynaklar arası yinelenen) ikincil satırlar her listeden, sayıdan ve süzgeçten çıkar; kimlikleri birincile eşlenir. */
 alias=new Map();gizli=new Set();sec=new Map();idKey=new Map();

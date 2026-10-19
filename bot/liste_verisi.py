@@ -525,5 +525,10 @@ def liste_uret(ilanlar, gorseller, docs, simdi=None, guncelleme=None, kopyalar=N
 
 def uret(ilanlar, gorseller, docs, simdi=None, guncelleme=None, kopyalar=None, kaynak_durumlari=None):
     veri = liste_uret(ilanlar, gorseller, docs, simdi, guncelleme, kopyalar, kaynak_durumlari)
+    try:   # ani müdahaleler (docs/mudahale.json) derlenen listeye de işlenir; site anında zaten uyguluyor
+        import mudahale
+        veri['ilanlar'] = mudahale.liste_uygula(veri['ilanlar'], Path(docs) / 'mudahale.json')
+    except Exception as hata:
+        print(f'Uyarı: müdahaleler uygulanamadı: {hata}')
     (Path(docs) / 'liste.json').write_text(json.dumps(veri, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
     return veri
