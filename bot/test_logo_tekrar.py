@@ -61,5 +61,40 @@ class Tekrar(unittest.TestCase):
         self.assertIsNone(ilan_bot.onceden_paylasilmis(yeni, {'sbb-1': eski, 'kk-2': yeni}, set()))
 
 
+class Dugmeler(unittest.TestCase):
+    def test_kibar_kisaltmalar(self):
+        beklenen = {'Kamu Gözetimi, Muhasebe ve Denetim Standartları Kurumu Başkanlığı': 'KGK',
+                    'Türkiye İş Kurumu Genel Müdürlüğü': 'İŞKUR', 'Orta Anadolu Kalkınma Ajansı': 'ORAN',
+                    'Doğanyol Belediye Başkanlığı': 'Doğanyol Bld.', 'Edirne Uzunköprü Belediyesi': 'Uzunköprü Bld.',
+                    'Subaşı (YALOVA) Belediye Başkanlığı': 'Subaşı Bld.', 'Yüksek Seçim Kurulu Başkanlığı': 'YSK',
+                    'Gençlik ve Spor Bakanlığı': 'GSB', 'Niğde Ömer Halisdemir Üniversitesi Rektörlüğü': 'NÖHÜ'}
+        for kurum, kisa in beklenen.items():
+            self.assertEqual(ilan_bot.dugme_kisalt(ilan_bot.dugme_kurumu(kurum)), kisa, kurum)
+        self.assertLessEqual(len(ilan_bot.dugme_kisalt('Çok Uzun Bir Kurum Adı Sözcükleri Burada')), ilan_bot.DUGME_EN_UZUN + 1)
+
+    def test_ikiser_yan_yana(self):
+        from unittest import mock
+        gonderilen = {}
+
+        class Yanit(io.BytesIO):
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *a):
+                return False
+
+        def ac(istek, timeout=None):
+            import urllib.parse
+            gonderilen.update(urllib.parse.parse_qs(istek.data.decode()))
+            return Yanit(b'{"ok": true, "result": {"message_id": 5}}')
+
+        with mock.patch.object(ilan_bot.urllib.request, 'urlopen', ac):
+            ilan_bot.telegram_gonder('t', 'c', 'metin', site_url='https://kpsstercihi.com/',
+                                     ek_dugmeler=[(f'K{n}', f'https://kpsstercihi.com/ilan/{n}/') for n in range(5)])
+        satirlar = __import__('json').loads(gonderilen['reply_markup'][0])['inline_keyboard']
+        self.assertEqual([len(s) for s in satirlar], [2, 2, 2])
+        self.assertEqual(satirlar[-1][1]['text'], '🌐 Tüm ilanlar')
+
+
 if __name__ == '__main__':
     unittest.main()

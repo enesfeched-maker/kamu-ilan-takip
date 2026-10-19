@@ -335,7 +335,7 @@ def utm_ekle(url, site_url, ortam='kanal'):
 def telegram_gonder(token, chat_id, metin, ilan_linki="", site_url="", foto=None, yanit=None, ek_dugmeler=()):
     """Gönderir; başarıda Telegram message_id'sini (yoksa True), başarısızlıkta False döndürür.
     yanit: bir mesaja yanıt olarak göndermek için message_id (mesaj silinmişse yine de gönderilir).
-    ek_dugmeler: [(yazı, site adresi)] — site düğmesinin üstünde, her biri ayrı satır (akşam kartında ilan başına)."""
+    ek_dugmeler: [(yazı, site adresi)] — ikişer yan yana; site düğmesi en sona (akşam kartında ilan başına)."""
     url = f"https://api.telegram.org/bot{token}/{'sendPhoto' if foto else 'sendMessage'}"
     alanlar = {
         "chat_id": chat_id,
@@ -347,9 +347,12 @@ def telegram_gonder(token, chat_id, metin, ilan_linki="", site_url="", foto=None
     if ilan_linki:
         label='🔎 İlanı incele'
         dugmeler.append([{"text": label, "url": utm_ekle(ilan_linki, site_url)}])
-    for yazi, adres in ek_dugmeler or ():
-        dugmeler.append([{"text": yazi, "url": utm_ekle(adres, site_url)}])
-    if site_url:
+    ek = [{"text": yazi, "url": utm_ekle(adres, site_url)} for yazi, adres in ek_dugmeler or ()]
+    if ek:   # 19 Ekim 2026: ilan düğmeleri ikişer yan yana, kısa adlarla; site düğmesi tek kalan ilanın yanına
+        if site_url:
+            ek.append({"text": "🌐 Tüm ilanlar", "url": utm_ekle(site_url, site_url)})
+        dugmeler += [ek[n:n + 2] for n in range(0, len(ek), 2)]
+    elif site_url:
         dugmeler.append([{"text": "🌐 Tüm kamu ilanları", "url": utm_ekle(site_url, site_url)}])
     if dugmeler:
         alanlar["reply_markup"] = json.dumps({"inline_keyboard": dugmeler}, ensure_ascii=False)
@@ -841,7 +844,14 @@ AKSAM_DUGME_EN_COK = 7   # kartta görünen satır sayısı kadar (kart_tasariml
 
 DUGME_KISA = {'Türk Akreditasyon Kurumu': 'TÜRKAK', 'İskenderun Teknik Üniversitesi': 'İSTE', 'Türk Standardları Enstitüsü': 'TSE',
               'Jandarma Genel Komutanlığı': 'Jandarma', 'Jandarma ve Sahil Güvenlik Akademisi': 'JSGA', 'Türk Patent ve Marka Kurumu': 'TÜRKPATENT',
-              'Kültür ve Turizm Bakanlığı': 'KTB'}
+              'Kültür ve Turizm Bakanlığı': 'KTB', 'Türkiye İş Kurumu': 'İŞKUR',
+              'Kamu Gözetimi, Muhasebe ve Denetim Standartları Kurumu': 'KGK', 'Orta Anadolu Kalkınma Ajansı': 'ORAN',
+              'İstanbul Kalkınma Ajansı': 'İSTKA', 'Ankara Kalkınma Ajansı': 'Ankara KA',
+              'Cumhurbaşkanlığı İletişim Başkanlığı': 'İletişim Bşk.', 'Cumhurbaşkanlığı İletişim': 'İletişim Bşk.',
+              'Sigortacılık ve Özel Emeklilik Düzenleme ve Denetleme Kurumu': 'SEDDK',
+              'Türkiye Uluslararası İslam, Bilim ve Teknoloji Üniversitesi': 'TİBU'}
+
+DUGME_EN_UZUN = 18   # iki düğme yan yana sığsın (telefon ekranında yarım genişlik)
 
 
 def dugme_kurumu(kurum):
@@ -855,9 +865,43 @@ def dugme_kurumu(kurum):
         if ad in DUGME_KISA:
             return DUGME_KISA[ad]
     ad = re.sub(r'\s+(?:Başkanlığı|Genel Müdürlüğü|Genel Sekreterliği)$', '', tam)
+    if ad in DUGME_KISA:
+        return DUGME_KISA[ad]
     ad = re.sub(r'\s+Büyükşehir Belediyesi$', ' BŞB', ad)
     ad = re.sub(r'\s+Belediyesi$', ' Bld.', ad)
-    return re.sub(r'\s+Üniversitesi$', ' Üni.', ad)
+    ad = re.sub(r'\s+Rektörlüğü$', '', ad)
+    ad = re.sub(r'\s+Üniversitesi$', ' Üni.', ad)
+    ad = re.sub(r'\s+Kalkınma Ajansı$', ' KA', ad)
+    if len(ad) <= DUGME_EN_UZUN:
+        return ad
+    # 19 Ekim 2026: düğmeler ikişer yan yana; uzun adlar sözcük ortasından kesilmez, kibar kısaltılır
+    parantez = re.search(r'\(([^()]{2,12})\)\s*$', ad)
+    if parantez and parantez.group(1).isupper() and not re.search(r'Belediye', ad):
+        return parantez.group(1)                                      # '... Kurumu (TÜBİTAK)'
+    ad = re.sub(r'^(\S+)\s+\([^)]*\)\s+(?:Bld\.|Belediye(?:si| Başkanlığı)?)$', r'\1 Bld.', ad)   # 'Subaşı (YALOVA) Bld.'
+    from siniflandir import ILLER, kucuk
+    ilk, _, kalan = ad.partition(' ')
+    if kalan.endswith(' Bld.') and kucuk(ilk) in {kucuk(il) for il in ILLER}:
+        ad = kalan                                                    # 'Edirne Uzunköprü Bld.' -> 'Uzunköprü Bld.'
+    if len(ad) <= DUGME_EN_UZUN:
+        return ad
+    sozcukler = [w for w in re.findall(r'[^\s,()]+', ad) if w.casefold() not in ('ve', 'ile') and w[0].isalpha()]
+    if ad.endswith(' Üni.') and 3 <= len(sozcukler) <= 6:
+        return ''.join(w[0] for w in sozcukler[:-1]).upper() + 'Ü'      # 'Niğde Ömer Halisdemir Üni.' -> 'NÖHÜ'
+    if re.search(r'(?:Bakanlığı|Kurumu|Kurulu|Birliği|İdaresi)$', ad) and 2 <= len(sozcukler) <= 6:
+        return ''.join(w[0] for w in sozcukler).upper()               # yerleşik kısaltmalar: YSK, TİHEK, GSB, ÇSGB, TBB
+    return ad
+
+
+def dugme_kisalt(yazi, sinir=DUGME_EN_UZUN):
+    """Uzun düğme yazısı sözcük sınırında kısaltılır ('Kamu Gözetimi…'); parantez içi kısaltma varsa o kullanılır."""
+    m = re.search(r'\(([^()]{2,12})\)\s*$', yazi)
+    if m:
+        yazi = m.group(1)
+    if len(yazi) <= sinir:
+        return yazi
+    kes = yazi[:sinir].rsplit(' ', 1)[0].rstrip(',·- ')
+    return (kes if len(kes) >= 6 else yazi[:sinir - 1]) + '…'
 
 
 def kisa_kadro(ad, kurum):
@@ -884,7 +928,7 @@ def aksam_dugmeleri(ilanlar, logolar, site_url):
         ilk_kadro = next((k['ad'] for k in kart_verisi(i).get('kadrolar') or [] if k.get('ad')), '') or re.sub(r'^\d+\s+', '', toplu_satir(i)[1])
         yazi = kurum if kurumlar.count(kurum) == 1 else f"{kurum} · {kisa_kadro(ilk_kadro, kart_verisi(i)['kurum'])}"
 
-        sonuc.append((yazi if len(yazi) <= 60 else yazi[:59] + '…', adres))
+        sonuc.append((dugme_kisalt(yazi), adres))
     return sonuc
 
 
