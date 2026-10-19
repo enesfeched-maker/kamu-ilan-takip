@@ -539,6 +539,20 @@ def logolu_olanlar(gonderilecek, logo_bul=None):
     return kalan
 
 
+def yayina_hazir(gonderilecek, logo_bul=None, veri=None):
+    """19 Ekim 2026: kanala yalnız Gemini'nin okuduğu ilan, Gemini'nin okuduğu bilgilerle (kadro, tarih, koşul) gider;
+    logosu olmayan ilan gitmez. Duyurular etkilenmez. Gemini adımı hiç çalışmadıysa (anahtar yok) kapı kapalı kalır."""
+    import yz_isle
+    hazir = []
+    for i in gonderilecek:
+        tamam, neden = yz_isle.yayina_hazir(i, veri)
+        if not tamam:
+            print(f"::warning::Kanala gönderilmedi ({neden}): {i.get('kurum')} — {i['baslik']}")
+            continue
+        hazir.append(i if i.get('duyuru_turu') else yz_isle.uygula(i, veri))
+    return logolu_olanlar(hazir, logo_bul)
+
+
 def unvanli(i):
     import kurum_sayfasi
     return bool(kurum_sayfasi.kadrolar(i))
@@ -1356,7 +1370,7 @@ def main():
     gonderilecek = telegram_sirasi(mevcut, gelen, yeniler, gonderilen, bekleyen,
                                   ilk_calisma, a.duyur_mevcut, cfg)
     if not a.prepare:   # logosuz ilan sıranın başını tıkamasın diye sınırdan önce ayıklanır
-        gonderilecek = logolu_olanlar(gonderilecek)
+        gonderilecek = yayina_hazir(gonderilecek)
     # İlan başına hatırlatma kaldırıldı (geçmiş hatirlatilan korunur, yeni kayıt eklenmez);
     # yerine günde bir kez sabah özeti (yeni ilanlar + son başvurusu yaklaşanlar + açık ilan sayısı) gönderilir.
     mesajlar = dict(veri.get('telegram_mesajlari', {}))
@@ -1365,12 +1379,16 @@ def main():
     sabah = None
     if toplu_zamani(simdi(), toplu_gun):
         sabah_yeni = []  # 10 Ekim 2026: yeni ilanlar gun icinde tek tek paylasiliyor; sabah ozetinde listelenmez
-        sabah_son_gun = toplu_secim(gelen, gonderilen, cfg)
+        import yz_isle
+        sabah_son_gun = [yz_isle.uygula(x) for x in toplu_secim(gelen, gonderilen, cfg)]
         sabah_acik = sabah_acik_sayisi(gelen, simdi())
         if sabah_yeni or sabah_son_gun or sabah_acik:  # üçü de boşsa sessizce atlanır, gün işaretlenmez
             sabah = (sabah_yeni, sabah_son_gun, sabah_acik)
     aksam_gun = veri.get('telegram_aksam_gunu')
     aksam = aksam_yeniler(gelen, cfg, simdi()) if aksam_zamani(simdi(), aksam_gun) else []
+    if aksam:
+        import yz_isle
+        aksam = [yz_isle.uygula(x) for x in aksam]
     kuyruk = ([('sabah', sabah)] if sabah else []) + ([('aksam', aksam)] if aksam else []) + \
              [('duyuru' if i.get('duyuru_turu') else 'ilan', i) for i in gonderilecek]
     if sessiz_donemde(cfg, simdi()):

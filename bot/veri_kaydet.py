@@ -113,6 +113,44 @@ def commit_gerekli(remote, state):
     return yeni - eski >= ZAMAN_YENILEME
 
 
+YZ_PATH = 'denetim/yz.json'
+LOGO_DIR = 'docs/assets/kurum-logolari'
+
+
+def _uzak_json(yol):
+    sonuc = git('show', 'origin/main:' + yol, check=False, capture=True)
+    try:
+        return json.loads(sonuc.stdout) if sonuc.returncode == 0 else {}
+    except ValueError:
+        return {}
+
+
+def ek_dosyalari_birlestir():
+    """Gemini sonuçları (kayıt başına en yeni okuma) ve logo arşivi (kurum anahtarı birleşimi) uzak main ile birleştirilir;
+    değişen yollar döner. 19 Ekim 2026: yapay zekâ adımı aynı tarama içinde çalışır, sonuçları bu commit'le kalıcı olur."""
+    yollar = []
+    if Path(YZ_PATH).exists():
+        yerel = json.loads(Path(YZ_PATH).read_text(encoding='utf-8'))
+        uzak = _uzak_json(YZ_PATH)
+        birlesik = dict(uzak)
+        for k, v in yerel.items():
+            if str(v.get('zaman') or '') >= str((uzak.get(k) or {}).get('zaman') or ''):
+                birlesik[k] = v
+        Path(YZ_PATH).write_text(json.dumps(dict(sorted(birlesik.items())), ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
+        if birlesik != uzak:
+            yollar.append(YZ_PATH)
+    manifest = Path(LOGO_DIR) / 'kaynaklar.json'
+    if manifest.exists():
+        yerel = json.loads(manifest.read_text(encoding='utf-8'))
+        uzak = _uzak_json(f'{LOGO_DIR}/kaynaklar.json')
+        yeni = {k: v for k, v in yerel.items() if k not in uzak}
+        if yeni:
+            birlesik = {**uzak, **yeni}   # eklenme sırası korunur
+            manifest.write_text(json.dumps(birlesik, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+            yollar += [str(manifest)] + [f'{LOGO_DIR}/{v["dosya"]}' for v in yeni.values() if v.get('dosya')]
+    return yollar
+
+
 def main():
     state = json.loads(Path(PATH).read_text(encoding='utf-8'))
     git('config', 'user.name', 'ilan-bot')
@@ -122,12 +160,13 @@ def main():
         remote = json.loads(git('show', 'origin/main:'+PATH, capture=True).stdout)
         state = merge_registry(remote, state)
         write(state)
-        if not commit_gerekli(remote, state):
+        ekler = ek_dosyalari_birlestir()
+        if not commit_gerekli(remote, state) and not ekler:
             print('Yalnızca zaman damgaları değişti; commit atlanıyor.')
             return
         # Dizini uzak main'e eşitle: tek commit, rebase çakışması yok.
         git('reset', '--mixed', '--quiet', 'origin/main')
-        git('add', PATH)
+        git('add', PATH, *ekler)
         git('commit', '--quiet', '-m', 'ilanlar güncellendi')
         if git('push', 'origin', 'HEAD:main', check=False).returncode == 0:
             print('Registry saved; sent and pending histories preserved.')
