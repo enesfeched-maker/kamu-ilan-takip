@@ -139,6 +139,13 @@ def topla(simdi=None, ortam=None, gecmis_yolu=GECMIS_YOLU, istatistik_yolu=ISTAT
             izinsiz, ust_uste = str(hata), ust_uste + 1
             if ust_uste >= 3:  # izin yoksa hepsi aynı hatayı verir
                 break
+    son_id = next((g['ig_id'] for g in reversed(gecmis) if g.get('ig_id')), None)
+    if not olculen and not izinsiz and son_id:  # ölçülecek yaşta paylaşım yoksa izin en yeni paylaşımda denenir
+        try:
+            olcum_al(son_id, anahtar)
+            print('İstatistik izni var.')
+        except YayinHatasi as hata:
+            izinsiz = str(hata)
     _yaz(gecmis_yolu, gecmis)
     sonuc = dict(agirliklar(gecmis), guncelleme=simdi.isoformat(timespec='seconds'))
     _yaz(istatistik_yolu, sonuc)
