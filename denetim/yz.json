@@ -1,4 +1,53 @@
 {
+ "csb-478289": {
+  "zaman": "2026-10-20T01:17:41+03:00",
+  "surum": 2,
+  "model": "gemini-3.7-flash",
+  "kaynak": "metin",
+  "imza": "445a39774ca185af",
+  "baslik": "KARABAĞLAR BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE SÖZLEŞMELİ PERSONEL ALIM İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Mühendis",
+     "kosullar": [
+      "Çevre Mühendisliği lisans programından mezun olmak.",
+      "En az B sınıfı sürücü belgesine sahip olmak."
+     ],
+     "adet": 2,
+     "en_dusuk_puan": 60.0,
+     "il": "İzmir",
+     "ogrenim": "lisans",
+     "puan_turu": "P3"
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P3"
+   ],
+   "ortak_kosullar": [],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": null,
+   "basvuru_adresi": null,
+   "basvuru_yeri": null,
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": 60.0,
+   "iller": [
+    "İzmir"
+   ],
+   "kpss_gerekli": true,
+   "kurum": "Karabağlar Belediye Başkanlığı",
+   "ozet": "Karabağlar Belediye Başkanlığı, lisans mezunu 2 sözleşmeli Çevre Mühendisi alımı yapacaktır. Başvurular için son tarih 4 Aralık 2026'dır.",
+   "son_basvuru_saati": null,
+   "son_basvuru_tarihi": "2026-12-04",
+   "toplam": 2
+  }
+ },
  "csb-478401": {
   "zaman": "2026-10-19T20:48:51+03:00",
   "surum": 2,
@@ -291,6 +340,366 @@
    "son_basvuru_saati": "23:59",
    "son_basvuru_tarihi": "2026-11-08",
    "toplam": 11
+  }
+ },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=4850e095-8b16-4aba-9956-555740a41146": {
+  "zaman": "2026-10-20T01:17:41+03:00",
+  "surum": 2,
+  "model": "gemini-3.8-flash",
+  "kaynak": "metin",
+  "imza": "438cf400ca60ccb4",
+  "baslik": "ORTA ANADOLU KALKINMA AJANSI - PERSONEL ALIM İLANI - 2026",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Uzman Personel - 1",
+     "kosullar": [
+      "Şehir ve Bölge Planlama, Mimarlık, Endüstriyel Tasarım Müh., Çevre Müh. lisans mezunu olmak",
+      "2025 veya 2026 KPSS P1, P2, P3 puan türlerinin birinden en az 80 puan almış olmak",
+      "Son 5 yıl içinde YDS/e-YDS İngilizce dilinden en az C düzeyinde puan almış olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 80.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP1, KPSSP2, KPSSP3"
+    },
+    {
+     "unvan": "Uzman Personel - 2",
+     "kosullar": [
+      "Mühendislik lisans mezunu olmak (Uzman 1'de yer alan bölümler hariç)",
+      "2025 veya 2026 KPSS P1, P2, P3 puan türlerinin birinden en az 80 puan almış olmak",
+      "Son 5 yıl içinde YDS/e-YDS İngilizce dilinden en az C düzeyinde puan almış olmak"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": 80.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP1, KPSSP2, KPSSP3"
+    },
+    {
+     "unvan": "Uzman Personel - 3",
+     "kosullar": [
+      "İktisat, İşletme, Maliye, Uluslararası İlişkiler, İstatistik, Kamu Yönetimi vb. mezun olmak",
+      "2025 veya 2026 KPSS ilgili puan türlerinden en az 80 puan almış olmak",
+      "Son 5 yıl içinde YDS/e-YDS İngilizce dilinden en az C düzeyinde puan almış olmak"
+     ],
+     "adet": 3,
+     "en_dusuk_puan": 80.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP11, KPSSP12, KPSSP13, KPSSP14, KPSSP15, KPSSP16, KPSSP17, KPSSP19, KPSSP20, KPSSP21, KPSSP22, KPSSP23, KPSSP24, KPSSP25, KPSSP26, KPSSP29, KPSSP30, KPSSP34, KPSSP35, KPSSP36, KPSSP37, KPSSP38, KPSSP39, KPSSP40, KPSSP41, KPSSP42, KPSSP43, KPSSP44, KPSSP45, KPSSP46, KPSSP47, KPSSP48"
+    },
+    {
+     "unvan": "Destek Personeli",
+     "kosullar": [
+      "İktisat, İşletme, Maliye, İletişim, Grafik Tasarım, Radyo TV, Gazetecilik vb. mezun olmak",
+      "2025 veya 2026 KPSS ilgili puan türlerinden en az 70 puan almış olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP1, KPSSP2, KPSSP3, KPSSP11, KPSSP12, KPSSP13, KPSSP14, KPSSP15, KPSSP16, KPSSP17, KPSSP19, KPSSP20, KPSSP21, KPSSP22, KPSSP23, KPSSP24, KPSSP25, KPSSP26, KPSSP29, KPSSP30, KPSSP34, KPSSP35, KPSSP36, KPSSP37, KPSSP38, KPSSP39, KPSSP40, KPSSP41, KPSSP42, KPSSP43, KPSSP44, KPSSP45, KPSSP46, KPSSP47, KPSSP48"
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "KPSSP1",
+    "KPSSP2",
+    "KPSSP3",
+    "KPSSP11",
+    "KPSSP12",
+    "KPSSP13",
+    "KPSSP14",
+    "KPSSP15",
+    "KPSSP16",
+    "KPSSP17",
+    "KPSSP19",
+    "KPSSP20",
+    "KPSSP21",
+    "KPSSP22",
+    "KPSSP23",
+    "KPSSP24",
+    "KPSSP25",
+    "KPSSP26",
+    "KPSSP29",
+    "KPSSP30",
+    "KPSSP34",
+    "KPSSP35",
+    "KPSSP36",
+    "KPSSP37",
+    "KPSSP38",
+    "KPSSP39",
+    "KPSSP40",
+    "KPSSP41",
+    "KPSSP42",
+    "KPSSP43",
+    "KPSSP44",
+    "KPSSP45",
+    "KPSSP46",
+    "KPSSP47",
+    "KPSSP48"
+   ],
+   "ortak_kosullar": [
+    "2025 veya 2026 yılı Kamu Personeli Seçme Sınavı puanına sahip olmak",
+    "Başvurular yalnızca Kariyer Kapısı üzerinden elektronik ortamda yapılacaktır"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-11-09",
+   "basvuru_adresi": null,
+   "basvuru_yeri": "kariyer_kapisi",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": 70.0,
+   "iller": [
+    "Kayseri",
+    "Sivas",
+    "Yozgat"
+   ],
+   "kpss_gerekli": true,
+   "kurum": "Orta Anadolu Kalkınma Ajansı",
+   "ozet": "Orta Anadolu Kalkınma Ajansı, 6 uzman ve 1 destek personeli olmak üzere toplam 7 sözleşmeli personel alacaktır. Başvurular 09.11.2026 - 03.12.2026 tarihleri arasında Kariyer Kapısı üzerinden alınacaktır.",
+   "son_basvuru_saati": "23:59",
+   "son_basvuru_tarihi": "2026-12-03",
+   "toplam": 7
+  }
+ },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=727b6946-c0fe-493f-a9e1-a0d668eabca2": {
+  "zaman": "2026-10-20T01:17:41+03:00",
+  "surum": 2,
+  "model": "gemini-3.6-flash",
+  "kaynak": "metin",
+  "imza": "ce5be9a4dbf065bc",
+  "baslik": "TÜRK AKREDİTASYON KURUMU GENEL SEKRETERLİĞİ - SÖZLEŞMELİ BİLİŞİM PERSONELİ SINAV İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Siber Güvenlik Uzmanı",
+     "kosullar": [
+      "Siber güvenlik alanında en az 5 yıl fiilen çalışmış olmak",
+      "En az 5.000 aktif kullanıcılı bilgi sistemlerinde görev almış olmak",
+      "Ağ ve güvenlik sistemleri, SIEM ve zararlı yazılım analizi konularında tecrübeli olmak",
+      "Sızma testi, zafiyet yönetimi ve adli bilişim süreçlerine hakim olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "ogrenim": null,
+     "puan_turu": null
+    },
+    {
+     "unvan": "Sistem ve Ağ Uzmanı",
+     "kosullar": [
+      "Sistem ve ağ uzmanı pozisyonunda en az 5 yıl çalışmış olmak",
+      "Kurumsal sanallaştırma, sunucu ve veri depolama sistemlerinde tecrübe sahibi olmak",
+      "Active Directory, Linux, Windows Server ve ağ servisleri yönetiminde tecrübeli olmak",
+      "DC/DR, yedekleme ve otomasyon süreçlerinde tecrübe sahibi olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "ogrenim": null,
+     "puan_turu": null
+    }
+   ],
+   "ogrenim": [],
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "Sözlü veya uygulamalı sınavda başarılı olmak"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-10-16",
+   "basvuru_adresi": null,
+   "basvuru_yeri": null,
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": null,
+   "iller": [
+    "Ankara"
+   ],
+   "kpss_gerekli": null,
+   "kurum": "TÜRK AKREDİTASYON KURUMU GENEL SEKRETERLİĞİ",
+   "ozet": "Türk Akreditasyon Kurumu Genel Sekreterliği, Ankara'da görevlendirilmek üzere 2 sözleşmeli bilişim personeli alacaktır. Başvurular 16.10.2026 ile 31.10.2026 tarihleri arasında yapılacaktır.",
+   "son_basvuru_saati": "23:59",
+   "son_basvuru_tarihi": "2026-10-31",
+   "toplam": 2
+  }
+ },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=a6d18ac1-8799-4f76-b4f5-418ceb8c735e": {
+  "zaman": "2026-10-20T01:17:41+03:00",
+  "surum": 2,
+  "model": "gemini-3.8-flash",
+  "kaynak": "metin",
+  "imza": "bcc8519228115ac9",
+  "baslik": "KÜLTÜR VE TURİZM BAKANLIĞI - SÖZLEŞMELİ BİLİŞİM PERSONELİ ALIMI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "A Grubu Kıdemli Sistem Uzmanı",
+     "kosullar": [
+      "Kurumsal sistemlerde sistem yönetimi alanında en az 5 yıl çalışmış olmak",
+      "Windows Server işletim sistemlerinin kurulumu, yönetimi ve optimizasyonunda ileri seviye bilgi",
+      "Active Directory mimarisinin tasarımı, kurulumu ve yönetiminde ileri seviyede bilgi sahibi olmak",
+      "VMware ESXi, vCenter veya Microsoft Hyper-V sanallaştırma altyapılarında ileri seviye bilgi",
+      "Microsoft Certified veya VMware VCP sertifikalarına sahip olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": null,
+     "ogrenim": null,
+     "puan_turu": null
+    },
+    {
+     "unvan": "A Grubu Kıdemli Veritabanı Yöneticisi",
+     "kosullar": [
+      "Büyük ölçekli bilgi işlem birimlerinde veritabanı alanında en az 5 yıl çalışmış olmak",
+      "Microsoft SQL Server ve PostgreSQL veritabanlarının yönetimi ve kurulumunda tecrübe sahibi olmak",
+      "T-SQL konusunda ileri seviyede, PL/pgSQL konusunda bilgi sahibi olmak",
+      "SQL sorgu analizi, indeks analizi ve SQL Performance Tuning konularında tecrübe sahibi olmak",
+      "Always On Availability Groups, Failover Cluster ve PostgreSQL mimarilerinde bilgi sahibi olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": null,
+     "ogrenim": null,
+     "puan_turu": null
+    },
+    {
+     "unvan": "B Grubu Kıdemli Yazılım Geliştirme Uzmanı",
+     "kosullar": [
+      "Kullanıcı sayısı 5.000'den fazla olan projede görev almış ve yazılımda en az 5 yıl çalışmış olmak",
+      "C# ve Perl dilleri ile uygulama geliştirmiş olmak",
+      "Windows Servisleri, Web API ve Web Servisleri (SOAP, WCF, REST) konularında tecrübe sahibi olmak",
+      "Mikro servis mimarisi ve dağıtık ön bellek mimarileri konusunda tecrübe sahibi olmak",
+      "SQL Server ve MYSQL ilişkisel veritabanları konusunda deneyimli olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": null,
+     "ogrenim": null,
+     "puan_turu": null
+    },
+    {
+     "unvan": "B Grubu Kıdemli Ağ Yönetimi Uzmanı",
+     "kosullar": [
+      "Büyük ölçekli veya kurumsal sistemlerde bilişim ağları alanında en az 5 yıl çalışmış olmak",
+      "Kurumsal seviyedeki omurga ve kenar anahtar sistemlerinde ağ yöneticisi tecrübesine sahip olmak",
+      "LAN, WAN, WLAN, VPN, dinamik yönlendirme ve IEEE 802.1x teknolojilerinde tecrübe sahibi olmak",
+      "Kablosuz ağ cihazları kurulumu, yönetimi ve güvenliği konularında deneyim sahibi olmak",
+      "IP telefon, VoIP ve 4G/5G Mobil APN bağlantıları hakkında bilgi ve tecrübe sahibi olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": null,
+     "ogrenim": null,
+     "puan_turu": null
+    },
+    {
+     "unvan": "B Grubu Kıdemli Siber Güvenlik Uzmanı",
+     "kosullar": [
+      "Büyük ölçekli kurumsal sistemlerde siber güvenlik alanında en az 5 yıl çalışmış olmak",
+      "Firewall, IDS/IPS ve WAF sistemlerinin çalışma prensipleri ve yönetiminde deneyimli olmak",
+      "SIEM sistemlerinde log toplama, olay korelasyonu ve güvenlik analizinde tecrübeli olmak",
+      "Zafiyet tarama ve sızma testi araçlarını kullanarak güvenlik açığı tespiti yapabilmek",
+      "Tercihen CEH, ISO 27001 Baş Denetçi, CCNA veya CCNP sertifikalarına sahip olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": null,
+     "ogrenim": null,
+     "puan_turu": null
+    },
+    {
+     "unvan": "C Grubu Sistem Uzmanı",
+     "kosullar": [
+      "Büyük ölçekli veya kurumsal sistemlerde en az 3 yıl çalışmış olmak",
+      "Active Directory, Exchange, GPO, DNS, Hyper-V kurulum ve konfigürasyonunda tecrübeli olmak",
+      "Red Hat, CentOS, Ubuntu Linux işletim sistemleri yönetiminde tecrübe sahibi olmak",
+      "VMware sanallaştırma platformu ve Powershell scripting konularında bilgi ve tecrübe sahibi olmak",
+      "Kubernetes container mimarileri veya CI/CD süreçleri hakkında bilgi sahibi olmak"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": null,
+     "il": null,
+     "ogrenim": null,
+     "puan_turu": null
+    },
+    {
+     "unvan": "C Grubu Ürün Yönetimi ve İş Analizi Uzmanı",
+     "kosullar": [
+      "Büyük ölçekli proje ve ürün yönetimi veya analiz tasarım konularında en az 3 yıl çalışmış olmak",
+      "MS Project, Trello veya OpenProject gibi proje yönetim araçlarında bilgi ve tecrübe sahibi olmak",
+      "Profesyonel Scrum Ürün Sahibi (PSPO I) sertifikasına sahip olmak",
+      "İş süreçlerini analiz etmek, UML ve yazılım test metodolojileri alanında bilgi sahibi olmak",
+      "Mockup ve prototipler oluşturma ve kullanıcı deneyimi konularında bilgi sahibi olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": null,
+     "ogrenim": null,
+     "puan_turu": null
+    },
+    {
+     "unvan": "C Grubu Siber Güvenlik Uzmanı",
+     "kosullar": [
+      "Büyük ölçekli kurumsal sistemlerde en az 3 yıl tecrübe sahibi olmak",
+      "ISO 27001, KVKK ve Bilgi Güvenliği Rehberi uyum süreçlerinde tecrübe sahibi olmak",
+      "SIEM platformları ile korelasyon kuralları, panolar ve raporlar oluşturabilmek",
+      "Firewall ve WAF gibi ağ güvenlik cihazlarının kurulum ve yönetiminde en az 1 yıl deneyimli olmak",
+      "Tercihen CEH, ISO 27001 Baş Denetçi, CCNA veya CCNP sertifikalarına sahip olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": null,
+     "ogrenim": null,
+     "puan_turu": null
+    },
+    {
+     "unvan": "C Grubu Yazılım Geliştirme Uzmanı",
+     "kosullar": [
+      "Kullanıcı sayısı 5.000'den fazla olan projede görev almış ve en az 3 yıl çalışmış olmak",
+      "C#, ASP.NET MVC ve ASP.NET Core teknolojileri ile uygulama geliştirmiş olmak",
+      "Coğrafi sunucular (GeoServer vb.) ve WMS, WFS coğrafi veri standartlarında bilgi sahibi olmak",
+      "Openlayers veya Leaflet kütüphanelerini kullanarak uygulama geliştirmiş olmak",
+      "Modern JavaScript kütüphaneleri (Vue, Angular, React), HTML5 ve CSS3 konularında tecrübeli olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": null,
+     "ogrenim": null,
+     "puan_turu": null
+    }
+   ],
+   "ogrenim": [],
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "Yerleştirme Bakanlıkça gerçekleştirilecek sözlü sınav başarı sırasına göre yapılacaktır",
+    "Başvurular sadece elektronik ortamda Kariyer Kapısı üzerinden alınacaktır",
+    "Şahsen veya posta yoluyla yapılan başvurular kabul edilmeyecektir"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-10-19",
+   "basvuru_adresi": "https://kariyerkapisi.gov.tr/isealim",
+   "basvuru_yeri": "kariyer_kapisi",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": null,
+   "iller": [],
+   "kpss_gerekli": null,
+   "kurum": "Kültür ve Turizm Bakanlığı",
+   "ozet": "Kültür ve Turizm Bakanlığı merkez teşkilatında istihdam edilmek üzere sözlü sınavla 10 sözleşmeli bilişim personeli alacaktır. Başvurular 19-26 Ekim 2026 tarihleri arasında Kariyer Kapısı üzerinden yapılacaktır.",
+   "son_basvuru_saati": "23:59",
+   "son_basvuru_tarihi": "2026-10-26",
+   "toplam": 10
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=e53c369b-3913-48dc-8e41-be3a6392c249": {
@@ -619,6 +1028,199 @@
    "toplam": 11
   }
  },
+ "sbb-838c1ad20b87efb0ed63d6c7": {
+  "zaman": "2026-10-20T01:17:41+03:00",
+  "surum": 2,
+  "model": "gemini-3.7-flash",
+  "kaynak": "pdf",
+  "imza": "b6ade86a7bcc30d5",
+  "baslik": "TÜRK AKREDİTASYON KURUMU - 2 ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Siber Güvenlik Uzmanı",
+     "kosullar": [
+      "İlgili 4 yıllık mühendislik lisans programlarından mezun olmak",
+      "Siber güvenlik alanında en az 5 yıl fiilen çalışmış olduğunu belgelemek",
+      "En az 5.000 aktif kullanıcılı sistemlerde siber güvenlik süreçlerinde yer almış olmak",
+      "Firewall, Proxy, IDS/IPS, VPN, WAF, SIEM ve EDR/XDR sistemlerinde tecrübe sahibi olmak",
+      "Ağ güvenliği, zafiyet tarama, sızma testi ve adli bilişim konularına hâkim olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP3"
+    },
+    {
+     "unvan": "Sistem ve Ağ Uzmanı",
+     "kosullar": [
+      "İlgili 4 yıllık mühendislik lisans programlarından mezun olmak",
+      "Büyük ölçekli kurumlarda sistem ve ağ uzmanı olarak en az 5 yıl çalışmış olmak",
+      "VMware veya Hyper-V sanallaştırma mimarileri ile sunucu donanımlarında ileri düzey tecrübe",
+      "Windows Server, Active Directory, dosya sunucusu ve Linux yönetiminde deneyim sahibi olmak",
+      "Veri depolama (SAN/NAS), yedekleme, felaket kurtarma ve ağ anahtarlama süreçlerine hâkim olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP3"
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "KPSSP3"
+   ],
+   "ortak_kosullar": [
+    "Bilgisayar, yazılım, elektrik, elektronik veya endüstri mühendisliği bölümlerinden mezun olmak",
+    "Alanında en az 5 yıl mesleki tecrübeye sahip olmak",
+    "Güncel programlama dillerinden en az ikisini bildiğini belgelemek",
+    "Erkek adaylar için askerlik hizmetini yapmış, ertelemiş veya muaf olmak",
+    "Sözlü ve uygulamalı sınavda başarılı olmak"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-10-16",
+   "basvuru_adresi": "https://kariyerkapisi.gov.tr/",
+   "basvuru_yeri": "kariyer_kapisi",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": null,
+   "iller": [
+    "Ankara"
+   ],
+   "kpss_gerekli": false,
+   "kurum": "Türk Akreditasyon Kurumu",
+   "ozet": "Türk Akreditasyon Kurumu, sözlü ve uygulamalı sınavla 2 sözleşmeli bilişim personeli alımı yapacaktır. Başvurular 16-31 Ekim 2026 tarihleri arasında Kariyer Kapısı üzerinden alınacaktır.",
+   "son_basvuru_saati": "23:59",
+   "son_basvuru_tarihi": "2026-10-31",
+   "toplam": 2
+  }
+ },
+ "sbb-8f8bf62951391c9f5213752f": {
+  "zaman": "2026-10-20T01:17:41+03:00",
+  "surum": 2,
+  "model": "gemini-3.6-flash",
+  "kaynak": "pdf",
+  "imza": "aadcadf345026c4c",
+  "baslik": "TÜRK AKREDİTASYON KURUMU - 7 AKREDİTASYON UZMANI YARDIMCISI ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Akreditasyon Uzman Yardımcısı",
+     "kosullar": [
+      "Gıda Mühendisliği lisans programından mezun olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 70,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP2"
+    },
+    {
+     "unvan": "Akreditasyon Uzman Yardımcısı",
+     "kosullar": [
+      "Metalurji ve Malzeme Mühendisliği lisans programından mezun olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 70,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP2"
+    },
+    {
+     "unvan": "Akreditasyon Uzman Yardımcısı",
+     "kosullar": [
+      "Endüstri Mühendisliği lisans programından mezun olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 70,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP2"
+    },
+    {
+     "unvan": "Akreditasyon Uzman Yardımcısı",
+     "kosullar": [
+      "Makine Mühendisliği lisans programından mezun olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 70,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP2"
+    },
+    {
+     "unvan": "Akreditasyon Uzman Yardımcısı",
+     "kosullar": [
+      "Elektrik, Elektrik-Elektronik veya Elektronik Mühendisliği lisans mezunu olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 70,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP2"
+    },
+    {
+     "unvan": "Akreditasyon Uzman Yardımcısı",
+     "kosullar": [
+      "Çevre Mühendisliği lisans programından mezun olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 70,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP2"
+    },
+    {
+     "unvan": "Akreditasyon Uzman Yardımcısı",
+     "kosullar": [
+      "Veteriner lisans programından mezun olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 70,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP2"
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "KPSSP2"
+   ],
+   "ortak_kosullar": [
+    "2025 veya 2026 KPSS P2 puan türünden en az 70 puan almış olmak",
+    "Son iki yıl içinde YDS'den (İngilizce, Fransızca, Almanca) en az C seviyesinde (70) puan almış olmak",
+    "Sınavın yapıldığı yılın Ocak ayının birinci günü itibarıyla 35 yaşını doldurmamış olmak",
+    "Sağlık durumu her türlü yolculuk ve iklim koşullarında görev yapmaya elverişli olmak",
+    "Askerlikle ilgisi bulunmamak veya askerlik hizmetini yapmış, ertelenmiş yahut yedek sınıfta olmak"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-10-16",
+   "basvuru_adresi": "https://kariyerkapisi.gov.tr",
+   "basvuru_yeri": "kariyer_kapisi",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": 70,
+   "iller": [
+    "Ankara"
+   ],
+   "kpss_gerekli": true,
+   "kurum": "Türk Akreditasyon Kurumu",
+   "ozet": "Türk Akreditasyon Kurumu, çeşitli mühendislik ve veterinerlik lisans mezunları arasından 7 Akreditasyon Uzman Yardımcısı alacaktır. Başvurular 16/10/2026 - 02/11/2026 tarihleri arasında Kariyer Kapısı üzerinden yapılacaktır.",
+   "son_basvuru_saati": null,
+   "son_basvuru_tarihi": "2026-11-02",
+   "toplam": 7
+  }
+ },
  "sbb-c799c2bf65cf136277930882": {
   "zaman": "2026-10-19T21:51:57+03:00",
   "surum": 2,
@@ -796,6 +1398,60 @@
    "toplam": 7
   }
  },
+ "sbb-d568ee9cba7f99929eb258d5": {
+  "zaman": "2026-10-20T01:17:41+03:00",
+  "surum": 2,
+  "model": "gemini-3.7-flash",
+  "kaynak": "pdf",
+  "imza": "61b45c532fa9f06a",
+  "baslik": "İSKENDERUN TEKNİK ÜNİVERSİTESİ - 1 İÇ DENETÇİ ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "İç Denetçi",
+     "kosullar": [
+      "En az dört yıllık yükseköğrenim mezunu olmak",
+      "Kamu İç Denetçi Sertifikasına sahip olmak",
+      "Halen bir kamu kurum veya kuruluşunda görev yapıyor olmak",
+      "Belirtilen denetim, uzmanlık veya yöneticilik hizmet sürelerine sahip olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": "Hatay",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "Kamu İç Denetçi Sertifikasının kullanım durumu İDKK tarafından teyit edilecektir",
+    "Şartları taşıyan adaylar mülakata çağrılacaktır",
+    "Mülakat sonucunda 1 asıl ve 1 yedek aday belirlenecektir",
+    "Halen görev yapılan kurumdan muvafakat alınması gerekmektedir"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-10-16",
+   "basvuru_adresi": "https://iste.edu.tr/pdb",
+   "basvuru_yeri": "sahsen",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": null,
+   "iller": [
+    "Hatay"
+   ],
+   "kpss_gerekli": false,
+   "kurum": "İskenderun Teknik Üniversitesi",
+   "ozet": "İskenderun Teknik Üniversitesi, naklen atama yoluyla 1 adet İç Denetçi alımı yapacaktır. Başvurular 16.10.2026 - 30.10.2026 tarihleri arasında şahsen veya posta yoluyla kabul edilecektir.",
+   "son_basvuru_saati": "13:00",
+   "son_basvuru_tarihi": "2026-10-30",
+   "toplam": 1
+  }
+ },
  "sbb-d899f32eaa9140b2a3b909d2": {
   "zaman": "2026-10-19T21:51:57+03:00",
   "surum": 2,
@@ -849,6 +1505,79 @@
    "son_basvuru_saati": null,
    "son_basvuru_tarihi": null,
    "toplam": 3
+  }
+ },
+ "sbb-e9b0b6b325e3d0e45aecf805": {
+  "zaman": "2026-10-20T01:17:41+03:00",
+  "surum": 2,
+  "model": "gemini-3.6-flash",
+  "kaynak": "pdf",
+  "imza": "fffe9aa0a90ec5f2",
+  "baslik": "SAYIŞTAY BAŞKANLIĞI - 2 ADET SÖZLEŞMELİ BİLİŞİM PERSONELİ ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Kıdemli .Net Yazılım Geliştirme Uzmanı ve Çözüm Mimarı",
+     "kosullar": [
+      "Yazılım geliştirme alanında en az 10 yıl tecrübeye sahip olmak",
+      ".NET Framework, .NET Core, C# ile uygulama geliştirmede en az 10 yıl deneyimli olmak",
+      "İlişkisel veritabanı sistemleri konusunda en az 10 yıl deneyim sahibi olmak",
+      "API Gateway yönetimi ve entegrasyonu konusunda en az 2 yıl deneyim sahibi olmak",
+      "Azure DevOps ve CI/CD süreçlerinin yönetiminde en az 2 yıl deneyimli olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP3"
+    },
+    {
+     "unvan": "Yazılım Geliştirme Uzmanı (.Net)",
+     "kosullar": [
+      "Yazılım geliştirme alanında en az 3 yıl tecrübeye sahip olmak",
+      "Kurumsal web tabanlı sistem geliştirilmesinde aktif görev almış olmak",
+      "Ajan tabanlı yazılım geliştirme ve yapay zeka araçları konusunda tecrübeli olmak",
+      ".Net, ASP.NET, C#, MVC, Entity Framework ile yazılım geliştirme bilgisine sahip olmak",
+      "İlişkisel veri tabanları ve SQL konularında bilgi ve tecrübe sahibi olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP3"
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "KPSSP3"
+   ],
+   "ortak_kosullar": [
+    "Dört yıllık fakültelerin ilgili mühendislik veya fen-edebiyat bölümlerinden mezun olmak",
+    "Mesleki tecrübe şartını belgelemek",
+    "Güncel programlama dillerinden en az ikisini bildiğini belgelemek",
+    "Erkek adaylar için askerlik hizmetini yapmış, ertelemiş veya muaf olmak",
+    "Güvenlik soruşturmasından olumlu sonuç almak"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-10-19",
+   "basvuru_adresi": "T.C. Sayıştay Başkanlığı, İnönü Bulvarı (Eskişehir Yolu) 06520 No:45 Balgat / Çankaya / Ankara",
+   "basvuru_yeri": "sahsen",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": null,
+   "iller": [
+    "Ankara"
+   ],
+   "kpss_gerekli": true,
+   "kurum": "T.C. Sayıştay Başkanlığı",
+   "ozet": "Sayıştay Başkanlığı, Bilgi İşlem Birim Başkanlığında istihdam edilmek üzere 2 Sözleşmeli Bilişim Personeli alacaktır. Başvurular 19-30 Ekim 2026 tarihleri arasında şahsen veya posta yoluyla yapılacaktır.",
+   "son_basvuru_saati": null,
+   "son_basvuru_tarihi": "2026-10-30",
+   "toplam": 2
   }
  },
  "sbb-f444cce2b9f1fa1a8ec71292": {
