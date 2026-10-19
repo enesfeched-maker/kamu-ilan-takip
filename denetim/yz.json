@@ -469,6 +469,80 @@
    "toplam": 7
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=56b19c9c-b32c-45ae-8fdc-101d776c8df3": {
+  "zaman": "2026-10-20T02:38:54+03:00",
+  "surum": 2,
+  "model": "gemini-3.8-flash",
+  "kaynak": "metin",
+  "imza": "892456af04da91f3",
+  "baslik": "TÜRK AKREDİTASYON KURUMU GENEL SEKRETERLİĞİ - AKREDİTASYON UZMAN YARDIMCISI ALIMI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Akreditasyon Uzman Yardımcısı",
+     "kosullar": [
+      "Elektrik, Elektrik-Elektronik veya Elektronik Mühendisliği bölümünden mezun olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 70.0,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Akreditasyon Uzman Yardımcısı (Gıda Mühendisliği)",
+     "kosullar": [
+      "Gıda Mühendisliği lisans programından mezun olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 70.0,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Akreditasyon Uzman Yardımcısı",
+     "kosullar": [
+      "En az dört yıllık lisans eğitimi veren fakültelerin ilgili bölümlerinden mezun olmak"
+     ],
+     "adet": 5,
+     "en_dusuk_puan": 70.0,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "Giriş sınavının yapıldığı yılın Ocak ayının birinci günü itibarıyla 35 yaşını doldurmamış olmak",
+    "2025 veya 2026 KPSS'den en az 70 puan almış olmak",
+    "YDS İngilizce, Fransızca veya Almanca dillerinden en az 70 (C seviyesi) puan almış olmak",
+    "Her türlü yolculuk ve iklim koşullarında seyahat etmeye elverişli olmak",
+    "Giriş sınavı sözlü usulle yapılacaktır"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-10-16",
+   "basvuru_adresi": "https://kariyerkapisi.gov.tr",
+   "basvuru_yeri": "kariyer_kapisi",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": 70.0,
+   "iller": [
+    "Ankara"
+   ],
+   "kpss_gerekli": true,
+   "kurum": "TÜRK AKREDİTASYON KURUMU GENEL SEKRETERLİĞİ",
+   "ozet": "Türk Akreditasyon Kurumu, sözlü sınavla 7 Akreditasyon Uzman Yardımcısı alımı yapacaktır. Başvurular 16.10.2026 - 02.11.2026 tarihleri arasında Kariyer Kapısı üzerinden online olarak alınacaktır.",
+   "son_basvuru_saati": "23:59",
+   "son_basvuru_tarihi": "2026-11-02",
+   "toplam": 7
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=727b6946-c0fe-493f-a9e1-a0d668eabca2": {
   "zaman": "2026-10-20T01:17:41+03:00",
   "surum": 2,
