@@ -104,6 +104,8 @@ def uygula(ilanlar, bugun=None, kopya_of=None):
         if not adaylar or not _ayni_ilan(adaylar, kopya_of):
             continue
         tur, yeni = degisiklik(d)
+        if d.get('yz_yeni_son_tarih'):   # Gemini süre uzatmasının yeni son gününü belgeden okudu
+            tur, yeni = 'tarih', date.fromisoformat(d['yz_yeni_son_tarih'])
         if yeni and dgun and yeni < dgun:
             tur, yeni = 'basvuru', None   # geçmiş bir tarih yeni son başvuru olamaz
         d['duzeltme_of'] = adaylar[0]['id']

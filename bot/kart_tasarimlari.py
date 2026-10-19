@@ -230,6 +230,27 @@ def logo_yerlestir(im, d, v, kutu, arka='#ffffff', yaricap=26, ic=18):
     return True
 
 
+_AMBLEM_ATLA = {'ve', 'ile', 'tc', 't.c.', 'müdürlüğü', 'başkanlığı', 'genel', 'rektörlüğü', 'il', 'ilçe'}
+
+
+def bas_harfler(kurum):
+    """'Doğanyol Belediye Başkanlığı' -> 'DB'; 'Türkiye İş Kurumu' -> 'TİK' (en çok 3 harf)."""
+    kelimeler = [k for k in re.findall(r'[0-9A-Za-zÇĞİÖŞÜçğıöşü]+', kurum or '') if k.replace('İ', 'i').replace('I', 'ı').lower() not in _AMBLEM_ATLA]
+    harfler = ''.join(tr_buyuk(k[0]) for k in kelimeler[:3])
+    return harfler or 'K'
+
+
+def bas_harf_amblemi(kurum, boy=512):
+    """20 Ekim 2026: logosu bulunamayan kurum için yuvarlak baş harf amblemi (PNG bayt)."""
+    harf = bas_harfler(kurum)
+    im = Image.new('RGBA', (boy, boy), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    d.ellipse((8, 8, boy - 9, boy - 9), fill=ANA, outline=LIME, width=max(6, boy // 40))
+    font = F(round(boy * (0.42 if len(harf) < 3 else 0.32)), True)
+    d.text((boy / 2, boy / 2), harf, font=font, fill='#ffffff', anchor='mm')
+    return jpeg_png(im)
+
+
 def kadro_ozeti(v, en_cok):
     """Kadro listesini en fazla en_cok kutuya indirir; fazlası '+K kadro daha'. Her satır kendi meslek fotoğrafıyla.
     En kalabalık kadrolar önce (12 Ekim 2026: Milli Saraylar'da 100 güvenlik görevlisi '+4 kadro daha' içinde kalmıştı)."""

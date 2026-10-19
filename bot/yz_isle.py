@@ -151,6 +151,23 @@ def iptal_mi(item, veri=None):
                 and not k['yz'].get('akademik'))
 
 
+def sure_uzatma_isaretle(item, veri=None):
+    """Bot yeni ilan sanmış, Gemini süre uzatması okumuşsa kaydı düzeltme duyurusu yapar (yerinde); True döner.
+    duzeltme.uygula orijinali bulur ve son gününü günceller; kanala orijinal mesaja 'Yeni son başvuru' yanıtı gider."""
+    k = kayit_bul(item, veri)
+    if not k or item.get('duyuru_turu'):
+        return False
+    yz = k['yz']
+    if yz.get('duyuru_tipi') != 'sure_uzatma' or yz.get('akademik'):
+        return False
+    son, ilk = _tarih(yz.get('son_basvuru_tarihi')), _tarih(item.get('ilk_gorulme'))
+    if not son or (ilk and not ilk <= son <= ilk + timedelta(days=370)):
+        return False
+    item['duyuru_turu'] = DUYURU_TURU['sure_uzatma']
+    item['yz_yeni_son_tarih'] = son.isoformat()
+    return True
+
+
 def uygula(item, veri=None, simdi=None):
     """Kaydın Gemini alanlarıyla birleşmiş kopyası (Gemini sonucu yoksa kaydın kendisi)."""
     k = kayit_bul(item, veri)
