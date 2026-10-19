@@ -27,7 +27,29 @@ def bul(*ids):
     return kopya.kopya_bul(sec(*ids))['kopya_of']
 
 
+ISKUR_SBB = {"id": "sbb-526ff55537d8578a927e5bc7", "baslik": "TÜRKİYE İŞ KURUMU GENEL MÜDÜRLÜĞÜ - 11 ALACAK",
+             "kurum": "TÜRKİYE İŞ KURUMU GENEL MÜDÜRLÜĞÜ", "kadro": "11 ALACAK", "son_tarih": "2026-11-08",
+             "link": "https://kamuilan.sbb.gov.tr/", "kaynak": "SBB Kamu İlan", "kaynak_turu": "sbb",
+             "ilk_gorulme": "2026-10-19T11:22:33+03:00", "ogrenim": ["lisans"], "donem": "( 26 Ekim - 8 Kasım)"}
+ISKUR_ISKUR = {"id": "iskur-83eb8530b668c43b12af5245", "kurum": "Türkiye İş Kurumu", "son_tarih": "2026-11-08",
+               "baslik": "Türkiye İş Kurumu Genel Müdürlüğü Sözleşmeli Bilişim Personeli Sınav İlanı",
+               "link": "https://www.iskur.gov.tr/medya/s1pbmuad/x-08112026.pdf", "kaynak": "İŞKUR", "kaynak_turu": "iskur",
+               "ilk_gorulme": "2026-10-19T11:22:33+03:00", "yer": "Ankara"}
+
+
 class KopyaTests(unittest.TestCase):
+    def test_iki_tarafta_unvan_yoksa_tekil_kurum_ilani_birlesir(self):
+        self.assertEqual(len(kopya.kopya_bul([dict(ISKUR_SBB), dict(ISKUR_ISKUR)])['kopya_of']), 1)
+        ikinci = dict(ISKUR_SBB, id='sbb-' + 'f' * 24, kadro='4 ALACAK', baslik='TÜRKİYE İŞ KURUMU GENEL MÜDÜRLÜĞÜ - 4 ALACAK')   # aynı gün ikinci SBB kaydı: hangisi olduğu belirsiz
+        self.assertEqual(kopya.kopya_bul([dict(ISKUR_SBB), ikinci, dict(ISKUR_ISKUR)])['kopya_of'], {})
+
+    def test_tarihsiz_eski_kayit_listeden_duser(self):
+        k = {'id': 'https://kariyerkapisi.gov.tr/IlanDetay?i=x', 'kurum': 'DEVLET ARŞİVLERİ BAŞKANLIĞI',
+             'baslik': 'DEVLET ARŞİVLERİ BAŞKANLIĞI - SÖZLEŞMELİ PERSONEL ALIM İLANI', 'link': 'https://kariyerkapisi.gov.tr/IlanDetay?i=x'}
+        simdi = datetime(2026, 10, 19, 12, 0, tzinfo=TR)
+        self.assertIsNotNone(lv.kayit(dict(k, ilk_gorulme='2026-10-12T10:00:00+03:00'), None, {}, simdi))
+        self.assertIsNone(lv.kayit(dict(k, ilk_gorulme='2026-09-22T10:00:00+03:00'), None, {}, simdi))
+
     def test_elmakaya_uc_kaynak_tek_ilan(self):
         sonuc = bul(ELM_SBB, ELM_ISKUR, ELM_CSB)
         self.assertEqual(len(sonuc), 2)
