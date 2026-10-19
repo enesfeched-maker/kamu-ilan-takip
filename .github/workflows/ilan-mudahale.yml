@@ -1,0 +1,72 @@
+name: İlana ani müdahale
+
+# Telefondan da çalıştırılabilir (GitHub uygulaması → Actions → İlana ani müdahale → Run workflow).
+# Site değişikliği yeniden derleme beklemeden 1–2 dakikada görünür (docs/mudahale.json); karar config.json'a da
+# yazılır ve sonraki taramada siteye ve Telegram'a kalıcı olarak uygulanır.
+on:
+  workflow_dispatch:
+    inputs:
+      islem:
+        description: gizle (siteden ve kanaldan kaldır) · goster (geri al) · duzelt (alanları değiştir)
+        type: choice
+        options: [gizle, duzelt, goster]
+        default: gizle
+      ilan:
+        description: İlanın site bağlantısı (kpsstercihi.com/ilan/...) ya da anahtarı
+        required: true
+      manset:
+        description: (düzelt) Görünen kadro metni, örn. "9 Zabıta Memuru"
+        required: false
+      son_tarih:
+        description: (düzelt) Son başvuru günü, YYYY-AA-GG
+        required: false
+      toplam:
+        description: (düzelt) Toplam kişi sayısı
+        required: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ilan-mudahale
+  cancel-in-progress: false
+
+jobs:
+  uygula:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Müdahaleyi yaz
+        env:
+          ISLEM: ${{ inputs.islem }}
+          ILAN: ${{ inputs.ilan }}
+          MANSET: ${{ inputs.manset }}
+          SON_TARIH: ${{ inputs.son_tarih }}
+          TOPLAM: ${{ inputs.toplam }}
+        run: |
+          python - <<'PY'
+          import os, sys
+          sys.path.insert(0, 'bot')
+          import mudahale
+          a, k = mudahale.uygula(os.environ['ISLEM'], os.environ['ILAN'], os.environ.get('MANSET') or None,
+                                 os.environ.get('SON_TARIH') or None, os.environ.get('TOPLAM') or None)
+          print(f"{os.environ['ISLEM']}: {a}")
+          PY
+      - name: Kaydet
+        env:
+          ISLEM: ${{ inputs.islem }}
+          ILAN: ${{ inputs.ilan }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/mudahale.json config.json
+          git diff --cached --quiet && { echo "Değişiklik yok."; exit 0; }
+          git commit -m "Ani müdahale: $ISLEM $ILAN"
+          for i in 1 2 3 4 5; do
+            git pull --rebase -q origin main && git push -q origin HEAD:main && exit 0
+            sleep 5
+          done
+          exit 1
