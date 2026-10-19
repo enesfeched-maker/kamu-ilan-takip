@@ -43,6 +43,13 @@ jobs:
           fi
           echo "vakit=$V" >> "$GITHUB_OUTPUT"
           echo "etiket=sosyal-$(TZ=Europe/Istanbul date +%Y%m%d)-$V" >> "$GITHUB_OUTPUT"
+      - name: Instagram istatistikleri
+        # 2–30 günlük Reels'in izlenme/paylaşım sayıları; tür ve müzik ağırlıkları sosyal/istatistik.json'a yazılır.
+        continue-on-error: true
+        env:
+          IG_KULLANICI_ID: ${{ secrets.IG_KULLANICI_ID }}
+          IG_ERISIM_ANAHTARI: ${{ secrets.IG_ERISIM_ANAHTARI }}
+        run: python bot/sosyal_istatistik.py topla
       - name: İçerik üret
         id: uret
         run: python bot/sosyal_motor.py --vakit "${{ steps.v.outputs.vakit }}" --cikti sosyal-cikti
@@ -87,7 +94,9 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          python bot/sosyal_istatistik.py sonuc sosyal-cikti || true
           git add sosyal/gecmis.json
+          if [ -f sosyal/istatistik.json ]; then git add sosyal/istatistik.json; fi
           git diff --cached --quiet && exit 0
           git commit -m "Sosyal paylaşım geçmişi (${{ steps.v.outputs.etiket }}) [skip ci]"
           for i in 1 2 3 4 5; do
