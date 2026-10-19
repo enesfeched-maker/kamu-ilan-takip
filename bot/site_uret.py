@@ -691,6 +691,11 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
         bolum += ilan_taban.bolum_html(item, ROOT / 'docs')
     except Exception as hata:
         print(f'Uyarı: taban puanı bölümü üretilemedi ({item.get("id")}): {hata}')
+    try:   # ilanın verisinden başvuru özeti + türüne göre açıklama ve rehber bağlantısı
+        import ilan_rehber
+        bolum += ilan_rehber.bolum_html(item)
+    except Exception as hata:
+        print(f'Uyarı: rehber bölümü üretilemedi ({item.get("id")}): {hata}')
     diger = ''
     from basvuru_penceresi import asama_yazisi
     if item.get('basvuru_asamalari') and asama_yazisi(item['basvuru_asamalari']):
