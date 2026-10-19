@@ -199,6 +199,7 @@ def kadrolar(i):
     for p in parcalar:
         adet, ad = adet_ayir(p)
         ad = SON_EK.sub('', ad).strip()
+        ad = re.sub(r'^(?:adet|ADET|Adet)\s+', '', ad)   # SBB '2 ADET SÖZLEŞMELİ BİLİŞİM PERSONELİ'
         if ad:
             out.append((adet, _ve_kucuk(_su()._duzgun(ad))))
     if not out:

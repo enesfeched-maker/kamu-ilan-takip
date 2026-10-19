@@ -128,7 +128,8 @@ _TABLO_BASLIK_RE = re.compile(r'\b(?:Ünvan|Unvanı|Kodu|Cinsiyet|Aranan Nitelik
 
 def _kosul_temiz(metin):
     """Koşul metnini sadeleştirir; sütunları karışmış (okunmaz) metinde '' döner."""
-    metin = re.sub(r'\s+', ' ', metin or '').strip()
+    from metin_onar import onar
+    metin = onar(re.sub(r'\s+', ' ', metin or '').strip()) or ''
     if not metin or _KARISIK_RE.search(metin) or len(_TABLO_BASLIK_RE.findall(metin)) >= 2:
         return ''
     metin = re.sub(r'^(?:\d{1,2}[).-]|[a-zçğ]\))\s*', '', metin)
@@ -165,8 +166,12 @@ def _kadro_tablosu(item, kosulsuz=False):
             kullanilan.add(secilen)
             metin = _kosul_temiz(sartlar[secilen].get('metin'))
         satirlar.append((ad, adet, metin))
-    kalan = [{'kadro': _KOSUL_ETIKET.get(s.get('kadro'), s.get('kadro')), 'metin': m}
-             for n, s in enumerate(sartlar) if n not in kullanilan for m in [_kosul_temiz(s.get('metin'))] if m]
+    kalan, gorulen = [], {m for _, _, m in satirlar if m}
+    for n, s in enumerate(sartlar):   # aynı koşul metni (üst tabloda ya da önceki satırda) bir kez gösterilir
+        m = _kosul_temiz(s.get('metin')) if n not in kullanilan else ''
+        if m and m not in gorulen:
+            gorulen.add(m)
+            kalan.append({'kadro': _KOSUL_ETIKET.get(s.get('kadro'), s.get('kadro')), 'metin': m})
     html_ = ''
     if satirlar:
         kosullu = any(m for _, _, m in satirlar)
@@ -196,6 +201,7 @@ def _pdf_kadrolari(item):
 
 
 def _unvan_duzgun(ad):
+    ad = re.sub(r'^\d{6,}\s*[-–]\s*', '', ad or '')   # Kariyer Kapısı pozisyon kodu: '20260311 - Hemşire (Lisans)'
     return _duzgun(ad) if ad.upper() == ad else ad
 
 
@@ -232,7 +238,8 @@ def sade_madde(m):
     'ÖSYM tarafından 2025 ve 2026 yılında yapılan … KPSS P3 puan türünde en az 60 (altmış) puan almış olmak' -> '2025-2026 KPSS P3
     en az 60 puan almış olmak'; '10/6/2004 tarihli ve 5188 sayılı … Kanun'un 10 uncu maddesinde belirtilen şartlar ile' gibi mevzuat
     öncülleri ve '(Ancak …)' gibi uzun parantez açıklamaları atılır; '60 (altmış)' -> '60'; sondaki virgül nokta olur."""
-    m = re.sub(r'\s+', ' ', str(m or '')).strip()
+    from metin_onar import onar
+    m = onar(re.sub(r'\s+', ' ', str(m or '')).strip()) or ''
     puan = re.search(r'KPSS\)?\s*(?:\(\w\)\s*grubu\s*)?(P\s?\d{1,3})\b.*?en az\s*(\d{2,3})', m)
     if puan and re.search(r'puan\w*\s+(?:almış|sahip)', m) and len(m) > 50:
         yillar = sorted(set(re.findall(r'\b(20\d\d)\b', m)))
@@ -338,7 +345,12 @@ def _pdf_sart_bolumleri(item):
 
 def _sart_bolumleri_html(bolumler, belge, gorunen=10):
     """Başvuru şartları: her bölüm başlıklı madde listesi; pozisyon adları kalın ara başlık; uzun liste katlanır."""
+    from metin_onar import onar
+
     def li(metin, alt):
+        metin = onar(metin)
+        if not metin:
+            return ''
         return f'<li class="sb-alt">{esc(metin)}</li>' if alt else f'<li>{esc(metin)}</li>'
     govde = ''
     for ad, maddeler in bolumler:
@@ -683,9 +695,21 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
     from basvuru_penceresi import asama_yazisi
     if item.get('basvuru_asamalari') and asama_yazisi(item['basvuru_asamalari']):
         diger += f'<h3>Başvuru aşamaları</h3><p>{esc(asama_yazisi(item["basvuru_asamalari"]))}</p>'
+    from metin_onar import onar
+    gosterilen = []
     for heading, value in [('Duyuru metni', item.get('duyuru_cumlesi')), ('İlan özeti', None if item.get('ozet') == item.get('duyuru_cumlesi') else item.get('ozet')), ('Başvuru notu', item.get('basvuru_notu'))]:
-        if value:
-            diger += f'<h3>{heading}</h3><p>{esc(value)}</p>'
+        if not value:
+            continue
+        duzgun = onar(value)
+        if duzgun is None:   # PDF'ten boşlukları kaybolmuş metin: bozuk hâlini göstermek yerine belgeye yönlendir
+            if not gosterilen:
+                diger += f'<h3>{heading}</h3><p class="muted">Bu bölüm ilan belgesinden düzgün okunamadı; ayrıntılar resmî ilan belgesinde.</p>'
+                gosterilen.append('')
+            continue
+        if any(duzgun in g or g in duzgun for g in gosterilen if g):   # başvuru notu özetin içinde zaten geçiyorsa tekrar yazılmaz
+            continue
+        gosterilen.append(duzgun)
+        diger += f'<h3>{heading}</h3><p>{esc(duzgun)}</p>'
     if not any(item.get(k) for k in ('kadro', 'duyuru_cumlesi', 'ozet', 'basvuru_notu', 'sartlar')):
         diger += '<p class="muted">Bu ilanın kadro, şart ve başvuru ayrıntıları henüz kaynaktan okunamadı. Tüm bilgiler için resmî ilan belgesini aç.</p>'
     for belge in item.get('belgeler', [])[:3]:
