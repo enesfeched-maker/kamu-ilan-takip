@@ -56,7 +56,9 @@ class Alanlar(unittest.TestCase):
 
 class Kapi(unittest.TestCase):
     def test_yayina_hazir(self):
-        self.assertEqual(yi.yayina_hazir(ILAN, {})[0], False)
+        self.assertEqual(yi.yayina_hazir(ILAN, {}, SIMDI.replace(hour=10, minute=30))[0], False)   # 30 dk: Gemini beklenir
+        self.assertEqual(yi.yayina_hazir(ILAN, {}, SIMDI.replace(hour=11, minute=5))[0], True)     # 1 saat doldu: bot verisiyle
+        self.assertEqual(yi.yayina_hazir(ILAN, veri(dict(YZ, okunabilirlik='kotu')), SIMDI.replace(hour=10, minute=30))[0], False)
         self.assertEqual(yi.yayina_hazir(ILAN, veri())[0], True)
         self.assertEqual(yi.yayina_hazir(ILAN, veri(dict(YZ, akademik=True)))[0], False)
         self.assertEqual(yi.yayina_hazir(ILAN, veri(dict(YZ, iptal_veya_duzeltme=True)))[0], False)
@@ -65,7 +67,8 @@ class Kapi(unittest.TestCase):
     def test_ilan_bot_kapisi_gemini_alanlariyla_gonderir(self):
         import ilan_bot
         with contextlib.redirect_stdout(io.StringIO()):
-            hazir = ilan_bot.yayina_hazir([ILAN, dict(ILAN, id='kk-2')], logo_bul=lambda i: b'png', veri=veri())
+            taze = datetime.now(TR).isoformat()
+            hazir = ilan_bot.yayina_hazir([ILAN, dict(ILAN, id='kk-2', ilk_gorulme=taze)], logo_bul=lambda i: b'png', veri=veri())
         self.assertEqual([i['id'] for i in hazir], ['kk-1'])
         self.assertEqual(hazir[0]['son_tarih'], '2026-10-28')
 

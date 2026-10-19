@@ -147,16 +147,30 @@ def uygula(item, veri=None, simdi=None):
     return dict(item, **ek) if ek else item
 
 
-def yayina_hazir(item, veri=None):
-    """(hazır mı, neden). Telegram'a yalnız Gemini'nin düzgün okuduğu ilan gider."""
+EN_COK_BEKLEME = timedelta(hours=1)   # kullanıcı kararı: yeni ilan Telegram'a en geç 1 saatte gitsin
+
+
+def _bekleme_doldu(item, simdi=None):
+    from site_uret import TR
+    try:
+        ilk = datetime.fromisoformat(item.get('ilk_gorulme') or '')
+    except ValueError:
+        return True
+    ilk = ilk if ilk.tzinfo else ilk.replace(tzinfo=TR)
+    return (simdi or datetime.now(TR)) - ilk >= EN_COK_BEKLEME
+
+
+def yayina_hazir(item, veri=None, simdi=None):
+    """(hazır mı, neden). Telegram'a Gemini'nin okuduğu ilan gider; Gemini (yoğunluk/kota) 1 saatte okuyamazsa ilan
+    botun kendi bilgileriyle gider (gecikmesin), Gemini sonradan okuyunca site güncellenir."""
     if item.get('duyuru_turu'):
         return True, ''
     k = kayit_bul(item, veri)
     if not k:
-        return False, 'Gemini henüz okumadı'
+        return (True, '') if _bekleme_doldu(item, simdi) else (False, 'Gemini henüz okumadı; en çok 1 saat beklenir')
     yz = k['yz']
     if yz.get('okunabilirlik') == 'kotu':
-        return False, 'Gemini belgeyi okuyamadı'
+        return (True, '') if _bekleme_doldu(item, simdi) else (False, 'Gemini belgeyi okuyamadı; en çok 1 saat beklenir')
     if yz.get('akademik'):
         return False, 'Gemini akademik ilan dedi'
     if yz.get('iptal_veya_duzeltme'):
