@@ -78,6 +78,14 @@ def gecmis_oku(yol=GECMIS_YOLU):
         return []
 
 
+def istatistik_oku(yol):
+    """sosyal_istatistik.py'nin yazdığı Instagram ağırlıkları; yoksa boş (ağırlıksız seçim)."""
+    try:
+        return json.loads(Path(yol).read_text(encoding='utf-8'))
+    except (OSError, ValueError):
+        return {}
+
+
 def gecmis_yaz(gecmis, kayit, yol=GECMIS_YOLU):
     yol = Path(yol)
     yol.parent.mkdir(parents=True, exist_ok=True)
@@ -307,7 +315,9 @@ def rehber_adaylari(docs=ROOT / 'docs'):
 
 
 # ---------------------------------------------------------------- seçim
-def konu_sec(adaylar, gecmis, simdi, trend_basliklari=()):
+def konu_sec(adaylar, gecmis, simdi, trend_basliklari=(), agirlik=None):
+    """agirlik: sosyal/istatistik.json 'tur' ağırlıkları (Instagram'da daha çok izlenen türler öne çıkar)."""
+    agirlik = agirlik or {}
     yakin = {}
     for g in gecmis:
         z = _zaman(g.get('zaman'))
@@ -320,7 +330,7 @@ def konu_sec(adaylar, gecmis, simdi, trend_basliklari=()):
         z = yakin.get(a['anahtar'])
         if z and z > simdi - timedelta(days=TEKRAR_GUN.get(a['tur'], 3650)):
             continue
-        puan = a['puan'] - (15 if a['tur'] == son_tur else 0)
+        puan = a['puan'] - (15 if a['tur'] == son_tur else 0) + agirlik.get(a['tur'], 0)
         eslesen = [b for b in trend_basliklari if a['kelimeler'] & set(kucuk(b).split())]
         if eslesen or (a['kelimeler'] & trend_kelime):
             puan += 30
@@ -340,13 +350,16 @@ SORULAR = {
 MUZIK_KLASORU = ROOT / 'sosyal' / 'muzik'
 
 
-def muzik_sec(gecmis, tohum, klasor=MUZIK_KLASORU):
-    """Telifsiz parçalardan biri; son 3 paylaşımda çalınanlar mümkünse tekrarlanmaz. Klasör boşsa None (sessiz video)."""
+def muzik_sec(gecmis, tohum, klasor=MUZIK_KLASORU, agirlik=None):
+    """Telifsiz parçalardan biri; son 3 paylaşımda çalınanlar mümkünse tekrarlanmaz. Klasör boşsa None (sessiz video).
+    agirlik (istatistik 'muzik'): ölçülüp zayıf kalan parçalar (< -5) seçilmez; henüz ölçülmeyenler denenmeye devam eder."""
     parcalar = sorted(p for p in Path(klasor).glob('*') if p.suffix.lower() in ('.mp3', '.m4a', '.wav', '.aac'))
     if not parcalar:
         return None
     son = {g.get('muzik') for g in gecmis[-3:]}
     taze = [p for p in parcalar if p.name not in son] or parcalar
+    agirlik = agirlik or {}
+    taze = [p for p in taze if agirlik.get(p.name, 0) >= -5] or taze
     return _sec(taze, tohum)
 
 
@@ -366,8 +379,10 @@ def metin_olustur(konu, vakit, simdi):
     return {'baslik': baslik, 'aciklama': aciklama[:2150], 'etiketler': etiketler}
 
 
-def uret(vakit, cikti, simdi=None, cfg=None, docs=ROOT / 'docs', gecmis_yolu=GECMIS_YOLU, video=True, trend=True):
+def uret(vakit, cikti, simdi=None, cfg=None, docs=ROOT / 'docs', gecmis_yolu=GECMIS_YOLU, video=True, trend=True,
+         istatistik_yolu=None):
     simdi = (simdi or datetime.now(TR)).astimezone(TR)
+    agirlik = istatistik_oku(istatistik_yolu or Path(gecmis_yolu).parent / 'istatistik.json')
     cfg = cfg if cfg is not None else json.loads((ROOT / 'config.json').read_text(encoding='utf-8'))
     ilanlar = ilanlari_yukle(docs)
     acik = acik_ilanlar(ilanlar, simdi)
@@ -377,7 +392,7 @@ def uret(vakit, cikti, simdi=None, cfg=None, docs=ROOT / 'docs', gecmis_yolu=GEC
     adaylar = (haber_adaylari(cfg, simdi) + son_gun_adaylari(acik, simdi, vakit) + buyuk_adaylari(acik, simdi)
                + yeni_adaylari(acik, simdi, vakit, son_paylasilan) + kategori_adaylari(acik, simdi) + rehber_adaylari(docs))
     tb = ilgili_trendler(trendler()) if trend else []
-    konu = konu_sec(adaylar, gecmis, simdi, tb)
+    konu = konu_sec(adaylar, gecmis, simdi, tb, agirlik.get('tur'))
     if not konu:
         print('Paylaşılacak konu bulunamadı.')
         return None
@@ -387,7 +402,7 @@ def uret(vakit, cikti, simdi=None, cfg=None, docs=ROOT / 'docs', gecmis_yolu=GEC
     kareler = konu['kareler'](kurum_logosu)
     for n, im in enumerate(kareler, 1):
         im.save(cikti / f'{n:02d}.png', optimize=True)
-    muzik = muzik_sec(gecmis, f'{simdi.date()}{vakit}m')
+    muzik = muzik_sec(gecmis, f'{simdi.date()}{vakit}m', agirlik=agirlik.get('muzik'))
     if video:
         st.video_yaz(kareler, cikti / 'reel.mp4', muzik=muzik)
     metin = metin_olustur(konu, vakit, simdi)
