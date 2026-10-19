@@ -59,7 +59,7 @@ class PuanSayfalariTest(unittest.TestCase):
 
     def test_kurum_il_baslik_hali(self):
         h = (self.k / 'lisans' / 'hemsire' / 'index.html').read_text(encoding='utf-8')
-        self.assertIn('<td>Ankara</td>', h)
+        self.assertIn('<td data-et="İl">Ankara</td>', h)
         self.assertNotIn('<td>ANKARA</td>', h)
         self.assertEqual(ps._duzgun('İSTANBUL'), 'İstanbul')
         self.assertEqual(ps._duzgun('IĞDIR'), 'Iğdır')
