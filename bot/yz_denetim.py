@@ -67,8 +67,8 @@ class KotaDoldu(Exception):
     pass
 
 
-def model_bul(anahtar):
-    """Anahtarın erişebildiği, generateContent destekleyen en yeni 'flash' modeli (lite/görsel/ses sürümleri hariç)."""
+def modeller_bul(anahtar):
+    """Anahtarın erişebildiği, generateContent destekleyen 'flash' modelleri, en yeniden eskiye (lite/görsel/ses hariç)."""
     import re
     req = urllib.request.Request('https://generativelanguage.googleapis.com/v1beta/models?pageSize=1000',
                                  headers={'x-goog-api-key': anahtar})
@@ -84,31 +84,55 @@ def model_bul(anahtar):
         uygun.append((surum, 'preview' not in ad, 'latest' not in ad, ad))
     if not uygun:
         raise RuntimeError('Erişilebilir Gemini Flash modeli yok: ' + ', '.join(m.get('name', '') for m in modeller)[:300])
-    return max(uygun)[3]
+    return [u[3] for u in sorted(uygun, reverse=True)]
 
 
-def gemini(parcalar, anahtar, model=None, zaman_asimi=180):
-    global MODEL
-    if not (model or MODEL):
-        MODEL = model_bul(anahtar)
-        print(f'Gemini modeli: {MODEL}')
-    model = model or MODEL
-    govde = {'contents': [{'parts': parcalar}],
-             'generationConfig': {'temperature': 0, 'responseMimeType': 'application/json', 'responseSchema': SEMA}}
+_MODELLER = []
+
+
+def _iste(model, govde, anahtar, zaman_asimi):
     req = urllib.request.Request(API.format(model), data=json.dumps(govde).encode(), method='POST',
                                  headers={'Content-Type': 'application/json', 'x-goog-api-key': anahtar})
-    try:
-        with urllib.request.urlopen(req, timeout=zaman_asimi) as r:
-            yanit = json.load(r)
-    except urllib.error.HTTPError as h:
-        metin = ' '.join(h.read().decode('utf-8', 'replace').split())[:300]
-        if h.code == 429:
-            raise KotaDoldu(metin) from None
-        raise RuntimeError(f'Gemini HTTP {h.code}: {metin}') from None
-    try:
-        return json.loads(yanit['candidates'][0]['content']['parts'][0]['text'])
-    except (KeyError, IndexError, ValueError):
-        raise RuntimeError(f'Gemini yanıtı çözülemedi: {str(yanit)[:300]}') from None
+    with urllib.request.urlopen(req, timeout=zaman_asimi) as r:
+        return json.load(r)
+
+
+def gemini(parcalar, anahtar, zaman_asimi=180, bekle=20):
+    """Yoğunluk (503/500) ya da model kotası (429) olursa bir kez bekleyip yeniden dener, sonra bir önceki Flash
+    sürümüne geçer (kotalar model başına). Hiçbiri olmazsa 429'da KotaDoldu, diğerlerinde hata."""
+    global MODEL
+    import time
+    if not _MODELLER:
+        _MODELLER.extend([MODEL] if MODEL else modeller_bul(anahtar)[:3])
+        print(f'Gemini modelleri: {", ".join(_MODELLER)}')
+    govde = {'contents': [{'parts': parcalar}],
+             'generationConfig': {'temperature': 0, 'responseMimeType': 'application/json', 'responseSchema': SEMA}}
+    son_hata, kota = None, False
+    for model in list(_MODELLER):
+        for deneme in range(2):
+            try:
+                yanit = _iste(model, govde, anahtar, zaman_asimi)
+            except urllib.error.HTTPError as h:
+                metin = ' '.join(h.read().decode('utf-8', 'replace').split())[:300]
+                son_hata, kota = f'Gemini HTTP {h.code} ({model}): {metin}', h.code == 429
+                if h.code in (429, 500, 503) and deneme == 0:
+                    time.sleep(bekle)
+                    continue
+                break
+            except (urllib.error.URLError, TimeoutError) as h:
+                son_hata = f'Gemini bağlantı hatası ({model}): {h}'
+                break
+            MODEL = model
+            if _MODELLER[0] != model:   # çalışan model öne alınır: sonraki ilanlar boşuna beklemesin
+                _MODELLER.remove(model)
+                _MODELLER.insert(0, model)
+            try:
+                return json.loads(yanit['candidates'][0]['content']['parts'][0]['text'])
+            except (KeyError, IndexError, ValueError):
+                raise RuntimeError(f'Gemini yanıtı çözülemedi: {str(yanit)[:300]}') from None
+    if kota:
+        raise KotaDoldu(son_hata)
+    raise RuntimeError(son_hata)
 
 
 # ---------------------------------------------------------------- kaynak
@@ -238,7 +262,10 @@ def denetle(en_cok=8, anahtar=None, simdi=None, ilanlar=None, sonuc_yolu=SONUC_Y
             break
         except Exception as hata:
             sayac['hata'] += 1
-            print(f'Uyarı: {item.get("kurum")} denetlenemedi: {str(hata)[:200]}')
+            print(f'Uyarı: {item.get("kurum")} denetlenemedi: {str(hata)[:300]}')
+            if sayac['hata'] >= 2 and not sayac['denetlenen']:   # servis şu an yanıt vermiyor: boşuna bekleme
+                print('Gemini şu an yanıt vermiyor; kalanlar sonraki çalışmada.')
+                break
             continue
         farklar = karsilastir(item, yz)
         sonuclar[item['id']] = {'zaman': simdi.isoformat(timespec='seconds'), 'surum': SURUM, 'model': MODEL,

@@ -63,6 +63,20 @@ class Akis(unittest.TestCase):
             sayac = yd.denetle(5, 'a', SIMDI, [ilan(), ilan('kk-2')], Path(d) / 'yz.json', cagir)
         self.assertEqual(sayac['denetlenen'], 0)
 
+    def test_yogunlukta_onceki_modele_gecer(self):
+        import urllib.error
+        from unittest import mock
+
+        def iste(model, govde, anahtar, zaman_asimi):
+            if model == 'yeni-flash':
+                raise urllib.error.HTTPError('u', 503, 'yogun', {}, io.BytesIO(b'{"error": "yogun"}'))
+            return {'candidates': [{'content': {'parts': [{'text': '{"toplam": 3}'}]}}]}
+
+        with mock.patch.object(yd, '_iste', iste), mock.patch.object(yd, '_MODELLER', ['yeni-flash', 'eski-flash']), \
+                contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(yd.gemini([], 'a', bekle=0), {'toplam': 3})
+            self.assertEqual(yd._MODELLER[0], 'eski-flash')
+
     def test_anahtarsiz_atlanir(self):
         with contextlib.redirect_stdout(io.StringIO()):
             self.assertIsNone(yd.denetle(5, '', SIMDI, []))
