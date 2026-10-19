@@ -18,7 +18,7 @@ TR = timezone(timedelta(hours=3))
 KART_GENISLIK = 720
 LOGO_BOYUT = 128
 EN_COK_LOGO_INDIRME = 150
-CSS_SURUM = 22
+CSS_SURUM = 23
 LOGO_SURUM = 2
 ACIK_ZEMIN, KOYU_ZEMIN = '#F6F6F1', '#0D0E0C'
 ANALIZ_SURUM = 3  # docs/a.js (çerezsiz ziyaret istatistiği) önbellek sürümü
@@ -55,7 +55,7 @@ def ust_html(kok, aktif=''):
     # Taban puanı sayfaları (kpss-taban-puanlari/) da 'puanlar' bölümüdür; menüde tek sekme robot ve tablo sayfasına gider.
     menu = [('İlanlar', f'{kok}#ilanlar', 'ilanlar'),
             ('Taban Puanları', f'{kok}puanlar/', 'puanlar'),
-            ('Takvim', f'{kok}#takvim', ''), ('Kayıtlı', f'{kok}#kayitli', '')]
+            ('Akademik', f'{kok}#akademik', ''), ('Kayıtlı', f'{kok}#kayitli', '')]
     bagla = ''.join(f'<a href="{h}" data-a="menu" data-a-x="{ad}"{" class=" + chr(34) + "aktif" + chr(34) + " aria-current=" + chr(34) + "page" + chr(34) if a and a == aktif else ""}>'
                     f'{ad}{"<b class=" + chr(34) + "tb-sayi" + chr(34) + " id=" + chr(34) + "saved-count-m" + chr(34) + " hidden>0</b>" if ad == "Kayıtlı" else ""}</a>'
                     for ad, h, a in menu)
@@ -650,9 +650,9 @@ def dizinlenmez(item, simdi=None):
 
 
 def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=None):
-    from siniflandir import akademik_ilan
-    if akademik_ilan(item):
-        return None  # akademik ilanlar sitede gösterilmez
+    from siniflandir import akademik_ilan, saf_akademik
+    if akademik_ilan(item) and not saf_akademik(item):
+        return None  # kurum içi ilanlar sitede gösterilmez (akademik ilanlar 20 Ekim 2026'dan beri Akademik sekmesinde)
     url = urlparse(item.get('link', ''))
     key = parse_qs(url.query).get('i', [''])[0]
     import uuid
@@ -708,6 +708,11 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
     if (pdf_satirlari or kk_kadrolar) and item.get('ozet'):  # kartlar özetin üstünde: "koşullar aşağıda gösterilmiştir" cümlesi yanıltır
         item = dict(item, ozet=item['ozet'].replace(' Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.', ''))
     bolum = ''
+    try:   # 20 Ekim 2026: en üstte yalnız bilinmesi gerekenler, anahtar kelimelerle; ayrıntı aşağıda
+        import ilan_bakis
+        bolum += ilan_bakis.bolum_html(item, alanlar.get('toplam'), simdi)
+    except Exception as hata:
+        print(f'Uyarı: bir bakışta bölümü üretilemedi ({item.get("id")}): {hata}')
     if tablo:
         bolum += tablo
     elif item.get('kadro'):
@@ -1154,7 +1159,7 @@ def main():
         print(f'::warning::liste.json üretilemedi: {hata}')
     kayitlar = (liste or {}).get('ilanlar') or []
     paylasilan = set(data.get('telegram_gonderilen') or [])
-    kayit_haritasi = {k['key']: k for k in kayitlar}
+    kayit_haritasi = {k['key']: k for k in kayitlar + ((liste or {}).get('akademik') or [])}
     gorunen = [k for k in kayitlar if not k.get('kopya_of')]
     sayfa_anahtarlari, degisim = set(), {}
     for item in data.get('ilanlar', []):

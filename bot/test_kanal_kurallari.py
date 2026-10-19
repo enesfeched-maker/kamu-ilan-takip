@@ -109,10 +109,10 @@ class AkademikTesti(Dugum):
                                        ilan('c', ilk_gorulme=dun, iptal_edildi='csb-9', kaynak_turu=None)], SIMDI)
         self.assertEqual([i['id'] for i in secilen], ['b'])
 
-    def test_site_sayfasi_bot_verisi_ve_eski_sayfa_silinir(self):
+    def test_site_sayfasi_akademik_sekmede_bot_verisinde_yok(self):   # 20 Ekim 2026: akademik ilanlar sitede Akademik sekmesinde
         a = ilan('sbb-' + 'a' * 24, link='https://kamuilan.sbb.gov.tr/', kaynak_turu='sbb', **self.AKADEMIK)
         b = ilan('sbb-' + 'b' * 24, link='https://kamuilan.sbb.gov.tr/', kaynak_turu='sbb', kadro='1 ZABITA', baslik='X - Zabıta')
-        self.assertIsNone(site_uret.detail_page(a))
+        self.assertIsNotNone(site_uret.detail_page(a))
         self.assertIsNotNone(site_uret.detail_page(b))
         self.assertEqual([i['id'] for i in site_uret.bot_ilanlari([a, b], SIMDI)['ilanlar']], [b['id']])
         with tempfile.TemporaryDirectory() as kok:
@@ -122,9 +122,12 @@ class AkademikTesti(Dugum):
             (docs / 'ilanlar.json').write_text(json.dumps({'ilanlar': [a, b]}), encoding='utf-8')
             with patch.object(site_uret, 'ROOT', Path(kok)), contextlib.redirect_stdout(io.StringIO()):
                 site_uret.main()
-            self.assertFalse((docs / 'ilan' / a['id']).exists())
+            self.assertNotEqual((docs / 'ilan' / a['id'] / 'index.html').read_text(encoding='utf-8'), 'eski')
             self.assertTrue((docs / 'ilan' / b['id'] / 'index.html').exists())
-            self.assertNotIn(a['id'], (docs / 'sitemap.xml').read_text())
+            self.assertIn(a['id'], (docs / 'sitemap.xml').read_text())
+            liste = json.loads((docs / 'liste.json').read_text(encoding='utf-8'))
+            self.assertEqual([k['key'] for k in liste['akademik']], [a['id']])
+            self.assertNotIn(a['id'], [k['key'] for k in liste['ilanlar']])
             self.assertIn(b['id'], (docs / 'sitemap.xml').read_text())
             self.assertNotIn(a['id'], (docs / 'bot-ilanlar.json').read_text())
 

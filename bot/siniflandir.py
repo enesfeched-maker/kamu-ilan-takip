@@ -98,6 +98,12 @@ def akademik_ilan(ilan):
     return ilan.get('kategori') == 'akademik' or akademik_mi(ilan) or kurum_ici(ilan)
 
 
+def saf_akademik(ilan):
+    """20 Ekim 2026: sitede 'Akademik' sekmesinde gösterilen ilan (kurum içi ve duyurular hariç). Kanalda yine paylaşılmaz."""
+    return not ilan.get('duyuru_turu') and not ilan.get('iptal_edildi') and not kurum_ici(ilan) \
+        and (ilan.get('kategori') == 'akademik' or akademik_mi(ilan))
+
+
 # "Hukuk fakültesi, adalet meslek yüksekokulu ... mezunu olmak": fakülte adı mezuniyet şartı olarak yalnız şart/özet
 # metninde sayılır (kurum adındaki "Tıp Fakültesi Hastanesi" ya da "… Fakültesinde görevlendirilecek" değil).
 FAKULTE_SART = re.compile(r'fakültesi(?=\s*(?:,|veya\b|ya da\b|ile\b|mezun))|fakültesinden')

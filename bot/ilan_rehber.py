@@ -3,6 +3,7 @@
 ÖSYM taban puanı eşleşmeyen (kurumun kendi sınavıyla alım yapan) ilanlarda da sayfaya özgü bilgi olsun diye:
 ilanın kendi verisinden başvuru süresi, kapanış saati, puan türü ve öğrenim düzeyi; ilanın türüne göre kısa bir
 açıklama ve ilgili rehber yazısına bağlantı. Açıklamalar "genellikle" diye yazılır; kesin usul her zaman ilan metnidir."""
+import re
 from datetime import datetime
 from html import escape as esc
 
@@ -98,7 +99,8 @@ def maddeler(item):
 def basvuru_kanali(item):
     """İlan metni açıkça söylüyorsa: 'iskur' ya da 'kariyer'; emin değilsek None (yanlış yönlendirmemek için)."""
     metin = kucuk(' '.join(str(item.get(a) or '') for a in ('ozet', 'basvuru_notu', 'duyuru_cumlesi')))
-    if 'iskur.gov.tr' in str(item.get('link') or '') or 'işkur' in metin or 'iş kurumu' in metin:
+    # Kaynağın iskur.gov.tr olması yetmez: İŞKUR memur/belediye ilanlarının belgesini de yayımlar (20 Ekim 2026).
+    if re.search(r'işkur[^.]{0,60}(?:başvur|müracaat)|(?:başvur|müracaat)[^.]{0,60}(?:işkur|iş kurumu)', metin):
         return 'iskur'
     if 'kariyer kapısı' in metin or 'kariyerkapisi' in metin:
         return 'kariyer'
@@ -116,7 +118,7 @@ def bolum_html(item, kok='../../'):
                              'basvuru-belgeleri-ve-hatalar') if s]
     baglantilar = ' · '.join(f'<a class="yazi-link" href="{kok}rehber/{s}/">{esc(REHBER_ADI[s])}</a>'
                              for s in dict.fromkeys(rehberler))
-    return ('<section class="ilan-rehber"><h2>Bu ilan için bilmen gerekenler</h2>'
+    return ('<section class="ilan-rehber"><h2>Başvuru hakkında ayrıntılar</h2>'
             + (f'<ul>{"".join(f"<li>{esc(m)}</li>" for m in satirlar)}</ul>' if satirlar else '')
             + (f'<p>{esc(aciklama)}</p>' if aciklama else '')
             + '<p class="muted">Kesin şartlar ve değerlendirme usulü resmî ilan metnindedir.</p>'
