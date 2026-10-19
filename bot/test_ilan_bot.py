@@ -88,6 +88,7 @@ class TelegramDeliveryTests(unittest.TestCase):
              patch.object(ilan_bot, 'telegram_gonder', side_effect=self._kaydet(donus or [], success)) as send, \
              patch.object(ilan_bot, 'gorsel_olustur', return_value=b'photo'), \
              patch.object(ilan_bot, 'kurum_logosu', return_value=None), \
+             patch.object(ilan_bot, 'logolu_olanlar', side_effect=lambda g: g), \
              patch.object(ilan_bot, 'ilan_sayfasi', return_value='https://example.com/ilan/test/'), \
              patch.object(ilan_bot, 'yerel_oku', return_value={}), \
              patch.object(ilan_bot.time, 'sleep'), \
