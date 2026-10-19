@@ -135,7 +135,20 @@ def alanlar(yz, item, simdi=None):
         sonuc['yz_akademik'] = True
     if yz.get('iptal_veya_duzeltme'):
         sonuc['yz_duyuru'] = True
+        tip = DUYURU_TURU.get(yz.get('duyuru_tipi'))
+        if tip and not item.get('duyuru_turu'):
+            sonuc['duyuru_turu'] = tip   # sitede açık ilan gibi değil, duyuru olarak görünür
     return sonuc
+
+
+DUYURU_TURU = {'iptal': 'İptal', 'duzeltme': 'Düzeltme / süre değişikliği', 'sure_uzatma': 'Düzeltme / süre değişikliği'}
+
+
+def iptal_mi(item, veri=None):
+    """Bot yeni ilan sanmış ama Gemini belgeyi iptal duyurusu olarak okumuşsa True."""
+    k = kayit_bul(item, veri)
+    return bool(k and not item.get('duyuru_turu') and k['yz'].get('duyuru_tipi') == 'iptal'
+                and not k['yz'].get('akademik'))
 
 
 def uygula(item, veri=None, simdi=None):
@@ -164,7 +177,8 @@ def yayina_hazir(item, veri=None, simdi=None):
     """(hazır mı, neden). Telegram'a Gemini'nin okuduğu ilan gider; Gemini (yoğunluk/kota) 1 saatte okuyamazsa ilan
     botun kendi bilgileriyle gider (gecikmesin), Gemini sonradan okuyunca site güncellenir."""
     if item.get('duyuru_turu'):
-        return True, ''
+        k = kayit_bul(item, veri)   # iptal duyuruları gider (orijinal ilana yanıt); akademik ilana ait olan gitmez
+        return (False, 'Gemini akademik ilan dedi') if k and k['yz'].get('akademik') else (True, '')
     k = kayit_bul(item, veri)
     if not k:
         return (True, '') if _bekleme_doldu(item, simdi) else (False, 'Gemini henüz okumadı; en çok 1 saat beklenir')
@@ -173,8 +187,10 @@ def yayina_hazir(item, veri=None, simdi=None):
         return (True, '') if _bekleme_doldu(item, simdi) else (False, 'Gemini belgeyi okuyamadı; en çok 1 saat beklenir')
     if yz.get('akademik'):
         return False, 'Gemini akademik ilan dedi'
+    if iptal_mi(item, veri):
+        return True, 'iptal'
     if yz.get('iptal_veya_duzeltme'):
-        return False, 'Gemini iptal/düzeltme duyurusu dedi'
+        return False, 'Gemini düzeltme/süre uzatma duyurusu dedi (kanalda paylaşılmaz)'
     return True, ''
 
 

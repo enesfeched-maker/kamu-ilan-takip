@@ -73,6 +73,22 @@ class Kapi(unittest.TestCase):
         self.assertEqual(hazir[0]['son_tarih'], '2026-10-28')
 
 
+class Iptal(unittest.TestCase):
+    def test_gemini_iptal_dedigi_kayit_iptal_duyurusu_olarak_gider(self):
+        import ilan_bot
+        yz = dict(YZ, iptal_veya_duzeltme=True, duyuru_tipi='iptal')
+        with contextlib.redirect_stdout(io.StringIO()):
+            hazir = ilan_bot.yayina_hazir([ILAN], logo_bul=lambda i: None, veri=veri(yz))
+        self.assertEqual(hazir[0]['duyuru_turu'], 'İptal')                       # logo gerekmez, duyuru akışına girer
+        self.assertEqual(yi.uygula(ILAN, veri(yz), SIMDI)['duyuru_turu'], 'İptal')  # sitede duyuru olarak görünür
+
+    def test_duzeltme_ve_akademik_gitmez(self):
+        self.assertFalse(yi.yayina_hazir(ILAN, veri(dict(YZ, iptal_veya_duzeltme=True, duyuru_tipi='duzeltme')))[0])
+        self.assertFalse(yi.yayina_hazir(ILAN, veri(dict(YZ, iptal_veya_duzeltme=True, duyuru_tipi='iptal', akademik=True)))[0])
+        self.assertFalse(yi.yayina_hazir(dict(ILAN, duyuru_turu='İptal'), veri(dict(YZ, akademik=True)))[0])
+        self.assertTrue(yi.yayina_hazir(dict(ILAN, duyuru_turu='İptal'), veri())[0])
+
+
 class Isle(unittest.TestCase):
     def test_once_sira_sonra_yeni_okunur_ve_kaydedilir(self):
         ilanlar = [dict(ILAN, id='a', ilk_gorulme='2026-10-19T09:00'), dict(ILAN, id='b', ilk_gorulme='2026-10-19T11:00'),

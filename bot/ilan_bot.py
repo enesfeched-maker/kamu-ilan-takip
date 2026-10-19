@@ -549,6 +549,10 @@ def yayina_hazir(gonderilecek, logo_bul=None, veri=None):
         if not tamam:
             print(f"::warning::Kanala gönderilmedi ({neden}): {i.get('kurum')} — {i['baslik']}")
             continue
+        if neden == 'iptal':   # bot yeni ilan sanmıştı; Gemini iptal duyurusu okudu: orijinal ilana yanıt olarak gider
+            print(f"Gemini iptal duyurusu olarak okudu: {i['baslik']}")
+            hazir.append(dict(i, duyuru_turu='İptal'))
+            continue
         hazir.append(i if i.get('duyuru_turu') else yz_isle.uygula(i, veri))
     return logolu_olanlar(hazir, logo_bul)
 
@@ -1380,7 +1384,8 @@ def main():
     if toplu_zamani(simdi(), toplu_gun):
         sabah_yeni = []  # 10 Ekim 2026: yeni ilanlar gun icinde tek tek paylasiliyor; sabah ozetinde listelenmez
         import yz_isle
-        sabah_son_gun = [yz_isle.uygula(x) for x in toplu_secim(gelen, gonderilen, cfg)]
+        sabah_son_gun = [x for x in map(yz_isle.uygula, toplu_secim(gelen, gonderilen, cfg))
+                         if not x.get('duyuru_turu') and not x.get('yz_akademik')]   # Gemini: iptal/akademik kartta yer almaz
         sabah_acik = sabah_acik_sayisi(gelen, simdi())
         if sabah_yeni or sabah_son_gun or sabah_acik:  # üçü de boşsa sessizce atlanır, gün işaretlenmez
             sabah = (sabah_yeni, sabah_son_gun, sabah_acik)
@@ -1388,7 +1393,7 @@ def main():
     aksam = aksam_yeniler(gelen, cfg, simdi()) if aksam_zamani(simdi(), aksam_gun) else []
     if aksam:
         import yz_isle
-        aksam = [yz_isle.uygula(x) for x in aksam]
+        aksam = [x for x in map(yz_isle.uygula, aksam) if not x.get('duyuru_turu') and not x.get('yz_akademik')]
     kuyruk = ([('sabah', sabah)] if sabah else []) + ([('aksam', aksam)] if aksam else []) + \
              [('duyuru' if i.get('duyuru_turu') else 'ilan', i) for i in gonderilecek]
     if sessiz_donemde(cfg, simdi()):
