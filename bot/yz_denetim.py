@@ -18,7 +18,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SONUC_YOLU = ROOT / 'denetim' / 'yz.json'
-MODEL = os.environ.get('GEMINI_MODEL', 'gemini-2.5-flash')
+MODEL = os.environ.get('GEMINI_MODEL', '').strip() or None   # boşsa model_bul ile en yeni Flash seçilir
 API = 'https://generativelanguage.googleapis.com/v1beta/models/{}:generateContent'
 EN_BUYUK_PDF = 15 * 1024 * 1024
 SURUM = 1   # istem/şema değişince artırılır: eski sonuçlar yeniden denetlenir
@@ -67,7 +67,32 @@ class KotaDoldu(Exception):
     pass
 
 
-def gemini(parcalar, anahtar, model=MODEL, zaman_asimi=180):
+def model_bul(anahtar):
+    """Anahtarın erişebildiği, generateContent destekleyen en yeni 'flash' modeli (lite/görsel/ses sürümleri hariç)."""
+    import re
+    req = urllib.request.Request('https://generativelanguage.googleapis.com/v1beta/models?pageSize=1000',
+                                 headers={'x-goog-api-key': anahtar})
+    with urllib.request.urlopen(req, timeout=60) as r:
+        modeller = json.load(r).get('models') or []
+    uygun = []
+    for m in modeller:
+        ad = m.get('name', '').removeprefix('models/')
+        if ('generateContent' not in (m.get('supportedGenerationMethods') or []) or 'flash' not in ad
+                or re.search(r'lite|image|tts|audio|live|thinking|exp|8b', ad)):
+            continue
+        surum = tuple(int(x) for x in re.findall(r'\d+', ad.split('flash')[0])[:2])
+        uygun.append((surum, 'preview' not in ad, 'latest' not in ad, ad))
+    if not uygun:
+        raise RuntimeError('Erişilebilir Gemini Flash modeli yok: ' + ', '.join(m.get('name', '') for m in modeller)[:300])
+    return max(uygun)[3]
+
+
+def gemini(parcalar, anahtar, model=None, zaman_asimi=180):
+    global MODEL
+    if not (model or MODEL):
+        MODEL = model_bul(anahtar)
+        print(f'Gemini modeli: {MODEL}')
+    model = model or MODEL
     govde = {'contents': [{'parts': parcalar}],
              'generationConfig': {'temperature': 0, 'responseMimeType': 'application/json', 'responseSchema': SEMA}}
     req = urllib.request.Request(API.format(model), data=json.dumps(govde).encode(), method='POST',
@@ -76,7 +101,7 @@ def gemini(parcalar, anahtar, model=MODEL, zaman_asimi=180):
         with urllib.request.urlopen(req, timeout=zaman_asimi) as r:
             yanit = json.load(r)
     except urllib.error.HTTPError as h:
-        metin = h.read().decode('utf-8', 'replace')[:300]
+        metin = ' '.join(h.read().decode('utf-8', 'replace').split())[:300]
         if h.code == 429:
             raise KotaDoldu(metin) from None
         raise RuntimeError(f'Gemini HTTP {h.code}: {metin}') from None
