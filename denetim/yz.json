@@ -50,6 +50,180 @@
    "toplam": 2
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=320d07cc-b5bc-4bab-9541-6c1100def856": {
+  "zaman": "2026-10-19T22:24:13+03:00",
+  "surum": 2,
+  "model": "gemini-3.8-flash",
+  "kaynak": "metin",
+  "imza": "b5cd0bb2e3b2413e",
+  "baslik": "TÜRKİYE İŞ KURUMU (İŞKUR) - Türkiye İş Kurumu Genel Müdürlüğü Sözleşmeli Bilişim Personeli Giriş Sınavı İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Kıdemli Sistem Uzmanı",
+     "kosullar": [
+      "Linux veya UNIX işletim sistemleri alanında en az 7 yıl sistem yöneticisi tecrübesine sahip olmak",
+      "UNIX/Linux sunucu kurulum, bakım, sıkılaştırma ve performans konularında ileri düzey deneyim sahibi olmak",
+      "Sunucu sanallaştırma (VMware, Proxmox, KVM vb.) platformlarında ileri düzey yönetim tecrübesi bulunmak",
+      "Bash, Shell Scripting veya Python ile script geliştirme konusunda ileri düzey tecrübeli olmak",
+      "İlanda belirtilen LPIC, RHCSA, RHCE, CKA veya VCP gibi sertifikalardan en az birine sahip olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP3"
+    },
+    {
+     "unvan": "Kıdemli Siber Güvenlik Uzmanı",
+     "kosullar": [
+      "Siber güvenlik alanında en az 7 yıl tecrübeye sahip olmak",
+      "Güvenlik duvarı, IPS/IDS, WAF, SIEM ve PAM çözümlerinde ileri düzey bilgi sahibi olmak",
+      "Zafiyet testi araçlarından en az birini ileri seviyede kullanabilmek",
+      "CEH, GPEN, GWAPT, OSCP, LPT veya CompTIA Security+ sertifikalarından en az birine sahip olmak",
+      "Siber olay tespiti, kök neden analizi ve olay müdahale süreçlerinde deneyimli olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP3"
+    },
+    {
+     "unvan": "Kıdemli Ağ ve Güvenlik Uzmanı",
+     "kosullar": [
+      "Ağ veya güvenlik alanında en az 5 yıl deneyim sahibi olmak",
+      "Ağ mimarileri tasarımı, planlaması ve entegrasyonu konularında tecrübeli olmak",
+      "Firewall yönetimi, IDS/IPS, WAF ve yük dengeleyici sistemlerinde deneyim sahibi olmak",
+      "Cisco switch ve router cihazlarının CLI üzerinden yönetimine hakim olmak",
+      "CCNA, CCNP veya CCSP sertifikalarından birine sahip olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP3"
+    },
+    {
+     "unvan": "Ağ ve Güvenlik Uzmanı",
+     "kosullar": [
+      "Ağ veya güvenlik alanında en az 3 yıl deneyim sahibi olmak",
+      "Ağ üzerinde trafik ve protokol analizi yapabilen araçların kullanımında bilgili olmak",
+      "Güvenlik sistemlerinden en az ikisi hakkında tecrübe sahibi olmak",
+      "Routing ve switching yapılandırma süreçlerinde ileri düzey bilgi sahibi olmak",
+      "OSI katmanları ve TCP/IP protokol kümesine hakim olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP3"
+    },
+    {
+     "unvan": "Yazılım Uzmanı",
+     "kosullar": [
+      "Yazılım geliştirme alanında en az 3 yıl tecrübe sahibi olmak",
+      ".NET Framework, ASP.NET ve C# teknolojilerinde tecrübeli olmak",
+      "Web teknolojileri ve çok katmanlı mimaride web servisleri geliştirme deneyimi bulunmak",
+      "İlişkisel veritabanı tasarımı, SQL veya PL-SQL konularında deneyimli olmak",
+      "GIT veya TFS gibi versiyon kontrol sistemlerini kullanabilmek"
+     ],
+     "adet": 3,
+     "en_dusuk_puan": null,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP3"
+    },
+    {
+     "unvan": "Kıdemli Yapay Zeka Uzmanı",
+     "kosullar": [
+      "Veri işleme, yapay zeka, makine öğrenmesi veya LLM alanlarında en az 3 yıl tecrübe sahibi olmak",
+      "RAG ve vektör veritabanları mimarilerinde deneyim sahibi olmak",
+      "Prompt mühendisliği ve halüsinasyon çözüm süreçlerinde tecrübeli olmak",
+      "Python ve sunucu taraflı JavaScript/TypeScript dillerine hakim olmak",
+      "Linux ortamlarında ve Kubernetes altyapısında model dağıtım süreçlerinde deneyimli olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP3"
+    },
+    {
+     "unvan": "Yapay Zeka Uzmanı",
+     "kosullar": [
+      "Yapay zeka, makine öğrenmesi, NLP veya LLM konularında bilgi ve tecrübe sahibi olmak",
+      "RAG, prompt mühendisliği ve vektör veritabanları alanlarında deneyim sahibi olmak",
+      "Python ve sunucu taraflı JavaScript/TypeScript teknolojilerine hakim olmak",
+      "Linux işletim sistemleri ve konteyner teknolojileri hakkında bilgi sahibi olmak",
+      "Yapay zeka servislerinin REST API ile entegrasyonu süreçlerine hakim olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP3"
+    },
+    {
+     "unvan": "Kıdemli İş Zekası Uzmanı",
+     "kosullar": [
+      "İş zekası, veri ambarı veya veri mühendisliği alanlarında en az 5 yıl deneyimli olmak",
+      "SQL, T-SQL veya PL/SQL dillerinde ileri düzey sorgu geliştirme ve optimizasyon deneyimi bulunmak",
+      "ETL/ELT süreçlerine ve boyutsal veri modelleme yapılarına hakim olmak",
+      "Microsoft SSIS, SSAS, SSRS ve Power BI araçlarında tecrübe sahibi olmak",
+      "Büyük veri ortamlarında veri işleme ve sorgu performansı optimizasyonunda deneyimli olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP3"
+    },
+    {
+     "unvan": "Kıdemli Front End Web Yazılım Uzmanı",
+     "kosullar": [
+      "Yazılım geliştirme alanında en az 5 yıl tecrübe sahibi olmak",
+      "VueJS, AngularJS veya ReactJS gibi ön yüz geliştirme teknolojilerinde tecrübeli olmak",
+      ".NET Framework, ASP.NET ve C# dili ile kurumsal yazılım geliştirme deneyimi bulunmak",
+      "Çok katmanlı mimari ve REST/WEB API servisleri geliştirme konularında tecrübeli olmak",
+      "İlişkisel veritabanı tasarımı ve SQL sorgulama konularında deneyim sahibi olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP3"
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "KPSSP3"
+   ],
+   "ortak_kosullar": [
+    "2025 veya 2026 KPSS P3 puanı ve İngilizce yabancı dil puanı dikkate alınacaktır",
+    "Mesleki tecrübe sürelerinin resmi belgelerle ibraz edilmesi gerekmektedir",
+    "Giriş sınavı sonucuna göre başarı sıralaması yapılacaktır"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-10-26",
+   "basvuru_adresi": "https://kariyerkapisi.gov.tr/isealim",
+   "basvuru_yeri": "kariyer_kapisi",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": null,
+   "iller": [],
+   "kpss_gerekli": true,
+   "kurum": "Türkiye İş Kurumu",
+   "ozet": "İŞKUR Genel Müdürlüğü, bünyesinde istihdam etmek üzere 11 sözleşmeli bilişim personeli alıyor. Başvurular 26 Ekim - 8 Kasım 2026 tarihleri arasında Kariyer Kapısı üzerinden elektronik ortamda yapılacaktır.",
+   "son_basvuru_saati": "23:59",
+   "son_basvuru_tarihi": "2026-11-08",
+   "toplam": 11
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=e53c369b-3913-48dc-8e41-be3a6392c249": {
   "zaman": "2026-10-19T19:49:17+03:00",
   "surum": 1,
@@ -128,9 +302,9 @@
   }
  },
  "sbb-24c9bb297ddcd48d3ccc1aa2": {
-  "zaman": "2026-10-19T21:51:57+03:00",
+  "zaman": "2026-10-19T22:24:13+03:00",
   "surum": 2,
-  "model": "gemini-3.8-flash",
+  "model": "gemini-3.6-flash",
   "kaynak": "pdf",
   "imza": "d290898833229a54",
   "baslik": "KIYI EMNİYETİ GENEL MÜDÜRLÜĞÜ - 1 ESKİ HüKüMLÜ İŞÇİ ALACAK",
@@ -140,15 +314,13 @@
     {
      "unvan": "Büro Personeli (Memur) (Eski Hükümlü/TMY)",
      "kosullar": [
-      "Herhangi bir ön lisans programından mezun olmak",
-      "Eski hükümlü veya terörle mücadelede malul sayılmayacak şekilde yaralanan olduğunu belgelendirmek",
-      "Son başvuru tarihi itibarıyla 36 yaşından gün almamış olmak",
-      "Sosyal Güvenlik Kurumundan emeklilik, yaşlılık veya malullük aylığı almamış olmak",
-      "Güvenlik soruşturması ve arşiv araştırması olumlu sonuçlanmak"
+      "Herhangi bir ön lisans programından mezun olmak.",
+      "Eski hükümlü veya terörle mücadelede yaralanan olduğunu belgelemek.",
+      "36 yaşından gün almamış olmak."
      ],
      "adet": 1,
      "en_dusuk_puan": null,
-     "il": "İstanbul",
+     "il": "İSTANBUL",
      "ogrenim": "onlisans",
      "puan_turu": "KPSSP93"
     }
@@ -160,11 +332,11 @@
     "KPSSP93"
    ],
    "ortak_kosullar": [
-    "Son başvuru tarihi itibarıyla 36 yaşından gün almamış olmak",
-    "Sosyal Güvenlik Kurumundan emeklilik, yaşlılık veya malullük aylığı almamış olmak",
-    "Eski hükümlü veya terörle mücadelede malul sayılmayacak şekilde yaralanan belgesine sahip olmak",
-    "Sözlü sınavda başarılı sayılmak için en az 60 puan almış olmak",
-    "Güvenlik soruşturması ve arşiv araştırması olumlu olmak"
+    "Eski hükümlü veya terörle mücadelede yaralanan olduğunu belgelemek.",
+    "İlanın son başvuru tarihi itibarıyla 36 yaşından gün almamış olmak.",
+    "Sosyal Güvenlik Kurumundan emeklilik, yaşlılık veya malullük aylığı almıyor olmak.",
+    "Güvenlik soruşturması ve arşiv araştırması olumlu sonuçlanmak.",
+    "Başvurular İŞKUR internet sitesi üzerinden veya İŞKUR hizmet merkezlerinden yapılacaktır."
    ],
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -172,13 +344,14 @@
    "baslangic_tarihi": null,
    "basvuru_adresi": "https://esube.iskur.gov.tr/Istihdam/AcikIsIlanAra.aspx",
    "basvuru_yeri": "iskur",
+   "duyuru_tipi": "yeni_ilan",
    "en_dusuk_puan": null,
    "iller": [
-    "İstanbul"
+    "İSTANBUL"
    ],
    "kpss_gerekli": true,
-   "kurum": "Kıyı Emniyeti Genel Müdürlüğü",
-   "ozet": "Kıyı Emniyeti Genel Müdürlüğü, İstanbul'da istihdam edilmek üzere 1 daimi eski hükümlü/TMY Büro Personeli alacaktır. Başvurular İŞKUR üzerinden yapılacaktır.",
+   "kurum": "KIYI EMNİYETİ GENEL MÜDÜRLÜĞÜ",
+   "ozet": "Kıyı Emniyeti Genel Müdürlüğü, İstanbul ilinde görevlendirilmekt üzere 1 adet ön lisans mezunu Eski Hükümlü/TMY Büro Personeli alımı yapacaktır. Başvurular İŞKUR üzerinden alınacaktır.",
    "son_basvuru_saati": null,
    "son_basvuru_tarihi": null,
    "toplam": 1
