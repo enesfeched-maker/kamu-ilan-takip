@@ -332,7 +332,25 @@ def utm_ekle(url, site_url, ortam='kanal'):
     return govde + ('&' if '?' in govde else '?') + 'utm_source=telegram&utm_medium=' + ortam + kare + parca
 
 
-def telegram_gonder(token, chat_id, metin, ilan_linki="", site_url="", foto=None, yanit=None, ek_dugmeler=()):
+def ilan_dugmesi(item, bugun=None):
+    """19 Ekim 2026: yeni ilan düğmesi son günü söyler, dikkat çeker."""
+    bugun = bugun or simdi().date()
+    try:
+        son = datetime.strptime(str(item.get('son_tarih') or '')[:10], '%Y-%m-%d').date()
+    except ValueError:
+        return '👉 Hemen incele'
+    kalan = (son - bugun).days
+    if kalan < 0:
+        return '🔎 İlanı incele'
+    if kalan == 0:
+        return '⏳ Bugün son gün — Hemen incele'
+    if kalan == 1:
+        return '⏳ Yarın son gün — Hemen incele'
+    return f'⏳ Son gün {son.day} {AY_ADLARI[son.month - 1]} — Hemen incele'
+
+
+def telegram_gonder(token, chat_id, metin, ilan_linki="", site_url="", foto=None, yanit=None, ek_dugmeler=(),
+                    dugme_yazisi='🔎 İlanı incele'):
     """Gönderir; başarıda Telegram message_id'sini (yoksa True), başarısızlıkta False döndürür.
     yanit: bir mesaja yanıt olarak göndermek için message_id (mesaj silinmişse yine de gönderilir).
     ek_dugmeler: [(yazı, site adresi)] — ikişer yan yana; site düğmesi en sona (akşam kartında ilan başına)."""
@@ -345,8 +363,8 @@ def telegram_gonder(token, chat_id, metin, ilan_linki="", site_url="", foto=None
     }
     dugmeler = []
     if ilan_linki:
-        label='🔎 İlanı incele'
-        dugmeler.append([{"text": label, "url": utm_ekle(ilan_linki, site_url)}])
+        # style: Telegram'ın yeşil düğmesi (eski uygulamalar gri gösterir)
+        dugmeler.append([{"text": dugme_yazisi, "url": utm_ekle(ilan_linki, site_url), "style": "success"}])
     ek = [{"text": yazi, "url": utm_ekle(adres, site_url)} for yazi, adres in ek_dugmeler or ()]
     if ek:   # 19 Ekim 2026: ilan düğmeleri ikişer yan yana, kısa adlarla; site düğmesi tek kalan ilanın yanına
         if site_url:
@@ -1520,7 +1538,8 @@ def main():
             print('Site ayrıntı bağlantısı hazırlanamadı; gönderim ertelendi.',file=sys.stderr)
             hata=True
             continue
-        mid = telegram_gonder(token, chat_id, metin, hedef, site_url, foto=foto) if (token and chat_id) else False
+        mid = telegram_gonder(token, chat_id, metin, hedef, site_url, foto=foto,
+                              dugme_yazisi=ilan_dugmesi(i)) if (token and chat_id) else False
         if not mid:
             hata = True
             break
