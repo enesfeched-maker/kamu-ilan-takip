@@ -43,6 +43,7 @@ belgede yoksa null ya da boş liste ver. Belge taranmış görüntü olabilir; g
 - basvuru_yeri: kariyer_kapisi, iskur, sahsen, posta, eposta, kurum_sitesi, diger. basvuru_adresi: başvuru yapılacak site.
 - akademik: öğretim üyesi/görevlisi, araştırma görevlisi ilanıysa true.
 - iptal_veya_duzeltme: belge yeni ilan değil de iptal/düzeltme/süre uzatma/sonuç duyurusuysa true.
+- duyuru_tipi: yeni_ilan, iptal (ilanın ya da bir kadronun iptali), duzeltme, sure_uzatma, sonuc, diger.
 - okunabilirlik: belge okunabildiyse "iyi", kısmen okunabildiyse "kismi", okunamadıysa "kotu"."""
 
 _DIZI = {'type': 'ARRAY', 'items': {'type': 'STRING'}}
@@ -70,6 +71,8 @@ SEMA = {
         'ozet': {'type': 'STRING', 'nullable': True},
         'akademik': {'type': 'BOOLEAN'},
         'iptal_veya_duzeltme': {'type': 'BOOLEAN'},
+        'duyuru_tipi': {'type': 'STRING', 'nullable': True,
+                        'enum': ['yeni_ilan', 'iptal', 'duzeltme', 'sure_uzatma', 'sonuc', 'diger']},
         'okunabilirlik': {'type': 'STRING', 'enum': ['iyi', 'kismi', 'kotu']},
     },
     'required': ['kadrolar', 'ogrenim', 'puan_turleri', 'ortak_kosullar', 'akademik', 'iptal_veya_duzeltme', 'okunabilirlik'],
