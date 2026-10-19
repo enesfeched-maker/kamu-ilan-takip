@@ -716,7 +716,10 @@ def calisma_limiti(cfg, bekleyen_sayisi):
 
 def metinsiz_mi(cfg, zaman):
     """19 Ekim 2026 kullanıcı denemesi: config 'telegram_metinsiz_bitis' (ISO) gelene kadar ilan gönderileri yalnız kart
-    görseli ve düğmelerle gider (altında metin yok). Akşam/sabah kartları ve duyuru yanıtları etkilenmez."""
+    görseli ve düğmelerle gider (altında metin yok). Akşam/sabah kartları ve duyuru yanıtları etkilenmez.
+    19 Ekim 2026 kullanıcı kararı: kalıcı oldu ('telegram_metinsiz': true); metin yalnız sabah ve akşam 8 kartlarında."""
+    if cfg.get('telegram_metinsiz') is True:
+        return True
     bitis = cfg.get('telegram_metinsiz_bitis')
     if not bitis:
         return False

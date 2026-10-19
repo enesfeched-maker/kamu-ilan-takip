@@ -15,6 +15,11 @@ class Metinsiz(unittest.TestCase):
         self.assertFalse(ilan_bot.metinsiz_mi({}, simdi))
         self.assertFalse(ilan_bot.metinsiz_mi({'telegram_metinsiz_bitis': 'bozuk'}, simdi))
 
+    def test_kalici_metinsiz(self):
+        self.assertTrue(ilan_bot.metinsiz_mi({'telegram_metinsiz': True}, datetime.now(TR) + timedelta(days=400)))
+        self.assertTrue(ilan_bot.metinsiz_mi(ilan_bot.json.loads(open('../config.json', encoding='utf-8').read()),
+                                             datetime.now(TR) + timedelta(days=30)))
+
 
 if __name__ == '__main__':
     unittest.main()
