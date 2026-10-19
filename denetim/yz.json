@@ -1,7 +1,7 @@
 {
  "csb-478401": {
-  "zaman": "2026-10-19T19:49:17+03:00",
-  "surum": 1,
+  "zaman": "2026-10-19T20:48:51+03:00",
+  "surum": 2,
   "model": "gemini-3.6-flash",
   "kaynak": "metin",
   "imza": "c1c3830100c24207",
@@ -11,32 +11,40 @@
    "kadrolar": [
     {
      "unvan": "Çözümleyici",
-     "adet": 2
+     "kosullar": [
+      "Kamu Yönetimi, Halkla İlişkiler ve Tanıtım veya Yerel Yönetimler mezunu olmak",
+      "En az iki programlama dilini bildiğini belgelemek",
+      "En az B sınıfı sürücü belgesine sahip olmak"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": 55,
+     "il": "Malatya",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP3"
     }
    ],
    "ogrenim": [
     "lisans"
    ],
    "puan_turleri": [
-    "P3"
+    "KPSSP3"
    ],
-   "sartlar": [
-    "Kamu yönetimi, halkla ilişkiler ve tanıtım veya yerel yönetimler lisans mezunu olmak.",
-    "En az iki programlama dilini bildiğini belgelemek.",
-    "En az B sınıfı sürücü belgesine sahip olmak.",
-    "KPSS P3 puan türünden en az 55 puan almış olmak."
+   "ortak_kosullar": [
+    "KPSS P3 puan türünden en az 55 puan almış olmak"
    ],
    "akademik": false,
    "iptal_veya_duzeltme": false,
    "okunabilirlik": "iyi",
    "baslangic_tarihi": null,
+   "basvuru_adresi": null,
    "basvuru_yeri": null,
    "en_dusuk_puan": 55,
    "iller": [
     "Malatya"
    ],
    "kpss_gerekli": true,
-   "kurum": "DOĞANYOL BELEDİYE BAŞKANLIĞI",
+   "kurum": "Doğanyol Belediye Başkanlığı",
+   "ozet": "Doğanyol Belediye Başkanlığı 2 sözleşmeli Çözümleyici alımı yapacaktır. Son başvuru tarihi 4 Aralık 2026'dır.",
    "son_basvuru_saati": null,
    "son_basvuru_tarihi": "2026-12-04",
    "toplam": 2
@@ -88,71 +96,201 @@
    "toplam": 9
   }
  },
+ "iskur-83eb8530b668c43b12af5245": {
+  "zaman": "2026-10-19T20:48:51+03:00",
+  "surum": 2,
+  "model": "gemini-3.6-flash",
+  "kaynak": "metin",
+  "imza": "6fdf7957ba5cd953",
+  "baslik": "Türkiye İş Kurumu Genel Müdürlüğü Sözleşmeli Bilişim Personeli Sınav İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [],
+   "ogrenim": [],
+   "puan_turleri": [],
+   "ortak_kosullar": [],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": null,
+   "basvuru_adresi": null,
+   "basvuru_yeri": null,
+   "en_dusuk_puan": null,
+   "iller": [
+    "Ankara"
+   ],
+   "kpss_gerekli": null,
+   "kurum": "Türkiye İş Kurumu",
+   "ozet": "Türkiye İş Kurumu, Ankara ili için Sözleşmeli Bilişim Personeli alımı yapacaktır. Son başvuru tarihi 8 Kasım 2026 saat 23:55'tir.",
+   "son_basvuru_saati": "23:55",
+   "son_basvuru_tarihi": "2026-11-08",
+   "toplam": null
+  }
+ },
  "sbb-526ff55537d8578a927e5bc7": {
-  "zaman": "2026-10-19T19:49:17+03:00",
-  "surum": 1,
-  "model": "gemini-3.7-flash",
+  "zaman": "2026-10-19T20:48:51+03:00",
+  "surum": 2,
+  "model": "gemini-3.8-flash",
   "kaynak": "pdf",
-  "imza": "efef32872610b795",
+  "imza": "454b1e1c7f174801",
   "baslik": "TÜRKİYE İŞ KURUMU GENEL MÜDÜRLÜĞÜ - 11 ALACAK",
   "farklar": [],
   "yz": {
    "kadrolar": [
     {
      "unvan": "Kıdemli Sistem Uzmanı",
-     "adet": 1
+     "kosullar": [
+      "A Grubu mezuniyet şartlarını taşımak",
+      "Linux veya UNIX sistem yöneticiliği alanında en az 7 yıl tecrübeye sahip olmak",
+      "UNIX/Linux sunucu işletim sistemleri kurulumu ve yönetiminde ileri seviyede tecrübeli olmak",
+      "Sunucu sanallaştırma platformları hakkında ileri seviyede tecrübeye sahip olmak",
+      "Bash, Shell Scripting veya Python ile script geliştirmede tecrübeli olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSS P3"
     },
     {
      "unvan": "Kıdemli Siber Güvenlik Uzmanı",
-     "adet": 1
+     "kosullar": [
+      "A Grubu mezuniyet şartlarını taşımak",
+      "Siber güvenlik alanında en az 7 yıl tecrübeye sahip olmak",
+      "Güvenlik çözümleri ve zafiyet testi araçlarında ileri seviyede tecrübeli olmak",
+      "İlgili siber güvenlik sertifikalarından en az birine geçerli olarak sahip olmak",
+      "Windows ve Linux sistemlerde kök neden ve istihbarat analizi yapabilmek"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSS P3"
     },
     {
      "unvan": "Kıdemli Ağ ve Güvenlik Uzmanı",
-     "adet": 1
+     "kosullar": [
+      "A veya B Grubu mezuniyet şartlarını taşımak",
+      "Ağ veya güvenlik alanında en az 5 yıl deneyim sahibi olduğunu belgelemek",
+      "Ağ mimarileri tasarımı, planlaması ve protokol analiz araçlarında tecrübeli olmak",
+      "Cisco switch ve router cihazlarının CLI üzerinden yönetimine hakim olmak",
+      "Routing ve switching yapılandırma konularında iyi derecede bilgi sahibi olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSS P3"
     },
     {
      "unvan": "Ağ ve Güvenlik Uzmanı",
-     "adet": 1
+     "kosullar": [
+      "İlgili 4 yıllık fakültelerden mezun olmak",
+      "Ağ veya güvenlik alanında en az 3 yıl deneyim sahibi olduğunu belgelemek",
+      "Güvenlik sistemlerinden en az ikisi hakkında bilgi sahibi olmak",
+      "Routing, switching ve ağ mimarileri tasarımı konularında bilgi ve tecrübeli olmak",
+      "Cisco switch ve router CLI yönetimi konusunda yetkin olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSS P3"
     },
     {
      "unvan": "Yazılım Uzmanı",
-     "adet": 3
+     "kosullar": [
+      "İlgili 4 yıllık fakültelerden mezun olmak",
+      "Yazılım geliştirme alanında en az 3 yıl mesleki tecrübeye sahip olmak",
+      ".NET Framework, ASP.NET, C# dillerinde ve web teknolojilerinde tecrübeli olmak",
+      "Çok katmanlı mimari ve web servisleri (REST, SOAP, WEB API) konularına hakim olmak",
+      "İlişkisel veritabanı tasarımı, SQL sorgulama ve versiyon kontrol sistemlerini bilmek"
+     ],
+     "adet": 3,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSS P3"
     },
     {
      "unvan": "Kıdemli Yapay Zeka Uzmanı",
-     "adet": 1
+     "kosullar": [
+      "A veya B Grubu mezuniyet şartlarını taşımak",
+      "Veri işleme, yapay zeka, makine öğrenmesi veya LLM alanlarında en az 3 yıl tecrübeli olmak",
+      "RAG ve vektör veritabanları mimarilerinde tecrübe sahibi olmak",
+      "MCP temelli tool mimarileri tasarlayabilmek ve C#/.NET ve SQL/NoSQL bilmek",
+      "Python ve sunucu tarafı JavaScript/TypeScript dillerine hakim olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSS P3"
     },
     {
      "unvan": "Yapay Zeka Uzmanı",
-     "adet": 1
+     "kosullar": [
+      "İlgili 4 yıllık fakültelerden mezun olmak",
+      "Veri işleme, yapay zeka, NLP veya LLM alanlarında bilgi ve tecrübeye sahip olmak",
+      "RAG, Prompt Engineering ve vektör veritabanları konularında bilgili olmak",
+      "MCP temelli mimariler tasarlamak ve açık kaynaklı modelleri kullanabilmek",
+      "Python ve JavaScript/TypeScript ile Linux ve konteyner teknolojilerine hakim olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSS P3"
     },
     {
      "unvan": "Kıdemli İş Zekası Uzmanı",
-     "adet": 1
+     "kosullar": [
+      "A veya B Grubu mezuniyet şartlarını taşımak",
+      "İş zekası, veri ambarı veya veri mühendisliği alanlarında en az 5 yıl deneyimli olmak",
+      "SQL sorgulama diline, T-SQL veya PL/SQL süreçlerine ileri düzeyde hakim olmak",
+      "ETL/ELT ve veri ambarı modelleme süreçlerinde tecrübe sahibi olmak",
+      "Microsoft SSIS, SSAS, SSRS ve Power BI araçlarında deneyimli olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSS P3"
     },
     {
      "unvan": "Kıdemli Front End Web Yazılım Uzmanı",
-     "adet": 1
+     "kosullar": [
+      "A veya B Grubu mezuniyet şartlarını taşımak",
+      "Yazılım geliştirme alanında en az 5 yıl mesleki tecrübe sahibi olmak",
+      "VueJS, AngularJS veya ReactJS ön yüz teknolojilerinde tecrübeli olmak",
+      ".NET Framework, ASP.NET, C# dillerinde kurumsal yazılım geliştirmiş olmak",
+      "Kurumsal yazılım mimarisi, tasarım desenleri ve nesne yönelimli programlama bilmek"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSS P3"
     }
    ],
    "ogrenim": [
     "lisans"
    ],
    "puan_turleri": [
-    "P3"
+    "KPSS P3"
    ],
-   "sartlar": [
-    "657 sayılı Kanunun 48 inci maddesindeki genel şartları taşımak",
-    "Belirtilen 4 yıllık lisans mühendislik veya dengi fakülte bölümlerinden mezun olmak",
-    "Pozisyona göre en az 3, 5 veya 7 yıl mesleki tecrübeye sahip olmak",
+   "ortak_kosullar": [
+    "KPSS P3 puanı olmayan veya belge ibraz etmeyenlerin puanı 70 kabul edilir",
+    "Yabancı dil belgesi ibraz etmeyenlerin yabancı dil puanı sıfır sayılır",
     "Güncel programlama dillerinden en az ikisini bildiğini belgelemek",
-    "Pozisyona göre belirtilen özel tecrübe ve teknik şartları sağlamak",
-    "Teknik dokümantasyonu anlayabilecek düzeyde İngilizce bilmek"
+    "Sözlü veya uygulamalı sınavda 100 üzerinden en az 70 puan almak gerekir",
+    "Her kadro için ilan edilen kontenjanın 10 katı aday sınava çağrılacaktır"
    ],
    "akademik": false,
    "iptal_veya_duzeltme": false,
    "okunabilirlik": "iyi",
    "baslangic_tarihi": "2026-10-26",
+   "basvuru_adresi": "https://kariyerkapisi.gov.tr/isealim",
    "basvuru_yeri": "kariyer_kapisi",
    "en_dusuk_puan": null,
    "iller": [
@@ -160,6 +298,7 @@
    ],
    "kpss_gerekli": false,
    "kurum": "Türkiye İş Kurumu Genel Müdürlüğü",
+   "ozet": "Türkiye İş Kurumu, Bilgi İşlem Dairesi Başkanlığı bünyesinde istihdam edilmek üzere 11 sözleşmeli bilişim personeli alacaktır. Başvurular 26.10.2026 - 08.11.2026 tarihleri arasında Kariyer Kapısı üzerinden yapılacaktır.",
    "son_basvuru_saati": "23:59",
    "son_basvuru_tarihi": "2026-11-08",
    "toplam": 11
@@ -304,6 +443,61 @@
    "son_basvuru_saati": "23:59",
    "son_basvuru_tarihi": "2026-12-03",
    "toplam": 7
+  }
+ },
+ "sbb-f444cce2b9f1fa1a8ec71292": {
+  "zaman": "2026-10-19T20:48:51+03:00",
+  "surum": 2,
+  "model": "gemini-3.6-flash",
+  "kaynak": "pdf",
+  "imza": "3eec4eb4d1372cfc",
+  "baslik": "KIYI EMNİYETİ GENEL MÜDÜRLÜĞÜ - 5 ENGELLİ İŞÇİ ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Büro Personeli (Memur) (Engelli)",
+     "kosullar": [
+      "İlgili ön lisans programlarından mezun olmak",
+      "En az %40 engelli sağlık kurulu raporuna sahip olmak",
+      "Son başvuru tarihi itibarıyla 36 yaşından gün almamış olmak",
+      "Temel bilgisayar ve MS Office programlarına hakim olmak",
+      "İstanbul ilinde çalışmayı kabul etmek"
+     ],
+     "adet": 5,
+     "en_dusuk_puan": null,
+     "il": "İstanbul",
+     "ogrenim": "onlisans",
+     "puan_turu": "EKPSS"
+    }
+   ],
+   "ogrenim": [
+    "onlisans"
+   ],
+   "puan_turleri": [
+    "EKPSS"
+   ],
+   "ortak_kosullar": [
+    "Başvurular İŞKUR portalı veya İŞKUR Hizmet Merkezleri üzerinden yapılacaktır",
+    "Sözlü sınavda başarılı olmak için puan ortalamasının en az 60 olması şarttır",
+    "Adaylar hakkında güvenlik soruşturması ve arşiv araştırması yapılacaktır"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": null,
+   "basvuru_adresi": "https://esube.iskur.gov.tr/Istihdam/AcikIsIlanAra.aspx",
+   "basvuru_yeri": "iskur",
+   "en_dusuk_puan": null,
+   "iller": [
+    "İstanbul"
+   ],
+   "kpss_gerekli": true,
+   "kurum": "KIYI EMNİYETİ GENEL MÜDÜRLÜĞÜ",
+   "ozet": "Kıyı Emniyeti Genel Müdürlüğü, İstanbul ilinde görevlendirmek üzere EKPSS puanıyla 5 engelli büro personeli alacaktır. Başvurular İŞKUR üzerinden yapılacaktır.",
+   "son_basvuru_saati": null,
+   "son_basvuru_tarihi": null,
+   "toplam": 5
   }
  }
 }
