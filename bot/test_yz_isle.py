@@ -1,0 +1,123 @@
+import contextlib
+import io
+import json
+import tempfile
+import unittest
+from unittest import mock
+from datetime import datetime
+from pathlib import Path
+
+import yz_isle as yi
+import yz_logo
+from site_uret import TR
+from yz_denetim import SURUM
+
+SIMDI = datetime(2026, 10, 19, 20, 0, tzinfo=TR)
+ILAN = {'id': 'kk-1', 'baslik': 'Örnek Bakanlığı - 11 ALACAK', 'kurum': 'Örnek Bakanlığı', 'kadro': '11 ALACAK',
+        'son_tarih': '2026-10-26', 'ilk_gorulme': '2026-10-19T10:00:00+03:00', 'ozet': 'Kısa.'}
+YZ = {'kurum': 'Örnek Bakanlığı', 'okunabilirlik': 'iyi', 'akademik': False, 'iptal_veya_duzeltme': False,
+      'son_basvuru_tarihi': '2026-10-28', 'son_basvuru_saati': '17:00', 'baslangic_tarihi': '2026-10-19',
+      'kadrolar': [{'unvan': 'Yazılım Geliştirme Uzmanı', 'adet': 6, 'ogrenim': 'lisans', 'puan_turu': 'KPSS P3',
+                    'kosullar': ['Bilgisayar mühendisliği mezunu olmak.', "657 sayılı Kanunun 48. maddesindeki şartlar"]},
+                   {'unvan': 'Sistem Uzmanı', 'adet': 5, 'kosullar': []}],
+      'ogrenim': ['lisans'], 'kpss_gerekli': True, 'puan_turleri': ['KPSS P3'], 'iller': ['ANKARA'],
+      'ortak_kosullar': ['En az 3 yıl deneyim.'], 'ozet': 'Örnek Bakanlığı 11 sözleşmeli bilişim personeli alacak; '
+                                                         'başvurular 19-28 Ekim arasında Kariyer Kapısı üzerinden yapılır.'}
+
+
+def veri(yz=YZ, surum=SURUM):
+    return {'kk-1': {'surum': surum, 'yz': yz, 'zaman': '2026-10-19T19:00:00+03:00'}}
+
+
+class Alanlar(unittest.TestCase):
+    def test_gemini_kayda_yazilir(self):
+        i = yi.uygula(ILAN, veri(), SIMDI)
+        self.assertEqual(i['kadro'], 'Toplam 11 kişi — 6 Yazılım Geliştirme Uzmanı • 5 Sistem Uzmanı')
+        self.assertEqual((i['son_tarih'], i['son_zaman']), ('2026-10-28', '2026-10-28T17:00:00+03:00'))
+        self.assertEqual(i['puan_turleri'], ['P3'])
+        self.assertEqual(i['iller'], ['Ankara'])
+        self.assertEqual(i['yz_kadrolar'][0]['kosullar'], ['Bilgisayar mühendisliği mezunu olmak.'])   # 657/48 atıldı
+        self.assertIn('Kariyer Kapısı', i['ozet'])
+
+    def test_mantiksiz_deger_yazilmaz(self):
+        yz = dict(YZ, son_basvuru_tarihi='2025-01-01', kadrolar=[{'unvan': 'Uzman', 'adet': 0, 'kosullar': []}])
+        i = yi.uygula(ILAN, veri(yz), SIMDI)
+        self.assertEqual(i['son_tarih'], '2026-10-26')
+        self.assertEqual(i['kadro'], '11 ALACAK')
+
+    def test_okunamayan_ve_eski_surum_uygulanmaz(self):
+        self.assertIs(yi.uygula(ILAN, veri(dict(YZ, okunabilirlik='kotu')), SIMDI), ILAN)
+        self.assertIs(yi.uygula(ILAN, veri(surum=SURUM - 1), SIMDI), ILAN)
+
+    def test_takma_ad_ile_bulunur(self):
+        ikincil = dict(ILAN, id='sbb-9', kaynak_kimlikleri=['kk-1'])
+        self.assertTrue(yi.uygula(ikincil, veri(), SIMDI).get('yz'))
+
+
+class Kapi(unittest.TestCase):
+    def test_yayina_hazir(self):
+        self.assertEqual(yi.yayina_hazir(ILAN, {})[0], False)
+        self.assertEqual(yi.yayina_hazir(ILAN, veri())[0], True)
+        self.assertEqual(yi.yayina_hazir(ILAN, veri(dict(YZ, akademik=True)))[0], False)
+        self.assertEqual(yi.yayina_hazir(ILAN, veri(dict(YZ, iptal_veya_duzeltme=True)))[0], False)
+        self.assertEqual(yi.yayina_hazir(dict(ILAN, duyuru_turu='iptal'), {})[0], True)
+
+    def test_ilan_bot_kapisi_gemini_alanlariyla_gonderir(self):
+        import ilan_bot
+        with contextlib.redirect_stdout(io.StringIO()):
+            hazir = ilan_bot.yayina_hazir([ILAN, dict(ILAN, id='kk-2')], logo_bul=lambda i: b'png', veri=veri())
+        self.assertEqual([i['id'] for i in hazir], ['kk-1'])
+        self.assertEqual(hazir[0]['son_tarih'], '2026-10-28')
+
+
+class Isle(unittest.TestCase):
+    def test_once_sira_sonra_yeni_okunur_ve_kaydedilir(self):
+        ilanlar = [dict(ILAN, id='a', ilk_gorulme='2026-10-19T09:00'), dict(ILAN, id='b', ilk_gorulme='2026-10-19T11:00'),
+                   dict(ILAN, id='eski', son_tarih='2026-10-01')]
+        okunan = []
+        with tempfile.TemporaryDirectory() as d, contextlib.redirect_stdout(io.StringIO()):
+            d = Path(d)
+            (d / 'ilanlar.json').write_text(json.dumps({'ilanlar': ilanlar, 'telegram_bekleyen': ['a']}), encoding='utf-8')
+            sayac = yi.isle(5, 0, 'anahtar', SIMDI, d / 'ilanlar.json', d / 'yz.json',
+                            cagir=lambda parca, anahtar: okunan.append(parca[-1]['text']) or YZ, logo_bul=lambda i, a: None)
+            sonuc = json.loads((d / 'yz.json').read_text(encoding='utf-8'))
+        self.assertEqual(sayac['okunan'], 2)
+        self.assertEqual(sorted(sonuc), ['a', 'b'])
+        self.assertEqual(sonuc['a']['surum'], SURUM)
+
+
+class Logo(unittest.TestCase):
+    def test_resmi_alan(self):
+        self.assertTrue(yz_logo.resmi_mi('https://www.doganyol.bel.tr/logo.png'))
+        self.assertTrue(yz_logo.resmi_mi('https://iskur.gov.tr/a.png'))
+        self.assertFalse(yz_logo.resmi_mi('https://tr.wikipedia.org/x.png'))
+        self.assertFalse(yz_logo.resmi_mi('https://evil.com/gov.tr.png'))
+
+    def test_site_adaylari(self):
+        html = ('<img src="/img/banner.jpg"><img src="/img/logo.png" alt="x"><img src="https://cdn.com/logo.png">'
+                '<meta property="og:image" content="/og.jpg"><link rel="apple-touch-icon" sizes="180x180" href="/a180.png">')
+        self.assertEqual(yz_logo.site_adaylari('https://www.ornek.bel.tr/', html),
+                         ['https://www.ornek.bel.tr/img/logo.png', 'https://www.ornek.bel.tr/og.jpg',
+                          'https://www.ornek.bel.tr/a180.png'])
+
+    def test_bul_dogrula_kaydet(self):
+        from PIL import Image
+        png = io.BytesIO()
+        Image.new('RGBA', (200, 200), (200, 0, 0, 255)).save(png, format='PNG')
+        cevaplar = iter([{'candidates': [{'content': {'parts': [{'text': '```json\n{"site": "https://www.doganyol.bel.tr/", '
+                                                                        '"logolar": ["https://www.doganyol.bel.tr/logo.png"]}\n```'}]}}]},
+                         {'candidates': [{'content': {'parts': [{'text': '{"logo_mu": true, "guven": 0.95}'}]}}]}])
+        import yz_denetim as yd
+        with tempfile.TemporaryDirectory() as d, contextlib.redirect_stdout(io.StringIO()), \
+                mock.patch.object(yd, '_MODELLER', ['m']):
+            dosya = yz_logo.logo_bul_ve_kaydet({'kurum': 'DOĞANYOL BELEDİYE BAŞKANLIĞI'}, 'a',
+                                               iste=lambda *a: next(cevaplar),
+                                               indir=lambda url, *a: png.getvalue() if url.endswith('.png') else b'<html></html>',
+                                               arsiv=d)
+            kayit = json.loads((Path(d) / 'kaynaklar.json').read_text(encoding='utf-8'))
+        self.assertTrue(dosya.endswith('.png'))
+        self.assertEqual(list(kayit.values())[0]['orijinal'], 'https://www.doganyol.bel.tr/logo.png')
+
+
+if __name__ == '__main__':
+    unittest.main()

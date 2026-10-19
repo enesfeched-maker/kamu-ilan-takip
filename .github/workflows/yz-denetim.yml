@@ -1,10 +1,8 @@
 name: Yapay zekâ denetimi
 
 # Gemini, açık ilanları resmî belgeden bağımsız okur ve botun çıkardığı bilgilerle karşılaştırır (bot/yz_denetim.py).
-# Gözlem modu: hiçbir ilanı durdurmaz; sonuçlar denetim/yz.json'a yazılır.
+# 19 Ekim 2026: okuma artık ilan.yml içinde (bot/yz_isle.py); bu iş akışı yalnız elle deneme için.
 on:
-  schedule:
-    - cron: "15 * * * *"   # saatte bir; her çalışmada en çok 8 ilan (ücretsiz kota)
   workflow_dispatch:
     inputs:
       en_cok:

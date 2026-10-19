@@ -21,45 +21,58 @@ SONUC_YOLU = ROOT / 'denetim' / 'yz.json'
 MODEL = os.environ.get('GEMINI_MODEL', '').strip() or None   # boşsa model_bul ile en yeni Flash seçilir
 API = 'https://generativelanguage.googleapis.com/v1beta/models/{}:generateContent'
 EN_BUYUK_PDF = 15 * 1024 * 1024
-SURUM = 1   # istem/şema değişince artırılır: eski sonuçlar yeniden denetlenir
+SURUM = 2   # istem/şema değişince artırılır: eski sonuçlar yeniden okunur (2: kadro bazında koşullar, özet; yayına esas)
 
-ISTEM = """Sen Türkiye kamu personel ilanlarını okuyan titiz bir denetçisin. Aşağıdaki resmî ilanı (belge ya da metin) oku
-ve yalnız belgede AÇIKÇA yazanı doldur; tahmin etme, belgede yoksa null ya da boş liste ver.
-- son_basvuru_tarihi: başvuruların bittiği gün (YYYY-AA-GG). Sınav, sonuç, belge teslim tarihi DEĞİL.
-- son_basvuru_saati: yazıyorsa SS:DD.
-- baslangic_tarihi: başvuruların başladığı gün.
-- kadrolar: her unvan ve kişi sayısı (asil sayısı; yedek sayma). toplam: asil kişi toplamı.
-- ogrenim: yalnız şu değerler: lisans, onlisans, ortaogretim, ilkogretim.
-- kpss_gerekli: ilan KPSS puanı istiyorsa true, açıkça istemiyorsa false, belirsizse null.
-- puan_turleri: P3, P93, P94, KPSSP1, P48 gibi; en_dusuk_puan: yazıyorsa sayı.
-- basvuru_yeri: kariyer_kapisi, iskur, sahsen, posta, eposta, kurum_sitesi, diger.
-- sartlar: en çok 8 madde; her biri tek kısa cümle (en çok 120 karakter), kalıp ifade ve mevzuat atfı yok.
+ISTEM = """Sen Türkiye kamu personel ilanlarını okuyup bir ilan sitesi için kayıt hazırlayan titiz bir editörsün.
+Aşağıdaki resmî ilanı (belge ya da metin) baştan sona oku ve yalnız belgede AÇIKÇA yazanı doldur; tahmin etme,
+belgede yoksa null ya da boş liste ver. Belge taranmış görüntü olabilir; görüntüden oku.
+- kurum: ilanı veren kurumun tam adı (Türkçe büyük-küçük harf düzeninde).
+- son_basvuru_tarihi: başvuruların bittiği gün (YYYY-AA-GG). Sınav, sonuç, belge teslim, ilan tarihi DEĞİL.
+- son_basvuru_saati: yazıyorsa SS:DD (24 saat). baslangic_tarihi: başvuruların başladığı gün.
+- kadrolar: her ayrı unvan/pozisyon bir satır. adet: asil kişi sayısı (yedek sayma).
+  ogrenim: o kadronun düzeyi (lisans, onlisans, ortaogretim, ilkogretim). puan_turu: P3, P93, P94, KPSSP1, P48 gibi.
+  en_dusuk_puan: yazıyorsa sayı. il: görev yeri ili.
+  kosullar: o kadroya ÖZGÜ şartlar, en çok 5 madde; bölüm/mezuniyet, sertifika, ehliyet, deneyim, yaş, boy-kilo gibi.
+- toplam: asil kişi toplamı.
+- ortak_kosullar: tüm kadrolar için geçerli, akılda tutulması gereken en çok 5 madde (yaş sınırı, KPSS yılı, belge,
+  mülakat/sınav usulü gibi).
+- Koşul maddeleri: her biri tek kısa cümle, en çok 100 karakter, sade Türkçe. "657 sayılı Kanunun 48. maddesindeki genel
+  şartlar", "ilanda belirtilen", mevzuat numaraları ve tarih/sayı atıfları YAZMA. Emir kipi kullanma ("…mezun olmak" biçimi).
+- ozet: en çok 2 cümle, en çok 280 karakter: kim, kaç kişi, kimleri alıyor, başvuru nereden ve hangi tarihler arasında.
+- ogrenim, kpss_gerekli (KPSS puanı isteniyorsa true, açıkça istenmiyorsa false), puan_turleri: tüm ilan için.
+- basvuru_yeri: kariyer_kapisi, iskur, sahsen, posta, eposta, kurum_sitesi, diger. basvuru_adresi: başvuru yapılacak site.
 - akademik: öğretim üyesi/görevlisi, araştırma görevlisi ilanıysa true.
-- iptal_veya_duzeltme: belge yeni ilan değil de iptal/düzeltme/süre uzatma duyurusuysa true.
+- iptal_veya_duzeltme: belge yeni ilan değil de iptal/düzeltme/süre uzatma/sonuç duyurusuysa true.
 - okunabilirlik: belge okunabildiyse "iyi", kısmen okunabildiyse "kismi", okunamadıysa "kotu"."""
 
+_DIZI = {'type': 'ARRAY', 'items': {'type': 'STRING'}}
 SEMA = {
     'type': 'OBJECT',
     'properties': {
         'kurum': {'type': 'STRING', 'nullable': True},
         'kadrolar': {'type': 'ARRAY', 'items': {'type': 'OBJECT', 'properties': {
-            'unvan': {'type': 'STRING'}, 'adet': {'type': 'INTEGER', 'nullable': True}}, 'required': ['unvan']}},
+            'unvan': {'type': 'STRING'}, 'adet': {'type': 'INTEGER', 'nullable': True},
+            'ogrenim': {'type': 'STRING', 'nullable': True}, 'puan_turu': {'type': 'STRING', 'nullable': True},
+            'en_dusuk_puan': {'type': 'NUMBER', 'nullable': True}, 'il': {'type': 'STRING', 'nullable': True},
+            'kosullar': _DIZI}, 'required': ['unvan', 'kosullar']}},
         'toplam': {'type': 'INTEGER', 'nullable': True},
         'son_basvuru_tarihi': {'type': 'STRING', 'nullable': True},
         'son_basvuru_saati': {'type': 'STRING', 'nullable': True},
         'baslangic_tarihi': {'type': 'STRING', 'nullable': True},
         'ogrenim': {'type': 'ARRAY', 'items': {'type': 'STRING', 'enum': ['lisans', 'onlisans', 'ortaogretim', 'ilkogretim']}},
         'kpss_gerekli': {'type': 'BOOLEAN', 'nullable': True},
-        'puan_turleri': {'type': 'ARRAY', 'items': {'type': 'STRING'}},
+        'puan_turleri': _DIZI,
         'en_dusuk_puan': {'type': 'NUMBER', 'nullable': True},
-        'iller': {'type': 'ARRAY', 'items': {'type': 'STRING'}},
+        'iller': _DIZI,
         'basvuru_yeri': {'type': 'STRING', 'nullable': True},
-        'sartlar': {'type': 'ARRAY', 'items': {'type': 'STRING'}},
+        'basvuru_adresi': {'type': 'STRING', 'nullable': True},
+        'ortak_kosullar': _DIZI,
+        'ozet': {'type': 'STRING', 'nullable': True},
         'akademik': {'type': 'BOOLEAN'},
         'iptal_veya_duzeltme': {'type': 'BOOLEAN'},
         'okunabilirlik': {'type': 'STRING', 'enum': ['iyi', 'kismi', 'kotu']},
     },
-    'required': ['kadrolar', 'ogrenim', 'puan_turleri', 'sartlar', 'akademik', 'iptal_veya_duzeltme', 'okunabilirlik'],
+    'required': ['kadrolar', 'ogrenim', 'puan_turleri', 'ortak_kosullar', 'akademik', 'iptal_veya_duzeltme', 'okunabilirlik'],
 }
 
 

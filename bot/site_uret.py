@@ -233,6 +233,30 @@ def _kadro_kartlari(item, satirlar, belge):
 KK_OGRENIM = {'lisans': 'Lisans', 'onlisans': 'Önlisans', 'ortaogretim': 'Ortaöğretim'}
 
 
+def _yz_kadro_kartlari(item, belge):
+    """Gemini kayıtları: kadro kartı başına ünvan, kişi, kısa koşullar, öğrenim/KPSS/il; altta tüm kadrolar için."""
+    kartlar = ''
+    for k in item['yz_kadrolar']:
+        alt = []
+        kpss = ' · '.join(x for x in (k.get('puan_turu') or '', f'en az {k["en_dusuk_puan"]:g} puan' if isinstance(k.get('en_dusuk_puan'), (int, float)) else '') if x)
+        if kpss:
+            alt.append(f'<span><em>KPSS</em> {esc(kpss)}</span>')
+        if KK_OGRENIM.get(k.get('ogrenim')):
+            alt.append(f'<span><em>Öğrenim</em> {esc(KK_OGRENIM[k["ogrenim"]])}</span>')
+        if k.get('il'):
+            alt.append(f'<span><em>İl</em> {esc(k["il"])}</span>')
+        maddeler = ''.join(f'<li>{esc(m)}</li>' for m in k.get('kosullar') or [])
+        kartlar += (f'<div class="kk"><div class="kk-bas"><strong>{esc(k["unvan"])}</strong>'
+                    + (f'<span class="kk-adet">{k["adet"]} kişi</span>' if k.get('adet') else '') + '</div>'
+                    + (f'<ul>{maddeler}</ul>' if maddeler else '')
+                    + (f'<div class="kk-alt">{"".join(alt)}</div>' if alt else '') + '</div>')
+    ortak = ''.join(f'<li>{esc(m)}</li>' for m in item.get('yz_ortak') or [])
+    baglanti = (f'<li>Genel şartların tamamı ve istenen belgeler: <a class="yazi-link" href="{esc(belge)}" target="_blank" '
+                f'rel="noopener noreferrer">resmî ilan ↗</a></li>') if belge else ''
+    return (f'<h2>Kadrolar ve başvuru koşulları</h2><div class="kk-liste">{kartlar}</div>'
+            + (f'<div class="kk-ortak"><h3>Tüm kadrolar için</h3><ul>{ortak}{baglanti}</ul></div>' if ortak or baglanti else ''))
+
+
 def sade_madde(m):
     """Şart maddesini okunur kısalığa indirir (12 Ekim 2026 kullanıcı kararı: kişi baktığı anda anlamalı):
     'ÖSYM tarafından 2025 ve 2026 yılında yapılan … KPSS P3 puan türünde en az 60 (altmış) puan almış olmak' -> '2025-2026 KPSS P3
@@ -671,7 +695,9 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
     pdf_satirlari = _pdf_kadrolari(item)
     kk_kadrolar = [] if pdf_satirlari else [k for k in item.get('kadro_detay') or [] if isinstance(k, dict) and k.get('unvan')]
     sart_bolumleri = () if pdf_satirlari or kk_kadrolar else _pdf_sart_bolumleri(item)
-    if pdf_satirlari:
+    if item.get('yz_kadrolar'):   # Gemini'nin resmî belgeden okuduğu kadrolar ve kısa koşullar
+        tablo = _yz_kadro_kartlari(item, document_url(item) or item.get('link'))
+    elif pdf_satirlari:
         tablo = _kadro_kartlari(item, pdf_satirlari, document_url(item))
     elif kk_kadrolar:
         tablo = _kk_kadro_kartlari(kk_kadrolar, document_url(item) or item.get('link'), item.get('kadro_ortak'))
@@ -1074,6 +1100,11 @@ def elle_kurallar():
 def elle_uygula(ilanlar):
     """Elle gizlenen kayıtlar sitede hiç yer almaz; elle düzeltilen alanlar (örn. yanlış son tarih) kaydın üzerine yazılır."""
     gizle, alanlar = elle_kurallar()
+    try:   # 19 Ekim 2026: Gemini'nin resmî belgeden okuduğu alanlar (denetim/yz.json); elle düzeltmeler yine üstte
+        import yz_isle
+        ilanlar = [yz_isle.uygula(i) for i in ilanlar]
+    except Exception as hata:
+        print(f'Uyarı: Gemini alanları uygulanamadı: {hata}')
     return [dict(i, **alanlar.get(i.get('id'), {})) for i in ilanlar if i.get('id') not in gizle]
 
 
