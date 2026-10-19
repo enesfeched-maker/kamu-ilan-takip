@@ -468,9 +468,10 @@ def uyari_uret(kaynak_durumlari, acik_ilanlar, simdi):
 def liste_uret(ilanlar, gorseller, docs, simdi=None, guncelleme=None, kopyalar=None, kaynak_durumlari=None):
     """docs/liste.json içeriği. Kaynaklar arası kopya ilanların ikincil satırlarına `kopya_of` (birincil anahtar),
     birincil satıra `kaynak_sayisi`/`kaynaklar` yazılır; sayılar ve takvim yalnız görünen (birincil) satırlardan hesaplanır."""
-    from siniflandir import akademik_ilan
+    from siniflandir import akademik_ilan, saf_akademik
     simdi = (simdi or datetime.now(TR)).astimezone(TR)
     tablolar = taban_tablolari(docs)
+    akademik = []
     harita = il_haritasi(ilanlar)
     if kopyalar is None:
         try:
@@ -483,6 +484,10 @@ def liste_uret(ilanlar, gorseller, docs, simdi=None, guncelleme=None, kopyalar=N
     for item in ilanlar:
         try:
             if akademik_ilan(item):
+                if saf_akademik(item):   # ana listeye ve sayılara girmez; yalnız Akademik sekmesinde
+                    a = kayit(item, (gorseller or {}).get(_ks().anahtar(item)), tablolar, simdi, harita)
+                    if a and (a.get('son_tarih') or '9999') >= simdi.date().isoformat():
+                        akademik.append(a)
                 continue
             k = kayit(item, (gorseller or {}).get(_ks().anahtar(item)), tablolar, simdi, harita)
         except Exception as hata:
@@ -520,6 +525,7 @@ def liste_uret(ilanlar, gorseller, docs, simdi=None, guncelleme=None, kopyalar=N
         'uyari': uyari_uret(kaynak_durumlari, gorunen_ilanlar, simdi),
         'takvim': takvim(gorunen, simdi),
         'ilanlar': kayitlar,
+        'akademik': sorted(akademik, key=lambda k: (k.get('son_tarih') or '9999', k.get('kurum') or '')),
     }
 
 
