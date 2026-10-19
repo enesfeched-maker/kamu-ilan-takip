@@ -225,46 +225,30 @@
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=e53c369b-3913-48dc-8e41-be3a6392c249": {
-  "zaman": "2026-10-19T19:49:17+03:00",
-  "surum": 1,
-  "model": "gemini-3.8-flash",
+  "zaman": "2026-10-19T23:16:53+03:00",
+  "surum": 2,
+  "model": "gemini-3.6-flash",
   "kaynak": "metin",
-  "imza": "aabc428b1636a325",
+  "imza": "1c568b357d559680",
   "baslik": "KIYI EMNİYETİ GENEL MÜDÜRLÜĞÜ - PERSONEL ALIM İLANI (9 KİŞİLİK)",
   "farklar": [],
   "yz": {
-   "kadrolar": [
-    {
-     "unvan": "Sürekli İşçi",
-     "adet": 3
-    },
-    {
-     "unvan": "Engelli İşçi",
-     "adet": 5
-    },
-    {
-     "unvan": "Eski Hükümlü İşçi (Büro Personeli)",
-     "adet": 1
-    }
-   ],
+   "kadrolar": [],
    "ogrenim": [],
    "puan_turleri": [],
-   "sartlar": [
-    "Engelli kontenjanı için en az %40 engelli sağlık kurulu raporuna sahip olmak.",
-    "Başvurular İŞKUR web sitesinden veya İŞKUR hizmet merkezlerinden şahsen yapılacaktır.",
-    "Kuruma doğrudan yapılan başvurular kabul edilmeyecektir."
-   ],
+   "ortak_kosullar": [],
    "akademik": false,
    "iptal_veya_duzeltme": false,
-   "okunabilirlik": "iyi",
+   "okunabilirlik": "kismi",
    "baslangic_tarihi": "2026-10-19",
-   "basvuru_yeri": "iskur",
+   "basvuru_adresi": null,
+   "basvuru_yeri": null,
+   "duyuru_tipi": "yeni_ilan",
    "en_dusuk_puan": null,
-   "iller": [
-    "İstanbul"
-   ],
+   "iller": [],
    "kpss_gerekli": null,
-   "kurum": "Kıyı Emniyeti Genel Müdürlüğü",
+   "kurum": "KIYI EMNİYETİ GENEL MÜDÜRLÜĞÜ",
+   "ozet": "Kıyı Emniyeti Genel Müdürlüğü 9 personel alımı yapacaktır. Başvurular 19-23 Ekim 2026 tarihleri arasında yapılacaktır.",
    "son_basvuru_saati": "23:59",
    "son_basvuru_tarihi": "2026-10-23",
    "toplam": 9
