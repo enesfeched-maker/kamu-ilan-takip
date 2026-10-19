@@ -301,6 +301,8 @@ th.sayi{background:var(--surface-2);color:var(--muted);font-size:12px;letter-spa
   .ktablo td{border:0;padding:2px 0;min-width:0!important;text-align:left!important}
   .ktablo td[data-et]::before{content:attr(data-et) ": ";color:var(--muted);font-weight:500}
   .kp-tablo thead{display:none}
+  .kp-tablo td[data-et]::before{content:attr(data-et) ": ";color:var(--muted);font-weight:500}
+  .kp-tablo tr:has(td[data-et]) td:first-child{grid-column:1/-1;font-weight:600}
   .kp-tablo,.kp-tablo tbody{display:block;width:100%}
   .kp-tablo tr{display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line)}
   .kp-tablo tr:last-child{border-bottom:0}
