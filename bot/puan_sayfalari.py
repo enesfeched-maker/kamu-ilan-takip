@@ -148,7 +148,8 @@ def _crumbs(kok, parcalar):
 
 def _tablo(basliklar, satirlar):
     th = ''.join(f'<th scope="col">{esc(b)}</th>' for b in basliklar)
-    tr = ''.join('<tr>' + ''.join(f'<td>{h}</td>' for h in s) + '</tr>' for s in satirlar)
+    # mobilde tablo kartlara dönüşür: her hücre başlığını (data-et) yanında gösterir; ilk sütun kartın başlığıdır
+    tr = ''.join('<tr>' + ''.join(f'<td>{h}</td>' if n == 0 else f'<td data-et="{esc(basliklar[n])}">{h}</td>' for n, h in enumerate(s)) + '</tr>' for s in satirlar)
     return f'<div class="tablo-kap"><table class="kp-tablo"><thead><tr>{th}</tr></thead><tbody>{tr}</tbody></table></div>'
 
 
