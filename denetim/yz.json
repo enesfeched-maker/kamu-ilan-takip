@@ -851,6 +851,62 @@
    "toplam": 1
   }
  },
+ "sbb-4465c3cc1f08e887dd0c0af8": {
+  "zaman": "2026-10-20T02:06:21+03:00",
+  "surum": 2,
+  "model": "gemini-3.7-flash",
+  "kaynak": "pdf",
+  "imza": "69b9e604a1fbd2dd",
+  "baslik": "ANKARA BÜYÜKŞEHİR BELEDİYE BAŞKANLIĞI - 5 MÜFETTİŞ YARDIMCISI ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Müfettiş Yardımcısı",
+     "kosullar": [
+      "Hukuk, siyasal bilgiler, iktisat, işletme, İİBF veya denkliği kabul edilen programlardan mezun olmak",
+      "2025 veya 2026 KPSS A Grubu P48 puan türünden en az 75 puan almış olmak",
+      "Yazılı sınav tarihi itibarıyla 35 yaşını doldurmamış olmak (26.12.1991 ve sonrası doğanlar)",
+      "Bu sınava daha önce katılmamış veya en fazla bir defa katılmış olmak"
+     ],
+     "adet": 5,
+     "en_dusuk_puan": 75.0,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": "P48"
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P48"
+   ],
+   "ortak_kosullar": [
+    "2025 veya 2026 KPSS A Grubu sınavına girmiş olmak",
+    "Yazılı sınav tarihi (26.12.2026) itibarıyla 35 yaşını doldurmamış olmak",
+    "Görevin yapılmasına engel sağlık veya adli/idari engeli bulunmamak",
+    "Rehberlik ve Teftiş Kurulu giriş sınavına en fazla 1 kez katılmış olmak"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-11-23",
+   "basvuru_adresi": null,
+   "basvuru_yeri": "sahsen",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": 75.0,
+   "iller": [
+    "Ankara"
+   ],
+   "kpss_gerekli": true,
+   "kurum": "Ankara Büyükşehir Belediye Başkanlığı",
+   "ozet": "Ankara Büyükşehir Belediyesi 5 Müfettiş Yardımcısı alacaktır. Başvurular 23.11.2026 - 04.12.2026 tarihleri arasında şahsen veya posta yoluyla yapılacaktır.",
+   "son_basvuru_saati": "17:30",
+   "son_basvuru_tarihi": "2026-12-04",
+   "toplam": 5
+  }
+ },
  "sbb-526ff55537d8578a927e5bc7": {
   "zaman": "2026-10-19T20:48:51+03:00",
   "surum": 2,
