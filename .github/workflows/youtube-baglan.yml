@@ -1,0 +1,80 @@
+name: YouTube bağla
+
+# 1) Bu iş akışını "kod" alanı BOŞ çalıştır: özet sayfasında Google izin bağlantısı çıkar.
+# 2) Bağlantıyı aç, YouTube kanalının hesabıyla izin ver; tarayıcı https://kpsstercihi.com/?code=... adresine döner.
+# 3) O adresin tamamını "kod" alanına yapıştırıp yeniden çalıştır: kod yenileme anahtarına çevrilir, YT_YENILEME_ANAHTARI
+#    sırrına yazılır (SOSYAL_GH_ANAHTARI gerekir) ve anahtar hemen sınanır (video yüklenmez).
+# Önkoşul (bir kez): Google Cloud'daki OAuth Web istemcisinin "Authorized redirect URIs" listesinde https://kpsstercihi.com/ olmalı.
+on:
+  workflow_dispatch:
+    inputs:
+      kod:
+        description: Google'ın döndüğü adres (kpsstercihi.com/?code=...) ya da code değeri; boş bırakırsan izin bağlantısı üretilir
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+
+jobs:
+  bagla:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: İzin bağlantısı ya da kodu anahtara çevir
+        env:
+          KOD: ${{ inputs.kod }}
+          YT_ISTEMCI_KIMLIGI: ${{ secrets.YT_ISTEMCI_KIMLIGI }}
+          YT_ISTEMCI_SIRRI: ${{ secrets.YT_ISTEMCI_SIRRI }}
+          SOSYAL_GH_ANAHTARI: ${{ secrets.SOSYAL_GH_ANAHTARI }}
+        run: |
+          python3 - <<'PY'
+          import json, os, subprocess, urllib.error, urllib.parse, urllib.request
+          GIDIS = 'https://kpsstercihi.com/'
+          KAPSAM = 'https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube.readonly'
+          for ad in ('YT_ISTEMCI_KIMLIGI', 'YT_ISTEMCI_SIRRI', 'SOSYAL_GH_ANAHTARI'):
+              if not os.environ.get(ad, '').strip():
+                  raise SystemExit(f'{ad} sırrı tanımlı değil.')
+          istemci, sir = os.environ['YT_ISTEMCI_KIMLIGI'].strip(), os.environ['YT_ISTEMCI_SIRRI'].strip()
+          kod = os.environ['KOD'].strip()
+          if not kod:
+              url = 'https://accounts.google.com/o/oauth2/v2/auth?' + urllib.parse.urlencode({
+                  'client_id': istemci, 'redirect_uri': GIDIS, 'response_type': 'code', 'scope': KAPSAM,
+                  'access_type': 'offline', 'prompt': 'consent'})
+              ozet = os.environ['GITHUB_STEP_SUMMARY']
+              open(ozet, 'a', encoding='utf-8').write('### 1. Bu bağlantıyı aç ve izin ver\n\n' + url + '\n\n'
+                  '### 2. Tarayıcı kpsstercihi.com/?code=... adresine dönünce\n\nO adresin tamamını kopyalayıp bu iş akışını '
+                  '**kod** alanına yapıştırarak yeniden çalıştır.\n')
+              print('İZİN BAĞLANTISI (istemci kimliği gizli değildir): ' + url)
+              raise SystemExit(0)
+          if 'code=' in kod:
+              kod = urllib.parse.parse_qs(urllib.parse.urlparse(kod).query)['code'][0]
+          else:
+              kod = urllib.parse.unquote(kod)
+          veri = urllib.parse.urlencode({'client_id': istemci, 'client_secret': sir, 'code': kod,
+                                         'grant_type': 'authorization_code', 'redirect_uri': GIDIS}).encode()
+          try:
+              yanit = json.load(urllib.request.urlopen(urllib.request.Request('https://oauth2.googleapis.com/token', data=veri), timeout=30))
+          except urllib.error.HTTPError as h:
+              yanit = json.loads(h.read() or b'{}')
+          if 'refresh_token' not in yanit:
+              raise SystemExit('Google kodu anahtara çeviremedi: ' + str(yanit.get('error_description') or yanit.get('error') or yanit)
+                               + ' (kod tek kullanımlıktır ve birkaç dakikada geçersizleşir; izin bağlantısını yeniden üret)')
+          print('::add-mask::' + yanit['refresh_token'])
+          subprocess.run(['gh', 'secret', 'set', 'YT_YENILEME_ANAHTARI', '--repo', os.environ['GITHUB_REPOSITORY']],
+                         input=yanit['refresh_token'], text=True, check=True,
+                         env=dict(os.environ, GH_TOKEN=os.environ['SOSYAL_GH_ANAHTARI']))
+          open(os.path.join(os.environ['RUNNER_TEMP'], 'yt'), 'w').write(yanit['refresh_token'])
+          print(f"YouTube anahtarı kaydedildi. İzinler: {yanit.get('scope')}")
+          PY
+      - name: Anahtarı sına (video yüklenmez)
+        if: ${{ inputs.kod != '' }}
+        env:
+          YT_ISTEMCI_KIMLIGI: ${{ secrets.YT_ISTEMCI_KIMLIGI }}
+          YT_ISTEMCI_SIRRI: ${{ secrets.YT_ISTEMCI_SIRRI }}
+          YT_KANAL: ${{ vars.YT_KANAL }}
+        run: |
+          YT_YENILEME_ANAHTARI="$(cat "$RUNNER_TEMP/yt")" python bot/sosyal_yayinla.py --youtube-kontrol
