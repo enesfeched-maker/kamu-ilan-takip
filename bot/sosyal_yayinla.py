@@ -226,5 +226,10 @@ if __name__ == '__main__':
             instagram_yenile()
         except Exception as hata:
             print(f'Uyarı: Instagram anahtarı yenilenemedi: {hata}')
-    _, hata_var = yayinla(sys.argv[1] if len(sys.argv) > 1 and not sys.argv[1].startswith('--') else 'sosyal-cikti')
-    sys.exit(1 if hata_var else 0)
+    sonuclar, hata_var = yayinla(sys.argv[1] if len(sys.argv) > 1 and not sys.argv[1].startswith('--') else 'sosyal-cikti')
+    # 20 Ekim 2026: bir platform (ör. süresi dolmuş YouTube anahtarı) hata verse de diğerlerinde paylaşıldıysa iş kırmızı
+    # olmaz, uyarı verir; hiçbirinde paylaşılamadıysa iş başarısız sayılır.
+    for ad, sonuc in sonuclar.items():
+        if 'hata' in sonuc:
+            print(f"::warning::{ad} paylaşımı başarısız: {sonuc['hata'][:200]}")
+    sys.exit(1 if hata_var and all('hata' in s for s in sonuclar.values()) else 0)

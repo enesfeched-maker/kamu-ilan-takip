@@ -110,7 +110,7 @@ class AkademikTesti(Dugum):
         self.assertEqual([i['id'] for i in secilen], ['b'])
 
     def test_site_sayfasi_akademik_sekmede_bot_verisinde_yok(self):   # 20 Ekim 2026: akademik ilanlar sitede Akademik sekmesinde
-        a = ilan('sbb-' + 'a' * 24, link='https://kamuilan.sbb.gov.tr/', kaynak_turu='sbb', **self.AKADEMIK)
+        a = ilan('sbb-' + 'a' * 24, link='https://kamuilan.sbb.gov.tr/', kaynak_turu='sbb', son_tarih='2099-12-31', **self.AKADEMIK)
         b = ilan('sbb-' + 'b' * 24, link='https://kamuilan.sbb.gov.tr/', kaynak_turu='sbb', kadro='1 ZABITA', baslik='X - Zabıta')
         self.assertIsNotNone(site_uret.detail_page(a))
         self.assertIsNotNone(site_uret.detail_page(b))
