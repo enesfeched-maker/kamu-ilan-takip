@@ -154,6 +154,35 @@ def youtube(video, metin, ortam=None):
             'gorunurluk': (sonuc.get('status') or {}).get('privacyStatus')}
 
 
+def youtube_kontrol():
+    """Video yüklemeden YouTube anahtarını sınar: yenileme anahtarı geçerli mi, hangi izinler var, hangi kanal."""
+    kimlik = _env('YT_ISTEMCI_KIMLIGI', 'YT_ISTEMCI_SIRRI', 'YT_YENILEME_ANAHTARI')
+    if not kimlik:
+        print('YouTube anahtarları tanımlı değil.')
+        return False
+    istemci, sir, yenileme = kimlik
+    try:
+        erisim = _istek('https://oauth2.googleapis.com/token', veri={
+            'client_id': istemci, 'client_secret': sir, 'refresh_token': yenileme, 'grant_type': 'refresh_token'})['access_token']
+    except YayinHatasi as hata:
+        print(f'YouTube yenileme anahtarı KABUL EDİLMEDİ: {hata}')
+        return False
+    izinler = _istek('https://oauth2.googleapis.com/tokeninfo?access_token=' + urllib.parse.quote(erisim)).get('scope')
+    print(f'Yenileme anahtarı geçerli. İzinler: {izinler}')
+    beklenen = os.environ.get('YT_KANAL', '').strip()
+    if beklenen:
+        try:
+            kanallar = _istek('https://www.googleapis.com/youtube/v3/channels?part=snippet&mine=true',
+                              basliklar={'Authorization': f'Bearer {erisim}'}).get('items') or []
+            adlar = [(c.get('snippet') or {}).get('title', '') for c in kanallar]
+            print(f'Kanal: {", ".join(adlar) or "yok"} (beklenen: {beklenen}) -> '
+                  f'{"EŞLEŞTİ" if beklenen.casefold() in [a.casefold() for a in adlar] else "EŞLEŞMEDİ"}')
+        except YayinHatasi as hata:
+            print(f'Kanal doğrulanamadı (youtube.readonly izni yok; YT_KANAL değişkeni bu yüzden yüklemeyi durdurur): {hata}')
+            return False
+    return True
+
+
 # ---------------------------------------------------------------- TikTok
 def _tiktok_erisim(istemci, sir, yenileme):
     yanit = _istek('https://open.tiktokapis.com/v2/oauth/token/', veri={
@@ -221,6 +250,8 @@ def yayinla(klasor):
 
 
 if __name__ == '__main__':
+    if '--youtube-kontrol' in sys.argv:
+        sys.exit(0 if youtube_kontrol() else 1)
     if '--instagram-yenile' in sys.argv:
         try:
             instagram_yenile()
