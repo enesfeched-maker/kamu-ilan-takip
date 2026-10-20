@@ -1,0 +1,35 @@
+name: TikTok deneme yüklemesi
+
+# En son sosyal medya videosunu YALNIZ TikTok'a (taslak olarak) yükler ve TikTok'un cevabını yazar:
+# video telefona ulaştı mı, ulaşmadıysa nedeni nedir. Instagram ve YouTube'a dokunmaz, geçmişe yazmaz.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dene:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: En son videoyu indir
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          ETIKET="$(gh release list --limit 1 --json tagName --jq '.[0].tagName')"
+          echo "Sürüm: $ETIKET"
+          mkdir -p dene
+          gh release download "$ETIKET" --dir dene --pattern reel.mp4 --pattern paylasim.json
+          ls -la dene
+      - name: TikTok'a yükle
+        env:
+          TT_ISTEMCI_ANAHTARI: ${{ secrets.TT_ISTEMCI_ANAHTARI }}
+          TT_ISTEMCI_SIRRI: ${{ secrets.TT_ISTEMCI_SIRRI }}
+          TT_YENILEME_ANAHTARI: ${{ secrets.TT_YENILEME_ANAHTARI }}
+          SOSYAL_GH_ANAHTARI: ${{ secrets.SOSYAL_GH_ANAHTARI }}
+          TT_MOD: ${{ vars.TT_MOD }}
+        run: python bot/sosyal_yayinla.py --tiktok-dene dene
