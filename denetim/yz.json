@@ -469,6 +469,167 @@
    "toplam": 7
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=4f7526a3-f38f-4117-913d-df615e9d8b78": {
+  "zaman": "2026-10-20T03:43:28+03:00",
+  "surum": 2,
+  "model": "gemini-3.8-flash",
+  "kaynak": "metin",
+  "imza": "48ab01b3c3585502",
+  "baslik": "TÜRK STANDARDLARI ENSTİTÜSÜ - SÖZLEŞMELİ BİLİŞİM PERSONELİ ALIM İLANI 2026",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Kıdemli Sistem Uzmanı (4 Katına Kadar)",
+     "kosullar": [
+      "Bilgisayar, yazılım, elektrik, elektronik veya endüstri mühendisliği mezunu olmak",
+      "Sistem yöneticisi veya uzmanı olarak en az 8 yıllık tecrübeye sahip olmak",
+      "UNIX ve Linux sunucu sistemlerinin yönetimi konusunda ileri seviye tecrübeli olmak",
+      "Bash, Shell Scripting veya Python ile betik geliştirme tecrübesine sahip olmak",
+      "VMware sanallaştırma, depolama ve sunucu donanım yönetimi konularında ileri tecrübeli olmak"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Kıdemli Sistem Uzmanı (3 Katına Kadar)",
+     "kosullar": [
+      "Bilgisayar, yazılım, elektrik, elektronik veya endüstri mühendisliği mezunu olmak",
+      "Uygulama sunucusu yöneticisi düzeyinde en az 5 yıl çalışmış olmak",
+      "Web ve uygulama sunucuları yönetimi ve izlemesi konularında tecrübe sahibi olmak",
+      "VMware ESXi, VCenter, NSX yönetiminde ileri seviyede tecrübeli olmak",
+      "Depolama ve yedekleme sistemleri ile iş sürekliliği konularında tecrübe sahibi olmak"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Kıdemli Veri Tabanı Uzmanı (3 Katına Kadar)",
+     "kosullar": [
+      "Bilgisayar, yazılım, elektrik, elektronik veya endüstri mühendisliği mezunu olmak",
+      "SQL veri tabanı yöneticisi düzeyinde en az 5 yıl çalışmış olmak",
+      "İleri seviyede T-SQL bilgisine ve SQL sorgulama diline hakim olmak",
+      "MS SQL yüksek erişilebilirlik, kümeleme ve replikasyon teknolojilerinde tecrübeli olmak",
+      "Veri tabanı mimarisi, tasarımı, optimizasyonu ve yedekleme süreçlerinde tecrübeli olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Kıdemli Yazılım Geliştirme Uzmanı (3 Katına Kadar)",
+     "kosullar": [
+      "Bilgisayar, yazılım, elektrik, elektronik veya endüstri mühendisliği mezunu olmak",
+      ".NET teknolojileriyle geliştirilen projelerde en az 5 yıl tecrübe sahibi olmak",
+      ".NET veya .NET Core mimarisinde kurumsal uygulama geliştirme tecrübesine sahip olmak",
+      "REST ve SOAP tabanlı servisler ile mikroservis mimarilerinde tecrübeli olmak",
+      "Entity Framework, EF Core veya Dapper gibi ORM araçlarında tecrübe sahibi olmak"
+     ],
+     "adet": 3,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Kıdemli Yazılım Geliştirme Uzmanı (Java/İş Süreçleri)",
+     "kosullar": [
+      "Bilgisayar, yazılım, elektrik, elektronik veya endüstri mühendisliği mezunu olmak",
+      "Java teknolojileri konusunda en az 5 yıl uygulama geliştirici olarak çalışmış olmak",
+      "İş Süreçleri Yönetimi (BPM) araçlarıyla süreç tasarımında en az 3 yıl tecrübeli olmak",
+      "BPMN 2.0 ile modelleme ve Spring Framework mimarisinde tecrübe sahibi olmak",
+      "Servis tabanlı mimariler ve kurumsal entegrasyon alanında tecrübeli olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Sistem Uzmanı (2 Katına Kadar)",
+     "kosullar": [
+      "Uygulama sunucusu yöneticisi düzeyinde en az 3 yıl çalışmış olmak",
+      "Windows ve Linux sunucu sistemleri kurulum ve yapılandırmasında tecrübeli olmak",
+      "VMware sanallaştırma teknolojileri hakkında bilgi ve tecrübe sahibi olmak",
+      "Active Directory, Group Policy, DNS ve DHCP servisleri yönetiminde tecrübeli olmak",
+      "Sistem ve ağ izleme araçlarının (Zabbix, Grafana, Ansible vb.) yönetiminde tecrübeli olmak"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Ağ ve Güvenlik Uzmanı (2 Katına Kadar)",
+     "kosullar": [
+      "Ağ ve güvenlik alanında en az 3 yıllık iş tecrübesine sahip olmak",
+      "Güvenlik duvarı, anahtarlayıcı ve yönlendirici yönetiminde tecrübe sahibi olmak",
+      "Sızma testi, zafiyet tarama araçları ve SIEM konularında bilgi sahibi olmak",
+      "ISO 27001 standardı ve kurumsal bilgi güvenliği politikalarında tecrübeli olmak",
+      "Yerel ve geniş alan ağ teknolojileri ile VPN ve SSL konularında bilgili olmak"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Yazılım Geliştirme Uzmanı (.NET) (2 Katına Kadar)",
+     "kosullar": [
+      ".NET teknolojileriyle geliştirilmiş projelerde en az 3 yıl tecrübe sahibi olmak",
+      ".NET ve .NET Core mimarisinde uygulama geliştirme tecrübesine sahip olmak",
+      "Web API, REST ve SOAP servis geliştirme konularında tecrübeli olmak",
+      "İlişkisel veri tabanı tasarımı, SQL ve T-SQL sorgulama konularında bilgili olmak",
+      "HTML, CSS, JavaScript ve modern ön yüz çatılarında tecrübe sahibi olmak"
+     ],
+     "adet": 4,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "Dört yıllık mühendislik veya fen/istatistik/matematik/fizik lisans mezunu olmak",
+    "Güncel programlama dillerinden en az ikisini bildiğini belgelemek",
+    "Erkek adaylar için muvazzaf askerlik hizmetini yapmış, erteletmiş veya muaf olmak",
+    "Pozisyona ilişkin belirtilen mesleki tecrübe sürelerini sağlamak ve belgelemek",
+    "Adaylar ilan edilen pozisyonlardan yalnızca birine başvuru yapabilir"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-10-15",
+   "basvuru_adresi": "https://kariyerkapisi.gov.tr/isealim",
+   "basvuru_yeri": "kariyer_kapisi",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": null,
+   "iller": [
+    "Ankara"
+   ],
+   "kpss_gerekli": null,
+   "kurum": "Türk Standardları Enstitüsü",
+   "ozet": "Türk Standardları Enstitüsü, merkez teşkilatında istihdam edilmek üzere 17 sözleşmeli bilişim personeli alacaktır. Başvurular 15-25 Ekim 2026 tarihleri arasında Kariyer Kapısı üzerinden online olarak yapılacaktır.",
+   "son_basvuru_saati": "23:59",
+   "son_basvuru_tarihi": "2026-10-25",
+   "toplam": 17
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=56b19c9c-b32c-45ae-8fdc-101d776c8df3": {
   "zaman": "2026-10-20T02:38:54+03:00",
   "surum": 2,
@@ -1156,6 +1317,71 @@
    "son_basvuru_saati": "23:59",
    "son_basvuru_tarihi": "2026-11-08",
    "toplam": 11
+  }
+ },
+ "sbb-5681cd6adcb3be4bf8184f42": {
+  "zaman": "2026-10-20T03:43:28+03:00",
+  "surum": 2,
+  "model": "gemini-3.6-flash",
+  "kaynak": "pdf",
+  "imza": "9b815a7697fc5a18",
+  "baslik": "MİLLİ SAVUNMA BAKANLIĞI - DENİZ KUVVETLERİ KOMUTANLIĞINA 2026 YILI DENİZ SINIFI MUVAZZAF SUBAY ADAYI TEMİNİ",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Deniz Sınıfı Subayı (Güverte)",
+     "kosullar": [
+      "En az 4 yıllık ilgili lisans programlarından mezun olmak",
+      "Lisans mezunları için 27, lisansüstü mezunları için 32 yaşından büyük olmamak",
+      "Erkek adaylar için en az 168 cm, kadın adaylar için en az 162 cm boya sahip olmak"
+     ],
+     "adet": 35,
+     "en_dusuk_puan": null,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Deniz Sınıfı Subayı (Makine)",
+     "kosullar": [
+      "En az 4 yıllık ilgili lisans programlarından mezun olmak",
+      "Lisans mezunları için 27, lisansüstü mezunları için 32 yaşından büyük olmamak",
+      "Erkek adaylar için en az 168 cm, kadın adaylar için en az 162 cm boya sahip olmak"
+     ],
+     "adet": 15,
+     "en_dusuk_puan": null,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": null
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "Türkiye Cumhuriyeti vatandaşı olmak",
+    "01 Ocak 2026 itibarıyla lisans mezunları için 27, lisansüstü için 32 yaşını doldurmamış olmak",
+    "Genel Kültür Sınavından en az 50 puan almak",
+    "Fiziki yeterlilik testi ve mülakat aşamalarında başarılı olmak",
+    "Sağlık kurulu raporu ve güvenlik soruşturması şartlarını taşımak"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-10-12",
+   "basvuru_adresi": "https://personeltemin.msb.gov.tr",
+   "basvuru_yeri": "kurum_sitesi",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": null,
+   "iller": [],
+   "kpss_gerekli": false,
+   "kurum": "Millî Savunma Bakanlığı",
+   "ozet": "Millî Savunma Bakanlığı, Deniz Kuvvetleri Komutanlığı bünyesinde görev yapmak üzere 50 muvazzaf subay alımı yapacaktır. Başvurular 12 Ekim - 02 Kasım 2026 tarihleri arasında personeltemin.msb.gov.tr adresinden yapılacaktır.",
+   "son_basvuru_saati": "17:30",
+   "son_basvuru_tarihi": "2026-11-02",
+   "toplam": 50
   }
  },
  "sbb-838c1ad20b87efb0ed63d6c7": {
