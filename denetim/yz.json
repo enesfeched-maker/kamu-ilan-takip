@@ -223,6 +223,193 @@
    "toplam": 13
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=292b13a1-7511-4f89-896d-b19f526fcab1": {
+  "zaman": "2026-10-20T08:09:04+03:00",
+  "surum": 2,
+  "model": "gemini-3.6-flash",
+  "kaynak": "metin",
+  "imza": "493754bba0db59bb",
+  "baslik": "MİLLİ SARAYLAR İDARESİ BAŞKANLIĞI - 158 Sözleşmeli Personel Alımı İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Büro Personeli",
+     "kosullar": [
+      "İşletme, İktisat, Kamu Yönetimi vb. lisans bölümlerinden mezun olmak",
+      "KPSS P3 puan türünden en az 60 puan almış olmak",
+      "35 yaşını doldurmamış olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 60,
+     "il": "İSTANBUL",
+     "ogrenim": "lisans",
+     "puan_turu": "P3"
+    },
+    {
+     "unvan": "Müze Görevlisi",
+     "kosullar": [
+      "Müzecilik, Sanat Tarihi, Tarih, Arkeoloji vb. lisans bölümlerinden mezun olmak",
+      "KPSS P3 puan türünden en az 60 puan almış olmak",
+      "35 yaşını doldurmamış olmak"
+     ],
+     "adet": 9,
+     "en_dusuk_puan": 60,
+     "il": "İSTANBUL",
+     "ogrenim": "lisans",
+     "puan_turu": "P3"
+    },
+    {
+     "unvan": "Mühendis (İnşaat)",
+     "kosullar": [
+      "İnşaat Mühendisliği lisans bölümünden mezun olmak",
+      "KPSS P3 puan türünden en az 60 puan almış olmak",
+      "35 yaşını doldurmamış olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 60,
+     "il": "İSTANBUL",
+     "ogrenim": "lisans",
+     "puan_turu": "P3"
+    },
+    {
+     "unvan": "Restoratör (Kalemkâr)",
+     "kosullar": [
+      "İlgili lisans veya lisansüstü bölümlerden mezun olmak",
+      "KPSS P3 puan türünden en az 60 puan almış olmak",
+      "35 yaşını doldurmamış olmak"
+     ],
+     "adet": 5,
+     "en_dusuk_puan": 60,
+     "il": "İSTANBUL",
+     "ogrenim": "lisans",
+     "puan_turu": "P3"
+    },
+    {
+     "unvan": "Çözümleyici",
+     "kosullar": [
+      "Bilgisayar, Yazılım Mühendisliği vb. lisans bölümlerinden mezun olmak",
+      "C#, MS-SQL, JAVA dillerinden en az ikisini bildiğini belgelemek",
+      "YDS'den en az D düzeyinde İngilizce bilgisine sahip olmak",
+      "40 yaşını doldurmamış olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": "İSTANBUL",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Diğer Teknik Hizmet Personeli (El Dekoru ve Seramik Üretimi)",
+     "kosullar": [
+      "Geleneksel Türk Sanatları, Seramik, Resim vb. lisans bölümlerinden mezun olmak",
+      "40 yaşını doldurmamış olmak"
+     ],
+     "adet": 11,
+     "en_dusuk_puan": null,
+     "il": "İSTANBUL",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Tekniker (El Dekoru ve Seramik Üretimi)",
+     "kosullar": [
+      "Geleneksel El Sanatları, Seramik, Çini İşlemeciliği vb. önlisans mezunu olmak",
+      "40 yaşını doldurmamış olmak"
+     ],
+     "adet": 5,
+     "en_dusuk_puan": null,
+     "il": "İSTANBUL",
+     "ogrenim": "onlisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Koruma ve Güvenlik Görevlisi",
+     "kosullar": [
+      "Herhangi bir lisans bölümünden mezun olmak",
+      "KPSS P3 puan türünden en az 60 puan almış olmak",
+      "Silahlı Özel Güvenlik Kimlik Kartı veya Sertifikasına sahip olmak",
+      "24 saat esasına göre vardiyalı çalışmaya engeli bulunmamak",
+      "35 yaşını doldurmamış olmak"
+     ],
+     "adet": 80,
+     "en_dusuk_puan": 60,
+     "il": "İSTANBUL",
+     "ogrenim": "lisans",
+     "puan_turu": "P3"
+    },
+    {
+     "unvan": "Koruma ve Güvenlik Görevlisi",
+     "kosullar": [
+      "Herhangi bir lisans bölümünden mezun olmak",
+      "KPSS P3 puan türünden en az 60 puan almış olmak",
+      "Silahlı Özel Güvenlik Kimlik Kartı veya Sertifikasına sahip olmak",
+      "24 saat esasına göre vardiyalı çalışmaya engeli bulunmamak",
+      "35 yaşını doldurmamış olmak"
+     ],
+     "adet": 20,
+     "en_dusuk_puan": 60,
+     "il": "EDİRNE",
+     "ogrenim": "lisans",
+     "puan_turu": "P3"
+    },
+    {
+     "unvan": "Destek Personeli (Temizlik Görevlisi)",
+     "kosullar": [
+      "En az ortaöğretim (lise) ve dengi okul mezunu olmak",
+      "40 yaşını doldurmamış olmak"
+     ],
+     "adet": 20,
+     "en_dusuk_puan": null,
+     "il": "İSTANBUL",
+     "ogrenim": "ortaogretim",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Destek Personeli (Temizlik Görevlisi)",
+     "kosullar": [
+      "En az ortaöğretim (lise) ve dengi okul mezunu olmak",
+      "40 yaşını doldurmamış olmak"
+     ],
+     "adet": 5,
+     "en_dusuk_puan": null,
+     "il": "EDİRNE",
+     "ogrenim": "ortaogretim",
+     "puan_turu": null
+    }
+   ],
+   "ogrenim": [
+    "lisans",
+    "onlisans",
+    "ortaogretim"
+   ],
+   "puan_turleri": [
+    "P3"
+   ],
+   "ortak_kosullar": [
+    "Başvurular Kariyer Kapısı üzerinden e-Devlet şifresi ile elektronik ortamda yapılacaktır.",
+    "Şahsen, kargo veya posta yoluyla yapılan başvurular kabul edilmeyecektir."
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-10-12",
+   "basvuru_adresi": "https://kariyerkapisi.gov.tr/isealim",
+   "basvuru_yeri": "kariyer_kapisi",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": 60,
+   "iller": [
+    "EDİRNE",
+    "İSTANBUL"
+   ],
+   "kpss_gerekli": true,
+   "kurum": "MİLLİ SARAYLAR İDARESİ BAŞKANLIĞI",
+   "ozet": "Milli Saraylar İdaresi Başkanlığı, İstanbul ve Edirne birimlerinde istihdam edilmek üzere 158 sözleşmeli personel alacaktır. Başvurular 12-22 Ekim 2026 tarihleri arasında Kariyer Kapısı üzerinden yapılacaktır.",
+   "son_basvuru_saati": "23:59",
+   "son_basvuru_tarihi": "2026-10-22",
+   "toplam": 158
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=320d07cc-b5bc-4bab-9541-6c1100def856": {
   "zaman": "2026-10-19T22:24:13+03:00",
   "surum": 2,
@@ -822,6 +1009,309 @@
    "toplam": 2
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=9a12db48-03c8-46f2-8276-adfec8e26efa": {
+  "zaman": "2026-10-20T08:09:04+03:00",
+  "surum": 2,
+  "model": "gemini-3.8-flash",
+  "kaynak": "metin",
+  "imza": "cde1b9b4ef39af37",
+  "baslik": "DÜZCE ÜNİVERSİTESİ REKTÖRLÜĞÜ - 2026 / 3 SÖZLEŞMELİ PERSONEL ALIM İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Büro Personeli (Lisans)",
+     "kosullar": [
+      "İşletme, İktisat, Muhasebe veya Maliye lisans programlarının birinden mezun olmak",
+      "2026 yılı KPSS P3 puan türünden sınava girmiş olmak",
+      "Örgün öğretim öğrencisi olarak kaydı bulunmamak"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": null,
+     "il": "Düzce",
+     "ogrenim": "lisans",
+     "puan_turu": "P3"
+    },
+    {
+     "unvan": "Mühendis (Makine)",
+     "kosullar": [
+      "Makine Mühendisliği lisans programından mezun olmak",
+      "A Sınıfı İş Güvenliği Uzmanı Belgesine sahip olmak",
+      "2026 yılı KPSS P3 puan türünden sınava girmiş olmak",
+      "Vardiyalı sistemde, seyahatte ve arazide çalışmaya engeli bulunmamak",
+      "Örgün öğretim öğrencisi olarak kaydı bulunmamak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": "Düzce",
+     "ogrenim": "lisans",
+     "puan_turu": "P3"
+    },
+    {
+     "unvan": "Teknisyen (İnşaat Teknolojisi)",
+     "kosullar": [
+      "Ortaöğretim kurumlarının İnşaat Teknolojisi alanından mezun olmak",
+      "2024 yılı KPSS P94 puan türünden sınava girmiş olmak",
+      "Erkek olmak",
+      "Yükseköğretim kurumlarının herhangi bir programından mezun olmamak",
+      "Vardiyalı sistemde, seyahatte ve arazide çalışmaya engeli bulunmamak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": "Düzce",
+     "ogrenim": "ortaogretim",
+     "puan_turu": "P94"
+    },
+    {
+     "unvan": "Teknisyen (Tesisat Tekn. ve İklimlendirme)",
+     "kosullar": [
+      "Tesisat Teknolojisi ve İklimlendirme ortaöğretim alanından mezun olmak",
+      "2024 yılı KPSS P94 puan türünden sınava girmiş olmak",
+      "Erkek olmak",
+      "Yükseköğretim kurumlarının herhangi bir programından mezun olmamak",
+      "Vardiyalı sistemde, seyahatte ve arazide çalışmaya engeli bulunmamak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": "Düzce",
+     "ogrenim": "ortaogretim",
+     "puan_turu": "P94"
+    },
+    {
+     "unvan": "Destek Personeli (Temizlik)",
+     "kosullar": [
+      "Herhangi bir ortaöğretim mezunu olmak",
+      "2024 yılı KPSS P94 puan türünden sınava girmiş olmak",
+      "Vardiyalı sistemde çalışmasına engel bir durumu bulunmamak",
+      "Yükseköğretim kurumlarının herhangi bir programından mezun olmamak"
+     ],
+     "adet": 17,
+     "en_dusuk_puan": null,
+     "il": "Düzce",
+     "ogrenim": "ortaogretim",
+     "puan_turu": "P94"
+    },
+    {
+     "unvan": "Destek Personeli (Temizlik - Hastane)",
+     "kosullar": [
+      "Herhangi bir ortaöğretim mezunu olmak",
+      "2024 yılı KPSS P94 puan türünden sınava girmiş olmak",
+      "Vardiyalı sistemde çalışmasına engel bir durumu bulunmamak",
+      "Yükseköğretim kurumlarının herhangi bir programından mezun olmamak"
+     ],
+     "adet": 22,
+     "en_dusuk_puan": null,
+     "il": "Düzce",
+     "ogrenim": "ortaogretim",
+     "puan_turu": "P94"
+    },
+    {
+     "unvan": "Destek Personeli (Gassal)",
+     "kosullar": [
+      "Ortaöğretim kurumlarının İmam Hatip alanından mezun olmak",
+      "2024 yılı KPSS P94 puan türünden sınava girmiş olmak",
+      "Erkek olmak",
+      "Vardiyalı sistemde çalışmasına engel bir durumu bulunmamak",
+      "Yükseköğretim kurumlarının herhangi bir programından mezun olmamak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": "Düzce",
+     "ogrenim": "ortaogretim",
+     "puan_turu": "P94"
+    },
+    {
+     "unvan": "Koruma ve Güvenlik Görevlisi",
+     "kosullar": [
+      "Herhangi bir önlisans programından mezun olmak",
+      "Geçerli silahlı veya silahsız özel güvenlik görevlisi kimlik kartına sahip olmak",
+      "2024 yılı KPSS P93 puan türünden sınava girmiş olmak",
+      "Erkek olmak ve en az 170 cm boyunda olup boy-kilo farkı şartını sağlamak",
+      "İç ve dış mekânda vardiyalı çalışmaya engeli bulunmamak"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": null,
+     "il": "Düzce",
+     "ogrenim": "onlisans",
+     "puan_turu": "P93"
+    },
+    {
+     "unvan": "Koruma ve Güvenlik Görevlisi (Hastane)",
+     "kosullar": [
+      "Herhangi bir önlisans programından mezun olmak",
+      "Geçerli silahlı veya silahsız özel güvenlik görevlisi kimlik kartına sahip olmak",
+      "2024 yılı KPSS P93 puan türünden sınava girmiş olmak",
+      "Erkek olmak ve en az 170 cm boyunda olup boy-kilo farkı şartını sağlamak",
+      "İç ve dış mekânda vardiyalı çalışmaya engeli bulunmamak"
+     ],
+     "adet": 3,
+     "en_dusuk_puan": null,
+     "il": "Düzce",
+     "ogrenim": "onlisans",
+     "puan_turu": "P93"
+    },
+    {
+     "unvan": "Eczacı",
+     "kosullar": [
+      "Eczacılık lisans programından mezun olmak",
+      "KPSS şartı aranmamaktadır",
+      "Vardiyalı sistemde çalışmasına engel bir durumu bulunmamak",
+      "Örgün öğretim öğrencisi olarak kaydı bulunmamak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": "Düzce",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Hemşire (Lisans)",
+     "kosullar": [
+      "Hemşirelik, Hemşirelik ve Sağlık Hizmetleri veya Sağlık Memurluğu mezunu olmak",
+      "2026 yılı KPSS P3 puan türünden sınava girmiş olmak",
+      "Vardiyalı sistemde çalışmasına engel bir durumu bulunmamak",
+      "Örgün öğretim öğrencisi olarak kaydı bulunmamak"
+     ],
+     "adet": 86,
+     "en_dusuk_puan": null,
+     "il": "Düzce",
+     "ogrenim": "lisans",
+     "puan_turu": "P3"
+    },
+    {
+     "unvan": "Sağlık Teknikeri (Anestezi)",
+     "kosullar": [
+      "Anestezi veya Anestezi Teknikerliği ön lisans programından mezun olmak",
+      "2024 yılı KPSS P93 puan türünden sınava girmiş olmak",
+      "Vardiyalı sistemde çalışmasına engel bir durumu bulunmamak",
+      "Örgün öğretim öğrencisi olarak kaydı bulunmamak"
+     ],
+     "adet": 5,
+     "en_dusuk_puan": null,
+     "il": "Düzce",
+     "ogrenim": "onlisans",
+     "puan_turu": "P93"
+    },
+    {
+     "unvan": "Sağlık Teknikeri (Eczane)",
+     "kosullar": [
+      "Eczane Teknikerliği ya da Eczane Hizmetleri önlisans programından mezun olmak",
+      "2024 yılı KPSS P93 puan türünden sınava girmiş olmak",
+      "Vardiyalı sistemde çalışmasına engel bir durumu bulunmamak",
+      "Örgün öğretim öğrencisi olarak kaydı bulunmamak"
+     ],
+     "adet": 3,
+     "en_dusuk_puan": null,
+     "il": "Düzce",
+     "ogrenim": "onlisans",
+     "puan_turu": "P93"
+    },
+    {
+     "unvan": "Sağlık Teknikeri (Elektronörofizyoloji)",
+     "kosullar": [
+      "Elektronörofizyoloji ön lisans programından mezun olmak",
+      "2024 yılı KPSS P93 puan türünden sınava girmiş olmak",
+      "Vardiyalı sistemde çalışmasına engel bir durumu bulunmamak",
+      "Örgün öğretim öğrencisi olarak kaydı bulunmamak"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": null,
+     "il": "Düzce",
+     "ogrenim": "onlisans",
+     "puan_turu": "P93"
+    },
+    {
+     "unvan": "Sağlık Teknikeri (Tıbbi Gör.)",
+     "kosullar": [
+      "Tıbbi Görüntüleme Teknikleri veya Radyoloji önlisans mezunu olmak",
+      "2024 yılı KPSS P93 puan türünden sınava girmiş olmak",
+      "Vardiyalı sistemde çalışmasına engel bir durumu bulunmamak",
+      "Örgün öğretim öğrencisi olarak kaydı bulunmamak"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": null,
+     "il": "Düzce",
+     "ogrenim": "onlisans",
+     "puan_turu": "P93"
+    },
+    {
+     "unvan": "Sağlık Teknikeri (Tıbbi Lab.)",
+     "kosullar": [
+      "Tıbbi Laboratuvar Teknikleri önlisans programlarının birinden mezun olmak",
+      "2024 yılı KPSS P93 puan türünden sınava girmiş olmak",
+      "Vardiyalı sistemde çalışmasına engel bir durumu bulunmamak",
+      "Örgün öğretim öğrencisi olarak kaydı bulunmamak"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": null,
+     "il": "Düzce",
+     "ogrenim": "onlisans",
+     "puan_turu": "P93"
+    },
+    {
+     "unvan": "Sağlık Teknikeri (Diyaliz)",
+     "kosullar": [
+      "Diyaliz ön lisans programından mezun olmak",
+      "2024 yılı KPSS P93 puan türünden sınava girmiş olmak",
+      "Vardiyalı sistemde çalışmasına engel bir durumu bulunmamak",
+      "Örgün öğretim öğrencisi olarak kaydı bulunmamak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": "Düzce",
+     "ogrenim": "onlisans",
+     "puan_turu": "P93"
+    },
+    {
+     "unvan": "Sağlık Teknikeri (Acil)",
+     "kosullar": [
+      "İlk ve Acil Yardım, Paramedik veya Acil Bakım Teknikerliği mezunu olmak",
+      "2024 yılı KPSS P93 puan türünden sınava girmiş olmak",
+      "Vardiyalı sistemde çalışmasına engel bir durumu bulunmamak",
+      "Örgün öğretim öğrencisi olarak kaydı bulunmamak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": "Düzce",
+     "ogrenim": "onlisans",
+     "puan_turu": "P93"
+    }
+   ],
+   "ogrenim": [
+    "lisans",
+    "onlisans",
+    "ortaogretim"
+   ],
+   "puan_turleri": [
+    "P3",
+    "P93",
+    "P94"
+   ],
+   "ortak_kosullar": [
+    "Görevini devamlı yapmasına engel teşkil edecek sağlık problemi bulunmamak",
+    "Açık öğretim hariç örgün öğretim öğrencisi olarak kaydı bulunmamak",
+    "Lisans için 2026 KPSS, ön lisans ve ortaöğretim için 2024 KPSS puanına sahip olmak",
+    "Şahsen veya posta yoluyla başvuru kabul edilmeyecektir"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-10-14",
+   "basvuru_adresi": null,
+   "basvuru_yeri": null,
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": null,
+   "iller": [
+    "Düzce"
+   ],
+   "kpss_gerekli": true,
+   "kurum": "Düzce Üniversitesi Rektörlüğü",
+   "ozet": "Düzce Üniversitesi, çeşitli birimlerinde istihdam etmek üzere 153 sözleşmeli personel alımı yapmaktadır. Başvurular 14-28 Ekim 2026 tarihleri arasında yapılacaktır.",
+   "son_basvuru_saati": "16:00",
+   "son_basvuru_tarihi": "2026-10-28",
+   "toplam": 153
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=a6d18ac1-8799-4f76-b4f5-418ceb8c735e": {
   "zaman": "2026-10-20T01:17:41+03:00",
   "surum": 2,
@@ -990,6 +1480,104 @@
    "son_basvuru_saati": "23:59",
    "son_basvuru_tarihi": "2026-10-26",
    "toplam": 10
+  }
+ },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=cb266bf7-8022-4349-b285-053be1f91922": {
+  "zaman": "2026-10-20T08:09:04+03:00",
+  "surum": 2,
+  "model": "gemini-3.8-flash",
+  "kaynak": "metin",
+  "imza": "9fc26d48b42cdfdb",
+  "baslik": "İSTANBUL TEKNİK ÜNİVERSİTESİ REKTÖRLÜĞÜ - SÖZLEŞMELİ PERSONEL ALIMI İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Destek Personeli DP-1",
+     "kosullar": [
+      "Lise veya dengi okul mezunu olmak.",
+      "2024 KPSS P94 puan türünden 55 ve üzeri puan almış olmak.",
+      "Görevini devamlı yapmasına engel sağlık engeli bulunmamak."
+     ],
+     "adet": 12,
+     "en_dusuk_puan": 55.0,
+     "il": "İSTANBUL",
+     "ogrenim": "ortaogretim",
+     "puan_turu": "P94"
+    },
+    {
+     "unvan": "Koruma ve Güvenlik Görevlisi (KGG-1) Önlisans -Erkek",
+     "kosullar": [
+      "Herhangi bir önlisans programından mezun olmak.",
+      "2024 KPSS P93 puan türünden 60 ve üzeri puan almış olmak.",
+      "Geçerli özel güvenlik görevlisi kimlik kartına sahip olmak.",
+      "Askerlik ile ilişiği bulunmamak.",
+      "Boy-kilo şartına ve sağlık kriterlerine uygun olmak, dövmesi bulunmamak."
+     ],
+     "adet": 11,
+     "en_dusuk_puan": 60.0,
+     "il": "İSTANBUL",
+     "ogrenim": "onlisans",
+     "puan_turu": "P93"
+    },
+    {
+     "unvan": "Koruma ve Güvenlik Görevlisi (KGG-2) Önlisans- Kadın",
+     "kosullar": [
+      "Herhangi bir önlisans programından mezun olmak.",
+      "2024 KPSS P93 puan türünden 60 ve üzeri puan almış olmak.",
+      "Geçerli özel güvenlik görevlisi kimlik kartına sahip olmak.",
+      "Boy-kilo şartına ve sağlık kriterlerine uygun olmak, dövmesi bulunmamak."
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 60.0,
+     "il": "İSTANBUL",
+     "ogrenim": "onlisans",
+     "puan_turu": "P93"
+    },
+    {
+     "unvan": "Teknisyen (TKN-1)",
+     "kosullar": [
+      "Lise ve dengi Tesisat Teknolojisi ve İklimlendirme mezunu olmak.",
+      "2024 KPSS P94 puan türünden 60 ve üzeri puan almış olmak.",
+      "Görevini devamlı yapmasına engel sağlık engeli bulunmamak."
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 60.0,
+     "il": "İSTANBUL",
+     "ogrenim": "ortaogretim",
+     "puan_turu": "P94"
+    }
+   ],
+   "ogrenim": [
+    "onlisans",
+    "ortaogretim"
+   ],
+   "puan_turleri": [
+    "P93",
+    "P94"
+   ],
+   "ortak_kosullar": [
+    "Son başvuru tarihi itibariyle 35 yaşını doldurmamış olmak.",
+    "Yükseköğretim kurumlarında örgün öğretime devam eden öğrenci olmamak.",
+    "2024 KPSS (B) grubu sınavına girmiş olmak."
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-10-13",
+   "basvuru_adresi": null,
+   "basvuru_yeri": "diger",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": 55.0,
+   "iller": [
+    "İSTANBUL"
+   ],
+   "kpss_gerekli": true,
+   "kurum": "İSTANBUL TEKNİK ÜNİVERSİTESİ REKTÖRLÜĞÜ",
+   "ozet": "İstanbul Teknik Üniversitesi, 2024 KPSS puanıyla 25 sözleşmeli personel alıyor. Başvurular 13.10.2026 - 27.10.2026 tarihleri arasında yapılacaktır.",
+   "son_basvuru_saati": "23:59",
+   "son_basvuru_tarihi": "2026-10-27",
+   "toplam": 25
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=db21f412-186a-4d5c-bc46-03dff9ea17fb": {
