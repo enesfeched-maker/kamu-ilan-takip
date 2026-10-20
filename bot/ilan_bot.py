@@ -559,6 +559,8 @@ LOGO_BEKLEME = timedelta(hours=3)
 
 
 def logo_beklemesi_doldu(i, simdi_=None):
+    if i.get('amblem_hemen'):   # config 'telegram_amblem_hemen': logo beklenmeden amblemle gider
+        return True
     try:
         ilk = datetime.fromisoformat(i.get('ilk_gorulme') or '')
     except ValueError:
@@ -1445,7 +1447,8 @@ def main():
     gonderilecek = telegram_sirasi(mevcut, gelen, yeniler, gonderilen, bekleyen,
                                   ilk_calisma, a.duyur_mevcut, cfg)
     if not a.prepare:   # logosuz ilan sıranın başını tıkamasın diye sınırdan önce ayıklanır
-        gonderilecek = yayina_hazir(gonderilecek)
+        hemen = set(cfg.get('telegram_amblem_hemen') or [])
+        gonderilecek = yayina_hazir([dict(i, amblem_hemen=True) if i['id'] in hemen else i for i in gonderilecek])
     # İlan başına hatırlatma kaldırıldı (geçmiş hatirlatilan korunur, yeni kayıt eklenmez);
     # yerine günde bir kez sabah özeti (yeni ilanlar + son başvurusu yaklaşanlar + açık ilan sayısı) gönderilir.
     mesajlar = dict(veri.get('telegram_mesajlari', {}))

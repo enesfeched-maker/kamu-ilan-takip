@@ -20,6 +20,9 @@ class LogoYedegi(unittest.TestCase):
         with contextlib.redirect_stdout(io.StringIO()):
             kalan = ilan_bot.logolu_olanlar([taze, eski], logo_bul=lambda i: None, simdi_=SIMDI)
         self.assertEqual([i['id'] for i in kalan], ['b'])
+        with contextlib.redirect_stdout(io.StringIO()):
+            kalan = ilan_bot.logolu_olanlar([dict(taze, amblem_hemen=True)], logo_bul=lambda i: None, simdi_=SIMDI)
+        self.assertEqual([i['id'] for i in kalan], ['a'])
 
     def test_amblem(self):
         self.assertEqual(kt.bas_harfler('Doğanyol Belediye Başkanlığı'), 'DB')
