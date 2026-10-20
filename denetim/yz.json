@@ -223,6 +223,46 @@
    "toplam": 13
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=17bdedb4-3b36-4f67-9543-d6755941032b": {
+  "zaman": "2026-10-20T10:23:39+03:00",
+  "surum": 2,
+  "model": "gemini-3.8-flash",
+  "kaynak": "metin",
+  "imza": "8494ea11d9dd081c",
+  "baslik": "JANDARMA VE SAHİL GÜVENLİK AKADEMİSİ BAŞKANLIĞI - 2027 YILI J.GN.K.LIĞI MUVAZZAF SUBAY TEMİNİ",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Muvazzaf Subay",
+     "kosullar": [],
+     "adet": null,
+     "en_dusuk_puan": null,
+     "il": null,
+     "ogrenim": null,
+     "puan_turu": null
+    }
+   ],
+   "ogrenim": [],
+   "puan_turleri": [],
+   "ortak_kosullar": [],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "kismi",
+   "baslangic_tarihi": "2026-10-12",
+   "basvuru_adresi": null,
+   "basvuru_yeri": null,
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": null,
+   "iller": [],
+   "kpss_gerekli": null,
+   "kurum": "Jandarma ve Sahil Güvenlik Akademisi Başkanlığı",
+   "ozet": "Jandarma ve Sahil Güvenlik Akademisi Başkanlığı, Jandarma Genel Komutanlığı için muvazzaf subay temini yapacaktır. Başvurular 12 Ekim - 26 Ekim 2026 tarihleri arasında kabul edilecektir.",
+   "son_basvuru_saati": "23:59",
+   "son_basvuru_tarihi": "2026-10-26",
+   "toplam": null
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=292b13a1-7511-4f89-896d-b19f526fcab1": {
   "zaman": "2026-10-20T08:09:04+03:00",
   "surum": 2,
@@ -946,6 +986,69 @@
    "toplam": 7
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=5a71a4f2-6023-4194-822c-01e687eb9b15": {
+  "zaman": "2026-10-20T10:23:39+03:00",
+  "surum": 2,
+  "model": "gemini-3.8-flash",
+  "kaynak": "metin",
+  "imza": "d9ae3c412c5c9d76",
+  "baslik": "VAKIFLAR GENEL MÜDÜRLÜĞÜ - VAKIF UZMAN YARDIMCILIĞI ALIM İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Vakıf Uzman Yardımcısı (Arap Dili ve Edebiyatı)",
+     "kosullar": [
+      "Arap Dili ve Edebiyatı lisans mezunu olmak."
+     ],
+     "adet": 3,
+     "en_dusuk_puan": 70.0,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP3"
+    },
+    {
+     "unvan": "Vakıf Uzman Yardımcısı (İlahiyat)",
+     "kosullar": [
+      "İlahiyat lisans mezunu olmak."
+     ],
+     "adet": 2,
+     "en_dusuk_puan": 70.0,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP3"
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "KPSSP3"
+   ],
+   "ortak_kosullar": [
+    "2025 veya 2026 KPSS P3 puan türünden en az 70 puan almış olmak.",
+    "Son beş yıl içinde ilgili yabancı dilden YDS veya dengi sınavlardan en az 80 puan almış olmak.",
+    "Sınavın yapıldığı yılın ocak ayı başı itibarıyla 35 yaşını doldurmamış olmak (01.01.1991 sonrası)."
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-10-12",
+   "basvuru_adresi": "https://kariyerkapisi.gov.tr",
+   "basvuru_yeri": "kariyer_kapisi",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": 70.0,
+   "iller": [
+    "Ankara"
+   ],
+   "kpss_gerekli": true,
+   "kurum": "Vakıflar Genel Müdürlüğü",
+   "ozet": "Vakıflar Genel Müdürlüğü 5 Vakıf Uzman Yardımcısı alımı yapacaktır. Başvurular 12-25 Ekim 2026 tarihleri arasında Kariyer Kapısı üzerinden yapılacaktır.",
+   "son_basvuru_saati": "23:59",
+   "son_basvuru_tarihi": "2026-10-25",
+   "toplam": 5
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=727b6946-c0fe-493f-a9e1-a0d668eabca2": {
   "zaman": "2026-10-20T01:17:41+03:00",
   "surum": 2,
@@ -1482,6 +1585,83 @@
    "toplam": 10
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=c1ab5cba-d22b-40ab-b89b-1d27431a422c": {
+  "zaman": "2026-10-20T10:23:39+03:00",
+  "surum": 2,
+  "model": "gemini-3.8-flash",
+  "kaynak": "metin",
+  "imza": "37103368cd323574",
+  "baslik": "İSTANBUL KALKINMA AJANSI - PERSONEL ALIM İLANI 5 UZMAN",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Uzman Personel (Mühendislik ve İlgili Bölümler)",
+     "kosullar": [
+      "Mühendislik, Matematik, Şehir ve Bölge Planlama veya YBS lisans programlarından mezun olmak",
+      "İngilizce YDS veya e-YDS sınavından en az C düzeyinde puan belgesine sahip olmak",
+      "İlgili KPSS puan türünden en az 80 puan almış olmak"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": 80.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Uzman Personel (İİBF)",
+     "kosullar": [
+      "İşletme, İktisat veya Maliye lisans programlarından mezun olmak",
+      "İngilizce YDS veya e-YDS sınavından en az C düzeyinde puan belgesine sahip olmak",
+      "İlgili KPSS puan türünden en az 80 puan almış olmak"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": 80.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Uzman Personel (Deneyim ile)",
+     "kosullar": [
+      "Mühendislik, Matematik, Şehir ve Bölge Planlama veya YBS lisans programlarından mezun olmak",
+      "Başvuru tarihi itibarıyla 50 yaşını doldurmamış olmak",
+      "Belirtilen alanlarda kamu veya özel sektörde en az 5 yıl fiilen çalışmış olmak",
+      "İngilizce YDS veya e-YDS sınavından en az C düzeyinde puan belgesine sahip olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": null
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "İngilizce YDS/e-YDS veya uluslararası geçerliliği olan sınavlardan en az C düzeyinde puana sahip olmak",
+    "Erkek adaylar için muvazzaf askerlik hizmetini yapmış, ertelemiş veya yedek sınıfa geçirilmiş olmak",
+    "Görevini devamlı yapmasına engel akıl hastalığı ve sağlık engeli bulunmamak"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-11-02",
+   "basvuru_adresi": null,
+   "basvuru_yeri": "diger",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": 80.0,
+   "iller": [],
+   "kpss_gerekli": true,
+   "kurum": "İstanbul Kalkınma Ajansı",
+   "ozet": "İstanbul Kalkınma Ajansı, 4'ü KPSS puanıyla ve 1'i iş tecrübesiyle olmak üzere lisans mezunu toplam 5 uzman personel alımı yapacaktır. Başvurular 2-22 Kasım 2026 tarihleri arasında elektronik ortamda alınacaktır.",
+   "son_basvuru_saati": "23:59",
+   "son_basvuru_tarihi": "2026-11-22",
+   "toplam": 5
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=cb266bf7-8022-4349-b285-053be1f91922": {
   "zaman": "2026-10-20T08:09:04+03:00",
   "surum": 2,
@@ -1578,6 +1758,111 @@
    "son_basvuru_saati": "23:59",
    "son_basvuru_tarihi": "2026-10-27",
    "toplam": 25
+  }
+ },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=d72bc5ed-a952-4452-9fea-b05616038765": {
+  "zaman": "2026-10-20T10:23:39+03:00",
+  "surum": 2,
+  "model": "gemini-3.8-flash",
+  "kaynak": "metin",
+  "imza": "1fea4200275c8096",
+  "baslik": "TASARRUF MEVDUATI SİGORTA FONU BAŞKANLIĞI - FON DENETÇİ YARDIMCILIĞI, FON UZMAN YARDIMCILIĞI ve FON AVUKATLIĞI GİRİŞ SINAVI İLANI 2026",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Fon Denetçi Yardımcısı",
+     "kosullar": [
+      "Siyasal bilgiler, hukuk, İİBF, iktisat, işletme, mühendislik veya fen edebiyat mezunu olmak",
+      "2025 veya 2026 KPSS A grubu ilgili puan türlerinin birinden en az 75 puan almış olmak",
+      "2024, 2025 veya 2026 YDS veya e-YDS İngilizce, Fransızca veya Almancadan en az 50 almış olmak"
+     ],
+     "adet": 10,
+     "en_dusuk_puan": 75,
+     "il": "İstanbul",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP8, KPSSP9, KPSSP11, KPSSP16, KPSSP17, KPSSP18, KPSSP21, KPSSP22, KPSSP23, KPSSP26, KPSSP27, KPSSP28, KPSSP31, KPSSP32, KPSSP33, KPSSP37, KPSSP38, KPSSP41, KPSSP42, KPSSP43, KPSSP46, KPSSP47, KPSSP48"
+    },
+    {
+     "unvan": "Fon Uzman Yardımcısı",
+     "kosullar": [
+      "Siyasal bilgiler, hukuk, İİBF, iktisat, işletme, mühendislik veya fen edebiyat mezunu olmak",
+      "2025 veya 2026 KPSS A grubu ilgili puan türlerinin birinden en az 75 puan almış olmak",
+      "2024, 2025 veya 2026 YDS veya e-YDS İngilizce, Fransızca veya Almancadan en az 50 almış olmak"
+     ],
+     "adet": 45,
+     "en_dusuk_puan": 75,
+     "il": "İstanbul",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP8, KPSSP9, KPSSP11, KPSSP16, KPSSP17, KPSSP18, KPSSP21, KPSSP22, KPSSP23, KPSSP26, KPSSP27, KPSSP28, KPSSP31, KPSSP32, KPSSP33, KPSSP37, KPSSP38, KPSSP41, KPSSP42, KPSSP43, KPSSP46, KPSSP47, KPSSP48"
+    },
+    {
+     "unvan": "Fon Avukatı",
+     "kosullar": [
+      "Hukuk fakültesi mezunu olmak",
+      "Avukatlık ruhsatnamesine sahip olmak",
+      "2026 KPSS B grubu KPSSP3 puan türünden en az 70 puan almış olmak"
+     ],
+     "adet": 20,
+     "en_dusuk_puan": 70,
+     "il": "İstanbul",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP3"
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "KPSSP3",
+    "KPSSP8",
+    "KPSSP9",
+    "KPSSP11",
+    "KPSSP16",
+    "KPSSP17",
+    "KPSSP18",
+    "KPSSP21",
+    "KPSSP22",
+    "KPSSP23",
+    "KPSSP26",
+    "KPSSP27",
+    "KPSSP28",
+    "KPSSP31",
+    "KPSSP32",
+    "KPSSP33",
+    "KPSSP37",
+    "KPSSP38",
+    "KPSSP41",
+    "KPSSP42",
+    "KPSSP43",
+    "KPSSP46",
+    "KPSSP47",
+    "KPSSP48"
+   ],
+   "ortak_kosullar": [
+    "Sınavın yapıldığı yılın Ocak ayının birinci günü itibarıyla 35 yaşını doldurmamış olmak",
+    "Görevini devamlı yapmasına engel olabilecek akıl hastalığı bulunmamak",
+    "Askerlikle ilişiği bulunmamak, yapmış veya erteletmiş olmak",
+    "Müflis olmamak, konkordato ilan etmemiş veya iflasın ertelenmesi kararı verilmemiş olmak",
+    "Giriş sınavı yazılı ve sözlü aşamalardan oluşacaktır"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-10-12",
+   "basvuru_adresi": null,
+   "basvuru_yeri": null,
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": 70,
+   "iller": [
+    "İstanbul"
+   ],
+   "kpss_gerekli": true,
+   "kurum": "Tasarruf Mevduatı Sigorta Fonu Başkanlığı",
+   "ozet": "Tasarruf Mevduatı Sigorta Fonu, İstanbul teşkilatında istihdam edilmek üzere 10 denetçi yardımcısı, 45 uzman yardımcısı ve 20 avukat olmak üzere 75 personel alacak. Başvurular 12-30 Ekim 2026 tarihleri arasında yapılacaktır.",
+   "son_basvuru_saati": "17:00",
+   "son_basvuru_tarihi": "2026-10-30",
+   "toplam": 75
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=db21f412-186a-4d5c-bc46-03dff9ea17fb": {
@@ -1709,6 +1994,69 @@
    "toplam": 9
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=f64bcfee-da05-46c5-8324-b42254c169a2": {
+  "zaman": "2026-10-20T10:23:39+03:00",
+  "surum": 2,
+  "model": "gemini-3.8-flash",
+  "kaynak": "metin",
+  "imza": "5a88faaace6464e0",
+  "baslik": "SERMAYE PİYASASI KURULU BAŞKANLIĞI - SERMAYE PİYASASI KURULU MESLEK PERSONEL YARDIMCILIĞI GİRİŞ SINAVI 2026",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Uzman Yardımcısı",
+     "kosullar": [
+      "İlgili 4 yıllık lisans programlarından mezun olmak.",
+      "2025 veya 2026 KPSS ilgili puan türlerinin birinden en az 75 almış olmak.",
+      "01 Ocak 2026 tarihi itibarıyla 35 yaşını doldurmamış olmak.",
+      "Mali yasalara göre suç sayılan bir eylem dolayısıyla hüküm giymemiş olmak."
+     ],
+     "adet": 40,
+     "en_dusuk_puan": 75.0,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "KPSSP1",
+    "KPSSP2",
+    "KPSSP3",
+    "KPSSP25",
+    "KPSSP26",
+    "KPSSP27",
+    "KPSSP28",
+    "KPSSP45"
+   ],
+   "ortak_kosullar": [
+    "01 Ocak 2026 tarihi itibarıyla 35 yaşını doldurmamış olmak.",
+    "2025 veya 2026 KPSS ilgili puan türlerinin birinden en az 75 puan almış olmak.",
+    "En yüksek puanlı ilk 800 aday arasına girmek.",
+    "Sermaye Piyasası Kanunu ve diğer mali yasalara göre mahkumiyeti bulunmamak."
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-10-12",
+   "basvuru_adresi": null,
+   "basvuru_yeri": null,
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": 75.0,
+   "iller": [
+    "Ankara"
+   ],
+   "kpss_gerekli": true,
+   "kurum": "Sermaye Piyasası Kurulu Başkanlığı",
+   "ozet": "Sermaye Piyasası Kurulu Ankara teşkilatına 40 Uzman Yardımcısı alımı yapacaktır. Başvurular 12-26 Ekim 2026 tarihleri arasında gerçekleştirilecektir.",
+   "son_basvuru_saati": "23:59",
+   "son_basvuru_tarihi": "2026-10-26",
+   "toplam": 40
+  }
+ },
  "iskur-01c8b814c37c00ddcec7858b": {
   "zaman": "2026-10-20T06:12:51+03:00",
   "surum": 2,
@@ -1781,6 +2129,67 @@
    "son_basvuru_saati": "18:00",
    "son_basvuru_tarihi": "2026-12-03",
    "toplam": null
+  }
+ },
+ "iskur-3161393ea90114b808aceb51": {
+  "zaman": "2026-10-20T10:23:39+03:00",
+  "surum": 2,
+  "model": "gemini-3.8-flash",
+  "kaynak": "metin",
+  "imza": "e9442631a2a84083",
+  "baslik": "Edirne Keşan Belediyesi Memur Alım İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Mühendis",
+     "kosullar": [
+      "KPSS P3 puan türünden en az 70 puan almış olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 70.0,
+     "il": "Edirne",
+     "ogrenim": "lisans",
+     "puan_turu": "P3"
+    },
+    {
+     "unvan": "Mühendis",
+     "kosullar": [
+      "KPSS P3 puan türünden en az 70 puan almış olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 70.0,
+     "il": "Edirne",
+     "ogrenim": "lisans",
+     "puan_turu": "P3"
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P3"
+   ],
+   "ortak_kosullar": [
+    "Başvurular istenilen belgeler eklenerek e-posta yoluyla yapılacaktır."
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-11-16",
+   "basvuru_adresi": "insankaynaklari@kesan.bel.tr",
+   "basvuru_yeri": "eposta",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": 70.0,
+   "iller": [
+    "Edirne"
+   ],
+   "kpss_gerekli": true,
+   "kurum": "Edirne Keşan Belediyesi",
+   "ozet": "Edirne Keşan Belediyesi 2 Mühendis alımı yapacaktır. Başvurular 16-19 Kasım 2026 tarihleri arasında insankaynaklari@kesan.bel.tr adresine yapılacaktır.",
+   "son_basvuru_saati": "17:00",
+   "son_basvuru_tarihi": "2026-11-19",
+   "toplam": 2
   }
  },
  "iskur-48ae81d78be9ead4ae15005a": {
@@ -1898,6 +2307,38 @@
    "toplam": null
   }
  },
+ "iskur-beceb4b88f33dcb12811b07a": {
+  "zaman": "2026-10-20T10:23:39+03:00",
+  "surum": 2,
+  "model": "gemini-3.8-flash",
+  "kaynak": "metin",
+  "imza": "f9be685d5bb2c73d",
+  "baslik": "İstanbul Kalkınma Ajansı Personel Alım İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [],
+   "ogrenim": [],
+   "puan_turleri": [],
+   "ortak_kosullar": [],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "kismi",
+   "baslangic_tarihi": null,
+   "basvuru_adresi": null,
+   "basvuru_yeri": null,
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": null,
+   "iller": [
+    "İstanbul"
+   ],
+   "kpss_gerekli": null,
+   "kurum": "İstanbul Kalkınma Ajansı",
+   "ozet": "İstanbul Kalkınma Ajansı personel alımı yapacağını duyurmuştur. Son başvuru tarihi 2 Kasım 2026 saat 17:00'dir.",
+   "son_basvuru_saati": "17:00",
+   "son_basvuru_tarihi": "2026-11-02",
+   "toplam": null
+  }
+ },
  "sbb-24c9bb297ddcd48d3ccc1aa2": {
   "zaman": "2026-10-19T22:24:13+03:00",
   "surum": 2,
@@ -1952,6 +2393,284 @@
    "son_basvuru_saati": null,
    "son_basvuru_tarihi": null,
    "toplam": 1
+  }
+ },
+ "sbb-3aa4736db5de6f1d64227873": {
+  "zaman": "2026-10-20T10:23:39+03:00",
+  "surum": 2,
+  "model": "gemini-3.8-flash",
+  "kaynak": "pdf",
+  "imza": "5b17f2cc94527f31",
+  "baslik": "JANDARMA GENEL KOMUTANLIĞI - 135 MUVAZZAF SUBAY TEMİN EDİLECEKTİR",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Muvazzaf Subay (Jandarma)",
+     "kosullar": [
+      "En az dört yıllık lisans mezunu olmak",
+      "2025 veya 2026 KPSS P3 puan türünden en az 65 almış olmak",
+      "Son 5 yıl içinde ALES EA puan türünden en az 65 almış olmak",
+      "01 Ocak 2026 itibarıyla 27 yaşını bitirmemiş olmak (lisansüstü için 32 yaş)"
+     ],
+     "adet": 79,
+     "en_dusuk_puan": 65.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSS P3"
+    },
+    {
+     "unvan": "Muvazzaf Subay (İstihkam)",
+     "kosullar": [
+      "Kılavuzda belirtilen ilgili lisans bölümlerinden mezun olmak",
+      "2025 veya 2026 KPSS P3 puan türünden en az 65 almış olmak",
+      "Son 5 yıl içinde ALES EA puan türünden en az 65 almış olmak",
+      "01 Ocak 2026 itibarıyla 27 yaşını bitirmemiş olmak"
+     ],
+     "adet": 11,
+     "en_dusuk_puan": 65.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSS P3"
+    },
+    {
+     "unvan": "Muvazzaf Subay (Muhabere)",
+     "kosullar": [
+      "Kılavuzda belirtilen ilgili lisans bölümlerinden mezun olmak",
+      "2025 veya 2026 KPSS P3 puan türünden en az 65 almış olmak",
+      "Son 5 yıl içinde ALES EA puan türünden en az 65 almış olmak",
+      "01 Ocak 2026 itibarıyla 27 yaşını bitirmemiş olmak"
+     ],
+     "adet": 10,
+     "en_dusuk_puan": 65.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSS P3"
+    },
+    {
+     "unvan": "Muvazzaf Subay (İkmal)",
+     "kosullar": [
+      "Kılavuzda belirtilen ilgili lisans bölümlerinden mezun olmak",
+      "2025 veya 2026 KPSS P3 puan türünden en az 65 almış olmak",
+      "Son 5 yıl içinde ALES EA puan türünden en az 65 almış olmak",
+      "01 Ocak 2026 itibarıyla 27 yaşını bitirmemiş olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 65.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSS P3"
+    },
+    {
+     "unvan": "Muvazzaf Subay (Bakım)",
+     "kosullar": [
+      "Kılavuzda belirtilen ilgili lisans bölümlerinden mezun olmak",
+      "2025 veya 2026 KPSS P3 puan türünden en az 65 almış olmak",
+      "Son 5 yıl içinde ALES EA puan türünden en az 65 almış olmak",
+      "01 Ocak 2026 itibarıyla 27 yaşını bitirmemiş olmak"
+     ],
+     "adet": 7,
+     "en_dusuk_puan": 65.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSS P3"
+    },
+    {
+     "unvan": "Muvazzaf Subay (Maliye)",
+     "kosullar": [
+      "Kılavuzda belirtilen ilgili lisans bölümlerinden mezun olmak",
+      "2025 veya 2026 KPSS P3 puan türünden en az 65 almış olmak",
+      "Son 5 yıl içinde ALES EA puan türünden en az 65 almış olmak",
+      "01 Ocak 2026 itibarıyla 27 yaşını bitirmemiş olmak"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": 65.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSS P3"
+    },
+    {
+     "unvan": "Muvazzaf Subay (Mühendis - İnşaat)",
+     "kosullar": [
+      "İnşaat veya İnşaat Mühendisliği lisans programından mezun olmak",
+      "2025 veya 2026 KPSS P3 puan türünden en az 65 almış olmak",
+      "Son 5 yıl içinde ALES EA puan türünden en az 65 almış olmak",
+      "01 Ocak 2026 itibarıyla 27 yaşını bitirmemiş olmak"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": 65.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSS P3"
+    },
+    {
+     "unvan": "Muvazzaf Subay (Öğretmen - Beden Eğitimi)",
+     "kosullar": [
+      "Beden Eğitimi veya Spor lisans programlarından mezun olmak",
+      "2025 veya 2026 KPSS P3 puanından en az 65 ve ALES EA en az 65 almış olmak",
+      "Belirtilen spor branşlarında en az 1 yıl lisanslı olmak veya antrenörlük belgesi bulunmak",
+      "01 Ocak 2026 itibarıyla 27 yaşını bitirmemiş olmak"
+     ],
+     "adet": 3,
+     "en_dusuk_puan": 65.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSS P3"
+    },
+    {
+     "unvan": "Muvazzaf Subay (Öğretmen - Rehberlik)",
+     "kosullar": [
+      "Rehberlik ve Psikolojik Danışmanlık lisans bölümünden mezun olmak",
+      "2025 veya 2026 KPSS P3 puan türünden en az 65 almış olmak",
+      "Son 5 yıl içinde ALES EA puan türünden en az 65 almış olmak",
+      "Kadın aday olmak ve 27 yaşını bitirmemiş olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 65.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSS P3"
+    },
+    {
+     "unvan": "Muvazzaf Subay (Öğretmen - Hukuk)",
+     "kosullar": [
+      "Hukuk lisans programından mezun olmak",
+      "2025 veya 2026 KPSS P3 puan türünden en az 65 almış olmak",
+      "Son 5 yıl içinde ALES EA puan türünden en az 65 almış olmak",
+      "01 Ocak 2026 itibarıyla 27 yaşını bitirmemiş olmak"
+     ],
+     "adet": 4,
+     "en_dusuk_puan": 65.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSS P3"
+    },
+    {
+     "unvan": "Muvazzaf Subay (Veteriner)",
+     "kosullar": [
+      "Veteriner lisans programından mezun olmak",
+      "2025 veya 2026 KPSS P3 puan türünden en az 65 almış olmak",
+      "Son 5 yıl içinde ALES EA puan türünden en az 65 almış olmak",
+      "01 Ocak 2026 itibarıyla 32 yaşını bitirmemiş olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 65.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSS P3"
+    },
+    {
+     "unvan": "Muvazzaf Subay (Öğretmen - İngilizce)",
+     "kosullar": [
+      "İlgili İngilizce lisans programlarından mezun olmak",
+      "KPSS P3 en az 65, ALES EA en az 65 ve son 5 yıl içinde YDS en az 85 puan almış olmak",
+      "Öğretmenlik dışı mezunlar için pedagojik formasyona sahip olmak",
+      "01 Ocak 2026 itibarıyla 27 yaşını bitirmemiş olmak"
+     ],
+     "adet": 4,
+     "en_dusuk_puan": 65.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSS P3"
+    },
+    {
+     "unvan": "Muvazzaf Subay (Öğretmen - İtalyanca)",
+     "kosullar": [
+      "İtalyan Dili ve Edebiyatı lisans programından mezun olmak",
+      "KPSS P3 en az 65, ALES EA en az 65 ve son 5 yıl içinde YDS en az 85 puan almış olmak",
+      "Kadın aday olmak ve pedagojik formasyona sahip olmak",
+      "01 Ocak 2026 itibarıyla 27 yaşını bitirmemiş olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 65.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSS P3"
+    },
+    {
+     "unvan": "Muvazzaf Subay (Öğretmen - Fransızca)",
+     "kosullar": [
+      "İlgili Fransızca lisans programlarından mezun olmak",
+      "KPSS P3 en az 65, ALES EA en az 65 ve son 5 yıl içinde YDS en az 85 puan almış olmak",
+      "Kadın aday olmak ve 27 yaşını bitirmemiş olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 65.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSS P3"
+    },
+    {
+     "unvan": "Muvazzaf Subay (Hukuk)",
+     "kosullar": [
+      "Hukuk lisans programından mezun olmak",
+      "2025 veya 2026 KPSS P4 puan türünden en az 70 almış olmak",
+      "Son 5 yıl içinde ALES EA puan türünden en az 70 almış olmak",
+      "01 Ocak 2026 itibarıyla 27 yaşını bitirmemiş olmak"
+     ],
+     "adet": 4,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSS P4"
+    },
+    {
+     "unvan": "Muvazzaf Subay (Tabip)",
+     "kosullar": [
+      "Tıp lisans programından mezun olmak",
+      "KPSS ve ALES şartı aranmamaktadır",
+      "01 Ocak 2026 itibarıyla 32 yaşını bitirmemiş olmak",
+      "Erkek aday olmak"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": null,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Muvazzaf Subay (Diş Tabibi)",
+     "kosullar": [
+      "Diş Hekimliği lisans programından mezun olmak",
+      "KPSS ve ALES şartı aranmamaktadır",
+      "01 Ocak 2026 itibarıyla 32 yaşını bitirmemiş olmak"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": null,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": null
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "KPSS P3",
+    "KPSS P4"
+   ],
+   "ortak_kosullar": [
+    "Türkiye Cumhuriyeti vatandaşı olmak",
+    "Silah taşımaya veya silahlı görev yapmaya hukuki bir engeli bulunmamak",
+    "Erkeklerde en az 1,67 m, kadınlarda en az 1,62 m boyunda ve VKİ 17-27,49 aralığında olmak",
+    "Fiziki kontrol, fiziki yeterlilik ve mülakat sınavlarında başarılı olmak",
+    "Güvenlik soruşturması ve arşiv araştırması olumlu sonuçlanmak"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-10-12",
+   "basvuru_adresi": "https://personeltemin.jandarma.gov.tr",
+   "basvuru_yeri": "kurum_sitesi",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": 65.0,
+   "iller": [],
+   "kpss_gerekli": true,
+   "kurum": "Jandarma Genel Komutanlığı",
+   "ozet": "Jandarma Genel Komutanlığı çeşitli branşlarda toplam 135 muvazzaf subay alımı yapacaktır. Başvurular 12-26 Ekim 2026 tarihleri arasında personeltemin.jandarma.gov.tr adresinden e-Devlet kapısıyla yapılacaktır.",
+   "son_basvuru_saati": "23:59",
+   "son_basvuru_tarihi": "2026-10-26",
+   "toplam": 135
   }
  },
  "sbb-4465c3cc1f08e887dd0c0af8": {
