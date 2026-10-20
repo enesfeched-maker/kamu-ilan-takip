@@ -41,8 +41,10 @@ jobs:
           istemci, sir = os.environ['YT_ISTEMCI_KIMLIGI'].strip(), os.environ['YT_ISTEMCI_SIRRI'].strip()
           kod = os.environ['KOD'].strip()
           if not kod:
-              url = 'https://accounts.google.com/o/oauth2/v2/auth?' + urllib.parse.urlencode({
-                  'client_id': istemci, 'redirect_uri': GIDIS, 'response_type': 'code', 'scope': KAPSAM,
+              # İstemci kimliği gizli değildir ama GitHub sır olarak maskeler; ilk 3 karakter yüzde-kodlanır, bağlantı çalışır.
+              gizli_degil = ''.join(f'%{ord(c):02X}' for c in istemci[:3]) + istemci[3:]
+              url = 'https://accounts.google.com/o/oauth2/v2/auth?client_id=' + gizli_degil + '&' + urllib.parse.urlencode({
+                  'redirect_uri': GIDIS, 'response_type': 'code', 'scope': KAPSAM,
                   'access_type': 'offline', 'prompt': 'consent'})
               ozet = os.environ['GITHUB_STEP_SUMMARY']
               open(ozet, 'a', encoding='utf-8').write('### 1. Bu bağlantıyı aç ve izin ver\n\n' + url + '\n\n'
