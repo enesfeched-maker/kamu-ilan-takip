@@ -1,0 +1,24 @@
+name: YouTube anahtarını sına
+
+# Video yüklemeden yalnız YouTube yenileme anahtarını ve kanalı kontrol eder (anahtar yenilendikten sonra bir kez çalıştırılır).
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  kontrol:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: YouTube anahtarını sına
+        env:
+          YT_ISTEMCI_KIMLIGI: ${{ secrets.YT_ISTEMCI_KIMLIGI }}
+          YT_ISTEMCI_SIRRI: ${{ secrets.YT_ISTEMCI_SIRRI }}
+          YT_YENILEME_ANAHTARI: ${{ secrets.YT_YENILEME_ANAHTARI }}
+          YT_KANAL: ${{ vars.YT_KANAL }}
+        run: python bot/sosyal_yayinla.py --youtube-kontrol
