@@ -163,6 +163,89 @@
    "toplam": 44
   }
  },
+ "csb-477763": {
+  "zaman": "2026-10-20T15:09:05+03:00",
+  "surum": 2,
+  "model": "gemini-3.8-flash",
+  "kaynak": "metin",
+  "imza": "8b0834cf60143537",
+  "baslik": "MALAZGİRT BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Mühendis",
+     "kosullar": [
+      "Jeodezi ve fotogrametri, jeodezi ve haritacılık, harita veya geomatik mühendisliği mezunu olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 60,
+     "il": "Muş",
+     "ogrenim": "lisans",
+     "puan_turu": "P3"
+    },
+    {
+     "unvan": "Mühendis",
+     "kosullar": [
+      "İnşaat mühendisliği programından mezun olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 60,
+     "il": "Muş",
+     "ogrenim": "lisans",
+     "puan_turu": "P3"
+    },
+    {
+     "unvan": "Mimar",
+     "kosullar": [
+      "Mimarlık programından mezun olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 60,
+     "il": "Muş",
+     "ogrenim": "lisans",
+     "puan_turu": "P3"
+    },
+    {
+     "unvan": "Muhasebeci",
+     "kosullar": [
+      "Muhasebe ve Maliye programından mezun olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 60,
+     "il": "Muş",
+     "ogrenim": "lisans",
+     "puan_turu": "P3"
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P3"
+   ],
+   "ortak_kosullar": [
+    "KPSS P3 puan türünden en az 60 puan almış olmak"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": null,
+   "basvuru_adresi": null,
+   "basvuru_yeri": null,
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": 60,
+   "iller": [
+    "Muş"
+   ],
+   "kpss_gerekli": true,
+   "kurum": "Malazgirt Belediye Başkanlığı",
+   "ozet": "Malazgirt Belediye Başkanlığı bünyesinde istihdam edilmek üzere lisans mezunu 2 mühendis, 1 mimar ve 1 muhasebeci olmak üzere toplam 4 memur alınacaktır. Son başvuru tarihi 04.11.2026'dır.",
+   "son_basvuru_saati": null,
+   "son_basvuru_tarihi": "2026-11-04",
+   "toplam": 4
+  }
+ },
  "csb-477764": {
   "zaman": "2026-10-20T13:09:38+03:00",
   "surum": 2,
