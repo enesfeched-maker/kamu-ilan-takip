@@ -163,6 +163,108 @@
    "toplam": 44
   }
  },
+ "csb-477764": {
+  "zaman": "2026-10-20T13:09:38+03:00",
+  "surum": 2,
+  "model": "gemini-3.7-flash",
+  "kaynak": "metin",
+  "imza": "6d4fc42d9fe0c49a",
+  "baslik": "ELEŞKİRT BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Çözümleyici",
+     "kosullar": [
+      "İşletme, Siyaset Bilimi ve Yerel Yönetimler lisans mezunu olmak",
+      "En az iki programlama dili bildiğini belgelemek",
+      "En az B sınıfı sürücü belgesine sahip olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 50.0,
+     "il": "Ağrı",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP3"
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "KPSSP3"
+   ],
+   "ortak_kosullar": [],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": null,
+   "basvuru_adresi": null,
+   "basvuru_yeri": null,
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": 50.0,
+   "iller": [
+    "Ağrı"
+   ],
+   "kpss_gerekli": true,
+   "kurum": "Eleşkirt Belediye Başkanlığı",
+   "ozet": "Eleşkirt Belediye Başkanlığı, KPSS en az 50 puan ile lisans mezunu 1 Çözümleyici alımı yapacaktır. Son başvuru tarihi 04.11.2026'dır.",
+   "son_basvuru_saati": null,
+   "son_basvuru_tarihi": "2026-11-04",
+   "toplam": 1
+  }
+ },
+ "csb-477947": {
+  "zaman": "2026-10-20T13:09:38+03:00",
+  "surum": 2,
+  "model": "gemini-3.6-flash",
+  "kaynak": "metin",
+  "imza": "e79631fe95946a15",
+  "baslik": "POSOF BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE SÖZLEŞMELİ PERSONEL ALIM İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Teknisyen",
+     "kosullar": [
+      "İlgili mesleki ve teknik ortaöğretim alanlarından mezun olmak.",
+      "En az B sınıfı sürücü belgesine sahip olmak."
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 60,
+     "il": "Ardahan",
+     "ogrenim": "ortaogretim",
+     "puan_turu": "KPSSP94"
+    }
+   ],
+   "ogrenim": [
+    "ortaogretim"
+   ],
+   "puan_turleri": [
+    "KPSSP94"
+   ],
+   "ortak_kosullar": [
+    "KPSS P94 puan türünden en az 60 puan almış olmak.",
+    "En az B sınıfı sürücü belgesine sahip olmak."
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": null,
+   "basvuru_adresi": null,
+   "basvuru_yeri": null,
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": 60,
+   "iller": [
+    "Ardahan"
+   ],
+   "kpss_gerekli": true,
+   "kurum": "POSOF BELEDİYE BAŞKANLIĞI",
+   "ozet": "Posof Belediye Başkanlığı, Ardahan'da istihdam edilmek üzere 1 Teknisyen alacaktır. Başvurular 04.11.2026 tarihine kadar devam etmektedir.",
+   "son_basvuru_saati": null,
+   "son_basvuru_tarihi": "2026-11-04",
+   "toplam": 1
+  }
+ },
  "csb-478289": {
   "zaman": "2026-10-20T01:17:41+03:00",
   "surum": 2,
@@ -2856,6 +2958,58 @@
    "toplam": null
   }
  },
+ "iskur-56961c753a205497cf8368a3": {
+  "zaman": "2026-10-20T13:09:38+03:00",
+  "surum": 2,
+  "model": "gemini-3.6-flash",
+  "kaynak": "metin",
+  "imza": "83b97ee40006ef55",
+  "baslik": "Ardahan Pasof Belediyesi Sözleşmeli Personel Alım İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Teknisyen",
+     "kosullar": [
+      "KPSS P94 puan türünden en az 60 puan almış olmak",
+      "En az B sınıfı sürücü belgesine sahip olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 60,
+     "il": "Ardahan",
+     "ogrenim": "ortaogretim",
+     "puan_turu": "P94"
+    }
+   ],
+   "ogrenim": [
+    "ortaogretim"
+   ],
+   "puan_turleri": [
+    "P94"
+   ],
+   "ortak_kosullar": [
+    "KPSS P94 puan türünden en az 60 puan almış olmak",
+    "En az B sınıfı sürücü belgesine sahip olmak"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-11-02",
+   "basvuru_adresi": "posofbelediyesi@hotmail.com",
+   "basvuru_yeri": "eposta",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": 60,
+   "iller": [
+    "Ardahan"
+   ],
+   "kpss_gerekli": true,
+   "kurum": "Ardahan Posof Belediyesi",
+   "ozet": "Ardahan Posof Belediyesi 1 adet sözleşmeli Teknisyen alımı yapacaktır. Başvurular 02-04 Kasım 2026 tarihleri arasında e-posta, şahsen veya posta yoluyla kabul edilecektir.",
+   "son_basvuru_saati": "17:00",
+   "son_basvuru_tarihi": "2026-11-04",
+   "toplam": 1
+  }
+ },
  "iskur-6c0565cdb31b4595f797e950": {
   "zaman": "2026-10-20T12:12:31+03:00",
   "surum": 2,
@@ -4454,6 +4608,64 @@
    "son_basvuru_saati": null,
    "son_basvuru_tarihi": "2026-11-02",
    "toplam": 7
+  }
+ },
+ "sbb-996152b017d1af5f445dfade": {
+  "zaman": "2026-10-20T13:09:38+03:00",
+  "surum": 2,
+  "model": "gemini-3.7-flash",
+  "kaynak": "pdf",
+  "imza": "f8fed6743d04dee9",
+  "baslik": "ŞİLE BELEDİYE BAŞKANLIĞI - 8 MEMUR ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Zabıta Memuru",
+     "kosullar": [
+      "Herhangi bir lise veya dengi okuldan mezun olmak",
+      "En az B sınıfı sürücü belgesine sahip olmak",
+      "2024 KPSS P94 puan türünden en az 65 puan almış olmak",
+      "Erkeklerde en az 1.67 m, kadınlarda en az 1.60 m boyunda ve boy-kilo farkı en fazla 10 kg olmak",
+      "Sınav tarihi itibarıyla 30 yaşını doldurmamış olmak"
+     ],
+     "adet": 8,
+     "en_dusuk_puan": 65.0,
+     "il": "İstanbul",
+     "ogrenim": "ortaogretim",
+     "puan_turu": "P94"
+    }
+   ],
+   "ogrenim": [
+    "ortaogretim"
+   ],
+   "puan_turleri": [
+    "P94"
+   ],
+   "ortak_kosullar": [
+    "2024 KPSS P94 sınavından en az 65 puan almış olmak",
+    "Erkeklerde en az 1.67 m, kadınlarda en az 1.60 m boyunda olmak ve boy-kilo şartını taşımak",
+    "Sınav tarihi itibarıyla 30 yaşını doldurmamış olmak",
+    "En az B sınıfı sürücü belgesine sahip olmak",
+    "Sözlü ve uygulamalı sınavda başarılı olmak"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-11-02",
+   "basvuru_adresi": null,
+   "basvuru_yeri": "sahsen",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": 65.0,
+   "iller": [
+    "İstanbul"
+   ],
+   "kpss_gerekli": true,
+   "kurum": "Şile Belediye Başkanlığı",
+   "ozet": "Şile Belediye Başkanlığı, lise mezunu ve en az 65 KPSS puanı olan 8 zabıta memuru alacak. Başvurular 02-06 Kasım 2026 tarihleri arasında belediyeye şahsen yapılacaktır.",
+   "son_basvuru_saati": "17:00",
+   "son_basvuru_tarihi": "2026-11-06",
+   "toplam": 8
   }
  },
  "sbb-a1b920fe98f44f8e989fea1e": {
