@@ -1,4 +1,168 @@
 {
+ "csb-477163": {
+  "zaman": "2026-10-20T12:12:31+03:00",
+  "surum": 2,
+  "model": "gemini-3.6-flash",
+  "kaynak": "metin",
+  "imza": "a7ab6c8addbcd336",
+  "baslik": "BAHÇE BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Memur",
+     "kosullar": [
+      "İşletme, Kamu Yönetimi veya Muhasebe ve Finans Yönetimi mezunu olmak.",
+      "En az (B) sınıfı sürücü belgesine sahip olmak."
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 55,
+     "il": "Osmaniye",
+     "ogrenim": "lisans",
+     "puan_turu": "P3"
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P3"
+   ],
+   "ortak_kosullar": [
+    "KPSS P3 puan türünden en az 55 puan almış olmak."
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": null,
+   "basvuru_adresi": null,
+   "basvuru_yeri": null,
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": 55,
+   "iller": [
+    "Osmaniye"
+   ],
+   "kpss_gerekli": true,
+   "kurum": "Bahçe Belediye Başkanlığı",
+   "ozet": "Osmaniye Bahçe Belediye Başkanlığı, lisans mezunu 1 memur alımı yapacaktır. Başvuru için KPSS P3 türünden en az 55 puan şartı aranmaktadır.",
+   "son_basvuru_saati": null,
+   "son_basvuru_tarihi": null,
+   "toplam": 1
+  }
+ },
+ "csb-477761": {
+  "zaman": "2026-10-20T12:12:31+03:00",
+  "surum": 2,
+  "model": "gemini-3.6-flash",
+  "kaynak": "metin",
+  "imza": "1bbff52f596b2574",
+  "baslik": "İSTANBUL ELEKTRİK TRAMVAY VE TÜNEL İŞLETMELERİ GENEL MÜDÜRLÜĞÜ - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Bilgisayar İşletmeni",
+     "kosullar": [
+      "KPSS P3 puan türünden en az 70 puan almış olmak",
+      "Bilgisayar ve öğretim teknolojileri, otomotiv öğretmenliği veya iş idaresi mezunu olmak",
+      "MEB onaylı bilgisayar işletmeni sertifikasına sahip olmak veya ders aldığını belgelemek"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": 70,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "P3"
+    },
+    {
+     "unvan": "Bilgisayar İşletmeni",
+     "kosullar": [
+      "KPSS P3 puan türünden en az 70 puan almış olmak",
+      "Maliye, muhasebe ve maliye veya yönetim bilişim sistemleri lisans mezunu olmak",
+      "MEB onaylı bilgisayar işletmeni sertifikasına sahip olmak veya ders aldığını belgelemek"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": 70,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "P3"
+    },
+    {
+     "unvan": "Muhasebeci",
+     "kosullar": [
+      "KPSS P3 puan türünden en az 70 puan almış olmak",
+      "Muhasebe-finansman, muhasebe ve finansal yönetim lisans programından mezun olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 70,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "P3"
+    },
+    {
+     "unvan": "Psikolog",
+     "kosullar": [
+      "KPSS P3 puan türünden en az 70 puan almış olmak",
+      "Psikoloji lisans programından mezun olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 70,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "P3"
+    },
+    {
+     "unvan": "Mühendis",
+     "kosullar": [
+      "KPSS P3 puan türünden en az 70 puan almış olmak",
+      "Bilgisayar, bilişim sistemleri veya yazılım mühendisliği lisans mezunu olmak"
+     ],
+     "adet": 5,
+     "en_dusuk_puan": 70,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "P3"
+    },
+    {
+     "unvan": "Mühendis",
+     "kosullar": [
+      "KPSS P3 puan türünden en az 70 puan almış olmak",
+      "Çevre mühendisliği lisans programından mezun olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 70,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "P3"
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P3"
+   ],
+   "ortak_kosullar": [
+    "KPSS P3 puan türünden en az 70 puan almış olmak"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": null,
+   "basvuru_adresi": null,
+   "basvuru_yeri": null,
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": 70,
+   "iller": [
+    "İstanbul"
+   ],
+   "kpss_gerekli": true,
+   "kurum": "İSTANBUL ELEKTRİK TRAMVAY VE TÜNEL İŞLETMELERİ GENEL MÜDÜRLÜĞÜ",
+   "ozet": "İstanbul Elektrik Tramvay ve Tünel İşletmeleri Genel Müdürlüğü, lisans mezunları arasından 44 memur alımı yapacaktır. Başvurular 2 Kasım 2026 tarihine kadar devam etmektedir.",
+   "son_basvuru_saati": null,
+   "son_basvuru_tarihi": "2026-11-02",
+   "toplam": 44
+  }
+ },
  "csb-478289": {
   "zaman": "2026-10-20T01:17:41+03:00",
   "surum": 2,
@@ -735,6 +899,66 @@
    "son_basvuru_saati": "23:59",
    "son_basvuru_tarihi": "2026-11-08",
    "toplam": 11
+  }
+ },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=39d5a688-3b17-48de-a123-9140f55af29e": {
+  "zaman": "2026-10-20T12:12:31+03:00",
+  "surum": 2,
+  "model": "gemini-3.8-flash",
+  "kaynak": "metin",
+  "imza": "76ec07852beb4694",
+  "baslik": "MİLLİ SAVUNMA BAKANLIĞI - 2026 YILI TABİP, DİŞ TABİBİ SINIFI SÖZLEŞMELİ/MUVAZZAF SUBAY VE ÖZEL NİTELİKLİ BEDEN EĞİTİMİ ÖĞRETMENİ SINIFI MUVAZZAF SUBAY ADAYI TEMİNİ",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Tabip Sınıfı Sözleşmeli/Muvazzaf Subay",
+     "kosullar": [],
+     "adet": null,
+     "en_dusuk_puan": null,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Diş Tabibi Sınıfı Sözleşmeli/Muvazzaf Subay",
+     "kosullar": [],
+     "adet": null,
+     "en_dusuk_puan": null,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Özel Nitelikli Beden Eğitimi Öğretmeni Sınıfı Muvazzaf Subay",
+     "kosullar": [],
+     "adet": null,
+     "en_dusuk_puan": null,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": null
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [],
+   "ortak_kosullar": [],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "kismi",
+   "baslangic_tarihi": "2026-10-05",
+   "basvuru_adresi": null,
+   "basvuru_yeri": null,
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": null,
+   "iller": [],
+   "kpss_gerekli": null,
+   "kurum": "Milli Savunma Bakanlığı",
+   "ozet": "Milli Savunma Bakanlığı tabip, diş tabibi ve özel nitelikli beden eğitimi öğretmeni sınıfı sözleşmeli/muvazzaf subay temin edecektir. Başvurular 5-20 Ekim 2026 tarihleri arasında alınacaktır.",
+   "son_basvuru_saati": "17:30",
+   "son_basvuru_tarihi": "2026-10-20",
+   "toplam": null
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=4850e095-8b16-4aba-9956-555740a41146": {
@@ -2088,6 +2312,46 @@
    "toplam": 25
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=d518cb3b-36c9-43fb-8e94-e563f9887888": {
+  "zaman": "2026-10-20T12:12:31+03:00",
+  "surum": 2,
+  "model": "gemini-3.7-flash",
+  "kaynak": "metin",
+  "imza": "f00222da887093d8",
+  "baslik": "MİLLİ SAVUNMA BAKANLIĞI - 2026 YILI MİLLÎ SAVUNMA ÜNİVERSİTESİNE ÖĞRETMEN/MÜHENDİS SINIFI MUVAZZAF SUBAY ADAYI TEMİNİ",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Öğretmen/Mühendis Sınıfı Muvazzaf Subay Adayı",
+     "kosullar": [],
+     "adet": null,
+     "en_dusuk_puan": null,
+     "il": null,
+     "ogrenim": null,
+     "puan_turu": null
+    }
+   ],
+   "ogrenim": [],
+   "puan_turleri": [],
+   "ortak_kosullar": [],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "kismi",
+   "baslangic_tarihi": "2026-10-05",
+   "basvuru_adresi": null,
+   "basvuru_yeri": null,
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": null,
+   "iller": [],
+   "kpss_gerekli": null,
+   "kurum": "Millî Savunma Bakanlığı",
+   "ozet": "Millî Savunma Bakanlığı, Millî Savunma Üniversitesine öğretmen ve mühendis sınıfı muvazzaf subay adayı temin edecektir. Başvurular 05.10.2026 - 20.10.2026 tarihleri arasında alınacaktır.",
+   "son_basvuru_saati": "23:30",
+   "son_basvuru_tarihi": "2026-10-20",
+   "toplam": null
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=d72bc5ed-a952-4452-9fea-b05616038765": {
   "zaman": "2026-10-20T10:23:39+03:00",
   "surum": 2,
@@ -2322,6 +2586,46 @@
    "toplam": 9
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=f0ca8a29-559f-426a-ade5-5ed30651c618": {
+  "zaman": "2026-10-20T12:12:31+03:00",
+  "surum": 2,
+  "model": "gemini-3.6-flash",
+  "kaynak": "metin",
+  "imza": "8160b2976f4c682b",
+  "baslik": "ADALET BAKANLIĞI - 2026 Yılı Açıktan İcra Müdür ve İcra Müdür Yardımcılığı Sınav İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "İcra Müdürü ve İcra Müdür Yardımcısı",
+     "kosullar": [],
+     "adet": null,
+     "en_dusuk_puan": null,
+     "il": null,
+     "ogrenim": null,
+     "puan_turu": null
+    }
+   ],
+   "ogrenim": [],
+   "puan_turleri": [],
+   "ortak_kosullar": [],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-10-05",
+   "basvuru_adresi": null,
+   "basvuru_yeri": null,
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": null,
+   "iller": [],
+   "kpss_gerekli": null,
+   "kurum": "Adalet Bakanlığı",
+   "ozet": "Adalet Bakanlığı 2026 Yılı Açıktan İcra Müdür ve İcra Müdür Yardımcılığı Sınav İlanı yayımlanmıştır. Başvurular 05.10.2026 - 05.11.2026 tarihleri arasında yapılacaktır.",
+   "son_basvuru_saati": "23:59",
+   "son_basvuru_tarihi": "2026-11-05",
+   "toplam": null
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=f64bcfee-da05-46c5-8324-b42254c169a2": {
   "zaman": "2026-10-20T10:23:39+03:00",
   "surum": 2,
@@ -2549,6 +2853,57 @@
    "ozet": "Mevlana Kalkınma Ajansı Konya ili için personel alımı yapmaktadır. Son başvuru tarihi 13 Kasım 2026 saat 17:00'dir.",
    "son_basvuru_saati": "17:00",
    "son_basvuru_tarihi": "2026-11-13",
+   "toplam": null
+  }
+ },
+ "iskur-6c0565cdb31b4595f797e950": {
+  "zaman": "2026-10-20T12:12:31+03:00",
+  "surum": 2,
+  "model": "gemini-3.6-flash",
+  "kaynak": "metin",
+  "imza": "4884c0811e1fdfbf",
+  "baslik": "Türkiye Turizm Tanıtım ve Geliştirme Ajansı Personel Alım İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Personel",
+     "kosullar": [
+      "Yükseköğrenim mezunu olmak.",
+      "YDS veya denk sınav sonucu ya da %100 yabancı dil eğitimli lisans diplomasına sahip olmak."
+     ],
+     "adet": null,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "Başvurular TGA web sitesi üzerinden yapılacaktır.",
+    "Şahsen, posta veya e-posta ile yapılan başvurular kabul edilmeyecektir.",
+    "Yabancı dil geçerlilik süresi son başvuru tarihine göre hesaplanır."
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": null,
+   "basvuru_adresi": "tga.gov.tr/kariyer",
+   "basvuru_yeri": "kurum_sitesi",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": null,
+   "iller": [
+    "Ankara"
+   ],
+   "kpss_gerekli": false,
+   "kurum": "Türkiye Turizm Tanıtım ve Geliştirme Ajansı",
+   "ozet": "Türkiye Turizm Tanıtım ve Geliştirme Ajansı personel alımı yapacaktır. Başvurular 05.11.2026 tarihine kadar tga.gov.tr/kariyer adresi üzerinden yapılabilir.",
+   "son_basvuru_saati": "23:55",
+   "son_basvuru_tarihi": "2026-11-05",
    "toplam": null
   }
  },
@@ -3163,6 +3518,507 @@
    "son_basvuru_saati": null,
    "son_basvuru_tarihi": "2026-10-26",
    "toplam": 150
+  }
+ },
+ "sbb-4ff1ffce4a1f868025e826e0": {
+  "zaman": "2026-10-20T12:12:31+03:00",
+  "surum": 2,
+  "model": "gemini-3.7-flash",
+  "kaynak": "pdf",
+  "imza": "0bdfc5f0cdbf2963",
+  "baslik": "MİLLİ SAVUNMA BAKANLIĞI - 2026 YILI MİLLÎ SAVUNMA ÜNİVERSİTESİNE ÖĞRETMEN/MÜHENDİS SINIFI MUVAZZAF SUBAY ADAYI TEMİNİ",
+  "farklar": [
+   [
+    "ogrenim",
+    [
+     "ortaogretim"
+    ],
+    [
+     "lisans"
+    ],
+    false
+   ]
+  ],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Öğretmen (Matematik)",
+     "kosullar": [
+      "İlgili matematik lisans programlarının birinden mezun olmak",
+      "ALES Sayısal puan türünden en az 70 almış olmak"
+     ],
+     "adet": 8,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Sayısal"
+    },
+    {
+     "unvan": "Öğretmen (Fizik)",
+     "kosullar": [
+      "İlgili fizik lisans programlarının birinden mezun olmak",
+      "Kadro alanının ana bilim dalı veya program dallarında en az yüksek lisans yapıyor olmak",
+      "ALES Sayısal puan türünden en az 70 almış olmak"
+     ],
+     "adet": 3,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Sayısal"
+    },
+    {
+     "unvan": "Öğretmen (Eğitim Bilimleri)",
+     "kosullar": [
+      "İlgili öğretmenlik veya eğitim lisans programlarının birinden mezun olmak",
+      "Eğitim bilimleri alanlarının birinde en az yüksek lisans yapıyor olmak",
+      "ALES Eşit Ağırlık puan türünden en az 70 almış olmak"
+     ],
+     "adet": 10,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Eşit Ağırlık"
+    },
+    {
+     "unvan": "Öğretmen (İstatistik)",
+     "kosullar": [
+      "İlgili istatistik lisans programlarının birinden mezun olmak",
+      "ALES Sayısal puan türünden en az 70 almış olmak"
+     ],
+     "adet": 9,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Sayısal"
+    },
+    {
+     "unvan": "Öğretmen (Türk Dili ve Edebiyatı)",
+     "kosullar": [
+      "İlgili Türk dili ve edebiyatı lisans programlarının birinden mezun olmak",
+      "Kadro alanının ana bilim dalı veya program dallarında en az yüksek lisans yapmış olmak",
+      "ALES Sözel puan türünden en az 70 almış olmak"
+     ],
+     "adet": 16,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Sözel"
+    },
+    {
+     "unvan": "Öğretmen (Hukuk)",
+     "kosullar": [
+      "Hukuk lisans programından mezun olmak",
+      "İlgili hukuk alanlarının herhangi birinden en az yüksek lisans yapmış veya yapıyor olmak",
+      "ALES Eşit Ağırlık puan türünden en az 70 almış olmak"
+     ],
+     "adet": 9,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Eşit Ağırlık"
+    },
+    {
+     "unvan": "Öğretmen (Rehberlik)",
+     "kosullar": [
+      "Eğitimde Psikolojik Hizmetler veya PDR lisans programlarından mezun olmak",
+      "Kadro alanının ana bilim dalı veya program dallarında en az yüksek lisans yapıyor olmak",
+      "ALES Eşit Ağırlık puan türünden en az 70 almış olmak"
+     ],
+     "adet": 6,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Eşit Ağırlık"
+    },
+    {
+     "unvan": "Öğretmen (Arapça)",
+     "kosullar": [
+      "İlgili Arapça lisans programlarının birinden mezun olmak",
+      "ALES Sözel puan türünden en az 70 almış olmak"
+     ],
+     "adet": 8,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Sözel"
+    },
+    {
+     "unvan": "Öğretmen (Fransızca)",
+     "kosullar": [
+      "İlgili Fransızca lisans programlarının birinden mezun olmak",
+      "ALES Sözel puan türünden en az 70 almış olmak"
+     ],
+     "adet": 3,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Sözel"
+    },
+    {
+     "unvan": "Öğretmen (İngilizce)",
+     "kosullar": [
+      "İlgili İngilizce lisans programlarının birinden mezun olmak",
+      "YDS veya eşdeğeri sınavdan en az 85 puan almış olmak",
+      "ALES Sözel puan türünden en az 70 almış olmak"
+     ],
+     "adet": 20,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Sözel"
+    },
+    {
+     "unvan": "Öğretmen (Almanca)",
+     "kosullar": [
+      "İlgili Almanca lisans programlarının birinden mezun olmak",
+      "YDS veya eşdeğeri sınavdan en az 85 puan almış olmak",
+      "ALES Sözel puan türünden en az 70 almış olmak"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Sözel"
+    },
+    {
+     "unvan": "Öğretmen (Bulgarca)",
+     "kosullar": [
+      "Bulgar Dili ve Edebiyatı veya Mütercim-Tercümanlık mezunu olmak",
+      "ALES Sözel puan türünden en az 70 almış olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Sözel"
+    },
+    {
+     "unvan": "Öğretmen (İbranice)",
+     "kosullar": [
+      "İbrani Dili ve Edebiyatı veya İbrani Dili ve Kültürü mezunu olmak",
+      "ALES Sözel puan türünden en az 70 almış olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Sözel"
+    },
+    {
+     "unvan": "Öğretmen (Rusça)",
+     "kosullar": [
+      "İlgili Rusça lisans programlarının birinden mezun olmak",
+      "ALES Sözel puan türünden en az 70 almış olmak"
+     ],
+     "adet": 4,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Sözel"
+    },
+    {
+     "unvan": "Öğretmen (İspanyolca)",
+     "kosullar": [
+      "İspanyol Dili ve Edebiyatı veya Mütercim-Tercümanlık mezunu olmak",
+      "ALES Sözel puan türünden en az 70 almış olmak"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Sözel"
+    },
+    {
+     "unvan": "Öğretmen (İtalyanca)",
+     "kosullar": [
+      "İtalyan Dili ve Edebiyatı mezunu olmak",
+      "ALES Sözel puan türünden en az 70 almış olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Sözel"
+    },
+    {
+     "unvan": "Öğretmen (Çince)",
+     "kosullar": [
+      "Çin Dili ve Edebiyatı, Sinoloji veya Mütercim-Tercümanlık mezunu olmak",
+      "ALES Sözel puan türünden en az 70 almış olmak"
+     ],
+     "adet": 3,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Sözel"
+    },
+    {
+     "unvan": "Öğretmen (Romence)",
+     "kosullar": [
+      "Romen Dili ve Edebiyatı mezunu olmak",
+      "ALES Sözel puan türünden en az 70 almış olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Sözel"
+    },
+    {
+     "unvan": "Öğretmen (Yunanca)",
+     "kosullar": [
+      "Çağdaş Yunan Dili ve Edebiyatı mezunu olmak",
+      "ALES Sözel puan türünden en az 70 almış olmak"
+     ],
+     "adet": 3,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Sözel"
+    },
+    {
+     "unvan": "Öğretmen (Korece)",
+     "kosullar": [
+      "Kore Dili ve Edebiyatı mezunu olmak",
+      "ALES Sözel puan türünden en az 70 almış olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Sözel"
+    },
+    {
+     "unvan": "Öğretmen (Uluslararası İlişkiler)",
+     "kosullar": [
+      "İlgili uluslararası ilişkiler lisans programlarının birinden mezun olmak",
+      "Uluslararası İlişkiler, Siyaset Bilimi veya Güvenlik alanında yüksek lisans yapıyor olmak",
+      "ALES Eşit Ağırlık puan türünden en az 70 almış olmak"
+     ],
+     "adet": 5,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Eşit Ağırlık"
+    },
+    {
+     "unvan": "Öğretmen (Uçak Gövde Motor / Uçak Helikopter Bakım)",
+     "kosullar": [
+      "İlgili uçak ve motor bakım lisans programlarının birinden mezun olmak",
+      "Yalnız erkek adaylar başvurabilir",
+      "ALES Sayısal puan türünden en az 70 almış olmak"
+     ],
+     "adet": 5,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Sayısal"
+    },
+    {
+     "unvan": "Öğretmen (Tarih)",
+     "kosullar": [
+      "İlgili tarih lisans programlarının birinden mezun olmak",
+      "Kadro alanının ana bilim dalı veya program dallarında en az yüksek lisans yapmış olmak",
+      "Yalnız erkek adaylar başvurabilir",
+      "ALES Sözel puan türünden en az 70 almış olmak"
+     ],
+     "adet": 8,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Sözel"
+    },
+    {
+     "unvan": "Öğretmen (Kütüphanecilik)",
+     "kosullar": [
+      "Arşivcilik, Bilgi ve Belge Yönetimi veya Kütüphanecilik mezunu olmak",
+      "ALES Sözel puan türünden en az 70 almış olmak"
+     ],
+     "adet": 8,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Sözel"
+    },
+    {
+     "unvan": "Öğretmen (Psikoloji)",
+     "kosullar": [
+      "Psikoloji veya Davranış Bilimleri - Psikoloji Disiplini mezunu olmak",
+      "Kadro alanının ana bilim dalı veya program dallarında en az yüksek lisans yapıyor olmak",
+      "ALES Eşit Ağırlık puan türünden en az 70 almış olmak"
+     ],
+     "adet": 6,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Eşit Ağırlık"
+    },
+    {
+     "unvan": "Öğretmen (Beden Eğitimi)",
+     "kosullar": [
+      "İlgili beden eğitimi veya antrenörlük lisans programlarının birinden mezun olmak",
+      "Pedagojik formasyon belgesine sahip olmak",
+      "ALES Sözel veya Eşit Ağırlık puan türünden en az 70 almış olmak"
+     ],
+     "adet": 20,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Sözel/Eşit Ağırlık"
+    },
+    {
+     "unvan": "Mühendis (Bilgisayar)",
+     "kosullar": [
+      "İlgili bilgisayar ve bilişim lisans programlarının birinden mezun olmak",
+      "ALES Sayısal puan türünden en az 70 almış olmak"
+     ],
+     "adet": 12,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Sayısal"
+    },
+    {
+     "unvan": "Mühendis (Endüstri)",
+     "kosullar": [
+      "İlgili endüstri ve sistem mühendisliği lisans programlarının birinden mezun olmak",
+      "ALES Sayısal puan türünden en az 70 almış olmak"
+     ],
+     "adet": 6,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Sayısal"
+    },
+    {
+     "unvan": "Mühendis (Elektrik)",
+     "kosullar": [
+      "İlgili elektrik veya elektrik-elektronik mühendisliği mezunu olmak",
+      "ALES Sayısal puan türünden en az 70 almış olmak"
+     ],
+     "adet": 3,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Sayısal"
+    },
+    {
+     "unvan": "Mühendis (Uçak)",
+     "kosullar": [
+      "İlgili havacılık, uzay veya uçak mühendisliği lisans programlarından mezun olmak",
+      "ALES Sayısal puan türünden en az 70 almış olmak"
+     ],
+     "adet": 4,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Sayısal"
+    },
+    {
+     "unvan": "Mühendis (Havacılık ve Uzay)",
+     "kosullar": [
+      "İlgili havacılık ve uzay mühendisliği lisans programlarından mezun olmak",
+      "Yalnız erkek adaylar başvurabilir",
+      "ALES Sayısal puan türünden en az 70 almış olmak"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Sayısal"
+    },
+    {
+     "unvan": "Mühendis (Gemi İnşa)",
+     "kosullar": [
+      "İlgili arşivcilik, bilgi ve belge yönetimi veya kütüphanecilik mezunu olmak",
+      "ALES Sayısal puan türünden en az 70 almış olmak"
+     ],
+     "adet": 5,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Sayısal"
+    },
+    {
+     "unvan": "Mühendis (Makine)",
+     "kosullar": [
+      "İlgili makine ve imalat mühendisliği lisans programlarından mezun olmak",
+      "ALES Sayısal puan türünden en az 70 almış olmak"
+     ],
+     "adet": 6,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Sayısal"
+    },
+    {
+     "unvan": "Mühendis (Mekatronik)",
+     "kosullar": [
+      "Mekatronik Mühendisliği veya Mekatronik Sistemler Mühendisliği mezunu olmak",
+      "ALES Sayısal puan türünden en az 70 almış olmak"
+     ],
+     "adet": 5,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Sayısal"
+    },
+    {
+     "unvan": "Mühendis (İnşaat)",
+     "kosullar": [
+      "İnşaat Mühendisliği lisans programından mezun olmak",
+      "Yalnız erkek adaylar başvurabilir",
+      "ALES Sayısal puan türünden en az 70 almış olmak"
+     ],
+     "adet": 5,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Sayısal"
+    },
+    {
+     "unvan": "Mühendis (Elektronik)",
+     "kosullar": [
+      "İlgili elektrik-elektronik, haberleşme veya mikroelektronik mühendisliği mezunu olmak",
+      "ALES Sayısal puan türünden en az 70 almış olmak"
+     ],
+     "adet": 8,
+     "en_dusuk_puan": 70.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": "ALES Sayısal"
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "ALES"
+   ],
+   "ortak_kosullar": [
+    "01 Ocak 2026 itibarıyla lisans mezunları için 27, lisansüstü mezunları için 32 yaşını doldurmamış olmak",
+    "2022-2026 yılları arasında yapılan ALES'ten en az 70 puan almış olmak",
+    "Erkeklerde en az 168 cm, kadınlarda en az 162 cm boy ve uygun kilo sınırlarında olmak",
+    "Fiziki yeterlilik testi, mülakat ve sağlık kurulu raporu aşamalarından başarılı olmak",
+    "Güvenlik soruşturması ve arşiv araştırması olumlu sonuçlanmış olmak"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-10-05",
+   "basvuru_adresi": "https://personeltemin.msb.gov.tr",
+   "basvuru_yeri": "kurum_sitesi",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": 70.0,
+   "iller": [
+    "Ankara"
+   ],
+   "kpss_gerekli": false,
+   "kurum": "Millî Savunma Bakanlığı",
+   "ozet": "MSB, Millî Savunma Üniversitesine öğretmen ve mühendis sınıfı toplam 219 muvazzaf subay adayı alacaktır. Başvurular 05-20 Ekim 2026 tarihleri arasında personeltemin.msb.gov.tr üzerinden çevrim içi yapılacaktır.",
+   "son_basvuru_saati": "17:30",
+   "son_basvuru_tarihi": "2026-10-20",
+   "toplam": 219
   }
  },
  "sbb-526ff55537d8578a927e5bc7": {
@@ -3959,6 +4815,174 @@
    "son_basvuru_saati": "23:59",
    "son_basvuru_tarihi": "2026-12-03",
    "toplam": 7
+  }
+ },
+ "sbb-cbaa38524cf24d4c6fa9b46f": {
+  "zaman": "2026-10-20T12:12:31+03:00",
+  "surum": 2,
+  "model": "gemini-3.7-flash",
+  "kaynak": "pdf",
+  "imza": "928db20875b1fe04",
+  "baslik": "MİLLİ SAVUNMA BAKANLIĞI - 2026 YILI TABİP, DİŞ TABİBİ SINIFI SÖZLEŞMELİ/MUVAZZAF SUBAY VE ÖZEL NİTELİKLİ BEDEN EĞİTİMİ ÖĞRETMENİ SINIFI MUVAZZAF SUBAY ADAYI TEMİNİ",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Pratisyen Tabip (Kara Kuvvetleri Komutanlığı)",
+     "kosullar": [
+      "Tıp fakültesi lisans mezunu olmak",
+      "01 Ocak 1994 ve sonrası doğumlu olmak (32 yaşından büyük olmamak)",
+      "Genel Kültür Sınavından en az 50 puan almak",
+      "Fiziki yeterlilik testi ve mülakatta başarılı olmak"
+     ],
+     "adet": 50,
+     "en_dusuk_puan": 50.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Diş Tabibi (Kara Kuvvetleri Komutanlığı)",
+     "kosullar": [
+      "Diş hekimliği fakültesi lisans mezunu olmak",
+      "01 Ocak 1994 ve sonrası doğumlu olmak (32 yaşından büyük olmamak)",
+      "Genel Kültür Sınavından en az 50 puan almak",
+      "Fiziki yeterlilik testi ve mülakatta başarılı olmak"
+     ],
+     "adet": 3,
+     "en_dusuk_puan": 50.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Özel Nitelikli Beden Eğitimi Öğretmeni / Sporcu (Kara Kuvvetleri Komutanlığı)",
+     "kosullar": [
+      "İlgili spor bilimleri bölümlerinden veya 4 yıllık lisans programlarından mezun olmak",
+      "01 Ocak 1999 ve sonrası doğumlu olmak (27 yaşından büyük olmamak)",
+      "İlgili spor branşlarında milli sporcu veya antrenörlük belgesine sahip olmak",
+      "Genel Kültür Sınavından en az 50 puan almak",
+      "Fiziki yeterlilik testi ve mülakatta başarılı olmak"
+     ],
+     "adet": 12,
+     "en_dusuk_puan": 50.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Pratisyen Tabip (Deniz Kuvvetleri Komutanlığı)",
+     "kosullar": [
+      "Tıp fakültesi lisans mezunu olmak",
+      "01 Ocak 1994 ve sonrası doğumlu olmak (32 yaşından büyük olmamak)",
+      "Genel Kültür Sınavından en az 50 puan almak",
+      "Fiziki yeterlilik testi ve mülakatta başarılı olmak"
+     ],
+     "adet": 30,
+     "en_dusuk_puan": 50.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Diş Tabibi (Deniz Kuvvetleri Komutanlığı)",
+     "kosullar": [
+      "Diş hekimliği fakültesi lisans mezunu olmak",
+      "01 Ocak 1994 ve sonrası doğumlu olmak (32 yaşından büyük olmamak)",
+      "Genel Kültür Sınavından en az 50 puan almak",
+      "Fiziki yeterlilik testi ve mülakatta başarılı olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 50.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Özel Nitelikli Beden Eğitimi Öğretmeni / Sporcu (Deniz Kuvvetleri Komutanlığı)",
+     "kosullar": [
+      "İlgili spor bilimleri bölümlerinden veya 4 yıllık lisans programlarından mezun olmak",
+      "01 Ocak 1999 ve sonrası doğumlu olmak (27 yaşından büyük olmamak)",
+      "İlgili spor branşlarında milli sporcu veya antrenörlük belgesine sahip olmak",
+      "Genel Kültür Sınavından en az 50 puan almak",
+      "Fiziki yeterlilik testi ve mülakatta başarılı olmak"
+     ],
+     "adet": 12,
+     "en_dusuk_puan": 50.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Pratisyen Tabip (Hava Kuvvetleri Komutanlığı)",
+     "kosullar": [
+      "Tıp fakültesi lisans mezunu olmak",
+      "01 Ocak 1994 ve sonrası doğumlu olmak (32 yaşından büyük olmamak)",
+      "Genel Kültür Sınavından en az 50 puan almak",
+      "Fiziki yeterlilik testi ve mülakatta başarılı olmak"
+     ],
+     "adet": 5,
+     "en_dusuk_puan": 50.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Diş Tabibi (Hava Kuvvetleri Komutanlığı)",
+     "kosullar": [
+      "Diş hekimliği fakültesi lisans mezunu olmak",
+      "01 Ocak 1994 ve sonrası doğumlu olmak (32 yaşından büyük olmamak)",
+      "Genel Kültür Sınavından en az 50 puan almak",
+      "Fiziki yeterlilik testi ve mülakatta başarılı olmak"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": 50.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Özel Nitelikli Beden Eğitimi Öğretmeni / Sporcu (Hava Kuvvetleri Komutanlığı)",
+     "kosullar": [
+      "İlgili spor bilimleri bölümlerinden veya 4 yıllık lisans programlarından mezun olmak",
+      "01 Ocak 1999 ve sonrası doğumlu olmak (27 yaşından büyük olmamak)",
+      "İlgili spor branşlarında milli sporcu belgesine sahip olmak",
+      "Genel Kültür Sınavından en az 50 puan almak",
+      "Fiziki yeterlilik testi ve mülakatta başarılı olmak"
+     ],
+     "adet": 12,
+     "en_dusuk_puan": 50.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": null
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "Türkiye Cumhuriyeti vatandaşı olmak ve çifte vatandaşlığı bulunmamak",
+    "Belirlenen boy ve kilo standartlarına uygun olmak",
+    "MSB tarafından yapılacak Genel Kültür Sınavından en az 50 puan almak",
+    "Fiziki Yeterlilik Testi ile mülakat sınavında başarılı olmak",
+    "Muvazzaf/sözleşmeli subay olur kararlı sağlık kurulu raporu almak"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-10-05",
+   "basvuru_adresi": "https://personeltemin.msb.gov.tr",
+   "basvuru_yeri": "kurum_sitesi",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": 50.0,
+   "iller": [],
+   "kpss_gerekli": false,
+   "kurum": "Millî Savunma Bakanlığı",
+   "ozet": "Millî Savunma Bakanlığı KKK, DKK ve HKK bünyesinde istihdam edilmek üzere 127 tabip, diş tabibi ve beden eğitimi öğretmeni subay alacaktır. Başvurular 05-20 Ekim 2026 tarihleri arasında personeltemin.msb.gov.tr adresinden online yapılacaktır.",
+   "son_basvuru_saati": "17:30",
+   "son_basvuru_tarihi": "2026-10-20",
+   "toplam": 127
   }
  },
  "sbb-d568ee9cba7f99929eb258d5": {
