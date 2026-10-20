@@ -99,6 +99,69 @@
    "toplam": 2
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=0ad1bd8f-f6ad-4a03-8f10-7a42c33cf44a": {
+  "zaman": "2026-10-20T11:14:54+03:00",
+  "surum": 2,
+  "model": "gemini-3.7-flash",
+  "kaynak": "metin",
+  "imza": "7e62bd66f4af0786",
+  "baslik": "SAVUNMA SANAYİİ BAŞKANLIĞI - Savunma Sanayii Uzman Yardımcılığı Giriş Sınavı - 2026",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Savunma Sanayii Uzman Yardımcısı (Mühendislik)",
+     "kosullar": [
+      "Mühendislik lisans bölümlerinden mezun olmak"
+     ],
+     "adet": 19,
+     "en_dusuk_puan": 80.0,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Savunma Sanayii Uzman Yardımcısı (İşletme / İktisat)",
+     "kosullar": [
+      "İşletme veya İktisat lisans bölümlerinden mezun olmak"
+     ],
+     "adet": 3,
+     "en_dusuk_puan": 80.0,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "01.01.1991 ve sonrasında doğmuş olmak (35 yaşını doldurmamış olmak)",
+    "2025 veya 2026 KPSS ilgili puan türünden en az 80 puan almış olmak",
+    "Son iki yılda İngilizce YDS/e-YDS sınavından en az 75 puan veya dengi belgeye sahip olmak",
+    "Erkek adaylar için askerlikle ilişiği bulunmamak",
+    "Giriş sınavı sözlü sınav şeklinde yapılacaktır"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-10-12",
+   "basvuru_adresi": "https://kariyerkapisi.gov.tr/isealim",
+   "basvuru_yeri": "kariyer_kapisi",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": 80.0,
+   "iller": [
+    "Ankara"
+   ],
+   "kpss_gerekli": true,
+   "kurum": "Savunma Sanayii Başkanlığı",
+   "ozet": "Savunma Sanayii Başkanlığı 22 Savunma Sanayii Uzman Yardımcısı alacaktır. Başvurular 12-26 Ekim 2026 tarihleri arasında Kariyer Kapısı üzerinden alınacaktır.",
+   "son_basvuru_saati": "23:59",
+   "son_basvuru_tarihi": "2026-10-26",
+   "toplam": 22
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=11272843-b0f1-470e-af31-cc176fa0e5d4": {
   "zaman": "2026-10-20T06:12:51+03:00",
   "surum": 2,
@@ -448,6 +511,56 @@
    "son_basvuru_saati": "23:59",
    "son_basvuru_tarihi": "2026-10-22",
    "toplam": 158
+  }
+ },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=2fcec3f5-8c49-41d2-9ab4-9aead6433459": {
+  "zaman": "2026-10-20T11:14:54+03:00",
+  "surum": 2,
+  "model": "gemini-3.7-flash",
+  "kaynak": "metin",
+  "imza": "b4a81917bbaf35b8",
+  "baslik": "TÜRK PATENT VE MARKA KURUMU - SÖZLEŞMELİ BİLİŞİM PERSONELİ SINAV DUYURUSU (2026)",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Kıdemli Yazılım Mimarı",
+     "kosullar": [
+      "Spring Framework bileşenleri ile projelerde en az 5 yıl aktif görev almış olmak.",
+      "Java EE/Jakarta EE ve web uygulama geliştirme teknolojilerine hâkim olmak.",
+      "Yazılım mimarisi, dağıtık sistemler ve mikroservis konularında tecrübeli olmak.",
+      "İlişkisel veya NoSQL veri tabanları ve ORM araçları konusunda deneyim sahibi olmak.",
+      "Docker, CI/CD süreçleri ve Git tabanlı sürüm kontrollerinde tecrübeli olmak."
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "ogrenim": null,
+     "puan_turu": null
+    }
+   ],
+   "ogrenim": [],
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "Sözlü ve uygulamalı sınav başarı sırasına göre alım yapılacaktır."
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-10-07",
+   "basvuru_adresi": null,
+   "basvuru_yeri": "diger",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": null,
+   "iller": [
+    "Ankara"
+   ],
+   "kpss_gerekli": null,
+   "kurum": "Türk Patent ve Marka Kurumu",
+   "ozet": "Türk Patent ve Marka Kurumu, 1 Kıdemli Yazılım Mimarı alımı yapacaktır. Başvurular 07.10.2026 - 22.10.2026 tarihleri arasında elektronik ortamda alınacaktır.",
+   "son_basvuru_saati": "23:59",
+   "son_basvuru_tarihi": "2026-10-22",
+   "toplam": 1
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=320d07cc-b5bc-4bab-9541-6c1100def856": {
@@ -1112,6 +1225,92 @@
    "toplam": 2
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=72e593aa-e1b5-43c4-a4c5-63da01a63ef9": {
+  "zaman": "2026-10-20T11:14:54+03:00",
+  "surum": 2,
+  "model": "gemini-3.7-flash",
+  "kaynak": "metin",
+  "imza": "f6740d74e66afc45",
+  "baslik": "YARGITAY BAŞKANLIĞI - 2026 SÖZLEŞMELİ BİLİŞİM PERSONELİ ALIM İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Mobil Yazılım Geliştirme Uzmanı",
+     "kosullar": [
+      "Yazılım geliştirme konusunda en az 3 yıllık tecrübe sahibi olmak ve belgelemek",
+      "Mobil uygulama projelerinde aktif olarak en az 1 yıl çalışmış olmak",
+      "React Native veya Flutter konusunda bilgi ve tecrübe sahibi olmak",
+      "Android Studio ve Xcode geliştirme ortamlarının kullanımında tecrübeli olmak",
+      "İlgili 4 yıllık lisans bölümlerinden mezun olmak"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Siber Güvenlik Uzmanı",
+     "kosullar": [
+      "Ağ ve siber güvenlik pozisyonlarında en az 3 yıl çalışmış olduğunu belgelemek",
+      "Firewall, IPS/IDS, WAF, SIEM gibi siber güvenlik teknolojilerinde tecrübeli olmak",
+      "CEH, Security+, eJPT veya benzeri uluslararası sertifikalardan birine sahip olmak",
+      "Zafiyet tarama, log analizi ve siber olaylara müdahale konularında bilgi sahibi olmak",
+      "İlgili 4 yıllık lisans bölümlerinden mezun olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Kıdemli Siber Güvenlik Uzmanı",
+     "kosullar": [
+      "Ağ ve siber güvenlik pozisyonlarında en az 5 yıl çalışmış olduğunu belgelemek",
+      "Kurumsal siber güvenlik ürünlerinin yönetimi ve yapılandırılmasında tecrübeli olmak",
+      "CISSP, OSCP, CEH, GPEN, GCIH veya benzeri sertifikalardan en az birine sahip olmak",
+      "Python, PowerShell veya Bash dillerinden en az birinde bilgi sahibi olmak",
+      "Olay müdahale, sızma testi ve SIEM yönetimi süreçlerinde tecrübeli olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "Dört yıllık mühendislik veya belirlenen lisans bölümlerinden mezun olmak",
+    "Pozisyona göre en az 3 veya 5 yıllık mesleki tecrübeye sahip olmak",
+    "Güncel programlama dillerinden en az ikisini bildiğini belgelemek",
+    "Güvenlik soruşturması ve arşiv araştırması olumlu sonuçlanmak",
+    "Alımlar sözlü sınav sonucundaki başarı sırasına göre yapılacaktır"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-10-19",
+   "basvuru_adresi": null,
+   "basvuru_yeri": null,
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": null,
+   "iller": [
+    "Ankara"
+   ],
+   "kpss_gerekli": null,
+   "kurum": "Yargıtay Başkanlığı",
+   "ozet": "Yargıtay Başkanlığı sözlü sınavla 4 sözleşmeli bilişim personeli alacaktır. Başvurular 19.10.2026 - 23.10.2026 tarihleri arasında yapılacaktır.",
+   "son_basvuru_saati": "17:30",
+   "son_basvuru_tarihi": "2026-10-23",
+   "toplam": 4
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=9a12db48-03c8-46f2-8276-adfec8e26efa": {
   "zaman": "2026-10-20T08:09:04+03:00",
   "surum": 2,
@@ -1413,6 +1612,135 @@
    "son_basvuru_saati": "16:00",
    "son_basvuru_tarihi": "2026-10-28",
    "toplam": 153
+  }
+ },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=a14f0db5-110e-4656-a977-7b6b17b55fbb": {
+  "zaman": "2026-10-20T11:14:54+03:00",
+  "surum": 2,
+  "model": "gemini-3.7-flash",
+  "kaynak": "metin",
+  "imza": "558b4ba85c697500",
+  "baslik": "BANKACILIK DÜZENLEME VE DENETLEME KURUMU BAŞKANLIĞI (BDDK) - BANKACILIK DÜZENLEME VE DENETLEME KURUMU - SÖZLEŞMELİ BİLİŞİM PERSONELİ ALIM İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Kıdemli Siber Güvenlik Uzmanı",
+     "kosullar": [
+      "Sistem/ağ güvenliği, siber güvenlik veya bilgi güvenliği uzmanı olarak en az 5 yıl çalışmış olmak",
+      "Güvenlik duvarı, IPS, WAF, SIEM ve antivirüs sistemleri yönetiminde tecrübeli olmak",
+      "Zafiyet tarama ve trafik analizi yazılımlarından en az ikisini kullanabilmek",
+      "Fortinet NSE 7 veya Fortinet NSE 4 sertifikalarından en az birine sahip olmak",
+      "CISSP, CEH veya ISO 27001 standardı denetçi sertifikalarından en az birine sahip olmak"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": null,
+     "il": "İstanbul",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Kıdemli Yazılım Geliştirme Uzmanı",
+     "kosullar": [
+      "Microsoft .NET ve C# alanında en az 5 yıl tecrübe sahibi olmak",
+      "ASP.NET MVC ve ASP.NET Core teknolojilerinde ileri düzeyde deneyimli olmak",
+      "Çok katmanlı mimari, SOA, SOAP ve REST web servisleri konularına hâkim olmak",
+      "MS SQL Server üzerinde veri tabanı tasarımı ve sorgu geliştirme konularında tecrübeli olmak",
+      "Yazılım yaşam döngüsü, çevik yönetim ve versiyon kontrol sistemlerinde deneyimli olmak"
+     ],
+     "adet": 4,
+     "en_dusuk_puan": null,
+     "il": "İstanbul",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Yapay Zekâ Geliştirme Uzmanı",
+     "kosullar": [
+      "Veri madenciliği, makine öğrenimi veya yapay zekâ konularında en az 3 yıl tecrübeli olmak",
+      "Büyük dil modelleri (LLM) ve doğal dil işleme (NLP) konularında tecrübe sahibi olmak",
+      "Python programlama dili ve nesne tabanlı programlama prensiplerine hâkim olmak",
+      "Chatbot ve RAG sistemleri geliştirme ve optimizasyonu konusunda deneyimli olmak",
+      "Docker ve Kubernetes mikroservis mimarileri konusunda bilgi ve tecrübeye sahip olmak"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": null,
+     "il": "İstanbul",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Ağ Güvenlik Uzmanı",
+     "kosullar": [
+      "Sistem/ağ veya siber güvenlik uzmanı olarak en az 3 yıl çalıştığını belgelemek",
+      "Güvenlik duvarı, IPS, VPN, WAN ve SIEM sistemlerinin yönetiminde deneyimli olmak",
+      "Omurga ve kenar anahtar kurulumu, konfigürasyonu ve yönetiminde tecrübe sahibi olmak",
+      "Fortinet NSE 7 veya Fortinet NSE 4 sertifikalarından en az birine sahip olmak",
+      "CCNA, CCNP, CCNP Security, CEH, CISSP veya ISO 27001 sertifikalarından birine sahip olmak"
+     ],
+     "adet": 3,
+     "en_dusuk_puan": null,
+     "il": "İstanbul",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Sistem Uzmanı",
+     "kosullar": [
+      "Sistem yönetimi uzmanı olarak en az 3 yıl çalıştığını belgelemek",
+      "Active Directory, DNS, DHCP ve Exchange Server yönetiminde tecrübeli olmak",
+      "Hyper-V veya VMware sanallaştırma mimarilerinde tasarım ve yönetim tecrübesine sahip olmak",
+      "Veri yedekleme, kurtarma ve iş sürekliliği teknolojilerinde deneyimli olmak",
+      "MCSE veya MCSA sertifikalarından en az birine sahip olmak"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": null,
+     "il": "İstanbul",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "Yazılım Geliştirme Uzmanı",
+     "kosullar": [
+      "Microsoft .NET ve C# alanında en az 3 yıl tecrübe sahibi olmak",
+      "ASP.NET MVC ve ASP.NET Core geliştirme süreçlerinde tecrübeli olmak",
+      "Çok katmanlı mimari, SOA, SOAP ve RESTful web servisleri konularına hâkim olmak",
+      "İlişkisel veri tabanları ve SQL sorgu geliştirme konularında bilgi sahibi olmak",
+      "Yazılım testleri ve mikroservis mimarisi konularında bilgi ve tecrübeye sahip olmak"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": null,
+     "il": "İstanbul",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "Sözlü sınav sonucunda oluşacak başarı sırasına göre yerleştirme yapılacaktır",
+    "Şahsen veya posta yoluyla yapılan başvurular kabul edilmeyecektir",
+    "Gerekli durumlarda sisteme yüklenen belgelerin asılları talep edilebilecektir"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-10-19",
+   "basvuru_adresi": null,
+   "basvuru_yeri": "diger",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": null,
+   "iller": [
+    "İstanbul"
+   ],
+   "kpss_gerekli": null,
+   "kurum": "Bankacılık Düzenleme ve Denetleme Kurumu",
+   "ozet": "BDDK, İstanbul'da istihdam edilmek üzere sözlü sınavla 15 sözleşmeli bilişim personeli alacaktır. Başvurular 19.10.2026 - 02.11.2026 tarihleri arasında elektronik ortamda alınacaktır.",
+   "son_basvuru_saati": "23:59",
+   "son_basvuru_tarihi": "2026-11-02",
+   "toplam": 15
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=a6d18ac1-8799-4f76-b4f5-418ceb8c735e": {
@@ -2339,6 +2667,59 @@
    "toplam": null
   }
  },
+ "iskur-c2eb8c0816172f89126a78a8": {
+  "zaman": "2026-10-20T11:14:54+03:00",
+  "surum": 2,
+  "model": "gemini-3.8-flash",
+  "kaynak": "metin",
+  "imza": "a575d7ec8ef5679d",
+  "baslik": "Isparta Sarıidris Belediyesi Zabıta Memuru Alım İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Zabıta Memuru",
+     "kosullar": [
+      "En az B sınıfı sürücü belgesine sahip olmak.",
+      "Sınavın yapıldığı tarihte 30 yaşını doldurmamış olmak."
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 70,
+     "il": "Isparta",
+     "ogrenim": "lisans",
+     "puan_turu": "P3"
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P3"
+   ],
+   "ortak_kosullar": [
+    "Sınavın yapıldığı tarihte 30 yaşını doldurmamış olmak.",
+    "En az B sınıfı sürücü belgesine sahip olmak.",
+    "KPSS P3 puan türünden en az 70 puan almış olmak."
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-11-18",
+   "basvuru_adresi": null,
+   "basvuru_yeri": "sahsen",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": 70,
+   "iller": [
+    "Isparta"
+   ],
+   "kpss_gerekli": true,
+   "kurum": "Isparta Sarıidris Belediye Başkanlığı",
+   "ozet": "Isparta Sarıidris Belediyesi, KPSS P3 puanıyla 1 Zabıta Memuru alımı yapacaktır. Başvurular 18-20 Kasım 2026 tarihleri arasında şahsen Sarıidris Belediye Başkanlığına yapılacaktır.",
+   "son_basvuru_saati": "16:00",
+   "son_basvuru_tarihi": "2026-11-20",
+   "toplam": 1
+  }
+ },
  "sbb-24c9bb297ddcd48d3ccc1aa2": {
   "zaman": "2026-10-19T22:24:13+03:00",
   "surum": 2,
@@ -2727,6 +3108,61 @@
    "son_basvuru_saati": "17:30",
    "son_basvuru_tarihi": "2026-12-04",
    "toplam": 5
+  }
+ },
+ "sbb-46734a52a4045202658b0bf7": {
+  "zaman": "2026-10-20T11:14:54+03:00",
+  "surum": 2,
+  "model": "gemini-3.6-flash",
+  "kaynak": "pdf",
+  "imza": "39d08191f72df527",
+  "baslik": "ADALET BAKANLIĞI - 150 İCRA MÜDÜR VE İCRA MÜDÜR YARDIMCISI ALACAK.",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "İcra Müdürü ve İcra Müdür Yardımcısı",
+     "kosullar": [
+      "Hukuk fakültesi, adalet meslek yüksekokulu veya adalet ön lisans mezunu olmak",
+      "35 yaşını doldurmamış olmak (01/01/1991 ve sonrası doğumlular)",
+      "Türk vatandaşı olmak",
+      "Kamu haklarından mahrum bulunmamak",
+      "Görev yapmasına engel olabilecek akıl hastalığı bulunmamak"
+     ],
+     "adet": 150,
+     "en_dusuk_puan": null,
+     "il": null,
+     "ogrenim": "lisans, önlisans",
+     "puan_turu": null
+    }
+   ],
+   "ogrenim": [
+    "lisans",
+    "onlisans"
+   ],
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "Türk vatandaşı olmak",
+    "01/01/1991 ve sonrasında doğmuş olmak (35 yaşını doldurmamış olmak)",
+    "Kamu haklarından mahrum bulunmamak",
+    "Askerlikle ilgisi bulunmamak veya muvazzaf hizmetini yapmış/erteletmiş olmak",
+    "Görev yapmasına engel olabilecek akıl hastalığı bulunmamak"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-10-20",
+   "basvuru_adresi": "https://ais.osym.gov.tr",
+   "basvuru_yeri": "diger",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": null,
+   "iller": [],
+   "kpss_gerekli": false,
+   "kurum": "Adalet Bakanlığı",
+   "ozet": "Adalet Bakanlığı, yazılı ve sözlü sınavlar ile 150 İcra Müdür ve İcra Müdür Yardımcısı alacaktır. Başvurular 20-26 Ekim 2026 tarihleri arasında ÖSYM başvuru merkezleri veya https://ais.osym.gov.tr adresinden yapılacaktır.",
+   "son_basvuru_saati": null,
+   "son_basvuru_tarihi": "2026-10-26",
+   "toplam": 150
   }
  },
  "sbb-526ff55537d8578a927e5bc7": {
@@ -3208,6 +3644,146 @@
    "toplam": null
   }
  },
+ "sbb-aaae2ed4a77586932d827f7d": {
+  "zaman": "2026-10-20T11:14:54+03:00",
+  "surum": 2,
+  "model": "gemini-3.7-flash",
+  "kaynak": "pdf",
+  "imza": "2b160482efc04d91",
+  "baslik": "BANKACILIK DÜZENLEME VE DENETLEME KURUMU BAŞKANLIĞI - 15 SÖZLEŞMELİ BİLİŞİM PERSONELİ ALACAK",
+  "farklar": [
+   [
+    "son_tarih",
+    "2026-11-02",
+    "2024-11-02",
+    true
+   ]
+  ],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Kıdemli Siber Güvenlik Uzmanı",
+     "kosullar": [
+      "İlgili lisans bölümlerinden mezun olmak",
+      "Alanında en az 5 yıl mesleki tecrübeye sahip olmak",
+      "Ağ ve siber güvenlik sistemleri yönetimi konusunda tecrübeli olmak",
+      "Log yönetimi, SIEM ve sızma testleri konularında bilgi sahibi olmak",
+      "En az iki güncel programlama dilini bildiğini belgelemek"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": null,
+     "il": "İstanbul",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP3"
+    },
+    {
+     "unvan": "Kıdemli Yazılım Geliştirme Uzmanı",
+     "kosullar": [
+      "İlgili lisans bölümlerinden mezun olmak",
+      "Microsoft .NET ve C# konusunda en az 5 yıl tecrübe sahibi olmak",
+      "ASP.Net MVC ve ASP.Net Core teknolojilerinde geliştirme tecrübesine sahip olmak",
+      "Çok katmanlı mimari ve ilişkisel veri tabanları konularında tecrübeli olmak",
+      "En az iki güncel programlama dilini bildiğini belgelemek"
+     ],
+     "adet": 4,
+     "en_dusuk_puan": null,
+     "il": "İstanbul",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP3"
+    },
+    {
+     "unvan": "Yapay Zekâ Geliştirme Uzmanı",
+     "kosullar": [
+      "İlgili lisans bölümlerinden mezun olmak",
+      "Makine öğrenimi, derin öğrenme veya yapay zekâ konularında en az 3 yıl tecrübeli olmak",
+      "Büyük dil modelleri (LLM) ve doğal dil işleme (NLP) konularında tecrübeli olmak",
+      "Python programlama dili, vektör veri tabanları ve RAG sistemlerine hâkim olmak",
+      "En az iki güncel programlama dilini bildiğini belgelemek"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": null,
+     "il": "İstanbul",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP3"
+    },
+    {
+     "unvan": "Ağ Güvenlik Uzmanı",
+     "kosullar": [
+      "İlgili lisans bölümlerinden mezun olmak",
+      "Ağ güvenliği ve siber güvenlik alanında en az 3 yıl çalışmış olmak",
+      "Güvenlik duvarı, IPS ve DoS/DDoS önleme cihazlarının yönetiminde tecrübeli olmak",
+      "Ağ cihazlarının kurulumu, konfigürasyonu ve yönetiminde tecrübe sahibi olmak",
+      "En az iki güncel programlama dilini bildiğini belgelemek"
+     ],
+     "adet": 3,
+     "en_dusuk_puan": null,
+     "il": "İstanbul",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP3"
+    },
+    {
+     "unvan": "Sistem Uzmanı",
+     "kosullar": [
+      "İlgili lisans bölümlerinden mezun olmak",
+      "Sistem yönetimi uzmanı olarak en az 3 yıl çalışmış olmak",
+      "Active Directory, DNS, DHCP ve Exchange Server servislerinde tecrübeli olmak",
+      "Hyper-V veya Vmware sanallaştırma teknolojilerinde tecrübe sahibi olmak",
+      "Powershell scripting ve Windows Server platformlarına hâkim olmak"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": null,
+     "il": "İstanbul",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP3"
+    },
+    {
+     "unvan": "Yazılım Geliştirme Uzmanı",
+     "kosullar": [
+      "İlgili lisans bölümlerinden mezun olmak",
+      "Microsoft .NET ve C# alanında en az 3 yıl tecrübe sahibi olmak",
+      "ASP.Net MVC ve ASP.Net Core teknolojilerinde tecrübeli olmak",
+      "Web servisleri, API teknolojileri ve ilişkisel veri tabanlarına hâkim olmak",
+      "En az iki güncel programlama dilini bildiğini belgelemek"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": null,
+     "il": "İstanbul",
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP3"
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "KPSSP3"
+   ],
+   "ortak_kosullar": [
+    "KPSS puanı olmayan veya belge sunmayanların KPSS P3 puanı 70 olarak kabul edilir",
+    "Yabancı dil belgesi sunmayanların YDS puanı sıfır olarak değerlendirilir",
+    "En az iki güncel programlama dilini bildiğini belgelemek",
+    "Sözlü sınava her pozisyon için belirlenen kontenjanın 10 katı aday çağrılacaktır",
+    "Sözlü sınavda 100 üzerinden en az 70 puan alarak başarılı olmak"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2024-10-19",
+   "basvuru_adresi": "https://kariyerkapisi.gov.tr/isealim",
+   "basvuru_yeri": "kariyer_kapisi",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": null,
+   "iller": [
+    "İstanbul"
+   ],
+   "kpss_gerekli": false,
+   "kurum": "Bankacılık Düzenleme ve Denetleme Kurumu",
+   "ozet": "BDDK, bünyesinde istihdam etmek üzere 15 sözleşmeli bilişim personeli alacaktır. Başvurular 19.10.2024 - 02.11.2024 tarihleri arasında Kariyer Kapısı üzerinden yapılacaktır.",
+   "son_basvuru_saati": "23:59",
+   "son_basvuru_tarihi": "2024-11-02",
+   "toplam": 15
+  }
+ },
  "sbb-c799c2bf65cf136277930882": {
   "zaman": "2026-10-19T21:51:57+03:00",
   "surum": 2,
@@ -3492,6 +4068,63 @@
    "son_basvuru_saati": null,
    "son_basvuru_tarihi": null,
    "toplam": 3
+  }
+ },
+ "sbb-dd6cb2fdc71babe726d5b4fa": {
+  "zaman": "2026-10-20T11:14:54+03:00",
+  "surum": 2,
+  "model": "gemini-3.7-flash",
+  "kaynak": "pdf",
+  "imza": "7b65783e2dd72aa8",
+  "baslik": "TÜRK PATENT VE MARKA KURUMU - SÖZLEŞMELİ BİLİŞİM PERSONELİ SINAV ALIM İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Kıdemli Yazılım Mimarı",
+     "kosullar": [
+      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik müh. lisans mezunu olmak",
+      "Yazılım geliştirme veya ağ sistemleri alanında en az 5 yıl mesleki tecrübeye sahip olmak",
+      "Spring Framework bileşenleri ile projelerde en az 5 yıl aktif görev almış olmak",
+      "Java EE/Jakarta EE ve web uygulama geliştirme teknolojilerine hâkim olmak",
+      "En az iki güncel programlama dilini bildiğini belgelemek"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": null,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": null
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "KPSSP1",
+    "KPSSP2",
+    "KPSSP3"
+   ],
+   "ortak_kosullar": [
+    "KPSS ve YDS puanı olmayanların KPSS puanı 70, yabancı dil puanı 0 kabul edilir",
+    "Sözlü ve uygulamalı sınavda başarılı olmak",
+    "Görevini yapmaya engel sağlık sorunu bulunmadığını beyan etmek",
+    "En yüksek puandan başlanarak kontenjanın 10 katı aday sınava çağrılacaktır"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-10-07",
+   "basvuru_adresi": "https://kariyerkapisi.gov.tr/isealim",
+   "basvuru_yeri": "kariyer_kapisi",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": null,
+   "iller": [],
+   "kpss_gerekli": false,
+   "kurum": "Türk Patent ve Marka Kurumu",
+   "ozet": "Türk Patent ve Marka Kurumu 1 adet Kıdemli Yazılım Mimarı pozisyonunda sözleşmeli bilişim personeli alacaktır. Başvurular 07.10.2026 - 22.10.2026 tarihleri arasında Kariyer Kapısı üzerinden yapılacaktır.",
+   "son_basvuru_saati": "23:59",
+   "son_basvuru_tarihi": "2026-10-22",
+   "toplam": 1
   }
  },
  "sbb-e9b0b6b325e3d0e45aecf805": {
