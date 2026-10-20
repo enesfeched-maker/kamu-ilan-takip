@@ -43,9 +43,20 @@ def sonuclar(yol=SONUC_YOLU):
     return veri
 
 
+def kapali():
+    """20 Ekim 2026 kullanıcı kararı: config 'yapay_zeka_kapali': true iken Gemini hiç kullanılmaz; site ve Telegram
+    botun kendi verisiyle, beklemeden çalışır (eski sistem). Logo arama Gemini'siz (bel.tr tahmini) sürer."""
+    try:
+        return json.loads((ROOT / 'config.json').read_text(encoding='utf-8')).get('yapay_zeka_kapali') is True
+    except (OSError, ValueError):
+        return False
+
+
 def kayit_bul(item, veri=None):
     """Kaydın (ya da kaynaklar arası takma adlarından birinin) güncel sürümlü Gemini sonucu."""
     from yz_denetim import SURUM
+    if veri is None and kapali():
+        return None
     veri = sonuclar() if veri is None else veri
     for kimlik in [item.get('id'), *(item.get('kaynak_kimlikleri') or [])]:
         k = veri.get(kimlik)
@@ -193,6 +204,8 @@ def _bekleme_doldu(item, simdi=None):
 def yayina_hazir(item, veri=None, simdi=None):
     """(hazır mı, neden). Telegram'a Gemini'nin okuduğu ilan gider; Gemini (yoğunluk/kota) 1 saatte okuyamazsa ilan
     botun kendi bilgileriyle gider (gecikmesin), Gemini sonradan okuyunca site güncellenir."""
+    if veri is None and kapali():
+        return True, ''
     if item.get('duyuru_turu'):
         k = kayit_bul(item, veri)   # iptal duyuruları gider (orijinal ilana yanıt); akademik ilana ait olan gitmez
         return (False, 'Gemini akademik ilan dedi') if k and k['yz'].get('akademik') else (True, '')
@@ -232,6 +245,9 @@ def isle(en_cok=8, logo_en_cok=3, anahtar=None, simdi=None, yol=ROOT / 'docs' / 
     import yz_denetim as yd
     from site_uret import TR
     anahtar = anahtar or os.environ.get('GEMINI_ANAHTARI', '').strip()
+    if cagir is None and kapali():
+        en_cok = 0   # Gemini kapalı: ilan okunmaz, yalnız logo arama (Gemini'siz) çalışır
+        anahtar = anahtar or '-'
     if not anahtar:
         print('GEMINI_ANAHTARI tanımlı değil; yapay zekâ adımı atlandı.')
         return None

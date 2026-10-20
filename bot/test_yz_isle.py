@@ -73,6 +73,13 @@ class Kapi(unittest.TestCase):
         self.assertEqual(hazir[0]['son_tarih'], '2026-10-28')
 
 
+class Kapali(unittest.TestCase):
+    def test_kapaliyken_gemini_kullanilmaz_ilan_beklemez(self):
+        with mock.patch.object(yi, 'kapali', return_value=True):
+            self.assertIs(yi.uygula(ILAN), ILAN)
+            self.assertEqual(yi.yayina_hazir(ILAN, simdi=SIMDI.replace(hour=10, minute=5)), (True, ''))
+
+
 class Iptal(unittest.TestCase):
     def test_gemini_iptal_dedigi_kayit_iptal_duyurusu_olarak_gider(self):
         import ilan_bot
@@ -111,6 +118,22 @@ class Logo(unittest.TestCase):
         self.assertTrue(yz_logo.resmi_mi('https://iskur.gov.tr/a.png'))
         self.assertFalse(yz_logo.resmi_mi('https://tr.wikipedia.org/x.png'))
         self.assertFalse(yz_logo.resmi_mi('https://evil.com/gov.tr.png'))
+
+    def test_belediye_sitesi_tahmini_ve_amblem_kesimi(self):
+        self.assertEqual(yz_logo.tahmini_siteler('BOZTEPE BELEDİYE BAŞKANLIĞI')[0], 'https://www.boztepe.bel.tr/')
+        self.assertEqual(yz_logo.tahmini_siteler('Muş Elmakaya Belediyesi')[0], 'https://www.elmakaya.bel.tr/')
+        self.assertEqual(yz_logo.tahmini_siteler('Türkiye İş Kurumu'), [])
+        from PIL import Image, ImageDraw
+        im = Image.new('RGBA', (600, 100), (255, 255, 255, 0))
+        d = ImageDraw.Draw(im)
+        d.ellipse((5, 5, 95, 95), fill=(30, 90, 40, 255))
+        d.rectangle((130, 30, 590, 70), fill=(40, 60, 160, 255))
+        png = io.BytesIO()
+        im.save(png, format='PNG')
+        with Image.open(io.BytesIO(yz_logo.amblem_kes(png.getvalue()))) as kesik:
+            self.assertLess(abs(kesik.width - kesik.height), 5)
+        self.assertIsNone(yz_logo.amblem_kes(b'bozuk'))
+        self.assertNotRegex(yz_logo.TARAYICI['User-Agent'], r'[^\x00-\x7f]')   # başlıkta Türkçe harf istek atmayı bozar
 
     def test_site_adaylari(self):
         html = ('<img src="/img/banner.jpg"><img src="/img/logo.png" alt="x"><img src="https://cdn.com/logo.png">'
