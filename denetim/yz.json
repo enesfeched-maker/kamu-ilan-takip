@@ -99,6 +99,61 @@
    "toplam": 2
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=11272843-b0f1-470e-af31-cc176fa0e5d4": {
+  "zaman": "2026-10-20T06:12:51+03:00",
+  "surum": 2,
+  "model": "gemini-3.6-flash",
+  "kaynak": "metin",
+  "imza": "8e4d210055c1334e",
+  "baslik": "MEVLANA KALKINMA AJANSI - Personel Alım İlanı-İnşaat Mühendisliği (1 Uzman)",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Uzman (İnşaat Mühendisliği)",
+     "kosullar": [
+      "İnşaat Mühendisliği lisans bölümünden mezun olmak",
+      "KPSS ilgili puan türünden en az 80 puan almış olmak",
+      "İngilizce YDS'den en az C düzeyinde veya dengi puan belgesine sahip olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 80.0,
+     "il": null,
+     "ogrenim": "lisans",
+     "puan_turu": null
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "Türk vatandaşı olmak ve kamu haklarından mahrum bulunmamak",
+    "Kasten işlenen suçlardan hükümlü bulunmamak",
+    "Güvenlik soruşturması ve/veya arşiv araştırması yapılmış olmak",
+    "İşe giriş sağlık raporu alabilecek sağlık durumunda olmak",
+    "Askerlikle ilgisi bulunmamak veya muvazzaf hizmetini yapmış/ertelenmiş olmak"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-11-02",
+   "basvuru_adresi": null,
+   "basvuru_yeri": "diger",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": 80.0,
+   "iller": [
+    "Konya",
+    "Karaman"
+   ],
+   "kpss_gerekli": true,
+   "kurum": "MEVLANA KALKINMA AJANSI",
+   "ozet": "Mevlana Kalkınma Ajansı, Konya veya Karaman illerinde görevlendirilmek üzere 1 Uzman Personel alımı yapacaktır. Başvurular 02-13 Kasım 2026 tarihleri arasında elektronik ortamda alınacaktır.",
+   "son_basvuru_saati": "23:59",
+   "son_basvuru_tarihi": "2026-11-13",
+   "toplam": 1
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=1610b4a4-0f83-48cb-bd45-9aba5f32b893": {
   "zaman": "2026-10-20T00:42:19+03:00",
   "surum": 2,
@@ -937,6 +992,105 @@
    "toplam": 10
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=db21f412-186a-4d5c-bc46-03dff9ea17fb": {
+  "zaman": "2026-10-20T06:12:51+03:00",
+  "surum": 2,
+  "model": "gemini-3.6-flash",
+  "kaynak": "metin",
+  "imza": "3ae2e2f483006bef",
+  "baslik": "ORTA KARADENİZ KALKINMA AJANSI (OKA) - 2026 YILI PERSONEL ALIM İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "UZMAN PERSONEL - ŞEHİR VE BÖLGE PLANLAMA, MİMARLIK",
+     "kosullar": [
+      "İlgili lisans bölümlerinden mezun olmak",
+      "KPSS'den en az 80 puan almış olmak veya 5 yıl iş tecrübesine sahip olmak",
+      "İngilizce YDS'den en az C düzeyinde puan belgesine sahip olmak",
+      "En az B sınıfı sürücü belgesine sahip olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 80,
+     "il": "AMASYA, ÇORUM, SAMSUN, TOKAT",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "UZMAN PERSONEL - MÜHENDİSLİK",
+     "kosullar": [
+      "İlgili lisans bölümlerinden mezun olmak",
+      "KPSS'den en az 80 puan almış olmak veya 5 yıl iş tecrübesine sahip olmak",
+      "İngilizce YDS'den en az C düzeyinde puan belgesine sahip olmak",
+      "En az B sınıfı sürücü belgesine sahip olmak"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 80,
+     "il": "AMASYA, ÇORUM, SAMSUN, TOKAT",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "UZMAN PERSONEL - İDARİ BİLİMLER",
+     "kosullar": [
+      "İlgili lisans bölümlerinden mezun olmak",
+      "KPSS'den en az 80 puan almış olmak",
+      "İngilizce YDS'den en az C düzeyinde puan belgesine sahip olmak",
+      "En az B sınıfı sürücü belgesine sahip olmak"
+     ],
+     "adet": 2,
+     "en_dusuk_puan": 80,
+     "il": "AMASYA, ÇORUM, SAMSUN, TOKAT",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    },
+    {
+     "unvan": "DESTEK PERSONELİ",
+     "kosullar": [
+      "İlgili lisans bölümlerinden mezun olmak",
+      "KPSS'den en az 70 puan almış olmak",
+      "İngilizce dil belgesi veya SMMM ruhsatına sahip olmak tercih sebebidir",
+      "En az B sınıfı ehliyet sahibi olmak ve aktif araç kullanabilmek"
+     ],
+     "adet": 1,
+     "en_dusuk_puan": 70,
+     "il": "SAMSUN",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "Türk vatandaşı olmak ve kamu haklarından mahrum bulunmamak",
+    "Güvenlik soruşturması ve/veya arşiv araştırması yapılmış olmak",
+    "Askerlikle ilişiği bulunmamak",
+    "İşe giriş sağlık raporu alabiliyor olmak"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-11-02",
+   "basvuru_adresi": null,
+   "basvuru_yeri": "diger",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": 70,
+   "iller": [
+    "AMASYA",
+    "ÇORUM",
+    "SAMSUN",
+    "TOKAT"
+   ],
+   "kpss_gerekli": true,
+   "kurum": "ORTA KARADENİZ KALKINMA AJANSI (OKA)",
+   "ozet": "Orta Karadeniz Kalkınma Ajansı (OKA), 4 Uzman ve 1 Destek Personeli olmak üzere toplam 5 personel alımı yapacaktır. Başvurular 2-22 Kasım 2026 tarihleri arasında elektronik ortamda alınacaktır.",
+   "son_basvuru_saati": "23:59",
+   "son_basvuru_tarihi": "2026-11-22",
+   "toplam": 5
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=e53c369b-3913-48dc-8e41-be3a6392c249": {
   "zaman": "2026-10-19T23:16:53+03:00",
   "surum": 2,
@@ -965,6 +1119,48 @@
    "son_basvuru_saati": "23:59",
    "son_basvuru_tarihi": "2026-10-23",
    "toplam": 9
+  }
+ },
+ "iskur-01c8b814c37c00ddcec7858b": {
+  "zaman": "2026-10-20T06:12:51+03:00",
+  "surum": 2,
+  "model": "gemini-3.8-flash",
+  "kaynak": "metin",
+  "imza": "ccdc5261707b6c0c",
+  "baslik": "Türk Standartları Enstitüsü Sözleşmeli Bilişim Personeli Sınav İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Sözleşmeli Bilişim Personeli",
+     "kosullar": [],
+     "adet": null,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "ogrenim": null,
+     "puan_turu": null
+    }
+   ],
+   "ogrenim": [],
+   "puan_turleri": [],
+   "ortak_kosullar": [],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "kismi",
+   "baslangic_tarihi": null,
+   "basvuru_adresi": null,
+   "basvuru_yeri": null,
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": null,
+   "iller": [
+    "Ankara"
+   ],
+   "kpss_gerekli": null,
+   "kurum": "Türk Standartları Enstitüsü",
+   "ozet": "Türk Standartları Enstitüsü, Ankara için Sözleşmeli Bilişim Personeli alımı yapacaktır. Son başvuru tarihi 25 Ekim 2026 saat 23:55'tir.",
+   "son_basvuru_saati": "23:55",
+   "son_basvuru_tarihi": "2026-10-25",
+   "toplam": null
   }
  },
  "iskur-2779b3e3a72fb9fa634ba479": {
@@ -999,6 +1195,38 @@
    "toplam": null
   }
  },
+ "iskur-48ae81d78be9ead4ae15005a": {
+  "zaman": "2026-10-20T06:12:51+03:00",
+  "surum": 2,
+  "model": "gemini-3.6-flash",
+  "kaynak": "metin",
+  "imza": "92793e298b4f77ed",
+  "baslik": "Mevlana Kalkınma Ajansı Personel Alım İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [],
+   "ogrenim": [],
+   "puan_turleri": [],
+   "ortak_kosullar": [],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": null,
+   "basvuru_adresi": null,
+   "basvuru_yeri": null,
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": null,
+   "iller": [
+    "Konya"
+   ],
+   "kpss_gerekli": null,
+   "kurum": "Mevlana Kalkınma Ajansı",
+   "ozet": "Mevlana Kalkınma Ajansı Konya ili için personel alımı yapmaktadır. Son başvuru tarihi 13 Kasım 2026 saat 17:00'dir.",
+   "son_basvuru_saati": "17:00",
+   "son_basvuru_tarihi": "2026-11-13",
+   "toplam": null
+  }
+ },
  "iskur-83eb8530b668c43b12af5245": {
   "zaman": "2026-10-19T20:48:51+03:00",
   "surum": 2,
@@ -1027,6 +1255,58 @@
    "ozet": "Türkiye İş Kurumu, Ankara ili için Sözleşmeli Bilişim Personeli alımı yapacaktır. Son başvuru tarihi 8 Kasım 2026 saat 23:55'tir.",
    "son_basvuru_saati": "23:55",
    "son_basvuru_tarihi": "2026-11-08",
+   "toplam": null
+  }
+ },
+ "iskur-9b0565c28a9ae764ff23b945": {
+  "zaman": "2026-10-20T06:12:51+03:00",
+  "surum": 2,
+  "model": "gemini-3.8-flash",
+  "kaynak": "metin",
+  "imza": "8fc56706d2093bbb",
+  "baslik": "Orta Karadeniz Kalkınma Ajansı Personel Alım İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Personel",
+     "kosullar": [
+      "Lisans düzeyinde mezun olmak",
+      "2025 veya 2026 yılı KPSS'den en az 70 puan almış olmak",
+      "Son 5 yıl içinde İngilizce YDS'den en az (C) düzeyinde puan almış olmak"
+     ],
+     "adet": null,
+     "en_dusuk_puan": 70.0,
+     "il": "Samsun",
+     "ogrenim": "lisans",
+     "puan_turu": null
+    }
+   ],
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "2025 veya 2026 yıllarında yapılan KPSS'ye girmiş olmak",
+    "Son 5 yıl içinde İngilizce YDS'den asgari C düzeyinde belgeye sahip olmak",
+    "YÖKDİL puanı kabul edilmemektedir"
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "kismi",
+   "baslangic_tarihi": null,
+   "basvuru_adresi": null,
+   "basvuru_yeri": null,
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": 70.0,
+   "iller": [
+    "Samsun"
+   ],
+   "kpss_gerekli": true,
+   "kurum": "Orta Karadeniz Kalkınma Ajansı",
+   "ozet": "Orta Karadeniz Kalkınma Ajansı Samsun için lisans mezunu personel alımı yapacaktır. Başvurular 22 Kasım 2026 saat 23:00'e kadar alınacaktır.",
+   "son_basvuru_saati": "23:00",
+   "son_basvuru_tarihi": "2026-11-22",
    "toplam": null
   }
  },
