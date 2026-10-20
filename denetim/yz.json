@@ -5197,6 +5197,75 @@
    "toplam": 127
   }
  },
+ "sbb-ce3aeb16575b73442a9f8944": {
+  "zaman": "2026-10-20T14:07:34+03:00",
+  "surum": 2,
+  "model": "gemini-3.6-flash",
+  "kaynak": "pdf",
+  "imza": "9febadc6e9c9310f",
+  "baslik": "ŞİLE BELEDİYE BAŞKANLIĞI - 6 MEMUR ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Zabıta Memuru",
+     "kosullar": [
+      "Herhangi bir lisans programından mezun olmak.",
+      "Erkeklerde en az 1.67 m, kadınlarda en az 1.60 m boyunda olmak.",
+      "Boyun 1 metreden fazla kısmı ile kilosu arasında (+,-) 10 kg'dan fazla fark olmamak.",
+      "Sınav tarihinde 30 yaşını doldurmamış olmak."
+     ],
+     "adet": 2,
+     "en_dusuk_puan": 65.0,
+     "il": "İstanbul",
+     "ogrenim": "lisans",
+     "puan_turu": "P3"
+    },
+    {
+     "unvan": "Tekniker",
+     "kosullar": [
+      "Harita, inşaat, makine veya elektrik önlisans programlarının birinden mezun olmak."
+     ],
+     "adet": 4,
+     "en_dusuk_puan": 65.0,
+     "il": "İstanbul",
+     "ogrenim": "onlisans",
+     "puan_turu": "P93"
+    }
+   ],
+   "ogrenim": [
+    "lisans",
+    "onlisans"
+   ],
+   "puan_turleri": [
+    "P3",
+    "P93"
+   ],
+   "ortak_kosullar": [
+    "Türk vatandaşı olmak ve kamu haklarından mahrum bulunmamak.",
+    "2026 yılı KPSS sınavından ilgili puan türünde en az 65 puan almış olmak.",
+    "Görevini devamlı yapmasına engel olabilecek akıl hastalığı bulunmamak.",
+    "Erkek adaylar için askerlikle ilgisi bulunmamak veya askerliğini yapmış/ertelenmiş olmak."
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "iyi",
+   "baslangic_tarihi": "2026-11-09",
+   "basvuru_adresi": "insankaynaklari@sile.bel.tr",
+   "basvuru_yeri": "sahsen, eposta, posta",
+   "duyuru_tipi": "yeni_ilan",
+   "en_dusuk_puan": 65.0,
+   "iller": [
+    "İstanbul"
+   ],
+   "kpss_gerekli": true,
+   "kurum": "ŞİLE BELEDİYE BAŞKANLIĞI",
+   "ozet": "Şile Belediye Başkanlığı, lisans ve önlisans mezunlarından 6 memur ve tekniker alımı yapacaktır. Başvurular 09.11.2026 - 13.11.2026 tarihleri arasında şahsen, e-posta veya posta yoluyla yapılacaktır.",
+   "son_basvuru_saati": "17:00",
+   "son_basvuru_tarihi": "2026-11-13",
+   "toplam": 6
+  }
+ },
  "sbb-d568ee9cba7f99929eb258d5": {
   "zaman": "2026-10-20T01:17:41+03:00",
   "surum": 2,
