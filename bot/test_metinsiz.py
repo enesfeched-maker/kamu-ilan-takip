@@ -1,5 +1,6 @@
 ﻿import unittest
 from datetime import datetime, timedelta, timezone
+from pathlib import Path
 
 import ilan_bot
 
@@ -17,7 +18,7 @@ class Metinsiz(unittest.TestCase):
 
     def test_kalici_metinsiz(self):
         self.assertTrue(ilan_bot.metinsiz_mi({'telegram_metinsiz': True}, datetime.now(TR) + timedelta(days=400)))
-        self.assertTrue(ilan_bot.metinsiz_mi(ilan_bot.json.loads(open('../config.json', encoding='utf-8').read()),
+        self.assertTrue(ilan_bot.metinsiz_mi(ilan_bot.json.loads((Path(__file__).resolve().parents[1] / 'config.json').read_text(encoding='utf-8')),
                                              datetime.now(TR) + timedelta(days=30)))
 
 
