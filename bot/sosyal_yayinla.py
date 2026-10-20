@@ -223,6 +223,21 @@ def tiktok(video, metin, ortam=None, mod=None):
     return {'id': veri.get('publish_id'), 'gorunurluk': gizlilik}
 
 
+def tiktok_durum(publish_id, ortam=None, bekle=90):
+    """TikTok'un yüklemeyi nasıl işlediği (PROCESSING_UPLOAD / SEND_TO_USER_INBOX / FAILED + neden); en çok `bekle` sn bekler."""
+    import time
+    kimlik = ortam or _env('TT_ISTEMCI_ANAHTARI', 'TT_ISTEMCI_SIRRI', 'TT_YENILEME_ANAHTARI')
+    erisim = _tiktok_erisim(*kimlik)
+    son = {}
+    for _ in range(max(1, bekle // 6)):
+        son = (_istek('https://open.tiktokapis.com/v2/post/publish/status/fetch/', json_veri={'publish_id': publish_id},
+                      basliklar={'Authorization': f'Bearer {erisim}'}).get('data') or {})
+        if son.get('status') in ('SEND_TO_USER_INBOX', 'PUBLISH_COMPLETE', 'FAILED'):
+            break
+        time.sleep(6)
+    return son
+
+
 PLATFORMLAR = (('instagram', instagram), ('youtube', youtube), ('tiktok', tiktok))
 
 
@@ -250,6 +265,13 @@ def yayinla(klasor):
 
 
 if __name__ == '__main__':
+    if '--tiktok-dene' in sys.argv:   # yalnız TikTok'a yükler ve TikTok'un cevabını yazar (tiktok-dene.yml)
+        k = Path(sys.argv[sys.argv.index('--tiktok-dene') + 1])
+        yanit = tiktok(k / 'reel.mp4', json.loads((k / 'paylasim.json').read_text(encoding='utf-8')))
+        print('TikTok yükleme isteği:', yanit)
+        durum = tiktok_durum(yanit['id'])
+        print('TikTok durumu:', json.dumps(durum, ensure_ascii=False))
+        sys.exit(0 if durum.get('status') in ('SEND_TO_USER_INBOX', 'PUBLISH_COMPLETE') else 1)
     if '--youtube-kontrol' in sys.argv:
         sys.exit(0 if youtube_kontrol() else 1)
     if '--instagram-yenile' in sys.argv:
