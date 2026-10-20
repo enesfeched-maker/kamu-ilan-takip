@@ -85,13 +85,6 @@ jobs:
           fi
       # Gemini ilanı resmî belgeden okur (sitede ve Telegram'da bu bilgiler kullanılır), eksik kurum logosunu bulur.
       # Hata ya da kota taramayı durdurmaz; okunmayan ilan Telegram'a gitmez, sonraki taramada yeniden denenir.
-      - name: Yapay zekâ ile ilanları oku
-        if: ${{ !cancelled() }}
-        continue-on-error: true
-        timeout-minutes: 15
-        env:
-          GEMINI_ANAHTARI: ${{ secrets.GEMINI_ANAHTARI }}
-        run: python bot/yz_isle.py --en-cok 8 --logo 3
       - name: Değişen veriyi kaydet
         if: ${{ always() }}
         run: python bot/veri_kaydet.py

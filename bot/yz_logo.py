@@ -9,6 +9,7 @@ import base64
 import io
 import json
 import re
+import urllib.error
 import urllib.parse
 import urllib.request
 from datetime import date
@@ -19,7 +20,7 @@ ARSIV = ROOT / 'docs' / 'assets' / 'kurum-logolari'
 RESMI_UZANTILAR = ('.gov.tr', '.bel.tr', '.edu.tr', '.tsk.tr', '.org.tr', '.pol.tr', '.k12.tr', '.av.tr', '.jgk.gov.tr')
 EN_BUYUK_GORSEL = 3 * 1024 * 1024
 EN_AZ_GUVEN = 0.8
-TARAYICI = {'User-Agent': 'Mozilla/5.0 (KPSS Tercihi logo arşivi; +https://kpsstercihi.com/)'}
+TARAYICI = {'User-Agent': 'Mozilla/5.0 (KPSS Tercihi logo archive; +https://kpsstercihi.com/)'}   # başlıkta yalnız ASCII
 
 ARAMA_ISTEMI = """Türkiye'deki "{kurum}" kurumunun resmî internet sitesini ve sitedeki logo/amblem görselinin doğrudan adresini
 Google'da ara. Yalnız resmî alan adlarını (gov.tr, bel.tr, edu.tr, tsk.tr, org.tr) kabul et; haber sitesi, Vikipedi, sosyal
@@ -43,6 +44,16 @@ def resmi_mi(url):
 
 
 def _indir(url, sinir=EN_BUYUK_GORSEL, zaman_asimi=30):
+    """Küçük belediye sitelerinin çoğunda HTTPS sertifikası bozuk: o zaman aynı adres http ile denenir."""
+    try:
+        return _indir_tek(url, sinir, zaman_asimi)
+    except urllib.error.URLError as hata:
+        if url.startswith('https://') and 'CERTIFICATE' in str(hata).upper():
+            return _indir_tek('http://' + url[len('https://'):], sinir, zaman_asimi)
+        raise
+
+
+def _indir_tek(url, sinir, zaman_asimi):
     req = urllib.request.Request(url, headers=TARAYICI)
     with urllib.request.urlopen(req, timeout=zaman_asimi) as r:
         if not resmi_mi(r.geturl()):
@@ -51,6 +62,45 @@ def _indir(url, sinir=EN_BUYUK_GORSEL, zaman_asimi=30):
     if len(veri) > sinir:
         raise ValueError('dosya çok büyük')
     return veri
+
+
+_ASCII = str.maketrans('çğıöşüâîû', 'cgiosuaiu')
+
+
+def tahmini_siteler(kurum):
+    """Belediyelerin resmî sitesi neredeyse her zaman <ad>.bel.tr: Gemini aramasına gerek kalmadan denenir."""
+    from siniflandir import kucuk
+    k = kucuk(kurum)
+    m = re.search(r'([a-zçğıöşüâîû]+)\s+(?:il\s+özel\s+idaresi|belediye)', k)
+    if not m:
+        return []
+    ad = m.group(1).translate(_ASCII)
+    return [f'https://www.{ad}.bel.tr/', f'https://{ad}.bel.tr/']
+
+
+def amblem_kes(veri):
+    """Yatay afiş logolarında (amblem + yazı) soldaki amblemi keser; kesilemezse None."""
+    from PIL import Image
+    try:
+        im = Image.open(io.BytesIO(veri)).convert('RGBA')
+    except Exception:
+        return None
+    w, h = im.size
+    if w < 2.5 * h:
+        return None
+    px = im.load()
+
+    def bos(x):
+        return all(px[x, y][3] < 20 or min(px[x, y][:3]) > 235 for y in range(h))
+    x = int(h * 0.4)
+    while x < w and not bos(x):
+        x += 1
+    kutu = im.crop((0, 0, x, h)).getbbox()
+    if not kutu or not 0.7 <= (kutu[2] - kutu[0]) / max(1, kutu[3] - kutu[1]) <= 1.4:
+        return None
+    out = io.BytesIO()
+    im.crop(kutu).save(out, format='PNG')
+    return out.getvalue()
 
 
 def _json_bul(metin):
@@ -156,24 +206,38 @@ def logo_bul_ve_kaydet(item, anahtar, iste=None, indir=None, arsiv=ARSIV):
     if not kurum:
         return None
     indir = indir or _indir
-    bulunan = gemini_ara(kurum, anahtar, iste)
-    site = bulunan.get('site') if resmi_mi(bulunan.get('site') or '') else None
-    adaylar = [u for u in bulunan.get('logolar') or [] if resmi_mi(u) and not u.lower().endswith('.svg')]
-    if site:
+    site, adaylar, tahmini = None, [], False
+    for s in tahmini_siteler(item.get('kurum') or kurum):   # önce tahmin: Gemini arama kotası çok küçük
+        try:
+            adaylar = site_adaylari(s, indir(s, 2 * 1024 * 1024).decode('utf-8', 'replace'))
+        except Exception as hata:
+            print(f'Uyarı: {s} okunamadı: {str(hata)[:120]}')
+            continue
+        if adaylar:
+            site, tahmini = s, True
+            break
+    if not adaylar and anahtar != '-':   # '-': Gemini kapalı (yz_isle.kapali)
+        bulunan = gemini_ara(kurum, anahtar, iste)
+        site = bulunan.get('site') if resmi_mi(bulunan.get('site') or '') else None
+        adaylar = [u for u in bulunan.get('logolar') or [] if resmi_mi(u) and not u.lower().endswith('.svg')]
+    if site and not tahmini:
         try:
             adaylar += [u for u in site_adaylari(site, indir(site, 2 * 1024 * 1024).decode('utf-8', 'replace')) if u not in adaylar]
         except Exception as hata:
             print(f'Uyarı: {site} okunamadı: {str(hata)[:120]}')
     for url in adaylar[:6]:
         try:
-            hazir = gorsel_hazirla(indir(url))
+            ham = indir(url)
         except Exception:
             continue
+        hazir = gorsel_hazirla(amblem_kes(ham) or ham)
         if not hazir:
             continue
         png, boyut = hazir
-        karar = dogrula(kurum, png, anahtar, iste)
-        if karar.get('logo_mu') and float(karar.get('guven') or 0) >= EN_AZ_GUVEN:
+        karar = dogrula(kurum, png, anahtar, iste) if anahtar != '-' else {}
+        # Gemini yanıt veremezse (kota): belediyenin kendi bel.tr sitesinde adı 'logo' olan görsel kabul edilir
+        yedek = not karar and tahmini and 'logo' in url.rsplit('/', 1)[-1].lower()
+        if yedek or (karar.get('logo_mu') and float(karar.get('guven') or 0) >= EN_AZ_GUVEN):
             dosya = kaydet(item.get('kurum') or kurum, png, boyut, site or url, url, arsiv)
             print(f'Logo bulundu ve arşive eklendi: {kurum} -> {dosya} ({url})')
             return dosya
