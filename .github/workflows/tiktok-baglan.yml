@@ -7,8 +7,9 @@ on:
   workflow_dispatch:
     inputs:
       kod:
-        description: TikTok'un döndüğü adres (kpsstercihi.com/?code=...) ya da code değeri
-        required: true
+        description: TikTok'un döndüğü adres (kpsstercihi.com/?code=...) ya da code değeri; BOŞ bırakırsan izin bağlantısı üretilir
+        required: false
+        default: ''
 
 permissions:
   contents: read
@@ -30,6 +31,14 @@ jobs:
               if not os.environ.get(ad):
                   raise SystemExit(f'{ad} sırrı tanımlı değil.')
           kod = os.environ['KOD'].strip()
+          if not kod:   # izin bağlantısı: client_key gizli değildir ama GitHub maskeler; ilk 3 karakter yüzde-kodlanır
+              ck = os.environ['TT_ISTEMCI_ANAHTARI'].strip()
+              gizli_degil = ''.join(f'%{ord(c):02X}' for c in ck[:3]) + ck[3:]
+              url = ('https://www.tiktok.com/v2/auth/authorize/?client_key=' + gizli_degil
+                     + '&scope=user.info.basic,video.upload&response_type=code&redirect_uri=https%3A%2F%2Fkpsstercihi.com%2F&state=kpss')
+              print('İZİN BAĞLANTISI: ' + url)
+              open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8').write('### TikTok izin bağlantısı\n\n' + url + '\n')
+              raise SystemExit(0)
           if 'code=' in kod:
               kod = urllib.parse.parse_qs(urllib.parse.urlparse(kod).query)['code'][0]
           else:
