@@ -1,9 +1,9 @@
 {
  "schema": 1,
- "guncelleme": "2026-10-21T04:55:28.449599+00:00",
+ "guncelleme": "2026-10-21T05:26:06.143409+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-10-21T04:55:33.886296+00:00",
+   "kontrol": "2026-10-21T05:26:06.574794+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -4341,7 +4341,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-10-21T04:55:35.864079+00:00",
+   "kontrol": "2026-10-21T05:26:07.728621+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -19953,6 +19953,21 @@
     "lisans",
     "ortaogretim"
    ]
+  },
+  "https://kariyerkapisi.gov.tr/IlanDetay?i=0f54adef-6e76-4b95-b503-03f415523085": {
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/513288ed-ed9f-4a87-a746-c7c0b23679ea.png",
+   "son_tarih": "2026-10-26",
+   "son_zaman": "2026-10-26T23:59:00+03:00",
+   "baslangic_zaman": "2026-10-21T08:00:00+03:00",
+   "yer": "",
+   "kadro": "",
+   "ilan_turu": "Sürekli İşçi",
+   "ozet": "",
+   "sartlar": [],
+   "sart_kadro_sayisi": 0,
+   "basvuru_notu": "",
+   "detay_guncelleme": "2026-10-21T08:26:08+03:00",
+   "kk_detay_surumu": 3
   }
  },
  "logolar": {
