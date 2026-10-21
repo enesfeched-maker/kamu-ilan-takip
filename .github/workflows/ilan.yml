@@ -136,7 +136,8 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          GEMINI_ANAHTARI: ${{ secrets.GEMINI_ANAHTARI }}   # yalnız "aynı ilan mı?" sorusu için (yz_tekrar)
+          GROQ_ANAHTARI: ${{ secrets.GROQ_ANAHTARI }}       # "aynı ilan mı?" sorusu için ana sağlayıcı (yz_tekrar)
+          GEMINI_ANAHTARI: ${{ secrets.GEMINI_ANAHTARI }}   # yedek sağlayıcı
         run: python bot/ilan_bot.py --send-only
       - name: Telegram gönderim geçmişini kaydet
         if: ${{ always() && steps.telegram.outcome != 'skipped' }}

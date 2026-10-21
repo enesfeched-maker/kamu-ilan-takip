@@ -1,0 +1,42 @@
+name: Yapay zekâ anahtarlarını sına
+
+# GROQ_ANAHTARI / GEMINI_ANAHTARI sırları yenilendikten sonra bir kez çalıştırılır: anahtar geçerli mi, küçük bir soruya
+# cevap veriyor mu, kaç saniyede. Anahtarlar hiçbir zaman yazdırılmaz.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  kontrol:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Anahtarları sına
+        env:
+          GROQ_ANAHTARI: ${{ secrets.GROQ_ANAHTARI }}
+          GEMINI_ANAHTARI: ${{ secrets.GEMINI_ANAHTARI }}
+        run: |
+          python - <<'PY'
+          import json, os, sys, time, urllib.error
+          sys.path.insert(0, 'bot')
+          import yz_tekrar as yt
+          groq, gemini = os.environ.get('GROQ_ANAHTARI', '').strip(), os.environ.get('GEMINI_ANAHTARI', '').strip()
+          if groq:
+              for model in yt.GROQ_MODELLER:
+                  t0 = time.time()
+                  try:
+                      cevap = yt._groq_iste(model, 'Yalnız {"ayni": true, "guven": 1, "neden": "deneme"} JSON\'unu aynen yaz.', groq, 30)
+                      print(f'Groq {model}: TAMAM ({time.time() - t0:.1f} sn) -> {cevap[:70]}')
+                  except urllib.error.HTTPError as h:
+                      print(f'Groq {model}: HTTP {h.code}' + (' (anahtar KABUL EDİLMEDİ)' if h.code in (401, 403) else ''))
+                  except Exception as e:
+                      print(f'Groq {model}: yanıt vermedi ({str(e)[:80]})')
+          else:
+              print('GROQ_ANAHTARI tanımlı değil.')
+          print('Gemini yedeği:', 'tanımlı' if gemini else 'tanımlı değil')
+          PY

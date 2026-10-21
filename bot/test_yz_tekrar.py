@@ -64,12 +64,73 @@ class SessizYutmaKorumasi(unittest.TestCase):
         self.assertEqual(ilan_bot.onceden_paylasilmis(genel, {'kk': genel, 'a': a}, {'a'}), 'a')
 
 
+class GroqAnaSaglayici(unittest.TestCase):
+    def tearDown(self):
+        yz_tekrar.ayarla(False)
+
+    def test_groq_cevabi_kullanilir_gemini_sorulmaz(self):
+        yz_tekrar.ayarla(True, 'groq-anahtar', 'gemini-anahtar')
+        modeller = []
+
+        def groq(model, istem, anahtar, zaman):
+            modeller.append(model)
+            return json.dumps({'ayni': True, 'guven': 0.96, 'neden': 'aynı kurum ve kadro'})
+
+        def gemini_olmamali(*a):
+            raise AssertionError('Groq cevap verdiğinde Gemini çağrılmamalı')
+        sonuc = yz_tekrar.sor(TCDD_SBB, TCDD_KK, 166, None, iste=gemini_olmamali, groq_iste=groq)
+        self.assertTrue(yz_tekrar.tutulsun_mu(sonuc))
+        self.assertEqual(modeller, ['llama-3.3-70b-versatile'])
+
+    def test_groq_hata_verirse_once_kucuk_model_sonra_gemini(self):
+        import yz_denetim as yd
+        yd._MODELLER[:] = ['m']
+        yz_tekrar.ayarla(True, 'groq-anahtar', 'gemini-anahtar')
+        denenen = []
+
+        def groq(model, istem, anahtar, zaman):
+            denenen.append(model)
+            raise OSError('429')
+        try:
+            with contextlib.redirect_stdout(io.StringIO()):
+                sonuc = yz_tekrar.sor(TCDD_SBB, TCDD_KK, groq_iste=groq, iste=cevap(False, 0.8, 'farklı'))
+        finally:
+            yd._MODELLER[:] = []
+        self.assertEqual(denenen, ['llama-3.3-70b-versatile', 'llama-3.1-8b-instant'])
+        self.assertFalse(sonuc['ayni'])   # Gemini yedeği cevap verdi
+
+    def test_hicbiri_cevap_vermezse_none_ve_ilan_yayinlanir(self):
+        import yz_denetim as yd
+        yd._MODELLER[:] = ['m']
+        yz_tekrar.ayarla(True, 'groq-anahtar', 'gemini-anahtar')
+
+        def patlar(*a):
+            raise OSError('503')
+        try:
+            with contextlib.redirect_stdout(io.StringIO()):
+                self.assertIsNone(yz_tekrar.sor(TCDD_SBB, TCDD_KK, groq_iste=patlar, iste=patlar))
+        finally:
+            yd._MODELLER[:] = []
+        self.assertFalse(yz_tekrar.tutulsun_mu(None))
+
+    def test_yalniz_groq_anahtari_yeter_ve_anahtarsiz_kapali(self):
+        yz_tekrar.ayarla(True, 'groq-anahtar', '')
+        self.assertTrue(yz_tekrar.etkin())
+        yz_tekrar.ayarla(True, '', '')
+        self.assertFalse(yz_tekrar.etkin())
+
+    def test_bozuk_json_yok_sayilir(self):
+        yz_tekrar.ayarla(True, 'groq-anahtar', '')
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.assertIsNone(yz_tekrar.sor(TCDD_SBB, TCDD_KK, groq_iste=lambda *a: 'json değil'))
+
+
 class GeminiIkinciGoz(unittest.TestCase):
     def setUp(self):
         import yz_denetim as yd
         self.yd = yd
         yd._MODELLER[:] = ['m']
-        yz_tekrar.ayarla(True, 'anahtar')
+        yz_tekrar.ayarla(True, '', 'anahtar')
 
     def tearDown(self):
         self.yd._MODELLER[:] = []
@@ -109,7 +170,7 @@ class GeminiIkinciGoz(unittest.TestCase):
             try:
                 yz_tekrar.sor = lambda *x, **k: {'ayni': True, 'guven': 0.95, 'neden': 'aynı'}
                 self.assertEqual(ilan_bot.onceden_paylasilmis(a, mevcut, gonderilen), 'b')
-                yz_tekrar.ayarla(True, 'anahtar')
+                yz_tekrar.ayarla(True, '', 'anahtar')
                 yz_tekrar.sor = lambda *x, **k: {'ayni': True, 'guven': 0.6, 'neden': 'belki'}
                 self.assertIsNone(ilan_bot.onceden_paylasilmis(a, mevcut, gonderilen))   # emin değil -> yayınla
                 yz_tekrar.sor = lambda *x, **k: None
