@@ -39,7 +39,7 @@ def kurum_adi(k):
     s = _su()._duzgun(k)
     for kis in re.findall(r'\(([A-ZÇĞİÖŞÜ0-9]{2,8})\)', k or ''):
         s = re.sub(r'\(' + re.escape(_su()._duzgun(kis)) + r'\)', f'({kis})', s)
-    return s
+    return re.sub(r'\bA\.[sş]\.?(?=\s|$)', 'A.Ş.', s)   # "A.ş" -> "A.Ş." (anonim şirket eki)
 
 
 def _belediye_parcalar(k):

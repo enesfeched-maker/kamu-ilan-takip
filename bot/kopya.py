@@ -149,7 +149,16 @@ def _uygun(item):
 
 
 KURUM_TAKMA = {'iett': 'elektrik tramvay tunel'}   # kısaltma -> adın ayırt edici sözcükleri
-KURUM_GENEL = {'ve', 'ile', 'genel', 'mudurlugu', 'sekreterligi', 'kurumu', 'kurulu', 'cumhurbaskanligi', 'baskanlik'}
+KURUM_GENEL = {'ve', 'ile', 'genel', 'mudurlugu', 'sekreterligi', 'kurumu', 'kurulu', 'cumhurbaskanligi', 'baskanlik',
+               'a', 's', 'as', 'anonim', 'sirketi', 'sirket'}
+
+
+def kurum_sade(ad):
+    """'Türkiye Cumhuriyeti Devlet Demiryolları Taşımacılık Anonim Şirketi' ile 'Devlet Demiryolları Taşımacılık A.Ş.' aynı
+    çekirdeğe iner: baştaki 'Türkiye Cumhuriyeti' (arkasından ≥3 sözcük geliyorsa) ve şirket türü ekleri atılır."""
+    ad = re.sub(r'\ba\.? ?s\.?\b', ' as ', ad)
+    ad = re.sub(r'^turkiye cumhuriyeti (?=(?:\S+\s+){2}\S+)', '', ad)
+    return ' '.join(ad.split())
 BASLIK_GENEL = {'ve', 'ile', 'veya', 'alim', 'alimi', 'ilani', 'duyurusu', 'personel', 'sinav', 'sinavi', 'yili', 'yilinda',
                 'alacak', 'alinacak', 'ilk', 'defa', 'atanmak', 'uzere', 'aciktan', 'temin', 'edecektir', 'adet', 'kisi',
                 'toplam', 'sozlesmeli', 'mevcut'}
@@ -165,7 +174,7 @@ def _kurum_cekirdek(item, kan):
     'İstanbul Bankacılık Düzenleme ve Denetleme Kurumu' ile 'BANKACILIK DÜZENLEME VE DENETLEME KURUMU BAŞKANLIĞI (BDDK)' aynıdır."""
     if kan.endswith(' belediye'):
         return frozenset(kan.split())
-    ad = ks.kurum_anahtari(re.sub(r'\([^)]*\)', ' ', item.get('kurum') or ''))
+    ad = kurum_sade(ks.kurum_anahtari(re.sub(r'\([^)]*\)', ' ', item.get('kurum') or '')))
     for kisa, acik in KURUM_TAKMA.items():
         ad = re.sub(r'\b' + kisa + r'\b', acik, ad)
     sozcukler = [w for w in ad.split() if w not in KURUM_GENEL]
