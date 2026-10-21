@@ -1,0 +1,43 @@
+name: Gemini anahtarını sına
+
+# GEMINI_ANAHTARI sırrı yenilendikten sonra bir kez çalıştırılır: anahtar geçerli mi, hangi modeller görünüyor, küçük bir soruya cevap veriyor mu.
+# Anahtarın kendisi hiçbir zaman yazdırılmaz.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  kontrol:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Anahtarı sına
+        env:
+          GEMINI_ANAHTARI: ${{ secrets.GEMINI_ANAHTARI }}
+        run: |
+          python - <<'PY'
+          import json, os, sys, urllib.error, urllib.request
+          sys.path.insert(0, 'bot')
+          anahtar = os.environ.get('GEMINI_ANAHTARI', '').strip()
+          if not anahtar:
+              raise SystemExit('GEMINI_ANAHTARI tanımlı değil.')
+          import yz_denetim as yd
+          try:
+              modeller = yd.modeller_bul(anahtar)
+          except urllib.error.HTTPError as h:
+              raise SystemExit(f'Anahtar KABUL EDİLMEDİ: HTTP {h.code}')
+          print('Anahtar geçerli. Kullanılabilir Flash modelleri:', ', '.join(modeller[:4]) or 'yok')
+          govde = {'contents': [{'parts': [{'text': 'Sadece "tamam" yaz.'}]}], 'generationConfig': {'temperature': 0}}
+          for m in modeller[:2]:
+              try:
+                  yanit = yd._iste(m, govde, anahtar, 30)
+                  print(m, '->', yanit['candidates'][0]['content']['parts'][0]['text'].strip()[:40])
+                  break
+              except Exception as e:
+                  print(m, 'yanıt vermedi:', str(e)[:100])
+          PY
