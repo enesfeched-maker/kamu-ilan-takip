@@ -43,6 +43,27 @@ class BotKarari(unittest.TestCase):
         self.assertIn(ilan_bot.tekrar_karari(a, b), ('belirsiz', 'ayni'))
 
 
+class SessizYutmaKorumasi(unittest.TestCase):
+    """Bot yanlış 'aynı' derse gerçek ilan sessizce yutulur: bunun yolları kapalı olmalı."""
+
+    def test_ozgul_ve_benzemeyen_basliklar_farkli(self):
+        tabip = ilan('t', 'MİLLİ SAVUNMA BAKANLIĞI', baslik='MİLLİ SAVUNMA BAKANLIĞI - 2026 YILI TABİP, DİŞ TABİBİ SINIFI SÖZLEŞMELİ/MUVAZZAF SUBAY ADAYI TEMİNİ')
+        uni = ilan('u', 'MİLLİ SAVUNMA BAKANLIĞI', baslik='MİLLİ SAVUNMA BAKANLIĞI - 2026 YILI MİLLÎ SAVUNMA ÜNİVERSİTESİNE ÖĞRETMEN/MÜHENDİS SINIFI MUVAZZAF SUBAY ADAYI')
+        self.assertEqual(ilan_bot.tekrar_karari(tabip, uni), 'farkli')
+
+    def test_genel_baslik_birden_cok_ilana_uyuyorsa_yutulmaz(self):
+        genel = ilan('kk', 'ÖRNEK KURUMU', baslik='ÖRNEK KURUMU - PERSONEL ALIM İLANI')
+        a = ilan('a', 'ÖRNEK KURUMU', '3 Mühendis')
+        b = ilan('b', 'ÖRNEK KURUMU', '2 Şoför')
+        mevcut = {'kk': genel, 'a': a, 'b': b}
+        self.assertEqual(ilan_bot.onceden_paylasilmis(genel, mevcut, {'a'}), None)   # a mı b mi belli değil -> yayınla
+
+    def test_genel_baslik_tek_ilana_uyuyorsa_tekrardir(self):
+        genel = ilan('kk', 'ÖRNEK KURUMU', baslik='ÖRNEK KURUMU - PERSONEL ALIM İLANI')
+        a = ilan('a', 'ÖRNEK KURUMU', '3 Mühendis')
+        self.assertEqual(ilan_bot.onceden_paylasilmis(genel, {'kk': genel, 'a': a}, {'a'}), 'a')
+
+
 class GeminiIkinciGoz(unittest.TestCase):
     def setUp(self):
         import yz_denetim as yd

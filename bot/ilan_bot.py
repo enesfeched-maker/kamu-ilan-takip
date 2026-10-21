@@ -547,7 +547,29 @@ def tekrar_karari(a, b):
         return 'farkli'
     if not k1 or not k2 or len(k1 & k2) / max(1, min(len(k1), len(k2))) < 0.5:
         return 'farkli'
+    b1, b2 = _baslik_kokleri(a), _baslik_kokleri(b)
+    if len(b1) >= 3 and len(b2) >= 3 and len(b1 & b2) / len(b1 | b2) < 0.34:
+        return 'farkli'   # iki özgül başlık birbirine benzemiyor (örn. MSB 'Tabip/Diş Tabibi' ile 'Üniversiteye Öğretmen/Mühendis')
     return 'belirsiz'
+
+
+def _genel_baslikli_belirsiz(i, g, mevcut):
+    """'Aynı' kararı yalnız genel başlığa dayanıyorsa (kişi sayısı bilinmiyor ve başlıklardan biri 'Personel alım ilanı' gibi
+    özgül sözcük taşımıyorsa) ve aynı kurumun aynı gün kapanan BAŞKA, g'den farklı bir ilanı da i'ye uyuyorsa True: hangisine ait
+    olduğu bilinemez, ilan yutulmaz (21 Ekim 2026: sessizce yanlış ilanı yutma riski)."""
+    _, _, t1, _ = _parmak_izi(i)
+    _, _, t2, _ = _parmak_izi(g)
+    b1, b2 = _baslik_kokleri(i), _baslik_kokleri(g)
+    if (t1 and t2) or (b1 and b2):
+        return False
+    for c in mevcut.values():
+        if c is i or c is g or c.get('duyuru_turu') or akademik_ilan(c) or c.get('id') in (i.get('id'), g.get('id')):
+            continue
+        if str(c.get('son_tarih') or '')[:10] != str(i.get('son_tarih') or '')[:10]:
+            continue
+        if ayni_ilan_mi(i, c) and tekrar_karari(g, c) == 'farkli':
+            return True
+    return False
 
 
 def _yakin_zamanli(a, b, saat=72):
@@ -569,6 +591,9 @@ def onceden_paylasilmis(i, mevcut, gonderilen):
         if not g or kimlik == i['id'] or g.get('duyuru_turu') or not paylasildi(g, gonderilen):
             continue
         if ayni_ilan_mi(i, g):
+            if _genel_baslikli_belirsiz(i, g, mevcut):
+                print(f"Tekrar kararı belirsiz (genel başlık, aynı gün birden çok ilan): {i['baslik'][:70]}")
+                continue
             return kimlik
     import yz_tekrar
     if not yz_tekrar.etkin():
@@ -577,7 +602,12 @@ def onceden_paylasilmis(i, mevcut, gonderilen):
         g = mevcut.get(kimlik)
         if not g or kimlik == i['id'] or g.get('duyuru_turu') or not paylasildi(g, gonderilen) or not yz_tekrar.etkin():
             continue
-        if not _yakin_zamanli(i, g) or tekrar_karari(i, g) != 'belirsiz':
+        if not _yakin_zamanli(i, g):
+            continue
+        karar = tekrar_karari(i, g)
+        if karar == 'ayni' and _genel_baslikli_belirsiz(i, g, mevcut):
+            karar = 'belirsiz'   # genel başlığa dayanan 'aynı' kararı Gemini'ye sorulur
+        if karar != 'belirsiz':
             continue
         sonuc = yz_tekrar.sor(i, g, _parmak_izi(i)[2], _parmak_izi(g)[2])
         print(f"Tekrar sorusu (bot: belirsiz): {i['baslik'][:60]} <> {g['baslik'][:60]} -> "
