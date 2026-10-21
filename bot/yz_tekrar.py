@@ -54,7 +54,9 @@ def ozet(i, toplam=None):
 
 
 def _cozumle(metin):
-    sonuc = json.loads(metin)
+    import re
+    m = re.search(r'\{.*\}', str(metin or ''), re.S)   # düşünme etiketi/ek yazı varsa yalnız JSON kısmı
+    sonuc = json.loads(m.group(0) if m else metin)
     return {'ayni': bool(sonuc.get('ayni')), 'guven': float(sonuc.get('guven') or 0), 'neden': str(sonuc.get('neden') or '')[:200]}
 
 
@@ -82,8 +84,9 @@ def groq_modelleri(anahtar, iste=None):
 
     def sira(k):
         s = k.lower()
-        for n, kural in enumerate((lambda x: 'llama' in x and '70b' in x, lambda x: 'llama' in x and ('maverick' in x or 'scout' in x),
-                                   lambda x: 'llama' in x and '8b' in x, lambda x: 'gpt-oss' in x)):
+        for n, kural in enumerate((lambda x: 'gpt-oss-120b' in x or ('llama' in x and '70b' in x),
+                                   lambda x: 'llama' in x and ('maverick' in x or 'scout' in x), lambda x: 'qwen' in x,
+                                   lambda x: 'gpt-oss' in x, lambda x: 'llama' in x and '8b' in x)):
             if kural(s):
                 return n
         return 9
@@ -93,13 +96,20 @@ def groq_modelleri(anahtar, iste=None):
 
 
 def _groq_iste(model, istem, anahtar, zaman_asimi):
-    govde = {'model': model, 'temperature': 0, 'max_tokens': 200, 'response_format': {'type': 'json_object'},
+    """Önce JSON kipiyle; model bunu desteklemiyorsa (HTTP 400) JSON kipi olmadan yeniden dener (istem zaten JSON ister)."""
+    govde = {'model': model, 'temperature': 0, 'max_tokens': 800, 'response_format': {'type': 'json_object'},
              'messages': [{'role': 'system', 'content': 'Yalnız geçerli JSON döndür.'}, {'role': 'user', 'content': istem}]}
-    req = urllib.request.Request(GROQ_URL, data=json.dumps(govde).encode(), method='POST',
-                                 headers={'Content-Type': 'application/json', 'Authorization': f'Bearer {anahtar}',
-                                          'User-Agent': 'kpsstercihi-tekrar/1.0'})
-    with urllib.request.urlopen(req, timeout=zaman_asimi) as r:
-        return json.load(r)['choices'][0]['message']['content']
+    for deneme in range(2):
+        req = urllib.request.Request(GROQ_URL, data=json.dumps(govde).encode(), method='POST',
+                                     headers={'Content-Type': 'application/json', 'Authorization': f'Bearer {anahtar}',
+                                              'User-Agent': 'kpsstercihi-tekrar/1.0'})
+        try:
+            with urllib.request.urlopen(req, timeout=zaman_asimi) as r:
+                return json.load(r)['choices'][0]['message']['content']
+        except urllib.error.HTTPError as hata:
+            if hata.code != 400 or deneme:
+                raise
+            govde.pop('response_format', None)
 
 
 def _gemini_iste(istem, anahtar, zaman_asimi, iste=None):
