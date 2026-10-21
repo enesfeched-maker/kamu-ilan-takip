@@ -1,0 +1,58 @@
+name: Bekçi
+
+# Yarım saatte bir sistemi kontrol eder, yöneticiye Telegram'dan özel mesaj atar (bot/bekci.py).
+# Gerekli sır: TELEGRAM_YONETICI_ID (özel sohbet kimliği). Kimliği bulmak için: botla özel konuşmada /start yaz,
+# sonra bu iş akışını elle "id_bul" işaretli çalıştır.
+on:
+  schedule:
+    - cron: "7,37 * * * *"
+  workflow_dispatch:
+    inputs:
+      id_bul:
+        description: Botla konuşan özel sohbetlerin kimliklerini yaz (TELEGRAM_YONETICI_ID için)
+        type: boolean
+        default: false
+      deneme:
+        description: Kontrol et ama mesaj atma
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: bekci
+  cancel-in-progress: false
+
+jobs:
+  bekle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Önceki durumu geri yükle
+        uses: actions/cache/restore@v4
+        with:
+          path: bekci-durum.json
+          key: bekci-geri-yukle
+          restore-keys: bekci-
+      - name: Kontrol et
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_YONETICI_ID: ${{ secrets.TELEGRAM_YONETICI_ID }}
+        run: |
+          ARGS=""
+          if [ "${{ inputs.id_bul }}" = "true" ]; then ARGS="--id-bul"; fi
+          if [ "${{ inputs.deneme }}" = "true" ]; then ARGS="--deneme"; fi
+          python bot/bekci.py $ARGS
+      - name: Durumu kaydet
+        if: ${{ always() && inputs.id_bul != true }}
+        uses: actions/cache/save@v4
+        with:
+          path: bekci-durum.json
+          key: bekci-${{ github.run_id }}
