@@ -1,9 +1,9 @@
 {
  "schema": 1,
- "guncelleme": "2026-10-21T05:56:41.199174+00:00",
+ "guncelleme": "2026-10-21T06:27:07.754380+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-10-21T05:56:43.650523+00:00",
+   "kontrol": "2026-10-21T06:27:08.736472+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -96,6 +96,34 @@
      "basvuru_notu": "Herhangi bir kamu kuruluşunda çalışanların (daha önce çalışıp ayrılsalar dahi) e-Devlet üzerinden alacakları “HİTAP Hizmet Belgesini” müracaatlarına eklemeleri gerekmektedir. e-Devletten alınan karekodlu tüm belgeler geçerlidir. Hizmet Belgesi Üniversitemiz dışından başvuracak olanlar için gerekmektedir.",
      "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/23117a7c4872b9fbb5b1b2cde84da57c88bf8146a133d1cfb1deca3b7fe86ee2.pdf",
      "belge_sha256": "23117a7c4872b9fbb5b1b2cde84da57c88bf8146a133d1cfb1deca3b7fe86ee2",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6
+    },
+    {
+     "id": "sbb-c4607e1204a007bc22ede111",
+     "baslik": "PAMUKKALE ÜNİVERSİTESİ - 40 ÖĞRETİM ÜYESİ ALACAK",
+     "kurum": "PAMUKKALE ÜNİVERSİTESİ",
+     "kadro": "40 ÖĞRETİM ÜYESİ ALACAK",
+     "ilan_turu": "Öğretim Üyesi",
+     "son_tarih": "2026-11-04",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 21 Ekim - 4 Kasım)",
+     "baslangic_zaman": "2026-10-21T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-10-21T09:27:08+03:00",
+     "belge_ozeti": "6faf9d10b3694c3403a503124a0a6b0d8e4aca369ece4c57b80b8c77220f0dac",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "40 ÖĞRETİM ÜYESİ alımı. Son başvuru: 04.11.2026. Özel şartlar aşağıdaki ilan belgesinde yer alıyor.",
+     "sartlar": [],
+     "basvuru_notu": "",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/6faf9d10b3694c3403a503124a0a6b0d8e4aca369ece4c57b80b8c77220f0dac.pdf",
+     "belge_sha256": "6faf9d10b3694c3403a503124a0a6b0d8e4aca369ece4c57b80b8c77220f0dac",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
     },
@@ -437,6 +465,54 @@
      ]
     },
     {
+     "id": "sbb-4804615e17dc4fdc7fd31aa8",
+     "baslik": "DİCLE ÜNİVERSİTESİ - 9 ÖĞRETİM ELEMANI ALACAK",
+     "kurum": "DİCLE ÜNİVERSİTESİ",
+     "kadro": "9 ÖĞRETİM ELEMANI ALACAK",
+     "ilan_turu": "Öğretim Elemanı",
+     "son_tarih": "2026-11-02",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 19 Ekim - 2 Kasım)",
+     "baslangic_zaman": "2026-10-19T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-10-21T01:44:12+03:00",
+     "belge_ozeti": "3402772f1579e826f77da04454fc7142f07fdd6613ff42ed93ba88fcd0ac1a03",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "9 ÖĞRETİM ELEMANI alımı. Son başvuru: 02.11.2026. 1- İlan Başvuru Formu 2-Nüfus Cüzdanı fotokopisi (e-Devlet üzerinden alınan nüfus kayıt örneği de kabul edilecektir.) 3-Özgeçmiş 4-Erkek adaylar için askerlikle ilgili terhis, tecil veya muaf olduğunu gösterir belge, 5-Öğrenim belgelerinin aslı veya onaylı suretleri (e-Devlet üzerinden alınan karekodlu belgeler ön değerlendirme ve nihai değerlendirme aşamalarında kabul edilecektir. e-Devlet harici diploma/mezuniyet belgelerinin mutlaka resmi kurumlarca onaylanmış ıslak imzalı ve mühürlü sureti bulunmalıdır.) 6-Yabancı yükseköğretim kurumu mezunlarının diplomaları için Yükseköğretim Kurulu Başkanlığınca verilmiş denklik belgesi, Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "1- Eczacılık Fakültesi mezunu olup, Farmasötik Mikrobiyoloji ana bilim dalında tezli yüksek lisans yapıyor olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "2- Biyoloji veya Moleküler Biyoloji ve Genetik Bölümü lisans mezunu olup Biyoloji alanında tezli yüksek lisans yapıyor olmak"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "3- İlahiyat Fakültesi mezunu olup, İslam Tarihi ve Sanatları (Türk İslam Sanatları Tarihi) alanında tezli yüksek lisans yapıyor olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "4- Veteriner Fakültesi mezunu olup, ilgili ana bilim dalında doktora yapıyor olmak."
+      }
+     ],
+     "basvuru_notu": "1- Başvurular ilanın Resmî Gazete’de yayınlandığı tarihten itibaren 15 gün içerisinde sadece online olarak https://ilan.dicle.edu.tr adresinden kabul edilecek ve link üzerinden işlemler yürütülecektir. Şahsen veya posta yoluyla yapılan başvurular kabul edilmeyecektir.",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/3402772f1579e826f77da04454fc7142f07fdd6613ff42ed93ba88fcd0ac1a03.pdf",
+     "belge_sha256": "3402772f1579e826f77da04454fc7142f07fdd6613ff42ed93ba88fcd0ac1a03",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "belge_ogrenim": [
+      "lisans"
+     ]
+    },
+    {
      "id": "sbb-1b8994c71a34ba67022f643f",
      "baslik": "İZMİR BAKIRÇAY ÜNİVERSİTESİ - 28 AKADEMİK PERSONEL ALACAK",
      "kurum": "İZMİR BAKIRÇAY ÜNİVERSİTESİ",
@@ -488,54 +564,6 @@
      "belge_sha256": "4361af9a6e6c7d2cf0453e402ec4b952d040cafa0136c7d01da363c7176de325",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
-    },
-    {
-     "id": "sbb-4804615e17dc4fdc7fd31aa8",
-     "baslik": "DİCLE ÜNİVERSİTESİ - 9 ÖĞRETİM ELEMANI ALACAK",
-     "kurum": "DİCLE ÜNİVERSİTESİ",
-     "kadro": "9 ÖĞRETİM ELEMANI ALACAK",
-     "ilan_turu": "Öğretim Elemanı",
-     "son_tarih": "2026-11-02",
-     "kaynak": "SBB Kamu İlan",
-     "kaynak_turu": "sbb",
-     "donem": "( 19 Ekim - 2 Kasım)",
-     "baslangic_zaman": "2026-10-19T00:00:00+03:00",
-     "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-21T01:44:12+03:00",
-     "belge_ozeti": "3402772f1579e826f77da04454fc7142f07fdd6613ff42ed93ba88fcd0ac1a03",
-     "kaynaklar": [
-      {
-       "ad": "SBB Kamu İlan",
-       "link": "https://kamuilan.sbb.gov.tr/"
-      }
-     ],
-     "ozet": "9 ÖĞRETİM ELEMANI alımı. Son başvuru: 02.11.2026. 1- İlan Başvuru Formu 2-Nüfus Cüzdanı fotokopisi (e-Devlet üzerinden alınan nüfus kayıt örneği de kabul edilecektir.) 3-Özgeçmiş 4-Erkek adaylar için askerlikle ilgili terhis, tecil veya muaf olduğunu gösterir belge, 5-Öğrenim belgelerinin aslı veya onaylı suretleri (e-Devlet üzerinden alınan karekodlu belgeler ön değerlendirme ve nihai değerlendirme aşamalarında kabul edilecektir. e-Devlet harici diploma/mezuniyet belgelerinin mutlaka resmi kurumlarca onaylanmış ıslak imzalı ve mühürlü sureti bulunmalıdır.) 6-Yabancı yükseköğretim kurumu mezunlarının diplomaları için Yükseköğretim Kurulu Başkanlığınca verilmiş denklik belgesi, Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
-     "sartlar": [
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "1- Eczacılık Fakültesi mezunu olup, Farmasötik Mikrobiyoloji ana bilim dalında tezli yüksek lisans yapıyor olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "2- Biyoloji veya Moleküler Biyoloji ve Genetik Bölümü lisans mezunu olup Biyoloji alanında tezli yüksek lisans yapıyor olmak"
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "3- İlahiyat Fakültesi mezunu olup, İslam Tarihi ve Sanatları (Türk İslam Sanatları Tarihi) alanında tezli yüksek lisans yapıyor olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "4- Veteriner Fakültesi mezunu olup, ilgili ana bilim dalında doktora yapıyor olmak."
-      }
-     ],
-     "basvuru_notu": "1- Başvurular ilanın Resmî Gazete’de yayınlandığı tarihten itibaren 15 gün içerisinde sadece online olarak https://ilan.dicle.edu.tr adresinden kabul edilecek ve link üzerinden işlemler yürütülecektir. Şahsen veya posta yoluyla yapılan başvurular kabul edilmeyecektir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/3402772f1579e826f77da04454fc7142f07fdd6613ff42ed93ba88fcd0ac1a03.pdf",
-     "belge_sha256": "3402772f1579e826f77da04454fc7142f07fdd6613ff42ed93ba88fcd0ac1a03",
-     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 6,
-     "belge_ogrenim": [
-      "lisans"
-     ]
     },
     {
      "id": "sbb-0fac6531d53b24c392f59a95",
@@ -2034,59 +2062,6 @@
      "sbb_detay_surumu": 6
     },
     {
-     "id": "sbb-5351ae1fb5298d718e9947e4",
-     "baslik": "ŞIRNAK ÜNİVERSİTESİ - 7 ÖĞRETİM ELEMANI ALACAK",
-     "kurum": "ŞIRNAK ÜNİVERSİTESİ",
-     "kadro": "7 ÖĞRETİM ELEMANI ALACAK",
-     "ilan_turu": "Öğretim Elemanı",
-     "son_tarih": "2026-10-26",
-     "kaynak": "SBB Kamu İlan",
-     "kaynak_turu": "sbb",
-     "donem": "( 12 Ekim - 26 Ekim)",
-     "baslangic_zaman": "2026-10-12T00:00:00+03:00",
-     "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-21T05:18:11+03:00",
-     "belge_ozeti": "be2f57b27572efa0f08e6ca7fc67db9761fd3bc68eeff415e37ded7935e52fe1",
-     "kaynaklar": [
-      {
-       "ad": "SBB Kamu İlan",
-       "link": "https://kamuilan.sbb.gov.tr/"
-      }
-     ],
-     "ozet": "7 ÖĞRETİM ELEMANI alımı. Son başvuru: 26.10.2026. 6) Başvurular şahsen veya posta yolu ile yapılacaktır. Süresi içinde yapılmayan başvurular ile eksik belgeli başvurular dikkate alınmayacaktır. Posta ile yapılacak başvuruların son başvuru tarihine kadar ilgili kadronun bulunduğu birime ulaşmış olması gerekmektedir. Gecikmelerden Üniversitemiz sorumlu değildir. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
-     "sartlar": [
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "a) Fizik lisans mezunu olup, Yüksek Lisans ve Doktorasını fizik alanında olmak. yapmışİnce film güneş hücreleri konusunda çalışmalar yapmış olmak ve TÜBİTAK destekli projelerde görev almış olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "b) Yüksek Lisans ve Doktorasını biyokimya alanında yapmış olmak. Belgelemek kaydıyla en az 5 yıl biyokimya laboratuvarında görev yapmış olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "c) Lisans ve Tezli Yüksek Lisans eğitimini Mobilya ve Dekorasyon Bölümünden Eğitimiyapmış olup Ağaç İşleri Endüstri Mühendisliği alanında doktora yapmış olmak. Yükseköğretim Kurumlarında en az 2 (iki) dönem ders vermiş olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "d) Lisans Eğitimini Fakültelerin İç Mimarlık, İç Mimarlık ve Çevre Tasarımı, Mobilya ve Dekorasyon Öğretmenliği, Mobilya ve Eğitimi,Dekorasyon Endüstri İşleri AğaçMühendisliği Bölümlerin birinden yapmış olmak ve ilgili alanda Tezli Yüksek lisans yapmış olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "e) Lisans Eğitimini Enerji Sistemleri Mühendisliği bölümünden yapmış olmak ve Enerji Bilimi ve Teknolojileri alanında tezli yüksek lisans yapmış olmak. Belgelendirmek kaydıyla İklimlendirme ve Soğutma Eğitimi Sertifikasına sahip olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "f) Lisans Eğitimini Enerji Sistemleri Mühendisliği bölümünden yapmış olmak ve Enerji Bilimi ve Teknolojileri alanında tezli yüksek lisans yapmış olmak."
-      }
-     ],
-     "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/be2f57b27572efa0f08e6ca7fc67db9761fd3bc68eeff415e37ded7935e52fe1.pdf",
-     "belge_sha256": "be2f57b27572efa0f08e6ca7fc67db9761fd3bc68eeff415e37ded7935e52fe1",
-     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 6
-    },
-    {
      "id": "sbb-b9e172d215a109b3581118d2",
      "baslik": "ŞIRNAK ÜNİVERSİTESİ - 14 ÖĞRETİM ÜYESİ ALACAK",
      "kurum": "ŞIRNAK ÜNİVERSİTESİ",
@@ -2136,6 +2111,59 @@
      "basvuru_notu": "",
      "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/127e5d29043e55ab78159f1c2ad35b0ef4f9334477a310973d7c9dbf719a8a8e.pdf",
      "belge_sha256": "127e5d29043e55ab78159f1c2ad35b0ef4f9334477a310973d7c9dbf719a8a8e",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6
+    },
+    {
+     "id": "sbb-5351ae1fb5298d718e9947e4",
+     "baslik": "ŞIRNAK ÜNİVERSİTESİ - 7 ÖĞRETİM ELEMANI ALACAK",
+     "kurum": "ŞIRNAK ÜNİVERSİTESİ",
+     "kadro": "7 ÖĞRETİM ELEMANI ALACAK",
+     "ilan_turu": "Öğretim Elemanı",
+     "son_tarih": "2026-10-26",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 12 Ekim - 26 Ekim)",
+     "baslangic_zaman": "2026-10-12T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-10-21T05:18:11+03:00",
+     "belge_ozeti": "be2f57b27572efa0f08e6ca7fc67db9761fd3bc68eeff415e37ded7935e52fe1",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "7 ÖĞRETİM ELEMANI alımı. Son başvuru: 26.10.2026. 6) Başvurular şahsen veya posta yolu ile yapılacaktır. Süresi içinde yapılmayan başvurular ile eksik belgeli başvurular dikkate alınmayacaktır. Posta ile yapılacak başvuruların son başvuru tarihine kadar ilgili kadronun bulunduğu birime ulaşmış olması gerekmektedir. Gecikmelerden Üniversitemiz sorumlu değildir. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "a) Fizik lisans mezunu olup, Yüksek Lisans ve Doktorasını fizik alanında olmak. yapmışİnce film güneş hücreleri konusunda çalışmalar yapmış olmak ve TÜBİTAK destekli projelerde görev almış olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "b) Yüksek Lisans ve Doktorasını biyokimya alanında yapmış olmak. Belgelemek kaydıyla en az 5 yıl biyokimya laboratuvarında görev yapmış olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "c) Lisans ve Tezli Yüksek Lisans eğitimini Mobilya ve Dekorasyon Bölümünden Eğitimiyapmış olup Ağaç İşleri Endüstri Mühendisliği alanında doktora yapmış olmak. Yükseköğretim Kurumlarında en az 2 (iki) dönem ders vermiş olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "d) Lisans Eğitimini Fakültelerin İç Mimarlık, İç Mimarlık ve Çevre Tasarımı, Mobilya ve Dekorasyon Öğretmenliği, Mobilya ve Eğitimi,Dekorasyon Endüstri İşleri AğaçMühendisliği Bölümlerin birinden yapmış olmak ve ilgili alanda Tezli Yüksek lisans yapmış olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "e) Lisans Eğitimini Enerji Sistemleri Mühendisliği bölümünden yapmış olmak ve Enerji Bilimi ve Teknolojileri alanında tezli yüksek lisans yapmış olmak. Belgelendirmek kaydıyla İklimlendirme ve Soğutma Eğitimi Sertifikasına sahip olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "f) Lisans Eğitimini Enerji Sistemleri Mühendisliği bölümünden yapmış olmak ve Enerji Bilimi ve Teknolojileri alanında tezli yüksek lisans yapmış olmak."
+      }
+     ],
+     "basvuru_notu": "",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/be2f57b27572efa0f08e6ca7fc67db9761fd3bc68eeff415e37ded7935e52fe1.pdf",
+     "belge_sha256": "be2f57b27572efa0f08e6ca7fc67db9761fd3bc68eeff415e37ded7935e52fe1",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
     },
@@ -2867,6 +2895,55 @@
      ]
     },
     {
+     "id": "sbb-d3b90c876e6dae4eea84e465",
+     "baslik": "SAKARYA UYGULAMALI BİLİMLER ÜNİVERSİTESİ - 4 ÖĞRETİM ELEMANI ALACAK",
+     "kurum": "SAKARYA UYGULAMALI BİLİMLER ÜNİVERSİTESİ",
+     "kadro": "4 ÖĞRETİM ELEMANI ALACAK",
+     "ilan_turu": "Öğretim Elemanı",
+     "son_tarih": "2026-10-21",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 7 Ekim - 21 Ekim)",
+     "baslangic_zaman": "2026-10-07T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-10-21T05:19:13+03:00",
+     "belge_ozeti": "ce046af717839a291366ea26ba74d9510199323144f202894f92143d538dad83",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "4 ÖĞRETİM ELEMANI alımı. Son başvuru: 21.10.2026. Ünvan Dil Özel Şartlar Başvuru Adresi Denizcilik Meslek Yüksekokulu Gemi ve Gemi Makineleri Mühendisliği,İnşaatı Gemi ve Deniz Motorlu Araçlar ve Ulaştırma Teknolojileri Bölümü 1 2 Öğr. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "2- ALES'ten en az 70, Yükseköğretim Kurulu tarafından kabul edilen merkezi yabancı dil sınavından en az 50 puan veya kabul edilen bir eşdeğerliğisınavdan bu puan muadili bir puan almış olmak gerekir. Merkezi sınav muafiyetinden yararlanmayı talep edenlerin ön değerlendirme ve nihai değerlendirme aşamalarında ALES puanı 70 olarak kabul edilir."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "4- Öğretim görevlisi kadrosuna başvuracak adaylarda en az tezli yüksek lisans derecesine sahip olmak veya lisans ve yüksek lisans derecesini birlikte veren programlardan mezun olmak şartı aranır."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "2- Meslek yüksekokullarının, bu yönetmeliğin 6. maddesinin 4. fıkrası kapsamındaki öğretim görevlisi haricindeki öğretimkadroları elemanı kadrolarına yapılacak başvurularda yabancı dil şartı aranmaz."
+      },
+      {
+       "kadro": "Sınav puanı koşulu · kadroya göre muafiyetler için belgeyi inceleyin",
+       "metin": "2- ALES'ten en az 70, Yükseköğretim Kurulu tarafından kabul edilen merkezi yabancı dil sınavından en az 50 puan veya kabul edilen bir eşdeğerliğisınavdan bu puan muadili bir puan almış olmak gerekir."
+      }
+     ],
+     "basvuru_notu": "Başvurular şahsen veya posta ile yapılacak olup süresi içinde yapılmayan ya da eksik belgeli yapılan başvurular değerlendirmeye alınmayacaktır (e-posta ile başvurular kabul edilmeyecektir).",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/ce046af717839a291366ea26ba74d9510199323144f202894f92143d538dad83.pdf",
+     "belge_sha256": "ce046af717839a291366ea26ba74d9510199323144f202894f92143d538dad83",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "belge_ogrenim": [
+      "lisans",
+      "onlisans"
+     ]
+    },
+    {
      "id": "sbb-23194c78117910f49a03f95b",
      "baslik": "BOĞAZİÇİ ÜNİVERSİTESİ - 2 ÖĞRETİM ELEMANI ALACAK",
      "kurum": "BOĞAZİÇİ ÜNİVERSİTESİ",
@@ -2974,55 +3051,6 @@
      "belge_sha256": "6642798381d6ebd4818485bd1463ea281fecdc1fe15ef030a99494aee94ae5f7",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
-    },
-    {
-     "id": "sbb-d3b90c876e6dae4eea84e465",
-     "baslik": "SAKARYA UYGULAMALI BİLİMLER ÜNİVERSİTESİ - 4 ÖĞRETİM ELEMANI ALACAK",
-     "kurum": "SAKARYA UYGULAMALI BİLİMLER ÜNİVERSİTESİ",
-     "kadro": "4 ÖĞRETİM ELEMANI ALACAK",
-     "ilan_turu": "Öğretim Elemanı",
-     "son_tarih": "2026-10-21",
-     "kaynak": "SBB Kamu İlan",
-     "kaynak_turu": "sbb",
-     "donem": "( 7 Ekim - 21 Ekim)",
-     "baslangic_zaman": "2026-10-07T00:00:00+03:00",
-     "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-21T05:19:13+03:00",
-     "belge_ozeti": "ce046af717839a291366ea26ba74d9510199323144f202894f92143d538dad83",
-     "kaynaklar": [
-      {
-       "ad": "SBB Kamu İlan",
-       "link": "https://kamuilan.sbb.gov.tr/"
-      }
-     ],
-     "ozet": "4 ÖĞRETİM ELEMANI alımı. Son başvuru: 21.10.2026. Ünvan Dil Özel Şartlar Başvuru Adresi Denizcilik Meslek Yüksekokulu Gemi ve Gemi Makineleri Mühendisliği,İnşaatı Gemi ve Deniz Motorlu Araçlar ve Ulaştırma Teknolojileri Bölümü 1 2 Öğr. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
-     "sartlar": [
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "2- ALES'ten en az 70, Yükseköğretim Kurulu tarafından kabul edilen merkezi yabancı dil sınavından en az 50 puan veya kabul edilen bir eşdeğerliğisınavdan bu puan muadili bir puan almış olmak gerekir. Merkezi sınav muafiyetinden yararlanmayı talep edenlerin ön değerlendirme ve nihai değerlendirme aşamalarında ALES puanı 70 olarak kabul edilir."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "4- Öğretim görevlisi kadrosuna başvuracak adaylarda en az tezli yüksek lisans derecesine sahip olmak veya lisans ve yüksek lisans derecesini birlikte veren programlardan mezun olmak şartı aranır."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "2- Meslek yüksekokullarının, bu yönetmeliğin 6. maddesinin 4. fıkrası kapsamındaki öğretim görevlisi haricindeki öğretimkadroları elemanı kadrolarına yapılacak başvurularda yabancı dil şartı aranmaz."
-      },
-      {
-       "kadro": "Sınav puanı koşulu · kadroya göre muafiyetler için belgeyi inceleyin",
-       "metin": "2- ALES'ten en az 70, Yükseköğretim Kurulu tarafından kabul edilen merkezi yabancı dil sınavından en az 50 puan veya kabul edilen bir eşdeğerliğisınavdan bu puan muadili bir puan almış olmak gerekir."
-      }
-     ],
-     "basvuru_notu": "Başvurular şahsen veya posta ile yapılacak olup süresi içinde yapılmayan ya da eksik belgeli yapılan başvurular değerlendirmeye alınmayacaktır (e-posta ile başvurular kabul edilmeyecektir).",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/ce046af717839a291366ea26ba74d9510199323144f202894f92143d538dad83.pdf",
-     "belge_sha256": "ce046af717839a291366ea26ba74d9510199323144f202894f92143d538dad83",
-     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 6,
-     "belge_ogrenim": [
-      "lisans",
-      "onlisans"
-     ]
     },
     {
      "id": "sbb-8f7f2052e3b2ce8caac4fc29",
@@ -4341,7 +4369,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-10-21T05:56:45.458973+00:00",
+   "kontrol": "2026-10-21T06:27:10.341858+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -18490,7 +18518,7 @@
    ],
    "sart_kadro_sayisi": 9,
    "basvuru_notu": "Adaylar başvurularını 19.10.2026(00.00)-26.10.2026(23.59) tarihleri arasında e-Devlet aracılığıyla Kariyer Kapısı https://kariyerkapisi.gov.tr/isealim üzerinden gerçekleştirilecek olup duyuruda belirtilen süre içinde şahsen veya posta yoluyla yapılan başvurular kabul edilmeyecektir.",
-   "detay_guncelleme": "2026-10-20T21:07:46+03:00",
+   "detay_guncelleme": "2026-10-21T09:27:11+03:00",
    "kk_detay_surumu": 3,
    "kadro_detay": [
     {
