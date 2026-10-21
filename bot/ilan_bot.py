@@ -531,14 +531,58 @@ def ayni_ilan_mi(a, b):
     return len(b1 & b2) / len(b1 | b2) >= 0.5
 
 
+def tekrar_karari(a, b):
+    """İki kayıt için botun kendi kararı: 'ayni' | 'farkli' | 'belirsiz'. Son gün farklıysa, kişi sayıları farklıysa, bilinen
+    unvanlar ortak değilse ya da kurum çekirdekleri benzemiyorsa 'farkli'; 'belirsiz' olanlar Gemini'ye sorulabilir (yz_tekrar)."""
+    s1, s2 = str(a.get('son_tarih') or '')[:10], str(b.get('son_tarih') or '')[:10]
+    if not s1 or s1 != s2:
+        return 'farkli'
+    if ayni_ilan_mi(a, b):
+        return 'ayni'
+    k1, _, t1, u1 = _parmak_izi(a)
+    k2, _, t2, u2 = _parmak_izi(b)
+    if t1 and t2 and t1 != t2:
+        return 'farkli'
+    if u1 and u2 and not (u1 & u2):
+        return 'farkli'
+    if not k1 or not k2 or len(k1 & k2) / max(1, min(len(k1), len(k2))) < 0.5:
+        return 'farkli'
+    return 'belirsiz'
+
+
+def _yakin_zamanli(a, b, saat=72):
+    try:
+        z1, z2 = (datetime.fromisoformat(x.get('ilk_gorulme') or '') for x in (a, b))
+    except ValueError:
+        return True   # tarih okunamazsa elenmez
+    z1, z2 = (z if z.tzinfo else z.replace(tzinfo=TR) for z in (z1, z2))
+    return abs(z1 - z2) <= timedelta(hours=saat)
+
+
 def onceden_paylasilmis(i, mevcut, gonderilen):
     """Aynı ilan (ayni_ilan_mi) kanalda zaten paylaşıldıysa paylaşılan kaydın kimliği; yoksa None.
-    kopya.kopya_bul'un kaçırdığı durumlar için ikinci kilit (aynı ilan 2-3 kez paylaşılmasın)."""
+    kopya.kopya_bul'un kaçırdığı durumlar için ikinci kilit (aynı ilan 2-3 kez paylaşılmasın).
+    Botun 'belirsiz' dediği ve son 72 saatte paylaşılmış kayıtla benzeyen ilan için Gemini'ye ikinci göz olarak sorulur
+    (yz_tekrar: yalnız 'aynı, güven >= 0.9' ise tutulur; her türlü hata/belirsizlikte ilan yayınlanır)."""
     for kimlik in gonderilen:
         g = mevcut.get(kimlik)
         if not g or kimlik == i['id'] or g.get('duyuru_turu') or not paylasildi(g, gonderilen):
             continue
         if ayni_ilan_mi(i, g):
+            return kimlik
+    import yz_tekrar
+    if not yz_tekrar.etkin():
+        return None
+    for kimlik in gonderilen:
+        g = mevcut.get(kimlik)
+        if not g or kimlik == i['id'] or g.get('duyuru_turu') or not paylasildi(g, gonderilen) or not yz_tekrar.etkin():
+            continue
+        if not _yakin_zamanli(i, g) or tekrar_karari(i, g) != 'belirsiz':
+            continue
+        sonuc = yz_tekrar.sor(i, g, _parmak_izi(i)[2], _parmak_izi(g)[2])
+        print(f"Tekrar sorusu (bot: belirsiz): {i['baslik'][:60]} <> {g['baslik'][:60]} -> "
+              f"{'cevap yok, ilan gönderilecek' if not sonuc else ('aynı' if sonuc['ayni'] else 'farklı') + f' (güven {sonuc['guven']:.2f}): {sonuc['neden']}'}")
+        if yz_tekrar.tutulsun_mu(sonuc):
             return kimlik
     return None
 
@@ -1449,6 +1493,8 @@ def main():
         bekleyen = {i['id'] for i in gelen}
     gonderilen.update(aliases[x] for x in list(gonderilen) if x in aliases)
     bekleyen = {aliases.get(x,x) for x in bekleyen}
+    import yz_tekrar   # Gemini yalnız "aynı ilan mı?" sorusu için, yalnız gönderim adımında (config: yz_tekrar_acik)
+    yz_tekrar.ayarla(cfg.get('yz_tekrar_acik') is True and not a.prepare and not a.dry_run)
     gonderilecek = telegram_sirasi(mevcut, gelen, yeniler, gonderilen, bekleyen,
                                   ilk_calisma, a.duyur_mevcut, cfg)
     if not a.prepare:   # logosuz ilan sıranın başını tıkamasın diye sınırdan önce ayıklanır
