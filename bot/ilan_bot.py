@@ -767,6 +767,10 @@ def duyuru_karari(duyuru, ilanlar, mesajlar, yanitlar, bugun, gonderilen=None):
         return duzeltme_karari(duyuru, ilanlar, mesajlar, yanitlar, bugun)
     if akademik_ilan(duyuru):
         return {'islem': 'sessiz', 'sebep': 'akademik duyuru', 'referans': None}
+    # 21 Ekim 2026 (Elmakaya iptali ÇŞB ve SBB'den iki kez gitti): olay imzası her yolda, kelime kümesiyle kontrol edilir
+    from iptal_yaniti import ayni_olay_bildirildi
+    if ayni_olay_bildirildi(duyuru, yanitlar, bugun, DUZ_METIN_TEKILLESTIRME_GUN, gun_icinde):
+        return {'islem': 'sessiz', 'sebep': 'aynı olay (başka kaynaktan) son 30 günde bildirildi', 'referans': None}
     adaylar = orijinal_ara(duyuru, ilanlar, mesajlar, bugun)
     genis = orijinal_ara(duyuru, ilanlar, mesajlar, bugun, mesaj_gerekli=False)
     # Akademik bastırma yalnız: akademik olmayan hiçbir aday (mesaj şartı olmadan da) yok VE akademik aday var.
@@ -804,6 +808,13 @@ def duyuru_karari(duyuru, ilanlar, mesajlar, yanitlar, bugun, gonderilen=None):
         return {'islem': 'sessiz', 'sebep': 'aynı olay (düz metin) son 30 günde bildirildi', 'referans': None}
     tam = tam_iptal(duyuru, referans) if referans else None
     return {'islem': 'gonder', 'orijinal': None, 'referans': referans, 'tam': tam, 'yaz': anahtar}
+
+
+def yanit_kaydet(yanitlar, karar, duyuru, gun):
+    """Gönderilen iptal duyurusunun anahtarlarını kaydeder: karar yolundaki anahtar + yoldan bağımsız olay imzası."""
+    yanitlar[karar['yaz']] = gun
+    if duyuru_turu_iptal_mi(duyuru):
+        yanitlar[duz_anahtar(duyuru)] = gun
 
 
 def duzeltme_karari(duyuru, ilanlar, mesajlar, yanitlar, bugun):
@@ -1652,7 +1663,7 @@ def main():
             gonderilen.add(i['id'])
             bekleyen.discard(i['id'])
             mesaj_kaydet(i['id'], mid)
-            yanitlar[karar['yaz']] = simdi().date().isoformat()
+            yanit_kaydet(yanitlar, karar, i, simdi().date().isoformat())
             if orijinal is not None and duyuru_turu_iptal_mi(i) and karar['tam']:
                 orijinal['iptal_edildi'] = i['id']  # kısmi (tek kadro) iptallerde ilan açık kalır
             adet += 1

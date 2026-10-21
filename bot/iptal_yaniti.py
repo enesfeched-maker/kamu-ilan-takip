@@ -233,3 +233,29 @@ def yanit_anahtarlari(tur, orijinal, tam, imza=''):
 
 def duz_anahtar(duyuru):
     return f"m:{_tur(duyuru)}:{duyuru_imzasi(duyuru)}"
+
+
+def imza_kumesi(anahtar):
+    """'m:iptal:belediye:elmakaya|beledi' ve 'm:iptal:|beledi,elmaka' (kurum alanı boş kaynak) aynı kümeye iner:
+    {'beledi', 'elmaka'} (sözcükler 6 harfe kısaltılır, tür ve 'kurum' etiketi atılır)."""
+    parcalar = str(anahtar).split(':', 2)
+    metin = parcalar[2] if len(parcalar) == 3 else ''
+    return {t[:6] for t in re.split(r'[:|,\s]+', metin) if t and t != 'kurum'}
+
+
+def ayni_olay_bildirildi(duyuru, yanitlar, bugun, gun=30, gun_icinde=None):
+    """Aynı iptal/düzeltme olayı (başka kaynaktan, farklı yazımla gelse de) son `gun` günde bildirildiyse True.
+    Anahtarlar aynı ya da kelime kümeleri en az %80 örtüşüyorsa (ve kümede >=2 sözcük varsa) aynı olaydır;
+    başka kadronun iptali ek sözcük taşıdığı için ayrı bildirilir."""
+    anahtar = duz_anahtar(duyuru)
+    tur = anahtar.split(':', 2)[1]
+    kume = imza_kumesi(anahtar)
+    for k, zaman in yanitlar.items():
+        if not k.startswith(f'm:{tur}:') or not gun_icinde(zaman, bugun, gun):
+            continue
+        if k == anahtar:
+            return True
+        diger = imza_kumesi(k)
+        if len(kume) >= 2 and len(diger) >= 2 and len(kume & diger) / len(kume | diger) >= 0.8:
+            return True
+    return False
