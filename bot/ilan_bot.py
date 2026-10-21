@@ -493,8 +493,13 @@ def _parmak_izi(i):
     kadro = kurum_sayfasi.kadrolar(i)
     adetler = [a for a, _ in kadro]
     toplam = sum(adetler) if adetler and all(isinstance(a, int) for a in adetler) else None
-    return (kurum_anahtari(i.get('kurum') or ''), str(i.get('son_tarih') or '')[:10], toplam,
-            {kucuk(ad) for _, ad in kadro if ad})
+    try:   # kurum adı yazım farkları ('T.C. ... Anonim Şirketi' / '... A.Ş.') aynı çekirdeğe iner
+        import kopya
+        import kurum_sayfasi as ks
+        kurum = kopya._kurum_cekirdek(i, ks.kurum_kanonik(i.get('kurum')))
+    except Exception:
+        kurum = kurum_anahtari(i.get('kurum') or '')
+    return (kurum, str(i.get('son_tarih') or '')[:10], toplam, {kucuk(ad) for _, ad in kadro if ad})
 
 
 GENEL_BASLIK_KELIMELERI = {'alacak', 'alınacak', 'alım', 'alımı', 'ilanı', 'ilan', 'personel', 'personeli', 'yılı',
