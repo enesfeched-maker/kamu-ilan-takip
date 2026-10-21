@@ -58,6 +58,40 @@ def _cozumle(metin):
     return {'ayni': bool(sonuc.get('ayni')), 'guven': float(sonuc.get('guven') or 0), 'neden': str(sonuc.get('neden') or '')[:200]}
 
 
+_groq_modelleri_onbellek = []
+
+
+def groq_modelleri(anahtar, iste=None):
+    """Anahtarın gördüğü sohbet modelleri, tercih sırasıyla (model adları değişebildiği için listeden seçilir):
+    Llama 3.3/3.x 70B > diğer 70B+ Llama > 8B Llama > gpt-oss > diğerleri. Liste alınamazsa sabit adlar."""
+    if _groq_modelleri_onbellek:
+        return _groq_modelleri_onbellek
+    try:
+        if iste:
+            kimlikler = iste()
+        else:
+            req = urllib.request.Request(GROQ_URL.replace('/chat/completions', '/models'),
+                                         headers={'Authorization': f'Bearer {anahtar}', 'User-Agent': 'kpsstercihi-tekrar/1.0'})
+            with urllib.request.urlopen(req, timeout=ZAMAN_ASIMI) as r:
+                kimlikler = [m['id'] for m in json.load(r).get('data') or [] if m.get('active', True)]
+    except Exception as hata:
+        print(f'Uyarı: Groq model listesi alınamadı: {str(hata)[:100]}')
+        return list(GROQ_MODELLER)
+    dis = ('whisper', 'guard', 'tts', 'playai', 'distil', 'embed', 'vision', 'prompt', 'safeguard', 'orpheus')
+    adaylar = [k for k in kimlikler if not any(x in k.lower() for x in dis)]
+
+    def sira(k):
+        s = k.lower()
+        for n, kural in enumerate((lambda x: 'llama' in x and '70b' in x, lambda x: 'llama' in x and ('maverick' in x or 'scout' in x),
+                                   lambda x: 'llama' in x and '8b' in x, lambda x: 'gpt-oss' in x)):
+            if kural(s):
+                return n
+        return 9
+    sirali = sorted(adaylar, key=lambda k: (sira(k), '3.3' not in k, k))
+    _groq_modelleri_onbellek[:] = sirali or list(GROQ_MODELLER)
+    return _groq_modelleri_onbellek
+
+
 def _groq_iste(model, istem, anahtar, zaman_asimi):
     govde = {'model': model, 'temperature': 0, 'max_tokens': 200, 'response_format': {'type': 'json_object'},
              'messages': [{'role': 'system', 'content': 'Yalnız geçerli JSON döndür.'}, {'role': 'user', 'content': istem}]}
@@ -85,14 +119,14 @@ def _gemini_iste(istem, anahtar, zaman_asimi, iste=None):
     return None
 
 
-def sor(a, b, toplam_a=None, toplam_b=None, iste=None, groq_iste=None):
+def sor(a, b, toplam_a=None, toplam_b=None, iste=None, groq_iste=None, groq_model_listesi=None):
     """{'ayni': bool, 'guven': float, 'neden': str} ya da None (hiçbir sağlayıcı yanıt vermedi). Önce Groq, sonra Gemini; bekleme yok.
     iste: Gemini isteği (test), groq_iste: Groq isteği (test)."""
     _durum['cagri'] += 1
     istem = ISTEM.format(a=ozet(a, toplam_a), b=ozet(b, toplam_b))
     if _durum['groq']:
         groq_iste = groq_iste or _groq_iste
-        for model in GROQ_MODELLER[:2]:
+        for model in (groq_model_listesi or groq_modelleri(_durum['groq']))[:2]:
             try:
                 return _cozumle(groq_iste(model, istem, _durum['groq'], ZAMAN_ASIMI))
             except Exception as hata:   # 429/5xx/zaman aşımı/bozuk yanıt: sıradaki model, sonra Gemini

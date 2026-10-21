@@ -9,6 +9,7 @@ import yz_tekrar
 
 TR = ilan_bot.TR
 SIMDI = datetime(2026, 10, 21, 12, 0, tzinfo=TR)
+MODELLER = ['llama-3.3-70b-versatile', 'llama-3.1-8b-instant']
 
 
 def ilan(kimlik, kurum, kadro='', baslik=None, son='2026-10-26', **ek):
@@ -65,6 +66,17 @@ class SessizYutmaKorumasi(unittest.TestCase):
 
 
 class GroqAnaSaglayici(unittest.TestCase):
+    def test_model_listesinden_en_iyi_llama_secilir(self):
+        yz_tekrar._groq_modelleri_onbellek.clear()
+        try:
+            liste = list(yz_tekrar.groq_modelleri('x', iste=lambda: ['whisper-large-v3', 'llama-guard-4-12b', 'llama-3.1-8b-instant',
+                                                                'openai/gpt-oss-20b', 'llama-3.3-70b-versatile', 'meta-llama/llama-4-scout-17b']))
+        finally:
+            yz_tekrar._groq_modelleri_onbellek.clear()
+        self.assertEqual(liste[:2], ['llama-3.3-70b-versatile', 'meta-llama/llama-4-scout-17b'])
+        self.assertNotIn('whisper-large-v3', liste)
+        self.assertNotIn('llama-guard-4-12b', liste)
+
     def tearDown(self):
         yz_tekrar.ayarla(False)
 
@@ -78,7 +90,7 @@ class GroqAnaSaglayici(unittest.TestCase):
 
         def gemini_olmamali(*a):
             raise AssertionError('Groq cevap verdiğinde Gemini çağrılmamalı')
-        sonuc = yz_tekrar.sor(TCDD_SBB, TCDD_KK, 166, None, iste=gemini_olmamali, groq_iste=groq)
+        sonuc = yz_tekrar.sor(TCDD_SBB, TCDD_KK, 166, None, iste=gemini_olmamali, groq_iste=groq, groq_model_listesi=MODELLER)
         self.assertTrue(yz_tekrar.tutulsun_mu(sonuc))
         self.assertEqual(modeller, ['llama-3.3-70b-versatile'])
 
@@ -93,7 +105,7 @@ class GroqAnaSaglayici(unittest.TestCase):
             raise OSError('429')
         try:
             with contextlib.redirect_stdout(io.StringIO()):
-                sonuc = yz_tekrar.sor(TCDD_SBB, TCDD_KK, groq_iste=groq, iste=cevap(False, 0.8, 'farklı'))
+                sonuc = yz_tekrar.sor(TCDD_SBB, TCDD_KK, groq_iste=groq, iste=cevap(False, 0.8, 'farklı'), groq_model_listesi=MODELLER)
         finally:
             yd._MODELLER[:] = []
         self.assertEqual(denenen, ['llama-3.3-70b-versatile', 'llama-3.1-8b-instant'])
@@ -108,7 +120,7 @@ class GroqAnaSaglayici(unittest.TestCase):
             raise OSError('503')
         try:
             with contextlib.redirect_stdout(io.StringIO()):
-                self.assertIsNone(yz_tekrar.sor(TCDD_SBB, TCDD_KK, groq_iste=patlar, iste=patlar))
+                self.assertIsNone(yz_tekrar.sor(TCDD_SBB, TCDD_KK, groq_iste=patlar, iste=patlar, groq_model_listesi=MODELLER))
         finally:
             yd._MODELLER[:] = []
         self.assertFalse(yz_tekrar.tutulsun_mu(None))
@@ -122,7 +134,7 @@ class GroqAnaSaglayici(unittest.TestCase):
     def test_bozuk_json_yok_sayilir(self):
         yz_tekrar.ayarla(True, 'groq-anahtar', '')
         with contextlib.redirect_stdout(io.StringIO()):
-            self.assertIsNone(yz_tekrar.sor(TCDD_SBB, TCDD_KK, groq_iste=lambda *a: 'json değil'))
+            self.assertIsNone(yz_tekrar.sor(TCDD_SBB, TCDD_KK, groq_iste=lambda *a: 'json değil', groq_model_listesi=MODELLER))
 
 
 class GeminiIkinciGoz(unittest.TestCase):
