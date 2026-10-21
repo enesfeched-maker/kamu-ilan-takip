@@ -117,8 +117,14 @@ def bekleyen_oku():
 
 
 def id_bul(token):
+    with urllib.request.urlopen(f'https://api.telegram.org/bot{token}/getMe', timeout=30) as r:
+        print('Bot:', '@' + (json.load(r).get('result') or {}).get('username', '?'))
+    with urllib.request.urlopen(f'https://api.telegram.org/bot{token}/getWebhookInfo', timeout=30) as r:
+        bilgi = json.load(r).get('result') or {}
+    print('Webhook:', bilgi.get('url') or 'yok', '| bekleyen güncelleme:', bilgi.get('pending_update_count'))
     with urllib.request.urlopen(f'https://api.telegram.org/bot{token}/getUpdates', timeout=30) as r:
         guncellemeler = json.load(r).get('result') or []
+    print('Gelen güncelleme sayısı:', len(guncellemeler), '| türler:', sorted({(g.get('message') or {}).get('chat', {}).get('type') or next(iter([k for k in g if k != 'update_id']), '?') for g in guncellemeler}))
     bulunan = {}
     for g in guncellemeler:
         m = g.get('message') or {}
