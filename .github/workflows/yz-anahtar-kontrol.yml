@@ -27,7 +27,9 @@ jobs:
           import yz_tekrar as yt
           groq, gemini = os.environ.get('GROQ_ANAHTARI', '').strip(), os.environ.get('GEMINI_ANAHTARI', '').strip()
           if groq:
-              for model in yt.GROQ_MODELLER:
+              modeller = yt.groq_modelleri(groq)
+              print('Groq modelleri (tercih sırasıyla):', ', '.join(modeller[:8]))
+              for model in modeller[:2]:
                   t0 = time.time()
                   try:
                       cevap = yt._groq_iste(model, 'Yalnız {"ayni": true, "guven": 1, "neden": "deneme"} JSON\'unu aynen yaz.', groq, 30)
