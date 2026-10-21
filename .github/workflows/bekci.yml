@@ -16,6 +16,10 @@ on:
         description: Kontrol et ama mesaj atma
         type: boolean
         default: false
+      test_mesaji:
+        description: Yöneticiye tek bir test mesajı gönder
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -49,6 +53,7 @@ jobs:
           ARGS=""
           if [ "${{ inputs.id_bul }}" = "true" ]; then ARGS="--id-bul"; fi
           if [ "${{ inputs.deneme }}" = "true" ]; then ARGS="--deneme"; fi
+          if [ "${{ inputs.test_mesaji }}" = "true" ]; then ARGS="--test-mesaj"; fi
           python bot/bekci.py $ARGS
       - name: Durumu kaydet
         if: ${{ always() && inputs.id_bul != true }}
