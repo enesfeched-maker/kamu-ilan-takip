@@ -1,5 +1,5 @@
 {
- "guncelleme": "2026-10-21T10:31:17+03:00",
+ "guncelleme": "2026-10-21T10:40:31+03:00",
  "ilanlar": [
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=9c82aab5-022e-43c8-b7f1-e6cf329d205b",
@@ -22125,57 +22125,6 @@
    "kpss": "kpss"
   },
   {
-   "id": "csb-478401",
-   "baslik": "DOĞANYOL BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE SÖZLEŞMELİ PERSONEL ALIM İLANI",
-   "kurum": "DOĞANYOL BELEDİYE BAŞKANLIĞI",
-   "kadro": "2 Çözümleyici",
-   "ilan_turu": "Sözleşmeli Personel",
-   "son_tarih": "2026-12-04",
-   "kaynak": "ÇŞB Yerel Yönetimler",
-   "kaynak_turu": "csb",
-   "link": "https://yerelyonetimler.csb.gov.tr/malatya-ili-doganyol-belediye-baskanligina-ilk-defa-atanmak-uzere-sozlesmeli-personel-alim-ilani-duyuru-478401",
-   "kaynaklar": [
-    {
-     "ad": "ÇŞB Yerel Yönetimler",
-     "link": "https://yerelyonetimler.csb.gov.tr/malatya-ili-doganyol-belediye-baskanligina-ilk-defa-atanmak-uzere-sozlesmeli-personel-alim-ilani-duyuru-478401"
-    },
-    {
-     "ad": "SBB Kamu İlan",
-     "link": "https://kamuilan.sbb.gov.tr/"
-    }
-   ],
-   "yayim_tarihi": "2026-10-19",
-   "detay_guncelleme": "2026-10-21T03:16:10+03:00",
-   "csb_detay_surumu": 4,
-   "ozet": "Malatya ili Doğanyol Belediye Başkanlığı bünyesinde 5393 sayılı Belediye Kanunu’nun 49 uncu maddesi ile Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla, belirtilen boş pozisyona tam zamanlı sözleşmeli personel alınacaktır. Son başvuru: 04.12.2026.",
-   "belgeler": [
-    {
-     "ad": "19-10-2026-Doganyol-Belediyesi-ilk-defa-memur-alim-ilani-1-20261019135725.docx",
-     "link": "https://webdosya.csb.gov.tr/v2/yerelyonetimler/2026/10/19-10-2026-Doganyol-Belediyesi-ilk-defa-memur-alim-ilani-1-20261019135725.docx"
-    }
-   ],
-   "yer": "Malatya",
-   "sartlar": [
-    {
-     "kadro": "Çözümleyici · 2 pozisyon",
-     "metin": "KPSS P3 puan türünden en az 55 puan. Hizmet sınıfı TH, 7. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren kurumların kamu yönetimi, halkla ilişkiler ve tanıtım ve yerel yönetimler bölümlerinin birinden mezun olmak En az iki programlama dilini bildiğini mezun olduğu okuldan alacağı belge veya Millî Eğitim Bakanlığından onaylı kurs sertifikası ile belgelemek. En az (B) sınıfı sürücü belgesine sahip olmak."
-    }
-   ],
-   "ilk_gorulme": "2026-10-19T15:14:59+03:00",
-   "kaynak_kimlikleri": [
-    "csb-478401",
-    "sbb-d8b1c1b0ed57899a26f02cb3"
-   ],
-   "ogrenim": [
-    "lisans"
-   ],
-   "kategori": "belediye",
-   "iller": [
-    "Malatya"
-   ],
-   "kpss": "kpss"
-  },
-  {
    "id": "iskur-9a987e7b9b3e9392633389ee",
    "baslik": "Malatya Doğanyol Belediyesi Sözleşmeli Personel Alım İlanı",
    "kurum": "Malatya Doğanyol Belediyesi",
@@ -22190,6 +22139,14 @@
     {
      "ad": "İŞKUR",
      "link": "https://www.iskur.gov.tr/medya/rifdxfx4/malatya-do%C4%9Fanyol-belediyesi-soezle%C5%9Fmeli-personel-al%C4%B1m-ilan%C4%B1-04122026.pdf"
+    },
+    {
+     "ad": "ÇŞB Yerel Yönetimler",
+     "link": "https://yerelyonetimler.csb.gov.tr/malatya-ili-doganyol-belediye-baskanligina-ilk-defa-atanmak-uzere-sozlesmeli-personel-alim-ilani-duyuru-478401"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
    "detay_guncelleme": "2026-10-21T10:28:28+03:00",
@@ -22210,9 +22167,11 @@
    "iskur_belge_sha256": "d5c0c013a18456cf1857fab830e120e7a866cd9cec688966b228af615c366463",
    "iskur_detay_guncelleme": "2026-10-21T10:28:52+03:00",
    "baslangic_zaman": "2026-12-02T00:00:00+03:00",
-   "ilk_gorulme": "2026-10-21T10:28:53+03:00",
+   "ilk_gorulme": "2026-10-19T15:14:59+03:00",
    "kaynak_kimlikleri": [
-    "iskur-9a987e7b9b3e9392633389ee"
+    "csb-478401",
+    "iskur-9a987e7b9b3e9392633389ee",
+    "sbb-d8b1c1b0ed57899a26f02cb3"
    ],
    "ogrenim": [
     "lisans"
@@ -23644,6 +23603,7 @@
   "iskur-8f2afcb0d71295c346c4b20d",
   "iskur-90bc49ba5ab8723a8adb1001",
   "iskur-99382747cf844bf91f8d55d1",
+  "iskur-9a987e7b9b3e9392633389ee",
   "iskur-9b0565c28a9ae764ff23b945",
   "iskur-9d4d97ec470c2efcf5b3e55c",
   "iskur-9fece49766cbf82ae3e58d14",
@@ -23832,7 +23792,6 @@
   "sbb-ffbba5c3ef2b2c84c00bb8e2"
  ],
  "telegram_bekleyen": [
-  "iskur-9a987e7b9b3e9392633389ee",
   "sbb-d899f32eaa9140b2a3b909d2",
   "sbb-f444cce2b9f1fa1a8ec71292"
  ],
@@ -23980,7 +23939,6 @@
   "csb-478083",
   "csb-478165",
   "csb-478289",
-  "csb-478401",
   "csb-478442",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=0ad1bd8f-f6ad-4a03-8f10-7a42c33cf44a",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=0f54adef-6e76-4b95-b503-03f415523085",
