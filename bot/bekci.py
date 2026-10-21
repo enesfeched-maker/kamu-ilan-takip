@@ -140,6 +140,10 @@ def ana():
         bulunan = id_bul(token)
         print('Özel sohbetler:', bulunan or 'yok — önce botla Telegram\'da özel konuşma başlatıp /start yaz, sonra yeniden çalıştır.')
         return 0
+    if '--test-mesaj' in sys.argv:
+        sohbet = os.environ.get('TELEGRAM_YONETICI_ID', '').strip()
+        print('Test mesajı:', 'gönderildi' if sohbet and telegram(token, sohbet, 'KPSS Tercihi bekçi\n✅ Test mesajı: bildirimler çalışıyor. Bundan sonra sorun olursa ya da günde iki kez (09.00 ve 21.00) buraya yazacağım.') else 'GÖNDERİLEMEDİ (TELEGRAM_YONETICI_ID tanımlı değil)')
+        return 0
     simdi = datetime.now(timezone.utc)
     tarama = calismalar('ilan.yml')
     sosyal = calismalar('sosyal.yml', 4)
