@@ -666,7 +666,7 @@ def tekrarlari_ele(uygun, mevcut, gonderilen, bekleyen):
 
 
 LOGO_BEKLEME = timedelta(hours=3)
-UNVAN_BEKLEME = timedelta(hours=3)
+UNVAN_BEKLEME = timedelta(hours=1)   # 22 Ekim 2026 kullanıcı: "1 saat beklesin en çok"
 
 
 def sure_doldu(i, sure, simdi_=None):
@@ -783,9 +783,9 @@ def telegram_sirasi(mevcut, gelen, yeniler, gonderilen, bekleyen, ilk_calisma, d
             # 22 Ekim 2026: Galatasaray ilanı 8 saat takıldı -> en çok UNVAN_BEKLEME beklenir, sonra ilan kaybolmasın diye gider
             # (bu arada kopyası paylaşıldıysa tekrar denetimi zaten eler).
             if not sure_doldu(i, UNVAN_BEKLEME):
-                print(f"Kanala gönderilmedi (unvan okunamadı, en çok 3 saat beklenir): {i['baslik']}")
+                print(f"Kanala gönderilmedi (unvan okunamadı, en çok 1 saat beklenir): {i['baslik']}")
                 continue
-            print(f"::warning::Unvan 3 saatte okunamadı, başlıkla gönderilecek: {i['baslik']}")
+            print(f"::warning::Unvan 1 saatte okunamadı, başlıkla gönderilecek: {i['baslik']}")
         if telegram_icin_uygun(i, dahil, haric):
             uygun.append(i)
     ilanlar = kopyalari_ele([i for i in uygun if not i.get('duyuru_turu')], mevcut, gonderilen, bekleyen)
