@@ -734,7 +734,8 @@ def telegram_sirasi(mevcut, gelen, yeniler, gonderilen, bekleyen, ilk_calisma, d
             # kanala gitmez, sırada bekler; kurum adı sonradan okunursa normal akışla paylaşılır.
             print(f"Kanala gönderilmedi (kurum adı okunamadı): {i['baslik']}")
             continue
-        if i.get('kaynak_turu') == 'sbb' and not i.get('duyuru_turu') and not unvanli(i):
+        if i.get('kaynak_turu') == 'sbb' and not i.get('duyuru_turu') \
+                and not unvanli(dict(i, **(((cfg.get('elle') or {}).get('alanlar') or {}).get(i['id']) or {}))):   # elle girilen unvan geçerli
             # Unvansız SBB kaydı ('… - 2 ALACAK') kanalda anlamsız görünür ve kopyası zor eşleşir (16 Ekim 2026: Akreditasyon
             # bilişim ilanı ikinci kez gitti): sırada bekler; unvan okunursa ya da kopyası paylaşılırsa normal akış sürer.
             print(f"Kanala gönderilmedi (unvan okunamadı): {i['baslik']}")
