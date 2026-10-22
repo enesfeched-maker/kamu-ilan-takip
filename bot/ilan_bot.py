@@ -284,6 +284,37 @@ def resmi_cumle_kisa(d, sinir=280):
     return kisalt(_bas_harf_buyut(c), sinir) if c else ''
 
 
+def ilan_adi(ilan):
+    """Mesajlarda ilanın kısa adı: 'Galatasaray Üniversitesi Yazılım Geliştirme Uzmanı'."""
+    from kart_tasarimlari import kisa_kurum
+    kurum = kisa_kurum(okunakli_baslik(ilan.get('kurum') or ''))
+    try:
+        import kurum_sayfasi
+        import liste_verisi
+        unvan = liste_verisi.baslik_temiz(kurum_sayfasi.kart_alanlari(ilan)['manset'])
+    except Exception:
+        unvan = okunakli_baslik(kisa_baslik(ilan))
+    unvan = re.sub(r'^\s*\d+\s+', '', unvan or '').strip()
+    if not unvan or re.fullmatch(r'(?i)(?:personel|alacak|alım|ilan)\w*', unvan):
+        return kurum or okunakli_baslik(kisa_baslik(ilan))
+    return f'{kurum} {kisalt(unvan, 80)}'.strip()
+
+
+def duzeltme_metni(duyuru, orijinal):
+    """21 Ekim 2026 kullanıcı kararı: her düzeltme 'X ilanı hakkında düzeltme yayınlanmıştır.' diye bildirilir;
+    başvuru tarihi ya da şekli değiştiyse yeni bilgi altına yazılır."""
+    e = html.escape
+    satirlar = [f"📝 <b>{e(ilan_adi(orijinal))} ilanı hakkında düzeltme yayınlanmıştır.</b>"]
+    if duyuru.get('duzeltme_degisen') == 'tarih' and duyuru.get('duzeltme_yeni_tarih'):
+        satirlar.append(f"📅 <b>Yeni son başvuru:</b> {tarih_yaz(duyuru['duzeltme_yeni_tarih'])}")
+    elif duyuru.get('duzeltme_degisen') == 'basvuru':
+        from duzeltme import duzeltilen_kisim, _bitisik
+        kisim = _bitisik(duzeltilen_kisim(duyuru))
+        if kisim:
+            satirlar.append(f"Başvuru şekli: {e(kisalt(_bas_harf_buyut(kisim), 220))}")
+    return "\n".join(satirlar)
+
+
 def duyuru_metni(duyuru, orijinale_yanit, tam=True, referans=None):
     """İptal/düzeltme duyurusu mesajı. Orijinal ilana yanıtsa kısa, değilse kurum ve başlıkla kartsız metin.
     tam=False: iptal ilanın yalnız bir kadrosunu kapsıyor ('Bu ilandaki Tekniker alımı iptal edilmiştir').
@@ -765,7 +796,7 @@ def duyuru_karari(duyuru, ilanlar, mesajlar, yanitlar, bugun, gonderilen=None):
     referans: kanalda paylaşılmış ama mesaj kaydı olmayan tek orijinal (yanıt verilemez; metinde 📌 ile gösterilir)."""
     tur = 'iptal' if duyuru_turu_iptal_mi(duyuru) else 'duzeltme'
     if tur == 'duzeltme':
-        return duzeltme_karari(duyuru, ilanlar, mesajlar, yanitlar, bugun)
+        return duzeltme_karari(duyuru, ilanlar, mesajlar, yanitlar, bugun, gonderilen)
     if akademik_ilan(duyuru):
         return {'islem': 'sessiz', 'sebep': 'akademik duyuru', 'referans': None}
     # 21 Ekim 2026 (Elmakaya iptali ÇŞB ve SBB'den iki kez gitti): olay imzası her yolda, kelime kümesiyle kontrol edilir
@@ -812,28 +843,36 @@ def duyuru_karari(duyuru, ilanlar, mesajlar, yanitlar, bugun, gonderilen=None):
 
 
 def yanit_kaydet(yanitlar, karar, duyuru, gun):
-    """Gönderilen iptal duyurusunun anahtarlarını kaydeder: karar yolundaki anahtar + yoldan bağımsız olay imzası."""
+    """Gönderilen iptal/düzeltme duyurusunun anahtarlarını kaydeder: karar yolundaki anahtar + yoldan bağımsız olay imzası."""
     yanitlar[karar['yaz']] = gun
-    if duyuru_turu_iptal_mi(duyuru):
-        yanitlar[duz_anahtar(duyuru)] = gun
+    yanitlar[duz_anahtar(duyuru)] = gun
 
 
-def duzeltme_karari(duyuru, ilanlar, mesajlar, yanitlar, bugun):
-    """Düzeltme duyuruları kanalda paylaşılmaz (9 Ekim 2026). 15 Ekim 2026 istisnası: başvuru TARİHİ ya da başvuru
-    ŞEKLİ değiştiyse ve orijinal ilan kanalda paylaşılmışsa, orijinal mesaja tek satırlık yanıt gider.
-    Bağlantı duzeltme.uygula()'nın yazdığı 'duzeltme_of' alanından gelir (ihtiyatlı eşleştirme)."""
-    degisen = duyuru.get('duzeltme_degisen')
-    if degisen not in ('tarih', 'basvuru'):
-        return {'islem': 'sessiz', 'sebep': 'düzeltme duyuruları paylaşılmıyor', 'referans': None}
+def duzeltme_karari(duyuru, ilanlar, mesajlar, yanitlar, bugun, gonderilen=None):
+    """21 Ekim 2026 kullanıcı kararı: düzeltme duyuruları kanalda 'X ilanı hakkında düzeltme yayınlanmıştır.' diye
+    bildirilir (tarih/başvuru şekli değiştiyse yeni bilgiyle). Orijinal ilan (duzeltme.uygula'nın yazdığı 'duzeltme_of')
+    kanalda paylaşılmış olmalı: mesaj kaydı varsa ona yanıt, yoksa düz mesaj. Akademik ilana ait, orijinali bulunamayan,
+    kanalda hiç paylaşılmamış ya da süresi dolmuş ilanın düzeltmesi ve aynı düzeltmenin başka kaynaktan kopyası gitmez."""
+    if akademik_ilan(duyuru):
+        return {'islem': 'sessiz', 'sebep': 'akademik duyuru', 'referans': None}
+    from iptal_yaniti import ayni_olay_bildirildi
+    if ayni_olay_bildirildi(duyuru, yanitlar, bugun, DUZ_METIN_TEKILLESTIRME_GUN, gun_icinde):
+        return {'islem': 'sessiz', 'sebep': 'aynı düzeltme (başka kaynaktan) son 30 günde bildirildi', 'referans': None}
     o = next((i for i in ilanlar if i.get('id') == duyuru.get('duzeltme_of')), None)
-    if o is None or akademik_ilan(o) or not mesaj_kimligi(o, mesajlar):
+    if o is None:
+        return {'islem': 'sessiz', 'sebep': 'düzeltilen ilan bulunamadı', 'referans': None}
+    mesajli = bool(mesaj_kimligi(o, mesajlar))
+    if akademik_ilan(o) or not (mesajli or (gonderilen is not None and paylasildi(o, gonderilen))):
         return {'islem': 'sessiz', 'sebep': 'orijinal ilan kanalda paylaşılmadı', 'referans': None}
     if suresi_doldu(o):
         return {'islem': 'sessiz', 'sebep': 'orijinal ilanın süresi doldu', 'referans': None}
-    anahtarlar = yanit_anahtarlari('duzeltme', o, False, f"{degisen}:{duyuru.get('duzeltme_yeni_tarih') or ''}")
+    degisen = duyuru.get('duzeltme_degisen') or 'diger'
+    imza = f"{degisen}:{duyuru.get('duzeltme_yeni_tarih') or str(duyuru.get('ilk_gorulme') or '')[:10]}"
+    anahtarlar = yanit_anahtarlari('duzeltme', o, False, imza)
     if any(k in yanitlar for k in anahtarlar):
         return {'islem': 'sessiz', 'sebep': 'aynı düzeltme daha önce bildirildi', 'referans': None}
-    return {'islem': 'gonder', 'orijinal': o, 'referans': None, 'tam': True, 'yaz': anahtarlar[0]}
+    return {'islem': 'gonder', 'orijinal': o if mesajli else None, 'referans': None if mesajli else o,
+            'duzeltilen': o, 'tam': True, 'yaz': anahtarlar[0]}
 
 
 ILAN_ARASI_SN = 150   # 20 Ekim 2026: taramada en çok 3 ilan, aralarında 2,5 dk (kanal dağınık görünmesin)
@@ -1648,13 +1687,15 @@ def main():
                 continue
             orijinal = karar['orijinal']
             yanit = mesaj_kimligi(orijinal, mesajlar)[1] if orijinal else None
-            metin = duyuru_metni(i, orijinal is not None, karar['tam'], karar.get('referans'))
+            metin = (duzeltme_metni(i, karar['duzeltilen']) if karar.get('duzeltilen') is not None
+                     else duyuru_metni(i, orijinal is not None, karar['tam'], karar.get('referans')))
             if a.dry_run:
                 print('--- (önizleme, gönderilmedi) ---\n' + metin + '\n')
                 continue
             try:
                 # düzeltme sayfası orijinale bağlı: düğme doğrudan güncel bilgili orijinal ilan sayfasını açar
-                hedef = ilan_sayfasi(orijinal if (orijinal is not None and not duyuru_turu_iptal_mi(i)) else i, site_url)
+                hedef = ilan_sayfasi(karar['duzeltilen'] if karar.get('duzeltilen') is not None
+                                     else orijinal if (orijinal is not None and not duyuru_turu_iptal_mi(i)) else i, site_url)
             except ValueError:
                 hedef = ''
             mid = telegram_gonder(token, chat_id, metin, hedef, site_url, yanit=yanit) if (token and chat_id) else False
