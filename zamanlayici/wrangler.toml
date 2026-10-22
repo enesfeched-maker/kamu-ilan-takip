@@ -1,0 +1,9 @@
+name = "kpss-zamanlayici"
+main = "src/index.js"
+compatibility_date = "2026-05-22"
+
+# Tarama her 30 dakikada bir, bekçi taramadan 7 dakika sonra (src/index.js ISLER ile aynı olmalı).
+[triggers]
+crons = ["*/30 * * * *", "7,37 * * * *"]
+
+# Sır (değeri buraya YAZILMAZ): GH_TOKEN -> kurulum.ps1 gizli girişle ekler.

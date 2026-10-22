@@ -1,0 +1,8 @@
+{
+  "name": "kpss-zamanlayici",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  }
+}

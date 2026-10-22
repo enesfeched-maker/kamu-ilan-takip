@@ -666,6 +666,17 @@ def tekrarlari_ele(uygun, mevcut, gonderilen, bekleyen):
 
 
 LOGO_BEKLEME = timedelta(hours=3)
+UNVAN_BEKLEME = timedelta(hours=3)
+
+
+def sure_doldu(i, sure, simdi_=None):
+    """İlk görülmeden bu yana `sure` geçtiyse True (ilk görülme okunamazsa False: beklenir)."""
+    try:
+        ilk = datetime.fromisoformat(i.get('ilk_gorulme') or '')
+    except ValueError:
+        return False
+    ilk = ilk if ilk.tzinfo else ilk.replace(tzinfo=TR)
+    return (simdi_ or simdi()) - ilk >= sure
 
 
 def logo_beklemesi_doldu(i, simdi_=None):
@@ -769,8 +780,12 @@ def telegram_sirasi(mevcut, gelen, yeniler, gonderilen, bekleyen, ilk_calisma, d
                 and not unvanli(dict(i, **(((cfg.get('elle') or {}).get('alanlar') or {}).get(i['id']) or {}))):   # elle girilen unvan geçerli
             # Unvansız SBB kaydı ('… - 2 ALACAK') kanalda anlamsız görünür ve kopyası zor eşleşir (16 Ekim 2026: Akreditasyon
             # bilişim ilanı ikinci kez gitti): sırada bekler; unvan okunursa ya da kopyası paylaşılırsa normal akış sürer.
-            print(f"Kanala gönderilmedi (unvan okunamadı): {i['baslik']}")
-            continue
+            # 22 Ekim 2026: Galatasaray ilanı 8 saat takıldı -> en çok UNVAN_BEKLEME beklenir, sonra ilan kaybolmasın diye gider
+            # (bu arada kopyası paylaşıldıysa tekrar denetimi zaten eler).
+            if not sure_doldu(i, UNVAN_BEKLEME):
+                print(f"Kanala gönderilmedi (unvan okunamadı, en çok 3 saat beklenir): {i['baslik']}")
+                continue
+            print(f"::warning::Unvan 3 saatte okunamadı, başlıkla gönderilecek: {i['baslik']}")
         if telegram_icin_uygun(i, dahil, haric):
             uygun.append(i)
     ilanlar = kopyalari_ele([i for i in uygun if not i.get('duyuru_turu')], mevcut, gonderilen, bekleyen)
