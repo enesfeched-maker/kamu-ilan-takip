@@ -32,6 +32,8 @@ class Kontrol(unittest.TestCase):
         takili = dict(calisma(None, 47), status='waiting')
         s = bekci.sorunlar(SIMDI, [takili, calisma('success', 60)], SAGLIKLI, SITE_TAZE, None, 0)
         self.assertIn('tarama_takildi', s)
+        sonra_basarili = [calisma('success', 5), takili]   # takılı kayıttan sonra başarılı tarama: eski kayıt, uyarı yok
+        self.assertNotIn('tarama_takildi', bekci.sorunlar(SIMDI, sonra_basarili, SAGLIKLI, SITE_TAZE, None, 0))
         kisa = dict(calisma(None, 10), status='waiting')
         self.assertNotIn('tarama_takildi', bekci.sorunlar(SIMDI, [kisa, calisma('success', 40)], SAGLIKLI, SITE_TAZE, None, 0))
 
