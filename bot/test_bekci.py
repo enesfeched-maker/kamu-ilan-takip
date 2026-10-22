@@ -28,6 +28,13 @@ class Kontrol(unittest.TestCase):
         self.assertEqual(bekci.sorunlar(SIMDI, [calisma('failure', 5), calisma('cancelled', 20), calisma('success', 40)],
                                         SAGLIKLI, SITE_TAZE, None, 0), {})
 
+    def test_takili_tarama(self):
+        takili = dict(calisma(None, 47), status='waiting')
+        s = bekci.sorunlar(SIMDI, [takili, calisma('success', 60)], SAGLIKLI, SITE_TAZE, None, 0)
+        self.assertIn('tarama_takildi', s)
+        kisa = dict(calisma(None, 10), status='waiting')
+        self.assertNotIn('tarama_takildi', bekci.sorunlar(SIMDI, [kisa, calisma('success', 40)], SAGLIKLI, SITE_TAZE, None, 0))
+
     def test_tarama_durmus(self):
         s = bekci.sorunlar(SIMDI, [calisma('success', 150)], SAGLIKLI, SITE_TAZE, None, 0)
         self.assertIn('tarama_durdu', s)
