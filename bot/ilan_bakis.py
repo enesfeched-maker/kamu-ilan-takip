@@ -50,7 +50,7 @@ def sart_kelimeleri(item):
         sonuc.append('Boy-kilo şartı')
     if re.search(r'\byds\b|yökdil|yabancı dil', m):
         sonuc.append('Yabancı dil')
-    if re.search(r'engelli', m):
+    if re.search(r'\bengelli\b', m):
         sonuc.append('Engelli kadrosu')
     if re.search(r'güvenlik (?:kimlik kartı|görevlisi kimlik|eğitimi sertifika)|silahlı güvenlik', m):
         sonuc.append('Güvenlik kimlik kartı')

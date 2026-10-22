@@ -5,6 +5,11 @@ from siniflandir import saf_akademik
 
 
 class Bakis(unittest.TestCase):
+    def test_engellilerde_spor_programi_engelli_kadrosu_degil(self):
+        item = {'yz_kadrolar': [{'kosullar': ['Engellilerde beden eğitimi ve spor öğretmenliği mezunu olmak.']}]}
+        self.assertNotIn('Engelli kadrosu', ib.sart_kelimeleri(item))
+        self.assertIn('Engelli kadrosu', ib.sart_kelimeleri({'ozet': '5 engelli işçi alımı'}))
+
     def test_sart_kelimeleri(self):
         item = {'yz_ortak': ['35 yaşını doldurmamış olmak.', 'Erkek adaylar için askerlik şartı.'],
                 'yz_kadrolar': [{'kosullar': ['B sınıfı sürücü belgesine sahip olmak.', 'En az 3 yıl mesleki deneyim.',

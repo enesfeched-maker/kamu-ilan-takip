@@ -17,7 +17,9 @@
   "telegram_metinsiz": true,
   "yapay_zeka_kapali": true,
   "yz_tekrar_acik": true,
-  "telegram_amblem_hemen": ["csb-478442"],
+  "telegram_amblem_hemen": [
+    "csb-478442"
+  ],
   "sosyal": {
     "haberler": [
       {
@@ -250,6 +252,162 @@
           "Ankara"
         ],
         "yer": "ANKARA"
+      },
+      "csb-478532": {
+        "_not": "22 Ekim 2026: Kullanıcının sağladığı resmî RTF belgesi okunarak altı kadro satırı ve başvuru koşulları elle doğrulandı.",
+        "kadro": "90 Zabıta Memuru",
+        "yer": "İzmir",
+        "iller": [
+          "İzmir"
+        ],
+        "kategori": "belediye",
+        "ogrenim": [
+          "lisans",
+          "onlisans"
+        ],
+        "belge_ogrenim": [
+          "lisans",
+          "onlisans"
+        ],
+        "kpss": "kpss",
+        "puan_turleri": [
+          "P3",
+          "P93"
+        ],
+        "son_tarih": "2026-12-04",
+        "son_zaman": "2026-12-04T17:00:00+03:00",
+        "baslangic_zaman": "2026-11-30T08:30:00+03:00",
+        "ozet": "İzmir Büyükşehir Belediyesi 90 zabıta memuru alacak: 60 lisans, 30 önlisans; toplam 72 erkek ve 18 kadın. 2026 KPSS P3/P93 en az 65 puan. Her öğrenim düzeyinin kabul edilen bölümleri aşağıdaki altı kadro grubunda belirtilmiştir.",
+        "basvuru_notu": "30 Kasım–4 Aralık 2026 tarihlerinde 08.30–17.00 arasında, İzmir Büyükşehir Belediyesi Zabıta Dairesi Başkanlığına (Yenidoğan, 2225 Sokak No:2, Konak/İzmir) şahsen başvurulur. www.izmir.bel.tr üzerinden doldurulan formun imzalı çıktısı ve istenen belgeler teslim edilir. Posta, e-posta veya yalnızca çevrim içi form doldurma yoluyla başvuru kabul edilmez.",
+        "yz_kadrolar": [
+          {
+            "unvan": "Zabıta Memuru — Erkek (sıra 1)",
+            "adet": 24,
+            "ogrenim": "lisans",
+            "puan_turu": "P3",
+            "en_dusuk_puan": 65,
+            "il": "İzmir",
+            "kosullar": [
+              "Antrenörlük eğitimi, beden eğitimi ve spor öğretmenliği, spor yöneticiliği, egzersiz ve spor bilimleri, rekreasyon, engellilerde beden eğitimi ve spor öğretmenliği veya engellilerde egzersiz ve spor bilimleri lisans programlarından mezun olmak.",
+              "Erkek adaylar için ayrılmış kontenjan. Hizmet sınıfı GİH, 9. derece.",
+              "En az B sınıfı sürücü belgesi. 2026 KPSS puanı kullanılacaktır."
+            ]
+          },
+          {
+            "unvan": "Zabıta Memuru — Kadın (sıra 2)",
+            "adet": 6,
+            "ogrenim": "lisans",
+            "puan_turu": "P3",
+            "en_dusuk_puan": 65,
+            "il": "İzmir",
+            "kosullar": [
+              "Antrenörlük eğitimi, beden eğitimi ve spor öğretmenliği, spor yöneticiliği, egzersiz ve spor bilimleri, rekreasyon, engellilerde beden eğitimi ve spor öğretmenliği veya engellilerde egzersiz ve spor bilimleri lisans programlarından mezun olmak.",
+              "Kadın adaylar için ayrılmış kontenjan. Hizmet sınıfı GİH, 9. derece.",
+              "En az B sınıfı sürücü belgesi. 2026 KPSS puanı kullanılacaktır."
+            ]
+          },
+          {
+            "unvan": "Zabıta Memuru — Erkek (sıra 3)",
+            "adet": 24,
+            "ogrenim": "lisans",
+            "puan_turu": "P3",
+            "en_dusuk_puan": 65,
+            "il": "İzmir",
+            "kosullar": [
+              "Yerel yönetimler, kamu yönetimi veya siyaset bilimi ve kamu yönetimi lisans programlarından mezun olmak.",
+              "Erkek adaylar için ayrılmış kontenjan. Hizmet sınıfı GİH, 9. derece.",
+              "En az B sınıfı sürücü belgesi. 2026 KPSS puanı kullanılacaktır."
+            ]
+          },
+          {
+            "unvan": "Zabıta Memuru — Kadın (sıra 4)",
+            "adet": 6,
+            "ogrenim": "lisans",
+            "puan_turu": "P3",
+            "en_dusuk_puan": 65,
+            "il": "İzmir",
+            "kosullar": [
+              "Yerel yönetimler, kamu yönetimi veya siyaset bilimi ve kamu yönetimi lisans programlarından mezun olmak.",
+              "Kadın adaylar için ayrılmış kontenjan. Hizmet sınıfı GİH, 9. derece.",
+              "En az B sınıfı sürücü belgesi. 2026 KPSS puanı kullanılacaktır."
+            ]
+          },
+          {
+            "unvan": "Zabıta Memuru — Erkek (sıra 5)",
+            "adet": 24,
+            "ogrenim": "onlisans",
+            "puan_turu": "P93",
+            "en_dusuk_puan": 65,
+            "il": "İzmir",
+            "kosullar": [
+              "Adalet, yerel yönetimler veya özel güvenlik ve koruma önlisans programlarından mezun olmak.",
+              "Erkek adaylar için ayrılmış kontenjan. Hizmet sınıfı GİH, 10. derece.",
+              "En az B sınıfı sürücü belgesi. 2026 KPSS puanı kullanılacaktır."
+            ]
+          },
+          {
+            "unvan": "Zabıta Memuru — Kadın (sıra 6)",
+            "adet": 6,
+            "ogrenim": "onlisans",
+            "puan_turu": "P93",
+            "en_dusuk_puan": 65,
+            "il": "İzmir",
+            "kosullar": [
+              "Adalet, yerel yönetimler veya özel güvenlik ve koruma önlisans programlarından mezun olmak.",
+              "Kadın adaylar için ayrılmış kontenjan. Hizmet sınıfı GİH, 10. derece.",
+              "En az B sınıfı sürücü belgesi. 2026 KPSS puanı kullanılacaktır."
+            ]
+          }
+        ],
+        "yz_ortak": [
+          "2026 KPSS (B grubu): lisans kadroları için P3, önlisans kadroları için P93 puan türünden en az 65 puan.",
+          "Sınavın yapıldığı tarihte (11 Ocak 2027) 30 yaşını doldurmamış olmak.",
+          "En az B sınıfı sürücü belgesine sahip olmak.",
+          "Boy şartı: erkeklerde en az 1,67 m, kadınlarda en az 1,60 m. Boyun 1 metreden fazla kısmı (cm) ile kilo arasında en fazla 10 kg fark olmalı. Ölçüm belediye tarafından aç karnına, soyunuk ve çıplak ayakla yapılır.",
+          "657 sayılı Kanunun 40 ve 48/A maddelerinde belirtilen genel şartları taşımak; Türk vatandaşı olmak, kamu haklarından mahrum olmamak, ilanda sayılan mahkûmiyetlerin bulunmaması ve görevi sürdürmeye engel sağlık durumunun olmaması. Erkek adayların askerlik şartını sağlaması gerekir.",
+          "Adaylar şartlarını sağladıkları yalnızca bir kadroya başvurabilir.",
+          "Başvuru: 30 Kasım–4 Aralık 2026, mesai saatleri 08.30–17.00. Yalnızca şahsen; posta ve e-posta kabul edilmez.",
+          "Başvuru adresi: İzmir Büyükşehir Belediyesi Zabıta Dairesi Başkanlığı, Yenidoğan, 2225 Sokak No:2, Konak/İzmir.",
+          "Belediyenin www.izmir.bel.tr sitesinde elektronik olarak doldurulan başvuru formunun çıktısı imzalanarak teslim edilir. Form doldurmak tek başına başvuru değildir.",
+          "Belgeler: imzalı başvuru formu; kimlik; diploma/mezuniyet belgesi (yabancı okul mezunları için denklik); doğrulama kodlu KPSS sonuç belgesi; sürücü belgesi; son altı ayda çekilmiş 2 fotoğraf; başvurulan kadroyu belirten dilekçe. Asıl/onaylı örnek ve barkod koşulları için ilan belgesini inceleyin.",
+          "KPSS sıralamasına göre boş kadro sayısının beş katı aday sınava çağrılır; son sıradaki adayla aynı puanı alanlar da çağrılır. Sınava katılacaklar 18 Aralık 2026 tarihinde www.izmir.bel.tr adresinde ilan edilir.",
+          "Sözlü ve uygulamalı sınav: 11 Ocak 2027 saat 09.00, İtfaiye Eğitim Şube Müdürlüğü, Şehit Er Mehmet Çadırcı Cad. No:50, Şirinkapı, Buca/İzmir. Bitmezse ertesi gün devam eder.",
+          "Sözlü sınav konuları: Anayasa, Atatürk İlkeleri ve İnkılâp Tarihi, 657 sayılı Kanun ve mahalli idarelerle ilgili temel mevzuat. Uygulamalı sınav mesleki bilgi/yetenek ve sportif dayanıklılığı ölçer.",
+          "Sınav puanı sözlü sınavın %50’si ile uygulamalı sınavın %50’sinden oluşur; başarılı olmak için ortalama en az 60 olmalı. Atamaya esas puan, sınav puanı ile KPSS puanının aritmetik ortalamasıdır; eşitlikte yüksek KPSS puanı önceliklidir."
+        ],
+        "sartlar": [
+          {
+            "kadro": "Zabıta Memuru — Erkek (sıra 1) — 24 kişi",
+            "metin": "Antrenörlük eğitimi, beden eğitimi ve spor öğretmenliği, spor yöneticiliği, egzersiz ve spor bilimleri, rekreasyon, engellilerde beden eğitimi ve spor öğretmenliği veya engellilerde egzersiz ve spor bilimleri lisans programlarından mezun olmak. Erkek adaylar için ayrılmış kontenjan. Hizmet sınıfı GİH, 9. derece. En az B sınıfı sürücü belgesi. 2026 KPSS puanı kullanılacaktır. KPSS P3 en az 65 puan."
+          },
+          {
+            "kadro": "Zabıta Memuru — Kadın (sıra 2) — 6 kişi",
+            "metin": "Antrenörlük eğitimi, beden eğitimi ve spor öğretmenliği, spor yöneticiliği, egzersiz ve spor bilimleri, rekreasyon, engellilerde beden eğitimi ve spor öğretmenliği veya engellilerde egzersiz ve spor bilimleri lisans programlarından mezun olmak. Kadın adaylar için ayrılmış kontenjan. Hizmet sınıfı GİH, 9. derece. En az B sınıfı sürücü belgesi. 2026 KPSS puanı kullanılacaktır. KPSS P3 en az 65 puan."
+          },
+          {
+            "kadro": "Zabıta Memuru — Erkek (sıra 3) — 24 kişi",
+            "metin": "Yerel yönetimler, kamu yönetimi veya siyaset bilimi ve kamu yönetimi lisans programlarından mezun olmak. Erkek adaylar için ayrılmış kontenjan. Hizmet sınıfı GİH, 9. derece. En az B sınıfı sürücü belgesi. 2026 KPSS puanı kullanılacaktır. KPSS P3 en az 65 puan."
+          },
+          {
+            "kadro": "Zabıta Memuru — Kadın (sıra 4) — 6 kişi",
+            "metin": "Yerel yönetimler, kamu yönetimi veya siyaset bilimi ve kamu yönetimi lisans programlarından mezun olmak. Kadın adaylar için ayrılmış kontenjan. Hizmet sınıfı GİH, 9. derece. En az B sınıfı sürücü belgesi. 2026 KPSS puanı kullanılacaktır. KPSS P3 en az 65 puan."
+          },
+          {
+            "kadro": "Zabıta Memuru — Erkek (sıra 5) — 24 kişi",
+            "metin": "Adalet, yerel yönetimler veya özel güvenlik ve koruma önlisans programlarından mezun olmak. Erkek adaylar için ayrılmış kontenjan. Hizmet sınıfı GİH, 10. derece. En az B sınıfı sürücü belgesi. 2026 KPSS puanı kullanılacaktır. KPSS P93 en az 65 puan."
+          },
+          {
+            "kadro": "Zabıta Memuru — Kadın (sıra 6) — 6 kişi",
+            "metin": "Adalet, yerel yönetimler veya özel güvenlik ve koruma önlisans programlarından mezun olmak. Kadın adaylar için ayrılmış kontenjan. Hizmet sınıfı GİH, 10. derece. En az B sınıfı sürücü belgesi. 2026 KPSS puanı kullanılacaktır. KPSS P93 en az 65 puan."
+          }
+        ],
+        "belge_kopyasi": "https://kpsstercihi.com/belgeler/csb/izmir-zabita-2026.rtf",
+        "belgeler": [
+          {
+            "ad": "Resmî ilan belgesi (RTF)",
+            "link": "https://kpsstercihi.com/belgeler/csb/izmir-zabita-2026.rtf"
+          }
+        ]
       }
     }
   }

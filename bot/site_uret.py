@@ -749,7 +749,7 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
     if not any(item.get(k) for k in ('kadro', 'duyuru_cumlesi', 'ozet', 'basvuru_notu', 'sartlar')):
         diger += '<p class="muted">Bu ilanın kadro, şart ve başvuru ayrıntıları henüz kaynaktan okunamadı. Tüm bilgiler için resmî ilan belgesini aç.</p>'
     for belge in item.get('belgeler', [])[:3]:
-        if str(belge.get('link', '')).startswith('https://webdosya.csb.gov.tr/v2/yerelyonetimler/'):
+        if str(belge.get('link', '')).startswith(('https://webdosya.csb.gov.tr/v2/yerelyonetimler/', BASE + 'belgeler/csb/')):
             diger += f'<p><a class="yazi-link" href="{esc(belge["link"])}" target="_blank" rel="noopener noreferrer">Duyuru eki: {esc(belge.get("ad"))} ↗</a></p>'
     ikincil = (kopya or {}).get('rol') in ('ikincil', 'duzeltme')
     if ikincil:   # başka kaynaktaki kopya ya da düzeltme duyurusu: Google tek sayfayı (esas kaydı) dizinler
