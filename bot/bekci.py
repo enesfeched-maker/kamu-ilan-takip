@@ -56,6 +56,11 @@ def sorunlar(simdi, tarama, sosyal, site_guncelleme, site_hata, bekleyen, zaman_
             s['tarama_durdu'] = 'Son başarılı taramanın üzerinden 100 dakikadan fazla geçti.'
     else:
         s['tarama_durdu'] = 'Tarama kaydı okunamadı.'
+    takili = [c for c in tarama if c.get('status') in ('waiting', 'queued')
+              and simdi - zaman(c['createdAt']) > timedelta(minutes=30)]
+    if takili:
+        s['tarama_takildi'] = (f'Bir tarama {int((simdi - zaman(takili[-1]["createdAt"])).total_seconds() // 60)} dakikadır başlamadan '
+                               'bekliyor (GitHub tarafında takıldı); arkasındaki taramalar da sırada bekliyor.')
     if sosyal:
         son = next((c for c in sosyal if c.get('status') == 'completed' and c.get('conclusion') != 'cancelled'), None)
         if son and son['conclusion'] == 'failure':
