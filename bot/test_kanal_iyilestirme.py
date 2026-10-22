@@ -24,6 +24,13 @@ class LogoYedegi(unittest.TestCase):
             kalan = ilan_bot.logolu_olanlar([dict(taze, amblem_hemen=True)], logo_bul=lambda i: None, simdi_=SIMDI)
         self.assertEqual([i['id'] for i in kalan], ['a'])
 
+    def test_unvan_beklemesi_3_saat(self):
+        taze = {'ilk_gorulme': (SIMDI - timedelta(hours=1)).isoformat()}
+        eski = {'ilk_gorulme': (SIMDI - timedelta(hours=3, minutes=5)).isoformat()}
+        self.assertFalse(ilan_bot.sure_doldu(taze, ilan_bot.UNVAN_BEKLEME, SIMDI))
+        self.assertTrue(ilan_bot.sure_doldu(eski, ilan_bot.UNVAN_BEKLEME, SIMDI))
+        self.assertFalse(ilan_bot.sure_doldu({}, ilan_bot.UNVAN_BEKLEME, SIMDI))   # bilinmiyorsa beklenir
+
     def test_amblem(self):
         self.assertEqual(kt.bas_harfler('Doğanyol Belediye Başkanlığı'), 'DB')
         self.assertEqual(kt.bas_harfler('Türkiye İş Kurumu Genel Müdürlüğü'), 'TİK')
