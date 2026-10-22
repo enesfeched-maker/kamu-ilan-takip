@@ -90,7 +90,9 @@ def kind(title):
 
 
 def notice(title):
-    return any(w in norm(title) for w in ('iptal','duzeltme','sure uzatim'))
+    n=norm(title)
+    # 'DÜLETME İLANI' gibi yazım hataları da düzeltme duyurusudur (22 Ekim 2026: Sarıidris ilan sanıldı)
+    return any(w in n for w in ('iptal','sure uzatim')) or bool(re.search(r'\bduz?e?le?tme\b',n))
 
 
 def total(item):
