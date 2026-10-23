@@ -429,7 +429,7 @@ def _duzeltme_kutusu(item):
             satir += f' <span class="muted">“{esc(d["cumle"])}”</span>'
         link = str(d.get('link') or '')
         u = urlparse(link)
-        if u.scheme == 'https' and u.hostname in {'kariyerkapisi.gov.tr', 'kamuilan.sbb.gov.tr', 'www.iskur.gov.tr', 'iskur.gov.tr', 'yerelyonetimler.csb.gov.tr'}:
+        if u.scheme == 'https' and u.hostname in {'kariyerkapisi.gov.tr', 'kamuilan.sbb.gov.tr', 'www.iskur.gov.tr', 'iskur.gov.tr', 'yerelyonetimler.csb.gov.tr','www.ogm.gov.tr','pgm.ktb.gov.tr','pdb.marmara.edu.tr'}:
             satir += f' <a class="yazi-link" href="{esc(link)}" target="_blank" rel="noopener noreferrer">Resmî düzeltme ↗</a>'
         kutular += f'<p class="not uyari duzeltme-not">{satir}</p>'
     return kutular
@@ -662,7 +662,7 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
         key = item.get('id', '')
         if not re.fullmatch(r'(?:(?:sbb|iskur)-[a-f0-9]{24}|csb-\d{4,9})', key):
             return None
-    if url.scheme != 'https' or url.hostname not in {'kariyerkapisi.gov.tr','kamuilan.sbb.gov.tr','www.iskur.gov.tr','iskur.gov.tr','yerelyonetimler.csb.gov.tr'} or url.username or url.password:
+    if url.scheme != 'https' or url.hostname not in {'kariyerkapisi.gov.tr','kamuilan.sbb.gov.tr','www.iskur.gov.tr','iskur.gov.tr','yerelyonetimler.csb.gov.tr','www.ogm.gov.tr','pgm.ktb.gov.tr','pdb.marmara.edu.tr'} or url.username or url.password:
         return None
     import kurum_sayfasi as ks
     import liste_verisi

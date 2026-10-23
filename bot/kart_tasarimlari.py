@@ -153,7 +153,7 @@ def veri(ilan, logo=None, simdi=None):
         kalan_yazi = 'Yarın son gün'
     else:
         kalan_yazi = f'{kalan} gün kaldı'
-    yer = ', '.join(ilan.get('iller') or []) or _baslik(str(ilan.get('yer') or ''))
+    yer = ilan.get('yer_kisa') or ', '.join(ilan.get('iller') or []) or _baslik(str(ilan.get('yer') or ''))
     kaynaklar = [k.get('ad') for k in ilan.get('kaynaklar') or [] if k.get('ad')] or ([ilan['kaynak']] if ilan.get('kaynak') else [])
     return {
         'kurum': _kurum_adi(ilan.get('kurum') or ilan.get('baslik') or ''), 'kadrolar': kadrolar, 'toplam': toplam,

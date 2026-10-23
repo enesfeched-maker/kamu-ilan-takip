@@ -5,6 +5,15 @@ from siniflandir import saf_akademik
 
 
 class Bakis(unittest.TestCase):
+    def test_kadroya_ozel_yas_sarti_tum_ilana_genellenmez(self):
+        item = {'basvuru_kisa_sartlar': ['D01/D02: 30 yaş altı'],
+                'yz_kadrolar': [{'kosullar': ['Son başvuru tarihinde 30 yaşını doldurmamış olmak.']}]}
+        self.assertEqual(ib.sart_kelimeleri(item), ['D01/D02: 30 yaş altı'])
+
+    def test_sozlu_sinav_puani_basvuru_tabani_degil(self):
+        item = {'basvuru_puani_belirtilmemis': True, 'ozet': 'Sözlü sınavda en az 70 puan gerekir.'}
+        self.assertNotIn(('En düşük puan', '70'), ib.bilgiler(item))
+
     def test_engellilerde_spor_programi_engelli_kadrosu_degil(self):
         item = {'yz_kadrolar': [{'kosullar': ['Engellilerde beden eğitimi ve spor öğretmenliği mezunu olmak.']}]}
         self.assertNotIn('Engelli kadrosu', ib.sart_kelimeleri(item))

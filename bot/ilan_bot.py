@@ -767,7 +767,8 @@ def telegram_sirasi(mevcut, gelen, yeniler, gonderilen, bekleyen, ilk_calisma, d
         if suresi_doldu(i):
             bekleyen.discard(kimlik)
             continue
-        if i.get('kaynak_turu') == 'iskur' and not i.get('duyuru_turu') and iskur_bekliyor(i):
+        elle_onay = (((cfg.get('elle') or {}).get('alanlar') or {}).get(kimlik) or {}).get('telegram_hemen') is True
+        if i.get('kaynak_turu') == 'iskur' and not i.get('duyuru_turu') and iskur_bekliyor(i) and not elle_onay:
             # İŞKUR ikincil kaynak: aynı ilan SBB / Kariyer Kapısı'na düşerse kanala o (esas) kayıt gitsin.
             print(f"Kanal için bekletildi (İŞKUR, {ISKUR_BEKLEME_SAAT} saat): {i['baslik']}")
             continue

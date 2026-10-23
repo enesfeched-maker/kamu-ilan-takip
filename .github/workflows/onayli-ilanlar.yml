@@ -1,0 +1,34 @@
+name: Onaylı ilanları paylaş
+on:
+  workflow_dispatch:
+    inputs:
+      ilanlar:
+        description: Elle doğrulanmış ilan kimlikleri (boşlukla ayrılır)
+        required: true
+permissions:
+  contents: write
+concurrency:
+  group: ilan-tara-2
+  cancel-in-progress: false
+jobs:
+  gonder:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install Pillow==11.3.0 beautifulsoup4==4.13.5 pypdf==6.0.0 pdfplumber==0.11.7
+      - name: Canlı sayfaları doğrula ve normal botla gönder
+        env:
+          ILANLAR: ${{ inputs.ilanlar }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          python - <<'PY'
+          import os, subprocess
+          subprocess.run(['python', 'bot/onayli_ilanlari_gonder.py', *os.environ['ILANLAR'].split()], check=True)
+          PY
+      - name: Gönderim geçmişini koru
+        if: ${{ always() }}
+        run: python bot/veri_kaydet.py

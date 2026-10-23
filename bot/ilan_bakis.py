@@ -25,6 +25,8 @@ def _kosul_metni(item):
 
 def sart_kelimeleri(item):
     """Eleyici şartlar kısa anahtar kelimeyle: '35 yaş altı', 'Erkek', 'Sürücü belgesi', '3 yıl deneyim'..."""
+    if isinstance(item.get('basvuru_kisa_sartlar'), list):
+        return [s for s in item['basvuru_kisa_sartlar'] if isinstance(s, str) and s.strip()]
     m = _kosul_metni(item)
     sonuc = []
     yas = re.search(r'(\d{2})\s*(?:\([^)]{0,20}\)\s*)?yaşını\s*(?:doldurmamış|bitirmemiş|geçmemiş|tamamlamamış)', m)
@@ -65,7 +67,7 @@ def bilgiler(item, toplam=None, simdi=None):
     if toplam:
         sonuc.append(('Alınacak', f'{toplam} kişi'))
     puan = re.search(r'(?:en az|asgari|minimum)\s*(\d{2,3})(?:[.,]\d+)?\s*(?:\([^)]{0,20}\)\s*)?puan|(\d{2,3})(?:[.,]\d+)?\s*(?:\([^)]{0,20}\)\s*)?(?:ve üzeri\s*)?puan\s*almış', _kosul_metni(item))
-    if puan:
+    if puan and not item.get('basvuru_puani_belirtilmemis'):
         sonuc.append(('En düşük puan', puan.group(1) or puan.group(2)))
     from ilan_rehber import basvuru_kanali
     kanal = {'iskur': 'İŞKUR', 'kariyer': 'Kariyer Kapısı'}.get(basvuru_kanali(item))
