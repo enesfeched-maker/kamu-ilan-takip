@@ -8,6 +8,7 @@ from pathlib import Path
 import ilan_taban
 import kurum_zengin
 import rehberler
+import uygulamali_rehberler
 import site_uret
 from site_uret import TR
 
@@ -55,7 +56,7 @@ class Icerik(unittest.TestCase):
     def test_rehberler(self):
         with tempfile.TemporaryDirectory() as t:
             adresler = rehberler.yaz(t, 'https://kpsstercihi.com/')
-            self.assertEqual(len(adresler), len(rehberler.REHBERLER) + 1)
+            self.assertEqual(len(adresler), len(rehberler.REHBERLER) + len(uygulamali_rehberler.icerikler()) + 1)
             h = (Path(t) / 'rehber' / 'kpss-puan-turleri' / 'index.html').read_text(encoding='utf-8')
         self.assertIn('"@type": "Article"', h)
         self.assertIn('<h1>KPSS puan türleri', h)

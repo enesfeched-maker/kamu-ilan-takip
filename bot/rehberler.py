@@ -13,9 +13,7 @@ REHBERLER = [
      'Kamuda kadrolu ya da sözleşmeli çalışmanın en yaygın yolu KPSS puanıdır. Ama puanı almak işin yarısı: hangi puanla nereye, '
      'hangi yolla başvurulacağını bilmek de en az o kadar önemli. Bu yazıda süreci baştan sona sade biçimde anlattık.',
      [('1. Önce hangi KPSS\'ye gireceğini belirle', [
-         'KPSS öğrenim düzeyine göre ayrı oturumlarda yapılır: lisans, önlisans ve ortaöğretim. Hangi oturuma girdiğin, hangi kadrolara '
-         'başvurabileceğini belirler. Lisans mezunu bir aday çoğu zaman önlisans ve ortaöğretim kadrolarına da başvurabilir; ancak bunun '
-         'için o düzeyin sınavına da girmiş ve o düzeyin puanına sahip olması gerekir.',
+         'Hangi öğrenim düzeyinden sınava girebileceğin ve hangi kadroları tercih edebileceğin, ilgili sınav ve yerleştirme kılavuzlarına bağlıdır. Mezuniyet tarihini, sınava girdiğin öğrenim düzeyini ve kullanacağın puanı birlikte kontrol et. Üst düzey bir diploma, alt düzeydeki bütün kadrolara otomatik başvuru hakkı vermez.',
          'Sınavın hangi yıl yapıldığı da önemlidir: KPSS puanlarının geçerlilik süresi sınırlıdır ve her ilan hangi yılın puanını kabul '
          'ettiğini açıkça yazar.']),
       ('2. Puan türünü tanı', [
@@ -42,7 +40,7 @@ REHBERLER = [
          'Sözlü sınav tarihleri ve istenecek belgeler bu duyurularda yer alır. Duyuruları kaçırmamak için kurumun sitesini ve resmî '
          'ilan kaynağını düzenli kontrol et.',
          'Atanmaya hak kazandığında, güvenlik soruşturması/arşiv araştırması ve sağlık şartı gibi adımlar tamamlandıktan sonra atama yapılır.'])],
-     [('Puan türleri rehberi', 'rehber/kpss-puan-turleri/'), ('KPSS taban puanları', 'kpss-taban-puanlari/'), ('Açık ilanlar', '#ilanlar')]),
+     [('Nitelik kodlarını kontrol et', 'rehber/kpss-nitelik-kodu-nasil-okunur/'), ('Puan türleri rehberi', 'rehber/kpss-puan-turleri/'), ('KPSS taban puanları', 'kpss-taban-puanlari/'), ('Açık ilanlar', '#ilanlar')]),
 
     ('kpss-puan-turleri', 'KPSS puan türleri: P3, P93, P94 ve diğerleri ne anlama gelir?',
      'KPSS puan türleri neyi ölçer, hangi kadroda hangisi istenir? P3, P93, P94 ve A grubu puanlarının sade açıklaması.',
@@ -57,15 +55,14 @@ REHBERLER = [
          'Uzman yardımcılığı, denetmen yardımcılığı gibi A grubu kadrolarda genel yetenek-genel kültürün yanında alan bilgisi testleri '
          '(hukuk, iktisat, maliye, muhasebe, kamu yönetimi gibi) de hesaba katılır. Bu kadrolarda ilan, kabul edilen puan türlerini '
          '(örneğin P1, P2, P4… P48) tek tek sayar.']),
-      ('Öğretmenlik ve diğer özel puanlar', [
-         'Öğretmen atamalarında eğitim bilimleri ve alan bilgisi testlerine dayalı ayrı puan türleri kullanılır. Engelli adaylar için '
-         'yapılan EKPSS ise ayrı bir sınavdır ve kendi puan türleri vardır.']),
+      ('Öğretmenlik başvuruları için kapsam notu', [
+         'Bu rehberin kapsamı P3, P93 ve P94 puanlarının kamu ilanlarında okunmasıdır. Öğretmenlik başvurularında ilgili dönemin MEB ve ÖSYM duyurularındaki sınav, puan ve başvuru koşullarını ayrıca incele.']),
       ('İlanı okurken dikkat', [
          ('madde', ['İlan birden fazla puan türünü kabul edebilir; hangisi yüksekse otomatik seçilmez, ilanın tarifine bakılır.',
                     'Asgari puan şartı (örneğin "en az 70 puan") ile yerleştirme sırası farklı şeylerdir: asgari puan başvuru şartıdır, '
                     'sıralama ise başvuranlar arasında yapılır.',
                     'Puanın hangi yılın sınavından alındığı ilanda yazar; eski yılın puanı kabul edilmeyebilir.'])])],
-     [('KPSS ile memur olmak', 'rehber/kpss-ile-memur-olmak/'), ('Tercih robotu', 'puanlar/')]),
+     [('Taban puanını yorumla', 'rehber/kpss-taban-puani-nasil-yorumlanir/'), ('KPSS ile memur olmak', 'rehber/kpss-ile-memur-olmak/'), ('Tercih robotu', 'puanlar/')]),
 
     ('merkezi-yerlestirme-ve-kurum-ilanlari', 'Merkezi yerleştirme ile kurum ilanları arasındaki fark',
      'ÖSYM tercihleri ile kurumların kendi ilanları nasıl işler? Başvuru, sınav ve sıralama farkları.',
@@ -246,7 +243,7 @@ def sayfa(r, base):
     canonical = f'{base}rehber/{slug}/'
     kok = '../../'
     ld = {'@context': 'https://schema.org', '@type': 'Article', 'headline': baslik, 'description': aciklama,
-          'inLanguage': 'tr', 'datePublished': GUNCELLEME, 'dateModified': GUNCELLEME, 'mainEntityOfPage': canonical,
+          'inLanguage': 'tr', 'datePublished': GUNCELLEME, 'dateModified': '2026-10-24' if slug in ('kpss-ile-memur-olmak', 'kpss-puan-turleri') else GUNCELLEME, 'mainEntityOfPage': canonical,
           'author': {'@type': 'Organization', 'name': 'KPSS Tercihi', 'url': base},
           'publisher': {'@type': 'Organization', 'name': 'KPSS Tercihi', 'url': base}}
     govde = ''.join(f'<section class="bolum"><h2>{su.esc(h)}</h2>' + ''.join(_paragraf(p, su.esc) for p in ps) + '</section>'
@@ -267,17 +264,18 @@ def sayfa(r, base):
 
 def hub(base):
     import site_uret as su
+    import uygulamali_rehberler as ur
     canonical = f'{base}rehber/'
     kok = '../'
     kartlar = ''.join(f'<li><a href="{su.esc(r[0])}/"><b>{su.esc(r[1])}</b></a><p class="muted">{su.esc(r[2])}</p></li>' for r in REHBERLER)
     aciklama = 'KPSS ile memur olmak, puan türleri, belediye ve işçi alımları, 4/B, bilişim personeli ve başvuru belgeleri üzerine sade rehberler.'
     html = (su.sayfa_basi('KPSS ve kamu ilanları rehberleri | KPSS Tercihi', aciklama, su.esc(canonical), kok,
-                          ek_head=f'<meta property="og:url" content="{su.esc(canonical)}">')
+                          ek_head=f'<meta property="og:url" content="{su.esc(canonical)}"><link rel="stylesheet" href="../rehber.css?v=1">')
             + f'<body class="kurum-page"><a class="skip" href="#icerik">İçeriğe geç</a>{su.ust_html(kok)}'
             + '<section class="kp-hero"><div class="wrap"><nav class="crumbs" aria-label="Konum"><a href="../">Ana sayfa</a>'
               '<span aria-hidden="true">/</span><span>Rehberler</span></nav><span class="eyebrow">Rehber</span>'
               '<h1>KPSS ve kamu ilanları rehberleri</h1><p>Başvurudan atamaya kadar en çok merak edilen konular, sade ve kalıcı yazılar.</p></div></section>'
-            + f'<main id="icerik" class="wrap kp-main"><section class="bolum"><ul class="rehber-liste">{kartlar}</ul></section>'
+            + f'<main id="icerik" class="wrap kp-main">{ur.kartlar()}<section class="bolum"><ul class="rehber-liste">{kartlar}</ul></section>'
               f'<p class="kp-note">{su.esc(NOT)}</p></main>{su.alt_html(kok)}</body></html>')
     return canonical, html
 
@@ -296,4 +294,6 @@ def yaz(docs, base):
         (docs / 'rehber' / r[0]).mkdir(parents=True, exist_ok=True)
         (docs / 'rehber' / r[0] / 'index.html').write_text(html, encoding='utf-8')
         adresler.append(url)
+    import uygulamali_rehberler as ur
+    adresler.extend(ur.yaz(docs, base))
     return adresler
