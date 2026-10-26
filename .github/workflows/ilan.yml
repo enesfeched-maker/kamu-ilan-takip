@@ -25,7 +25,7 @@ permissions:
 
 concurrency:
   # 22 Ekim 2026: eski gruplar GitHub tarafında iptal/silinemeyen "waiting" bir çalışmada takılı kaldı; yeni ad.
-  group: ilan-tara-2
+  group: ilan-tara-3
   cancel-in-progress: false
 
 jobs:
@@ -34,7 +34,7 @@ jobs:
     runs-on: macos-15-intel
     # İki iş akışı da Pages'e yayın yapar; aynı anda yayın GitHub'da çakışır.
     concurrency:
-      group: pages-2   # site-yayinla.yml ile aynı olmalı
+      group: pages-3   # site-yayinla.yml ile aynı olmalı
       cancel-in-progress: false
     environment:
       name: github-pages
