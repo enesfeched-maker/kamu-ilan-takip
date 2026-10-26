@@ -43,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     # İki iş akışı da Pages'e yayın yapar; aynı anda yayın GitHub'da çakışır.
     concurrency:
-      group: pages-2   # ilan.yml ile aynı olmalı
+      group: pages-3   # ilan.yml ile aynı olmalı
       cancel-in-progress: false
     environment:
       name: github-pages
