@@ -1,9 +1,9 @@
 {
  "schema": 1,
- "guncelleme": "2026-10-26T11:56:51.863868+00:00",
+ "guncelleme": "2026-10-26T12:27:20.364387+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-10-26T11:56:54.021723+00:00",
+   "kontrol": "2026-10-26T12:27:20.752400+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -4627,9 +4627,105 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-10-26T11:56:55.687211+00:00",
+   "kontrol": "2026-10-26T12:27:25.218740+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
+    {
+     "id": "csb-478574",
+     "baslik": "MALATYA İLİ DOĞANYOL BELEDİYESİNİN SÖZLEŞMELİ PERSONEL ALIM İPTAL İLANI",
+     "kurum": "",
+     "kadro": "",
+     "ilan_turu": "Sözleşmeli Personel",
+     "son_tarih": null,
+     "kaynak": "ÇŞB Yerel Yönetimler",
+     "kaynak_turu": "csb",
+     "link": "https://yerelyonetimler.csb.gov.tr/malatya-ili-doganyol-belediyesinin-sozlesmeli-personel-alim-iptal-ilani-duyuru-478574",
+     "kaynaklar": [
+      {
+       "ad": "ÇŞB Yerel Yönetimler",
+       "link": "https://yerelyonetimler.csb.gov.tr/malatya-ili-doganyol-belediyesinin-sozlesmeli-personel-alim-iptal-ilani-duyuru-478574"
+      }
+     ],
+     "yayim_tarihi": "2026-10-26",
+     "detay_guncelleme": "2026-10-26T15:27:22+03:00",
+     "csb_detay_surumu": 4,
+     "ozet": "Doğanyol Belediyesinin 21/10/2026 tarihli ve 2676 sayılı yazısına istinaden ilk defa atanmak üzere sözleşmeli personel alım ilanı iptal edilmiştir.",
+     "belgeler": [],
+     "yer": "Malatya",
+     "duyuru_turu": "İptal duyurusu"
+    },
+    {
+     "id": "csb-478573",
+     "baslik": "BERGAMA BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
+     "kurum": "BERGAMA BELEDİYE BAŞKANLIĞI",
+     "kadro": "Toplam 4 kişi — 2 Memur • 2 Evlendirme Memuru",
+     "ilan_turu": "Memur",
+     "son_tarih": "2026-12-11",
+     "kaynak": "ÇŞB Yerel Yönetimler",
+     "kaynak_turu": "csb",
+     "link": "https://yerelyonetimler.csb.gov.tr/izmir-ili-bergama-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-478573",
+     "kaynaklar": [
+      {
+       "ad": "ÇŞB Yerel Yönetimler",
+       "link": "https://yerelyonetimler.csb.gov.tr/izmir-ili-bergama-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-478573"
+      }
+     ],
+     "yayim_tarihi": "2026-10-26",
+     "detay_guncelleme": "2026-10-26T15:27:23+03:00",
+     "csb_detay_surumu": 4,
+     "ozet": "İzmir ili Bergama Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır. Son başvuru: 11.12.2026.",
+     "belgeler": [
+      {
+       "ad": "26-10-2026-bergama-belediyesi-ilan-metni-1-20261026152153.docx",
+       "link": "https://webdosya.csb.gov.tr/v2/yerelyonetimler/2026/10/26-10-2026-bergama-belediyesi-ilan-metni-1-20261026152153.docx"
+      }
+     ],
+     "yer": "İzmir",
+     "sartlar": [
+      {
+       "kadro": "Memur · 2 kadro",
+       "metin": "KPSS P3 puan türünden en az 80 puan. Hizmet sınıfı GİH, 7. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren kurumların ekonomi, iktisat, maliye bölümlerinin birinden mezun olmak."
+      },
+      {
+       "kadro": "Evlendirme Memuru · 2 kadro",
+       "metin": "KPSS P3 puan türünden en az 80 puan. Hizmet sınıfı GİH, 8. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren kurumların uluslararası ilişkiler, maliye, halkla ilişkiler ve tanıtım bölümlerinin birinden mezun olmak."
+      }
+     ]
+    },
+    {
+     "id": "csb-478572",
+     "baslik": "ASARCIK BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
+     "kurum": "ASARCIK BELEDİYE BAŞKANLIĞI",
+     "kadro": "1 Mimar",
+     "ilan_turu": "Memur",
+     "son_tarih": null,
+     "kaynak": "ÇŞB Yerel Yönetimler",
+     "kaynak_turu": "csb",
+     "link": "https://yerelyonetimler.csb.gov.tr/samsun-ili-asarcik-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-478572",
+     "kaynaklar": [
+      {
+       "ad": "ÇŞB Yerel Yönetimler",
+       "link": "https://yerelyonetimler.csb.gov.tr/samsun-ili-asarcik-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-478572"
+      }
+     ],
+     "yayim_tarihi": "2026-10-26",
+     "detay_guncelleme": "2026-10-26T15:27:25+03:00",
+     "csb_detay_surumu": 4,
+     "ozet": "Samsun ili Asarcık Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır.",
+     "belgeler": [
+      {
+       "ad": "26-10-2026-Asarcik-Belediye-Baskanligi-Ilk-Defa-Memur-Alimi-Ilani-son-1-20261026151953.docx",
+       "link": "https://webdosya.csb.gov.tr/v2/yerelyonetimler/2026/10/26-10-2026-Asarcik-Belediye-Baskanligi-Ilk-Defa-Memur-Alimi-Ilani-son-1-20261026151953.docx"
+      }
+     ],
+     "yer": "Samsun",
+     "sartlar": [
+      {
+       "kadro": "Mimar · 1 kadro",
+       "metin": "KPSS P3 puan türünden en az 70 puan. Hizmet sınıfı TH, 6. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren fakültelerin mimarlık programından mezun olmak. En az (B) sınıfı sürücü belgesine sahip olmak."
+      }
+     ]
+    },
     {
      "id": "csb-478532",
      "baslik": "İZMİR BÜYÜKŞEHİR BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE ZABITA MEMURU ALIM İLANI",
@@ -4776,40 +4872,6 @@
       {
        "kadro": "Mühendis · 1 kadro",
        "metin": "KPSS P3 puan türünden en az 60 puan. Hizmet sınıfı TH, 8. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren fakültelerin maden mühendisliği bölümünden mezun olmak. (B) sınıfı sürücü belgesine sahip olmak."
-      }
-     ]
-    },
-    {
-     "id": "csb-478401",
-     "baslik": "DOĞANYOL BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE SÖZLEŞMELİ PERSONEL ALIM İLANI",
-     "kurum": "DOĞANYOL BELEDİYE BAŞKANLIĞI",
-     "kadro": "2 Çözümleyici",
-     "ilan_turu": "Sözleşmeli Personel",
-     "son_tarih": "2026-12-04",
-     "kaynak": "ÇŞB Yerel Yönetimler",
-     "kaynak_turu": "csb",
-     "link": "https://yerelyonetimler.csb.gov.tr/malatya-ili-doganyol-belediye-baskanligina-ilk-defa-atanmak-uzere-sozlesmeli-personel-alim-ilani-duyuru-478401",
-     "kaynaklar": [
-      {
-       "ad": "ÇŞB Yerel Yönetimler",
-       "link": "https://yerelyonetimler.csb.gov.tr/malatya-ili-doganyol-belediye-baskanligina-ilk-defa-atanmak-uzere-sozlesmeli-personel-alim-ilani-duyuru-478401"
-      }
-     ],
-     "yayim_tarihi": "2026-10-19",
-     "detay_guncelleme": "2026-10-26T06:43:16+03:00",
-     "csb_detay_surumu": 4,
-     "ozet": "Malatya ili Doğanyol Belediye Başkanlığı bünyesinde 5393 sayılı Belediye Kanunu’nun 49 uncu maddesi ile Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla, belirtilen boş pozisyona tam zamanlı sözleşmeli personel alınacaktır. Son başvuru: 04.12.2026.",
-     "belgeler": [
-      {
-       "ad": "19-10-2026-Doganyol-Belediyesi-ilk-defa-memur-alim-ilani-1-20261019135725.docx",
-       "link": "https://webdosya.csb.gov.tr/v2/yerelyonetimler/2026/10/19-10-2026-Doganyol-Belediyesi-ilk-defa-memur-alim-ilani-1-20261019135725.docx"
-      }
-     ],
-     "yer": "Malatya",
-     "sartlar": [
-      {
-       "kadro": "Çözümleyici · 2 pozisyon",
-       "metin": "KPSS P3 puan türünden en az 55 puan. Hizmet sınıfı TH, 7. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren kurumların kamu yönetimi, halkla ilişkiler ve tanıtım ve yerel yönetimler bölümlerinin birinden mezun olmak En az iki programlama dilini bildiğini mezun olduğu okuldan alacağı belge veya Millî Eğitim Bakanlığından onaylı kurs sertifikası ile belgelemek. En az (B) sınıfı sürücü belgesine sahip olmak."
       }
      ]
     },
@@ -5288,64 +5350,6 @@
      "belgeler": [],
      "yer": "Rize",
      "duyuru_turu": "İptal duyurusu"
-    },
-    {
-     "id": "csb-477606",
-     "baslik": "ÜSKÜDAR BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İPTAL İLANI",
-     "kurum": "ÜSKÜDAR BELEDİYE BAŞKANLIĞI",
-     "kadro": "",
-     "ilan_turu": "Memur",
-     "son_tarih": null,
-     "kaynak": "ÇŞB Yerel Yönetimler",
-     "kaynak_turu": "csb",
-     "link": "https://yerelyonetimler.csb.gov.tr/istanbul-ili-uskudar-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-iptal-ilani-duyuru-477606",
-     "kaynaklar": [
-      {
-       "ad": "ÇŞB Yerel Yönetimler",
-       "link": "https://yerelyonetimler.csb.gov.tr/istanbul-ili-uskudar-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-iptal-ilani-duyuru-477606"
-      }
-     ],
-     "yayim_tarihi": "2026-09-14",
-     "detay_guncelleme": "2026-10-26T12:52:05+03:00",
-     "csb_detay_surumu": 4,
-     "ozet": "Üsküdar Belediyesinin 11/09/2026 tarihli ve 480167 sayılı yazısına istinaden ilk defa memur ve zabıta memuru alım ilanı iptal edilmiştir.",
-     "belgeler": [],
-     "yer": "İstanbul",
-     "duyuru_turu": "İptal duyurusu"
-    },
-    {
-     "id": "csb-477599",
-     "baslik": "MUCUR BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
-     "kurum": "MUCUR BELEDİYE BAŞKANLIĞI",
-     "kadro": "1 Memur",
-     "ilan_turu": "Memur",
-     "son_tarih": "2026-10-28",
-     "kaynak": "ÇŞB Yerel Yönetimler",
-     "kaynak_turu": "csb",
-     "link": "https://yerelyonetimler.csb.gov.tr/kirsehir-ili-mucur-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-477599",
-     "kaynaklar": [
-      {
-       "ad": "ÇŞB Yerel Yönetimler",
-       "link": "https://yerelyonetimler.csb.gov.tr/kirsehir-ili-mucur-belediye-baskanligina-ilk-defa-atanmak-uzere-memur-alim-ilani-duyuru-477599"
-      }
-     ],
-     "yayim_tarihi": "2026-09-14",
-     "detay_guncelleme": "2026-10-26T06:43:22+03:00",
-     "csb_detay_surumu": 4,
-     "ozet": "Kırşehir ili Mucur Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla memur alınacaktır. Son başvuru: 28.10.2026.",
-     "belgeler": [
-      {
-       "ad": "14-09-2026-Mucur-Bel-1-Memur-Alim-Ilani-lisans-son-20260914145247.docx",
-       "link": "https://webdosya.csb.gov.tr/v2/yerelyonetimler/2026/09/14-09-2026-Mucur-Bel-1-Memur-Alim-Ilani-lisans-son-20260914145247.docx"
-      }
-     ],
-     "yer": "Kırşehir",
-     "sartlar": [
-      {
-       "kadro": "Memur · 1 kadro",
-       "metin": "KPSS P3 puan türünden en az 55 puan. Hizmet sınıfı GİH, 12. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren fakültelerin; istatistik, ilköğretim matematik öğretmenliği, işletme programlarının birinden mezun olmak."
-      }
-     ]
     }
    ]
   }
@@ -20356,7 +20360,7 @@
    ],
    "sart_kadro_sayisi": 1,
    "basvuru_notu": "c) Şahsen başvuru alınmayacak, posta veya diğer yollarla yapılan müracaatlar kabul edilmeyecektir.",
-   "detay_guncelleme": "2026-10-26T03:06:36+03:00",
+   "detay_guncelleme": "2026-10-26T15:27:25+03:00",
    "kk_detay_surumu": 3,
    "kadro_detay": [
     {
@@ -20439,7 +20443,7 @@
    ],
    "sart_kadro_sayisi": 7,
    "basvuru_notu": "Bu duyuruda belirtilen esaslara uygun olmayan, posta yolu veya şahsen müracaat şeklinde yapılan başvurular kabul edilmeyecektir. Müracaatların sona ermesinden sonra adayın başvuru bilgilerinde kesinlikle değişiklik yapılmayacaktır. Başvuru işleminin hatasız, eksiksiz ve duyuruda belirtilen hususlara uygun olarak yapılmasından adayın kendisi sorumlu olacaktır. Adaylardan gerekli durumlarda; sisteme yüklenen belgelerin asılları istenilebilecektir.",
-   "detay_guncelleme": "2026-10-26T03:06:37+03:00",
+   "detay_guncelleme": "2026-10-26T15:27:26+03:00",
    "kk_detay_surumu": 3,
    "kadro_detay": [
     {
