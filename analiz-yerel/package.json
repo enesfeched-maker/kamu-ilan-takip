@@ -1,0 +1,9 @@
+{
+  "name": "kpss-analiz-yerel",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node --env-file=.env sunucu.js",
+    "test": "node --test \"test/*.test.js\""
+  }
+}
