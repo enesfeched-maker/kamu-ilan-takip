@@ -1,9 +1,9 @@
 {
  "schema": 1,
- "guncelleme": "2026-10-26T22:09:25.922904+00:00",
+ "guncelleme": "2026-10-26T23:15:30.566641+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-10-26T22:10:33.658978+00:00",
+   "kontrol": "2026-10-26T23:15:31.940479+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -552,8 +552,8 @@
      "donem": "( 24 Ekim - 28 Ekim)",
      "baslangic_zaman": "2026-10-24T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-26T13:24:33+03:00",
-     "belge_ozeti": "b9e36aa2975410b8268d46c96c3eea80cd63a73e56e6730d9506cb400ee543b1",
+     "detay_guncelleme": "2026-10-27T02:15:31+03:00",
+     "belge_ozeti": "e89478a157b57d62298ab7cb8e52793196684dbaab6edb69f376c8944bc42e06",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -573,8 +573,8 @@
       }
      ],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/b9e36aa2975410b8268d46c96c3eea80cd63a73e56e6730d9506cb400ee543b1.pdf",
-     "belge_sha256": "b9e36aa2975410b8268d46c96c3eea80cd63a73e56e6730d9506cb400ee543b1",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/e89478a157b57d62298ab7cb8e52793196684dbaab6edb69f376c8944bc42e06.pdf",
+     "belge_sha256": "e89478a157b57d62298ab7cb8e52793196684dbaab6edb69f376c8944bc42e06",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "duyuru_cumlesi": "Sağlık Bilimleri Üniversitesi Rektörlüğünden: İPTAL VE DÜZELTME İLANI Üniversitemiz birimlerine öğretim üyesi alımıyla ilgili 14.10.2 026 tarihli ve 33400 sayılı Resmî Gazete’de aslına uygun olarak yayımlanan ilanımızda yapılan iptal ve düzeltmelere ilişkin; - AŞAĞIDA BİLGİLERİ BULUNAN ÖĞRETİM ÜYESİ KADROSU İPTAL EDİLMİŞTİR."
@@ -1416,8 +1416,8 @@
      "donem": "( 21 Ekim - 1 Kasım)",
      "baslangic_zaman": "2026-10-21T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-10-26T13:55:00+03:00",
-     "belge_ozeti": "fe18bfdfed3edb808f689ef4970e3d0d3f2b2d518f2fd08f2e7500665381fa29",
+     "detay_guncelleme": "2026-10-27T02:15:31+03:00",
+     "belge_ozeti": "7f602b9d25e78df86522b3218293375bf219e9a1d7410701abe2520e683dd9d6",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1428,8 +1428,8 @@
      "ozet": "İzmir Kalkınma Ajansından: İPTAL İLANI 7 Nisan 2026 tarihli ve 33217 sayılı Resmî Gazete’de yayımlanan personel alımına ilişkin ilan iptal edilmiştir.",
      "sartlar": [],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/fe18bfdfed3edb808f689ef4970e3d0d3f2b2d518f2fd08f2e7500665381fa29.pdf",
-     "belge_sha256": "fe18bfdfed3edb808f689ef4970e3d0d3f2b2d518f2fd08f2e7500665381fa29",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/7f602b9d25e78df86522b3218293375bf219e9a1d7410701abe2520e683dd9d6.pdf",
+     "belge_sha256": "7f602b9d25e78df86522b3218293375bf219e9a1d7410701abe2520e683dd9d6",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "duyuru_cumlesi": "İzmir Kalkınma Ajansından: İPTAL İLANI 7 Nisan 2026 tarihli ve 33217 sayılı Resmî Gazete’de yayımlanan personel alımına ilişkin ilan iptal edilmiştir."
@@ -4378,8 +4378,8 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-10-26T22:11:11.251930+00:00",
-   "hata_sayisi": 1,
+   "kontrol": "2026-10-26T23:15:35.507723+00:00",
+   "hata_sayisi": 0,
    "ilanlar": [
     {
      "id": "csb-478584",
@@ -4608,22 +4608,22 @@
     },
     {
      "id": "csb-478481",
-     "baslik": "MUŞ İLİ ELMAKAYA BELEDİYESİNİNMEMUR ALIMI İPTAL İLANI",
+     "baslik": "MUŞ İLİ ELMAKAYA BELEDİYESİNİN MEMUR ALIMI İPTAL İLANI",
      "kurum": "",
      "kadro": "",
      "ilan_turu": "Memur",
      "son_tarih": null,
      "kaynak": "ÇŞB Yerel Yönetimler",
      "kaynak_turu": "csb",
-     "link": "https://yerelyonetimler.csb.gov.tr/mus-ili-elmakaya-belediyesininmemur-alimi-iptal-ilani-duyuru-478481",
+     "link": "https://yerelyonetimler.csb.gov.tr/mus-ili-elmakaya-belediyesinin-memur-alimi-iptal-ilani-duyuru-478481",
      "kaynaklar": [
       {
        "ad": "ÇŞB Yerel Yönetimler",
-       "link": "https://yerelyonetimler.csb.gov.tr/mus-ili-elmakaya-belediyesininmemur-alimi-iptal-ilani-duyuru-478481"
+       "link": "https://yerelyonetimler.csb.gov.tr/mus-ili-elmakaya-belediyesinin-memur-alimi-iptal-ilani-duyuru-478481"
       }
      ],
      "yayim_tarihi": "2026-10-21",
-     "detay_guncelleme": "2026-10-26T13:55:02+03:00",
+     "detay_guncelleme": "2026-10-27T02:15:34+03:00",
      "csb_detay_surumu": 4,
      "ozet": "Muş ili Elmakaya Belediyesinin 19.10.2026 tarihli ve 1085 sayılı yazısına istinaden ilk defa memur alımı iptal edilmiştir.",
      "belgeler": [],
@@ -4647,7 +4647,7 @@
       }
      ],
      "yayim_tarihi": "2026-10-21",
-     "detay_guncelleme": "2026-10-26T13:55:03+03:00",
+     "detay_guncelleme": "2026-10-27T02:15:35+03:00",
      "csb_detay_surumu": 4,
      "ozet": "Manisa ili Akhisar Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadroya açıktan atama yoluyla memur alınacaktır Son başvuru: 11.12.2026.",
      "belgeler": [
