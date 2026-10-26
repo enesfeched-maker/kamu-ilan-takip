@@ -15,7 +15,7 @@ if (-not (Test-Path $env_dosyasi)) {
     Write-Host '.env yazıldı (git dışında tutulur).'
 } else { Write-Host '.env zaten var, dokunulmadı.' }
 
-$eylem = New-ScheduledTaskAction -Execute $node -Argument '--env-file=.env sunucu.js' -WorkingDirectory $dizin
+$eylem = New-ScheduledTaskAction -Execute (Join-Path $env:WINDIR 'System32\wscript.exe') -Argument "`"$dizin\gizli-baslat.vbs`"" -WorkingDirectory $dizin   # konsol penceresi açmaz
 $tetik = New-ScheduledTaskTrigger -AtLogOn -User $env:USERNAME
 $ayar = New-ScheduledTaskSettingsSet -RestartCount 999 -RestartInterval (New-TimeSpan -Minutes 1) -ExecutionTimeLimit ([TimeSpan]::Zero) -StartWhenAvailable -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
 Register-ScheduledTask -TaskName 'KPSS Analiz Toplayici' -Action $eylem -Trigger $tetik -Settings $ayar -Description 'KPSS Tercihi cerezsiz analiz toplayicisi (127.0.0.1:8787)' -Force | Out-Null
