@@ -22,17 +22,36 @@ function ortam({ host = 'kpsstercihi.com', protocol = 'https:', pathname = '/', 
     crypto: { getRandomValues: (a) => { a.forEach((_, i) => { a[i] = (i * 37 + 11) % 256; }); } },
     addEventListener(t, f) { (dinleyiciler['w:' + t] = dinleyiciler['w:' + t] || []).push(f); },
   };
-  if (beacon) pencere.navigator.sendBeacon = (url, govde) => { gonderilen.push({ url, govde: JSON.parse(govde) }); return true; };
+  // Geçiş dönemi: a.js her paketi iki toplayıcıya yollar. Testler eski adresi (gonderilen/fetchler) sayar; yeni adres `yeni` içinde.
+  const ESKI = 'https://api.kpsstercihi.com/o', yeni = [];
+  if (beacon) pencere.navigator.sendBeacon = (url, govde) => { (url === ESKI ? gonderilen : yeni).push({ url, govde: JSON.parse(govde) }); return true; };
   const ctx = {
     window: pencere, document: belge, URLSearchParams, URL, JSON, Math, Date, Uint8Array, Number, String, isFinite, PerformanceObserver: undefined,
     setTimeout: (f, ms) => { zamanlar.push({ f, ms }); return zamanlar.length; }, clearTimeout: () => {}, setInterval: () => 0,
-    fetch: fetchVar ? (url, o) => { fetchler.push({ url, o }); return Promise.resolve({}); } : undefined,
+    fetch: fetchVar ? (url, o) => { (url === ESKI ? fetchler : yeni).push({ url, o }); return Promise.resolve({}); } : undefined,
   };
   pencere.window = pencere;
   vm.runInNewContext(KAYNAK, ctx);
   const tetikle = (t, ev) => (dinleyiciler[t] || []).forEach((f) => f(ev));
-  return { pencere, gonderilen, fetchler, tetikle, belge, dinleyiciler, oturumDepo, zamanlar };
+  return { pencere, gonderilen, fetchler, yeni, tetikle, belge, dinleyiciler, oturumDepo, zamanlar };
 }
+
+test('geçiş dönemi: her paket yeni toplayıcıya da aynen gider; yeni adres hata verse eskisi etkilenmez', () => {
+  const e = ortam();
+  e.pencere.kpssA('sayfa', { v: 'bugun' });
+  e.belge.hidden = true; e.tetikle('visibilitychange', {});
+  assert.equal(e.gonderilen.length, 1);
+  assert.equal(e.yeni.length, 1);
+  assert.equal(e.yeni[0].url, 'https://desktop-j33ukam.tail89e06c.ts.net/o');
+  assert.deepEqual(e.yeni[0].govde, e.gonderilen[0].govde);
+  // yeni adrese beacon hata verirse eski adres yine gider
+  const k = ortam();
+  const ilk = k.pencere.navigator.sendBeacon;
+  k.pencere.navigator.sendBeacon = (url, g) => { if (url !== 'https://api.kpsstercihi.com/o') throw new Error('ag'); return ilk(url, g); };
+  k.pencere.kpssA('sayfa', {});
+  k.belge.hidden = true; k.tetikle('visibilitychange', {});
+  assert.equal(k.gonderilen.length, 1);
+});
 
 test('yerel adreste, file: üzerinde, DNT/GPC açıkken ve otomasyonda hiçbir şey kurulmaz', () => {
   for (const o of [{ host: 'localhost' }, { host: '127.0.0.1' }, { protocol: 'file:', host: '' }, { host: 'ornek.com' }, { host: 'kpsstercihi.com', protocol: 'http:' },
