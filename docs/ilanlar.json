@@ -1,5 +1,5 @@
 {
- "guncelleme": "2026-10-26T18:15:16+03:00",
+ "guncelleme": "2026-10-26T18:31:53+03:00",
  "ilanlar": [
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=9c82aab5-022e-43c8-b7f1-e6cf329d205b",
@@ -26236,6 +26236,8 @@
   "csb-478532",
   "csb-478573",
   "csb-478574",
+  "csb-478583",
+  "csb-478584",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=0ad1bd8f-f6ad-4a03-8f10-7a42c33cf44a",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=0f54adef-6e76-4b95-b503-03f415523085",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=11272843-b0f1-470e-af31-cc176fa0e5d4",
@@ -26459,6 +26461,7 @@
   "sbb-90590b042f3d9058effaa9d4",
   "sbb-92175a7cf7d3c024505448b2",
   "sbb-93cc332f5c0251f47b070fe1",
+  "sbb-97dc5702fc63408885c15aef",
   "sbb-97e476fbb140b9951ef70fe8",
   "sbb-996152b017d1af5f445dfade",
   "sbb-9c31b73e8bf1ca0dcd1af3df",
@@ -26533,10 +26536,7 @@
  ],
  "telegram_bekleyen": [
   "csb-478572",
-  "csb-478583",
-  "csb-478584",
   "sbb-1b5d1f3068575a269a3a23ad",
-  "sbb-97dc5702fc63408885c15aef",
   "sbb-d899f32eaa9140b2a3b909d2",
   "sbb-f444cce2b9f1fa1a8ec71292"
  ],
@@ -26557,6 +26557,8 @@
   "csb-478532": 386,
   "csb-478573": 399,
   "csb-478574": 400,
+  "csb-478583": 403,
+  "csb-478584": 401,
   "https://kariyerkapisi.gov.tr/IlanDetay?i=0ad1bd8f-f6ad-4a03-8f10-7a42c33cf44a": 311,
   "https://kariyerkapisi.gov.tr/IlanDetay?i=0f54adef-6e76-4b95-b503-03f415523085": 374,
   "https://kariyerkapisi.gov.tr/IlanDetay?i=1610b4a4-0f83-48cb-bd45-9aba5f32b893": 360,
@@ -26604,6 +26606,7 @@
   "sbb-88240428a1026a054a7d3bb8": 303,
   "sbb-89c8b060891cf9aed29dbcdc": 280,
   "sbb-8f95a85a84773c07862778cf": 332,
+  "sbb-97dc5702fc63408885c15aef": 402,
   "sbb-9eb67dc94a240ed678694f80": 372,
   "sbb-9ed3758a19cd1983ad11eee0": 305,
   "sbb-a1b920fe98f44f8e989fea1e": 336,
@@ -26620,6 +26623,7 @@
  "telegram_duyuru_yanitlari": {
   "m:duzeltme:belediye:malazgirt|": "2026-10-09",
   "m:duzeltme:belediye:tokat|itfaiy": "2026-10-09",
+  "m:iptal:belediye:doganyol|": "2026-10-26",
   "m:iptal:belediye:elmakaya|beledi": "2026-10-21",
   "m:iptal:belediye:rize|jeoloj,muhend": "2026-10-09",
   "m:iptal:belediye:rize|muhend,ziraat": "2026-10-09",
