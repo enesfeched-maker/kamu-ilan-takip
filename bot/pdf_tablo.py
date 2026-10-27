@@ -3,10 +3,18 @@
 Düz metne dökülen tablolarda sütunlar birbirine karışıyordu ("Sıra Kadro Kadro KPSS ... En az 1 İtfaiye Eri GİH 11");
 burada her satır ayrı kadro olarak okunur: ünvan, adet, nitelikler (madde madde), cinsiyet, KPSS puan türü ve taban puanı.
 pdfplumber kurulu değilse ya da belge okunamazsa boş liste döner; sayfa eski görünümle üretilir."""
+import hashlib
+import json
+import os
 import re
+import tempfile
 from functools import lru_cache
+from pathlib import Path
 
 SURUM = 1
+HAM_SURUM = 1  # ham önbellek biçimi değişirse artırılır
+# pdfplumber'ın ham çıktısı diskte saklanır (ilan PDF'leri değişmez); ayrıştırma mantığı her seferinde taze çalışır.
+ONBELLEK = Path(os.environ.get('PDF_ONBELLEK') or Path(__file__).resolve().parent.parent / '.cache' / 'pdf')
 # Başlık hücresi -> alan. Sıra önemli: 'puan türü' 'taban'dan önce denenir.
 SUTUN = [
     ('unvan', re.compile(r'unvan|ünvan', re.I)),
@@ -84,6 +92,26 @@ def _satir(es, r):
     }
 
 
+def _ham(yol, tur, hesapla):
+    """pdfplumber'ın ham çıktısını PDF içeriği + sürümle diskte saklar; bozuk/yazılamayan önbellek yok sayılır."""
+    import pdfplumber
+    ozet = hashlib.sha256(Path(yol).read_bytes()).hexdigest()
+    dosya = ONBELLEK / f'{tur}-{HAM_SURUM}-{pdfplumber.__version__}-{ozet}.json'
+    try:
+        return json.loads(dosya.read_text(encoding='utf-8'))
+    except Exception:
+        pass
+    deger = hesapla()
+    try:
+        ONBELLEK.mkdir(parents=True, exist_ok=True)
+        with tempfile.NamedTemporaryFile('w', encoding='utf-8', dir=ONBELLEK, suffix='.tmp', delete=False) as f:
+            json.dump(deger, f, ensure_ascii=False)
+        os.replace(f.name, dosya)
+    except Exception:
+        pass
+    return deger
+
+
 @lru_cache(maxsize=None)
 def tablo_oku(yol):
     """PDF'teki kadro tablosu satırları (ilk uygun tablo ve sonraki sayfalarda başlıksız devamı)."""
@@ -92,26 +120,29 @@ def tablo_oku(yol):
     except ImportError:
         return ()
     satirlar, es, genislik = [], None, 0
-    try:
+
+    def hesapla():
         with pdfplumber.open(str(yol)) as pdf:
-            for sayfa in pdf.pages[:8]:
-                for tb in sayfa.extract_tables({'text_x_tolerance': 1.5}):
-                    tb = [[_hucre(c) for c in r] for r in tb if any(r)]
-                    if not tb:
+            return [sayfa.extract_tables({'text_x_tolerance': 1.5}) for sayfa in pdf.pages[:8]]
+    try:
+        for sayfa in _ham(yol, 'tablo', hesapla):
+            for tb in sayfa:
+                tb = [[_hucre(c) for c in r] for r in tb if any(r)]
+                if not tb:
+                    continue
+                yeni = _basliklar(tb[0])
+                if 'unvan' in yeni.values() and ({'adet', 'nitelik'} & set(yeni.values())):
+                    if es is not None:  # ikinci bir kadro tablosu: ilkine eklenmez (farklı biçim olabilir)
                         continue
-                    yeni = _basliklar(tb[0])
-                    if 'unvan' in yeni.values() and ({'adet', 'nitelik'} & set(yeni.values())):
-                        if es is not None:  # ikinci bir kadro tablosu: ilkine eklenmez (farklı biçim olabilir)
-                            continue
-                        es, genislik, govde = yeni, len(tb[0]), tb[1:]
-                    elif es is not None and len(tb[0]) == genislik:
-                        govde = tb  # önceki sayfadaki tablonun devamı (başlıksız)
-                    else:
-                        continue
-                    for r in govde:
-                        s = _satir(es, r)
-                        if s:
-                            satirlar.append(s)
+                    es, genislik, govde = yeni, len(tb[0]), tb[1:]
+                elif es is not None and len(tb[0]) == genislik:
+                    govde = tb  # önceki sayfadaki tablonun devamı (başlıksız)
+                else:
+                    continue
+                for r in govde:
+                    s = _satir(es, r)
+                    if s:
+                        satirlar.append(s)
     except Exception:
         return ()
     return tuple(satirlar)
@@ -143,13 +174,16 @@ def _baslik_adi(satir):
 
 def _metin_oku(yol):
     import pdfplumber
-    with pdfplumber.open(str(yol)) as pdf:
-        satirlar = []
-        for sayfa in pdf.pages[:20]:
-            for s in (sayfa.extract_text(x_tolerance=1.5) or '').splitlines():
-                s = _hucre(s)
-                if s and not re.fullmatch(r'\d{1,3}\s*/\s*\d{1,3}|\d{1,3}|Sayfa \d+.*', s):
-                    satirlar.append(s)
+
+    def hesapla():
+        with pdfplumber.open(str(yol)) as pdf:
+            return [(sayfa.extract_text(x_tolerance=1.5) or '') for sayfa in pdf.pages[:20]]
+    satirlar = []
+    for metin in _ham(yol, 'metin', hesapla):
+        for s in metin.splitlines():
+            s = _hucre(s)
+            if s and not re.fullmatch(r'\d{1,3}\s*/\s*\d{1,3}|\d{1,3}|Sayfa \d+.*', s):
+                satirlar.append(s)
     return satirlar
 
 

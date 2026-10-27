@@ -47,11 +47,30 @@ jobs:
           path: .cache/logolar
           key: logolar-${{ github.run_id }}
           restore-keys: logolar-
+      # İlan PDF'leri değişmez; pdfplumber çıktısı saklanır.
+      - name: PDF okuma önbelleğini geri yükle
+        uses: actions/cache@v6.1.0
+        with:
+          path: .cache/pdf
+          key: pdf-${{ github.run_id }}
+          restore-keys: pdf-
       - uses: actions/setup-python@v7.0.0
+        id: py
         with:
           python-version: "3.12"
+      - name: Bağımlılık önbelleğini geri yükle
+        uses: actions/cache@v6.1.0
+        with:
+          path: ~/venv-bot
+          key: venv-${{ runner.os }}-${{ runner.arch }}-py${{ steps.py.outputs.python-version }}-Pillow11.3.0-bs4.13.5-pypdf6.0.0-pdfplumber0.11.7
+      # macOS-intel'de cryptography (pdfplumber bağımlılığı) kaynaktan derlenir (~4 dk); bu yüzden venv önbelleğe alınır.
       - name: Görsel bağımlılığını kur
-        run: python -m pip install Pillow==11.3.0 beautifulsoup4==4.13.5 pypdf==6.0.0 pdfplumber==0.11.7
+        run: |
+          if [ ! -x ~/venv-bot/bin/python ]; then
+            python -m venv ~/venv-bot
+            ~/venv-bot/bin/python -m pip install Pillow==11.3.0 beautifulsoup4==4.13.5 pypdf==6.0.0 pdfplumber==0.11.7
+          fi
+          echo "$HOME/venv-bot/bin" >> "$GITHUB_PATH"
       - name: Botu çalıştır
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
