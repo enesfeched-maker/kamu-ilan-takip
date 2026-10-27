@@ -1,4 +1,6 @@
+import json
 import unittest
+from pathlib import Path
 from unittest import mock
 
 import pdf_tablo
@@ -79,6 +81,75 @@ class OkumaTests(unittest.TestCase):
         with mock.patch.dict('sys.modules', {'pdfplumber': None}):
             self.assertEqual(pdf_tablo.tablo_oku('yok.pdf'), ())
         pdf_tablo.tablo_oku.cache_clear()
+
+
+class _SahteSayfa:
+    def extract_tables(self, ayar=None):
+        return [[['Kadro Unvanı', 'Adedi', 'Niteliği', 'KPSS Puan Türü'],
+                 ['İtfaiye Eri', '2', '- Lise mezunu olmak.', 'P94']]]
+
+    def extract_text(self, x_tolerance=3):
+        return 'I. BAŞVURU ŞARTLARI\nA- GENEL ŞARTLAR\na) Türk vatandaşı olmak.\nb) 18 yaşını doldurmuş olmak.\n12\nII. SINAV YERİ\n- Ankara.'
+
+
+class _SahtePdf:
+    pages = [_SahteSayfa()]
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *a):
+        return False
+
+
+class OnbellekTests(unittest.TestCase):
+    def setUp(self):
+        import tempfile
+        self.dizin = tempfile.TemporaryDirectory()
+        self.addCleanup(self.dizin.cleanup)
+        self.pdf = Path(self.dizin.name) / 'a.pdf'
+        self.pdf.write_bytes(b'%PDF-sahte')
+        self.onbellek = Path(self.dizin.name) / 'onbellek'
+        p = mock.patch.object(pdf_tablo, 'ONBELLEK', self.onbellek)
+        p.start()
+        self.addCleanup(p.stop)
+        self.temizle()
+        self.addCleanup(self.temizle)
+
+    @staticmethod
+    def temizle():
+        pdf_tablo.tablo_oku.cache_clear()
+        pdf_tablo.sart_bolumleri.cache_clear()
+
+    def test_ikinci_okuma_pdf_acmaz_tablo(self):
+        with mock.patch('pdfplumber.open', return_value=_SahtePdf()) as acik:
+            ilk = pdf_tablo.tablo_oku(str(self.pdf))
+        self.assertEqual(acik.call_count, 1)
+        self.assertEqual(ilk[0]['unvan'], 'İtfaiye Eri')
+        self.temizle()
+        with mock.patch('pdfplumber.open', side_effect=AssertionError('PDF açılmamalı')):
+            self.assertEqual(pdf_tablo.tablo_oku(str(self.pdf)), ilk)
+
+    def test_ikinci_okuma_pdf_acmaz_sartlar(self):
+        with mock.patch('pdfplumber.open', return_value=_SahtePdf()) as acik:
+            ilk = pdf_tablo.sart_bolumleri(str(self.pdf))
+        self.assertEqual(acik.call_count, 1)
+        self.assertTrue(ilk)
+        self.temizle()
+        with mock.patch('pdfplumber.open', side_effect=AssertionError('PDF açılmamalı')):
+            self.assertEqual(pdf_tablo.sart_bolumleri(str(self.pdf)), ilk)
+
+    def test_bozuk_onbellek_yok_sayilir(self):
+        with mock.patch('pdfplumber.open', return_value=_SahtePdf()):
+            ilk = pdf_tablo.tablo_oku(str(self.pdf))
+        dosyalar = list(self.onbellek.glob('tablo-*.json'))
+        self.assertEqual(len(dosyalar), 1)
+        dosyalar[0].write_text('{bozuk', encoding='utf-8')
+        self.temizle()
+        with mock.patch('pdfplumber.open', return_value=_SahtePdf()) as acik:
+            self.assertEqual(pdf_tablo.tablo_oku(str(self.pdf)), ilk)
+        self.assertEqual(acik.call_count, 1)
+        self.assertEqual(json.loads(dosyalar[0].read_text(encoding='utf-8'))[0][0][1][0], 'İtfaiye Eri')
 
 
 class SayfaTests(unittest.TestCase):

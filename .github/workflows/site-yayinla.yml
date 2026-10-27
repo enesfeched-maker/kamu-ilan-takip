@@ -56,6 +56,13 @@ jobs:
           path: .cache/logolar
           key: logolar-${{ github.run_id }}
           restore-keys: logolar-
+      # İlan PDF'leri değişmez; pdfplumber çıktısı saklanır.
+      - name: PDF okuma önbelleğini geri yükle
+        uses: actions/cache@v6.1.0
+        with:
+          path: .cache/pdf
+          key: pdf-${{ github.run_id }}
+          restore-keys: pdf-
       - uses: actions/setup-python@v7.0.0
         with:
           python-version: "3.12"
