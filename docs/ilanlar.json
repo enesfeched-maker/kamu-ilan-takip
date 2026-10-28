@@ -1,5 +1,5 @@
 {
- "guncelleme": "2026-10-28T12:06:42+03:00",
+ "guncelleme": "2026-10-28T12:14:56+03:00",
  "ilanlar": [
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=9c82aab5-022e-43c8-b7f1-e6cf329d205b",
@@ -26952,7 +26952,7 @@
    "kurum": "MİLLİ SARAYLAR İDARESİ BAŞKANLIĞI",
    "ilan_turu": "Sözleşmeli Personel İlanları",
    "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=39c5ca3c-3571-485b-b226-2ff559360a0a",
-   "son_tarih": null,
+   "son_tarih": "",
    "ilk_gorulme": "2026-10-28T12:05:44+03:00",
    "kaynaklar": [
     {
@@ -26989,6 +26989,8 @@
   "csb-478574",
   "csb-478583",
   "csb-478584",
+  "csb-478617",
+  "csb-478618",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=0ad1bd8f-f6ad-4a03-8f10-7a42c33cf44a",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=0f54adef-6e76-4b95-b503-03f415523085",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=11272843-b0f1-470e-af31-cc176fa0e5d4",
@@ -27070,6 +27072,7 @@
   "iskur-372564423bd22d94fde88cb4",
   "iskur-3b7504f32c379b237fe86abd",
   "iskur-3bd8add3dfef4b37e1293996",
+  "iskur-3df8c4442aa3e26c5e9253af",
   "iskur-3f593d9e3c71078c698a111a",
   "iskur-427041e176b4b5fb14fbd125",
   "iskur-46fd3ccae48ba3acd1a3e086",
@@ -27294,10 +27297,7 @@
   "sbb-ffbba5c3ef2b2c84c00bb8e2"
  ],
  "telegram_bekleyen": [
-  "csb-478617",
-  "csb-478618",
   "iskur-1447040f913261353bf46dd0",
-  "iskur-3df8c4442aa3e26c5e9253af",
   "sbb-1b5d1f3068575a269a3a23ad",
   "sbb-d899f32eaa9140b2a3b909d2",
   "sbb-f444cce2b9f1fa1a8ec71292"
@@ -27322,6 +27322,8 @@
   "csb-478574": 400,
   "csb-478583": 403,
   "csb-478584": 401,
+  "csb-478617": 413,
+  "csb-478618": 414,
   "https://kariyerkapisi.gov.tr/IlanDetay?i=0ad1bd8f-f6ad-4a03-8f10-7a42c33cf44a": 311,
   "https://kariyerkapisi.gov.tr/IlanDetay?i=0f54adef-6e76-4b95-b503-03f415523085": 374,
   "https://kariyerkapisi.gov.tr/IlanDetay?i=1610b4a4-0f83-48cb-bd45-9aba5f32b893": 360,
@@ -27343,6 +27345,7 @@
   "https://kariyerkapisi.gov.tr/IlanDetay?i=da785726-3bff-45bb-9ab6-d43389db86f9": 290,
   "https://kariyerkapisi.gov.tr/IlanDetay?i=e53c369b-3913-48dc-8e41-be3a6392c249": 364,
   "https://kariyerkapisi.gov.tr/IlanDetay?i=f0ca8a29-559f-426a-ade5-5ed30651c618": 291,
+  "iskur-3df8c4442aa3e26c5e9253af": 412,
   "iskur-4afcdadb4b2d8f979d706f9f": 392,
   "iskur-6c0565cdb31b4595f797e950": 288,
   "iskur-862f03143b5892c40224f3e3": 393,
