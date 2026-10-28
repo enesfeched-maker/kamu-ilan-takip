@@ -43,3 +43,17 @@ class ResmiDetayTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class GenelSartlarAnaMetinden(unittest.TestCase):
+    def test_ana_metindeki_genel_sartlar_ortaga_gecer(self):
+        ana = {'ilanBaslik': 'X - SÖZLEŞMELİ BİLİŞİM PERSONELİ', 'basTarih': '2026-10-22T09:00:00', 'bitTarih': '2026-11-06T23:59:00',
+               'ilanMetni': 'SÖZLEŞMELİ BİLİŞİM PERSONELİ ALIMI\nA. GENEL ŞARTLAR\n'
+                            'a) 657 sayılı Devlet Memurları Kanunu’nun 48 inci maddesinde sayılan genel şartları haiz olması,\n'
+                            'b) Güncel programlama dillerinden en az ikisini bildiğini belgelemeleri zorunludur.\n'
+                            'B. ÖZEL ŞARTLAR\na. Yazılım Uzmanı (1 Kişi)\n1. En az 5 yıllık mesleki tecrübeye sahip olduğunu belgelemek,\n'}
+        alt = [{'ilanBaslik': 'Yazılım Uzmanı', 'unvan': 'YAZILIM UZMANI', 'kontenjanList': [{'il': 'ANKARA', 'kontenjan': 1}],
+                'ilanMetni': 'Unvanı: Yazılım Uzmanı\nÖzel Şartları:\n1. En az 5 yıllık mesleki tecrübeye sahip olduğunu belgelemek,\n'}]
+        sonuc = detay_coz(ana, alt)
+        basliklar = [b for b, _ in sonuc.get('kadro_ortak', [])]
+        self.assertTrue(any('GENEL' in b.upper() for b in basliklar), basliklar)

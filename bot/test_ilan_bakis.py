@@ -43,3 +43,17 @@ class Bakis(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class CokPozisyonluDeneyim(unittest.TestCase):
+    def test_tek_kadronun_yili_hepsine_yazilmaz(self):
+        item = {'kadro_detay': [
+            {'unvan': 'Kıdemli Ağ Uzmanı', 'maddeler': ['En az 10 (on) yıllık mesleki tecrübeye sahip olduğunu belgelemek.']},
+            {'unvan': 'Sistem Uzmanı', 'maddeler': ['En az 3 yıl tecrübeye sahip olmak.']}]}
+        self.assertIn('Kadroya göre 3–10 yıl deneyim', ib.sart_kelimeleri(item))
+        self.assertNotIn('10 yıl deneyim', ib.sart_kelimeleri(item))
+
+    def test_hepsinde_ayni_yil_tek_etiket(self):
+        item = {'kadro_detay': [{'unvan': 'A', 'maddeler': ['En az 3 yıl tecrübeye sahip olmak.']},
+                                {'unvan': 'B', 'maddeler': ['En az 3 yıl deneyim.']}]}
+        self.assertIn('3 yıl deneyim', ib.sart_kelimeleri(item))

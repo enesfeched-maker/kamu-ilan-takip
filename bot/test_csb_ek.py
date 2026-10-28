@@ -46,7 +46,9 @@ class DocxTablosuTesti(unittest.TestCase):
     def test_gercek_ilan_tablosu(self):
         a = csb_ek.belge_alanlari('x.docx', (VERI / 'csb_alim.docx').read_bytes())
         self.assertEqual(a['kadro'], '8 Zabıta Memuru')
-        self.assertEqual(len(a['sartlar']), 1)
+        self.assertEqual(len(a['sartlar']), 2)   # kadro satırı + gövdedeki ortak şartlar (yaş, boy-kilo)
+        self.assertIn('30 yaşını doldurmamış', a['sartlar'][1]['metin'])
+        self.assertIn('Başvuru 2 Kasım 2026', a['basvuru_notu'])
         s = a['sartlar'][0]
         self.assertEqual(s['kadro'], 'Zabıta Memuru · 8 kadro')
         self.assertIn('KPSS P94 puan türünden en az 65 puan.', s['metin'])
@@ -257,3 +259,43 @@ class KanalGuvenligiTesti(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class DocxGovdeBilgisiTesti(unittest.TestCase):
+    def _docx(self, paragraflar):
+        govde = ''.join(f'<w:p><w:r><w:t xml:space="preserve">{escape(p)}</w:t></w:r></w:p>' for p in paragraflar)
+        kayit = io.BytesIO()
+        with zipfile.ZipFile(kayit, 'w') as z:
+            z.writestr('word/document.xml', f'<?xml version="1.0" encoding="UTF-8"?><w:document {W}><w:body>{govde}</w:body></w:document>')
+        return kayit.getvalue()
+
+    def test_yas_boy_ve_basvuru_bolumu_okunur(self):
+        veri = self._docx([
+            '2. BAŞVURU ÖZEL ŞARTLARI:',
+            'Zabıta için tartılma ve ölçülme aç karnına olmak kaydıyla erkeklerde en az 1.67 metre, kadınlarda en az 1.60 metre boyunda olmak,',
+            'Sınavın yapıldığı tarihte 30 yaşını doldurmamış olmak,',
+            '3. BAŞVURU ESNASINDA ADAYLARDAN İSTENİLEN BELGELER:',
+            '4. BAŞVURU YERİ, TARİHİ, ŞEKLİ VE SÜRESİ:',
+            'Elektronik ortamda başvurular, 30.11.2026 – 11.12.2026 tarihleri arasında insan@ornek.bel.tr mail adresine yapılacaktır.',
+            'Şahsen veya iadeli taahhütlü posta yoluyla yapılacak başvurular mesai bitimine kadar yapılır.',
+            '5. BAŞVURULARIN DEĞERLENDİRİLMESİ'])
+        ek_bilgi = csb_ek.docx_ek_bilgiler(veri)
+        self.assertIn('30 yaşını doldurmamış', ek_bilgi['sart'])
+        self.assertIn('1,67', ek_bilgi['sart'])
+        self.assertEqual(ek_bilgi['basvuru'], 'Başvuru 30 Kasım 2026 – 11 Aralık 2026 arasında; e-postayla (insan@ornek.bel.tr) ya da şahsen/postayla.')
+
+    def test_belgede_olmayan_bilgi_uretilmez(self):
+        self.assertEqual(csb_ek.docx_ek_bilgiler(self._docx(['İLAN METNİ'])), {})
+
+
+class SbbBelgeUyumuTesti(unittest.TestCase):
+    def test_baska_ilanin_pdfi_uyumsuz_sayilir(self):
+        metin = 'Başvurular 12.10.2026 tarihinde başlayıp, 22.10.2026 tarihinde sona erecektir. 06.06.1978 tarihli karar.'
+        self.assertTrue(ek.belge_uyumsuz(metin, '( 28 Ekim - 8 Kasım)'))
+
+    def test_donemle_ortusen_belge_uyumlu(self):
+        self.assertFalse(ek.belge_uyumsuz('Başvurular 28.10.2026 - 08.11.2026 arasında.', '( 28 Ekim - 8 Kasım)'))
+        self.assertFalse(ek.belge_uyumsuz('Son başvuru 8 Kasım 2026.', '( 28 Ekim - 8 Kasım)'))
+
+    def test_tarihsiz_belge_uyumsuz_sayilmaz(self):
+        self.assertFalse(ek.belge_uyumsuz('Başvurular 15 gün içinde yapılır.', '( 28 Ekim - 8 Kasım)'))

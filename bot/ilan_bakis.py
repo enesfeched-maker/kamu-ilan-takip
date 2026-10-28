@@ -45,9 +45,24 @@ def sart_kelimeleri(item):
         sonuc.append(f'{ehliyet.group(1).upper()} sınıfı ehliyet')
     elif re.search(r'sürücü belgesi|ehliyet', m):
         sonuc.append('Sürücü belgesi')
-    deneyim = re.search(r'(?:en az\s*)?(\d{1,2})\s*(?:\(\w+\)\s*)?yıl(?:lık)?\s*(?:[^.;]{0,30}?)(?:deneyim|tecrübe|mesleki)', m)
-    if deneyim:
-        sonuc.append(f'{deneyim.group(1)} yıl deneyim')
+    deneyim_re = r'(?:en az\s*)?(\d{1,2})\s*(?:\(\w+\)\s*)?yıl(?:lık)?\s*(?:[^.;]{0,30}?)(?:deneyim|tecrübe|mesleki)'
+    kadrolar = [k for k in item.get('kadro_detay') or [] if isinstance(k, dict)]
+    if len(kadrolar) > 1:   # çok pozisyonlu ilanda tek bir kadronun yılı hepsine yazılmaz
+        yillar = []
+        for k in kadrolar:
+            metin = kucuk(' '.join(str(x) for x in k.get('maddeler') or []) + ' ' + ' '.join(str(x) for b in k.get('bolumler') or [] for x in (b[1] if len(b) > 1 else [])))
+            e = re.search(deneyim_re, metin)
+            yillar.append(e.group(1) if e else None)
+        if any(yillar):
+            bulunan = sorted({int(y) for y in yillar if y})
+            if None not in yillar and len(bulunan) == 1:
+                sonuc.append(f'{bulunan[0]} yıl deneyim')
+            elif len(bulunan) == 1 or len(bulunan) > 1:
+                sonuc.append(f'Kadroya göre {bulunan[0]}–{bulunan[-1]} yıl deneyim' if len(bulunan) > 1 else f'Bazı kadrolarda {bulunan[0]} yıl deneyim')
+    else:
+        deneyim = re.search(deneyim_re, m)
+        if deneyim:
+            sonuc.append(f'{deneyim.group(1)} yıl deneyim')
     if re.search(r'\bboy\b|beden kitle', m):
         sonuc.append('Boy-kilo şartı')
     if re.search(r'\byds\b|yökdil|yabancı dil', m):

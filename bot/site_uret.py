@@ -155,7 +155,12 @@ def _kadro_tablosu(item, kosulsuz=False):
     if kosulsuz:  # koşullar ayrıca (PDF'ten madde madde) gösterilecek: yalnız kadro / kontenjan
         sartlar = []
     satirlar, kullanilan = [], set()
-    for adet, ad in kadrolar:
+    satir_sart = [re.fullmatch(r'(.+?) · (\d+) kadro', s.get('kadro') or '') for s in sartlar]
+    if sum(1 for m in satir_sart if m) >= 2:   # ÇŞB tablosu: her satır ayrı kadro (aynı unvanlı satırlar birleşip kontenjan şaşmasın)
+        kadrolar = []
+        kullanilan = {n for n, m in enumerate(satir_sart) if m}
+        satirlar = [(m.group(1), int(m.group(2)), _kosul_temiz(s.get('metin'))) for m, s in zip(satir_sart, sartlar) if m]
+    for adet, ad in ([] if satirlar else kadrolar):
         a, secilen = kucuk(ad), None
         bos = [(n, kucuk(s.get('kadro') or '')) for n, s in enumerate(sartlar) if n not in kullanilan]
         secilen = next((n for n, b in bos if a and a == b), None)
@@ -693,7 +698,10 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
     duzeltme_kutusu = _duzeltme_kutusu(item)
     from sbb_detay import document_url
     pdf_satirlari = _pdf_kadrolari(item)
-    kk_kadrolar = [] if pdf_satirlari else [k for k in item.get('kadro_detay') or [] if isinstance(k, dict) and k.get('unvan')]
+    kk_hepsi = [k for k in item.get('kadro_detay') or [] if isinstance(k, dict) and k.get('unvan')]
+    if pdf_satirlari and not any(s.get('nitelik') for s in pdf_satirlari) and any(k.get('bolumler') or k.get('maddeler') for k in kk_hepsi):
+        pdf_satirlari = ()   # SBB PDF tablosu koşulsuz (yalnız unvan/adet); Kariyer Kapısı kopyasının koşulları varsa onlar gösterilir
+    kk_kadrolar = [] if pdf_satirlari else kk_hepsi
     sart_bolumleri = () if pdf_satirlari or kk_kadrolar else _pdf_sart_bolumleri(item)
     if item.get('yz_kadrolar'):   # Gemini'nin resmî belgeden okuduğu kadrolar ve kısa koşullar
         tablo = _yz_kadro_kartlari(item, document_url(item) or item.get('link'))

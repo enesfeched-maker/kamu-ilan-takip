@@ -203,6 +203,23 @@ def pdf_dates(text, range_text):
     return result
 
 
+def belge_uyumsuz(text, range_text):
+    """SBB satırına başka (eski) ilanın PDF'i bağlanmış mı? Belge açık tarihler veriyor ama listedeki dönemin ne başlangıcı ne
+    bitişi bunların arasında: 28 Ekim 2026 Milli Saraylar satırına 12–22 Ekim'deki 158 kişilik ilanın PDF'i bağlıydı."""
+    parts = re.findall(r'(\d{1,2})\s+('+'|'.join(MONTHS)+r')',(range_text or '').lower())
+    if len(parts) != 2:
+        return False
+    gunler = set()
+    for d,m,y in re.findall(r'(?<!\d)(\d{1,2})\s*[./]\s*(\d{1,2})\s*[./]\s*(20\d{2})(?!\d)',text):
+        gunler.add((int(d),int(m)))
+    for d,ay,y in re.findall(r'(?<!\d)(\d{1,2})\s+('+'|'.join(MONTHS)+r')\s+(20\d{2})',text.lower()):
+        gunler.add((int(d),MONTHS.index(ay)+1))
+    if not gunler:
+        return False
+    donem = {(int(p[0]),MONTHS.index(p[1])+1) for p in parts}
+    return not (gunler & donem)
+
+
 def sbb_rows(data):
     doc=soup(data)
     root=doc.find(id='nav2')
@@ -267,7 +284,14 @@ def read_sbb(previous):
             if notice(row['baslik']):
                 row['duyuru_turu']='İptal duyurusu' if 'iptal' in norm(row['baslik']) else 'Düzeltme / süre değişikliği'
             from sbb_detay import summarize
-            row.update(summarize(data,row))
+            ozet_alanlari=summarize(data,row)
+            if belge_uyumsuz(text,row['donem']):
+                # Yanlış belgeden okunan kadro/şart sitede yanıltır; Kariyer Kapısı kopyası varsa koşullar oradan gelir.
+                for alan in ('kadro','sartlar','ozet','kadro_detay','basvuru_notu','puan_turleri','belge_ogrenim','ogrenim','kpss'):
+                    ozet_alanlari.pop(alan,None)
+                ozet_alanlari['belge_uyumsuz']=True
+                print(f'SBB belgesi listedeki döneme uymuyor, koşulları alınmadı: {row["kurum"]} {row["donem"]}',flush=True)
+            row.update(ozet_alanlari)
             records.append(row)
         except Exception as exc:
             errors+=1
