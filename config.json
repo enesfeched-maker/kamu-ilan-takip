@@ -183,14 +183,85 @@
         "son_tarih": "2026-11-22",
         "son_zaman": "2026-11-22T23:59:00+03:00",
         "baslangic_zaman": "2026-11-02T00:00:00+03:00",
-        "kadro": "5 UZMAN",
+        "kadro": "5 Uzman",
         "ogrenim": [
           "lisans"
         ],
         "belge_ogrenim": [
           "lisans"
         ],
-        "kpss": "kpss"
+        "kpss": "kpss",
+        "yz_kadrolar": [
+          {
+            "unvan": "Uzman (KPSS ile — mühendislik, matematik, şehir planlama)",
+            "adet": 2,
+            "ogrenim": "lisans",
+            "puan_turu": "KPSS P1, P2 veya P3",
+            "en_dusuk_puan": 80,
+            "il": "İstanbul",
+            "kosullar": [
+              "Dört yıllık lisans eğitimi veren yükseköğretim kurumlarının şu bölümlerinden mezun olmak: Bilgisayar, Çevre, Elektrik-Elektronik, Elektronik ve Haberleşme, Endüstri, İşletme, Makine, Matematik, Metalurji, Metalurji ve Malzeme Mühendisliği; Matematik; Şehir ve Bölge Planlama; Yönetim Bilişim Sistemleri.",
+              "Son 5 yıl içinde İngilizce YDS/e-YDS’den en az (C) düzeyinde puan veya dengi belge.",
+              "KPSSP1, KPSSP2 veya KPSSP3 puan türlerinden en az 80 puan almış olmak."
+            ]
+          },
+          {
+            "unvan": "Uzman (KPSS ile — iktisat, işletme, maliye)",
+            "adet": 2,
+            "ogrenim": "lisans",
+            "puan_turu": "KPSS P14, P15, P19, P20, P21, P24 veya P25",
+            "en_dusuk_puan": 80,
+            "il": "İstanbul",
+            "kosullar": [
+              "Dört yıllık lisans eğitimi veren yükseköğretim kurumlarının İktisat, İşletme ve Maliye bölümlerinden mezun olmak.",
+              "Son 5 yıl içinde İngilizce YDS/e-YDS’den en az (C) düzeyinde puan veya dengi belge.",
+              "KPSSP14, P15, P19, P20, P21, P24 veya P25 puan türlerinden en az 80 puan almış olmak."
+            ]
+          },
+          {
+            "unvan": "Uzman (KPSS aranmaz — deneyimle, mühendislik ve matematik bölümleri)",
+            "adet": 1,
+            "ogrenim": "lisans",
+            "puan_turu": null,
+            "en_dusuk_puan": null,
+            "il": "İstanbul",
+            "kosullar": [
+              "Yukarıdaki mühendislik, matematik, şehir ve bölge planlama ve yönetim bilişim sistemleri bölümlerinin birinden lisans mezunu olmak.",
+              "Başvuru tarihi itibarıyla 50 yaşını doldurmamış olmak.",
+              "Kamu ya da özel sektörde belgelendirilecek şekilde en az 5 yıl fiilen çalışmış olmak: planlama/programlama, proje üretimi ve yönetimi, strateji geliştirme, izleme-değerlendirme, tanıtım ve danışmanlık, şehircilik ve çevre, araştırma-geliştirme, bilgi ve iletişim teknolojileri, finansman, insan kaynakları yönetimi, uluslararası ticaret veya hukuk konularından.",
+              "Son 5 yıl içinde İngilizce YDS/e-YDS’den en az (C) düzeyinde puan veya dengi belge."
+            ]
+          }
+        ],
+        "yz_ortak": [
+          "Türk vatandaşı olmak; kamu haklarından mahrum bulunmamak; belirtilen suçlardan hüküm giymemiş olmak; güvenlik soruşturması ve arşiv araştırması olumlu olmak.",
+          "Görevini devamlı yapmaya engel akıl hastalığı ve bulaşıcı hastalığı bulunmamak; erkek adaylar için askerlikle ilişiği bulunmamak.",
+          "Tercih nedenleri (sınavda ek puan): hibe/teşvik ve AB programı yürütme tecrübesi, bölgesel araştırma ve raporlama, satın alma süreçleri, finansal analiz, ikinci yabancı dil (en az C), ilgili alanda lisansüstü eğitim.",
+          "Başvurular yalnız kariyerkapisi.gov.tr/iseAlim üzerinden online yapılır; sınava çağrılacaklar 4 Aralık 2026’da ilan edilir, sözlü (mülakat) sınav tarihi ayrıca duyurulur."
+        ],
+        "sartlar": [
+          {
+            "kadro": "Uzman (KPSS ile — mühendislik, matematik, şehir planlama) · 2 kadro",
+            "metin": "Dört yıllık lisans eğitimi veren yükseköğretim kurumlarının şu bölümlerinden mezun olmak: Bilgisayar, Çevre, Elektrik-Elektronik, Elektronik ve Haberleşme, Endüstri, İşletme, Makine, Matematik, Metalurji, Metalurji ve Malzeme Mühendisliği; Matematik; Şehir ve Bölge Planlama; Yönetim Bilişim Sistemleri. Son 5 yıl içinde İngilizce YDS/e-YDS’den en az (C) düzeyinde puan veya dengi belge. KPSSP1, KPSSP2 veya KPSSP3 puan türlerinden en az 80 puan almış olmak."
+          },
+          {
+            "kadro": "Uzman (KPSS ile — iktisat, işletme, maliye) · 2 kadro",
+            "metin": "Dört yıllık lisans eğitimi veren yükseköğretim kurumlarının İktisat, İşletme ve Maliye bölümlerinden mezun olmak. Son 5 yıl içinde İngilizce YDS/e-YDS’den en az (C) düzeyinde puan veya dengi belge. KPSSP14, P15, P19, P20, P21, P24 veya P25 puan türlerinden en az 80 puan almış olmak."
+          },
+          {
+            "kadro": "Uzman (KPSS aranmaz — deneyimle, mühendislik ve matematik bölümleri) · 1 kadro",
+            "metin": "Yukarıdaki mühendislik, matematik, şehir ve bölge planlama ve yönetim bilişim sistemleri bölümlerinin birinden lisans mezunu olmak. Başvuru tarihi itibarıyla 50 yaşını doldurmamış olmak. Kamu ya da özel sektörde belgelendirilecek şekilde en az 5 yıl fiilen çalışmış olmak: planlama/programlama, proje üretimi ve yönetimi, strateji geliştirme, izleme-değerlendirme, tanıtım ve danışmanlık, şehircilik ve çevre, araştırma-geliştirme, bilgi ve iletişim teknolojileri, finansman, insan kaynakları yönetimi, uluslararası ticaret veya hukuk konularından. Son 5 yıl içinde İngilizce YDS/e-YDS’den en az (C) düzeyinde puan veya dengi belge."
+          }
+        ],
+        "basvuru_kisa_sartlar": [
+          "KPSS en az 80 puan (4 kadro)",
+          "YDS/e-YDS en az C",
+          "1 kadro KPSS’siz: 5 yıl deneyim, 50 yaş sınırı",
+          "Yalnız online başvuru"
+        ],
+        "ozet": "İstanbul Kalkınma Ajansı 5 uzman alacak: 2’si mühendislik ve matematik, 2’si iktisat, işletme ve maliye bölümlerinden KPSS en az 80 puanla; 1’i KPSS aranmaksızın en az 5 yıl deneyimle. İngilizce YDS en az C düzeyi şarttır.",
+        "basvuru_notu": "Başvurular 2 Kasım 2026 – 22 Kasım 2026 saat 23.59’a kadar kariyerkapisi.gov.tr/iseAlim üzerinden online yapılır. Sınava çağrılacak adaylar 4 Aralık 2026’da ilan edilir; sözlü sınav tarihi ayrıca duyurulur.",
+        "_not": "28 Ekim 2026: İlan taranmış görsel PDF olduğundan koşullar okunamamıştı; sayfalar elle okunarak yazıldı."
       },
       "https://kariyerkapisi.gov.tr/IlanDetay?i=a6d18ac1-8799-4f76-b4f5-418ceb8c735e": {
         "_not": "16 Ekim 2026: Kariyer Kapisi ayrinti servisi zaman asimina ugradi; bilgiler resmi ilan sayfasindan elle girildi.",
@@ -707,7 +778,7 @@
           "2024 KPSS (B grubu) P94 puanı esas alınır. Resmî ilanda başvuru için sayısal asgari KPSS puanı belirtilmemiştir; sözlü sınavdaki 70 puan başarı şartı KPSS taban puanı değildir.",
           "657 sayılı Kanunun 48. maddesindeki genel şartları ve 4/B sözleşme feshi sonrası yeniden istihdama ilişkin hükümleri taşımak. Erkek adayların askerliği tamamlanmış veya muaf olması; emeklilik/yaşlılık aylığı alınmaması gerekir. Atama için arşiv araştırması olumlu sonuçlanmalıdır.",
           "Yaş, ehliyet, deneyim ve örgün lisans öğrencisi olmama şartları kadroya göre değişir; yukarıdaki B01 / D01 / D02 kartlarından kontrol edilmelidir.",
-          "Başvuru 23 Ekim 2026 saat 09.00–6 Kasım 2026 saat 13.00 arasında Kariyer Kapısı üzerinden yapılır. Postayla başvuru kabul edilmez.",
+          "Başvuru 26 Ekim 2026 saat 09.00–9 Kasım 2026 saat 13.00 arasında Kariyer Kapısı üzerinden yapılır. Postayla başvuru kabul edilmez.",
           "Çevrim içi başvuru tek başına yeterli değildir. Oluşan “Aday Başvuru Bilgileri” belgesi ve istenen tüm belgeler başvuru süresi içinde Göztepe Yerleşkesi Personel Daire Başkanlığına şahsen teslim edilmelidir. Teslim edilmezse başvuru geçersiz sayılır.",
           "Her pozisyon için KPSS sıralamasına göre kontenjanın en fazla üç katı aday sözlü sınava çağrılır; son sıradaki adayla aynı puanı alanlar da çağrılır.",
           "Sözlü sınav 25–26 Kasım 2026’da Göztepe Yerleşkesinde yapılır. Başarı için sözlü sınav ortalaması en az 70 olmalıdır. Yerleştirme sözlü puanına göre yapılır; eşitlikte KPSS puanı, mezuniyet tarihi ve doğum tarihi sırasıyla dikkate alınır.",
@@ -727,7 +798,7 @@
             "metin": "Ortaöğretim kurumlarının herhangi bir alanından mezun olmak. Kadın adaylar ve erkek adaylar başvurabilir. Son başvuru tarihi itibarıyla 30 yaşını doldurmamış olmak. Vardiyalı çalışmaya uygun olmak. Temizlik, çöp toplama, eşya/evrak taşıma, yük indirme-kaldırma, servis, bulaşık, bahçe bakımı ve ilanda sayılan hizmetli görevlerini yapabilecek durumda olmak. Örgün lisans öğrencisi olmamak. Atanmaya hak kazananlardan iç/dış mekân, gece ve vardiyalı çalışmaya engel sağlık durumu olmadığına ilişkin sağlık kurulu raporu istenir."
           }
         ],
-        "_not": "23 Ekim 2026: Kullanıcının talebiyle kurumun resmî ilanı okunarak elle doğrulandı; bugün standart kanal biçimiyle paylaşım onaylı.",
+        "_not": "23 Ekim 2026: Kullanıcının talebiyle kurumun resmî ilanı okunarak elle doğrulandı; bugün standart kanal biçimiyle paylaşım onaylı. 28 Ekim 2026: Düzeltme ilanı (26.10.2026) başvuru tarihlerini 26 Ekim–9 Kasım 2026 13.00 olarak değiştirmişti; tarihler güncellendi (kadro sayıları aynı).",
         "kadro": "Toplam 63 kişi — 20 Büro Personeli • 3 Şoför • 40 Hizmetli",
         "ogrenim": [
           "ortaogretim"
@@ -739,15 +810,15 @@
         "puan_turleri": [
           "P94"
         ],
-        "son_tarih": "2026-11-06",
-        "son_zaman": "2026-11-06T13:00:00+03:00",
-        "baslangic_zaman": "2026-10-23T09:00:00+03:00",
+        "son_tarih": "2026-11-09",
+        "son_zaman": "2026-11-09T13:00:00+03:00",
+        "baslangic_zaman": "2026-10-26T09:00:00+03:00",
         "yer": "İstanbul",
         "iller": [
           "İstanbul"
         ],
         "ozet": "Marmara Üniversitesi ortaöğretim mezunlarından 20 büro personeli, 3 şoför ve 40 hizmetli olmak üzere toplam 63 sözleşmeli personel alacak. 2024 KPSS P94 sıralaması ve sözlü sınav uygulanacak. Çevrim içi başvuru ile şahsen belge tesliminin ikisi de zorunlu.",
-        "basvuru_notu": "23 Ekim 09.00–6 Kasım 2026 13.00 arasında Kariyer Kapısı başvurusu yapılmalı; ardından “Aday Başvuru Bilgileri” ve istenen belgeler başvuru süresi içinde Göztepe Yerleşkesi Personel Daire Başkanlığına şahsen teslim edilmeli. Posta kabul edilmez.",
+        "basvuru_notu": "26 Ekim 09.00–9 Kasım 2026 13.00 arasında Kariyer Kapısı başvurusu yapılmalı; ardından “Aday Başvuru Bilgileri” ve istenen belgeler başvuru süresi içinde Göztepe Yerleşkesi Personel Daire Başkanlığına şahsen teslim edilmeli. Posta kabul edilmez.",
         "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/13cdc09da672e8479da85065685c317911a72c90d97f12abdf17c2829c799133.pdf",
         "belge_sha256": "13cdc09da672e8479da85065685c317911a72c90d97f12abdf17c2829c799133",
         "belge_aciklamasi": "Marmara Üniversitesi Personel Daire Başkanlığının yayımladığı resmî ilan belgesinin değiştirilmemiş kopyasıdır.",
@@ -1761,6 +1832,454 @@
         ],
         "baslangic_zaman": "2026-12-01T00:00:00+03:00",
         "son_tarih": "2026-12-03"
+      },
+      "sbb-e9b0b6b325e3d0e45aecf805": {
+        "yz_kadrolar": [
+          {
+            "unvan": "Kıdemli .Net Yazılım Geliştirme Uzmanı ve Çözüm Mimarı (B Grubu, ücret tavanının 4 katına kadar)",
+            "adet": 1,
+            "ogrenim": "lisans",
+            "puan_turu": "P3",
+            "en_dusuk_puan": null,
+            "il": "Ankara",
+            "kosullar": [
+              "Büyük ölçekli bilgi işlem birimlerinde ya da kritik veri tutan kamu kurumlarında (veya en az 5.000 iç / 10.000 dış kullanıcılı özel sektör sistem merkezlerinde) yazılım geliştirmede en az 10 yıl çalıştığını belgelemek.",
+              "Şu eğitimlerden en az üçünü aldığını belgelemek: Web Uygulamaları Güvenliği, Veri Tabanı Güvenliği, Microsoft Sistemleri Güvenliği, Unix/Linux Güvenliği, Microsoft Azure DevOps, Güvenli Yazılım Geliştirme, Proje Yönetimi, SPICE.",
+              ".NET Framework, .NET Core, ASP.NET, C#, MVC ile ileri düzey bilgi ve en az 10 yıl uygulama geliştirme deneyimini belgelemek; ilişkisel veritabanı sistemlerinde en az 10 yıl deneyim.",
+              "API Gateway araçlarından en az birinin yönetimi ve entegrasyonunda en az 2 yıl; Azure DevOps benzeri araçlarla CI/CD süreçlerinin tasarım ve yönetiminde en az 2 yıl deneyim.",
+              "MS SQL Server, PostgreSQL ve/veya Oracle ile uygulama geliştirme ve SQL; JavaScript framework (Vue, Angular, React, jQuery), HTML, CSS; NoSQL (MongoDB vb.); web servisleri, SOAP, WCF, REST API, mikroservis; IIS; Linux/Unix; Kubernetes ve konteyner bilgisi ve tecrübesi.",
+              "Proje yönetimi, teknik şartname hazırlama, UML tabanlı modelleme, birim testi, tasarım desenleri/OOP/Entity Framework, güvenli yazılım yaşam döngüsü, teknik dokümantasyon, Git ve Azure DevOps (TFS) bilgisi; yapay zekâ ajanları (Ollama, RAG) ve Redis gibi önbellekleme konusunda bilgi.",
+              "Tercihen Android ve/veya iOS uygulama geliştirme deneyimi; tercihen yüksek performanslı ve ölçeklenebilir sistemlerin tasarım ve geliştirmesinde görev almış olmak."
+            ]
+          },
+          {
+            "unvan": "Yazılım Geliştirme Uzmanı (.Net) (D Grubu, ücret tavanının 2 katına kadar)",
+            "adet": 1,
+            "ogrenim": "lisans",
+            "puan_turu": "P3",
+            "en_dusuk_puan": null,
+            "il": "Ankara",
+            "kosullar": [
+              "Büyük ölçekli bilgi işlem birimlerinde ya da kritik veri tutan kamu kurumlarında (veya en az 1.000 iç / 3.000 dış kullanıcılı özel sektör sistem merkezlerinde) yazılım geliştirmede en az 3 yıl çalıştığını belgelemek.",
+              "Büyük ölçekli bilgi işlem birimlerinde en az bir kurumsal web tabanlı sistemin geliştirilmesinde aktif görev aldığını belgelemek.",
+              "İş akışı otomasyonu ve yapay zekâ uygulama araçlarından (n8n, Make, Node-RED, Dify, Flowise vb.) en az birinde ve ajan tabanlı yazılım geliştirmede bilgi ve tecrübe.",
+              ".Net, ASP.NET, C#, MVC, Entity Framework; Design Pattern ve nesne yönelimli programlama; birim testi; güvenli yazılım yaşam döngüsü; web servisleri, SOAP, WCF, API, mikroservis; ilişkisel veritabanı ve SQL; JavaScript framework, CSS3, HTML5; Git/TFS bilgisi ve tecrübesi.",
+              "Tercihen yüksek performanslı ve ölçeklenebilir sistemlerin tasarımında görev almış olmak; dokümantasyona önem vermek."
+            ]
+          }
+        ],
+        "yz_ortak": [
+          "Dört yıllık fakültelerin bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden (YÖK denkliği kabul edilen yurt dışı programlar dahil) mezun olmak. Diğer dört yıllık mühendislik bölümleri, fen-edebiyat ve eğitim fakültelerinin bilgisayar/teknoloji bölümleri, istatistik, matematik ve fizik mezunları yalnız ücret tavanının 2 katına kadar olan pozisyona (Yazılım Geliştirme Uzmanı) başvurabilir.",
+          "657 sayılı Kanunun 48. maddesindeki genel şartları taşımak; erkek adaylar için askerlikle ilişiği bulunmamak (yapmış, ertelemiş, muaf ya da yedeğe geçirilmiş olmak); güvenlik soruşturmasından olumlu sonuç almak.",
+          "Yazılım ya da büyük ölçekli ağ sistemleri alanında: ücret tavanı 2 katını geçmeyen pozisyon için en az 3 yıl, diğerleri için en az 5 yıl mesleki tecrübe; tecrübe yalnız bilişim personeli olarak geçen ve belgelenen sürelerden sayılır.",
+          "Güncel programlama dillerinden en az ikisini bildiğini belgelemek (transkript kabul edilir); bilgisayar çevre birimleri ile ağ yönetimi ve güvenliği hakkında bilgi sahibi olmak.",
+          "KPSS P3 puanının %70'i ile YDS (veya dengi) puanının %30'unun toplamıyla sıralanır; KPSS puanı olmayana 70, YDS puanı olmayana 0 verilir. Sıralamada her pozisyon için ilk 10 kat aday sözlü sınava çağrılır.",
+          "Aday yalnız bir grup ve pozisyona başvurabilir; birden fazlasına başvuranların başvuruları geçersiz sayılır."
+        ],
+        "sartlar": [
+          {
+            "kadro": "Kıdemli .Net Yazılım Geliştirme Uzmanı ve Çözüm Mimarı (B Grubu, ücret tavanının 4 katına kadar) · 1 kadro",
+            "metin": "Büyük ölçekli bilgi işlem birimlerinde ya da kritik veri tutan kamu kurumlarında (veya en az 5.000 iç / 10.000 dış kullanıcılı özel sektör sistem merkezlerinde) yazılım geliştirmede en az 10 yıl çalıştığını belgelemek. Şu eğitimlerden en az üçünü aldığını belgelemek: Web Uygulamaları Güvenliği, Veri Tabanı Güvenliği, Microsoft Sistemleri Güvenliği, Unix/Linux Güvenliği, Microsoft Azure DevOps, Güvenli Yazılım Geliştirme, Proje Yönetimi, SPICE. .NET Framework, .NET Core, ASP.NET, C#, MVC ile ileri düzey bilgi ve en az 10 yıl uygulama geliştirme deneyimini belgelemek; ilişkisel veritabanı sistemlerinde en az 10 yıl deneyim. API Gateway araçlarından en az birinin yönetimi ve entegrasyonunda en az 2 yıl; Azure DevOps benzeri araçlarla CI/CD süreçlerinin tasarım ve yönetiminde en az 2 yıl deneyim. MS SQL Server, PostgreSQL ve/veya Oracle ile uygulama geliştirme ve SQL; JavaScript framework (Vue, Angular, React, jQuery), HTML, CSS; NoSQL (MongoDB vb.); web servisleri, SOAP, WCF, REST API, mikroservis; IIS; Linux/Unix; Kubernetes ve konteyner bilgisi ve tecrübesi. Proje yönetimi, teknik şartname hazırlama, UML tabanlı modelleme, birim testi, tasarım desenleri/OOP/Entity Framework, güvenli yazılım yaşam döngüsü, teknik dokümantasyon, Git ve Azure DevOps (TFS) bilgisi; yapay zekâ ajanları (Ollama, RAG) ve Redis gibi önbellekleme konusunda bilgi. Tercihen Android ve/veya iOS uygulama geliştirme deneyimi; tercihen yüksek performanslı ve ölçeklenebilir sistemlerin tasarım ve geliştirmesinde görev almış olmak."
+          },
+          {
+            "kadro": "Yazılım Geliştirme Uzmanı (.Net) (D Grubu, ücret tavanının 2 katına kadar) · 1 kadro",
+            "metin": "Büyük ölçekli bilgi işlem birimlerinde ya da kritik veri tutan kamu kurumlarında (veya en az 1.000 iç / 3.000 dış kullanıcılı özel sektör sistem merkezlerinde) yazılım geliştirmede en az 3 yıl çalıştığını belgelemek. Büyük ölçekli bilgi işlem birimlerinde en az bir kurumsal web tabanlı sistemin geliştirilmesinde aktif görev aldığını belgelemek. İş akışı otomasyonu ve yapay zekâ uygulama araçlarından (n8n, Make, Node-RED, Dify, Flowise vb.) en az birinde ve ajan tabanlı yazılım geliştirmede bilgi ve tecrübe. .Net, ASP.NET, C#, MVC, Entity Framework; Design Pattern ve nesne yönelimli programlama; birim testi; güvenli yazılım yaşam döngüsü; web servisleri, SOAP, WCF, API, mikroservis; ilişkisel veritabanı ve SQL; JavaScript framework, CSS3, HTML5; Git/TFS bilgisi ve tecrübesi. Tercihen yüksek performanslı ve ölçeklenebilir sistemlerin tasarımında görev almış olmak; dokümantasyona önem vermek."
+          }
+        ],
+        "basvuru_kisa_sartlar": [
+          "Pozisyona göre 3–10 yıl deneyim",
+          "Mühendislik lisansı",
+          "En az 2 programlama dili belgesi",
+          "Yalnız bir pozisyona başvuru",
+          "KPSS şart değil, P3 puanı sıralamaya girer"
+        ],
+        "basvuru_puani_belirtilmemis": true,
+        "ozet": "Sayıştay Başkanlığı Bilgi İşlem Birim Başkanlığı için 2 sözleşmeli bilişim personeli alacak: 1 kıdemli .Net yazılım geliştirme uzmanı ve çözüm mimarı (en az 10 yıl deneyim), 1 yazılım geliştirme uzmanı (en az 3 yıl deneyim). Başvuru dilekçe ve belgelerle şahsen ya da posta ile yapılır.",
+        "basvuru_notu": "Başvurular 19 Ekim 2026 – 30 Ekim 2026 mesai bitimine kadar, dilekçe ve belgelerle birlikte T.C. Sayıştay Başkanlığı, İnönü Bulvarı (Eskişehir Yolu) No:45 06520 Balgat / Çankaya / Ankara adresine şahsen ya da son gün Başkanlığa ulaşacak şekilde posta ile yapılır. Aday yalnız bir pozisyona başvurabilir. Başvuru formu, KPSS ve yabancı dil belgesi, diploma, mesleki tecrübe belgesi, özgeçmiş, adli sicil ve askerlik belgesi istenir.",
+        "_not": "28 Ekim 2026: Genel şartların (d) bendi (3/5 yıl tecrübe), askerlik, güvenlik soruşturması ve iki pozisyonun özel şartları sitede yoktu; resmî ilan belgesinden elle yazıldı."
+      },
+      "iskur-6c0565cdb31b4595f797e950": {
+        "kadro": "7 Personel",
+        "kpss": "kpsssiz",
+        "ogrenim": [
+          "ortaogretim",
+          "lisans"
+        ],
+        "yz_kadrolar": [
+          {
+            "unvan": "Yapay Zekâ Direktörü",
+            "adet": 1,
+            "ogrenim": "lisans",
+            "puan_turu": null,
+            "en_dusuk_puan": null,
+            "il": null,
+            "kosullar": [
+              "Bilgisayar, Yazılım, Yapay Zekâ, Büyük Veri Mühendisliği, Elektrik-Elektronik, Endüstri Mühendisliği, Matematik, İstatistik, Ekonomi, İktisat, Bankacılık Finans veya Veri Bilimi bölümlerinden en az lisans mezunu olmak.",
+              "Toplamda en az 15 yıl mesleki deneyim; bunun en az 7 yılı ekip ve/veya proje yönetimi sorumluluğu bulunan yönetsel görevlerde geçmiş olmak (karekodlu SGK hizmet dökümü / çalışma belgesi ile belgelenir).",
+              "Veri ve yapay zekâ projelerini yönetme, büyük veri, makine öğrenmesi, NLP, üretken yapay zekâ ve LLM konularında deneyim; turizm veya seyahat alanında veri analitiği / yapay zekâ projesi geliştirmiş ya da yönetmiş olmak.",
+              "İngilizce: YDS/e-YDS’den en az (B) seviyesi veya %100 yabancı dille eğitim veren lisans programı mezunu olmak."
+            ]
+          },
+          {
+            "unvan": "Etkinlik ve Ağırlama Müdür Yardımcısı",
+            "adet": 1,
+            "ogrenim": "lisans",
+            "puan_turu": null,
+            "en_dusuk_puan": null,
+            "il": null,
+            "kosullar": [
+              "Turizm ve Otelcilik, İletişim, Sinema ve Televizyon, Halkla İlişkiler, Pazarlama bölümlerinin birinden en az lisans mezunu olmak.",
+              "Pazarlama, reklam ve tanıtım, basın ilişkileri, görsel iletişim, editoryal alanlarının herhangi birinden veya toplamında en az 6 yıl mesleki deneyim (karekodlu SGK dökümü / çalışma belgesi).",
+              "Etkinlik yönetimi, ağırlamalar, basınla ilişkiler, saha operasyonları, sosyal medya yönetimi, televizyon/reklam/fotoğraf prodüksiyon süreçlerinde deneyim; reklam ve iletişim ajanslarıyla çalışmış olmak.",
+              "İngilizce: YDS/e-YDS’den en az (B) seviyesi veya %100 yabancı dille eğitim veren lisans programı mezunu olmak."
+            ]
+          },
+          {
+            "unvan": "Ürün Pazarlama Koordinatörü",
+            "adet": 1,
+            "ogrenim": "lisans",
+            "puan_turu": null,
+            "en_dusuk_puan": null,
+            "il": null,
+            "kosullar": [
+              "Pazarlama, Mühendislik, Turizm Otel Yöneticiliği veya Gastronomi bölümlerinin birinden en az lisans mezunu olmak; tercihen Pazarlama, İletişim, İşletme alanlarında yüksek lisans.",
+              "Pazarlama, iletişim, gastronomi alanlarının birinden veya toplamında en az 4 yıl mesleki deneyim (karekodlu SGK dökümü / çalışma belgesi); gastronomi turizmi ürün, etkinlik ve rota geliştirme deneyimi.",
+              "Proje yönetimi ve paydaş iş birliği deneyimi; MS Office (özellikle Excel, PowerPoint) etkin kullanım; seyahat engeli bulunmamak.",
+              "İngilizce: YDS/e-YDS’den en az (B) seviyesi veya %100 yabancı dille eğitim veren lisans programı mezunu olmak."
+            ]
+          },
+          {
+            "unvan": "Dijital Destinasyon İletişim Uzmanı",
+            "adet": 1,
+            "ogrenim": "lisans",
+            "puan_turu": null,
+            "en_dusuk_puan": null,
+            "il": null,
+            "kosullar": [
+              "Siyaset Bilimi, Uluslararası İlişkiler, Kamu Yönetimi, Halkla İlişkiler veya Pazarlama bölümlerinin birinden en az lisans mezunu olmak.",
+              "En az 3 yıl mesleki deneyim (karekodlu SGK dökümü / çalışma belgesi); yurt içi/dışı marka iletişimi, dijital pazarlama, entegre pazarlama iletişimi çalışmaları.",
+              "Kampanya performansını veri/analitik ve KPI bazında ölçme ve raporlama, kampanya bütçe planlama ve uluslararası platformlarla kampanya yürütme deneyimi.",
+              "İngilizce: YDS/e-YDS’den en az (B) seviyesi veya %100 yabancı dille eğitim veren lisans programı mezunu olmak."
+            ]
+          },
+          {
+            "unvan": "Fuar Koordinatörü",
+            "adet": 1,
+            "ogrenim": "lisans",
+            "puan_turu": null,
+            "en_dusuk_puan": null,
+            "il": null,
+            "kosullar": [
+              "Siyaset Bilimi, Uluslararası İlişkiler, Kamu Yönetimi, Halkla İlişkiler veya Pazarlama bölümlerinin birinden en az lisans mezunu olmak.",
+              "Fuar organizasyon, operasyon yönetimi, satış, halkla ilişkiler, tanıtım, müşteri temsilciliği alanlarının birinden veya toplamında en az 7 yıl çalışma deneyimi (karekodlu SGK dökümü / çalışma belgesi).",
+              "Uluslararası sergi, fuar ve konferansların uçtan uca planlama ve uygulamasında; yüklenici ve tedarikçi koordinasyonu, bütçe ve maliyet takibinde deneyim; uluslararası satış ve müşteri ilişkileri.",
+              "İngilizce: YDS/e-YDS’den en az (B) seviyesi veya %100 yabancı dille eğitim veren lisans programı mezunu olmak."
+            ]
+          },
+          {
+            "unvan": "Destek Hizmetleri Büro Personeli",
+            "adet": 2,
+            "ogrenim": "ortaogretim",
+            "puan_turu": null,
+            "en_dusuk_puan": null,
+            "il": null,
+            "kosullar": [
+              "En az lise veya dengi okul mezunu olmak.",
+              "En az 6 yıl çalışma deneyimi (karekodlu SGK dökümü / çalışma belgesi); havalimanları ve havayolu satış ofislerinde deneyim, toplantı ve etkinliklerin idari/teknik hazırlığı ile biletleme ve yolcu hizmetlerinde görev almış olmak.",
+              "Paydaş ve saha iletişimi deneyimi; ekip çalışmasına yatkın, görev ve sorumluluk takibinde deneyimli olmak."
+            ]
+          }
+        ],
+        "yz_ortak": [
+          "Türk vatandaşı olmak, 18 yaşını doldurmuş olmak, kamu haklarından mahrum bulunmamak, görevini devamlı yapmaya engel sağlık sorunu bulunmamak.",
+          "Erkek adaylar için işe başlayacağı tarih itibarıyla askerlik görevini tamamlamış, ertelemiş ya da yükümlülüğü bulunmamak.",
+          "Alım KPSS ile değil, başvuru puanlaması ve sözlü sınavla yapılır; sözlü sınavda en az 70 puan gerekir. Her pozisyon için en yüksek puanlı 5 katı aday sözlü sınava çağrılır.",
+          "TGA’da 4857 sayılı İş Kanunu’na tabi çalışılır; Ajans personeli kamu personeli statüsünde değildir.",
+          "Aday yalnız bir pozisyona başvurabilir; birden fazla pozisyona yapılan başvurular geçersizdir.",
+          "İstenen belgeler: özgeçmiş, mezuniyet belgesi, askerlik durum belgesi, yabancı dil belgesi (gerekiyorsa), son 1 ay içinde alınmış adli sicil kaydı, işe giriş sağlık raporu, tecrübe için SGK hizmet dökümü ve çalışma belgesi."
+        ],
+        "sartlar": [
+          {
+            "kadro": "Yapay Zekâ Direktörü · 1 kadro",
+            "metin": "Bilgisayar, Yazılım, Yapay Zekâ, Büyük Veri Mühendisliği, Elektrik-Elektronik, Endüstri Mühendisliği, Matematik, İstatistik, Ekonomi, İktisat, Bankacılık Finans veya Veri Bilimi bölümlerinden en az lisans mezunu olmak. Toplamda en az 15 yıl mesleki deneyim; bunun en az 7 yılı ekip ve/veya proje yönetimi sorumluluğu bulunan yönetsel görevlerde geçmiş olmak (karekodlu SGK hizmet dökümü / çalışma belgesi ile belgelenir). Veri ve yapay zekâ projelerini yönetme, büyük veri, makine öğrenmesi, NLP, üretken yapay zekâ ve LLM konularında deneyim; turizm veya seyahat alanında veri analitiği / yapay zekâ projesi geliştirmiş ya da yönetmiş olmak. İngilizce: YDS/e-YDS’den en az (B) seviyesi veya %100 yabancı dille eğitim veren lisans programı mezunu olmak."
+          },
+          {
+            "kadro": "Etkinlik ve Ağırlama Müdür Yardımcısı · 1 kadro",
+            "metin": "Turizm ve Otelcilik, İletişim, Sinema ve Televizyon, Halkla İlişkiler, Pazarlama bölümlerinin birinden en az lisans mezunu olmak. Pazarlama, reklam ve tanıtım, basın ilişkileri, görsel iletişim, editoryal alanlarının herhangi birinden veya toplamında en az 6 yıl mesleki deneyim (karekodlu SGK dökümü / çalışma belgesi). Etkinlik yönetimi, ağırlamalar, basınla ilişkiler, saha operasyonları, sosyal medya yönetimi, televizyon/reklam/fotoğraf prodüksiyon süreçlerinde deneyim; reklam ve iletişim ajanslarıyla çalışmış olmak. İngilizce: YDS/e-YDS’den en az (B) seviyesi veya %100 yabancı dille eğitim veren lisans programı mezunu olmak."
+          },
+          {
+            "kadro": "Ürün Pazarlama Koordinatörü · 1 kadro",
+            "metin": "Pazarlama, Mühendislik, Turizm Otel Yöneticiliği veya Gastronomi bölümlerinin birinden en az lisans mezunu olmak; tercihen Pazarlama, İletişim, İşletme alanlarında yüksek lisans. Pazarlama, iletişim, gastronomi alanlarının birinden veya toplamında en az 4 yıl mesleki deneyim (karekodlu SGK dökümü / çalışma belgesi); gastronomi turizmi ürün, etkinlik ve rota geliştirme deneyimi. Proje yönetimi ve paydaş iş birliği deneyimi; MS Office (özellikle Excel, PowerPoint) etkin kullanım; seyahat engeli bulunmamak. İngilizce: YDS/e-YDS’den en az (B) seviyesi veya %100 yabancı dille eğitim veren lisans programı mezunu olmak."
+          },
+          {
+            "kadro": "Dijital Destinasyon İletişim Uzmanı · 1 kadro",
+            "metin": "Siyaset Bilimi, Uluslararası İlişkiler, Kamu Yönetimi, Halkla İlişkiler veya Pazarlama bölümlerinin birinden en az lisans mezunu olmak. En az 3 yıl mesleki deneyim (karekodlu SGK dökümü / çalışma belgesi); yurt içi/dışı marka iletişimi, dijital pazarlama, entegre pazarlama iletişimi çalışmaları. Kampanya performansını veri/analitik ve KPI bazında ölçme ve raporlama, kampanya bütçe planlama ve uluslararası platformlarla kampanya yürütme deneyimi. İngilizce: YDS/e-YDS’den en az (B) seviyesi veya %100 yabancı dille eğitim veren lisans programı mezunu olmak."
+          },
+          {
+            "kadro": "Fuar Koordinatörü · 1 kadro",
+            "metin": "Siyaset Bilimi, Uluslararası İlişkiler, Kamu Yönetimi, Halkla İlişkiler veya Pazarlama bölümlerinin birinden en az lisans mezunu olmak. Fuar organizasyon, operasyon yönetimi, satış, halkla ilişkiler, tanıtım, müşteri temsilciliği alanlarının birinden veya toplamında en az 7 yıl çalışma deneyimi (karekodlu SGK dökümü / çalışma belgesi). Uluslararası sergi, fuar ve konferansların uçtan uca planlama ve uygulamasında; yüklenici ve tedarikçi koordinasyonu, bütçe ve maliyet takibinde deneyim; uluslararası satış ve müşteri ilişkileri. İngilizce: YDS/e-YDS’den en az (B) seviyesi veya %100 yabancı dille eğitim veren lisans programı mezunu olmak."
+          },
+          {
+            "kadro": "Destek Hizmetleri Büro Personeli · 2 kadro",
+            "metin": "En az lise veya dengi okul mezunu olmak. En az 6 yıl çalışma deneyimi (karekodlu SGK dökümü / çalışma belgesi); havalimanları ve havayolu satış ofislerinde deneyim, toplantı ve etkinliklerin idari/teknik hazırlığı ile biletleme ve yolcu hizmetlerinde görev almış olmak. Paydaş ve saha iletişimi deneyimi; ekip çalışmasına yatkın, görev ve sorumluluk takibinde deneyimli olmak."
+          }
+        ],
+        "basvuru_kisa_sartlar": [
+          "Pozisyona göre 3–15 yıl deneyim",
+          "İngilizce YDS (B) veya yabancı dil eğitimi",
+          "KPSS yok, sözlü sınav",
+          "Yalnız bir pozisyona başvuru",
+          "Yalnız tga.gov.tr/kariyer"
+        ],
+        "basvuru_puani_belirtilmemis": true,
+        "ozet": "Türkiye Turizm Tanıtım ve Geliştirme Ajansı 7 personel alacak: yapay zekâ direktörü, etkinlik ve ağırlama müdür yardımcısı, ürün pazarlama koordinatörü, dijital destinasyon iletişim uzmanı, fuar koordinatörü ve 2 destek hizmetleri büro personeli. KPSS aranmaz; pozisyona göre 3–15 yıl deneyim ve sözlü sınav vardır.",
+        "basvuru_notu": "Başvurular 5 Ekim 2026 – 5 Kasım 2026 tarihleri arasında yalnız tga.gov.tr/kariyer sayfasından yapılır; şahsen, posta, faks veya e-posta ile başvuru kabul edilmez. Başvuru yapılan pozisyon için belgelerin sisteme eksiksiz yüklenmesi gerekir. Sözlü sınav yeri ve tarihi tga.gov.tr’den duyurulur.",
+        "_not": "28 Ekim 2026: 7 kadro (6 unvan) ve koşulları resmî ilan Ek-1 tablosundan elle yazıldı; sitede kadro ve koşul eksikti."
+      },
+      "https://kariyerkapisi.gov.tr/IlanDetay?i=f0ca8a29-559f-426a-ade5-5ed30651c618": {
+        "kadro": "150 İcra Müdürü ve İcra Müdür Yardımcısı",
+        "kpss": "kpsssiz",
+        "ogrenim": [
+          "onlisans",
+          "lisans"
+        ],
+        "yz_kadrolar": [
+          {
+            "unvan": "İcra Müdürü ve İcra Müdür Yardımcısı",
+            "adet": 150,
+            "ogrenim": "lisans",
+            "puan_turu": null,
+            "en_dusuk_puan": null,
+            "il": null,
+            "kosullar": [
+              "Hukuk fakültesi, adalet meslek yüksekokulu, meslek yüksekokullarının adalet bölümü veya adalet meslek eğitimi ön lisans programı mezunu olmak (yurt dışı öğrenimde denklik belgesi).",
+              "Yazılı sınavın yapıldığı yılın 1 Ocak’ı itibarıyla 35 yaşını doldurmamış olmak (doğum tarihi 01/01/1991 ve sonrası).",
+              "Türk vatandaşı olmak; kamu haklarından mahrum bulunmamak; görevini engelleyecek akıl hastalığı bulunmamak.",
+              "Kasten işlenen 1 yıl veya daha fazla hapis cezası ile devlet güvenliği, anayasal düzen, zimmet, irtikâp, rüşvet, hırsızlık, dolandırıcılık, sahtecilik, güveni kötüye kullanma, hileli iflas, ihaleye fesat karıştırma, aklama ve kaçakçılık suçlarından mahkûm olmamak.",
+              "Erkek adaylar için askerlikle ilgisi bulunmamak veya yapmış, ertelenmiş ya da yedeğe geçirilmiş olmak."
+            ]
+          }
+        ],
+        "yz_ortak": [
+          "KPSS aranmaz: ÖSYM’nin 5 Aralık 2026 Cumartesi günü Ankara’da yaptığı yazılı sınavla, ardından sözlü sınavla alınır.",
+          "Başvurular ÖSYM üzerinden (ais.osym.gov.tr ya da ÖSYM başvuru merkezleri) alınır; başvuru ve sınav ücreti yatırılır."
+        ],
+        "sartlar": [
+          {
+            "kadro": "İcra Müdürü ve İcra Müdür Yardımcısı · 150 kadro",
+            "metin": "Hukuk fakültesi, adalet meslek yüksekokulu, meslek yüksekokullarının adalet bölümü veya adalet meslek eğitimi ön lisans programı mezunu olmak (yurt dışı öğrenimde denklik belgesi). Yazılı sınavın yapıldığı yılın 1 Ocak’ı itibarıyla 35 yaşını doldurmamış olmak (doğum tarihi 01/01/1991 ve sonrası). Türk vatandaşı olmak; kamu haklarından mahrum bulunmamak; görevini engelleyecek akıl hastalığı bulunmamak. Kasten işlenen 1 yıl veya daha fazla hapis cezası ile devlet güvenliği, anayasal düzen, zimmet, irtikâp, rüşvet, hırsızlık, dolandırıcılık, sahtecilik, güveni kötüye kullanma, hileli iflas, ihaleye fesat karıştırma, aklama ve kaçakçılık suçlarından mahkûm olmamak. Erkek adaylar için askerlikle ilgisi bulunmamak veya yapmış, ertelenmiş ya da yedeğe geçirilmiş olmak."
+          }
+        ],
+        "basvuru_kisa_sartlar": [
+          "KPSS yok, ÖSYM yazılı sınavı",
+          "Hukuk fakültesi veya adalet önlisans",
+          "35 yaş sınırı (1991 ve sonrası)",
+          "Yazılı sınav 5 Aralık 2026"
+        ],
+        "basvuru_puani_belirtilmemis": true,
+        "ozet": "Adalet Bakanlığı yazılı ve sözlü sınavla 150 icra müdürü ve icra müdür yardımcısı alacak. Hukuk fakültesi, adalet meslek yüksekokulu veya adalet önlisans mezunu ve 1 Ocak 2026 itibarıyla 35 yaşını doldurmamış olmak gerekir; yazılı sınav ÖSYM tarafından 5 Aralık 2026’da yapılır.",
+        "basvuru_notu": "ÖSYM başvuruları 20–26 Ekim 2026 tarihleri arasında ais.osym.gov.tr üzerinden ya da ÖSYM başvuru merkezlerinden alındı; geç başvuru günü 5 Kasım 2026’dır. Yazılı sınav 5 Aralık 2026 Cumartesi günü saat 10.15’te Ankara-Çankaya ve Ankara-Yenimahalle merkezlerinde yapılır.",
+        "_not": "28 Ekim 2026: Adalet Bakanlığı İcra İşleri Dairesi Başkanlığı’nın resmî sınav duyurusundan (150 kadro, 35 yaş, öğrenim, tarihler) elle yazıldı."
+      },
+      "iskur-c322e5601259e08082548c73": {
+        "yz_kadrolar": [
+          {
+            "unvan": "Mühendis (İnşaat)",
+            "adet": 1,
+            "ogrenim": "lisans",
+            "puan_turu": "P3",
+            "en_dusuk_puan": 65,
+            "il": "Konya",
+            "kosullar": [
+              "Hizmet sınıfı TH, 6. derece.",
+              "Lisans düzeyinde eğitim veren fakültelerin inşaat mühendisliği programından mezun olmak.",
+              "En az (B) sınıfı sürücü belgesine sahip olmak."
+            ]
+          },
+          {
+            "unvan": "Mühendis (Jeodezi ve Haritacılık)",
+            "adet": 1,
+            "ogrenim": "lisans",
+            "puan_turu": "P3",
+            "en_dusuk_puan": 65,
+            "il": "Konya",
+            "kosullar": [
+              "Hizmet sınıfı TH, 6. derece.",
+              "Lisans düzeyinde eğitim veren fakültelerin jeodezi ve fotogrametri mühendisliği, jeodezi ve haritacılık mühendisliği, harita mühendisliği veya geomatik mühendisliği programlarının birinden mezun olmak.",
+              "En az (B) sınıfı sürücü belgesine sahip olmak."
+            ]
+          }
+        ],
+        "yz_ortak": [
+          "657 sayılı Kanunun 40. ve 48/A maddelerindeki genel şartlar: Türk vatandaşı olmak, kamu haklarından mahrum bulunmamak, belirtilen suçlardan hüküm giymemiş olmak, erkek adaylar için askerlikle ilişiği bulunmamak, görevini devamlı yapmaya engel akıl hastalığı bulunmamak.",
+          "2026 KPSS (B grubu) sınavına girmiş ve tabloda belirtilen puan türünden asgari puanı almış olmak.",
+          "Cinsiyet şartı yoktur (erkek ve kadın adaylar)."
+        ],
+        "sartlar": [
+          {
+            "kadro": "Mühendis (İnşaat) · 1 kadro",
+            "metin": "Hizmet sınıfı TH, 6. derece. Lisans düzeyinde eğitim veren fakültelerin inşaat mühendisliği programından mezun olmak. En az (B) sınıfı sürücü belgesine sahip olmak."
+          },
+          {
+            "kadro": "Mühendis (Jeodezi ve Haritacılık) · 1 kadro",
+            "metin": "Hizmet sınıfı TH, 6. derece. Lisans düzeyinde eğitim veren fakültelerin jeodezi ve fotogrametri mühendisliği, jeodezi ve haritacılık mühendisliği, harita mühendisliği veya geomatik mühendisliği programlarının birinden mezun olmak. En az (B) sınıfı sürücü belgesine sahip olmak."
+          }
+        ],
+        "_not": "28 Ekim 2026: İlan PDF’indeki kadro tablosu (bölüm ve nitelik şartları) sitede yoktu; resmî ilandan elle yazıldı."
+      },
+      "iskur-3161393ea90114b808aceb51": {
+        "yz_kadrolar": [
+          {
+            "unvan": "Mühendis (İnşaat)",
+            "adet": 1,
+            "ogrenim": "lisans",
+            "puan_turu": "P3",
+            "en_dusuk_puan": 70,
+            "il": "Edirne",
+            "kosullar": [
+              "Hizmet sınıfı TH, 8. derece.",
+              "Lisans düzeyinde eğitim veren fakültelerin inşaat mühendisliği programından mezun olmak."
+            ]
+          },
+          {
+            "unvan": "Mühendis (Elektrik-Elektronik)",
+            "adet": 1,
+            "ogrenim": "lisans",
+            "puan_turu": "P3",
+            "en_dusuk_puan": 70,
+            "il": "Edirne",
+            "kosullar": [
+              "Hizmet sınıfı TH, 8. derece.",
+              "Lisans düzeyinde eğitim veren fakültelerin elektrik-elektronik mühendisliği programından mezun olmak."
+            ]
+          }
+        ],
+        "yz_ortak": [
+          "657 sayılı Kanunun 40. ve 48/A maddelerindeki genel şartlar: Türk vatandaşı olmak, kamu haklarından mahrum bulunmamak, belirtilen suçlardan hüküm giymemiş olmak, erkek adaylar için askerlikle ilişiği bulunmamak, görevini devamlı yapmaya engel akıl hastalığı bulunmamak.",
+          "2026 KPSS (B grubu) sınavına girmiş ve tabloda belirtilen puan türünden asgari puanı almış olmak.",
+          "Cinsiyet şartı yoktur (erkek ve kadın adaylar)."
+        ],
+        "sartlar": [
+          {
+            "kadro": "Mühendis (İnşaat) · 1 kadro",
+            "metin": "Hizmet sınıfı TH, 8. derece. Lisans düzeyinde eğitim veren fakültelerin inşaat mühendisliği programından mezun olmak."
+          },
+          {
+            "kadro": "Mühendis (Elektrik-Elektronik) · 1 kadro",
+            "metin": "Hizmet sınıfı TH, 8. derece. Lisans düzeyinde eğitim veren fakültelerin elektrik-elektronik mühendisliği programından mezun olmak."
+          }
+        ],
+        "_not": "28 Ekim 2026: İlan PDF’indeki kadro tablosu (bölüm ve nitelik şartları) sitede yoktu; resmî ilandan elle yazıldı."
+      },
+      "iskur-c2eb8c0816172f89126a78a8": {
+        "yz_kadrolar": [
+          {
+            "unvan": "Zabıta Memuru",
+            "adet": 1,
+            "ogrenim": "lisans",
+            "puan_turu": "P3",
+            "en_dusuk_puan": 70,
+            "il": "Isparta",
+            "kosullar": [
+              "Hizmet sınıfı GİH, 10. derece.",
+              "Lisans düzeyinde eğitim veren fakültelerin bankacılık ve finans, finans matematiği, finansal ekonometri programlarının birinden mezun olmak.",
+              "En az (B) sınıfı sürücü belgesine sahip olmak.",
+              "Sınavın yapıldığı tarihte 30 yaşını doldurmamış olmak.",
+              "Boy: erkeklerde en az 1,67 m, kadınlarda en az 1,60 m; boyun 1 metreden fazla olan kısmı ile kilo arasında (+/–) 10 kg’dan fazla fark olmamak (aç karnına, soyunuk ve çıplak ayakla; başvuru evrakı alınmadan önce Belediyece ölçülür)."
+            ]
+          }
+        ],
+        "yz_ortak": [
+          "657 sayılı Kanunun 40. ve 48/A maddelerindeki genel şartlar: Türk vatandaşı olmak, kamu haklarından mahrum bulunmamak, belirtilen suçlardan hüküm giymemiş olmak, erkek adaylar için askerlikle ilişiği bulunmamak, görevini devamlı yapmaya engel akıl hastalığı bulunmamak.",
+          "2026 KPSS (B grubu) sınavına girmiş ve tabloda belirtilen puan türünden asgari puanı almış olmak.",
+          "Cinsiyet şartı yoktur (erkek ve kadın adaylar). Başvuru belgeleri 18–20 Kasım 2026 tarihlerinde mesai günlerinde saat 10.00–16.00 arasında Sarıidris Belediyesi’ne (Hürriyet Mah. Vatan Cad. No:37, Eğirdir/Isparta) teslim edilir; sözlü ve uygulamalı sınav 2 Aralık 2026 saat 10.00’da yapılır."
+        ],
+        "sartlar": [
+          {
+            "kadro": "Zabıta Memuru · 1 kadro",
+            "metin": "Hizmet sınıfı GİH, 10. derece. Lisans düzeyinde eğitim veren fakültelerin bankacılık ve finans, finans matematiği, finansal ekonometri programlarının birinden mezun olmak. En az (B) sınıfı sürücü belgesine sahip olmak. Sınavın yapıldığı tarihte 30 yaşını doldurmamış olmak. Boy: erkeklerde en az 1,67 m, kadınlarda en az 1,60 m; boyun 1 metreden fazla olan kısmı ile kilo arasında (+/–) 10 kg’dan fazla fark olmamak (aç karnına, soyunuk ve çıplak ayakla; başvuru evrakı alınmadan önce Belediyece ölçülür)."
+          }
+        ],
+        "_not": "28 Ekim 2026: İlan PDF’indeki kadro tablosu (bölüm ve nitelik şartları) sitede yoktu; resmî ilandan elle yazıldı.",
+        "son_zaman": "2026-11-20T16:00:00+03:00"
+      },
+      "iskur-9a987e7b9b3e9392633389ee": {
+        "yz_kadrolar": [
+          {
+            "unvan": "Çözümleyici",
+            "adet": 2,
+            "ogrenim": "lisans",
+            "puan_turu": "P3",
+            "en_dusuk_puan": 55,
+            "il": "Malatya",
+            "kosullar": [
+              "Hizmet sınıfı TH, 7. derece.",
+              "Lisans düzeyinde eğitim veren kurumların kamu yönetimi, halkla ilişkiler ve tanıtım ya da yerel yönetimler bölümlerinin birinden mezun olmak.",
+              "En az iki programlama dilini bildiğini, mezun olduğu okuldan alacağı belge veya Millî Eğitim Bakanlığından onaylı kurs sertifikası ile belgelemek.",
+              "En az (B) sınıfı sürücü belgesine sahip olmak."
+            ]
+          }
+        ],
+        "yz_ortak": [
+          "657 sayılı Kanunun 40. ve 48/A maddelerindeki genel şartlar: Türk vatandaşı olmak, kamu haklarından mahrum bulunmamak, belirtilen suçlardan hüküm giymemiş olmak, erkek adaylar için askerlikle ilişiği bulunmamak, görevini devamlı yapmaya engel akıl hastalığı bulunmamak.",
+          "2026 KPSS (B grubu) sınavına girmiş ve tabloda belirtilen puan türünden asgari puanı almış olmak.",
+          "Cinsiyet şartı yoktur (erkek ve kadın adaylar). Pozisyon tam zamanlı sözleşmeli personel (5393 sayılı Belediye Kanunu m. 49) olarak alınır."
+        ],
+        "sartlar": [
+          {
+            "kadro": "Çözümleyici · 2 kadro",
+            "metin": "Hizmet sınıfı TH, 7. derece. Lisans düzeyinde eğitim veren kurumların kamu yönetimi, halkla ilişkiler ve tanıtım ya da yerel yönetimler bölümlerinin birinden mezun olmak. En az iki programlama dilini bildiğini, mezun olduğu okuldan alacağı belge veya Millî Eğitim Bakanlığından onaylı kurs sertifikası ile belgelemek. En az (B) sınıfı sürücü belgesine sahip olmak."
+          }
+        ],
+        "_not": "28 Ekim 2026: İlan PDF’indeki kadro tablosu (bölüm ve nitelik şartları) sitede yoktu; resmî ilandan elle yazıldı."
+      },
+      "sbb-5681cd6adcb3be4bf8184f42": {
+        "yz_kadrolar": [
+          {
+            "unvan": "Deniz Sınıfı Muvazzaf Subay Adayı",
+            "adet": null,
+            "ogrenim": "lisans",
+            "puan_turu": null,
+            "en_dusuk_puan": null,
+            "il": null,
+            "kosullar": [
+              "1 Ocak 2026 itibarıyla lisans mezunları için 27 yaşından büyük olmamak (1 Ocak 1999 ve sonrası doğumlular); lisansüstü eğitimini tamamlayanlar için 32 yaşından büyük olmamak (1 Ocak 1994 ve sonrası doğumlular).",
+              "Yurt içinde en az dört yıl süreli fakülte veya yüksekokulların kılavuzdaki TABLO-1 kaynak okul programlarından mezun olmak (eş değer programlar sayılmaz); yurt dışı mezunlarda programın YÖK denkliği belgelenmelidir.",
+              "KPSS puanı istenmez; Millî Savunma Bakanlığınca yapılacak genel kültür sınavından en az 50 puan alanlar değerlendirmeye alınır.",
+              "Türk vatandaşı olmak, hakkında “yedek subay olamaz” kararı bulunmamak, belirtilen suçlardan hüküm giymemiş ve soruşturması bulunmamak; sağlık şartları ile boy-kilo ve fiziki yeterlilik testi koşullarını sağlamak.",
+              "Kadın ve erkek adaylar başvurabilir. Askerlik yükümlülüğü yasal sebeplerle ertelenmiş olanlar, yedek subay/astsubay, erbaş ve erler ile terhis olanlar başvurabilir."
+            ]
+          }
+        ],
+        "yz_ortak": [
+          "Başvuru 12 Ekim – 2 Kasım 2026 saat 17.30’a kadar yalnız personeltemin.msb.gov.tr üzerinden e-Devlet şifresiyle yapılır; şahsen, posta veya dilekçeyle başvuru kabul edilmez.",
+          "Başvuru ücreti 600 TL’dir; 2 Kasım 2026 saat 23.30’a kadar yatırılır. İkinci seçim aşamaları MEBS Okulu ve Eğitim Merkezi Komutanlığında (Mamak/Ankara) yapılır."
+        ],
+        "sartlar": [
+          {
+            "kadro": "Deniz Sınıfı Muvazzaf Subay Adayı",
+            "metin": "1 Ocak 2026 itibarıyla lisans mezunları için 27 yaşından büyük olmamak (1 Ocak 1999 ve sonrası doğumlular); lisansüstü eğitimini tamamlayanlar için 32 yaşından büyük olmamak (1 Ocak 1994 ve sonrası doğumlular). Yurt içinde en az dört yıl süreli fakülte veya yüksekokulların kılavuzdaki TABLO-1 kaynak okul programlarından mezun olmak (eş değer programlar sayılmaz); yurt dışı mezunlarda programın YÖK denkliği belgelenmelidir. KPSS puanı istenmez; Millî Savunma Bakanlığınca yapılacak genel kültür sınavından en az 50 puan alanlar değerlendirmeye alınır. Türk vatandaşı olmak, hakkında “yedek subay olamaz” kararı bulunmamak, belirtilen suçlardan hüküm giymemiş ve soruşturması bulunmamak; sağlık şartları ile boy-kilo ve fiziki yeterlilik testi koşullarını sağlamak. Kadın ve erkek adaylar başvurabilir. Askerlik yükümlülüğü yasal sebeplerle ertelenmiş olanlar, yedek subay/astsubay, erbaş ve erler ile terhis olanlar başvurabilir."
+          }
+        ],
+        "basvuru_notu": "Başvuru 12 Ekim – 2 Kasım 2026 saat 17.30’a kadar personeltemin.msb.gov.tr üzerinden e-Devlet şifresiyle yapılır; şahsen, posta veya dilekçeyle başvuru kabul edilmez. Başvuru ücreti 600 TL’dir.",
+        "basvuru_kisa_sartlar": [
+          "KPSS yok, genel kültür sınavı (en az 50)",
+          "Lisans 27 yaş, lisansüstü 32 yaş sınırı",
+          "Yalnız e-Devlet ile başvuru",
+          "Başvuru ücreti 600 TL"
+        ],
+        "basvuru_puani_belirtilmemis": true,
+        "_not": "28 Ekim 2026: Sitedeki şart metni kılavuzun bozuk bir parçasıydı; kılavuzun başvuru bölümünden elle yazıldı."
+      },
+      "sbb-a1b920fe98f44f8e989fea1e": {
+        "sartlar": [
+          {
+            "kadro": "Muvazzaf subay adayı",
+            "metin": "Kadro sayıları, yaş sınırı, kaynak okul programları ve diğer şartlar 2026 Yılı Muvazzaf Subay Temini Kılavuzunda yer alır (personeltemin.msb.gov.tr). SBB’de yayımlanan belge yalnızca kılavuza bağlantı veren tek sayfadır."
+          }
+        ],
+        "basvuru_notu": "Başvuru son günü 2 Kasım 2026’dır. Başvuru yöntemi ve tüm şartlar için Millî Savunma Bakanlığı Personel Temin Daire Başkanlığı’nın personeltemin.msb.gov.tr adresindeki kılavuza bakın.",
+        "_not": "28 Ekim 2026: SBB belgesi yalnızca kılavuz bağlantısı içerdiğinden şart metni uydurulmadı; kılavuza yönlendirildi."
       }
     }
   }
