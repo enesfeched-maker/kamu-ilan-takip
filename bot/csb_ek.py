@@ -249,10 +249,69 @@ def pdf_alanlari(veri, baslik=''):
     return {k: sonuc[k] for k in ('kadro', 'sartlar') if sonuc.get(k)} if sonuc.get('kadro') else {}
 
 
+def docx_paragraflari(veri):
+    """Gövdedeki (tablo dışı) paragraflar."""
+    kok = docx_xml(veri)
+    govde = kok.find(W + 'body')
+    return [m for m in (_paragraf(p) for p in (govde if govde is not None else [])  if p.tag == W + 'p') if m]
+
+
+def _tarih_yaz(g, a, y):
+    ay = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık']
+    return f'{int(g)} {ay[int(a) - 1]} {y}'
+
+
+def docx_ek_bilgiler(veri):
+    """Belge gövdesindeki özel şartlar (yaş, boy-kilo) ve başvuru yeri/tarihi: {'sart': metin, 'basvuru': metin}; yoksa {}.
+    Yalnız belgede yazanlar; bulunamayan alan atlanır."""
+    p = docx_paragraflari(veri)
+    tam = '\n'.join(p)
+    sonuc = {}
+    ozel = re.split(r'BAŞVURU\s+ÖZEL\s+ŞARTLARI', tam, maxsplit=1)
+    bolum = re.split(r'BAŞVURU\s+ESNASINDA', ozel[1], maxsplit=1)[0] if len(ozel) > 1 else ''
+    parca = []
+    yas = re.search(r'(?:sınavın yapıldığı tarihte|son başvuru tarihi itibarıyla)\s*(\d{2})\s*yaşını doldurmamış olmak', bolum, re.I)
+    if yas:
+        parca.append(f'Sınavın yapıldığı tarihte {yas.group(1)} yaşını doldurmamış olmak.')
+    boy = re.search(r'erkeklerde en az ([\d.,]+) metre, kadınlarda en az ([\d.,]+) metre', bolum)
+    if boy:
+        parca.append(f'Boy: erkeklerde en az {boy.group(1).replace(".", ",")} m, kadınlarda en az {boy.group(2).replace(".", ",")} m; '
+                     'boyun 1 metreden fazla kısmı ile kilo arasında en fazla 10 kg fark olmalı (ölçüm aç karnına, soyunuk ve çıplak ayakla).')
+    if parca:
+        sonuc['sart'] = ' '.join(parca)
+    yer = re.split(r'BAŞVURU\s+YERİ', tam, maxsplit=1)
+    if len(yer) > 1:
+        b4 = re.split(r'\n\s*5\.', yer[1], maxsplit=1)[0]
+        aralik = re.search(r'(\d{1,2})[./](\d{1,2})[./](20\d{2})\s*[-–]\s*(\d{1,2})[./](\d{1,2})[./](20\d{2})', b4)
+        if aralik:
+            g1, a1, y1, g2, a2, y2 = aralik.groups()
+            metin = f'Başvuru {_tarih_yaz(g1, a1, y1)} – {_tarih_yaz(g2, a2, y2)} arasında'
+            mail = re.search(r'[\w.-]+@[\w.-]+\.\w+', b4)
+            sahsen = re.search(r'şahsen', b4, re.I)
+            if mail:
+                metin += f'; e-postayla ({mail.group(0)})' + (' ya da şahsen/postayla' if sahsen else '')
+            elif sahsen:
+                metin += '; şahsen'
+            if re.search(r'posta ile veya diğer şekillerde[^.]*kabul edilmeyecektir', b4, re.I):
+                metin += ' (posta ve diğer yollarla başvuru kabul edilmez)'
+            sonuc['basvuru'] = metin + '.'
+    return sonuc
+
+
 def belge_alanlari(adres, veri, baslik=''):
     """Ek belgeden kadro/şart alanları. Çözümleme başarısızsa istisna atar; kadro tablosu yoksa {} döner."""
     if adres.lower().endswith('.docx'):
-        return alanlar(tablo_satirlari(docx_tablolari(veri)))
+        sonuc = alanlar(tablo_satirlari(docx_tablolari(veri)))
+        if sonuc:
+            try:
+                ek = docx_ek_bilgiler(veri)
+            except Exception:
+                ek = {}
+            if ek.get('sart'):
+                sonuc['sartlar'] = sonuc['sartlar'] + [{'kadro': 'Tüm kadrolar için', 'metin': ek['sart']}]
+            if ek.get('basvuru'):
+                sonuc['basvuru_notu'] = ek['basvuru']
+        return sonuc
     return pdf_alanlari(veri, baslik)
 
 

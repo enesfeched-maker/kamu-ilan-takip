@@ -102,3 +102,16 @@ class KosulTemizTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class CsbSatirlariAyriTesti(unittest.TestCase):
+    def test_ayni_unvanli_satirlar_birlesmez(self):
+        item = {'kadro': '23 Zabıta Memuru', 'sartlar': [
+            {'kadro': 'Zabıta Memuru · 18 kadro', 'metin': 'KPSS P3 puan türünden en az 65 puan. Lisans mezunu.'},
+            {'kadro': 'Zabıta Memuru · 5 kadro', 'metin': 'KPSS P3 puan türünden en az 65 puan. Veteriner mezunu.'}]}
+        import site_uret
+        html_ = site_uret._kadro_tablosu(item)
+        self.assertIn('>18<', html_)
+        self.assertIn('>5<', html_)
+        self.assertNotIn('>23<', html_)
+        self.assertIn('Veteriner mezunu', html_)

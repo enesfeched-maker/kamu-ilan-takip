@@ -157,6 +157,14 @@ def detay_coz(ana, alt):
     for a, bl in zip(ayrinti, ozel):
         a['bolumler'] = bl
         a['maddeler'] = [m for _, ms in bl for m in ms]
+    if not any(re.search(r'(?i)genel\s+(?:şart|koşul)', b or '') for b, _ in ortak):
+        # Sözleşmeli bilişim gibi ilanlarda genel şartlar kadro satırlarında değil ana ilan metnindedir
+        try:
+            from kosul_ayristir import bolumler
+            genel_bolum = [[b, ms] for b, ms in bolumler(ana.get('ilanMetni') or '') if re.search(r'(?i)genel\s+(?:şart|koşul)', b or '') and ms]
+        except Exception:
+            genel_bolum = []
+        ortak = list(ortak) + genel_bolum
     ortak_metin = ' '.join(m for _, ms in ortak for m in ms)
     if ortak:
         sonuc['kadro_ortak'] = ortak
