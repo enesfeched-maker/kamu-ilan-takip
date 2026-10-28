@@ -1,0 +1,28 @@
+name: Kanal mesajını sil
+
+# Yanlışlıkla iki kez paylaşılan ilanın fazla mesajını kanaldan kaldırır (Actions -> Kanal mesajını sil -> Run workflow).
+on:
+  workflow_dispatch:
+    inputs:
+      mesajlar:
+        description: "Silinecek Telegram mesaj numaraları (virgülle), örn. 411"
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  sil:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mesajları sil
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          MESAJLAR: ${{ inputs.mesajlar }}
+        run: |
+          for id in $(echo "$MESAJLAR" | tr ',' ' '); do
+            case "$id" in (*[!0-9]*|'') echo "Geçersiz mesaj numarası: $id"; exit 1;; esac
+            curl -fsS -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/deleteMessage" \
+              -d chat_id="$TELEGRAM_CHAT_ID" -d message_id="$id" > /dev/null && echo "Silindi: $id"
+          done

@@ -1526,5 +1526,32 @@
       300,
       298
     ]
+  },
+  "imamoglu belediye": {
+    "dosya": "imamoglu-belediyesi.png",
+    "kaynak": "https://www.imamoglubelediyesi.bel.tr/",
+    "orijinal": "https://www.imamoglubelediyesi.bel.tr/img/logo.png",
+    "boyut": [
+      324,
+      126
+    ]
+  },
+  "asarcik belediye": {
+    "dosya": "asarcik-belediyesi.png",
+    "kaynak": "https://www.asarcik.bel.tr/",
+    "orijinal": "https://www.asarcik.bel.tr/content/image/asarcik.png",
+    "boyut": [
+      400,
+      400
+    ]
+  },
+  "elazig il ozel idaresi": {
+    "dosya": "elazig-il-ozel-idaresi.png",
+    "kaynak": "http://www.elazigozelidaresi.gov.tr/",
+    "orijinal": "http://www.elazigozelidaresi.gov.tr/kurumlar/elazigozelidaresi.gov.tr/AYeniOzelidare/Logo/elazig_ilozelidare_logo.png",
+    "boyut": [
+      200,
+      65
+    ]
   }
 }
