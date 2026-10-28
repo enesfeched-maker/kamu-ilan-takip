@@ -530,11 +530,14 @@ def _parmak_izi(i):
         kurum = kopya._kurum_cekirdek(i, ks.kurum_kanonik(i.get('kurum')))
     except Exception:
         kurum = kurum_anahtari(i.get('kurum') or '')
-    return (kurum, str(i.get('son_tarih') or '')[:10], toplam, {kucuk(ad) for _, ad in kadro if ad})
+    # SBB'nin 'N MEMUR ALACAK' gibi sınıf adları gerçek unvan değildir ('Müze Görevlisi' ilanının SBB satırı): unvan sayılmaz
+    # (28 Ekim 2026: Milli Saraylar ilanı SBB ve İŞKUR kaydıyla iki kez paylaşıldı).
+    return (kurum, str(i.get('son_tarih') or '')[:10], toplam, {kucuk(ad) for _, ad in kadro if ad} - GENEL_UNVANLAR)
 
 
 GENEL_BASLIK_KELIMELERI = {'alacak', 'alınacak', 'alım', 'alımı', 'ilanı', 'ilan', 'personel', 'personeli', 'yılı',
-                           'duyurusu', 'kişi', 'adet', 'sözleşmeli', 'kadrolu', 'açıktan', 'için', 'ile', 've'}
+                           'duyurusu', 'kişi', 'adet', 'sözleşmeli', 'kadrolu', 'açıktan', 'için', 'ile', 've', 'memur', 'işçi', 'sürekli'}
+GENEL_UNVANLAR = {'memur', 'işçi', 'sürekli işçi', 'sözleşmeli personel', 'personel', 'kamu personeli'}
 
 
 def _baslik_kokleri(i):

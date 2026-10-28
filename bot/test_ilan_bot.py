@@ -583,3 +583,19 @@ class GununSozuTests(unittest.TestCase):
         an = datetime(2026, 10, 11, 9, tzinfo=ilan_bot.TR)
         metin = ilan_bot.sabah_mesaj([], [], 0, '', an)
         self.assertEqual(metin.split('\n')[1], ilan_bot.PAZAR_SOZLERI[0])
+
+
+class GenelUnvanliSbbSatiriTekrari(unittest.TestCase):
+    def test_sbb_memur_alacak_satiri_ayni_ilanin_diger_kaydiyla_eslesir(self):
+        import ilan_bot as b
+        sbb = {'id': 'sbb-1', 'kurum': 'MİLLİ SARAYLAR İDARESİ BAŞKANLIĞI', 'son_tarih': '2026-11-08', 'kadro': '3 MEMUR ALACAK',
+               'baslik': 'MİLLİ SARAYLAR İDARESİ BAŞKANLIĞI - 3 MEMUR ALACAK'}
+        kk = {'id': 'https://kariyerkapisi.gov.tr/IlanDetay?i=x', 'kurum': 'MİLLİ SARAYLAR İDARESİ BAŞKANLIĞI', 'son_tarih': '2026-11-08',
+              'kadro': '3 MÜZE GÖREVLİSİ', 'baslik': 'MİLLİ SARAYLAR İDARESİ BAŞKANLIĞI - SÖZLEŞMELİ PERSONEL POZİSYONUNDA 3 MÜZE GÖREVLİSİ ALIMI SINAV İLANI'}
+        self.assertTrue(b.ayni_ilan_mi(sbb, kk))
+
+    def test_farkli_kisi_sayisi_hala_farkli_ilan(self):
+        import ilan_bot as b
+        a = {'id': 'sbb-1', 'kurum': 'X BELEDİYE BAŞKANLIĞI', 'son_tarih': '2026-11-08', 'kadro': '3 MEMUR ALACAK', 'baslik': 'X BELEDİYE BAŞKANLIĞI - 3 MEMUR ALACAK'}
+        c = {'id': 'csb-2', 'kurum': 'X BELEDİYE BAŞKANLIĞI', 'son_tarih': '2026-11-08', 'kadro': '5 Zabıta Memuru', 'baslik': 'X BELEDİYE BAŞKANLIĞI - ZABITA'}
+        self.assertFalse(b.ayni_ilan_mi(a, c))
