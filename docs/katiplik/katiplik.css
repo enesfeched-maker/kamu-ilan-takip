@@ -493,3 +493,11 @@ body:has(.ko-secim) .kt-sayfa-bas h1::after{content:"🎮"}
 .kt-kaynak:empty,#ayar-not:empty,.kt-yol-sonuc:empty{display:none}
 .kt-ayar-alt #basla{margin-left:auto}
 .kt-hero h1{margin-top:0}
+/* yol haritası dolunca uzun kart yanında boşluk kalmasın: iki kart alt alta, tam genişlik */
+.kt-gun:has(.kt-yol-sonuc:not(:empty)){grid-template-columns:minmax(0,1fr)}
+@media (min-width:861px){
+  .kt-yol-sonuc{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:36px;align-items:start}
+  .kt-yol-sonuc>*{grid-column:2}
+  .kt-yol-sonuc>.kt-yol-tahmin{grid-column:1;grid-row:1/span 9;margin:0}
+  .kt-yol-sonuc>p:first-of-type{margin-top:0}
+}
