@@ -102,7 +102,7 @@ var yuzde=function(x){return (x*100).toFixed(x<0.1&&x>0?1:0).replace('.',',')+'%
 function sure(sn){sn=Math.round(sn||0);if(sn<60)return sn+' sn';var d=Math.floor(sn/60),s=sn%60;if(d<60)return d+' dk'+(s?' '+s+' sn':'');return Math.floor(d/60)+' sa '+(d%60)+' dk'}
 function gunKisa(g){var p=g.split('-');return Number(p[2])+'.'+p[1]}
 var GUNAD=['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'];
-var EYLEM={manset_tikla:'Manşet tıklaması',manset_nokta:'Manşet noktası',manset_ok:'Manşet oku',satir_tikla:'İlan satırı',kurum_tikla:'Kurum bağlantısı',kategori:'Kategori seçimi',filtre:'Filtre değişimi',arama:'Arama',daha_fazla:'Daha fazla göster',kaydet:'İlan kaydedildi',kaydi_sil:'Kayıt kaldırıldı',takvim_ics:'Takvim indirme (.ics)',telegram:'Telegram bağlantısı',resmi_ilan:'Resmî ilana git',profil_kaydet:'Profil kaydı',robot:'Tercih robotu',tema:'Tema değiştirme',menu:'Menü',makale:'Rehber makalesi',arama_bildirim:'Sonuçsuz arama → Telegram haber al',arama_gecmis:'Sonuçsuz arama → geçmiş ilanlar',arama_cip:'Hızlı arama düğmesi',arama_taban:'Sonuçsuz arama → taban puanları'};
+var EYLEM={manset_tikla:'Manşet tıklaması',manset_nokta:'Manşet noktası',manset_ok:'Manşet oku',satir_tikla:'İlan satırı',kurum_tikla:'Kurum bağlantısı',kategori:'Kategori seçimi',filtre:'Filtre değişimi',arama:'Arama',daha_fazla:'Daha fazla göster',kaydet:'İlan kaydedildi',kaydi_sil:'Kayıt kaldırıldı',takvim_ics:'Takvim indirme (.ics)',telegram:'Telegram bağlantısı',resmi_ilan:'Resmî ilana git',profil_kaydet:'Profil kaydı',robot:'Tercih robotu',tema:'Tema değiştirme',menu:'Menü',makale:'Rehber makalesi',arama_bildirim:'Sonuçsuz arama → Telegram haber al',arama_gecmis:'Sonuçsuz arama → geçmiş ilanlar',arama_cip:'Hızlı arama düğmesi',arama_taban:'Sonuçsuz arama → taban puanları','katip-basla':'Katiplik: deneme başlatıldı','katip-bitti':'Katiplik: deneme bitti','katip-mod':'Katiplik: mod seçimi','katip-kutuphane':'Katiplik: kütüphane seçimi','katip-ders':'Katiplik: ders açıldı','katip-ders-bitti':'Katiplik: ders tamamlandı','katip-antrenman':'Katiplik: antrenman başladı','katip-antrenman-bitti':'Katiplik: antrenman bitti','katip-oyun':'Katiplik: oyun başladı','katip-oyun-bitti':'Katiplik: oyun bitti','katip-kart':'Katiplik: sonuç kartı','katip-yol':'Katiplik: yol haritası',katiplik:'Katiplik düğmesi'};
 var GORUNUM={bugun:'Manşet',ilanlar:'İlanlar',takvim:'Takvim',kayitli:'Kayıtlı',rehber:'Rehber',ilan:'İlan penceresi',makale:'Bilgi / rehber makalesi',karsilastir:'Karşılaştırma'};
 function eylem(a){return EYLEM[a]||a}
 
@@ -186,6 +186,35 @@ function akisCiz(kap,akis){
   kap.appendChild(w)
 }
 
+/* Katiplik bölümü: ziyaret, süre, sınav hunisi, sonuçlar ve araç kullanımı. Ad eşlemeleri sitedeki data-a / A() değerleridir. */
+var KATIP_MOD={sinav:'Sınav simülasyonu',gunluk:'Günün metni',antrenman:'Serbest antrenman',hatali:'Hatalı kelimeler',isinma:'Isınma',ozel:'Kendi metni'};
+var KATIP_SAYFA={'/katiplik/':'Sınav (ana)','/katiplik/dersler/':'Dersler','/katiplik/antrenman/':'Kelime antrenmanı','/katiplik/oyunlar/':'Oyunlar','/katiplik/sinav-metinleri/':'Sınav metinleri (dizin)','/katiplik/degerlendirme-kriterleri/':'Değerlendirme kriterleri','/katiplik/klavye-sinavi-rehberi/':'Sınav rehberi'};
+function katipSayfa(p){var m=p.match(/^\/katiplik\/sinav-metinleri\/metin-(\d+)\/$/);return m?'Resmî metin '+m[1]:(KATIP_SAYFA[p]||p)}
+var KATIP_KUT={zk2025:'ZK 2025 (resmî)',ozgun:'Özgün metinler',tck:'TCK',cmk:'CMK',hmk:'HMK',iik:'İİK',tmk:'TMK',tbk:'TBK',anayasa:'Anayasa',iyuk:'İYUK',dmk:'DMK'};
+var KATIP_ANT={hiz:'Hız testi',zayif:'Zayıf tuşlar',hedef200:'Sık 200 kelime',hedef500:'Sık 500 kelime',uzun:'Uzun kelimeler',terim:'Hukuk terimleri',rakam:'Rakam ve sayı'};
+function katipMod(x){var m=String(x).replace(/-(basarili|basarisiz)$/,'');if(/^sinav-/.test(m))return 'Sınav · '+(KATIP_KUT[m.slice(6)]||m.slice(6));return KATIP_MOD[m]||m}
+function katiplikCiz(kok,K){
+  var k=K.kpi,kp=h('div','kpi');
+  kok.appendChild(h('h2','bolum','Katiplik'));
+  [['Sayfa görüntüleme',tr(k.goruntu),tr(k.girisOturum)+' oturum katiplikle başladı'],['Etkin süre',sure(k.sureSn),k.goruntu?sure(k.sureSn/k.goruntu)+' / görüntüleme':''],
+   ['Başlatılan deneme',tr(k.basla),k.basla?yuzde(k.bitti/k.basla)+' tamamlandı ('+tr(k.bitti)+')':'henüz yok'],['Sınav başarısı',k.bitenSinav?yuzde(k.basariOran):'—',tr(k.bitenSinav)+' sınav · ort. '+k.ortNet+' net'],
+   ['Menüden tıklama',tr(k.menu),'“Katiplik · Yeni” sekmesi'],['Paylaşım',tr(k.paylasim),tr(K.paylasimGelen)+' oturum paylaşımdan geldi']].forEach(function(a){
+    var c=h('div');c.appendChild(h('span',null,a[0]));c.appendChild(h('strong',null,a[1]));c.appendChild(h('em',null,a[2]));kp.appendChild(c)});
+  kok.appendChild(kp);
+  var g=h('div','izgara'),c;kok.appendChild(g);
+  c=kart(g,'Katiplik sayfaları','görüntüleme · ortalama etkin süre');cubuklar(c,K.sayfalar.map(function(r){return {ad:katipSayfa(r.p),v:r.say,ek:r.ortSn?sure(r.ortSn):''}}),{bos:'Katiplik sayfası henüz görüntülenmedi.'});
+  c=kart(g,'Nereden geliyorlar','katiplik sayfasıyla başlayan oturum');cubuklar(c,K.kaynak.map(function(r){return {ad:r.ad,v:r.say}}),{bos:'Veri yok.'});
+  c=kart(g,'Aramadan / dışarıdan giriş sayfası','oturumun ilk sayfası');cubuklar(c,K.girisSayfasi.map(function(r){return {ad:katipSayfa(r.ad),v:r.say}}),{bos:'Veri yok.'});
+  c=kart(g,'Sınav sonuçları','net kelime aralığı · 3 dk sınav + günün metni');cubuklar(c,K.netDagilim.map(function(r){return {ad:r.ad+' net',v:r.say}}),{bos:'Biten sınav yok.'});
+  c=kart(g,'Modlara göre sonuç','biten · başarı · ort. net');cubuklar(c,K.modlar.map(function(r){return {ad:katipMod(r.ad),v:r.say,ek:yuzde(r.basariOran)+' başarı · '+r.ortNet+' net'}}),{bos:'Biten deneme yok.'});
+  c=kart(g,'Başlatılan denemeler','mod ve kütüphane');cubuklar(c,K.basla.map(function(r){return {ad:katipMod(r.ad),v:r.say}}),{bos:'Henüz deneme başlatılmadı.'});
+  c=kart(g,'Kütüphane seçimi');cubuklar(c,K.kutuphane.map(function(r){return {ad:KATIP_KUT[r.ad]||r.ad,v:r.say}}),{bos:'Kütüphane değiştirilmedi (varsayılan: ZK 2025).'});
+  c=kart(g,'Tamamlanan dersler','ders · ort. yıldız');cubuklar(c,K.dersler.map(function(r){return {ad:r.ad,v:r.say,ek:r.ort+'★'}}),{bos:'Tamamlanan ders yok ('+tr(K.dersAcilis)+' ders açıldı).'});
+  c=kart(g,'Kelime antrenmanı','biten · ort. net/dk');cubuklar(c,K.antrenman.map(function(r){return {ad:KATIP_ANT[r.ad]||r.ad,v:r.say,ek:r.ort+' net/dk'}}),{bos:'Biten antrenman yok.'});
+  c=kart(g,'Oyunlar','biten oyun · ort. puan');cubuklar(c,K.oyunlar.map(function(r){return {ad:r.ad==='dosya'?'Dosya Yetiştir':r.ad==='hata'?'Hata Avı':r.ad,v:r.say,ek:'ort. '+tr(r.ort)+' puan'}}),{bos:'Biten oyun yok.'});
+  c=kart(g,'Katiplik düğmeleri','data-a="katiplik"');cubuklar(c,K.dugmeler.map(function(r){return {ad:r.ad,v:r.say}}),{bos:'Tıklama yok.'});
+  c.appendChild(h('p','not','Yol haritasında sınav tarihi giren: '+tr(K.yolHaritasi)+'.'));
+}
 var aralik='7g',akisKap=null;
 function canliGuncelle(){
   fetch('/panel/canli',{credentials:'same-origin'}).then(function(r){if(r.status===401){location.href='/panel';throw 0}return r.json()}).then(function(c){
@@ -217,6 +246,7 @@ function ciz(d){
    ['Yeni / geri dönen',yg?yuzde(k.yeni/yg)+' / '+yuzde(k.geri/yg):'—',tr(k.yeni)+' yeni · '+tr(k.geri)+' geri dönen']].forEach(function(a){
     var c=h('div');c.appendChild(h('span',null,a[0]));c.appendChild(h('strong',null,a[1]));c.appendChild(h('em',null,a[2]));kp.appendChild(c)});
   kok.appendChild(kp);
+  if(d.katiplik)katiplikCiz(kok,d.katiplik);
 
   var g,c,K=d.kayip;
   if(K){

@@ -8,7 +8,7 @@ SAYFALAR = {
     'gizlilik': ('Gizlilik politikası', 'KPSS Tercihi gizlilik politikası: tarayıcıda saklanan bilgiler, çerezsiz ziyaret istatistikleri ve Google AdSense reklamları.',
                  'Bu site üyelik istemez. Özgeçmiş, kimlik bilgisi veya başvuru belgesi toplamak için bir form içermez.', [
         ('Bu cihazda saklanan bilgiler', 'Kaydettiğin ilanların kimlikleri, profilin (öğrenim düzeyi, puan, iller), son ziyaret zamanın ve renk teması '
-         'tercihin tarayıcının yerel depolamasında tutulur. Bunlar başka cihazlara taşınmaz ve sunucumuza gönderilmez. Tarayıcı verilerini silerek '
+         'tercihin tarayıcının yerel depolamasında tutulur. Katiplik klavye sınavı, ders, antrenman ve oyunlarındaki sonuçların, hatalı kelimelerin ve tuş istatistiklerin de yalnızca bu tarayıcıda tutulur; yazdığın metin sunucuya gönderilmez. Bunlar başka cihazlara taşınmaz ve sunucumuza gönderilmez. Tarayıcı verilerini silerek '
          'ya da ana sayfadaki Gizlilik bölümündeki düğmeyle temizleyebilirsin.'),
         ('Dış bağlantılar ve barındırma', 'Resmî başvuru sayfası ve Telegram bağlantıları kendi hizmetlerine yönlendirir. Bu hizmetlerin veri '
          'uygulamaları ayrıdır. Site dosyaları bir barındırma hizmeti üzerinden sunulur; bu hizmet teknik erişim kayıtlarını işleyebilir.'),

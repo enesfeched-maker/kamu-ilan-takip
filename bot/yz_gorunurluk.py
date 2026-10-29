@@ -33,6 +33,9 @@ SSS = [
     ('KPSS şartı olmayan kamu ilanları da var mı?',
      'Evet. Belediye, üniversite ve İŞKUR üzerinden yapılan bazı alımlarda KPSS şartı aranmaz; bu ilanlar da listede yer alır ve ilan '
      'kartında KPSS şartı olmadığı belirtilir.'),
+    ('Zabıt katipliği klavye sınavına nasıl çalışabilirim?',
+     'kpsstercihi.com/katiplik/ sayfasında Adalet Bakanlığı değerlendirme kriterleriyle puanlanan 3 dakikalık klavye sınavı simülasyonu, '
+     'Bakanlığın yayımladığı 2025 resmî sınav metinleri, klavye dersleri, hız testi ve klavye oyunları ücretsiz olarak yer alır.'),
 ]
 
 
@@ -62,6 +65,10 @@ def llms_metni(kayitlar, base, simdi, sayfasi_olan=None):
         f'- [Güncel kamu ilanları]({base}): açık ilanlar, son başvuru tarihine göre',
         f'- [KPSS tercih robotu]({base}puanlar/): puanını gir, geçmiş yerleştirmelerde yettiği kadroları gör',
         f'- [KPSS taban puanları]({base}kpss-taban-puanlari/): lisans, önlisans, ortaöğretim kadro kadro en düşük/en yüksek puanlar',
+        f'- [Katiplik klavye sınavı simülasyonu]({base}katiplik/): zabıt, icra ve CTE katipliği uygulama sınavı; Adalet Bakanlığı değerlendirme kriterleriyle 3 dakikalık deneme, 2025 resmî sınav metinleri',
+        f'- [Zabıt katipliği 2025 sınav metinleri]({base}katiplik/sinav-metinleri/): Bakanlığın yayımladığı 30 uygulamalı sınav metni',
+        f'- [Klavye hız testi]({base}katiplik/antrenman/) ve [on parmak klavye dersleri]({base}katiplik/dersler/)',
+        f'- [Akademik ilanlar]({base}akademik/): öğretim üyesi, öğretim görevlisi, araştırma görevlisi alımları',
         f'- [Sık sorulan sorular]({base}sss/)',
         '- [Telegram kanalı](https://t.me/kpsstercihi): yeni ilanlar anında',
         '',

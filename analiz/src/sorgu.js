@@ -59,6 +59,17 @@ export const METRIKLER = [
   { boyut: 'ilan_sure', sql: `SELECT ${SUT('k')}, SUM(n * COALESCE(n2, 1)) AS toplam FROM olaylar WHERE t = 'aktif' AND ${ILAN_EKRANI} AND {G} GROUP BY gun, k ORDER BY toplam DESC {L}` },
   { boyut: 'kurum', sql: grup(SUT('k'), "t = 'sayfa' AND sy = 'kurum' AND k IS NOT NULL", 'k') },
   { boyut: 'taban', sql: grup(SUT("COALESCE(k, '')"), "t = 'sayfa' AND sy = 'taban'", 'k') },
+  // Katiplik bölümü (Kasım 2026): sayfa başına etkin süre ve katiplik sayfasıyla başlayan oturumların kaynağı (k1 = kaynak, k2 = giriş sayfası).
+  { boyut: 'katip_sure', sql: `SELECT ${SUT('p')}, SUM(n * COALESCE(n2, 1)) AS toplam FROM olaylar WHERE t = 'aktif' AND p LIKE '/katiplik/%' AND {G} GROUP BY gun, p ORDER BY toplam DESC {L}` },
+  ilkOturum('katip_giris', "COALESCE(kaynak, 'Doğrudan')", "AND p LIKE '/katiplik/%'", 'p'),
+  // Katiplik eylemleri (tikla_hedef günlük 200 satırla sınırlı olduğu için ayrı): k1 = eylem, k2 = değer, toplam = n toplamı (net, puan, yıldız).
+  { boyut: 'katip_eylem', sql: `SELECT ${SUT('a', "COALESCE(x, '')")}, SUM(COALESCE(n, 0)) AS toplam FROM olaylar WHERE t = 'tikla' AND (a = 'katiplik' OR a LIKE 'katip-%') AND {G} GROUP BY gun, a, k2 ORDER BY say DESC {L}` },
+  // Biten sınav/antrenman sonuçları net aralığına göre: k1 = mod ve sonuç (ör. sinav-basarili), k2 = net aralığı.
+  {
+    boyut: 'katip_sonuc',
+    sql: `SELECT ${SUT("COALESCE(x, '')", "CASE WHEN n IS NULL THEN '?' WHEN n < 30 THEN '0-29' WHEN n < 60 THEN '30-59' WHEN n < 90 THEN '60-89' WHEN n < 120 THEN '90-119' ELSE '120+' END")},
+      SUM(COALESCE(n, 0)) AS toplam FROM olaylar WHERE t = 'tikla' AND a = 'katip-bitti' AND {G} GROUP BY gun, k1, k2 ORDER BY say DESC {L}`,
+  },
   { boyut: 'tikla_ad', sql: grup(SUT('a'), "t = 'tikla'", 'a') },
   {
     boyut: 'tikla_hedef',
