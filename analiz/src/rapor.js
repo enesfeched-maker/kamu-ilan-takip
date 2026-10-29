@@ -44,6 +44,71 @@ export function ilanYollari(rows) {
   return anahtarlar;
 }
 
+// Katiplik bölümü (Kasım 2026): sayfalar ve süre, giriş kaynakları, sınav huni ve sonuçları, ders/antrenman/oyun kullanımı, paylaşım.
+const NET_ARALIK = ['0-29', '30-59', '60-89', '90-119', '120+'];
+export function katiplikOzeti(rows, hedefler = [], utm = []) {
+  const B = (b) => birlestir(rows, b);
+  const ortalama = (r) => (r.say ? tamam(r.toplam / r.say) : 0);
+  const sureler = new Map(B('katip_sure').map((r) => [r.k1, r]));
+  const sayfaM = new Map();
+  for (const r of B('sayfa')) {
+    if (!r.k1.startsWith('/katiplik/')) continue;
+    const o = sayfaM.get(r.k1) || { p: r.k1, say: 0, tekil: 0 };
+    o.say += r.say; o.tekil += r.tekil; sayfaM.set(r.k1, o);
+  }
+  const sayfalar = sirala([...sayfaM.values()].map((o) => {
+    const s = sureler.get(o.p);
+    return { ...o, sureSn: s ? s.toplam : 0, ortSn: s && o.say ? tamam(s.toplam / o.say) : 0 };
+  }));
+  const eylem = B('katip_eylem');
+  const topla = (a, x) => eylem.filter((r) => r.k1 === a && (x == null || r.k2 === x)).reduce((t, r) => t + r.say, 0);
+  const grupla = (a, f = (r) => ({ ad: r.k2 || '—', say: r.say, tekil: r.tekil, ort: ortalama(r) })) => sirala(eylem.filter((r) => r.k1 === a).map(f));
+  const sonuc = B('katip_sonuc');
+  const sinavSonuc = sonuc.filter((r) => /^(sinav|gunluk)-/.test(r.k1));
+  const bitenSinav = sinavSonuc.reduce((t, r) => t + r.say, 0);
+  const basarili = sinavSonuc.filter((r) => r.k1.endsWith('-basarili')).reduce((t, r) => t + r.say, 0);
+  const netToplam = sinavSonuc.reduce((t, r) => t + r.toplam, 0);
+  const modSonuc = new Map();
+  for (const r of sonuc) {
+    const mod = r.k1.replace(/-(basarili|basarisiz)$/, '');
+    const o = modSonuc.get(mod) || { ad: mod, say: 0, basarili: 0, net: 0 };
+    o.say += r.say; o.net += r.toplam; if (r.k1.endsWith('-basarili')) o.basarili += r.say; modSonuc.set(mod, o);
+  }
+  const girisler = B('katip_giris');
+  const toplaAnahtar = (alan) => {
+    const m = new Map();
+    for (const r of girisler) m.set(r[alan], (m.get(r[alan]) || 0) + r.say);
+    return sirala([...m].map(([ad, say]) => ({ ad, say })));
+  };
+  const basla = topla('katip-basla');
+  return {
+    kpi: {
+      goruntu: sayfalar.reduce((t, r) => t + r.say, 0),
+      sureSn: sayfalar.reduce((t, r) => t + r.sureSn, 0),
+      girisOturum: girisler.reduce((t, r) => t + r.say, 0),
+      basla, bitti: topla('katip-bitti'), bitenSinav,
+      basariOran: bitenSinav ? basarili / bitenSinav : 0,
+      ortNet: bitenSinav ? tamam(netToplam / bitenSinav) : 0,
+      menu: hedefler.filter((r) => r.a === 'menu' && r.x === 'Katiplik').reduce((t, r) => t + r.say, 0),
+      paylasim: topla('katiplik', 'paylas') + topla('katiplik', 'gunluk-paylas') + topla('katiplik', 'sonuc-karti'),
+    },
+    sayfalar: ilk(sayfalar, 20),
+    kaynak: ilk(toplaAnahtar('k1'), 10),
+    girisSayfasi: ilk(toplaAnahtar('k2'), 12),
+    netDagilim: NET_ARALIK.map((a) => ({ ad: a, say: sinavSonuc.filter((r) => r.k2 === a).reduce((t, r) => t + r.say, 0) })),
+    modlar: sirala([...modSonuc.values()].map((o) => ({ ad: o.ad, say: o.say, basariOran: o.say ? o.basarili / o.say : 0, ortNet: o.say ? tamam(o.net / o.say) : 0 }))),
+    basla: grupla('katip-basla'),
+    kutuphane: grupla('katip-kutuphane'),
+    dersler: ilk(grupla('katip-ders-bitti'), 12),
+    dersAcilis: topla('katip-ders'),
+    antrenman: grupla('katip-antrenman-bitti'),
+    oyunlar: grupla('katip-oyun-bitti'),
+    dugmeler: ilk(grupla('katiplik'), 15),
+    yolHaritasi: topla('katip-yol'),
+    paylasimGelen: utm.filter((r) => /^paylas\//.test(r.kaynak) && /katiplik|gunluk/.test(r.kaynak)).reduce((t, r) => t + r.oturum, 0),
+  };
+}
+
 export async function raporUret(env, aralik, simdiMs = Date.now(), adlariGetir = async () => ({})) {
   const { bas, bit, adet } = aralikCoz(aralik, simdiMs);
   const rows = await aralikOku(env.DB, bas, bit);
@@ -111,14 +176,16 @@ export async function raporUret(env, aralik, simdiMs = Date.now(), adlariGetir =
     for (const e of [25, 50, 75, 100]) if (yeni ? e <= n : e === n) kaydirmaToplam.set(String(e), (kaydirmaToplam.get(String(e)) || 0) + r.say);
   }
 
+  const utm = liste('utm', (r) => ({ kaynak: r.k1, kampanya: r.k2, oturum: r.say }));
   return {
     aralik: { bas, bit, adet },
     kpi,
+    katiplik: katiplikOzeti(rows, hedefler, utm),
     gunler,
     isi,
     kaynak: ilk(sirala(B('kaynak')).map(k1say), 12),
     rhost: liste('rhost', k1say),
-    utm: liste('utm', (r) => ({ kaynak: r.k1, kampanya: r.k2, oturum: r.say })),
+    utm,
     sehir: liste('sehir', (r) => ({ ad: r.k1, ulke: r.k2, oturum: r.say, ziyaretci: r.tekil })),
     ulke: liste('ulke', k1say),
     cihaz: liste('cihaz', k1say),

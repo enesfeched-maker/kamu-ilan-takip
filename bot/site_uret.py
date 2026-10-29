@@ -41,7 +41,7 @@ def ikonlar(kok):
             f'<link rel="manifest" href="{kok}manifest.webmanifest">')
 
 
-KABUK_SURUM = 3
+KABUK_SURUM = 4
 TG_DOLU = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.5 3.6 2.9 10.8c-1.1.4-1.1 1.2-.2 1.5l4.8 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.4l2.4-2.3 4.9 3.6c.9.5 1.5.2 1.8-.8l3.2-15.1c.3-1.3-.5-1.9-1.4-1.6zM9 13.4l9.3-5.9c.4-.3.8-.1.5.2l-7.9 7.1-.3 3.4z"/></svg>'
 HAMBURGER_IKON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>'
 # Mobil menü düğmesi: iç sayfaların kendi betiğine bağlı kalmasın diye üst barın hemen ardından çalışır.
@@ -53,12 +53,22 @@ MENU_BETIGI = ('<script>(function(){var h=document.getElementById("tb"),b=docume
 def ust_html(kok, aktif=''):
     """Ana sayfayla aynı ince koyu üst bar (docs/index.html .tb, docs/kabuk.css); bağlantılar `kok` göreli."""
     # Taban puanı sayfaları (kpss-taban-puanlari/) da 'puanlar' bölümüdür; menüde tek sekme robot ve tablo sayfasına gider.
+    # Akademik menüden çıktı (Kasım 2026): aramadan gelenler için /akademik/ sayfası ve alt bilgi bağlantısı var.
+    # Katiplik yeni bölüm olarak vurgulu (tb-yeni) ve "Yeni" rozetli gösterilir.
     menu = [('İlanlar', f'{kok}#ilanlar', 'ilanlar'),
             ('Taban Puanları', f'{kok}puanlar/', 'puanlar'),
-            ('Akademik', f'{kok}#akademik', ''), ('Kayıtlı', f'{kok}#kayitli', '')]
-    bagla = ''.join(f'<a href="{h}" data-a="menu" data-a-x="{ad}"{" class=" + chr(34) + "aktif" + chr(34) + " aria-current=" + chr(34) + "page" + chr(34) if a and a == aktif else ""}>'
-                    f'{ad}{"<b class=" + chr(34) + "tb-sayi" + chr(34) + " id=" + chr(34) + "saved-count-m" + chr(34) + " hidden>0</b>" if ad == "Kayıtlı" else ""}</a>'
-                    for ad, h, a in menu)
+            ('Katiplik', f'{kok}katiplik/', 'katiplik'),
+            ('Kayıtlı', f'{kok}#kayitli', '')]
+
+    def sinif(ad, a):
+        s = (['aktif'] if a and a == aktif else []) + (['tb-yeni'] if ad == 'Katiplik' else [])
+        return (f' class="{" ".join(s)}"' if s else '') + (' aria-current="page"' if a and a == aktif else '')
+
+    def ek(ad):
+        if ad == 'Kayıtlı':
+            return '<b class="tb-sayi" id="saved-count-m" hidden>0</b>'
+        return '<b class="tb-rozet">Yeni</b>' if ad == 'Katiplik' else ''
+    bagla = ''.join(f'<a href="{h}" data-a="menu" data-a-x="{ad}"{sinif(ad, a)}>{ad}{ek(ad)}</a>' for ad, h, a in menu)
     return (f'<header class="tb" id="tb"><div class="tb-ic"><a class="tb-marka" href="{kok}" aria-label="KPSS Tercihi ana sayfa">'
             f'<img src="{kok}assets/logo-96.webp?v={LOGO_SURUM}" alt="" width="34" height="34"><span>KPSS Tercihi</span></a>'
             f'<a class="tb-tg" href="https://t.me/kpsstercihi" target="_blank" rel="noopener" data-a="telegram" data-a-x="ust">{TG_DOLU}<span class="tam">Telegram\'a katıl</span><span class="kisa">Katıl</span></a>'
@@ -74,7 +84,7 @@ def alt_html(kok, yil=None):
     yil = yil or datetime.now(TR).year
     return (f'<footer class="ab"><div class="ab-ic"><div class="ab-marka"><img src="{kok}assets/logo-96.webp?v={LOGO_SURUM}" alt="" width="36" height="36">'
             f'<div><strong>KPSS Tercihi</strong><span>Kamu ilanları, sade ve tek yerde</span></div></div>'
-            f'<nav class="ab-linkler" aria-label="Alt bilgi"><a href="https://t.me/kpsstercihi" target="_blank" rel="noopener" data-a="telegram" data-a-x="alt">Telegram</a><a href="{kok}rehber/">Rehberler</a><a href="{kok}sss/">Sık sorulanlar</a><a href="{kok}hakkimizda/">Hakkımızda</a><a href="{kok}gizlilik/">Gizlilik</a><a href="{kok}kullanim-kosullari/">Kullanım koşulları</a></nav>'
+            f'<nav class="ab-linkler" aria-label="Alt bilgi"><a href="https://t.me/kpsstercihi" target="_blank" rel="noopener" data-a="telegram" data-a-x="alt">Telegram</a><a href="{kok}katiplik/">Katiplik sınavı</a><a href="{kok}akademik/">Akademik ilanlar</a><a href="{kok}rehber/">Rehberler</a><a href="{kok}sss/">Sık sorulanlar</a><a href="{kok}hakkimizda/">Hakkımızda</a><a href="{kok}gizlilik/">Gizlilik</a><a href="{kok}kullanim-kosullari/">Kullanım koşulları</a></nav>'
             f'<p class="ab-not">© <span id="yil">{yil}</span> KPSS Tercihi</p></div></footer>')
 
 
@@ -1223,6 +1233,25 @@ def main():
         print(f'Uyarı: taban puanı sayfaları üretilemedi: {hata}')
     if BASE + 'puanlar/' not in urls:
         urls.insert(1, BASE + 'puanlar/')   # tercih robotu sayfası haritada yoktu
+    if BASE + 'katiplik/' not in urls:
+        urls.insert(2, BASE + 'katiplik/')   # klavye sınavı simülasyonu
+    for alt in ('oyunlar', 'antrenman', 'dersler'):   # katiplik alt sayfaları, katiplik/ adresinin hemen ardına
+        if BASE + f'katiplik/{alt}/' not in urls:
+            urls.insert(urls.index(BASE + 'katiplik/') + 1, BASE + f'katiplik/{alt}/')
+    try:
+        import katiplik_sayfalari   # resmî sınav metinleri, değerlendirme kriterleri, sınav rehberi (aramadan trafik)
+        urls += katiplik_sayfalari.yaz(docs, BASE)
+    except Exception as hata:
+        print(f'Uyarı: katiplik sayfaları üretilemedi: {hata}')
+    try:
+        import akademik_sayfasi   # Akademik menüden çıktı; aramadan gelenler için taranabilir liste
+        urls += akademik_sayfasi.yaz(docs, BASE, (liste or {}).get('akademik') or [], datetime.now(TR))
+        degisim[BASE + 'akademik/'] = datetime.now(TR).date().isoformat()
+    except Exception as hata:
+        print(f'Uyarı: akademik sayfası üretilemedi: {hata}')
+    for u in urls:   # katiplik simülasyonunda günün metni her gün değişir
+        if u == BASE + 'katiplik/':
+            degisim[u] = datetime.now(TR).date().isoformat()
     try:
         import yz_gorunurluk   # yapay zekâ asistanları için düz metin özet (llms.txt) ve SSS sayfası
         sss_url, sss_html = yz_gorunurluk.sss_sayfasi(BASE)
