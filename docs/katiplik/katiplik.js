@@ -402,7 +402,10 @@
       egim = payda > 0.5 ? Math.max(-2, Math.min(2.5, pay / payda)) : 0;
     }
     var kalan = veri.yol.tarih ? Math.ceil((new Date(veri.yol.tarih + 'T09:00').getTime() - simdi) / 864e5) : 0;
-    var tahmin = kalan > 0 ? Math.round(ort + egim * Math.min(kalan, 60)) : null;
+    // Öğrenme eğrisi zamanla yavaşlar: doğrusal eğimi uzun vadeye olduğu gibi taşımak abartılı tahmin verir (ör. 93 → 223).
+    // Artışı ilk haftadan sonra yarıya indir ve toplamda en çok +35 net, üst sınır 160 net kabul et.
+    var artis = egim > 0 ? egim * Math.min(kalan, 7) + egim * 0.5 * Math.max(0, Math.min(kalan, 60) - 7) : egim * Math.min(kalan, 14);
+    var tahmin = kalan > 0 ? Math.max(0, Math.min(160, Math.round(ort + Math.max(-20, Math.min(35, artis))))) : null;
     var t = E('div', 'kt-yol-tahmin');
     [[ort, 'Son ' + son5.length + ' sınav ortalaması'], [(egim >= 0 ? '+' : '') + egim.toFixed(1), 'Günlük değişim (net)'], [kalan > 0 ? kalan : '—', 'Sınava kalan gün'], [tahmin != null ? tahmin : '—', 'Sınav günü tahmini']].forEach(function (x) {
       var d = E('div'); d.append(E('b', null, String(x[0])), E('span', null, x[1])); t.append(d);
