@@ -16,7 +16,8 @@ if (-not (Test-Path $env_dosyasi)) {
 } else { Write-Host '.env zaten var, dokunulmadı.' }
 
 $eylem = New-ScheduledTaskAction -Execute (Join-Path $env:WINDIR 'System32\wscript.exe') -Argument "`"$dizin\gizli-baslat.vbs`"" -WorkingDirectory $dizin   # konsol penceresi açmaz
-$tetik = New-ScheduledTaskTrigger -AtLogOn -User $env:USERNAME
+# Oturum açılınca başlar; ayrıca 5 dakikada bir "çalışmıyorsa başlat" (çıkış/oturum kapanması sonrası kendini toparlar).
+$tetik = @((New-ScheduledTaskTrigger -AtLogOn -User $env:USERNAME), (New-ScheduledTaskTrigger -Once -At (Get-Date).AddMinutes(1) -RepetitionInterval (New-TimeSpan -Minutes 5) -RepetitionDuration (New-TimeSpan -Days 3650)))
 $ayar = New-ScheduledTaskSettingsSet -RestartCount 999 -RestartInterval (New-TimeSpan -Minutes 1) -ExecutionTimeLimit ([TimeSpan]::Zero) -StartWhenAvailable -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
 Register-ScheduledTask -TaskName 'KPSS Analiz Toplayici' -Action $eylem -Trigger $tetik -Settings $ayar -Description 'KPSS Tercihi cerezsiz analiz toplayicisi (127.0.0.1:8787)' -Force | Out-Null
 Start-ScheduledTask -TaskName 'KPSS Analiz Toplayici'
