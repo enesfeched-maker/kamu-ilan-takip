@@ -30,12 +30,12 @@
   var METINLER = [], GUNLUK = [], ISINMA = [];
   var mod = 'sinav';
   var MODLAR = {
-    sinav: { ust: 'Sınav simülasyonu', baslik: 'Resmi sınav koşulları', aciklama: 'Süre 3 dakika. Metin seçtiğin kütüphaneden rastgele seçilir; tamamı küçük harf, noktalama ve paragraf yok. Süre bitince yazım alanı kilitlenir ve tutanak hazırlanır.', dugme: 'Sınavı başlat · 3:00' },
-    antrenman: { ust: 'Serbest antrenman', baslik: 'Kendi koşullarını belirle', aciklama: 'İstediğin kütüphaneyi, metni ve süreyi seç. Baraj seçtiğin süreye göre ölçeklenir (dakikada 30 net).', dugme: 'Antrenmanı başlat' },
-    hatali: { ust: 'Hatalı kelimelerim', baslik: 'Zayıf kelimelerini güçlendir', aciklama: 'Önceki denemelerinde en çok yanlış yazdığın kelimelerden oluşan 1 dakikalık tekrar.', dugme: 'Tekrarı başlat · 1:00' },
-    isinma: { ust: 'Isınma', baslik: 'Türkçe karakter ısınması', aciklama: 'ğ, ş, ı, ç, ö, ü harflerini içeren kelimelerle 1 dakikalık parmak ısınması. Sınavdan önce yapman önerilir.', dugme: 'Isınmayı başlat · 1:00' },
-    ozel: { ust: 'Kendi metnin', baslik: 'Metnini yapıştır', aciklama: 'Yapıştırdığın metin sınav biçimine çevrilir: küçük harf, noktalama ve rakam olmadan.', dugme: 'Başlat' },
-    gunluk: { ust: 'Günün metni', baslik: 'Günün duruşması', aciklama: '', dugme: 'Günün metnini yaz' }
+    sinav: { ust: 'Sınav simülasyonu', baslik: 'Resmi sınav koşulları', dugme: 'Sınavı başlat · 3:00' },
+    antrenman: { ust: 'Serbest antrenman', baslik: 'Kendi koşullarını belirle', dugme: 'Antrenmanı başlat' },
+    hatali: { ust: 'Hatalı kelimelerim', baslik: 'Zayıf kelimelerini güçlendir', dugme: 'Tekrarı başlat · 1:00' },
+    isinma: { ust: 'Isınma', baslik: 'Türkçe karakter ısınması', dugme: 'Isınmayı başlat · 1:00' },
+    ozel: { ust: 'Kendi metnin', baslik: 'Metnini yapıştır', dugme: 'Başlat' },
+    gunluk: { ust: 'Günün metni', baslik: 'Günün duruşması', dugme: 'Günün metnini yaz' }
   };
 
   /* ---------- metin hazırlama ---------- */
@@ -73,8 +73,7 @@
   function kutuphaneYukle(id) {
     ayar.kutuphane = id; kaydet();
     var k = KUT.bul(id);
-    $('kaynak-not').textContent = 'Kaynak: ' + k.kaynak + ' ';
-    if (id === 'zk2025') { var a = E('a', null, '30 metnin tamamını oku →'); a.href = 'sinav-metinleri/'; $('kaynak-not').append(a); }
+    $('kaynak-not').textContent = '';   // yalnız yükleme hatasında dolar
     $('basla').disabled = $('hemen-sinav').disabled = true;
     return KUT.getir(id).then(function (m) {
       METINLER = m;
@@ -99,10 +98,10 @@
     [].forEach.call(document.querySelectorAll('.kt-mod'), function (b) { var a = b.dataset.mod === m; b.classList.toggle('secili', a); b.setAttribute('aria-pressed', String(a)); });
     [].forEach.call(document.querySelectorAll('[data-goster]'), function (e) { e.classList.toggle('kt-gizli', e.dataset.goster.split(' ').indexOf(m) < 0); });
     var t = MODLAR[m];
-    $('ayar-ust').textContent = t.ust; $('ayar-baslik').textContent = t.baslik; $('ayar-aciklama').textContent = t.aciklama;
+    $('ayar-ust').textContent = t.ust; $('ayar-baslik').textContent = t.baslik;
     $('basla').textContent = m === 'antrenman' || m === 'ozel' ? t.dugme + ' · ' + sureYaz(ayar.sure) : t.dugme;
     $('basla').setAttribute('data-a-x', 'basla-' + m);
-    var not = 'Klavye sınavı için bilgisayar ve fiziksel klavye önerilir.';
+    var not = '';   // yalnız Hatalı kelimelerim modunda durum bildirir
     if (m === 'hatali') { var n = hataliHavuz().length; not = n < 5 ? 'Henüz yeterli hatalı kelimen yok (en az 5). Önce bir sınav simülasyonu yap.' : n + ' farklı hatalı kelimen var; en çok yanlış yazdıkların öncelikli.'; }
     $('ayar-not').textContent = not;
     if (kaydir) $('ayar').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -395,7 +394,7 @@
     var kap = $('y-sonuc'); kap.textContent = '';
     var hedef = Math.max(30, Math.min(250, Number(veri.yol.hedef) || 90));
     var g = veri.gecmis.filter(function (x) { return sinavMi(x) && x.s === 180; });
-    if (!g.length) { kap.append(E('p', 'muted', 'Plan için önce bir sınav simülasyonu yap; sonucuna göre günlük çalışma önerisi çıkaracağız.')); return; }
+    if (!g.length) return;   // ilk sınavdan sonra dolar
     var son5 = g.slice(0, 5), ort = Math.round(son5.reduce(function (t, x) { return t + x.net; }, 0) / son5.length);
     // Son 30 gündeki denemelerden günlük artış eğilimi (doğrusal regresyon)
     var simdi = Date.now(), noktalar = g.filter(function (x) { return simdi - x.t < 30 * 864e5; }).map(function (x) { return [(x.t - simdi) / 864e5, x.net]; });
