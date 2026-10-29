@@ -68,3 +68,17 @@ CREATE TABLE IF NOT EXISTS butce (
   yazma   INTEGER NOT NULL DEFAULT 0,
   okuma   INTEGER NOT NULL DEFAULT 0
 );
+
+-- Katiplik liderlik tablosu (hafta basina kisi basina en iyi net). Bkz. migrations/0004_liderlik.sql.
+CREATE TABLE IF NOT EXISTS liderlik (
+  hafta  TEXT    NOT NULL,
+  kimlik TEXT    NOT NULL,
+  ad     TEXT    NOT NULL,
+  net    INTEGER NOT NULL,
+  dogru  INTEGER NOT NULL,
+  hatali INTEGER NOT NULL,
+  dk     INTEGER NOT NULL,
+  ts     INTEGER NOT NULL,
+  PRIMARY KEY (hafta, kimlik)
+) WITHOUT ROWID;
+CREATE INDEX IF NOT EXISTS liderlik_net ON liderlik (hafta, net DESC);

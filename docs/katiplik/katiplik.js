@@ -282,6 +282,7 @@
     yr.textContent = yeniRozet.length ? 'Yeni rozet kazandın: ' + yeniRozet.map(function (x) { return x.ad; }).join(', ') + ' 🎉' : '';
     $('r-hatali').hidden = r.hatalar.filter(function (h) { return h.a; }).length === 0;
     $('r-tekrar').hidden = s.metinNo < 0 || s.mod === 'gunluk';
+    liderHazirla(r);
     $('sonuc').hidden = false; $('sonuc').scrollTop = 0;
     $('r-yeni').focus();
     A('tikla', { a: 'katip-bitti', x: s.mod + (r.basarili ? '-basarili' : '-basarisiz'), n: r.net });
@@ -468,6 +469,80 @@
     }
   }
 
+  /* ---------- liderlik tablosu ----------
+     Yalnız kullanıcı "Ekle" derse gönderilir: takma ad + yazılan metin. Sunucu neti resmî kriterlerle kendisi hesaplar,
+     metni saklamaz. Tarayıcı kimliği rastgele bir anahtardır ('kit-katip-lider'). */
+  var LIDER_URL = /^(localhost|127\.0\.0\.1)$/.test(location.hostname) ? 'http://localhost:8787/liderlik' : 'https://api.kpsstercihi.com/liderlik';
+  var lider = O.oku('kit-katip-lider', null);
+  if (!lider || typeof lider !== 'object' || !/^[a-f0-9]{32}$/.test(lider.anahtar || '')) {
+    var rb = new Uint8Array(16); crypto.getRandomValues(rb);
+    lider = { anahtar: [].map.call(rb, function (x) { return (x + 256).toString(16).slice(1); }).join(''), ad: '', kimlik: '' };
+  }
+  var liderTablo = null, liderSekme = 'haftalik', liderAday = null;
+  var MADALYA = ['🥇', '🥈', '🥉'];
+  var LIDER_HATA = {
+    ad: 'Bu takma ad kullanılamıyor; 2–18 harf/rakam olan başka bir ad dene.', kisa: 'Tabloya girmek için biraz daha yazmalısın.',
+    supheli: 'Bu sonuç doğrulanamadı.', hiz: 'Çok sık gönderdin; birkaç dakika sonra tekrar dene.', kota: 'Tablo şu an yoğun; biraz sonra tekrar dene.'
+  };
+
+  function liderCiz() {
+    var ol = $('lider-liste'), liste = liderTablo ? liderTablo[liderSekme] || [] : [];
+    ol.textContent = '';
+    $('lider-bos').hidden = !liderTablo || liste.length > 0;
+    $('lider-bos').textContent = liderSekme === 'haftalik' ? 'Bu hafta henüz kimse yok. İlk sen ol!' : 'Henüz kimse yok. İlk sen ol!';
+    liste.forEach(function (x, i) {
+      var li = E('li', (x.i && x.i === lider.kimlik ? 'ben ' : '') + (i < 3 ? 'ilk' + (i + 1) : ''));
+      li.append(E('span', 'sira', i < 3 ? MADALYA[i] : String(i + 1)), E('span', 'ad', x.ad), E('span', 'dk', x.dk + ' vuruş/dk'), E('b', 'net', x.net + ' net'));
+      ol.append(li);
+    });
+  }
+  function liderYukle() {
+    fetch(LIDER_URL).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { if (j) { liderTablo = j; liderCiz(); } }).catch(function () {});
+  }
+  [].forEach.call(document.querySelectorAll('[data-lt]'), function (b) {
+    b.onclick = function () {
+      liderSekme = b.dataset.lt;
+      [].forEach.call(document.querySelectorAll('[data-lt]'), function (x) { x.classList.toggle('secili', x === b); x.setAttribute('aria-pressed', x === b); });
+      liderCiz();
+    };
+  });
+
+  // Sonuç ekranında "tabloya ekle" kutusu: 3 dk resmî koşullar, 2025 resmî metinleri ve fiziksel klavye.
+  function liderHazirla(r) {
+    var kutu = $('lider-ekle'), uygun = (s.mod === 'sinav' || s.mod === 'gunluk') && s.kutuphane === 'zk2025' && s.metinNo >= 0 && r.toplam >= 10 && r.net >= 1;
+    liderAday = null;
+    kutu.hidden = !uygun;
+    if (!uygun) return;
+    var klavyeli = s.kayit.vuruslar.length >= yazim.value.replace(/\s+$/, '').length * 0.9;
+    liderAday = klavyeli ? { mod: s.mod, kut: s.kutuphane, no: s.metinNo, yazi: yazim.value, vurus: s.kayit.vuruslar.length } : null;
+    kutu.classList.remove('tamam');
+    $('lider-form').hidden = !klavyeli;
+    $('lider-ad').value = lider.ad || (ayar.aday && ayar.aday !== 'Misafir Aday' ? ayar.aday.slice(0, 18) : '');
+    $('lider-gonder').disabled = false;
+    $('lider-ekle-alt').textContent = klavyeli ? r.net + ' net ile bu haftanın tablosuna gir.' : 'Liderlik tablosu yalnız fiziksel klavyeyle yapılan sınavları kabul eder.';
+  }
+  function liderGonder() {
+    if (!liderAday) return;
+    var ad = $('lider-ad').value.replace(/\s+/g, ' ').trim();
+    if (ad.length < 2) { $('lider-ad').focus(); $('lider-ekle-alt').textContent = 'Önce bir takma ad yaz (2–18 karakter).'; return; }
+    var b = $('lider-gonder'); b.disabled = true;
+    $('lider-ekle-alt').textContent = 'Gönderiliyor…';
+    var g = Object.assign({ ad: ad, anahtar: lider.anahtar }, liderAday);
+    fetch(LIDER_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body: JSON.stringify(g) })
+      .then(function (r) { return r.json().catch(function () { return { hata: 'ag' }; }); })
+      .then(function (j) {
+        if (!j.ok) { b.disabled = false; $('lider-ekle-alt').textContent = LIDER_HATA[j.hata] || 'Gönderilemedi; bağlantını kontrol edip tekrar dene.'; return; }
+        lider.ad = ad; lider.kimlik = j.kimlik; O.yaz('kit-katip-lider', lider);
+        liderTablo = j.tablo; liderCiz(); liderAday = null;
+        $('lider-ekle').classList.add('tamam'); $('lider-form').hidden = true;
+        $('lider-ekle-alt').textContent = 'Bu hafta ' + j.sira + '. sıradasın' + (j.sira <= 3 ? ' ' + MADALYA[j.sira - 1] : '') + ' · tablo ana sayfada.';
+        A('tikla', { a: 'katip-lider', x: 'ekle', n: j.net });
+      })
+      .catch(function () { b.disabled = false; $('lider-ekle-alt').textContent = 'Gönderilemedi; bağlantını kontrol edip tekrar dene.'; });
+  }
+  $('lider-gonder').onclick = liderGonder;
+  $('lider-ad').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); e.stopPropagation(); liderGonder(); } });
+
   /* ---------- olaylar ---------- */
   [].forEach.call(document.querySelectorAll('.kt-mod'), function (b) { b.onclick = function () { modSec(b.dataset.mod, true); A('tikla', { a: 'katip-mod', x: b.dataset.mod }); }; });
   [].forEach.call(document.querySelectorAll('#sure-sec .tab'), function (b) { b.onclick = function () { surSec(Number(b.dataset.v)); kaydet(); modSec(mod); }; });
@@ -536,7 +611,7 @@
   document.addEventListener('keydown', function (e) {
     if ($('sinav').hidden) return;
     if (!$('sonuc').hidden) {
-      if (e.key === 'Enter' && e.target.tagName !== 'BUTTON') { e.preventDefault(); $('r-yeni').click(); }
+      if (e.key === 'Enter' && e.target.tagName !== 'BUTTON' && e.target.tagName !== 'INPUT') { e.preventDefault(); $('r-yeni').click(); }
       else if (e.key === 'Escape') kapat();
     } else if (e.key === 'Escape' && s.durum === 'geri') kapat();
   });
@@ -569,4 +644,5 @@
     if (istenen === 'gunluk') sinavAc('gunluk');
   });
   ozetCiz();
+  liderYukle();
 })();
