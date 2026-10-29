@@ -5,7 +5,7 @@
 // "tekil" ve "oturum" gün bazında sayılır; çok günlük görünümde toplanır (aynı kişi farklı günlerde tekrar sayılır,
 // çünkü günlük tuz yüzünden günler arası eşleştirme zaten yapılamaz).
 
-import { gunBasSn } from './zaman.js';
+import { gunBasSn, gunEkle } from './zaman.js';
 import { okumaGunlugu } from './onbellek.js';
 
 const SUT = (k1, k2 = "''") => `gun, ${k1} AS k1, ${k2} AS k2, COUNT(*) AS say, COUNT(DISTINCT zv) AS tekil, COUNT(DISTINCT os) AS oturum`;
@@ -195,13 +195,32 @@ export async function gunOzetiYaz(db, gun, simdiSn = Math.floor(Date.now() / 100
 }
 
 // [bas, bit] arasındaki tüm metrikler: özeti çıkmış günler ozet tablosundan, kalanlar ham olaylardan.
+// [bas, bit] içinde özeti çıkmamış günlerin art arda gelen dilimleri: [[ilkGun, sonGun], ...] (çoğunlukla yalnız bugün).
+export function ozetsizDilimler(bas, bit, ozetliGunler) {
+  const dilimler = [];
+  for (let g = bas; g <= bit; g = gunEkle(g, 1)) {
+    if (ozetliGunler.has(g)) continue;
+    const son = dilimler[dilimler.length - 1];
+    if (son && gunEkle(son[1], 1) === g) son[1] = g; else dilimler.push([g, g]);
+  }
+  return dilimler;
+}
+
 export async function aralikOku(db, bas, bit) {
   const ozetli = await db.prepare('SELECT gun, boyut, k1, k2, say, tekil, oturum, toplam FROM ozet WHERE gun BETWEEN ? AND ?').bind(bas, bit).all();
-  // ts aralığı tek indeksi (idx_olaylar_ts) kullanır; gün sınırları Türkiye saatindedir.
-  const kos = 'ts >= ? AND ts < ? AND gun NOT IN (SELECT gun FROM ozet_gun)';
-  const hamMetrik = METRIKLER.filter((m) => !m.yalnizOzet);
-  const sonuc = sonuclariBirlestir(await db.batch(tekSorgu(db, hamMetrik, kos, [gunBasSn(bas), gunBasSn(bit) + 86400], 0)));
-  okumaGunlugu('panel/veri', ozetli, sonuc);
+  // Ham tablo yalnız özeti çıkmamış günlerin ts aralığında taranır. Eskiden tüm [bas, bit] aralığı taranıp özetli günler
+  // NOT IN ile atılıyordu; D1 atılan satırları da okunmuş sayar (30/90 günlük görünümde rapor başına ~1 milyon satır).
+  const gunler = await db.prepare('SELECT gun FROM ozet_gun WHERE gun BETWEEN ? AND ?').bind(bas, bit).all();
+  const dilimler = ozetsizDilimler(bas, bit, new Set((gunler.results || []).map((r) => r.gun)));
+  let sonuc = { results: [], meta: { rows_read: 0 } };
+  if (dilimler.length) {
+    // Her dilim ts indeksini (idx_olaylar_ts) kullanan bir aralık; gün sınırları Türkiye saatindedir.
+    const kos = `(${dilimler.map(() => '(ts >= ? AND ts < ?)').join(' OR ')}) AND gun NOT IN (SELECT gun FROM ozet_gun)`;
+    const baglar = dilimler.flatMap(([a, z]) => [gunBasSn(a), gunBasSn(z) + 86400]);
+    const hamMetrik = METRIKLER.filter((m) => !m.yalnizOzet);
+    sonuc = sonuclariBirlestir(await db.batch(tekSorgu(db, hamMetrik, kos, baglar, 0)));
+  }
+  okumaGunlugu('panel/veri', ozetli, gunler, sonuc);
   const ham = satirlarBirlesik(sonuc);
   return [...satirlar(ozetli, null).map((r, i) => ({ ...r, boyut: ozetli.results[i].boyut })), ...ham];
 }

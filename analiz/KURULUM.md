@@ -57,6 +57,18 @@ sonra siteyi yayınla; ilk ziyaretler panelde birkaç saniye içinde görünür.
   rakam dizileri içeren girdiler `[temizlendi]` olur).
 - Ham olaylar 90 gün, günlük özetler 400 gün tutulur; tuzlar her gece silinir (gün atlamalı izleme mümkün değildir).
 
+## Katiplik liderlik tablosu (`/liderlik`)
+
+Herkese açık sıralama: `GET /liderlik` (2 dk önbellek), sonuç ekleme: `POST /liderlik` (yalnız site kökenlerinden, IP başına
+10 dakikada 10 gönderim). Sunucu, tarayıcının söylediği nete güvenmez; yazılan metni sitenin kendi `docs/katiplik/puanla.js`
+motoruyla 2025 resmî metnine (`metin/zk2025.js`) karşı yeniden puanlar ve metni saklamaz. Saklanan: takma ad, net, doğru/hatalı
+kelime, dakikadaki vuruş, hafta ve tarayıcının rastgele anahtarının özeti. Tablo bir kez kurulur:
+
+```powershell
+& $w d1 execute kpss-analiz --remote --file=migrations/0004_liderlik.sql --config wrangler.toml
+& $w deploy --config wrangler.toml
+```
+
 ## Yerel deneme
 
 ```powershell

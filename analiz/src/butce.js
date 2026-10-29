@@ -150,6 +150,22 @@ export function butceOku(env, simdiMs = saat()) {
   return { gun, yazma, okuma, sinirYazma: s.yazma, sinirOkuma: s.okuma, yazmaKademesi: yk, okumaKademesi: ok, yazmaAd: YAZMA_ADLARI[yk], okumaAd: OKUMA_ADLARI[ok] };
 }
 
+// Ağır bir istekten (panel raporu, bakım) sonra sayaç beklemeden tabloya yazılır. Eskiden yalnız aynı izolatın bir sonraki
+// isteğinde (en erken 1 dk sonra) yazılıyordu; seyrek gelen panel isteklerinden sonra izolat kapanınca okumalar hiç sayılmıyordu.
+export const HEMEN_YAZ_OKUMA = 20000;
+export const HEMEN_YAZ_YAZMA = 2000;
+export function butceBekliyor() {
+  const y = durum.yerel;
+  return y.okuma >= HEMEN_YAZ_OKUMA || y.yazma >= HEMEN_YAZ_YAZMA || (durum.eskiGunler || []).length > 0;
+}
+export async function butceYaz(env, simdiMs = saat()) {
+  if (!env || !env.DB || !env.DB._db) return;
+  if (durum.bekleyen) await durum.bekleyen;
+  durum.genel.ms = simdiMs;
+  durum.bekleyen = yenile(env, utcGun(simdiMs), simdiMs).finally(() => { durum.bekleyen = null; });
+  return durum.bekleyen;
+}
+
 export async function butceDurumu(env, simdiMs = saat()) {
   await butceHazirla(env, simdiMs);
   return butceOku(env, simdiMs);
