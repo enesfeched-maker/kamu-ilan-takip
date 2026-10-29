@@ -327,7 +327,11 @@
     var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Son sınav simülasyonlarında net kelime">';
     [0, 50, 100, 150].forEach(function (v) { if (v <= en) svg += '<line class="eks" x1="' + sol + '" x2="' + W + '" y1="' + Y(v) + '" y2="' + Y(v) + '"/><text x="0" y="' + (Y(v) + 4) + '">' + v + '</text>'; });
     svg += '<line class="baraj" x1="' + sol + '" x2="' + W + '" y1="' + Y(90) + '" y2="' + Y(90) + '"/><text x="' + (W - 60) + '" y="' + (Y(90) - 5) + '">baraj 90</text>';
-    svg += '<polyline class="cizgi" points="' + g.map(function (x, i) { return X(i) + ',' + Y(x.net); }).join(' ') + '"/>';
+    var noktalar = g.map(function (x, i) { return X(i) + ',' + Y(x.net); }).join(' ');
+    svg += '<defs><linearGradient id="kt-cizgi" x1="0" x2="1"><stop offset="0" stop-color="var(--k-lime)"/><stop offset=".6" stop-color="var(--k-mavi)"/><stop offset="1" stop-color="var(--k-mor)"/></linearGradient>'
+      + '<linearGradient id="kt-alan" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="var(--k-mavi)" stop-opacity=".32"/><stop offset="1" stop-color="var(--k-mavi)" stop-opacity="0"/></linearGradient></defs>';
+    if (g.length > 1) svg += '<polygon class="alan" fill="url(#kt-alan)" points="' + X(0) + ',' + Y(0) + ' ' + noktalar + ' ' + X(g.length - 1) + ',' + Y(0) + '"/>';
+    svg += '<polyline class="cizgi" stroke="url(#kt-cizgi)" style="stroke:url(#kt-cizgi);stroke-width:3.5" points="' + noktalar + '"/>';
     g.forEach(function (x, i) { svg += '<circle class="nokta" cx="' + X(i) + '" cy="' + Y(x.net) + '" r="4"><title>' + x.net + ' net</title></circle>'; });
     kap.innerHTML = svg + '</svg>';
   }
