@@ -29,7 +29,26 @@ STIL = ('<style>.ks-cta{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 6px}.
         'flex-direction:column;gap:6px;font-size:13px;font-weight:600}.ks-hesap input{height:44px;padding:0 12px;border:1px solid var(--line-2);'
         'border-radius:10px;background:var(--surface);color:var(--ink);font:inherit;font-size:16px}.ks-sonuc{margin-top:14px;padding:14px 16px;'
         'border-radius:12px;background:var(--surface-2);font-size:15px}.ks-sonuc b.iyi{color:#2E8540}.ks-sonuc b.kotu{color:var(--alert)}'
-        ':root[data-theme=dark] .ks-sonuc b.iyi{color:var(--lime)}</style>')
+        ':root[data-theme=dark] .ks-sonuc b.iyi{color:var(--lime)}'
+        # renk dili docs/katiplik/katiplik.css ile aynı (--k-* paleti)
+        ':root{--k-lime:#7CB518;--k-mavi:#2F80ED;--k-mor:#7B5CE6;--k-tur:#F2711C;--k-pembe:#E8487F;--k-sari:#E0A100}'
+        ':root[data-theme=dark]{--k-lime:#C8F169;--k-mavi:#6CB2FF;--k-mor:#A68CFF;--k-tur:#FF9A5C;--k-pembe:#FF7AAE;--k-sari:#FFD24D}'
+        '.katip-sayfa .kp-hero{background:radial-gradient(700px 420px at 0% 0%,color-mix(in srgb,var(--k-lime) 26%,transparent),transparent 62%),'
+        'radial-gradient(600px 420px at 100% 100%,color-mix(in srgb,var(--k-mavi) 20%,transparent),transparent 62%),'
+        'radial-gradient(420px 300px at 70% 0%,color-mix(in srgb,var(--k-mor) 18%,transparent),transparent 62%)}'
+        '.katip-sayfa .kp-hero .eyebrow{color:var(--k-mavi)}'
+        '.ks-kutular div{border-top:4px solid var(--r);background:linear-gradient(170deg,color-mix(in srgb,var(--r) 12%,var(--surface)),var(--surface) 70%)}'
+        '.ks-kutular div:nth-child(4n+1){--r:var(--k-lime)}.ks-kutular div:nth-child(4n+2){--r:var(--k-mavi)}'
+        '.ks-kutular div:nth-child(4n+3){--r:var(--k-mor)}.ks-kutular div:nth-child(4n){--r:var(--k-tur)}'
+        '.ks-liste{counter-reset:ks}.ks-liste li{counter-increment:ks;position:relative;padding-left:66px;border-left:4px solid var(--r)}'
+        '.ks-liste li::before{content:counter(ks);position:absolute;left:14px;top:50%;margin-top:-18px;width:36px;height:36px;border-radius:11px;'
+        'display:grid;place-items:center;font-weight:800;background:color-mix(in srgb,var(--r) 20%,transparent)}'
+        '.ks-liste li:nth-child(5n+1){--r:var(--k-lime)}.ks-liste li:nth-child(5n+2){--r:var(--k-mavi)}.ks-liste li:nth-child(5n+3){--r:var(--k-mor)}'
+        '.ks-liste li:nth-child(5n+4){--r:var(--k-tur)}.ks-liste li:nth-child(5n){--r:var(--k-pembe)}'
+        '.ks-metin{border-left:5px solid var(--k-lime)}.ks-kelimeler code{background:color-mix(in srgb,var(--k-mor) 14%,var(--surface-2))}'
+        '.ks-tablo tbody td:first-child b::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;background:var(--k-tur)}'
+        '.ks-hesap{padding:18px;border-radius:16px;background:color-mix(in srgb,var(--k-mavi) 9%,var(--surface));border:1px solid color-mix(in srgb,var(--k-mavi) 30%,var(--line))}'
+        '.ks-sonuc{border-left:5px solid var(--k-mavi)}</style>')
 
 
 def metinleri_oku(docs):
@@ -59,7 +78,7 @@ def _kabuk(su, baslik, aciklama, canonical, kok, kirinti_html, eyebrow, h1, giri
     ek = (f'<meta property="og:url" content="{su.esc(canonical)}"><meta property="og:image" content="{su.BASE}{OG_GORSEL}">'
           f'<meta name="twitter:card" content="summary_large_image">{STIL}{_ld(ld)}')
     return (su.sayfa_basi(baslik, aciklama, su.esc(canonical), kok, og_tur, ek_head=ek)
-            + f'<body class="kurum-page"><a class="skip" href="#icerik">İçeriğe geç</a>{su.ust_html(kok, "katiplik")}'
+            + f'<body class="kurum-page katip-sayfa"><a class="skip" href="#icerik">İçeriğe geç</a>{su.ust_html(kok, "katiplik")}'
             + f'<section class="kp-hero"><div class="wrap"><nav class="crumbs" aria-label="Konum">{kirinti_html}</nav>'
             + f'<span class="eyebrow">{su.esc(eyebrow)}</span><h1>{su.esc(h1)}</h1><p>{giris}</p></div></section>'
             + f'<main id="icerik" class="wrap kp-main"><article>{govde}</article></main>{su.alt_html(kok)}</body></html>')

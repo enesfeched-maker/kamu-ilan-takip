@@ -327,7 +327,11 @@
     var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Son sınav simülasyonlarında net kelime">';
     [0, 50, 100, 150].forEach(function (v) { if (v <= en) svg += '<line class="eks" x1="' + sol + '" x2="' + W + '" y1="' + Y(v) + '" y2="' + Y(v) + '"/><text x="0" y="' + (Y(v) + 4) + '">' + v + '</text>'; });
     svg += '<line class="baraj" x1="' + sol + '" x2="' + W + '" y1="' + Y(90) + '" y2="' + Y(90) + '"/><text x="' + (W - 60) + '" y="' + (Y(90) - 5) + '">baraj 90</text>';
-    svg += '<polyline class="cizgi" points="' + g.map(function (x, i) { return X(i) + ',' + Y(x.net); }).join(' ') + '"/>';
+    var noktalar = g.map(function (x, i) { return X(i) + ',' + Y(x.net); }).join(' ');
+    svg += '<defs><linearGradient id="kt-cizgi" x1="0" x2="1"><stop offset="0" stop-color="var(--k-lime)"/><stop offset=".6" stop-color="var(--k-mavi)"/><stop offset="1" stop-color="var(--k-mor)"/></linearGradient>'
+      + '<linearGradient id="kt-alan" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="var(--k-mavi)" stop-opacity=".32"/><stop offset="1" stop-color="var(--k-mavi)" stop-opacity="0"/></linearGradient></defs>';
+    if (g.length > 1) svg += '<polygon class="alan" fill="url(#kt-alan)" points="' + X(0) + ',' + Y(0) + ' ' + noktalar + ' ' + X(g.length - 1) + ',' + Y(0) + '"/>';
+    svg += '<polyline class="cizgi" stroke="url(#kt-cizgi)" style="stroke:url(#kt-cizgi);stroke-width:3.5" points="' + noktalar + '"/>';
     g.forEach(function (x, i) { svg += '<circle class="nokta" cx="' + X(i) + '" cy="' + Y(x.net) + '" r="4"><title>' + x.net + ' net</title></circle>'; });
     kap.innerHTML = svg + '</svg>';
   }
@@ -402,7 +406,10 @@
       egim = payda > 0.5 ? Math.max(-2, Math.min(2.5, pay / payda)) : 0;
     }
     var kalan = veri.yol.tarih ? Math.ceil((new Date(veri.yol.tarih + 'T09:00').getTime() - simdi) / 864e5) : 0;
-    var tahmin = kalan > 0 ? Math.round(ort + egim * Math.min(kalan, 60)) : null;
+    // Öğrenme eğrisi zamanla yavaşlar: doğrusal eğimi uzun vadeye olduğu gibi taşımak abartılı tahmin verir (ör. 93 → 223).
+    // Artışı ilk haftadan sonra yarıya indir ve toplamda en çok +35 net, üst sınır 160 net kabul et.
+    var artis = egim > 0 ? egim * Math.min(kalan, 7) + egim * 0.5 * Math.max(0, Math.min(kalan, 60) - 7) : egim * Math.min(kalan, 14);
+    var tahmin = kalan > 0 ? Math.max(0, Math.min(160, Math.round(ort + Math.max(-20, Math.min(35, artis))))) : null;
     var t = E('div', 'kt-yol-tahmin');
     [[ort, 'Son ' + son5.length + ' sınav ortalaması'], [(egim >= 0 ? '+' : '') + egim.toFixed(1), 'Günlük değişim (net)'], [kalan > 0 ? kalan : '—', 'Sınava kalan gün'], [tahmin != null ? tahmin : '—', 'Sınav günü tahmini']].forEach(function (x) {
       var d = E('div'); d.append(E('b', null, String(x[0])), E('span', null, x[1])); t.append(d);
