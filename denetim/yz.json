@@ -1,4 +1,149 @@
 {
+ "csb-478572": {
+  "zaman": "2026-10-30T04:47:52+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "csb",
+  "imza": "8966b3f3666b3fd0",
+  "baslik": "ASARCIK BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Mimar",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Lisans düzeyinde eğitim veren fakültelerin mimarlık programından mezun olmak.",
+      "En az (B) sınıfı sürücü belgesine sahip olmak."
+     ]
+    }
+   ],
+   "toplam": 1,
+   "son_basvuru_tarihi": "2026-12-03",
+   "baslangic_tarihi": "2026-12-01",
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P3"
+   ],
+   "ortak_kosullar": [
+    "Elektronik ortamda başvurular 01/12/2026-3/12/2026 tarihleri arasında yapılacaktır.",
+    "Şahsen veya iadeli taahhütlü posta yoluyla başvurular, belirtilen tarihler arasında mesai bitimine kadar yapılacaktır.",
+    "Sınava girmeye hak kazanan adaylar 10/12/2026 tarihinde Belediyemizin web sayfasında ilan edilecektir.",
+    "Sözlü sınav 18/12/2026 tarihinde saat: 10’da başlayacaktır.",
+    "Başvuruları kabul edilip sınava çağrılan adaylara sınav giriş belgesi gönderilecektir."
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "csb-478573": {
+  "zaman": "2026-10-30T04:47:52+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "csb",
+  "imza": "0d6251287ebb981d",
+  "baslik": "BERGAMA BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Memur",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 80,
+     "kosullar": [
+      "Lisans düzeyinde eğitim veren kurumların ekonomi, iktisat, maliye bölümlerinin birinden mezun olmak"
+     ]
+    },
+    {
+     "unvan": "Evlendirme Memuru",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 80,
+     "kosullar": [
+      "Lisans düzeyinde eğitim veren kurumların uluslararası ilişkiler, maliye, halkla ilişkiler ve tanıtım bölümlerinin birinden mezun olmak"
+     ]
+    }
+   ],
+   "toplam": 4,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P3"
+   ],
+   "ortak_kosullar": [
+    "09/12/2026- 11/12/2026 tarihleri arasında elektronik ortamda başvuru",
+    "Şahsen veya iadeli taahhütlü posta yolu ile başvurular, yukarıdaki başvuru tarihleri arasında mesai bitimine kadar",
+    "21/12/2026 tarihinde sözlü sınav",
+    "Sınava girmeye hak kazandığı halde ilan edilen sınav tarihinde sınava katılmayanlar sınav hakkını kaybeder",
+    "Başvuruları kabul edilip sınava çağrılan adaylar, Belediyemizce düzenlenen Sınav Giriş Belgesini almak zorundadır"
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "csb-478583": {
+  "zaman": "2026-10-30T04:47:52+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "csb",
+  "imza": "cbb56ba7151d1921",
+  "baslik": "KARATAY BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE ZABITA MEMURU ALIMI İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Zabıta Memuru",
+     "adet": 9,
+     "ogrenim": "onlisans",
+     "puan_turu": "P93",
+     "en_dusuk_puan": 60,
+     "kosullar": [
+      "Mahalli İdareler önlisans programından mezun olmak",
+      "Mahalli İdareler (Zabıta) önlisans programından mezun olmak",
+      "Yerel Yönetimler önlisans programından mezun olmak",
+      "Pazarlama önlisans programından mezun olmak",
+      "Pazarlama ve Satış önlisans programından mezun olmak",
+      "Piyasa Araştırmaları ve Pazarlama önlisans programından mezun olmak",
+      "En az (B) sınıfı sürücü belgesine sahip olmak"
+     ]
+    }
+   ],
+   "toplam": 9,
+   "ogrenim": [
+    "onlisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P93"
+   ],
+   "ortak_kosullar": [
+    "Sınav tarihi 07/01/2027",
+    "Başvurular şahsen yapılacaktır",
+    "Sınav yeri Aziziye Mahallesi, Garaj Caddesi, No:5 Karatay/KONYA",
+    "30 yaşını doldurmamış olmak",
+    "Sınavda başarılı sayılmak için her iki sınavın ortalamasının en az 60 puan olması"
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
  "csb-478584": {
   "zaman": "2026-10-30T04:27:52+03:00",
   "surum": 3,
@@ -186,6 +331,85 @@
    "duyuru_tipi": "yeni_ilan"
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=793cd518-1ca4-4e15-90ee-58989b15bd08": {
+  "zaman": "2026-10-30T04:47:52+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "metin",
+  "imza": "24acdc12e6206343",
+  "baslik": "ORMAN GENEL MÜDÜRLÜĞÜ - MÜFETTİŞ YARDIMCILIĞI GİRİŞ SINAVI İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "MÜFETTİŞ YARDIMCISI (ORMAN MÜHENDİSLİĞİ)",
+     "adet": 6,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Orman Fakültelerinin Orman Mühendisliği mezunu olmak veya bunlara denkliği Yükseköğretim Kurulunca kabul edilen yurt dışındaki yükseköğretim kurumlarından mezun olmak"
+     ]
+    },
+    {
+     "unvan": "MÜFETTİŞ YARDIMCISI (ORMAN ENDÜSTRİ MÜHENDİSLİĞİ)",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Orman Fakültelerinin Orman Endüstri Mühendisliği bölümü mezunu olmak veya bunlara denkliği Yükseköğretim Kurulunca kabul edilen yurt dışındaki yükseköğretim kurumlarından mezun olmak"
+     ]
+    },
+    {
+     "unvan": "MÜFETTİŞ YARDIMCISI (HUKUK)",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Hukuk Fakültesi mezunu olmak veya bunlara denkliği Yükseköğretim Kurulunca kabul edilen yurt dışındaki yükseköğretim kurumlarından mezun olmak"
+     ]
+    },
+    {
+     "unvan": "MÜFETTİŞ YARDIMCISI (İKTİSAT, İŞLETME, MALİYE)",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "İktisadi ve İdari Bilimler, İktisat, İşletme veya Siyasal Bilgiler Fakültelerinin İktisat, İşletme, Maliye bölümlerinden birinden mezun olmak veya bunlara denkliği Yükseköğretim Kurulunca kabul edilen yurt dışındaki yükseköğretim kurumlarından mezun olmak"
+     ]
+    },
+    {
+     "unvan": "MÜFETTİŞ YARDIMCISI (ORMAN MÜHENDİSLİĞİ)",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": 75,
+     "kosullar": [
+      "Son başvuru tarihi itibarıyla geçerliliği devam eden Kamu Personel Seçme Sınavından (KPSS), Tablo1’de mezuniyet durumlarına göre belirlenmiş puan türünden en az 75 puan almış olmak",
+      "Orman Fakültelerinin Orman Mühendisliği mezunu olmak veya bunlara denkliği Yükseköğretim Kurulunca kabul edilen yurt dışındaki yükseköğretim kurumlarından mezun olmak"
+     ]
+    }
+   ],
+   "toplam": 12,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "Son başvuru tarihi itibarıyla geçerliliği devam eden Kamu Personel Seçme Sınavından (KPSS), Tablo1’de mezuniyet durumlarına göre belirlenmiş puan türünden en az 75 puan almış olması",
+    "Sınavın açıldığı yılın ocak ayının birinci günü itibarıyla 35 yaşını doldurmamış olması (01.01.1991 ve daha sonra doğanlar başvurabilecektir.)",
+    "Görevini yapmaya engel sağlık sorunu olmamak. Türkiye’nin her yerinde görev yapmaya ve her türlü iklim ve yolculuk şartlarında seyahat etmeye elverişli olması ve müfettişlik görevini devamlı yapmasına engel bir durumu bulunmaması"
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=f657a20b-5132-4e3a-8b1e-131e031f065b": {
   "zaman": "2026-10-30T04:00:33+03:00",
   "surum": 3,
@@ -343,6 +567,40 @@
    "duyuru_tipi": "yeni_ilan"
   }
  },
+ "iskur-4afcdadb4b2d8f979d706f9f": {
+  "zaman": "2026-10-30T04:47:52+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "metin",
+  "imza": "5d518301a2e8301a",
+  "baslik": "Orman Genel Müdürlüğü Müfettiş Yardımcılığı Sınav İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Müfettiş Yardımcısı",
+     "adet": 12,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "KPSS'den Tablo1’de mezuniyet durumlarına göre belirlenmiş puan türünden en az 75 puan almış olmak"
+     ]
+    }
+   ],
+   "toplam": 12,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [],
+   "ortak_kosullar": [],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
  "sbb-1b5d1f3068575a269a3a23ad": {
   "zaman": "2026-10-30T04:00:33+03:00",
   "surum": 3,
@@ -482,6 +740,106 @@
     "Şahsen veya iadeli taahhütlü posta yolu ile başvurular mesai saatlerinde yapılacaktır.",
     "Sınava girmeye hak kazanan adaylar 10/12/2026 tarihinde ilan edilecektir.",
     "Sınav 18/12/2026 tarihinde saat 10:00'da başlayacaktır."
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "sbb-a00f639e934dfda13b150416": {
+  "zaman": "2026-10-30T04:47:52+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "pdf",
+  "imza": "c6bfd38733d2a625",
+  "baslik": "İZMİR BÜYÜKŞEHİR BELEDİYE BAŞKANLIĞI - 90 ZABITA MEMURU ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Zabıta Memuru — Kadın",
+     "adet": 6,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 65,
+     "kosullar": [
+      "Antrenörlük Eğitimi, Beden Eğitimi ve Spor Öğretmenliği, Spor Yöneticiliği, Egzersiz ve Spor Bilimleri, Rekreasyon, Engellilerde Beden Eğitimi ve Spor Öğretmenliği Engellilerde Egzersiz ve Spor Bilimleri programlarından mezun olmak",
+      "En az (B) sınıfı sürücü belgesine sahip olmak"
+     ]
+    },
+    {
+     "unvan": "Zabıta Memuru — Kadın",
+     "adet": 24,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 65,
+     "kosullar": [
+      "Yerel Yönetimler, Kamu Yönetimi, Siyaset Bilimi ve Kamu Yönetimi programlarından mezun olmak",
+      "En az (B) sınıfı sürücü belgesine sahip olmak"
+     ]
+    },
+    {
+     "unvan": "Zabıta Memuru — Erkek",
+     "adet": 24,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 65,
+     "kosullar": [
+      "Antrenörlük Eğitimi, Beden Eğitimi ve Spor Öğretmenliği, Spor Yöneticiliği, Egzersiz ve Spor Bilimleri, Rekreasyon, Engellilerde Beden Eğitimi ve Spor Öğretmenliği Engellilerde Egzersiz ve Spor Bilimleri programlarından mezun olmak",
+      "En az (B) sınıfı sürücü belgesine sahip olmak"
+     ]
+    },
+    {
+     "unvan": "Zabıta Memuru — Erkek",
+     "adet": 6,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 65,
+     "kosullar": [
+      "Yerel Yönetimler, Kamu Yönetimi, Siyaset Bilimi ve Kamu Yönetimi programlarından mezun olmak",
+      "En az (B) sınıfı sürücü belgesine sahip olmak"
+     ]
+    },
+    {
+     "unvan": "Zabıta Memuru — Kadın",
+     "adet": 6,
+     "ogrenim": "onlisans",
+     "puan_turu": "P93",
+     "en_dusuk_puan": 65,
+     "kosullar": [
+      "Adalet, Yerel Yönetimler, Özel Güvenlik ve Koruma programlarından mezun olmak",
+      "En az (B) sınıfı sürücü belgesine sahip olmak"
+     ]
+    },
+    {
+     "unvan": "Zabıta Memuru — Erkek",
+     "adet": 24,
+     "ogrenim": "onlisans",
+     "puan_turu": "P93",
+     "en_dusuk_puan": 65,
+     "kosullar": [
+      "Adalet, Yerel Yönetimler, Özel Güvenlik ve Koruma programlarından mezun olmak",
+      "En az (B) sınıfı sürücü belgesine sahip olmak"
+     ]
+    }
+   ],
+   "toplam": 90,
+   "ogrenim": [
+    "lisans",
+    "onlisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P3",
+    "P93"
+   ],
+   "ortak_kosullar": [
+    "Sınavın yapıldığı tarihte 30 yaşını doldurmamak",
+    "En az (B) sınıfı sürücü belgesine sahip olmak",
+    "Başvurular şahsen yapılacaktır",
+    "Başvuru belgelerini 30/11/2026 – 04/12/2026 tarihleri arasında teslim etmek",
+    "Sınav yeri ve zamanı 18/12/2026 tarihinde ilan edilecektir"
    ],
    "okunabilirlik": "iyi",
    "akademik": false,
