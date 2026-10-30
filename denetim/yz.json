@@ -453,6 +453,54 @@
    "duyuru_tipi": "yeni_ilan"
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=11272843-b0f1-470e-af31-cc176fa0e5d4": {
+  "zaman": "2026-10-30T08:10:20+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "metin",
+  "imza": "f505324ba3c041b5",
+  "baslik": "MEVLANA KALKINMA AJANSI - Personel Alım İlanı-İnşaat Mühendisliği (1 Uzman)",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "UZMAN",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Affa uğramış olsalar bile Devletin şahsiyetine karşı işlenen suçlarla ilgili hükümlü bulunmamak",
+      "Güvenlik soruşturması yapılmış olmak",
+      "İşe giriş sağlık raporu alabiliyor olmak",
+      "En az dört yıllık lisans eğitimi veren yükseköğretim kurumlarından Tablo 2’de belirtilen bölümden mezun olmak",
+      "ÖSYM tarafından yapılan sınavdan (C) düzeyinde veya denkliği kabul edilen yabancı dil belgesine sahip olmak",
+      "KPSS’dan mezun olduğu öğrenim dalı itibarıyla Tablo 2’de belirtilen puan türlerinin birinden en az 80 puan almış olmak",
+      "Ajansın faaliyet alanlarıyla ilgili konularda bilgi ve deneyim sahibi olmak",
+      "Ajansın görev sahası olan TR52 bölgesi ile ilgili çalışmalar yapmış olmak",
+      "Yüksek lisans veya doktora derecesine sahip olmak",
+      "İngilizce dışında ikinci yabancı dil belgesine sahip olmak",
+      "MS Office Programlarını iyi derecede kullanabilmek",
+      "B sınıfı sürücü ehliyetine sahip olmak"
+     ]
+    }
+   ],
+   "toplam": 1,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "Sadece elektronik ortamda yapılan başvurular geçerli",
+    "İlanda belirtilen şartlara uygun olmayan başvurular kabul edilmeyecektir"
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=1610b4a4-0f83-48cb-bd45-9aba5f32b893": {
   "zaman": "2026-10-30T06:50:04+03:00",
   "surum": 3,
@@ -1377,6 +1425,69 @@
    "duyuru_tipi": "yeni_ilan"
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=c1ab5cba-d22b-40ab-b89b-1d27431a422c": {
+  "zaman": "2026-10-30T08:10:20+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "metin",
+  "imza": "37103368cd323574",
+  "baslik": "İSTANBUL KALKINMA AJANSI - PERSONEL ALIM İLANI 5 UZMAN",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "UZMAN PERSONEL 1",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 80,
+     "kosullar": [
+      "En az dört yıllık lisans eğitimi veren yükseköğretim kurumlarından mezun olmak.",
+      "Sınav son başvuru tarihinden önceki 5 yıl içinde YDS veya denkliği kabul edilen sınavdan asgari (C) düzeyine karşılık gelen puanı sağlamak."
+     ]
+    },
+    {
+     "unvan": "UZMAN PERSONEL 2",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 80,
+     "kosullar": [
+      "En az dört yıllık lisans eğitimi veren yükseköğretim kurumlarından mezun olmak.",
+      "Sınav son başvuru tarihinden önceki 5 yıl içinde YDS veya denkliği kabul edilen sınavdan asgari (C) düzeyine karşılık gelen puanı sağlamak."
+     ]
+    },
+    {
+     "unvan": "UZMAN PERSONEL 3",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "En az dört yıllık lisans eğitimi veren yükseköğretim kurumlarından mezun olmak.",
+      "5 yıl fiilen çalışma deneyimine sahip olmak.",
+      "Sınav son başvuru tarihinden önceki 5 yıl içinde YDS veya denkliği kabul edilen sınavdan asgari (C) düzeyine karşılık gelen puanı sağlamak."
+     ]
+    }
+   ],
+   "toplam": 5,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P3"
+   ],
+   "ortak_kosullar": [
+    "Devletin şahsiyetine karşı işlenen suçlarla hükümlü bulunmamak.",
+    "Güvenlik soruşturması yapılmış olmak."
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=d419889e-c536-4404-b91f-b319b84f1fa9": {
   "zaman": "2026-10-30T06:13:27+03:00",
   "surum": 3,
@@ -1424,6 +1535,100 @@
     "Giriş sınavının yapılacağı yılın ocak ayının birinci günü itibarıyla 35 yaşını doldurmamış olmak",
     "Başvuru inceleme sonuçlarına itirazlar, sonuçların ilân edilmesinden itibaren yedi takvim günü içinde yapılacaktır.",
     "Posta veya e-posta ile yapılan itirazlarda itiraz tarihi posta veya e-postanın Başkanlığa ulaştığı tarih olarak kabul edilecektir."
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=d72bc5ed-a952-4452-9fea-b05616038765": {
+  "zaman": "2026-10-30T08:10:20+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "metin",
+  "imza": "1fea4200275c8096",
+  "baslik": "TASARRUF MEVDUATI SİGORTA FONU BAŞKANLIĞI - FON DENETÇİ YARDIMCILIĞI, FON UZMAN YARDIMCILIĞI ve FON AVUKATLIĞI GİRİŞ SINAVI İLANI 2026",
+  "farklar": [
+   [
+    "puan_turleri",
+    [
+     "P11",
+     "P16",
+     "P17",
+     "P18",
+     "P21",
+     "P22",
+     "P23",
+     "P26",
+     "P27",
+     "P28",
+     "P3",
+     "P31",
+     "P32",
+     "P33",
+     "P37",
+     "P38",
+     "P41",
+     "P42",
+     "P43",
+     "P46",
+     "P47",
+     "P48",
+     "P8",
+     "P9"
+    ],
+    [
+     "P3"
+    ],
+    false
+   ]
+  ],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "FON DENETÇİ YARDIMCILIĞI",
+     "adet": 10,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 75,
+     "kosullar": [
+      "Üniversitelerin en az 4 (Dört) yıl süreli eğitim veren siyasal bilgiler, hukuk, iktisadi ve idari bilimler, iktisat ve işletme, bankacılık, bankacılık ve finans fakülteleri ve yüksekokulları ile mühendislik ve fen edebiyat fakültelerinin bilgisayar, yazılım, bilgisayar ve yazılım, endüstri, elektrik, elektronik, elektrik ve elektronik, elektronik ve haberleşme, mekatronik, bilgisayar sistemleri ve teknolojileri, bilgisayar sistemleri ve ağları, istatistik, matematik ve ekonometri bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulu tarafından onaylanmış yurt içindeki veya yurt dışındaki yükseköğretim kurumlarından mezun olmak"
+     ]
+    },
+    {
+     "unvan": "FON UZMAN YARDIMCILIĞI",
+     "adet": 45,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 75,
+     "kosullar": [
+      "Üniversitelerin en az 4 (Dört) yıl süreli eğitim veren siyasal bilgiler, hukuk, iktisadi ve idari bilimler, iktisat ve işletme, bankacılık, bankacılık ve finans fakülteleri ve yüksekokulları ile mühendislik ve fen edebiyat fakültelerinin bilgisayar, yazılım, bilgisayar ve yazılım, endüstri, elektrik, elektronik, elektrik ve elektronik, elektronik ve haberleşme, mekatronik, bilgisayar sistemleri ve teknolojileri, bilgisayar sistemleri ve ağları, istatistik, matematik ve ekonometri bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulu tarafından onaylanmış yurt içindeki veya yurt dışındaki yükseköğretim kurumlarından mezun olmak"
+     ]
+    },
+    {
+     "unvan": "FON AVUKATLIĞI",
+     "adet": 20,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Üniversitelerin en az 4 (Dört) yıl süreli hukuk fakülteleri ile bunlara denkliği Yükseköğretim Kurulu tarafından onaylanmış yurt dışındaki yükseköğretim kurumlarından mezun olmak",
+      "Avukatlık ruhsatnamesine sahip olmak"
+     ]
+    }
+   ],
+   "toplam": 75,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P3"
+   ],
+   "ortak_kosullar": [
+    "Sınavın yapıldığı yılın Ocak ayının birinci günü itibarıyla 35 yaşını doldurmamış olmak",
+    "2004 sayılı İcra ve İflas Kanunu hükümlerine göre müflis olmamak, konkordato ilan etmiş olmamak, uzlaşma suretiyle yeniden yapılandırma başvurusu tasdik edilmiş olmamak ya da hakkında iflasın ertelenmesi kararı verilmiş olmamak"
    ],
    "okunabilirlik": "iyi",
    "akademik": false,
@@ -1678,6 +1883,67 @@
    "duyuru_tipi": "yeni_ilan"
   }
  },
+ "iskur-3161393ea90114b808aceb51": {
+  "zaman": "2026-10-30T08:10:20+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "metin",
+  "imza": "e9442631a2a84083",
+  "baslik": "Edirne Keşan Belediyesi Memur Alım İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Mühendis",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Hizmet sınıfı TH, 8. derece"
+     ]
+    }
+   ],
+   "toplam": 2,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P3"
+   ],
+   "ortak_kosullar": [
+    "Elektronik ortamda başvuru yapılacak.",
+    "Başvurular insankaynaklari@kesan.bel.tr adresine yapılacaktır."
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "iskur-48ae81d78be9ead4ae15005a": {
+  "zaman": "2026-10-30T08:10:20+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "metin",
+  "imza": "92793e298b4f77ed",
+  "baslik": "Mevlana Kalkınma Ajansı Personel Alım İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [],
+   "toplam": 0,
+   "ogrenim": [],
+   "kpss_gerekli": false,
+   "puan_turleri": [],
+   "ortak_kosullar": [],
+   "ozet": "Mevlana Kalkınma Ajansı tarafından Konya'da kamu personeli alımı yapılacaktır. Başvurular 2026-11-13 tarihine kadar devam edecektir.",
+   "okunabilirlik": "kotu",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
  "iskur-4afcdadb4b2d8f979d706f9f": {
   "zaman": "2026-10-30T04:47:52+03:00",
   "surum": 3,
@@ -1851,6 +2117,28 @@
     "Son başvuru tarihinden önceki 5 (beş) yıl içinde İngilizce dilinden Yabancı Dil Bilgisi Seviye Tespit Sınavından (C) düzeyinde veya dil yeterliği bakımından bunlara denkliği kabul edilen ve uluslararası geçerliliği bulunan başka bir sınavdan a sgari (C) düzeyine karşılık gelen puanın eşdeğerini sağlayan belgeye sahip olmak (YÖK DİL puanı kabul edilmeyecektir)"
    ],
    "okunabilirlik": "kismi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "iskur-beceb4b88f33dcb12811b07a": {
+  "zaman": "2026-10-30T08:10:20+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "metin",
+  "imza": "f9be685d5bb2c73d",
+  "baslik": "İstanbul Kalkınma Ajansı Personel Alım İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [],
+   "toplam": 0,
+   "ogrenim": [],
+   "kpss_gerekli": false,
+   "puan_turleri": [],
+   "ortak_kosullar": [],
+   "ozet": "İstanbul Kalkınma Ajansı tarafından personel alım ilanı yayınlanmıştır. Başvurular 2026-11-02 tarihinde sona erecektir.",
+   "okunabilirlik": "kotu",
    "akademik": false,
    "iptal_veya_duzeltme": false,
    "duyuru_tipi": "yeni_ilan"
