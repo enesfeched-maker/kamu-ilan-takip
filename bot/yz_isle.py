@@ -152,6 +152,14 @@ def alanlar(yz, item, simdi=None):
     return sonuc
 
 
+YAYINA_GIRMEZ = ('taranmis', 'uyusmazlik')   # yz_yerel: kayıt tutulur (yeniden okunmaz) ama yayına esas olmaz
+
+
+def _yayina_girmez(k):
+    """Yerel model okumadı ya da kişi sayısını bottan farklı okudu (30 Ekim: Şile 8 memur ilanını 2 okudu)."""
+    return k.get('kaynak') in YAYINA_GIRMEZ or (str(k.get('model') or '').startswith('ollama:')
+                                                and any(f[0] == 'toplam' for f in k.get('farklar') or []))
+
 DUYURU_TURU = {'iptal': 'İptal', 'duzeltme': 'Düzeltme / süre değişikliği', 'sure_uzatma': 'Düzeltme / süre değişikliği'}
 
 
@@ -182,7 +190,7 @@ def sure_uzatma_isaretle(item, veri=None):
 def uygula(item, veri=None, simdi=None):
     """Kaydın Gemini alanlarıyla birleşmiş kopyası (Gemini sonucu yoksa kaydın kendisi)."""
     k = kayit_bul(item, veri)
-    if not k:
+    if not k or _yayina_girmez(k):
         return item
     ek = alanlar(k['yz'], item, simdi)
     return dict(item, **ek) if ek else item
@@ -213,7 +221,7 @@ def yayina_hazir(item, veri=None, simdi=None):
     if not k:
         return (True, '') if _bekleme_doldu(item, simdi) else (False, 'Gemini henüz okumadı; en çok 1 saat beklenir')
     yz = k['yz']
-    if k.get('kaynak') == 'taranmis':   # yerel model taranmış belgeyi okumaz (yz_yerel); beklemenin anlamı yok
+    if _yayina_girmez(k):
         return True, ''
     if yz.get('okunabilirlik') == 'kotu':
         return (True, '') if _bekleme_doldu(item, simdi) else (False, 'Gemini belgeyi okuyamadı; en çok 1 saat beklenir')

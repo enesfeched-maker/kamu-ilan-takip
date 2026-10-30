@@ -209,6 +209,9 @@ def oku(ilanlar, bekleyen, veri, model, simdi, en_cok=6, sure_dk=25, cagir=None,
             print(f'Uyarı: {item.get("kurum")} okunamadı: {str(hata)[:200]}')
             continue
         yeni[item['id']] = kayit(item, yz, kaynak, model, simdi)
+        if any(f[0] == 'toplam' for f in yeni[item['id']]['farklar']):
+            # Kişi sayısı bottan farklı (30 Ekim: Şile 8 memur ilanını 2 okudu): yayına girmez, botun verisi kalır
+            yeni[item['id']]['kaynak'] = 'uyusmazlik'
         print(f'Okundu ({time.monotonic() - t:.0f} sn): {item.get("kurum")} — {str(item.get("baslik"))[:60]} ({kaynak})')
     veri.update(yeni)
     return yeni
