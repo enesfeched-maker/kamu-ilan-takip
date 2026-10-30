@@ -67,12 +67,28 @@ _DOLGU = re.compile(r'belirtilme|bilgi (?:yok|verilme)|^\s*(?:kadın\s*/\s*erkek
 
 
 # ---------------------------------------------------------------- belge metni
+def _sbb_pdf(item):
+    """Saklanan SBB belgesi: önce bu kopyadaki dosya, yoksa sitedeki kopyası (belge_kopyasi)."""
+    import yz_denetim as yd
+    from sbb_detay import document_url
+    pdf = yd._yerel_pdf(item)
+    adres = document_url(item)
+    if pdf or not adres:
+        return pdf
+    try:
+        with urllib.request.urlopen(urllib.request.Request(adres, headers={'User-Agent': 'Mozilla/5.0'}), timeout=60) as y:
+            veri = y.read(yd.EN_BUYUK_PDF + 1)
+    except (OSError, ValueError):
+        return None
+    return veri if veri[:4] == b'%PDF' and len(veri) <= yd.EN_BUYUK_PDF else None
+
+
 def metin_al(item, sbb_pdf=None, csb_indir=None):
     """(metin, kaynak). kaynak: 'pdf', 'csb', 'metin', 'taranmis' (metin çıkmadı, okutulmaz) ya da 'bekle' (SBB belgesi
     bu bilgisayara henüz inmedi; sonraki çalışmada denenir)."""
     import yz_denetim as yd
     from sbb_detay import document_url
-    pdf = sbb_pdf(item) if sbb_pdf else yd._yerel_pdf(item)
+    pdf = (sbb_pdf or _sbb_pdf)(item)
     if not pdf and document_url(item):
         return '', 'bekle'
     if pdf:

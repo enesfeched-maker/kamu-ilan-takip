@@ -37,7 +37,11 @@ def guncelle():
 
 
 if __name__ == '__main__':
+    # --betik yz_yerel.py: "Kamu Ilan Takip - Yerel Yapay Zeka" görevi aynı güncellemeyle yerel yapay zekâyı çalıştırır
+    argumanlar, betik = sys.argv[1:], 'yerel_tara.py'
+    if argumanlar[:1] == ['--betik'] and len(argumanlar) > 1 and argumanlar[1] in ('yerel_tara.py', 'yz_yerel.py'):
+        betik, argumanlar = argumanlar[1], argumanlar[2:]
     guncelle()
-    tarama = subprocess.run([sys.executable, str(ROOT / 'bot' / 'yerel_tara.py'), *sys.argv[1:]],
+    tarama = subprocess.run([sys.executable, str(ROOT / 'bot' / betik), *argumanlar],
                             cwd=ROOT, creationflags=GIZLI)
     sys.exit(tarama.returncode)
