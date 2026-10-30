@@ -1,4 +1,46 @@
 {
+ "csb-478289": {
+  "zaman": "2026-10-30T07:20:37+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "csb",
+  "imza": "8eb188149d678c6a",
+  "baslik": "KARABAĞLAR BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE SÖZLEŞMELİ PERSONEL ALIM İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Mühendis",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "kosullar": [
+      "Çevre mühendisliği programından mezun olmak",
+      "En az (B) sınıfı sürücü belgesine sahip olmak"
+     ]
+    }
+   ],
+   "toplam": 2,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P3"
+   ],
+   "ortak_kosullar": [
+    "30/11/2026- 04/12/2026 tarihleri arasında e-Devlet Kapısı üzerinden başvuru",
+    "Sınava girmek isteyen adaylar, Belediyemizin www.karabaglar.bel.tr adresi veya Kariyer Kapısı Platformu üzerinden temin edecekleri başvuru formunu doldurup imzalayarak Kariyer Kapısı’na ekleyeceklerdir.",
+    "16/12/2026 tarihinde saat 10:00'da Karabağlar Belediyesi Ana Hizmet Binasında sözlü sınav yapılacak.",
+    "Sınava gelirken sınav giriş belgesi ile geçerli kimlik belgelerini yanlarında bulundurmak"
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
  "csb-478442": {
   "zaman": "2026-10-30T06:13:27+03:00",
   "surum": 3,
@@ -1015,6 +1057,90 @@
    "duyuru_tipi": "yeni_ilan"
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=727b6946-c0fe-493f-a9e1-a0d668eabca2": {
+  "zaman": "2026-10-30T07:20:37+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "metin",
+  "imza": "f1340c4594e54348",
+  "baslik": "TÜRK AKREDİTASYON KURUMU GENEL SEKRETERLİĞİ - SÖZLEŞMELİ BİLİŞİM PERSONELİ SINAV İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "SİBER GÜVENLİK UZMANI",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Büyük ölçekli bilgi işlem birimlerinde veya kurumsal bilgi teknolojileri altyapılarında siber güvenlik alanında en az beş yıl fiilen çalışmış olmak ve bu hususu belgelemek.",
+      "En az 5.000 (beş bin) aktif kullanıcıya veya istemciye hizmet veren bilgi sistemlerinde siber güvenlik altyapılarının kurulumu, işletimi, yönetimi veya güvenliğinin sağlanması süreçlerinde görev almış olmak ve bu hususu belgelemek.",
+      "Güvenlik Duvarı (Firewall), Proxy, IDS/IPS, VPN, WAF, Yük Dengeleme (Load Balancing), ve DDoS koruma çözümlerinin yönetimi ve entegrasyonunda tecrübe sahibi olmak.",
+      "SIEM, EDR/XDR, Anti-virüs ve Sandbox (Şüpheli Dosya Analizi) yazılımlarının yönetiminde, kimlik ve erişim yönetimi ile bilgi güvenliği sistemlerinde tecrübe sahibi olmak.",
+      "SIEM uygulamaları için Script, Regex ve korelasyon kuralları hazırlama; Syslog ve EventLog analizi konularında ileri düzeyde tecrübeli olmak.",
+      "E-posta sunucu mimarileri, e-posta protokolleri (SMTP, IMAP, POP3) ve e-posta doğrulama teknolojilerinin (SPF, DKIM, DMARC) kurulum, yönetim ve güvenlik süreçlerine hâkim olmak.",
+      "Sıfır Güven (Zero Trust) güvenlik mimarisi ve ZTNA (Zero Trust Network Access) çözümlerinin tasarımı, kurgulanması ve uygulanması konusunda bilgi ve tecrübe sahibi olmak.",
+      "BGP, OSPF, DNS, DHCP, NAT, NAC, Layer-2/Layer-3 VPN ve noktadan noktaya WAN teknolojilerinde kurulum, yapılandırma ve sorun giderme tecrübesine sahip olmak.",
+      "LAN, WAN, WLAN, TCP/IP, IPv4/IPv6, OSI katman yapısı ile kurumsal ağ mimarilerinin tasarımı, planlaması, entegrasyonu ve IEEE 802.1X ağ standartları konularında tecrübe sahibi olmak.",
+      "Ağ cihazlarının güvenliği, sıkılaştırılması ve iş sürekliliği mimarilerinin kurgulanması konularında bilgi ve tecrübe sahibi olmak.",
+      "Ağ güvenliği ilkelerine hâkim olmak; ağ üzerindeki trafiği ve protokolleri analiz edebilen yazılımları (Wireshark, tcpdump vb.) yetkin şekilde kullanabilmek.",
+      "Zafiyet tarama araçlarını (Vulnerability Scanner) ileri düzeyde kullanabilmek, tarama sonuçlarını analiz etmek, önceliklendirmek ve raporlayabilmek.",
+      "Sızma testi (Penetration Testing) metodolojilerine, zafiyet yönetim süreçlerine hâkim olmak ve üçüncü taraf sızma testi süreçlerini koordine edebilmek.",
+      "Ayrıcalıklı Erişim Yönetimi (PAM- Privileged Access Management) mimarisi ve çözümleri hakkında tecrübe sahibi olmak.",
+      "Güncel saldırı türleri, zararlı yazılım davranışları ve saldırı amaçlı kullanılan araçlar (exploit framework'leri) hakkında bilgi sahibi olmak.",
+      "MITRE ATT&CK Framework ve OWASP Top 10 standartlarına hâkim olmak, bu yapılara göre güvenlik kontrolleri kurgulayabilmek.",
+      "5651 ve 7545 sayılı Kanunlar kapsamındaki teknik ve yasal loglama/güvenlik gereksinimlerine hâkim olmak.",
+      "Siber Olaylara Müdahale (SOME / Incident Response), kriz yönetimi ve temel adli bilişim (Digital Forensics) süreçlerinde tecrübe sahibi olmak."
+     ]
+    },
+    {
+     "unvan": "SİSTEM AĞ UZMANI",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Büyük ölçekli kamu kurum ve kuruluşlarında ya da en az 5.000 (beşbin) dış kullanıcısı bulunan özel sektördeki sistem merkezlerinde sistem ve ağ uzmanı veya benzer konumlarda en az 5 (beş) yıl çalışmış olmak.",
+      "Kurumsal ölçekteki sanallaştırma platformlarının (VMware vSphere, vCenter, ESXi ve/veya Microsoft Hyper-V) mimari tasarımı, kurulumu, yüksek erişilebilirlik (HA), DRS, vMotion/Live Migration, cluster yapılandırmaları, performans optimizasyonu ve kapasite planlaması süreçlerinde ileri düzey tecrübe sahibi olmak.",
+      "Fiziksel sunucu altyapılarının kurulumu, yönetimi, donanım konfigürasyonları (İşlemci, Bellek, Disk, RAID, HBA, Ethernet adaptörleri) ve firmware/BIOS güncellemeleri konusunda tecrübe sahibi olmak.",
+      "Windows Server işletim sistemlerinde kurulum, yapılandırma, güncelleme, güvenlik sıkılaştırması (hardening), yama yönetimi (Patch Management) ve performans optimizasyonu süreçlerinde tecrübe sahibi olmak.",
+      "Dosya sunucularının (File Server) kurulumu ve yönetimi, DFS/DFS-R, NTFS ve Share Permissions, Access-Based Enumeration, kullanıcı/grup bazlı yetkilendirme, kota ve erişim kontrolü süreçlerinde tecrübe sahibi olmak.",
+      "Linux tabanlı işletim sistemlerinde kurulum, yönetim, güvenlik sıkılaştırma, log analizi ve temel servislerin yönetimi konusunda tecrübe sahibi olmak.",
+      "Active Directory Domain Services (AD DS), Domain Controller, OU yapısı, Group Policy (GPO), Delegation, TIER mimarisi, sıkılaştırma ve güvenli kimlik doğrulama süreçlerinde ileri düzey bilgi sahibi olmak.",
+      "Kurumsal ölçekli veri depolama sistemlerinin (SAN/NAS/All-Flash Array) mimarisi, LUN/NFS/SMB provizyonu ve yönetimi konusunda tecrübe sahibi olmak.",
+      "Fiber Kanal Anahtarlar (FC Switches) konfigürasyonu, Zoning süreçleri ve SAN topolojilerine hâkim olmak.",
+      "Veri depolama seviyesinde senkron/asenkron replikasyon, snapshot ve lokasyonlar arası veri transferi teknolojilerinde deneyim sahibi olmak.",
+      "Microsoft Failover Clustering (WSFC), Failover Cluster Role, CSV, Quorum ve Microsoft SQL Server Always On Availability Groups altyapı kurulumu, yapılandırılması ve işletilmesi konusunda tecrübe sahibi olmak.",
+      "DNS, DHCP, LDAP, NTP, Kerberos ve temel ağ servislerinin kurulum, yapılandırma, yönetim, izleme ve sorun giderme süreçlerinde deneyim sahibi olmak.",
+      "Omurga ve kenar ağ anahtarları (Switching), Yönlendiriciler (Router) ve Merkezi Kablosuz Ağ Kontrolörlerinin (WLC) kurulumu, yapılandırılması ve işletilmesinde tecrübeli olmak.",
+      "Veri Merkezi ve Felaketten Kurtarma Merkezi (DC/DR) altyapı tasarımı, replikasyon senaryolarının oluşturulması, felaket anı geri dönüş (Failover/Failback) ve tatbikat süreçlerinin yürütülmesi konusunda tecrübe sahibi olmak.",
+      "Kurumsal yedekleme altyapılarının (Backup Policy, Retention, Repository) tasarımı ve yönetimi; Fiziksel/Sanal makinelerin yedeklenmesi, Restore, Instant Recovery, Bare Metal Recovery operasyonları ile periyodik geri dönüş testlerinin gerçekleştirilmesi konusunda tecrübeli olmak.",
+      "Sistem yönetimi, AD işlemleri, otomasyon ve raporlama için ileri düzeyde PowerShell script geliştirme ve Linux ortamlarında otomasyonlar oluşturma konusunda bilgi ve tecrübe sahibi olmak.",
+      "Microsoft SCCM (işletim sistemi/uygulama dağıtımı, patch management) ve SCOM (veya benzeri merkezi monitoring) ile sunucu, storage ve servislerin izlenmesi, alarm/kök neden (RCA) analizlerinin yapılması konusunda tecrübe sahibi olmak.",
+      "TCP/IP (IPv4/IPv6), VLAN, Routing, VPN, NAT, Load Balancing ve Ağ Segmentasyonu konularında bilgi sahibi olmak.",
+      "IIS, Apache, Nginx gibi web/uygulama sunucularının yönetimi ve E-posta sunucu protokolleri/altyapıları hakkında bilgi sahibi olmak.",
+      "Ansible, FreeIPA gibi yapılandırma yönetimi ve otomasyon araçlarının yönetimi konusunda bilgi sahibi olmak."
+     ]
+    }
+   ],
+   "toplam": 2,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "Fakültelerin dört yıllık bilgisayar mühendisliği, yazılım mühendisliği, elektrik mühendisliği, elektronik mühendisliği, elektrik ve elektronik mühendisliği ve endüstri mühendisliği bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurt dışındaki yükseköğretim kurumlarından mezun olmak",
+    "Yazılım, yazılım tasarımı ve geliştirilmesi ile bu sürecin yönetimi konusunda veya büyük ölçekli ağ sistemlerinin kurulumu ve yönetimi konusunda en az 5 (beş) yıl mesleki tecrübeye sahip bulunmak",
+    "Bilgisayar çevre birimlerinin donanımı ve kurulan ağ yönetimi güvenliği hakkında bilgi sahibi olması kaydıyla güncel programlama dillerinden en az ikisini bildiğini belgelemek"
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=7726dd9c-56dd-49e0-a0b2-a098e6c57b8a": {
   "zaman": "2026-10-30T05:07:52+03:00",
   "surum": 3,
@@ -1881,6 +2007,182 @@
    "duyuru_tipi": "yeni_ilan"
   }
  },
+ "sbb-838c1ad20b87efb0ed63d6c7": {
+  "zaman": "2026-10-30T07:20:37+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "pdf",
+  "imza": "509854f42c9bd9e1",
+  "baslik": "TÜRK AKREDİTASYON KURUMU - 2 ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Siber Güvenlik Uzmanı",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Büyük ölçekli bilgi işlem birimlerinde veya kurumsal bilgi teknolojileri altyapılarında siber güvenlik alanında en az beş yıl fiilen çalışmış olmak",
+      "En az 5.000 aktif kullanıcıya hizmet veren bilgi sistemlerinde siber güvenlik altyapılarının kurulumunda tecrübe sahibi olmak",
+      "Güvenlik Duvarı, Proxy, IDS/IPS, VPN, WAF, Yük Dengeleme çözümlerinde tecrübe sahibi olmak",
+      "SIEM, EDR/XDR, Anti-virüs yazılımlarının yönetiminde tecrübe sahibi olmak",
+      "E-posta sunucu mimarileri hakkında hâkim olmak",
+      "Sıfır Güven güvenlik mimarisi konusunda bilgi ve tecrübe sahibi olmak",
+      "Ağ cihazlarının güvenliği konusunda bilgi sahibi olmak",
+      "Zafiyet tarama araçlarını kullanabilmek",
+      "Sızma testi metodolojilerine hâkim olmak",
+      "Ayrıcalıklı Erişim Yönetimi mimarisi hakkında tecrübe sahibi olmak",
+      "Güncel saldırı türleri hakkında bilgi sahibi olmak",
+      "MITRE ATT&CK Framework konusunda hâkim olmak",
+      "5651 ve 7545 sayılı Kanunlar kapsamındaki gereksinimlere hâkim olmak",
+      "Siber Olaylara Müdahale süreçlerinde tecrübe sahibi olmak"
+     ]
+    },
+    {
+     "unvan": "Sistem ve Ağ Uzmanı",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Büyük ölçekli kamu kurum ve kuruluşlarında sistem ve ağ uzmanı olarak en az 5 yıl çalışmış olmak",
+      "Kurumsal ölçekteki sanallaştırma platformlarında tecrübe sahibi olmak",
+      "Fiziksel sunucu altyapılarının kurulumunda tecrübe sahibi olmak",
+      "Windows Server işletim sistemlerinde tecrübe sahibi olmak",
+      "Active Directory Domain Services konusunda ileri düzey bilgi sahibi olmak",
+      "Kurumsal ölçekli veri depolama sistemlerinin mimarisi konusunda tecrübe sahibi olmak",
+      "Microsoft Failover Clustering konusunda tecrübe sahibi olmak",
+      "Veri Merkezi ve Felaketten Kurtarma Merkezi altyapı tasarımı konusunda tecrübe sahibi olmak",
+      "Kurumsal yedekleme altyapılarının tasarımı ve yönetimi konusunda tecrübe sahibi olmak",
+      "PowerShell script geliştirme konusunda bilgi sahibi olmak",
+      "Microsoft SCCM ile sunucu izleme konusunda tecrübe sahibi olmak",
+      "TCP/IP konularında bilgi sahibi olmak"
+     ]
+    }
+   ],
+   "toplam": 2,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P3"
+   ],
+   "ortak_kosullar": [
+    "Fakültelerin dört yıllık bilgisayar mühendisliği, yazılım mühendisliği, elektrik mühendisliği, elektronik mühendisliği, elektrik ve elektronik mühendisliği ve endüstri mühendisliği bölümlerinden mezun olmak",
+    "Başvurular, e-Devlet üzerinden Türk Akreditasyon Kurumu-Kariyer Kapısı Kamu İşe Alım adresi üzerinden yapılacaktır",
+    "Sınav 11/11/2026 tarihinde Türk Akreditasyon Kurumu adresinde yapılacaktır"
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "sbb-8f8bf62951391c9f5213752f": {
+  "zaman": "2026-10-30T07:20:37+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "pdf",
+  "imza": "106a63c844a5f47e",
+  "baslik": "TÜRK AKREDİTASYON KURUMU - 7 AKREDİTASYON UZMANI YARDIMCISI ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Akreditasyon Uzman Yardımcısı",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP2",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Gıda Mühendisliği lisans programından mezun olmak"
+     ]
+    },
+    {
+     "unvan": "Akreditasyon Uzman Yardımcısı",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP2",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Metalurji ve Malzeme Mühendisliği lisans programından mezun olmak"
+     ]
+    },
+    {
+     "unvan": "Akreditasyon Uzman Yardımcısı",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP2",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Endüstri Mühendisliği lisans programından mezun olmak"
+     ]
+    },
+    {
+     "unvan": "Akreditasyon Uzman Yardımcısı",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP2",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Makine Mühendisliği lisans programından mezun olmak"
+     ]
+    },
+    {
+     "unvan": "Akreditasyon Uzman Yardımcısı",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP2",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Elektrik Mühendisliği, Elektrik-Elektronik Mühendisliği veya Elektronik Mühendisliği lisans programlarının birinden mezun olmak"
+     ]
+    },
+    {
+     "unvan": "Akreditasyon Uzman Yardımcısı",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP2",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Çevre Mühendisliği lisans programından mezun olmak"
+     ]
+    },
+    {
+     "unvan": "Akreditasyon Uzman Yardımcısı",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "KPSSP2",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Veteriner lisans programından mezun olmak"
+     ]
+    }
+   ],
+   "toplam": 7,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "KPSSP2"
+   ],
+   "ortak_kosullar": [
+    "18 yaşını tamamlamış olmak",
+    "İlanda belirtilen öğrenim şartlarını taşımak",
+    "Giriş sınavının yapıldığı yılın Ocak ayının birinci günü itibarıyla 35 yaşını doldurmamış olmak",
+    "Başvuruları e-Devlet Kariyer Kapısı Kamu İşe Alım Platformu üzerinden yapmak",
+    "Yabancı dil yeterliliğine sahip olmak (İngilizce, Fransızca veya Almanca)"
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
  "sbb-a00f639e934dfda13b150416": {
   "zaman": "2026-10-30T04:47:52+03:00",
   "surum": 3,
@@ -2447,6 +2749,130 @@
     "Sınav yeri Strateji ve Bütçe Başkanlığı (Necatibey Cad. 110/A Yücetepe/ANKARA)",
     "Adaylar, başvuru sonuçlarına itirazlarını yazılı olarak yapabilirler",
     "Sınav soruları, genel ve özel şartlarda belirtilen tüm konuları kapsayacaktır"
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "sbb-d568ee9cba7f99929eb258d5": {
+  "zaman": "2026-10-30T07:20:37+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "pdf",
+  "imza": "690a93c6dbc36ed6",
+  "baslik": "İSKENDERUN TEKNİK ÜNİVERSİTESİ - 1 İÇ DENETÇİ ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "İç Denetçi",
+     "adet": 1,
+     "ogrenim": "yuksek_lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "68’inci maddesinin (B) bendinde belirtilen koşulları taşımak",
+      "İç Denetim Koordinasyon Kurulu tarafından belirlenen alanlarda en az dört yıllık yükseköğrenim görmüş olmak",
+      "En az 5 yıl denetim elemanı olarak çalışmış olmak veya en az 8 yıl uzman olarak çalışmış olmak veya doktora unvanına sahip olmak veya müdür ve daha üst unvanlarda en az 8 yıl çalışmış olmak",
+      "Kamu İç Denetçi Sertifikasına sahip olmak",
+      "Halen bir kamu kurum veya kuruluşunda görev yapıyor olmak",
+      "İç Denetçilerin Çalışma Usul ve Esasları Hakkında Yönetmelikte belirtilen nitelikleri taşımak",
+      "İç denetçilik mesleğinin gerektirdiği bilgi, ehliyet ve temsil yeteneğine sahip olmak"
+     ]
+    }
+   ],
+   "toplam": 1,
+   "ogrenim": [],
+   "kpss_gerekli": false,
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "Başvuruların süresi içerisinde ve eksiksiz olarak yapılması zorunludur.",
+    "Başvuruların değerlendirilmesi İskenderun Teknik Üniversitesi Rektörlüğünce oluşturulacak komisyon tarafından yapılacaktır.",
+    "Başvuru sahiplerinin Kamu İç Denetçi Sertifikalarının kullanım durumu İç Denetim Koordinasyon Kurulundan teyit edilecektir.",
+    "Mülakata çağrılacak adayların listesi ile mülakat tarihi, saati ve yeri Üniversitemizin resmi internet sitesinde duyurulacaktır.",
+    "Başvuru sonuçları Üniversitemizin resmi internet sitesinde ilan edilecektir."
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "sbb-e9b0b6b325e3d0e45aecf805": {
+  "zaman": "2026-10-30T07:20:37+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "pdf",
+  "imza": "2de6517bce456ec0",
+  "baslik": "SAYIŞTAY BAŞKANLIĞI - 2 ADET SÖZLEŞMELİ BİLİŞİM PERSONELİ ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Kıdemli .Net Yazılım Geliştirme Uzmanı ve Çözüm Mimarı",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Büyük ölçekli bilgi işlem birimlerinde en az 10 yıl çalışmış olmak",
+      "Web Uygulamaları Güvenliği eğitimini almış olmak",
+      "Veri tabanı Güvenliği eğitimini almış olmak",
+      ".NET Framework bilgisine sahip olmak",
+      "MS SQL Server bilgisine sahip olmak",
+      "API Gateway araçları konusunda deneyimli olmak",
+      "Azure DevOps konusunda deneyimli olmak",
+      "JavaScript bilgisine sahip olmak",
+      "İlişkisel olmayan veritabanları bilgisine sahip olmak",
+      "Geniş ölçekli web tabanlı uygulamaların tasarlanması konusunda deneyimli olmak",
+      "Uygulama sunucusu kurulumu konusunda bilgili olmak",
+      "Linux/Unix işletim sistemleri bilgisine sahip olmak",
+      "En az bir kurumsal web tabanlı sistemin tasarlanması konusunda deneyimli olmak",
+      "Proje yönetimi konusunda bilgili olmak",
+      "UML tabanlı yazılım modelleme konusunda deneyimli olmak",
+      "Kubernetes konusunda bilgili olmak",
+      "Yapay zekâ modelleri kullanma konusunda bilgili olmak",
+      "Uygulama performansını artırmaya yönelik önbellekleme teknolojileri konusunda bilgili olmak",
+      "Birim testi geliştirme konusunda bilgili olmak",
+      "Kurumsal yazılım mimarisi konusunda bilgili olmak",
+      "Yazılım yaşam döngüsü konusunda bilgili olmak",
+      "Git ve Azure DevOps konusunda bilgili olmak",
+      "Tercihen Android ve/veya iOS platformları için uygulama geliştirme deneyimine sahip olmak",
+      "Tercihen yüksek performanslı ve ölçeklenebilir sistemlerin mimari tasarımı konusunda deneyimli olmak"
+     ]
+    },
+    {
+     "unvan": "Yazılım Geliştirme Uzmanı (.Net)",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Büyük ölçekli bilgi işlem birimlerinde en az 3 yıl çalışmış olmak",
+      "İş akışı otomasyonu konusunda bilgili olmak",
+      "Design Pattern konusunda bilgili olmak",
+      ".Net, ASP.NET, C#, MVC bilgisine sahip olmak",
+      "Unit test konusunda bilgili olmak",
+      "Yazılım yaşam döngüsü konusunda bilgili olmak",
+      "Web servisleri konusunda bilgili olmak",
+      "JavaScript bilgisine sahip olmak",
+      "Versiyonlama araçları konusunda bilgili olmak"
+     ]
+    }
+   ],
+   "toplam": 2,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P3"
+   ],
+   "ortak_kosullar": [
+    "Belirli bölümden mezun olmak",
+    "Sayıştay Başkanlığı güvenlik soruşturmasından olumlu sonuç almak"
    ],
    "okunabilirlik": "iyi",
    "akademik": false,
