@@ -213,6 +213,77 @@
    "duyuru_tipi": "yeni_ilan"
   }
  },
+ "csb-477763": {
+  "zaman": "2026-10-30T09:25:58+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "csb",
+  "imza": "8b0834cf60143537",
+  "baslik": "MALAZGİRT BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Mühendis",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "kosullar": [
+      "Lisans düzeyinde eğitim veren fakültelerin jeodezi ve fotogrametri mühendisliği, jeodezi ve haritacılık mühendisliği, harita mühendisliği, geomatik mühendisliği programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "kosullar": [
+      "Lisans düzeyinde eğitim veren fakültelerin İnşaat mühendisliği programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mimar",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "kosullar": [
+      "Lisans düzeyinde eğitim veren fakültelerin mimarlık programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Muhasebeci",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "kosullar": [
+      "Lisans düzeyinde eğitim veren fakültelerin Muhasebe ve Maliye programından mezun olmak."
+     ]
+    }
+   ],
+   "toplam": 4,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P3"
+   ],
+   "ortak_kosullar": [
+    "Adaylar, 2026 yılı Kamu Personeli Seçme Sınavına (KPSS (B) grubu) girmiş olmak.",
+    "Başvuruların elektronik ortamda veya posta yoluyla yapılması.",
+    "Sınav tarihi: 2026-11-12",
+    "Sınav yeri: Malazgirt Belediyesi"
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
  "csb-477764": {
   "zaman": "2026-10-30T09:05:05+03:00",
   "surum": 3,
@@ -2482,6 +2553,56 @@
    "duyuru_tipi": "yeni_ilan"
   }
  },
+ "iskur-56961c753a205497cf8368a3": {
+  "zaman": "2026-10-30T09:25:58+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "metin",
+  "imza": "83b97ee40006ef55",
+  "baslik": "Ardahan Pasof Belediyesi Sözleşmeli Personel Alım İlanı",
+  "farklar": [
+   [
+    "ogrenim",
+    [
+     "ortaogretim"
+    ],
+    [
+     "lisans"
+    ],
+    false
+   ]
+  ],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Teknisyen",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P94",
+     "en_dusuk_puan": 60,
+     "kosullar": [
+      "13/10/1983 tarihli ve 2918 sayılı Karayolları Trafik Kanunu hükümlerince verilen en az (B) sınıfı sürücü belgesine sahip olmak"
+     ]
+    }
+   ],
+   "toplam": 1,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P94"
+   ],
+   "ortak_kosullar": [
+    "Elektronik ortamda başvurular, 02/11/2026-04/11/2026 tarihleri arasında istenilen belgeler eklenmek suretiyle Belediyemizin posofbelediyesi@hotmail.com mail adresine yapılacaktır.",
+    "Şahsen veya iadeli taahhütlü posta yolu ile yapılacak başvurular, yukarıdaki başvuru tarihleri arasında mesai bitimine kadar (mesai günlerinde saat 08:00-17:00 arasında) başvuru formu eksiksiz ve doğru şekilde doldurularak ve başvuru esnasında istenilen diğer belgeler eklenmek suretiyle Merkez Mah. Ardahan Cad. No:48 Posof/ARDAHAN adresindeki Posof Belediye Başkanlığı Ana Hizmet Binası Yazı İşleri Müdürlüğü birimine yapılabilir."
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
  "iskur-6c0565cdb31b4595f797e950": {
   "zaman": "2026-10-30T09:05:05+03:00",
   "surum": 3,
@@ -2782,6 +2903,169 @@
     "Başvurular Kariyer Kapısı veya e-Devlet üzerinden",
     "Sınav tarihi ayrıca duyurulacak",
     "Sınav Galatasaray Üniversitesi'nde yapılacak"
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "sbb-390fd0065a5a1473b643ad5b": {
+  "zaman": "2026-10-30T09:25:58+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "pdf",
+  "imza": "f274ff999476609e",
+  "baslik": "İSTANBUL ELEKTRİK TRAMVAY VE TÜNEL İŞLETMELERİ GENEL MÜDÜRLÜĞÜ (İETT) - 44 MEMUR ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Bilgisayar İşletmeni",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Bilgisayar ve öğretim teknolojileri eğitimi, bilgisayar ve öğretim teknolojileri öğretmenliği, otomotiv öğretmenliği veya iş idaresi lisans programlarının birinden mezun olmak.",
+      "Millî Eğitim Bakanlığı onaylı bilgisayar işletmeni sertifikasına sahip olmak veya mezun olduğu okulda bilgisayar dersi gördüğünü belgelemek."
+     ]
+    },
+    {
+     "unvan": "Bilgisayar İşletmeni",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Maliye, muhasebe ve maliye veya yönetim bilişim sistemleri lisans programlarının birinden mezun olmak.",
+      "Millî Eğitim Bakanlığı onaylı bilgisayar işletmeni sertifikasına sahip olmak veya mezun olduğu okulda bilgisayar dersi gördüğünü belgelemek."
+     ]
+    },
+    {
+     "unvan": "Muhasebeci",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Muhasebe-finansman, muhasebe ve finansal yönetim, muhasebe ve finans yönetimi lisans programlarının birinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Psikolog",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Psikoloji lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis",
+     "adet": 5,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Bilgisayar mühendisliği, bilgisayar bilimleri mühendisliği, bilgisayar bilimi ve mühendisliği, bilişim sistemleri mühendisliği, bilgisayar ve enformatik mühendisliği, kontrol ve bilgisayar mühendisliği, yazılım mühendisliği lisans programlarının birinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Çevre mühendisliği lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Elektrik mühendisliği lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis",
+     "adet": 9,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Elektronik mühendisliği, mikroelektronik mühendisliği, elektrik ve elektronik mühendisliği, elektrik-elektronik mühendisliği, elektronik ve haberleşme mühendisliği lisans programlarının birinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis",
+     "adet": 6,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Endüstri mühendisliği, endüstri sistemleri mühendisliği, endüstri ve sistem mühendisliği, sistem mühendisliği, üretim sistemleri mühendisliği, üretim mühendisliği, imalat mühendisliği lisans programlarının birinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Gıda mühendisliği, gıda işleme mühendisliği lisans programlarının birinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Jeodezi ve fotogrametri mühendisliği, jeodezi ve haritacılık mühendisliği, harita mühendisliği, geomatik mühendisliği lisans programlarının birinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "İnşaat mühendisliği lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis",
+     "adet": 10,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Makine mühendisliği, makine ve imalat mühendisliği, makine ve üretim mühendisliği lisans programlarının birinden mezun olmak."
+     ]
+    }
+   ],
+   "toplam": 44,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P3"
+   ],
+   "ortak_kosullar": [
+    "İlan edilen kadrolara başvuracak adayların, 2026 yılı Kamu Personeli Seçme Sınavına (KPSS (B) grubu ) girmiş olmak.",
+    "Başvuruların elektronik ortamda (https://www.turkiye.gov.tr/etvt-is-basvurusu) yapılması.",
+    "Sınav tarihi ve yeri (16/11/2026 – 11/12/2026) İETT İşletmeleri Genel Müdürlüğü web sayfasında (https://www.iett.gov.tr) ilan edilecektir.",
+    "Başvuruların değerlendirilmesi ve sınav sonuçları İETT İşletmeleri Genel Müdürlüğü internet adresinden (https://www.iett.gov.tr) ilan edilecektir."
    ],
    "okunabilirlik": "iyi",
    "akademik": false,
@@ -3316,6 +3600,67 @@
     "Giriş sınavının yapıldığı yılın Ocak ayının birinci günü itibarıyla 35 yaşını doldurmamış olmak",
     "Başvuruları e-Devlet Kariyer Kapısı Kamu İşe Alım Platformu üzerinden yapmak",
     "Yabancı dil yeterliliğine sahip olmak (İngilizce, Fransızca veya Almanca)"
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "sbb-996152b017d1af5f445dfade": {
+  "zaman": "2026-10-30T09:25:58+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "pdf",
+  "imza": "55ab329c8b2f02ff",
+  "baslik": "ŞİLE BELEDİYE BAŞKANLIĞI - 8 MEMUR ALACAK",
+  "farklar": [
+   [
+    "toplam",
+    8,
+    2,
+    true
+   ]
+  ],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Zabıta Memuru — Kadın",
+     "adet": 1,
+     "ogrenim": "ortaogretim",
+     "puan_turu": "P94",
+     "en_dusuk_puan": 65,
+     "kosullar": [
+      "Herhangi bir ortaöğretim kurumundan (lise veya dengi okul) mezun olmak.",
+      "En az (B) sınıfı sürücü belgesine sahip olmak."
+     ]
+    },
+    {
+     "unvan": "Zabıta Memuru — Erkek",
+     "adet": 1,
+     "ogrenim": "ortaogretim",
+     "puan_turu": "P94",
+     "en_dusuk_puan": 65,
+     "kosullar": [
+      "Herhangi bir ortaöğretim kurumundan (lise veya dengi okul) mezun olmak.",
+      "En az (B) sınıfı sürücü belgesine sahip olmak."
+     ]
+    }
+   ],
+   "toplam": 2,
+   "ogrenim": [
+    "ortaogretim"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P94"
+   ],
+   "ortak_kosullar": [
+    "Sınavın yapıldığı tarihte 30 yaşını doldurmamış olmak.",
+    "Erkeklerde en az 1.67 metre, kadınlarda en az 1.60 metre boyunda olmak ve boyun 1 metreden fazla olan kısmı ile kilosu arasında (+, -) 10 kg’dan fazla fark olmamak.",
+    "Başvurular şahsen yapılacaktır.",
+    "Sınav 20/11/2026 tarihinde başlayacaktır.",
+    "Başvuruların değerlendirilmesine müteakip 13/11/2026 tarihinde ilan edilecektir."
    ],
    "okunabilirlik": "iyi",
    "akademik": false,
@@ -3950,6 +4295,58 @@
     "Sınavın sözlü mülakat şeklinde yapılması",
     "Sınav tarihleri daha sonra duyurulacaktır",
     "Başvuruların 09/11/2026 - 03/12/2026 tarihleri arasında yapılması"
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "sbb-ce3aeb16575b73442a9f8944": {
+  "zaman": "2026-10-30T09:25:58+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "pdf",
+  "imza": "3fd3b74d92177058",
+  "baslik": "ŞİLE BELEDİYE BAŞKANLIĞI - 6 MEMUR ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Zabıta Memuru",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 65,
+     "kosullar": [
+      "Herhangi bir lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Tekniker",
+     "adet": 1,
+     "ogrenim": "onlisans",
+     "puan_turu": "P93",
+     "en_dusuk_puan": 65,
+     "kosullar": [
+      "Harita, harita kadastro, harita teknikerliği, harita ve maden ölçme, harita ve kadastro, inşaat, inşaat teknikerliği, inşaat teknolojisi makine, elektrik önlisans programlarının birinden mezun olmak."
+     ]
+    }
+   ],
+   "toplam": 6,
+   "ogrenim": [
+    "lisans",
+    "onlisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P3",
+    "P93"
+   ],
+   "ortak_kosullar": [
+    "Başvuru yeri ve şekli: Elektronik ortamda başvuru için insankaynaklari@sile.bel.tr mail adresi, şahsen başvuru için Balibey Mah. Atatürk Cad. No:69/A Şile/İstanbul adresindeki Şile Belediye Başkanlığı Yazı İşleri Müdürlüğü.",
+    "Sınav tarihi ve usulü: Memur kadroları için 27/11/2026 tarihinde sözlü sınav, zabıta memuru kadroları için 27/11/2026 tarihinde sözlü ve uygulamalı sınav.",
+    "Başvuruların değerlendirilmesi: KPSS puanları ile sınav puanlarının aritmetik ortalaması alınarak değerlendirme yapılacak."
    ],
    "okunabilirlik": "iyi",
    "akademik": false,
