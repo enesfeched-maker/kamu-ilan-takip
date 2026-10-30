@@ -99,6 +99,15 @@ class Akis(unittest.TestCase):
         self.assertEqual(yz_isle.yayina_hazir(ILAN, veri, SIMDI.replace(minute=40)), (True, ''))
         self.assertNotIn('yz_kadrolar', yz_isle.uygula(ILAN, veri, SIMDI))   # botun verisi kalır
 
+    def test_kisi_sayisi_bottan_farkliysa_yayina_girmez(self):
+        veri = {}
+        item = dict(ILAN, kadro='8 MEMUR ALACAK', kadro_detay=[{'unvan': 'Memur', 'adet': 8}])
+        yy.oku([item], set(), veri, 'gemma3:12b', SIMDI, cagir=lambda *a: CEVAP, metin=lambda i: ('metin', 'csb'))
+        if veri['csb-1']['farklar']:   # bot toplamı okunabildiyse
+            self.assertEqual(veri['csb-1']['kaynak'], 'uyusmazlik')
+            self.assertIs(yz_isle.uygula(item, veri, SIMDI), item)
+            self.assertEqual(yz_isle.yayina_hazir(item, veri, SIMDI), (True, ''))
+
     def test_model_hatasinda_kayit_yazilmaz(self):
         veri = {}
         yy.oku([ILAN], set(), veri, 'gemma3:12b', SIMDI, cagir=lambda *a: 1 / 0, metin=lambda i: ('metin', 'csb'))
