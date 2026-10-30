@@ -1,0 +1,53 @@
+name: Claude ilan okumasını al
+
+# Claude bulut rutini (bot/yz_claude_talimat.md) okumalarını yz-okuma dalına gönderir; burada main'deki
+# denetim/yz.json ile kayıt başına en yeni okuma kalacak biçimde birleştirilir. Sonraki taramada site ve Telegram kullanır.
+on:
+  push:
+    branches: [yz-okuma]
+    paths: [denetim/yz.json]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: yz-okuma-al
+  cancel-in-progress: false
+
+jobs:
+  al:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          ref: main
+          fetch-depth: 1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: "3.12"
+      - name: Birleştir ve main'e kaydet
+        run: |
+          git config user.name ilan-bot
+          git config user.email ilan-bot@users.noreply.github.com
+          for deneme in 1 2 3; do
+            git fetch -q origin main yz-okuma
+            git reset -q --hard origin/main
+            git show origin/yz-okuma:denetim/yz.json > "$RUNNER_TEMP/yeni.json"
+            python - "$RUNNER_TEMP/yeni.json" <<'PY'
+          import json, sys
+          sys.path.insert(0, 'bot')
+          from yz_yerel import birlestir
+          from pathlib import Path
+          yol = Path('denetim/yz.json')
+          eski = json.loads(yol.read_text(encoding='utf-8')) if yol.exists() else {}
+          yeni = json.loads(Path(sys.argv[1]).read_text(encoding='utf-8'))
+          yol.write_text(json.dumps(birlestir(eski, yeni), ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
+          PY
+            git add denetim/yz.json
+            git diff --cached --quiet && { echo "Yeni okuma yok."; exit 0; }
+            git commit -q -m "Claude ilan okuması [skip ci]"
+            git push -q origin HEAD:main && exit 0
+            sleep 10
+          done
+          exit 1
