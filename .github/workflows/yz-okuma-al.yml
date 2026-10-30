@@ -1,10 +1,11 @@
 name: Claude ilan okumasını al
 
-# Claude bulut rutini (bot/yz_claude_talimat.md) okumalarını yz-okuma dalına gönderir; burada main'deki
-# denetim/yz.json ile kayıt başına en yeni okuma kalacak biçimde birleştirilir. Sonraki taramada site ve Telegram kullanır.
+# Claude bulut rutini (bot/yz_claude_talimat.md) her okumayı kendine özel yz-okuma-<zaman> dalına gönderir (force-push
+# gerekmesin diye). Burada bekleyen tüm yz-okuma* dalları sırayla main'deki denetim/yz.json ile kayıt başına en yeni okuma
+# kalacak biçimde birleştirilir, sonra dallar silinir. Sonraki taramada site ve Telegram kullanır.
 on:
   push:
-    branches: [yz-okuma]
+    branches: [yz-okuma, "yz-okuma-*"]
     paths: [denetim/yz.json]
   workflow_dispatch:
 
@@ -31,10 +32,14 @@ jobs:
           git config user.name ilan-bot
           git config user.email ilan-bot@users.noreply.github.com
           for deneme in 1 2 3; do
-            git fetch -q origin main yz-okuma
+            git fetch -q --prune --depth=1 origin main '+refs/heads/yz-okuma*:refs/remotes/origin/yz-okuma*'
             git reset -q --hard origin/main
-            git show origin/yz-okuma:denetim/yz.json > "$RUNNER_TEMP/yeni.json"
-            python - "$RUNNER_TEMP/yeni.json" <<'PY'
+            # Eskiden yeniye: aynı kayıtta birlestir zaten en yeni okumayı tutar, sıra yalnız güvence.
+            dallar=$(git for-each-ref --sort=committerdate --format='%(refname:lstrip=3)' 'refs/remotes/origin/yz-okuma*')
+            [ -z "$dallar" ] && { echo "Bekleyen okuma dalı yok."; exit 0; }
+            for dal in $dallar; do
+              git show "origin/$dal:denetim/yz.json" > "$RUNNER_TEMP/yeni.json" || { echo "$dal: yz.json yok"; continue; }
+              python - "$RUNNER_TEMP/yeni.json" <<'PY'
           import json, sys
           sys.path.insert(0, 'bot')
           from yz_yerel import birlestir
@@ -44,10 +49,16 @@ jobs:
           yeni = json.loads(Path(sys.argv[1]).read_text(encoding='utf-8'))
           yol.write_text(json.dumps(birlestir(eski, yeni), ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
           PY
+            done
             git add denetim/yz.json
-            git diff --cached --quiet && { echo "Yeni okuma yok."; exit 0; }
-            git commit -q -m "Claude ilan okuması [skip ci]"
-            git push -q origin HEAD:main && exit 0
-            sleep 10
+            if git diff --cached --quiet; then
+              echo "Yeni okuma yok."
+            else
+              git commit -q -m "Claude ilan okuması [skip ci]"
+              git push -q origin HEAD:main || { sleep 10; continue; }
+            fi
+            # Yalnız birleştirilen dallar silinir; bu arada gelen yeni dal bir sonraki çalışmada alınır.
+            for dal in $dallar; do git push -q origin --delete "$dal" || true; done
+            exit 0
           done
           exit 1
