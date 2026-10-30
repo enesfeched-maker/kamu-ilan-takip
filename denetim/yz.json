@@ -448,6 +448,114 @@
    "toplam": 2
   }
  },
+ "csb-478617": {
+  "zaman": "2026-10-30T03:12:26+03:00",
+  "surum": 2,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "csb",
+  "imza": "70df722103904116",
+  "baslik": "EYYÜBİYE BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE ZABITA MEMURU ALIMI İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Zabıta Memuru",
+     "adet": 9,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "kosullar": [
+      "Herhangi bir lisans programından mezun olmak.",
+      "En az (B) sınıfı sürücü belgesine sahip olmak."
+     ]
+    }
+   ],
+   "toplam": 9,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P3"
+   ],
+   "ortak_kosullar": [
+    "Sınavın yapıldığı tarihte 30 yaşını doldurmamış olmak.",
+    "Boy-kilo şartı: Erkeklerde en az 1.67 metre, kadınlarda en az 1.60 metre boyunda olmak ve boyun 1 metreden fazla olan kısmı ile kilosu arasında (+,-) 10 kg’dan fazla fark olmamak.",
+    "Başvuru yeri ve şekli: Eyyübiye Belediyesi Millet Bahçesi Konferans salonuna şahsen başvuru.",
+    "Sınav tarihi ve usulü: Sözlü sınav 30/12/2026, uygulamalı sınav 31/12/2026."
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "csb-478618": {
+  "zaman": "2026-10-30T03:12:26+03:00",
+  "surum": 2,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "csb",
+  "imza": "76b0a20403a2979e",
+  "baslik": "GAZİOSMANPAŞA BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE ZABITA MEMURU ALIMI İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Zabıta Memuru",
+     "adet": 18,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 65,
+     "kosullar": [
+      "Kamu yönetimi, yerel yönetimler, işletme, siyaset bilimi ve kamu yönetimi, siyaset bilimi, çalışma ekonomisi ve endüstri ilişkileri programlarından mezun olmak.",
+      "En az (B) sınıfı sürücü belgesine sahip olmak."
+     ]
+    },
+    {
+     "unvan": "Zabıta Memuru",
+     "adet": 5,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 65,
+     "kosullar": [
+      "İnşaat mühendisliği, çevre mühendisliği, veteriner, gıda mühendisliği programlarından mezun olmak.",
+      "En az (B) sınıfı sürücü belgesine sahip olmak."
+     ]
+    },
+    {
+     "unvan": "Zabıta Memuru",
+     "adet": 13,
+     "ogrenim": "onlisans",
+     "puan_turu": "P93",
+     "en_dusuk_puan": 65,
+     "kosullar": [
+      "Mahalli idareler, mahalli idareler (zabıta), yerel yönetimler, halkla ilişkiler, adalet, acil durum ve afet yönetimi, ilk ve acil yardım önlisans programlarından mezun olmak.",
+      "En az (B) sınıfı sürücü belgesine sahip olmak."
+     ]
+    }
+   ],
+   "toplam": 36,
+   "ogrenim": [
+    "lisans",
+    "onlisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P3",
+    "P93"
+   ],
+   "ortak_kosullar": [
+    "Sınav tarihi 2026-12-28",
+    "Başvuru yeri Gaziosmanpaşa Belediye Başkanlığı Yazı İşleri Müdürlüğü",
+    "Başvuru şekli şahsen",
+    "Sınav yeri Gaziosmanpaşa Belediye Başkanlığı Yarı Olimpik Yüzme Havuzu ve Spor Kompleksi"
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=0ad1bd8f-f6ad-4a03-8f10-7a42c33cf44a": {
   "zaman": "2026-10-20T11:14:54+03:00",
   "surum": 2,
@@ -1084,6 +1192,46 @@
    "son_basvuru_saati": "23:59",
    "son_basvuru_tarihi": "2026-11-08",
    "toplam": 11
+  }
+ },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=39c5ca3c-3571-485b-b226-2ff559360a0a": {
+  "zaman": "2026-10-30T03:12:26+03:00",
+  "surum": 2,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "metin",
+  "imza": "a3676b2eb8e2bf4e",
+  "baslik": "MİLLİ SARAYLAR İDARESİ BAŞKANLIĞI - SÖZLEŞMELİ PERSONEL POZİSYONUNDA 3 MÜZE GÖREVLİSİ (KAZI GÖREVLİSİ) ALIMI SINAV İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Müze Görevlisi (Kazı Görevlisi)",
+     "adet": 3,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Arkeoloji, Sanat Tarihi, Arkeoloji ve Sanat Tarihi, Klasik Arkeoloji, Tarih Öncesi Arkeolojisi, Prehistorya, Protohistorya ve Ön Asya Arkeolojisi veya Türk İslam Arkeolojisi lisans bölümlerinden birinden mezun olmak.",
+      "Yurtdışındaki Yükseköğretim Kurumlarından mezun olanların denklik belgesi sunması."
+     ]
+    }
+   ],
+   "toplam": 3,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": false,
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "Son başvuru tarihi itibarıyla 40 yaşını doldurmamış olmak.",
+    "Başvuru özel şartlarına sahip olmak.",
+    "18 yaşını tamamlamış olmak.",
+    "Güvenlik soruşturması ve arşiv araştırması sonucu olumlu olmak."
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=39d5a688-3b17-48de-a123-9140f55af29e": {
@@ -2874,6 +3022,77 @@
    "toplam": 40
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=f657a20b-5132-4e3a-8b1e-131e031f065b": {
+  "zaman": "2026-10-30T03:12:26+03:00",
+  "surum": 2,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "metin",
+  "imza": "71f20ed7d4c377be",
+  "baslik": "KAMU İHALE KURUMU - KAMU İHALE UZMAN YARDIMCILIĞI GİRİŞ SINAVI DUYURUSU (2026)",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "KAMU İHALE UZMAN YARDIMCISI — 1. Grup Hukuk Fakültesi",
+     "adet": 7,
+     "ogrenim": "lisans",
+     "puan_turu": "P4",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Hukuk Fakültesi mezunu olmak"
+     ]
+    },
+    {
+     "unvan": "KAMU İHALE UZMAN YARDIMCISI — 2. Grup-İktisat, Siyasal Bilgiler, İşletme, İktisadi ve İdari Bilimler Fakülteleri",
+     "adet": 6,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "İktisat, Siyasal Bilgiler, İşletme, İktisadi ve İdari Bilimler Fakültelerinden mezun olmak"
+     ]
+    },
+    {
+     "unvan": "KAMU İHALE UZMAN YARDIMCISI — 3. Grup- İnşaat Mühendisliği",
+     "adet": 10,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "İnşaat Mühendisliği bölümü mezunu olmak"
+     ]
+    },
+    {
+     "unvan": "KAMU İHALE UZMAN YARDIMCISI — 3. Grup-Makine Mühendisliği",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Makine Mühendisliği bölümü mezunu olmak"
+     ]
+    }
+   ],
+   "toplam": 25,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P4"
+   ],
+   "ortak_kosullar": [
+    "Giriş sınavının yapıldığı yılın Ocak ayının birinci günü itibarıyla otuz beş yaşını doldurmamış olmak",
+    "Sağlık yönüyle ilgili görevini devamlı olarak yapmaya engel bir durumu olmamak",
+    "Hizmetin gerektirdiği niteliklere, muhakeme yeteneğine ve temsil kabiliyetine sahip olup, yoğun iş temposuna ayak uydurabilme ve takım çalışmasına yatkın olmak",
+    "Güvenlik soruşturması ve/veya arşiv araştırmasında kamu hizmetine atanmasına engel bir durumu bulunmamak"
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
  "iskur-01c8b814c37c00ddcec7858b": {
   "zaman": "2026-10-20T06:12:51+03:00",
   "surum": 2,
@@ -3310,6 +3529,50 @@
    "son_basvuru_saati": "16:00",
    "son_basvuru_tarihi": "2026-11-20",
    "toplam": 1
+  }
+ },
+ "sbb-1b5d1f3068575a269a3a23ad": {
+  "zaman": "2026-10-30T03:12:26+03:00",
+  "surum": 2,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "pdf",
+  "imza": "65931fdb1adf834e",
+  "baslik": "GALATASARAY ÜNİVERSİTESİ - 1 ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Yazılım Geliştirme Uzmanı",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Fakültelerin dört yıllık bilgisayar mühendisliği, sistem mühendisliği, elektrik mühendisliği, elektronik mühendisliği, elektrik ve elektronik mühendisliği, elektronik ve haberleşme mühendisliği, yazılım mühendisliği ve endüstri mühendisliği bölümlerinden mezun olmak",
+      "Fakültelerin mühendislik bölümlerinden, fen-edebiyat, eğitim ve eğitim bilimleri fakültelerinin, bilgisayar ve teknoloji üzerine eğitim veren bölümleri ile istatistik, matematik ve fizik bölümlerinden mezun olmak",
+      "En az 3 yıllık mesleki tecrübeye sahip olmak",
+      "Güncel programlama dillerinden en az ikisini bilmek"
+     ]
+    }
+   ],
+   "toplam": 1,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P3"
+   ],
+   "ortak_kosullar": [
+    "Başvurular Resmi Gazete ilan tarihinden itibaren 15 gün içerisinde yapılacaktır.",
+    "Başvurular Kariyer Kapısı veya e-Devlet üzerinden yapılacaktır.",
+    "Sınav tarihi ayrıca duyurulacaktır.",
+    "Sınav Galatasaray Üniversitesi'nde yapılacaktır."
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
   }
  },
  "sbb-24c9bb297ddcd48d3ccc1aa2": {
@@ -4933,6 +5196,178 @@
    "son_basvuru_saati": "23:59",
    "son_basvuru_tarihi": "2024-11-02",
    "toplam": 15
+  }
+ },
+ "sbb-b8e350246ed989bd4d6c9b23": {
+  "zaman": "2026-10-30T03:12:26+03:00",
+  "surum": 2,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "pdf",
+  "imza": "e4c365a92cd9bffb",
+  "baslik": "MİLLİ SARAYLAR İDARESİ BAŞKANLIĞI - 3 MEMUR ALACAK",
+  "farklar": [
+   [
+    "toplam",
+    3,
+    158,
+    true
+   ],
+   [
+    "ogrenim",
+    [
+     "lisans",
+     "onlisans",
+     "ortaogretim"
+    ],
+    [
+     "lisans",
+     "onlisans"
+    ],
+    false
+   ],
+   [
+    "puan_turleri",
+    [
+     "P3"
+    ],
+    [
+     "NULL",
+     "P3"
+    ],
+    false
+   ]
+  ],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Büro Personeli",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "ÖSYM tarafından 2025 ve 2026 yılında yapılan Kamu Personeli Seçme Sınavlarında KPSS P3 puan türünde en az 60 (altmış) puan almış olmak.",
+      "Son başvuru tarihi itibarıyla 35 yaşını doldurmamış olmak.",
+      "İşletme, Yönetim Bilimleri, İktisat, Maliye, Çalışma Ekonomisi ve Endüstri İlişkileri, Kamu Yönetimi, Siyaset Bilimi, Siyaset Bilimi ve Kamu Yönetimi, Siyaset Bilimi ve Uluslararası İlişkiler bölümlerinden birinden mezun olmak veya bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurtdışındaki Yükseköğretim Kurumlarından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Müze Görevlisi",
+     "adet": 9,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "ÖSYM tarafından 2025 ve 2026 yılında yapılan Kamu Personeli Seçme Sınavında KPSS P3 puan türünde en az 60 (altmış) puan almış olmak.",
+      "Son başvuru tarihi itibarıyla 35 yaşını doldurmamış olmak.",
+      "Müzecilik, Sanat Tarihi, Tarih, Türk Halkbilimi, Arkeoloji, Klasik Arkeoloji, Arkeoloji ve Sanat Tarihi, Türk İslam Arkeolojisi, İletişim Bilimleri, Halkla İlişkiler ve Tanıtım, Halkla İlişkiler ve Reklamcılık, Gazetecilik ile Radyo, Televizyon ve Sinema lisans bölümlerinden birinden mezun olmak veya bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurtdışındaki Yükseköğretim Kurumlarından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis (İnşaat)",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "ÖSYM tarafından 2025 ve 2026 yılında yapılan Kamu Personeli Seçme Sınavlarında KPSS P3 puan türünde en az 60 (altmış) puan almış olmak.",
+      "Son başvuru tarihi itibarıyla 35 yaşını doldurmamış olmak.",
+      "Üniversitelerin İnşaat Mühendisliği lisans bölümünden mezun olmak veya bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurtdışındaki Yükseköğretim Kurumlarından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Restoratör (Kalemkâr)",
+     "adet": 5,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "ÖSYM tarafından 2025 ve 2026 yılında yapılan Kamu Personeli Seçme Sınavında KPSS P3 puan türünde en az 60 (altmış) puan almış olmak.",
+      "Son başvuru tarihi itibarıyla 35 yaşını doldurmamış olmak.",
+      "Üniversitelerin Kültür Varlıklarını Koruma ve Onarım, Restorasyon ve Konservasyon, Rölöve-Restorasyon, Taşınabilir Kültür Varlıklarını Koruma ve Onarım, Sanat Eserleri Konservasyonu ve Restorasyonu lisans bölümlerinden mezun olmak veya Mimarlık, Mühendislik, Fen- Edebiyat, Güzel Sanatlar, Dil ve Tarih-Coğrafya fakültelerinin taşınır ve taşınmaz kültür varlıklarını koruma, onarım, restorasyon ve konservasyon konularında lisansüstü programlarından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Çözümleyici",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "null",
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Son başvuru tarihi itibarıyla 40 yaşını doldurmamış olmak.",
+      "Bilgisayar Mühendisliği, Bilgisayar Bilimi ve Mühendisliği, Bilgisayar Bilimleri ve Mühendisliği, Bilişim Sistemleri Mühendisliği, Yazılım Mühendisliği, Bilgisayar ve Yazılım Mühendisliği, Yazılım Geliştirme, Bilgisayar Bilimleri, Bilişim Sistemleri ve Teknolojileri, Ağ, Bilgisayar Teknolojisi ve Bilişim Sistemleri, Bilgisayar ve Enformasyon Sistemleri, Bilgisayar ve Enformatik, Sistem Yönetimi, Veri Tabanı Uygulama, Web Tasarım lisans bölümlerinden mezun olmak veya bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurtdışındaki Yükseköğretim Kurumlarından mezun olmak.",
+      "İstihdam edileceği BİM’ deki C-SHARP (ASP.NET, MVC), MS-SQL, JAVA programlama dillerinden en az iki tanesini bildiğini belgelemek.",
+      "Yabancı Dil Seviye Tespit Sınavından (YDS) en az (D) düzeyinde İngilizce bilmek."
+     ]
+    },
+    {
+     "unvan": "Diğer Teknik Hizmet Personeli (El Dekoru ve Seramik Üretimi)",
+     "adet": 11,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Son başvuru tarihi itibarıyla 40 yaşını doldurmamış olmak.",
+      "Lisans bölümlerinin Geleneksel Türk Sanatları, Geleneksel Sanatlar, Geleneksel Türk El Sanatları, Geleneksel El Sanatları, Resim, Seramik, Seramik Sanatları, Seramik Tasarımı, Seramik ve Cam, Seramik ve Cam Tasarımı, Seramik-Cam, Bileşik Sanatlar, El Sanatları, El Sanatları Tasarımı ve Üretimi, Çini, Çini Tasarımı ve Onarımı bölümlerinden mezun olmak veya bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurtdışındaki Yükseköğretim Kurumlarından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Tekniker (El Dekoru ve Seramik Üretimi)",
+     "adet": 5,
+     "ogrenim": "onlisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Son başvuru tarihi itibarıyla 40 yaşını doldurmamış olmak.",
+      "Meslek Yüksek Okullarının Geleneksel El Sanatları, Seramik, Çini İşlemeciliği, Seramik ve Cam, Seramik, Cam ve Çinicilik, Geleneksel Türk El Sanatları, El Sanatları, Seramik-Cam bölümlerinden mezun olmak veya bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurtdışındaki Yükseköğretim Kurumlarından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Koruma ve Güvenlik Görevlisi",
+     "adet": 100,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "ÖSYM tarafından 2025 ve 2026 yılında yapılan Kamu Personeli Seçme Sınavında KPSS P3 puan türünde en az 60 (altmış) puan almış olmak.",
+      "10/6/2004 tarihli ve 5188 sayılı Özel Güvenlik Hizmetlerine Dair Kanun’un 10 uncu maddesinde belirtilen şartları sağlamak.",
+      "Silahlı Güvenlik Kimlik Kartına sahip olmak veya Silahlı Özel Güvenlik Elemanı Sertifikasına sahip olmak veya bu belgeler için ilgili kurumlara başvuruda bulunmuş olmak.",
+      "Başkanlığımızın tüm hizmet birimlerinde, gece ve gündüz, iç ve dış mekânlarında 24 saat esasına göre vardiyalı sistemde çalışmaya engel durumu bulunmamak.",
+      "Son başvuru tarihi itibarıyla 35 yaşını doldurmamış olmak."
+     ]
+    },
+    {
+     "unvan": "Destek Personeli (Temizlik Görevlisi)",
+     "adet": 25,
+     "ogrenim": "lisans",
+     "puan_turu": "null",
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Son başvuru tarihi itibarıyla 40 yaşını doldurmamış olmak.",
+      "En az ortaöğretim (lise) ve dengi okul mezunu olmak."
+     ]
+    }
+   ],
+   "toplam": 158,
+   "ogrenim": [
+    "lisans",
+    "onlisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P3",
+    "null"
+   ],
+   "ortak_kosullar": [
+    "Başvurular, Kariyer Kapısı (https://kariyerkapisi.gov.tr/isealim) internet sitesinden e-Devlet şifresi ile elektronik ortamda yapılacaktır.",
+    "Başvurusu kabul edilmiş olanlardan daha sonra yapılan incelemede sınava katılma şartlarını taşımadığı anlaşılanların atama işlemleri yapılmayacaktır.",
+    "Atanmaya hak kazanan adaylar, atamaya esas istenilen belgelerle birlikte ilan edilen süre içinde Milli Saraylar İdaresi Başkanlığı/Personel Dairesi Başkanlığına müracaat edeceklerdir.",
+    "Atama işlemlerinde 7315 sayılı Güvenlik Soruşturması ve Arşiv Araştırması Kanunu hükümleri uygulanacaktır."
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
   }
  },
  "sbb-c799c2bf65cf136277930882": {
