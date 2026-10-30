@@ -14,14 +14,17 @@ doğru** yazmak. Hız değil doğruluk önemli. Belgede açıkça yazmayan hiçb
    - Sonucu görevin `cikti` yoluna aşağıdaki biçimde JSON olarak yaz.
 3. `python bot/yz_claude.py kaydet` — çıktıları denetler ve `denetim/yz.json` dosyasına işler. "Atlandı" satırı varsa
    o ilanın JSON'unu düzelt ve komutu yeniden çalıştır.
-4. Değişiklik varsa yalnız `denetim/yz.json` dosyasını `yz-okuma` dalına gönder:
+4. Değişiklik varsa yalnız `denetim/yz.json` dosyasını bu çalışmaya özel YENİ bir dala gönder. Komutları ayrı ayrı
+   çalıştır, dal adındaki zamanı bir kez belirleyip hepsinde aynısını kullan (ör. `yz-okuma-20261030-1405`):
    ```
-   git checkout -B yz-okuma
+   git checkout -b yz-okuma-YYYYAAGG-SSDD
    git add denetim/yz.json
    git commit -m "Claude ilan okuması"
-   git push -f origin yz-okuma
+   git push origin yz-okuma-YYYYAAGG-SSDD
    ```
-   main'e doğrudan gönderme, başka dosya değiştirme. `.github/workflows/yz-okuma-al.yml` main'e birleştirir.
+   Dal yeni olduğu için normal push yeter; `git push -f`, `git reset --hard` ve var olan bir dala gönderme GEREKMEZ, kullanma.
+   Push "already exists" ile reddedilirse dal adına saniye ekleyip yeni dal aç. main'e doğrudan gönderme, başka dosya
+   değiştirme. `.github/workflows/yz-okuma-al.yml` dalı main'e birleştirip siler.
 
 ## Çıktı biçimi (her ilan için bir JSON)
 

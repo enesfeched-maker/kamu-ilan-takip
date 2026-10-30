@@ -4,7 +4,8 @@ Claude Code bulut rutini 2 saatte bir çalışır (talimat: bot/yz_claude_talima
   1. python bot/yz_claude.py hazirla   -> okunacak ilanlar ve belgeleri yz-is/ klasörüne (gorevler.json)
   2. Claude her belgeyi okur, yz-is/<anahtar>.json yazar (biçim talimatta)
   3. python bot/yz_claude.py kaydet    -> sonuçlar denetilip denetim/yz.json'a işlenir
-  4. rutin denetim/yz.json'u yz-okuma dalına gönderir; .github/workflows/yz-okuma-al.yml main'e birleştirir.
+  4. rutin denetim/yz.json'u yeni bir yz-okuma-<zaman> dalına gönderir (force-push yok);
+     .github/workflows/yz-okuma-al.yml main'e birleştirip dalı siler.
 Site ve Telegram yz_isle.uygula ile bu veriyi kullanır; elle düzeltmeler yine üstte. Telegram yeni ilanı Claude okuyana
 kadar en çok yz_isle.EN_COK_BEKLEME bekletir, sonra botun verisiyle gönderir."""
 import argparse
