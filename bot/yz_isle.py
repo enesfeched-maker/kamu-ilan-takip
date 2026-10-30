@@ -213,6 +213,8 @@ def yayina_hazir(item, veri=None, simdi=None):
     if not k:
         return (True, '') if _bekleme_doldu(item, simdi) else (False, 'Gemini henüz okumadı; en çok 1 saat beklenir')
     yz = k['yz']
+    if k.get('kaynak') == 'taranmis':   # yerel model taranmış belgeyi okumaz (yz_yerel); beklemenin anlamı yok
+        return True, ''
     if yz.get('okunabilirlik') == 'kotu':
         return (True, '') if _bekleme_doldu(item, simdi) else (False, 'Gemini belgeyi okuyamadı; en çok 1 saat beklenir')
     if yz.get('akademik'):

@@ -17,6 +17,7 @@ on:
       - docs/yerel-kaynaklar.json
       - docs/belgeler/**
       - docs/assets/**
+      - denetim/yz.json   # yerel yapay zekâ (bot/yz_yerel.py) okumaları sonraki taramada kullanılır
 
 permissions:
   contents: write
