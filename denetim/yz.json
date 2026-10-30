@@ -885,6 +885,55 @@
    "duyuru_tipi": "yeni_ilan"
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=56b19c9c-b32c-45ae-8fdc-101d776c8df3": {
+  "zaman": "2026-10-30T07:50:19+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "metin",
+  "imza": "892456af04da91f3",
+  "baslik": "TÜRK AKREDİTASYON KURUMU GENEL SEKRETERLİĞİ - AKREDİTASYON UZMAN YARDIMCISI ALIMI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Akreditasyon Uzman Yardımcısı",
+     "adet": 7,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Elektrik Mühendisliği, Elektrik-Elektronik Mühendisliği veya Elektronik Mühendisliği mezunu olmak."
+     ]
+    },
+    {
+     "unvan": "AKREDİTASYON UZMAN YARDIMCISI-GIDA MÜHENDİSLİĞİ",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Gıda Mühendisliği mezunu olmak."
+     ]
+    }
+   ],
+   "toplam": 7,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "Mezuniyet: Başvurmak istenilen grup ile alakalı belirtilen mezuniyet şartını sağlamak.",
+    "Asgari KPSS Puanı: 70",
+    "Giriş Sınavına Çağrılacak Aday Sayısı: 4",
+    "18 yaşını tamamlamış olmak,"
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=5976effc-ff4b-49b1-a5d7-c08d82d81636": {
   "zaman": "2026-10-30T05:07:52+03:00",
   "surum": 3,
@@ -1382,6 +1431,74 @@
    "duyuru_tipi": "yeni_ilan"
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=db21f412-186a-4d5c-bc46-03dff9ea17fb": {
+  "zaman": "2026-10-30T07:50:19+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "metin",
+  "imza": "bd60a4ff7b1fc616",
+  "baslik": "ORTA KARADENİZ KALKINMA AJANSI (OKA) - 2026 YILI PERSONEL ALIM İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "UZMAN PERSONEL 2026 -ŞEHİR VE BÖLGE PLANLAMA, MİMARLIK",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": 80,
+     "kosullar": [
+      "Tablo 1’de belirtilen bölümlerden lisans düzeyinde mezun olmak"
+     ]
+    },
+    {
+     "unvan": "UZMAN PERSONEL 2026- MÜHENDİSLİK",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": 80,
+     "kosullar": [
+      "Tablo 1’de belirtilen bölümlerden lisans düzeyinde mezun olmak"
+     ]
+    },
+    {
+     "unvan": "UZMAN PERSONEL 2026-İDARİ BİLİMLER",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": 80,
+     "kosullar": [
+      "Tablo 1’de belirtilen bölümlerden lisans düzeyinde mezun olmak"
+     ]
+    },
+    {
+     "unvan": "DESTEK PERSONELİ 2026",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Tablo 2’de yer alan bölümlerden veya bunlara denk mezun olmak",
+      "2025 veya 2026 yılında yapılan KPSS’den Tablo 2’de yer alan ilgili puan türünden en az 70 puan almış olmak"
+     ]
+    }
+   ],
+   "toplam": 5,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "Ajansta istihdam edilecek adayların tamamının öncellikle aşağıda belirtilen genel şartları sağlamaları gerekmektedir",
+    "Güvenlik soruşturması ve/veya arşiv araştırması yapılmış olmak"
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=f657a20b-5132-4e3a-8b1e-131e031f065b": {
   "zaman": "2026-10-30T04:00:33+03:00",
   "surum": 3,
@@ -1702,6 +1819,43 @@
    "duyuru_tipi": "yeni_ilan"
   }
  },
+ "iskur-9b0565c28a9ae764ff23b945": {
+  "zaman": "2026-10-30T07:50:19+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "metin",
+  "imza": "8fc56706d2093bbb",
+  "baslik": "Orta Karadeniz Kalkınma Ajansı Personel Alım İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Lisans Düzeyinde Personel",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "2025 veya 2026 yıllarında yapılan Kamu Personeli Seçme Sınavından mezun oldukları öğrenim dalları itibarıyla Tablo 1’de gösterilen ilgili puan türlerinden son başvuru tarihi itibarıyla en az 80 (seksen) puan almış olmak",
+      "Üniversitelerin Tablo 2’de yer alan bölümlerinden veya bunlara denkliği Yükseköğretim Kurulu’nca kabul edilen yurt içindeki veya yurt dışındaki yükseköğretim kurumlarından lisans düzeyinde mezun olmak"
+     ]
+    }
+   ],
+   "toplam": 1,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "Son başvuru tarihinden önceki 5 (beş) yıl içinde İngilizce dilinden Yabancı Dil Bilgisi Seviye Tespit Sınavından (C) düzeyinde veya dil yeterliği bakımından bunlara denkliği kabul edilen ve uluslararası geçerliliği bulunan başka bir sınavdan a sgari (C) düzeyine karşılık gelen puanın eşdeğerini sağlayan belgeye sahip olmak (YÖK DİL puanı kabul edilmeyecektir)"
+   ],
+   "okunabilirlik": "kismi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
  "sbb-1b5d1f3068575a269a3a23ad": {
   "zaman": "2026-10-30T04:00:33+03:00",
   "surum": 3,
@@ -1781,6 +1935,52 @@
     "Başvuru, e-Devlet Kapısı üzerinden Burdur Mehmet Akif Ersoy Üniversitesi Kariyer Kapısı Kamu İşe Alım platformundan yapılacak.",
     "Başvuru sonuçları, Kariyer Kapısı üzerinden ve Üniversitemiz internet adresinden ilan edilecek.",
     "Sınav 30.11.2026 tarihinde yapılacak."
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "sbb-4465c3cc1f08e887dd0c0af8": {
+  "zaman": "2026-10-30T07:50:19+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "pdf",
+  "imza": "bdb20235138a87fb",
+  "baslik": "ANKARA BÜYÜKŞEHİR BELEDİYE BAŞKANLIĞI - 5 MÜFETTİŞ YARDIMCISI ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Müfettiş Yardımcısı",
+     "adet": 5,
+     "ogrenim": "lisans",
+     "puan_turu": "P48",
+     "en_dusuk_puan": 75,
+     "kosullar": [
+      "Hukuk, siyasal bilgiler, iktisat, işletme, iktisadî ve idarî bilimler fakültelerinden veya bunlara denk mezun olmak.",
+      "2025 ve 2026 yılı Kamu Personeli Seçme Sınavına (KPSS - A Grubu) girmiş olmak.",
+      "Yazılı sınav tarihi itibarıyla 35 yaşını doldurmamış olmak (26.12.1991 ve daha sonraki tarihlerde doğanlar).",
+      "Müfettişlik mesleğinin yürütülmesine adli veya idari herhangi bir engeli bulunmamak.",
+      "Rehberlik ve Teftiş Kurulu Başkanlığınca yapılacak sınava daha önce katılmamış olmak veya en fazla 1 defa katılmış olmak."
+     ]
+    }
+   ],
+   "toplam": 5,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P48"
+   ],
+   "ortak_kosullar": [
+    "Yazılı sınava katılabilmek için başvuru formunu eksiksiz ve doğru olarak doldurmak.",
+    "Postadaki gecikmeler ve duyuruda belirtilen süre içinde yapılmayan başvurular dikkate alınmayacaktır.",
+    "Sınav tarihi itibarıyla 35 yaşını doldurmamış olmak (26.12.1991 ve daha sonraki tarihlerde doğanlar).",
+    "Sınava girmeye hak kazandığı halde ilan edilen sınav tarihinde sınava katılmayan veya mazeretine binaen katılmayan adaylar, sınav hakkını kaybetmiş sayılacaktır.",
+    "Sınav sonuçlarına itiraz, sınav sonuçlarının açıklandığı günden başlamak üzere, 3 iş günü içinde Kurul Başkanlığına yazılı olarak yapılacaktır."
    ],
    "okunabilirlik": "iyi",
    "akademik": false,
@@ -1963,6 +2163,57 @@
    "akademik": false,
    "iptal_veya_duzeltme": false,
    "okunabilirlik": "kotu"
+  }
+ },
+ "sbb-5681cd6adcb3be4bf8184f42": {
+  "zaman": "2026-10-30T07:50:19+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "pdf",
+  "imza": "11af9c2c07a9cec2",
+  "baslik": "MİLLİ SAVUNMA BAKANLIĞI - DENİZ KUVVETLERİ KOMUTANLIĞINA 2026 YILI DENİZ SINIFI MUVAZZAF SUBAY ADAYI TEMİNİ",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Deniz Sınıfı Muvazzaf Subay Adayı",
+     "adet": 2026,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "01 Ocak 2026 tarihi itibarı ile düzeltilmemiş nüfus kaydına göre 27 yaşından büyük olmamak (lisans için)",
+      "01 Ocak 2026 tarihi itibarı ile düzeltilmemiş nüfus kaydına göre 32 yaşından büyük olmamak (lisansüstü için)",
+      "Yurt içinde en az dört yıl ve daha fazla süreli fakülte/yüksekokulların kaynak okul programlarından mezun olmak",
+      "Öğrenimlerini yurt dışında tamamlayanların YÖK denkliği olmak",
+      "KPSS puanı istenmemek ve MSB tarafından yapılacak genel kültür sınavından en az 50 puan almak",
+      "Herhangi bir kurum veya kuruluşa mecburi hizmet sorumluluğu olmamak",
+      "Silah taşımaya hukuki bir engel olmamak",
+      "Alkol, uyuşturucu veya uyarıcı madde kullanımı nedeniyle tedavi görmemiş olmak",
+      "Terör örgütlerine iltisakı olmamak",
+      "Güvenlik soruşturması ve arşiv araştırması olumlu sonuçlanmış olmak",
+      "Herhangi bir işte çalışmamış olmak",
+      "Yabancı uyruklu eşle evli olmamak"
+     ]
+    }
+   ],
+   "toplam": 2026,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": false,
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "Başvurular https://personeltemin.msb.gov.tr adresinden yapılacak.",
+    "Başvuru ücreti 600 TL'dir.",
+    "Sınavlar MEBS Okulu ve Eğitim Merkezi Komutanlığında (Mamak/Ankara) yapılacak.",
+    "Sağlık kurulu raporu alınması gerekmektedir.",
+    "Güvenlik soruşturması ve arşiv araştırması yapılacaktır."
+   ],
+   "okunabilirlik": "kismi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
   }
  },
  "sbb-6599de4d7ab75fdadb1de2a8": {
@@ -2281,6 +2532,24 @@
    "akademik": false,
    "iptal_veya_duzeltme": false,
    "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "sbb-a1b920fe98f44f8e989fea1e": {
+  "zaman": "2026-10-30T07:50:19+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "taranmis",
+  "imza": "7787126f92c5a399",
+  "baslik": "MİLLİ SAVUNMA BAKANLIĞI - TÜRK SİLAHLI KUVVETLERİNE EN AZ DÖRT YIL SÜRELİ FAKÜLTE VEYA YÜKSEKOKUL MEZUNLARINDAN 2026 YILI MUVAZZAF SUBAY ADAYI TEMİNİ",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [],
+   "ogrenim": [],
+   "puan_turleri": [],
+   "ortak_kosullar": [],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "kotu"
   }
  },
  "sbb-b8e350246ed989bd4d6c9b23": {
