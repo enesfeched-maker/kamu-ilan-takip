@@ -67,6 +67,41 @@ class Metin(unittest.TestCase):
         finally:
             csb_kaynak.belge_metni = eski
 
+    def test_csb_belgesi_alinamazsa_beklenir(self):
+        def patlar(adres):
+            raise OSError('erişim yok')
+        self.assertEqual(yy.metin_al(ILAN, csb_indir=patlar), ('', 'bekle'))
+
+    def test_csb_kopyasi_saklanir_ve_okunur(self):
+        import tempfile
+        from pathlib import Path
+        import csb_kaynak
+        eski_klasor, eski_metin = csb_kaynak.BELGE_KLASORU, csb_kaynak.belge_metni
+        csb_kaynak.BELGE_KLASORU = Path(tempfile.mkdtemp()) / 'csb'
+        csb_kaynak.belge_metni = lambda adres, veri: veri.decode()
+        try:
+            adres = ILAN['belgeler'][0]['link']
+            dosyalar = csb_kaynak.belge_kopyalari([ILAN], indir_=lambda a, r: b'y' * 500)
+            self.assertEqual(list(dosyalar), ['docs/belgeler/csb/' + csb_kaynak.belge_yolu(adres).name])
+            self.assertTrue(csb_kaynak.belge_yolu(adres).name.endswith('.docx'))
+            # depodaki kopya varken siteye gidilmez
+            self.assertEqual(yy.metin_al(ILAN), ('y' * 500, 'csb'))
+            self.assertEqual(csb_kaynak.belge_kopyalari([ILAN], indir_=lambda a, r: 1 / 0), dosyalar)
+        finally:
+            csb_kaynak.BELGE_KLASORU, csb_kaynak.belge_metni = eski_klasor, eski_metin
+
+    def test_csb_kopyalari_site_paketine_girmez(self):
+        import tempfile
+        from pathlib import Path
+        import site_paketi
+        d = Path(tempfile.mkdtemp())
+        (d / 'docs' / 'belgeler' / 'csb').mkdir(parents=True)
+        (d / 'docs' / 'belgeler' / 'csb' / 'a.docx').write_bytes(b'x')
+        (d / 'docs' / 'index.html').write_text('x')
+        site_paketi.paketle(d / 'docs', d / '_site')
+        self.assertTrue((d / '_site' / 'index.html').exists())
+        self.assertFalse((d / '_site' / 'belgeler' / 'csb').exists())
+
     def test_metinsiz_pdf_taranmis(self):
         import ek_kaynaklar
         eski = ek_kaynaklar.pdf_text

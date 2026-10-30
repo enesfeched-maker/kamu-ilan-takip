@@ -33,8 +33,11 @@ def paketle(kaynak=ROOT / 'docs', hedef=ROOT / '_site'):
     kaynak, hedef = Path(kaynak), Path(hedef)
     ozetler = bagli_belgeler(kaynak / 'ilanlar.json')
     belge_klasoru = (kaynak / BELGE_YOLU).resolve()
+    belgeler = (kaynak / 'belgeler').resolve()
 
     def atla(klasor, adlar):
+        if Path(klasor).resolve() == belgeler and 'csb' in adlar:
+            return ['csb']   # ÇŞB ek kopyaları yalnız yapay zekâ okuması için (yz_claude); yayına girmez
         if ozetler is not None and Path(klasor).resolve() == belge_klasoru:
             return [a for a in adlar if a.endswith('.pdf') and a[:-4] not in ozetler]
         return []
