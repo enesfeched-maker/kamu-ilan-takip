@@ -104,11 +104,20 @@ class Akis(unittest.TestCase):
         yy.oku([ILAN], set(), veri, 'gemma3:12b', SIMDI, cagir=lambda *a: 1 / 0, metin=lambda i: ('metin', 'csb'))
         self.assertEqual(veri, {})
 
-    def test_birlestir_en_yeni_okuma_kalir(self):
-        uzak = {'a': {'zaman': '2026-10-30T10:00:00+03:00', 'x': 1}, 'b': {'zaman': '2026-10-30T12:00:00+03:00'}}
-        yeni = {'a': {'zaman': '2026-10-30T11:00:00+03:00', 'x': 2}, 'b': {'zaman': '2026-10-30T09:00:00+03:00'}}
-        self.assertEqual(yy.birlestir(uzak, yeni)['a']['x'], 2)
-        self.assertEqual(yy.birlestir(uzak, yeni)['b']['zaman'], '2026-10-30T12:00:00+03:00')
+    def test_birlestir_en_yeni_okuma_kalir_eski_surum_atilir(self):
+        uzak = {'a': {'zaman': '2026-10-30T10:00:00+03:00', 'x': 1, 'surum': SURUM},
+                'b': {'zaman': '2026-10-30T12:00:00+03:00', 'surum': SURUM},
+                'gemini': {'zaman': '2026-10-20T12:00:00+03:00', 'surum': SURUM - 1}}
+        yeni = {'a': {'zaman': '2026-10-30T11:00:00+03:00', 'x': 2, 'surum': SURUM},
+                'b': {'zaman': '2026-10-30T09:00:00+03:00', 'surum': SURUM}}
+        sonuc = yy.birlestir(uzak, yeni)
+        self.assertEqual(sonuc['a']['x'], 2)
+        self.assertEqual(sonuc['b']['zaman'], '2026-10-30T12:00:00+03:00')
+        self.assertNotIn('gemini', sonuc)
+
+    def test_eski_surumlu_gemini_kaydi_yayina_girmez(self):
+        veri = {'csb-1': {'surum': SURUM - 1, 'zaman': '2026-10-20T12:00:00+03:00', 'yz': CEVAP}}
+        self.assertIs(yz_isle.uygula(ILAN, veri, SIMDI), ILAN)
 
 
 if __name__ == '__main__':
