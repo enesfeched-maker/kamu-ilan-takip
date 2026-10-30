@@ -31,7 +31,7 @@ def publish_files(files,token,message):
         existing={i['path']:i['sha'] for i in tree['tree']}
         changes=[]
         for path,raw in files.items():
-            if '..' in path.split('/') or not path.startswith(('bot/','docs/')):
+            if '..' in path.split('/') or not (path.startswith(('bot/','docs/')) or path=='denetim/yz.json'):
                 raise ValueError('Yayın yolu proje kapsamı dışında')
             sha=hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()
             if existing.get(path)==sha:continue
