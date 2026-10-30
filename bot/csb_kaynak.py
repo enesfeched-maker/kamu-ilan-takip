@@ -283,6 +283,48 @@ def _ek_indir(ek, referer):
             time.sleep(1.5)
 
 
+BELGE_KLASORU = Path(__file__).resolve().parents[1] / 'docs' / 'belgeler' / 'csb'
+AZAMI_KOPYA_INDIRME = 10   # tek aktarımda önceden okunmuş duyurular için en çok bu kadar eksik kopya indirilir
+
+
+def belge_yolu(adres):
+    """ÇŞB ek belgesinin depodaki kopyası (30 Ekim 2026): Claude bulut ortamı webdosya.csb.gov.tr'ye erişemiyor;
+    ilan okuması (yz_claude) belgeyi buradan okur. Site paketine girmez (site_paketi)."""
+    import hashlib
+    return BELGE_KLASORU / (hashlib.sha1(str(adres).encode()).hexdigest()[:20] + Path(str(adres)).suffix.lower())
+
+
+def _kopya_sakla(adres, veri):
+    try:
+        yol = belge_yolu(adres)
+        if not yol.exists():
+            yol.parent.mkdir(parents=True, exist_ok=True)
+            yol.write_bytes(veri)
+    except OSError:
+        pass
+
+
+def belge_kopyalari(kayitlar, indir_=None):
+    """{depo yolu: içerik}: kayıtların ek belge kopyaları; yerelde olmayanlar (en çok AZAMI_KOPYA_INDIRME) indirilir."""
+    indir_ = indir_ or _ek_indir
+    dosyalar, indirilen = {}, 0
+    for k in kayitlar:
+        for belge in k.get('belgeler') or []:
+            adres = str(belge.get('link') or '')
+            if not EK_ADRESI.match(adres):
+                continue
+            yol = belge_yolu(adres)
+            if not yol.exists() and indirilen < AZAMI_KOPYA_INDIRME:
+                indirilen += 1
+                try:
+                    _kopya_sakla(adres, indir_(adres, k.get('link')))
+                except Exception as exc:
+                    print(f'ÇŞB belge kopyası indirilemedi ({type(exc).__name__}): {adres.rsplit("/", 1)[-1][:60]}', flush=True)
+            if yol.exists():
+                dosyalar['docs/belgeler/csb/' + yol.name] = yol.read_bytes()
+    return dosyalar
+
+
 def duyuru_oku(satir):
     detay = detay_ayristir(indir(satir['link']))
     tarihler, okunamayan, alanlar = set(), 0, {}
@@ -291,6 +333,7 @@ def duyuru_oku(satir):
             time.sleep(.3)    # aynı sunucuya art arda istek: kısa bekleme (en çok AZAMI_BELGE belge)
         try:
             veri = _ek_indir(ek, satir['link'])
+            _kopya_sakla(ek, veri)
             tarihler.add(son_basvuru(belge_metni(ek, veri)))
         except Exception as exc:
             okunamayan += 1

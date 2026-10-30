@@ -142,6 +142,11 @@ def publish(snapshot,token):
             path='docs/belgeler/sbb/'+item['belge_sha256']+'.pdf'
             local=ROOT/path
             if local.exists():documents[path]=local.read_bytes()
+    try:   # ÇŞB ek kopyaları: Claude ilan okuması bulutta bu siteye erişemiyor (csb_kaynak.belge_yolu)
+        from csb_kaynak import belge_kopyalari
+        documents.update(belge_kopyalari(snapshot.get('kaynaklar',{}).get('csb',{}).get('ilanlar',[])))
+    except Exception as exc:
+        print('ÇŞB belge kopyaları hazırlanamadı:',type(exc).__name__,flush=True)
     if documents:
         from github_yayin import publish_files
         documents[REMOTE_PATH]=(json.dumps(snapshot,ensure_ascii=False,indent=1)+'\n').encode()

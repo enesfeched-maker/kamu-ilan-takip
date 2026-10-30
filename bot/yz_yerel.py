@@ -100,21 +100,27 @@ def metin_al(item, sbb_pdf=None, csb_indir=None):
         return (metin, 'pdf') if len(metin) >= EN_AZ_METIN else ('', 'taranmis')
     if item.get('kaynak_turu') == 'csb':
         import csb_kaynak
-        indir = csb_indir or (lambda adres: csb_kaynak.indir(adres, csb_kaynak.BELGE_SINIRI, item.get('link')))
-        parcalar = []
+        def indir_varsayilan(adres):   # önce depodaki kopya (csb_kaynak.belge_yolu), yoksa siteden
+            kopya = csb_kaynak.belge_yolu(adres)
+            return kopya.read_bytes() if kopya.is_file() else csb_kaynak.indir(adres, csb_kaynak.BELGE_SINIRI, item.get('link'))
+        indir = csb_indir or indir_varsayilan
+        parcalar, inen = [], 0
         for belge in (item.get('belgeler') or [])[:3]:
             adres = str(belge.get('link') or '')
             if not csb_kaynak.EK_ADRESI.match(adres):
                 continue
             try:
-                parcalar.append(csb_kaynak.belge_metni(adres, indir(adres)))
+                veri = indir(adres)
+                inen += 1
+                parcalar.append(csb_kaynak.belge_metni(adres, veri))
             except Exception as hata:
-                print(f'Uyarı: ÇŞB belgesi indirilemedi ({type(hata).__name__}): {adres.rsplit("/", 1)[-1][:60]}')
+                print(f'Uyarı: ÇŞB belgesi alınamadı ({type(hata).__name__}): {adres.rsplit("/", 1)[-1][:60]}')
         metin = '\n\n'.join(p for p in parcalar if p)
         if len(metin) >= EN_AZ_METIN:
             return metin, 'csb'
         if item.get('belgeler') and not metin:
-            return '', 'taranmis'
+            # belge hiç alınamadıysa (kopya henüz depoda yok) sonraki çalışmada denenir
+            return ('', 'taranmis') if inen else ('', 'bekle')
     return yd.ham_metin(item), 'metin'
 
 
