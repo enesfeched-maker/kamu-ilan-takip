@@ -5,6 +5,8 @@ doğru** yazmak. Hız değil doğruluk önemli. Belgede açıkça yazmayan hiçb
 
 ## Adımlar
 
+0. Bağımlılıklar: `python -m pip install -q cffi cryptography pypdf beautifulsoup4 Pillow` (pip yerine `python -m pip`:
+   bulut ortamında pip başka bir Python'a kuruyor; cffi/cryptography olmadan pypdf açılmıyor).
 1. `python bot/yz_claude.py hazirla` — okunacak ilanları `yz-is/gorevler.json` dosyasına yazar. Liste boşsa 4. adıma geç
    (yapılacak iş yok; hiçbir şey gönderme, kısa bir satırla bitir).
 2. Her görev için:
