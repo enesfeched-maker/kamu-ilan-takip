@@ -1,4 +1,38 @@
 {
+ "csb-478532": {
+  "zaman": "2026-10-30T05:07:52+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "metin",
+  "imza": "2497c1b1d2bd761b",
+  "baslik": "İZMİR BÜYÜKŞEHİR BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE ZABITA MEMURU ALIM İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Zabıta Memuru",
+     "adet": 0,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": []
+    }
+   ],
+   "toplam": 0,
+   "son_basvuru_tarihi": "belirtilmemiş",
+   "baslangic_tarihi": "belirtilmemiş",
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [],
+   "ortak_kosullar": [],
+   "okunabilirlik": "kismi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
  "csb-478572": {
   "zaman": "2026-10-30T04:47:52+03:00",
   "surum": 3,
@@ -331,6 +365,222 @@
    "duyuru_tipi": "yeni_ilan"
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=5976effc-ff4b-49b1-a5d7-c08d82d81636": {
+  "zaman": "2026-10-30T05:07:52+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "metin",
+  "imza": "34ed94b4547bafe3",
+  "baslik": "TARIM VE ORMAN BAKANLIĞI - SÖZLEŞMELİ BİLİŞİM PERSONEL ALIMI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Kıdemli Ağ Uzmanı",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "En az 10.000 kullanıcılı kurumsal ağ altyapısında ağ uzmanı olarak 10 yıllık tecrübe",
+      "Kurumsal ağ mimarilerini tasarlama, planlama, standartlaştırma ve entegrasyonu konusunda ileri düzey bilgi",
+      "Yeni nesil güvenlik duvarı, WAF, DDoS ve IPS/IDS çözümleri konusunda ileri düzey bilgi",
+      "Kurumsal ağlarda kullanılan omurga, dağıtım ve erişim anahtarlarının mimari tasarımı ve yapılandırılması konusunda bilgi",
+      "Kurumsal kablosuz ağların tasarlanması, kurulması, yapılandırılması ve yönetimi konusunda bilgi",
+      "NAC çözümlerinin tasarlanması, kurulması ve yönetimi konusunda bilgi",
+      "Wireshark, tcpdump, TShark gibi araçları kullanarak ağ trafiği analizi yapabilme",
+      "LAN, WAN ve WLAN mimarileri konusunda bilgi",
+      "Veri merkezi ağ altyapılarının tasarlanması ve işletilmesi konusunda bilgi",
+      "SNMP, Syslog, NetFlow, sFlow, IPFIX gibi yöntemler kullanılarak ağ altyapısının izlenmesi konusunda bilgi",
+      "Belgeleme ve düzenli raporlamaya önem verme"
+     ]
+    },
+    {
+     "unvan": "Kıdemli CBS Yazılım Geliştirme Uzmanı",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Yazılım tasarımı ve geliştirilmesi konusunda 10 yıllık tecrübe, en az 5 CBS yazılım geliştirme tecrübesi",
+      ".NET, .NET Core, ASP.NET MVC teknolojilerinden en az birinin bilgisi",
+      "Açık kaynak kodlu CBS bileşenleri (GeoServer, MapServer, QGIS Server, PostGIS, GDAL/OGR, OpenLayers, Leaflet) bilgisi",
+      "OpenLayers veya Leaflet kütüphanesi kullanarak web tabanlı harita uygulaması geliştirmiş olmak",
+      "OGC web servis standartları (WMS, WMTS, WFS/WFS-T) bilgisi",
+      "Açık kaynak kodlu CBS yazılım ve kütüphaneleri (QGIS, GDAL/OGR, PROJ, GEOS, NetTopologySuite) bilgisi",
+      "Vektör ve raster coğrafi veri formatları bilgisi",
+      "Koordinat referans sistemleri, datum ve projeksiyon dönüşümleri bilgisi",
+      "Büyük hacimli mekânsal verinin web üzerinden performanslı sunulması bilgisi",
+      "Yazılım mimari gereksinimlerinin belirlenmesi bilgisi",
+      "Kullanıcı kimliklendirme ve yetkilendirme yöntemleri bilgisi",
+      "Yazılım geliştirme yaşam döngüsü (SDLC) bilgisi",
+      "Güvenli yazılım geliştirme standartları bilgisi",
+      "Yüksek erişilebilirlik ve yüksek performans özelliklerine sahip yazılım sistemlerinin geliştirilmesi bilgisi",
+      "Javascript framework kütüphanelerinden en az birinde (React, Angular, Node.js, Vue) bilgi",
+      "MS SQL ve/veya PostgreSQL veri tabanları bilgisi",
+      "Web servisleri (SOAP, WCF, REST) bilgisi",
+      "Nesne yönelimli programlama, SOLID prensipleri, veri yapıları, algoritmalar bilgisi",
+      "Yazılım test teknikleri ve metodolojileri bilgisi",
+      "Team Foundation Server (TFS), Git gibi konfigürasyon/değişiklik kod yönetim sistemleri bilgisi",
+      "Kuyruklama sistemlerinin kullanımı ve yönetimi bilgisi",
+      "Dağıtık ön bellek sistemlerinin kullanımı ve yönetimi bilgisi",
+      "DevOps ve CI/CD süreçleri bilgisi"
+     ]
+    },
+    {
+     "unvan": "Yazılım Uzmanı",
+     "adet": 5,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      ".NET, .NET Core, ASP.NET MVC teknolojilerinden en az birinin bilgisi",
+      "En az 10.000 kullanıcılı kurumsal yazılım projesinde geliştirici olarak görev alma",
+      "Yazılım mimari gereksinimlerinin belirlenmesi bilgisi",
+      "Kullanıcı kimliklendirme ve yetkilendirme yöntemleri bilgisi",
+      "Yazılım geliştirme yaşam döngüsü (SDLC) bilgisi",
+      "Güvenli yazılım geliştirme standartları bilgisi",
+      "Yüksek erişilebilirlik ve yüksek performans özelliklerine sahip yazılım sistemlerinin geliştirilmesi bilgisi",
+      "Javascript framework kütüphanelerinden en az birinde (React, Angular, Node.js, Vue) bilgi",
+      "MS SQL ve/veya PostgreSQL veri tabanları bilgisi",
+      "Web servisleri (SOAP, WCF, REST) bilgisi",
+      "Nesne yönelimli programlama, SOLID prensipleri, veri yapıları, algoritmalar bilgisi",
+      "Yazılım test teknikleri ve metodolojileri bilgisi",
+      "Team Foundation Server (TFS), Git gibi konfigürasyon/değişiklik kod yönetim sistemleri bilgisi"
+     ]
+    },
+    {
+     "unvan": "Sistem Uzmanı",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "En az 5.000 kullanıcılı bir sistem altyapısında sistem uzmanı olarak 3 yıllık tecrübe",
+      "Linux işletim sistemleri bilgisi",
+      "Docker, Podman veya benzeri container teknolojileri bilgisi",
+      "Kubernetes platformları bilgisi",
+      "VMware, Proxmox, Nutanix veya benzeri sanallaştırma teknolojileri bilgisi",
+      "Prometheus, Grafana, Zabbix veya benzeri izleme sistemleri bilgisi",
+      "NVIDIA GPU tabanlı sunucular ve yapay zekâ altyapıları bilgisi",
+      "Veri merkezi ağ teknolojileri bilgisi",
+      "Bash, Python veya benzeri araçlarla otomasyon geliştirme bilgisi",
+      "Sistem performans analizi ve iyileştirme bilgisi",
+      "Ansible, Terraform gibi altyapı otomasyonu araçları bilgisi"
+     ]
+    },
+    {
+     "unvan": "Ağ Uzmanı",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "En az 5.000 kullanıcılı kurumsal bir ağ altyapısında ağ uzmanı olarak 3 yıllık tecrübe",
+      "Kurumsal ağ mimarilerini tasarlama, planlama, standartlaştırma ve entegrasyonu konusunda bilgi",
+      "Kurumsal ağlarda kullanılan omurga, dağıtım ve erişim anahtarlarının mimari tasarımı ve yapılandırılması konusunda bilgi",
+      "Kurumsal kablosuz ağların tasarlanması, kurulması, yapılandırılması ve yönetimi konusunda bilgi",
+      "Firewall, VPN ve SSL teknolojileri bilgisi",
+      "NAC çözümlerinin tasarlanması, kurulması ve yönetimi konusunda bilgi",
+      "Wireshark, tcpdump, TShark gibi araçları kullanarak ağ trafiği analizi yapabilme",
+      "LAN, WAN ve WLAN mimarileri bilgisi",
+      "Veri merkezi ağ altyapılarının tasarlanması ve işletilmesi konusunda bilgi",
+      "SNMP, Syslog, NetFlow, sFlow, IPFIX gibi yöntemler kullanılarak ağ altyapısının izlenmesi konusunda bilgi"
+     ]
+    },
+    {
+     "unvan": "Risk ve Uyum Uzmanı",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Bilgi teknolojileri ve bilgi güvenliği süreç analizi ve tasarımı konusunda 3 yıllık tecrübe",
+      "Kurumsal risk yönetimi, bilgi güvenliğine ilişkin mevzuata uyum süreçleri bilgisi",
+      "ISO/IEC 27001, COBIT, NIST CSF, MITRE ATT&CK bilgisi",
+      "Veri sınıflandırma, veri güvenliği, tehdit ve zafiyet yönetimi bilgisi",
+      "ISO/IEC 27001 İç Tetkikçi veya Başdenetçi eğitimini tamamlamış olmak"
+     ]
+    },
+    {
+     "unvan": "Siber Güvenlik Uzmanı",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Siber güvenlik alanında 3 yıllık tecrübe",
+      "ISO 27001, COBIT, NIST CSF, MITRE ATT&CK bilgisi",
+      "Güvenlik yapılarının tasarımı, planlaması ve entegrasyonu bilgisi",
+      "Ağ üzerinde trafik ve protokol analizi yapabilme",
+      "Microsoft Windows Server, Microsoft Exchange Server, Active Directory bilgisi",
+      "Powershell ve Linux shell scripting bilgisi",
+      "Merkezi iz kaydı sistemleri (SIEM) yönetimi bilgisi",
+      "Siber Olaylara Müdahale Ekibi (SOME) kurulum, yönetim ve dokümantasyon bilgisi",
+      "Adli bilişim bilgisi"
+     ]
+    }
+   ],
+   "toplam": 13,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "Fakültelerin dört yıllık bilgisayar mühendisliği, yazılım mühendisliği, elektrik mühendisliği, elektronik mühendisliği, elektrik ve elektronik mühendisliği ve endüstri mühendisliği bölümlerinden mezun olması",
+    "Bilgisayar çevre birimlerinin donanımı ve kurulan ağ yönetimi ve güvenliği hakkında bilgi sahibi olmak"
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=7726dd9c-56dd-49e0-a0b2-a098e6c57b8a": {
+  "zaman": "2026-10-30T05:07:52+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "metin",
+  "imza": "2a1937d2523edcac",
+  "baslik": "GALATASARAY ÜNİVERSİTESİ REKTÖRLÜĞÜ - SÖZLEŞMELİ BİLİŞİM PERSONELİ ALIM İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Yazılım Geliştirme Uzmanı",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Üniversite Yönetim Sistemi ve kurumsal otomasyon projelerinde en az 3 yıl deneyime sahip olmak ve belgelemek",
+      "NET, C#, ASP.NET ve .NET Core teknolojileri kullanılarak yazılım geliştirme konusunda uygulama deneyimine sahip olmak",
+      "SOAP ve REST tabanlı web servislerinin geliştirilmesi, entegrasyonu veya kullanılması konusunda deneyime sahip olmak",
+      "Microsoft SQL Server üzerinde veri tabanı tasarımı, T-SQL ile sorgu geliştirme, sorgu optimizasyonu ve performans iyileştirme konularında deneyim sahibi olmak",
+      "Microsoft SQL Server veri tabanlarıyla entegre çalışan uygulamalar geliştirmiş olmak",
+      "SSRS, Power BI, DevExpress Reporting veya Crystal Reports araçlarından en az biri kullanılarak raporlama, dashboard veya veri görselleştirme çözümleri geliştirmiş olmak",
+      "Power BI üzerinde ölçü (measure) ve hesaplama geliştirme konusunda deneyime sahip olmak",
+      "LLM tabanlı çözümler kapsamında RAG (Retrieval-Augmented Generation), embedding, vektör veri tabanları veya model optimizasyonu konularından en az biri ile uygulama geliştirme deneyimine sahip olmak"
+     ]
+    }
+   ],
+   "toplam": 1,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": false,
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "Başvurular şahsen, posta veya diğer yollarla yapılmayacak.",
+    "İlan, 375 sayılı Kanun Hükmünde Kararname’nin Ek 6’ncı maddesi ile 31/12/2008 tarih ve 27097 sayılı Resmi Gazete’de yayımlanan Kamu Kurum ve Kuruluşlarının Büyük Ölçekli Bilgi İşlem Birimlerinde Sözleşmeli Bilişim Personeli İstihdamına İlişkin Esas ve Usuller Hakkında Yönetmelik’in 8’inci maddesi kapsamında yapılıyor."
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=793cd518-1ca4-4e15-90ee-58989b15bd08": {
   "zaman": "2026-10-30T04:47:52+03:00",
   "surum": 3,
@@ -403,6 +653,70 @@
     "Son başvuru tarihi itibarıyla geçerliliği devam eden Kamu Personel Seçme Sınavından (KPSS), Tablo1’de mezuniyet durumlarına göre belirlenmiş puan türünden en az 75 puan almış olması",
     "Sınavın açıldığı yılın ocak ayının birinci günü itibarıyla 35 yaşını doldurmamış olması (01.01.1991 ve daha sonra doğanlar başvurabilecektir.)",
     "Görevini yapmaya engel sağlık sorunu olmamak. Türkiye’nin her yerinde görev yapmaya ve her türlü iklim ve yolculuk şartlarında seyahat etmeye elverişli olması ve müfettişlik görevini devamlı yapmasına engel bir durumu bulunmaması"
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=af46c544-8728-4ab2-beed-937fe050035c": {
+  "zaman": "2026-10-30T05:07:52+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "pdf",
+  "imza": "90d66652525c4231",
+  "baslik": "MARMARA ÜNİVERSİTESİ REKTÖRLÜĞÜ - Sözleşmeli Personel Alım İlanı (26.10.2026)",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Büro Personeli",
+     "adet": 20,
+     "ogrenim": "ortaogretim",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Ortaöğretim Kurumlarının herhangi bir alanından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Destek Personeli (Şoför)",
+     "adet": 3,
+     "ogrenim": "ortaogretim",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Ortaöğretim Kurumlarının herhangi bir alanından mezun olmak.",
+      "E sınıfı sürücü belgesine sahip olmak veya Karayolları Trafik Yönetmeliği değişikliklerine uygun sürücü belgesine sahip olmak.",
+      "Şoförlük alanında en az 3 yıl tecrübeye sahip olmak.",
+      "Son başvuru tarihi itibariyle 30 yaşını doldurmamış olmak.",
+      "Vardiyalı çalışma usulüne göre çalıştırılacaktır."
+     ]
+    },
+    {
+     "unvan": "Destek Personeli (Hizmetli)",
+     "adet": 40,
+     "ogrenim": "ortaogretim",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Ortaöğretim Kurumlarının herhangi bir alanından mezun olmak.",
+      "Son başvuru tarihi itibariyle 30 yaşını doldurmamış olmak.",
+      "Vardiyalı çalışma usulüne göre çalıştırılacaktır."
+     ]
+    }
+   ],
+   "toplam": 63,
+   "ogrenim": [
+    "ortaogretim"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "2024 KPSS (B) grubu sınavına girmiş olmak.",
+    "Herhangi bir Sosyal Güvenlik Kurumundan emeklilik veya yaşlılık aylığı almıyor olmak.",
+    "Başvuruların Kariyer Kapısı üzerinden eksiksiz ve hatasız tamamlanması."
    ],
    "okunabilirlik": "iyi",
    "akademik": false,
@@ -593,6 +907,40 @@
     "lisans"
    ],
    "kpss_gerekli": true,
+   "puan_turleri": [],
+   "ortak_kosullar": [],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "iskur-862f03143b5892c40224f3e3": {
+  "zaman": "2026-10-30T05:07:52+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "metin",
+  "imza": "086a07022372a891",
+  "baslik": "Kültür ve Turizm Bakanlığı Sözleşmeli Kütüphaneci Alım İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Kütüphaneci",
+     "adet": 162,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Bilgi ve Belge Yönetimi, Kütüphanecilik, Arşivcilik, Dokümantasyon ve Enformasyon bölümlerinin herhangi birinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilen yurt dışındaki öğretim kurumlarından mezun olmak"
+     ]
+    }
+   ],
+   "toplam": 162,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": false,
    "puan_turleri": [],
    "ortak_kosullar": [],
    "okunabilirlik": "iyi",
@@ -1012,6 +1360,115 @@
     "Başvurusu kabul edilmiş olanlardan daha sonra yapılan incelemede sınava katılma şartlarını taşımadığı anlaşılanların atama işlemleri yapılmayacaktır.",
     "Atanmaya hak kazanan adaylar, atamaya esas istenilen belgelerle birlikte ilan edilen süre içinde Milli Saraylar İdaresi Başkanlığı/Personel Dairesi Başkanlığına müracaat edeceklerdir.",
     "Atama işlemlerinde 7315 sayılı Güvenlik Soruşturması ve Arşiv Araştırması Kanunu hükümleri uygulanacaktır."
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "sbb-d0483ec79d771512966ed174": {
+  "zaman": "2026-10-30T05:07:52+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "pdf",
+  "imza": "bdd503222452d737",
+  "baslik": "STRATEJİ VE BÜTÇE BAŞKANLIĞI - 7 SÖZLEŞMELİ BİLİŞİM PERSONELİ ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Yazılım Geliştirme Uzmanı (I. GRUP)",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "En az 3.000 kullanıcısı bulunan uygulamaların geliştirildiği kamu kurum ve kuruluşlarında yazılım geliştirme tecrübesi",
+      ".NET Framework, .NET Core mimarisinde çalışan projelerde en az 3 yıl tecrübe",
+      "Yazılım yaşam döngüsünün tüm aşamaları hakkında bilgi",
+      "Modern front end yaklaşımlarına hakim olmak",
+      "JSON ve XML veri formatları hakkında bilgi",
+      "IIS veya Nginx uygulama sunucularının yönetimi konusunda bilgi",
+      "Çalışan yazılıma uygun izleme yöntemlerinin geliştirilmesi konusunda bilgi",
+      "RESTFUL servisler başta olmak üzere SOAP, WCF, WSDL, XML tabanlı servis mimarilerinde kurumsal entegrasyon konusunda bilgi",
+      "MVC ve Clean Architecture yaklaşımları hakkında bilgi",
+      "ORM Kullanımı konusunda bilgi (Entity Framework)",
+      "İlişkisel veritabanı tasarımı, veri işleme, SQL, T-SQL konusunda bilgi",
+      "PostgreSQL veya MSSQL veritabanları hakkında bilgi",
+      "Reporting Service konusunda bilgi",
+      "Kurumsal Tasarım Kalıpları ve Nesne Yönelimli Programlama konularında bilgi",
+      "Versiyon kontrol sistemi ve CI -CD konusunda bilgi"
+     ]
+    },
+    {
+     "unvan": "Kıdemli Yazılım Geliştirme Uzmanı (II. GRUP)",
+     "adet": 4,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "En az 5.000 kullanıcısı bulunan uygulamaların geliştirildiği kamu kurum ve kuruluşlarında yazılım geliştirme tecrübesi",
+      ".NET Framework, .NET Core mimarisinde çalışan projelerde en az 5 yıl tecrübe",
+      "RESTFUL servisler başta olmak üzere SOAP, WCF, WSDL, XML tabanlı servis mimarilerinde kurumsal entegrasyon konusunda tecrübe",
+      "Yazılım yaşam döngüsünün tüm aşamaları hakkında bilgi",
+      "Modern front end yaklaşımlarına hakim olmak",
+      "JSON ve XML veri formatları hakkında bilgi",
+      "IIS veya Nginx uygulama sunucularının yönetimi konusunda bilgi",
+      "Çalışan yazılıma uygun izleme yöntemlerinin geliştirilmesi konusunda bilgi",
+      "MVC ve Clean Architecture yaklaşımları hakkında bilgi",
+      "ORM Kullanımı konusunda bilgi (Entity Framework)",
+      "İlişkisel veritabanı tasarımı, veri işleme, SQL, T-SQL konusunda bilgi",
+      "PostgreSQL veya MSSQL veritabanı hakkında bilgi",
+      "Reporting Service konusunda bilgi",
+      "Kurumsal Tasarım Kalıpları ve Nesne Yönelimli Programlama konularında bilgi",
+      "Versiyon kontrol sistemi ve CI -CD konusunda bilgi"
+     ]
+    },
+    {
+     "unvan": "Kıdemli Sistem ve Güvenlik Uzmanı (III. GRUP)",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Kamu kurum ve kuruluşlarında sistem yönetimi, ağ yönetimi, bilgi güvenliği alanlarında en az 5 yıl tecrübe",
+      "Linux ve Microsoft Windows Server işletim sistemlerinin kurulumu ve yönetimi konusunda bilgi",
+      "Apache HTTP Server, Nginx ve Internet Information Services gibi uygulama sunucularının yönetimi konusunda bilgi",
+      "Sunucu sanallaştırma sistemlerinin kurulumu ve yönetimi konusunda bilgi",
+      "Veri depolama üniteleri ile SAN anahtarlarının yönetimi konusunda bilgi",
+      "Fiziksel sunucu ve sunucu donanımları konusunda bilgi",
+      "Microsoft active directory konusunda bilgi",
+      "Açık kaynak kodlu izleme araçlarının kurulumu ve yönetimi konusunda bilgi",
+      "E-posta sistemi kurulum, yapılandırma, yönetim ve sorun giderme konusunda bilgi",
+      "Yedekleme, felaket kurtarma merkezi, sunucu replikasyonu ve iş sürekliliği sistemlerinin kurulumu ve yönetimi konusunda bilgi",
+      "Kurumsal ağ mimarisi konusunda bilgi",
+      "Ağ Erişim Kontrol sistemlerinin yönetimi konusunda bilgi",
+      "Kenar ağ anahtarları ve yönlendirici cihazlarının kurulumu ve yönetimi konusunda bilgi",
+      "Web Application Firewall ve yük dengeleme sistemlerinin yönetimi konusunda bilgi",
+      "Güvenlik duvarı, IDS/IPS, IPsec ve SSL VPN çözümleri konusunda bilgi",
+      "SIEM ve log yönetimi konularında bilgi",
+      "ISO 27001 Bilgi Güvenliği Yönetim Sistemi süreçleri hakkında bilgi",
+      "Siber Güvenlik Başkanlığı Bilgi ve İletişim Güvenliği Rehberi uyum süreçleri hakkında bilgi",
+      "PAM sistemlerinin kurulumu ve yönetimi konusunda bilgi",
+      "Pardus ve/veya açık kaynak kodlu yazılımlara ilişkin bilgi"
+     ]
+    }
+   ],
+   "toplam": 7,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P3"
+   ],
+   "ortak_kosullar": [
+    "Başvurular, Başkanlığın https://www.sbb.gov.tr internet adresi üzerinden yapılacak",
+    "Sınav 23.11.2026 tarihinde başlayacak",
+    "Sınav yeri Strateji ve Bütçe Başkanlığı (Necatibey Cad. 110/A Yücetepe/ANKARA)",
+    "Adaylar, başvuru sonuçlarına itirazlarını yazılı olarak yapabilirler",
+    "Sınav soruları, genel ve özel şartlarda belirtilen tüm konuları kapsayacaktır"
    ],
    "okunabilirlik": "iyi",
    "akademik": false,
