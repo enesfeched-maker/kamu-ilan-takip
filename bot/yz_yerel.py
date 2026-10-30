@@ -215,8 +215,10 @@ def oku(ilanlar, bekleyen, veri, model, simdi, en_cok=6, sure_dk=25, cagir=None,
 
 
 def birlestir(uzak, yeni):
-    """Kayıt başına en yeni okuma kalır (veri_kaydet.ek_dosyalari_birlestir ile aynı kural)."""
-    sonuc = dict(uzak)
+    """Kayıt başına en yeni okuma kalır (veri_kaydet.ek_dosyalari_birlestir ile aynı kural); eski sürümlü kayıtlar
+    (Gemini dönemi) atılır."""
+    from yz_denetim import SURUM
+    sonuc = {k: v for k, v in uzak.items() if v.get('surum', 0) >= SURUM}
     for k, v in yeni.items():
         if str(v.get('zaman') or '') >= str((uzak.get(k) or {}).get('zaman') or ''):
             sonuc[k] = v

@@ -21,7 +21,8 @@ SONUC_YOLU = ROOT / 'denetim' / 'yz.json'
 MODEL = os.environ.get('GEMINI_MODEL', '').strip() or None   # boşsa model_bul ile en yeni Flash seçilir
 API = 'https://generativelanguage.googleapis.com/v1beta/models/{}:generateContent'
 EN_BUYUK_PDF = 15 * 1024 * 1024
-SURUM = 2   # istem/şema değişince artırılır: eski sonuçlar yeniden okunur (2: kadro bazında koşullar, özet; yayına esas)
+SURUM = 3   # istem/şema değişince artırılır: eski sonuçlar yeniden okunur (2: kadro bazında koşullar, özet; yayına esas;
+#             3: 30 Ekim 2026 yerel yapay zekâ — eski Gemini sonuçları yayına girmez, veri_kaydet geri yazsa da)
 
 ISTEM = """Sen Türkiye kamu personel ilanlarını okuyup bir ilan sitesi için kayıt hazırlayan titiz bir editörsün.
 Aşağıdaki resmî ilanı (belge ya da metin) baştan sona oku ve yalnız belgede AÇIKÇA yazanı doldur; tahmin etme,
