@@ -143,11 +143,12 @@ def _maddeler(liste):
     return [m for m in (str(x).strip() for x in liste or []) if m and not _DOLGU.search(m)]
 
 
-def temizle(yz, item):
-    """Modelin çıktısını yayına güvenli hâle getirir (bkz. modül açıklaması)."""
+def temizle(yz, item, guvenilir=False):
+    """Modelin çıktısını yayına güvenli hâle getirir (bkz. modül açıklaması). guvenilir (Claude, yz_claude): belgeden
+    okunan son tarih ve özet kullanılır; ilanı durdurma kararı yine verilmez."""
     yz = dict(yz)
     yz.update(akademik=False, iptal_veya_duzeltme=False, duyuru_tipi='yeni_ilan')
-    if item.get('son_tarih'):
+    if item.get('son_tarih') and not guvenilir:
         for alan in ('son_basvuru_tarihi', 'son_basvuru_saati', 'baslangic_tarihi'):
             yz.pop(alan, None)
     yz['ortak_kosullar'] = _maddeler(yz.get('ortak_kosullar'))
@@ -168,7 +169,8 @@ def temizle(yz, item):
     # yanlış yazdığı oldu).
     yz['ogrenim'] = sorted({k['ogrenim'] for k in kadrolar if k.get('ogrenim') in ('lisans', 'onlisans', 'ortaogretim')})
     yz['puan_turleri'] = sorted({str(k['puan_turu']) for k in kadrolar if k.get('puan_turu')})
-    yz.pop('ozet', None)
+    if not guvenilir:
+        yz.pop('ozet', None)
     return yz
 
 

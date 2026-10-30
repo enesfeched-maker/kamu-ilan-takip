@@ -196,7 +196,9 @@ def uygula(item, veri=None, simdi=None):
     return dict(item, **ek) if ek else item
 
 
-EN_COK_BEKLEME = timedelta(hours=1)   # kullanıcı kararı: yeni ilan Telegram'a en geç 1 saatte gitsin
+# 30 Ekim 2026 kullanıcı kararı: "aceleden ziyade doğruluk" — Claude 2 saatte bir okur (yz_claude); yeni ilan Claude
+# okuyana kadar en çok 4 saat bekler, sonra botun verisiyle gider (önce 1 saatti).
+EN_COK_BEKLEME = timedelta(hours=4)
 
 
 def _bekleme_doldu(item, simdi=None):
@@ -219,7 +221,7 @@ def yayina_hazir(item, veri=None, simdi=None):
         return (False, 'Gemini akademik ilan dedi') if k and k['yz'].get('akademik') else (True, '')
     k = kayit_bul(item, veri)
     if not k:
-        return (True, '') if _bekleme_doldu(item, simdi) else (False, 'Gemini henüz okumadı; en çok 1 saat beklenir')
+        return (True, '') if _bekleme_doldu(item, simdi) else (False, 'yapay zekâ henüz okumadı; en çok 4 saat beklenir')
     yz = k['yz']
     if _yayina_girmez(k):
         return True, ''

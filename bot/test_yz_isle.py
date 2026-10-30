@@ -57,7 +57,8 @@ class Alanlar(unittest.TestCase):
 class Kapi(unittest.TestCase):
     def test_yayina_hazir(self):
         self.assertEqual(yi.yayina_hazir(ILAN, {}, SIMDI.replace(hour=10, minute=30))[0], False)   # 30 dk: Gemini beklenir
-        self.assertEqual(yi.yayina_hazir(ILAN, {}, SIMDI.replace(hour=11, minute=5))[0], True)     # 1 saat doldu: bot verisiyle
+        self.assertEqual(yi.yayina_hazir(ILAN, {}, SIMDI.replace(hour=11, minute=5))[0], False)    # 1 saat: hâlâ beklenir
+        self.assertEqual(yi.yayina_hazir(ILAN, {}, SIMDI.replace(hour=14, minute=5))[0], True)     # 4 saat doldu: bot verisiyle
         self.assertEqual(yi.yayina_hazir(ILAN, veri(dict(YZ, okunabilirlik='kotu')), SIMDI.replace(hour=10, minute=30))[0], False)
         self.assertEqual(yi.yayina_hazir(ILAN, veri())[0], True)
         self.assertEqual(yi.yayina_hazir(ILAN, veri(dict(YZ, akademik=True)))[0], False)
