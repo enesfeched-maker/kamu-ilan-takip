@@ -1,4 +1,43 @@
 {
+ "csb-478584": {
+  "zaman": "2026-10-30T04:27:52+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "csb",
+  "imza": "4ca9bab939c4b348",
+  "baslik": "KARŞIYAKA BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Bilgisayar İşletmeni",
+     "adet": 6,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Lisans düzeyinde eğitim veren kurumların maliye, işletme, iktisat, muhasebe ve finans yönetimi, bankacılık ve finans, çalışma ekonomisi ve endüstri ilişkileri programlarının birinden mezun olmak.",
+      "Millî Eğitim Bakanlığı onaylı bilgisayar sertifikasına sahip olmak veya mezun olduğu okulda bilgisayar dersi gördüğünü belgelemek."
+     ]
+    }
+   ],
+   "toplam": 6,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P3"
+   ],
+   "ortak_kosullar": [
+    "Elektronik ortamda veya posta yoluyla başvuruların belirtilen tarihlerde yapılması."
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
  "csb-478617": {
   "zaman": "2026-10-30T04:00:33+03:00",
   "surum": 3,
@@ -218,6 +257,92 @@
    "duyuru_tipi": "yeni_ilan"
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=f7ee3ab4-6c25-48f1-8a78-588066e3cf52": {
+  "zaman": "2026-10-30T04:27:52+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "metin",
+  "imza": "8d17208e477a5082",
+  "baslik": "BURDUR MEHMET AKİF ERSOY ÜNİVERSİTESİ REKTÖRLÜĞÜ - SÖZLEŞMELİ BİLİŞİM PERSONELİ ALIM İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Sistem Yöneticisi",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Büyük ölçekli bilgi işlem merkezlerinde, sistem yönetimi alanında en az 3 (üç) yıl sistem uzmanı/yöneticisi olarak çalışmış olmak ve bunu belgelemek",
+      "Linux ve BSD işletim sistemleri ve türevlerinde en az orta düzey bilgi ve tecrübeye sahip olmak",
+      "Windows Server işletim sistemlerinin kurulumu, yönetimi ve temel hizmetleri konusunda bilgi ve tecrübeye sahip olmak",
+      "Linux işletim sistemi için ileri derecede betik dili (bash, v.b.) kullanmış olmak",
+      "Sunucu sanallaştırma platformları hakkında bilgi sahibi olmak",
+      "VMware ve Proxmox sunucu sanallaştırma ortamı kurulum, konfigürasyon, yönetim ve bakımı konularında en az orta seviye bilgi ve tecrübeye sahip olmak",
+      "Yedekleme sistemlerinin kurulumu, konfigürasyonu ve yönetimi konularında ileri seviye bilgi ve tecrübeye sahip olmak",
+      "Web sunucu servislerinin kurulumu, yapılandırması ve yönetimi konusunda bilgi ve tecrübeye sahip olmak",
+      "Veritabanı (MySQL, PostgreSQL, MsSQL) yönetim sistemlerinin kurulumu, konfigürasyonu ve yönetimi konusunda bilgi ve tecrübeye sahip olmak",
+      "Monitörleme araçlarının kurulumu, konfigürasyonu ve yönetimi konusunda bilgi sahibi olmak",
+      "Temel network konularında en az orta seviye bilgi ve tecrübeye sahip olmak",
+      "Veri depolama mimarileri kurulum, yönetim, bakımı ve konfigürasyonu konusunda bilgi sahibi olmak",
+      "Açık kaynak kodlu e-posta servislerinin (örneğin Postfix, Dovecot) kurulumu, yönetimi, güvenliği ve optimizasyonu konularında bilgi ve tecrübeye sahip olmak",
+      "Temel bilgi güvenliği prensipleri, ISO 27001, altyapı güvenliği (erişim kontrolü, sertifika yönetimi) ve yedekleme/felaket kurtarma (DR) konularında bilgi sahibi olmak",
+      "LDAP(OpenLDAP) ve Active Directory (AD) dizin hizmetlerinin kurulumu, konfigürasyonu, entegrasyonu ve yönetimi konularında bilgi ve tecrübeye sahip olmak",
+      "Merkezi kimlik doğrulama sistemleri (FreeRADIUS) kurulum ve işletme konularında bilgi sahibi olmak",
+      "Konteyner mimarisi (Docker, Kubernetes, OpenShift vb.) konusunda bilgi ve tecrübeye sahip olmak",
+      "Git ve GitLab/GitHub/Bitbucket kullanımı ve yönetimi konusunda bilgi ve tecrübeye sahip olmak",
+      "Sunucu ve depolama üniteleri donanımları ve konfigürasyonları (disk, Ethernet, HBA, RAID vb.) hakkında bilgi ve tecrübeye sahip olmak",
+      "Veri Merkezi altyapı bileşenleri konusunda kurulum, yönetim ve dizayn etme konularında bilgi ve tecrübeye sahip olmak",
+      "VPN hizmetleri (OpenVPN, WireGuard) kurulumu, yapılandırması ve yönetimi konularında bilgi ve tecrübe sahibi olmak",
+      "Güvenlik duvarı kurulum ve yapılandırma konularında tecrübe sahibi olmak"
+     ]
+    }
+   ],
+   "toplam": 1,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "Fakültelerin dört yıllık bilgisayar mühendisliği, yazılım mühendisliği, elektrik mühendisliği, elektronik mühendisliği, elektrik ve elektronik mühendisliği ve endüstri mühendisliği bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurt dışındaki yükseköğretim kurumlarından mezun olmak",
+    "Yazılım, yazılım tasarımı ve geliştirilmesi ile bu sürecin yönetimi konusunda veya büyük ölçekli ağ sistemlerinin kurulumu ve yönetimi konusunda, son başvuru tarihi itibari ile ücret tavanı iki katını geçemeyecekler için en az 3 yıllık, diğerleri için en az 5 yıllık mesleki tecrübeye sahip bulunması",
+    "Bilgisayar çevre birimlerinin donanımı ve kurulan ağ yönetimi güvenliği hakkında bilgi sahibi olmaları kaydıyla güncel programlama dillerinden en az ikisini bildiğini belgelemeleri",
+    "Herhangi bir kamu kurumunda çalışmakta iken görevden veya meslekten ihraç edilmemiş olmak",
+    "Güvenlik Soruşturması ve Arşiv Araştırması olumlu sonuçlanmak"
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "iskur-1447040f913261353bf46dd0": {
+  "zaman": "2026-10-30T04:27:52+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "metin",
+  "imza": "b5b07b58b0f62b29",
+  "baslik": "Elazığ İl Özel İdaresi Sözleşmeli Personel Alım İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [],
+   "toplam": 0,
+   "ogrenim": [],
+   "kpss_gerekli": false,
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "Elektronik ortamda başvuru yapılacaktır.",
+    "Başvurular, istenilen belgeler eklenmek suretiyle ozelidare@elazig.gov.tr mail adresine yapılacaktır."
+   ],
+   "ozet": "Elazığ İl Özel İdaresi, sözleşmeli personel alımı yapacaktır. Başvurular 30/11/2026 – 09/12/2026 tarihleri arasında ozelidare@elazig.gov.tr adresine yapılacaktır.",
+   "okunabilirlik": "kotu",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
  "sbb-1b5d1f3068575a269a3a23ad": {
   "zaman": "2026-10-30T04:00:33+03:00",
   "surum": 3,
@@ -255,6 +380,108 @@
     "Başvurular Kariyer Kapısı veya e-Devlet üzerinden",
     "Sınav tarihi ayrıca duyurulacak",
     "Sınav Galatasaray Üniversitesi'nde yapılacak"
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "sbb-42ad8a93106df0cfa5840d8e": {
+  "zaman": "2026-10-30T04:27:52+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "pdf",
+  "imza": "784ab40e8a05ed2a",
+  "baslik": "BURDUR MEHMET AKİF ERSOY ÜNİVERSİTESİ - 1 ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Sistem Yöneticisi",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Fakültelerin dört yıllık bilgisayar mühendisliği, yazılım mühendisliği, elektrik mühendisliği, elektronik mühendisliği, elektrik ve elektronik mühendisliği ve endüstri mühendisliği bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurt dışındaki yükseköğretim kurumlarından mezun olmak",
+      "Son başvuru tarihi itibari ile en az 3 yıllık mesleki tecrübeye sahip bulunması",
+      "Güncel programlama dillerinden en az ikisini bildiğini belgelemeleri",
+      "Büyük ölçekli bilgi işlem merkezlerinde, sistem yönetimi alanında en az 3 (üç) yıl sistem uzmanı/yöneticisi olarak çalışmış olmak ve bunu belgelemek",
+      "Linux ve BSD işletim sistemleri ve türevlerinde en az orta düzey bilgi ve tecrübeye sahip olmak"
+     ]
+    }
+   ],
+   "toplam": 1,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "Başvuru, e-Devlet Kapısı üzerinden Burdur Mehmet Akif Ersoy Üniversitesi Kariyer Kapısı Kamu İşe Alım platformundan yapılacak.",
+    "Başvuru sonuçları, Kariyer Kapısı üzerinden ve Üniversitemiz internet adresinden ilan edilecek.",
+    "Sınav 30.11.2026 tarihinde yapılacak."
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "sbb-55c388ddcd94b92cd129672a": {
+  "zaman": "2026-10-30T04:27:52+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "taranmis",
+  "imza": "48a87acfdcea94d3",
+  "baslik": "İMAMOĞLU BELEDİYE BAŞKANLIĞI - 2 SüREKLİ İŞÇİ ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [],
+   "ogrenim": [],
+   "puan_turleri": [],
+   "ortak_kosullar": [],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "okunabilirlik": "kotu"
+  }
+ },
+ "sbb-6599de4d7ab75fdadb1de2a8": {
+  "zaman": "2026-10-30T04:27:52+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "pdf",
+  "imza": "59a1f3a2fffa5228",
+  "baslik": "ASARCIK BELEDİYE BAŞKANLIĞI - 1 MEMUR ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Mimar",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Lisans düzeyinde eğitim veren fakültelerin mimarlık programından mezun olmak.",
+      "En az (B) sınıfı sürücü belgesine sahip olmak."
+     ]
+    }
+   ],
+   "toplam": 1,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P3"
+   ],
+   "ortak_kosullar": [
+    "Elektronik ortamda başvurular 01/12/2026 -3/12/2026 tarihleri arasında yapılacaktır.",
+    "Şahsen veya iadeli taahhütlü posta yolu ile başvurular mesai saatlerinde yapılacaktır.",
+    "Sınava girmeye hak kazanan adaylar 10/12/2026 tarihinde ilan edilecektir.",
+    "Sınav 18/12/2026 tarihinde saat 10:00'da başlayacaktır."
    ],
    "okunabilirlik": "iyi",
    "akademik": false,
