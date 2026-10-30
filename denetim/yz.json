@@ -1,4 +1,375 @@
 {
+ "csb-477163": {
+  "zaman": "2026-10-30T09:05:05+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "csb",
+  "imza": "a7ab6c8addbcd336",
+  "baslik": "BAHÇE BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Memur",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 55,
+     "kosullar": [
+      "Lisans düzeyinde eğitim veren fakültelerin işletme, kamu yönetimi, muhasebe ve finans yönetimi programlarının birinden mezun olmak.",
+      "En az (B) sınıfı sürücü belgesine sahip olmak."
+     ]
+    }
+   ],
+   "toplam": 1,
+   "son_basvuru_tarihi": "2026-10-06",
+   "baslangic_tarihi": "2026-10-01",
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P3"
+   ],
+   "ortak_kosullar": [
+    "Elektronik ortamda başvurular, 01.10.2026/06.10.2026 tarihleri arasında Belediyemizin iletisim@bahce.bel.tr adresine yapılacaktır.",
+    "Sınava girmeye hak kazandığı halde ilan edilen sınav tarihinde sınava katılmayan ve/veya mazeretine binaen katılmayan adaylar, sınav hakkını kaybetmiş sayılacaktır.",
+    "Sınav, 10/10/2026 tarihinde saat: 10.00’da Bahçe Belediyesi Karşıyaka Mahallesi Muhammet Zengin BOLAT caddesi No:1 Belediye Hizmet Binası adresinde yapılacaktır.",
+    "Adayların atamaya esas başarı puanlarının aynı olması halinde KPSS puanı yüksek olana öncelik tanınır."
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "csb-477761": {
+  "zaman": "2026-10-30T09:05:05+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "csb",
+  "imza": "1bbff52f596b2574",
+  "baslik": "İSTANBUL ELEKTRİK TRAMVAY VE TÜNEL İŞLETMELERİ GENEL MÜDÜRLÜĞÜ - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
+  "farklar": [
+   [
+    "toplam",
+    44,
+    46,
+    true
+   ]
+  ],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Bilgisayar İşletmeni",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Bilgisayar ve öğretim teknolojileri eğitimi, bilgisayar ve öğretim teknolojileri öğretmenliği, otomotiv öğretmenliği, iş idaresi lisans programlarının birinden mezun olmak.",
+      "Millî Eğitim Bakanlığı onaylı bilgisayar işletmeni sertifikasına sahip olmak veya mezun olduğu okulda bilgisayar dersi gördüğünü belgelemek."
+     ]
+    },
+    {
+     "unvan": "Bilgisayar İşletmeni — Kadın",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Maliye, muhasebe ve maliye, yönetim bilişim sistemleri lisans programlarının birinden mezun olmak.",
+      "Millî Eğitim Bakanlığı onaylı bilgisayar işletmeni sertifikasına sahip olmak veya mezun olduğu okulda bilgisayar dersi gördüğünü belgelemek."
+     ]
+    },
+    {
+     "unvan": "Muhasebeci",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Muhasebe-finansman, muhasebe ve finansal yönetim, muhasebe ve finans yönetimi lisans programlarının birinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Psikolog",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Psikoloji lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis",
+     "adet": 5,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Bilgisayar mühendisliği, bilgisayar bilimleri mühendisliği, bilgisayar bilimi ve mühendisliği, bilişim sistemleri mühendisliği, bilgisayar ve enformatik mühendisliği, kontrol ve bilgisayar mühendisliği, yazılım mühendisliği lisans programlarının birinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Çevre mühendisliği lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Elektrik mühendisliği lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis",
+     "adet": 9,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Elektronik mühendisliği, mikroelektronik mühendisliği, elektrik ve elektronik mühendisliği, elektrik-elektronik mühendisliği, elektronik ve haberleşme mühendisliği lisans programlarının birinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis",
+     "adet": 6,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Endüstri mühendisliği, endüstri sistemleri mühendisliği, endüstri ve sistem mühendisliği, sistem mühendisliği, üretim sistemleri mühendisliği, üretim mühendisliği, imalat mühendisliği lisans programlarının birinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Gıda mühendisliği, gıda işleme mühendisliği lisans programlarının birinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Jeodezi ve fotogrametri mühendisliği, jeodezi ve haritacılık mühendisliği, harita mühendisliği, geomatik mühendisliği lisans programlarının birinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "İnşaat mühendisliği lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis",
+     "adet": 10,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Makine mühendisliği, makine ve imalat mühendisliği, makine ve üretim mühendisliği lisans programlarının birinden mezun olmak."
+     ]
+    }
+   ],
+   "toplam": 46,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P3"
+   ],
+   "ortak_kosullar": [
+    "İlan edilen kadrolar için aranan diğer başvuru şartlarını taşımak.",
+    "Elektronik ortamda başvurular, 26/10/2026-02/11/2026 tarihleri arasında yapılacaktır.",
+    "Sınava girmeye hak kazandığı halde ilan edilen sınav tarihinde sınava katılmayan ve/veya mazeretine binaen katılmayan adaylar, sınav hakkını kaybetmiş sayılacaktır.",
+    "Sınav sonuçlarına, başarı listesinin İETT İşletmeleri Genel Müdürlüğünün internet adresinde ilanından itibaren yedi gün içinde yazılı olarak itiraz edilebilir."
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "csb-477763": {
+  "zaman": "2026-10-30T09:25:58+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "csb",
+  "imza": "8b0834cf60143537",
+  "baslik": "MALAZGİRT BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Mühendis",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "kosullar": [
+      "Lisans düzeyinde eğitim veren fakültelerin jeodezi ve fotogrametri mühendisliği, jeodezi ve haritacılık mühendisliği, harita mühendisliği, geomatik mühendisliği programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "kosullar": [
+      "Lisans düzeyinde eğitim veren fakültelerin İnşaat mühendisliği programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mimar",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "kosullar": [
+      "Lisans düzeyinde eğitim veren fakültelerin mimarlık programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Muhasebeci",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "kosullar": [
+      "Lisans düzeyinde eğitim veren fakültelerin Muhasebe ve Maliye programından mezun olmak."
+     ]
+    }
+   ],
+   "toplam": 4,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P3"
+   ],
+   "ortak_kosullar": [
+    "Adaylar, 2026 yılı Kamu Personeli Seçme Sınavına (KPSS (B) grubu) girmiş olmak.",
+    "Başvuruların elektronik ortamda veya posta yoluyla yapılması.",
+    "Sınav tarihi: 2026-11-12",
+    "Sınav yeri: Malazgirt Belediyesi"
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "csb-477764": {
+  "zaman": "2026-10-30T09:05:05+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "csb",
+  "imza": "6d4fc42d9fe0c49a",
+  "baslik": "ELEŞKİRT BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Çözümleyici",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 50,
+     "kosullar": [
+      "Lisans düzeyinde eğitim veren fakültelerin İşletme, Siyaset Bilimi ve yerel yönetimler bölümlerinden mezun olmak.",
+      "En az iki programlama dilini bildiğini belgelemek.",
+      "En az (B) sınıfı sürücü belgesine sahip olmak."
+     ]
+    }
+   ],
+   "toplam": 1,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P3"
+   ],
+   "ortak_kosullar": [
+    "Elektronik ortamda başvurular 02/11/2026-04/11/2026 tarihleri arasında yapılacaktır.",
+    "Şahsen veya iadeli taahhütlü posta yolu ile başvurular mesai saatlerinde yapılacaktır.",
+    "Sınava girmeye hak kazanan adaylar 06/11/2026 tarihinde belediyenin web sayfasında ilan edilecektir.",
+    "Sözlü sınav 09/11/2026 tarihinde yapılacaktır.",
+    "Başvuruları kabul edilip sınava çağrılan adaylara sınav giriş belgesi gönderilecektir."
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "csb-477947": {
+  "zaman": "2026-10-30T09:05:05+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "csb",
+  "imza": "e79631fe95946a15",
+  "baslik": "POSOF BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE SÖZLEŞMELİ PERSONEL ALIM İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Teknisyen",
+     "adet": 1,
+     "ogrenim": "ortaogretim",
+     "puan_turu": "P94",
+     "en_dusuk_puan": 60,
+     "kosullar": [
+      "Herhangi bir mesleki ve dengi ortaöğretim kurumlarının inşaat teknolojisi, elektrik-elektronik teknolojisi, makine ve tasarım teknolojisi, harita-tapu kadastro, bilişim teknolojileri, motorlu araçlar teknolojisi alanı dallarından mezun olmak",
+      "En az (B) sınıfı sürücü belgesine sahip olmak."
+     ]
+    }
+   ],
+   "toplam": 1,
+   "ogrenim": [
+    "ortaogretim"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P94"
+   ],
+   "ortak_kosullar": [
+    "Elektronik ortamda başvurular 02/11/2026-04/11/2026 tarihleri arasında",
+    "Şahsen veya iadeli taahhütlü posta yolu ile başvurular 02/11/2026-04/11/2026 tarihleri arasında",
+    "Sınav tarihi: 2026-11-17",
+    "Sınav yeri: Posof Belediye Başkanlığı toplantı salonu"
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
  "csb-478289": {
   "zaman": "2026-10-30T15:39:28+03:00",
   "surum": 4,
@@ -1311,6 +1682,188 @@
    "puan_turleri": []
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=a14f0db5-110e-4656-a977-7b6b17b55fbb": {
+  "zaman": "2026-10-30T08:30:20+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "metin",
+  "imza": "5c7702bf66e9db3e",
+  "baslik": "BANKACILIK DÜZENLEME VE DENETLEME KURUMU BAŞKANLIĞI (BDDK) - BANKACILIK DÜZENLEME VE DENETLEME KURUMU - SÖZLEŞMELİ BİLİŞİM PERSONELİ ALIM İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Kıdemli Siber Güvenlik Uzmanı",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Büyük ölçekli bilgi işlem birimlerinde veya milli güvenliği tehdit edebilecek ya da kamu düzeninin bozulmasına yol açabilecek kritik türdeki verilerin bulunduğu kamu kurum ve kuruluşlarında yahut en az 1000 (bin) iç veya 5.000 (beş bin) dış kullanıcısı bulunan özel sektördeki sistem merkezlerinde sistem/ağ güvenliği, siber güvenlik veya bilgi güvenliği uzmanı olarak en az 5 (beş) yıl çalıştığını belgelemek",
+      "Fortigate Firewall, FortiAuthenticator, FortiAnalyzer, FortiSandbox, Fortimail, FortiEMS, Intrusion Prevention System (IPS), URL Filtering, Mail Gateway, Antivirüs, Sandbox ve DoS/DDoS önleme cihazlarının kurulum, yapılandırma ve yönetiminde bilgi ve tecrübe sahibi olmak",
+      "Microsoft ve Unix/Linux işletim sistemleri güvenliği konusunda bilgi ve tecrübe sahibi olmak",
+      "Web Application Firewall (WAF) hakkında bilgi ve tecrübe sahibi olmak",
+      "VPN, WAN, DNS ve alan adları yönetiminde bilgi ve tecrübe sahibi olmak",
+      "Kurumsal log yönetimi, SIEM ve log korelasyonu sistemlerinin yönetiminde bilgi ve tecrübe sahibi olmak",
+      "Data Loss Prevention (DLP) hakkında bilgi ve tecrübe sahibi olmak",
+      "Penetrasyon/sızma testleri hakkında bilgi ve tecrübe sahibi olmak",
+      "Ağ zafiyet tarama ve trafik analizi yazılımlarından (Nessus, AppScan, Wireshark, Tcpdump, Nmap, Netcat vb.) en az ikisinin kullanımı konusunda bilgi ve tecrübe sahibi olmak",
+      "Proje yönetim birimleri ile ortak çalışabilecek, teknik liderlik yapabilecek seviyede proje görev yönetimi konusunda bilgi ve tecrübe sahibi olmak",
+      "Zararlı kod analizi hakkında bilgi sahibi olmak",
+      "NAC (Network Access Control) uygulamalarının kurulumu ve yönetiminde bilgi sahibi olmak",
+      "Siber olaylara müdahale (SOME) faaliyetleri hakkında bilgi sahibi olmak",
+      "Fortinet Certified Solution Specialist (Fortinet NSE 7) veya Fortinet Certified Professional (Fortinet NSE 4) sertifikalarından en az birine sahip olmak",
+      "Certified Information Systems Security Professional (CISSP), Certified Ethical Hacker (CEH) veya ISO 27001 (Bilgi Güvenliği Yönetimi Sistemi) Standardı denetçi sertifikalarından en az birine sahip olmak",
+      "ISO 27001 (Bilgi Güvenliği Yönetimi Sistemi) Standardı konusunda, sertifikasyon hazırlık çalışmaları ve uygulamaları ile bilgi güvenliği süreçleri, iş sürekliliği, risk analizi ve risk yönetimi konularında uygulama bilgisine sahip olmak ve sertifikanın başarı ile alındığı en az bir uygulamada aktif rol almak"
+     ]
+    },
+    {
+     "unvan": "Kıdemli Yazılım Geliştirme Uzmanı",
+     "adet": 4,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Microsoft.NET teknolojilerine ve özellikle C# programlama diline hâkim olmak ve bu konularda en az 5 yıl tecrübe sahibi olmak",
+      "ASP.Net MVC ve ASP.Net Core teknolojilerinde iyi derecede bilgiye ve geliştirme tecrübesine sahip olmak",
+      "Nesne tabanlı programlama ve SOLID prensipleri hakkında bilgi ve tecrübe sahibi olmak",
+      "ORM (Nesne İlişkisel Eşleme), Entity Framework, LINQ vb. teknolojiler ile code-first ve database-first yaklaşımları konusunda bilgi ve tecrübe sahibi olmak",
+      "Çok katmanlı mimari ve servis tabanlı mimari (SOA) hakkında bilgi ve tecrübe sahibi olmak",
+      "SOAP ve REST web servisler, WCF, Web API teknolojileri hakkında bilgi ve tecrübe sahibi olmak",
+      "JQuery, Javascript, AJAX, HTML, Bootstrap, CSS vb. web teknolojilerinde bilgi ve tecrübe sahibi olmak",
+      "MS SQL Server üzerinde SQL sorgusu yazma, stored procedure ve function tanımlama konularında bilgi ve tecrübe sahibi olmak",
+      "İlişkisel veri tabanlarında tasarım, normalizasyon ve optimizasyon hakkında bilgi ve tecrübe sahibi olmak",
+      "ETL, OLAP ve OLTP modellerinin tasarımı, geliştirilmesi, yönetimi ve optimizasyonu konusunda bilgi sahibi olmak",
+      "Microsoft Power BI ile veri modelleme, dashboard geliştirme, raporlama, DAX, Power Query (M), Row Level Security (RLS) ve Power BI Report Server sunucu bakımı ve yönetimi konularında bilgi sahibi olmak",
+      "SAP BusinessObjects ile veri modelleme, dashboard geliştirme, raporlama, Row Level Security (RLS) ve BusinessObjects sunucu bakımı ve yönetimi konularında bilgi sahibi olmak",
+      "Yazılım yaşam döngüsü, yazılım analiz ve tasarımı, güvenli yazılım geliştirme konularında bilgi ve tecrübe sahibi olmak",
+      "Proje yönetimi ve çevik metodoloji konusunda bilgi ve tecrübe sahibi olmak",
+      "Yazılım Versiyon Kontrol Sistemleri (Azure DevOps, Git vb.) hakkında bilgi sahibi olmak",
+      "İş analistliği ve gereksinim belirleme konusunda bilgi sahibi olmak",
+      "Yazılım testleri konusunda bilgi sahibi olmak",
+      "Mikroservis mimarisi hakkında bilgi sahibi olmak",
+      "Yazılım kalite, güvence, değişiklik yönetimi ve yazılım doğrulama faaliyetleri konusunda bilgi sahibi olmak",
+      "ISO27001 Bilgi Güvenliği Standardı hakkında bilgi sahibi olmak",
+      "Unit Of Work, Repository vb. tasarım desenleri konusunda bilgi sahibi olmak",
+      "IIS 8.0 ve üzeri sürümlerde web uygulaması yayımlama (deployment) konusunda bilgi ve tecrübe sahibi olmak",
+      "Microsoft SQL Server Integration Services (SSIS), SQL Server Analysis Services (SSAS) ve SQL Server Reporting Services (SSRS) teknolojilerinin en az birinde bilgi sahibi olmak"
+     ]
+    },
+    {
+     "unvan": "Yapay Zekâ Geliştirme Uzmanı",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Veri Madenciliği, Makine Öğrenimi, Derin Öğrenme, Yapay Zekâ vb. konularında en az 3 yıl tecrübe sahibi olmak",
+      "Büyük dil modelleri (LLM) ve Doğal dil işleme (NLP) konularında bilgi ve tecrübe sahibi olmak",
+      "Güvenlik filtreleri, içerik denetleme ve koruma mekanizmaları uygulaması konularında bilgi sahibi olmak",
+      "Pyhton programlama dili, nesne tabanlı programlama ve SOLID prensipleri hakkında bilgi ve tecrübe sahibi olmak",
+      "Chatbot tabanlı yapay zekâ uygulamaları geliştirme, yapay zekâ uygulamaları için eş zamansız API geliştirme, veri doğrulama, veri işleme, performans iyileştirme konularında bilgi ve tecrübe sahibi olmak",
+      "Retrieval-Augmented Generation (RAG) sistemlerinin tasarımı, geliştirilmesi ve optimizasyonu konusunda bilgi ve tecrübe sahibi olmak",
+      "Vektör veri tabanı (MsSQL ve PostgreSQL) kullanımı, indeksleme stratejileri, sorgu iyileştirme, yedekleme, replikasyon ve load-balancing konularında bilgi ve tecrübe sahibi olmak",
+      "Embedding modelleri ve semantic arama, chunking stratejileri, metadata filtering, hibrid arama, document processing pipeline ve knowledge base yönetimi konularında bilgi ve tecrübe sahibi olmak",
+      "Çoklu ajan sistemleri, iş akışı düzenleme konularında bilgi ve tecrübe sahibi olmak",
+      "Kubernetes orkestrasyon sistemi, mikroservis mimarisi ve Docker teknolojisi konusunda bilgi ve tecrübe sahibi olmak",
+      "Linux/Unix işletim sistemleri, sunucu yedekleme, replikasyon ve load-balancing konusunda bilgi ve tecrübe sahibi olmak",
+      "Temel sistem ve ağ yönetimi konularında bilgi ve tecrübe sahibi olmak",
+      "Fine-tuning, Context Engineering vb. konularda bilgi sahibi olmak",
+      "Yapay zekâ etiği, adil yapay zekâ, yanlılık tespiti ve azaltma, veri gizliliği, model sağlamlığı konularında bilgi sahibi olmak"
+     ]
+    },
+    {
+     "unvan": "Ağ Güvenlik Uzmanı",
+     "adet": 3,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Büyük ölçekli bilgi işlem birimlerinde veya milli güvenliği tehdit edebilecek ya da kamu düzeninin bozulmasına yol açabilecek kritik türdeki verilerin bulunduğu kamu kurum ve kuruluşlarında yahut en az 1000 (bin) iç veya 5.000 (beş bin) dış kullanıcısı bulunan özel sektördeki sistem merkezlerinde sistem/ağ güvenliği, siber güvenlik, bilgi güvenliği veya ağ uzmanı olarak en az 3 (üç) yıl çalıştığını belgelemek",
+      "Firewall, Intrusion Prevention System (IPS), URL Filtering, Mail Gateway, Antivirüs, Sandbox ve DoS/DDoS önleme cihazlarının kurulum, yapılandırma ve yönetiminde bilgi ve tecrübe sahibi olmak",
+      "VPN, WAN, DNS ve alan adları yönetiminde bilgi ve tecrübe sahibi olmak",
+      "Kurumsal log yönetimi, SIEM ve log korelasyonu sistemlerinin yönetiminde bilgi ve tecrübe sahibi olmak",
+      "Cisco veya HP ağ cihazlarının ana omurga anahtarı (Backbone switch) ve kenar anahtarı (kenar switch) kurulumu, konfigürasyonu ve yönetiminde bilgi ve tecrübe sahibi olmak",
+      "Routing, Switching, Tunneling ve DHCP protokolleri ile 802.11ac/ax kablosuz standartları ve 802.1X ağ erişim kontrolü süreçleri hakkında bilgi sahibi olmak",
+      "NAC (Network Access Control) uygulamalarının kurulumu ve yönetiminde bilgi sahibi olmak",
+      "Ağ zafiyet tarama ve trafik analizi yazılımlarından (Nessus, AppScan, Wireshark, Tcpdump, Nmap, Netcat vb.) en az ikisinin kullanımı konusunda bilgi sahibi olmak",
+      "Siber olaylara müdahale (SOME) faaliyetleri hakkında bilgi sahibi olmak",
+      "ISO 27001 Bilgi Güvenliği Yönetim Sistemi (BGYS) standartlarına uygun politika ve prosedürlerin oluşturulmasında, dokümante edilmesinde ve BGYS uygulama süreçlerinde aktif rol üstlenmiş olmak",
+      "6698 sayılı KVKK uyum süreçleri, veri güvenliği gereksinimleri ve yasal yükümlülükler hakkında bilgi sahibi olmak",
+      "5651 sayılı kanun ve ilgili mevzuat hakkında bilgi sahibi olmak",
+      "Fortinet Certified Solution Specialist (Fortinet NSE 7) veya Fortinet Certified Professional (Fortinet NSE 4) sertifikalarından en az birine sahip olmak",
+      "Cisco Certified Network Associate(CCNA), Cisco Certified Network Professional (CCNP) veya Cisco Certified Network Professional Security (CCNP Security) sertifikalarından en az birine sahip olmak",
+      "ISO27001 Baş Denetçi Sertifikası, Certified Ethical Hacker (CEH), Licensed Penetration Tester (LPT), GIAC Penetration Tester (GPEN), Offensive Security Certified Professional (OSCP), Certified Information System Security Profesional (CISSP) sertifikalarından en az birine sahip olmak",
+      "Web Application Firewall (WAF) ve Data Loss Prevention (DLP) yazılımları hakkında bilgi ve tecrübe sahibi olmak",
+      "Sandboxing, zararlı kod analizi, tersine mühendislik, atak yüzeyleri, atak yaşam döngüsü hakkında bilgi sahibi olmak",
+      "Penetrasyon/sızma testleri hakkında bilgi ve tecrübe sahibi olmak"
+     ]
+    },
+    {
+     "unvan": "Sistem Uzmanı",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Büyük ölçekli bilgi işlem birimlerinde veya milli güvenliği tehdit edebilecek ya da kamu düzeninin bozulmasına yol açabilecek kritik türdeki verilerin bulunduğu kamu kurum ve kuruluşlarında yahut en az 1000 (bin) iç veya 5.000 (beş bin) dış kullanıcısı bulunan özel sektördeki sistem merkezlerinde sistem yönetimi uzmanı olarak en az 3 (üç) yıl çalıştığını belgelemek",
+      "Microsoft Active Directory, DNS, DHCP, Dosya Sunucusu (File Server) ve Exchange Server servislerinin kurulum, yapılandırma ve yönetiminde tecrübe sahibi olmak",
+      "Sanallaştırma teknolojileri (Hyper-V, Vmware) üzerine mimari tasarım yapabilme, kurulumları gerçekleştirip yönetebilme, kısa orta ve uzun vade için kapasite planları çıkarabilme tecrübesine sahip olmak",
+      "Veri yedekleme, kurtarma ve iş sürekliliği çözümleri (Veeam, Netbackup vb.) ile e-posta arşivleme teknolojilerinde bilgi ve tecrübe sahibi olmak",
+      "Microsoft System Center ailesi (MECM/SCCM, SCOM, DPM) bileşenlerinin yönetimi ve yapılandırılması konusunda bilgi ve tecrübe sahibi olmak",
+      "Powershell scripting ile sistem otomasyonu yapabilmek; GPO, LDAP ve Windows Server (2019/2022/2025) platformlarını yönetebilmek",
+      "Temel sunucu (web, mail, domain, DNS) servislerinin iş sürekliliğini tasarlayıp kurabilme tecrübesine sahip olmak",
+      "Microsoft Certified Solutions Expert (MCSE) veya Windows Certified Solution Associate (MCSA) - (2012 ve sonrası) sertifikalarından en az birine sahip olmak",
+      "Microsoft’un yetkili eğitim ortaklarından Windows Server (2016 ve sonrası), Active Directory ve Exchange Server veya bu sistemlerin güvenliği hakkındaki eğitimlerden en az ikisini aldığını katılım sertifikası ile belgelemek",
+      "Ağ yönetimi konusunda bilgi ve tecrübe sahibi olmak",
+      "Veri merkezi (Datacenter) kurulumu, yönetimi ve TIER standartları/sertifikasyon süreçleri hakkında bilgi sahibi olmak",
+      "ODM (Olağanüstü Durum Merkezi) sistemlerinin kurulumu ve yönetimi hakkında bilgi ve tecrübe sahibi olmak"
+     ]
+    },
+    {
+     "unvan": "Yazılım Geliştirme Uzmanı",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Microsoft.NET teknolojilerine ve özellikle C# programlama diline hâkim olmak ve bu konularda en az 3 yıl tecrübe sahibi olmak",
+      "ASP.Net MVC ve ASP.Net Core teknolojilerinde iyi derecede bilgiye ve geliştirme tecrübesine sahip olmak",
+      "Nesne tabanlı programlama ve SOLID prensipleri hakkında bilgi ve tecrübe sahibi olmak",
+      "ORM (Nesne İlişkisel Eşleme), Entity Framework, LINQ vb. teknolojiler ile code-first ve database-first yaklaşımları konusunda bilgi ve tecrübe sahibi olmak",
+      "Çok katmanlı mimari ve servis tabanlı mimari (SOA) hakkında bilgi ve tecrübe sahibi olmak",
+      "SOAP ve REST web servisler, WCF, Web API teknolojileri hakkında bilgi ve tecrübe sahibi olmak",
+      "JQuery, Javascript, AJAX, HTML, Bootstrap, CSS vb. web teknolojilerinde bilgi ve tecrübe sahibi olmak",
+      "MS SQL Server üzerinde SQL sorgusu yazma, stored procedure ve function tanımlama konularında bilgi sahibi olmak",
+      "İlişkisel veri tabanlarında tasarım, normalizasyon ve optimizasyon hakkında bilgi sahibi olmak",
+      "Yazılım testleri konusunda bilgi sahibi olmak",
+      "Mikroservis mimarisi hakkında bilgi sahibi olmak",
+      "ISO27001 Bilgi Güvenliği Standardı hakkında bilgi sahibi olmak",
+      "ETL, OLAP ve OLTP modellerinin tasarımı, geliştirilmesi, yönetimi ve optimizasyonu konusunda bilgi sahibi olmak",
+      "Microsoft Power BI ile veri modelleme, dashboard geliştirme, raporlama, DAX, Power Query (M), Row Level Security (RLS) ve Power BI Report Server sunucu bakımı ve yönetimi konularında bilgi sahibi olmak",
+      "SAP BusinessObjects ile veri modelleme, dashboard geliştirme, raporlama, Row Level Security (RLS) ve BusinessObjects sunucu bakımı ve yönetimi konularında bilgi sahibi olmak",
+      "Microsoft SQL Server Integration Services (SSIS), SQL Server Analysis Services (SSAS) ve SQL Server Reporting Services (SSRS) teknolojilerinin en az birinde bilgi sahibi olmak"
+     ]
+    }
+   ],
+   "toplam": 15,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "Fakültelerin dört yıllık bilgisayar mühendisliği, yazılım mühendisliği, elektrik mühendisliği, elektronik mühendisliği, elektrik ve elektronik mühendisliği ve endüstri mühendisliği bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurt dışındaki yükseköğretim kurumlarından mezun olmak",
+    "Yazılım, yazılım tasarımı ve geliştirilmesi ile bu sürecin yönetimi konusunda veya büyük ölçekli ağ sistemlerinin kurulumu ve yönetimi konusunda ücret tavanı iki katını geçemeyecekler için en az 3 (üç) yıllık, diğerleri için en az 5 (beş) yıllık mesleki tecrübe",
+    "Bilgisayar çevre birimlerinin donanımı ve kurulan ağ yönetimi güvenliği hakkında bilgi sahibi olmaları kaydıyla güncel programlama dillerinden en az ikisini bildiğini belgelemek",
+    "Hizmetin gerektirdiği niteliklere, muhakeme yeteneğine ve temsil kabiliyetine sahip olmak, yoğun iş temposuna ayak uydurabilmek ve takım çalışmasına yatkın olmak"
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=af46c544-8728-4ab2-beed-937fe050035c": {
   "zaman": "2026-10-30T13:47:35+03:00",
   "surum": 4,
@@ -1524,6 +2077,100 @@
    "puan_turleri": []
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=d72bc5ed-a952-4452-9fea-b05616038765": {
+  "zaman": "2026-10-30T08:10:20+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "metin",
+  "imza": "1fea4200275c8096",
+  "baslik": "TASARRUF MEVDUATI SİGORTA FONU BAŞKANLIĞI - FON DENETÇİ YARDIMCILIĞI, FON UZMAN YARDIMCILIĞI ve FON AVUKATLIĞI GİRİŞ SINAVI İLANI 2026",
+  "farklar": [
+   [
+    "puan_turleri",
+    [
+     "P11",
+     "P16",
+     "P17",
+     "P18",
+     "P21",
+     "P22",
+     "P23",
+     "P26",
+     "P27",
+     "P28",
+     "P3",
+     "P31",
+     "P32",
+     "P33",
+     "P37",
+     "P38",
+     "P41",
+     "P42",
+     "P43",
+     "P46",
+     "P47",
+     "P48",
+     "P8",
+     "P9"
+    ],
+    [
+     "P3"
+    ],
+    false
+   ]
+  ],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "FON DENETÇİ YARDIMCILIĞI",
+     "adet": 10,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 75,
+     "kosullar": [
+      "Üniversitelerin en az 4 (Dört) yıl süreli eğitim veren siyasal bilgiler, hukuk, iktisadi ve idari bilimler, iktisat ve işletme, bankacılık, bankacılık ve finans fakülteleri ve yüksekokulları ile mühendislik ve fen edebiyat fakültelerinin bilgisayar, yazılım, bilgisayar ve yazılım, endüstri, elektrik, elektronik, elektrik ve elektronik, elektronik ve haberleşme, mekatronik, bilgisayar sistemleri ve teknolojileri, bilgisayar sistemleri ve ağları, istatistik, matematik ve ekonometri bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulu tarafından onaylanmış yurt içindeki veya yurt dışındaki yükseköğretim kurumlarından mezun olmak"
+     ]
+    },
+    {
+     "unvan": "FON UZMAN YARDIMCILIĞI",
+     "adet": 45,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 75,
+     "kosullar": [
+      "Üniversitelerin en az 4 (Dört) yıl süreli eğitim veren siyasal bilgiler, hukuk, iktisadi ve idari bilimler, iktisat ve işletme, bankacılık, bankacılık ve finans fakülteleri ve yüksekokulları ile mühendislik ve fen edebiyat fakültelerinin bilgisayar, yazılım, bilgisayar ve yazılım, endüstri, elektrik, elektronik, elektrik ve elektronik, elektronik ve haberleşme, mekatronik, bilgisayar sistemleri ve teknolojileri, bilgisayar sistemleri ve ağları, istatistik, matematik ve ekonometri bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulu tarafından onaylanmış yurt içindeki veya yurt dışındaki yükseköğretim kurumlarından mezun olmak"
+     ]
+    },
+    {
+     "unvan": "FON AVUKATLIĞI",
+     "adet": 20,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Üniversitelerin en az 4 (Dört) yıl süreli hukuk fakülteleri ile bunlara denkliği Yükseköğretim Kurulu tarafından onaylanmış yurt dışındaki yükseköğretim kurumlarından mezun olmak",
+      "Avukatlık ruhsatnamesine sahip olmak"
+     ]
+    }
+   ],
+   "toplam": 75,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P3"
+   ],
+   "ortak_kosullar": [
+    "Sınavın yapıldığı yılın Ocak ayının birinci günü itibarıyla 35 yaşını doldurmamış olmak",
+    "2004 sayılı İcra ve İflas Kanunu hükümlerine göre müflis olmamak, konkordato ilan etmiş olmamak, uzlaşma suretiyle yeniden yapılandırma başvurusu tasdik edilmiş olmamak ya da hakkında iflasın ertelenmesi kararı verilmiş olmamak"
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=db21f412-186a-4d5c-bc46-03dff9ea17fb": {
   "zaman": "2026-10-30T18:05:06+03:00",
   "surum": 4,
@@ -1605,6 +2252,28 @@
     "lisans"
    ],
    "puan_turleri": []
+  }
+ },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=f0ca8a29-559f-426a-ade5-5ed30651c618": {
+  "zaman": "2026-10-30T09:05:05+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "metin",
+  "imza": "8160b2976f4c682b",
+  "baslik": "ADALET BAKANLIĞI - 2026 Yılı Açıktan İcra Müdür ve İcra Müdür Yardımcılığı Sınav İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [],
+   "toplam": 0,
+   "ogrenim": [],
+   "kpss_gerekli": false,
+   "puan_turleri": [],
+   "ortak_kosullar": [],
+   "ozet": "ADALET BAKANLIĞI, 2026 yılı İcra Müdür ve İcra Müdür Yardımcılığı sınavı için başvuru almaktadır. Başvurular 2026-10-05 tarihinde başlayıp 2026-11-05 tarihinde sona erecektir.",
+   "okunabilirlik": "kotu",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=f657a20b-5132-4e3a-8b1e-131e031f065b": {
@@ -1790,6 +2459,45 @@
    "ortak_kosullar": []
   }
  },
+ "iskur-3161393ea90114b808aceb51": {
+  "zaman": "2026-10-30T08:10:20+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "metin",
+  "imza": "e9442631a2a84083",
+  "baslik": "Edirne Keşan Belediyesi Memur Alım İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Mühendis",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Hizmet sınıfı TH, 8. derece"
+     ]
+    }
+   ],
+   "toplam": 2,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P3"
+   ],
+   "ortak_kosullar": [
+    "Elektronik ortamda başvuru yapılacak.",
+    "Başvurular insankaynaklari@kesan.bel.tr adresine yapılacaktır."
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
  "iskur-48ae81d78be9ead4ae15005a": {
   "zaman": "2026-10-30T18:05:06+03:00",
   "surum": 4,
@@ -1891,6 +2599,102 @@
     "lisans"
    ],
    "puan_turleri": []
+  }
+ },
+ "iskur-56961c753a205497cf8368a3": {
+  "zaman": "2026-10-30T09:25:58+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "metin",
+  "imza": "83b97ee40006ef55",
+  "baslik": "Ardahan Pasof Belediyesi Sözleşmeli Personel Alım İlanı",
+  "farklar": [
+   [
+    "ogrenim",
+    [
+     "ortaogretim"
+    ],
+    [
+     "lisans"
+    ],
+    false
+   ]
+  ],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Teknisyen",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P94",
+     "en_dusuk_puan": 60,
+     "kosullar": [
+      "13/10/1983 tarihli ve 2918 sayılı Karayolları Trafik Kanunu hükümlerince verilen en az (B) sınıfı sürücü belgesine sahip olmak"
+     ]
+    }
+   ],
+   "toplam": 1,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P94"
+   ],
+   "ortak_kosullar": [
+    "Elektronik ortamda başvurular, 02/11/2026-04/11/2026 tarihleri arasında istenilen belgeler eklenmek suretiyle Belediyemizin posofbelediyesi@hotmail.com mail adresine yapılacaktır.",
+    "Şahsen veya iadeli taahhütlü posta yolu ile yapılacak başvurular, yukarıdaki başvuru tarihleri arasında mesai bitimine kadar (mesai günlerinde saat 08:00-17:00 arasında) başvuru formu eksiksiz ve doğru şekilde doldurularak ve başvuru esnasında istenilen diğer belgeler eklenmek suretiyle Merkez Mah. Ardahan Cad. No:48 Posof/ARDAHAN adresindeki Posof Belediye Başkanlığı Ana Hizmet Binası Yazı İşleri Müdürlüğü birimine yapılabilir."
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "iskur-6c0565cdb31b4595f797e950": {
+  "zaman": "2026-10-30T09:05:05+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "metin",
+  "imza": "4884c0811e1fdfbf",
+  "baslik": "Türkiye Turizm Tanıtım ve Geliştirme Ajansı Personel Alım İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Zabıta Memuru — Kadın",
+     "adet": 2,
+     "ogrenim": "yuksek_lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "TGA Personel Alımı Kadroları ve Adaylarda Aranan Nitelikler Tablosunda (Ek-1) belirtilen bölümlerden Yükseköğrenim mezunu olmak."
+     ]
+    },
+    {
+     "unvan": "Zabıta Memuru",
+     "adet": 2,
+     "ogrenim": "yuksek_lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "TGA Personel Alımı Kadroları ve Adaylarda Aranan Nitelikler Tablosunda (Ek-1) belirtilen bölümlerden Yükseköğrenim mezunu olmak."
+     ]
+    }
+   ],
+   "toplam": 4,
+   "ogrenim": [],
+   "kpss_gerekli": false,
+   "puan_turleri": [],
+   "ortak_kosullar": [
+    "Adaylar başvurularını, TGA web sitesi içerisinde yer alan kariyer sayfası (tga.gov.tr/kariyer) üzerinden yapabilecek olup, şahsen veya posta, faks ve email vb. yoluyla yapılan başvurular kabul edilmeyecektir.",
+    "Yabancı dil düzeyine ilişkin belgelerin geçerlilik süresi sınav başvurusunun son günü dikkate alınarak hesaplanır.",
+    "Türkiye’de, bu ilanda belirtilen dillerde olmak üzere %100 yabancı dille eğitim-öğretim yapılan lisans programlarından mezun olduğunu kanıtlar belge (e-Devlet kapısından alınan barkodlu belge ve transkript yüklenmesi zorunludur)."
+   ],
+   "okunabilirlik": "kismi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
   }
  },
  "iskur-83eb8530b668c43b12af5245": {
@@ -2045,6 +2849,57 @@
    "duyuru_tipi": "yeni_ilan"
   }
  },
+ "iskur-c2eb8c0816172f89126a78a8": {
+  "zaman": "2026-10-30T08:30:20+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "metin",
+  "imza": "a575d7ec8ef5679d",
+  "baslik": "Isparta Sarıidris Belediyesi Zabıta Memuru Alım İlanı",
+  "farklar": [
+   [
+    "ogrenim",
+    [
+     "lisans"
+    ],
+    [
+     "ortaogretim"
+    ],
+    false
+   ]
+  ],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Zabıta Memuru",
+     "adet": 1,
+     "ogrenim": "ortaogretim",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Sınavın yapıldığı tarihte 30 yaşını doldurmamış olmak",
+      "13/10/1983 tarihli ve 2918 sayılı Karayolları Trafik Kanunu hükümlerince verilen ve tablonun nitelik kısmında belirtilen en az (B) sınıfı sürücü belgesine sahip olmak"
+     ]
+    }
+   ],
+   "toplam": 1,
+   "ogrenim": [
+    "ortaogretim"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P3"
+   ],
+   "ortak_kosullar": [
+    "Başvurular şahsen yapılacaktır.",
+    "Başvuru belgeleri 18/11/2026 - 20/11/2026 tarihleri arasında Sarıidris Belediye Başkanlığı Yazı İşleri Müdürlüğüne teslim edilecektir."
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
  "sbb-1b5d1f3068575a269a3a23ad": {
   "zaman": "2026-10-30T13:14:13+03:00",
   "surum": 4,
@@ -2091,6 +2946,169 @@
    "puan_turleri": [
     "P3"
    ]
+  }
+ },
+ "sbb-390fd0065a5a1473b643ad5b": {
+  "zaman": "2026-10-30T09:25:58+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "pdf",
+  "imza": "f274ff999476609e",
+  "baslik": "İSTANBUL ELEKTRİK TRAMVAY VE TÜNEL İŞLETMELERİ GENEL MÜDÜRLÜĞÜ (İETT) - 44 MEMUR ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Bilgisayar İşletmeni",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Bilgisayar ve öğretim teknolojileri eğitimi, bilgisayar ve öğretim teknolojileri öğretmenliği, otomotiv öğretmenliği veya iş idaresi lisans programlarının birinden mezun olmak.",
+      "Millî Eğitim Bakanlığı onaylı bilgisayar işletmeni sertifikasına sahip olmak veya mezun olduğu okulda bilgisayar dersi gördüğünü belgelemek."
+     ]
+    },
+    {
+     "unvan": "Bilgisayar İşletmeni",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Maliye, muhasebe ve maliye veya yönetim bilişim sistemleri lisans programlarının birinden mezun olmak.",
+      "Millî Eğitim Bakanlığı onaylı bilgisayar işletmeni sertifikasına sahip olmak veya mezun olduğu okulda bilgisayar dersi gördüğünü belgelemek."
+     ]
+    },
+    {
+     "unvan": "Muhasebeci",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Muhasebe-finansman, muhasebe ve finansal yönetim, muhasebe ve finans yönetimi lisans programlarının birinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Psikolog",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Psikoloji lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis",
+     "adet": 5,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Bilgisayar mühendisliği, bilgisayar bilimleri mühendisliği, bilgisayar bilimi ve mühendisliği, bilişim sistemleri mühendisliği, bilgisayar ve enformatik mühendisliği, kontrol ve bilgisayar mühendisliği, yazılım mühendisliği lisans programlarının birinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Çevre mühendisliği lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Elektrik mühendisliği lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis",
+     "adet": 9,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Elektronik mühendisliği, mikroelektronik mühendisliği, elektrik ve elektronik mühendisliği, elektrik-elektronik mühendisliği, elektronik ve haberleşme mühendisliği lisans programlarının birinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis",
+     "adet": 6,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Endüstri mühendisliği, endüstri sistemleri mühendisliği, endüstri ve sistem mühendisliği, sistem mühendisliği, üretim sistemleri mühendisliği, üretim mühendisliği, imalat mühendisliği lisans programlarının birinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Gıda mühendisliği, gıda işleme mühendisliği lisans programlarının birinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Jeodezi ve fotogrametri mühendisliği, jeodezi ve haritacılık mühendisliği, harita mühendisliği, geomatik mühendisliği lisans programlarının birinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "İnşaat mühendisliği lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis",
+     "adet": 10,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "kosullar": [
+      "Makine mühendisliği, makine ve imalat mühendisliği, makine ve üretim mühendisliği lisans programlarının birinden mezun olmak."
+     ]
+    }
+   ],
+   "toplam": 44,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P3"
+   ],
+   "ortak_kosullar": [
+    "İlan edilen kadrolara başvuracak adayların, 2026 yılı Kamu Personeli Seçme Sınavına (KPSS (B) grubu ) girmiş olmak.",
+    "Başvuruların elektronik ortamda (https://www.turkiye.gov.tr/etvt-is-basvurusu) yapılması.",
+    "Sınav tarihi ve yeri (16/11/2026 – 11/12/2026) İETT İşletmeleri Genel Müdürlüğü web sayfasında (https://www.iett.gov.tr) ilan edilecektir.",
+    "Başvuruların değerlendirilmesi ve sınav sonuçları İETT İşletmeleri Genel Müdürlüğü internet adresinden (https://www.iett.gov.tr) ilan edilecektir."
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
   }
  },
  "sbb-42ad8a93106df0cfa5840d8e": {
@@ -2645,6 +3663,67 @@
    ]
   }
  },
+ "sbb-996152b017d1af5f445dfade": {
+  "zaman": "2026-10-30T09:25:58+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "pdf",
+  "imza": "55ab329c8b2f02ff",
+  "baslik": "ŞİLE BELEDİYE BAŞKANLIĞI - 8 MEMUR ALACAK",
+  "farklar": [
+   [
+    "toplam",
+    8,
+    2,
+    true
+   ]
+  ],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Zabıta Memuru — Kadın",
+     "adet": 1,
+     "ogrenim": "ortaogretim",
+     "puan_turu": "P94",
+     "en_dusuk_puan": 65,
+     "kosullar": [
+      "Herhangi bir ortaöğretim kurumundan (lise veya dengi okul) mezun olmak.",
+      "En az (B) sınıfı sürücü belgesine sahip olmak."
+     ]
+    },
+    {
+     "unvan": "Zabıta Memuru — Erkek",
+     "adet": 1,
+     "ogrenim": "ortaogretim",
+     "puan_turu": "P94",
+     "en_dusuk_puan": 65,
+     "kosullar": [
+      "Herhangi bir ortaöğretim kurumundan (lise veya dengi okul) mezun olmak.",
+      "En az (B) sınıfı sürücü belgesine sahip olmak."
+     ]
+    }
+   ],
+   "toplam": 2,
+   "ogrenim": [
+    "ortaogretim"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P94"
+   ],
+   "ortak_kosullar": [
+    "Sınavın yapıldığı tarihte 30 yaşını doldurmamış olmak.",
+    "Erkeklerde en az 1.67 metre, kadınlarda en az 1.60 metre boyunda olmak ve boyun 1 metreden fazla olan kısmı ile kilosu arasında (+, -) 10 kg’dan fazla fark olmamak.",
+    "Başvurular şahsen yapılacaktır.",
+    "Sınav 20/11/2026 tarihinde başlayacaktır.",
+    "Başvuruların değerlendirilmesine müteakip 13/11/2026 tarihinde ilan edilecektir."
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
  "sbb-a00f639e934dfda13b150416": {
   "zaman": "2026-10-30T18:05:06+03:00",
   "surum": 4,
@@ -2777,6 +3856,158 @@
    "ortak_kosullar": [],
    "ozet": "",
    "okunabilirlik": "kotu",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "sbb-aaae2ed4a77586932d827f7d": {
+  "zaman": "2026-10-30T08:30:20+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "pdf",
+  "imza": "1f84c33206fb0dcc",
+  "baslik": "BANKACILIK DÜZENLEME VE DENETLEME KURUMU BAŞKANLIĞI - 15 SÖZLEŞMELİ BİLİŞİM PERSONELİ ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Kıdemli Siber Güvenlik Uzmanı",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Büyük ölçekli bilgi işlem birimlerinde veya milli güvenliği tehdit edebilecek kritik verilerin bulunduğu kamu kurum ve kuruluşlarında veya özel sektördeki sistem merkezlerinde sistem/ağ güvenliği uzmanı olarak en az 5 yıl çalışmış olmak",
+      "Fortigate Firewall, FortiAuthenticator, FortiAnalyzer, FortiSandbox, Fortimail, FortiEMS, IPS, URL Filtering, Mail Gateway, Antivirüs, Sandbox ve DoS/DDoS önleme cihazlarının kurulum, yapılandırma ve yönetiminde bilgi sahibi olmak",
+      "Microsoft ve Unix/Linux işletim sistemleri güvenliği konusunda bilgi sahibi olmak",
+      "Web Application Firewall (WAF) hakkında bilgi sahibi olmak",
+      "VPN, WAN, DNS ve alan adları yönetiminde bilgi sahibi olmak",
+      "Kurumsal log yönetimi, SIEM ve log korelasyonu sistemlerinin yönetiminde bilgi sahibi olmak",
+      "Data Loss Prevention (DLP) hakkında bilgi sahibi olmak",
+      "Penetrasyon/sızma testleri hakkında bilgi sahibi olmak",
+      "Ağ zafiyet tarama ve trafik analizi yazılımlarından en az ikisinin kullanımı konusunda bilgi sahibi olmak",
+      "Proje yönetimi konusunda bilgi sahibi olmak",
+      "Zararlı kod analizi hakkında bilgi sahibi olmak",
+      "NAC uygulamalarının kurulumu ve yönetiminde bilgi sahibi olmak",
+      "Siber olaylara müdahale (SOME) faaliyetleri hakkında bilgi sahibi olmak"
+     ]
+    },
+    {
+     "unvan": "Kıdemli Yazılım Geliştirme Uzmanı",
+     "adet": 4,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Microsoft.NET teknolojilerine ve C# programlama diline hakim olmak ve en az 5 yıl tecrübe sahibi olmak",
+      "ASP.Net MVC ve ASP.Net Core teknolojilerinde iyi derecede bilgi sahibi olmak",
+      "Nesne tabanlı programlama ve SOLID prensipleri hakkında bilgi sahibi olmak",
+      "ORM, Entity Framework, LINQ teknolojileri konusunda bilgi sahibi olmak",
+      "Çok katmanlı mimari ve servis tabanlı mimari hakkında bilgi sahibi olmak",
+      "SOAP ve REST web servisler, WCF, Web API teknolojileri hakkında bilgi sahibi olmak",
+      "JQuery, Javascript, AJAX, HTML, Bootstrap, CSS vb. web teknolojilerinde bilgi sahibi olmak",
+      "MS SQL Server üzerinde SQL sorgusu yazma konusunda bilgi sahibi olmak",
+      "İlişkisel veri tabanlarında tasarım, normalizasyon ve optimizasyon hakkında bilgi sahibi olmak",
+      "ETL, OLAP ve OLTP modellerinin tasarımı, geliştirilmesi, yönetimi ve optimizasyonu konusunda bilgi sahibi olmak",
+      "Microsoft Power BI ile veri modelleme, dashboard geliştirme, raporlama konusunda bilgi sahibi olmak",
+      "SAP BusinessObjects ile veri modelleme, dashboard geliştirme, raporlama konusunda bilgi sahibi olmak",
+      "Yazılım yaşam döngüsü, yazılım analiz ve tasarımı konusunda bilgi sahibi olmak"
+     ]
+    },
+    {
+     "unvan": "Yapay Zekâ Geliştirme Uzmanı",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Veri Madenciliği, Makine Öğrenimi, Derin Öğrenme, Yapay Zekâ konularında en az 3 yıl tecrübe sahibi olmak",
+      "Büyük dil modelleri (LLM) ve Doğal dil işleme (NLP) konularında bilgi sahibi olmak",
+      "Güvenlik filtreleri, içerik denetleme ve koruma mekanizmaları uygulaması konularında bilgi sahibi olmak",
+      "Pyhton programlama dili konusunda bilgi sahibi olmak",
+      "Retrieval-Augmented Generation (RAG) sistemlerinin tasarımı, geliştirilmesi ve optimizasyonu konusunda bilgi sahibi olmak",
+      "Vektör veri tabanı kullanımı konusunda bilgi sahibi olmak",
+      "Embedding modelleri ve semantic arama konusunda bilgi sahibi olmak",
+      "Çoklu ajan sistemleri konusunda bilgi sahibi olmak",
+      "Kubernetes orkestrasyon sistemi konusunda bilgi sahibi olmak",
+      "Linux/Unix işletim sistemleri konusunda bilgi sahibi olmak",
+      "Temel sistem ve ağ yönetimi konularında bilgi sahibi olmak",
+      "Yapay zekâ etiği, adil yapay zekâ, yanlılık tespiti ve azaltma konularında bilgi sahibi olmak"
+     ]
+    },
+    {
+     "unvan": "Ağ Güvenlik Uzmanı",
+     "adet": 3,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Büyük ölçekli bilgi işlem birimlerinde veya milli güvenliği tehdit edebilecek kritik verilerin bulunduğu kamu kurum ve kuruluşlarında veya özel sektördeki sistem merkezlerinde sistem/ağ güvenliği uzmanı olarak en az 3 yıl çalışmış olmak",
+      "Firewall, IPS, URL Filtering, Mail Gateway, Antivirüs, Sandbox ve DoS/DDoS önleme cihazlarının kurulum, yapılandırma ve yönetiminde bilgi sahibi olmak",
+      "VPN, WAN, DNS ve alan adları yönetiminde bilgi sahibi olmak",
+      "Kurumsal log yönetimi, SIEM ve log korelasyonu sistemlerinin yönetiminde bilgi sahibi olmak",
+      "Cisco veya HP ağ cihazlarının kurulum, konfigürasyonu ve yönetiminde bilgi sahibi olmak",
+      "Routing, Switching, Tunneling ve DHCP protokolleri hakkında bilgi sahibi olmak",
+      "NAC uygulamalarının kurulumu ve yönetiminde bilgi sahibi olmak",
+      "Ağ zafiyet tarama ve trafik analizi yazılımlarından en az ikisinin kullanımı konusunda bilgi sahibi olmak",
+      "Siber olaylara müdahale (SOME) faaliyetleri hakkında bilgi sahibi olmak",
+      "ISO 27001 Bilgi Güvenliği Yönetim Sistemi standartları hakkında bilgi sahibi olmak",
+      "6698 sayılı KVKK uyum süreçleri hakkında bilgi sahibi olmak",
+      "5651 sayılı kanun hakkında bilgi sahibi olmak"
+     ]
+    },
+    {
+     "unvan": "Sistem Uzmanı",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Büyük ölçekli bilgi işlem birimlerinde veya milli güvenliği tehdit edebilecek kritik verilerin bulunduğu kamu kurum ve kuruluşlarında veya özel sektördeki sistem merkezlerinde sistem yönetimi uzmanı olarak en az 3 yıl çalışmış olmak",
+      "Microsoft Active Directory, DNS, DHCP, Dosya Sunucusu ve Exchange Server servislerinin kurulum, yapılandırma ve yönetiminde tecrübe sahibi olmak",
+      "Sanallaştırma teknolojileri üzerine mimari tasarım yapabilmek",
+      "Veri yedekleme, kurtarma ve iş sürekliliği çözümleri ile e-posta arşivleme teknolojilerinde bilgi sahibi olmak",
+      "Microsoft System Center ailesi bileşenlerinin yönetimi ve yapılandırılması konusunda bilgi sahibi olmak",
+      "Powershell scripting ile sistem otomasyonu yapabilmek",
+      "Temel sunucu servislerinin iş sürekliliğini tasarlayabilmek"
+     ]
+    },
+    {
+     "unvan": "Yazılım Geliştirme Uzmanı",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "kosullar": [
+      "Microsoft.NET teknolojilerine ve C# programlama diline hakim olmak ve en az 3 yıl tecrübe sahibi olmak",
+      "ASP.Net MVC ve ASP.Net Core teknolojilerinde iyi derecede bilgi sahibi olmak",
+      "Nesne tabanlı programlama ve SOLID prensipleri hakkında bilgi sahibi olmak",
+      "ORM, Entity Framework, LINQ teknolojileri konusunda bilgi sahibi olmak",
+      "Çok katmanlı mimari ve servis tabanlı mimari hakkında bilgi sahibi olmak",
+      "SOAP ve REST web servisler, WCF, Web API teknolojileri hakkında bilgi sahibi olmak",
+      "JQuery, Javascript, AJAX, HTML, Bootstrap, CSS vb. web teknolojilerinde bilgi sahibi olmak",
+      "MS SQL Server üzerinde SQL sorgusu yazma konusunda bilgi sahibi olmak",
+      "İlişkisel veri tabanlarında tasarım, normalizasyon ve optimizasyon hakkında bilgi sahibi olmak"
+     ]
+    }
+   ],
+   "toplam": 15,
+   "ogrenim": [
+    "lisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P3"
+   ],
+   "ortak_kosullar": [
+    "Başvurular e-Devlet üzerinden Kariyer Kapısı aracılığıyla elektronik ortamda yapılacak.",
+    "Sınav yeri ve tarihi Kurumun resmi internet sitesinde duyurulacak.",
+    "Adaylar, başvuru için gerekli belgeleri başvuru sistemine yükleyecek.",
+    "Başvuruların incelenmesi sonucunda sözlü sınava çağrılacak adaylar belirlenecek.",
+    "Sınavda başarılı olabilmek için 100 üzerinden en az 70 puan alınması gerekmektedir."
+   ],
+   "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
    "duyuru_tipi": "yeni_ilan"
@@ -3050,6 +4281,58 @@
     "P1,P2,P3,P11,P12,P13,P14,P15,P16,P17,P19,P20,P21,P22,P23,P24,P25,P26,P29,P30,P34,P35,P36,P37,P38,P39,P40,P41,P42,P43,P44,P45,P46,P47,P48",
     "P11,P12,P13,P14,P15,P16,P17,P19,P20,P21,P22,P23,P24,P25,P26,P29,P30,P34,P35,P36,P37,P38,P39,P40,P41,P42,P43,P44,P45,P46,P47,P48"
    ]
+  }
+ },
+ "sbb-ce3aeb16575b73442a9f8944": {
+  "zaman": "2026-10-30T09:25:58+03:00",
+  "surum": 3,
+  "model": "ollama:gemma3:12b",
+  "kaynak": "pdf",
+  "imza": "3fd3b74d92177058",
+  "baslik": "ŞİLE BELEDİYE BAŞKANLIĞI - 6 MEMUR ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Zabıta Memuru",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 65,
+     "kosullar": [
+      "Herhangi bir lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Tekniker",
+     "adet": 1,
+     "ogrenim": "onlisans",
+     "puan_turu": "P93",
+     "en_dusuk_puan": 65,
+     "kosullar": [
+      "Harita, harita kadastro, harita teknikerliği, harita ve maden ölçme, harita ve kadastro, inşaat, inşaat teknikerliği, inşaat teknolojisi makine, elektrik önlisans programlarının birinden mezun olmak."
+     ]
+    }
+   ],
+   "toplam": 6,
+   "ogrenim": [
+    "lisans",
+    "onlisans"
+   ],
+   "kpss_gerekli": true,
+   "puan_turleri": [
+    "P3",
+    "P93"
+   ],
+   "ortak_kosullar": [
+    "Başvuru yeri ve şekli: Elektronik ortamda başvuru için insankaynaklari@sile.bel.tr mail adresi, şahsen başvuru için Balibey Mah. Atatürk Cad. No:69/A Şile/İstanbul adresindeki Şile Belediye Başkanlığı Yazı İşleri Müdürlüğü.",
+    "Sınav tarihi ve usulü: Memur kadroları için 27/11/2026 tarihinde sözlü sınav, zabıta memuru kadroları için 27/11/2026 tarihinde sözlü ve uygulamalı sınav.",
+    "Başvuruların değerlendirilmesi: KPSS puanları ile sınav puanlarının aritmetik ortalaması alınarak değerlendirme yapılacak."
+   ],
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
   }
  },
  "sbb-d0483ec79d771512966ed174": {
