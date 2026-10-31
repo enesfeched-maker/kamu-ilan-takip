@@ -49,6 +49,16 @@ class Alanlar(unittest.TestCase):
         self.assertIs(yi.uygula(ILAN, veri(dict(YZ, okunabilirlik='kotu')), SIMDI), ILAN)
         self.assertIs(yi.uygula(ILAN, veri(surum=SURUM - 1), SIMDI), ILAN)
 
+    def test_belge_penceresi_yz_tarihini_ezmez(self):
+        # 31 Ekim 2026: Sağlık Bakanlığı kurası belgede 5 Kasım; botun özetindeki pencere 24 Kasım'ı geri yazıyordu.
+        import liste_verisi
+        sbb = dict(ILAN, kaynak_turu='sbb', basvuru_notu='Kura başvurusunu iptal etmek isteyen adaylar, 06.11.2026 – '
+                   '24.11.2026 (saat 18.00’e kadar) tarihleri arasında EKİP üzerinden başvurusunu iptal edebilirler.')
+        self.assertEqual(liste_verisi.pencere_tamamla(sbb)['son_tarih'], '2026-11-24')   # yz yokken pencere uygulanır
+        i = liste_verisi.donem_tamamla(yi.uygula(sbb, veri(), SIMDI))
+        self.assertEqual((i['son_tarih'], i['son_zaman']), ('2026-10-28', '2026-10-28T17:00:00+03:00'))
+        self.assertEqual(i['baslangic_zaman'], '2026-10-19T00:00:00+03:00')
+
     def test_takma_ad_ile_bulunur(self):
         ikincil = dict(ILAN, id='sbb-9', kaynak_kimlikleri=['kk-1'])
         self.assertTrue(yi.uygula(ikincil, veri(), SIMDI).get('yz'))

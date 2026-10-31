@@ -82,6 +82,8 @@ def pencere_tamamla(item):
     aynı düzeltmeyi kendisi yazar; bu, henüz yeniden okunmamış kayıtlar için derleme zamanı yedeğidir."""
     if item.get('kaynak_turu') not in ('iskur', 'sbb') or item.get('duyuru_turu') or item.get('iptal_edildi'):
         return item
+    if item.get('yz_tarih'):   # yapay zekâ tarihi resmî belgeden okudu (yz_isle.alanlar); botun metni onu ezmez
+        return item
     from basvuru_penceresi import uygula
     metinler = [item.get('basvuru_notu')] + ([item.get('ozet')] if item.get('kaynak_turu') == 'sbb' else [])
     ref = _tr_tarih(item.get('ilk_gorulme')) or datetime.now(TR).date()
