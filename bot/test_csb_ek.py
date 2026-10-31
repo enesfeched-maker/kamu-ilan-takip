@@ -313,3 +313,21 @@ class SbbBelgeUyumuTesti(unittest.TestCase):
             self.assertNotIn(alan, birlesik)
         self.assertEqual(birlesik['kadro'], '3 MEMUR ALACAK')
         self.assertEqual(ek.merge_sources([dict(yeni, belge_uyumsuz=False)], {'sbb-1': eski})[0]['ozet'], 'Eski özet.')
+
+    def test_uyumsuz_satir_onbellekten_verilmez(self):
+        from datetime import datetime
+        from sbb_detay import VERSION
+        simdi = datetime(2026, 10, 31, 15, 0, tzinfo=ek.TR)
+        satir = {'id': 'sbb-1', 'baslik': 'Milli Saraylar - 3 MEMUR ALACAK', 'kurum': 'Milli Saraylar', 'kadro': '3 MEMUR ALACAK',
+                 'son_tarih': None, 'kaynak': 'SBB Kamu İlan', 'kaynak_turu': 'sbb', 'donem': '( 28 Ekim - 8 Kasım)',
+                 'gecici_link': 'https://kamuilan.sbb.gov.tr/ilanDetay.aspx?i=1'}
+        onceki = {'id': 'sbb-1', 'baslik': satir['baslik'], 'kaynak_turu': 'sbb', 'detay_guncelleme': '2026-10-31T14:37:01+03:00',
+                  'sbb_detay_surumu': VERSION, 'belge_kopyasi': 'x', 'belge_uyumsuz': True, 'sartlar': ['eski']}
+        with patch.object(ek, 'now', return_value=simdi), patch.object(ek, 'session'), \
+                patch.object(ek, 'get', return_value=(b'pdf', 'u')) as indir, patch.object(ek, 'sbb_rows', return_value=[dict(satir)]), \
+                patch.object(ek, 'pdf_text', return_value='Başvurular 12.10.2026 - 22.10.2026 arasında.'), \
+                patch('sbb_detay.summarize', return_value={'sartlar': ['yanlış']}), patch.object(ek.time, 'sleep'):
+            kayitlar, hata = ek.read_sbb({'sbb-1': onceki})
+        self.assertEqual((indir.call_count, hata), (2, 0))   # liste + belge yeniden indirildi
+        self.assertTrue(kayitlar[0]['belge_uyumsuz'])
+        self.assertNotIn('sartlar', kayitlar[0])
