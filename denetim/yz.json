@@ -3913,37 +3913,61 @@
   }
  },
  "sbb-5681cd6adcb3be4bf8184f42": {
-  "zaman": "2026-10-31T05:14:08+03:00",
+  "zaman": "2026-10-31T21:10:46+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "48d980801b289015",
+  "imza": "8dc7f17143bbd42b",
   "baslik": "MİLLİ SAVUNMA BAKANLIĞI - DENİZ KUVVETLERİ KOMUTANLIĞINA 2026 YILI DENİZ SINIFI MUVAZZAF SUBAY ADAYI TEMİNİ",
   "farklar": [],
   "yz": {
    "kadrolar": [
     {
-     "unvan": "Deniz Sınıfı (Güverte) Muvazzaf Subay Adayı",
-     "adet": 35,
+     "unvan": "Deniz Sınıfı (Güverte) Muvazzaf Subay Adayı — Erkek",
+     "adet": 32,
      "ogrenim": "lisans",
      "puan_turu": null,
      "en_dusuk_puan": null,
      "il": null,
      "kosullar": [
-      "Tablo-1'de listelenen mühendislik/güverte kaynak okul programlarından mezun olmak.",
-      "32 erkek, 3 kadın kontenjan."
+      "Tablo-1'de gösterilen kaynak okul programlarından (dört yıllık fakülte/yüksekokul) mezun olmak.",
+      "Erkek adaylarda asgari boy 168 cm olmak."
      ]
     },
     {
-     "unvan": "Deniz Sınıfı (Makine) Muvazzaf Subay Adayı",
-     "adet": 15,
+     "unvan": "Deniz Sınıfı (Güverte) Muvazzaf Subay Adayı — Kadın",
+     "adet": 3,
      "ogrenim": "lisans",
      "puan_turu": null,
      "en_dusuk_puan": null,
      "il": null,
      "kosullar": [
-      "Tablo-1'de listelenen mühendislik kaynak okul programlarından mezun olmak.",
-      "13 erkek, 2 kadın kontenjan."
+      "Tablo-1'de gösterilen kaynak okul programlarından (dört yıllık fakülte/yüksekokul) mezun olmak.",
+      "Kadın adaylarda asgari boy 162 cm olmak."
+     ]
+    },
+    {
+     "unvan": "Deniz Sınıfı (Makine) Muvazzaf Subay Adayı — Erkek",
+     "adet": 13,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "il": null,
+     "kosullar": [
+      "Tablo-1'de gösterilen kaynak okul programlarından (dört yıllık fakülte/yüksekokul) mezun olmak.",
+      "Erkek adaylarda asgari boy 168 cm olmak."
+     ]
+    },
+    {
+     "unvan": "Deniz Sınıfı (Makine) Muvazzaf Subay Adayı — Kadın",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "il": null,
+     "kosullar": [
+      "Tablo-1'de gösterilen kaynak okul programlarından (dört yıllık fakülte/yüksekokul) mezun olmak.",
+      "Kadın adaylarda asgari boy 162 cm olmak."
      ]
     }
    ],
@@ -3954,12 +3978,12 @@
    "kpss_gerekli": false,
    "iller": [],
    "ortak_kosullar": [
-    "KPSS puanı istenmez; MSB genel kültür sınavından en az 50 puan alınmalıdır.",
-    "Başvuru ücreti 600 TL.",
-    "Başvuru personeltemin.msb.gov.tr üzerinden yapılır.",
-    "Boy-kilo sınırı: erkekte en az 168 cm, kadında en az 162 cm (nomogram)."
+    "01 Ocak 2026 itibarıyla lisans mezunlarında 27 yaşından, lisansüstü mezunlarında 32 yaşından büyük olmamak.",
+    "KPSS puanı istenmez; MSB genel kültür sınavından en az 50 puan almak gerekir.",
+    "Başvuru yalnızca personeltemin.msb.gov.tr üzerinden e-Devlet ile çevrim içi yapılır; ücret 600 TL (en geç 2 Kasım 2026 saat 23.30).",
+    "Seçim aşamaları: genel kültür sınavı, fiziki yeterlilik testi, mülakat; MEBS Okulu (Mamak/Ankara)."
    ],
-   "ozet": "MSB, Deniz Kuvvetleri için 50 muvazzaf subay adayı alacak (Güverte 35, Makine 15). Başvuru 12 Ekim–2 Kasım 2026, saat 17:30'a kadar; KPSS istenmez.",
+   "ozet": "MSB, Deniz Kuvvetleri için 2026 yılı Deniz Sınıfı (Güverte 35, Makine 15) toplam 50 muvazzaf subay adayı alacak. Başvurular 12 Ekim–2 Kasım 2026'da personeltemin.msb.gov.tr üzerinden çevrim içi yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -4699,11 +4723,11 @@
   }
  },
  "sbb-a1b920fe98f44f8e989fea1e": {
-  "zaman": "2026-10-31T05:14:08+03:00",
+  "zaman": "2026-10-31T21:10:46+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf-gorsel",
-  "imza": "8a39f88bfcd4bb8e",
+  "imza": "f7eb669e5dc4c77b",
   "baslik": "MİLLİ SAVUNMA BAKANLIĞI - TÜRK SİLAHLI KUVVETLERİNE EN AZ DÖRT YIL SÜRELİ FAKÜLTE VEYA YÜKSEKOKUL MEZUNLARINDAN 2026 YILI MUVAZZAF SUBAY ADAYI TEMİNİ",
   "farklar": [],
   "yz": {
