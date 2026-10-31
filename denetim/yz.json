@@ -3553,11 +3553,11 @@
   }
  },
  "sbb-42ad8a93106df0cfa5840d8e": {
-  "zaman": "2026-10-31T03:13:45+03:00",
+  "zaman": "2026-10-31T15:19:10+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "b82704ad9374f2e7",
+  "imza": "f2fd54c74015e5f4",
   "baslik": "BURDUR MEHMET AKİF ERSOY ÜNİVERSİTESİ - 1 ALACAK",
   "farklar": [],
   "yz": {
@@ -3566,14 +3566,13 @@
      "unvan": "Sistem Yöneticisi (Sözleşmeli Bilişim Personeli)",
      "adet": 1,
      "ogrenim": "lisans",
-     "puan_turu": "P3",
+     "puan_turu": null,
      "en_dusuk_puan": null,
      "il": "Burdur",
      "kosullar": [
-      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak.",
       "Büyük ölçekli bilgi işlem merkezlerinde en az 3 yıl sistem uzmanı/yöneticisi olarak çalışmış olmak.",
-      "Linux/BSD ve Windows Server, VMware/Proxmox sanallaştırma konularında bilgi ve tecrübe sahibi olmak.",
-      "Güncel programlama dillerinden en az ikisini bildiğini belgelemek."
+      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak.",
+      "Linux/BSD ve Windows Server yönetimi, VMware/Proxmox sanallaştırma konularında bilgi ve tecrübeye sahip olmak."
      ]
     }
    ],
@@ -3586,11 +3585,11 @@
     "Burdur"
    ],
    "ortak_kosullar": [
-    "Değerlendirme puanı: 2026 KPSS P3'ün %70'i + İngilizce YDS puanının %30'u; ilk 10 aday sözlü/uygulamalı sınava çağrılır.",
-    "Başvuru yalnız Kariyer Kapısı üzerinden yapılır; şahsen veya posta başvurusu kabul edilmez.",
-    "Sözlü/uygulamalı sınav 30/11/2026'da Burdur Mehmet Akif Ersoy Üniversitesi Bilgi İşlem Daire Başkanlığında yapılacak."
+    "Başvuru Kariyer Kapısı (e-Devlet) üzerinden yapılır; şahsen veya posta ile başvuru kabul edilmez.",
+    "Güncel programlama dillerinden en az ikisini bildiğini belgelemek.",
+    "Sözlü ve uygulamalı sınav 30 Kasım 2026'da yapılır."
    ],
-   "ozet": "Burdur Mehmet Akif Ersoy Üniversitesi 1 sistem yöneticisi (sözleşmeli bilişim personeli) alacak. Başvurular 28 Ekim–11 Kasım 2026 saat 13:00'a kadar Kariyer Kapısı'ndan yapılır.",
+   "ozet": "Burdur Mehmet Akif Ersoy Üniversitesi 1 sözleşmeli bilişim personeli (sistem yöneticisi) alacak. Başvurular 28 Ekim–11 Kasım 2026 (13:00) arasında Kariyer Kapısı'ndan yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -3598,9 +3597,7 @@
    "ogrenim": [
     "lisans"
    ],
-   "puan_turleri": [
-    "P3"
-   ]
+   "puan_turleri": []
   }
  },
  "sbb-430c26aecb5c9fc198f2999a": {
@@ -3668,11 +3665,11 @@
   }
  },
  "sbb-4465c3cc1f08e887dd0c0af8": {
-  "zaman": "2026-10-31T03:13:45+03:00",
+  "zaman": "2026-10-31T15:19:10+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "848c0c876d1add6c",
+  "imza": "ed0035de56422cfd",
   "baslik": "ANKARA BÜYÜKŞEHİR BELEDİYE BAŞKANLIĞI - 5 MÜFETTİŞ YARDIMCISI ALACAK",
   "farklar": [],
   "yz": {
@@ -3685,9 +3682,9 @@
      "en_dusuk_puan": 75,
      "il": "Ankara",
      "kosullar": [
-      "En az 4 yıllık hukuk, siyasal bilgiler, iktisat, işletme veya iktisadî ve idarî bilimler fakültelerinden mezun olmak.",
-      "Yazılı sınav tarihi itibarıyla 35 yaşını doldurmamış olmak (26.12.1991 ve sonrası doğumlu).",
-      "Rehberlik ve Teftiş Kurulu sınavına daha önce hiç girmemiş veya en fazla 1 kez girmiş olmak."
+      "Hukuk, siyasal bilgiler, iktisat, işletme veya iktisadi ve idari bilimler fakültelerinden mezun olmak.",
+      "Yazılı sınav tarihi itibarıyla 35 yaşını doldurmamış olmak (26.12.1991 ve sonrası doğumlular).",
+      "Rehberlik ve Teftiş Kurulu sınavına daha önce en fazla 1 kez katılmış olmak."
      ]
     }
    ],
@@ -3700,12 +3697,11 @@
     "Ankara"
    ],
    "ortak_kosullar": [
-    "2025 veya 2026 KPSS (A grubu) sınavına girmiş olmak.",
-    "Başvuru: Rehberlik ve Teftiş Kurulu Başkanlığına (Yenimahalle/Ankara) şahsen veya iadeli taahhütlü posta ile.",
-    "Yazılı sınav 26.12.2026 saat 09:00'da; sınava çağrılanlar 18.12.2026'da www.ankara.bel.tr'de ilan edilecek.",
-    "Yazılı sınavdan en az 75 puan alanlar sözlü sınava çağrılır."
+    "2025 veya 2026 KPSS A grubu P48 puanı en az 75 olmalıdır.",
+    "Başvuru şahsen veya iadeli taahhütlü posta ile Rehberlik ve Teftiş Kurulu Başkanlığı'na (Yenimahalle/Ankara) yapılır.",
+    "Sınava girecekler 18 Aralık 2026'da ilan edilir; yazılı sınav 26 Aralık 2026 saat 09.00'da yapılır."
    ],
-   "ozet": "Ankara Büyükşehir Belediyesi 5 müfettiş yardımcısı alacak; KPSS P48 en az 75 puan şart. Başvurular 23 Kasım–4 Aralık 2026'da şahsen veya posta ile yapılır.",
+   "ozet": "Ankara Büyükşehir Belediyesi 5 müfettiş yardımcısı alacak. Başvurular 23 Kasım–4 Aralık 2026 arasında şahsen veya iadeli taahhütlü posta ile yapılır; yazılı sınav 26 Aralık'ta.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -3719,127 +3715,121 @@
   }
  },
  "sbb-526ff55537d8578a927e5bc7": {
-  "zaman": "2026-10-31T03:13:45+03:00",
+  "zaman": "2026-10-31T15:19:10+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "5956397236b38c0c",
+  "imza": "eaa88f7d2f8e4838",
   "baslik": "TÜRKİYE İŞ KURUMU GENEL MÜDÜRLÜĞÜ - 11 ALACAK",
   "farklar": [],
   "yz": {
    "kadrolar": [
     {
-     "unvan": "Kıdemli Sistem Uzmanı (A Grubu)",
+     "unvan": "Kıdemli Sistem Uzmanı (Sözleşmeli Bilişim Personeli)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": null,
      "il": "Ankara",
      "kosullar": [
-      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak.",
-      "Linux/UNIX alanında sistem yöneticisi olarak toplam en az 7 yıl tecrübe sahibi olmak.",
-      "Sanallaştırma, konteyner ve yüksek erişilebilirlik konularında ileri seviye tecrübe sahibi olmak."
+      "Bilişim alanında en az 7 yıl mesleki tecrübe sahibi olmak (A grubu).",
+      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak."
      ]
     },
     {
-     "unvan": "Kıdemli Siber Güvenlik Uzmanı (A Grubu)",
+     "unvan": "Kıdemli Siber Güvenlik Uzmanı (Sözleşmeli Bilişim Personeli)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": null,
      "il": "Ankara",
      "kosullar": [
-      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak.",
-      "Siber güvenlik alanında en az 7 yıl tecrübe sahibi olmak.",
-      "CEH, GPEN, OSCP, Security+ vb. sertifikalardan en az birine geçerli olarak sahip olmak."
+      "Bilişim alanında en az 7 yıl mesleki tecrübe sahibi olmak (A grubu).",
+      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak."
      ]
     },
     {
-     "unvan": "Kıdemli Ağ ve Güvenlik Uzmanı (B Grubu)",
+     "unvan": "Kıdemli Ağ ve Güvenlik Uzmanı (Sözleşmeli Bilişim Personeli)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": null,
      "il": "Ankara",
      "kosullar": [
-      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak.",
-      "Ağ veya güvenlik alanında en az 5 yıl deneyimi belgelemek."
+      "Bilişim alanında en az 5 yıl mesleki tecrübe sahibi olmak (B grubu).",
+      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak."
      ]
     },
     {
-     "unvan": "Ağ ve Güvenlik Uzmanı (C Grubu)",
+     "unvan": "Ağ ve Güvenlik Uzmanı (Sözleşmeli Bilişim Personeli)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": null,
      "il": "Ankara",
      "kosullar": [
-      "Bilgisayar/yazılım/elektrik/elektronik/endüstri mühendisliği ya da ilanda sayılan diğer mühendislik, fen-edebiyat ve eğitim bölümlerinden mezun olmak.",
-      "Ağ veya güvenlik alanında en az 3 yıl deneyimi belgelemek."
+      "Bilişim alanında en az 3 yıl mesleki tecrübe sahibi olmak (C grubu).",
+      "Mühendislik, fen-edebiyat veya bilgisayar/istatistik/matematik/fizik bölümlerinden de başvurulabilir (yalnız C grubu)."
      ]
     },
     {
-     "unvan": "Yazılım Uzmanı (C Grubu)",
+     "unvan": "Yazılım Uzmanı (Sözleşmeli Bilişim Personeli)",
      "adet": 3,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": null,
      "il": "Ankara",
      "kosullar": [
-      "Bilgisayar/yazılım/elektrik/elektronik/endüstri mühendisliği ya da ilanda sayılan diğer mühendislik, fen-edebiyat ve eğitim bölümlerinden mezun olmak.",
-      "Yazılım geliştirmede en az 3 yıl tecrübe sahibi olmak.",
-      ".NET Framework, ASP.NET ve C# tecrübesine sahip olmak."
+      "Bilişim alanında en az 3 yıl mesleki tecrübe sahibi olmak (C grubu).",
+      "Mühendislik, fen-edebiyat veya bilgisayar/istatistik/matematik/fizik bölümlerinden de başvurulabilir (yalnız C grubu)."
      ]
     },
     {
-     "unvan": "Kıdemli Yapay Zeka Uzmanı (B Grubu)",
+     "unvan": "Kıdemli Yapay Zeka Uzmanı (Sözleşmeli Bilişim Personeli)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": null,
      "il": "Ankara",
      "kosullar": [
-      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak.",
-      "Yapay zeka, makine öğrenmesi, NLP veya LLM alanlarında en az 3 yıl tecrübe sahibi olmak.",
-      "RAG ve vektör veritabanları konularında bilgi ve tecrübe sahibi olmak."
+      "Bilişim alanında en az 5 yıl mesleki tecrübe sahibi olmak (B grubu).",
+      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak."
      ]
     },
     {
-     "unvan": "Yapay Zeka Uzmanı (C Grubu)",
+     "unvan": "Yapay Zeka Uzmanı (Sözleşmeli Bilişim Personeli)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": null,
      "il": "Ankara",
      "kosullar": [
-      "Bilgisayar/yazılım/elektrik/elektronik/endüstri mühendisliği ya da ilanda sayılan diğer mühendislik, fen-edebiyat ve eğitim bölümlerinden mezun olmak.",
-      "Yapay zeka, makine öğrenmesi, NLP veya LLM alanlarında bilgi ve tecrübe sahibi olmak.",
-      "RAG, prompt mühendisliği ve vektör veritabanları konularında bilgi sahibi olmak."
+      "Bilişim alanında en az 3 yıl mesleki tecrübe sahibi olmak (C grubu).",
+      "Mühendislik, fen-edebiyat veya bilgisayar/istatistik/matematik/fizik bölümlerinden de başvurulabilir (yalnız C grubu)."
      ]
     },
     {
-     "unvan": "Kıdemli İş Zekası Uzmanı (B Grubu)",
+     "unvan": "Kıdemli İş Zekası Uzmanı (Sözleşmeli Bilişim Personeli)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": null,
      "il": "Ankara",
      "kosullar": [
-      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak.",
-      "İş zekası, veri ambarı veya veri mühendisliğinde en az 5 yıl deneyim sahibi olmak."
+      "Bilişim alanında en az 5 yıl mesleki tecrübe sahibi olmak (B grubu).",
+      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak."
      ]
     },
     {
-     "unvan": "Kıdemli Front End Web Yazılım Uzmanı (B Grubu)",
+     "unvan": "Kıdemli Front End Web Yazılım Uzmanı (Sözleşmeli Bilişim Personeli)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": null,
      "il": "Ankara",
      "kosullar": [
-      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak.",
-      "Yazılım geliştirmede en az 5 yıl tecrübe sahibi olmak.",
-      "VueJS, AngularJS veya ReactJS ile .NET/C# tecrübesine sahip olmak."
+      "Bilişim alanında en az 5 yıl mesleki tecrübe sahibi olmak (B grubu).",
+      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak."
      ]
     }
    ],
@@ -3852,11 +3842,12 @@
     "Ankara"
    ],
    "ortak_kosullar": [
-    "Sıralama: 2025/2026 KPSS P3'ün %70'i + YDS puanının %30'u; pozisyonun 10 katı aday sözlü/uygulamalı sınava çağrılır.",
-    "Başvuru yalnız e-Devlet Kariyer Kapısı üzerinden yapılır; şahsen veya posta başvurusu alınmaz.",
-    "Sınav tarihleri www.iskur.gov.tr'de duyurulacak; sınav Ankara'da İŞKUR Genel Müdürlüğünde yapılacak."
+    "Başvuru puanı: 2025/2026 KPSS P3 x 0,70 + yabancı dil x 0,30; kadro sayısının 10 katı aday sınava çağrılır.",
+    "Başvuru e-Devlet üzerinden Kariyer Kapısı'ndan yapılır.",
+    "Güncel programlama dillerinden en az ikisini bildiğini belgelemek.",
+    "Sözlü ve/veya uygulamalı sınav tarihleri iskur.gov.tr'de duyurulur."
    ],
-   "ozet": "İŞKUR Genel Müdürlüğü 11 sözleşmeli bilişim personeli alacak (sistem, siber güvenlik, ağ, yazılım, yapay zeka, iş zekası, front end). Başvurular 26 Ekim–8 Kasım 2026'da Kariyer Kapısı'ndan yapılır.",
+   "ozet": "Türkiye İş Kurumu 11 sözleşmeli bilişim personeli alacak (sistem, siber güvenlik, ağ, yazılım, yapay zeka, iş zekası). Başvurular 26 Ekim–8 Kasım 2026 arasında Kariyer Kapısı'ndan yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -3870,11 +3861,11 @@
   }
  },
  "sbb-55c388ddcd94b92cd129672a": {
-  "zaman": "2026-10-31T03:13:45+03:00",
+  "zaman": "2026-10-31T15:19:10+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf-gorsel",
-  "imza": "ef70013038e625f4",
+  "imza": "d8d884a3abaf6715",
   "baslik": "İMAMOĞLU BELEDİYE BAŞKANLIĞI - 2 SüREKLİ İŞÇİ ALACAK",
   "farklar": [
    [
@@ -3887,16 +3878,15 @@
   "yz": {
    "kadrolar": [
     {
-     "unvan": "İnşaat İşçisi",
+     "unvan": "İnşaat İşçisi — Kadın",
      "adet": 1,
      "ogrenim": "ortaogretim",
      "puan_turu": null,
      "en_dusuk_puan": null,
      "il": "Adana",
      "kosullar": [
-      "Mesleki Yeterlilik Kurumu İnşaat İşçisi (Seviye 2) belgesine sahip olmak.",
-      "Kimlik kartı sahibi olmak.",
-      "İŞKUR üzerinden başvurup 04.11.2026'ya kadar belgeleri Yazı İşleri Müdürlüğüne teslim etmek."
+      "Mesleki Yeterlilik Kurumu İnşaat İşçisi (Seviye 2) belgesi ve kimlik kartı sahibi olmak.",
+      "Kadın aday olmak (18-45 yaş)."
      ]
     }
    ],
@@ -3908,11 +3898,10 @@
     "Adana"
    ],
    "ortak_kosullar": [
-    "Başvuru İŞKUR üzerinden yapılır; belgeler 04.11.2026'ya kadar mesai bitimine dek belediyeye elden teslim edilir.",
-    "Noter kurası 09.11.2026 saat 13:00'te; kurayı kazananlarla mülakat yapılacak.",
-    "Kura listesi belediye internet sitesinde yayımlanacak."
+    "İŞKUR üzerinden başvuru yapıldıktan sonra belgeler 4 Kasım 2026 mesai bitimine kadar Belediye Yazı İşleri Müdürlüğü'ne elden teslim edilir.",
+    "Noter kurası 9 Kasım 2026 saat 13:00'te yapılır; kuradan sonra mülakat yapılır."
    ],
-   "ozet": "İmamoğlu Belediyesi (Adana) 1 sürekli inşaat işçisi alacak; lise düzeyi ve MYK İnşaat İşçisi belgesi aranır. İŞKUR başvuruları 28 Ekim–2 Kasım 2026'da, kura 9 Kasım'da.",
+   "ozet": "İmamoğlu Belediyesi (Adana) 1 kadın inşaat işçisi alacak. İŞKUR başvuruları 28 Ekim–2 Kasım 2026; kura 9 Kasım 2026'da.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -4184,11 +4173,11 @@
   }
  },
  "sbb-6599de4d7ab75fdadb1de2a8": {
-  "zaman": "2026-10-31T03:13:45+03:00",
+  "zaman": "2026-10-31T15:19:10+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "5db1993878f39263",
+  "imza": "40ed150dda90986f",
   "baslik": "ASARCIK BELEDİYE BAŞKANLIĞI - 1 MEMUR ALACAK",
   "farklar": [],
   "yz": {
@@ -4201,7 +4190,7 @@
      "en_dusuk_puan": 70,
      "il": "Samsun",
      "kosullar": [
-      "Lisans düzeyinde eğitim veren fakültelerin mimarlık programından mezun olmak.",
+      "Mimarlık programından mezun olmak.",
       "En az (B) sınıfı sürücü belgesine sahip olmak."
      ]
     }
@@ -4215,12 +4204,11 @@
     "Samsun"
    ],
    "ortak_kosullar": [
-    "2026 KPSS (B) grubu sınavına girmiş olmak.",
-    "Başvuru: ik@asarcik.bel.tr'ye e-posta, şahsen veya iadeli taahhütlü posta (Yazı İşleri Müdürlüğü, Asarcık/Samsun).",
-    "Sözlü sınav 18/12/2026 saat 10:00'da Belediye Meclis Toplantı Salonunda yapılacak.",
-    "Sınava çağrılacaklar 10/12/2026'da belediye sitesinde ilan edilecek."
+    "2026 KPSS (B grubu) P3 puanı en az 70 olmalıdır.",
+    "Başvuru e-posta (ik@asarcik.bel.tr), şahsen veya iadeli taahhütlü posta ile yapılır.",
+    "Sözlü sınav 18 Aralık 2026'da Asarcık Belediyesi'nde yapılır."
    ],
-   "ozet": "Asarcık Belediyesi (Samsun) 1 mimar memur alacak; KPSS P3 en az 70 puan şart. Başvurular 1–3 Aralık 2026'da e-posta, şahsen veya posta ile yapılır.",
+   "ozet": "Asarcık Belediyesi (Samsun) 1 mimar memur alacak. Başvurular 1–3 Aralık 2026'da e-posta, şahsen veya posta ile yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -4302,11 +4290,11 @@
   }
  },
  "sbb-838c1ad20b87efb0ed63d6c7": {
-  "zaman": "2026-10-31T03:13:45+03:00",
+  "zaman": "2026-10-31T15:19:10+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "a75da073d6d0301b",
+  "imza": "423739e79ca53662",
   "baslik": "TÜRK AKREDİTASYON KURUMU - 2 ALACAK",
   "farklar": [],
   "yz": {
@@ -4314,28 +4302,28 @@
     {
      "unvan": "Siber Güvenlik Uzmanı (Sözleşmeli Bilişim Personeli)",
      "adet": 1,
+     "kosullar": [
+      "Siber güvenlik alanında en az 5 yıl fiilen çalışmış olmak ve belgelemek.",
+      "En az 5.000 aktif kullanıcılı bilgi sistemlerinde siber güvenlik görevi almış olmak.",
+      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak."
+     ],
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": null,
-     "il": "Ankara",
-     "kosullar": [
-      "Bilgisayar, yazılım, elektrik, elektronik veya endüstri mühendisliği lisans bölümlerinden mezun olmak.",
-      "Siber güvenlik alanında en az 5 yıl fiilen çalışmış olmak.",
-      "En az 5.000 kullanıcılı bilgi sistemlerinde siber güvenlik altyapısı görevi almış olmak."
-     ]
+     "il": "Ankara"
     },
     {
      "unvan": "Sistem ve Ağ Uzmanı (Sözleşmeli Bilişim Personeli)",
      "adet": 1,
+     "kosullar": [
+      "Sistem ve ağ uzmanı olarak en az 5 yıl çalışmış olmak.",
+      "VMware/Hyper-V sanallaştırma platformlarında ileri düzey tecrübe sahibi olmak.",
+      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak."
+     ],
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": null,
-     "il": "Ankara",
-     "kosullar": [
-      "Bilgisayar, yazılım, elektrik, elektronik veya endüstri mühendisliği lisans bölümlerinden mezun olmak.",
-      "Büyük ölçekli kurumlarda sistem ve ağ uzmanı olarak en az 5 yıl çalışmış olmak.",
-      "Sanallaştırma, Windows/Linux sunucu ve Active Directory konularında ileri düzey tecrübe sahibi olmak."
-     ]
+     "il": "Ankara"
     }
    ],
    "toplam": 2,
@@ -4347,12 +4335,11 @@
     "Ankara"
    ],
    "ortak_kosullar": [
-    "En az 5 yıl mesleki tecrübe ve güncel programlama dillerinden en az ikisini bilmek.",
-    "2026 KPSS P3 puanının %70'i ile YDS puanının %30'u esas alınarak sıralanır; en yüksek puanlı adaylar sözlü/uygulamalı sınava çağrılır.",
-    "Başvuru yalnız Kariyer Kapısı (e-Devlet) üzerinden yapılır.",
-    "Sözlü/uygulamalı sınav 11/11/2026'da Türk Akreditasyon Kurumunda (Çankaya/Ankara)."
+    "Başvuru puanı: 2026 KPSS P3 x 0,70 + yabancı dil x 0,30; pozisyonun 10 katı aday sınava çağrılır.",
+    "Başvuru Kariyer Kapısı (e-Devlet) üzerinden yapılır; posta, e-posta veya şahsen başvuru kabul edilmez.",
+    "Sözlü/uygulamalı sınav 11 Kasım 2026'da Ankara'da yapılır."
    ],
-   "ozet": "Türk Akreditasyon Kurumu 1 siber güvenlik uzmanı ve 1 sistem ve ağ uzmanı olmak üzere 2 sözleşmeli bilişim personeli alacak. Başvurular 16–31 Ekim 2026'da Kariyer Kapısı'ndan yapılır.",
+   "ozet": "Türk Akreditasyon Kurumu 2 sözleşmeli bilişim personeli (siber güvenlik, sistem ve ağ uzmanı) alacak. Başvurular 16–31 Ekim 2026 (23:59) arasında Kariyer Kapısı'ndan yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -4415,11 +4402,11 @@
   }
  },
  "sbb-8f8bf62951391c9f5213752f": {
-  "zaman": "2026-10-31T03:13:45+03:00",
+  "zaman": "2026-10-31T15:19:10+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "6213533c7fa59552",
+  "imza": "c3fdf9c47611ba34",
   "baslik": "TÜRK AKREDİTASYON KURUMU - 7 AKREDİTASYON UZMANI YARDIMCISI ALACAK",
   "farklar": [],
   "yz": {
@@ -4433,7 +4420,8 @@
      "il": "Ankara",
      "kosullar": [
       "Gıda Mühendisliği lisans programından mezun olmak.",
-      "YDS'den en az 70 puan (C seviyesi) almış olmak."
+      "YDS'den en az C seviyesinde (70) puan almış olmak.",
+      "Giriş sınavı yılının 1 Ocak'ı itibarıyla 35 yaşını doldurmamış olmak."
      ]
     },
     {
@@ -4445,7 +4433,8 @@
      "il": "Ankara",
      "kosullar": [
       "Metalurji ve Malzeme Mühendisliği lisans programından mezun olmak.",
-      "YDS'den en az 70 puan (C seviyesi) almış olmak."
+      "YDS'den en az C seviyesinde (70) puan almış olmak.",
+      "Giriş sınavı yılının 1 Ocak'ı itibarıyla 35 yaşını doldurmamış olmak."
      ]
     },
     {
@@ -4457,7 +4446,8 @@
      "il": "Ankara",
      "kosullar": [
       "Endüstri Mühendisliği lisans programından mezun olmak.",
-      "YDS'den en az 70 puan (C seviyesi) almış olmak."
+      "YDS'den en az C seviyesinde (70) puan almış olmak.",
+      "Giriş sınavı yılının 1 Ocak'ı itibarıyla 35 yaşını doldurmamış olmak."
      ]
     },
     {
@@ -4469,19 +4459,21 @@
      "il": "Ankara",
      "kosullar": [
       "Makine Mühendisliği lisans programından mezun olmak.",
-      "YDS'den en az 70 puan (C seviyesi) almış olmak."
+      "YDS'den en az C seviyesinde (70) puan almış olmak.",
+      "Giriş sınavı yılının 1 Ocak'ı itibarıyla 35 yaşını doldurmamış olmak."
      ]
     },
     {
-     "unvan": "Akreditasyon Uzman Yardımcısı (Elektrik / Elektrik-Elektronik / Elektronik Mühendisliği)",
+     "unvan": "Akreditasyon Uzman Yardımcısı (Elektrik, Elektrik-Elektronik veya Elektronik Mühendisliği)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P2",
      "en_dusuk_puan": 70,
      "il": "Ankara",
      "kosullar": [
-      "Elektrik, Elektrik-Elektronik veya Elektronik Mühendisliği lisans programlarından birinden mezun olmak.",
-      "YDS'den en az 70 puan (C seviyesi) almış olmak."
+      "Elektrik, Elektrik-Elektronik veya Elektronik Mühendisliği lisans programından mezun olmak.",
+      "YDS'den en az C seviyesinde (70) puan almış olmak.",
+      "Giriş sınavı yılının 1 Ocak'ı itibarıyla 35 yaşını doldurmamış olmak."
      ]
     },
     {
@@ -4493,7 +4485,8 @@
      "il": "Ankara",
      "kosullar": [
       "Çevre Mühendisliği lisans programından mezun olmak.",
-      "YDS'den en az 70 puan (C seviyesi) almış olmak."
+      "YDS'den en az C seviyesinde (70) puan almış olmak.",
+      "Giriş sınavı yılının 1 Ocak'ı itibarıyla 35 yaşını doldurmamış olmak."
      ]
     },
     {
@@ -4505,7 +4498,8 @@
      "il": "Ankara",
      "kosullar": [
       "Veteriner lisans programından mezun olmak.",
-      "YDS'den en az 70 puan (C seviyesi) almış olmak."
+      "YDS'den en az C seviyesinde (70) puan almış olmak.",
+      "Giriş sınavı yılının 1 Ocak'ı itibarıyla 35 yaşını doldurmamış olmak."
      ]
     }
    ],
@@ -4517,12 +4511,11 @@
     "Ankara"
    ],
    "ortak_kosullar": [
-    "2025 veya 2026 KPSS P2 puanından en az 70 almış olmak.",
-    "Giriş sınavı yılının 1 Ocak'ında 35 yaşını doldurmamış olmak.",
-    "Başvuru yalnız Kariyer Kapısı üzerinden; adaylar yalnız bir gruba başvurabilir.",
-    "Sözlü sınav tarihi 09/11/2026'da www.turkak.org.tr'de ilan edilecek."
+    "2025 veya 2026 KPSS P2 puanı en az 70 olmalıdır.",
+    "Başvuru e-Devlet Kariyer Kapısı üzerinden yapılır.",
+    "Her bölüm için kontenjanın 4 katı aday sözlü sınava çağrılır; sınav tarihi 9 Kasım 2026'da turkak.org.tr'de ilan edilir."
    ],
-   "ozet": "Türk Akreditasyon Kurumu 7 akreditasyon uzman yardımcısı alacak (gıda, metalurji, endüstri, makine, elektrik-elektronik, çevre mühendisliği ve veteriner). Başvurular 16 Ekim–2 Kasım 2026'da Kariyer Kapısı'ndan yapılır.",
+   "ozet": "Türk Akreditasyon Kurumu 7 akreditasyon uzman yardımcısı alacak (gıda, metalurji, endüstri, makine, elektrik, çevre mühendisliği ve veteriner). Başvurular 16 Ekim–2 Kasım 2026 arasında Kariyer Kapısı'ndan yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -4928,176 +4921,33 @@
   }
  },
  "sbb-b8e350246ed989bd4d6c9b23": {
-  "zaman": "2026-10-31T03:13:45+03:00",
+  "zaman": "2026-10-31T15:19:10+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "1f2a0d133522fd14",
+  "imza": "54536666168cb076",
   "baslik": "MİLLİ SARAYLAR İDARESİ BAŞKANLIĞI - 3 MEMUR ALACAK",
-  "farklar": [
-   [
-    "son_tarih",
-    "2026-11-08",
-    "2026-10-22",
-    true
-   ],
-   [
-    "toplam",
-    3,
-    158,
-    true
-   ]
-  ],
+  "farklar": [],
   "yz": {
-   "kadrolar": [
-    {
-     "unvan": "Büro Personeli",
-     "adet": 1,
-     "ogrenim": "lisans",
-     "puan_turu": "P3",
-     "en_dusuk_puan": 60,
-     "il": "İstanbul",
-     "kosullar": [
-      "İşletme, Yönetim Bilimleri, İktisat, Maliye, Kamu Yönetimi, Siyaset Bilimi vb. bölümlerden birinden mezun olmak.",
-      "Son başvuru tarihi itibarıyla 35 yaşını doldurmamış olmak."
-     ]
-    },
-    {
-     "unvan": "Müze Görevlisi",
-     "adet": 9,
-     "ogrenim": "lisans",
-     "puan_turu": "P3",
-     "en_dusuk_puan": 60,
-     "il": "İstanbul",
-     "kosullar": [
-      "Müzecilik, Sanat Tarihi, Tarih, Arkeoloji, İletişim, Halkla İlişkiler, Gazetecilik, Radyo-TV-Sinema vb. lisans bölümlerinden mezun olmak.",
-      "Son başvuru tarihi itibarıyla 35 yaşını doldurmamış olmak."
-     ]
-    },
-    {
-     "unvan": "Mühendis (İnşaat)",
-     "adet": 1,
-     "ogrenim": "lisans",
-     "puan_turu": "P3",
-     "en_dusuk_puan": 60,
-     "il": "İstanbul",
-     "kosullar": [
-      "İnşaat Mühendisliği lisans bölümünden mezun olmak.",
-      "Son başvuru tarihi itibarıyla 35 yaşını doldurmamış olmak."
-     ]
-    },
-    {
-     "unvan": "Restoratör (Kalemkâr)",
-     "adet": 5,
-     "ogrenim": "lisans",
-     "puan_turu": "P3",
-     "en_dusuk_puan": 60,
-     "il": "İstanbul",
-     "kosullar": [
-      "Kültür Varlıklarını Koruma ve Onarım, Restorasyon ve Konservasyon vb. lisans bölümlerinden mezun olmak.",
-      "Son başvuru tarihi itibarıyla 35 yaşını doldurmamış olmak."
-     ]
-    },
-    {
-     "unvan": "Çözümleyici",
-     "adet": 1,
-     "ogrenim": "lisans",
-     "puan_turu": null,
-     "en_dusuk_puan": null,
-     "il": "İstanbul",
-     "kosullar": [
-      "Bilgisayar/yazılım mühendisliği, bilgisayar bilimleri, bilişim sistemleri vb. lisans bölümlerinden mezun olmak.",
-      "C#, MS-SQL, Java dillerinden en az ikisini bildiğini belgelemek.",
-      "YDS'den en az D düzeyinde İngilizce bilmek.",
-      "Son başvuru tarihi itibarıyla 40 yaşını doldurmamış olmak."
-     ]
-    },
-    {
-     "unvan": "Diğer Teknik Hizmet Personeli (El Dekoru ve Seramik Üretimi)",
-     "adet": 11,
-     "ogrenim": "lisans",
-     "puan_turu": null,
-     "en_dusuk_puan": null,
-     "il": "İstanbul",
-     "kosullar": [
-      "Geleneksel Türk Sanatları, Seramik, Çini, El Sanatları, Resim vb. lisans bölümlerinden mezun olmak.",
-      "Son başvuru tarihi itibarıyla 40 yaşını doldurmamış olmak."
-     ]
-    },
-    {
-     "unvan": "Tekniker (El Dekoru ve Seramik Üretimi)",
-     "adet": 5,
-     "ogrenim": "onlisans",
-     "puan_turu": null,
-     "en_dusuk_puan": null,
-     "il": "İstanbul",
-     "kosullar": [
-      "MYO'ların Geleneksel El Sanatları, Seramik, Çini İşlemeciliği, Seramik ve Cam vb. bölümlerinden mezun olmak.",
-      "Son başvuru tarihi itibarıyla 40 yaşını doldurmamış olmak."
-     ]
-    },
-    {
-     "unvan": "Koruma ve Güvenlik Görevlisi",
-     "adet": 100,
-     "ogrenim": "lisans",
-     "puan_turu": "P3",
-     "en_dusuk_puan": 60,
-     "il": "İstanbul",
-     "kosullar": [
-      "Herhangi bir lisans bölümünden mezun olmak.",
-      "Silahlı Özel Güvenlik Kimlik Kartına veya sertifikasına sahip olmak ya da bunlar için başvurmuş olmak.",
-      "Vardiyalı (24 saat esaslı) çalışmaya engeli bulunmamak.",
-      "Son başvuru tarihi itibarıyla 35 yaşını doldurmamış olmak."
-     ]
-    },
-    {
-     "unvan": "Destek Personeli (Temizlik Görevlisi)",
-     "adet": 25,
-     "ogrenim": "ortaogretim",
-     "puan_turu": null,
-     "en_dusuk_puan": null,
-     "il": "İstanbul",
-     "kosullar": [
-      "En az ortaöğretim (lise) ve dengi okul mezunu olmak.",
-      "Son başvuru tarihi itibarıyla 40 yaşını doldurmamış olmak."
-     ]
-    }
-   ],
-   "toplam": 158,
-   "son_basvuru_tarihi": "2026-10-22",
-   "baslangic_tarihi": "2026-10-12",
-   "kpss_gerekli": true,
-   "iller": [
-    "İstanbul",
-    "Edirne"
-   ],
-   "ortak_kosullar": [
-    "KPSS'li unvanlarda 2025 veya 2026 KPSS P3'ten en az 60 puan almış olmak.",
-    "Başvuru yalnız Kariyer Kapısı üzerinden; adaylar yalnız bir gruba başvurabilir.",
-    "Sınav: KPSS sıralaması, uygulamalı ve/veya sözlü; duyurular www.millisaraylar.gov.tr'de.",
-    "Başvuru-sonuç duyuruları Kariyer Kapısı ve millisaraylar.gov.tr'de yapılır."
-   ],
-   "ozet": "Milli Saraylar İdaresi 158 sözleşmeli personel alacak (80+20 koruma ve güvenlik, 9 müze görevlisi, 25 temizlik, 11 teknik hizmet vb.). Başvurular 12–22 Ekim 2026'da Kariyer Kapısı'ndan yapıldı.",
-   "okunabilirlik": "iyi",
+   "kadrolar": [],
+   "toplam": null,
+   "son_basvuru_tarihi": null,
+   "kpss_gerekli": null,
+   "iller": [],
+   "ortak_kosullar": [],
+   "ozet": "",
+   "okunabilirlik": "kotu",
    "akademik": false,
    "iptal_veya_duzeltme": false,
-   "duyuru_tipi": "yeni_ilan",
-   "ogrenim": [
-    "lisans",
-    "onlisans",
-    "ortaogretim"
-   ],
-   "puan_turleri": [
-    "P3"
-   ]
+   "duyuru_tipi": "yeni_ilan"
   }
  },
  "sbb-c799c2bf65cf136277930882": {
-  "zaman": "2026-10-31T03:13:45+03:00",
+  "zaman": "2026-10-31T15:19:10+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "d0848460065da077",
+  "imza": "7b22f16a9a7fc2c8",
   "baslik": "ORTA ANADOLU KALKINMA AJANSI - 6 UZMAN, 1 DESTEK PERSONELİ ALACAK",
   "farklar": [
    [
@@ -5107,9 +4957,8 @@
      "P11"
     ],
     [
-     "P1,P2,P3",
-     "P1,P2,P3,P11-P48(ILANDASAYILANTÜRLER)",
-     "P11-P48(ILANDASAYILANTÜRLER)"
+     "P1/P2/P3",
+     "P1/P2/P3VEP11-P48"
     ],
     false
    ]
@@ -5117,56 +4966,55 @@
   "yz": {
    "kadrolar": [
     {
-     "unvan": "Uzman Personel — Şehir ve Bölge Planlama / Mimarlık / Endüstriyel Tasarım Müh. / Çevre Müh.",
+     "unvan": "Uzman Personel - 1 (Planlama/Mimarlık/Çevre)",
      "adet": 1,
      "ogrenim": "lisans",
-     "puan_turu": "P1, P2, P3",
+     "puan_turu": "P1/P2/P3",
      "en_dusuk_puan": 80,
-     "il": "Kayseri",
      "kosullar": [
-      "Şehir ve Bölge Planlama, Mimarlık, Endüstriyel Tasarım Mühendisliği veya Çevre Mühendisliği lisans programından mezun olmak.",
-      "YDS/e-YDS İngilizceden en az C düzeyinde puan almış olmak."
-     ]
+      "Şehir ve Bölge Planlama, Mimarlık, Endüstriyel Tasarım Müh. veya Çevre Müh. lisans programından mezun olmak.",
+      "İngilizce YDS/e-YDS'den en az C düzeyinde puan veya denkini belgelemek."
+     ],
+     "il": "Kayseri"
     },
     {
-     "unvan": "Uzman Personel — Mühendislik",
+     "unvan": "Uzman Personel - 2 (Mühendislik)",
      "adet": 2,
      "ogrenim": "lisans",
-     "puan_turu": "P1, P2, P3",
+     "puan_turu": "P1/P2/P3",
      "en_dusuk_puan": 80,
-     "il": "Kayseri",
      "kosullar": [
       "Mühendislik lisans programlarından (Uzman-1 bölümleri hariç) mezun olmak.",
-      "YDS/e-YDS İngilizceden en az C düzeyinde puan almış olmak."
-     ]
+      "İngilizce YDS/e-YDS'den en az C düzeyinde puan veya denkini belgelemek."
+     ],
+     "il": "Kayseri"
     },
     {
-     "unvan": "Uzman Personel — İktisat / İşletme / Maliye / Uluslararası İlişkiler vb.",
+     "unvan": "Uzman Personel - 3 (İktisadi/İdari)",
      "adet": 3,
      "ogrenim": "lisans",
-     "puan_turu": "P11-P48 (ilanda sayılan türler)",
+     "puan_turu": "P1/P2/P3 ve P11-P48",
      "en_dusuk_puan": 80,
-     "il": "Kayseri",
      "kosullar": [
-      "İktisat, İşletme, Maliye, Uluslararası İlişkiler, İstatistik, Kamu Yönetimi, Siyaset Bilimi, Ekonomi veya Ekonometri lisans programından mezun olmak.",
-      "YDS/e-YDS İngilizceden en az C düzeyinde puan almış olmak."
-     ]
+      "İktisat, işletme, maliye, uluslararası ilişkiler, istatistik, kamu yönetimi, ekonomi veya ekonometri lisans programından mezun olmak.",
+      "İngilizce YDS/e-YDS'den en az C düzeyinde puan veya denkini belgelemek."
+     ],
+     "il": "Kayseri"
     },
     {
      "unvan": "Destek Personeli (Büro Görevlisi)",
      "adet": 1,
      "ogrenim": "lisans",
-     "puan_turu": "P1, P2, P3, P11-P48 (ilanda sayılan türler)",
+     "puan_turu": "P1/P2/P3 ve P11-P48",
      "en_dusuk_puan": 70,
-     "il": "Kayseri",
      "kosullar": [
-      "İktisat, İşletme, Maliye, Uluslararası İlişkiler, İstatistik, Kamu Yönetimi, Ekonomi, İletişim, Grafik Tasarım, Halkla İlişkiler, Radyo-TV veya Gazetecilik lisans programından mezun olmak."
-     ]
+      "İktisat, işletme, maliye, kamu yönetimi, iletişim, grafik tasarım, halkla ilişkiler, gazetecilik vb. lisans programından mezun olmak."
+     ],
+     "il": "Kayseri"
     }
    ],
    "toplam": 7,
    "son_basvuru_tarihi": "2026-12-03",
-   "son_basvuru_saati": "23:59",
    "baslangic_tarihi": "2026-11-09",
    "kpss_gerekli": true,
    "iller": [
@@ -5175,12 +5023,12 @@
     "Yozgat"
    ],
    "ortak_kosullar": [
-    "2025 veya 2026 KPSS'den ilgili puan türünden uzmanlarda en az 80, destek personelinde en az 70 puan almış olmak.",
-    "Başvuru yalnız e-Devlet Kariyer Kapısı üzerinden yapılır.",
-    "Sözlü sınava hak kazananlar 15/12/2026'da www.oran.org.tr'de ilan edilecek; sınav tarihi sonra duyurulacak.",
-    "Kayseri, Sivas ve Yozgat'ta Ajansın uygun göreceği yerde çalışmayı kabul etmek."
+    "2025 veya 2026 KPSS puanı gerekir (uzman en az 80, destek personeli en az 70).",
+    "Başvuru e-Devlet üzerinden Kariyer Kapısı'ndan yapılır.",
+    "Sözlü sınav; sınava katılacaklar 15 Aralık 2026'da oran.org.tr'de ilan edilir.",
+    "Kayseri, Sivas ve Yozgat'ta Ajans'ın uygun göreceği yerde çalışmayı kabul etmek."
    ],
-   "ozet": "Orta Anadolu Kalkınma Ajansı 6 uzman ve 1 destek personeli (büro görevlisi) alacak. Başvurular 9 Kasım–3 Aralık 2026'da Kariyer Kapısı'ndan yapılır.",
+   "ozet": "Orta Anadolu Kalkınma Ajansı 6 uzman ve 1 destek personeli (büro görevlisi) alacak. Başvurular 9 Kasım–3 Aralık 2026 arasında Kariyer Kapısı'ndan yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -5189,9 +5037,8 @@
     "lisans"
    ],
    "puan_turleri": [
-    "P1, P2, P3",
-    "P1, P2, P3, P11-P48 (ilanda sayılan türler)",
-    "P11-P48 (ilanda sayılan türler)"
+    "P1/P2/P3",
+    "P1/P2/P3 ve P11-P48"
    ]
   }
  },
@@ -5257,11 +5104,11 @@
   }
  },
  "sbb-d0483ec79d771512966ed174": {
-  "zaman": "2026-10-31T03:13:45+03:00",
+  "zaman": "2026-10-31T15:19:10+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "a6e6fa7159b4fdb0",
+  "imza": "a7b523a4cf0982db",
   "baslik": "STRATEJİ VE BÜTÇE BAŞKANLIĞI - 7 SÖZLEŞMELİ BİLİŞİM PERSONELİ ALACAK",
   "farklar": [],
   "yz": {
@@ -5269,42 +5116,39 @@
     {
      "unvan": "Yazılım Geliştirme Uzmanı (I. Grup)",
      "adet": 2,
+     "kosullar": [
+      "En az 3 yıl büyük ölçekli bilgi işlemde yazılım geliştirme tecrübesini belgelemek.",
+      "En az 3 yıl .NET Framework/.NET Core kurumsal yazılım geliştirme tecrübesini belgelemek.",
+      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak."
+     ],
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": null,
-     "il": "Ankara",
-     "kosullar": [
-      "Bilgisayar, yazılım, elektrik, elektronik veya endüstri mühendisliği (veya ilanda sayılan diğer mühendislik/fen-edebiyat bölümleri) mezunu olmak.",
-      "En az 3.000 kullanıcılı uygulamaların geliştirildiği büyük ölçekli birimlerde en az 3 yıl yazılım tecrübesini belgelemek.",
-      ".NET Framework/.NET Core ile en az 3 yıl kurumsal yazılım geliştirme tecrübesini belgelemek."
-     ]
+     "il": "Ankara"
     },
     {
      "unvan": "Kıdemli Yazılım Geliştirme Uzmanı (II. Grup)",
      "adet": 4,
+     "kosullar": [
+      "En az 5 yıl büyük ölçekli bilgi işlemde yazılım geliştirme tecrübesini belgelemek.",
+      "En az 5 yıl .NET Framework/.NET Core kurumsal yazılım geliştirme tecrübesini belgelemek.",
+      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak."
+     ],
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": null,
-     "il": "Ankara",
-     "kosullar": [
-      "Bilgisayar, yazılım, elektrik, elektronik veya endüstri mühendisliği lisans bölümlerinden mezun olmak.",
-      "En az 5.000 kullanıcılı uygulamaların geliştirildiği büyük ölçekli birimlerde en az 5 yıl yazılım tecrübesini belgelemek.",
-      ".NET Framework/.NET Core ile en az 5 yıl kurumsal yazılım geliştirme tecrübesini belgelemek.",
-      "REST, SOAP, WCF tabanlı kurumsal entegrasyon tecrübesini belgelemek."
-     ]
+     "il": "Ankara"
     },
     {
      "unvan": "Kıdemli Sistem ve Güvenlik Uzmanı (III. Grup)",
      "adet": 1,
+     "kosullar": [
+      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak."
+     ],
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": null,
-     "il": "Ankara",
-     "kosullar": [
-      "Bilgisayar, yazılım, elektrik, elektronik veya endüstri mühendisliği lisans bölümlerinden mezun olmak.",
-      "Sistem yönetimi, ağ yönetimi veya bilgi güvenliğinde en az 5 yıl tecrübeyi belgelemek.",
-      "Linux ve Windows Server sistemlerinin kurulum, yönetim ve güvenlik sıkılaştırma tecrübesini belgelemek."
-     ]
+     "il": "Ankara"
     }
    ],
    "toplam": 7,
@@ -5316,11 +5160,12 @@
     "Ankara"
    ],
    "ortak_kosullar": [
-    "Başvuru puanı: KPSS P3'ün %70'i + YDS puanının %30'u; ilk 10 katı aday sözlü/uygulamalı sınava çağrılır.",
-    "Başvuru yalnız www.sbb.gov.tr üzerinden; elden veya posta başvurusu kabul edilmez. Adaylar yalnız bir pozisyona başvurabilir.",
-    "Sözlü/uygulamalı sınav 23/11/2026'da başlayacak."
+    "Başvuru puanı: KPSS P3 x 0,70 + yabancı dil x 0,30; kadro sayısının 10 katı aday sınava çağrılır.",
+    "Başvuru yalnız Başkanlığın internet sitesi (sbb.gov.tr) üzerinden yapılır; elden veya posta ile kabul edilmez.",
+    "Sözlü/uygulamalı sınav 23 Kasım 2026'da Ankara'da başlar.",
+    "Adaylar yalnızca bir pozisyona başvurabilir."
    ],
-   "ozet": "Strateji ve Bütçe Başkanlığı 2 yazılım geliştirme uzmanı, 4 kıdemli yazılım geliştirme uzmanı ve 1 kıdemli sistem ve güvenlik uzmanı olmak üzere 7 sözleşmeli bilişim personeli alacak. Başvurular 22 Ekim–5 Kasım 2026 saat 18:00'e kadar sbb.gov.tr'den yapılır.",
+   "ozet": "Strateji ve Bütçe Başkanlığı 7 sözleşmeli bilişim personeli alacak. Başvurular 22 Ekim–5 Kasım 2026 (18:00) arasında sbb.gov.tr üzerinden yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -5381,11 +5226,11 @@
   }
  },
  "sbb-df22de83b55afe5d5d95edea": {
-  "zaman": "2026-10-31T03:13:45+03:00",
+  "zaman": "2026-10-31T15:19:10+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "35e0ef1327c3673f",
+  "imza": "1a951e90bc79c11b",
   "baslik": "SAĞLIK BAKANLIĞI - 2026 YILI 3. DÖNEM İLK DEFA VE YENİDEN ATAMA KURASI",
   "farklar": [
    [
@@ -5396,7 +5241,62 @@
    ]
   ],
   "yz": {
-   "kadrolar": [],
+   "kadrolar": [
+    {
+     "unvan": "Uzman Tabip",
+     "adet": null,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "il": null,
+     "kosullar": []
+    },
+    {
+     "unvan": "Tabip",
+     "adet": null,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "il": null,
+     "kosullar": []
+    },
+    {
+     "unvan": "Uzman Diş Tabibi",
+     "adet": null,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "il": null,
+     "kosullar": []
+    },
+    {
+     "unvan": "Diş Tabibi",
+     "adet": null,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "il": null,
+     "kosullar": []
+    },
+    {
+     "unvan": "Uzman Eczacı",
+     "adet": null,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "il": null,
+     "kosullar": []
+    },
+    {
+     "unvan": "Eczacı",
+     "adet": null,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "il": null,
+     "kosullar": []
+    }
+   ],
    "toplam": null,
    "son_basvuru_tarihi": "2026-11-05",
    "son_basvuru_saati": "18:00",
@@ -5404,118 +5304,119 @@
    "kpss_gerekli": false,
    "iller": [],
    "ortak_kosullar": [
-    "Başvuru yalnız EKİP (ekip.saglik.gov.tr) üzerinden yapılır; en fazla 10 tercih yapılabilir.",
-    "Kura 26 Kasım 2026'da noter huzurunda yapılacak; yer ve saat yhgm.saglik.gov.tr'de ilan edilecek.",
-    "Atamaya esas evrakın son teslim günü 11 Aralık 2026 saat 18:00."
+    "Başvuru EKİP (ekip.saglik.gov.tr) üzerinden yapılır; en fazla 10 tercih yapılabilir.",
+    "Diploma veya uzmanlık belgesi Sağlık Bakanlığı'nca tescilli olmalıdır.",
+    "Kura 26 Kasım 2026'da noter huzurunda yapılır; atamaya esas evraklar 11 Aralık 2026 saat 18.00'e kadar teslim edilir."
    ],
-   "ozet": "Sağlık Bakanlığı 2026 3. dönem kurasıyla uzman tabip, tabip, uzman diş tabibi, diş tabibi, uzman eczacı ve eczacı atayacak; münhal sayısı ilanda yok. Başvurular 30 Ekim–5 Kasım 2026'da EKİP'ten yapılır.",
-   "okunabilirlik": "kotu",
+   "ozet": "Sağlık Bakanlığı 2026 3. dönem ilk defa ve yeniden atama kurasıyla uzman tabip, tabip, diş tabibi ve eczacı atayacak. Başvurular 30 Ekim–5 Kasım 2026 arasında EKİP'ten yapılır.",
+   "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
-   "duyuru_tipi": "yeni_ilan"
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": []
   }
  },
  "sbb-e522c30465d0421cf5462b88": {
-  "zaman": "2026-10-31T03:13:45+03:00",
+  "zaman": "2026-10-31T15:19:10+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "7bf6b5cea1483d2b",
+  "imza": "b3fd550cd8f4007c",
   "baslik": "NÜKLEER DÜZENLEME KURUMU - 8 SÖZLEŞMELİ BİLİŞİM PERSONELİ ALACAK",
   "farklar": [],
   "yz": {
    "kadrolar": [
     {
-     "unvan": "Yazılım Mimarı",
+     "unvan": "Yazılım Mimarı (Sözleşmeli Bilişim Personeli)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": null,
      "il": "Ankara",
      "kosullar": [
-      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak.",
-      "Kurumsal yazılım mimarisinde en az 8 yıl tecrübeyi belgelemek.",
-      "Angular ve .NET/C# ile uçtan uca yazılım geliştirme deneyimine sahip olmak."
+      "Kurumsal yazılım mimarisi alanında en az 8 yıl belgeli tecrübe sahibi olmak.",
+      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak."
      ]
     },
     {
-     "unvan": "Kıdemli Veri Tabanı Uzmanı",
+     "unvan": "Kıdemli Yazılım Uzmanı (Sözleşmeli Bilişim Personeli)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": null,
      "il": "Ankara",
      "kosullar": [
-      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak.",
-      "Veri tabanı uzmanı, iş zekâsı uzmanı veya veri mühendisi olarak en az 5 yıl tecrübeyi belgelemek."
+      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak."
      ]
     },
     {
-     "unvan": "Sistem Uzmanı",
+     "unvan": "Sistem Uzmanı (Sözleşmeli Bilişim Personeli)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": null,
      "il": "Ankara",
      "kosullar": [
-      "Active Directory, Windows Server, Linux sistem yönetiminde en az 3 yıl tecrübeyi belgelemek."
+      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak."
      ]
     },
     {
-     "unvan": "Kıdemli Yazılım Uzmanı",
+     "unvan": "Kıdemli Veri Tabanı Uzmanı (Sözleşmeli Bilişim Personeli)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": null,
      "il": "Ankara",
      "kosullar": [
-      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak.",
-      "Kurumsal yazılım mimarisi ve uygulama altyapılarında en az 5 yıl tecrübeyi belgelemek."
+      "Veri tabanı/iş zekâsı/veri mühendisi olarak en az 5 yıl belgeli tecrübe sahibi olmak.",
+      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak."
      ]
     },
     {
-     "unvan": "Ağ Uzmanı",
+     "unvan": "Ağ Uzmanı (Sözleşmeli Bilişim Personeli)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": null,
      "il": "Ankara",
      "kosullar": [
-      "Ağ alanında en az 3 yıl deneyim sahibi olmak ve belgelemek."
+      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak."
      ]
     },
     {
-     "unvan": "Kıdemli Siber Güvenlik Uzmanı",
+     "unvan": "Kıdemli Siber Güvenlik Uzmanı (Sözleşmeli Bilişim Personeli)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": null,
      "il": "Ankara",
      "kosullar": [
-      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak.",
-      "Siber güvenlik sistemleri yönetimi ve operasyonlarında en az 5 yıl tecrübeyi belgelemek."
+      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak."
      ]
     },
     {
-     "unvan": "Yazılım Uzmanı",
+     "unvan": "Yazılım Uzmanı (Sözleşmeli Bilişim Personeli)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": null,
      "il": "Ankara",
      "kosullar": [
-      "Yazılım geliştirmede en az 3 yıl tecrübeyi belgelemek."
+      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak."
      ]
     },
     {
-     "unvan": "Proje Yöneticisi",
+     "unvan": "Proje Yöneticisi (Sözleşmeli Bilişim Personeli)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": null,
      "il": "Ankara",
      "kosullar": [
-      "Bilgi işlem veya kurumsal projelerde proje yönetiminde en az 3 yıl tecrübeyi belgelemek."
+      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak."
      ]
     }
    ],
@@ -5528,11 +5429,12 @@
     "Ankara"
    ],
    "ortak_kosullar": [
-    "Başvuru puanı: 2025/2026 KPSS P3 × 0,70 + YDS/e-YDS × 0,30; adaylar yalnız bir pozisyona başvurabilir.",
-    "Başvuru yalnız e-Devlet Kariyer Kapısı üzerinden yapılır.",
-    "Sözlü/uygulamalı sınav 7–11 Aralık 2026'da Nükleer Düzenleme Kurumunda (Çankaya/Ankara)."
+    "2025 veya 2026 KPSS P3 puanı ve İngilizce YDS/e-YDS puanı esas alınır; her pozisyon için 10 aday sözlü/uygulamalı sınava çağrılır.",
+    "Başvuru Kariyer Kapısı (e-Devlet) üzerinden yapılır; posta veya şahsen başvuru kabul edilmez.",
+    "Sözlü/uygulamalı sınav 7-11 Aralık 2026'da Ankara'da yapılır.",
+    "Adaylar yalnızca bir pozisyona başvurabilir."
    ],
-   "ozet": "Nükleer Düzenleme Kurumu 8 sözleşmeli bilişim personeli alacak (yazılım mimarı, veri tabanı, sistem, ağ, siber güvenlik, yazılım ve proje yöneticisi). Başvurular 9–23 Kasım 2026'da Kariyer Kapısı'ndan yapılır.",
+   "ozet": "Nükleer Düzenleme Kurumu 8 sözleşmeli bilişim personeli alacak. Başvurular 9-23 Kasım 2026'da Kariyer Kapısı üzerinden yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
