@@ -263,7 +263,8 @@ def read_sbb(previous):
         if len(older)==1:
             row['id']=older[0]['id']
         cached=cache.get(row['id'])
-        if cached and fresh(cached) and cached.get('sbb_detay_surumu')==VERSION and cached.get('belge_kopyasi'):
+        # Uyumsuz belgeli satır önbellekten verilmez: eski alanları bir sonraki taramada temizlensin, SBB belgeyi düzeltirse görülsün.
+        if cached and fresh(cached) and cached.get('sbb_detay_surumu')==VERSION and cached.get('belge_kopyasi') and not cached.get('belge_uyumsuz'):
             cached=dict(cached)
             if cached.get('kaynak_turu')=='sbb':
                 cached.update(link=SBB,kaynaklar=[{'ad':'SBB Kamu İlan','link':SBB}])
