@@ -1,0 +1,59 @@
+name: Sosyal medyada özel paylaşım
+
+# Hazır bir videoyu (ör. katiplik tanıtımı) Instagram/YouTube/TikTok'a bir kez gönderir; günlük sosyal.yml'e dokunmaz.
+# Tanım: sosyal/ozel/<ad>.json -> {"video": "paylasim/x.mp4", "baslik": "...", "aciklama": "...", "etiketler": [...]}
+on:
+  workflow_dispatch:
+    inputs:
+      tanim:
+        description: "sosyal/ozel/ altındaki JSON tanımı"
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sosyal
+  cancel-in-progress: false
+
+jobs:
+  paylas:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install Pillow==11.3.0 beautifulsoup4==4.13.5 pypdf==6.0.0 pdfplumber==0.11.7
+      - name: Hazırla
+        id: h
+        env:
+          TANIM: ${{ inputs.tanim }}
+        run: |
+          mkdir sosyal-cikti
+          python -c "import json,os,shutil;d=json.load(open(os.environ['TANIM'],encoding='utf-8'));shutil.copy(d['video'],'sosyal-cikti/reel.mp4');json.dump(d,open('sosyal-cikti/paylasim.json','w',encoding='utf-8'),ensure_ascii=False)"
+          echo "etiket=sosyal-$(TZ=Europe/Istanbul date +%Y%m%d)-$(basename "$TANIM" .json)" >> "$GITHUB_OUTPUT"
+      - name: Önizleme sürümü
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ETIKET: ${{ steps.h.outputs.etiket }}
+        run: |
+          python -c "import json;d=json.load(open('sosyal-cikti/paylasim.json',encoding='utf-8'));open('notlar.md','w',encoding='utf-8').write(d['baslik']+'\n\n'+d['aciklama'])"
+          gh release delete "$ETIKET" --yes --cleanup-tag 2>/dev/null || true
+          gh release create "$ETIKET" sosyal-cikti/* --title "$ETIKET" --notes-file notlar.md --prerelease
+      - name: Yayınla
+        env:
+          IG_KULLANICI_ID: ${{ secrets.IG_KULLANICI_ID }}
+          IG_ERISIM_ANAHTARI: ${{ secrets.IG_ERISIM_ANAHTARI }}
+          YT_ISTEMCI_KIMLIGI: ${{ secrets.YT_ISTEMCI_KIMLIGI }}
+          YT_ISTEMCI_SIRRI: ${{ secrets.YT_ISTEMCI_SIRRI }}
+          YT_YENILEME_ANAHTARI: ${{ secrets.YT_YENILEME_ANAHTARI }}
+          YT_KANAL: ${{ vars.YT_KANAL }}
+          SOSYAL_KAPALI: ${{ vars.SOSYAL_KAPALI }}
+          TT_ISTEMCI_ANAHTARI: ${{ secrets.TT_ISTEMCI_ANAHTARI }}
+          TT_ISTEMCI_SIRRI: ${{ secrets.TT_ISTEMCI_SIRRI }}
+          TT_YENILEME_ANAHTARI: ${{ secrets.TT_YENILEME_ANAHTARI }}
+          TT_MOD: ${{ vars.TT_MOD }}
+          SOSYAL_GH_ANAHTARI: ${{ secrets.SOSYAL_GH_ANAHTARI }}
+          VIDEO_URL: https://github.com/${{ github.repository }}/releases/download/${{ steps.h.outputs.etiket }}/reel.mp4
+        run: python bot/sosyal_yayinla.py sosyal-cikti
