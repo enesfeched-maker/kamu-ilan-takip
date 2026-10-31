@@ -299,3 +299,17 @@ class SbbBelgeUyumuTesti(unittest.TestCase):
 
     def test_tarihsiz_belge_uyumsuz_sayilmaz(self):
         self.assertFalse(ek.belge_uyumsuz('Başvurular 15 gün içinde yapılır.', '( 28 Ekim - 8 Kasım)'))
+
+    def test_uyumsuz_belgenin_eski_alanlari_birlesmede_silinir(self):
+        # 31 Ekim 2026: Milli Saraylar '3 MEMUR' satırında 158 kişilik ilanın şartları ve PDF bağlantısı eski kayıttan geri geliyordu.
+        eski = {'id': 'sbb-1', 'kurum': 'Milli Saraylar İdaresi Başkanlığı', 'kaynak_turu': 'sbb', 'kadro': '3 MEMUR ALACAK',
+                'sartlar': [{'kadro': 'x', 'metin': '1.Grup: Büro Personeli'}], 'ozet': 'Eski özet.',
+                'belge_kopyasi': 'https://kpsstercihi.com/belgeler/sbb/' + 'a' * 64 + '.pdf', 'belge_sha256': 'a' * 64,
+                'ilk_gorulme': '2026-10-28T11:06:07+03:00'}
+        yeni = {'id': 'sbb-1', 'kurum': eski['kurum'], 'kaynak_turu': 'sbb', 'kadro': '3 MEMUR ALACAK',
+                'son_tarih': '2026-11-08', 'belge_uyumsuz': True}
+        birlesik = ek.merge_sources([yeni], {'sbb-1': eski})[0]
+        for alan in ('sartlar', 'ozet', 'belge_kopyasi', 'belge_sha256'):
+            self.assertNotIn(alan, birlesik)
+        self.assertEqual(birlesik['kadro'], '3 MEMUR ALACAK')
+        self.assertEqual(ek.merge_sources([dict(yeni, belge_uyumsuz=False)], {'sbb-1': eski})[0]['ozet'], 'Eski özet.')

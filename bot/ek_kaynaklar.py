@@ -203,6 +203,12 @@ def pdf_dates(text, range_text):
     return result
 
 
+# Uyumsuz belgeden gelen alanlar. 31 Ekim 2026: belge bağlantısı da alınmaz (site yanlış PDF'i göstermesin, yapay zekâ onu
+# okumasın); merge_sources eski kayıtta kalmış bu alanları da siler.
+UYUMSUZ_BELGE_ALANLARI = ('kadro','sartlar','ozet','kadro_detay','basvuru_notu','puan_turleri','belge_ogrenim','ogrenim','kpss',
+                          'belge_kopyasi','belge_sha256','belge_aciklamasi')
+
+
 def belge_uyumsuz(text, range_text):
     """SBB satırına başka (eski) ilanın PDF'i bağlanmış mı? Belge açık tarihler veriyor ama listedeki dönemin ne başlangıcı ne
     bitişi bunların arasında: 28 Ekim 2026 Milli Saraylar satırına 12–22 Ekim'deki 158 kişilik ilanın PDF'i bağlıydı."""
@@ -287,7 +293,7 @@ def read_sbb(previous):
             ozet_alanlari=summarize(data,row)
             if belge_uyumsuz(text,row['donem']):
                 # Yanlış belgeden okunan kadro/şart sitede yanıltır; Kariyer Kapısı kopyası varsa koşullar oradan gelir.
-                for alan in ('kadro','sartlar','ozet','kadro_detay','basvuru_notu','puan_turleri','belge_ogrenim','ogrenim','kpss'):
+                for alan in UYUMSUZ_BELGE_ALANLARI:
                     ozet_alanlari.pop(alan,None)
                 ozet_alanlari['belge_uyumsuz']=True
                 print(f'SBB belgesi listedeki döneme uymuyor, koşulları alınmadı: {row["kurum"]} {row["donem"]}',flush=True)
@@ -483,6 +489,10 @@ def merge_sources(records, previous):
         ident=chosen['id']
         if ident==item['id']:
             merged={**chosen,**item}
+            if item.get('belge_uyumsuz'):   # yanlış belgeden önceki taramada okunmuş alanlar kalmasın
+                for alan in UYUMSUZ_BELGE_ALANLARI:
+                    if alan not in item:
+                        merged.pop(alan,None)
         else:
             merged={**result.get(ident,chosen)}
         prior=result.get(ident,{})
