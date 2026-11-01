@@ -37,14 +37,19 @@ class AdsenseDegerTest(unittest.TestCase):
         self.assertIn('<h1>İletişim</h1>', html)
         self.assertIn('Duyurular için kanalımız: @kpsstercihi', html)
         self.assertIn('Hatalı ilan bildirirken', html)
-        self.assertNotIn('mailto:', html)   # ILETISIM_EPOSTA boşken e-posta bölümü yok
+        self.assertIn('<a class="yazi-link" href="mailto:iletisim@kpsstercihi.com">iletisim@kpsstercihi.com</a>', html)
         eski = bilgi_sayfalari.ILETISIM_EPOSTA
-        bilgi_sayfalari.ILETISIM_EPOSTA = 'a@b.com'
+        bilgi_sayfalari.ILETISIM_EPOSTA = ''
         try:
             _, html = bilgi_sayfalari.sayfa('iletisim', BASE)
         finally:
             bilgi_sayfalari.ILETISIM_EPOSTA = eski
-        self.assertIn('<a class="yazi-link" href="mailto:a@b.com">a@b.com</a>', html)
+        self.assertNotIn('mailto:', html)   # ILETISIM_EPOSTA boşken e-posta bölümü yok
+
+    def test_gizlilik_ve_kosullar_e_postayi_gosterir(self):
+        for ad in ('gizlilik', 'kullanim-kosullari'):
+            _, html = bilgi_sayfalari.sayfa(ad, BASE)
+            self.assertIn('iletisim@kpsstercihi.com adresine yazabilirsin', html)
 
     def test_hakkimizda_yeni_bolumler(self):
         _, html = bilgi_sayfalari.sayfa('hakkimizda', BASE)
