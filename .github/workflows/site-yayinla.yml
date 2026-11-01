@@ -18,6 +18,8 @@ on:
       - 'docs/manifest.webmanifest'
       - 'bot/liste_verisi.py'
       - 'bot/site_uret.py'
+      - 'bot/statik_icerik.py'
+      - 'bot/analiz_sayfalari.py'
       - 'bot/kurum_sayfasi.py'
       - 'bot/kart_tasarimlari.py'
       - 'bot/kurum_gorseli.py'

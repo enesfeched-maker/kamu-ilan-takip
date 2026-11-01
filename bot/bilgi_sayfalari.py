@@ -3,6 +3,7 @@ Ana sayfadaki '#bilgi/...' görünümleri JavaScript ile açılır; Google ve Ad
 Metin docs/portal.js 'bilgi/gizlilik' ve 'bilgi/hakkimizda' ile aynı tutulur."""
 
 ILETISIM = 'https://t.me/kpsstercihi'
+ILETISIM_EPOSTA = ''   # doldurulursa /iletisim/ sayfasında E-posta bölümü çıkar
 
 SAYFALAR = {
     'gizlilik': ('Gizlilik politikası', 'KPSS Tercihi gizlilik politikası: tarayıcıda saklanan bilgiler, çerezsiz ziyaret istatistikleri ve Google AdSense reklamları.',
@@ -45,19 +46,37 @@ SAYFALAR = {
          'kontenjan ve koşullar kaynağın sunduğu bilgilerle sınırlıdır.'),
         ('Ne sunuyoruz?', 'Açık ilanlar tek listede, son başvuru tarihine göre; kurum sayfaları, KPSS taban puanları ve tercih robotu. Yeni ilanlar '
          'Telegram kanalımızda (@kpsstercihi) da paylaşılır.'),
+        ('Neden kuruldu?', "Kamu ilanları Kariyer Kapısı, İŞKUR, Kamu İlan ve Yerel Yönetimler gibi ayrı kaynaklarda, çoğu zaman uzun PDF belgeleri içinde yayımlanıyor. KPSS Tercihi bu ilanları tek listede toplar; kadroları ve koşulları okunur hâle getirir, ÖSYM'nin geçmiş yerleştirme verileriyle birlikte sunar."),
+        ('İlanları nasıl hazırlıyoruz?', 'Kaynaklar gün içinde düzenli olarak taranır. İlan belgeleri otomatik araçlarla ve yapay zekâ desteğiyle okunur; kadro, koşul ve tarih bilgileri belgeyle karşılaştırılır. Aynı ilanın farklı kaynaklardaki kopyaları birleştirilir. Okunamayan ya da belirsiz bilgi tahmin edilmez, resmî belgeye yönlendirilir.'),
+        ('Düzeltme ve iptaller', 'Bir ilan için iptal ya da düzeltme duyurusu yayımlandığında bu bilgi ilan sayfasına işlenir. Hatalı bir bilgi fark edersen iletişim sayfasından bildirebilirsin; kontrol edip düzeltiriz.'),
+        ('Puan verileri ve analizler', "Taban puanları, tercih robotu ve analiz sayfaları ÖSYM'nin yayımladığı 2022–2026 KPSS yerleştirme sayısal bilgilerinden hesaplanır. Geçmiş sonuçları gösterir, gelecek için garanti değildir."),
         ('Resmî bir hizmet mi?', 'Hayır. Herhangi bir kamu kurumuna bağlı değiliz. Başvuru kabul etmeyiz, aday uygunluğu değerlendirmeyiz. Güncel ve '
          'bağlayıcı bilgi için resmî ilanı esas al.'),
-        ('İletişim', 'Hatalı bir ilan, öneri ya da iş birliği için Telegram kanalımız (@kpsstercihi) üzerinden ulaşabilirsin.'),
+        ('İletişim', 'Hatalı bir ilan, öneri ya da iş birliği için iletişim sayfamızdan bize ulaşabilirsin.', '<a class="yazi-link" href="../iletisim/">İletişim sayfası →</a>'),
     ]),
 }
+
+
+def _iletisim_bolumleri():
+    bolumler = [('Telegram', 'Duyurular için kanalımız: @kpsstercihi')]
+    if ILETISIM_EPOSTA:
+        bolumler.append(('E-posta', ILETISIM_EPOSTA, f'<a class="yazi-link" href="mailto:{ILETISIM_EPOSTA}">{ILETISIM_EPOSTA}</a>'))
+    bolumler.append(('Hatalı ilan bildirirken', 'İlanın bağlantısını ve hatalı gördüğün bilgiyi yazman yeterli.'))
+    return bolumler
+
+
+def _sayfalar():
+    """Sabit sayfalar + İletişim (e-posta sabitine göre bölümleri değişir)."""
+    return dict(SAYFALAR, iletisim=('İletişim', 'KPSS Tercihi iletişim: hatalı ilan bildirimi, öneri ve iş birliği.',
+                                    'Hatalı ilan bildirimi, öneri ya da iş birliği için bize ulaşabilirsin.', _iletisim_bolumleri()))
 
 
 def sayfa(ad, base):
     """(adres, html) — SSS sayfasıyla aynı kabuk."""
     import site_uret as su
-    baslik, aciklama, giris, bolumler = SAYFALAR[ad]
+    baslik, aciklama, giris, bolumler = _sayfalar()[ad]
     canonical = base + ad + '/'
-    maddeler = ''.join(f'<section class="bolum"><h2>{su.esc(b)}</h2><p>{su.esc(m)}</p></section>' for b, m in bolumler)
+    maddeler = ''.join(f'<section class="bolum"><h2>{su.esc(b[0])}</h2><p>{su.esc(b[1])}</p>{b[2] if len(b) > 2 else ""}</section>' for b in bolumler)
     maddeler += f'<p><a class="yazi-link" href="{ILETISIM}" target="_blank" rel="noopener">Telegram ↗</a></p>'
     html = (su.sayfa_basi(f'{baslik} — KPSS Tercihi', aciklama, su.esc(canonical), '../',
                           ek_head=f'<meta property="og:url" content="{su.esc(canonical)}">')
@@ -71,7 +90,7 @@ def sayfa(ad, base):
 def yaz(docs, base):
     """Sayfaları yazar; site haritası için adresleri döner."""
     adresler = []
-    for ad in SAYFALAR:
+    for ad in _sayfalar():
         adres, html = sayfa(ad, base)
         (docs / ad).mkdir(exist_ok=True)
         (docs / ad / 'index.html').write_text(html, encoding='utf-8')

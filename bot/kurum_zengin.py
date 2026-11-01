@@ -1,7 +1,7 @@
 """Kurum sayfalarına siteye özgü içerik (19 Ekim 2026, AdSense 'düşük değerli içerik' reddi sonrası):
   - KPSS merkezi yerleştirme geçmişi: ÖSYM sayısal bilgilerinde bu kurumun kadroları ve en küçük puanları (docs/puanlar),
   - takip özeti: sitenin bu kurumdan derlediği ilan sayısı, ilk görülme ve en sık kadrolar.
-Ne açık ilanı ne yerleştirme geçmişi olan kurum sayfası arama dizinine girmez (dizinlenir=False)."""
+Yerleştirme geçmişi olmayan kurum sayfası arama dizinine girmez (kurum_sayfasi.kurum_dizinlenir)."""
 import json
 from collections import Counter
 from datetime import datetime

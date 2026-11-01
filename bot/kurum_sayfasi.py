@@ -39,6 +39,7 @@ def kurum_adi(k):
     s = _su()._duzgun(k)
     for kis in re.findall(r'\(([A-ZÇĞİÖŞÜ0-9]{2,8})\)', k or ''):
         s = re.sub(r'\(' + re.escape(_su()._duzgun(kis)) + r'\)', f'({kis})', s)
+    s = re.sub(r'^T\.c\.\s*(\S)', lambda m: 'T.C. ' + ('İ' if m.group(1) == 'i' else m.group(1).upper()), s)   # "T.c.devlet" -> "T.C. Devlet"
     return re.sub(r'\bA\.[sş]\.?(?=\s|$)', 'A.Ş.', s)   # "A.ş" -> "A.Ş." (anonim şirket eki)
 
 
@@ -525,11 +526,11 @@ def kurum_sayfasi(kan, liste, slug, gorseller, simdi, tablolar=None, harita=None
                        + '</tbody></table></div><p class="kp-note">Düzeltme/iptal duyuruları ile sona eren ilanlar arşiv amacıyla gösterilir. Güncel bilgi için resmî kaynağı esas al.</p></section>')
     kadro_yazi = SAYI_YAZ(toplam_kadro) if toplam_kadro else '—'
     zengin, ek_head = '', ''
-    try:   # siteye özgü içerik: KPSS yerleştirme geçmişi + takip özeti; ikisi de yoksa ve açık ilan yoksa sayfa dizinlenmez
+    try:   # siteye özgü içerik: KPSS yerleştirme geçmişi + takip özeti; yerleştirme geçmişi yoksa sayfa dizinlenmez
         import kurum_zengin
         docs = su.ROOT / 'docs'
         zengin = kurum_zengin.takip_ozeti_html(ad, tum) + kurum_zengin.yerlestirme_html(kan, docs)
-        if not kurum_dizinlenir(kan, liste, simdi, docs):
+        if not kurum_dizinlenir(kan, docs):
             ek_head = '<meta name="robots" content="noindex,follow">'
     except Exception as hata:
         print(f'Uyarı: kurum sayfası ek içeriği üretilemedi ({slug}): {hata}')
@@ -541,12 +542,52 @@ def kurum_sayfasi(kan, liste, slug, gorseller, simdi, tablolar=None, harita=None
     return su.sayfa_kabugu(baslik + ' | KPSS Tercihi', aciklama, canonical, icerik, 'kurum-page', baslik, ek_head)
 
 
-def kurum_dizinlenir(kan, liste, simdi, docs):
-    """Arama dizinine yalnız açık ilanı ya da KPSS yerleştirme geçmişi olan kurum sayfası girer."""
-    if any(durum(i, simdi)[1] in ACIK for i in liste if not i.get('duyuru_turu')):
-        return True
+def kurum_dizinlenir(kan, docs):
+    """Arama dizinine yalnız KPSS yerleştirme geçmişi olan kurum sayfası girer (1 Kasım 2026, ikinci AdSense reddi):
+    tek ilanlı kurum sayfası ilan sayfasının kısa tekrarıdır; sayfa açık kalır, ilan sayfası dizinde kalır."""
     import kurum_zengin
     return bool(kurum_zengin.yerlestirmeler(kan, docs))
+
+
+TR_ALFABE = 'abcçdefgğhıijklmnoöprsştuüvyz'
+
+
+def _tr_sira(s):
+    """Türkçe alfabe sırası anahtarı (alfabede olmayan karakterler sona)."""
+    k = kucuk(s)
+    return [TR_ALFABE.find(c) if c in TR_ALFABE else 99 for c in k]
+
+
+def kurum_hub_sayfasi(girdiler, simdi=None):
+    """/kurum/ — dizinlenen kurum sayfalarının A-Z listesi. girdiler: [(ad, slug, açık ilan sayısı, toplam kayıt)].
+    Sayılar verilerden gelir; (canonical, html) döner, liste boşsa None."""
+    if not girdiler:
+        return None
+    su = _su()
+    simdi = (simdi or datetime.now(TR)).astimezone(TR)
+    kok = '../'
+    gruplar = {}
+    for ad, slug, acik, toplam in sorted(girdiler, key=lambda g: _tr_sira(g[0])):
+        harf = ad.strip()[:1]
+        harf = 'İ' if harf == 'i' else harf.upper() if harf != 'ı' else 'I'
+        gruplar.setdefault(harf if harf.isalpha() else '#', []).append((ad, slug, acik, toplam))
+    toplam_acik = sum(g[2] for g in girdiler)
+    bolumler = ''
+    for harf in sorted(gruplar, key=lambda h: _tr_sira(h)):
+        satirlar = ''.join(
+            f'<li><a href="{esc(slug)}/">{esc(ad)}</a> — ' + (f'{acik} açık ilan' if acik else f'{toplam} kayıt') + '</li>'
+            for ad, slug, acik, toplam in gruplar[harf])
+        bolumler += f'<section class="bolum"><div class="bolum-bas"><h2>{esc(harf)}</h2></div><ul>{satirlar}</ul></section>'
+    baslik = 'Kurumlar: kamu ilanı yayımlayan kurumlar'
+    aciklama = f'{len(girdiler)} kurumun kamu personel alım ilanları ve KPSS yerleştirme geçmişi; şu an {toplam_acik} açık ilan.'
+    giris = (f'{len(girdiler)} kurumun sayfası var; bu kurumlarda şu an {toplam_acik} başvurusu açık ilan bulunuyor. '
+             'Kurum adına tıklayınca ilanlarını ve varsa geçmiş KPSS yerleştirme sonuçlarını görürsün.')
+    canonical = su.BASE + 'kurum/'
+    icerik = (f'<section class="kp-hero"><div class="wrap"><nav class="crumbs" aria-label="Konum"><a href="{kok}">Ana sayfa</a><span aria-hidden="true">/</span><span>Kurumlar</span></nav>'
+              f'<h1>Kurumlar</h1><p>{esc(giris)}</p></div></section><main id="icerik" class="wrap kp-main">{bolumler}</main>')
+    html = (su.sayfa_basi(baslik + ' | KPSS Tercihi', aciklama, esc(canonical), kok, ek_head=f'<meta property="og:url" content="{esc(canonical)}">')
+            + f'<body class="kurum-page"><a class="skip" href="#icerik">İçeriğe geç</a>{su.ust_html(kok)}{icerik}{su.alt_html(kok)}</body></html>')
+    return canonical, html
 
 
 def kurum_sayfalarini_uret(ilanlar, docs, gorseller, simdi=None, kopyalar=None):
@@ -563,7 +604,7 @@ def kurum_sayfalarini_uret(ilanlar, docs, gorseller, simdi=None, kopyalar=None):
         tablolar, harita = liste_verisi.taban_tablolari(docs), liste_verisi.il_haritasi(ilanlar)
     except Exception as hata:
         print(f'Uyarı: kurum sayfaları için taban verisi okunamadı: {hata}')
-    adresler, basarili = [], set()
+    adresler, basarili, hub_girdileri = [], set(), []
     for kan, liste in gruplar.items():
         slug = slugler[kan]
         klasor = kok / slug
@@ -576,10 +617,24 @@ def kurum_sayfalarini_uret(ilanlar, docs, gorseller, simdi=None, kopyalar=None):
             shutil.rmtree(klasor, ignore_errors=True)
             continue
         try:
-            dizin = kurum_dizinlenir(kan, liste, simdi, docs)
+            dizin = kurum_dizinlenir(kan, su.ROOT / 'docs')   # kurum_sayfasi() ile aynı kaynak: harita ve noindex çelişmesin
         except Exception:
-            dizin = True
+            dizin = False
         if dizin:
             adresler.append(su.BASE + 'kurum/' + slug + '/')
+            try:
+                ad = en_cok_gecen_ad(liste)
+                if '|' in kan and kan.split('|')[1] not in kurum_anahtari(ad).split():
+                    ad += f' ({IL_ADI.get(kan.split("|")[1], kan.split("|")[1])})'
+                acik_sayi = sum(1 for i in liste if not i.get('duyuru_turu') and durum(i, simdi)[1] in ACIK)
+                hub_girdileri.append((ad, slug, acik_sayi, len(liste)))
+            except Exception as hata:
+                print(f'Uyarı: kurum listesine eklenemedi ({slug}): {hata}')
         basarili.add(kan)
-    return gruplar, slugler, adresler, basarili
+    try:
+        hub = kurum_hub_sayfasi(hub_girdileri, simdi)
+        if hub:
+            (kok / 'index.html').write_text(hub[1], encoding='utf-8')
+    except Exception as hata:
+        print(f'Uyarı: kurum listesi sayfası üretilemedi: {hata}')
+    return gruplar, slugler, adresler, basarili   # /kurum/ listesi adreslere girmez: site_uret.main() dosya varsa haritaya ekler

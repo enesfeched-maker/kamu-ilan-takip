@@ -65,6 +65,20 @@ class PuanSayfalariTest(unittest.TestCase):
         self.assertEqual(ps._duzgun('IĞDIR'), 'Iğdır')
         self.assertIn('Z Kurumu', h)
 
+    def test_kadro_cumleleri(self):
+        h = (self.k / 'lisans' / 'hemsire' / 'index.html').read_text(encoding='utf-8')
+        self.assertIn('2026/1 döneminde en küçük puanların medyanı 73,12', h)   # (71,2346 + 75) / 2
+        self.assertIn('2022/1 dönemine göre 1,74 puan yükseldi', h)
+        self.assertNotIn('yerleşildi', h)   # tek il: karşılaştırma cümlesi yok
+        d = {'2025-2': [satir('X', 70.0)], '2026-1': [dict(satir('X', 60.0), il='VAN'), dict(satir('X', 90.0), il='İZMİR'), satir('X', 75.0)]}
+        c = ps.kadro_cumleleri(d)
+        self.assertEqual(len(c), 2)
+        self.assertIn('75,00', c[0])
+        self.assertIn('5,00 puan yükseldi', c[0])
+        self.assertIn('en düşük puanla Van (60,00), en yüksek puanla İzmir (90,00)', c[1])
+        self.assertEqual(ps.kadro_cumleleri({'2026-1': [satir('X', 60.0)]}), [])   # tek dönem, <3 satır
+        self.assertEqual(ps.kadro_cumleleri({'2025-2': [satir('X', None)], '2026-1': [satir('X', 60.0)]}), [])
+
     def test_baslik_hali(self):
         self.assertEqual(ps.baslik_hali('HEMŞİRE YARDIMCISI'), 'Hemşire Yardımcısı')
         self.assertEqual(ps.baslik_hali('İŞÇİ'), 'İşçi')

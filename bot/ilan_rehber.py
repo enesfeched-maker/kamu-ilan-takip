@@ -39,15 +39,15 @@ def tur_bilgisi(item):
     metin = kucuk(' '.join(str(item.get(a) or '') for a in ('baslik', 'kadro', 'ilan_turu', 'kurum')))
     kat = item.get('kategori')
     if kat == 'bilisim' or 'bilişim personeli' in metin:
-        return ('Sözleşmeli bilişim personeli alımlarında sözlü sınava çağrı sıralaması genellikle KPSS P3 puanının %70\'i '
-                'ile yabancı dil puanının %30\'u toplanarak yapılır; mesleki tecrübe süresi ücret tavanını (2, 3 ya da 4 kat) belirler.',
+        return ('Sözleşmeli bilişim personeli alımlarında sınava çağrı sıralaması ilandaki formülle yapılır; formül ve aranan '
+                'mesleki tecrübe, ilandaki ücret katına ve kuruma göre değişir.',
                 'sozlesmeli-bilisim-personeli')
     if 'engelli' in metin:
         return ('Engelli kadrolarında en az %40 engelli olduğunu gösteren sağlık kurulu raporu istenir; memur kadrolarında '
-                'EKPSS puanı, işçi kadrolarında İŞKUR üzerinden başvuru ve kura yaygındır.', 'ekpss-engelli-memur-alimi')
+                'EKPSS puanı kullanılır, işçi kadrolarına başvuru İŞKUR üzerinden yapılır.', 'ekpss-engelli-memur-alimi')
     if kat == 'isci' or 'işçi' in metin:
-        return ('Kamu işçi alımlarında başvuru genellikle İŞKUR üzerinden yapılır; çoğu ilanda KPSS aranmaz, adaylar noter '
-                'kurası ya da sözlü sınavla belirlenir. Kuruma doğrudan yapılan başvurular çoğu zaman geçersiz sayılır.',
+        return ('Kamu işçi alımlarında başvuru genellikle İŞKUR üzerinden yapılır. Önlisans ve lisans düzeyinde KPSS puanı, '
+                'ortaöğretim ve altında noter kurası kullanılır; kesin usul ilan metnindedir.',
                 'kamu-isci-alimi')
     if kat == 'belediye':
         ek = ''
@@ -55,8 +55,8 @@ def tur_bilgisi(item):
             ek = ' İtfaiye eri kadrolarında boy-kilo ölçüleri, yaş sınırı ve sürücü belgesi şartı sık aranır.'
         elif 'zabıta' in metin:
             ek = ' Zabıta memuru kadrolarında boy-kilo ölçüleri ve yaş sınırı sık görülür.'
-        return ('Belediye ilanlarında başvuru çoğunlukla şahsen, posta ya da e-posta ile yapılır; adaylar KPSS puan sırasına '
-                'göre sözlü ya da uygulamalı sınava çağrılır.' + ek, 'belediye-memur-alimi')
+        return ('Belediye ilanlarında başvuru yöntemini ilan belirler. Memur kadrolarında adaylar KPSS puan sırasına göre, '
+                'kadro sayısının en çok beş katı kadar yazılı ve/veya sözlü sınava çağrılır.' + ek, 'belediye-memur-alimi')
     if any(k in metin for k in ('uzman yardımcısı', 'müfettiş yardımcısı', 'denetçi yardımcısı', 'murakıp yardımcısı',
                                 'kariyer meslek')):
         return ('Uzman ve müfettiş yardımcılığı ilanlarında KPSS A grubu puanına göre sınırlı sayıda aday giriş sınavına '
@@ -66,7 +66,7 @@ def tur_bilgisi(item):
         return ('Askerî personel temininde başvurular genellikle ilgili kuvvetin ya da MSB\'nin personel temin sayfasından '
                 'yapılır; ön değerlendirme, sağlık, fiziki yeterlilik ve mülakat aşamaları bulunur.', None)
     if 'sözleşmeli' in metin:
-        return ('Sözleşmeli (4/B) personel alımlarında yerleştirme genellikle KPSS puan sırasıyla ya da sözlü sınavla yapılır; '
+        return ('Sözleşmeli (4/B) personel alımlarında yerleştirme KPSS puan sırasıyla ya da yazılı/sözlü sınavla yapılır; '
                 'hizmet sözleşmesinin koşulları ilan metninde yer alır.', 'sozlesmeli-personel-4b')
     return None, None
 

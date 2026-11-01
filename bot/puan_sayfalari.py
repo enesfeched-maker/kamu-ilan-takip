@@ -43,6 +43,9 @@ def baslik_hali(s):
     out = []
     for w in s.split():
         k = _kucuk(w)
+        if out and k in ('ve', 'ile', 'veya'):
+            out.append(k)
+            continue
         ilk = 'İ' if k[0] == 'i' else k[0].upper()
         out.append(ilk + k[1:])
     return ' '.join(out)
@@ -159,6 +162,30 @@ def _hero(kirinti_html, baslik, giris):
 
 
 # ------------------------------------------------------------------ sayfalar
+def kadro_cumleleri(donemler):
+    """Hesaplanmış kısa tespitler (sabit dolgu yok): son dönem medyanı önceki dönemle, son dönemde en düşük/en yüksek puanlı il.
+    Medyan karşılaştırması için puanı olan en az 2 dönem, il cümlesi için son dönemde il+puan bilen en az 3 satır gerekir."""
+    puanli = sorted((d for d in donemler if _puanlar(donemler[d], 'min')), key=_donem_anahtar)
+    cumleler = []
+    if len(puanli) >= 2:
+        son, onceki = puanli[-1], puanli[-2]
+        a, b = statistics.median(_puanlar(donemler[son], 'min')), statistics.median(_puanlar(donemler[onceki], 'min'))
+        fark = round(a - b, 2)
+        if fark == 0:
+            hareket = 'aynı kaldı'
+        else:
+            hareket = f'{sayi(abs(fark))} puan {"yükseldi" if fark > 0 else "düştü"}'
+        cumleler.append(f'{donem_yaz(son)} döneminde en küçük puanların medyanı {sayi(a)}; {donem_yaz(onceki)} dönemine göre {hareket} ({sayi(b)}).')
+    if puanli:
+        satirlar = [r for r in donemler[puanli[-1]] if isinstance(r.get('min'), (int, float)) and _duzgun(r.get('il'))]
+        if len(satirlar) >= 3:
+            dusuk, yuksek = min(satirlar, key=lambda r: r['min']), max(satirlar, key=lambda r: r['min'])
+            if _duzgun(dusuk['il']) != _duzgun(yuksek['il']):
+                cumleler.append(f'{donem_yaz(puanli[-1])} döneminde en düşük puanla {_duzgun(dusuk["il"])} ({sayi(dusuk["min"])}), '
+                                f'en yüksek puanla {_duzgun(yuksek["il"])} ({sayi(yuksek["min"])}) yerleşildi.')
+    return cumleler
+
+
 def kadro_sayfasi(base, duzey_slug, duzey_ad, unvan, slug, donemler, ilk_yil, son_yil):
     """donemler: {dönem: [satır]}."""
     sirali = sorted(donemler, key=_donem_anahtar)
@@ -190,8 +217,10 @@ def kadro_sayfasi(base, duzey_slug, duzey_ad, unvan, slug, donemler, ilk_yil, so
                   + _tablo(['Kurum', 'İl', 'Teşkilat', 'Kontenjan', 'Yerleşen', 'En küçük puan', 'En büyük puan'],
                            [[esc(_kurum(r.get('kurum'))), esc(_duzgun(r.get('il'))), esc(_duzgun(r.get('teskilat'))), tam(r.get('kontenjan') or 0),
                              tam(r.get('yerlesen') or 0), _p(r.get('min'), 3), _p(r.get('max'), 3)] for r in rows]) + '</section>')
+    tespit = ''.join(f'<p>{esc(c)}</p>' for c in kadro_cumleleri(donemler))
+    tespit = f'<section class="bolum">{tespit}</section>' if tespit else ''
     icerik = (_hero(_crumbs(kok, kir), f'KPSS {ad} Taban Puanları ({duzey_ad})', ozet_p)
-              + f'<main id="icerik" class="wrap kp-main"><section class="bolum"><div class="bolum-bas"><h2>Dönem dönem özet</h2></div>{ozet_tablo}</section>{detay}'
+              + f'<main id="icerik" class="wrap kp-main">{tespit}<section class="bolum"><div class="bolum-bas"><h2>Dönem dönem özet</h2></div>{ozet_tablo}</section>{detay}'
               f'<section class="bolum"><p><a href="../">← Tüm {esc(duzey_ad.lower())} kadroları</a> · <a href="{kok}puanlar/">Puanını gir, tercih robotunu dene →</a></p></section></main>')
     kirinti = [('Ana sayfa', base), ('KPSS Taban Puanları', base + KLASOR + '/'), (duzey_ad, f'{base}{KLASOR}/{duzey_slug}/'),
                (ad, f'{base}{KLASOR}/{duzey_slug}/{slug}/')]
@@ -239,7 +268,8 @@ def hub_sayfasi(base, ozetler, ilk_yil, son_yil):
              f'kadro (unvan) bazında inceleyin. Tercih döneminde hangi puanın hangi kadroya yettiğini geçmiş yıllarla karşılaştırmak için kullanışlıdır.')
     icerik = (_hero(_crumbs(kok, [('KPSS Taban Puanları', None)]), baslik, giris)
               + f'<main id="icerik" class="wrap kp-main"><section class="bolum"><div class="bolum-bas"><h2>Öğrenim düzeyine göre taban puanları</h2></div><ul>{kartlar}</ul>'
-              f'<p><a href="{kok}puanlar/">Puanını gir, hangi kadrolara yettiğini gör: tercih robotu →</a></p></section></main>')
+              f'<p><a href="{kok}puanlar/">Puanını gir, hangi kadrolara yettiğini gör: tercih robotu →</a></p>'
+              f'<p><a href="{kok}analiz/">Puan verilerinden analizler: değişim, il il karşılaştırma, kadro sıralaması →</a></p></section></main>')
     kirinti = [('Ana sayfa', base), ('KPSS Taban Puanları', base + KLASOR + '/')]
     return _sayfa(base, '', 1, baslik, aciklama, kirinti, icerik)
 
