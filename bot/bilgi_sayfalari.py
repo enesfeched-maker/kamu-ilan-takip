@@ -3,7 +3,7 @@ Ana sayfadaki '#bilgi/...' görünümleri JavaScript ile açılır; Google ve Ad
 Metin docs/portal.js 'bilgi/gizlilik' ve 'bilgi/hakkimizda' ile aynı tutulur."""
 
 ILETISIM = 'https://t.me/kpsstercihi'
-ILETISIM_EPOSTA = ''   # doldurulursa /iletisim/ sayfasında E-posta bölümü çıkar
+ILETISIM_EPOSTA = 'iletisim@kpsstercihi.com'   # Cloudflare Email Routing ile yönlenir; boşsa /iletisim/ sayfasında E-posta bölümü çıkmaz
 
 SAYFALAR = {
     'gizlilik': ('Gizlilik politikası', 'KPSS Tercihi gizlilik politikası: tarayıcıda saklanan bilgiler, çerezsiz ziyaret istatistikleri ve Google AdSense reklamları.',
@@ -24,7 +24,7 @@ SAYFALAR = {
         ('Sosyal medya hesaplarımız', 'Instagram, YouTube ve TikTok hesaplarımızdaki paylaşımlar, bu platformların resmî paylaşım '
          'arayüzleriyle yalnız kendi hesaplarımıza yapılır. Bu bağlantılar üzerinden takipçilerin ya da ziyaretçilerin kişisel verisi '
          'toplanmaz, saklanmaz, paylaşılmaz.'),
-        ('İletişim', 'Gizlilikle ilgili soruların için Telegram kanalımızı (@kpsstercihi) kullanabilirsin.'),
+        ('İletişim', f'Gizlilikle ilgili soruların için {ILETISIM_EPOSTA} adresine yazabilirsin. Bize yazarsan e-posta adresin ve iletin yalnızca yanıt vermek için kullanılır.'),
     ]),
     'kullanim-kosullari': ('Kullanım koşulları', 'KPSS Tercihi kullanım koşulları: hizmetin kapsamı, bilgilerin doğruluğu ve sorumluluk.',
                            'KPSS Tercihi’ni ve sosyal medya hesaplarımızı kullanarak aşağıdaki koşulları kabul etmiş olursun.', [
@@ -37,7 +37,7 @@ SAYFALAR = {
          'KPSS Tercihi sorumlu tutulamaz.'),
         ('İçerik kullanımı', 'Paylaşımlarımızı kaynak göstererek paylaşabilirsin. İlan metinleri ve resmî belgeler ilgili kurumlara aittir.'),
         ('Değişiklikler', 'Bu koşullar gerektiğinde güncellenebilir; güncel metin her zaman bu sayfadadır.'),
-        ('İletişim', 'Soruların için Telegram kanalımız (@kpsstercihi) üzerinden ulaşabilirsin.'),
+        ('İletişim', f'Soruların için {ILETISIM_EPOSTA} adresine yazabilirsin.'),
     ]),
     'hakkimizda': ('Hakkımızda', 'KPSS Tercihi nedir, ilanlar hangi resmî kaynaklardan derlenir, nasıl iletişim kurulur?',
                    'KPSS Tercihi, kamu personel ilanlarını daha kolay incelemek ve takip etmek için hazırlanmış bağımsız bir rehberdir.', [
@@ -60,7 +60,7 @@ SAYFALAR = {
 def _iletisim_bolumleri():
     bolumler = [('Telegram', 'Duyurular için kanalımız: @kpsstercihi')]
     if ILETISIM_EPOSTA:
-        bolumler.append(('E-posta', ILETISIM_EPOSTA, f'<a class="yazi-link" href="mailto:{ILETISIM_EPOSTA}">{ILETISIM_EPOSTA}</a>'))
+        bolumler.append(('E-posta', 'Soru, düzeltme ve iş birliği için:', f'<a class="yazi-link" href="mailto:{ILETISIM_EPOSTA}">{ILETISIM_EPOSTA}</a>'))
     bolumler.append(('Hatalı ilan bildirirken', 'İlanın bağlantısını ve hatalı gördüğün bilgiyi yazman yeterli.'))
     return bolumler
 
