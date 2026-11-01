@@ -79,18 +79,23 @@ def ust_html(kok, aktif=''):
             f'</nav></div></header>{MENU_BETIGI}')
 
 
+REKLAM_BETIGI = '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8335827974832277" crossorigin="anonymous"></script>'
+
+
 def alt_html(kok, yil=None):
     """Ana sayfayla aynı koyu alt bilgi: marka, bağlantılar ve bağımsızlık notu."""
     yil = yil or datetime.now(TR).year
     return (f'<footer class="ab"><div class="ab-ic"><div class="ab-marka"><img src="{kok}assets/logo-96.webp?v={LOGO_SURUM}" alt="" width="36" height="36">'
             f'<div><strong>KPSS Tercihi</strong><span>Kamu ilanları, sade ve tek yerde</span></div></div>'
-            f'<nav class="ab-linkler" aria-label="Alt bilgi"><a href="https://t.me/kpsstercihi" target="_blank" rel="noopener" data-a="telegram" data-a-x="alt">Telegram</a><a href="{kok}katiplik/">Katiplik sınavı</a><a href="{kok}akademik/">Akademik ilanlar</a><a href="{kok}rehber/">Rehberler</a><a href="{kok}sss/">Sık sorulanlar</a><a href="{kok}hakkimizda/">Hakkımızda</a><a href="{kok}gizlilik/">Gizlilik</a><a href="{kok}kullanim-kosullari/">Kullanım koşulları</a></nav>'
+            f'<nav class="ab-linkler" aria-label="Alt bilgi"><a href="https://t.me/kpsstercihi" target="_blank" rel="noopener" data-a="telegram" data-a-x="alt">Telegram</a><a href="{kok}katiplik/">Katiplik sınavı</a><a href="{kok}akademik/">Akademik ilanlar</a><a href="{kok}rehber/">Rehberler</a><a href="{kok}analiz/">Analizler</a><a href="{kok}kurum/">Kurumlar</a><a href="{kok}sss/">Sık sorulanlar</a><a href="{kok}hakkimizda/">Hakkımızda</a><a href="{kok}iletisim/">İletişim</a><a href="{kok}gizlilik/">Gizlilik</a><a href="{kok}kullanim-kosullari/">Kullanım koşulları</a></nav>'
             f'<p class="ab-not">© <span id="yil">{yil}</span> KPSS Tercihi</p></div></footer>')
 
 
 def sayfa_basi(baslik, aciklama, canonical, kok, og_tur='website', ek_head='', og_baslik=None):
-    """<!doctype> … <body> açılışına kadar ortak kısım (kurum ve ilan sayfaları)."""
-    return (f'<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="google-adsense-account" content="ca-pub-8335827974832277"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8335827974832277" crossorigin="anonymous"></script>'
+    """<!doctype> … <body> açılışına kadar ortak kısım (kurum ve ilan sayfaları).
+    Reklam betiği yalnız dizinlenen sayfalara girer: noindex sayfa gerçek içerik sayılmaz (AdSense, 1 Kasım 2026)."""
+    reklam = '' if 'noindex' in (ek_head or '') else REKLAM_BETIGI
+    return (f'<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="google-adsense-account" content="ca-pub-8335827974832277">{reklam}'
             f'<meta name="theme-color" content="{ACIK_ZEMIN}"><meta name="color-scheme" content="light dark">{TEMA_BETIGI}'
             f'<title>{esc(baslik)}</title><meta name="description" content="{esc(aciklama)}"><link rel="canonical" href="{canonical}">'
             f'<meta property="og:title" content="{esc(og_baslik or baslik)}"><meta property="og:description" content="{esc(aciklama)}"><meta property="og:type" content="{og_tur}">{ek_head}'
@@ -648,14 +653,18 @@ def yapisal_veri(item, canonical, end, alanlar, kayit, gorsel, simdi, is_ilani):
     return sonuc + _ld(is_)
 
 
-ESKI_ILAN_GUN = 30   # son başvurusu bu kadar gün önce geçen ilan sayfası arama dizininden çıkar (sayfa açık kalır)
+ESKI_ILAN_GUN = 7   # son başvurusu bu kadar gün önce geçen ilan sayfası arama dizininden çıkar (sayfa açık kalır)
 
 
 def dizinlenmez(item, simdi=None):
-    """19 Ekim 2026 (AdSense 'düşük değerli içerik'): arama motoruna yalnız işe yarar ilan sayfaları gösterilir.
-    noindex: iptal/düzeltme duyurusu, son başvurusu ESKI_ILAN_GUN'den önce geçmiş ilan, kadro/şart/özet hiç okunamamış kayıt."""
+    """1 Kasım 2026 (AdSense ikinci ret): arama motoruna yalnız işe yarar ilan sayfaları gösterilir.
+    noindex: iptal/düzeltme duyurusu, akademik ilan, son başvurusu ESKI_ILAN_GUN'den önce geçmiş ilan,
+    kadro/şart/özet hiç okunamamış kayıt. Sayfalar açık kalır; yalnız dizinden ve site haritasından çıkar."""
     simdi = (simdi or datetime.now(TR)).astimezone(TR)
     if item.get('duyuru_turu') or item.get('iptal_edildi'):
+        return True
+    from siniflandir import saf_akademik
+    if saf_akademik(item):
         return True
     son = _bitis(item)
     if son and son < simdi - timedelta(days=ESKI_ILAN_GUN):
@@ -1179,7 +1188,7 @@ def main():
     paylasilan = set(data.get('telegram_gonderilen') or [])
     kayit_haritasi = {k['key']: k for k in kayitlar + ((liste or {}).get('akademik') or [])}
     gorunen = [k for k in kayitlar if not k.get('kopya_of')]
-    sayfa_anahtarlari, degisim = set(), {}
+    sayfa_anahtarlari, degisim, haritada_olmayan = set(), {}, set()
     for item in data.get('ilanlar', []):
         result = detail_page(item)
         if not result:
@@ -1220,11 +1229,15 @@ def main():
         if (sayfa_kopya or {}).get('rol') not in ('ikincil', 'duzeltme') and not dizinlenmez(item):   # kopya/düzeltme ve zayıf sayfa haritaya girmez
             urls.append(BASE + 'ilan/' + key + '/')
             degisim[urls[-1]] = max(str(item.get(a) or '')[:10] for a in ('ilk_gorulme', 'detay_guncelleme', 'guncelleme'))
+        else:
+            haritada_olmayan.add(key)   # ana sayfadaki statik ilan satırlarına da girmez
         count += 1
     try:
         yonlendirmeleri_yaz(docs, data.get('ilanlar', []), sayfa_anahtarlari)
     except Exception as hata:
         print(f'Uyarı: eski ilan bağlantıları yönlendirilemedi: {hata}')
+    if (docs / 'kurum' / 'index.html').is_file():
+        urls.append(BASE + 'kurum/')   # A-Z kurum listesi
     urls += kurum_adresleri
     try:
         from puan_sayfalari import puan_sayfalarini_uret
@@ -1261,11 +1274,17 @@ def main():
         import bilgi_sayfalari   # gizlilik / hakkımızda: AdSense ve Google için ayrı, taranabilir adresler
         urls += bilgi_sayfalari.yaz(docs, BASE)
         import rehberler   # özgün rehber yazıları (/rehber/)
-        urls += rehberler.yaz(docs, BASE)
+        urls += rehberler.yaz(docs, BASE, gorunen, sayfa_anahtarlari, haritada_olmayan, datetime.now(TR))   # açık ilan blokları için statik ana sayfayla aynı veri
         sayfali = sayfa_anahtarlari
         (docs / 'llms.txt').write_text(yz_gorunurluk.llms_metni(gorunen, BASE, datetime.now(TR), sayfali), encoding='utf-8')
     except Exception as hata:
         print(f'Uyarı: llms.txt / SSS üretilemedi: {hata}')
+    try:
+        import analiz_sayfalari   # özgün veri analizleri (/analiz/): AdSense için siteye özgü içerik
+        asil_ilanlar = [i for i in data.get('ilanlar', []) if i.get('id') not in (kopyalar.get('kopya_of') or {})]
+        urls += analiz_sayfalari.yaz(docs, BASE, asil_ilanlar, datetime.now(TR))
+    except Exception as hata:
+        print(f'Uyarı: analiz sayfaları üretilemedi: {hata}')
     bugun = datetime.now(TR).date().isoformat()   # ana sayfa her gün değişir; Google'a tazelik sinyali
     degisim[BASE] = bugun
     (docs / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
@@ -1280,6 +1299,11 @@ def main():
         uret(data.get('ilanlar', []), datetime.now(TR), docs, BASE)
     except Exception as hata:
         print(f'Uyarı: sosyal paylaşım içeriği üretilemedi: {hata}')
+    try:
+        import statik_icerik   # JavaScript kapalıyken de ana sayfada ve /puanlar/ sayfasında gerçek içerik
+        statik_icerik.yaz(docs, gorunen, sayfa_anahtarlari, haritada_olmayan, datetime.now(TR))
+    except Exception as hata:
+        print(f'Uyarı: statik ana sayfa içeriği yazılamadı: {hata}')
     print(f'{count} public detail pages and sitemap generated.')
 
 

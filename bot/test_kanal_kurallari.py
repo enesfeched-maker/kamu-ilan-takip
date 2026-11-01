@@ -124,7 +124,8 @@ class AkademikTesti(Dugum):
                 site_uret.main()
             self.assertNotEqual((docs / 'ilan' / a['id'] / 'index.html').read_text(encoding='utf-8'), 'eski')
             self.assertTrue((docs / 'ilan' / b['id'] / 'index.html').exists())
-            self.assertIn(a['id'], (docs / 'sitemap.xml').read_text())
+            self.assertNotIn(a['id'], (docs / 'sitemap.xml').read_text())   # 1 Kasım 2026: akademik ilan sayfası açık ama noindex ve haritada yok
+            self.assertIn('noindex', (docs / 'ilan' / a['id'] / 'index.html').read_text(encoding='utf-8'))
             liste = json.loads((docs / 'liste.json').read_text(encoding='utf-8'))
             self.assertEqual([k['key'] for k in liste['akademik']], [a['id']])
             self.assertNotIn(a['id'], [k['key'] for k in liste['ilanlar']])

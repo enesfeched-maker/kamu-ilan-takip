@@ -151,10 +151,11 @@ class SayfaTests(unittest.TestCase):
     def test_sayfa_uretilir_akademik_haric_ad_kacirilir(self):
         ilanlar = [ilan(1, 'A <b>Belediyesi</b>'), ilan(2, 'A <b>Belediyesi</b>', son_tarih='2026-01-01'),
                    ilan(3, 'X Üniversitesi', baslik='Öğretim Görevlisi alımı', kategori='akademik')]
-        docs, (gruplar, slugler, adresler, _) = self.kos(ilanlar)
+        with mock.patch.object(ks, 'kurum_dizinlenir', return_value=True):
+            docs, (gruplar, slugler, adresler, _) = self.kos(ilanlar)
         self.assertEqual(len(gruplar), 1)
         self.assertEqual(len(adresler), 1)
-        klasorler = [p.name for p in (docs / 'kurum').iterdir()]
+        klasorler = [p.name for p in (docs / 'kurum').iterdir() if p.is_dir()]
         self.assertEqual(len(klasorler), 1)
         html = (docs / 'kurum' / klasorler[0] / 'index.html').read_text(encoding='utf-8')
         self.assertNotIn('<b>Belediyesi', html)
@@ -162,6 +163,26 @@ class SayfaTests(unittest.TestCase):
         self.assertIn('Başvurusu açık ilanlar', html)
         self.assertIn('Duyurular ve geçmiş ilanlar', html)
         self.assertIn(f'../../ilan/{uid(1)}/', html)
+
+    def test_kurum_listesi_a_z(self):
+        ilanlar = [ilan(1, 'Çankaya Belediyesi'), ilan(2, 'Adana Belediyesi'), ilan(3, 'Adana Belediyesi'),
+                   ilan(4, 'Eski Belediyesi', son_tarih='2026-01-01')]
+        with mock.patch.object(ks, 'kurum_dizinlenir', side_effect=lambda kan, docs: 'eski' not in kan):
+            docs, _ = self.kos(ilanlar)
+        html = (docs / 'kurum' / 'index.html').read_text(encoding='utf-8')
+        self.assertIn('2 kurumun sayfası var', html)
+        self.assertIn('2 açık ilan', html)
+        self.assertLess(html.index('Adana Belediyesi'), html.index('Çankaya Belediyesi'))
+        self.assertNotIn('Eski Belediyesi', html)
+        self.assertIn('<link rel="canonical" href="https://kpsstercihi.com/kurum/">', html)
+        self.assertIsNone(ks.kurum_hub_sayfasi([]))
+
+    def test_yerlestirme_gecmisi_yoksa_dizinlenmez_reklamsiz(self):
+        docs, (_, _, adresler, _) = self.kos([ilan(1, 'Ankara Belediyesi')])   # açık ilanı olsa da geçmişi yok
+        self.assertEqual(adresler, [])
+        html = (docs / 'kurum' / 'ankara-belediyesi' / 'index.html').read_text(encoding='utf-8')
+        self.assertIn('noindex', html)
+        self.assertNotIn('adsbygoogle.js', html)
 
     def test_bos_durum(self):
         docs, _ = self.kos([ilan(1, 'A Belediyesi', son_tarih='2026-01-01')])
@@ -185,7 +206,8 @@ class SayfaTests(unittest.TestCase):
             veri = [ilan(1, 'Ankara Belediyesi'), ilan(2, 'Ankara Belediyesi'), ilan(3, 'X Üniversitesi', kategori='akademik', baslik='Öğretim Görevlisi')]
             (kok / 'docs' / 'ilanlar.json').write_text(json.dumps({'ilanlar': veri}), encoding='utf-8')
             with mock.patch.object(site_uret, 'ROOT', kok), mock.patch.object(site_uret, 'gorselleri_uret', return_value={}), \
-                    mock.patch('sosyal_paylasim.uret', side_effect=RuntimeError('atla')):
+                    mock.patch('sosyal_paylasim.uret', side_effect=RuntimeError('atla')), \
+                    mock.patch.object(ks, 'kurum_dizinlenir', return_value=True):
                 site_uret.main()
             g = json.loads((kok / 'docs' / 'ilan' / 'gorseller.json').read_text(encoding='utf-8'))
             self.assertEqual(g[uid(1)]['kurum_slug'], 'ankara-belediyesi')

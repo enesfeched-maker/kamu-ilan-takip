@@ -50,7 +50,9 @@ class Icerik(unittest.TestCase):
         self.assertFalse(site_uret.dizinlenmez(acik, SIMDI))
         self.assertTrue(site_uret.dizinlenmez(dict(acik, duyuru_turu='İptal'), SIMDI))
         self.assertTrue(site_uret.dizinlenmez(dict(acik, son_tarih='2026-08-01'), SIMDI))
-        self.assertFalse(site_uret.dizinlenmez(dict(acik, son_tarih='2026-10-01'), SIMDI))
+        self.assertFalse(site_uret.dizinlenmez(dict(acik, son_tarih='2026-10-15'), SIMDI))   # 4 gün önce: hâlâ dizinde
+        self.assertTrue(site_uret.dizinlenmez(dict(acik, son_tarih='2026-10-01'), SIMDI))   # 7 günden eski
+        self.assertTrue(site_uret.dizinlenmez(dict(acik, kategori='akademik'), SIMDI))   # akademik ilan dizinlenmez
         self.assertTrue(site_uret.dizinlenmez({'son_tarih': acik['son_tarih']}, SIMDI))   # hiç içerik yok
 
     def test_rehberler(self):

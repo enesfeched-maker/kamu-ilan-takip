@@ -1,23 +1,30 @@
 # Arama motorları ve yapay zekâ asistanları sitenin tamamını okuyabilir.
 User-agent: *
 Allow: /
+Disallow: /belgeler/
 
 User-agent: GPTBot
 Allow: /
+Disallow: /belgeler/
 
 User-agent: OAI-SearchBot
 Allow: /
+Disallow: /belgeler/
 
 User-agent: ChatGPT-User
 Allow: /
+Disallow: /belgeler/
 
 User-agent: Google-Extended
 Allow: /
+Disallow: /belgeler/
 
 User-agent: PerplexityBot
 Allow: /
+Disallow: /belgeler/
 
 User-agent: ClaudeBot
 Allow: /
+Disallow: /belgeler/
 
 Sitemap: https://kpsstercihi.com/sitemap.xml
