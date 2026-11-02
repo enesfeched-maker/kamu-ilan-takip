@@ -941,6 +941,63 @@
    ]
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=01e546b7-c1d0-4364-b010-7eea088f49cd": {
+  "zaman": "2026-11-02T11:23:59+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "16cf579f7eb6c018",
+  "baslik": "YÜKSEKÖĞRETİM KURULU BAŞKANLIĞI (YÖK) - SÖZLEŞMELİ BİLİŞİM PERSONELİ ALIM İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Kıdemli Yazılım Geliştirme Uzmanı (Java)",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "kosullar": [
+      "Bilgisayar veya yazılım mühendisliği bölümünden mezun olmak.",
+      "Lisans sonrası en az 8 yıl yazılım geliştirici olarak çalışmış olmak (belgeli)."
+     ]
+    },
+    {
+     "unvan": "Yazılım Geliştirme Uzmanı (Java)",
+     "adet": 3,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "kosullar": [
+      "Lisans sonrası en az 3 yıl yazılım geliştirici olarak çalışmış olmak (belgeli).",
+      "JPA ve Hibernate gibi ORM teknolojilerini bilmek."
+     ]
+    }
+   ],
+   "toplam": 5,
+   "son_basvuru_tarihi": "2026-11-16",
+   "son_basvuru_saati": "23:59",
+   "baslangic_tarihi": "2026-11-02",
+   "kpss_gerekli": false,
+   "iller": [
+    "Ankara"
+   ],
+   "ortak_kosullar": [
+    "Başvuru yalnız Kariyer Kapısı (kariyerkapisi.gov.tr/isealim) üzerinden yapılır; posta ve şahsen başvuru kabul edilmez."
+   ],
+   "ozet": "YÖK 5 sözleşmeli bilişim personeli (Java yazılım geliştirme uzmanı) alacak. Başvurular 2–16 Kasım 2026 arasında Kariyer Kapısı'ndan yapılır.",
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": []
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=11272843-b0f1-470e-af31-cc176fa0e5d4": {
   "zaman": "2026-10-30T18:05:06+03:00",
   "surum": 4,
@@ -1915,6 +1972,68 @@
    ]
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=a1ba338b-81ac-4dfb-9cc3-dc53c4c438cd": {
+  "zaman": "2026-11-02T11:23:59+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "cc16632d716c3f41",
+  "baslik": "YILDIZ TEKNİK ÜNİVERSİTESİ REKTÖRLÜĞÜ - YILDIZ TEKNİK ÜNİVERSİTESİ SÖZLEŞMELİ BİLİŞİM PERSONELİ İLANI (2026/2)",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [],
+   "okunabilirlik": "kotu",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ortak_kosullar": []
+  }
+ },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=a9f4af35-682a-4030-b699-68d7e4ad1546": {
+  "zaman": "2026-11-02T11:23:59+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "1b4066286aed616d",
+  "baslik": "KÜLTÜR VE TURİZM BAKANLIĞI - 162 SÖZLEŞMELİ KÜTÜPHANECİ ALIMI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Kütüphaneci",
+     "adet": 162,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "Bilgi ve Belge Yönetimi, Kütüphanecilik, Arşivcilik, Dokümantasyon ve Enformasyon bölümlerinden birinden mezun olmak."
+     ]
+    }
+   ],
+   "toplam": 162,
+   "son_basvuru_tarihi": "2026-11-16",
+   "son_basvuru_saati": "23:59",
+   "baslangic_tarihi": "2026-11-02",
+   "kpss_gerekli": true,
+   "iller": [],
+   "ortak_kosullar": [
+    "2026 KPSS (B) grubu P3 puan türünden en az 70 puan aranır.",
+    "Alınacak sayının 3 katı aday sözlü giriş sınavına çağrılır."
+   ],
+   "ozet": "Kültür ve Turizm Bakanlığı 81 ile yayılmış 162 sözleşmeli kütüphaneci alacak (KPSS P3 en az 70). Başvurular 2–16 Kasım 2026 arasındadır.",
+   "okunabilirlik": "kismi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P3"
+   ]
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=af46c544-8728-4ab2-beed-937fe050035c": {
   "zaman": "2026-10-30T13:47:35+03:00",
   "surum": 4,
@@ -2050,26 +2169,20 @@
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=bb1814b5-f9dd-47b3-8006-900a7b8098c5": {
-  "zaman": "2026-11-02T09:16:31+03:00",
+  "zaman": "2026-11-02T11:23:59+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "metin",
-  "imza": "e0086e6faef2960a",
+  "imza": "640715b63124ff93",
   "baslik": "JANDARMA VE SAHİL GÜVENLİK AKADEMİSİ BAŞKANLIĞI - 2026 YILI J.GN.K.LIĞI AÇIKTAN DEVLET MEMURU TEMİNİ",
   "farklar": [],
   "yz": {
    "kadrolar": [],
-   "toplam": null,
-   "son_basvuru_tarihi": null,
-   "baslangic_tarihi": null,
-   "kpss_gerekli": null,
-   "iller": [],
-   "ortak_kosullar": [],
-   "ozet": "",
    "okunabilirlik": "kotu",
    "akademik": false,
    "iptal_veya_duzeltme": false,
-   "duyuru_tipi": "yeni_ilan"
+   "duyuru_tipi": "yeni_ilan",
+   "ortak_kosullar": []
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=bbb712a1-b716-42c9-b235-b8eee837643f": {
@@ -2635,6 +2748,78 @@
    "puan_turleri": []
   }
  },
+ "iskur-0400573bc1182becd3a21126": {
+  "zaman": "2026-11-02T11:23:59+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "e442b859995589f0",
+  "baslik": "Doğu Karadeniz Kalkınma Ajansı Personel Alım İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [],
+   "toplam": null,
+   "son_basvuru_tarihi": "2026-12-06",
+   "son_basvuru_saati": "23:59",
+   "baslangic_tarihi": "2026-11-23",
+   "iller": [
+    "Trabzon"
+   ],
+   "ortak_kosullar": [
+    "Başvuru Kariyer Kapısı üzerinden yapılır; sözlü sınav (mülakat) uygulanır."
+   ],
+   "ozet": "Doğu Karadeniz Kalkınma Ajansı personel alacak. Başvurular 23 Kasım–6 Aralık 2026 arası Kariyer Kapısı'ndan yapılır.",
+   "okunabilirlik": "kotu",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "iskur-090fb7d39012e2f5024f6e1a": {
+  "zaman": "2026-11-02T11:23:59+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "b14eee4c7a298aae",
+  "baslik": "İstanbul Gaziosmanpaşa Belediyesi Zabıta Memuru Alım İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Zabıta Memuru",
+     "adet": 36,
+     "ogrenim": null,
+     "puan_turu": "P3",
+     "en_dusuk_puan": 65,
+     "il": "İstanbul",
+     "kosullar": [
+      "Sınavın yapıldığı tarihte 30 yaşını doldurmamış olmak.",
+      "En az (B) sınıfı sürücü belgesine sahip olmak."
+     ]
+    }
+   ],
+   "toplam": 36,
+   "son_basvuru_tarihi": "2026-12-11",
+   "son_basvuru_saati": "17:00",
+   "baslangic_tarihi": "2026-12-07",
+   "kpss_gerekli": true,
+   "iller": [
+    "İstanbul"
+   ],
+   "ortak_kosullar": [
+    "Başvurular 7–11 Aralık 2026 arası mesai saatlerinde Gaziosmanpaşa Belediyesi Yazı İşleri Müdürlüğü'ne şahsen yapılır."
+   ],
+   "ozet": "Gaziosmanpaşa Belediyesi 36 zabıta memuru alacak (KPSS P3/P93 en az 65). Başvurular 7–11 Aralık 2026'da şahsen yapılır.",
+   "okunabilirlik": "kismi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [],
+   "puan_turleri": [
+    "P3"
+   ]
+  }
+ },
  "iskur-0ca1c1811f87d2184aafb65b": {
   "zaman": "2026-10-30T23:13:31+03:00",
   "surum": 4,
@@ -2893,6 +3078,92 @@
    "puan_turleri": [
     "P3"
    ]
+  }
+ },
+ "iskur-21dfba2eebd5c383d4996f2c": {
+  "zaman": "2026-11-02T11:23:59+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "a7626eb59ede2d06",
+  "baslik": "Konya Karatay Belediyesi Zabıta Memuru Alım İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [],
+   "toplam": null,
+   "son_basvuru_tarihi": "2026-12-18",
+   "son_basvuru_saati": "17:00",
+   "baslangic_tarihi": "2026-12-14",
+   "kpss_gerekli": true,
+   "iller": [
+    "Konya"
+   ],
+   "ortak_kosullar": [
+    "Başvurular 14–18 Aralık 2026 arası Karatay Belediyesi İnsan Kaynakları ve Eğitim Müdürlüğü'ne şahsen yapılır.",
+    "2026 KPSS (B) grubundan ilanda belirtilen puan türünden asgari puan aranır."
+   ],
+   "ozet": "Karatay Belediyesi zabıta memuru alacak. Başvurular 14–18 Aralık 2026'da belediyeye şahsen yapılır.",
+   "okunabilirlik": "kotu",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "iskur-26082b6d45e9036b603834f7": {
+  "zaman": "2026-11-02T11:23:59+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "b5018cb764fd7d40",
+  "baslik": "Yükseköğretim Kurulu Başkanlığı Sözleşmeli Bilişim Personeli Alım İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Kıdemli Yazılım Geliştirme Uzmanı (Java)",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "kosullar": [
+      "Bilgisayar veya yazılım mühendisliği bölümünden mezun olmak.",
+      "Lisans sonrası en az 8 yıl yazılım geliştirici olarak çalışmış olmak (belgeli)."
+     ]
+    },
+    {
+     "unvan": "Yazılım Geliştirme Uzmanı (Java)",
+     "adet": 3,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "kosullar": [
+      "Lisans sonrası en az 3 yıl yazılım geliştirici olarak çalışmış olmak (belgeli).",
+      "JPA ve Hibernate gibi ORM teknolojilerini bilmek."
+     ]
+    }
+   ],
+   "toplam": 5,
+   "son_basvuru_tarihi": "2026-11-16",
+   "son_basvuru_saati": "23:59",
+   "baslangic_tarihi": "2026-11-02",
+   "kpss_gerekli": false,
+   "iller": [
+    "Ankara"
+   ],
+   "ortak_kosullar": [
+    "Başvuru yalnız Kariyer Kapısı (kariyerkapisi.gov.tr/isealim) üzerinden yapılır; posta ve şahsen başvuru kabul edilmez."
+   ],
+   "ozet": "YÖK 5 sözleşmeli bilişim personeli (Java yazılım geliştirme uzmanı) alacak. Başvurular 2–16 Kasım 2026 arasında Kariyer Kapısı'ndan yapılır.",
+   "okunabilirlik": "kismi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": []
   }
  },
  "iskur-2779b3e3a72fb9fa634ba479": {
@@ -3188,6 +3459,57 @@
    "duyuru_tipi": "yeni_ilan"
   }
  },
+ "iskur-6db412b8905ea170d7c8e91b": {
+  "zaman": "2026-11-02T11:23:59+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "ee9e9fd7adef4b2d",
+  "baslik": "İzmir Karşıyaka Belediyesi Memur Alım İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Bilgisayar İşletmeni (7. derece)",
+     "adet": 3,
+     "ogrenim": null,
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "il": "İzmir",
+     "kosullar": []
+    },
+    {
+     "unvan": "Bilgisayar İşletmeni (8. derece)",
+     "adet": 3,
+     "ogrenim": null,
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "il": "İzmir",
+     "kosullar": []
+    }
+   ],
+   "toplam": 6,
+   "son_basvuru_tarihi": "2026-12-02",
+   "son_basvuru_saati": "17:00",
+   "baslangic_tarihi": "2026-11-30",
+   "kpss_gerekli": true,
+   "iller": [
+    "İzmir"
+   ],
+   "ortak_kosullar": [
+    "Başvurular 30 Kasım–2 Aralık 2026 arası belgelerle personelisleri@karsiyaka.bel.tr adresine e-posta ile yapılır."
+   ],
+   "ozet": "Karşıyaka Belediyesi 6 bilgisayar işletmeni alacak (KPSS P3 en az 70). Başvurular 30 Kasım–2 Aralık 2026'da e-posta ile yapılır.",
+   "okunabilirlik": "kismi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [],
+   "puan_turleri": [
+    "P3"
+   ]
+  }
+ },
  "iskur-83eb8530b668c43b12af5245": {
   "zaman": "2026-10-30T15:39:28+03:00",
   "surum": 4,
@@ -3245,6 +3567,27 @@
    "duyuru_tipi": "yeni_ilan",
    "ogrenim": [],
    "puan_turleri": []
+  }
+ },
+ "iskur-8fa63d4528ecb71c06a11739": {
+  "zaman": "2026-11-02T11:23:59+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "cf32e5753f199a36",
+  "baslik": "Jandarma Genel Komutanlığı 2026 Yılı Devlet Memuru Alım İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [],
+   "toplam": 30,
+   "son_basvuru_tarihi": "2026-11-16",
+   "kpss_gerekli": true,
+   "okunabilirlik": "kotu",
+   "ozet": "Jandarma Genel Komutanlığı 30 açıktan devlet memuru alacak; ayrıntı başvuru kılavuzundadır.",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ortak_kosullar": []
   }
  },
  "iskur-9a987e7b9b3e9392633389ee": {
@@ -3314,6 +3657,51 @@
    "akademik": false,
    "iptal_veya_duzeltme": false,
    "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "iskur-bdec3041224a377dc350424f": {
+  "zaman": "2026-11-02T11:23:59+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "5b613d0af83cc161",
+  "baslik": "Şanlıurfa Eyyübiye Belediyesi Zabıta Memuru Alım ilanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Zabıta Memuru",
+     "adet": 9,
+     "ogrenim": null,
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "il": "Şanlıurfa",
+     "kosullar": [
+      "Sınavın yapıldığı tarihte 30 yaşını doldurmamış olmak.",
+      "En az (B) sınıfı sürücü belgesine sahip olmak."
+     ]
+    }
+   ],
+   "toplam": 9,
+   "son_basvuru_tarihi": "2026-12-10",
+   "son_basvuru_saati": "17:00",
+   "baslangic_tarihi": "2026-12-07",
+   "kpss_gerekli": true,
+   "iller": [
+    "Şanlıurfa"
+   ],
+   "ortak_kosullar": [
+    "Başvurular 7–10 Aralık 2026 arası mesai saatlerinde Eyyübiye Belediyesi Millet Bahçesi Konferans Salonu'na şahsen yapılır."
+   ],
+   "ozet": "Eyyübiye Belediyesi 9 zabıta memuru alacak (KPSS P3 en az 60). Başvurular 7–10 Aralık 2026'da belediyeye şahsen yapılır.",
+   "okunabilirlik": "kismi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [],
+   "puan_turleri": [
+    "P3"
+   ]
   }
  },
  "iskur-beceb4b88f33dcb12811b07a": {
@@ -3640,6 +4028,339 @@
    "duyuru_tipi": "yeni_ilan",
    "ogrenim": [],
    "puan_turleri": []
+  }
+ },
+ "sbb-2a7662aed2b08030660a2828": {
+  "zaman": "2026-11-02T11:23:59+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "pdf",
+  "imza": "386d99ba9a17cb14",
+  "baslik": "JANDARMA GENEL KOMUTANLIĞI - 30 MEMUR TEMİN EDİLECEKTİR",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Avukat",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "il": "Kayseri",
+     "kosullar": [
+      "Hukuk lisans programından mezun olmak.",
+      "Avukatlık ruhsatnamesine sahip olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis (Bilgisayar)",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "il": "Ankara",
+     "kosullar": [
+      "Bilgisayar Mühendisliği veya Bilgisayar Bilimleri ve Mühendisliği lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis (Elektrik)",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "il": "Ankara",
+     "kosullar": [
+      "Elektrik Mühendisliği lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "İstatistikçi",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "il": "Ankara",
+     "kosullar": [
+      "İstatistik veya ilgili listedeki lisans programlarından birinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Kimyager — Ankara",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "il": "Ankara",
+     "kosullar": [
+      "Kimya, Kimyager veya Kimya Mühendisliği gibi listedeki lisans programlarından birinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Kimyager — Van",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "il": "Van",
+     "kosullar": [
+      "Kimya, Kimyager veya Kimya Mühendisliği gibi listedeki lisans programlarından birinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Psikolog — Karabük (Safranbolu)",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "il": "Karabük",
+     "kosullar": [
+      "Psikoloji veya Davranış Bilimleri - Psikoloji Disiplini lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Psikolog — Kastamonu",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "il": "Kastamonu",
+     "kosullar": [
+      "Psikoloji veya Davranış Bilimleri - Psikoloji Disiplini lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Psikolog — Mardin",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "il": "Mardin",
+     "kosullar": [
+      "Psikoloji veya Davranış Bilimleri - Psikoloji Disiplini lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Psikolog — Muğla",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "il": "Muğla",
+     "kosullar": [
+      "Psikoloji veya Davranış Bilimleri - Psikoloji Disiplini lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Uzman (Radyo-TV-Sinema)",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "il": "Ankara",
+     "kosullar": [
+      "Radyo, Televizyon ve Sinema veya Sinema bölümlerinden birinden mezun olmak.",
+      "Tercihen 3 yıl kameraman veya kamera asistanı olarak çalışmış olmak."
+     ]
+    },
+    {
+     "unvan": "Uzman (İletişim/Medya)",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "il": "Ankara",
+     "kosullar": [
+      "Yeni Medya, İletişim, Gazetecilik, Türk Dili ve Edebiyatı, Siyaset Bilimi, Uluslararası İlişkiler, Sosyoloji, Felsefe vb. listedeki bölümlerden birinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Uzman (Hukuk) — Ankara",
+     "adet": 4,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "il": "Ankara",
+     "kosullar": [
+      "Hukuk lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Uzman (Hukuk) — Aksaray",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "il": "Aksaray",
+     "kosullar": [
+      "Hukuk lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Uzman (Hukuk) — Artvin",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "il": "Artvin",
+     "kosullar": [
+      "Hukuk lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Uzman (Hukuk) — Erzincan",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "il": "Erzincan",
+     "kosullar": [
+      "Hukuk lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Uzman (Hukuk) — Gümüşhane",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "il": "Gümüşhane",
+     "kosullar": [
+      "Hukuk lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Uzman (Hukuk) — Kırklareli",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "il": "Kırklareli",
+     "kosullar": [
+      "Hukuk lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Uzman (Hukuk) — Muş",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "il": "Muş",
+     "kosullar": [
+      "Hukuk lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Uzman (Hukuk) — Ordu",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "il": "Ordu",
+     "kosullar": [
+      "Hukuk lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Uzman (Hukuk) — Yozgat",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "il": "Yozgat",
+     "kosullar": [
+      "Hukuk lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Uzman (Maliye/İktisat/İşletme) — Çankırı",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "il": "Çankırı",
+     "kosullar": [
+      "Maliye, Muhasebe, İktisat veya İşletme gibi listedeki lisans programlarından birinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Uzman (Maliye/İktisat/İşletme) — Isparta",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "il": "Isparta",
+     "kosullar": [
+      "Maliye, Muhasebe, İktisat veya İşletme gibi listedeki lisans programlarından birinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Uzman (Maliye/İktisat/İşletme) — Kırıkkale",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "il": "Kırıkkale",
+     "kosullar": [
+      "Maliye, Muhasebe, İktisat veya İşletme gibi listedeki lisans programlarından birinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Uzman (Maliye/İktisat/İşletme) — Nevşehir",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "il": "Nevşehir",
+     "kosullar": [
+      "Maliye, Muhasebe, İktisat veya İşletme gibi listedeki lisans programlarından birinden mezun olmak."
+     ]
+    }
+   ],
+   "toplam": 30,
+   "son_basvuru_tarihi": "2026-11-16",
+   "son_basvuru_saati": "23:59",
+   "baslangic_tarihi": "2026-11-02",
+   "kpss_gerekli": true,
+   "iller": [
+    "Aksaray",
+    "Ankara",
+    "Artvin",
+    "Erzincan",
+    "Gümüşhane",
+    "Isparta",
+    "Karabük",
+    "Kastamonu",
+    "Kayseri",
+    "Kırklareli",
+    "Kırıkkale",
+    "Mardin",
+    "Muğla",
+    "Muş",
+    "Nevşehir",
+    "Ordu",
+    "Van",
+    "Yozgat",
+    "Çankırı"
+   ],
+   "ortak_kosullar": [
+    "Başvuru 2–16 Kasım 2026 (23:59) arası personeltemin.jandarma.gov.tr üzerinden e-Devlet ile yapılır.",
+    "KPSS 2025-2026 P3 puan türünden en az 60 puan.",
+    "Kontenjanın 15 katı aday mesleki yeterlilik/mülakat sınavına çağrılır.",
+    "Erkek ve kadın adaylar başvurabilir; adaylar yalnız bir unvana başvurabilir."
+   ],
+   "ozet": "Jandarma Genel Komutanlığı 30 açıktan devlet memuru alacak (avukat, mühendis, psikolog, uzman vb.). Başvurular 2–16 Kasım 2026 arası e-Devlet ile Personel Temin Sistemi'nden yapılır.",
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P3"
+   ]
   }
  },
  "sbb-303f0798530a5eab8afb2bd4": {
