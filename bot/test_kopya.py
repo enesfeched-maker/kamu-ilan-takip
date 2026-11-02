@@ -273,6 +273,19 @@ class KalanKopyaTests(unittest.TestCase):
         kk['baslik'] = 'JANDARMA VE SAHİL GÜVENLİK AKADEMİSİ BAŞKANLIĞI - SÖZLEŞMELİ PİLOT (UÇAK) TEMİNİ'
         self.assertEqual(kopya.kopya_bul([kk, sbb])['kopya_of'], {})
 
+    def test_jandarma_memur_alimi_uc_kaynak_tek_ilan(self):
+        # 2 Kasım 2026: Akademi'nin Kariyer Kapısı kaydı ('Sözleşmeli Personel İlanları' kategorisi), SBB '30 MEMUR' ve İŞKUR
+        # (başlığı kurum alanına taşır) üç ayrı mesaj olarak paylaşıldı.
+        kk = kk_kayit(1, 'JANDARMA VE SAHİL GÜVENLİK AKADEMİSİ BAŞKANLIĞI',
+                      'JANDARMA VE SAHİL GÜVENLİK AKADEMİSİ BAŞKANLIĞI - 2026 YILI J.GN.K.LIĞI AÇIKTAN DEVLET MEMURU ALIMI', '2026-11-16', kadro='')
+        kk['ilan_turu'] = 'Sözleşmeli Personel İlanları'
+        sbb = sbb_kayit(1, 'JANDARMA GENEL KOMUTANLIĞI', '30 MEMUR TEMİN EDİLECEKTİR', son='2026-11-16')
+        iskur = iskur_kayit(1, 'Jandarma Genel Komutanlığı 2026 Yılı Devlet Memuru', 'Jandarma Genel Komutanlığı 2026 Yılı Devlet Memuru Alım İlanı',
+                            '2026-11-16', yer='Ankara')
+        iskur.pop('kadro', None)
+        sonuc = kopya.kopya_bul([kk, sbb, iskur])['kopya_of']
+        self.assertEqual(sonuc, {kk['id']: sbb['id'], iskur['id']: sbb['id']})
+
     def test_jandarma_farkli_donem_birlesmez(self):
         kk, sbb = self.jandarma()
         sbb['donem'] = '( 24 Ekim - 11 Kasım)'
