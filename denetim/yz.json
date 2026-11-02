@@ -3637,37 +3637,37 @@
   }
  },
  "sbb-390fd0065a5a1473b643ad5b": {
-  "zaman": "2026-11-01T19:13:47+03:00",
+  "zaman": "2026-11-02T07:12:22+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "abc8fbaf53709ffe",
+  "imza": "946a42d8f051db1e",
   "baslik": "İSTANBUL ELEKTRİK TRAMVAY VE TÜNEL İŞLETMELERİ GENEL MÜDÜRLÜĞÜ (İETT) - 44 MEMUR ALACAK",
   "farklar": [],
   "yz": {
    "kadrolar": [
     {
-     "unvan": "Bilgisayar İşletmeni (Bilgisayar/Öğretim Teknolojileri)",
+     "unvan": "Bilgisayar İşletmeni (Bilgisayar/Öğretmenlik)",
      "adet": 2,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 70,
      "il": "İstanbul",
      "kosullar": [
-      "Bilgisayar ve öğretim teknolojileri eğitimi, bilgisayar ve öğretim teknolojileri öğretmenliği, otomotiv öğretmenliği veya iş idaresi lisans programlarından birinden mezun olmak.",
-      "Bilgisayar işletmeni için MEB onaylı bilgisayar işletmeni sertifikasına sahip olmak veya okulda bilgisayar dersi gördüğünü belgelemek."
+      "Bilgisayar ve öğretim teknolojileri eğitimi/öğretmenliği, otomotiv öğretmenliği veya iş idaresi lisans programlarından mezun olmak.",
+      "Millî Eğitim Bakanlığı onaylı bilgisayar işletmeni sertifikasına sahip olmak veya okulda bilgisayar dersi gördüğünü belgelemek."
      ]
     },
     {
-     "unvan": "Bilgisayar İşletmeni (Maliye/Muhasebe/YBS)",
+     "unvan": "Bilgisayar İşletmeni (Maliye/Yönetim Bilişim)",
      "adet": 2,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 70,
      "il": "İstanbul",
      "kosullar": [
-      "Maliye, muhasebe ve maliye veya yönetim bilişim sistemleri lisans programlarından birinden mezun olmak.",
-      "Bilgisayar işletmeni için MEB onaylı bilgisayar işletmeni sertifikasına sahip olmak veya okulda bilgisayar dersi gördüğünü belgelemek."
+      "Maliye, muhasebe ve maliye veya yönetim bilişim sistemleri lisans programlarından mezun olmak.",
+      "Millî Eğitim Bakanlığı onaylı bilgisayar işletmeni sertifikasına sahip olmak veya okulda bilgisayar dersi gördüğünü belgelemek."
      ]
     },
     {
@@ -3678,7 +3678,7 @@
      "en_dusuk_puan": 70,
      "il": "İstanbul",
      "kosullar": [
-      "Muhasebe-finansman, muhasebe ve finansal yönetim veya muhasebe ve finans yönetimi lisans programlarından birinden mezun olmak."
+      "Muhasebe-finansman, muhasebe ve finansal yönetim veya muhasebe ve finans yönetimi lisans programlarından mezun olmak."
      ]
     },
     {
@@ -3700,7 +3700,7 @@
      "en_dusuk_puan": 70,
      "il": "İstanbul",
      "kosullar": [
-      "Bilgisayar, bilgisayar bilimleri, bilişim sistemleri, yazılım, kontrol ve bilgisayar vb. mühendisliği lisans programlarından birinden mezun olmak."
+      "Bilgisayar, yazılım, bilişim sistemleri vb. mühendisliği lisans programlarından birinden mezun olmak."
      ]
     },
     {
@@ -3733,7 +3733,7 @@
      "en_dusuk_puan": 70,
      "il": "İstanbul",
      "kosullar": [
-      "Elektronik, mikroelektronik, elektrik-elektronik veya elektronik ve haberleşme mühendisliği lisans programlarından birinden mezun olmak."
+      "Elektronik, elektrik-elektronik veya elektronik ve haberleşme mühendisliği lisans programlarından mezun olmak."
      ]
     },
     {
@@ -3744,7 +3744,7 @@
      "en_dusuk_puan": 70,
      "il": "İstanbul",
      "kosullar": [
-      "Endüstri, endüstri sistemleri, sistem, üretim sistemleri, üretim veya imalat mühendisliği lisans programlarından birinden mezun olmak."
+      "Endüstri, sistem, üretim veya imalat mühendisliği lisans programlarından birinden mezun olmak."
      ]
     },
     {
@@ -3755,18 +3755,18 @@
      "en_dusuk_puan": 70,
      "il": "İstanbul",
      "kosullar": [
-      "Gıda mühendisliği veya gıda işleme mühendisliği lisans programlarından birinden mezun olmak."
+      "Gıda mühendisliği veya gıda işleme mühendisliği lisans programından mezun olmak."
      ]
     },
     {
-     "unvan": "Mühendis (Harita)",
+     "unvan": "Mühendis (Harita/Jeodezi)",
      "adet": 2,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 70,
      "il": "İstanbul",
      "kosullar": [
-      "Jeodezi ve fotogrametri, jeodezi ve haritacılık, harita veya geomatik mühendisliği lisans programlarından birinden mezun olmak."
+      "Jeodezi ve fotogrametri, harita veya geomatik mühendisliği lisans programlarından mezun olmak."
      ]
     },
     {
@@ -3788,24 +3788,23 @@
      "en_dusuk_puan": 70,
      "il": "İstanbul",
      "kosullar": [
-      "Makine, makine ve imalat veya makine ve üretim mühendisliği lisans programlarından birinden mezun olmak."
+      "Makine, makine ve imalat veya makine ve üretim mühendisliği lisans programlarından mezun olmak."
      ]
     }
    ],
    "toplam": 44,
    "son_basvuru_tarihi": "2026-11-02",
-   "son_basvuru_saati": null,
    "baslangic_tarihi": "2026-10-26",
    "kpss_gerekli": true,
    "iller": [
     "İstanbul"
    ],
    "ortak_kosullar": [
-    "2026 KPSS (B grubu) P3 puanından en az 70 puan almış olmak.",
-    "Başvuru 26 Ekim–2 Kasım 2026 arasında turkiye.gov.tr/etvt-is-basvurusu adresinden elektronik ortamda yapılır.",
-    "Sözlü sınav 16 Kasım–11 Aralık 2026 arasında Beyoğlu/İstanbul'daki İETT Genel Müdürlüğünde yapılır."
+    "2026 KPSS (B grubu) P3 puanı en az 70 olmak.",
+    "Başvuru 26 Ekim–2 Kasım 2026'da turkiye.gov.tr/etvt-is-basvurusu üzerinden elektronik yapılır.",
+    "Sözlü sınav 16 Kasım–11 Aralık 2026 arasında saat 09.30'da başlar."
    ],
-   "ozet": "İETT 44 memur alacak: 38 mühendis, 4 bilgisayar işletmeni, 1 muhasebeci, 1 psikolog. Başvurular 26 Ekim–2 Kasım 2026'da turkiye.gov.tr üzerinden yapılır.",
+   "ozet": "İETT 44 memur alacak (13 kadro: mühendis, bilgisayar işletmeni, muhasebeci, psikolog). Başvurular 26 Ekim–2 Kasım 2026'da turkiye.gov.tr üzerinden yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -4249,57 +4248,40 @@
   }
  },
  "sbb-5681cd6adcb3be4bf8184f42": {
-  "zaman": "2026-11-01T19:13:47+03:00",
+  "zaman": "2026-11-02T07:12:22+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "e41d19db6afb8496",
+  "imza": "7aa5ec8c4c57e12e",
   "baslik": "MİLLİ SAVUNMA BAKANLIĞI - DENİZ KUVVETLERİ KOMUTANLIĞINA 2026 YILI DENİZ SINIFI MUVAZZAF SUBAY ADAYI TEMİNİ",
   "farklar": [],
   "yz": {
    "kadrolar": [
     {
-     "unvan": "Muvazzaf Subay Adayı — Deniz Sınıfı (Güverte)",
-     "adet": 35,
+     "unvan": "Deniz Sınıfı Muvazzaf Subay Adayı",
+     "adet": null,
      "ogrenim": "lisans",
      "puan_turu": null,
      "en_dusuk_puan": null,
      "il": null,
      "kosullar": [
-      "Tablo-1'de gösterilen dört yıllık fakülte/yüksekokul programlarından (bilgisayar, deniz ulaştırma işletme, elektrik-elektronik, endüstri, gemi inşaatı, gemi makineleri işletme, güverte, makine) mezun olmak.",
-      "01 Ocak 2026 itibarıyla lisans mezunları için 27, lisansüstü mezunlar için 32 yaşından büyük olmamak.",
-      "Kontenjan: 32 erkek, 3 kadın."
-     ]
-    },
-    {
-     "unvan": "Muvazzaf Subay Adayı — Deniz Sınıfı (Makine)",
-     "adet": 15,
-     "ogrenim": "lisans",
-     "puan_turu": null,
-     "en_dusuk_puan": null,
-     "il": null,
-     "kosullar": [
-      "Tablo-1'de gösterilen dört yıllık fakülte/yüksekokul programlarından (bilgisayar, deniz ulaştırma işletme, elektrik-elektronik, endüstri, gemi inşaatı, gemi makineleri işletme, güverte, makine) mezun olmak.",
-      "01 Ocak 2026 itibarıyla lisans mezunları için 27, lisansüstü mezunlar için 32 yaşından büyük olmamak.",
-      "Kontenjan: 13 erkek, 2 kadın."
+      "Kılavuzdaki kaynak okul programlarından (dört yıllık fakülte/yüksekokul) mezun olmak."
      ]
     }
    ],
-   "toplam": 50,
+   "toplam": null,
    "son_basvuru_tarihi": "2026-11-02",
    "son_basvuru_saati": "17:30",
    "baslangic_tarihi": "2026-10-12",
    "kpss_gerekli": false,
    "iller": [],
    "ortak_kosullar": [
-    "KPSS puanı istenmez; MSB'nin yapacağı genel kültür sınavından en az 50 puan gerekir.",
-    "Başvuru ücreti 600 TL; 12 Ekim–2 Kasım 2026 arasında yatırılır (son gün saat 23:30).",
-    "Asgari boy erkeklerde 168 cm, kadınlarda 162 cm; boy-kilo oranı nomogramdaki aralıkta olmalı.",
-    "Seçim aşamaları (fiziki yeterlilik testi, mülakat vb.) Mamak/Ankara'da MEBS Okulu'nda yapılır.",
-    "Başvuru personeltemin.msb.gov.tr adresinden yapılır."
+    "KPSS puanı istenmez; genel kültür sınavından en az 50 puan alınmalı.",
+    "Lisans mezunları için 1 Ocak 2026 itibarıyla 27 yaşından büyük olmamak.",
+    "Başvuru ücreti 600 TL; başvuru personeltemin.msb.gov.tr üzerinden yapılır."
    ],
-   "ozet": "MSB, Deniz Kuvvetleri için 50 muvazzaf subay adayı alacak (35 güverte, 15 makine). Başvurular 12 Ekim–2 Kasım 2026 saat 17:30'a kadar personeltemin.msb.gov.tr'den yapılır.",
-   "okunabilirlik": "iyi",
+   "ozet": "MSB Deniz Kuvvetleri için 2026 yılı deniz sınıfı muvazzaf subay adayı alıyor. Başvurular 12 Ekim–2 Kasım 2026 saat 17.30'a kadar yapılır.",
+   "okunabilirlik": "kismi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
    "duyuru_tipi": "yeni_ilan",
@@ -4857,11 +4839,11 @@
   }
  },
  "sbb-996152b017d1af5f445dfade": {
-  "zaman": "2026-11-01T19:13:47+03:00",
+  "zaman": "2026-11-02T07:12:22+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "796b1cbc26671951",
+  "imza": "ed5311d5d6a2f37f",
   "baslik": "ŞİLE BELEDİYE BAŞKANLIĞI - 8 MEMUR ALACAK",
   "farklar": [],
   "yz": {
@@ -4874,15 +4856,13 @@
      "en_dusuk_puan": 65,
      "il": "İstanbul",
      "kosullar": [
-      "Herhangi bir ortaöğretim kurumundan (lise veya dengi okul) mezun olmak.",
-      "En az (B) sınıfı sürücü belgesine sahip olmak.",
-      "Erkek ve kadın adaylar başvurabilir."
+      "Herhangi bir ortaöğretim kurumundan (lise veya dengi) mezun olmak.",
+      "En az (B) sınıfı sürücü belgesine sahip olmak."
      ]
     }
    ],
    "toplam": 8,
    "son_basvuru_tarihi": "2026-11-06",
-   "son_basvuru_saati": "17:00",
    "baslangic_tarihi": "2026-11-02",
    "kpss_gerekli": true,
    "iller": [
@@ -4891,11 +4871,11 @@
    "ortak_kosullar": [
     "Sınavın yapıldığı tarihte 30 yaşını doldurmamış olmak.",
     "Boy: erkeklerde en az 1,67 m, kadınlarda en az 1,60 m; boy-kilo farkı en çok 10 kg.",
-    "2024 KPSS (B grubu) P94 puanından en az 65 puan almış olmak.",
-    "Başvuru şahsen, Balibey Mah. Atatürk Cad. No:69/A Şile/İstanbul adresindeki Yazı İşleri Müdürlüğüne yapılır.",
-    "Sözlü ve uygulamalı sınav 20 Kasım 2026 saat 10:00'da yapılır."
+    "2026 KPSS (B grubu) P94 puanı en az 65 olmak.",
+    "Başvuru 2–6 Kasım 2026'da Şile Belediyesi Yazı İşleri Müdürlüğü'ne şahsen yapılır.",
+    "Sözlü ve uygulamalı sınav 20 Kasım 2026 saat 10.00'da yapılır."
    ],
-   "ozet": "Şile Belediyesi 8 zabıta memuru alacak (lise mezunu). Başvurular 2–6 Kasım 2026'da Yazı İşleri Müdürlüğüne şahsen yapılır.",
+   "ozet": "Şile Belediyesi 8 zabıta memuru alacak (lise mezunu, KPSS P94). Başvurular 2–6 Kasım 2026'da belediyeye şahsen yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -4909,11 +4889,11 @@
   }
  },
  "sbb-a00f639e934dfda13b150416": {
-  "zaman": "2026-11-01T19:13:47+03:00",
+  "zaman": "2026-11-02T07:12:22+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "9fc8af249e9802bb",
+  "imza": "5fffcdbb72e06a9e",
   "baslik": "İZMİR BÜYÜKŞEHİR BELEDİYE BAŞKANLIĞI - 90 ZABITA MEMURU ALACAK",
   "farklar": [],
   "yz": {
@@ -4926,7 +4906,7 @@
      "en_dusuk_puan": 65,
      "il": "İzmir",
      "kosullar": [
-      "Antrenörlük Eğitimi, Beden Eğitimi ve Spor Öğretmenliği, Spor Yöneticiliği, Egzersiz ve Spor Bilimleri, Rekreasyon, Engellilerde Beden Eğitimi ve Spor Öğretmenliği veya Engellilerde Egzersiz ve Spor Bilimleri lisans programlarından birinden mezun olmak.",
+      "Antrenörlük, Beden Eğitimi ve Spor Öğretmenliği, Spor Yöneticiliği, Egzersiz ve Spor Bilimleri, Rekreasyon veya Engellilerde Beden Eğitimi ve Spor Öğretmenliği lisans programlarından birinden mezun olmak.",
       "En az (B) sınıfı sürücü belgesine sahip olmak."
      ]
     },
@@ -4938,7 +4918,7 @@
      "en_dusuk_puan": 65,
      "il": "İzmir",
      "kosullar": [
-      "Antrenörlük Eğitimi, Beden Eğitimi ve Spor Öğretmenliği, Spor Yöneticiliği, Egzersiz ve Spor Bilimleri, Rekreasyon, Engellilerde Beden Eğitimi ve Spor Öğretmenliği veya Engellilerde Egzersiz ve Spor Bilimleri lisans programlarından birinden mezun olmak.",
+      "Antrenörlük, Beden Eğitimi ve Spor Öğretmenliği, Spor Yöneticiliği, Egzersiz ve Spor Bilimleri, Rekreasyon veya Engellilerde Beden Eğitimi ve Spor Öğretmenliği lisans programlarından birinden mezun olmak.",
       "En az (B) sınıfı sürücü belgesine sahip olmak."
      ]
     },
@@ -5002,11 +4982,11 @@
    "ortak_kosullar": [
     "Sınavın yapıldığı tarihte 30 yaşını doldurmamış olmak.",
     "Boy: erkeklerde en az 1,67 m, kadınlarda en az 1,60 m; boy-kilo farkı en çok 10 kg.",
-    "2026 KPSS (B grubu) sonucu aranır; adaylar yalnız bir kadroya başvurabilir.",
-    "Başvuru şahsen, 08:30–17:00 arası Yenidoğan, 2225 Sokak No:2 Konak/İzmir adresindeki Zabıta Dairesi Başkanlığına yapılır.",
-    "Sözlü ve uygulamalı sınav 11 Ocak 2027 saat 09:00'da Buca/İzmir'de yapılır."
+    "2026 KPSS (B grubu) puanı en az 65 olmak.",
+    "Başvuru 30 Kasım–4 Aralık 2026'da Zabıta Dairesi Başkanlığı'na (Konak) şahsen yapılır; posta/e-posta kabul edilmez.",
+    "Sözlü ve uygulamalı sınav 11 Ocak 2027 saat 09.00'da Buca'da yapılır."
    ],
-   "ozet": "İzmir Büyükşehir Belediyesi 90 zabıta memuru alacak (lisans ve ön lisans). Başvurular 30 Kasım–4 Aralık 2026'da Zabıta Dairesi Başkanlığına şahsen yapılır.",
+   "ozet": "İzmir Büyükşehir Belediyesi 90 zabıta memuru alacak (lisans 60, ön lisans 30). Başvurular 30 Kasım–4 Aralık 2026'da Zabıta Dairesi'ne şahsen yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -5022,25 +5002,20 @@
   }
  },
  "sbb-a1b920fe98f44f8e989fea1e": {
-  "zaman": "2026-11-01T19:13:47+03:00",
+  "zaman": "2026-11-02T07:12:22+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf-gorsel",
-  "imza": "76182bc09dcdd9b4",
+  "imza": "26e970d91a395437",
   "baslik": "MİLLİ SAVUNMA BAKANLIĞI - TÜRK SİLAHLI KUVVETLERİNE EN AZ DÖRT YIL SÜRELİ FAKÜLTE VEYA YÜKSEKOKUL MEZUNLARINDAN 2026 YILI MUVAZZAF SUBAY ADAYI TEMİNİ",
   "farklar": [],
   "yz": {
    "kadrolar": [],
-   "toplam": null,
-   "son_basvuru_tarihi": null,
-   "kpss_gerekli": null,
-   "iller": [],
-   "ortak_kosullar": [],
-   "ozet": "",
    "okunabilirlik": "kotu",
    "akademik": false,
    "iptal_veya_duzeltme": false,
-   "duyuru_tipi": "yeni_ilan"
+   "duyuru_tipi": "yeni_ilan",
+   "ortak_kosullar": []
   }
  },
  "sbb-a9fa876c2c8808fb5e6d4bc0": {
@@ -5093,11 +5068,11 @@
   }
  },
  "sbb-aaae2ed4a77586932d827f7d": {
-  "zaman": "2026-11-01T19:13:47+03:00",
+  "zaman": "2026-11-02T07:12:22+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "c9fa3dc11a127ada",
+  "imza": "37e87702daeb6d69",
   "baslik": "BANKACILIK DÜZENLEME VE DENETLEME KURUMU BAŞKANLIĞI - 15 SÖZLEŞMELİ BİLİŞİM PERSONELİ ALACAK",
   "farklar": [],
   "yz": {
@@ -5110,9 +5085,7 @@
      "en_dusuk_puan": null,
      "il": null,
      "kosullar": [
-      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak (diğer mühendislik, bilgisayar-teknoloji odaklı fen-edebiyat/eğitim, istatistik, matematik, fizik mezunları ücret tavanının 2 katı için başvurabilir).",
-      "Sistem/ağ/siber/bilgi güvenliği uzmanı olarak en az 5 yıl çalıştığını belgelemek.",
-      "En az iki güncel programlama dilini bildiğini belgelemek."
+      "En az 5 yıl mesleki tecrübe sahibi olmak."
      ]
     },
     {
@@ -5123,9 +5096,7 @@
      "en_dusuk_puan": null,
      "il": null,
      "kosullar": [
-      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak (diğer mühendislik, bilgisayar-teknoloji odaklı fen-edebiyat/eğitim, istatistik, matematik, fizik mezunları ücret tavanının 2 katı için başvurabilir).",
-      "Yazılım alanında en az 5 yıl mesleki tecrübeye sahip olmak.",
-      "C# ve Microsoft .NET teknolojilerinde en az 5 yıl tecrübe sahibi olmak."
+      "En az 5 yıl mesleki tecrübe sahibi olmak."
      ]
     },
     {
@@ -5136,8 +5107,7 @@
      "en_dusuk_puan": null,
      "il": null,
      "kosullar": [
-      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak (diğer mühendislik, bilgisayar-teknoloji odaklı fen-edebiyat/eğitim, istatistik, matematik, fizik mezunları ücret tavanının 2 katı için başvurabilir).",
-      "Veri madenciliği, makine öğrenimi, derin öğrenme veya yapay zekâ alanında en az 3 yıl tecrübe sahibi olmak."
+      "En az 3 yıl mesleki tecrübe sahibi olmak."
      ]
     },
     {
@@ -5148,8 +5118,7 @@
      "en_dusuk_puan": null,
      "il": null,
      "kosullar": [
-      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak (diğer mühendislik, bilgisayar-teknoloji odaklı fen-edebiyat/eğitim, istatistik, matematik, fizik mezunları ücret tavanının 2 katı için başvurabilir).",
-      "Sistem/ağ/siber/bilgi güvenliği veya ağ uzmanı olarak en az 3 yıl çalıştığını belgelemek."
+      "En az 3 yıl mesleki tecrübe sahibi olmak."
      ]
     },
     {
@@ -5160,8 +5129,7 @@
      "en_dusuk_puan": null,
      "il": null,
      "kosullar": [
-      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak (diğer mühendislik, bilgisayar-teknoloji odaklı fen-edebiyat/eğitim, istatistik, matematik, fizik mezunları ücret tavanının 2 katı için başvurabilir).",
-      "Sistem yönetimi uzmanı olarak en az 3 yıl çalıştığını belgelemek."
+      "En az 3 yıl mesleki tecrübe sahibi olmak."
      ]
     },
     {
@@ -5172,8 +5140,7 @@
      "en_dusuk_puan": null,
      "il": null,
      "kosullar": [
-      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak (diğer mühendislik, bilgisayar-teknoloji odaklı fen-edebiyat/eğitim, istatistik, matematik, fizik mezunları ücret tavanının 2 katı için başvurabilir).",
-      "Yazılım alanında en az 3 yıl mesleki tecrübeye sahip olmak."
+      "En az 3 yıl mesleki tecrübe sahibi olmak."
      ]
     }
    ],
@@ -5181,15 +5148,15 @@
    "son_basvuru_tarihi": "2026-11-02",
    "son_basvuru_saati": "23:59",
    "baslangic_tarihi": "2026-10-19",
-   "kpss_gerekli": false,
+   "kpss_gerekli": true,
    "iller": [],
    "ortak_kosullar": [
-    "Başvuru 19 Ekim 00:00 – 2 Kasım 2026 23:59 arası e-Devlet üzerinden Kariyer Kapısı'ndan yapılır.",
-    "Posta veya şahsen yapılan başvurular kabul edilmez.",
-    "Başvuruda fotoğraflı özgeçmiş ve mesleki çalışma süresini gösteren belgeler yüklenir.",
-    "Sözleşmeli bilişim personeli sözlü sınav sonucuna göre alınır."
+    "Dört yıllık mühendislik, fen-edebiyat veya eğitim fakültesi ilgili bölümünden mezun olmak.",
+    "Güncel programlama dillerinden en az ikisini bildiğini belgelemek.",
+    "2025 veya 2026 KPSS P3 puanı ve yabancı dil puanına göre sözlü sınava çağrılır.",
+    "Başvuru 19 Ekim–2 Kasım 2026'da Kariyer Kapısı üzerinden elektronik yapılır."
    ],
-   "ozet": "Bankacılık Düzenleme ve Denetleme Kurumu 15 sözleşmeli bilişim personeli alacak. Başvurular 2 Kasım 2026 23:59'a kadar Kariyer Kapısı'ndan yapılır.",
+   "ozet": "BDDK 15 sözleşmeli bilişim personeli alacak (siber güvenlik, yazılım, yapay zekâ, ağ, sistem uzmanları). Başvurular 2 Kasım 2026 saat 23.59'a kadar Kariyer Kapısı'ndan yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -5201,11 +5168,11 @@
   }
  },
  "sbb-b79b5a2fa5f2a1036a2ea5bc": {
-  "zaman": "2026-11-01T19:13:47+03:00",
+  "zaman": "2026-11-02T07:12:22+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "70ed232f513136d9",
+  "imza": "dc90c7fcca4bef35",
   "baslik": "ELEŞKİRT BELEDİYE BAŞKANLIĞI - 1 ÇÖZÜMLEYİCİ ALACAK",
   "farklar": [],
   "yz": {
@@ -5218,26 +5185,25 @@
      "en_dusuk_puan": 50,
      "il": "Ağrı",
      "kosullar": [
-      "Lisans düzeyinde eğitim veren fakültelerin İşletme, Siyaset Bilimi ve Yerel Yönetimler bölümlerinden birinden mezun olmak.",
-      "En az iki programlama dilini bildiğini okuldan alınacak belge veya MEB onaylı kurs sertifikasıyla belgelemek.",
+      "İşletme, Siyaset Bilimi veya Yerel Yönetimler lisans bölümlerinden birinden mezun olmak.",
+      "En az iki programlama dilini bildiğini belgelemek.",
       "En az (B) sınıfı sürücü belgesine sahip olmak."
      ]
     }
    ],
    "toplam": 1,
    "son_basvuru_tarihi": "2026-11-04",
-   "son_basvuru_saati": "17:00",
    "baslangic_tarihi": "2026-11-02",
    "kpss_gerekli": true,
    "iller": [
     "Ağrı"
    ],
    "ortak_kosullar": [
-    "2026 KPSS (B grubu) P3 puanından en az 50 puan almış olmak.",
-    "Başvuru 2–4 Kasım 2026'da yaziisleri@eleskirt.bel.tr adresine e-postayla ya da Yazı İşleri Müdürlüğüne şahsen/iadeli taahhütlü postayla yapılır.",
-    "Sözlü sınav 9 Kasım 2026 saat 10:00'da Eleşkirt Belediyesinde yapılır."
+    "2026 KPSS (B grubu) P3 puanı en az 50 olmak.",
+    "Başvuru 2–4 Kasım 2026'da e-posta, posta veya şahsen yapılır.",
+    "Sözlü sınav 9 Kasım 2026 saat 10.00'da yapılır."
    ],
-   "ozet": "Eleşkirt (Ağrı) Belediyesi 1 çözümleyici alacak. Başvurular 2–4 Kasım 2026'da e-posta, şahsen veya taahhütlü postayla yapılır.",
+   "ozet": "Eleşkirt Belediyesi (Ağrı) 1 çözümleyici alacak. Başvurular 2–4 Kasım 2026'da e-posta, posta veya şahsen yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -5376,11 +5342,11 @@
   }
  },
  "sbb-ce3aeb16575b73442a9f8944": {
-  "zaman": "2026-11-01T19:13:47+03:00",
+  "zaman": "2026-11-02T07:12:22+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "106c8d370795f91a",
+  "imza": "744c49339ab502df",
   "baslik": "ŞİLE BELEDİYE BAŞKANLIĞI - 6 MEMUR ALACAK",
   "farklar": [],
   "yz": {
@@ -5404,26 +5370,25 @@
      "en_dusuk_puan": 65,
      "il": "İstanbul",
      "kosullar": [
-      "Harita, harita kadastro, harita ve maden ölçme, inşaat, inşaat teknolojisi, makine veya elektrik ön lisans programlarından birinden mezun olmak."
+      "Harita, harita kadastro, inşaat, makine, elektrik vb. ön lisans programlarından birinden mezun olmak."
      ]
     }
    ],
    "toplam": 6,
    "son_basvuru_tarihi": "2026-11-13",
-   "son_basvuru_saati": "17:00",
    "baslangic_tarihi": "2026-11-09",
    "kpss_gerekli": true,
    "iller": [
     "İstanbul"
    ],
    "ortak_kosullar": [
-    "2026 KPSS (B grubu) sonucundan en az 65 puan aranır.",
     "Zabıta memuru için sınav tarihinde 30 yaşını doldurmamış olmak.",
-    "Zabıta memuru için boy: erkeklerde en az 1,67 m, kadınlarda en az 1,60 m; boy-kilo farkı en çok 10 kg.",
-    "Memur (tekniker): e-posta, şahsen veya taahhütlü postayla; zabıta: yalnız şahsen, Şile Belediyesi Yazı İşleri Müdürlüğüne.",
-    "Sözlü sınav 27 Kasım 2026'da; zabıta için ayrıca uygulamalı sınav yapılır."
+    "Zabıta için boy: erkeklerde en az 1,67 m, kadınlarda en az 1,60 m; boy-kilo farkı en çok 10 kg.",
+    "2026 KPSS (B grubu) puanı en az 65 olmak.",
+    "Başvuru 9–13 Kasım 2026'da; zabıta için şahsen, tekniker için e-posta, posta veya şahsen.",
+    "Zabıta sözlü ve uygulamalı sınavı 27 Kasım 2026 saat 14.00'te yapılır."
    ],
-   "ozet": "Şile Belediyesi 2 zabıta memuru ve 4 tekniker alacak. Başvurular 9–13 Kasım 2026'da Yazı İşleri Müdürlüğüne yapılır.",
+   "ozet": "Şile Belediyesi 2 zabıta memuru ve 4 tekniker alacak. Başvurular 9–13 Kasım 2026'da belediyeye yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
