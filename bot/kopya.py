@@ -64,6 +64,10 @@ def _uyumlu_kadro(a, b):
     if ua and ub:
         if ua & ub:
             return True
+        # 'Uzman' ile 'Uzman Personel' (elle düzeltilmiş kadro adı): toplamlar eşit ve biliniyorsa biri ötekinin sözcük altkümesi sayılır
+        # (2 Kasım 2026: Doğu Karadeniz Kalkınma Ajansı ilanı sitede üç satır göründü).
+        if ta and ta == tb and any(set(x.split()) <= set(y.split()) or set(y.split()) <= set(x.split()) for x in ua for y in ub):
+            return True
         return (ua <= GENEL_UNVANLAR or ub <= GENEL_UNVANLAR) and bool(ta) and ta == tb
     if not ua and not ub:
         return bool(ta) and ta == tb
@@ -302,6 +306,8 @@ def kopya_bul(ilanlar):
         if not (x['kan'] == y['kan'] or x['cekirdek'] and x['cekirdek'] == y['cekirdek'] or _jandarma_takma(a, b)):
             return False
         if x['il'] and y['il']:
+            if x['il'] != y['il'] and any('iskur.gov.tr' in h for h in x['host'] | y['host']) and not x['kan'].endswith(' belediye'):
+                return True   # İŞKUR kurumun merkez ilini yazar, ilan başka ilde olabilir (2 Kasım 2026: DOKA İŞKUR 'Trabzon', ilan Rize); belirleyici kural yine kadro/tekillik
             return x['il'] == y['il']
         # ili bir tarafta yazmayan (İŞKUR'un şehri, SBB'de il yok) ulusal kurum ilanı eşleşebilir; belediyede il şarttır
         return not x['kan'].endswith(' belediye')

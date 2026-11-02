@@ -286,6 +286,16 @@ class KalanKopyaTests(unittest.TestCase):
         sonuc = kopya.kopya_bul([kk, sbb, iskur])['kopya_of']
         self.assertEqual(sonuc, {kk['id']: sbb['id'], iskur['id']: sbb['id']})
 
+    def test_kalkinma_ajansi_uzman_personel_ve_iskur_baska_il_tek_ilan(self):
+        # 2 Kasım 2026: DOKA ilanı sitede üç satır göründü: kadro adı elle 'Uzman' / 'Uzman Personel' olmuş, İŞKUR merkez ili Trabzon yazmış, ilan Rize.
+        sbb = sbb_kayit(1, 'DOĞU KARADENİZ KALKINMA AJANSI', '1 Uzman', son='2026-12-06')
+        sbb['iller'] = ['Rize']
+        kk = kk_kayit(1, 'DOĞU KARADENİZ KALKINMA AJANSI', 'DOĞU KARADENİZ KALKINMA AJANSI - PERSONEL ALIM İLANI-2026', '2026-12-06', kadro='1 Uzman Personel')
+        kk['iller'] = ['Rize']
+        iskur = iskur_kayit(1, 'Doğu Karadeniz Kalkınma Ajansı', 'Doğu Karadeniz Kalkınma Ajansı Personel Alım İlanı', '2026-12-06', yer='Trabzon', iller=['Trabzon'])
+        iskur.pop('kadro', None)
+        sonuc = kopya.kopya_bul([sbb, kk, iskur])['kopya_of']
+        self.assertEqual(sonuc, {kk['id']: sbb['id'], iskur['id']: sbb['id']})
     def test_jandarma_farkli_donem_birlesmez(self):
         kk, sbb = self.jandarma()
         sbb['donem'] = '( 24 Ekim - 11 Kasım)'
