@@ -72,8 +72,12 @@ def _uyumlu_kadro(a, b):
 
 def _tur(item):
     """'sozlesmeli' | 'memur' | None — başlık/ilan türü/kadro metninden."""
-    m = ks.kurum_anahtari(' '.join(str(item.get(a) or '') for a in ('baslik', 'ilan_turu', 'kadro')))
-    return 'sozlesmeli' if 'sozlesmeli' in m else 'memur' if re.search(r'\bmemur', m) else None
+    def bak(alanlar):
+        m = ks.kurum_anahtari(' '.join(str(item.get(a) or '') for a in alanlar))
+        return 'sozlesmeli' if 'sozlesmeli' in m else 'memur' if re.search(r'\bmemur', m) else None
+    # Başlık/kadro önce: Kariyer Kapısı'nın 'Sözleşmeli Personel İlanları' kategorisi memur alımını da kapsar
+    # (2 Kasım 2026: 'J.GN.K.LIĞI AÇIKTAN DEVLET MEMURU' ilanı sözleşmeli sayılıp SBB kaydıyla eşleşmedi).
+    return bak(('baslik', 'kadro')) or bak(('ilan_turu',))
 
 
 def _tur_uyumlu(a, b):
@@ -175,6 +179,9 @@ def _kurum_cekirdek(item, kan):
     if kan.endswith(' belediye'):
         return frozenset(kan.split())
     ad = kurum_sade(ks.kurum_anahtari(re.sub(r'\([^)]*\)', ' ', item.get('kurum') or '')))
+    # İŞKUR bazen başlığı kurum alanına taşır ('Jandarma Genel Komutanlığı 2026 Yılı Devlet Memuru'): yıl ve alım sözcükleri atılır
+    # (2 Kasım 2026: Jandarma ilanı SBB ve İŞKUR kaydıyla iki kez paylaşıldı).
+    ad = ' '.join(re.sub(r'\b20\d\d\b|\byili\b|\bdevlet (?=memuru)|\bmemuru\b|\balim\b|\bilani\b', ' ', ad).split()) or ad
     for kisa, acik in KURUM_TAKMA.items():
         ad = re.sub(r'\b' + kisa + r'\b', acik, ad)
     sozcukler = [w for w in ad.split() if w not in KURUM_GENEL]
@@ -190,7 +197,7 @@ JGK = 'jandarma genel komutanligi'
 def _jandarma_takma(a, b):
     """Jandarma ve Sahil Güvenlik Akademisi, J.Gn.K.'lığı adına personel temin eder: başlığında 'J.Gn.K.' ya da 'Jandarma Genel
     Komutanlığı' geçen Akademi ilanı, Jandarma Genel Komutanlığı ilanıyla aynı kurum sayılır. Başka Akademi ilanı sayılmaz."""
-    ka, kb = ks.kurum_kanonik(a.get('kurum')), ks.kurum_kanonik(b.get('kurum'))
+    ka, kb = (JGK if k.startswith(JGK) else k for k in (ks.kurum_kanonik(a.get('kurum')), ks.kurum_kanonik(b.get('kurum'))))
     if {ka, kb} != {JSGA, JGK}:
         return False
     akademi = a if ka == JSGA else b
@@ -352,6 +359,10 @@ def kopya_bul(ilanlar):
             return True
         if not _tur_uyumlu(a, b) or not _toplam_esit_ya_da_bilinmiyor(a, b):
             return False
+        if (_jandarma_takma(a, b) and a.get('son_tarih') and a.get('son_tarih') == b.get('son_tarih')
+                and _tur(a) == _tur(b) == 'memur' and not (_unvanlar(a) and _unvanlar(b))):
+            return True   # Akademi, J.Gn.K. adına temin eder: aynı gün kapanan, unvanı okunamayan Jandarma devlet memuru alımı aynı ilandır
+            # (sözleşmeli ilanlarda — pilot, bilişim — unvan sözcükleri ayırt edicidir; yukarıdaki genel kurallara bırakılır)
         ortak = ortak_unvan(a, b)
         if _unvanlar(a) and _unvanlar(b):
             return ortak
