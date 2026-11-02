@@ -1,10 +1,10 @@
 {
  "schema": 1,
- "guncelleme": "2026-11-02T06:06:41.077296+00:00",
+ "guncelleme": "2026-11-02T07:36:41.776661+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-11-02T06:06:49.572181+00:00",
-   "hata_sayisi": 0,
+   "kontrol": "2026-11-02T07:37:18.420098+00:00",
+   "hata_sayisi": 1,
    "ilanlar": [
     {
      "id": "sbb-267a000ae26570448d5e5174",
@@ -86,8 +86,8 @@
      "donem": "( 2 Kasım - 1 Aralık)",
      "baslangic_zaman": "2026-11-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-02T09:06:42+03:00",
-     "belge_ozeti": "4d06fa9f93c70a7b45d9b4047b967881ec79d3cbac02bf83db750690f4eed7b5",
+     "detay_guncelleme": "2026-11-02T10:36:42+03:00",
+     "belge_ozeti": "a186377a89a898ddafbe62adf711a6bbb2092777ce239f90519099a05d2b89d8",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -375,6 +375,49 @@
      "sbb_detay_surumu": 6
     },
     {
+     "id": "sbb-2a7662aed2b08030660a2828",
+     "baslik": "JANDARMA GENEL KOMUTANLIĞI - 30 MEMUR TEMİN EDİLECEKTİR",
+     "kurum": "JANDARMA GENEL KOMUTANLIĞI",
+     "kadro": "30 MEMUR TEMİN EDİLECEKTİR",
+     "ilan_turu": "Memur",
+     "son_tarih": "2026-11-16",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 2 Kasım - 16 Kasım)",
+     "baslangic_zaman": "2026-11-02T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-11-02T10:36:44+03:00",
+     "belge_ozeti": "7ea34411cd26c87cdc1b5dbfac54398b903dfd16d47230cb23faec11d5195055",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "30 MEMUR TEMİN EDİLECEKTİR. Son başvuru: 16.11.2026. Personel Temin Sistemi dışında posta yoluyla veya şahsen yapılan başvurular dikkate alınmayacaktır. d. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "Mühendis THS 1-8 1 1 Ankara Elektrik Mühendisliği lisans - (2) programından mezun olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "KPSS (P3) 2025-2026 E / K 1. İstatistik 2. İstatistik ve Yöneylem Araştırması En Az 60 Puan 3. İstatistik-Ekonometri 4. İstatistik-Ekonometri ve Planlama 5. Ekonometri ve İstatistik 6. Matematik ve İstatistik İstatistikçi THS 1-8 2 2 Ankara 7. İstatistik-Matematik - 8. İstatistik ve Maliye 9. Maliye ve İstatistik 10. İstatistik ve Siyasi İlimler 11. Siyasi İlimler ve İstatistik 12. İstatistik ve Sosyal Siyaset 13. İstatistik-Sosyal Siyaset lisans programlarının birinden mezun olmak."
+      }
+     ],
+     "basvuru_notu": "",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/7ea34411cd26c87cdc1b5dbfac54398b903dfd16d47230cb23faec11d5195055.pdf",
+     "belge_sha256": "7ea34411cd26c87cdc1b5dbfac54398b903dfd16d47230cb23faec11d5195055",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "puan_turleri": [
+      "P3"
+     ],
+     "belge_ogrenim": [
+      "lisans"
+     ]
+    },
+    {
      "id": "sbb-7f740d1055142e4f7ccaf76e",
      "baslik": "BİTLİS EREN ÜNİVERSİTESİ - 7 ÖĞRETİM ÜYESİ ALACAK",
      "kurum": "BİTLİS EREN ÜNİVERSİTESİ",
@@ -442,8 +485,8 @@
      "donem": "( 30 Ekim - 5 Kasım)",
      "baslangic_zaman": "2026-10-30T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-02T09:06:43+03:00",
-     "belge_ozeti": "61bc2b8e3cb9018c10275b98391806274ad6bf01da1dc97b750049d24350f788",
+     "detay_guncelleme": "2026-11-02T10:36:46+03:00",
+     "belge_ozeti": "b943a0276c1753993f5a24163709e63647e68fd778aa35441eae606368bc1334",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -898,8 +941,8 @@
      "donem": "( 28 Ekim - 8 Kasım)",
      "baslangic_zaman": "2026-10-28T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-02T09:06:44+03:00",
-     "belge_ozeti": "357778804441fad29490d475ef117a9570880c499be638fc409ead501628b590",
+     "detay_guncelleme": "2026-11-02T10:36:47+03:00",
+     "belge_ozeti": "e3ef713d93454830d4a1459f27230cdc8be4fbdbc8b17111386e0daef422fd75",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -981,8 +1024,8 @@
      "donem": "( 28 Ekim - 6 Kasım)",
      "baslangic_zaman": "2026-10-28T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-02T09:06:45+03:00",
-     "belge_ozeti": "684b5a443988cabc95c3f12106a0f310bb1f0c48d66a3108e20b9558686be525",
+     "detay_guncelleme": "2026-11-02T10:36:49+03:00",
+     "belge_ozeti": "0587c92c50bc78bacb3df89b0068339a28c54f307227a987a599dbc77134661c",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1338,8 +1381,8 @@
      "donem": "( 27 Ekim - 10 Kasım)",
      "baslangic_zaman": "2026-10-27T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-02T09:06:46+03:00",
-     "belge_ozeti": "1847f4fa21656b25d8abbd4644d0bdcbf68f8782b712b54736f9c5af287b74f9",
+     "detay_guncelleme": "2026-11-02T10:36:50+03:00",
+     "belge_ozeti": "1fc75781b0158211f516f3dd0fcb67af2ceb25180005f3d1925c14613d61fef7",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1768,8 +1811,8 @@
      "donem": "( 2 Aralık - 4 Aralık)",
      "baslangic_zaman": "2026-12-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-02T09:06:48+03:00",
-     "belge_ozeti": "0924181656a94aed42e168382c2af64d06e497a1cb8627887167e97e3853929e",
+     "detay_guncelleme": "2026-11-02T10:37:17+03:00",
+     "belge_ozeti": "7604bb4dc617f9ef4a9621f8a8867d328c22f48204363c0ad75a1e0d9d53eb5c",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -2394,8 +2437,8 @@
      "donem": "( 22 Ekim - 6 Kasım)",
      "baslangic_zaman": "2026-10-22T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-02T09:06:48+03:00",
-     "belge_ozeti": "b332cbbe6f30e3ac274efeb3a25cbdd927ce569e85246064001f1add5a95398f",
+     "detay_guncelleme": "2026-11-02T10:37:17+03:00",
+     "belge_ozeti": "93afe0e24519e50c54f090092924276075acc487bc46e9a3f93b1baf1ca0deeb",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -2574,8 +2617,8 @@
      "donem": "( 18 Kasım - 20 Kasım)",
      "baslangic_zaman": "2026-11-18T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-02T09:06:49+03:00",
-     "belge_ozeti": "ee51a05f5ef1f155f7e91819401c60c93ac2d5c7139f399a8fe06d1f6c6b71f2",
+     "detay_guncelleme": "2026-11-02T10:37:18+03:00",
+     "belge_ozeti": "f2fc4a6a46d46348408de0c687edfc960c48cf79cbf104b594068722c4cd797c",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -3134,6 +3177,59 @@
      ]
     },
     {
+     "id": "sbb-1b8994c71a34ba67022f643f",
+     "baslik": "İZMİR BAKIRÇAY ÜNİVERSİTESİ - 28 AKADEMİK PERSONEL ALACAK",
+     "kurum": "İZMİR BAKIRÇAY ÜNİVERSİTESİ",
+     "kadro": "28 AKADEMİK PERSONEL ALACAK",
+     "ilan_turu": "Kamu Personeli",
+     "son_tarih": "2026-11-02",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 19 Ekim - 2 Kasım)",
+     "baslangic_zaman": "2026-10-19T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-11-02T04:08:09+03:00",
+     "belge_ozeti": "5e3d106c8b58fe6e1939fca950eb0be5c52dd85f8144a623dabb5e217b700b3a",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "28 AKADEMİK PERSONEL alımı. Son başvuru: 02.11.2026. - Başvurular, ilanın Resmî Gazete’de yayımlandığı tarihten itibaren 15’inci gün saat 23:59’a kadar çevrimiçi olarak yapılacaktır. Şahsen veya posta ile yapılan başvurular kabul edilmeyecektir. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "Veteriner Fakültesi lisans mezunu olmak. Veteriner Histoloji ve Embriyoloji alanında doktora yapmış olmak. Yükseköğretim kurumlarında 8 Dr. Öğr. 3 1 Karşıyaka Meslek Yüksekokulu Veterinerlik en az 2 yıl ders verme deneyimine sahip olmak. Pankreas ve kolon kanseri Üyesi Bölümü Laborant ve Veteriner Sağlık Programı hücrelerinde bakır sitotoksisitesi ve apoptotik değişim ile fermente süt ürünlerinde mikroplastik kalıntılar konularında bilimsel çalışmalar yapmış olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "Veteriner Fakültesi lisans mezunu olmak. Besin Hijyeni ve Teknolojisi Dr. Öğr. Karşıyaka Meslek Yüksekokulu Veterinerlik alanında doktora yapmış olmak. Yükseköğretim kurumlarında en az 2 yıl 9 Üyesi 3 1 Bölümü Laborant ve Veteriner Sağlık Programı ders vermiş olmak. Tüketime hazır gıdaların mikrobiyolojik kalitesi ile fermente gıda matrislerinde mikroplastik etkileşimi konularında çalışmalar yapmış olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "1 Araştırma 6 1 75 60 Hukuk Fakültesi Kamu Hukuku Hukuk fakültesi mezunu olmak ve kamu hukuku alanında Görevlisi (EA) Bölümü Hukuk Tarihi Anabilim Dalı yüksek lisans yapıyor olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "Araştırma 75 Mühendislik ve Mimarlık Fakültesi Endüstri Mühendisliği Bölümü lisans mezunu olmak ve 2 Görevlisi 6 1 (SAY) 60 Endüstri Mühendisliği Bölümü Endüstri Mühendisliği programında tezli yüksek lisans Endüstri Mühendisliği Anabilim Dalı yapıyor olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "Öğretim 70 Rektörlük (Ders Verecek) Ortak Tarih Öğretmenliği lisans ve tezli yüksek lisans mezunu 3 Görevlisi 6 1 (SÖZ) 60 Dersler Bölümü Atatürk İlkeleri ve olmak. Atatürk İlkeleri ve İnkılap Tarihi alanında doktora İnkılap Tarihi yapmış olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "MUAFİYET • Doktora veya tıpta, diş hekimliğinde, eczacılıkta ve veteriner hekimlikte uzmanlık ya da sanatta yeterlik eğitimini tamamlamış olanlarda, meslek yüksekokullarının Yükseköğretim Kurulu tarafından belirlenen uzmanlık alanlarına atanacak olanlarda, yükseköğretim kurumlarında öğretim elemanı kadrolarında çalışmış veya çalışmakta olanlarda merkezi sınav şartı aranmaz."
+      }
+     ],
+     "basvuru_notu": "- Başvurular, ilanın Resmî Gazete’de yayımlandığı tarihten itibaren 15’inci gün saat 23:59’a kadar çevrimiçi olarak yapılacaktı r. Şahsen veya posta ile yapılan başvurular kabul edilmeyecektir.",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/5e3d106c8b58fe6e1939fca950eb0be5c52dd85f8144a623dabb5e217b700b3a.pdf",
+     "belge_sha256": "5e3d106c8b58fe6e1939fca950eb0be5c52dd85f8144a623dabb5e217b700b3a",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6
+    },
+    {
      "id": "sbb-c799c2bf65cf136277930882",
      "baslik": "ORTA ANADOLU KALKINMA AJANSI - 6 UZMAN, 1 DESTEK PERSONELİ ALACAK",
      "kurum": "ORTA ANADOLU KALKINMA AJANSI",
@@ -3192,59 +3288,6 @@
      "belge_ogrenim": [
       "lisans"
      ]
-    },
-    {
-     "id": "sbb-1b8994c71a34ba67022f643f",
-     "baslik": "İZMİR BAKIRÇAY ÜNİVERSİTESİ - 28 AKADEMİK PERSONEL ALACAK",
-     "kurum": "İZMİR BAKIRÇAY ÜNİVERSİTESİ",
-     "kadro": "28 AKADEMİK PERSONEL ALACAK",
-     "ilan_turu": "Kamu Personeli",
-     "son_tarih": "2026-11-02",
-     "kaynak": "SBB Kamu İlan",
-     "kaynak_turu": "sbb",
-     "donem": "( 19 Ekim - 2 Kasım)",
-     "baslangic_zaman": "2026-10-19T00:00:00+03:00",
-     "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-02T04:08:09+03:00",
-     "belge_ozeti": "5e3d106c8b58fe6e1939fca950eb0be5c52dd85f8144a623dabb5e217b700b3a",
-     "kaynaklar": [
-      {
-       "ad": "SBB Kamu İlan",
-       "link": "https://kamuilan.sbb.gov.tr/"
-      }
-     ],
-     "ozet": "28 AKADEMİK PERSONEL alımı. Son başvuru: 02.11.2026. - Başvurular, ilanın Resmî Gazete’de yayımlandığı tarihten itibaren 15’inci gün saat 23:59’a kadar çevrimiçi olarak yapılacaktır. Şahsen veya posta ile yapılan başvurular kabul edilmeyecektir. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
-     "sartlar": [
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "Veteriner Fakültesi lisans mezunu olmak. Veteriner Histoloji ve Embriyoloji alanında doktora yapmış olmak. Yükseköğretim kurumlarında 8 Dr. Öğr. 3 1 Karşıyaka Meslek Yüksekokulu Veterinerlik en az 2 yıl ders verme deneyimine sahip olmak. Pankreas ve kolon kanseri Üyesi Bölümü Laborant ve Veteriner Sağlık Programı hücrelerinde bakır sitotoksisitesi ve apoptotik değişim ile fermente süt ürünlerinde mikroplastik kalıntılar konularında bilimsel çalışmalar yapmış olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "Veteriner Fakültesi lisans mezunu olmak. Besin Hijyeni ve Teknolojisi Dr. Öğr. Karşıyaka Meslek Yüksekokulu Veterinerlik alanında doktora yapmış olmak. Yükseköğretim kurumlarında en az 2 yıl 9 Üyesi 3 1 Bölümü Laborant ve Veteriner Sağlık Programı ders vermiş olmak. Tüketime hazır gıdaların mikrobiyolojik kalitesi ile fermente gıda matrislerinde mikroplastik etkileşimi konularında çalışmalar yapmış olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "1 Araştırma 6 1 75 60 Hukuk Fakültesi Kamu Hukuku Hukuk fakültesi mezunu olmak ve kamu hukuku alanında Görevlisi (EA) Bölümü Hukuk Tarihi Anabilim Dalı yüksek lisans yapıyor olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "Araştırma 75 Mühendislik ve Mimarlık Fakültesi Endüstri Mühendisliği Bölümü lisans mezunu olmak ve 2 Görevlisi 6 1 (SAY) 60 Endüstri Mühendisliği Bölümü Endüstri Mühendisliği programında tezli yüksek lisans Endüstri Mühendisliği Anabilim Dalı yapıyor olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "Öğretim 70 Rektörlük (Ders Verecek) Ortak Tarih Öğretmenliği lisans ve tezli yüksek lisans mezunu 3 Görevlisi 6 1 (SÖZ) 60 Dersler Bölümü Atatürk İlkeleri ve olmak. Atatürk İlkeleri ve İnkılap Tarihi alanında doktora İnkılap Tarihi yapmış olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "MUAFİYET • Doktora veya tıpta, diş hekimliğinde, eczacılıkta ve veteriner hekimlikte uzmanlık ya da sanatta yeterlik eğitimini tamamlamış olanlarda, meslek yüksekokullarının Yükseköğretim Kurulu tarafından belirlenen uzmanlık alanlarına atanacak olanlarda, yükseköğretim kurumlarında öğretim elemanı kadrolarında çalışmış veya çalışmakta olanlarda merkezi sınav şartı aranmaz."
-      }
-     ],
-     "basvuru_notu": "- Başvurular, ilanın Resmî Gazete’de yayımlandığı tarihten itibaren 15’inci gün saat 23:59’a kadar çevrimiçi olarak yapılacaktı r. Şahsen veya posta ile yapılan başvurular kabul edilmeyecektir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/5e3d106c8b58fe6e1939fca950eb0be5c52dd85f8144a623dabb5e217b700b3a.pdf",
-     "belge_sha256": "5e3d106c8b58fe6e1939fca950eb0be5c52dd85f8144a623dabb5e217b700b3a",
-     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 6
     },
     {
      "id": "sbb-0fac6531d53b24c392f59a95",
@@ -4413,7 +4456,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-11-02T06:06:50.588210+00:00",
+   "kontrol": "2026-11-02T07:37:19.680157+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -21735,6 +21778,288 @@
     "P24",
     "P29",
     "P34"
+   ]
+  },
+  "https://kariyerkapisi.gov.tr/IlanDetay?i=bb1814b5-f9dd-47b3-8006-900a7b8098c5": {
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/11ccecda-5dda-4e54-8306-f258a32d237c.png",
+   "son_tarih": "2026-11-16",
+   "son_zaman": "2026-11-16T23:59:00+03:00",
+   "baslangic_zaman": "2026-11-02T09:00:00+03:00",
+   "yer": "",
+   "kadro": "",
+   "ilan_turu": "Sözleşmeli Personel İlanları",
+   "ozet": "",
+   "sartlar": [],
+   "sart_kadro_sayisi": 0,
+   "basvuru_notu": "",
+   "detay_guncelleme": "2026-11-02T10:37:20+03:00",
+   "kk_detay_surumu": 3
+  },
+  "https://kariyerkapisi.gov.tr/IlanDetay?i=01e546b7-c1d0-4364-b010-7eea088f49cd": {
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/ae443556-cd79-41f2-acb5-d6395686f068.png",
+   "son_tarih": "2026-11-16",
+   "son_zaman": "2026-11-16T23:59:00+03:00",
+   "baslangic_zaman": "2026-11-02T10:00:00+03:00",
+   "yer": "ANKARA / ÇANKAYA",
+   "kadro": "5 SÖZLEŞMELİ BİLİŞİM PERSONELİ",
+   "ilan_turu": "Sözleşmeli Personel İlanları",
+   "ozet": "Başkanlığımızda 375 sayılı Kanun Hükmünde Kararnamenin ek 6 ncı maddesi ve Kamu Kurum ve Kuruluşlarının Büyük Ölçekli Bilgi İşlem Birimlerinde Sözleşmeli Bilişim Personeli İstihdamına İlişkin Esas ve Usuller Hakkında Yönetmelik uyarınca sözleşmeli bilişim personeli istihdam edilecektir.",
+   "sartlar": [
+    {
+     "kadro": "Kıdemli Yazılım Geliştirme Uzmanı (Java) (2 Kişi - Aylık brüt sözleşme ücret tavanının 4 katına kadar) ",
+     "metin": "-Bilgisayar mühendisliği, yazılım mühendisliği ya da bunlara denkliği/eşdeğerliği Yükseköğretim Kurulu'nca kabul edilmiş yükseköğretim kurumlarından mezun olmak."
+    }
+   ],
+   "sart_kadro_sayisi": 2,
+   "basvuru_notu": "-Adaylar istenilen belgelerini başvuru sisteminde belirtilen alanlara istenilen formatta yükleyecektir. Kariyer Kapısı (https://kariyerkapisi.gov.tr/isealim) üzerinden yapılmayan, posta yolu veya şahsen yapılan ve bu duyuruda belirtilen esaslara uygun olmayan başvurular kabul edilmeyecektir. Başvuru tarihini geciktiren, başvurusunu tamamlamayan veya nitelikleri uygun olmayan adayların müracaatları işleme alınmayacaktır.",
+   "detay_guncelleme": "2026-11-02T10:37:20+03:00",
+   "kk_detay_surumu": 3,
+   "kadro_ortak": [
+    [
+     "",
+     [
+      "Bilgisayar mühendisliği, yazılım mühendisliği ya da bunlara denkliği/eşdeğerliği Yükseköğretim Kurulu'nca kabul edilmiş yükseköğretim kurumlarından mezun olmak.",
+      "Java ve Spring Boot kullanılarak geliştirilen uygulamaların geliştirme ve bakım çalışmalarında fiilen görev aldığını belgelendirmek.",
+      "Spring Security ve Spring Data bileşenleri hakkında bilgi sahibi olmak.",
+      "Oracle veya PostgreSQL ilişkisel veri tabanları konusunda bilgi ve deneyim sahibi olmak.",
+      "Web teknolojileri (HTML/HTML5, XHTML, CSS/CSS3, Javascript) konularında bilgi sahibi olmak.",
+      "Javascript framework veya kütüphanelerinden en az birinde (React, Vue, Angular vb.) bilgi sahibi olmak.",
+      "Web servisleri, SOAP, REST gibi teknolojiler hakkında bilgi sahibi olmak.",
+      "Yazılım geliştirme yaşam döngüsü (SDLC) ve çevik yazılım geliştirme (Scrum, Kanban) süreçleri hakkında bilgi sahibi olmak.",
+      "Versiyon Kontrol Sistemleri (Git, SVN vb.) hakkında bilgi sahibi olmak.",
+      "Nesne Yönelimli Programlama (OOP), Temiz Kod, SOLID prensipleri ve Tasarım Kalıpları hakkında bilgi sahibi olmak."
+     ]
+    ],
+    [
+     ") GENEL ŞARTLAR",
+     [
+      "657 sayılı Devlet Memurları Kanunu’nun 48 inci maddesinde yazılı genel şartları taşımak.",
+      "Erkek adaylar için muvazzaf askerlik çağına gelmemiş veya askerlik çağına gelmiş ise muvazzaf askerlik hizmetini yapmış, erteletmiş veya askerlik hizmetinden muaf olmak."
+     ]
+    ]
+   ],
+   "kadro_detay": [
+    {
+     "unvan": "Kıdemli Yazılım Geliştirme Uzmanı (Java) (2 Kişi - Aylık brüt sözleşme ücret tavanının 4 katına kadar)",
+     "adet": 2,
+     "iller": [
+      "ANKARA / ÇANKAYA"
+     ],
+     "ogrenim": "",
+     "sinav": "",
+     "maddeler": [
+      "Belgelendirmek kaydıyla lisans mezuniyetinden sonra yazılım geliştiricisi olarak en az 8 yıllık çalışma deneyimine sahip olmak.",
+      "JPA ve Hibernate gibi ORM teknolojileri, ileri düzey SQL, veri modelleme ve sorgu performansı iyileştirme konularında bilgi sahibi olmak.",
+      "Birim testi (unit testing), entegrasyon testi ve test odaklı geliştirme (TDD) konularında bilgi sahibi olmak.",
+      "CI/CD süreçleri ve Jenkins, GitLab CI/CD veya benzeri sürekli entegrasyon ve dağıtım araçları hakkında bilgi sahibi olmak.",
+      "Docker kullanarak uygulamaları konteyner ortamında geliştirme ve çalıştırma konusunda bilgi sahibi olmak.",
+      "Mikroservis, Modüler Monolit ve dağıtık sistem mimarileri hakkında bilgi sahibi olmak.",
+      "Tercihen Alan Odaklı Tasarım (DDD) ve Hexagonal mimari konularında bilgi sahibi olmak.",
+      "Tercihen Keycloak veya benzeri kimlik ve erişim yönetimi araçları ile OAuth 2.0, OpenID Connect ve tek oturum açma yöntemleri hakkında bilgi sahibi olmak.",
+      "Kubernetes veya benzeri konteyner orkestrasyon platformları hakkında bilgi sahibi olmak.",
+      "Apache Kafka, RabbitMQ veya benzeri mesaj kuyruklama ve asenkron mesajlaşma teknolojilerinden en az biri hakkında bilgi sahibi olmak.",
+      "Redis, Memcached veya benzeri önbellekleme (caching) ve bellek içi veri yönetimi teknolojilerinden en az biri hakkında bilgi sahibi olmak."
+     ],
+     "bolumler": [
+      [
+       "",
+       [
+        "Belgelendirmek kaydıyla lisans mezuniyetinden sonra yazılım geliştiricisi olarak en az 8 yıllık çalışma deneyimine sahip olmak.",
+        "JPA ve Hibernate gibi ORM teknolojileri, ileri düzey SQL, veri modelleme ve sorgu performansı iyileştirme konularında bilgi sahibi olmak.",
+        "Birim testi (unit testing), entegrasyon testi ve test odaklı geliştirme (TDD) konularında bilgi sahibi olmak.",
+        "CI/CD süreçleri ve Jenkins, GitLab CI/CD veya benzeri sürekli entegrasyon ve dağıtım araçları hakkında bilgi sahibi olmak.",
+        "Docker kullanarak uygulamaları konteyner ortamında geliştirme ve çalıştırma konusunda bilgi sahibi olmak.",
+        "Mikroservis, Modüler Monolit ve dağıtık sistem mimarileri hakkında bilgi sahibi olmak.",
+        "Tercihen Alan Odaklı Tasarım (DDD) ve Hexagonal mimari konularında bilgi sahibi olmak.",
+        "Tercihen Keycloak veya benzeri kimlik ve erişim yönetimi araçları ile OAuth 2.0, OpenID Connect ve tek oturum açma yöntemleri hakkında bilgi sahibi olmak.",
+        "Kubernetes veya benzeri konteyner orkestrasyon platformları hakkında bilgi sahibi olmak.",
+        "Apache Kafka, RabbitMQ veya benzeri mesaj kuyruklama ve asenkron mesajlaşma teknolojilerinden en az biri hakkında bilgi sahibi olmak.",
+        "Redis, Memcached veya benzeri önbellekleme (caching) ve bellek içi veri yönetimi teknolojilerinden en az biri hakkında bilgi sahibi olmak."
+       ]
+      ]
+     ]
+    },
+    {
+     "unvan": "Yazılım Geliştirme Uzmanı (Java) (3 Kişi - Aylık brüt sözleşme ücret tavanının 2 katına kadar)",
+     "adet": 3,
+     "iller": [
+      "ANKARA / ÇANKAYA"
+     ],
+     "ogrenim": "",
+     "sinav": "",
+     "maddeler": [
+      "Belgelendirmek kaydıyla lisans mezuniyetinden sonra yazılım geliştiricisi olarak en az 3 yıllık çalışma deneyimine sahip olmak",
+      "JPA ve Hibernate gibi ORM teknolojileri hakkında bilgi sahibi olmak."
+     ],
+     "bolumler": [
+      [
+       "",
+       [
+        "Belgelendirmek kaydıyla lisans mezuniyetinden sonra yazılım geliştiricisi olarak en az 3 yıllık çalışma deneyimine sahip olmak",
+        "JPA ve Hibernate gibi ORM teknolojileri hakkında bilgi sahibi olmak."
+       ]
+      ]
+     ]
+    }
+   ],
+   "belge_ogrenim": [
+    "lisans"
+   ]
+  },
+  "https://kariyerkapisi.gov.tr/IlanDetay?i=a9f4af35-682a-4030-b699-68d7e4ad1546": {
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/b3648e8c-54c8-4622-a40d-66cc220f15c3.png",
+   "son_tarih": "2026-11-16",
+   "son_zaman": "2026-11-16T23:59:00+03:00",
+   "baslangic_zaman": "2026-11-02T00:00:00+03:00",
+   "yer": "ADANA • ADIYAMAN • AFYONKARAHİSAR • AKSARAY • ANKARA • ANTALYA • ARTVİN • AYDIN • AĞRI • BALIKESİR • BATMAN • BAYBURT • BURDUR • BURSA • BİLECİK • DENİZLİ • DÜZCE • DİYARBAKIR • EDİRNE • ELAZIĞ • ERZURUM • ERZİNCAN • ESKİŞEHİR • GAZİANTEP • GÜMÜŞHANE • HAKKARİ • HATAY • ISPARTA • IĞDIR • KAHRAMANMARAŞ • KARABÜK • KARAMAN • KARS • KASTAMONU • KAYSERİ • KIRIKKALE • KIRKLARELİ • KIRŞEHİR • KOCAELİ • KONYA • KÜTAHYA • MALATYA • MANİSA • MERSİN • MUĞLA • MUŞ • NEVŞEHİR • ORDU • OSMANİYE • RİZE • SAKARYA • SAMSUN • SİNOP • SİVAS • TEKİRDAĞ • TOKAT • TRABZON • TUNCELİ • UŞAK • YOZGAT • ZONGULDAK • ÇANKIRI • ÇORUM • İSTANBUL • İZMİR • ŞANLIURFA • ŞIRNAK",
+   "kadro": "162 KÜTÜPHANECİ",
+   "ilan_turu": "Sözleşmeli Personel İlanları",
+   "ozet": "Bakanlığımız taşra teşkilatı birimlerinde 657 sayılı Devlet Memurları Kanunu’nun 4’üncü maddesinin (B) fıkrasına göre 06/06/1978 tarih ve 7/15754 sayılı Bakanlar Kurulu Kararı ile yürürlüğe konulan Sözleşmeli Personel Çalıştırılmasına İlişkin Esasların Ek 2’nci maddesi uyarınca istihdam edilmek üzere, bölümü, puan türü, yeri ve adedi belirtilen münhal Kütüphaneci pozisyonuna sözlü sınav ile toplam 162 sözleşmeli personel alımı yapılacaktır.",
+   "sartlar": [
+    {
+     "kadro": "KÜTÜPHANECİ ",
+     "metin": "Ölçme, Seçme ve Yerleştirme Merkezi (ÖSYM) tarafından 2026 yılında yapılan, Kamu Personeli Seçme Sınavının KPSS (B) Grubu için KPSSP3 puan türünden asgari 70 ve daha yukarı puan almak kaydıyla, müracaat edenlerin en yüksek puandan başlanarak sıralanması neticesinde alınacak sözleşmeli personel sayısının üç katı aday giriş sınavına çağrılır.\nBilgi ve Belge Yönetimi, Kütüphanecilik, Arşivcilik, Dokümantasyon ve Enformasyon bölümlerinin herhangi birinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilen yurt dışındaki öğretim kurumlarından mezun olmak,"
+    }
+   ],
+   "sart_kadro_sayisi": 1,
+   "basvuru_notu": "",
+   "detay_guncelleme": "2026-11-02T10:37:21+03:00",
+   "kk_detay_surumu": 3,
+   "kadro_ortak": [
+    [
+     "GENEL ŞARTLAR",
+     [
+      "Başvuracak adaylarda aranılan nitelikler ile 657 sayılı Devlet Memurları Kanunu’nun 48’inci maddesindeki genel şartlar ve ilan edilen münhal pozisyon için belirtilen özel şartlar aranır:",
+      "Türk Vatandaşı olmak,",
+      "Son başvuru tarihi itibarıyla 18 (on sekiz) yaşını tamamlamış olmak,",
+      "Kamu haklarından mahrum bulunmamak,",
+      "Türk Ceza Kanunu’nun 53’üncü maddesinde belirtilen süreler geçmiş olsa bile; kasten işlenen bir suçtan dolayı bir yıl veya daha fazla süreyle hapis cezasına ya da affa uğramış olsa bile devletin güvenliğine karşı suçlar, Anayasal düzene ve bu düzenin işleyişine karşı suçlar, zimmet, irtikâp, rüşvet, hırsızlık, dolandırıcılık, sahtecilik, güveni kötüye kullanma, hileli iflas, ihaleye fesat karıştırma, edimin ifasına fesat karıştırma, suçtan kaynaklanan malvarlığı değerlerini aklama veya kaçakçılık suçlarından mahkûm olmamak,",
+      "Erkek adaylar için askerlik durumu itibarıyla; askerlikle ilgisi bulunmamak, muvazzaf askerlik hizmetini yapmış yahut ertelenmiş veya yedek sınıfa geçirilmiş olmak,",
+      "Görevini devamlı yapmasına engel teşkil edecek bedensel veya ruhsal sağlık sorunu bulunmamak, (Atanmaya hak kazanan adaylardan, görevini devamlı yapmasına engel olabilecek sağlık sorunu bulunmadığını gösterir, tam teşekküllü Devlet veya Devlet Üniversitesi Hastanelerinden alınacak Sağlık Kurulu (Heyet) raporu talep edilecektir.)",
+      "657 sayılı Devlet Memurları Kanunu’nun 4’üncü maddesi uyarınca; Başvuru tarihi itibarıyla son 1 yıl içerisinde aynı ünvanda 4/B sözleşmeli statüde çalışmakta olan ya da kurumlarınca sözleşmesi feshedilen veya sözleşmesini tek taraflı fesheden adaylar Sözleşmeli Personel Çalıştırılmasına İlişkin Esasların Ek 1’inci maddesinin 4’üncü fıkrasında yer alan; “fesih tarihinden itibaren bir yıl geçmedikçe kamu kurum ve kuruluşlarının sözleşmeli personel pozisyonlarında yeniden istihdam edilemez.” hükmüne tabidir. Bu hükme aykırı durum sonradan tespit edilenlerin atamaları iptal edilir."
+     ]
+    ]
+   ],
+   "kadro_detay": [
+    {
+     "unvan": "KÜTÜPHANECİ",
+     "adet": 162,
+     "iller": [
+      "ADANA",
+      "ADIYAMAN",
+      "AFYONKARAHİSAR",
+      "AĞRI",
+      "AKSARAY",
+      "ANKARA",
+      "ANTALYA",
+      "ARTVİN",
+      "AYDIN",
+      "BALIKESİR",
+      "BATMAN",
+      "BAYBURT",
+      "BİLECİK",
+      "BURDUR",
+      "BURSA",
+      "ÇANKIRI",
+      "ÇORUM",
+      "DENİZLİ",
+      "DİYARBAKIR",
+      "DÜZCE",
+      "EDİRNE",
+      "ELAZIĞ",
+      "ERZİNCAN",
+      "ERZURUM",
+      "ESKİŞEHİR",
+      "GAZİANTEP",
+      "GÜMÜŞHANE",
+      "HAKKARİ",
+      "HATAY",
+      "ISPARTA",
+      "İSTANBUL",
+      "İZMİR",
+      "KAHRAMANMARAŞ",
+      "KARABÜK",
+      "KARAMAN",
+      "KARS",
+      "KASTAMONU",
+      "KAYSERİ",
+      "KIRIKKALE",
+      "KIRKLARELİ",
+      "KIRŞEHİR",
+      "KOCAELİ",
+      "KONYA",
+      "KÜTAHYA",
+      "MALATYA",
+      "MANİSA",
+      "MERSİN",
+      "MUĞLA",
+      "MUŞ",
+      "NEVŞEHİR",
+      "ORDU",
+      "OSMANİYE",
+      "RİZE",
+      "SAKARYA",
+      "SAMSUN",
+      "SİNOP",
+      "SİVAS",
+      "ŞANLIURFA",
+      "ŞIRNAK",
+      "TEKİRDAĞ",
+      "TOKAT",
+      "TRABZON",
+      "TUNCELİ",
+      "UŞAK",
+      "IĞDIR",
+      "YOZGAT",
+      "ZONGULDAK"
+     ],
+     "ogrenim": "",
+     "sinav": "",
+     "maddeler": [
+      "Başvuracak adaylarda aranılan nitelikler ile 657 sayılı Devlet Memurları Kanunu’nun 48’inci maddesindeki genel şartlar ve ilan edilen münhal pozisyon için belirtilen özel şartlar aranır:",
+      "Türk Vatandaşı olmak,",
+      "Son başvuru tarihi itibarıyla 18 (on sekiz) yaşını tamamlamış olmak,",
+      "Kamu haklarından mahrum bulunmamak,",
+      "Türk Ceza Kanunu’nun 53’üncü maddesinde belirtilen süreler geçmiş olsa bile; kasten işlenen bir suçtan dolayı bir yıl veya daha fazla süreyle hapis cezasına ya da affa uğramış olsa bile devletin güvenliğine karşı suçlar, Anayasal düzene ve bu düzenin işleyişine karşı suçlar, zimmet, irtikâp, rüşvet, hırsızlık, dolandırıcılık, sahtecilik, güveni kötüye kullanma, hileli iflas, ihaleye fesat karıştırma, edimin ifasına fesat karıştırma, suçtan kaynaklanan malvarlığı değerlerini aklama veya kaçakçılık suçlarından mahkûm olmamak,",
+      "Erkek adaylar için askerlik durumu itibarıyla; askerlikle ilgisi bulunmamak, muvazzaf askerlik hizmetini yapmış yahut ertelenmiş veya yedek sınıfa geçirilmiş olmak,",
+      "Görevini devamlı yapmasına engel teşkil edecek bedensel veya ruhsal sağlık sorunu bulunmamak, (Atanmaya hak kazanan adaylardan, görevini devamlı yapmasına engel olabilecek sağlık sorunu bulunmadığını gösterir, tam teşekküllü Devlet veya Devlet Üniversitesi Hastanelerinden alınacak Sağlık Kurulu (Heyet) raporu talep edilecektir.)",
+      "657 sayılı Devlet Memurları Kanunu’nun 4’üncü maddesi uyarınca; Başvuru tarihi itibarıyla son 1 yıl içerisinde aynı ünvanda 4/B sözleşmeli statüde çalışmakta olan ya da kurumlarınca sözleşmesi feshedilen veya sözleşmesini tek taraflı fesheden adaylar Sözleşmeli Personel Çalıştırılmasına İlişkin Esasların Ek 1’inci maddesinin 4’üncü fıkrasında yer alan; “fesih tarihinden itibaren bir yıl geçmedikçe kamu kurum ve kuruluşlarının sözleşmeli personel pozisyonlarında yeniden istihdam edilemez.” hükmüne tabidir. Bu hükme aykırı durum sonradan tespit edilenlerin atamaları iptal edilir.",
+      "Yükseköğretim kurumlarının lisans düzeyinde eğitim veren; Bilgi ve Belge Yönetimi, Kütüphanecilik, Arşivcilik, Dokümantasyon ve Enformasyon bölümlerinin herhangi birinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilen yurt dışındaki öğretim kurumlarından mezun olmak,",
+      "Ölçme, Seçme ve Yerleştirme Merkezi (ÖSYM) tarafından 2026 yılında yapılan, Kamu Personeli Seçme Sınavının KPSS (B) Grubu için KPSSP3 puan türünden asgari 70 ve daha yukarı puan almak kaydıyla, müracaat edenlerin en yüksek puandan başlanarak sıralanması neticesinde alınacak sözleşmeli personel sayısının üç katı aday giriş sınavına çağrılır. Son sıradaki aday ile aynı puana sahip adaylar da giriş sınavına alınır.",
+      "Adayların, son başvuru tarihi itibarıyla, ilanda belirtilen öğrenim ve bölüm mezunu olmaları gerekmektedir.",
+      "Başvuru Yapılabilecek İller ve Kontenjanlar (162): Adana (1), Adıyaman (2), Afyonkarahisar (3), Ağrı (1), Aksaray (1), Ankara (6), Antalya (3), Artvin (5), Aydın (2), Balıkesir (3), Batman (4), Bayburt (1), Bilecik (1), Burdur (1), Bursa (2), Çankırı (3), Çorum (5), Denizli (4), Diyarbakır (6), Düzce (1), Edirne (1), Elazığ (2), Erzincan (2), Erzurum (4), Eskişehir (3), Gaziantep (2), Gümüşhane (3), Hakkari (1), Hatay (3), Iğdır (1), Isparta (5), İstanbul (6), İzmir (3), Kahramanmaraş (5), Karabük (1), Karaman (2), Kars (1), Kastamonu (3), Kayseri (1), Kırıkkale (1), Kırklareli (1), Kırşehir (1), Kocaeli (1), Konya (9), Kütahya (1), Malatya (2), Manisa (3), Mersin (3), Muğla (1), Muş (2), Nevşehir (4), Ordu (3), Osmaniye (2), Rize (1), Sakarya (1), Samsun (1), Sinop (2), Sivas (3), Şanlıurfa (1), Şırnak (2), Tekirdağ (1), Tokat (2), Trabzon (5), Tunceli (1), Uşak (1), Yozgat (2), Zonguldak (1)."
+     ],
+     "bolumler": [
+      [
+       "GENEL ŞARTLAR",
+       [
+        "Başvuracak adaylarda aranılan nitelikler ile 657 sayılı Devlet Memurları Kanunu’nun 48’inci maddesindeki genel şartlar ve ilan edilen münhal pozisyon için belirtilen özel şartlar aranır:",
+        "Türk Vatandaşı olmak,",
+        "Son başvuru tarihi itibarıyla 18 (on sekiz) yaşını tamamlamış olmak,",
+        "Kamu haklarından mahrum bulunmamak,",
+        "Türk Ceza Kanunu’nun 53’üncü maddesinde belirtilen süreler geçmiş olsa bile; kasten işlenen bir suçtan dolayı bir yıl veya daha fazla süreyle hapis cezasına ya da affa uğramış olsa bile devletin güvenliğine karşı suçlar, Anayasal düzene ve bu düzenin işleyişine karşı suçlar, zimmet, irtikâp, rüşvet, hırsızlık, dolandırıcılık, sahtecilik, güveni kötüye kullanma, hileli iflas, ihaleye fesat karıştırma, edimin ifasına fesat karıştırma, suçtan kaynaklanan malvarlığı değerlerini aklama veya kaçakçılık suçlarından mahkûm olmamak,",
+        "Erkek adaylar için askerlik durumu itibarıyla; askerlikle ilgisi bulunmamak, muvazzaf askerlik hizmetini yapmış yahut ertelenmiş veya yedek sınıfa geçirilmiş olmak,",
+        "Görevini devamlı yapmasına engel teşkil edecek bedensel veya ruhsal sağlık sorunu bulunmamak, (Atanmaya hak kazanan adaylardan, görevini devamlı yapmasına engel olabilecek sağlık sorunu bulunmadığını gösterir, tam teşekküllü Devlet veya Devlet Üniversitesi Hastanelerinden alınacak Sağlık Kurulu (Heyet) raporu talep edilecektir.)",
+        "657 sayılı Devlet Memurları Kanunu’nun 4’üncü maddesi uyarınca; Başvuru tarihi itibarıyla son 1 yıl içerisinde aynı ünvanda 4/B sözleşmeli statüde çalışmakta olan ya da kurumlarınca sözleşmesi feshedilen veya sözleşmesini tek taraflı fesheden adaylar Sözleşmeli Personel Çalıştırılmasına İlişkin Esasların Ek 1’inci maddesinin 4’üncü fıkrasında yer alan; “fesih tarihinden itibaren bir yıl geçmedikçe kamu kurum ve kuruluşlarının sözleşmeli personel pozisyonlarında yeniden istihdam edilemez.” hükmüne tabidir. Bu hükme aykırı durum sonradan tespit edilenlerin atamaları iptal edilir."
+       ]
+      ],
+      [
+       "ÖZEL ŞARTLAR",
+       [
+        "Yükseköğretim kurumlarının lisans düzeyinde eğitim veren; Bilgi ve Belge Yönetimi, Kütüphanecilik, Arşivcilik, Dokümantasyon ve Enformasyon bölümlerinin herhangi birinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilen yurt dışındaki öğretim kurumlarından mezun olmak,",
+        "Ölçme, Seçme ve Yerleştirme Merkezi (ÖSYM) tarafından 2026 yılında yapılan, Kamu Personeli Seçme Sınavının KPSS (B) Grubu için KPSSP3 puan türünden asgari 70 ve daha yukarı puan almak kaydıyla, müracaat edenlerin en yüksek puandan başlanarak sıralanması neticesinde alınacak sözleşmeli personel sayısının üç katı aday giriş sınavına çağrılır. Son sıradaki aday ile aynı puana sahip adaylar da giriş sınavına alınır.",
+        "Adayların, son başvuru tarihi itibarıyla, ilanda belirtilen öğrenim ve bölüm mezunu olmaları gerekmektedir.",
+        "Başvuru Yapılabilecek İller ve Kontenjanlar (162): Adana (1), Adıyaman (2), Afyonkarahisar (3), Ağrı (1), Aksaray (1), Ankara (6), Antalya (3), Artvin (5), Aydın (2), Balıkesir (3), Batman (4), Bayburt (1), Bilecik (1), Burdur (1), Bursa (2), Çankırı (3), Çorum (5), Denizli (4), Diyarbakır (6), Düzce (1), Edirne (1), Elazığ (2), Erzincan (2), Erzurum (4), Eskişehir (3), Gaziantep (2), Gümüşhane (3), Hakkari (1), Hatay (3), Iğdır (1), Isparta (5), İstanbul (6), İzmir (3), Kahramanmaraş (5), Karabük (1), Karaman (2), Kars (1), Kastamonu (3), Kayseri (1), Kırıkkale (1), Kırklareli (1), Kırşehir (1), Kocaeli (1), Konya (9), Kütahya (1), Malatya (2), Manisa (3), Mersin (3), Muğla (1), Muş (2), Nevşehir (4), Ordu (3), Osmaniye (2), Rize (1), Sakarya (1), Samsun (1), Sinop (2), Sivas (3), Şanlıurfa (1), Şırnak (2), Tekirdağ (1), Tokat (2), Trabzon (5), Tunceli (1), Uşak (1), Yozgat (2), Zonguldak (1)."
+       ]
+      ]
+     ]
+    }
+   ],
+   "belge_ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P3"
    ]
   }
  },
