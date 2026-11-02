@@ -1,9 +1,9 @@
 {
  "schema": 1,
- "guncelleme": "2026-11-02T13:36:44.602503+00:00",
+ "guncelleme": "2026-11-02T14:36:42.324925+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-11-02T13:37:22.508423+00:00",
+   "kontrol": "2026-11-02T14:36:52.275583+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -86,8 +86,8 @@
      "donem": "( 2 Kasım - 1 Aralık)",
      "baslangic_zaman": "2026-11-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-02T16:36:45+03:00",
-     "belge_ozeti": "6e16a256f4ef0ed3c38e89f69334c1f499ccbc3e96a3de034aa164d3afc5a6ae",
+     "detay_guncelleme": "2026-11-02T17:36:43+03:00",
+     "belge_ozeti": "c6dcc5733275484acf6814774e89091d4a2742a8fd54ef00f07cea0707d147e7",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -218,118 +218,6 @@
      ]
     },
     {
-     "id": "sbb-3badab732314c3d7bdcdf429",
-     "baslik": "İZMİR DEMOKRASİ ÜNİVERSİTESİ - 1 ALACAK",
-     "kurum": "İZMİR DEMOKRASİ ÜNİVERSİTESİ",
-     "kadro": "1 ALACAK",
-     "ilan_turu": "Kamu Personeli",
-     "son_tarih": "2026-11-16",
-     "kaynak": "SBB Kamu İlan",
-     "kaynak_turu": "sbb",
-     "donem": "( 2 Kasım - 16 Kasım)",
-     "baslangic_zaman": "2026-11-02T00:00:00+03:00",
-     "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-02T13:06:47+03:00",
-     "belge_ozeti": "4f7c6c40c33fd5ec46d01e0000896619aabeb02c658adc655807c6e85f77bfc8",
-     "kaynaklar": [
-      {
-       "ad": "SBB Kamu İlan",
-       "link": "https://kamuilan.sbb.gov.tr/"
-      }
-     ],
-     "ozet": "1 alımı. Son başvuru: 16.11.2026. İlana başvurular internet üzerinden, Üniversite Bilgi Yönetimi Sistemi (ÜBYS) üzerinden Akademik Personel Başvuru Modülü aracılığı ile (https://ubys.idu.edu.tr/HRM/AkademikBasvuru/PersonelBasvuru/Giris?sistemgiristip=1) elektronik olarak gerçekleştirilecek olup fiziksel belge ve posta yolu ile yapılan başvurular dikkate alınmayacaktır. Başvuruya ilişkin bilgi almak, karşılaşılabilecek sorunları bildirmek veya yardım almak için telefon ve adresler aşağıda belirtilmiştir. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
-     "sartlar": [
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "Bilgi İşlem Daire Öğretim Bilgisayar Mühendisliği lisans programından mezun olmak. ÖE2026/2-2 Rektörlük Başkanlığı - Görevlisi 5 1 Bilgisayar Mühendisliği alanında tezli yüksek lisans yapmış 70 65 (UB) olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "İş Sağlığı ve Öğretim Fen, Mühendislik, Mimarlık veya İş Sağlığı ve Güvenliği ÖE2026/2-3 Rektörlük Güvenliği - Görevlisi 5 1 alanlarında tezli yüksek lisans yapmış olmak. Çalışma ve Sosyal 70 65 Koordinatörlüğü (UB) Güvenlik Bakanlığı tarafından verilmiş geçerli İş Güvenliği Uzmanlığı Belgesine (A veya B sınıfı) sahip olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "2-Araştırma Görevlisi kadrosuna başvurabilmek için giriş sınavın yapıldığı yılın ocak ayının birinci günü itibarıyla otuz beş yaşını doldurmamış olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "3-ALES puanı (ilanda belirtilen puan alanında son beş yıliçinde alınan/ALES muafiyetinden yararlanacaklarındurumlarınıibrazetmeleridurumunda değerlendirme puanı 70 olarak dikkatealınır. ALES muafiyetindenyararlanmak isteyen adaylar başvuru formu üzerinde bu durumu beyan etmelidir.Başvuru modülüne ALES sonuç belgesi yerine ALES muafiyeti talep dilekçesi yüklemelidir) ve Yabancı Dil Puanına sahip olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "4-Araştırma Görevlisi kadrolarına başvuran adaylardan; tezli yüksek lisans, doktora veya sanatta yeterlik eğitimi öğrencisi olmak şartı aranır."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "5-Öğretim Görevlisi kadrosuna başvuracak adaylardan; en az tezli yüksek lisans derecesine sahip olmak veya lisans ve yüksek lisans derecesini birlikte veren programlardan mezun olmak şartı aranır."
-      }
-     ],
-     "basvuru_notu": "Başvuru Yerleri, İnternet Sayfası Adresleri ve Telefon Numaraları Başvuru adresi Telefon Birim İnternet Sayfaları",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/4f7c6c40c33fd5ec46d01e0000896619aabeb02c658adc655807c6e85f77bfc8.pdf",
-     "belge_sha256": "4f7c6c40c33fd5ec46d01e0000896619aabeb02c658adc655807c6e85f77bfc8",
-     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 6,
-     "belge_ogrenim": [
-      "lisans"
-     ]
-    },
-    {
-     "id": "sbb-9d1d0cad984aad9c58b66245",
-     "baslik": "İZMİR DEMOKRASİ ÜNİVERSİTESİ - 2 ÖĞRETİM ELEMANI ALACAK",
-     "kurum": "İZMİR DEMOKRASİ ÜNİVERSİTESİ",
-     "kadro": "2 ÖĞRETİM ELEMANI ALACAK",
-     "ilan_turu": "Öğretim Elemanı",
-     "son_tarih": "2026-11-16",
-     "kaynak": "SBB Kamu İlan",
-     "kaynak_turu": "sbb",
-     "donem": "( 2 Kasım - 16 Kasım)",
-     "baslangic_zaman": "2026-11-02T00:00:00+03:00",
-     "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-02T12:37:16+03:00",
-     "belge_ozeti": "9f0f4081f28721b12489a72c16598ec5b01e927b1caf7acaf5699c872282d1ca",
-     "kaynaklar": [
-      {
-       "ad": "SBB Kamu İlan",
-       "link": "https://kamuilan.sbb.gov.tr/"
-      }
-     ],
-     "ozet": "2 ÖĞRETİM ELEMANI alımı. Son başvuru: 16.11.2026. İlana başvurular internet üzerinden, Üniversite Bilgi Yönetimi Sistemi (ÜBYS) üzerinden Akademik Personel Başvuru Modülü aracılığı ile (https://ubys.idu.edu.tr/HRM/AkademikBasvuru/PersonelBasvuru/Giris?sistemgiristip=1) elektronik olarak gerçekleştirilecek olup fiziksel belge ve posta yolu ile yapılan başvurular dikkate alınmayacaktır. Başvuruya ilişkin bilgi almak, karşılaşılabilecek sorunları bildirmek veya yardım almak için telefon ve adresler aşağıda belirtilmiştir. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
-     "sartlar": [
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "Bilgi İşlem Daire Öğretim Bilgisayar Mühendisliği lisans programından mezun olmak. ÖE2026/2-2 Rektörlük Başkanlığı - Görevlisi 5 1 Bilgisayar Mühendisliği alanında tezli yüksek lisans yapmış 70 65 (UB) olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "İş Sağlığı ve Öğretim Fen, Mühendislik, Mimarlık veya İş Sağlığı ve Güvenliği ÖE2026/2-3 Rektörlük Güvenliği - Görevlisi 5 1 alanlarında tezli yüksek lisans yapmış olmak. Çalışma ve Sosyal 70 65 Koordinatörlüğü (UB) Güvenlik Bakanlığı tarafından verilmiş geçerli İş Güvenliği Uzmanlığı Belgesine (A veya B sınıfı) sahip olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "2-Araştırma Görevlisi kadrosuna başvurabilmek için giriş sınavın yapıldığı yılın ocak ayının birinci günü itibarıyla otuz beş yaşını doldurmamış olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "3-ALES puanı (ilanda belirtilen puan alanında son beş yıliçinde alınan/ALES muafiyetinden yararlanacaklarındurumlarınıibrazetmeleridurumunda değerlendirme puanı 70 olarak dikkatealınır. ALES muafiyetindenyararlanmak isteyen adaylar başvuru formu üzerinde bu durumu beyan etmelidir.Başvuru modülüne ALES sonuç belgesi yerine ALES muafiyeti talep dilekçesi yüklemelidir) ve Yabancı Dil Puanına sahip olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "4-Araştırma Görevlisi kadrolarına başvuran adaylardan; tezli yüksek lisans, doktora veya sanatta yeterlik eğitimi öğrencisi olmak şartı aranır."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "5-Öğretim Görevlisi kadrosuna başvuracak adaylardan; en az tezli yüksek lisans derecesine sahip olmak veya lisans ve yüksek lisans derecesini birlikte veren programlardan mezun olmak şartı aranır."
-      }
-     ],
-     "basvuru_notu": "Başvuru Yerleri, İnternet Sayfası Adresleri ve Telefon Numaraları Başvuru adresi Telefon Birim İnternet Sayfaları",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/9f0f4081f28721b12489a72c16598ec5b01e927b1caf7acaf5699c872282d1ca.pdf",
-     "belge_sha256": "9f0f4081f28721b12489a72c16598ec5b01e927b1caf7acaf5699c872282d1ca",
-     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 6,
-     "belge_ogrenim": [
-      "lisans"
-     ]
-    },
-    {
      "id": "sbb-19f8c0fb3857bf54e83d102c",
      "baslik": "İZMİR DEMOKRASİ ÜNİVERSİTESİ - 7 ÖĞRETİM ÜYESİ ALACAK",
      "kurum": "İZMİR DEMOKRASİ ÜNİVERSİTESİ",
@@ -373,6 +261,62 @@
      "belge_sha256": "7fd10b683b78ed10f36d166900757f4dd783a5ee4b480d4d0884c75270a29256",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
+    },
+    {
+     "id": "sbb-4bd528a11a74cf7278288e89",
+     "baslik": "İZMİR DEMOKRASİ ÜNİVERSİTESİ - 3 ÖĞRETİM ELEMANI ALACAK",
+     "kurum": "İZMİR DEMOKRASİ ÜNİVERSİTESİ",
+     "kadro": "3 ÖĞRETİM ELEMANI ALACAK",
+     "ilan_turu": "Öğretim Elemanı",
+     "son_tarih": "2026-11-16",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 2 Kasım - 16 Kasım)",
+     "baslangic_zaman": "2026-11-02T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-11-02T17:36:44+03:00",
+     "belge_ozeti": "3f789097d1924c4e829cb3693f64e61058ec9cf23be6ec889588a988871d3d6f",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "3 ÖĞRETİM ELEMANI alımı. Son başvuru: 16.11.2026. İlana başvurular internet üzerinden, Üniversite Bilgi Yönetimi Sistemi (ÜBYS) üzerinden Akademik Personel Başvuru Modülü aracılığı ile (https://ubys.idu.edu.tr/HRM/AkademikBasvuru/PersonelBasvuru/Giris?sistemgiristip=1) elektronik olarak gerçekleştirilecek olup fiziksel belge ve posta yolu ile yapılan başvurular dikkate alınmayacaktır. Başvuruya ilişkin bilgi almak, karşılaşılabilecek sorunları bildirmek veya yardım almak için telefon ve adresler aşağıda belirtilmiştir. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "Bilgi İşlem Daire Öğretim Bilgisayar Mühendisliği lisans programından mezun olmak. ÖE2026/2-2 Rektörlük Başkanlığı - Görevlisi 5 1 Bilgisayar Mühendisliği alanında tezli yüksek lisans yapmış 70 65 (UB) olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "İş Sağlığı ve Öğretim Fen, Mühendislik, Mimarlık veya İş Sağlığı ve Güvenliği ÖE2026/2-3 Rektörlük Güvenliği - Görevlisi 5 1 alanlarında tezli yüksek lisans yapmış olmak. Çalışma ve Sosyal 70 65 Koordinatörlüğü (UB) Güvenlik Bakanlığı tarafından verilmiş geçerli İş Güvenliği Uzmanlığı Belgesine (A veya B sınıfı) sahip olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "2-Araştırma Görevlisi kadrosuna başvurabilmek için giriş sınavın yapıldığı yılın ocak ayının birinci günü itibarıyla otuz beş yaşını doldurmamış olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "3-ALES puanı (ilanda belirtilen puan alanında son beş yıliçinde alınan/ALES muafiyetinden yararlanacaklarındurumlarınıibrazetmeleridurumunda değerlendirme puanı 70 olarak dikkatealınır. ALES muafiyetindenyararlanmak isteyen adaylar başvuru formu üzerinde bu durumu beyan etmelidir.Başvuru modülüne ALES sonuç belgesi yerine ALES muafiyeti talep dilekçesi yüklemelidir) ve Yabancı Dil Puanına sahip olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "4-Araştırma Görevlisi kadrolarına başvuran adaylardan; tezli yüksek lisans, doktora veya sanatta yeterlik eğitimi öğrencisi olmak şartı aranır."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "5-Öğretim Görevlisi kadrosuna başvuracak adaylardan; en az tezli yüksek lisans derecesine sahip olmak veya lisans ve yüksek lisans derecesini birlikte veren programlardan mezun olmak şartı aranır."
+      }
+     ],
+     "basvuru_notu": "Başvuru Yerleri, İnternet Sayfası Adresleri ve Telefon Numaraları Başvuru adresi Telefon Birim İnternet Sayfaları",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/3f789097d1924c4e829cb3693f64e61058ec9cf23be6ec889588a988871d3d6f.pdf",
+     "belge_sha256": "3f789097d1924c4e829cb3693f64e61058ec9cf23be6ec889588a988871d3d6f",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "belge_ogrenim": [
+      "lisans"
+     ]
     },
     {
      "id": "sbb-2a7662aed2b08030660a2828",
@@ -485,8 +429,8 @@
      "donem": "( 30 Ekim - 5 Kasım)",
      "baslangic_zaman": "2026-10-30T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-02T16:36:47+03:00",
-     "belge_ozeti": "532fc6beacb108a5dbccd232a1beeefe15d94088cbc646a2dde0e34f28cc8b92",
+     "detay_guncelleme": "2026-11-02T17:36:45+03:00",
+     "belge_ozeti": "0aa1710fb1d0337d3ca2b943395d961a331fdfdbff7bc5e3290407e44df886b0",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1038,8 +982,8 @@
      "donem": "( 28 Ekim - 6 Kasım)",
      "baslangic_zaman": "2026-10-28T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-02T16:36:47+03:00",
-     "belge_ozeti": "aeccc73c44f5424974e622791f94cff878b3537b3f75bbc9523e3f6b1ce19b28",
+     "detay_guncelleme": "2026-11-02T17:36:45+03:00",
+     "belge_ozeti": "a135adefe6fd4442c21659c864688056d5c4cb5694e2a4633becf5375aa47aa9",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1395,8 +1339,8 @@
      "donem": "( 27 Ekim - 10 Kasım)",
      "baslangic_zaman": "2026-10-27T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-02T16:36:48+03:00",
-     "belge_ozeti": "dccb66e0d5b79c2f32ed01873adedeee60e9309aae68d660e2c5aeee3d74e8d3",
+     "detay_guncelleme": "2026-11-02T17:36:46+03:00",
+     "belge_ozeti": "fdcc0b5dde3d7057a2736205889cd6dee210e4a97ad189a74ffac4a9aebbc17f",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1512,8 +1456,8 @@
      "donem": "( 26 Ekim - 9 Kasım)",
      "baslangic_zaman": "2026-10-26T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-02T16:36:49+03:00",
-     "belge_ozeti": "a2078f21d6590c8e880c240cee017974881e2eed5b2caf710160e01bb25127fd",
+     "detay_guncelleme": "2026-11-02T17:36:48+03:00",
+     "belge_ozeti": "df4ff7260e5b0bdbb0b9f335be4a13b8ad64e897487f55f728347bfa24859735",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1773,8 +1717,8 @@
      "donem": "( 9 Aralık - 11 Aralık)",
      "baslangic_zaman": "2026-12-09T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-02T04:36:51+03:00",
-     "belge_ozeti": "20f7ab7d7197c0e9e67f71e7c30fbd8891c0e237e4e315baeb321fafd570fed4",
+     "detay_guncelleme": "2026-11-02T17:36:48+03:00",
+     "belge_ozeti": "83bd754803630822f79e2593791421fa6fe90adbc57770d68d5f10ecc54c35a4",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1801,8 +1745,8 @@
       }
      ],
      "basvuru_notu": "e) Başvuruları kabul edilip sınava çağrılan adaylar, Belediyemizce düzenlenen ve adayların kimlik bilgileri ile sınav yeri ve tarihinin bulunduğu “Sınav Giriş Belgesi”ni Belediyemiz İnsan Kaynakları ve Eğitim Müdürlüğünden sınavdan önce şahsen alınacaktır .",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/20f7ab7d7197c0e9e67f71e7c30fbd8891c0e237e4e315baeb321fafd570fed4.pdf",
-     "belge_sha256": "20f7ab7d7197c0e9e67f71e7c30fbd8891c0e237e4e315baeb321fafd570fed4",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/83bd754803630822f79e2593791421fa6fe90adbc57770d68d5f10ecc54c35a4.pdf",
+     "belge_sha256": "83bd754803630822f79e2593791421fa6fe90adbc57770d68d5f10ecc54c35a4",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "yer": "İzmir",
@@ -1825,8 +1769,8 @@
      "donem": "( 2 Aralık - 4 Aralık)",
      "baslangic_zaman": "2026-12-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-02T16:36:49+03:00",
-     "belge_ozeti": "97b1cb2d03bd355360cbf24f9274deb3fda035e5f9c3b513c56ed72d21d87624",
+     "detay_guncelleme": "2026-11-02T17:36:49+03:00",
+     "belge_ozeti": "09ec069e0f41d5c13fbb0648ea4ce6107b8b355af0c5cc75c81cdaf8dc5ada28",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1850,8 +1794,8 @@
      "donem": "( 26 Ekim - 9 Kasım)",
      "baslangic_zaman": "2026-10-26T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-02T05:06:52+03:00",
-     "belge_ozeti": "d39abfb00a1f8002004f9d7e1c85bd83e912f8f3ec4699b14d678c8c4db4f328",
+     "detay_guncelleme": "2026-11-02T17:36:49+03:00",
+     "belge_ozeti": "924a84e76ef1cfdec20bc124f2a37feed81b369666dd27c34a50993961874543",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1882,8 +1826,8 @@
       }
      ],
      "basvuru_notu": "- Müracaatlar, ilanın Resmî Gazete’de yayımlandığı günden itibaren 15’inci gün mesai bitimine kadar http://ubys.tibu.edu.tr/HRM/AkademikBasvuru/PersonelBasvuru/Giris sayfasından çevrim içi başvuru şeklinde yapılacaktır. Şahsen veya posta ile yapılan müracaatlar kabul edilmeyecektir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/d39abfb00a1f8002004f9d7e1c85bd83e912f8f3ec4699b14d678c8c4db4f328.pdf",
-     "belge_sha256": "d39abfb00a1f8002004f9d7e1c85bd83e912f8f3ec4699b14d678c8c4db4f328",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/924a84e76ef1cfdec20bc124f2a37feed81b369666dd27c34a50993961874543.pdf",
+     "belge_sha256": "924a84e76ef1cfdec20bc124f2a37feed81b369666dd27c34a50993961874543",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
     },
@@ -2349,8 +2293,8 @@
      "donem": "( 26 Ekim - 9 Kasım)",
      "baslangic_zaman": "2026-10-26T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-02T05:06:53+03:00",
-     "belge_ozeti": "b2f1e5fda8888c3d9eca232b6ec7f143cff3044c285a726a9a5f0cef37884a6a",
+     "detay_guncelleme": "2026-11-02T17:36:50+03:00",
+     "belge_ozeti": "89a51840da0b17bb80a249d903a0a4d3680df838784d425d0680a39bfb41b0c9",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -2369,8 +2313,8 @@
       }
      ],
      "basvuru_notu": "1) Giriş sınavına başvuru yapacak adaylar 26.10.2026 – 09.11.20 26 tarihleri arasında e- Devlet üzerinde Orman Genel Müdürlüğü – Kariyer Kapısı Kamu İşe Alım ve Kariyer Kapısı https://kariyerkapisi.gov.tr/isealim adresi üzerinden e-devlet şifreleri ile başvuru yapacaklardır. Başvuru işlemleri 09.11.2026 gecesi saat 23:59’da sona erecek o lup bu süre kesinlikle uzatılmayacaktır. Adayların başvuru işleminden önce e-devlet şi fresi edinmeleri gerekmektedir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/b2f1e5fda8888c3d9eca232b6ec7f143cff3044c285a726a9a5f0cef37884a6a.pdf",
-     "belge_sha256": "b2f1e5fda8888c3d9eca232b6ec7f143cff3044c285a726a9a5f0cef37884a6a",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/89a51840da0b17bb80a249d903a0a4d3680df838784d425d0680a39bfb41b0c9.pdf",
+     "belge_sha256": "89a51840da0b17bb80a249d903a0a4d3680df838784d425d0680a39bfb41b0c9",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "puan_turleri": [
@@ -2451,8 +2395,8 @@
      "donem": "( 22 Ekim - 6 Kasım)",
      "baslangic_zaman": "2026-10-22T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-02T16:36:57+03:00",
-     "belge_ozeti": "a73aa3a0203eb9f0405b9bf46a528b55c17bc734bf3da62e4aaa9fd4d5b7ce3b",
+     "detay_guncelleme": "2026-11-02T17:36:51+03:00",
+     "belge_ozeti": "48e6b799d0335db424b21937464bed0f6deb0e88bcac47df99bfd6a2a040c7a0",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -2631,8 +2575,8 @@
      "donem": "( 18 Kasım - 20 Kasım)",
      "baslangic_zaman": "2026-11-18T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-02T16:36:59+03:00",
-     "belge_ozeti": "0a581018c0cc429b703f5f9f62efdbe40d7480af97886c154f4fe991445f96b8",
+     "detay_guncelleme": "2026-11-02T17:36:52+03:00",
+     "belge_ozeti": "ecb3aa3adc33c291858603cdef18d23b75613240b6d24cdd5e1c58106b3847a7",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -4470,9 +4414,71 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-11-02T13:37:38.531109+00:00",
+   "kontrol": "2026-11-02T14:36:54.753325+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
+    {
+     "id": "csb-478688",
+     "baslik": "ARDAHAN İLİ POSOF İLÇESİ SÖZLEŞMELİ PERSONEL ALIMI İPTAL İLANI",
+     "kurum": "",
+     "kadro": "",
+     "ilan_turu": "Sözleşmeli Personel",
+     "son_tarih": null,
+     "kaynak": "ÇŞB Yerel Yönetimler",
+     "kaynak_turu": "csb",
+     "link": "https://yerelyonetimler.csb.gov.tr/ardahan-ili-posof-ilcesi-sozlesmeli-personel-alimi-iptal-ilani-duyuru-478688",
+     "kaynaklar": [
+      {
+       "ad": "ÇŞB Yerel Yönetimler",
+       "link": "https://yerelyonetimler.csb.gov.tr/ardahan-ili-posof-ilcesi-sozlesmeli-personel-alimi-iptal-ilani-duyuru-478688"
+      }
+     ],
+     "yayim_tarihi": "2026-11-02",
+     "detay_guncelleme": "2026-11-02T17:36:53+03:00",
+     "csb_detay_surumu": 5,
+     "ozet": "Ardahan İli Posof Belediyesinin 30.10.2026 tarihli ve 7982 sayılı yazısına istinaden ilk defa atanmak üzere sözleşmeli personel alım ilanı iptal edilmiştir",
+     "belgeler": [],
+     "yer": "Ardahan",
+     "duyuru_turu": "İptal duyurusu"
+    },
+    {
+     "id": "csb-478686",
+     "baslik": "ELEŞKİRT BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE İTFAİYE ERİ ALIMI İLANI",
+     "kurum": "ELEŞKİRT BELEDİYE BAŞKANLIĞI",
+     "kadro": "1 İtfaiye Eri",
+     "ilan_turu": "Kamu Personeli",
+     "son_tarih": "2026-12-11",
+     "kaynak": "ÇŞB Yerel Yönetimler",
+     "kaynak_turu": "csb",
+     "link": "https://yerelyonetimler.csb.gov.tr/agri-ili-eleskirt-belediye-baskanligina-ilk-defa-atanmak-uzere-itfaiye-eri-alimi-ilani-duyuru-478686",
+     "kaynaklar": [
+      {
+       "ad": "ÇŞB Yerel Yönetimler",
+       "link": "https://yerelyonetimler.csb.gov.tr/agri-ili-eleskirt-belediye-baskanligina-ilk-defa-atanmak-uzere-itfaiye-eri-alimi-ilani-duyuru-478686"
+      }
+     ],
+     "yayim_tarihi": "2026-11-02",
+     "detay_guncelleme": "2026-11-02T17:36:54+03:00",
+     "csb_detay_surumu": 5,
+     "ozet": "Ağrı ili Eleşkirt Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Belediye İtfaiye Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla itfaiye eri alımı yapılacaktır. Son başvuru: 11.12.2026.",
+     "belgeler": [
+      {
+       "ad": "2-11-2026-eleskirt-belediyesi-itfaiye-eri-alim-ilani-1-20261102165015.docx",
+       "link": "https://webdosya.csb.gov.tr/v2/yerelyonetimler/2026/11/2-11-2026-eleskirt-belediyesi-itfaiye-eri-alim-ilani-1-20261102165015.docx"
+      }
+     ],
+     "yer": "Ağrı",
+     "sartlar": [
+      {
+       "kadro": "İtfaiye Eri · 1 kadro",
+       "metin": "KPSS P3 puan türünden en az 70 puan. Hizmet sınıfı GİH, 11. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren kurumların herhangi birinden mezun olmak. En az (B) sınıfı Sürücü belgesine sahip olmak. Cinsiyet: Erkek."
+      },
+      {
+       "kadro": "Tüm kadrolar için",
+       "metin": "Sınavın yapıldığı tarihte 30 yaşını doldurmamış olmak. Boy: erkeklerde en az 1,67 m, kadınlarda en az 1,60 m; boyun 1 metreden fazla kısmı ile kilo arasında en fazla 10 kg fark olmalı (ölçüm aç karnına, soyunuk ve çıplak ayakla)."
+      }
+     ]
+    },
     {
      "id": "csb-478618",
      "baslik": "GAZİOSMANPAŞA BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE ZABITA MEMURU ALIMI İLANI",
@@ -5230,69 +5236,6 @@
       }
      ],
      "basvuru_notu": "Başvuru 9 Kasım 2026 – 13 Kasım 2026 arasında; e-postayla (insankaynaklari@sile.bel.tr) ya da şahsen/postayla (posta ve diğer yollarla başvuru kabul edilmez)."
-    },
-    {
-     "id": "csb-477952",
-     "baslik": "ŞİLE BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE ZABITA MEMURU ALIMI İLANI",
-     "kurum": "ŞİLE BELEDİYE BAŞKANLIĞI",
-     "kadro": "8 Zabıta Memuru",
-     "ilan_turu": "Memur",
-     "son_tarih": "2026-11-06",
-     "kaynak": "ÇŞB Yerel Yönetimler",
-     "kaynak_turu": "csb",
-     "link": "https://yerelyonetimler.csb.gov.tr/istanbul-ili-sile-belediye-baskanligina-ilk-defa-atanmak-uzere-zabita-memuru-alimi-ilani-duyuru-477952",
-     "kaynaklar": [
-      {
-       "ad": "ÇŞB Yerel Yönetimler",
-       "link": "https://yerelyonetimler.csb.gov.tr/istanbul-ili-sile-belediye-baskanligina-ilk-defa-atanmak-uzere-zabita-memuru-alimi-ilani-duyuru-477952"
-      }
-     ],
-     "yayim_tarihi": "2026-09-29",
-     "detay_guncelleme": "2026-11-02T12:37:29+03:00",
-     "csb_detay_surumu": 5,
-     "ozet": "İstanbul ili Şile Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Belediye Zabıta Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla zabıta memuru alımı yapılacaktır. Son başvuru: 06.11.2026.",
-     "belgeler": [
-      {
-       "ad": "29-09-2026-ile-Belediyesi-lk-Defa-Atanmak-zere-Zab-ta-Memuru-Al-m-lan-20260929101417.docx",
-       "link": "https://webdosya.csb.gov.tr/v2/yerelyonetimler/2026/09/29-09-2026-ile-Belediyesi-lk-Defa-Atanmak-zere-Zab-ta-Memuru-Al-m-lan-20260929101417.docx"
-      }
-     ],
-     "yer": "İstanbul",
-     "sartlar": [
-      {
-       "kadro": "Zabıta Memuru · 8 kadro",
-       "metin": "KPSS P94 puan türünden en az 65 puan. Hizmet sınıfı GİH, 11. derece. Öğrenim: Ortaöğretim mezunu. Herhangi bir ortaöğretim kurumundan (lise veya dengi okul) mezun olmak. En az (B) sınıfı sürücü belgesine sahip olmak."
-      },
-      {
-       "kadro": "Tüm kadrolar için",
-       "metin": "Sınavın yapıldığı tarihte 30 yaşını doldurmamış olmak. Boy: erkeklerde en az 1,67 m, kadınlarda en az 1,60 m; boyun 1 metreden fazla kısmı ile kilo arasında en fazla 10 kg fark olmalı (ölçüm aç karnına, soyunuk ve çıplak ayakla)."
-      }
-     ],
-     "basvuru_notu": "Başvuru 2 Kasım 2026 – 6 Kasım 2026 arasında; şahsen (posta ve diğer yollarla başvuru kabul edilmez)."
-    },
-    {
-     "id": "csb-477951",
-     "baslik": "ÇUIKURKUYU BELEDİYESİ - İLK DEFA MEMUR (ZABITA) ALIM İPTAL İLANI",
-     "kurum": "ÇUIKURKUYU BELEDİYESİ",
-     "kadro": "",
-     "ilan_turu": "Memur",
-     "son_tarih": null,
-     "kaynak": "ÇŞB Yerel Yönetimler",
-     "kaynak_turu": "csb",
-     "link": "https://yerelyonetimler.csb.gov.tr/nigde-ili-cuikurkuyu-belediyesi-ilk-defa-memur-zabita-alim-iptal-ilani-duyuru-477951",
-     "kaynaklar": [
-      {
-       "ad": "ÇŞB Yerel Yönetimler",
-       "link": "https://yerelyonetimler.csb.gov.tr/nigde-ili-cuikurkuyu-belediyesi-ilk-defa-memur-zabita-alim-iptal-ilani-duyuru-477951"
-      }
-     ],
-     "yayim_tarihi": "2026-09-29",
-     "detay_guncelleme": "2026-11-02T16:37:38+03:00",
-     "csb_detay_surumu": 5,
-     "ozet": "Niğde ili Çukurkuyu Belediyesinin 21.09.2026 tarihli ve 5651 sayılı yazısına istinaden ilk defa zabıta memuru alımı ilanı iptal edildi.",
-     "belgeler": [],
-     "yer": "Niğde",
-     "duyuru_turu": "İptal duyurusu"
     }
    ]
   }
@@ -21736,6 +21679,452 @@
         "Python veya Ağ otomasyonunda kullanılabilecek en az bir programlama dili bilmek.",
         "Tercihen CCNA sertifikasına sahip olmak.",
         "NAC (Network Access Control) teknolojisi konusunda bilgi ve tecrübe sahibi olmak."
+       ]
+      ]
+     ]
+    }
+   ],
+   "belge_ogrenim": [
+    "lisans"
+   ]
+  },
+  "https://kariyerkapisi.gov.tr/IlanDetay?i=5976effc-ff4b-49b1-a5d7-c08d82d81636": {
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/b9638ed1-17b7-4508-9f6e-34a7bda0bab2.png",
+   "son_tarih": "2026-11-06",
+   "son_zaman": "2026-11-06T23:59:00+03:00",
+   "baslangic_zaman": "2026-10-22T09:00:00+03:00",
+   "yer": "ANKARA / MERKEZ",
+   "kadro": "Toplam 13 kişi — 1 KIDEMLİ AĞ UZMANI • 1 KIDEMLİ CBS YAZILIM GELİŞTİRME UZMANI • 5 YAZILIM UZMANI • 1 SİSTEM UZMANI • 1 Ağ Uzmanı • 2 RİSK VE UYUM UZMANI • 2 Siber Güvenlik Uzmanı",
+   "ilan_turu": "Sözleşmeli Personel İlanları",
+   "ozet": "Tarım ve Orman Bakanlığı Bilgi Teknolojileri Genel Müdürlüğü (Ankara) emrinde tam zamanlı olarak istihdam edilmek üzere, 375 sayılı Kanun Hükmünde Kararnamenin Ek 6’ncı maddesi ve bu maddeye dayanılarak 31.12.2008 tarihli ve 27097 sayılı Resmi Gazete’de yayımlanan “Kamu Kurum ve Kuruluşlarının Büyük Ölçekli Bilgi İşlem Birimlerinde Sözleşmeli Bilişim Personeli İstihdamına İlişkin Esas ve Usuller Hakkında Yönetmelik”in 8’inci maddesi uyarınca, sözlü ve uygulamalı sınav sonucunda oluşacak başarı sırasına göre 13…",
+   "sartlar": [
+    {
+     "kadro": "Kıdemli Ağ Uzmanı (1 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 4 Katına Kadar)",
+     "metin": "En az 10.000 (on bin) kullanıcılı kurumsal bir ağ altyapısında ağ uzmanı, ağ mühendisi veya ağ yöneticisi olarak en az 10 (on) yıllık mesleki tecrübeye sahip olduğunu belgelemek,"
+    },
+    {
+     "kadro": "Kıdemli CBS Yazılım Geliştirme Uzmanı (1 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 4 Katına…",
+     "metin": "Yazılım, yazılım tasarımı ve geliştirilmesi ile bu sürecin yönetimi konusunda en az 10 (on) yıllık mesleki tecrübeye sahip olduğunu belgelemek, bu sürenin en az 5 (beş) yılının coğrafi bilgi sistemleri (CBS) yazılımlarının tasarımı ve geliştirilmesi süreçlerinde geçtiğini belgelemek,"
+    },
+    {
+     "kadro": "Yazılım Uzmanı (5 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 3 Katına Kadar)",
+     "metin": "Yazılım tasarımı ve geliştirilmesi süreçlerinde en az 5 (beş) yıllık mesleki tecrübeye sahip olduğunu belgelemek,"
+    },
+    {
+     "kadro": "Sistem Uzmanı (1 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 2 Katına Kadar) ",
+     "metin": "En az 5.000 (beş bin) kullanıcılı bir sistem altyapısında sistem uzmanı, sistem yöneticisi veya sistem mühendisi olarak en az 3 (üç) yıllık mesleki tecrübeye sahip olduğunu belgelemek,"
+    },
+    {
+     "kadro": "Ağ Uzmanı (1 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 2 Katına Kadar)",
+     "metin": "En az 5.000 (beş bin) kullanıcılı kurumsal bir ağ altyapısında ağ uzmanı, ağ mühendisi veya ağ yöneticisi olarak en az 3 (üç) yıllık mesleki tecrübeye sahip olduğunu belgelemek,"
+    },
+    {
+     "kadro": "Siber Güvenlik Uzmanı (2 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 2 Katına Kadar)",
+     "metin": "Ağ üzerinde trafik ve protokol analizi yapabilen (wireshark, tcpdump, zeek gibi) yazılımlar konusunda bilgi ve tecrübe sahibi olmak,"
+    }
+   ],
+   "sart_kadro_sayisi": 7,
+   "basvuru_notu": "Bu duyuruda belirtilen esaslara uygun olmayan, posta yolu veya şahsen müracaat şeklinde yapılan başvurular kabul edilmeyecektir. Müracaatların sona ermesinden sonra adayın başvuru bilgilerinde kesinlikle değişiklik yapılmayacaktır. Başvuru işleminin hatasız, eksiksiz ve duyuruda belirtilen hususlara uygun olarak yapılmasından adayın kendisi sorumlu olacaktır. Adaylardan gerekli durumlarda; sisteme yüklenen belgelerin asılları istenilebilecektir.",
+   "detay_guncelleme": "2026-11-02T17:36:55+03:00",
+   "kk_detay_surumu": 3,
+   "kadro_ortak": [
+    [
+     "A. GENEL ŞARTLAR",
+     [
+      "İstihdam edilecek personelin,",
+      "657 sayılı Devlet Memurları Kanunu’nun 48 inci maddesinde sayılan genel şartları haiz olması,",
+      "Fakültelerin dört yıllık bilgisayar mühendisliği, yazılım mühendisliği, elektrik mühendisliği, elektronik mühendisliği, elektrik ve elektronik mühendisliği ve endüstri mühendisliği bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurt dışındaki yükseköğretim kurumlarından mezun olması,",
+      "(b) bendinde belirtilenler dışında kalan dört yıllık eğitim veren fakültelerin mühendislik bölümlerinden, fen-edebiyat, eğitim ve eğitim bilimleri fakültelerinin, bilgisayar ve teknoloji üzerine eğitim veren bölümleri ile istatistik, matematik ve fizik bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurt dışındaki yükseköğretim kurumlarından mezun olması (Bu kısımda belirtilen bölüm mezunları aylık brüt sözleşme ücret tavanının 2 katına kadar olan ilana başvuru yapabilirler),",
+      "Yazılım, yazılım tasarımı ve geliştirilmesi ile bu sürecin yönetimi konusunda veya büyük ölçekli ağ sistemlerinin kurulumu ve yönetimi konusunda ücret tavanı iki katını geçmeyecekler için en az 3 (üç) yıllık, diğerleri için en az 5 (beş) yıllık mesleki tecrübeye sahip bulunması (Mesleki tecrübenin belirlenmesinde; Bilişim Personeli olarak 657 sayılı Kanuna tabi kadrolu veya aynı Kanunun 4 üncü maddesinin (B) bendi ya da 399 sayılı Kanun Hükmünde Kararnameye tabi sözleşmeli statüdeki hizmetler ile özel kesimde sosyal güvenlik kurumlarına prim ödenmek suretiyle işçi statüsünde bilişim personeli olarak geçtiği belgelenen hizmet süreleri dikkate alınır),",
+      "Bilgisayar çevre birimlerinin donanımı ve kurulan ağ yönetimi ve güvenliği hakkında bilgi sahibi olmaları kaydıyla güncel programlama dillerinden en az ikisini bildiğini belgelemeleri zorunludur.",
+      "Görevini devamlı yapmasına engel olabilecek akıl hastalığı bulunmamak,",
+      "Erkek adaylar için askerlik ile ilgili terhis, muafiyet veya son başvuru tarihi itibarıyla en az 1 (bir) yıl erteletmiş olmak kaydıyla ilişiği bulunmamak,",
+      "Hizmetin gerektirdiği niteliklere, muhakeme yeteneğine ve temsil kabiliyetine sahip olmak, takım çalışmasına yatkın olmak."
+     ]
+    ],
+    [
+     "GENEL ŞARTLAR başlığının (ç) maddesinde belirtilen mesleki tecrübeyi gösterir belge",
+     [
+      "Mesleki tecrübenin bilişim personeli olarak geçtiğinin belgelendirilmesi gerekmekte olup, e-devlet üzerinden yapılan başvuru esnasında ‘Diğer Bilgiler’ bölümüne yüklenecektir.",
+      "Mesleki tecrübe sürelerinde başvurulan pozisyon için aranılan lisans mezuniyeti sonrasındaki hizmetler dikkate alınacaktır."
+     ]
+    ]
+   ],
+   "kadro_detay": [
+    {
+     "unvan": "Kıdemli Ağ Uzmanı (1 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 4 Katına Kadar)",
+     "adet": 1,
+     "iller": [
+      "ANKARA / MERKEZ"
+     ],
+     "ogrenim": "",
+     "sinav": "",
+     "maddeler": [
+      "Kıdemli Ağ Uzmanı (1 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 4 Katına Kadar)",
+      "En az 10.000 (on bin) kullanıcılı kurumsal bir ağ altyapısında ağ uzmanı, ağ mühendisi veya ağ yöneticisi olarak en az 10 (on) yıllık mesleki tecrübeye sahip olduğunu belgelemek,",
+      "Kurumun mevcut ve gelecekteki ihtiyaçları doğrultusunda; ölçeklenebilirlik, yüksek erişilebilirlik, güvenlik, performans ve iş sürekliliği esaslarını gözeterek kurumsal ağ mimarilerinin tasarlanması, planlanması, standartlaştırılması ve mevcut sistemlerle entegrasyonu konularında ileri düzey bilgi ve tecrübe sahibi olmak,",
+      "Yeni nesil güvenlik duvarı, WAF (Web Application Firewall), Layer-7 DDoS ve IPS/IDS çözümlerinin kurumun ağ mimarisiyle bütünleşik olarak tasarlanması, konumlandırılması, yüksek erişilebilirlik ve kapasite gereksinimlerinin belirlenmesi, güvenlik politikalarının oluşturulması ve işletilmesi konularında ileri düzey bilgi ve tecrübe sahibi olmak,",
+      "Kurumsal ağlarda kullanılan omurga, dağıtım ve erişim anahtarlarının mimari tasarımı, konumlandırılması, yapılandırılması, yüksek erişilebilirlik ve kapasite planlaması, performans optimizasyonu ile ileri seviye sorun giderme konularında bilgi ve tecrübe sahibi olmak,",
+      "Kurumsal kablosuz ağların; erişim noktaları ve kablosuz ağ kontrol sistemleri kullanılarak kapsama alanı, kullanıcı yoğunluğu, kapasite, güvenlik, dolaşım ve yüksek erişilebilirlik gereksinimleri doğrultusunda tasarlanması, kurulması, yapılandırılması, mevcut ağ altyapısıyla bütünleştirilmesi ve yönetilmesi konularında bilgi ve tecrübe sahibi olmak,",
+      "NAC (Network Access Control) çözümlerinin; kullanıcı, cihaz ve erişim türlerine göre kimlik doğrulama, yetkilendirme, profil oluşturma, politika uygulama, ağ segmentasyonu ve olay müdahalesi gereksinimleri doğrultusunda tasarlanması, kurulması, mevcut ağ altyapısıyla bütünleştirilmesi ve yönetilmesi konularında bilgi ve tecrübe sahibi olmak,",
+      "Wireshark, tcpdump, TShark ve benzeri araçları kullanarak ağ trafiği ve protokol analizi yapabilmek; paket kaybı, gecikme, MTU/MSS uyumsuzluğu, asimetrik yönlendirme, oturum ve uygulama kaynaklı ağ sorunlarını tespit edip kök neden analizi gerçekleştirebilecek düzeyde bilgi ve tecrübe sahibi olmak,",
+      "LAN, WAN ve WLAN mimarileri; TCP/IP, IPv4 ve IPv6 adresleme; sanal özel ağlar (VPN), SSL/TLS, dinamik yönlendirme protokolleri ve IEEE 802.1X tabanlı erişim kontrolü konularında, kurumsal ölçekte tasarım, entegrasyon, yüksek erişilebilirlik, güvenlik, kapasite planlama ve ileri seviye sorun giderme yapabilecek düzeyde bilgi ve tecrübe sahibi olmak,",
+      "Veri merkezi ağ altyapılarının; yüksek erişilebilirlik, yedeklilik, ölçeklenebilirlik, segmentasyon, performans ve iş sürekliliği gereksinimleri doğrultusunda tasarlanması, mevcut sistemlerle bütünleştirilmesi, kapasite planlamasının yapılması ve işletilmesi konularında ileri düzey bilgi ve tecrübe sahibi olmak,",
+      "Kurumsal ağlarda yönlendirme, anahtarlama ve kablosuz ağ altyapılarının yapılandırılması, yönetilmesi, performans ve kapasite açısından optimize edilmesi, yüksek erişilebilirliğinin sağlanması ve ileri seviye sorunlarının giderilmesi konularında bilgi ve tecrübe sahibi olmak,",
+      "SNMP, Syslog, NetFlow, sFlow, IPFIX ve benzeri yöntemler kullanılarak ağ altyapısının erişilebilirlik, performans, kapasite ve güvenlik açısından izlenmesi; eşik ve alarm mekanizmalarının oluşturulması, eğilim ve kapasite analizlerinin yapılması ve teknik/yönetsel raporların hazırlanması konularında bilgi ve tecrübe sahibi olmak,",
+      "Belgeleme ve düzenli raporlamaya önem veriyor olmak,",
+      "Cisco Certified Network Professional (CCNP) Enterprise veya CCNP Security, ii. Fortinet NSE 4 – FortiOS Administrator veya üstü NSE sertifikası (geçerliliği devam eden FCP/FCSS – Network Security/Secure Networking sertifikaları dahil), iii. Palo Alto Networks Certified Next-Generation Firewall Engineer (NGFW Engineer) veya geçerliliği devam eden Palo Alto Networks Certified Network Security Engineer (PCNSE), iv. F5 Certified Technology Specialist (F5-CTS) – BIG-IP LTM veya BIG-IP ASM."
+     ],
+     "bolumler": [
+      [
+       "",
+       [
+        "Kıdemli Ağ Uzmanı (1 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 4 Katına Kadar)",
+        "En az 10.000 (on bin) kullanıcılı kurumsal bir ağ altyapısında ağ uzmanı, ağ mühendisi veya ağ yöneticisi olarak en az 10 (on) yıllık mesleki tecrübeye sahip olduğunu belgelemek,",
+        "Kurumun mevcut ve gelecekteki ihtiyaçları doğrultusunda; ölçeklenebilirlik, yüksek erişilebilirlik, güvenlik, performans ve iş sürekliliği esaslarını gözeterek kurumsal ağ mimarilerinin tasarlanması, planlanması, standartlaştırılması ve mevcut sistemlerle entegrasyonu konularında ileri düzey bilgi ve tecrübe sahibi olmak,",
+        "Yeni nesil güvenlik duvarı, WAF (Web Application Firewall), Layer-7 DDoS ve IPS/IDS çözümlerinin kurumun ağ mimarisiyle bütünleşik olarak tasarlanması, konumlandırılması, yüksek erişilebilirlik ve kapasite gereksinimlerinin belirlenmesi, güvenlik politikalarının oluşturulması ve işletilmesi konularında ileri düzey bilgi ve tecrübe sahibi olmak,",
+        "Kurumsal ağlarda kullanılan omurga, dağıtım ve erişim anahtarlarının mimari tasarımı, konumlandırılması, yapılandırılması, yüksek erişilebilirlik ve kapasite planlaması, performans optimizasyonu ile ileri seviye sorun giderme konularında bilgi ve tecrübe sahibi olmak,",
+        "Kurumsal kablosuz ağların; erişim noktaları ve kablosuz ağ kontrol sistemleri kullanılarak kapsama alanı, kullanıcı yoğunluğu, kapasite, güvenlik, dolaşım ve yüksek erişilebilirlik gereksinimleri doğrultusunda tasarlanması, kurulması, yapılandırılması, mevcut ağ altyapısıyla bütünleştirilmesi ve yönetilmesi konularında bilgi ve tecrübe sahibi olmak,",
+        "NAC (Network Access Control) çözümlerinin; kullanıcı, cihaz ve erişim türlerine göre kimlik doğrulama, yetkilendirme, profil oluşturma, politika uygulama, ağ segmentasyonu ve olay müdahalesi gereksinimleri doğrultusunda tasarlanması, kurulması, mevcut ağ altyapısıyla bütünleştirilmesi ve yönetilmesi konularında bilgi ve tecrübe sahibi olmak,",
+        "Wireshark, tcpdump, TShark ve benzeri araçları kullanarak ağ trafiği ve protokol analizi yapabilmek; paket kaybı, gecikme, MTU/MSS uyumsuzluğu, asimetrik yönlendirme, oturum ve uygulama kaynaklı ağ sorunlarını tespit edip kök neden analizi gerçekleştirebilecek düzeyde bilgi ve tecrübe sahibi olmak,",
+        "LAN, WAN ve WLAN mimarileri; TCP/IP, IPv4 ve IPv6 adresleme; sanal özel ağlar (VPN), SSL/TLS, dinamik yönlendirme protokolleri ve IEEE 802.1X tabanlı erişim kontrolü konularında, kurumsal ölçekte tasarım, entegrasyon, yüksek erişilebilirlik, güvenlik, kapasite planlama ve ileri seviye sorun giderme yapabilecek düzeyde bilgi ve tecrübe sahibi olmak,",
+        "Veri merkezi ağ altyapılarının; yüksek erişilebilirlik, yedeklilik, ölçeklenebilirlik, segmentasyon, performans ve iş sürekliliği gereksinimleri doğrultusunda tasarlanması, mevcut sistemlerle bütünleştirilmesi, kapasite planlamasının yapılması ve işletilmesi konularında ileri düzey bilgi ve tecrübe sahibi olmak,",
+        "Kurumsal ağlarda yönlendirme, anahtarlama ve kablosuz ağ altyapılarının yapılandırılması, yönetilmesi, performans ve kapasite açısından optimize edilmesi, yüksek erişilebilirliğinin sağlanması ve ileri seviye sorunlarının giderilmesi konularında bilgi ve tecrübe sahibi olmak,",
+        "SNMP, Syslog, NetFlow, sFlow, IPFIX ve benzeri yöntemler kullanılarak ağ altyapısının erişilebilirlik, performans, kapasite ve güvenlik açısından izlenmesi; eşik ve alarm mekanizmalarının oluşturulması, eğilim ve kapasite analizlerinin yapılması ve teknik/yönetsel raporların hazırlanması konularında bilgi ve tecrübe sahibi olmak,",
+        "Belgeleme ve düzenli raporlamaya önem veriyor olmak,"
+       ]
+      ],
+      [
+       "Aşağıdaki sertifikalardan en az bir veya birkaçına sahip olduğunu belgelemek",
+       [
+        "Cisco Certified Network Professional (CCNP) Enterprise veya CCNP Security, ii. Fortinet NSE 4 – FortiOS Administrator veya üstü NSE sertifikası (geçerliliği devam eden FCP/FCSS – Network Security/Secure Networking sertifikaları dahil), iii. Palo Alto Networks Certified Next-Generation Firewall Engineer (NGFW Engineer) veya geçerliliği devam eden Palo Alto Networks Certified Network Security Engineer (PCNSE), iv. F5 Certified Technology Specialist (F5-CTS) – BIG-IP LTM veya BIG-IP ASM."
+       ]
+      ]
+     ]
+    },
+    {
+     "unvan": "Kıdemli CBS Yazılım Geliştirme Uzmanı (1 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 4 Katına Kadar)",
+     "adet": 1,
+     "iller": [
+      "ANKARA / MERKEZ"
+     ],
+     "ogrenim": "",
+     "sinav": "",
+     "maddeler": [
+      "Kıdemli CBS Yazılım Geliştirme Uzmanı (1 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 4 Katına Kadar)",
+      "Yazılım, yazılım tasarımı ve geliştirilmesi ile bu sürecin yönetimi konusunda en az 10 (on) yıllık mesleki tecrübeye sahip olduğunu belgelemek, bu sürenin en az 5 (beş) yılının coğrafi bilgi sistemleri (CBS) yazılımlarının tasarımı ve geliştirilmesi süreçlerinde geçtiğini belgelemek,",
+      ".NET, .NET Core, ASP.NET MVC, ASP.NET Core teknolojilerinden en az birinin ve açık kaynak kodlu CBS bileşenlerinden (GeoServer, MapServer, QGIS Server, PostGIS, GDAL/OGR, OpenLayers, Leaflet) en az birinin kullanıldığı, en az 10.000 (on bin) kullanıcılı en az bir kurumsal CBS yazılımı projesinde geliştirici olarak görev aldığını belgelemek,",
+      "OpenLayers veya Leaflet kütüphanelerinden en az birini kullanarak web tabanlı harita uygulaması geliştirmiş olmak,",
+      "GeoServer veya ArcGIS Enterprise (ArcGIS Server) üzerinden harita ve detay (feature) servisleri yayımlamış ve bu servisleri kullanan uygulama geliştirmiş olmak,",
+      "OGC web servis standartlarına (WMS, WMTS, WFS/WFS-T) uygun servisleri kullanarak veya yayımlayarak uygulama geliştirmiş olmak, OGC API (Features, Tiles) standartları hakkında bilgi sahibi olmak,",
+      "Açık kaynak kodlu CBS yazılım ve kütüphaneleri (QGIS, GDAL/OGR, PROJ, GEOS, NetTopologySuite vb.) hakkında bilgi sahibi olmak,",
+      "Vektör ve raster coğrafi veri formatları (GML, GeoJSON, Shapefile, KML, GeoPackage, GeoTIFF/COG) ile vektör karo (MVT) yapıları hakkında bilgi sahibi olmak,",
+      "Koordinat referans sistemleri, datum ve projeksiyon dönüşümleri (ITRF96/TUREF, ED50, WGS84; 3 derecelik TM ve UTM projeksiyonları; EPSG tanımları) konusunda bilgi ve tecrübe sahibi olmak,",
+      "Büyük hacimli mekânsal verinin web üzerinden performanslı sunulması (karo önbellekleme, vektör karolar, ölçeğe bağlı gösterim, mekânsal indeks kullanımı) konusunda bilgi ve tecrübe sahibi olmak,",
+      "Yazılım mimari gereksinimlerinin belirlenmesi, tasarım, geliştirme ve alt yapının teknolojik gelişmelere uyarlanması konusunda bilgi ve tecrübe sahibi olmak,",
+      "Kullanıcı kimliklendirme ve yetkilendirme yöntem ve teknolojileri hakkında bilgi ve tecrübe sahibi olmak,",
+      "Yazılım geliştirme yaşam döngüsü (SDLC) hakkında bilgi ve tecrübe sahibi olmak,",
+      "Güvenli yazılım geliştirme standartları konusunda bilgi ve tecrübe sahibi olmak,",
+      "Yüksek erişilebilirlik ve yüksek performans özelliklerine sahip yazılım sistemlerinin geliştirilmesinde, mimari tasarım faaliyetlerinde görev almış olmak,",
+      "Javascript framework kütüphanelerinden en az birinde (React, Angular, Node.js, Vue) ve CSS3, HTML5 gibi web teknolojileri konusunda bilgi ve tecrübe sahibi olmak,",
+      "MS SQL ve/veya PostgreSQL veri tabanları ile uygulama geliştirmiş, ileri seviyede SQL konusunda bilgi ve tecrübe sahibi olmak,",
+      "Web servisleri (SOAP, WCF, REST) teknolojileri konusunda bilgi ve tecrübe sahibi olmak,",
+      "Nesne yönelimli programlama, SOLID prensipleri, veri yapıları, algoritmalar, çok katmanlı yazılım mimarileri ve tasarım kalıpları (design patterns) hakkında bilgi sahibi olmak,",
+      "Yazılım test teknikleri ve metodolojileri konusunda bilgi ve tecrübe sahibi olmak,",
+      "Team Foundation Server (TFS), Git gibi konfigürasyon/değişiklik kod yönetim sistemlerinden en az biri hakkında tecrübe sahibi olmak,",
+      "Kuyruklama sistemlerinin kullanımı ve yönetimi konusunda bilgi ve tecrübe sahibi olmak,",
+      "Dağıtık ön bellek sistemlerinin kullanımı ve yönetimi konusunda bilgi ve tecrübe sahibi olmak,",
+      "DevOps ve CI/CD süreçleri hakkında bilgi sahibi olmak,",
+      "Analitik düşünce ve hızlı problem çözme yeteneğine sahip olmak,",
+      "Ekip çalışmasına uygun, çözüm odaklı, disiplinli ve gelişime açık olmak,",
+      "Tercihen, uydu görüntüsü, ortofoto ve diğer raster verilerin işlenmesi ve web üzerinden sunulması ile uzaktan algılama analizleri (NDVI gibi bitki örtüsü indeksleri, değişim tespiti vb.) konusunda bilgi ve tecrübe sahibi olmak,",
+      "Tercihen, arazi örtüsü/arazi kullanımı veya parsel tabanlı mekânsal verilerin yönetildiği kurumsal CBS projelerinde görev almış olmak,",
+      "Tercihen, 7221 sayılı Coğrafi Bilgi Sistemleri Hakkında Kanun, Türkiye Ulusal Coğrafi Bilgi Sistemi (TUCBS) veri tema standartları ve INSPIRE ilkeleri hakkında bilgi sahibi olmak."
+     ],
+     "bolumler": [
+      [
+       "",
+       [
+        "Kıdemli CBS Yazılım Geliştirme Uzmanı (1 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 4 Katına Kadar)",
+        "Yazılım, yazılım tasarımı ve geliştirilmesi ile bu sürecin yönetimi konusunda en az 10 (on) yıllık mesleki tecrübeye sahip olduğunu belgelemek, bu sürenin en az 5 (beş) yılının coğrafi bilgi sistemleri (CBS) yazılımlarının tasarımı ve geliştirilmesi süreçlerinde geçtiğini belgelemek,",
+        ".NET, .NET Core, ASP.NET MVC, ASP.NET Core teknolojilerinden en az birinin ve açık kaynak kodlu CBS bileşenlerinden (GeoServer, MapServer, QGIS Server, PostGIS, GDAL/OGR, OpenLayers, Leaflet) en az birinin kullanıldığı, en az 10.000 (on bin) kullanıcılı en az bir kurumsal CBS yazılımı projesinde geliştirici olarak görev aldığını belgelemek,",
+        "OpenLayers veya Leaflet kütüphanelerinden en az birini kullanarak web tabanlı harita uygulaması geliştirmiş olmak,",
+        "GeoServer veya ArcGIS Enterprise (ArcGIS Server) üzerinden harita ve detay (feature) servisleri yayımlamış ve bu servisleri kullanan uygulama geliştirmiş olmak,",
+        "OGC web servis standartlarına (WMS, WMTS, WFS/WFS-T) uygun servisleri kullanarak veya yayımlayarak uygulama geliştirmiş olmak, OGC API (Features, Tiles) standartları hakkında bilgi sahibi olmak,",
+        "Açık kaynak kodlu CBS yazılım ve kütüphaneleri (QGIS, GDAL/OGR, PROJ, GEOS, NetTopologySuite vb.) hakkında bilgi sahibi olmak,",
+        "Vektör ve raster coğrafi veri formatları (GML, GeoJSON, Shapefile, KML, GeoPackage, GeoTIFF/COG) ile vektör karo (MVT) yapıları hakkında bilgi sahibi olmak,",
+        "Koordinat referans sistemleri, datum ve projeksiyon dönüşümleri (ITRF96/TUREF, ED50, WGS84; 3 derecelik TM ve UTM projeksiyonları; EPSG tanımları) konusunda bilgi ve tecrübe sahibi olmak,",
+        "Büyük hacimli mekânsal verinin web üzerinden performanslı sunulması (karo önbellekleme, vektör karolar, ölçeğe bağlı gösterim, mekânsal indeks kullanımı) konusunda bilgi ve tecrübe sahibi olmak,",
+        "Yazılım mimari gereksinimlerinin belirlenmesi, tasarım, geliştirme ve alt yapının teknolojik gelişmelere uyarlanması konusunda bilgi ve tecrübe sahibi olmak,",
+        "Kullanıcı kimliklendirme ve yetkilendirme yöntem ve teknolojileri hakkında bilgi ve tecrübe sahibi olmak,",
+        "Yazılım geliştirme yaşam döngüsü (SDLC) hakkında bilgi ve tecrübe sahibi olmak,",
+        "Güvenli yazılım geliştirme standartları konusunda bilgi ve tecrübe sahibi olmak,",
+        "Yüksek erişilebilirlik ve yüksek performans özelliklerine sahip yazılım sistemlerinin geliştirilmesinde, mimari tasarım faaliyetlerinde görev almış olmak,",
+        "Javascript framework kütüphanelerinden en az birinde (React, Angular, Node.js, Vue) ve CSS3, HTML5 gibi web teknolojileri konusunda bilgi ve tecrübe sahibi olmak,",
+        "MS SQL ve/veya PostgreSQL veri tabanları ile uygulama geliştirmiş, ileri seviyede SQL konusunda bilgi ve tecrübe sahibi olmak,",
+        "Web servisleri (SOAP, WCF, REST) teknolojileri konusunda bilgi ve tecrübe sahibi olmak,",
+        "Nesne yönelimli programlama, SOLID prensipleri, veri yapıları, algoritmalar, çok katmanlı yazılım mimarileri ve tasarım kalıpları (design patterns) hakkında bilgi sahibi olmak,",
+        "Yazılım test teknikleri ve metodolojileri konusunda bilgi ve tecrübe sahibi olmak,",
+        "Team Foundation Server (TFS), Git gibi konfigürasyon/değişiklik kod yönetim sistemlerinden en az biri hakkında tecrübe sahibi olmak,",
+        "Kuyruklama sistemlerinin kullanımı ve yönetimi konusunda bilgi ve tecrübe sahibi olmak,",
+        "Dağıtık ön bellek sistemlerinin kullanımı ve yönetimi konusunda bilgi ve tecrübe sahibi olmak,",
+        "DevOps ve CI/CD süreçleri hakkında bilgi sahibi olmak,",
+        "Analitik düşünce ve hızlı problem çözme yeteneğine sahip olmak,",
+        "Ekip çalışmasına uygun, çözüm odaklı, disiplinli ve gelişime açık olmak,",
+        "Tercihen, uydu görüntüsü, ortofoto ve diğer raster verilerin işlenmesi ve web üzerinden sunulması ile uzaktan algılama analizleri (NDVI gibi bitki örtüsü indeksleri, değişim tespiti vb.) konusunda bilgi ve tecrübe sahibi olmak,",
+        "Tercihen, arazi örtüsü/arazi kullanımı veya parsel tabanlı mekânsal verilerin yönetildiği kurumsal CBS projelerinde görev almış olmak,",
+        "Tercihen, 7221 sayılı Coğrafi Bilgi Sistemleri Hakkında Kanun, Türkiye Ulusal Coğrafi Bilgi Sistemi (TUCBS) veri tema standartları ve INSPIRE ilkeleri hakkında bilgi sahibi olmak."
+       ]
+      ]
+     ]
+    },
+    {
+     "unvan": "Yazılım Uzmanı (5 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 3 Katına Kadar)",
+     "adet": 5,
+     "iller": [
+      "ANKARA / MERKEZ"
+     ],
+     "ogrenim": "",
+     "sinav": "",
+     "maddeler": [
+      "Yazılım Uzmanı (5 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 3 Katına Kadar)",
+      "Yazılım tasarımı ve geliştirilmesi süreçlerinde en az 5 (beş) yıllık mesleki tecrübeye sahip olduğunu belgelemek,",
+      ".NET, .NET Core, ASP.NET MVC, ASP.NET Core teknolojilerinden en az birinin kullanıldığı, en az 10.000 (on bin) kullanıcılı en az bir kurumsal yazılım projesinde geliştirici olarak görev aldığını belgelemek,",
+      "Yazılım mimari gereksinimlerinin belirlenmesi, tasarım, geliştirme ve alt yapının teknolojik gelişmelere uyarlanması konusunda bilgi ve tecrübe sahibi olmak,",
+      "Kullanıcı kimliklendirme ve yetkilendirme yöntem ve teknolojileri hakkında bilgi ve tecrübe sahibi olmak,",
+      "Yazılım geliştirme yaşam döngüsü (SDLC) hakkında bilgi ve tecrübe sahibi olmak,",
+      "Güvenli yazılım geliştirme standartları konusunda bilgi ve tecrübe sahibi olmak,",
+      "Yüksek erişilebilirlik ve yüksek performans özelliklerine sahip yazılım sistemlerinin geliştirilmesinde, mimari tasarım faaliyetlerinde görev almış olmak,",
+      "Javascript framework kütüphanelerinden en az birinde (React, Angular, Node.js, Vue) ve HTML5 ile CSS3 gibi web teknolojileri konusunda bilgi ve tecrübe sahibi olmak,",
+      "MS SQL ve/veya PostgreSQL veri tabanları ile uygulama geliştirmiş, ileri seviyede SQL konusunda bilgi ve tecrübe sahibi olmak,",
+      "Web servisleri (SOAP, WCF, REST) teknolojileri konusunda bilgi ve tecrübe sahibi olmak,",
+      "Nesne yönelimli programlama, SOLID prensipleri, veri yapıları, algoritmalar, çok katmanlı yazılım mimarileri ve tasarım kalıpları (design patterns) hakkında bilgi sahibi olmak,",
+      "Yazılım test teknikleri ve metodolojileri konusunda bilgi ve tecrübe sahibi olmak,",
+      "Team Foundation Server (TFS), Git gibi konfigürasyon/değişiklik kod yönetim sistemlerinden en az biri hakkında tecrübe sahibi olmak,",
+      "Tercihen, kuyruklama sistemlerinin kullanımı ve yönetimi konusunda bilgi ve tecrübe sahibi olmak,",
+      "Tercihen, dağıtık ön bellek sistemlerinin kullanımı ve yönetimi konusunda bilgi ve tecrübe sahibi olmak,",
+      "Tercihen, DevOps ve CI/CD süreçleri hakkında bilgi sahibi olmak,",
+      "Analitik düşünce ve hızlı problem çözme yeteneğine sahip olmak,",
+      "Ekip çalışmasına uygun, çözüm odaklı, disiplinli ve gelişime açık olmak."
+     ],
+     "bolumler": [
+      [
+       "",
+       [
+        "Yazılım Uzmanı (5 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 3 Katına Kadar)",
+        "Yazılım tasarımı ve geliştirilmesi süreçlerinde en az 5 (beş) yıllık mesleki tecrübeye sahip olduğunu belgelemek,",
+        ".NET, .NET Core, ASP.NET MVC, ASP.NET Core teknolojilerinden en az birinin kullanıldığı, en az 10.000 (on bin) kullanıcılı en az bir kurumsal yazılım projesinde geliştirici olarak görev aldığını belgelemek,",
+        "Yazılım mimari gereksinimlerinin belirlenmesi, tasarım, geliştirme ve alt yapının teknolojik gelişmelere uyarlanması konusunda bilgi ve tecrübe sahibi olmak,",
+        "Kullanıcı kimliklendirme ve yetkilendirme yöntem ve teknolojileri hakkında bilgi ve tecrübe sahibi olmak,",
+        "Yazılım geliştirme yaşam döngüsü (SDLC) hakkında bilgi ve tecrübe sahibi olmak,",
+        "Güvenli yazılım geliştirme standartları konusunda bilgi ve tecrübe sahibi olmak,",
+        "Yüksek erişilebilirlik ve yüksek performans özelliklerine sahip yazılım sistemlerinin geliştirilmesinde, mimari tasarım faaliyetlerinde görev almış olmak,",
+        "Javascript framework kütüphanelerinden en az birinde (React, Angular, Node.js, Vue) ve HTML5 ile CSS3 gibi web teknolojileri konusunda bilgi ve tecrübe sahibi olmak,",
+        "MS SQL ve/veya PostgreSQL veri tabanları ile uygulama geliştirmiş, ileri seviyede SQL konusunda bilgi ve tecrübe sahibi olmak,",
+        "Web servisleri (SOAP, WCF, REST) teknolojileri konusunda bilgi ve tecrübe sahibi olmak,",
+        "Nesne yönelimli programlama, SOLID prensipleri, veri yapıları, algoritmalar, çok katmanlı yazılım mimarileri ve tasarım kalıpları (design patterns) hakkında bilgi sahibi olmak,",
+        "Yazılım test teknikleri ve metodolojileri konusunda bilgi ve tecrübe sahibi olmak,",
+        "Team Foundation Server (TFS), Git gibi konfigürasyon/değişiklik kod yönetim sistemlerinden en az biri hakkında tecrübe sahibi olmak,",
+        "Tercihen, kuyruklama sistemlerinin kullanımı ve yönetimi konusunda bilgi ve tecrübe sahibi olmak,",
+        "Tercihen, dağıtık ön bellek sistemlerinin kullanımı ve yönetimi konusunda bilgi ve tecrübe sahibi olmak,",
+        "Tercihen, DevOps ve CI/CD süreçleri hakkında bilgi sahibi olmak,",
+        "Analitik düşünce ve hızlı problem çözme yeteneğine sahip olmak,",
+        "Ekip çalışmasına uygun, çözüm odaklı, disiplinli ve gelişime açık olmak."
+       ]
+      ]
+     ]
+    },
+    {
+     "unvan": "Sistem Uzmanı (1 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 2 Katına Kadar)",
+     "adet": 1,
+     "iller": [
+      "ANKARA / MERKEZ"
+     ],
+     "ogrenim": "",
+     "sinav": "",
+     "maddeler": [
+      "Sistem Uzmanı (1 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 2 Katına Kadar)",
+      "En az 5.000 (beş bin) kullanıcılı bir sistem altyapısında sistem uzmanı, sistem yöneticisi veya sistem mühendisi olarak en az 3 (üç) yıllık mesleki tecrübeye sahip olduğunu belgelemek,",
+      "Linux işletim sistemlerinin (RHEL, Rocky Linux, Debian, Ubuntu, Pardus vb.) kurulumu, yönetimi ve sorun giderme konularında deneyim sahibi olmak.",
+      "Docker, Podman veya benzeri container teknolojileri hakkında bilgi sahibi olmak.",
+      "Kubernetes platformlarının kurulumu, yönetimi ve işletimi konularında deneyim sahibi olmak.",
+      "VMware, Proxmox, Nutanix veya benzeri sanallaştırma teknolojileri konusunda deneyim sahibi olmak.",
+      "Prometheus, Grafana, Zabbix veya benzeri izleme ve performans takip sistemleri konusunda deneyim sahibi olmak.",
+      "NVIDIA GPU tabanlı sunucuların ve yapay zekâ altyapılarında kullanılan GPU kümelerinin yönetimi, işletimi ve performans takibi konularında bilgi sahibi olmak.",
+      "Veri merkezi ağ teknolojileri, TCP/IP, VLAN, DNS ve DHCP hakkında bilgi sahibi olmak.",
+      "Bash, Python veya benzeri araçlarla otomasyon geliştirme konusunda deneyim sahibi olmak,",
+      "Sistem performans analizi ve iyileştirme, kapasite planlama, log inceleme ve sorun giderme konularında deneyim sahibi olmak,",
+      "Ansible, Terraform gibi altyapı otomasyonu araçları ile GitLab CI/CD, Jenkins gibi CI/CD araçlarından en az biri hakkında bilgi sahibi olmak,",
+      "Veri depolama üniteleri ile SAN anahtarlarının (Cisco MDS, Brocade vb.) yönetimi, yapılandırılması ve sorun giderilmesi konularında bilgi sahibi olmak,",
+      "Yedekleme ve yedekten geri dönme sistemleri ile yazılımları (Veeam, Commvault, NetBackup vb.) konusunda bilgi sahibi olmak,",
+      "Analitik düşünme, problem çözme ve ekip çalışması yetkinliklerine sahip olmak.",
+      "Tercihen, Linux sistem yönetimi, konteyner/Kubernetes, sanallaştırma veya GPU altyapıları alanlarında ulusal veya uluslararası geçerliliğe sahip sertifikalara sahip olmak (LPIC-1, LPIC-2, LPIC-3, LFCS, CompTIA Linux+, RHCSA, RHCE, RHCA, CKA, VMware Certified Professional (VCP), Nutanix Certified Professional (NCP), NVIDIA-Certified Associate/Professional (AI Infrastructure) vb.),"
+     ],
+     "bolumler": [
+      [
+       "",
+       [
+        "Sistem Uzmanı (1 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 2 Katına Kadar)",
+        "En az 5.000 (beş bin) kullanıcılı bir sistem altyapısında sistem uzmanı, sistem yöneticisi veya sistem mühendisi olarak en az 3 (üç) yıllık mesleki tecrübeye sahip olduğunu belgelemek,",
+        "Linux işletim sistemlerinin (RHEL, Rocky Linux, Debian, Ubuntu, Pardus vb.) kurulumu, yönetimi ve sorun giderme konularında deneyim sahibi olmak.",
+        "Docker, Podman veya benzeri container teknolojileri hakkında bilgi sahibi olmak.",
+        "Kubernetes platformlarının kurulumu, yönetimi ve işletimi konularında deneyim sahibi olmak.",
+        "VMware, Proxmox, Nutanix veya benzeri sanallaştırma teknolojileri konusunda deneyim sahibi olmak.",
+        "Prometheus, Grafana, Zabbix veya benzeri izleme ve performans takip sistemleri konusunda deneyim sahibi olmak.",
+        "NVIDIA GPU tabanlı sunucuların ve yapay zekâ altyapılarında kullanılan GPU kümelerinin yönetimi, işletimi ve performans takibi konularında bilgi sahibi olmak.",
+        "Veri merkezi ağ teknolojileri, TCP/IP, VLAN, DNS ve DHCP hakkında bilgi sahibi olmak.",
+        "Bash, Python veya benzeri araçlarla otomasyon geliştirme konusunda deneyim sahibi olmak,",
+        "Sistem performans analizi ve iyileştirme, kapasite planlama, log inceleme ve sorun giderme konularında deneyim sahibi olmak,",
+        "Ansible, Terraform gibi altyapı otomasyonu araçları ile GitLab CI/CD, Jenkins gibi CI/CD araçlarından en az biri hakkında bilgi sahibi olmak,",
+        "Veri depolama üniteleri ile SAN anahtarlarının (Cisco MDS, Brocade vb.) yönetimi, yapılandırılması ve sorun giderilmesi konularında bilgi sahibi olmak,",
+        "Yedekleme ve yedekten geri dönme sistemleri ile yazılımları (Veeam, Commvault, NetBackup vb.) konusunda bilgi sahibi olmak,",
+        "Analitik düşünme, problem çözme ve ekip çalışması yetkinliklerine sahip olmak.",
+        "Tercihen, Linux sistem yönetimi, konteyner/Kubernetes, sanallaştırma veya GPU altyapıları alanlarında ulusal veya uluslararası geçerliliğe sahip sertifikalara sahip olmak (LPIC-1, LPIC-2, LPIC-3, LFCS, CompTIA Linux+, RHCSA, RHCE, RHCA, CKA, VMware Certified Professional (VCP), Nutanix Certified Professional (NCP), NVIDIA-Certified Associate/Professional (AI Infrastructure) vb.),"
+       ]
+      ]
+     ]
+    },
+    {
+     "unvan": "Ağ Uzmanı (1 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 2 Katına Kadar)",
+     "adet": 1,
+     "iller": [
+      "ANKARA / MERKEZ"
+     ],
+     "ogrenim": "",
+     "sinav": "",
+     "maddeler": [
+      "Ağ Uzmanı (1 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 2 Katına Kadar)",
+      "En az 5.000 (beş bin) kullanıcılı kurumsal bir ağ altyapısında ağ uzmanı, ağ mühendisi veya ağ yöneticisi olarak en az 3 (üç) yıllık mesleki tecrübeye sahip olduğunu belgelemek,",
+      "Kurumun mevcut ve gelecekteki ihtiyaçları doğrultusunda; ölçeklenebilirlik, yüksek erişilebilirlik, güvenlik, performans ve iş sürekliliği esaslarını gözeterek kurumsal ağ mimarilerinin tasarlanması, planlanması, standartlaştırılması ve mevcut sistemlerle entegrasyonu konularında bilgi sahibi olmak.",
+      "Kurumsal ağlarda kullanılan omurga, dağıtım ve erişim anahtarlarının mimari tasarımı, konumlandırılması, yapılandırılması, yüksek erişilebilirlik ve kapasite planlaması, performans optimizasyonu ile ileri seviye sorun giderme konularında bilgi ve tecrübe sahibi olmak.",
+      "Kurumsal kablosuz ağların; erişim noktaları ve kablosuz ağ kontrol sistemleri kullanılarak kapsama alanı, kullanıcı yoğunluğu, kapasite, güvenlik, dolaşım ve yüksek erişilebilirlik gereksinimleri doğrultusunda tasarlanması, kurulması, yapılandırılması, mevcut ağ altyapısıyla bütünleştirilmesi ve yönetilmesi konularında bilgi ve tecrübe sahibi olmak.",
+      "Firewall (Güvenlik Duvarı), VPN ve SSL teknolojilerinin yönetimi, konfigürasyonu ve güvenliği konularında tecrübe sahibi olmak,",
+      "NAC (Network Access Control) çözümlerinin; kullanıcı, cihaz ve erişim türlerine göre kimlik doğrulama, yetkilendirme, profil oluşturma, politika uygulama, ağ segmentasyonu ve olay müdahalesi gereksinimleri doğrultusunda tasarlanması, kurulması, mevcut ağ altyapısıyla bütünleştirilmesi ve yönetilmesi konularında bilgi ve tecrübe sahibi olmak.",
+      "Wireshark, tcpdump, TShark ve benzeri araçları kullanarak ağ trafiği ve protokol analizi yapabilmek; paket kaybı, gecikme, MTU/MSS uyumsuzluğu, asimetrik yönlendirme, oturum ve uygulama kaynaklı ağ sorunlarını tespit edip kök neden analizi gerçekleştirebilecek düzeyde bilgi ve tecrübe sahibi olmak.",
+      "LAN, WAN ve WLAN mimarileri; TCP/IP, IPv4 ve IPv6 adresleme; sanal özel ağlar (VPN), SSL/TLS, dinamik yönlendirme protokolleri ve IEEE 802.1X tabanlı erişim kontrolü konularında, kurumsal ölçekte tasarım, entegrasyon, yüksek erişilebilirlik, güvenlik, kapasite planlama ve ileri seviye sorun giderme yapabilecek düzeyde bilgi ve tecrübe sahibi olmak.",
+      "Veri merkezi ağ altyapılarının; yüksek erişilebilirlik, yedeklilik, ölçeklenebilirlik, segmentasyon, performans ve iş sürekliliği gereksinimleri doğrultusunda tasarlanması, mevcut sistemlerle bütünleştirilmesi, kapasite planlamasının yapılması ve işletilmesi konularında bilgi sahibi olmak,",
+      "Kurumsal ağlarda yönlendirme, anahtarlama ve kablosuz ağ altyapılarının yapılandırılması, yönetilmesi, performans ve kapasite açısından optimize edilmesi, yüksek erişilebilirliğinin sağlanması ve ileri seviye sorunlarının giderilmesi konularında bilgi ve tecrübe sahibi olmak.",
+      "SNMP, Syslog, NetFlow, sFlow, IPFIX ve benzeri yöntemler kullanılarak ağ altyapısının erişilebilirlik, performans, kapasite ve güvenlik açısından izlenmesi; eşik ve alarm mekanizmalarının oluşturulması, eğilim ve kapasite analizlerinin yapılması ve teknik/yönetsel raporların hazırlanması konularında bilgi ve tecrübe sahibi olmak.",
+      "Belgeleme ve düzenli raporlamaya önem veriyor olmak,",
+      "Cisco Certified Network Associate (CCNA, 200-301), ii. Cisco Certified Network Professional (CCNP) Enterprise veya CCNP Security, iii. Fortinet NSE 4 – FortiOS Administrator veya üstü NSE sertifikası (geçerliliği devam eden FCP/FCSS – Network Security/Secure Networking sertifikaları dahil), iv. Palo Alto Networks Network Security Professional, Network Security Analyst veya Next-Generation Firewall Engineer (geçerliliği devam eden PCNSE dahil),",
+      "F5 Certified Administrator, BIG-IP (F5-CA) veya F5 Certified Technology Specialist (F5-CTS) – BIG-IP LTM/ASM."
+     ],
+     "bolumler": [
+      [
+       "",
+       [
+        "Ağ Uzmanı (1 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 2 Katına Kadar)",
+        "En az 5.000 (beş bin) kullanıcılı kurumsal bir ağ altyapısında ağ uzmanı, ağ mühendisi veya ağ yöneticisi olarak en az 3 (üç) yıllık mesleki tecrübeye sahip olduğunu belgelemek,",
+        "Kurumun mevcut ve gelecekteki ihtiyaçları doğrultusunda; ölçeklenebilirlik, yüksek erişilebilirlik, güvenlik, performans ve iş sürekliliği esaslarını gözeterek kurumsal ağ mimarilerinin tasarlanması, planlanması, standartlaştırılması ve mevcut sistemlerle entegrasyonu konularında bilgi sahibi olmak.",
+        "Kurumsal ağlarda kullanılan omurga, dağıtım ve erişim anahtarlarının mimari tasarımı, konumlandırılması, yapılandırılması, yüksek erişilebilirlik ve kapasite planlaması, performans optimizasyonu ile ileri seviye sorun giderme konularında bilgi ve tecrübe sahibi olmak.",
+        "Kurumsal kablosuz ağların; erişim noktaları ve kablosuz ağ kontrol sistemleri kullanılarak kapsama alanı, kullanıcı yoğunluğu, kapasite, güvenlik, dolaşım ve yüksek erişilebilirlik gereksinimleri doğrultusunda tasarlanması, kurulması, yapılandırılması, mevcut ağ altyapısıyla bütünleştirilmesi ve yönetilmesi konularında bilgi ve tecrübe sahibi olmak.",
+        "Firewall (Güvenlik Duvarı), VPN ve SSL teknolojilerinin yönetimi, konfigürasyonu ve güvenliği konularında tecrübe sahibi olmak,",
+        "NAC (Network Access Control) çözümlerinin; kullanıcı, cihaz ve erişim türlerine göre kimlik doğrulama, yetkilendirme, profil oluşturma, politika uygulama, ağ segmentasyonu ve olay müdahalesi gereksinimleri doğrultusunda tasarlanması, kurulması, mevcut ağ altyapısıyla bütünleştirilmesi ve yönetilmesi konularında bilgi ve tecrübe sahibi olmak.",
+        "Wireshark, tcpdump, TShark ve benzeri araçları kullanarak ağ trafiği ve protokol analizi yapabilmek; paket kaybı, gecikme, MTU/MSS uyumsuzluğu, asimetrik yönlendirme, oturum ve uygulama kaynaklı ağ sorunlarını tespit edip kök neden analizi gerçekleştirebilecek düzeyde bilgi ve tecrübe sahibi olmak.",
+        "LAN, WAN ve WLAN mimarileri; TCP/IP, IPv4 ve IPv6 adresleme; sanal özel ağlar (VPN), SSL/TLS, dinamik yönlendirme protokolleri ve IEEE 802.1X tabanlı erişim kontrolü konularında, kurumsal ölçekte tasarım, entegrasyon, yüksek erişilebilirlik, güvenlik, kapasite planlama ve ileri seviye sorun giderme yapabilecek düzeyde bilgi ve tecrübe sahibi olmak.",
+        "Veri merkezi ağ altyapılarının; yüksek erişilebilirlik, yedeklilik, ölçeklenebilirlik, segmentasyon, performans ve iş sürekliliği gereksinimleri doğrultusunda tasarlanması, mevcut sistemlerle bütünleştirilmesi, kapasite planlamasının yapılması ve işletilmesi konularında bilgi sahibi olmak,",
+        "Kurumsal ağlarda yönlendirme, anahtarlama ve kablosuz ağ altyapılarının yapılandırılması, yönetilmesi, performans ve kapasite açısından optimize edilmesi, yüksek erişilebilirliğinin sağlanması ve ileri seviye sorunlarının giderilmesi konularında bilgi ve tecrübe sahibi olmak.",
+        "SNMP, Syslog, NetFlow, sFlow, IPFIX ve benzeri yöntemler kullanılarak ağ altyapısının erişilebilirlik, performans, kapasite ve güvenlik açısından izlenmesi; eşik ve alarm mekanizmalarının oluşturulması, eğilim ve kapasite analizlerinin yapılması ve teknik/yönetsel raporların hazırlanması konularında bilgi ve tecrübe sahibi olmak.",
+        "Belgeleme ve düzenli raporlamaya önem veriyor olmak,"
+       ]
+      ],
+      [
+       "Tercihen, aşağıdaki sertifikalardan en az birine sahip olmak",
+       [
+        "Cisco Certified Network Associate (CCNA, 200-301), ii. Cisco Certified Network Professional (CCNP) Enterprise veya CCNP Security, iii. Fortinet NSE 4 – FortiOS Administrator veya üstü NSE sertifikası (geçerliliği devam eden FCP/FCSS – Network Security/Secure Networking sertifikaları dahil), iv. Palo Alto Networks Network Security Professional, Network Security Analyst veya Next-Generation Firewall Engineer (geçerliliği devam eden PCNSE dahil),",
+        "F5 Certified Administrator, BIG-IP (F5-CA) veya F5 Certified Technology Specialist (F5-CTS) – BIG-IP LTM/ASM."
+       ]
+      ]
+     ]
+    },
+    {
+     "unvan": "Risk ve Uyum Uzmanı (2 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 2 Katına Kadar)",
+     "adet": 2,
+     "iller": [
+      "ANKARA / MERKEZ"
+     ],
+     "ogrenim": "",
+     "sinav": "",
+     "maddeler": [
+      "Risk ve Uyum Uzmanı (2 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 2 Katına Kadar)",
+      "Bilgi teknolojileri ve bilgi güvenliği süreç analizi ve tasarımı, dokümantasyon, araştırma, risk yönetimi, denetim ve uyum süreçlerinin yürütülmesi konusunda en az 3 (üç) yıl çalışmış olduğunu belgelemek,",
+      "Kurumsal risk yönetimi, bilgi güvenliğine ilişkin mevzuata uyum süreçleri ve uluslararası iyi uygulamalar hakkında bilgi sahibi olmak,",
+      "Uluslararası bilgi güvenliği ve iş sürekliliği standartları (ISO/IEC 27001, ISO 22301), yapay zekâ yönetim sistemi standardı (ISO/IEC 42001), Siber Güvenlik Başkanlığı Bilgi ve İletişim Güvenliği Rehberi, 7545 sayılı Siber Güvenlik Kanunu, 6698 sayılı Kişisel Verilerin Korunması Kanunu ve 5651 sayılı Kanun konularında bilgi sahibi olmak,",
+      "Veri sınıflandırma, veri güvenliği, tehdit ve zafiyet yönetimi, siber olay yönetimi, kamu güvenlik standartları konularında bilgi sahibi olmak,",
+      "Belgeleme ve düzenli raporlamaya önem veriyor olmak,",
+      "ISO/IEC 27001 Bilgi Güvenliği Yönetim Sistemi İç Tetkikçi veya Başdenetçi (Lead Auditor) eğitimini başarıyla tamamladığını gösteren sertifikalardan en az birine sahip olduğunu belgelemek,",
+      "Tercihen, ISO/IEC 27001 veya diğer güvenlik standartları kapsamında dönüşüm/kurulum projelerinde aktif rol almış olmak,",
+      "Tercihen, bilgi güvenliği yönetimi, risk yönetimi, BT yönetişimi ve bilgi sistemleri denetimi alanlarında ulusal veya uluslararası geçerliliğe sahip sertifikalara sahip olmak (ISO/IEC 27001, ISO/IEC 27701, ISO/IEC 42001 veya ISO 22301 Başdenetçi Sertifikası, SPL Bilgi Sistemleri Bağımsız Denetim Lisansı, TSE Bilgi ve İletişim Güvenliği Rehberi Denetçi veya Başdenetçi Sertifikası, ISACA CISA vb.)."
+     ],
+     "bolumler": [
+      [
+       "",
+       [
+        "Risk ve Uyum Uzmanı (2 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 2 Katına Kadar)",
+        "Bilgi teknolojileri ve bilgi güvenliği süreç analizi ve tasarımı, dokümantasyon, araştırma, risk yönetimi, denetim ve uyum süreçlerinin yürütülmesi konusunda en az 3 (üç) yıl çalışmış olduğunu belgelemek,",
+        "Kurumsal risk yönetimi, bilgi güvenliğine ilişkin mevzuata uyum süreçleri ve uluslararası iyi uygulamalar hakkında bilgi sahibi olmak,",
+        "Uluslararası bilgi güvenliği ve iş sürekliliği standartları (ISO/IEC 27001, ISO 22301), yapay zekâ yönetim sistemi standardı (ISO/IEC 42001), Siber Güvenlik Başkanlığı Bilgi ve İletişim Güvenliği Rehberi, 7545 sayılı Siber Güvenlik Kanunu, 6698 sayılı Kişisel Verilerin Korunması Kanunu ve 5651 sayılı Kanun konularında bilgi sahibi olmak,",
+        "Veri sınıflandırma, veri güvenliği, tehdit ve zafiyet yönetimi, siber olay yönetimi, kamu güvenlik standartları konularında bilgi sahibi olmak,",
+        "Belgeleme ve düzenli raporlamaya önem veriyor olmak,",
+        "ISO/IEC 27001 Bilgi Güvenliği Yönetim Sistemi İç Tetkikçi veya Başdenetçi (Lead Auditor) eğitimini başarıyla tamamladığını gösteren sertifikalardan en az birine sahip olduğunu belgelemek,",
+        "Tercihen, ISO/IEC 27001 veya diğer güvenlik standartları kapsamında dönüşüm/kurulum projelerinde aktif rol almış olmak,",
+        "Tercihen, bilgi güvenliği yönetimi, risk yönetimi, BT yönetişimi ve bilgi sistemleri denetimi alanlarında ulusal veya uluslararası geçerliliğe sahip sertifikalara sahip olmak (ISO/IEC 27001, ISO/IEC 27701, ISO/IEC 42001 veya ISO 22301 Başdenetçi Sertifikası, SPL Bilgi Sistemleri Bağımsız Denetim Lisansı, TSE Bilgi ve İletişim Güvenliği Rehberi Denetçi veya Başdenetçi Sertifikası, ISACA CISA vb.)."
+       ]
+      ]
+     ]
+    },
+    {
+     "unvan": "Siber Güvenlik Uzmanı (2 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 2 Katına Kadar)",
+     "adet": 2,
+     "iller": [
+      "ANKARA / MERKEZ"
+     ],
+     "ogrenim": "",
+     "sinav": "",
+     "maddeler": [
+      "Siber Güvenlik Uzmanı (2 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 2 Katına Kadar)",
+      "Siber güvenlik alanında en az 3 (üç) yıl çalışmış olduğunu belgelemek,",
+      "ISO 27001, COBIT, NIST CSF, MITRE ATT&CK ve benzeri bilgi güvenliği standartları/çerçeveleri konusunda bilgi sahibi olmak,",
+      "Güvenlik yapılarının tasarımı, planlaması ve entegrasyonu konularında bilgi sahibi olmak,",
+      "Ağ üzerinde trafik ve protokol analizi yapabilen (wireshark, tcpdump, zeek gibi) yazılımlar konusunda bilgi ve tecrübe sahibi olmak,",
+      "Yerel Alan Ağı (LAN), TCP/IP, IPv4, IPv6, Geniş Alan Ağı (WAN), Kablosuz Yerel Alan Ağı (WLAN), Sanal Özel Ağ (VPN), SSL, Dinamik Yönlendirme Protokolleri, IEEE 802.1x ağ teknolojileri konusunda bilgi sahibi olmak,",
+      "Güvenlik Duvarı (Firewall), IPS, IDS, Antivirüs, DLP ve İçerik Filtreleme ve Yük Dengeleyici teknolojileri konusunda bilgi sahibi olmak,",
+      "Microsoft Windows Server, Microsoft Exchange Server, Active Directory, DNS, DHCP, NPS, WSUS, File Server, Certification Authority, Microsoft System Center Configuration Manager konularında bilgi sahibi olmak,",
+      "Powershell ve Linux shell scripting konusunda bilgi sahibi olmak,",
+      "Windows ve Linux fiziksel ve sanal sunucu ortamları ile sanallaştırma sistemlerinde sorun çözme, güvenlik sıkılaştırması ve log inceleme konularında tecrübeye sahip olmak,",
+      "Merkezi iz kaydı sistemleri (SIEM) yönetimi konusunda bilgi sahibi olup siber olayların tespiti için korelasyon yönetimi yapabilecek tecrübeye sahip olmak,",
+      "Siber Güvenlik Operasyon Merkezi (SOC) işletim süreçleri konusunda bilgi sahibi olmak,",
+      "Zafiyet yönetimi ve zafiyetlerin giderilmesi konusunda bilgi sahibi olmak,",
+      "Sızma (penetration) testi konusunda ve zafiyet tarama araçları hakkında tecrübe sahibi olmak,",
+      "Siber Olaylara Müdahale Ekibi (SOME) kurulum, yönetim ve dokümantasyon konularında bilgi sahibi olmak,",
+      "Adli bilişim konusunda bilgi sahibi olmak,",
+      "Teknik şartname oluşturma konusunda bilgi sahibi olmak,",
+      "Belgeleme ve düzenli raporlamaya önem veren, esnek çalışma saatlerine ve yoğun iş temposuna uyum sağlayabilir olmak,",
+      "Tercihen; sızma testi, siber olay müdahalesi, SOC, adli bilişim ve ağ güvenliği alanlarında ulusal veya uluslararası geçerliliğe sahip sertifikalara sahip olmak (TSE Sertifikalı veya Kıdemli Sızma Testi Uzmanı, OSCP, OSWE, GPEN, GXPN, GWAPT, GCIH, LPT (Master), CCNP Security vb.)."
+     ],
+     "bolumler": [
+      [
+       "",
+       [
+        "Siber Güvenlik Uzmanı (2 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 2 Katına Kadar)",
+        "Siber güvenlik alanında en az 3 (üç) yıl çalışmış olduğunu belgelemek,",
+        "ISO 27001, COBIT, NIST CSF, MITRE ATT&CK ve benzeri bilgi güvenliği standartları/çerçeveleri konusunda bilgi sahibi olmak,",
+        "Güvenlik yapılarının tasarımı, planlaması ve entegrasyonu konularında bilgi sahibi olmak,",
+        "Ağ üzerinde trafik ve protokol analizi yapabilen (wireshark, tcpdump, zeek gibi) yazılımlar konusunda bilgi ve tecrübe sahibi olmak,",
+        "Yerel Alan Ağı (LAN), TCP/IP, IPv4, IPv6, Geniş Alan Ağı (WAN), Kablosuz Yerel Alan Ağı (WLAN), Sanal Özel Ağ (VPN), SSL, Dinamik Yönlendirme Protokolleri, IEEE 802.1x ağ teknolojileri konusunda bilgi sahibi olmak,",
+        "Güvenlik Duvarı (Firewall), IPS, IDS, Antivirüs, DLP ve İçerik Filtreleme ve Yük Dengeleyici teknolojileri konusunda bilgi sahibi olmak,",
+        "Microsoft Windows Server, Microsoft Exchange Server, Active Directory, DNS, DHCP, NPS, WSUS, File Server, Certification Authority, Microsoft System Center Configuration Manager konularında bilgi sahibi olmak,",
+        "Powershell ve Linux shell scripting konusunda bilgi sahibi olmak,",
+        "Windows ve Linux fiziksel ve sanal sunucu ortamları ile sanallaştırma sistemlerinde sorun çözme, güvenlik sıkılaştırması ve log inceleme konularında tecrübeye sahip olmak,",
+        "Merkezi iz kaydı sistemleri (SIEM) yönetimi konusunda bilgi sahibi olup siber olayların tespiti için korelasyon yönetimi yapabilecek tecrübeye sahip olmak,",
+        "Siber Güvenlik Operasyon Merkezi (SOC) işletim süreçleri konusunda bilgi sahibi olmak,",
+        "Zafiyet yönetimi ve zafiyetlerin giderilmesi konusunda bilgi sahibi olmak,",
+        "Sızma (penetration) testi konusunda ve zafiyet tarama araçları hakkında tecrübe sahibi olmak,",
+        "Siber Olaylara Müdahale Ekibi (SOME) kurulum, yönetim ve dokümantasyon konularında bilgi sahibi olmak,",
+        "Adli bilişim konusunda bilgi sahibi olmak,",
+        "Teknik şartname oluşturma konusunda bilgi sahibi olmak,",
+        "Belgeleme ve düzenli raporlamaya önem veren, esnek çalışma saatlerine ve yoğun iş temposuna uyum sağlayabilir olmak,",
+        "Tercihen; sızma testi, siber olay müdahalesi, SOC, adli bilişim ve ağ güvenliği alanlarında ulusal veya uluslararası geçerliliğe sahip sertifikalara sahip olmak (TSE Sertifikalı veya Kıdemli Sızma Testi Uzmanı, OSCP, OSWE, GPEN, GXPN, GWAPT, GCIH, LPT (Master), CCNP Security vb.)."
        ]
       ]
      ]
