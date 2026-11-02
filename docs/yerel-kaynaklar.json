@@ -1,10 +1,10 @@
 {
  "schema": 1,
- "guncelleme": "2026-11-02T07:36:41.776661+00:00",
+ "guncelleme": "2026-11-02T08:06:42.192469+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-11-02T07:37:18.420098+00:00",
-   "hata_sayisi": 1,
+   "kontrol": "2026-11-02T08:06:50.162613+00:00",
+   "hata_sayisi": 0,
    "ilanlar": [
     {
      "id": "sbb-267a000ae26570448d5e5174",
@@ -86,8 +86,8 @@
      "donem": "( 2 Kasım - 1 Aralık)",
      "baslangic_zaman": "2026-11-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-02T10:36:42+03:00",
-     "belge_ozeti": "a186377a89a898ddafbe62adf711a6bbb2092777ce239f90519099a05d2b89d8",
+     "detay_guncelleme": "2026-11-02T11:06:43+03:00",
+     "belge_ozeti": "b05e7a5e782673a3698068c941d307a135a575d4dd3dd0d38421347c28564ec8",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -485,8 +485,8 @@
      "donem": "( 30 Ekim - 5 Kasım)",
      "baslangic_zaman": "2026-10-30T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-02T10:36:46+03:00",
-     "belge_ozeti": "b943a0276c1753993f5a24163709e63647e68fd778aa35441eae606368bc1334",
+     "detay_guncelleme": "2026-11-02T11:06:44+03:00",
+     "belge_ozeti": "5341681b5c3357ef64124aad7007ed19fae96414c55c96705144205caad39bfa",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -930,27 +930,41 @@
      ]
     },
     {
-     "id": "sbb-b8e350246ed989bd4d6c9b23",
-     "baslik": "MİLLİ SARAYLAR İDARESİ BAŞKANLIĞI - 3 MEMUR ALACAK",
+     "id": "sbb-78f9c3ba312fdf9e15f65155",
+     "baslik": "MİLLİ SARAYLAR İDARESİ BAŞKANLIĞI - 3 SÖZLEŞMELİ PERSONEL ALACAK",
      "kurum": "MİLLİ SARAYLAR İDARESİ BAŞKANLIĞI",
-     "kadro": "3 MEMUR ALACAK",
-     "ilan_turu": "Memur",
+     "kadro": "3 SÖZLEŞMELİ PERSONEL ALACAK",
+     "ilan_turu": "Sözleşmeli Personel",
      "son_tarih": "2026-11-08",
      "kaynak": "SBB Kamu İlan",
      "kaynak_turu": "sbb",
      "donem": "( 28 Ekim - 8 Kasım)",
      "baslangic_zaman": "2026-10-28T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-02T10:36:47+03:00",
-     "belge_ozeti": "e3ef713d93454830d4a1459f27230cdc8be4fbdbc8b17111386e0daef422fd75",
+     "detay_guncelleme": "2026-11-02T11:06:45+03:00",
+     "belge_ozeti": "0febb79ff7d752f4ed3a0c36c884590e8a1e774d588ee1b8c6e24d81a32ac719",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
        "link": "https://kamuilan.sbb.gov.tr/"
       }
      ],
-     "sbb_detay_surumu": 6,
-     "belge_uyumsuz": true
+     "ozet": "3 SÖZLEŞMELİ PERSONEL alımı. Son başvuru: 08.11.2026. Başvurular, Kariyer Kapısı (https://kariyerkapisi.gov.tr/isealim) internet sitesinden e- Devlet şifresi ile elektronik ortamda yapılacaktır. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "Unvanı: Müze Görevlisi (Kazı Görevlisi) Kadro Adedi: 3 Görev İli : Edirne Sınav Usulü: Uygulamalı Sınav + Sözlü Sınav Özel Şartları: 1- Son başvuru tarihi itibarıyla 40 yaşını doldurmamış olmak. 2- Arkeoloji, Sanat Tarihi, Arkeoloji ve Sanat Tarihi, Klasik Arkeoloji, Tarih Öncesi Arkeolojisi, Prehistorya, Protohistorya ve Ön Asya Arkeolojisi veya Türk İslam Arkeolojisi lisans bölümlerinden birinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurtdışındaki Yükseköğretim Kurumlarından mezun olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "2- Arkeoloji, Sanat Tarihi, Arkeoloji ve Sanat Tarihi, Klasik Arkeoloji, Tarih Öncesi Arkeolojisi, Prehistorya, Protohistorya ve Ön Asya Arkeolojisi veya Türk İslam Arkeolojisi lisans bölümlerinden birinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurtdışındaki Yükseköğretim Kurumlarından mezun olmak."
+      }
+     ],
+     "basvuru_notu": "Başkanlığımıza şahsen, kargo ya da posta yoluyla yapılan başvurular kabul edilmeyecektir.",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/0febb79ff7d752f4ed3a0c36c884590e8a1e774d588ee1b8c6e24d81a32ac719.pdf",
+     "belge_sha256": "0febb79ff7d752f4ed3a0c36c884590e8a1e774d588ee1b8c6e24d81a32ac719",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6
     },
     {
      "id": "sbb-94d1ab01adeb72d82f5c9df5",
@@ -1024,8 +1038,8 @@
      "donem": "( 28 Ekim - 6 Kasım)",
      "baslangic_zaman": "2026-10-28T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-02T10:36:49+03:00",
-     "belge_ozeti": "0587c92c50bc78bacb3df89b0068339a28c54f307227a987a599dbc77134661c",
+     "detay_guncelleme": "2026-11-02T11:06:46+03:00",
+     "belge_ozeti": "a7f7cade21cd68d5ef6b0b2ae0b0892f48f9ee3039080bcb44bcb61a7884ed8f",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1381,8 +1395,8 @@
      "donem": "( 27 Ekim - 10 Kasım)",
      "baslangic_zaman": "2026-10-27T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-02T10:36:50+03:00",
-     "belge_ozeti": "1fc75781b0158211f516f3dd0fcb67af2ceb25180005f3d1925c14613d61fef7",
+     "detay_guncelleme": "2026-11-02T11:06:47+03:00",
+     "belge_ozeti": "6d393150f31ea39d607ef0d6cbd494ae99f3e02d1ef395e5fa6e585a9e1410f7",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1498,8 +1512,8 @@
      "donem": "( 26 Ekim - 9 Kasım)",
      "baslangic_zaman": "2026-10-26T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-02T09:06:47+03:00",
-     "belge_ozeti": "7f1c1d8350c34e5cee1098c9fbeabb40afb8eed8df0720ba7a68de93b49442ce",
+     "detay_guncelleme": "2026-11-02T11:06:48+03:00",
+     "belge_ozeti": "6d0435b63e68bc9092e1cecf9442eb9b7b07a15bfa587351cca74d597918cc21",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1811,8 +1825,8 @@
      "donem": "( 2 Aralık - 4 Aralık)",
      "baslangic_zaman": "2026-12-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-02T10:37:17+03:00",
-     "belge_ozeti": "7604bb4dc617f9ef4a9621f8a8867d328c22f48204363c0ad75a1e0d9d53eb5c",
+     "detay_guncelleme": "2026-11-02T11:06:48+03:00",
+     "belge_ozeti": "2f796c752cdbd0b0b10e012bd13db5b31e7c5c5229f805b904ddbcb5af12930b",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -2437,8 +2451,8 @@
      "donem": "( 22 Ekim - 6 Kasım)",
      "baslangic_zaman": "2026-10-22T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-02T10:37:17+03:00",
-     "belge_ozeti": "93afe0e24519e50c54f090092924276075acc487bc46e9a3f93b1baf1ca0deeb",
+     "detay_guncelleme": "2026-11-02T11:06:49+03:00",
+     "belge_ozeti": "6abd3625c20488c9e4ee58d4fbaca45f7a25eac249b9d9c9d89abe2e0baef816",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -2617,8 +2631,8 @@
      "donem": "( 18 Kasım - 20 Kasım)",
      "baslangic_zaman": "2026-11-18T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-02T10:37:18+03:00",
-     "belge_ozeti": "f2fc4a6a46d46348408de0c687edfc960c48cf79cbf104b594068722c4cd797c",
+     "detay_guncelleme": "2026-11-02T11:06:49+03:00",
+     "belge_ozeti": "7c6c418db6c434865224367e1658a75a5c7a95ff3abd05d40141fc67d34877cf",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -4456,7 +4470,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-11-02T07:37:19.680157+00:00",
+   "kontrol": "2026-11-02T08:06:51.344097+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
