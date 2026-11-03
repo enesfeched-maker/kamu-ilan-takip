@@ -3956,30 +3956,34 @@
  "iskur-d1c85719faccac13961ea9b4": {
   "zaman": "2026-11-03T11:11:57+03:00",
   "surum": 4,
-  "model": "claude",
-  "kaynak": "metin",
+  "model": "elle",
+  "kaynak": "tga.gov.tr/kariyer",
   "imza": "87cb7f25541ab316",
   "baslik": "Türkiye Turizm Tanıtım ve Geliştirme Ajansı Personel Alım ilanı",
   "farklar": [],
   "yz": {
    "kadrolar": [],
-   "toplam": null,
+   "toplam": 13,
    "son_basvuru_tarihi": "2026-12-04",
    "son_basvuru_saati": null,
-   "baslangic_tarihi": null,
-   "kpss_gerekli": null,
+   "baslangic_tarihi": "2026-11-03",
+   "kpss_gerekli": false,
    "iller": [
-    "Ankara"
+    "İstanbul"
    ],
    "ortak_kosullar": [
-    "Ek-1 tablosunda belirtilen bölümlerden yükseköğrenim mezunu olmak.",
-    "Başvuru yalnızca tga.gov.tr/kariyer sayfasından yapılır; şahsen, posta, faks ve e-posta başvuruları kabul edilmez."
+    "Lisans mezunu olmak; Ek-1 tablosundaki bölümlerden biri aranır.",
+    "YDS/e-YDS en az B (Almanca, Fransızca veya İngilizce) ya da denk belge.",
+    "Başvuru yalnızca tga.gov.tr/kariyer üzerinden, tek pozisyona yapılır."
    ],
-   "ozet": "Türkiye Turizm Tanıtım ve Geliştirme Ajansı personel alıyor. Başvurular tga.gov.tr/kariyer üzerinden yapılır.",
-   "okunabilirlik": "kotu",
+   "ozet": "Türkiye Turizm Tanıtım ve Geliştirme Ajansı İstanbul için 13 personel alacak. KPSS aranmaz; başvurular 3 Kasım – 4 Aralık 2026 arasında tga.gov.tr/kariyer üzerinden yapılır.",
+   "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
-   "duyuru_tipi": "yeni_ilan"
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ]
   }
  },
  "sbb-0789771f8e6c1c43dd7bd8fe": {
