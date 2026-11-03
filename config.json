@@ -2286,7 +2286,12 @@
       "iskur-d1c85719faccac13961ea9b4": {
         "son_tarih": "2026-12-04",
         "son_zaman": "2026-12-04T23:59:00+03:00",
-        "kadro": "13 Personel"
+        "kadro": "13 Personel",
+        "il": "İstanbul",
+        "iller": [
+          "İstanbul"
+        ],
+        "telegram_hemen": true
       }
     }
   }
