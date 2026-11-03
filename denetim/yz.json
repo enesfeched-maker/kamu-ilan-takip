@@ -4191,11 +4191,11 @@
   }
  },
  "sbb-2a7662aed2b08030660a2828": {
-  "zaman": "2026-11-03T13:11:45+03:00",
+  "zaman": "2026-11-04T01:12:52+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "710924ede052d238",
+  "imza": "79f656d003205a81",
   "baslik": "JANDARMA GENEL KOMUTANLIĞI - 30 MEMUR TEMİN EDİLECEKTİR",
   "farklar": [],
   "yz": {
@@ -4220,7 +4220,7 @@
      "en_dusuk_puan": 60,
      "il": "Ankara",
      "kosullar": [
-      "Bilgisayar Mühendisliği, Bilgisayar Bilimi ve Mühendisliği veya Bilgisayar Bilimleri ve Mühendisliği lisans programlarından birinden mezun olmak."
+      "Bilgisayar Mühendisliği, Bilgisayar Bilimi ve Mühendisliği ya da Bilgisayar Bilimleri ve Mühendisliği lisans programından mezun olmak."
      ]
     },
     {
@@ -4242,7 +4242,7 @@
      "en_dusuk_puan": 60,
      "il": "Ankara",
      "kosullar": [
-      "İstatistik ve kılavuzda sayılan benzeri (İstatistik-Ekonometri, Matematik ve İstatistik vb.) lisans programlarından birinden mezun olmak."
+      "İstatistik ve belgede sayılan benzer istatistik lisans programlarından birinden mezun olmak."
      ]
     },
     {
@@ -4253,8 +4253,7 @@
      "en_dusuk_puan": 60,
      "il": "Ankara, Van",
      "kosullar": [
-      "Kimya, Kimyager, Uygulamalı Kimya, Kimya Mühendisliği ve kılavuzda sayılan benzeri lisans programlarından birinden mezun olmak.",
-      "Dağılım: Ankara 1, Van 1."
+      "Kimya, Kimyager, Uygulamalı Kimya veya Kimya Mühendisliği gibi belgede sayılan lisans programlarından birinden mezun olmak."
      ]
     },
     {
@@ -4265,34 +4264,32 @@
      "en_dusuk_puan": 60,
      "il": "Karabük (Safranbolu), Kastamonu, Mardin, Muğla",
      "kosullar": [
-      "Psikoloji veya Davranış Bilimleri - Psikoloji Disiplini lisans programlarından birinden mezun olmak.",
-      "Dağılım: Karabük/Safranbolu 1, Kastamonu 1, Mardin 1, Muğla 1."
+      "Psikoloji veya Davranış Bilimleri - Psikoloji Disiplini lisans programından mezun olmak."
      ]
     },
     {
-     "unvan": "Uzman (Radyo-TV-Sinema)",
+     "unvan": "Uzman (Sinema/Radyo-TV)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 60,
      "il": "Ankara",
      "kosullar": [
-      "Radyo, Televizyon ve Sinema, Sinema ve benzeri lisans programlarından birinden mezun olmak.",
-      "Tercihen en az 3 yıl kameraman veya kamera asistanı olarak çalışmış olmak.",
-      "Tercihen video kurgu/montaj ve Adobe Premiere Pro, After Effects bilmek."
+      "Radyo-Televizyon ve Sinema, Sinema ve Televizyon gibi belgede sayılan lisans programlarından birinden mezun olmak.",
+      "Tercihen: en az 3 yıl kameraman/kamera asistanı olarak çalışmış olmak.",
+      "Tercihen: Adobe Premiere Pro ve After Effects kullanabilmek."
      ]
     },
     {
-     "unvan": "Uzman (Medya-İletişim)",
+     "unvan": "Uzman (Medya/İletişim)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 60,
      "il": "Ankara",
      "kosullar": [
-      "Yeni Medya, Medya ve İletişim, Gazetecilik, Halkla İlişkiler, Türk Dili ve Edebiyatı, Siyaset Bilimi, Uluslararası İlişkiler, Sosyoloji, Felsefe vb. lisans programlarından birinden mezun olmak.",
-      "Tercihen mezuniyet bölümüne yönelik yüksek lisansı tamamlamış olmak.",
-      "Tercihen Etkili Okuryazarlık Kursu veya metin yazarlığı sertifikalarından birine sahip olmak."
+      "Medya, İletişim, Gazetecilik, Halkla İlişkiler, Türk Dili, Siyaset Bilimi, Uluslararası İlişkiler, Sosyoloji, Felsefe vb. belgede sayılan lisans programlarından birinden mezun olmak.",
+      "Tercihen: mezuniyet bölümüne yönelik yüksek lisansı tamamlamış olmak."
      ]
     },
     {
@@ -4303,20 +4300,18 @@
      "en_dusuk_puan": 60,
      "il": "Ankara, Aksaray, Artvin, Erzincan, Gümüşhane, Kırklareli, Muş, Ordu, Yozgat",
      "kosullar": [
-      "Hukuk lisans programından mezun olmak.",
-      "Dağılım: Ankara 4; Aksaray, Artvin, Erzincan, Gümüşhane, Kırklareli, Muş, Ordu, Yozgat'ta 1'er kadro."
+      "Hukuk lisans programından mezun olmak."
      ]
     },
     {
-     "unvan": "Uzman (Maliye-İşletme-İktisat)",
+     "unvan": "Uzman (Maliye/İktisat/İşletme)",
      "adet": 4,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 60,
      "il": "Çankırı, Isparta, Kırıkkale, Nevşehir",
      "kosullar": [
-      "Maliye, Muhasebe, İktisat, İşletme ve kılavuzda sayılan benzeri lisans programlarından birinden mezun olmak.",
-      "Dağılım: Çankırı 1, Isparta 1, Kırıkkale 1, Nevşehir 1."
+      "Maliye, Muhasebe, İktisat, İşletme ve belgede sayılan benzer lisans programlarından birinden mezun olmak."
      ]
     }
    ],
@@ -4347,12 +4342,13 @@
     "Nevşehir"
    ],
    "ortak_kosullar": [
-    "2025-2026 yıllarında yapılan KPSS'de P3 puan türünden en az 60 puan almış olmak.",
-    "Başvuru son günü (16 Kasım 2026) itibarıyla 18 yaşını tamamlamış olmak.",
-    "Başvurular yalnızca personeltemin.jandarma.gov.tr üzerinden e-Devlet ile yapılır; adaylar tek unvana başvurabilir.",
-    "Kontenjanın 15 katı aday KPSS sırasına göre mesleki yeterlilik ve/veya mülakat sınavına çağrılır."
+    "2025-2026 KPSS P3 puan türünden en az 60 puan almış olmak.",
+    "Başvuru son günü itibarıyla 18 yaşını tamamlamış olmak.",
+    "Başvurular personeltemin.jandarma.gov.tr üzerinden e-Devlet ile yapılır; posta veya şahsen başvuru alınmaz.",
+    "Adaylar yalnız bir ünvana başvurabilir.",
+    "Kontenjanın 15 katı aday KPSS sırasıyla mesleki yeterlilik ve/veya mülakat sınavına çağrılır."
    ],
-   "ozet": "Jandarma Genel Komutanlığı 10 unvanda 30 açıktan devlet memuru alacak (KPSS P3 en az 60). Başvurular 2–16 Kasım 2026'da personeltemin.jandarma.gov.tr üzerinden yapılır.",
+   "ozet": "Jandarma Genel Komutanlığı 30 açıktan devlet memuru alacak (avukat, mühendis, psikolog, uzman vb.). Başvurular 2–16 Kasım 2026'da personeltemin.jandarma.gov.tr üzerinden yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
