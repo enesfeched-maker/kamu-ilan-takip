@@ -1540,27 +1540,52 @@
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=51fd7921-cfbe-482f-8e2f-b8a569a605d0": {
-  "zaman": "2026-11-03T09:11:32+03:00",
+  "zaman": "2026-11-03T11:11:57+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "metin",
-  "imza": "2882f1ccc713a345",
+  "imza": "ed903dd6a5fc9196",
   "baslik": "DOKUZ EYLÜL ÜNİVERSİTESİ REKTÖRLÜĞÜ - SÖZLEŞMELİ PERSONEL İLANI",
   "farklar": [],
   "yz": {
-   "kadrolar": [],
-   "toplam": null,
-   "son_basvuru_tarihi": null,
-   "son_basvuru_saati": null,
-   "baslangic_tarihi": null,
-   "kpss_gerekli": null,
-   "iller": [],
-   "ortak_kosullar": [],
-   "ozet": "",
-   "okunabilirlik": "kotu",
+   "kadrolar": [
+    {
+     "unvan": "Hemşire",
+     "adet": 68,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "il": "İzmir",
+     "kosullar": [
+      "Hemşirelik lisans programından mezun olmak.",
+      "Son başvuru tarihi itibarıyla ön lisans/lisans programlarında örgün öğrenci olmamak.",
+      "Son başvuru tarihi itibarıyla 35 yaşını doldurmamış olmak."
+     ]
+    }
+   ],
+   "toplam": 68,
+   "son_basvuru_tarihi": "2026-11-19",
+   "son_basvuru_saati": "13:00",
+   "baslangic_tarihi": "2026-11-03",
+   "kpss_gerekli": true,
+   "iller": [
+    "İzmir"
+   ],
+   "ortak_kosullar": [
+    "2026 KPSS B grubu P3 puanı esas alınır; yazılı veya sözlü sınav yapılmaz.",
+    "Elektronik posta, faks, şahsen veya posta yoluyla yapılan başvurular işleme alınmaz."
+   ],
+   "ozet": "Dokuz Eylül Üniversitesi İzmir'de 68 sözleşmeli hemşire alacak. Alım 2026 KPSS P3 puanıyla, sınavsız yapılır; başvurular 3–19 Kasım 2026 arasındadır.",
+   "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
-   "duyuru_tipi": "yeni_ilan"
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P3"
+   ]
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=56b19c9c-b32c-45ae-8fdc-101d776c8df3": {
@@ -3926,6 +3951,35 @@
    "puan_turleri": [
     "P3"
    ]
+  }
+ },
+ "iskur-d1c85719faccac13961ea9b4": {
+  "zaman": "2026-11-03T11:11:57+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "87cb7f25541ab316",
+  "baslik": "Türkiye Turizm Tanıtım ve Geliştirme Ajansı Personel Alım ilanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [],
+   "toplam": null,
+   "son_basvuru_tarihi": "2026-12-04",
+   "son_basvuru_saati": null,
+   "baslangic_tarihi": null,
+   "kpss_gerekli": null,
+   "iller": [
+    "Ankara"
+   ],
+   "ortak_kosullar": [
+    "Ek-1 tablosunda belirtilen bölümlerden yükseköğrenim mezunu olmak.",
+    "Başvuru yalnızca tga.gov.tr/kariyer sayfasından yapılır; şahsen, posta, faks ve e-posta başvuruları kabul edilmez."
+   ],
+   "ozet": "Türkiye Turizm Tanıtım ve Geliştirme Ajansı personel alıyor. Başvurular tga.gov.tr/kariyer üzerinden yapılır.",
+   "okunabilirlik": "kotu",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
   }
  },
  "sbb-0789771f8e6c1c43dd7bd8fe": {
