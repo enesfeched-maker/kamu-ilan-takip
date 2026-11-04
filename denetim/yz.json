@@ -992,6 +992,191 @@
    ]
   }
  },
+ "csb-478727": {
+  "zaman": "2026-11-04T13:13:55+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "csb",
+  "imza": "ff0868602f52f3e4",
+  "baslik": "ULA BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE ZABITA MEMURU ALIMI İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Zabıta Memuru",
+     "adet": 4,
+     "ogrenim": "onlisans",
+     "puan_turu": "P93",
+     "en_dusuk_puan": 70,
+     "il": "Muğla",
+     "kosullar": [
+      "Herhangi bir önlisans programından mezun olmak.",
+      "En az (B) sınıfı sürücü belgesine sahip olmak.",
+      "Boy: erkeklerde en az 1,67 m, kadınlarda en az 1,60 m; boy-kilo farkı en çok 10 kg.",
+      "Sınavın yapıldığı tarihte 30 yaşını doldurmamış olmak."
+     ]
+    }
+   ],
+   "toplam": 4,
+   "son_basvuru_tarihi": "2026-12-23",
+   "son_basvuru_saati": "16:00",
+   "baslangic_tarihi": "2026-12-21",
+   "kpss_gerekli": true,
+   "iller": [
+    "Muğla"
+   ],
+   "ortak_kosullar": [
+    "2026 KPSS (B) grubu P93 puan türünden en az 70 puan almış olmak.",
+    "Başvuru yalnızca şahsen, Ula Belediyesi İnsan Kaynakları ve Eğitim Müdürlüğü'ne (10:00–16:00) yapılır; posta kabul edilmez.",
+    "Sözlü ve uygulamalı sınav 7 Ocak 2027 saat 10:00'da yapılacak."
+   ],
+   "ozet": "Ula Belediyesi (Muğla) 4 zabıta memuru alacak. Başvurular 21–23 Aralık 2026'da belediyeye şahsen yapılır; sözlü ve uygulamalı sınav 7 Ocak 2027'de.",
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "onlisans"
+   ],
+   "puan_turleri": [
+    "P93"
+   ]
+  }
+ },
+ "csb-478728": {
+  "zaman": "2026-11-04T13:13:55+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "csb",
+  "imza": "af1a3c9e792e5e41",
+  "baslik": "TANOBA BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Memur",
+     "adet": 1,
+     "ogrenim": "onlisans",
+     "puan_turu": "P93",
+     "en_dusuk_puan": 60,
+     "il": "Tokat",
+     "kosullar": [
+      "Herhangi bir önlisans programından mezun olmak.",
+      "En az (B) sınıfı sürücü belgesine sahip olmak."
+     ]
+    }
+   ],
+   "toplam": 1,
+   "son_basvuru_tarihi": "2026-12-18",
+   "son_basvuru_saati": "17:00",
+   "baslangic_tarihi": "2026-12-16",
+   "kpss_gerekli": true,
+   "iller": [
+    "Tokat"
+   ],
+   "ortak_kosullar": [
+    "2026 KPSS (B) grubu P93 puan türünden en az 60 puan almış olmak.",
+    "Başvuru 16–18 Aralık 2026'da e-posta (bilgi@tanoba.bel.tr), şahsen veya iadeli taahhütlü posta ile yapılır.",
+    "Sözlü sınav 4 Ocak 2027 saat 14.00'te Tanoba Belediyesi'nde (Erbaa/Tokat) yapılacak."
+   ],
+   "ozet": "Tanoba Belediyesi (Tokat) 1 memur alacak. Başvurular 16–18 Aralık 2026'da e-posta, şahsen veya posta ile yapılır; sözlü sınav 4 Ocak 2027'de.",
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "onlisans"
+   ],
+   "puan_turleri": [
+    "P93"
+   ]
+  }
+ },
+ "csb-478729": {
+  "zaman": "2026-11-04T13:13:55+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "csb",
+  "imza": "041e198987cffeb1",
+  "baslik": "GÜNDOĞMUŞ BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Mühendis (İnşaat)",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "il": "Antalya",
+     "kosullar": [
+      "İnşaat mühendisliği lisans programından mezun olmak.",
+      "En az (B) sınıfı sürücü belgesine sahip olmak."
+     ]
+    },
+    {
+     "unvan": "Mimar",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "il": "Antalya",
+     "kosullar": [
+      "Mimarlık lisans programından mezun olmak.",
+      "En az (B) sınıfı sürücü belgesine sahip olmak."
+     ]
+    },
+    {
+     "unvan": "Muhasebeci",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "il": "Antalya",
+     "kosullar": [
+      "Maliye, işletme, muhasebe ve finansal yönetim, ekonomi ve finans veya muhasebe ve finans yönetimi lisans programlarından birinden mezun olmak.",
+      "En az (B) sınıfı sürücü belgesine sahip olmak."
+     ]
+    },
+    {
+     "unvan": "Memur",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "il": "Antalya",
+     "kosullar": [
+      "Kamu yönetimi, siyaset bilimi ve kamu yönetimi, yerel yönetimler, uluslararası ilişkiler veya çalışma ekonomisi ve endüstri ilişkileri lisans programlarından birinden mezun olmak.",
+      "En az (B) sınıfı sürücü belgesine sahip olmak."
+     ]
+    }
+   ],
+   "toplam": 4,
+   "son_basvuru_tarihi": "2027-01-05",
+   "son_basvuru_saati": "17:30",
+   "baslangic_tarihi": "2026-12-21",
+   "kpss_gerekli": true,
+   "iller": [
+    "Antalya"
+   ],
+   "ortak_kosullar": [
+    "2026 KPSS (B) grubu P3 puan türünden en az 60 puan almış olmak.",
+    "Başvuru 21 Aralık 2026–5 Ocak 2027'de e-posta (belediye@gundogmus.bel.tr), şahsen veya iadeli taahhütlü posta ile yapılır.",
+    "Adaylar yalnızca bir kadroya başvurabilir."
+   ],
+   "ozet": "Gündoğmuş Belediyesi (Antalya) 1 mühendis, 1 mimar, 1 muhasebeci ve 1 memur olmak üzere 4 kişi alacak. Başvurular 21 Aralık 2026–5 Ocak 2027 arasında yapılır.",
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P3"
+   ]
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=01e546b7-c1d0-4364-b010-7eea088f49cd": {
   "zaman": "2026-11-02T11:23:59+03:00",
   "surum": 4,
@@ -1540,25 +1725,140 @@
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=4d1a4aba-67fa-449d-b19d-13b197a770f0": {
-  "zaman": "2026-11-04T11:11:45+03:00",
+  "zaman": "2026-11-04T13:13:55+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "metin",
-  "imza": "bfa1736b346fefe0",
+  "imza": "106b614f2b510f44",
   "baslik": "NÜKLEER DÜZENLEME KURUMU BAŞKANLIĞI - SÖZLEŞMELİ BİLİŞİM PERSONELİ GİRİŞ SINAVI İLANI",
   "farklar": [],
   "yz": {
-   "kadrolar": [],
-   "toplam": null,
-   "son_basvuru_tarihi": null,
-   "kpss_gerekli": null,
-   "iller": [],
-   "ortak_kosullar": [],
-   "ozet": "",
-   "okunabilirlik": "kotu",
+   "kadrolar": [
+    {
+     "unvan": "Yazılım Mimarı",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "kosullar": [
+      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği lisans programlarından birinden mezun olmak.",
+      "Kurumsal yazılım mimarisi alanında en az 8 yıl belgeli tecrübe sahibi olmak.",
+      "Angular ve .NET/.NET Core (C#) ile uçtan uca yazılım geliştirme deneyimi olmak."
+     ]
+    },
+    {
+     "unvan": "Kıdemli Veri Tabanı Uzmanı",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "kosullar": [
+      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği lisans programlarından birinden mezun olmak.",
+      "Veri tabanı uzmanı, iş zekâsı uzmanı veya veri mühendisi olarak en az 5 yıl belgeli tecrübe sahibi olmak.",
+      "Veri ambarı, ETL, raporlama ve OLAP uygulamalarında en az 5 yıl tecrübe sahibi olmak."
+     ]
+    },
+    {
+     "unvan": "Sistem Uzmanı",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "kosullar": [
+      "Bilgisayar/yazılım/elektrik/elektronik/endüstri mühendisliğinden veya (ücret tavanının 2 katı pozisyonlar için) diğer mühendislik, bilgisayar-teknoloji, istatistik, matematik, fizik bölümlerinden mezun olmak.",
+      "İlgili alanda en az 3 yıl belgeli tecrübe sahibi olmak."
+     ]
+    },
+    {
+     "unvan": "Kıdemli Yazılım Uzmanı",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "kosullar": [
+      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği lisans programlarından birinden mezun olmak.",
+      "İlgili alanda en az 5 yıl belgeli tecrübe sahibi olmak."
+     ]
+    },
+    {
+     "unvan": "Ağ Uzmanı",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "kosullar": [
+      "Bilgisayar/yazılım/elektrik/elektronik/endüstri mühendisliğinden veya (ücret tavanının 2 katı pozisyonlar için) diğer mühendislik, bilgisayar-teknoloji, istatistik, matematik, fizik bölümlerinden mezun olmak.",
+      "İlgili alanda en az 3 yıl belgeli tecrübe sahibi olmak."
+     ]
+    },
+    {
+     "unvan": "Kıdemli Siber Güvenlik Uzmanı",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "kosullar": [
+      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği lisans programlarından birinden mezun olmak.",
+      "İlgili alanda en az 5 yıl belgeli tecrübe sahibi olmak."
+     ]
+    },
+    {
+     "unvan": "Yazılım Uzmanı",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "kosullar": [
+      "Bilgisayar/yazılım/elektrik/elektronik/endüstri mühendisliğinden veya (ücret tavanının 2 katı pozisyonlar için) diğer mühendislik, bilgisayar-teknoloji, istatistik, matematik, fizik bölümlerinden mezun olmak.",
+      "Kurumsal yazılım alanında en az 3 yıl belgeli deneyim sahibi olmak.",
+      "C# (.NET) ve/veya Java ile uygulama geliştirmiş olmak."
+     ]
+    },
+    {
+     "unvan": "Proje Yöneticisi",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "kosullar": [
+      "Bilgisayar/yazılım/elektrik/elektronik/endüstri mühendisliğinden veya (ücret tavanının 2 katı pozisyonlar için) diğer mühendislik, bilgisayar-teknoloji, istatistik, matematik, fizik bölümlerinden mezun olmak.",
+      "Proje yönetimi alanında en az 3 yıl belgeli tecrübe sahibi olmak."
+     ]
+    }
+   ],
+   "toplam": 8,
+   "son_basvuru_tarihi": "2026-11-23",
+   "son_basvuru_saati": "23:59",
+   "baslangic_tarihi": "2026-11-09",
+   "kpss_gerekli": true,
+   "iller": [
+    "Ankara"
+   ],
+   "ortak_kosullar": [
+    "2025 veya 2026 KPSS P3 puanı ve İngilizce YDS/e-YDS puanı esas alınır; P3 puanı olmayanlara 70 puan verilir.",
+    "Başvuru yalnızca Kariyer Kapısı (kariyerkapisi.gov.tr/isealim) üzerinden yapılır; posta ve şahsen kabul edilmez.",
+    "Sözlü/uygulamalı sınav 7–11 Aralık 2026'da Ankara'da yapılacak.",
+    "Adaylar yalnızca bir pozisyona başvurabilir; en az iki programlama dilini bildiğini belgelemek gerekir."
+   ],
+   "ozet": "Nükleer Düzenleme Kurumu (Ankara) 8 sözleşmeli bilişim personeli alacak: yazılım mimarı, veri tabanı, sistem, yazılım, ağ, siber güvenlik uzmanları ve proje yöneticisi. Başvuru Kariyer Kapısı'ndan 9–23 Kasım 2026.",
+   "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
-   "duyuru_tipi": "yeni_ilan"
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P3"
+   ]
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=51fd7921-cfbe-482f-8e2f-b8a569a605d0": {
@@ -4351,11 +4651,11 @@
   }
  },
  "sbb-2a7662aed2b08030660a2828": {
-  "zaman": "2026-11-04T01:12:52+03:00",
+  "zaman": "2026-11-04T13:13:55+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "79f656d003205a81",
+  "imza": "4a9fda956936aa97",
   "baslik": "JANDARMA GENEL KOMUTANLIĞI - 30 MEMUR TEMİN EDİLECEKTİR",
   "farklar": [],
   "yz": {
@@ -4380,7 +4680,7 @@
      "en_dusuk_puan": 60,
      "il": "Ankara",
      "kosullar": [
-      "Bilgisayar Mühendisliği, Bilgisayar Bilimi ve Mühendisliği ya da Bilgisayar Bilimleri ve Mühendisliği lisans programından mezun olmak."
+      "Bilgisayar mühendisliği, bilgisayar bilimi ve mühendisliği veya bilgisayar bilimleri ve mühendisliği programlarından birinden mezun olmak."
      ]
     },
     {
@@ -4391,7 +4691,7 @@
      "en_dusuk_puan": 60,
      "il": "Ankara",
      "kosullar": [
-      "Elektrik Mühendisliği lisans programından mezun olmak."
+      "Elektrik mühendisliği lisans programından mezun olmak."
      ]
     },
     {
@@ -4402,7 +4702,7 @@
      "en_dusuk_puan": 60,
      "il": "Ankara",
      "kosullar": [
-      "İstatistik ve belgede sayılan benzer istatistik lisans programlarından birinden mezun olmak."
+      "İstatistik, istatistik ve yöneylem araştırması, istatistik-ekonometri, matematik ve istatistik vb. belirtilen 13 lisans programından birinden mezun olmak."
      ]
     },
     {
@@ -4413,7 +4713,7 @@
      "en_dusuk_puan": 60,
      "il": "Ankara, Van",
      "kosullar": [
-      "Kimya, Kimyager, Uygulamalı Kimya veya Kimya Mühendisliği gibi belgede sayılan lisans programlarından birinden mezun olmak."
+      "Kimya, kimyager, kimya mühendisliği vb. belirtilen 9 lisans programından birinden mezun olmak."
      ]
     },
     {
@@ -4424,32 +4724,31 @@
      "en_dusuk_puan": 60,
      "il": "Karabük (Safranbolu), Kastamonu, Mardin, Muğla",
      "kosullar": [
-      "Psikoloji veya Davranış Bilimleri - Psikoloji Disiplini lisans programından mezun olmak."
+      "Psikoloji veya davranış bilimleri-psikoloji disiplini lisans programından mezun olmak."
      ]
     },
     {
-     "unvan": "Uzman (Sinema/Radyo-TV)",
+     "unvan": "Uzman (Sinema-TV, Kameraman)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 60,
      "il": "Ankara",
      "kosullar": [
-      "Radyo-Televizyon ve Sinema, Sinema ve Televizyon gibi belgede sayılan lisans programlarından birinden mezun olmak.",
-      "Tercihen: en az 3 yıl kameraman/kamera asistanı olarak çalışmış olmak.",
-      "Tercihen: Adobe Premiere Pro ve After Effects kullanabilmek."
+      "Radyo-televizyon ve sinema, sinema-TV vb. belirtilen 13 lisans programından birinden mezun olmak.",
+      "Tercihen: en az 3 yıl kameraman/kamera asistanı olarak çalışmış olmak; video kurgu ve Adobe Premiere Pro/After Effects bilmek."
      ]
     },
     {
-     "unvan": "Uzman (Medya/İletişim)",
+     "unvan": "Uzman (Medya-İletişim)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 60,
      "il": "Ankara",
      "kosullar": [
-      "Medya, İletişim, Gazetecilik, Halkla İlişkiler, Türk Dili, Siyaset Bilimi, Uluslararası İlişkiler, Sosyoloji, Felsefe vb. belgede sayılan lisans programlarından birinden mezun olmak.",
-      "Tercihen: mezuniyet bölümüne yönelik yüksek lisansı tamamlamış olmak."
+      "Yeni medya, medya ve iletişim, gazetecilik, halkla ilişkiler, Türk dili ve edebiyatı, siyaset bilimi, uluslararası ilişkiler, sosyoloji, felsefe vb. belirtilen 65 lisans programından birinden mezun olmak.",
+      "Tercihen: mezuniyet bölümüne yönelik yüksek lisans; metin yazarlığı/yaratıcı yazarlık sertifikası."
      ]
     },
     {
@@ -4458,20 +4757,20 @@
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 60,
-     "il": "Ankara, Aksaray, Artvin, Erzincan, Gümüşhane, Kırklareli, Muş, Ordu, Yozgat",
+     "il": "Ankara (4), Aksaray, Artvin, Erzincan, Gümüşhane, Kırklareli, Muş, Ordu, Yozgat (birer)",
      "kosullar": [
       "Hukuk lisans programından mezun olmak."
      ]
     },
     {
-     "unvan": "Uzman (Maliye/İktisat/İşletme)",
+     "unvan": "Uzman (Maliye-Muhasebe-İktisat-İşletme)",
      "adet": 4,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 60,
      "il": "Çankırı, Isparta, Kırıkkale, Nevşehir",
      "kosullar": [
-      "Maliye, Muhasebe, İktisat, İşletme ve belgede sayılan benzer lisans programlarından birinden mezun olmak."
+      "Maliye, muhasebe, iktisat, işletme vb. belirtilen 61 lisans programından birinden mezun olmak."
      ]
     }
    ],
@@ -4502,13 +4801,12 @@
     "Nevşehir"
    ],
    "ortak_kosullar": [
-    "2025-2026 KPSS P3 puan türünden en az 60 puan almış olmak.",
-    "Başvuru son günü itibarıyla 18 yaşını tamamlamış olmak.",
-    "Başvurular personeltemin.jandarma.gov.tr üzerinden e-Devlet ile yapılır; posta veya şahsen başvuru alınmaz.",
-    "Adaylar yalnız bir ünvana başvurabilir.",
-    "Kontenjanın 15 katı aday KPSS sırasıyla mesleki yeterlilik ve/veya mülakat sınavına çağrılır."
+    "2025–2026 KPSS P3 puan türünden en az 60 puan almış olmak.",
+    "Müracaatın son günü (16 Kasım 2026) itibarıyla 18 yaşını tamamlamış olmak.",
+    "Başvuru yalnızca personeltemin.jandarma.gov.tr üzerinden e-Devlet ile yapılır; adaylar tek unvana başvurabilir.",
+    "Kontenjanın 15 katı aday mesleki yeterlilik/mülakat sınavına çağrılır."
    ],
-   "ozet": "Jandarma Genel Komutanlığı 30 açıktan devlet memuru alacak (avukat, mühendis, psikolog, uzman vb.). Başvurular 2–16 Kasım 2026'da personeltemin.jandarma.gov.tr üzerinden yapılır.",
+   "ozet": "Jandarma Genel Komutanlığı 30 açıktan devlet memuru alacak (avukat, mühendis, istatistikçi, kimyager, psikolog, uzman). Başvurular 2–16 Kasım 2026'da Personel Temin Sistemi'nden yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
