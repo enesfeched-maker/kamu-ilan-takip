@@ -1779,6 +1779,79 @@
    "ortak_kosullar": []
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=6e7cd2e5-b3d8-4c95-916b-6e1ff234b0b0": {
+  "zaman": "2026-11-04T09:12:38+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "a3aa1cbdaacb3d13",
+  "baslik": "ZAFER KALKINMA AJANSI - UZMAN PERSONEL ALIMI (Kasım 2026)",
+  "farklar": [
+   [
+    "ogrenim",
+    [
+     "lisans",
+     "onlisans"
+    ],
+    [
+     "lisans"
+    ],
+    false
+   ]
+  ],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Uzman Personel (Mühendislik, Şehir ve Bölge Planlama)",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": 80,
+     "il": null,
+     "kosullar": [
+      "Mühendislik veya Şehir ve Bölge Planlama bölümlerinden lisans düzeyinde mezun olmak.",
+      "KPSS P1, P2 veya P3 puan türlerinden en az 80 puan almış olmak."
+     ]
+    },
+    {
+     "unvan": "Uzman Personel (İİBF)",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": 80,
+     "il": null,
+     "kosullar": [
+      "İstatistik, Ekonometri, İktisat, Maliye, İşletme, Kamu Yönetimi, Uluslararası İlişkiler veya Çalışma Ekonomisi mezunu olmak.",
+      "Mezun olunan bölüme göre belirtilen KPSS puan türünden en az 80 puan almış olmak."
+     ]
+    }
+   ],
+   "toplam": 2,
+   "son_basvuru_tarihi": "2026-12-14",
+   "son_basvuru_saati": "23:59",
+   "baslangic_tarihi": "2026-11-25",
+   "kpss_gerekli": true,
+   "iller": [
+    "Afyonkarahisar",
+    "Kütahya",
+    "Manisa",
+    "Uşak"
+   ],
+   "ortak_kosullar": [
+    "YDS/e-YDS İngilizce'den son 5 yılda en az 70 puan veya denk belge almış olmak.",
+    "Başvurular yalnızca elektronik ortamda yapılır; elden, e-posta veya posta ile başvuru kabul edilmez."
+   ],
+   "ozet": "Zafer Kalkınma Ajansı TR33 bölgesi (Afyonkarahisar, Kütahya, Manisa, Uşak) için 2 uzman personel alacak. Başvurular 25 Kasım–14 Aralık 2026 arasında elektronik ortamda yapılır.",
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": []
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=727b6946-c0fe-493f-a9e1-a0d668eabca2": {
   "zaman": "2026-10-30T15:39:28+03:00",
   "surum": 4,
@@ -4366,11 +4439,11 @@
   }
  },
  "sbb-2d140a0e470f5a4e9d94fe00": {
-  "zaman": "2026-11-04T07:13:57+03:00",
+  "zaman": "2026-11-04T09:12:38+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "2864b3dafe68d7fc",
+  "imza": "5ecd88b5c8464b91",
   "baslik": "KARABAĞLAR BELEDİYE BAŞKANLIĞI - 2 SÖZLEŞMELİ PERSONEL ALACAK",
   "farklar": [],
   "yz": {
@@ -4397,11 +4470,11 @@
     "İzmir"
    ],
    "ortak_kosullar": [
-    "2026 KPSS (B) grubundan P3 puan türünde en az 60 puan almış olmak.",
-    "Başvuru 30 Kasım–4 Aralık 2026: yalnız e-Devlet/Kariyer Kapısı üzerinden; şahsen veya posta kabul edilmez.",
-    "Sözlü sınav 16 Aralık 2026 saat 10:00, Karabağlar Belediyesi."
+    "2026 yılı KPSS (B) grubundan en az 60 puan almış olmak.",
+    "Başvuru 30 Kasım–4 Aralık 2026'da e-Devlet veya Kariyer Kapısı'ndan yapılır; şahsen/posta kabul edilmez.",
+    "Sözlü sınav 16 Aralık 2026 saat 10:00, Karabağlar Belediyesi Ana Hizmet Binası."
    ],
-   "ozet": "Karabağlar Belediyesi (İzmir) 2 sözleşmeli çevre mühendisi alacak. Başvurular 30 Kasım–4 Aralık 2026'da Kariyer Kapısı'ndan yapılır.",
+   "ozet": "Karabağlar Belediyesi 2 sözleşmeli çevre mühendisi alacak. Başvurular 30 Kasım–4 Aralık 2026'da e-Devlet/Kariyer Kapısı üzerinden yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -5722,11 +5795,11 @@
   }
  },
  "sbb-996152b017d1af5f445dfade": {
-  "zaman": "2026-11-03T23:12:35+03:00",
+  "zaman": "2026-11-04T09:12:38+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "439977b059c91bce",
+  "imza": "06b2b7957074ab8b",
   "baslik": "ŞİLE BELEDİYE BAŞKANLIĞI - 8 MEMUR ALACAK",
   "farklar": [],
   "yz": {
@@ -5739,14 +5812,14 @@
      "en_dusuk_puan": 65,
      "il": "İstanbul",
      "kosullar": [
-      "Herhangi bir ortaöğretim kurumundan (lise veya dengi okul) mezun olmak.",
+      "Herhangi bir ortaöğretim kurumundan (lise veya dengi) mezun olmak.",
       "En az (B) sınıfı sürücü belgesine sahip olmak."
      ]
     }
    ],
    "toplam": 8,
    "son_basvuru_tarihi": "2026-11-06",
-   "son_basvuru_saati": null,
+   "son_basvuru_saati": "17:00",
    "baslangic_tarihi": "2026-11-02",
    "kpss_gerekli": true,
    "iller": [
@@ -5754,12 +5827,12 @@
    ],
    "ortak_kosullar": [
     "Sınavın yapıldığı tarihte 30 yaşını doldurmamış olmak.",
-    "KPSS (B) grubundan P94 puan türünden en az 65 puan almış olmak.",
     "Boy: erkeklerde en az 1,67 m, kadınlarda en az 1,60 m; boy-kilo farkı en çok 10 kg.",
-    "Başvuru şahsen Şile Belediyesi Yazı İşleri Müdürlüğü'ne yapılır; posta kabul edilmez.",
-    "Sözlü ve uygulamalı sınav 20 Kasım 2026'da; sınava çağrılanlar 13 Kasım 2026'da ilan edilir."
+    "KPSS (B) grubu P94'ten en az 65 puan almış olmak (ilanda 2024 yılı KPSS yazıyor).",
+    "Başvuru 2–6 Kasım 2026'da Şile Belediyesi Yazı İşleri Müdürlüğü'ne şahsen yapılır.",
+    "Sözlü ve uygulamalı sınav 20 Kasım 2026 saat 10:00."
    ],
-   "ozet": "Şile Belediyesi 8 zabıta memuru alacak (lise mezunu, P94). Başvurular 2–6 Kasım 2026'da Yazı İşleri Müdürlüğü'ne şahsen yapılır.",
+   "ozet": "Şile Belediyesi (İstanbul) 8 zabıta memuru alacak (lise mezunu, P94). Başvurular 2–6 Kasım 2026'da Yazı İşleri Müdürlüğü'ne şahsen yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -5773,11 +5846,11 @@
   }
  },
  "sbb-a00f639e934dfda13b150416": {
-  "zaman": "2026-11-03T23:12:35+03:00",
+  "zaman": "2026-11-04T09:12:38+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "d87ad33bb8e04fac",
+  "imza": "b4fae3ebc7fa10b9",
   "baslik": "İZMİR BÜYÜKŞEHİR BELEDİYE BAŞKANLIĞI - 90 ZABITA MEMURU ALACAK",
   "farklar": [],
   "yz": {
@@ -5790,7 +5863,7 @@
      "en_dusuk_puan": 65,
      "il": "İzmir",
      "kosullar": [
-      "Spor/beden eğitimi alanındaki lisans programlarından birinden mezun olmak.",
+      "Antrenörlük, Beden Eğitimi ve Spor Öğretmenliği, Spor Yöneticiliği, Egzersiz ve Spor Bilimleri, Rekreasyon vb. programdan mezun olmak.",
       "En az (B) sınıfı sürücü belgesine sahip olmak."
      ]
     },
@@ -5802,31 +5875,31 @@
      "en_dusuk_puan": 65,
      "il": "İzmir",
      "kosullar": [
-      "Spor/beden eğitimi alanındaki lisans programlarından birinden mezun olmak.",
+      "Antrenörlük, Beden Eğitimi ve Spor Öğretmenliği, Spor Yöneticiliği, Egzersiz ve Spor Bilimleri, Rekreasyon vb. programdan mezun olmak.",
       "En az (B) sınıfı sürücü belgesine sahip olmak."
      ]
     },
     {
-     "unvan": "Zabıta Memuru (Yerel Yönetimler) — Erkek",
+     "unvan": "Zabıta Memuru (Yönetim) — Erkek",
      "adet": 24,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 65,
      "il": "İzmir",
      "kosullar": [
-      "Yerel Yönetimler, Kamu Yönetimi, Siyaset Bilimi ve Kamu Yönetimi lisans programlarından birinden mezun olmak.",
+      "Yerel Yönetimler, Kamu Yönetimi veya Siyaset Bilimi ve Kamu Yönetimi programından mezun olmak.",
       "En az (B) sınıfı sürücü belgesine sahip olmak."
      ]
     },
     {
-     "unvan": "Zabıta Memuru (Yerel Yönetimler) — Kadın",
+     "unvan": "Zabıta Memuru (Yönetim) — Kadın",
      "adet": 6,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 65,
      "il": "İzmir",
      "kosullar": [
-      "Yerel Yönetimler, Kamu Yönetimi, Siyaset Bilimi ve Kamu Yönetimi lisans programlarından birinden mezun olmak.",
+      "Yerel Yönetimler, Kamu Yönetimi veya Siyaset Bilimi ve Kamu Yönetimi programından mezun olmak.",
       "En az (B) sınıfı sürücü belgesine sahip olmak."
      ]
     },
@@ -5838,7 +5911,7 @@
      "en_dusuk_puan": 65,
      "il": "İzmir",
      "kosullar": [
-      "Adalet, Yerel Yönetimler veya Özel Güvenlik ve Koruma ön lisans programlarından birinden mezun olmak.",
+      "Adalet, Yerel Yönetimler veya Özel Güvenlik ve Koruma ön lisans programından mezun olmak.",
       "En az (B) sınıfı sürücü belgesine sahip olmak."
      ]
     },
@@ -5850,7 +5923,7 @@
      "en_dusuk_puan": 65,
      "il": "İzmir",
      "kosullar": [
-      "Adalet, Yerel Yönetimler veya Özel Güvenlik ve Koruma ön lisans programlarından birinden mezun olmak.",
+      "Adalet, Yerel Yönetimler veya Özel Güvenlik ve Koruma ön lisans programından mezun olmak.",
       "En az (B) sınıfı sürücü belgesine sahip olmak."
      ]
     }
@@ -5865,12 +5938,12 @@
    ],
    "ortak_kosullar": [
     "Sınavın yapıldığı tarihte 30 yaşını doldurmamış olmak.",
-    "2026 KPSS (B) grubundan ilgili puan türünden en az 65 puan almış olmak.",
     "Boy: erkeklerde en az 1,67 m, kadınlarda en az 1,60 m; boy-kilo farkı en çok 10 kg.",
-    "Başvuru şahsen, 08:30–17:00 arasında İzmir Büyükşehir Belediyesi Zabıta Dairesi Başkanlığı'na (Konak) yapılır.",
-    "Sözlü ve uygulamalı sınav 11 Ocak 2027'de; sınava çağrılanlar 18 Aralık 2026'da ilan edilir."
+    "2026 KPSS (B) grubundan en az 65 puan almış olmak.",
+    "Başvuru 30 Kasım–4 Aralık 2026, 08:30–17:00, Zabıta Dairesi Başkanlığı'na (Konak) şahsen yapılır.",
+    "Sözlü ve uygulamalı sınav 11 Ocak 2027 saat 09:00, Buca."
    ],
-   "ozet": "İzmir Büyükşehir Belediyesi 90 zabıta memuru alacak (lisans 60, ön lisans 30). Başvurular 30 Kasım–4 Aralık 2026'da Zabıta Dairesi Başkanlığı'na şahsen yapılır.",
+   "ozet": "İzmir Büyükşehir Belediyesi 90 zabıta memuru alacak (lisans ve ön lisans). Başvurular 30 Kasım–4 Aralık 2026'da Zabıta Dairesi Başkanlığı'na şahsen yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -6068,11 +6141,11 @@
   }
  },
  "sbb-b79b5a2fa5f2a1036a2ea5bc": {
-  "zaman": "2026-11-03T23:12:35+03:00",
+  "zaman": "2026-11-04T09:12:38+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "b38510477c224119",
+  "imza": "38f8e40561a6eb02",
   "baslik": "ELEŞKİRT BELEDİYE BAŞKANLIĞI - 1 ÇÖZÜMLEYİCİ ALACAK",
   "farklar": [],
   "yz": {
@@ -6086,25 +6159,25 @@
      "il": "Ağrı",
      "kosullar": [
       "İşletme, Siyaset Bilimi veya Yerel Yönetimler bölümlerinden birinden mezun olmak.",
-      "En az iki programlama dilini belgeyle kanıtlamak (okul belgesi veya MEB onaylı kurs sertifikası).",
+      "En az iki programlama dilini bildiğini belgelemek (okul belgesi veya MEB onaylı kurs sertifikası).",
       "En az (B) sınıfı sürücü belgesine sahip olmak."
      ]
     }
    ],
    "toplam": 1,
    "son_basvuru_tarihi": "2026-11-04",
-   "son_basvuru_saati": null,
+   "son_basvuru_saati": "17:00",
    "baslangic_tarihi": "2026-11-02",
    "kpss_gerekli": true,
    "iller": [
     "Ağrı"
    ],
    "ortak_kosullar": [
-    "2026 KPSS (B) grubundan P3 puan türünden en az 50 puan almış olmak.",
-    "Başvuru e-posta (yaziisleri@eleskirt.bel.tr), şahsen veya iadeli taahhütlü posta ile yapılır.",
-    "Sözlü sınav 9 Kasım 2026'da Eleşkirt Belediyesi'nde yapılır."
+    "2026 KPSS (B) grubundan P3'ten en az 50 puan almış olmak.",
+    "Başvuru 2–4 Kasım 2026'da yaziisleri@eleskirt.bel.tr adresine, şahsen veya iadeli taahhütlü posta ile yapılır.",
+    "Sözlü sınav 9 Kasım 2026 saat 10:00."
    ],
-   "ozet": "Eleşkirt (Ağrı) Belediyesi 1 çözümleyici alacak. Başvurular 2–4 Kasım 2026'da e-posta, şahsen veya posta ile yapılır.",
+   "ozet": "Eleşkirt Belediyesi (Ağrı) 1 çözümleyici alacak. Başvurular 2–4 Kasım 2026'da e-posta, şahsen veya posta ile Yazı İşleri Müdürlüğü'ne yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -6291,11 +6364,11 @@
   }
  },
  "sbb-ce3aeb16575b73442a9f8944": {
-  "zaman": "2026-11-03T23:12:35+03:00",
+  "zaman": "2026-11-04T09:12:38+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "e8de0d1a99f97339",
+  "imza": "9af80c3c49375c15",
   "baslik": "ŞİLE BELEDİYE BAŞKANLIĞI - 6 MEMUR ALACAK",
   "farklar": [],
   "yz": {
@@ -6319,26 +6392,26 @@
      "en_dusuk_puan": 65,
      "il": "İstanbul",
      "kosullar": [
-      "Harita, harita kadastro, inşaat, makine, elektrik gibi listedeki ön lisans programlarından birinden mezun olmak."
+      "Harita, harita kadastro, harita ve maden ölçme, inşaat, makine veya elektrik ön lisans programlarından birinden mezun olmak."
      ]
     }
    ],
    "toplam": 6,
    "son_basvuru_tarihi": "2026-11-13",
-   "son_basvuru_saati": null,
+   "son_basvuru_saati": "17:00",
    "baslangic_tarihi": "2026-11-09",
    "kpss_gerekli": true,
    "iller": [
     "İstanbul"
    ],
    "ortak_kosullar": [
-    "2026 KPSS (B) grubundan ilgili puan türünden en az 65 puan almış olmak.",
-    "Zabıta memuru için sınavın yapıldığı tarihte 30 yaşını doldurmamış olmak.",
-    "Zabıta için boy: erkeklerde en az 1,67 m, kadınlarda en az 1,60 m; boy-kilo farkı en çok 10 kg.",
-    "Tekniker: e-posta (insankaynaklari@sile.bel.tr), şahsen veya iadeli taahhütlü posta; zabıta: yalnız şahsen.",
-    "Başvuru yeri: Şile Belediyesi Yazı İşleri Müdürlüğü."
+    "2026 KPSS (B) grubundan en az 65 puan almış olmak.",
+    "Zabıta için: 30 yaşını doldurmamış olmak; boy erkekte en az 1,67 m, kadında en az 1,60 m; boy-kilo farkı en çok 10 kg.",
+    "Tekniker: e-posta (insankaynaklari@sile.bel.tr), iadeli taahhütlü posta veya şahsen; zabıta: yalnızca şahsen başvuru.",
+    "Başvuru Şile Belediyesi Yazı İşleri Müdürlüğü'ne 9–13 Kasım 2026 arasında yapılır.",
+    "Sözlü (ve zabıtada uygulamalı) sınav 27 Kasım 2026."
    ],
-   "ozet": "Şile Belediyesi 2 zabıta memuru ve 4 tekniker alacak. Başvurular 9–13 Kasım 2026 arasında; zabıta için şahsen, tekniker için e-posta/posta ile de yapılabilir.",
+   "ozet": "Şile Belediyesi (İstanbul) 2 zabıta memuru (lisans) ve 4 tekniker (ön lisans) alacak. Başvurular 9–13 Kasım 2026'da Yazı İşleri Müdürlüğü'ne yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
