@@ -2358,25 +2358,49 @@
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=9ff8772a-9434-42fb-84ad-f8080f79640d": {
-  "zaman": "2026-11-04T17:14:47+03:00",
+  "zaman": "2026-11-04T19:13:03+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "metin",
-  "imza": "1576e50ff773c4c9",
+  "imza": "3b5d5d21930e7c97",
   "baslik": "KARABAĞLAR BELEDİYE BAŞKANLIĞI - Çevre Mühendisi Alımı (2 Adet)",
   "farklar": [],
   "yz": {
-   "kadrolar": [],
-   "toplam": null,
-   "son_basvuru_tarihi": null,
-   "kpss_gerekli": null,
-   "iller": [],
-   "ortak_kosullar": [],
-   "ozet": "",
-   "okunabilirlik": "kotu",
+   "kadrolar": [
+    {
+     "unvan": "Mühendis (Çevre Mühendisi)",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": 60,
+     "il": "İzmir",
+     "kosullar": [
+      "Çevre mühendisliği lisans programından mezun olmak.",
+      "En az (B) sınıfı sürücü belgesine sahip olmak."
+     ]
+    }
+   ],
+   "toplam": 2,
+   "son_basvuru_tarihi": "2026-12-04",
+   "son_basvuru_saati": null,
+   "baslangic_tarihi": "2026-11-30",
+   "kpss_gerekli": true,
+   "iller": [
+    "İzmir"
+   ],
+   "ortak_kosullar": [
+    "2026 yılı KPSS (B) grubu sınavından en az 60 puan almış olmak.",
+    "Başvurular e-Devlet veya kariyerkapisi.gov.tr üzerinden elektronik ortamda yapılır; şahsen veya posta ile başvuru kabul edilmez."
+   ],
+   "ozet": "Karabağlar Belediyesi 2 sözleşmeli çevre mühendisi alacak. Başvurular 30 Kasım–4 Aralık 2026'da e-Devlet veya Kariyer Kapısı üzerinden yapılır.",
+   "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
-   "duyuru_tipi": "yeni_ilan"
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": []
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=a14f0db5-110e-4656-a977-7b6b17b55fbb": {
