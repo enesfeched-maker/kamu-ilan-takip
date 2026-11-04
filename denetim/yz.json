@@ -5995,11 +5995,11 @@
   }
  },
  "sbb-7f4d800fab4d3d251159b468": {
-  "zaman": "2026-11-04T11:11:45+03:00",
+  "zaman": "2026-11-04T23:13:16+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "8807c9b45c00a016",
+  "imza": "99a04d33f76ef1f1",
   "baslik": "ZAFER KALKINMA AJANSI - 2 SÖZLEŞMELİ PERSONEL ALACAK",
   "farklar": [],
   "yz": {
@@ -6010,22 +6010,22 @@
      "ogrenim": "lisans",
      "puan_turu": "P1, P2, P3",
      "en_dusuk_puan": 80,
-     "il": "Kütahya",
+     "il": null,
      "kosullar": [
-      "Mühendislik bölümlerinden veya Şehir ve Bölge Planlama bölümünden lisans düzeyinde mezun olmak.",
-      "YDS/e-YDS İngilizceden son 5 yıl içinde en az 70 puan almış olmak."
+      "Mühendislik bölümleri veya Şehir ve Bölge Planlama lisans programından mezun olmak.",
+      "YDS/e-YDS İngilizceden son 5 yılda en az 70 puan almış olmak."
      ]
     },
     {
-     "unvan": "Uzman Personel (İktisadi ve idari bilimler)",
+     "unvan": "Uzman Personel (İktisadi ve İdari Bilimler)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P12-P40 (bölüme göre)",
      "en_dusuk_puan": 80,
-     "il": "Kütahya",
+     "il": null,
      "kosullar": [
-      "İstatistik, Ekonometri, İktisat, Maliye, İşletme, Kamu Yönetimi, Uluslararası İlişkiler veya Çalışma Ekonomisi mezunu olmak.",
-      "YDS/e-YDS İngilizceden son 5 yıl içinde en az 70 puan almış olmak."
+      "İstatistik, Ekonometri, İktisat, Maliye, İşletme, Kamu Yönetimi, Uluslararası İlişkiler veya Çalışma Ekonomisi ve Endüstri İlişkileri mezunu olmak.",
+      "YDS/e-YDS İngilizceden son 5 yılda en az 70 puan almış olmak."
      ]
     }
    ],
@@ -6034,14 +6034,17 @@
    "baslangic_tarihi": "2026-11-25",
    "kpss_gerekli": true,
    "iller": [
-    "Kütahya"
+    "Afyonkarahisar",
+    "Kütahya",
+    "Manisa",
+    "Uşak"
    ],
    "ortak_kosullar": [
-    "KPSS'den mezuniyet alanına göre ilgili puan türünden en az 80 puan almış olmak.",
-    "Başvuru yalnız Kariyer Kapısı üzerinden elektronik ortamda yapılır; yalnız bir kontenjana başvurulabilir.",
-    "Sınav Ajans Genel Sekreterliği'nde sözlü (mülakat) olarak yapılır; başarı notu en az 70."
+    "Son başvuru tarihinde geçerli KPSS'den mezun olunan bölüme göre belirtilen puan türünden en az 80 puan almak.",
+    "Başvuru yalnız Kariyer Kapısı üzerinden elektronik ortamda yapılır.",
+    "Sınav Kütahya'da sözlü (mülakat) olarak yapılır; mülakata katılanların ilanı 18.12.2026."
    ],
-   "ozet": "Zafer Kalkınma Ajansı 2 uzman personel alacak. Başvurular 25 Kasım–14 Aralık 2026 arasında Kariyer Kapısı'ndan yapılır.",
+   "ozet": "Zafer Kalkınma Ajansı 2 uzman personel alacak. Başvurular 25 Kasım–14 Aralık 2026'da Kariyer Kapısı üzerinden yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -6056,11 +6059,11 @@
   }
  },
  "sbb-8168d2862502fa00b90159b9": {
-  "zaman": "2026-11-04T11:11:45+03:00",
+  "zaman": "2026-11-04T23:13:16+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf-gorsel",
-  "imza": "8ee919eba0a5e933",
+  "imza": "2f863292e1613823",
   "baslik": "MİLLİ SAVUNMA BAKANLIĞI - TÜRK SİLAHLI KUVVETLERİNE FAKÜLTE VEYA YÜKSEKOKUL MEZUNLARINDAN 2026 YILI MUVAZZAF ASTSUBAY ADAYI TEMİNİ",
   "farklar": [],
   "yz": {
@@ -6649,11 +6652,11 @@
   }
  },
  "sbb-b79b5a2fa5f2a1036a2ea5bc": {
-  "zaman": "2026-11-04T09:12:38+03:00",
+  "zaman": "2026-11-04T23:13:16+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "38f8e40561a6eb02",
+  "imza": "93d16c6d348265d2",
   "baslik": "ELEŞKİRT BELEDİYE BAŞKANLIĞI - 1 ÇÖZÜMLEYİCİ ALACAK",
   "farklar": [],
   "yz": {
@@ -6666,8 +6669,8 @@
      "en_dusuk_puan": 50,
      "il": "Ağrı",
      "kosullar": [
-      "İşletme, Siyaset Bilimi veya Yerel Yönetimler bölümlerinden birinden mezun olmak.",
-      "En az iki programlama dilini bildiğini belgelemek (okul belgesi veya MEB onaylı kurs sertifikası).",
+      "İşletme, Siyaset Bilimi ve Yerel Yönetimler bölümlerinden birinden lisans mezunu olmak.",
+      "En az iki programlama dilini belge veya MEB onaylı kurs sertifikasıyla belgelemek.",
       "En az (B) sınıfı sürücü belgesine sahip olmak."
      ]
     }
@@ -6681,11 +6684,11 @@
     "Ağrı"
    ],
    "ortak_kosullar": [
-    "2026 KPSS (B) grubundan P3'ten en az 50 puan almış olmak.",
-    "Başvuru 2–4 Kasım 2026'da yaziisleri@eleskirt.bel.tr adresine, şahsen veya iadeli taahhütlü posta ile yapılır.",
-    "Sözlü sınav 9 Kasım 2026 saat 10:00."
+    "2026 KPSS (B grubu) P3 puan türünden en az 50 puan almak.",
+    "Başvuru: yaziisleri@eleskirt.bel.tr'ye e-posta ya da Belediye Yazı İşleri Müdürlüğü'ne şahsen/posta ile.",
+    "Sözlü sınav 09.11.2026 saat 10:00'da Eleşkirt Belediyesi'nde; sınava girecekler 06.11.2026'da ilan edilir."
    ],
-   "ozet": "Eleşkirt Belediyesi (Ağrı) 1 çözümleyici alacak. Başvurular 2–4 Kasım 2026'da e-posta, şahsen veya posta ile Yazı İşleri Müdürlüğü'ne yapılır.",
+   "ozet": "Eleşkirt Belediyesi (Ağrı) 1 çözümleyici memur alacak. Başvurular 2–4 Kasım 2026'da e-posta, şahsen veya posta ile yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -6770,11 +6773,11 @@
   }
  },
  "sbb-c28e3903f61859d41ea03f2e": {
-  "zaman": "2026-11-04T11:11:45+03:00",
+  "zaman": "2026-11-04T23:13:16+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf-gorsel",
-  "imza": "8c5f5dd2834bb250",
+  "imza": "2c35436b178d25eb",
   "baslik": "MİLLİ SAVUNMA BAKANLIĞI - TÜRK SİLAHLI KUVVETLERİNE EN AZ DÖRT YIL SÜRELİ FAKÜLTE VEYA YÜKSEKOKUL MEZUNLARINDAN 2026 YILI BANDO SINIFI MUVAZZAF ASTSUBAY ADAYI TEMİNİ",
   "farklar": [],
   "yz": {
