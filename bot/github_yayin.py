@@ -17,9 +17,9 @@ def api(path,token,method='GET',data=None):
         try:
             with urllib.request.urlopen(req,timeout=40) as response:return json.load(response)
         except urllib.error.HTTPError as exc:
-            if exc.code in (403,429,502,503) and attempt<3:
+            if exc.code in (403,429,500,502,503) and attempt<3:
                 time.sleep(30);continue
-            raise RuntimeError('GitHub yayın HTTP '+str(exc.code)) from None
+            raise RuntimeError('GitHub yayın HTTP '+str(exc.code)+' ('+method+' '+path.split('?')[0]+')') from None
 
 
 def publish_files(files,token,message):
