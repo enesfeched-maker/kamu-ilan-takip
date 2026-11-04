@@ -1539,6 +1539,28 @@
    ]
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=4d1a4aba-67fa-449d-b19d-13b197a770f0": {
+  "zaman": "2026-11-04T11:11:45+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "bfa1736b346fefe0",
+  "baslik": "NÜKLEER DÜZENLEME KURUMU BAŞKANLIĞI - SÖZLEŞMELİ BİLİŞİM PERSONELİ GİRİŞ SINAVI İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [],
+   "toplam": null,
+   "son_basvuru_tarihi": null,
+   "kpss_gerekli": null,
+   "iller": [],
+   "ortak_kosullar": [],
+   "ozet": "",
+   "okunabilirlik": "kotu",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=51fd7921-cfbe-482f-8e2f-b8a569a605d0": {
   "zaman": "2026-11-03T11:11:57+03:00",
   "surum": 4,
@@ -4026,6 +4048,67 @@
    ]
   }
  },
+ "iskur-c73eadc3d3c573acc183bc22": {
+  "zaman": "2026-11-04T11:11:45+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "5bf14c8e5aaaad37",
+  "baslik": "Zafer Kalkınma Ajansı Personel Alım İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Uzman Personel (Mühendislik, Şehir ve Bölge Planlama)",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P1, P2, P3",
+     "en_dusuk_puan": 80,
+     "il": "Kütahya",
+     "kosullar": [
+      "Mühendislik bölümlerinden veya Şehir ve Bölge Planlama bölümünden lisans düzeyinde mezun olmak.",
+      "YDS/e-YDS İngilizceden son 5 yıl içinde en az 70 puan almış olmak."
+     ]
+    },
+    {
+     "unvan": "Uzman Personel (İktisadi ve idari bilimler)",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P12-P40 (bölüme göre)",
+     "en_dusuk_puan": 80,
+     "il": "Kütahya",
+     "kosullar": [
+      "İstatistik, Ekonometri, İktisat, Maliye, İşletme, Kamu Yönetimi, Uluslararası İlişkiler veya Çalışma Ekonomisi mezunu olmak.",
+      "YDS/e-YDS İngilizceden son 5 yıl içinde en az 70 puan almış olmak."
+     ]
+    }
+   ],
+   "toplam": 2,
+   "son_basvuru_tarihi": "2026-12-14",
+   "baslangic_tarihi": "2026-11-25",
+   "kpss_gerekli": true,
+   "iller": [
+    "Kütahya"
+   ],
+   "ortak_kosullar": [
+    "KPSS'den mezuniyet alanına göre ilgili puan türünden en az 80 puan almış olmak.",
+    "Başvuru yalnız Kariyer Kapısı üzerinden elektronik ortamda yapılır; yalnız bir kontenjana başvurulabilir.",
+    "Sınav Ajans Genel Sekreterliği'nde sözlü (mülakat) olarak yapılır; başarı notu en az 70."
+   ],
+   "ozet": "Zafer Kalkınma Ajansı 2 uzman personel alacak. Başvurular 25 Kasım–14 Aralık 2026 arasında Kariyer Kapısı'ndan yapılır.",
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P1, P2, P3",
+    "P12-P40 (bölüme göre)"
+   ]
+  }
+ },
  "iskur-d1c85719faccac13961ea9b4": {
   "zaman": "2026-11-03T11:11:57+03:00",
   "surum": 4,
@@ -5567,6 +5650,89 @@
    "puan_turleri": []
   }
  },
+ "sbb-7f4d800fab4d3d251159b468": {
+  "zaman": "2026-11-04T11:11:45+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "pdf",
+  "imza": "8807c9b45c00a016",
+  "baslik": "ZAFER KALKINMA AJANSI - 2 SÖZLEŞMELİ PERSONEL ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Uzman Personel (Mühendislik, Şehir ve Bölge Planlama)",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P1, P2, P3",
+     "en_dusuk_puan": 80,
+     "il": "Kütahya",
+     "kosullar": [
+      "Mühendislik bölümlerinden veya Şehir ve Bölge Planlama bölümünden lisans düzeyinde mezun olmak.",
+      "YDS/e-YDS İngilizceden son 5 yıl içinde en az 70 puan almış olmak."
+     ]
+    },
+    {
+     "unvan": "Uzman Personel (İktisadi ve idari bilimler)",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P12-P40 (bölüme göre)",
+     "en_dusuk_puan": 80,
+     "il": "Kütahya",
+     "kosullar": [
+      "İstatistik, Ekonometri, İktisat, Maliye, İşletme, Kamu Yönetimi, Uluslararası İlişkiler veya Çalışma Ekonomisi mezunu olmak.",
+      "YDS/e-YDS İngilizceden son 5 yıl içinde en az 70 puan almış olmak."
+     ]
+    }
+   ],
+   "toplam": 2,
+   "son_basvuru_tarihi": "2026-12-14",
+   "baslangic_tarihi": "2026-11-25",
+   "kpss_gerekli": true,
+   "iller": [
+    "Kütahya"
+   ],
+   "ortak_kosullar": [
+    "KPSS'den mezuniyet alanına göre ilgili puan türünden en az 80 puan almış olmak.",
+    "Başvuru yalnız Kariyer Kapısı üzerinden elektronik ortamda yapılır; yalnız bir kontenjana başvurulabilir.",
+    "Sınav Ajans Genel Sekreterliği'nde sözlü (mülakat) olarak yapılır; başarı notu en az 70."
+   ],
+   "ozet": "Zafer Kalkınma Ajansı 2 uzman personel alacak. Başvurular 25 Kasım–14 Aralık 2026 arasında Kariyer Kapısı'ndan yapılır.",
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P1, P2, P3",
+    "P12-P40 (bölüme göre)"
+   ]
+  }
+ },
+ "sbb-8168d2862502fa00b90159b9": {
+  "zaman": "2026-11-04T11:11:45+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "pdf-gorsel",
+  "imza": "8ee919eba0a5e933",
+  "baslik": "MİLLİ SAVUNMA BAKANLIĞI - TÜRK SİLAHLI KUVVETLERİNE FAKÜLTE VEYA YÜKSEKOKUL MEZUNLARINDAN 2026 YILI MUVAZZAF ASTSUBAY ADAYI TEMİNİ",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [],
+   "toplam": null,
+   "son_basvuru_tarihi": null,
+   "kpss_gerekli": null,
+   "iller": [],
+   "ortak_kosullar": [],
+   "ozet": "",
+   "okunabilirlik": "kotu",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
  "sbb-838c1ad20b87efb0ed63d6c7": {
   "zaman": "2026-10-31T15:19:10+03:00",
   "surum": 4,
@@ -6259,6 +6425,28 @@
    "puan_turleri": [
     "P3"
    ]
+  }
+ },
+ "sbb-c28e3903f61859d41ea03f2e": {
+  "zaman": "2026-11-04T11:11:45+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "pdf-gorsel",
+  "imza": "8c5f5dd2834bb250",
+  "baslik": "MİLLİ SAVUNMA BAKANLIĞI - TÜRK SİLAHLI KUVVETLERİNE EN AZ DÖRT YIL SÜRELİ FAKÜLTE VEYA YÜKSEKOKUL MEZUNLARINDAN 2026 YILI BANDO SINIFI MUVAZZAF ASTSUBAY ADAYI TEMİNİ",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [],
+   "toplam": null,
+   "son_basvuru_tarihi": null,
+   "kpss_gerekli": null,
+   "iller": [],
+   "ortak_kosullar": [],
+   "ozet": "",
+   "okunabilirlik": "kotu",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
   }
  },
  "sbb-c799c2bf65cf136277930882": {
