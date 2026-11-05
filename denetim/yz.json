@@ -2433,6 +2433,30 @@
    "puan_turleri": []
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=724294dd-2cf3-4df3-8cd5-615baea623be": {
+  "zaman": "2026-11-06T01:11:03+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "dd21c6336cd8f59a",
+  "baslik": "SOSYAL GÜVENLİK KURUMU BAŞKANLIĞI - 2026/2 SOSYAL GÜVENLİK KURUMU BAŞKANLIĞI - SOSYAL GÜVENLİK DENETMEN YARDIMCILIĞI / ( (Hukuk, Siyasal Bilgiler, İktisadi ve İdari Bilimler, İktisat, İşletme)",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [],
+   "toplam": 0,
+   "son_basvuru_tarihi": null,
+   "son_basvuru_saati": null,
+   "baslangic_tarihi": null,
+   "kpss_gerekli": null,
+   "iller": [],
+   "ortak_kosullar": [],
+   "ozet": "",
+   "okunabilirlik": "kotu",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=727b6946-c0fe-493f-a9e1-a0d668eabca2": {
   "zaman": "2026-10-30T15:39:28+03:00",
   "surum": 4,
@@ -6548,17 +6572,19 @@
   }
  },
  "sbb-8168d2862502fa00b90159b9": {
-  "zaman": "2026-11-05T13:11:56+03:00",
+  "zaman": "2026-11-06T01:11:03+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf-gorsel",
-  "imza": "ec01ca8f6b1a3729",
+  "imza": "25bc22a55d5abe43",
   "baslik": "MİLLİ SAVUNMA BAKANLIĞI - TÜRK SİLAHLI KUVVETLERİNE FAKÜLTE VEYA YÜKSEKOKUL MEZUNLARINDAN 2026 YILI MUVAZZAF ASTSUBAY ADAYI TEMİNİ",
   "farklar": [],
   "yz": {
    "kadrolar": [],
-   "toplam": null,
+   "toplam": 0,
    "son_basvuru_tarihi": null,
+   "son_basvuru_saati": null,
+   "baslangic_tarihi": null,
    "kpss_gerekli": null,
    "iller": [],
    "ortak_kosullar": [],
@@ -7425,17 +7451,19 @@
   }
  },
  "sbb-c28e3903f61859d41ea03f2e": {
-  "zaman": "2026-11-05T13:11:56+03:00",
+  "zaman": "2026-11-06T01:11:03+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf-gorsel",
-  "imza": "2d5264c5391e5b2a",
+  "imza": "1c42d9b3dbac6020",
   "baslik": "MİLLİ SAVUNMA BAKANLIĞI - TÜRK SİLAHLI KUVVETLERİNE EN AZ DÖRT YIL SÜRELİ FAKÜLTE VEYA YÜKSEKOKUL MEZUNLARINDAN 2026 YILI BANDO SINIFI MUVAZZAF ASTSUBAY ADAYI TEMİNİ",
   "farklar": [],
   "yz": {
    "kadrolar": [],
-   "toplam": null,
+   "toplam": 0,
    "son_basvuru_tarihi": null,
+   "son_basvuru_saati": null,
+   "baslangic_tarihi": null,
    "kpss_gerekli": null,
    "iller": [],
    "ortak_kosullar": [],
@@ -7685,6 +7713,69 @@
     "lisans"
    ],
    "puan_turleri": []
+  }
+ },
+ "sbb-d174235c748d2741298002af": {
+  "zaman": "2026-11-06T01:11:03+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "pdf",
+  "imza": "9ea6ff216d15b8ad",
+  "baslik": "SOSYAL GÜVENLİK KURUMU BAŞKANLIĞI - 100 SOSYAL GÜVENLİK DENETMEN YARDIMCISI ALACAK",
+  "farklar": [
+   [
+    "puan_turleri",
+    [
+     "P39",
+     "P40",
+     "P41",
+     "P42",
+     "P43",
+     "P48"
+    ],
+    [
+     "P39,P40,P41,P42,P43,P48"
+    ],
+    false
+   ]
+  ],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Sosyal Güvenlik Denetmen Yardımcısı",
+     "adet": 100,
+     "ogrenim": "lisans",
+     "puan_turu": "P39, P40, P41, P42, P43, P48",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "Hukuk, siyasal bilgiler, iktisadi ve idari bilimler, iktisat, işletme fakülte/yüksekokullarından ya da bunların sosyal hizmetler bölümlerinden mezun olmak.",
+      "2025 veya 2026 KPSS'de ilgili puan türünden en az 70 puan almış olmak."
+     ]
+    }
+   ],
+   "toplam": 100,
+   "son_basvuru_tarihi": "2026-11-22",
+   "son_basvuru_saati": "23:59",
+   "baslangic_tarihi": "2026-11-09",
+   "kpss_gerekli": true,
+   "iller": [],
+   "ortak_kosullar": [
+    "Giriş sınavının yapıldığı yılın Ocak ayının birinci günü itibarıyla 35 yaşını doldurmamış olmak.",
+    "Başvuru yalnızca E-Devlet üzerinden Kariyer Kapısı'ndan yapılır; şahsen, kargo veya posta başvurusu kabul edilmez.",
+    "Kadro sayısının 4 katı aday (en çok 400) KPSS puan sırasına göre sözlü sınava çağrılır; sözlü sınav 28.12.2026–11.01.2027 arasında Ankara'da yapılır."
+   ],
+   "ozet": "SGK 100 sosyal güvenlik denetmen yardımcısı alacak. Başvurular 9–22 Kasım 2026 arasında E-Devlet üzerinden Kariyer Kapısı'ndan yapılır.",
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P39, P40, P41, P42, P43, P48"
+   ]
   }
  },
  "sbb-d568ee9cba7f99929eb258d5": {
