@@ -6482,37 +6482,37 @@
   }
  },
  "sbb-7f4d800fab4d3d251159b468": {
-  "zaman": "2026-11-05T11:13:10+03:00",
+  "zaman": "2026-11-05T23:11:53+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "f6dec0156ddbc7cd",
+  "imza": "44a3e6bbed19ef40",
   "baslik": "ZAFER KALKINMA AJANSI - 2 SÖZLEŞMELİ PERSONEL ALACAK",
   "farklar": [],
   "yz": {
    "kadrolar": [
     {
-     "unvan": "Uzman Personel (Mühendislik, Şehir ve Bölge Planlama)",
+     "unvan": "Uzman Personel (Mühendislik Bölümleri, Şehir ve Bölge Planlama)",
      "adet": 1,
      "ogrenim": "lisans",
-     "puan_turu": "P1/P2/P3",
+     "puan_turu": "P1, P2, P3",
      "en_dusuk_puan": 80,
      "il": null,
      "kosullar": [
       "Mühendislik bölümlerinden veya Şehir ve Bölge Planlama'dan lisans düzeyinde mezun olmak.",
-      "Son 5 yılda YDS/e-YDS İngilizce'den en az 70 puan almış olmak."
+      "YDS/e-YDS İngilizceden son 5 yıl içinde en az 70 puan almış olmak."
      ]
     },
     {
-     "unvan": "Uzman Personel (İktisadi ve idari bilimler, istatistik)",
+     "unvan": "Uzman Personel (İstatistik, Ekonometri, İktisat, Maliye, İşletme, Kamu Yönetimi, Uluslararası İlişkiler, Çalışma Ekonomisi ve Endüstri İlişkileri)",
      "adet": 1,
      "ogrenim": "lisans",
-     "puan_turu": "P12/P13/P14/P15/P19/P20/P24/P25/P29/P30/P34/P35/P39/P40",
+     "puan_turu": "P12-P40 (bölüme göre)",
      "en_dusuk_puan": 80,
      "il": null,
      "kosullar": [
-      "İstatistik, Ekonometri, İktisat, Maliye, İşletme, Kamu Yönetimi, Uluslararası İlişkiler veya Çalışma Ekonomisi bölümlerinden mezun olmak.",
-      "Son 5 yılda YDS/e-YDS İngilizce'den en az 70 puan almış olmak."
+      "İstatistik, Ekonometri, İktisat, Maliye, İşletme, Kamu Yönetimi, Uluslararası İlişkiler veya Çalışma Ekonomisi ve Endüstri İlişkileri lisans bölümlerinden mezun olmak.",
+      "YDS/e-YDS İngilizceden son 5 yıl içinde en az 70 puan almış olmak."
      ]
     }
    ],
@@ -6528,11 +6528,12 @@
     "Uşak"
    ],
    "ortak_kosullar": [
-    "Mezun olunan bölüme göre ilgili KPSS puan türünden en az 80 puan almış olmak.",
-    "Başvuru yalnız Kariyer Kapısı'ndan; mülakat tarihleri ajans sitesinde ilan edilir.",
-    "Mülakata hak kazananlar 18/12/2026'da ilan edilir."
+    "KPSS'den mezun olunan bölüme göre ilgili puan türünden en az 80 puan almış olmak.",
+    "Başvuru yalnızca Kariyer Kapısı üzerinden elektronik ortamda yapılır.",
+    "Sınav Kütahya'da Ajans Genel Sekreterliği'nde sözlü (mülakat) olarak yapılır.",
+    "Mülakata hak kazananlar 18.12.2026'da ilan edilir."
    ],
-   "ozet": "Zafer Kalkınma Ajansı 2 uzman personel alacak (Afyonkarahisar, Kütahya, Manisa, Uşak). Başvurular 25 Kasım–14 Aralık 2026'da Kariyer Kapısı'ndan yapılır.",
+   "ozet": "Zafer Kalkınma Ajansı 2 uzman personel alacak (Afyonkarahisar, Kütahya, Manisa, Uşak bölgesi). Başvurular 25 Kasım–14 Aralık 2026'da Kariyer Kapısı'ndan yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -6541,8 +6542,8 @@
     "lisans"
    ],
    "puan_turleri": [
-    "P1/P2/P3",
-    "P12/P13/P14/P15/P19/P20/P24/P25/P29/P30/P34/P35/P39/P40"
+    "P1, P2, P3",
+    "P12-P40 (bölüme göre)"
    ]
   }
  },
