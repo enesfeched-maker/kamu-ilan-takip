@@ -1,5 +1,5 @@
 {
- "guncelleme": "2026-11-05T10:08:34+03:00",
+ "guncelleme": "2026-11-05T10:12:45+03:00",
  "ilanlar": [
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=9c82aab5-022e-43c8-b7f1-e6cf329d205b",
@@ -28895,61 +28895,6 @@
    "kpss": "kpss"
   },
   {
-   "id": "csb-478686",
-   "baslik": "ELEŞKİRT BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE İTFAİYE ERİ ALIMI İLANI",
-   "kurum": "ELEŞKİRT BELEDİYE BAŞKANLIĞI",
-   "kadro": "1 İtfaiye Eri",
-   "ilan_turu": "Kamu Personeli",
-   "son_tarih": "2026-12-11",
-   "kaynak": "ÇŞB Yerel Yönetimler",
-   "kaynak_turu": "csb",
-   "link": "https://yerelyonetimler.csb.gov.tr/agri-ili-eleskirt-belediye-baskanligina-ilk-defa-atanmak-uzere-itfaiye-eri-alimi-ilani-duyuru-478686",
-   "kaynaklar": [
-    {
-     "ad": "ÇŞB Yerel Yönetimler",
-     "link": "https://yerelyonetimler.csb.gov.tr/agri-ili-eleskirt-belediye-baskanligina-ilk-defa-atanmak-uzere-itfaiye-eri-alimi-ilani-duyuru-478686"
-    },
-    {
-     "ad": "SBB Kamu İlan",
-     "link": "https://kamuilan.sbb.gov.tr/"
-    }
-   ],
-   "yayim_tarihi": "2026-11-02",
-   "detay_guncelleme": "2026-11-05T07:07:49+03:00",
-   "csb_detay_surumu": 5,
-   "ozet": "Ağrı ili Eleşkirt Belediye Başkanlığı bünyesinde, 657 sayılı Devlet Memurları Kanununa tabi olarak istihdam edilmek üzere; Belediye İtfaiye Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla belirtilen boş kadrolara açıktan atama yoluyla itfaiye eri alımı yapılacaktır. Son başvuru: 11.12.2026.",
-   "belgeler": [
-    {
-     "ad": "2-11-2026-eleskirt-belediyesi-itfaiye-eri-alim-ilani-1-20261102165015.docx",
-     "link": "https://webdosya.csb.gov.tr/v2/yerelyonetimler/2026/11/2-11-2026-eleskirt-belediyesi-itfaiye-eri-alim-ilani-1-20261102165015.docx"
-    }
-   ],
-   "yer": "Ağrı",
-   "sartlar": [
-    {
-     "kadro": "İtfaiye Eri · 1 kadro",
-     "metin": "KPSS P3 puan türünden en az 70 puan. Hizmet sınıfı GİH, 11. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren kurumların herhangi birinden mezun olmak. En az (B) sınıfı Sürücü belgesine sahip olmak. Cinsiyet: Erkek."
-    },
-    {
-     "kadro": "Tüm kadrolar için",
-     "metin": "Sınavın yapıldığı tarihte 30 yaşını doldurmamış olmak. Boy: erkeklerde en az 1,67 m, kadınlarda en az 1,60 m; boyun 1 metreden fazla kısmı ile kilo arasında en fazla 10 kg fark olmalı (ölçüm aç karnına, soyunuk ve çıplak ayakla)."
-    }
-   ],
-   "ilk_gorulme": "2026-11-02T18:07:41+03:00",
-   "kaynak_kimlikleri": [
-    "csb-478686",
-    "sbb-c06a1af1c6621aac3d8ffc69"
-   ],
-   "ogrenim": [
-    "lisans"
-   ],
-   "kategori": "belediye",
-   "iller": [
-    "Ağrı"
-   ],
-   "kpss": "kpss"
-  },
-  {
    "id": "sbb-6c7b00b43831e8e67a778d75",
    "baslik": "AKHİSAR BELEDİYE BAŞKANLIĞI - 1 MEMUR ALACAK",
    "kurum": "AKHİSAR BELEDİYE BAŞKANLIĞI",
@@ -29042,6 +28987,14 @@
     {
      "ad": "İŞKUR",
      "link": "https://www.iskur.gov.tr/medya/1i1gywes/a%C4%9Fr%C4%B1-ele%C5%9Fkirt-belediyesi-itfaiye-eri-al%C4%B1m-ilan%C4%B1-11122026.pdf"
+    },
+    {
+     "ad": "ÇŞB Yerel Yönetimler",
+     "link": "https://yerelyonetimler.csb.gov.tr/agri-ili-eleskirt-belediye-baskanligina-ilk-defa-atanmak-uzere-itfaiye-eri-alimi-ilani-duyuru-478686"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
    "detay_guncelleme": "2026-11-05T10:06:37+03:00",
@@ -29065,9 +29018,11 @@
    "iskur_detay_surumu": 2,
    "iskur_belge_sha256": "dcfac15e33af84d7aec30b9b62005ab45911ace76d591a675b64a48637d0f976",
    "iskur_detay_guncelleme": "2026-11-05T10:07:29+03:00",
-   "ilk_gorulme": "2026-11-05T10:07:34+03:00",
+   "ilk_gorulme": "2026-11-02T18:07:41+03:00",
    "kaynak_kimlikleri": [
-    "iskur-00ad41516ded7769e694101d"
+    "csb-478686",
+    "iskur-00ad41516ded7769e694101d",
+    "sbb-c06a1af1c6621aac3d8ffc69"
    ],
    "ogrenim": [
     "lisans"
@@ -31075,6 +31030,7 @@
   "https://kariyerkapisi.gov.tr/IlanDetay?i=f64bcfee-da05-46c5-8324-b42254c169a2",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=f657a20b-5132-4e3a-8b1e-131e031f065b",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=f7ee3ab4-6c25-48f1-8a78-588066e3cf52",
+  "iskur-00ad41516ded7769e694101d",
   "iskur-01c8b814c37c00ddcec7858b",
   "iskur-0400573bc1182becd3a21126",
   "iskur-090fb7d39012e2f5024f6e1a",
@@ -31344,7 +31300,6 @@
   "sbb-ffbba5c3ef2b2c84c00bb8e2"
  ],
  "telegram_bekleyen": [
-  "iskur-00ad41516ded7769e694101d",
   "iskur-62fb0ed7f360aea3497ec749",
   "sbb-1b5d1f3068575a269a3a23ad",
   "sbb-a4d91901160ee37475b9a885",
@@ -31547,7 +31502,6 @@
   "csb-478572",
   "csb-478573",
   "csb-478574",
-  "csb-478686",
   "csb-478688",
   "csb-478727",
   "csb-478728",
