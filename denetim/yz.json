@@ -2434,27 +2434,67 @@
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=724294dd-2cf3-4df3-8cd5-615baea623be": {
-  "zaman": "2026-11-06T01:11:03+03:00",
+  "zaman": "2026-11-06T03:11:44+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "metin",
-  "imza": "dd21c6336cd8f59a",
+  "imza": "cf4475d43e8b571c",
   "baslik": "SOSYAL GÜVENLİK KURUMU BAŞKANLIĞI - 2026/2 SOSYAL GÜVENLİK KURUMU BAŞKANLIĞI - SOSYAL GÜVENLİK DENETMEN YARDIMCILIĞI / ( (Hukuk, Siyasal Bilgiler, İktisadi ve İdari Bilimler, İktisat, İşletme)",
-  "farklar": [],
+  "farklar": [
+   [
+    "puan_turleri",
+    [
+     "P39",
+     "P40",
+     "P41",
+     "P42",
+     "P43",
+     "P48"
+    ],
+    [
+     "P39"
+    ],
+    false
+   ]
+  ],
   "yz": {
-   "kadrolar": [],
-   "toplam": 0,
-   "son_basvuru_tarihi": null,
-   "son_basvuru_saati": null,
-   "baslangic_tarihi": null,
-   "kpss_gerekli": null,
+   "kadrolar": [
+    {
+     "unvan": "Sosyal Güvenlik Denetmen Yardımcısı",
+     "adet": 100,
+     "ogrenim": "lisans",
+     "puan_turu": "P39",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "Hukuk, siyasal bilgiler, iktisadi ve idari bilimler, iktisat veya işletme fakülte/yüksekokullarından mezun olmak.",
+      "KPSS P39, P40, P41, P42, P43 veya P48 puan türünden en az 70 puan almış olmak."
+     ]
+    }
+   ],
+   "toplam": 100,
+   "son_basvuru_tarihi": "2026-11-22",
+   "son_basvuru_saati": "23:59",
+   "baslangic_tarihi": "2026-11-09",
+   "kpss_gerekli": true,
    "iller": [],
-   "ortak_kosullar": [],
-   "ozet": "",
-   "okunabilirlik": "kotu",
+   "ortak_kosullar": [
+    "Giriş sınavı yılının Ocak ayının 1. günü itibarıyla 35 yaşını doldurmamış olmak.",
+    "KPSS 2025 veya 2026 yılı sınavından en az 70 puan almış olmak.",
+    "Başvuru yalnız Kariyer Kapısı (kariyerkapisi.gov.tr/isealim) üzerinden yapılır.",
+    "Sözlü sınava 400 aday katılacaktır."
+   ],
+   "ozet": "SGK 100 Sosyal Güvenlik Denetmen Yardımcısı alacak; sözlü sınav yapılacak. Başvurular 9–22 Kasım 2026'da Kariyer Kapısı'ndan yapılır.",
+   "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
-   "duyuru_tipi": "yeni_ilan"
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P39"
+   ]
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=727b6946-c0fe-493f-a9e1-a0d668eabca2": {
@@ -5215,11 +5255,11 @@
   }
  },
  "sbb-2a7662aed2b08030660a2828": {
-  "zaman": "2026-11-05T15:16:04+03:00",
+  "zaman": "2026-11-06T03:11:44+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "95d9d7961f5d489b",
+  "imza": "6206225ac9bd9892",
   "baslik": "JANDARMA GENEL KOMUTANLIĞI - 30 MEMUR TEMİN EDİLECEKTİR",
   "farklar": [],
   "yz": {
@@ -5244,7 +5284,7 @@
      "en_dusuk_puan": 60,
      "il": "Ankara",
      "kosullar": [
-      "Bilgisayar Mühendisliği, Bilgisayar Bilimi ve Mühendisliği veya Bilgisayar Bilimleri ve Mühendisliği lisans programından mezun olmak."
+      "Bilgisayar Mühendisliği, Bilgisayar Bilimi ve Mühendisliği veya Bilgisayar Bilimleri ve Mühendisliği lisansından mezun olmak."
      ]
     },
     {
@@ -5266,7 +5306,7 @@
      "en_dusuk_puan": 60,
      "il": "Ankara",
      "kosullar": [
-      "İstatistik veya ilanda sayılan istatistik içerikli lisans programlarından birinden mezun olmak."
+      "İstatistik ve ilgili listedeki lisans programlarından birinden mezun olmak."
      ]
     },
     {
@@ -5277,7 +5317,8 @@
      "en_dusuk_puan": 60,
      "il": null,
      "kosullar": [
-      "Kimya, Kimyager, Uygulamalı Kimya, Kimya Mühendisliği vb. ilanda sayılan lisans programlarından birinden mezun olmak."
+      "Kimya, Kimyagerlik veya Kimya Mühendisliği ilgili lisans programlarından birinden mezun olmak.",
+      "Ankara 1, Van 1 kontenjan."
      ]
     },
     {
@@ -5288,32 +5329,30 @@
      "en_dusuk_puan": 60,
      "il": null,
      "kosullar": [
-      "Psikoloji veya Davranış Bilimleri - Psikoloji Disiplini lisans programından mezun olmak."
+      "Psikoloji veya Davranış Bilimleri-Psikoloji Disiplini lisansından mezun olmak.",
+      "Karabük/Safranbolu, Kastamonu, Mardin, Muğla'da birer kontenjan."
      ]
     },
     {
-     "unvan": "Uzman (Görsel-İşitsel/Sinema)",
+     "unvan": "Uzman (Radyo-TV-Sinema)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 60,
      "il": "Ankara",
      "kosullar": [
-      "Radyo-Televizyon ve Sinema, Sinema vb. ilanda sayılan lisans programlarından birinden mezun olmak.",
-      "Tercihen en az 3 yıl kameraman veya kamera asistanı olarak çalışmış olmak.",
-      "Tercihen Adobe Premiere Pro ve After Effects'i etkin kullanabilmek."
+      "Radyo-Televizyon-Sinema ve ilgili listedeki lisans programlarından birinden mezun olmak."
      ]
     },
     {
-     "unvan": "Uzman (Medya/İletişim)",
+     "unvan": "Uzman (Medya-İletişim ve Sosyal Bilimler)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 60,
      "il": "Ankara",
      "kosullar": [
-      "İletişim, medya, gazetecilik, halkla ilişkiler, Türk dili ve edebiyatı, siyaset bilimi, uluslararası ilişkiler, sosyoloji veya felsefe lisans programlarından birinden mezun olmak.",
-      "Tercihen mezuniyet bölümüne yönelik yüksek lisansı tamamlamış olmak."
+      "Medya, iletişim, gazetecilik, halkla ilişkiler, Türk dili, siyaset bilimi, uluslararası ilişkiler, sosyoloji veya felsefe lisans programlarından birinden mezun olmak."
      ]
     },
     {
@@ -5324,18 +5363,20 @@
      "en_dusuk_puan": 60,
      "il": null,
      "kosullar": [
-      "Hukuk lisans programından mezun olmak."
+      "Hukuk lisans programından mezun olmak.",
+      "Ankara 4; Aksaray, Artvin, Erzincan, Gümüşhane, Kırklareli, Muş, Ordu, Yozgat'ta birer kontenjan."
      ]
     },
     {
-     "unvan": "Uzman (Maliye/İktisat/İşletme)",
+     "unvan": "Uzman (Maliye-İktisat-İşletme)",
      "adet": 4,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 60,
      "il": null,
      "kosullar": [
-      "Maliye, muhasebe, iktisat veya işletme alanındaki ilanda sayılan lisans programlarından birinden mezun olmak."
+      "Maliye, muhasebe, iktisat, işletme ve ilgili listedeki lisans programlarından birinden mezun olmak.",
+      "Çankırı, Isparta, Kırıkkale, Nevşehir'de birer kontenjan."
      ]
     }
    ],
@@ -5345,8 +5386,8 @@
    "baslangic_tarihi": "2026-11-02",
    "kpss_gerekli": true,
    "iller": [
-    "Kayseri",
     "Ankara",
+    "Kayseri",
     "Van",
     "Karabük",
     "Kastamonu",
@@ -5366,12 +5407,12 @@
     "Nevşehir"
    ],
    "ortak_kosullar": [
-    "KPSS 2025-2026 P3 puan türünden en az 60 puan almış olmak.",
-    "Başvuru son günü itibarıyla 18 yaşını tamamlamış olmak.",
-    "Başvuru yalnızca personeltemin.jandarma.gov.tr üzerinden e-Devlet ile yapılır; yalnız bir unvana başvurulabilir.",
-    "Başvuranlar KPSS sırasına göre kontenjanın 15 katı kadar aday mesleki yeterlilik ve/veya mülakat sınavına çağrılır."
+    "KPSS (P3) 2025-2026 yıllarından en az 60 puan almış olmak.",
+    "Başvuru sadece personeltemin.jandarma.gov.tr üzerinden e-Devlet ile yapılır.",
+    "Adaylar yalnız bir unvana başvurabilir.",
+    "Kontenjanın 15 katı aday KPSS sırasıyla mesleki yeterlilik ve/veya mülakat sınavına çağrılır."
    ],
-   "ozet": "Jandarma Genel Komutanlığı 30 açıktan devlet memuru alacak (avukat, mühendis, uzman, psikolog vb.). Başvurular 2–16 Kasım 2026'da Personel Temin Sistemi'nden e-Devlet ile yapılır.",
+   "ozet": "Jandarma Genel Komutanlığı 30 açıktan devlet memuru alacak (avukat, mühendis, psikolog, uzman vb.). Başvurular 2–16 Kasım 2026'da Personel Temin Sistemi'nden yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -6115,24 +6156,22 @@
   }
  },
  "sbb-5f3fa2414e8b9e9a456461d8": {
-  "zaman": "2026-11-05T15:16:04+03:00",
+  "zaman": "2026-11-06T03:11:44+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "f4bc31e1a319de2a",
+  "imza": "93f563ebee4f15f2",
   "baslik": "GAZİANTEP ÜNİVERSİTESİ - 11 ALACAK",
   "farklar": [],
   "yz": {
    "kadrolar": [],
    "toplam": null,
-   "son_basvuru_tarihi": "2026-11-17",
-   "baslangic_tarihi": "2026-11-03",
+   "son_basvuru_tarihi": null,
+   "baslangic_tarihi": null,
    "kpss_gerekli": false,
-   "iller": [
-    "Gaziantep"
-   ],
+   "iller": [],
    "ortak_kosullar": [],
-   "ozet": "Gaziantep Üniversitesi öğretim görevlisi ve araştırma görevlisi (akademik kadro) ilanıdır.",
+   "ozet": "",
    "okunabilirlik": "kotu",
    "akademik": false,
    "iptal_veya_duzeltme": false,
