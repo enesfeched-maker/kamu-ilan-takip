@@ -6695,19 +6695,17 @@
   }
  },
  "sbb-8168d2862502fa00b90159b9": {
-  "zaman": "2026-11-06T01:11:03+03:00",
+  "zaman": "2026-11-06T13:11:23+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf-gorsel",
-  "imza": "25bc22a55d5abe43",
+  "imza": "1fa0a0074daedb9a",
   "baslik": "MİLLİ SAVUNMA BAKANLIĞI - TÜRK SİLAHLI KUVVETLERİNE FAKÜLTE VEYA YÜKSEKOKUL MEZUNLARINDAN 2026 YILI MUVAZZAF ASTSUBAY ADAYI TEMİNİ",
   "farklar": [],
   "yz": {
    "kadrolar": [],
-   "toplam": 0,
+   "toplam": null,
    "son_basvuru_tarihi": null,
-   "son_basvuru_saati": null,
-   "baslangic_tarihi": null,
    "kpss_gerekli": null,
    "iller": [],
    "ortak_kosullar": [],
@@ -7577,19 +7575,17 @@
   }
  },
  "sbb-c28e3903f61859d41ea03f2e": {
-  "zaman": "2026-11-06T01:11:03+03:00",
+  "zaman": "2026-11-06T13:11:23+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf-gorsel",
-  "imza": "1c42d9b3dbac6020",
+  "imza": "114927246b433e51",
   "baslik": "MİLLİ SAVUNMA BAKANLIĞI - TÜRK SİLAHLI KUVVETLERİNE EN AZ DÖRT YIL SÜRELİ FAKÜLTE VEYA YÜKSEKOKUL MEZUNLARINDAN 2026 YILI BANDO SINIFI MUVAZZAF ASTSUBAY ADAYI TEMİNİ",
   "farklar": [],
   "yz": {
    "kadrolar": [],
-   "toplam": 0,
+   "toplam": null,
    "son_basvuru_tarihi": null,
-   "son_basvuru_saati": null,
-   "baslangic_tarihi": null,
    "kpss_gerekli": null,
    "iller": [],
    "ortak_kosullar": [],
@@ -7844,11 +7840,11 @@
   }
  },
  "sbb-d174235c748d2741298002af": {
-  "zaman": "2026-11-06T01:11:03+03:00",
+  "zaman": "2026-11-06T13:11:23+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "9ea6ff216d15b8ad",
+  "imza": "d7a51a8d47511433",
   "baslik": "SOSYAL GÜVENLİK KURUMU BAŞKANLIĞI - 100 SOSYAL GÜVENLİK DENETMEN YARDIMCISI ALACAK",
   "farklar": [
    [
@@ -7878,7 +7874,7 @@
      "il": null,
      "kosullar": [
       "Hukuk, siyasal bilgiler, iktisadi ve idari bilimler, iktisat, işletme fakülte/yüksekokullarından ya da bunların sosyal hizmetler bölümlerinden mezun olmak.",
-      "2025 veya 2026 KPSS'de ilgili puan türünden en az 70 puan almış olmak."
+      "KPSS P39, P40, P41, P42, P43 veya P48 puan türünden en az 70 puan almış olmak."
      ]
     }
    ],
@@ -7889,11 +7885,12 @@
    "kpss_gerekli": true,
    "iller": [],
    "ortak_kosullar": [
-    "Giriş sınavının yapıldığı yılın Ocak ayının birinci günü itibarıyla 35 yaşını doldurmamış olmak.",
-    "Başvuru yalnızca E-Devlet üzerinden Kariyer Kapısı'ndan yapılır; şahsen, kargo veya posta başvurusu kabul edilmez.",
-    "Kadro sayısının 4 katı aday (en çok 400) KPSS puan sırasına göre sözlü sınava çağrılır; sözlü sınav 28.12.2026–11.01.2027 arasında Ankara'da yapılır."
+    "Giriş sınavının yapıldığı yılın 1 Ocak'ı itibarıyla 35 yaşını doldurmamış olmak.",
+    "2025 veya 2026 yılı KPSS'den en az 70 puan almış olmak.",
+    "Başvuru yalnızca E-Devlet üzerinden Kariyer Kapısı'ndan yapılır; şahsen, kargo ya da posta ile başvuru kabul edilmez.",
+    "Sözlü sınav 28.12.2026–11.01.2027 arasında Ankara'da yapılır; kadro sayısının 4 katı aday (400) sözlü sınava çağrılır."
    ],
-   "ozet": "SGK 100 sosyal güvenlik denetmen yardımcısı alacak. Başvurular 9–22 Kasım 2026 arasında E-Devlet üzerinden Kariyer Kapısı'ndan yapılır.",
+   "ozet": "SGK 100 Sosyal Güvenlik Denetmen Yardımcısı alacak. Başvurular 9–22 Kasım 2026'da E-Devlet üzerinden Kariyer Kapısı'ndan yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
