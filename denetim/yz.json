@@ -5115,11 +5115,11 @@
   }
  },
  "sbb-0789771f8e6c1c43dd7bd8fe": {
-  "zaman": "2026-11-06T05:10:50+03:00",
+  "zaman": "2026-11-06T17:18:06+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "65810f7647d9c133",
+  "imza": "0a0470ce6ee55ea7",
   "baslik": "YÜKSEKÖĞRETİM KURULU BAŞKANLIĞI - 5 ALACAK",
   "farklar": [],
   "yz": {
@@ -5132,9 +5132,9 @@
      "en_dusuk_puan": null,
      "il": null,
      "kosullar": [
-      "Bilgisayar veya yazılım mühendisliğinden (ya da denkliği kabul edilen bölümden) mezun olmak.",
-      "Lisans sonrası yazılım geliştirici olarak en az 8 yıl belgeli deneyime sahip olmak.",
-      "Java ve Spring Boot ile geliştirme/bakımda fiilen görev aldığını belgelemek."
+      "Bilgisayar veya yazılım mühendisliği (ya da denkliği kabul edilen) bölümünden mezun olmak.",
+      "Lisanstan sonra yazılım geliştirici olarak en az 8 yıl deneyimi olmak.",
+      "Java ve Spring Boot ile uygulama geliştirme/bakımında fiilen görev aldığını belgelemek."
      ]
     },
     {
@@ -5145,26 +5145,23 @@
      "en_dusuk_puan": null,
      "il": null,
      "kosullar": [
-      "Bilgisayar veya yazılım mühendisliğinden (ya da denkliği kabul edilen bölümden) mezun olmak.",
-      "Lisans sonrası yazılım geliştirici olarak en az 3 yıl belgeli deneyime sahip olmak.",
-      "Java ve Spring Boot ile geliştirme/bakımda fiilen görev aldığını belgelemek."
+      "Bilgisayar veya yazılım mühendisliği (ya da denkliği kabul edilen) bölümünden mezun olmak.",
+      "Lisanstan sonra yazılım geliştirici olarak en az 3 yıl deneyimi olmak.",
+      "Java ve Spring Boot ile uygulama geliştirme/bakımında fiilen görev aldığını belgelemek."
      ]
     }
    ],
    "toplam": 5,
    "son_basvuru_tarihi": "2026-11-16",
-   "son_basvuru_saati": null,
    "baslangic_tarihi": "2026-11-02",
    "kpss_gerekli": true,
    "iller": [],
    "ortak_kosullar": [
-    "Başvuru 2–16 Kasım 2026 arasında e-Devlet üzerinden Kariyer Kapısı'ndan yapılır.",
-    "2026 KPSS P3 sonuç belgesi istenir; belge sunmayanın puanı 70 sayılır.",
-    "İngilizce YDS/e-YDS belgesi istenir; belge yoksa yabancı dil puanı 0 sayılır.",
-    "Sıralama: KPSS P3'ün %70'i + yabancı dil puanının %30'u; alınacak sayının 10 katı sözlü sınava girer.",
-    "Sözlü sınavda başarı için en az 70 puan gerekir."
+    "Başvuru Kariyer Kapısı (e-Devlet) üzerinden elektronik ortamda yapılır.",
+    "2026 KPSS P3 puanının %70'i ile YDS puanının %30'u esas alınır; KPSS belgesi yoksa puan 70 sayılır.",
+    "Sıralamada alınacak sayının 10 katı aday sözlü sınava çağrılır; başarı için en az 70 puan gerekir."
    ],
-   "ozet": "YÖK Başkanlığı 5 sözleşmeli bilişim personeli (2 kıdemli, 3 Java yazılım geliştirme uzmanı) alacak. Başvurular 2–16 Kasım 2026'da Kariyer Kapısı üzerinden yapılır.",
+   "ozet": "Yükseköğretim Kurulu Başkanlığı 5 sözleşmeli bilişim personeli (2 kıdemli, 3 Java yazılım geliştirme uzmanı) alacak. Başvurular 2–16 Kasım 2026'da Kariyer Kapısı'ndan yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -5178,17 +5175,17 @@
   }
  },
  "sbb-0a0b1d327a7c5924b935242e": {
-  "zaman": "2026-11-06T05:10:50+03:00",
+  "zaman": "2026-11-06T17:18:06+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "4f720e9fa4613e7b",
+  "imza": "12bc9e1415fa9053",
   "baslik": "DOĞU KARADENİZ KALKINMA AJANSI - 1 UZMAN ALACAK",
   "farklar": [],
   "yz": {
    "kadrolar": [
     {
-     "unvan": "Uzman Personel",
+     "unvan": "Uzman",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P12",
@@ -5196,8 +5193,8 @@
      "il": "Rize",
      "kosullar": [
       "İktisat, Ekonomi, İşletme, Kamu Yönetimi, Uluslararası İlişkiler, İstatistik veya Siyaset Bilimi bölümlerinden mezun olmak.",
-      "KPSS P12, P14, P24, P29 veya P34'ten en az 80 puan almak.",
-      "YDS/e-YDS İngilizceden en az C düzeyinde puana sahip olmak."
+      "KPSS P12, P14, P24, P29 veya P34 puan türlerinden en az 80 puan almış olmak.",
+      "Son 5 yılda YDS/e-YDS İngilizce'den en az C düzeyinde puan almış olmak."
      ]
     }
    ],
@@ -5210,12 +5207,11 @@
     "Rize"
    ],
    "ortak_kosullar": [
-    "Başvuru e-Devlet üzerinden Kariyer Kapısı'ndan yapılır; elden veya posta ile başvuru kabul edilmez.",
-    "Sınava çağrılacaklar 11 Aralık 2026'da duyurulacak; sözlü sınav (mülakat) yapılır.",
-    "Puanlama: KPSS %55, YDS %35, yüksek lisans %2, doktora %4, ikinci yabancı dil %4.",
-    "Sözlü sınava pozisyon sayısının 5 katı aday çağrılır; başarı notu en az 70'tir."
+    "Başvuru Kariyer Kapısı (e-Devlet) üzerinden elektronik ortamda yapılır.",
+    "Sıralamada KPSS %55, YDS %35 ağırlıklıdır; pozisyon sayısının 5 katı aday sözlü sınava çağrılır.",
+    "Sözlü sınavda başarı notu 100 üzerinden en az 70'tir."
    ],
-   "ozet": "Doğu Karadeniz Kalkınma Ajansı, Rize Yatırım Destek Ofisi'nde görev yapacak 1 uzman alacak. Başvurular 23 Kasım–6 Aralık 2026'da Kariyer Kapısı üzerinden yapılır.",
+   "ozet": "Doğu Karadeniz Kalkınma Ajansı Rize Yatırım Destek Ofisi'nde görevlendirilmek üzere 1 uzman alacak. Başvurular 23 Kasım–6 Aralık 2026'da Kariyer Kapısı'ndan yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -5277,44 +5273,42 @@
   }
  },
  "sbb-267a000ae26570448d5e5174": {
-  "zaman": "2026-11-06T05:10:50+03:00",
+  "zaman": "2026-11-06T17:18:06+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "7fa7d8d2a8a45682",
+  "imza": "c4f20056c0c72c3e",
   "baslik": "AYDIN ADNAN MENDERES ÜNİVERSİTESİ - 8 TARIM İŞÇİSİ ALACAK",
   "farklar": [],
   "yz": {
    "kadrolar": [
     {
-     "unvan": "Tarım İşçisi (Karma Çiftlik) — Eski Hükümlü / Terörle Mücadelede Malul Sayılmayacak Şekilde Yaralanan",
+     "unvan": "Tarım İşçisi (Eski Hükümlü / Terörle Mücadelede Malul Sayılmayacak Şekilde Yaralanan)",
      "adet": 8,
      "ogrenim": null,
      "puan_turu": null,
      "en_dusuk_puan": null,
      "il": "Aydın",
      "kosullar": [
-      "Eski hükümlü ya da terörle mücadelede malul sayılmayacak şekilde yaralanmış olmak.",
       "En az ilkokul, en fazla lisans mezunu olmak.",
-      "18 yaşını doldurmuş, 40 yaşını doldurmamış olmak.",
-      "İlan tarihinden önce Aydın il merkezi ve ilçelerinde ikamet etmek ve belgelemek."
+      "Eski hükümlü ya da terörle mücadelede malul sayılmayacak şekilde yaralanmış olmak.",
+      "İlan tarihinden önce Aydın il merkezi veya ilçelerinde ikamet ediyor olmak."
      ]
     }
    ],
    "toplam": 8,
    "son_basvuru_tarihi": "2026-11-06",
-   "son_basvuru_saati": null,
    "baslangic_tarihi": "2026-11-02",
    "kpss_gerekli": false,
    "iller": [
     "Aydın"
    ],
    "ortak_kosullar": [
-    "Başvuru İŞKUR üzerinden (esube.iskur.gov.tr, Alo 170 veya hizmet noktaları) yapılır.",
-    "Açık iş sayısının 4 katından fazla başvuruda noter kurası, ardından sözlü sınav yapılır.",
-    "Deneme süresi 60 gündür."
+    "Son başvuru tarihi itibarıyla 18 yaşını doldurmuş, 40 yaşını doldurmamış olmak.",
+    "Başvuru İŞKUR üzerinden (esube.iskur.gov.tr, hizmet noktaları veya Alo 170) yapılır.",
+    "Alım noter kurası ve sözlü sınav ile yapılır; sözlü sınav 100 puan üzerinden değerlendirilir."
    ],
-   "ozet": "Aydın Adnan Menderes Üniversitesi, eski hükümlü/terörle mücadelede yaralanan adaylar arasından 8 tarım işçisi alacak. Başvurular 2–6 Kasım 2026'da İŞKUR üzerinden yapılır.",
+   "ozet": "Aydın Adnan Menderes Üniversitesi 8 tarım işçisi alacak (eski hükümlü / terörle mücadelede malul sayılmayacak şekilde yaralananlar). Başvurular 2–6 Kasım 2026'da İŞKUR üzerinden yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -5767,17 +5761,17 @@
   }
  },
  "sbb-425e6e6d19d0265de78a8122": {
-  "zaman": "2026-11-06T05:10:50+03:00",
+  "zaman": "2026-11-06T17:18:06+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf-gorsel",
-  "imza": "906018105afd292d",
+  "imza": "6a6a968c0f791aa5",
   "baslik": "MİMAR SİNAN GÜZEL SANATLAR ÜNİVERSİTESİ - 1 SÖZLEŞMELİ PERSONEL ALACAK",
   "farklar": [],
   "yz": {
    "kadrolar": [
     {
-     "unvan": "Canlı Model (Sözleşmeli, saat ücretli)",
+     "unvan": "Canlı Model (Sözleşmeli)",
      "adet": 1,
      "ogrenim": "ortaogretim",
      "puan_turu": null,
@@ -5790,15 +5784,12 @@
    ],
    "toplam": 1,
    "son_basvuru_tarihi": "2026-11-06",
-   "son_basvuru_saati": null,
    "baslangic_tarihi": "2026-11-02",
    "kpss_gerekli": false,
    "iller": [],
    "ortak_kosullar": [
-    "KPSS şartı aranmamaktadır.",
-    "Başvuru Güzel Sanatlar Fakültesi Sekreterliğine şahsen yapılır; posta kabul edilmez.",
-    "Sözlü sınav 9 Kasım 2026 saat 10.00'da Güzel Sanatlar Fakültesi'nde yapılır.",
-    "2 yedek aday belirlenecektir."
+    "Başvuru belgelerle birlikte Güzel Sanatlar Fakültesi Fakülte Sekreterliğine şahsen yapılır; posta kabul edilmez.",
+    "Sözlü sınav 9 Kasım 2026 saat 10.00'da Güzel Sanatlar Fakültesi'nde yapılır; KPSS şartı aranmaz."
    ],
    "ozet": "Mimar Sinan Güzel Sanatlar Üniversitesi Güzel Sanatlar Fakültesi 1 sözleşmeli canlı model alacak. Başvurular 2–6 Kasım 2026'da fakülte sekreterliğine şahsen yapılır.",
    "okunabilirlik": "iyi",
@@ -6243,11 +6234,11 @@
   }
  },
  "sbb-5f3fa2414e8b9e9a456461d8": {
-  "zaman": "2026-11-06T03:11:44+03:00",
+  "zaman": "2026-11-06T17:18:06+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "93f563ebee4f15f2",
+  "imza": "23549aa9c8684a6a",
   "baslik": "GAZİANTEP ÜNİVERSİTESİ - 11 ALACAK",
   "farklar": [],
   "yz": {
