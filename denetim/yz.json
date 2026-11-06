@@ -6688,25 +6688,20 @@
   }
  },
  "sbb-8168d2862502fa00b90159b9": {
-  "zaman": "2026-11-06T13:11:23+03:00",
+  "zaman": "2026-11-07T01:11:02+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf-gorsel",
-  "imza": "1fa0a0074daedb9a",
+  "imza": "02d60a4b9cc84f72",
   "baslik": "MİLLİ SAVUNMA BAKANLIĞI - TÜRK SİLAHLI KUVVETLERİNE FAKÜLTE VEYA YÜKSEKOKUL MEZUNLARINDAN 2026 YILI MUVAZZAF ASTSUBAY ADAYI TEMİNİ",
   "farklar": [],
   "yz": {
    "kadrolar": [],
-   "toplam": null,
-   "son_basvuru_tarihi": null,
-   "kpss_gerekli": null,
-   "iller": [],
-   "ortak_kosullar": [],
-   "ozet": "",
    "okunabilirlik": "kotu",
    "akademik": false,
    "iptal_veya_duzeltme": false,
-   "duyuru_tipi": "yeni_ilan"
+   "duyuru_tipi": "yeni_ilan",
+   "ortak_kosullar": []
   }
  },
  "sbb-838c1ad20b87efb0ed63d6c7": {
@@ -7445,6 +7440,82 @@
    ]
   }
  },
+ "sbb-b72113af57d8ed4fcee1a60e": {
+  "zaman": "2026-11-07T01:11:02+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "pdf",
+  "imza": "3bf03e12f2ff6093",
+  "baslik": "İZMİR DEMOKRASİ ÜNİVERSİTESİ - 2 SÖZLEŞMELİ PERSONEL ALACAK",
+  "farklar": [
+   [
+    "ogrenim",
+    [
+     "lisans",
+     "onlisans",
+     "ortaogretim"
+    ],
+    [
+     "lisans"
+    ],
+    false
+   ],
+   [
+    "puan_turleri",
+    [
+     "P3",
+     "P93",
+     "P94"
+    ],
+    [
+     "P3"
+    ],
+    false
+   ]
+  ],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Avukat",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 75,
+     "il": "İzmir",
+     "kosullar": [
+      "Hukuk Fakültesinden mezun olmak.",
+      "Avukatlık ruhsatnamesi sahibi olmak ve belgelendirmek.",
+      "Son başvuru tarihi itibariyle 35 yaşını doldurmamış olmak.",
+      "Lisans sonrası staj hariç en az 3 yıl avukat olarak mesleki tecrübeye sahip olmak."
+     ]
+    }
+   ],
+   "toplam": 2,
+   "son_basvuru_tarihi": "2026-11-20",
+   "son_basvuru_saati": "13:00",
+   "baslangic_tarihi": "2026-11-07",
+   "kpss_gerekli": true,
+   "iller": [
+    "İzmir"
+   ],
+   "ortak_kosullar": [
+    "2026 KPSS (B) grubu P3 puan sıralamasına göre yerleştirme yapılır; yazılı/sözlü sınav yoktur.",
+    "Başvuru Kariyer Kapısı üzerinden yapılır.",
+    "Her aday yalnız bir pozisyona başvurabilir."
+   ],
+   "ozet": "İzmir Demokrasi Üniversitesi 2 sözleşmeli avukat alacak. Başvurular 7–20 Kasım 2026'da Kariyer Kapısı'ndan yapılır.",
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P3"
+   ]
+  }
+ },
  "sbb-b79b5a2fa5f2a1036a2ea5bc": {
   "zaman": "2026-11-04T23:13:16+03:00",
   "surum": 4,
@@ -7567,25 +7638,20 @@
   }
  },
  "sbb-c28e3903f61859d41ea03f2e": {
-  "zaman": "2026-11-06T13:11:23+03:00",
+  "zaman": "2026-11-07T01:11:02+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf-gorsel",
-  "imza": "114927246b433e51",
+  "imza": "98f063a66afe6327",
   "baslik": "MİLLİ SAVUNMA BAKANLIĞI - TÜRK SİLAHLI KUVVETLERİNE EN AZ DÖRT YIL SÜRELİ FAKÜLTE VEYA YÜKSEKOKUL MEZUNLARINDAN 2026 YILI BANDO SINIFI MUVAZZAF ASTSUBAY ADAYI TEMİNİ",
   "farklar": [],
   "yz": {
    "kadrolar": [],
-   "toplam": null,
-   "son_basvuru_tarihi": null,
-   "kpss_gerekli": null,
-   "iller": [],
-   "ortak_kosullar": [],
-   "ozet": "",
    "okunabilirlik": "kotu",
    "akademik": false,
    "iptal_veya_duzeltme": false,
-   "duyuru_tipi": "yeni_ilan"
+   "duyuru_tipi": "yeni_ilan",
+   "ortak_kosullar": []
   }
  },
  "sbb-c799c2bf65cf136277930882": {
