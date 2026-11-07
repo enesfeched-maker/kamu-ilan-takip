@@ -5283,11 +5283,11 @@
   }
  },
  "sbb-0789771f8e6c1c43dd7bd8fe": {
-  "zaman": "2026-11-07T05:10:57+03:00",
+  "zaman": "2026-11-07T17:13:48+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "f69f3ebdb51eea8f",
+  "imza": "9e78f270794dc33d",
   "baslik": "YÜKSEKÖĞRETİM KURULU BAŞKANLIĞI - 5 ALACAK",
   "farklar": [],
   "yz": {
@@ -5300,10 +5300,10 @@
      "en_dusuk_puan": null,
      "il": null,
      "kosullar": [
-      "Bilgisayar veya yazılım mühendisliğinden (ya da denkliği kabul edilen bölümden) mezun olmak.",
-      "Lisans sonrası yazılım geliştirici olarak en az 8 yıl çalışma deneyimine sahip olmak.",
-      "Java ve Spring Boot ile geliştirilen uygulamalarda fiilen görev aldığını belgelemek.",
-      "Oracle veya PostgreSQL veri tabanlarında bilgi ve deneyim sahibi olmak."
+      "Bilgisayar veya yazılım mühendisliği (ya da denkliği kabul edilen) bölümden mezun olmak.",
+      "Lisans sonrası yazılım geliştirici olarak en az 8 yıl belgeli deneyime sahip olmak.",
+      "Java ve Spring Boot ile uygulama geliştirme ve bakımında fiilen görev aldığını belgelemek.",
+      "Spring Security, Spring Data, Oracle/PostgreSQL, JPA/Hibernate ve ileri düzey SQL bilmek."
      ]
     },
     {
@@ -5314,10 +5314,10 @@
      "en_dusuk_puan": null,
      "il": null,
      "kosullar": [
-      "Bilgisayar veya yazılım mühendisliğinden (ya da denkliği kabul edilen bölümden) mezun olmak.",
-      "Lisans sonrası yazılım geliştirici olarak en az 3 yıl çalışma deneyimine sahip olmak.",
-      "Java ve Spring Boot ile geliştirilen uygulamalarda fiilen görev aldığını belgelemek.",
-      "Oracle veya PostgreSQL veri tabanlarında bilgi ve deneyim sahibi olmak."
+      "Bilgisayar veya yazılım mühendisliği (ya da denkliği kabul edilen) bölümden mezun olmak.",
+      "Lisans sonrası yazılım geliştirici olarak en az 3 yıl belgeli deneyime sahip olmak.",
+      "Java ve Spring Boot ile uygulama geliştirme ve bakımında fiilen görev aldığını belgelemek.",
+      "Spring Security, Spring Data, Oracle/PostgreSQL ve JPA/Hibernate bilmek."
      ]
     }
    ],
@@ -5325,14 +5325,13 @@
    "son_basvuru_tarihi": "2026-11-16",
    "baslangic_tarihi": "2026-11-02",
    "kpss_gerekli": true,
+   "iller": [],
    "ortak_kosullar": [
-    "2026 KPSS P3 sonuç belgesi istenir; belge sunmayanın puanı 70 sayılır.",
-    "İngilizce YDS/e-YDS veya eşdeğer sınav belgesi istenir; belge sunmayanın dil puanı 0 sayılır.",
-    "Başvuru e-Devlet üzerinden Kariyer Kapısı'ndan elektronik ortamda yapılır.",
-    "Sıralama: KPSS P3'ün %70'i + yabancı dil puanının %30'u; alınacak sayının 10 katı aday sözlü sınava girer.",
-    "Sözlü sınavda başarı için en az 70 puan gerekir."
+    "2026 KPSS P3 puanı ve İngilizce YDS/e-YDS puanı esas alınır; belge sunmayanın KPSS puanı 70, YDS puanı 0 sayılır.",
+    "Başvuru e-Devlet üzerinden Kariyer Kapısı'ndan elektronik ortamda yapılır; posta veya şahsen başvuru kabul edilmez.",
+    "Sıralamadaki ilk 10 kat aday sözlü sınava girer; sözlü sınavda en az 70 puan gerekir."
    ],
-   "ozet": "Yükseköğretim Kurulu Başkanlığı 2 kıdemli ve 3 Java yazılım geliştirme uzmanı (sözleşmeli bilişim personeli) alacak. Başvurular 2–16 Kasım 2026'da Kariyer Kapısı'ndan yapılır.",
+   "ozet": "Yükseköğretim Kurulu Başkanlığı 2 kıdemli ve 3 yazılım geliştirme uzmanı (Java), toplam 5 sözleşmeli bilişim personeli alacak. Başvurular 2–16 Kasım 2026'da Kariyer Kapısı'ndan yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -5346,11 +5345,11 @@
   }
  },
  "sbb-0a0b1d327a7c5924b935242e": {
-  "zaman": "2026-11-07T05:10:57+03:00",
+  "zaman": "2026-11-07T17:13:48+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "a04104145e566aff",
+  "imza": "ccb56e7918a08c59",
   "baslik": "DOĞU KARADENİZ KALKINMA AJANSI - 1 UZMAN ALACAK",
   "farklar": [
    [
@@ -5367,7 +5366,7 @@
   "yz": {
    "kadrolar": [
     {
-     "unvan": "Uzman Personel",
+     "unvan": "Uzman",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P12, P14, P24, P29, P34",
@@ -5375,8 +5374,8 @@
      "il": "Rize",
      "kosullar": [
       "İktisat, ekonomi, işletme, kamu yönetimi, uluslararası ilişkiler, istatistik veya siyaset bilimi bölümlerinden mezun olmak.",
-      "Son 5 yılda YDS/e-YDS İngilizce'den en az C düzeyinde puan almış olmak.",
-      "YDS/e-YDS taban puanı 70'tir."
+      "KPSS'den ilgili puan türlerinden en az 80 puan almış olmak.",
+      "Son 5 yılda YDS/e-YDS İngilizce en az C düzeyinde puan almış olmak."
      ]
     }
    ],
@@ -5389,12 +5388,11 @@
     "Rize"
    ],
    "ortak_kosullar": [
-    "2025-2026 KPSS'den ilgili puan türlerinden en az 80 puan almış olmak.",
     "Başvuru e-Devlet üzerinden Kariyer Kapısı'ndan elektronik ortamda yapılır.",
-    "Sıralama: KPSS %55, YDS %35; alınacak sayının 5 katı aday sözlü sınava çağrılır.",
-    "Sözlü sınavda başarı notu 100 üzerinden en az 70'tir."
+    "Sıralamada ilk 5 aday sözlü sınava çağrılır; sözlü sınavda en az 70 puan gerekir.",
+    "Başarılı aday Rize Yatırım Destek Ofisi'nde görevlendirilir; TR90 bölgesi illerinde çalışmayı kabul etmiş sayılır."
    ],
-   "ozet": "Doğu Karadeniz Kalkınma Ajansı Rize Yatırım Destek Ofisi'nde görevlendirilmek üzere 1 uzman alacak. Başvurular 23 Kasım–6 Aralık 2026'da Kariyer Kapısı'ndan yapılır.",
+   "ozet": "Doğu Karadeniz Kalkınma Ajansı 1 uzman alacak (Rize Yatırım Destek Ofisi). Başvurular 23 Kasım–6 Aralık 2026'da Kariyer Kapısı'ndan yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -6403,11 +6401,11 @@
   }
  },
  "sbb-5f3fa2414e8b9e9a456461d8": {
-  "zaman": "2026-11-07T05:10:57+03:00",
+  "zaman": "2026-11-07T17:13:48+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "7bf0a87aa929d8f1",
+  "imza": "c079e465fe0096f7",
   "baslik": "GAZİANTEP ÜNİVERSİTESİ - 11 ALACAK",
   "farklar": [],
   "yz": {
