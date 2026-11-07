@@ -5115,11 +5115,11 @@
   }
  },
  "sbb-0789771f8e6c1c43dd7bd8fe": {
-  "zaman": "2026-11-06T17:18:06+03:00",
+  "zaman": "2026-11-07T05:10:57+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "0a0470ce6ee55ea7",
+  "imza": "f69f3ebdb51eea8f",
   "baslik": "YÜKSEKÖĞRETİM KURULU BAŞKANLIĞI - 5 ALACAK",
   "farklar": [],
   "yz": {
@@ -5132,9 +5132,10 @@
      "en_dusuk_puan": null,
      "il": null,
      "kosullar": [
-      "Bilgisayar veya yazılım mühendisliği (ya da denkliği kabul edilen) bölümünden mezun olmak.",
-      "Lisanstan sonra yazılım geliştirici olarak en az 8 yıl deneyimi olmak.",
-      "Java ve Spring Boot ile uygulama geliştirme/bakımında fiilen görev aldığını belgelemek."
+      "Bilgisayar veya yazılım mühendisliğinden (ya da denkliği kabul edilen bölümden) mezun olmak.",
+      "Lisans sonrası yazılım geliştirici olarak en az 8 yıl çalışma deneyimine sahip olmak.",
+      "Java ve Spring Boot ile geliştirilen uygulamalarda fiilen görev aldığını belgelemek.",
+      "Oracle veya PostgreSQL veri tabanlarında bilgi ve deneyim sahibi olmak."
      ]
     },
     {
@@ -5145,9 +5146,10 @@
      "en_dusuk_puan": null,
      "il": null,
      "kosullar": [
-      "Bilgisayar veya yazılım mühendisliği (ya da denkliği kabul edilen) bölümünden mezun olmak.",
-      "Lisanstan sonra yazılım geliştirici olarak en az 3 yıl deneyimi olmak.",
-      "Java ve Spring Boot ile uygulama geliştirme/bakımında fiilen görev aldığını belgelemek."
+      "Bilgisayar veya yazılım mühendisliğinden (ya da denkliği kabul edilen bölümden) mezun olmak.",
+      "Lisans sonrası yazılım geliştirici olarak en az 3 yıl çalışma deneyimine sahip olmak.",
+      "Java ve Spring Boot ile geliştirilen uygulamalarda fiilen görev aldığını belgelemek.",
+      "Oracle veya PostgreSQL veri tabanlarında bilgi ve deneyim sahibi olmak."
      ]
     }
    ],
@@ -5155,13 +5157,14 @@
    "son_basvuru_tarihi": "2026-11-16",
    "baslangic_tarihi": "2026-11-02",
    "kpss_gerekli": true,
-   "iller": [],
    "ortak_kosullar": [
-    "Başvuru Kariyer Kapısı (e-Devlet) üzerinden elektronik ortamda yapılır.",
-    "2026 KPSS P3 puanının %70'i ile YDS puanının %30'u esas alınır; KPSS belgesi yoksa puan 70 sayılır.",
-    "Sıralamada alınacak sayının 10 katı aday sözlü sınava çağrılır; başarı için en az 70 puan gerekir."
+    "2026 KPSS P3 sonuç belgesi istenir; belge sunmayanın puanı 70 sayılır.",
+    "İngilizce YDS/e-YDS veya eşdeğer sınav belgesi istenir; belge sunmayanın dil puanı 0 sayılır.",
+    "Başvuru e-Devlet üzerinden Kariyer Kapısı'ndan elektronik ortamda yapılır.",
+    "Sıralama: KPSS P3'ün %70'i + yabancı dil puanının %30'u; alınacak sayının 10 katı aday sözlü sınava girer.",
+    "Sözlü sınavda başarı için en az 70 puan gerekir."
    ],
-   "ozet": "Yükseköğretim Kurulu Başkanlığı 5 sözleşmeli bilişim personeli (2 kıdemli, 3 Java yazılım geliştirme uzmanı) alacak. Başvurular 2–16 Kasım 2026'da Kariyer Kapısı'ndan yapılır.",
+   "ozet": "Yükseköğretim Kurulu Başkanlığı 2 kıdemli ve 3 Java yazılım geliştirme uzmanı (sözleşmeli bilişim personeli) alacak. Başvurular 2–16 Kasım 2026'da Kariyer Kapısı'ndan yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -5175,26 +5178,37 @@
   }
  },
  "sbb-0a0b1d327a7c5924b935242e": {
-  "zaman": "2026-11-06T17:18:06+03:00",
+  "zaman": "2026-11-07T05:10:57+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "12bc9e1415fa9053",
+  "imza": "a04104145e566aff",
   "baslik": "DOĞU KARADENİZ KALKINMA AJANSI - 1 UZMAN ALACAK",
-  "farklar": [],
+  "farklar": [
+   [
+    "puan_turleri",
+    [
+     "P12"
+    ],
+    [
+     "P12,P14,P24,P29,P34"
+    ],
+    false
+   ]
+  ],
   "yz": {
    "kadrolar": [
     {
-     "unvan": "Uzman",
+     "unvan": "Uzman Personel",
      "adet": 1,
      "ogrenim": "lisans",
-     "puan_turu": "P12",
+     "puan_turu": "P12, P14, P24, P29, P34",
      "en_dusuk_puan": 80,
      "il": "Rize",
      "kosullar": [
-      "İktisat, Ekonomi, İşletme, Kamu Yönetimi, Uluslararası İlişkiler, İstatistik veya Siyaset Bilimi bölümlerinden mezun olmak.",
-      "KPSS P12, P14, P24, P29 veya P34 puan türlerinden en az 80 puan almış olmak.",
-      "Son 5 yılda YDS/e-YDS İngilizce'den en az C düzeyinde puan almış olmak."
+      "İktisat, ekonomi, işletme, kamu yönetimi, uluslararası ilişkiler, istatistik veya siyaset bilimi bölümlerinden mezun olmak.",
+      "Son 5 yılda YDS/e-YDS İngilizce'den en az C düzeyinde puan almış olmak.",
+      "YDS/e-YDS taban puanı 70'tir."
      ]
     }
    ],
@@ -5207,8 +5221,9 @@
     "Rize"
    ],
    "ortak_kosullar": [
-    "Başvuru Kariyer Kapısı (e-Devlet) üzerinden elektronik ortamda yapılır.",
-    "Sıralamada KPSS %55, YDS %35 ağırlıklıdır; pozisyon sayısının 5 katı aday sözlü sınava çağrılır.",
+    "2025-2026 KPSS'den ilgili puan türlerinden en az 80 puan almış olmak.",
+    "Başvuru e-Devlet üzerinden Kariyer Kapısı'ndan elektronik ortamda yapılır.",
+    "Sıralama: KPSS %55, YDS %35; alınacak sayının 5 katı aday sözlü sınava çağrılır.",
     "Sözlü sınavda başarı notu 100 üzerinden en az 70'tir."
    ],
    "ozet": "Doğu Karadeniz Kalkınma Ajansı Rize Yatırım Destek Ofisi'nde görevlendirilmek üzere 1 uzman alacak. Başvurular 23 Kasım–6 Aralık 2026'da Kariyer Kapısı'ndan yapılır.",
@@ -5220,7 +5235,7 @@
     "lisans"
    ],
    "puan_turleri": [
-    "P12"
+    "P12, P14, P24, P29, P34"
    ]
   }
  },
@@ -6229,26 +6244,21 @@
   }
  },
  "sbb-5f3fa2414e8b9e9a456461d8": {
-  "zaman": "2026-11-06T17:18:06+03:00",
+  "zaman": "2026-11-07T05:10:57+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "23549aa9c8684a6a",
+  "imza": "7bf0a87aa929d8f1",
   "baslik": "GAZİANTEP ÜNİVERSİTESİ - 11 ALACAK",
   "farklar": [],
   "yz": {
    "kadrolar": [],
-   "toplam": null,
-   "son_basvuru_tarihi": null,
-   "baslangic_tarihi": null,
-   "kpss_gerekli": false,
-   "iller": [],
-   "ortak_kosullar": [],
-   "ozet": "",
+   "toplam": 0,
    "okunabilirlik": "kotu",
    "akademik": false,
    "iptal_veya_duzeltme": false,
-   "duyuru_tipi": "yeni_ilan"
+   "duyuru_tipi": "yeni_ilan",
+   "ortak_kosullar": []
   }
  },
  "sbb-6295f6e0ec51fdf233636132": {
