@@ -1,10 +1,10 @@
 {
  "schema": 1,
- "guncelleme": "2026-11-07T20:06:42.597736+00:00",
+ "guncelleme": "2026-11-07T20:36:42.128329+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-11-07T20:06:55.074049+00:00",
-   "hata_sayisi": 0,
+   "kontrol": "2026-11-07T20:37:31.633308+00:00",
+   "hata_sayisi": 1,
    "ilanlar": [
     {
      "id": "sbb-b72113af57d8ed4fcee1a60e",
@@ -73,8 +73,8 @@
      "donem": "( 7 Kasım - 21 Kasım)",
      "baslangic_zaman": "2026-11-07T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-07T23:06:43+03:00",
-     "belge_ozeti": "f7b333b8b194fdf555de2af73b4a109d7cc3d4a1d0efc1f888cb3a355ad62a06",
+     "detay_guncelleme": "2026-11-07T23:36:43+03:00",
+     "belge_ozeti": "95647e4fcf691ecd487edc120213867b402f7e1e0909f0867702a62ad20e12e2",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -98,8 +98,8 @@
      "donem": "( 6 Kasım - 20 Kasım)",
      "baslangic_zaman": "2026-11-06T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-07T11:06:44+03:00",
-     "belge_ozeti": "80be5841e42d69bf064f04135cff6e536eb3ab7186cf61e22a508ed32cf17d6c",
+     "detay_guncelleme": "2026-11-07T23:36:43+03:00",
+     "belge_ozeti": "40d884daea01c8dd7f05c50a8605a6c8f422cb3c595389830b44a3d5b5a1bf0e",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -134,8 +134,8 @@
       }
      ],
      "basvuru_notu": "3-Başvurular şahsen veya posta ile yapılabilir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/80be5841e42d69bf064f04135cff6e536eb3ab7186cf61e22a508ed32cf17d6c.pdf",
-     "belge_sha256": "80be5841e42d69bf064f04135cff6e536eb3ab7186cf61e22a508ed32cf17d6c",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/40d884daea01c8dd7f05c50a8605a6c8f422cb3c595389830b44a3d5b5a1bf0e.pdf",
+     "belge_sha256": "40d884daea01c8dd7f05c50a8605a6c8f422cb3c595389830b44a3d5b5a1bf0e",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "belge_ogrenim": [
@@ -257,8 +257,8 @@
      "donem": "( 6 Kasım - 16 Kasım)",
      "baslangic_zaman": "2026-11-06T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-07T23:06:47+03:00",
-     "belge_ozeti": "0e2218706e254155d92fd2f2ce73200c97df1d597506293a4f42ce622bfb93a9",
+     "detay_guncelleme": "2026-11-07T23:37:10+03:00",
+     "belge_ozeti": "e15edaab55d4f297a6c0176016e85e52cc852099e108774bd56dff2b3455a7e3",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -459,8 +459,8 @@
      "donem": "( 6 Kasım - 21 Kasım)",
      "baslangic_zaman": "2026-11-06T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-07T11:36:48+03:00",
-     "belge_ozeti": "163b542b2004353276d8ff569ab5f0605b8b78020be704c593146e77359d343a",
+     "detay_guncelleme": "2026-11-07T23:37:11+03:00",
+     "belge_ozeti": "b1033e9b419d870d08251134f47be8db8cf60cf1c73448cd55f79a0e711d9f08",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -475,8 +475,8 @@
       }
      ],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/163b542b2004353276d8ff569ab5f0605b8b78020be704c593146e77359d343a.pdf",
-     "belge_sha256": "163b542b2004353276d8ff569ab5f0605b8b78020be704c593146e77359d343a",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/b1033e9b419d870d08251134f47be8db8cf60cf1c73448cd55f79a0e711d9f08.pdf",
+     "belge_sha256": "b1033e9b419d870d08251134f47be8db8cf60cf1c73448cd55f79a0e711d9f08",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
     },
@@ -650,8 +650,8 @@
      "donem": "( 9 Kasım - 15 Kasım)",
      "baslangic_zaman": "2026-11-09T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-07T11:06:49+03:00",
-     "belge_ozeti": "743a37f2c447c91ce56bf4e550b21471792f2fac2367a14675e912b5b455cfa6",
+     "detay_guncelleme": "2026-11-07T23:37:13+03:00",
+     "belge_ozeti": "a0b0fd249914f04c9a0f36233e811fee5c44f018fd68c1c10a9802961118930d",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -686,8 +686,8 @@
       }
      ],
      "basvuru_notu": "2.1- Giriş Sınavları için başvurular, 09.11.2026 - 15.11 .2026 tarihleri arasında e-devlet üzerinde Türkiye Şeker Fabrikaları A.Ş. - Kariyer Kapısı Kamu İşe Alım ve Kariyer Kapısı (https://kariyerkapisi.gov.tr/isealim ) üzerinden gerçekleştirilecek olup ilanda belirtilen şartlara uygun olmayan başvurular ile süresi içerisinde yapıl mayan başvurular dikkate alınmayacaktır .",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/743a37f2c447c91ce56bf4e550b21471792f2fac2367a14675e912b5b455cfa6.pdf",
-     "belge_sha256": "743a37f2c447c91ce56bf4e550b21471792f2fac2367a14675e912b5b455cfa6",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/a0b0fd249914f04c9a0f36233e811fee5c44f018fd68c1c10a9802961118930d.pdf",
+     "belge_sha256": "a0b0fd249914f04c9a0f36233e811fee5c44f018fd68c1c10a9802961118930d",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "puan_turleri": [
@@ -711,8 +711,8 @@
      "donem": "( 5 Kasım - 16 Kasım)",
      "baslangic_zaman": "2026-11-05T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-07T23:06:48+03:00",
-     "belge_ozeti": "f65224476f811535df93c11b7216d4688645bcab1485f6c9ca147132b1e89b84",
+     "detay_guncelleme": "2026-11-07T23:37:15+03:00",
+     "belge_ozeti": "533c8a70d53186e1e9a9b69f0d86b97b72b4796021ad8d3fc5c76d2c63c6c695",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -736,8 +736,8 @@
      "donem": "( 5 Kasım - 19 Kasım)",
      "baslangic_zaman": "2026-11-05T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-07T11:06:51+03:00",
-     "belge_ozeti": "3511f2a7e6a3a7d4a2a331715067e96b9f4fc3763434ea6c45b37a0cdc425e68",
+     "detay_guncelleme": "2026-11-07T23:37:15+03:00",
+     "belge_ozeti": "3a26a5518b5f197a6db3cf8caef595564d2a94a422f62997b19a302328fee6f0",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -747,8 +747,8 @@
      "ozet": "4 ÖĞRETİM ÜYESİ alımı. Son başvuru: 19.11.2026. Adaylar başvurularını, ilanın Resmî Gazete’de yayımlandığı tarihten itibaren 15 gün içerisinde şahsen veya posta yoluyla yapmalıdır. Özel şartlar aşağıdaki ilan belgesinde yer alıyor.",
      "sartlar": [],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/3511f2a7e6a3a7d4a2a331715067e96b9f4fc3763434ea6c45b37a0cdc425e68.pdf",
-     "belge_sha256": "3511f2a7e6a3a7d4a2a331715067e96b9f4fc3763434ea6c45b37a0cdc425e68",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/3a26a5518b5f197a6db3cf8caef595564d2a94a422f62997b19a302328fee6f0.pdf",
+     "belge_sha256": "3a26a5518b5f197a6db3cf8caef595564d2a94a422f62997b19a302328fee6f0",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
     },
@@ -820,8 +820,8 @@
      "donem": "( 21 Aralık - 5 Ocak)",
      "baslangic_zaman": "2026-12-21T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-07T11:06:52+03:00",
-     "belge_ozeti": "5369d9fb0b1e5c1c6026dbbb4a907438eaf5ae0eb4f64c5ac17d217189201f2a",
+     "detay_guncelleme": "2026-11-07T23:37:17+03:00",
+     "belge_ozeti": "dae59341f4c2ed02d9050e2381ae7b33fd4d609aaeac6f23c5ca34e6261954f7",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -852,8 +852,8 @@
       }
      ],
      "basvuru_notu": "a) Elektronik ortamda başvurular, 21/12/2026-05/01/2027 tarihleri arasında istenilen belgeler eklenmek suretiyle Belediyemizin belediye@gundogmus.bel.tr mail adresine yapılacaktır.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/5369d9fb0b1e5c1c6026dbbb4a907438eaf5ae0eb4f64c5ac17d217189201f2a.pdf",
-     "belge_sha256": "5369d9fb0b1e5c1c6026dbbb4a907438eaf5ae0eb4f64c5ac17d217189201f2a",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/dae59341f4c2ed02d9050e2381ae7b33fd4d609aaeac6f23c5ca34e6261954f7.pdf",
+     "belge_sha256": "dae59341f4c2ed02d9050e2381ae7b33fd4d609aaeac6f23c5ca34e6261954f7",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "yer": "Antalya",
@@ -876,8 +876,8 @@
      "donem": "( 5 Kasım - 20 Kasım)",
      "baslangic_zaman": "2026-11-05T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-07T11:06:53+03:00",
-     "belge_ozeti": "0c013712348a28a1aa167b81248dcf51c67dc29e790be66337911e2603a6b5e1",
+     "detay_guncelleme": "2026-11-07T23:37:18+03:00",
+     "belge_ozeti": "b0607e9e0dfad452aa49bbd9b2a43c6c9063b99270122087d7f410bbe998a3b4",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -900,8 +900,8 @@
       }
      ],
      "basvuru_notu": "Adaylar, Üniversitemizin https://akds.erbakan.edu.tr adresinden elektronik ortamda başvurularını yaptıktan sonra alacakları “Öğretim Elemanı Başvuru Formu” ve aşağıda istenilen belgeler ile birlikte ilgili birimlere şahsen veya posta yolu ile başvurabileceklerdir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/0c013712348a28a1aa167b81248dcf51c67dc29e790be66337911e2603a6b5e1.pdf",
-     "belge_sha256": "0c013712348a28a1aa167b81248dcf51c67dc29e790be66337911e2603a6b5e1",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/b0607e9e0dfad452aa49bbd9b2a43c6c9063b99270122087d7f410bbe998a3b4.pdf",
+     "belge_sha256": "b0607e9e0dfad452aa49bbd9b2a43c6c9063b99270122087d7f410bbe998a3b4",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "belge_ogrenim": [
@@ -1024,8 +1024,8 @@
      "donem": "( 25 Kasım - 14 Aralık)",
      "baslangic_zaman": "2026-11-25T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-07T11:06:54+03:00",
-     "belge_ozeti": "0f7f00ed117092d808142b94759097526ba5a81b91fec87621893cb04473ac2a",
+     "detay_guncelleme": "2026-11-07T23:37:20+03:00",
+     "belge_ozeti": "bb6d24aa4e352913d241bb71d56cd6dc76fe408f0a3daf8ec67bd1c52c0113e8",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1040,8 +1040,8 @@
       }
      ],
      "basvuru_notu": "Başvurular, \"Başvuru Formu\" eksiksiz ve doğru bir şekilde doldurulmak suretiyle elektronik ortam da yapılacaktır.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/0f7f00ed117092d808142b94759097526ba5a81b91fec87621893cb04473ac2a.pdf",
-     "belge_sha256": "0f7f00ed117092d808142b94759097526ba5a81b91fec87621893cb04473ac2a",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/bb6d24aa4e352913d241bb71d56cd6dc76fe408f0a3daf8ec67bd1c52c0113e8.pdf",
+     "belge_sha256": "bb6d24aa4e352913d241bb71d56cd6dc76fe408f0a3daf8ec67bd1c52c0113e8",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "belge_ogrenim": [
@@ -1060,8 +1060,8 @@
      "donem": "( 3 Kasım - 13 Kasım)",
      "baslangic_zaman": "2026-11-03T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-07T23:06:48+03:00",
-     "belge_ozeti": "505dd32200e943138c368ddf22dd392a73a979473a7d3dff0ef36df646bcc914",
+     "detay_guncelleme": "2026-11-07T23:37:21+03:00",
+     "belge_ozeti": "d3a86a91c52570e49abccd980a07ca12004202ab98dbc32c1a2e67ac77744a2c",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1085,8 +1085,8 @@
      "donem": "( 3 Kasım - 19 Kasım)",
      "baslangic_zaman": "2026-11-03T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-07T11:06:56+03:00",
-     "belge_ozeti": "b0fb6842df877986b257af9a457c25f87b01602e7ce620cf5ba9032fb098383b",
+     "detay_guncelleme": "2026-11-07T23:37:22+03:00",
+     "belge_ozeti": "708df1dfb0c721cf15ac4fa8a13d96eafebfba9efafd8ca00f71fc8bc110c1e9",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1101,8 +1101,8 @@
       }
      ],
      "basvuru_notu": "Elektronik ortamda yaşanabilecek teknik aksaklıklar ve yoğunluk riski göz önünde bulundurularak, başvuruların son güne bırakılmaması gerekmektedir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/b0fb6842df877986b257af9a457c25f87b01602e7ce620cf5ba9032fb098383b.pdf",
-     "belge_sha256": "b0fb6842df877986b257af9a457c25f87b01602e7ce620cf5ba9032fb098383b",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/708df1dfb0c721cf15ac4fa8a13d96eafebfba9efafd8ca00f71fc8bc110c1e9.pdf",
+     "belge_sha256": "708df1dfb0c721cf15ac4fa8a13d96eafebfba9efafd8ca00f71fc8bc110c1e9",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "puan_turleri": [
@@ -1124,8 +1124,8 @@
      "donem": "( 9 Aralık - 11 Aralık)",
      "baslangic_zaman": "2026-12-09T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-07T11:06:57+03:00",
-     "belge_ozeti": "4a383408a1e57ea3141a30fccbc1062afe626df0d02d4132ceb8a11efab3fd50",
+     "detay_guncelleme": "2026-11-07T23:37:23+03:00",
+     "belge_ozeti": "fecf81f900a9129ca5aef6bb648b97c1259a3c31a5ab2db2e9af99d023f4bfc1",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1156,8 +1156,8 @@
       }
      ],
      "basvuru_notu": "BAŞVURU YERİ, TARİHİ, ŞEKLİ VE SÜRESİ: Adaylar, sözlü ve uygulamalı sınava katılabilmek için; a) 09/12/2026 tarihinden 11/12/2026 tarihi mesai bitimine kadar, yukarıda sayılan belgeler ile birlikte, boy ve kilo ölçümünü yapmak üzere Müftüselim Mahallesi Cumhuriyet Caddesi No:104 kat:2 adresindeki Eleşkirt Belediyesi içerisinde yer alan Yazı İşleri Müdürlüğüne şahsen müracaat ederek başvuru sürecini tamamlayacaklardır. b) Başvurular şahsen yapılacaktır.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/4a383408a1e57ea3141a30fccbc1062afe626df0d02d4132ceb8a11efab3fd50.pdf",
-     "belge_sha256": "4a383408a1e57ea3141a30fccbc1062afe626df0d02d4132ceb8a11efab3fd50",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/fecf81f900a9129ca5aef6bb648b97c1259a3c31a5ab2db2e9af99d023f4bfc1.pdf",
+     "belge_sha256": "fecf81f900a9129ca5aef6bb648b97c1259a3c31a5ab2db2e9af99d023f4bfc1",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "yer": "Ağrı",
@@ -1289,8 +1289,8 @@
      "donem": "( 2 Kasım - 1 Aralık)",
      "baslangic_zaman": "2026-11-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-07T23:06:49+03:00",
-     "belge_ozeti": "f275eb1d72c40926374259b2bc08829e0e4843ce145d0d3fc22ae3d73e23ed81",
+     "detay_guncelleme": "2026-11-07T23:37:25+03:00",
+     "belge_ozeti": "4913ee7688a97441ce2520de0c25dbf3a5edef52554b53d725b170781f95da27",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1573,8 +1573,8 @@
      "donem": "( 2 Kasım - 23 Kasım)",
      "baslangic_zaman": "2026-11-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-07T11:07:00+03:00",
-     "belge_ozeti": "de56d4b714dbb6f5eb54b1aa8d5d3b27c8474724b18755a38ec1bae12086a68e",
+     "detay_guncelleme": "2026-11-07T23:37:27+03:00",
+     "belge_ozeti": "a6542786c0029f0519379a33dfcce48a537f5a4fcb7c64445b93a20cb1b55829",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1584,8 +1584,8 @@
      "ozet": "TÜRK SİLAHLI KUVVETLERİNE FAKÜLTE VEYA YÜKSEKOKUL MEZUNLARINDAN 2026 YILI MUVAZZAF ASTSUBAY ADAYI TEMİNİ. Son başvuru: 23.11.2026. Özel şartlar aşağıdaki ilan belgesinde yer alıyor.",
      "sartlar": [],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/de56d4b714dbb6f5eb54b1aa8d5d3b27c8474724b18755a38ec1bae12086a68e.pdf",
-     "belge_sha256": "de56d4b714dbb6f5eb54b1aa8d5d3b27c8474724b18755a38ec1bae12086a68e",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/a6542786c0029f0519379a33dfcce48a537f5a4fcb7c64445b93a20cb1b55829.pdf",
+     "belge_sha256": "a6542786c0029f0519379a33dfcce48a537f5a4fcb7c64445b93a20cb1b55829",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
     },
@@ -1601,8 +1601,8 @@
      "donem": "( 2 Kasım - 23 Kasım)",
      "baslangic_zaman": "2026-11-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-07T11:07:01+03:00",
-     "belge_ozeti": "158b552ae60daf60fb1a35ead50456723311a0558aabb8909729b3660ef7574e",
+     "detay_guncelleme": "2026-11-07T23:37:27+03:00",
+     "belge_ozeti": "569f1f8569c075ecdfe9ec1097a79512d5e8202263c63665b09d38020c38c456",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1612,8 +1612,8 @@
      "ozet": "TÜRK SİLAHLI KUVVETLERİNE EN AZ DÖRT YIL SÜRELİ FAKÜLTE VEYA YÜKSEKOKUL MEZUNLARINDAN 2026 YILI BANDO SINIFI MUVAZZAF ASTSUBAY ADAYI TEMİNİ. Son başvuru: 23.11.2026. Özel şartlar aşağıdaki ilan belgesinde yer alıyor.",
      "sartlar": [],
      "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/158b552ae60daf60fb1a35ead50456723311a0558aabb8909729b3660ef7574e.pdf",
-     "belge_sha256": "158b552ae60daf60fb1a35ead50456723311a0558aabb8909729b3660ef7574e",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/569f1f8569c075ecdfe9ec1097a79512d5e8202263c63665b09d38020c38c456.pdf",
+     "belge_sha256": "569f1f8569c075ecdfe9ec1097a79512d5e8202263c63665b09d38020c38c456",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
     },
@@ -2482,8 +2482,8 @@
      "donem": "( 27 Ekim - 10 Kasım)",
      "baslangic_zaman": "2026-10-27T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-07T23:06:52+03:00",
-     "belge_ozeti": "20219bffffde7d62d1ca1d5bb6eb94b4957c3622af311c9d31b7624aae42d665",
+     "detay_guncelleme": "2026-11-07T23:37:28+03:00",
+     "belge_ozeti": "d8b1a2adfc623277df070d289dd39d6fda199a80668da2ffd2bfae510baa63e4",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -2821,8 +2821,8 @@
      "donem": "( 2 Aralık - 4 Aralık)",
      "baslangic_zaman": "2026-12-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-07T23:06:53+03:00",
-     "belge_ozeti": "96735ebc0cdf710bae109793161a4d3179948e78b452071bd94c2cd6f263173a",
+     "detay_guncelleme": "2026-11-07T23:37:30+03:00",
+     "belge_ozeti": "bbac634f3715a0510335714ed835f31a0a147c4cf8bc5a1724fed998dd51e11e",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -2846,8 +2846,8 @@
      "donem": "( 26 Ekim - 9 Kasım)",
      "baslangic_zaman": "2026-10-26T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-07T23:06:54+03:00",
-     "belge_ozeti": "293e0a8a5b30075ae7c502283889bc1e706965c3642352a677fc0918e537c193",
+     "detay_guncelleme": "2026-11-07T23:37:30+03:00",
+     "belge_ozeti": "756f98cad438f1de059e91fcd301e3bb5a1c6d54362ff4fdcd81529a647a9f48",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -3292,8 +3292,8 @@
      "donem": "( 18 Kasım - 20 Kasım)",
      "baslangic_zaman": "2026-11-18T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-07T23:06:54+03:00",
-     "belge_ozeti": "f0dbe618ded876ce90ad3ae473f566368f3640a3b4396c1bb3f7345570c2d8b2",
+     "detay_guncelleme": "2026-11-07T23:37:31+03:00",
+     "belge_ozeti": "0f081a9dcb9c54161cf629ab5df0b05aaccdbbc2af3beed2f418c3430df23c93",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -4083,7 +4083,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-11-07T20:06:56.198886+00:00",
+   "kontrol": "2026-11-07T20:37:33.584174+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -4103,7 +4103,7 @@
       }
      ],
      "yayim_tarihi": "2026-11-06",
-     "detay_guncelleme": "2026-11-07T11:07:06+03:00",
+     "detay_guncelleme": "2026-11-07T23:37:33+03:00",
      "csb_detay_surumu": 5,
      "ozet": "Ağrı ili Eleşkirt Belediyesinin 05.11.2026 tarihli ve 9286 sayılı yazısına istinaden ilk defa memur alımı ilanı iptal edilmiştir.",
      "belgeler": [],
@@ -23234,7 +23234,7 @@
    ],
    "sart_kadro_sayisi": 4,
    "basvuru_notu": "1- İlgililerin, ilanın Resmî Gazetede yayımlandığı tarihten itibaren 15 gün içinde https://kariyerkapisi.gov.tr/isealim internet adresinden başvurularını tamamlamaları gerekmektedir. Posta ile yapılan müracaatlar kabul edilmeyecektir.",
-   "detay_guncelleme": "2026-11-07T11:07:06+03:00",
+   "detay_guncelleme": "2026-11-07T23:37:34+03:00",
    "kk_detay_surumu": 3,
    "kadro_ortak": [
     [
