@@ -1615,6 +1615,81 @@
    ]
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=26f5b7a7-865c-483f-9045-2f77e5e7fb9d": {
+  "zaman": "2026-11-07T11:12:30+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "ced216dc637b6315",
+  "baslik": "İZMİR DEMOKRASİ ÜNİVERSİTESİ REKTÖRLÜĞÜ - İZMİR DEMOKRASİ ÜNİVERSİTESİ REKTÖRLÜĞÜ - SÖZLEŞMELİ AVUKAT ALIM İLANI (S2026/3)",
+  "farklar": [
+   [
+    "ogrenim",
+    [
+     "lisans",
+     "onlisans",
+     "ortaogretim"
+    ],
+    [
+     "lisans"
+    ],
+    false
+   ],
+   [
+    "puan_turleri",
+    [
+     "P3",
+     "P93",
+     "P94"
+    ],
+    [
+     "P3"
+    ],
+    false
+   ]
+  ],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Avukat",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 75,
+     "il": "İzmir",
+     "kosullar": [
+      "Hukuk Fakültesi mezunu olmak.",
+      "Avukatlık ruhsatnamesi sahibi olmak.",
+      "Lisans sonrası en az 3 yıl avukat olarak mesleki tecrübeye sahip olmak.",
+      "Son başvuru tarihi itibarıyla 35 yaşını doldurmamış olmak."
+     ]
+    }
+   ],
+   "toplam": 2,
+   "son_basvuru_tarihi": "2026-11-20",
+   "son_basvuru_saati": "13:00",
+   "baslangic_tarihi": "2026-11-07",
+   "kpss_gerekli": true,
+   "iller": [
+    "İzmir"
+   ],
+   "ortak_kosullar": [
+    "Yazılı ve/veya sözlü sınav yapılmaz; 2026 KPSS (B) grubu P3 puan sıralaması esas alınır.",
+    "Güvenlik soruşturması ve arşiv araştırması sonucu olumlu olmak."
+   ],
+   "ozet": "İzmir Demokrasi Üniversitesi 2 sözleşmeli avukat alacak; sınav yapılmaz, 2026 KPSS P3 sıralaması esas alınır. Başvurular 7–20 Kasım 2026 arasındadır.",
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P3"
+   ]
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=320d07cc-b5bc-4bab-9541-6c1100def856": {
   "zaman": "2026-10-30T14:31:39+03:00",
   "surum": 4,
@@ -2758,6 +2833,99 @@
    ],
    "puan_turleri": [
     "P3",
+    "P93"
+   ]
+  }
+ },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=877cfe70-3bd5-4c0f-93e4-64da34f001f5": {
+  "zaman": "2026-11-07T11:12:30+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "439949e0de331bea",
+  "baslik": "MİLLİ SARAYLAR İDARESİ BAŞKANLIĞI - 38 SÖZLEŞMELİ PERSONEL ALINMASINA İLİŞKİN SINAV DUYURUSU",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Koruma ve Güvenlik Görevlisi",
+     "adet": 12,
+     "ogrenim": "onlisans",
+     "puan_turu": "P93",
+     "en_dusuk_puan": 60,
+     "il": "İstanbul",
+     "kosullar": [
+      "Herhangi bir ön lisans bölümünden mezun olmak.",
+      "Son başvuru tarihi itibarıyla 45 yaşını doldurmamış olmak.",
+      "Silahlı Güvenlik Kimlik Kartına veya Silahlı Özel Güvenlik Elemanı Sertifikasına sahip olmak ya da başvurmuş olmak.",
+      "24 saat vardiyalı sistemde çalışmaya engel durumu bulunmamak."
+     ]
+    },
+    {
+     "unvan": "Restoratör (Kalemkar)",
+     "adet": 5,
+     "ogrenim": "onlisans",
+     "puan_turu": "P93",
+     "en_dusuk_puan": 60,
+     "il": "İstanbul",
+     "kosullar": [
+      "MYO Restorasyon, Konservasyon, Eser Koruma vb. bölümlerinden mezun olmak.",
+      "Son başvuru tarihi itibarıyla 35 yaşını doldurmamış olmak."
+     ]
+    },
+    {
+     "unvan": "İtfaiyeci",
+     "adet": 17,
+     "ogrenim": "onlisans",
+     "puan_turu": "P93",
+     "en_dusuk_puan": 60,
+     "il": "İstanbul",
+     "kosullar": [
+      "MYO İtfaiyecilik ve Yangın Güvenliği, İtfaiyecilik ve Sivil Savunma bölümlerinden mezun olmak.",
+      "Son başvuru tarihi itibarıyla 35 yaşını doldurmamış olmak.",
+      "C sınıfı ehliyete sahip olmak.",
+      "Erkek olmak.",
+      "24 saat vardiyalı sistemde çalışmaya engel durumu bulunmamak."
+     ]
+    },
+    {
+     "unvan": "Destek Personeli (Şoför)",
+     "adet": 4,
+     "ogrenim": "ortaogretim",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "il": "İstanbul",
+     "kosullar": [
+      "En az ortaöğretim (lise) mezunu olmak.",
+      "C ve D sınıfı ehliyete sahip olmak.",
+      "Son başvuru tarihi itibarıyla 40 yaşını doldurmamış olmak.",
+      "Erkek olmak."
+     ]
+    }
+   ],
+   "toplam": 38,
+   "son_basvuru_tarihi": "2026-11-17",
+   "son_basvuru_saati": "23:59",
+   "baslangic_tarihi": "2026-11-07",
+   "kpss_gerekli": true,
+   "iller": [
+    "İstanbul"
+   ],
+   "ortak_kosullar": [
+    "Başvurular Kariyer Kapısı'ndan e-Devlet şifresiyle elektronik ortamda yapılır; şahsen, kargo veya posta başvurusu kabul edilmez.",
+    "Koruma, restoratör ve itfaiyeci için 2026 KPSS P93'ten en az 60 puan gerekir.",
+    "Güvenlik soruşturması ve arşiv araştırması sonucu olumlu olmak."
+   ],
+   "ozet": "Milli Saraylar İdaresi Başkanlığı İstanbul'da 38 sözleşmeli personel (koruma-güvenlik, restoratör, itfaiyeci, şoför) alacak. Başvurular 7–17 Kasım 2026'da Kariyer Kapısı'ndan yapılır.",
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "onlisans",
+    "ortaogretim"
+   ],
+   "puan_turleri": [
     "P93"
    ]
   }
@@ -6979,11 +7147,11 @@
   }
  },
  "sbb-a00f639e934dfda13b150416": {
-  "zaman": "2026-11-06T23:12:36+03:00",
+  "zaman": "2026-11-07T11:12:30+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "fa9c407cc91b4f34",
+  "imza": "cd06866dda7e6916",
   "baslik": "İZMİR BÜYÜKŞEHİR BELEDİYE BAŞKANLIĞI - 90 ZABITA MEMURU ALACAK",
   "farklar": [],
   "yz": {
@@ -6996,7 +7164,7 @@
      "en_dusuk_puan": 65,
      "il": "İzmir",
      "kosullar": [
-      "Antrenörlük, Beden Eğitimi ve Spor, Spor Yöneticiliği, Egzersiz ve Spor Bilimleri, Rekreasyon bölümlerinden mezun olmak.",
+      "Antrenörlük, Beden Eğitimi ve Spor Öğretmenliği, Spor Yöneticiliği, Egzersiz ve Spor Bilimleri, Rekreasyon bölümlerinden mezun olmak.",
       "En az (B) sınıfı sürücü belgesine sahip olmak."
      ]
     },
@@ -7008,31 +7176,31 @@
      "en_dusuk_puan": 65,
      "il": "İzmir",
      "kosullar": [
-      "Antrenörlük, Beden Eğitimi ve Spor, Spor Yöneticiliği, Egzersiz ve Spor Bilimleri, Rekreasyon bölümlerinden mezun olmak.",
+      "Antrenörlük, Beden Eğitimi ve Spor Öğretmenliği, Spor Yöneticiliği, Egzersiz ve Spor Bilimleri, Rekreasyon bölümlerinden mezun olmak.",
       "En az (B) sınıfı sürücü belgesine sahip olmak."
      ]
     },
     {
-     "unvan": "Zabıta Memuru — Erkek (Yerel Yön./Kamu Yön.)",
+     "unvan": "Zabıta Memuru — Erkek (Kamu Yönetimi)",
      "adet": 24,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 65,
      "il": "İzmir",
      "kosullar": [
-      "Yerel Yönetimler, Kamu Yönetimi veya Siyaset Bilimi ve Kamu Yönetimi lisans programından mezun olmak.",
+      "Kamu Yönetimi, Yerel Yönetimler, Siyaset Bilimi ve Kamu Yönetimi bölümlerinden mezun olmak.",
       "En az (B) sınıfı sürücü belgesine sahip olmak."
      ]
     },
     {
-     "unvan": "Zabıta Memuru — Kadın (Yerel Yön./Kamu Yön.)",
+     "unvan": "Zabıta Memuru — Kadın (Kamu Yönetimi)",
      "adet": 6,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 65,
      "il": "İzmir",
      "kosullar": [
-      "Yerel Yönetimler, Kamu Yönetimi veya Siyaset Bilimi ve Kamu Yönetimi lisans programından mezun olmak.",
+      "Kamu Yönetimi, Yerel Yönetimler, Siyaset Bilimi ve Kamu Yönetimi bölümlerinden mezun olmak.",
       "En az (B) sınıfı sürücü belgesine sahip olmak."
      ]
     },
@@ -7044,7 +7212,7 @@
      "en_dusuk_puan": 65,
      "il": "İzmir",
      "kosullar": [
-      "Adalet, Yerel Yönetimler veya Özel Güvenlik ve Koruma ön lisans programından mezun olmak.",
+      "Ön lisans Adalet, Yerel Yönetimler, Özel Güvenlik ve Koruma programlarından mezun olmak.",
       "En az (B) sınıfı sürücü belgesine sahip olmak."
      ]
     },
@@ -7056,7 +7224,7 @@
      "en_dusuk_puan": 65,
      "il": "İzmir",
      "kosullar": [
-      "Adalet, Yerel Yönetimler veya Özel Güvenlik ve Koruma ön lisans programından mezun olmak.",
+      "Ön lisans Adalet, Yerel Yönetimler, Özel Güvenlik ve Koruma programlarından mezun olmak.",
       "En az (B) sınıfı sürücü belgesine sahip olmak."
      ]
     }
@@ -7070,13 +7238,13 @@
     "İzmir"
    ],
    "ortak_kosullar": [
-    "2026 KPSS (B grubu) puanından en az 65 puan almış olmak.",
     "Sınavın yapıldığı tarihte 30 yaşını doldurmamış olmak.",
     "Boy: erkeklerde en az 1,67 m, kadınlarda en az 1,60 m; boy-kilo farkı en çok 10 kg.",
-    "Başvuru Zabıta Dairesi Başkanlığı'na (Konak) şahsen, 08:30–17:00 arasında yapılır.",
-    "Sözlü ve uygulamalı sınav 11 Ocak 2027'de yapılacaktır."
+    "Başvuru 30 Kasım–4 Aralık 2026'da şahsen İzmir Büyükşehir Belediyesi Zabıta Dairesi'ne yapılır; posta ve e-posta kabul edilmez.",
+    "Sözlü ve uygulamalı sınav 11 Ocak 2027'de İzmir'de yapılır.",
+    "2026 KPSS (B) grubundan en az 65 puan gerekir."
    ],
-   "ozet": "İzmir Büyükşehir Belediyesi 90 zabıta memuru alacak (lisans ve ön lisans). Başvurular 30 Kasım–4 Aralık 2026'da Konak'ta şahsen yapılır.",
+   "ozet": "İzmir Büyükşehir Belediyesi 90 zabıta memuru alacak (lisans ve ön lisans). Başvurular 30 Kasım–4 Aralık 2026'da Zabıta Dairesi'ne şahsen yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -7754,11 +7922,11 @@
   }
  },
  "sbb-ce3aeb16575b73442a9f8944": {
-  "zaman": "2026-11-06T23:12:36+03:00",
+  "zaman": "2026-11-07T11:12:30+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "c4cab15a596c2b9f",
+  "imza": "8d8c0edba1c37e3a",
   "baslik": "ŞİLE BELEDİYE BAŞKANLIĞI - 6 MEMUR ALACAK",
   "farklar": [],
   "yz": {
@@ -7772,8 +7940,7 @@
      "il": "İstanbul",
      "kosullar": [
       "Herhangi bir lisans programından mezun olmak.",
-      "Sınavın yapıldığı tarihte 30 yaşını doldurmamış olmak.",
-      "Boy: erkeklerde en az 1,67 m, kadınlarda en az 1,60 m; boy-kilo farkı en çok 10 kg."
+      "Sınavın yapıldığı tarihte 30 yaşını doldurmamış olmak."
      ]
     },
     {
@@ -7784,23 +7951,26 @@
      "en_dusuk_puan": 65,
      "il": "İstanbul",
      "kosullar": [
-      "Harita, harita kadastro, inşaat, makine veya elektrik ön lisans programlarından birinden mezun olmak."
+      "Harita, harita kadastro, inşaat, makine, elektrik ön lisans programlarından birinden mezun olmak."
      ]
     }
    ],
    "toplam": 6,
    "son_basvuru_tarihi": "2026-11-13",
+   "son_basvuru_saati": null,
    "baslangic_tarihi": "2026-11-09",
    "kpss_gerekli": true,
    "iller": [
     "İstanbul"
    ],
    "ortak_kosullar": [
-    "2026 KPSS (B grubu) puanından en az 65 puan almış olmak.",
-    "Tekniker: e-posta (insankaynaklari@sile.bel.tr), şahsen veya iadeli taahhütlü posta; zabıta: yalnızca şahsen.",
-    "Sınavlar 27 Kasım 2026'da yapılacaktır."
+    "Zabıta memuru: erkeklerde en az 1,67 m, kadınlarda en az 1,60 m boy; boy-kilo farkı en çok 10 kg.",
+    "Zabıta başvurusu 9–13 Kasım 2026'da Şile Belediyesi Yazı İşleri Müdürlüğü'ne şahsen yapılır.",
+    "Tekniker başvurusu e-posta (insankaynaklari@sile.bel.tr), şahsen veya iadeli taahhütlü posta ile yapılır.",
+    "Sözlü (zabıta için ayrıca uygulamalı) sınav 27 Kasım 2026'da Şile'de yapılır.",
+    "2026 KPSS (B) grubundan en az 65 puan gerekir."
    ],
-   "ozet": "Şile Belediyesi 2 zabıta memuru ve 4 tekniker alacak. Başvurular 9–13 Kasım 2026'da yapılır.",
+   "ozet": "Şile Belediyesi 2 zabıta memuru ve 4 tekniker alacak. Başvurular 9–13 Kasım 2026'da; sözlü sınav 27 Kasım 2026'da yapılacak.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
