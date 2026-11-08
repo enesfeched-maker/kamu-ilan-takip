@@ -306,6 +306,7 @@ if(o.kurum_slug){const a=E('a','',o.kurum||'Kurum');a.setAttribute('data-a','kur
 const h=E('h3','satir-baslik'),a=E('a','satir-link',o.manset||'Kamu ilanı');a.href=ilanHref(o);a.setAttribute('data-a','satir_tikla');a.setAttribute('data-a-h',o.key);h.append(a);if(o.ek)h.append(' ',E('span','ek','+'+o.ek));
 h.append(' ',E('span','satir-tarih','('+tarihAraligi(o)+')'));g.append(k,h);
 const alt=[o.il,o.ogrenim.map(x=>LEVELS[x]).join(' / '),o.toplam&&!/^\d/.test(o.manset)?sayiTr(o.toplam)+' kadro':''].filter(Boolean);
+if(F.q&&sorguVaryant(F.q).length&&fullOf(o)&&!baslikUyar(o,F.q))alt.push('Aradığın ifade ilan metninde geçiyor');
 if(alt.length)g.append(E('p','satir-alt',alt.join(' · ')));
 const sag=E('div','satir-sag'),r=rozetOf(o,res);if(r)sag.append(r);sag.append(saveButton(o));
 n.append(kurumGorseli(o,'satir-logo',40),g,sag);return n;}
@@ -348,17 +349,26 @@ try{const u=new URL(location.href),sp=new URLSearchParams(u.search);for(const k 
 const rest=[sp.toString(),viewOf(tab)==='ana'?queryOf(F,!!activeProfile()):''].filter(Boolean).join('&'),next=u.pathname+(rest?'?'+rest:'')+u.hash;
 if(next!==u.pathname+u.search+u.hash)history.replaceState(null,'',next);}catch{}}
 const fullOf=o=>fmap.get(o.key)||null;
-const aramaTek=o=>{const f=fullOf(o);return f?f.search:normalize([o.manset,o.kurum,o.il,...o.iller].join(' '));};
+/* Arama metni kuralı: bot/arama_indeksi.py katla() ile aynı olmalı ("4/B" = "4b", "KPSS'siz" = "kpsssiz"). */
+const aramaNorm=v=>normalize(v).replace(/['’`]/g,'').replace(/(\d)\s*[\/-]\s*([a-z])\b/g,'$1$2').replace(/[^a-z0-9]+/g,' ').trim();
+/* Filtre sözcükleri de aranır: "kpsssiz", "önlisans", "belediye". Satır alanları her zaman metne girer (tam kayıtta il ve manşet yok). */
+const satirMetni=o=>aramaNorm([o.manset,o.kurum,o.il,...(o.iller||[]),turLabel(o.ilan_turu),katOf(o),...rowLevels(o),o.kpss==='kpss'?'kpss':o.kpss?'kpsssiz':''].join(' '));
+const aramaTek=o=>{const f=fullOf(o);return ' '+satirMetni(o)+(f?' '+f.search:'');};
+const baslikMetni=o=>' '+aramaNorm([o.manset,o.kurum,o.il,...(o.iller||[])].join(' '));
 const aramaMetni=o=>(sec.get(o.key)||[]).reduce((t,k)=>{const r=lmap.get(k);return r?t+' '+aramaTek(r):t;},aramaTek(o));
 /* Eş anlamlılar (normalize edilmiş): sorgudaki ifade bir gruptan biriyse diğerleri de aranır. Analizde sonuçsuz kalan aramalardan derlendi. */
-const ES_ANLAM=[['fizyoterapist','fizyoterapi'],['diyetisyen','beslenme ve diyet','diyet uzmani'],['cocuk gelisimci','cocuk gelisimi','cocuk gelisim'],['sosyal calismaci','sosyal hizmet'],['psikolog','psikoloji'],['veteriner hekim','veteriner'],['rontgen','radyoloji','tibbi goruntuleme'],['tibbi laboratuvar','laboratuvar'],['avukat','hukuk musaviri','hukukcu'],['saglik bakanligi','hastane','saglik mudurlugu'],['bilgisayar muhendisi','bilgisayar muhendisligi','yazilim'],['zabita','zabita memuru'],['guvenlik gorevlisi','koruma ve guvenlik','guvenlik'],['sofor','surucu'],['iett','elektrik tramvay'],['sgk','sosyal guvenlik kurumu'],['meb','milli egitim'],['diyanet','din isleri'],['mimar','mimarlik']];
+const ES_ANLAM=[['fizyoterapist','fizyoterapi'],['diyetisyen','beslenme ve diyet','diyet uzmani'],['cocuk gelisimci','cocuk gelisimi','cocuk gelisim'],['sosyal calismaci','sosyal hizmet'],['psikolog','psikoloji'],['veteriner hekim','veteriner'],['rontgen','radyoloji','tibbi goruntuleme'],['tibbi laboratuvar','laboratuvar'],['avukat','hukuk musaviri','hukukcu'],['saglik bakanligi','hastane','saglik mudurlugu'],['bilgisayar muhendisi','bilgisayar muhendisligi','yazilim'],['zabita','zabita memuru'],['guvenlik gorevlisi','koruma ve guvenlik'],['sofor','soforluk','servis surucusu'],['iett','elektrik tramvay'],['sgk','sosyal guvenlik kurumu'],['meb','milli egitim'],['diyanet','din isleri'],['mimar','mimarlik'],['on lisans','onlisans'],['lise','ortaogretim'],['kpss siz','kpss sartsiz','kpsssiz'],['bekci','carsi ve mahalle bekcisi'],['itfaiye','itfaiye eri'],['temizlik','temizlik gorevlisi','destek personeli'],['asci','ascibasi'],['polis','pomem','emniyet'],['asker','subay','astsubay','uzman cavus','uzman erbas'],['infaz koruma','gardiyan'],['katip','zabit katibi','katiplik'],['mubasir','mubasirlik'],['hemsire','hemsirelik'],['ebe','ebelik'],['eczaci','eczacilik'],['doktor','hekim','tabip'],['ogretmen','ogretmenlik'],['tekniker','teknisyen']];
+const ARAMA_DOLGU=new Set(['alim','alimi','alimlari','ilan','ilani','ilanlar','ilanlari','personel','personeli','kamu','icin','ve','veya','ile','basvuru','basvurusu']);
+const KELIME_EKI=/(larin|lerin|ndan|nden|lari|leri|sina|sine|nin|nun|dan|den|tan|ten|nda|nde|lar|ler|si|su|da|de|ta|te|in|un|i|u)$/;
+let belgeDizini={};
 let aramaOnb={q:null,v:[]};
 /* Sorgunun kelime dizileri: kendisi + eş anlamlı ifade değiştirilmiş biçimleri. Aynı sorgu için önbellekten. */
 function sorguVaryant(q){
-const n=normalize(q).trim().replace(/\s+/g,' ');if(aramaOnb.q===n)return aramaOnb.v;
+const n=aramaNorm(q);if(aramaOnb.q===n)return aramaOnb.v;
 const v=new Set(n?[n]:[]);
 for(const g of ES_ANLAM)for(const p of g)if((' '+n+' ').includes(' '+p+' '))for(const r of g)if(r!==p)v.add((' '+n+' ').replace(' '+p+' ',' '+r+' ').trim());
-aramaOnb={q:n,v:[...v].map(s=>s.split(' ').filter(Boolean))};return aramaOnb.v;}
+/* "zabıta alımı", "ankara ilanları" gibi sorgularda dolgu sözcüğü metinde olmayınca ilan düşmesin; tamamı dolguysa olduğu gibi aranır. */
+aramaOnb={q:n,v:[...v].map(s=>{const ws=s.split(' ').filter(Boolean),k=ws.filter(w=>!ARAMA_DOLGU.has(w));return k.length?k:ws;})};return aramaOnb.v;}
 /* En çok bir harf farkı (ekleme/silme/değiştirme). */
 function birHarf(a,b){
 if(Math.abs(a.length-b.length)>1)return false;let i=0,j=0,fark=0;
@@ -371,9 +381,18 @@ if(t.includes(w))return true;if(w.length<5)return false;
 if(w.length>=7&&t.includes(w.slice(0,-2)))return true;
 for(const tk of t.split(/[^a-z0-9]+/))if(tk.length>=w.length-1&&(birHarf(w,tk.slice(0,w.length))||birHarf(w,tk.slice(0,w.length+1))||birHarf(w,tk.slice(0,w.length-1))))return true;
 return false;}
+/* Kelime başı eşleşmesi; 5+ harfte kelime içi de sayılır (PDF'te bitişik yazılmış "SözleşmeliMemur"). Çekim eki atılmış kök de aranır:
+   "zabıtası", "hemşireler", "ankarada". "lisans" önlisansı getirmesin. Kök 5 harften kısaysa aranmaz ("bursa" → "burs" olmasın). */
+function kelimeUyar(t,w){
+if(t.includes(' '+w)||(w.length>=5&&w!=='lisans'&&t.includes(w)))return true;
+const kok=w.replace(KELIME_EKI,'');return kok!==w&&kok.length>=5&&t.includes(' '+kok);}
 function aramaUyar(o,f,bulanik){
 const vs=sorguVaryant(f.q);if(!vs.length)return true;const t=aramaMetni(o);
-return vs.some(ws=>ws.every(w=>bulanik?bulanikUyar(t,w):t.includes(w)));}
+if(vs.some(ws=>ws.every(w=>bulanik?bulanikUyar(t,w):kelimeUyar(t,w))))return true;
+/* Belge metninde eş anlamlı açılmaz ("şoför" → "sürücü belgesi" her ilanda geçiyor), yazım toleransı da uygulanmaz. */
+if(bulanik)return false;const b=t+' '+[o.key,...(sec.get(o.key)||[])].map(k=>belgeDizini[k]||'').join(' ');return vs[0].every(w=>kelimeUyar(b,w));}
+/* Sorgu başlık/kurum/ilde geçiyorsa üstte; yalnız ilan metni ya da belgede geçiyorsa satırda belirtilir. */
+function baslikUyar(o,q){const t=baslikMetni(o);return sorguVaryant(q).some(ws=>ws.every(w=>kelimeUyar(t,w)));}
 /* Profil dışındaki tüm süzgeçler. Metin araması tam kayıt gelene kadar satır alanlarında yapılır. */
 function rowMatches(o,f,bulanik){
 if(!f.arsiv&&closed(o))return false;
@@ -390,7 +409,8 @@ function sortRows(list,f){
 const byDl=(a,b)=>Number(closed(a))-Number(closed(b))||(a.son_tarih||'9999').localeCompare(b.son_tarih||'9999')||a.kurum.localeCompare(b.kurum,'tr');
 /* Liste yayın gününe göre gruplanıp ilk sayfası kesildiği için varsayılan sıra en yeni gün önce; gün içinde de en yeni yayımlanan üstte. */
 const gun=o=>o.ilk_gorulme?istDate(Date.parse(o.ilk_gorulme)):'',byGun=(a,b)=>gun(b).localeCompare(gun(a))||(Date.parse(b.ilk_gorulme)||0)-(Date.parse(a.ilk_gorulme)||0)||byDl(a,b);
-const cmp=f.sira==='yeni'?(a,b)=>(Date.parse(b.ilk_gorulme)||0)-(Date.parse(a.ilk_gorulme)||0):f.sira==='kurum'?(a,b)=>a.kurum.localeCompare(b.kurum,'tr'):f.sb==='yakinda'?(a,b)=>(Date.parse(a.baslangic_zaman)||0)-(Date.parse(b.baslangic_zaman)||0):byGun;
+const arandi=sorguVaryant(f.q).length&&f.sira==='son',baslikOnce=(a,b)=>arandi?Number(baslikUyar(b,f.q))-Number(baslikUyar(a,f.q)):0;
+const cmp=f.sira==='yeni'?(a,b)=>(Date.parse(b.ilk_gorulme)||0)-(Date.parse(a.ilk_gorulme)||0):f.sira==='kurum'?(a,b)=>a.kurum.localeCompare(b.kurum,'tr'):f.sb==='yakinda'?(a,b)=>(Date.parse(a.baslangic_zaman)||0)-(Date.parse(b.baslangic_zaman)||0):(a,b)=>gun(b).localeCompare(gun(a))||baslikOnce(a,b)||byGun(a,b);
 return list.slice().sort(cmp);}
 const uygunAcik=(f,pr)=>!!pr&&f.uygun===true;
 /* Arama yazılıyken "Profilime uygun" süzmez (analizde aranan meslek profil dışında kalınca "ilan yok" sanılıp çıkılıyordu);
@@ -516,7 +536,9 @@ sonSayi=list.length;$('result-count').textContent=list.length+' ilan';
 if(res.on&&res.bilinmiyor>0)fs.replaceChildren(E('span','',res.bilinmiyor+' ilanın öğrenim şartı okunamadı; gizlenmedi, koşullarını kontrol et.'));
 else if(res.bulanik&&list.length)fs.replaceChildren(E('span','','“'+F.q.trim().slice(0,60)+'” için tam eşleşme yok; benzer sonuçlar gösteriliyor.'));
 else if(res.aramaGenis&&list.length)fs.replaceChildren(E('span','','Arama tüm ilanlarda yapıldı; profiline uyanlar üstte.'));
-else fs.replaceChildren();}
+else{const g=F.q.trim()&&!F.arsiv&&list.length&&loaded?filterIlan(ilanBase({...F,arsiv:true}),{...F,arsiv:true},pr).list.length-list.length:0;
+if(g>0){const b=E('button','yazi-link','Süresi geçmiş '+g+' ilanı da göster');b.type='button';b.onclick=()=>{A('tikla',{a:'arama_gecmis',x:normalize(F.q).slice(0,60),n:g});F.arsiv=true;ilanDegisti();};fs.replaceChildren(b);}
+else fs.replaceChildren();}}
 $('clear').hidden=!suzgecVar(F);
 const nodes=zamanGruplari(vis).map(([d,rows])=>gunGrubu(d,rows,res));
 if(list.length>vis.length){
@@ -798,10 +820,11 @@ function ensureFull(){
 if(fullPromise)return fullPromise;
 if(fullFailed)return Promise.resolve();
 fullPromise=(async()=>{
-const [fr,gr]=await Promise.allSettled([getJSON('ilanlar.json','no-cache'),getJSON('ilan/gorseller.json','no-cache')]);
+const [fr,gr,br]=await Promise.allSettled([getJSON('ilanlar.json','no-cache'),getJSON('ilan/gorseller.json','no-cache'),getJSON('arama-belge.json','no-cache')]);
+if(br.status==='fulfilled'&&br.value&&typeof br.value==='object')belgeDizini=br.value;
 if(fr.status==='fulfilled'&&fr.value&&Array.isArray(fr.value.ilanlar)){
 const data=fr.value,imgs=gr.status==='fulfilled'&&gr.value&&typeof gr.value==='object'?gr.value:{};
-items=data.ilanlar.filter(i=>i&&typeof i.id==='string'&&typeof i.baslik==='string'&&i.kategori!=='akademik').map(i=>({...i,key:keyFor(i),location:proper(i.yer),...pickImages(imgs[keyFor(i)]),L:lmap.get(keyFor(i))||null,search:normalize([i.baslik,i.kurum,i.yer,i.kadro,i.ilan_turu,i.ozet,...(i.sartlar||[]).map(s=>s.kadro+' '+s.metin)].join(' '))}));
+items=data.ilanlar.filter(i=>i&&typeof i.id==='string'&&typeof i.baslik==='string'&&i.kategori!=='akademik').map(i=>({...i,key:keyFor(i),location:proper(i.yer),...pickImages(imgs[keyFor(i)]),L:lmap.get(keyFor(i))||null,search:aramaNorm([i.baslik,i.kurum,i.yer,i.kadro,i.ilan_turu,i.ozet,i.basvuru_notu,i.duyuru_cumlesi,...(i.iller||[]),...(i.kadro_detay||[]).map(k=>JSON.stringify(k)),...(i.sartlar||[]).map(s=>s.kadro+' '+s.metin)].join(' '))}));
 loaded=true;if(!listeZaman&&data.guncelleme)listeZaman=data.guncelleme;
 if(!listeVar){liste=items.filter(i=>!i.duyuru_turu&&!i.iptal_edildi&&!closed(i)).map(fallbackModel);}
 const failed=Object.entries(data.kaynak_durumlari||{}).filter(([,s])=>s.hata_sayisi>0).map(([k])=>({sbb:'SBB',csb:'ÇŞB Yerel Yönetimler'})[k]||'İŞKUR');
