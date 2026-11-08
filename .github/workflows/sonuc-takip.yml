@@ -1,0 +1,41 @@
+name: Sonuç duyurusu takibi
+
+on:
+  schedule:
+    - cron: '20 7,15 * * *'   # 10.20 ve 18.20 TR
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sonuc-takip
+  cancel-in-progress: false
+
+jobs:
+  tara:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: "3.12"
+      - run: python -m pip install Pillow==11.3.0 beautifulsoup4==4.13.5 pypdf==6.0.0 pdfplumber==0.11.7
+      - name: Kurum sitelerini tara
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python bot/sonuc_takip.py
+      - name: Sonuçları kaydet
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/sonuclar.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Sonuç duyuruları güncellendi [skip ci]"
+          for i in 1 2 3 4 5; do
+            git pull --rebase -q origin main && git push -q origin HEAD:main && exit 0
+            sleep 5
+          done
+          exit 1
