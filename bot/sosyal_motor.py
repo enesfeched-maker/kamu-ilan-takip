@@ -20,6 +20,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from xml.etree import ElementTree
 
+import sosyal_kalite
 import sosyal_tasarim as st
 from kart_tasarimlari import veri as kart_verisi
 from siniflandir import akademik_ilan, kucuk
@@ -376,7 +377,7 @@ def metin_olustur(konu, vakit, simdi):
     aciklama = '\n'.join(govde) + f'\n\n{soru}\n\n{kapanis}\n{takip}\n\n' + ' '.join(etiketler)
     baslik = konu['baslik']
     baslik = (baslik if len(baslik) <= 90 else baslik[:89].rstrip() + '…') + ' #shorts'
-    return {'baslik': baslik, 'aciklama': aciklama[:2150], 'etiketler': etiketler}
+    return {'baslik': sosyal_kalite.temizle(baslik), 'aciklama': sosyal_kalite.aciklama_duzelt(aciklama)[:2150], 'etiketler': etiketler}
 
 
 def uret(vakit, cikti, simdi=None, cfg=None, docs=ROOT / 'docs', gecmis_yolu=GECMIS_YOLU, video=True, trend=True,
