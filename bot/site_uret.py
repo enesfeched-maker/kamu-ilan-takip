@@ -91,14 +91,43 @@ def alt_html(kok, yil=None):
             f'<p class="ab-not">© <span id="yil">{yil}</span> KPSS Tercihi</p></div></footer>')
 
 
+TITLE_SINIRI = 62
+ACIKLAMA_SINIRI = 160
+VARSAYILAN_GORSEL = 'https://kpsstercihi.com/assets/logo-512.png'
+
+
+def _sozcukte_kes(metin, sinir):
+    return metin[:sinir].rsplit(' ', 1)[0].rstrip(' ,;:-–—|')
+
+
+def kisa_baslik(baslik):
+    """Arama sonucunda kesilmeyen başlık: sınırı aşınca önce marka eki, sonra sondaki sözcükler atılır."""
+    if len(baslik) <= TITLE_SINIRI:
+        return baslik
+    govde = re.sub(r'\s+[|—–-]\s+(?:Kamu İlanları|KPSS Tercihi).*$', '', baslik)
+    return govde if len(govde) <= TITLE_SINIRI else _sozcukte_kes(govde, TITLE_SINIRI)
+
+
+def kisa_aciklama(aciklama):
+    return aciklama if len(aciklama) <= ACIKLAMA_SINIRI else _sozcukte_kes(aciklama, ACIKLAMA_SINIRI - 1) + '…'
+
+
+def varsayilan_gorsel(ek_head):
+    """Kendi kart görseli olmayan sayfalar paylaşılınca da logo ve kart görünsün."""
+    if 'og:image' in (ek_head or ''):
+        return ''
+    return f'<meta property="og:image" content="{VARSAYILAN_GORSEL}"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="{VARSAYILAN_GORSEL}">'
+
+
 def sayfa_basi(baslik, aciklama, canonical, kok, og_tur='website', ek_head='', og_baslik=None):
     """<!doctype> … <body> açılışına kadar ortak kısım (kurum ve ilan sayfaları).
     Reklam betiği yalnız dizinlenen sayfalara girer: noindex sayfa gerçek içerik sayılmaz (AdSense, 1 Kasım 2026)."""
     reklam = '' if 'noindex' in (ek_head or '') else REKLAM_BETIGI
+    ozet = kisa_aciklama(aciklama)
     return (f'<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="google-adsense-account" content="ca-pub-8335827974832277">{reklam}'
             f'<meta name="theme-color" content="{ACIK_ZEMIN}"><meta name="color-scheme" content="light dark">{TEMA_BETIGI}'
-            f'<title>{esc(baslik)}</title><meta name="description" content="{esc(aciklama)}"><link rel="canonical" href="{canonical}">'
-            f'<meta property="og:title" content="{esc(og_baslik or baslik)}"><meta property="og:description" content="{esc(aciklama)}"><meta property="og:type" content="{og_tur}">{ek_head}'
+            f'<title>{esc(kisa_baslik(baslik))}</title><meta name="description" content="{esc(ozet)}"><link rel="canonical" href="{canonical}">'
+            f'<meta property="og:title" content="{esc(og_baslik or baslik)}"><meta property="og:description" content="{esc(ozet)}"><meta property="og:type" content="{og_tur}"><meta property="og:site_name" content="KPSS Tercihi"><meta property="og:locale" content="tr_TR">{ek_head}{"" if og_tur == "article" else varsayilan_gorsel(ek_head)}'
             f'<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
             f'<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap">'
             f'<link rel="stylesheet" href="{kok}sayfa.css?v={CSS_SURUM}"><link rel="stylesheet" href="{kok}kabuk.css?v={KABUK_SURUM}">{ikonlar(kok)}<script src="{kok}a.js?v={ANALIZ_SURUM}" defer></script><script src="{kok}sayfa.js?v={CSS_SURUM}" defer></script></head>')
@@ -1284,6 +1313,7 @@ def main():
         urls += rehberler.yaz(docs, BASE, gorunen, sayfa_anahtarlari, haritada_olmayan, datetime.now(TR))   # açık ilan blokları için statik ana sayfayla aynı veri
         sayfali = sayfa_anahtarlari
         (docs / 'llms.txt').write_text(yz_gorunurluk.llms_metni(gorunen, BASE, datetime.now(TR), sayfali), encoding='utf-8')
+        (docs / 'llms-full.txt').write_text(yz_gorunurluk.llms_tam_metni(gorunen, BASE, datetime.now(TR), sayfali), encoding='utf-8')
     except Exception as hata:
         print(f'Uyarı: llms.txt / SSS üretilemedi: {hata}')
     try:

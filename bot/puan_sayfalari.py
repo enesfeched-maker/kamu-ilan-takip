@@ -124,6 +124,15 @@ def _kirinti_json(base, parcalar):
     return f'<script type="application/ld+json">{j}</script>'
 
 
+def _veri_seti_json(base, canonical, aciklama):
+    """Taban puanları özgün derleme veri: Dataset işareti asistanların ve Google Veri Kümesi Arama'nın kaynağı tanımasını sağlar."""
+    j = json.dumps({'@context': 'https://schema.org', '@type': 'Dataset', 'name': 'KPSS Taban Puanları', 'description': aciklama, 'url': canonical,
+                    'inLanguage': 'tr-TR', 'isAccessibleForFree': True, 'isBasedOn': 'https://www.osym.gov.tr/',
+                    'creator': {'@type': 'Organization', 'name': 'KPSS Tercihi', 'url': base}},
+                   ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
+    return f'<script type="application/ld+json">{j}</script>'
+
+
 def _kes(s, n=160):
     return s if len(s) <= n else s[:n - 1].rstrip(' ,;.') + '…'
 
@@ -134,7 +143,7 @@ def _sayfa(base, yol, derinlik, baslik, aciklama, kirinti, icerik):
     kok = '../' * derinlik
     canonical = base + KLASOR + '/' + yol
     aciklama = _kes(aciklama)
-    ek = (f'<meta property="og:url" content="{esc(canonical)}">' + _kirinti_json(base, kirinti))
+    ek = (f'<meta property="og:url" content="{esc(canonical)}">' + _kirinti_json(base, kirinti) + (_veri_seti_json(base, canonical, aciklama) if not yol else ''))
     govde = (su.sayfa_basi(baslik, aciklama, esc(canonical), kok, ek_head=ek)
              + f'<body class="kurum-page"><a class="skip" href="#icerik">İçeriğe geç</a>{su.ust_html(kok, "puanlar")}{icerik}'
              + f'<p class="wrap kp-note" style="margin:24px auto">{esc(NOT)}</p>{su.alt_html(kok)}</body></html>')
