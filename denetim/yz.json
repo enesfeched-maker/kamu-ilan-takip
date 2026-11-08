@@ -5283,11 +5283,11 @@
   }
  },
  "sbb-0789771f8e6c1c43dd7bd8fe": {
-  "zaman": "2026-11-08T05:11:22+03:00",
+  "zaman": "2026-11-08T17:11:16+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "a4f998cbef424936",
+  "imza": "8ae86a5ad53939ef",
   "baslik": "YÜKSEKÖĞRETİM KURULU BAŞKANLIĞI - 5 ALACAK",
   "farklar": [],
   "yz": {
@@ -5300,9 +5300,9 @@
      "en_dusuk_puan": null,
      "il": null,
      "kosullar": [
-      "Bilgisayar veya yazılım mühendisliğinden (ya da denkliği kabul edilen bölümden) mezun olmak.",
-      "Lisans sonrası yazılım geliştirici olarak en az 8 yıl belgeli deneyime sahip olmak.",
-      "Java ve Spring Boot ile geliştirme ve bakımda fiilen görev aldığını belgelemek."
+      "Bilgisayar veya yazılım mühendisliğinden (ya da denkinden) mezun olmak.",
+      "Lisanstan sonra yazılım geliştirici olarak en az 8 yıl deneyimi belgelemek.",
+      "Java ve Spring Boot ile uygulama geliştirme/bakımında fiilen çalıştığını belgelemek."
      ]
     },
     {
@@ -5313,9 +5313,9 @@
      "en_dusuk_puan": null,
      "il": null,
      "kosullar": [
-      "Bilgisayar veya yazılım mühendisliğinden (ya da denkliği kabul edilen bölümden) mezun olmak.",
-      "Lisans sonrası yazılım geliştirici olarak en az 3 yıl belgeli deneyime sahip olmak.",
-      "Java ve Spring Boot ile geliştirme ve bakımda fiilen görev aldığını belgelemek."
+      "Bilgisayar veya yazılım mühendisliğinden (ya da denkinden) mezun olmak.",
+      "Lisanstan sonra yazılım geliştirici olarak en az 3 yıl deneyimi belgelemek.",
+      "Java ve Spring Boot ile uygulama geliştirme/bakımında fiilen çalıştığını belgelemek."
      ]
     }
    ],
@@ -5326,13 +5326,13 @@
    "kpss_gerekli": true,
    "iller": [],
    "ortak_kosullar": [
-    "2026 KPSS P3 sonuç belgesi istenir; belge ibraz etmeyenin puanı 70 sayılır.",
-    "İngilizce YDS/e-YDS veya eşdeğeri sınav belgesi istenir; belgesizin dil puanı 0 sayılır.",
-    "Sıralama: KPSS P3'ün %70'i + yabancı dil puanının %30'u; alınacak sayının 10 katı aday sözlü sınava çağrılır.",
-    "Sözlü sınavda en az 70 puan gerekir.",
-    "Başvuru e-Devlet üzerinden Kariyer Kapısı'ndan elektronik ortamda yapılır."
+    "Başvuru 2–16 Kasım 2026 arasında e-Devlet üzerinden Kariyer Kapısı'ndan yapılır.",
+    "2026 KPSS P3 puanı istenir; belge vermeyenin puanı 70 sayılır.",
+    "İngilizce YDS/e-YDS belgesi istenir; belge yoksa yabancı dil puanı 0 sayılır.",
+    "Sıralama: KPSS P3'ün %70'i + yabancı dilin %30'u; alım sayısının 10 katı adaya sözlü sınav yapılır.",
+    "Sözlü sınavda en az 70 puan gerekir."
    ],
-   "ozet": "YÖK sözleşmeli bilişim personeli olarak 2 kıdemli ve 3 Java yazılım geliştirme uzmanı alacak. Başvurular 2–16 Kasım 2026'da Kariyer Kapısı'ndan yapılır.",
+   "ozet": "YÖK Başkanlığı 2'si kıdemli olmak üzere 5 sözleşmeli Java yazılım uzmanı alacak. Başvurular 2–16 Kasım 2026'da Kariyer Kapısı üzerinden yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -5346,11 +5346,11 @@
   }
  },
  "sbb-0a0b1d327a7c5924b935242e": {
-  "zaman": "2026-11-08T05:11:22+03:00",
+  "zaman": "2026-11-08T17:11:16+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "db40d502cbd1c808",
+  "imza": "c2d9444c0adc6759",
   "baslik": "DOĞU KARADENİZ KALKINMA AJANSI - 1 UZMAN ALACAK",
   "farklar": [
    [
@@ -5374,9 +5374,9 @@
      "en_dusuk_puan": 80,
      "il": "Rize",
      "kosullar": [
-      "İktisat, Ekonomi, İşletme, Kamu Yönetimi, Uluslararası İlişkiler, İstatistik veya Siyaset Bilimi bölümlerinden mezun olmak.",
-      "KPSS P12, P14, P24, P29 veya P34 puan türlerinden en az 80 puan almış olmak.",
-      "Son 5 yılda YDS/e-YDS İngilizce en az C düzeyi (en az 70 puan) almış olmak."
+      "İktisat, Ekonomi, İşletme, Kamu Yönetimi, Uluslararası İlişkiler, İstatistik, Siyaset Bilimi bölümlerinden mezun olmak.",
+      "İngilizce YDS/e-YDS'den en az C düzeyinde puan almış olmak.",
+      "Başvuru tarihinden önceki 5 yıl içinde alınmış dil belgesi bulunmak."
      ]
     }
    ],
@@ -5389,11 +5389,12 @@
     "Rize"
    ],
    "ortak_kosullar": [
-    "Başvuru e-Devlet üzerinden Kariyer Kapısı'ndan elektronik ortamda yapılır.",
-    "Sözlü sınav (mülakat); alınacak sayının 5 katı aday sınava çağrılır, başarı notu en az 70'tir.",
-    "Sıralama: KPSS %55, YDS %35, yüksek lisans %2, doktora %4, ikinci yabancı dil %4."
+    "Başvuru 23 Kasım–6 Aralık 2026 arası e-Devlet üzerinden Kariyer Kapısı'ndan yapılır.",
+    "2025-2026 KPSS'den ilgili puan türlerinde en az 80 puan gerekir.",
+    "Sıralama: KPSS %55, YDS %35, yüksek lisans %2, doktora %4, ikinci yabancı dil %4.",
+    "İlk 5 aday sözlü sınava çağrılır; başarı için en az 70 puan gerekir."
    ],
-   "ozet": "Doğu Karadeniz Kalkınma Ajansı Rize Yatırım Destek Ofisi için 1 uzman alacak. Başvurular 23 Kasım–6 Aralık 2026'da Kariyer Kapısı'ndan yapılır.",
+   "ozet": "Doğu Karadeniz Kalkınma Ajansı Rize Yatırım Destek Ofisi için 1 uzman alacak. Başvurular 23 Kasım–6 Aralık 2026'da Kariyer Kapısı üzerinden yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -5500,11 +5501,11 @@
   }
  },
  "sbb-2a7662aed2b08030660a2828": {
-  "zaman": "2026-11-08T03:11:20+03:00",
+  "zaman": "2026-11-08T17:11:16+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "e17d18282b614ff6",
+  "imza": "9a98652dcf29ffa5",
   "baslik": "JANDARMA GENEL KOMUTANLIĞI - 30 MEMUR TEMİN EDİLECEKTİR",
   "farklar": [],
   "yz": {
@@ -5529,7 +5530,7 @@
      "en_dusuk_puan": 60,
      "il": "Ankara",
      "kosullar": [
-      "Bilgisayar Mühendisliği, Bilgisayar Bilimi ve Mühendisliği veya Bilgisayar Bilimleri ve Mühendisliği lisans programından mezun olmak."
+      "Bilgisayar (Bilimi) Mühendisliği lisans programlarından birinden mezun olmak."
      ]
     },
     {
@@ -5551,7 +5552,7 @@
      "en_dusuk_puan": 60,
      "il": "Ankara",
      "kosullar": [
-      "İstatistik ve belgede sayılan eşdeğer istatistik lisans programlarından birinden mezun olmak."
+      "İstatistik veya belgede sayılan eşdeğer lisans programlarından birinden mezun olmak."
      ]
     },
     {
@@ -5560,9 +5561,10 @@
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 60,
-     "il": "Ankara",
+     "il": null,
      "kosullar": [
-      "Kimya, Kimyagerlik, Uygulamalı Kimya veya Kimya Mühendisliği lisans programlarından birinden mezun olmak."
+      "Kimya, Kimyager, Kimya Mühendisliği vb. belgede sayılan lisans programlarından birinden mezun olmak.",
+      "Kadro dağılımı: Ankara 1, Van 1."
      ]
     },
     {
@@ -5571,34 +5573,32 @@
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 60,
-     "il": "Karabük / Safranbolu",
+     "il": null,
      "kosullar": [
-      "Psikoloji veya Davranış Bilimleri - Psikoloji Disiplini lisans programından mezun olmak."
+      "Psikoloji veya Davranış Bilimleri-Psikoloji Disiplini lisans programından mezun olmak.",
+      "Kadro dağılımı: Karabük/Safranbolu, Kastamonu, Mardin, Muğla'da birer kişi."
      ]
     },
     {
-     "unvan": "Uzman (Radyo-TV-Sinema)",
+     "unvan": "Uzman (Radyo-TV/Sinema)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 60,
      "il": "Ankara",
      "kosullar": [
-      "Radyo, Televizyon ve Sinema ile ilgili belgede sayılan lisans programlarından birinden mezun olmak.",
-      "Tercihen en az 3 yıl kameraman veya kamera asistanı olarak çalışmış olmak.",
-      "Tercihen Adobe Premiere Pro ve After Effects'i etkin kullanabilmek."
+      "Radyo-Televizyon ve Sinema, Sinema-TV vb. belgede sayılan lisans programlarından birinden mezun olmak."
      ]
     },
     {
-     "unvan": "Uzman (Medya-İletişim)",
+     "unvan": "Uzman (Medya/İletişim ve Sosyal Bilimler)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 60,
      "il": "Ankara",
      "kosullar": [
-      "Medya, iletişim, gazetecilik, halkla ilişkiler, Türk dili ve edebiyatı, siyaset bilimi, uluslararası ilişkiler, sosyoloji veya felsefe lisans programlarından birinden mezun olmak.",
-      "Tercihen mezuniyet bölümüne yönelik yüksek lisansı tamamlamış olmak."
+      "Medya-iletişim, gazetecilik, halkla ilişkiler, Türk dili, siyaset bilimi, uluslararası ilişkiler, sosyoloji, felsefe vb. belgede sayılan programlardan mezun olmak."
      ]
     },
     {
@@ -5607,20 +5607,22 @@
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 60,
-     "il": "Ankara",
+     "il": null,
      "kosullar": [
-      "Hukuk lisans programından mezun olmak."
+      "Hukuk lisans programından mezun olmak.",
+      "Kadro dağılımı: Ankara 4; Aksaray, Artvin, Erzincan, Gümüşhane, Kırklareli, Muş, Ordu, Yozgat'ta birer kişi."
      ]
     },
     {
-     "unvan": "Uzman (Maliye-İktisat-İşletme)",
+     "unvan": "Uzman (Maliye/İktisat/İşletme)",
      "adet": 4,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 60,
-     "il": "Çankırı",
+     "il": null,
      "kosullar": [
-      "Maliye, muhasebe, iktisat veya işletme alanındaki belgede sayılan lisans programlarından birinden mezun olmak."
+      "Maliye, muhasebe, iktisat, işletme vb. belgede sayılan lisans programlarından birinden mezun olmak.",
+      "Kadro dağılımı: Çankırı, Isparta, Kırıkkale, Nevşehir'de birer kişi."
      ]
     }
    ],
@@ -5630,33 +5632,34 @@
    "baslangic_tarihi": "2026-11-02",
    "kpss_gerekli": true,
    "iller": [
-    "Aksaray",
     "Ankara",
+    "Kayseri",
+    "Van",
+    "Karabük",
+    "Kastamonu",
+    "Mardin",
+    "Muğla",
+    "Aksaray",
     "Artvin",
     "Erzincan",
     "Gümüşhane",
-    "Isparta",
-    "Karabük / Safranbolu",
-    "Kastamonu",
-    "Kayseri",
     "Kırklareli",
-    "Kırıkkale",
-    "Mardin",
-    "Muğla",
     "Muş",
-    "Nevşehir",
     "Ordu",
-    "Van",
     "Yozgat",
-    "Çankırı"
+    "Çankırı",
+    "Isparta",
+    "Kırıkkale",
+    "Nevşehir"
    ],
    "ortak_kosullar": [
-    "2025-2026 KPSS P3 puan türünden en az 60 puan almış olmak.",
-    "Başvuru son günü (16 Kasım 2026) itibarıyla 18 yaşını tamamlamış olmak.",
-    "Başvuru yalnızca personeltemin.jandarma.gov.tr üzerinden e-Devlet ile yapılır; posta veya şahsen başvuru alınmaz.",
-    "Adaylar yalnızca bir unvana başvurabilir; kontenjanın 15 katı aday mesleki yeterlilik/mülakat sınavına çağrılır."
+    "Başvuru 2–16 Kasım 2026 (saat 23:59) arası Jandarma Personel Temin Sistemi'nden e-Devlet ile yapılır.",
+    "2025-2026 KPSS P3 puan türünden en az 60 puan gerekir.",
+    "Başvuru yapan 16 Kasım 2026 itibarıyla en az 18 yaşını doldurmuş olmalıdır.",
+    "Adaylar yalnız bir unvana başvurabilir.",
+    "Kontenjanın 15 katı aday KPSS sırasına göre mesleki yeterlilik/mülakat sınavına çağrılır."
    ],
-   "ozet": "Jandarma Genel Komutanlığı 30 açıktan devlet memuru alacak: avukat, mühendis, istatistikçi, kimyager, psikolog ve uzman kadroları. Başvurular 2–16 Kasım 2026'da Personel Temin Sistemi'nden yapılır.",
+   "ozet": "Jandarma Genel Komutanlığı 30 açıktan devlet memuru alacak (avukat, mühendis, istatistikçi, kimyager, psikolog, uzman). Başvurular 2–16 Kasım 2026'da Personel Temin Sistemi'nden yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -6411,23 +6414,22 @@
   }
  },
  "sbb-5f3fa2414e8b9e9a456461d8": {
-  "zaman": "2026-11-08T05:11:22+03:00",
+  "zaman": "2026-11-08T17:11:16+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "7cdc2a321a330d3f",
+  "imza": "3ce67fe023f42c5f",
   "baslik": "GAZİANTEP ÜNİVERSİTESİ - 11 ALACAK",
   "farklar": [],
   "yz": {
    "kadrolar": [],
    "toplam": null,
    "son_basvuru_tarihi": "2026-11-17",
-   "son_basvuru_saati": null,
    "baslangic_tarihi": "2026-11-03",
    "kpss_gerekli": false,
    "iller": [],
    "ortak_kosullar": [],
-   "ozet": "",
+   "ozet": "Gaziantep Üniversitesi araştırma görevlisi ve öğretim görevlisi ilanıdır; akademik kadro olduğundan KPSS ile atanma kapsamı dışındadır.",
    "okunabilirlik": "kotu",
    "akademik": false,
    "iptal_veya_duzeltme": false,
