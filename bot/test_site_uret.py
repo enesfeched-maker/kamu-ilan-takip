@@ -1,5 +1,6 @@
 import unittest
 from datetime import datetime
+import site_uret
 from site_uret import TR, bot_ilanlari, detail_page
 
 
@@ -99,6 +100,24 @@ class KosulTemizTests(unittest.TestCase):
         self.assertEqual(site_uret._kosul_temiz('Ünvan Başvuru Cinsiyet Adet Aranan Nitelikler Kodu Ofis 1 BÜRO PERSONELİ BP01 - 4birinden mezun olmak.'), '')
         t = site_uret._kosul_temiz('6) Tüm unvanlar için en az 60 puan. a) Lisans için KPSSP3. b) Ön lisans için KPSSP93.')
         self.assertEqual(site_uret._kosul_html(t), 'Tüm unvanlar için en az 60 puan.<br>a) Lisans için KPSSP3.<br>b) Ön lisans için KPSSP93.')
+
+class BasBilgiTest(unittest.TestCase):
+    def test_uzun_baslikta_once_marka_atilir(self):
+        b = 'A' * 50 + ' Personel Alımı 2026 | KPSS Tercihi'
+        self.assertEqual(site_uret.kisa_baslik(b), 'A' * 50 + ' Personel')
+
+    def test_kisa_baslik_degismez(self):
+        self.assertEqual(site_uret.kisa_baslik('Kısa | KPSS Tercihi'), 'Kısa | KPSS Tercihi')
+
+    def test_aciklama_sozcukte_kesilir(self):
+        k = site_uret.kisa_aciklama('kelime ' * 40)
+        self.assertLessEqual(len(k), site_uret.ACIKLAMA_SINIRI)
+        self.assertTrue(k.endswith('kelime…'))
+
+    def test_gorselsiz_sayfaya_varsayilan_eklenir(self):
+        self.assertIn('og:image', site_uret.varsayilan_gorsel(''))
+        self.assertEqual(site_uret.varsayilan_gorsel('<meta property="og:image" content="x">'), '')
+
 
 if __name__ == '__main__':
     unittest.main()

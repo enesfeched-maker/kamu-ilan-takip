@@ -10,6 +10,15 @@ BASE = 'https://kpsstercihi.com/'
 
 
 class LlmsTest(unittest.TestCase):
+    def test_tam_metin_tum_ilanlar_ve_sss(self):
+        kayitlar = [{'key': str(n), 'kurum': f'K{n}', 'son_tarih': '2026-11-20'} for n in range(yz.LLMS_EN_COK + 5)]
+        kisa = yz.llms_metni(kayitlar, BASE, datetime(2026, 10, 12, 9))
+        tam = yz.llms_tam_metni(kayitlar, BASE, datetime(2026, 10, 12, 9))
+        self.assertIn('ilan daha', kisa)
+        self.assertNotIn('ilan daha', tam)
+        self.assertIn(f'ilan/{yz.LLMS_EN_COK + 4}/', tam)
+        self.assertIn('## Sık sorulan sorular', tam)
+
     def test_acik_ilanlar_tarih_sirasiyla_listelenir_bitmis_ve_kopya_atlanir(self):
         kayitlar = [
             {'key': 'b', 'kurum': 'B Bakanlığı', 'manset': '5 Memur', 'son_tarih': '2026-11-02', 'durum': 'ok', 'iller': ['Ankara'],

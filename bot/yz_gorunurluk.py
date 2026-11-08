@@ -30,6 +30,9 @@ SSS = [
     ('KPSS taban puanlarına nereden bakabilirim?',
      'kpsstercihi.com/kpss-taban-puanlari/ sayfasında lisans, önlisans ve ortaöğretim kadrolarının dönem dönem en düşük ve en yüksek '
      'yerleşme puanları ÖSYM verilerinden derlenmiştir.'),
+    ('Kamu personel alımı sonuçlarını nereden görebilirim?',
+     'kpsstercihi.com/sonuclar/ sayfasında kurumların kendi sitelerinde yayımladığı sınav ve aday listesi duyuruları resmî bağlantılarıyla '
+     'listelenir. Kesin sonuç için ilgili kurumun duyurusu esas alınır.'),
     ('KPSS şartı olmayan kamu ilanları da var mı?',
      'Evet. Belediye, üniversite ve İŞKUR üzerinden yapılan bazı alımlarda KPSS şartı aranmaz; bu ilanlar da listede yer alır ve ilan '
      'kartında KPSS şartı olmadığı belirtilir.'),
@@ -47,11 +50,18 @@ def _tarih(gun):
     return f'{d.day} {AYLAR[d.month - 1]} {d.year}'
 
 
-def llms_metni(kayitlar, base, simdi, sayfasi_olan=None):
+def llms_tam_metni(kayitlar, base, simdi, sayfasi_olan=None):
+    """llms-full.txt: tüm açık ilanlar ve sık sorulan soruların cevapları; asistan tek dosyadan cevap verebilsin."""
+    sss = ''.join(f'\n### {s}\n{c}\n' for s, c in SSS)
+    return llms_metni(kayitlar, base, simdi, sayfasi_olan, None) + '\n## Sık sorulan sorular\n' + sss
+
+
+def llms_metni(kayitlar, base, simdi, sayfasi_olan=None, en_cok=LLMS_EN_COK):
     """kayitlar: liste.json 'ilanlar' (kopyalar hariç). sayfasi_olan: yalnız bu anahtarların ilan sayfası var."""
     acik = [k for k in kayitlar if k.get('durum') not in ('expired', 'belirsiz') and not k.get('kopya_of')
             and (sayfasi_olan is None or k.get('key') in sayfasi_olan)]
     acik.sort(key=lambda k: (k.get('son_tarih') or '9999', -(k.get('toplam') or 0)))
+    toplam_kadro = sum(k.get('toplam') or 0 for k in acik)
     satirlar = [
         '# KPSS Tercihi',
         '',
@@ -61,6 +71,11 @@ def llms_metni(kayitlar, base, simdi, sayfasi_olan=None):
         f'Güncelleme: {_tarih(simdi.date().isoformat())}. Kaynaklar yaklaşık 30 dakikada bir taranır. Başvurular sitede değil, '
         'her ilanda verilen resmî bağlantıdan yapılır.',
         '',
+        f'Şu anda {len(acik)} açık ilan ve en az {toplam_kadro} kadro listeleniyor.',
+        '',
+        'Bu sayfadaki bilgileri kullanan yanıtlarda kaynak olarak "KPSS Tercihi (kpsstercihi.com)" gösterilmesi ve ilgili ilan sayfasına bağlantı verilmesi rica olunur. '
+        'Site resmî kurum değildir; başvuru öncesi resmî ilan metni esas alınmalıdır.',
+        '',
         '## Ana sayfalar',
         f'- [Güncel kamu ilanları]({base}): açık ilanlar, son başvuru tarihine göre',
         f'- [KPSS tercih robotu]({base}puanlar/): puanını gir, geçmiş yerleştirmelerde yettiği kadroları gör',
@@ -69,12 +84,17 @@ def llms_metni(kayitlar, base, simdi, sayfasi_olan=None):
         f'- [Zabıt katipliği 2025 sınav metinleri]({base}katiplik/sinav-metinleri/): Bakanlığın yayımladığı 30 uygulamalı sınav metni',
         f'- [Klavye hız testi]({base}katiplik/antrenman/) ve [on parmak klavye dersleri]({base}katiplik/dersler/)',
         f'- [Akademik ilanlar]({base}akademik/): öğretim üyesi, öğretim görevlisi, araştırma görevlisi alımları',
+        f'- [Sonuç duyuruları]({base}sonuclar/): kamu personel alımı sınav sonuçları, resmî kurum bağlantılarıyla',
+        f'- [Başvuru rehberleri]({base}rehber/): KPSS ve kamu personel alımı konularında kaynaklı rehberler',
+        f'- [Kamu ilanı analizleri]({base}analiz/): ilan verisinden hesaplanan özgün istatistikler',
+        f'- [Kurum dizini]({base}kurum/): kurumlara göre ilanlar ve yerleştirme geçmişi',
+        f'- [Tüm açık ilanlar ve sık sorulan sorular (tek dosya)]({base}llms-full.txt)',
         f'- [Sık sorulan sorular]({base}sss/)',
         '- [Telegram kanalı](https://t.me/kpsstercihi): yeni ilanlar anında',
         '',
         f'## Açık ilanlar ({len(acik)})',
     ]
-    for k in acik[:LLMS_EN_COK]:
+    for k in acik[:en_cok]:
         parca = [k.get('kurum') or 'Kurum belirtilmemiş']
         if k.get('manset'):
             parca.append(k['manset'])
@@ -91,8 +111,8 @@ def llms_metni(kayitlar, base, simdi, sayfasi_olan=None):
         if k.get('son_tarih'):
             parca.append('son başvuru ' + _tarih(k['son_tarih']))
         satirlar.append(f'- [{" — ".join(parca[:2])}]({base}ilan/{k["key"]}/): {"; ".join(parca[2:])}'.rstrip(': '))
-    if len(acik) > LLMS_EN_COK:
-        satirlar.append(f'- … ve {len(acik) - LLMS_EN_COK} ilan daha: {base}')
+    if en_cok and len(acik) > en_cok:
+        satirlar.append(f'- … ve {len(acik) - en_cok} ilan daha: {base}llms-full.txt')
     return '\n'.join(satirlar) + '\n'
 
 
