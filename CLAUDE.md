@@ -13,6 +13,11 @@ fayda + reklam/sponsor geliri. Sohbet dili Türkçe; kod adları Türkçe.
 - Push öncesi: `python -m unittest discover -s bot -p 'test_*.py'` hepsi geçmeli.
 - Dosyaların çoğu CRLF satır sonlu; düzenlerken satır sonlarını koru, ilgisiz satır değiştirme.
 
+## Bağlam ve model düzeni (geliştirme oturumları; yz_claude ilan okuma rutini hariç)
+- Oturum `claude --model sonnet --advisor opus` ile açılır: ana oturum Sonnet, danışman Opus.
+- Tüm kod tabanı aramaları ve testler Haiku alt ajanlarına bırakılır: `search` (tarama), `grep` (çağrı konumları), `audit` (denetim + test, kendi worktree'inde). Ana bağlam sade kalır.
+- Hızlı, kesin küçük seçimler (araç seçme, yol seçme, yeniden deneme) danışmana sorulmadan verilir.
+
 ## Mimari
 - `bot/ilan_bot.py`: ana akış. Kariyer Kapısı RSS + ayrıntı API, İŞKUR, SBB → `docs/ilanlar.json`.
   `--prepare` (tarama) ve `--send-only` (Telegram) adımları `.github/workflows/ilan.yml` içinde.
