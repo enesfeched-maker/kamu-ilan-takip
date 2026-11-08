@@ -8088,11 +8088,11 @@
   }
  },
  "sbb-d174235c748d2741298002af": {
-  "zaman": "2026-11-08T03:11:20+03:00",
+  "zaman": "2026-11-08T15:11:01+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "517e2c27e1d437ea",
+  "imza": "c9b644d6b93904c5",
   "baslik": "SOSYAL GÜVENLİK KURUMU BAŞKANLIĞI - 100 SOSYAL GÜVENLİK DENETMEN YARDIMCISI ALACAK",
   "farklar": [
    [
@@ -8106,7 +8106,7 @@
      "P48"
     ],
     [
-     "P39"
+     "P39,P40,P41,P42,P43,P48"
     ],
     false
    ]
@@ -8117,12 +8117,12 @@
      "unvan": "Sosyal Güvenlik Denetmen Yardımcısı",
      "adet": 100,
      "ogrenim": "lisans",
-     "puan_turu": "P39",
+     "puan_turu": "P39, P40, P41, P42, P43, P48",
      "en_dusuk_puan": 70,
      "il": null,
      "kosullar": [
       "Hukuk, siyasal bilgiler, iktisadi ve idari bilimler, iktisat, işletme fakülte/yüksekokullarından ya da bunların sosyal hizmetler bölümlerinden mezun olmak.",
-      "KPSS P39, P40, P41, P42, P43 veya P48 puan türünden en az 70 puan almış olmak."
+      "ÖSYM tarafından 2025 veya 2026'da yapılan KPSS'de belirlenen puan türlerinde en az 70 puan almış olmak."
      ]
     }
    ],
@@ -8133,21 +8133,21 @@
    "kpss_gerekli": true,
    "iller": [],
    "ortak_kosullar": [
-    "Giriş sınavının yapıldığı yılın 1 Ocak'ı itibarıyla 35 yaşını doldurmamış olmak.",
-    "2025 veya 2026 yılı KPSS'de Tablo-1'deki puan türünden en az 70 puan almış olmak.",
-    "Başvuru yalnızca Kariyer Kapısı (E-Devlet) üzerinden yapılır; şahsen, kargo ya da posta ile başvuru kabul edilmez.",
-    "Sözlü sınav 28.12.2026–11.01.2027 arasında Ankara'da yapılır; kadro sayısının 4 katı aday çağrılır."
+    "Giriş sınavının yapıldığı yılın Ocak ayının birinci günü itibarıyla 35 yaşını doldurmamış olmak.",
+    "Başvuru yalnızca E-Devlet üzerinden Kariyer Kapısı İşe Alım platformundan yapılır; şahsen, kargo veya posta kabul edilmez.",
+    "Sözlü sınav 28.12.2026–11.01.2027 arasında Ankara'da yapılır; kadro sayısının 4 katı aday KPSS sırasına göre çağrılır.",
+    "Sözlü sınavdan başarılı sayılmak için en az 70 puan almak gerekir."
    ],
-   "ozet": "Sosyal Güvenlik Kurumu 100 sosyal güvenlik denetmen yardımcısı alacak. Başvurular 9–22 Kasım 2026'da Kariyer Kapısı'ndan yapılır.",
+   "ozet": "SGK taşra teşkilatı için 100 Sosyal Güvenlik Denetmen Yardımcısı alacak. Başvurular 9–22 Kasım 2026'da E-Devlet üzerinden Kariyer Kapısı'ndan yapılır.",
    "okunabilirlik": "iyi",
-   "puan_turleri": [
-    "P39"
-   ],
    "akademik": false,
    "iptal_veya_duzeltme": false,
    "duyuru_tipi": "yeni_ilan",
    "ogrenim": [
     "lisans"
+   ],
+   "puan_turleri": [
+    "P39, P40, P41, P42, P43, P48"
    ]
   }
  },
