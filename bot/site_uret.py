@@ -1266,6 +1266,11 @@ def main():
         if u == BASE + 'katiplik/':
             degisim[u] = datetime.now(TR).date().isoformat()
     try:
+        import arama_indeksi   # ilan belgelerinin kelime dizini: meslek yalnız PDF'te geçen ilanlar da aranabilsin
+        arama_indeksi.yaz(data.get('ilanlar', []), docs)
+    except Exception as hata:
+        print(f'Uyarı: arama dizini üretilemedi: {hata}')
+    try:
         import yz_gorunurluk   # yapay zekâ asistanları için düz metin özet (llms.txt) ve SSS sayfası
         sss_url, sss_html = yz_gorunurluk.sss_sayfasi(BASE)
         (docs / 'sss').mkdir(exist_ok=True)
