@@ -6986,11 +6986,11 @@
   }
  },
  "sbb-6975c78c3d45204d44f373ea": {
-  "zaman": "2026-11-09T01:10:59+03:00",
+  "zaman": "2026-11-09T13:12:29+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "542a4c4b1a19cd06",
+  "imza": "974ff9b2ab147e62",
   "baslik": "KAMU DENETÇİLİĞİ KURUMU - 10 KAMU DENETÇİLİĞİ UZMAN YARDIMCISI ALACAK",
   "farklar": [
    [
@@ -7001,7 +7001,7 @@
      "P4"
     ],
     [
-     "P33,P38",
+     "P33VEYAP38",
      "P4"
     ],
     false
@@ -7010,27 +7010,25 @@
   "yz": {
    "kadrolar": [
     {
-     "unvan": "Kamu Denetçiliği Uzman Yardımcısı (Hukuk)",
+     "unvan": "Kamu Denetçiliği Uzman Yardımcısı (Hukuk — I. Grup)",
      "adet": 7,
      "ogrenim": "lisans",
      "puan_turu": "P4",
      "en_dusuk_puan": 80,
      "il": null,
      "kosullar": [
-      "Hukuk fakültelerinden veya denkliği kabul edilen yurt içi/yurt dışı kurumlardan mezun olmak.",
-      "KPSS P4 puan türünden en az 80 puan almış olmak."
+      "En az dört yıllık hukuk fakültesinden ya da denkliği kabul edilmiş yurt içi/dışı okuldan mezun olmak."
      ]
     },
     {
-     "unvan": "Kamu Denetçiliği Uzman Yardımcısı (Siyasal/İİBF/İktisat/İşletme)",
+     "unvan": "Kamu Denetçiliği Uzman Yardımcısı (SBF/İİBF/İktisat/İşletme — II. Grup)",
      "adet": 3,
      "ogrenim": "lisans",
-     "puan_turu": "P33, P38",
+     "puan_turu": "P33 veya P38",
      "en_dusuk_puan": 80,
      "il": null,
      "kosullar": [
-      "Siyasal bilgiler, iktisadi ve idari bilimler, iktisat veya işletme fakültelerinden mezun olmak.",
-      "KPSS P33 veya P38 puan türünden en az 80 puan almış olmak."
+      "Siyasal bilgiler, iktisadi ve idari bilimler, iktisat veya işletme fakültesinden (veya denkliği kabul edilmiş okuldan) mezun olmak."
      ]
     }
    ],
@@ -7041,12 +7039,12 @@
    "kpss_gerekli": true,
    "iller": [],
    "ortak_kosullar": [
-    "2025 veya 2026 KPSS'ye katılmış olmak.",
-    "01.01.1991 ve sonrası doğumlu olmak (35 yaşını doldurmamış).",
-    "Başvuru e-Devlet ile Kariyer Kapısı üzerinden yapılır; adaylar yalnız bir gruba başvurabilir.",
-    "Kadro sayısının 2 katı aday sözlü sınava çağrılır; sözlü sınavda en az 70 puan gerekir."
+    "2025 veya 2026 KPSS'den ilgili puan türünden en az 80 puan almış olmak.",
+    "Sınav yılının Ocak ayının ilk günü itibarıyla 35 yaşını doldurmamış olmak (01.01.1991 ve sonrası doğumlular).",
+    "Adaylar yalnızca bir gruba başvurabilir.",
+    "Başvuru e-Devlet ile Kariyer Kapısı üzerinden yapılır; KPSS sıralamasına göre kadronun 2 katı aday sözlü sınava çağrılır."
    ],
-   "ozet": "TBMM Kamu Denetçiliği Kurumu 10 uzman yardımcısı alacak (7 hukuk, 3 siyasal/iktisat/işletme). Başvurular 9–22 Kasım 2026 arasında Kariyer Kapısı'ndan yapılır.",
+   "ozet": "TBMM Kamu Denetçiliği Kurumu 10 Kamu Denetçiliği Uzman Yardımcısı alacak (7 hukuk, 3 SBF/İİBF/iktisat/işletme). Başvurular 9–22 Kasım 2026'da Kariyer Kapısı'ndan yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -7055,7 +7053,7 @@
     "lisans"
    ],
    "puan_turleri": [
-    "P33, P38",
+    "P33 veya P38",
     "P4"
    ]
   }
@@ -7178,42 +7176,41 @@
   }
  },
  "sbb-7f4d800fab4d3d251159b468": {
-  "zaman": "2026-11-09T01:10:59+03:00",
+  "zaman": "2026-11-09T13:12:29+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "33e6b8153d25473e",
+  "imza": "beaa7c3f001d7e55",
   "baslik": "ZAFER KALKINMA AJANSI - 2 SÖZLEŞMELİ PERSONEL ALACAK",
   "farklar": [],
   "yz": {
    "kadrolar": [
     {
-     "unvan": "Uzman Personel (Mühendislik / Şehir ve Bölge Planlama)",
+     "unvan": "Uzman Personel (Mühendislik, Şehir ve Bölge Planlama)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P1, P2, P3",
      "en_dusuk_puan": 80,
-     "il": null,
+     "il": "Kütahya",
      "kosullar": [
-      "Mühendislik bölümlerinden veya Şehir ve Bölge Planlama'dan lisans düzeyinde mezun olmak.",
-      "KPSS P1, P2 veya P3'ten en az 80 puan almış olmak."
+      "Mühendislik bölümlerinden veya Şehir ve Bölge Planlama bölümünden lisans düzeyinde mezun olmak."
      ]
     },
     {
-     "unvan": "Uzman Personel (İstatistik/İktisat/Maliye/İşletme/Kamu Yön./UİP/ÇEEİ)",
+     "unvan": "Uzman Personel (İstatistik, Ekonomi, İşletme, Kamu Yönetimi vb.)",
      "adet": 1,
      "ogrenim": "lisans",
-     "puan_turu": "P12-P40",
+     "puan_turu": "P12-P40 (bölüme göre)",
      "en_dusuk_puan": 80,
-     "il": null,
+     "il": "Kütahya",
      "kosullar": [
-      "İstatistik, Ekonometri, İktisat, Maliye, İşletme, Kamu Yönetimi, Uluslararası İlişkiler veya Çalışma Ekonomisi mezunu olmak.",
-      "Bölümüne göre ilgili KPSS puan türünden (P12-P13, P14-P15, P19-P20, P24-P25, P29-P30, P34-P35, P39-P40) en az 80 almak."
+      "İstatistik, ekonometri, iktisat, maliye, işletme, kamu yönetimi, uluslararası ilişkiler veya çalışma ekonomisi ve endüstri ilişkileri bölümünden mezun olmak."
      ]
     }
    ],
    "toplam": 2,
    "son_basvuru_tarihi": "2026-12-14",
+   "son_basvuru_saati": null,
    "baslangic_tarihi": "2026-11-25",
    "kpss_gerekli": true,
    "iller": [
@@ -7223,12 +7220,12 @@
     "Uşak"
    ],
    "ortak_kosullar": [
-    "YDS/e-YDS İngilizce'den son 5 yılda en az 70 puan (veya denk belge) almak.",
-    "Son başvuru tarihinde geçerli KPSS sonucu olmak.",
-    "Başvuru yalnız Kariyer Kapısı üzerinden; yalnız bir kontenjana başvurulabilir.",
-    "Sözlü sınav (mülakat); başarı için en az 70 puan. 4857 sayılı Kanun'a göre belirsiz süreli iş sözleşmesi."
+    "Son 5 yıl içinde YDS/e-YDS İngilizce'den en az 70 puan almış olmak.",
+    "Başvuru yalnız Kariyer Kapısı üzerinden yapılır; mülakat öncesi aday sayısı kadronun 5 katıdır.",
+    "Görev yeri Afyonkarahisar, Kütahya, Manisa, Uşak illerinden biridir; Ajans merkezi Kütahya.",
+    "Seyahat engeli olmamak."
    ],
-   "ozet": "Zafer Kalkınma Ajansı 2 uzman personel alacak (1 mühendislik/şehir planlama, 1 iktisat-işletme vb.). Başvurular 25 Kasım–14 Aralık 2026 arasında Kariyer Kapısı'ndan.",
+   "ozet": "Zafer Kalkınma Ajansı 2 uzman personel alacak (1 mühendislik/şehir planlama, 1 iktisadi-idari bilimler grubu). Başvurular 25 Kasım–14 Aralık 2026'da Kariyer Kapısı'ndan yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -7238,16 +7235,16 @@
    ],
    "puan_turleri": [
     "P1, P2, P3",
-    "P12-P40"
+    "P12-P40 (bölüme göre)"
    ]
   }
  },
  "sbb-8168d2862502fa00b90159b9": {
-  "zaman": "2026-11-09T01:10:59+03:00",
+  "zaman": "2026-11-09T13:12:29+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf-gorsel",
-  "imza": "fe4b9b4bf4ad4a44",
+  "imza": "4dc6b45569ae46db",
   "baslik": "MİLLİ SAVUNMA BAKANLIĞI - TÜRK SİLAHLI KUVVETLERİNE FAKÜLTE VEYA YÜKSEKOKUL MEZUNLARINDAN 2026 YILI MUVAZZAF ASTSUBAY ADAYI TEMİNİ",
   "farklar": [],
   "yz": {
@@ -8204,11 +8201,11 @@
   }
  },
  "sbb-c28e3903f61859d41ea03f2e": {
-  "zaman": "2026-11-09T01:10:59+03:00",
+  "zaman": "2026-11-09T13:12:29+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf-gorsel",
-  "imza": "c6f45a12d7f1dc6e",
+  "imza": "946917249adfffc3",
   "baslik": "MİLLİ SAVUNMA BAKANLIĞI - TÜRK SİLAHLI KUVVETLERİNE EN AZ DÖRT YIL SÜRELİ FAKÜLTE VEYA YÜKSEKOKUL MEZUNLARINDAN 2026 YILI BANDO SINIFI MUVAZZAF ASTSUBAY ADAYI TEMİNİ",
   "farklar": [],
   "yz": {
@@ -8318,11 +8315,11 @@
   }
  },
  "sbb-ce3aeb16575b73442a9f8944": {
-  "zaman": "2026-11-08T23:15:01+03:00",
+  "zaman": "2026-11-09T13:12:29+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "43ad6a13bcc772c1",
+  "imza": "2b71e51587ed1722",
   "baslik": "ŞİLE BELEDİYE BAŞKANLIĞI - 6 MEMUR ALACAK",
   "farklar": [],
   "yz": {
@@ -8336,8 +8333,8 @@
      "il": "İstanbul",
      "kosullar": [
       "Herhangi bir lisans programından mezun olmak.",
-      "Sınavın yapıldığı tarihte 30 yaşını doldurmamış olmak.",
-      "Boy: erkeklerde en az 1,67 m, kadınlarda en az 1,60 m; boy-kilo farkı en çok 10 kg."
+      "Boy: erkeklerde en az 1,67 m, kadınlarda en az 1,60 m; boy-kilo farkı en çok 10 kg.",
+      "Sınavın yapıldığı tarihte 30 yaşını doldurmamış olmak."
      ]
     },
     {
@@ -8348,24 +8345,25 @@
      "en_dusuk_puan": 65,
      "il": "İstanbul",
      "kosullar": [
-      "Harita, harita kadastro, inşaat, makine, elektrik vb. önlisans programlarının birinden mezun olmak."
+      "Harita, harita kadastro, harita ve maden ölçme, inşaat, inşaat teknolojisi, makine veya elektrik önlisans programlarından birinden mezun olmak."
      ]
     }
    ],
    "toplam": 6,
    "son_basvuru_tarihi": "2026-11-13",
-   "son_basvuru_saati": "17:00",
+   "son_basvuru_saati": null,
    "baslangic_tarihi": "2026-11-09",
    "kpss_gerekli": true,
    "iller": [
     "İstanbul"
    ],
    "ortak_kosullar": [
-    "2026 KPSS (B) grubu sınavına girmiş olmak.",
-    "Tekniker: e-posta (insankaynaklari@sile.bel.tr), şahsen veya posta; zabıta: yalnız şahsen (boy-kilo ölçümü).",
-    "Tekniker sözlü sınavı 27/11/2026 saat 10.00, zabıta sözlü ve uygulamalı sınavı 27/11/2026 saat 14.00."
+    "2026 KPSS (B) grubundan ilgili puan türünden en az 65 puan almış olmak.",
+    "Tekniker: e-posta (insankaynaklari@sile.bel.tr), şahsen veya iadeli taahhütlü posta ile başvuru.",
+    "Zabıta: yalnız şahsen başvuru (boy-kilo ölçümü); Şile Belediyesi Yazı İşleri Müdürlüğü, Balibey Mah. Atatürk Cad. No:69/A.",
+    "Sözlü sınav 27 Kasım 2026; zabıtada ayrıca uygulamalı sınav."
    ],
-   "ozet": "Şile Belediyesi (İstanbul) 2 zabıta memuru ve 4 tekniker alacak. Başvurular 9–13 Kasım 2026 arasında yapılır.",
+   "ozet": "Şile Belediyesi 2 zabıta memuru ve 4 tekniker alacak. Başvurular 9–13 Kasım 2026'da; zabıta için şahsen, tekniker için e-posta/şahsen/posta ile yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
