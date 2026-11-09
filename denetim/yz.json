@@ -3354,6 +3354,79 @@
    "ortak_kosullar": []
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=bf7a4a08-46c9-4643-a8c4-6ccf9c8c6d1b": {
+  "zaman": "2026-11-09T09:17:04+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "ae079fc0ae35924b",
+  "baslik": "KAMU DENETÇİLİĞİ KURUMU (OMBUDSMANLIK) - KAMU DENETÇİLİĞİ UZMAN YARDIMCILIĞI GİRİŞ SINAVI İLANI",
+  "farklar": [
+   [
+    "puan_turleri",
+    [
+     "P33",
+     "P38",
+     "P4"
+    ],
+    [
+     "P33,P38",
+     "P4"
+    ],
+    false
+   ]
+  ],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Kamu Denetçiliği Uzman Yardımcısı — Hukuk (I. Grup)",
+     "adet": 7,
+     "ogrenim": "lisans",
+     "puan_turu": "P4",
+     "en_dusuk_puan": 70,
+     "il": "Ankara",
+     "kosullar": [
+      "En az dört yıllık lisans eğitimi veren hukuk fakültelerinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Kamu Denetçiliği Uzman Yardımcısı — Siyasal Bilgiler, İİBF, İktisat ve İşletme (II. Grup)",
+     "adet": 3,
+     "ogrenim": "lisans",
+     "puan_turu": "P33, P38",
+     "en_dusuk_puan": 70,
+     "il": "Ankara",
+     "kosullar": [
+      "Siyasal bilgiler, iktisadi ve idari bilimler, iktisat veya işletme fakültelerinden mezun olmak."
+     ]
+    }
+   ],
+   "toplam": 10,
+   "son_basvuru_tarihi": "2026-11-22",
+   "son_basvuru_saati": "23:59",
+   "baslangic_tarihi": "2026-11-09",
+   "kpss_gerekli": true,
+   "iller": [
+    "Ankara"
+   ],
+   "ortak_kosullar": [
+    "2025 veya 2026 yıllarında yapılan KPSS'ye katılmış olmak ve ilgili puan türünden en az 70 puan almak.",
+    "Giriş sınavı yılının Ocak ayının ilk günü itibarıyla 35 yaşını doldurmamış olmak (01.01.1991 ve sonrası doğumlular)."
+   ],
+   "ozet": "Kamu Denetçiliği Kurumu, giriş sınavıyla 7'si hukuk, 3'ü siyasal bilgiler/İİBF/iktisat/işletme mezunu olmak üzere 10 Kamu Denetçiliği Uzman Yardımcısı alacak. Başvuru süresi 9–22 Kasım 2026.",
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P33, P38",
+    "P4"
+   ]
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=c1ab5cba-d22b-40ab-b89b-1d27431a422c": {
   "zaman": "2026-10-30T18:05:06+03:00",
   "surum": 4,
