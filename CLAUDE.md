@@ -8,6 +8,8 @@ fayda + reklam/sponsor geliri. Sohbet dili Türkçe; kod adları Türkçe.
 - Orkestra şefi: Opus (planlar, karar verir, entegre eder, kendi diff'ini kontrol eder).
 - `.claude/agents/isci.md` (Sonnet, düşük efor): dar kapsamlı kodlama/ayrıştırma işleri.
 - `.claude/agents/denetci.md` (Opus, orta efor): işçi çıktısını inceler, düzeltme listesi verir.
+- Kod tabanı aramaları ve testler ana bağlamda değil, Haiku alt ajanlarında yapılır: `search` (tarama), `grep` (çağrı konumları), `audit` (ayrı worktree'de test ve denetim). Araç/yol seçimi ve yeniden deneme gibi küçük kararlar da Haiku'ya bırakılır.
+- Reklam, mağaza, veri doğruluğu ve yayın akışına dokunan riskli değişiklikleri Haiku denetimi yerine `denetci` (Opus) inceler.
 - Ajanları yalnız büyük/tekrarlı işlerde kullan; küçük işleri doğrudan yap (token tasarrufu).
 - Her özellik ayrı dal + PR; kullanıcı main'e kendisi birleştirir.
 - Push öncesi: `python -m unittest discover -s bot -p 'test_*.py'` hepsi geçmeli.

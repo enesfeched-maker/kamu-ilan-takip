@@ -7,6 +7,7 @@ on:
       - 'docs/puanlar/**'
       - 'docs/index.html'
       - 'docs/portal.js'
+      - 'docs/uygulama.js'
       - 'docs/portal.css'
       - 'docs/bugun.css'
       - 'docs/sayfa.css'

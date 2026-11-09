@@ -1,0 +1,15 @@
+{
+  "appId": "com.kpsstercihi.app",
+  "appName": "KPSS Tercihi",
+  "webDir": "www",
+  "appendUserAgent": "KPSSTercihiApp",
+  "backgroundColor": "#F6F6F1",
+  "server": {
+    "url": "https://kpsstercihi.com",
+    "errorPath": "offline.html"
+  },
+  "plugins": {
+    "SplashScreen": { "launchShowDuration": 800, "backgroundColor": "#F6F6F1", "showSpinner": false },
+    "LocalNotifications": { "iconColor": "#1F3A5F" }
+  }
+}
