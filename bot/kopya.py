@@ -183,6 +183,9 @@ def _kurum_cekirdek(item, kan):
     if kan.endswith(' belediye'):
         return frozenset(kan.split())
     ad = kurum_sade(ks.kurum_anahtari(re.sub(r'\([^)]*\)', ' ', item.get('kurum') or '')))
+    # İŞKUR ilan türünü kurum adına ekler ('Türkiye Şeker Fabrikaları A.Ş. Sözleşmeli Mühendis ve Tekniker'): şirket türü
+    # ekinden (A.Ş.) sonrası çekirdekten atılır.
+    ad = re.sub(r'\bas\b\s+\S.*$', 'as', ad)
     # İŞKUR bazen başlığı kurum alanına taşır ('Jandarma Genel Komutanlığı 2026 Yılı Devlet Memuru'): yıl ve alım sözcükleri atılır
     # (2 Kasım 2026: Jandarma ilanı SBB ve İŞKUR kaydıyla iki kez paylaşıldı).
     ad = ' '.join(re.sub(r'\b20\d\d\b|\byili\b|\bdevlet (?=memuru)|\bmemuru\b|\balim\b|\bilani\b', ' ', ad).split()) or ad
