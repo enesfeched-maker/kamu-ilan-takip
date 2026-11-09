@@ -40,9 +40,11 @@ class PuanSayfalariTest(unittest.TestCase):
         self.assertEqual(ps._ascii_slug('ÇOCUK GELİŞİMİ'), 'cocuk-gelisimi')
 
     def test_url_listesi_ve_canonical(self):
-        self.assertEqual(sorted(self.urls), sorted([BASE + 'kpss-taban-puanlari/', BASE + 'kpss-taban-puanlari/lisans/',
-                                                    BASE + 'kpss-taban-puanlari/lisans/hemsire/']))
+        self.assertEqual(sorted(self.urls), sorted([BASE + 'kpss-taban-puanlari/', BASE + 'kpss-taban-puanlari/lisans/']))   # hemşire: son iki dönemde 4 kayıt, haritada yok
         h = (self.k / 'lisans' / 'hemsire' / 'index.html').read_text(encoding='utf-8')
+        self.assertIn('noindex,follow', h)
+        self.assertTrue(ps.kadro_dizinlenir({'2025-1': [{}] * 2, '2025-2': [{}] * 2, '2026-1': [{}] * 3}))
+        self.assertFalse(ps.kadro_dizinlenir({'2022-1': [{}] * 9, '2025-2': [{}] * 2, '2026-1': [{}] * 2}))
         self.assertIn('<link rel="canonical" href="' + BASE + 'kpss-taban-puanlari/lisans/hemsire/">', h)
         self.assertIn('<html lang="tr">', h)
         self.assertIn('BreadcrumbList', h)
