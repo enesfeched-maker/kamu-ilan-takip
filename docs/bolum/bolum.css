@@ -1,0 +1,40 @@
+.bolum-main{padding-top:28px;padding-bottom:56px}
+.bolum-giris h1{margin:0 0 8px;font-size:28px;line-height:1.2;letter-spacing:-.02em}
+.bolum-giris p{margin:0 0 20px;color:var(--ink-2);max-width:68ch}
+.bolum-form{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow);margin-bottom:20px}
+.bolum-form .duzey-tabs{flex:0 0 100%}
+.bf-alan{display:flex;flex-direction:column;gap:6px;flex:1 1 280px;font-size:13px;font-weight:600;color:var(--ink-2)}
+.bf-alan input{height:42px;border:1px solid var(--line-2);border-radius:10px;padding:0 12px;font:inherit;font-size:15px;background:var(--surface);color:var(--ink)}
+.bf-alan input:focus-visible{outline:2px solid var(--focus);outline-offset:1px}
+.bf-hata{flex:0 0 100%;margin:0;color:var(--alert);font-size:14px}
+.b-ozet{margin:0 0 16px;color:var(--ink-2);font-size:14px}
+.b-ozet b{color:var(--ink)}
+.b-kontrol{margin:0 0 20px;padding:10px 14px;border-radius:10px;font-size:13px;background:var(--lime-soft);color:var(--lime-ink)}
+.b-kontrol.hata{background:var(--alert-soft);color:var(--alert)}
+.b-bolge{margin:28px 0 8px}
+.b-bolge>h2{margin:0 0 4px;font-size:21px;letter-spacing:-.02em}
+.b-bolge>p{margin:0 0 12px;color:var(--muted);font-size:14px}
+.b-grup{margin:0 0 14px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+.b-grup>summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px}
+.b-grup>summary::-webkit-details-marker{display:none}
+.b-grup>summary h3{margin:0;font-size:16px;font-weight:650}
+.b-grup>summary .sayi{font-size:13px;font-weight:650;background:var(--surface-3);border-radius:999px;padding:2px 10px}
+.b-grup .b-not{margin:0;padding:0 16px 10px;color:var(--muted);font-size:13px}
+.b-liste{display:flex;flex-direction:column}
+.b-satir{padding:12px 16px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:4px}
+.b-satir .b-kurum{font-size:12px;font-weight:650;letter-spacing:.03em;text-transform:uppercase;color:var(--muted)}
+.b-satir h4{margin:0;font-size:15px;font-weight:650;line-height:1.35}
+.b-satir h4 a{color:var(--ink);text-decoration:none}
+.b-satir h4 a:hover{text-decoration:underline}
+.b-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;font-size:13px;color:var(--ink-2)}
+.b-etiket{font-size:12px;font-weight:600;border-radius:6px;padding:2px 8px;background:var(--surface-3);color:var(--ink-2)}
+.b-etiket.uyari{background:var(--alert-soft);color:var(--alert)}
+.b-neden{margin:0;font-size:13px;color:var(--ink-2)}
+.b-kanit{margin:2px 0 0;font-size:13px;border-left:3px solid var(--lime-2);padding:4px 10px;color:var(--ink-2);background:var(--surface-2);border-radius:0 8px 8px 0}
+.b-kanit mark{background:var(--lime);color:#111310;border-radius:3px;padding:0 2px}
+.b-linkler{display:flex;gap:14px;font-size:13px}
+.b-linkler a{color:var(--ink);font-weight:600}
+.b-kisa .b-satir{padding:9px 16px;flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
+.b-kisa .b-satir h4{font-size:14px;font-weight:600}
+.b-bos{padding:14px 16px;color:var(--muted);font-size:14px;margin:0}
+@media (max-width:560px){.bolum-giris h1{font-size:23px}.b-grup>summary{padding:12px}.b-satir{padding:11px 12px}}

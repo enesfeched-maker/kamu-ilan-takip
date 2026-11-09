@@ -56,6 +56,7 @@ def ust_html(kok, aktif=''):
     # Akademik menüden çıktı (Kasım 2026): aramadan gelenler için /akademik/ sayfası ve alt bilgi bağlantısı var.
     # Katiplik yeni bölüm olarak vurgulu (tb-yeni) ve "Yeni" rozetli gösterilir.
     menu = [('İlanlar', f'{kok}#ilanlar', 'ilanlar'),
+            ('Bölümüne göre', f'{kok}bolum/', 'bolum'),
             ('Taban Puanları', f'{kok}puanlar/', 'puanlar'),
             ('Katiplik', f'{kok}katiplik/', 'katiplik'),
             ('Kayıtlı', f'{kok}#kayitli', '')]
