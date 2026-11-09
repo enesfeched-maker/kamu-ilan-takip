@@ -5501,11 +5501,11 @@
   }
  },
  "sbb-2a7662aed2b08030660a2828": {
-  "zaman": "2026-11-08T17:11:16+03:00",
+  "zaman": "2026-11-09T03:11:27+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "9a98652dcf29ffa5",
+  "imza": "1df56b798d25058c",
   "baslik": "JANDARMA GENEL KOMUTANLIĞI - 30 MEMUR TEMİN EDİLECEKTİR",
   "farklar": [],
   "yz": {
@@ -5530,7 +5530,7 @@
      "en_dusuk_puan": 60,
      "il": "Ankara",
      "kosullar": [
-      "Bilgisayar (Bilimi) Mühendisliği lisans programlarından birinden mezun olmak."
+      "Bilgisayar Mühendisliği, Bilgisayar Bilimi ve Mühendisliği veya Bilgisayar Bilimleri ve Mühendisliği lisans programından mezun olmak."
      ]
     },
     {
@@ -5552,7 +5552,7 @@
      "en_dusuk_puan": 60,
      "il": "Ankara",
      "kosullar": [
-      "İstatistik veya belgede sayılan eşdeğer lisans programlarından birinden mezun olmak."
+      "İstatistik veya belgede sayılan istatistik bileşik bölümlerinden (ör. İstatistik ve Yöneylem Araştırması, Ekonometri ve İstatistik) birinden mezun olmak."
      ]
     },
     {
@@ -5561,10 +5561,9 @@
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 60,
-     "il": null,
+     "il": "Ankara",
      "kosullar": [
-      "Kimya, Kimyager, Kimya Mühendisliği vb. belgede sayılan lisans programlarından birinden mezun olmak.",
-      "Kadro dağılımı: Ankara 1, Van 1."
+      "Kimya, Kimyager, Uygulamalı Kimya veya Kimya Mühendisliği vb. belgede sayılan lisans programlarından mezun olmak."
      ]
     },
     {
@@ -5573,32 +5572,35 @@
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 60,
-     "il": null,
+     "il": "Karabük / Safranbolu",
      "kosullar": [
-      "Psikoloji veya Davranış Bilimleri-Psikoloji Disiplini lisans programından mezun olmak.",
-      "Kadro dağılımı: Karabük/Safranbolu, Kastamonu, Mardin, Muğla'da birer kişi."
+      "Psikoloji veya Davranış Bilimleri - Psikoloji Disiplini lisans programından mezun olmak."
      ]
     },
     {
-     "unvan": "Uzman (Radyo-TV/Sinema)",
+     "unvan": "Uzman (Görsel-İşitsel Medya)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 60,
      "il": "Ankara",
      "kosullar": [
-      "Radyo-Televizyon ve Sinema, Sinema-TV vb. belgede sayılan lisans programlarından birinden mezun olmak."
+      "Radyo-Televizyon ve Sinema, Sinema-Televizyon vb. belgede sayılan lisans programlarından mezun olmak.",
+      "Tercihen en az 3 yıl kameraman veya kamera asistanı olarak çalışmış olmak.",
+      "Tercihen video kurgu ve post-prodüksiyona hakim, Adobe Premiere Pro ve After Effects kullanabilmek."
      ]
     },
     {
-     "unvan": "Uzman (Medya/İletişim ve Sosyal Bilimler)",
+     "unvan": "Uzman (İletişim/Medya)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 60,
      "il": "Ankara",
      "kosullar": [
-      "Medya-iletişim, gazetecilik, halkla ilişkiler, Türk dili, siyaset bilimi, uluslararası ilişkiler, sosyoloji, felsefe vb. belgede sayılan programlardan mezun olmak."
+      "Medya ve İletişim, Gazetecilik, Halkla İlişkiler, Türk Dili ve Edebiyatı, Uluslararası İlişkiler, Sosyoloji, Felsefe vb. belgede sayılan lisans programlarından mezun olmak.",
+      "Tercihen mezuniyet bölümüne yönelik yüksek lisansı tamamlamış olmak.",
+      "Tercihen Etkili Okuryazarlık Kursu veya metin yazarlığı sertifikalarından birine sahip olmak."
      ]
     },
     {
@@ -5607,10 +5609,9 @@
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 60,
-     "il": null,
+     "il": "Ankara",
      "kosullar": [
-      "Hukuk lisans programından mezun olmak.",
-      "Kadro dağılımı: Ankara 4; Aksaray, Artvin, Erzincan, Gümüşhane, Kırklareli, Muş, Ordu, Yozgat'ta birer kişi."
+      "Hukuk lisans programından mezun olmak."
      ]
     },
     {
@@ -5619,10 +5620,9 @@
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 60,
-     "il": null,
+     "il": "Çankırı",
      "kosullar": [
-      "Maliye, muhasebe, iktisat, işletme vb. belgede sayılan lisans programlarından birinden mezun olmak.",
-      "Kadro dağılımı: Çankırı, Isparta, Kırıkkale, Nevşehir'de birer kişi."
+      "Maliye, Muhasebe, İktisat, İşletme vb. belgede sayılan lisans programlarından mezun olmak."
      ]
     }
    ],
@@ -5632,34 +5632,33 @@
    "baslangic_tarihi": "2026-11-02",
    "kpss_gerekli": true,
    "iller": [
-    "Ankara",
-    "Kayseri",
-    "Van",
-    "Karabük",
-    "Kastamonu",
-    "Mardin",
-    "Muğla",
     "Aksaray",
+    "Ankara",
     "Artvin",
     "Erzincan",
     "Gümüşhane",
-    "Kırklareli",
-    "Muş",
-    "Ordu",
-    "Yozgat",
-    "Çankırı",
     "Isparta",
+    "Karabük / Safranbolu",
+    "Kastamonu",
+    "Kayseri",
+    "Kırklareli",
     "Kırıkkale",
-    "Nevşehir"
+    "Mardin",
+    "Muğla",
+    "Muş",
+    "Nevşehir",
+    "Ordu",
+    "Van",
+    "Yozgat",
+    "Çankırı"
    ],
    "ortak_kosullar": [
-    "Başvuru 2–16 Kasım 2026 (saat 23:59) arası Jandarma Personel Temin Sistemi'nden e-Devlet ile yapılır.",
-    "2025-2026 KPSS P3 puan türünden en az 60 puan gerekir.",
-    "Başvuru yapan 16 Kasım 2026 itibarıyla en az 18 yaşını doldurmuş olmalıdır.",
-    "Adaylar yalnız bir unvana başvurabilir.",
-    "Kontenjanın 15 katı aday KPSS sırasına göre mesleki yeterlilik/mülakat sınavına çağrılır."
+    "KPSS (P3) puan türünden 2025-2026 yıllarında en az 60 puan almış olmak.",
+    "Müracaatların son günü itibarıyla 18 yaşını tamamlamış olmak.",
+    "Başvuru yalnızca personeltemin.jandarma.gov.tr üzerinden e-Devlet ile yapılır; posta veya şahsen başvuru kabul edilmez.",
+    "Her aday yalnız bir unvana başvurabilir; kontenjanın 15 katı aday mesleki yeterlilik/mülakat sınavına çağrılır."
    ],
-   "ozet": "Jandarma Genel Komutanlığı 30 açıktan devlet memuru alacak (avukat, mühendis, istatistikçi, kimyager, psikolog, uzman). Başvurular 2–16 Kasım 2026'da Personel Temin Sistemi'nden yapılır.",
+   "ozet": "Jandarma Genel Komutanlığı 30 açıktan devlet memuru alacak (avukat, mühendis, psikolog, uzman vb.). Başvurular 2–16 Kasım 2026'da Personel Temin Sistemi'nden yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -8154,11 +8153,11 @@
   }
  },
  "sbb-d174235c748d2741298002af": {
-  "zaman": "2026-11-08T15:11:01+03:00",
+  "zaman": "2026-11-09T03:11:27+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "c9b644d6b93904c5",
+  "imza": "f85bb00f924dbb4e",
   "baslik": "SOSYAL GÜVENLİK KURUMU BAŞKANLIĞI - 100 SOSYAL GÜVENLİK DENETMEN YARDIMCISI ALACAK",
   "farklar": [
    [
@@ -8187,8 +8186,8 @@
      "en_dusuk_puan": 70,
      "il": null,
      "kosullar": [
-      "Hukuk, siyasal bilgiler, iktisadi ve idari bilimler, iktisat, işletme fakülte/yüksekokullarından ya da bunların sosyal hizmetler bölümlerinden mezun olmak.",
-      "ÖSYM tarafından 2025 veya 2026'da yapılan KPSS'de belirlenen puan türlerinde en az 70 puan almış olmak."
+      "Hukuk, siyasal bilgiler, iktisadi ve idari bilimler, iktisat, işletme fakülte/yüksekokullarından veya bunların sosyal hizmetler bölümlerinden mezun olmak.",
+      "KPSS 2025 veya 2026'da Tablo-1'deki puan türlerinden en az 70 puan almış olmak."
      ]
     }
    ],
@@ -8200,11 +8199,11 @@
    "iller": [],
    "ortak_kosullar": [
     "Giriş sınavının yapıldığı yılın Ocak ayının birinci günü itibarıyla 35 yaşını doldurmamış olmak.",
-    "Başvuru yalnızca E-Devlet üzerinden Kariyer Kapısı İşe Alım platformundan yapılır; şahsen, kargo veya posta kabul edilmez.",
-    "Sözlü sınav 28.12.2026–11.01.2027 arasında Ankara'da yapılır; kadro sayısının 4 katı aday KPSS sırasına göre çağrılır.",
-    "Sözlü sınavdan başarılı sayılmak için en az 70 puan almak gerekir."
+    "KPSS 2025 veya 2026 yılı sınavından en az 70 puan almış olmak.",
+    "Başvuru yalnızca E-Devlet üzerinden Kariyer Kapısı'ndan yapılır; şahsen, kargo veya posta kabul edilmez.",
+    "Sözlü sınav 28.12.2026–11.01.2027 arasında Ankara'da yapılır; kontenjanın 4 katı aday çağrılır."
    ],
-   "ozet": "SGK taşra teşkilatı için 100 Sosyal Güvenlik Denetmen Yardımcısı alacak. Başvurular 9–22 Kasım 2026'da E-Devlet üzerinden Kariyer Kapısı'ndan yapılır.",
+   "ozet": "SGK taşra teşkilatı için 100 Sosyal Güvenlik Denetmen Yardımcısı alacak. Başvurular 9–22 Kasım 2026 arasında Kariyer Kapısı'ndan e-Devlet ile yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
