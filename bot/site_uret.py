@@ -603,6 +603,50 @@ def _tarih_yazi(d):
     return f'{d.day} {ks.AY[d.month - 1]} {d.year}'
 
 
+def _kisa_kurum_adi(kurum):
+    """Arama başlığında yer açar: sondaki kısaltma varsa o, yoksa 'Rektörlüğü', 'Belediye Başkanlığı' gibi uzun ekler kısalır."""
+    m = re.search(r'\(([A-ZÇĞİÖŞÜ]{2,8})\)\s*$', kurum)
+    if m:
+        return m.group(1)
+    k = re.sub(r'\s*\([^)]*\)\s*$', '', kurum)
+    k = re.sub(r'\s+Rektörlüğü$', '', k)
+    k = re.sub(r'(Kurumu)\s+(?:Başkanlığı|Genel Sekreterliği)$', r'\1', k)
+    return re.sub(r'\s+Belediye Başkanlığı$', ' Belediyesi', k)
+
+
+def _kisa_manset(manset):
+    """Birden çok kadro sayılan ya da uzun kalıplı manşetin yalnız ilk mesleği."""
+    m = re.sub(r'\s*\+\d+\s*$', '', manset).split(',')[0].strip()
+    m = re.sub(r'(?i)\ben az\b.{0,80}?\bmezunlarından\b', ' ', m)
+    m = re.sub(r'\b20\d\d\s+[Yy]ılı\b', ' ', m)
+    m = re.sub(r'\bTürk Silahlı Kuvvetler(?:i|ine|inin)\b', 'TSK', m)
+    return ' '.join(m.split())
+
+
+def _sonu_temiz_kes(metin, sinir):
+    """Sözcükte keser; 've', 'Genel' gibi yarım kalan sözcüğü sonda bırakmaz."""
+    if len(metin) <= sinir:
+        return metin
+    return re.sub(r'(?:\s+(?:ve|veya|ile|için|Genel|Yüksek))+$', '', _sozcukte_kes(metin, sinir))
+
+
+def _ilan_basligi(kurum, manset, yil):
+    """Sınıra sığan en zengin 'Kurum Meslek Alımı Yıl' biçimi; meslek adı başlıktan asla düşmez."""
+    def ek(m):
+        return '' if re.search(r'(?i)al[ıi]m|ilan|s[ıi]nav|duyuru|temin', m) else ' Alımı'
+    kisa_k, kisa_m = _kisa_kurum_adi(kurum), _kisa_manset(manset)
+    parantezsiz = re.sub(r'\s*\([^)]*\)', '', kisa_m).strip() or kisa_m
+    adaylar = [(kurum, manset), (kisa_k, manset), (kisa_k, kisa_m), (kisa_k, parantezsiz)]
+    for y in (yil, ''):
+        for k, m in adaylar:
+            baslik = f'{k} {m}{ek(m)}{y}'
+            if len(baslik) <= TITLE_SINIRI:
+                return baslik
+    meslek = _sonu_temiz_kes(parantezsiz, 34)
+    meslek += ek(meslek)
+    return f'{_sonu_temiz_kes(kisa_k, TITLE_SINIRI - len(meslek) - 1)} {meslek}'.strip()
+
+
 def _arama_metinleri(item, alanlar, end, kayit, yedek):
     """(title, description): Google'da aranan biçim — 'Kurum Unvan Alımı 2026', açıklamada son başvuru, yer, öğrenim, KPSS."""
     import kurum_sayfasi as ks
@@ -614,7 +658,7 @@ def _arama_metinleri(item, alanlar, end, kayit, yedek):
         baslik = yedek
     else:
         yil = '' if re.search(r'\b20\d\d\b', manset) else f' {(end or datetime.now(TR)).astimezone(TR).year}'
-        baslik = f'{kurum} {manset}{"" if ilan_sozu else " Alımı"}{yil}'
+        baslik = _ilan_basligi(kurum, manset, yil)
     parcalar = [f'{kurum + " " if kurum else ""}{manset or yedek}{"" if ilan_sozu or not manset else " alım ilanı"}'.strip()]
     if end:
         parcalar.append('Son başvuru: ' + _tarih_yazi(end))

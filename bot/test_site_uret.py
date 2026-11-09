@@ -106,6 +106,17 @@ class BasBilgiTest(unittest.TestCase):
         b = 'A' * 50 + ' Personel Alımı 2026 | KPSS Tercihi'
         self.assertEqual(site_uret.kisa_baslik(b), 'A' * 50 + ' Personel')
 
+    def test_ilan_basliginda_meslek_dusmez(self):
+        for kurum, manset, beklenen in (
+            ('İstanbul Elektrik Tramvay ve Tünel İşletmeleri Genel Müdürlüğü (İETT)', 'Mühendis (Makine), Mühendis (Elektronik) +10', 'İETT Mühendis (Makine), Mühendis (Elektronik) +10 Alımı 2026'),
+            ('Bankacılık Düzenleme ve Denetleme Kurumu Başkanlığı', 'Kıdemli Yazılım Geliştirme Uzmanı, Ağ Güvenlik Uzmanı +3', 'Kıdemli Yazılım Geliştirme Uzmanı Alımı'),
+            ('Milli Savunma Bakanlığı', 'Türk Silahlı Kuvvetlerine En Az Dört Yıl Süreli Fakülte veya Yüksekokul Mezunlarından 2026 Yılı Muvazzaf Subay', 'TSK Muvazzaf Subay'),
+        ):
+            b = site_uret._ilan_basligi(kurum, manset, ' 2026')
+            self.assertLessEqual(len(b), site_uret.TITLE_SINIRI, b)
+            self.assertIn(beklenen, b)
+        self.assertEqual(site_uret._ilan_basligi('Posof Belediye Başkanlığı', '1 Teknisyen', ' 2026'), 'Posof Belediye Başkanlığı 1 Teknisyen Alımı 2026')
+
     def test_kisa_baslik_degismez(self):
         self.assertEqual(site_uret.kisa_baslik('Kısa | KPSS Tercihi'), 'Kısa | KPSS Tercihi')
 

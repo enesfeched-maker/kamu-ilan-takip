@@ -266,10 +266,13 @@ def duzey_sayfasi(base, duzey_slug, duzey_ad, grup, sluglar, son_donem, ilk_yil,
 
 
 def hub_sayfasi(base, ozetler, ilk_yil, son_yil):
-    """ozetler: [(duzey_slug, duzey_ad, kadro_unvan_sayisi, son_donem)]."""
+    """ozetler: [(duzey_slug, duzey_ad, kadro_unvan_sayisi, son_donem, [(unvan_adi, slug)])]."""
     kok = '../'
     kartlar = ''.join(
-        f'<li><a href="{s}/">KPSS {esc(ad)} taban puanları</a> — {tam(n)} kadro unvanı, son dönem {esc(donem_yaz(d))}</li>' for s, ad, n, d in ozetler)
+        f'<li><a href="{s}/">KPSS {esc(ad)} taban puanları</a> — {tam(n)} kadro unvanı, son dönem {esc(donem_yaz(d))}</li>' for s, ad, n, d, _ in ozetler)
+    one_cikan = ''.join(
+        f'<h3>{esc(ad)} kadroları</h3><ul>' + ''.join(f'<li><a href="{s}/{esc(k)}/">KPSS {esc(u)} taban puanları</a></li>' for u, k in liste) + '</ul>'
+        for s, ad, _, _, liste in ozetler if liste)
     baslik = f'KPSS Taban Puanları ({ilk_yil}–{son_yil})'
     aciklama = (f'KPSS lisans, önlisans ve ortaöğretim taban puanları ({ilk_yil}–{son_yil}): kadro kadro en düşük ve en yüksek yerleşme puanları, '
                 f'dönem dönem karşılaştırma.')
@@ -278,7 +281,9 @@ def hub_sayfasi(base, ozetler, ilk_yil, son_yil):
     icerik = (_hero(_crumbs(kok, [('KPSS Taban Puanları', None)]), baslik, giris)
               + f'<main id="icerik" class="wrap kp-main"><section class="bolum"><div class="bolum-bas"><h2>Öğrenim düzeyine göre taban puanları</h2></div><ul>{kartlar}</ul>'
               f'<p><a href="{kok}puanlar/">Puanını gir, hangi kadrolara yettiğini gör: tercih robotu →</a></p>'
-              f'<p><a href="{kok}analiz/">Puan verilerinden analizler: değişim, il il karşılaştırma, kadro sıralaması →</a></p></section></main>')
+              f'<p><a href="{kok}analiz/">Puan verilerinden analizler: değişim, il il karşılaştırma, kadro sıralaması →</a></p></section>'
+              + (f'<section class="bolum"><div class="bolum-bas"><h2>En çok yerleştirme yapılan kadrolar</h2></div>{one_cikan}</section>' if one_cikan else '')
+              + '</main>')
     kirinti = [('Ana sayfa', base), ('KPSS Taban Puanları', base + KLASOR + '/')]
     return _sayfa(base, '', 1, baslik, aciklama, kirinti, icerik)
 
@@ -321,7 +326,8 @@ def puan_sayfalarini_uret(docs, base):
         url, h = duzey_sayfasi(base, slug, ad, grup, sluglar, son_donem, ilk_yil, son_yil)
         _yaz(docs, slug, h)
         adresler.insert(0, url)
-        ozetler.append((slug, ad, len(grup), son_donem))
+        en_cok = sorted(sluglar, key=lambda u: (-sum(len(r) for r in grup[u].values()), _kucuk(u)))[:10]
+        ozetler.append((slug, ad, len(grup), son_donem, [(baslik_hali(u), sluglar[u]) for u in en_cok]))
     if not ozetler:
         return []
     url, h = hub_sayfasi(base, ozetler, ilk_yil, son_yil)

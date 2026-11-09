@@ -506,7 +506,7 @@ function renderYan(res,pr){
 let anahtar=null;try{const a=document.activeElement;anahtar=a&&a.dataset?a.dataset.odak:null;}catch{}
 renderKategori();renderSuzgec(res,pr);
 if(anahtar){const y=document.querySelector&&document.querySelector('[data-odak="'+anahtar+'"]');if(y&&y.focus)y.focus({preventScroll:true});}}
-function listeAdi(){if(F.tur)return F.tur;if(F.kat)return (KATEGORI.find(x=>x[0]===F.kat)||[0,'Tüm İlanlar'])[1];if(F.ogr==='belediye')return 'Belediye ilanları';return 'Tüm İlanlar';}
+function listeAdi(){if(F.tur)return F.tur;if(F.kat)return (KATEGORI.find(x=>x[0]===F.kat)||[0,'Tüm İlanlar'])[1];if(F.ogr==='belediye')return 'Belediye ilanları';return 'Kamu Personel İlanları';}
 /* Sonuçsuz aramada boş sayfa bırakılmaz: Telegram kanalına katılma, geçmiş ilanlar, sık aranan kelimeler ve taban puanları.
    Analizde sonuçsuz arama yapanların yarısı hiçbir şeye tıklamadan çıkıyordu. Bildirim botu hazır olana kadar kanala yönlendirilir. */
 const TG_KANAL='https://t.me/kpsstercihi',SIK_ARANAN=['memur','mühendis','psikolog','hemşire','büro personeli','sağlık teknikeri'];

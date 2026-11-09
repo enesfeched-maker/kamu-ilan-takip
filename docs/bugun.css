@@ -186,7 +186,7 @@ dialog svg,.save-button svg{stroke-width:1.7}
 .tumu i{width:44px;height:44px;border-radius:50%;background:var(--ink);color:var(--surface);display:grid;place-items:center;flex-shrink:0}
 .m-only{display:none}
 .sayfa-bas{padding:36px 0 4px}
-.sayfa-bas h1{margin:0;font-size:34px;line-height:1.12;letter-spacing:-.035em;font-weight:700}
+.sayfa-bas h1,.sayfa-bas h2{margin:0;font-size:34px;line-height:1.12;letter-spacing:-.035em;font-weight:700}
 .sayfa-bas p{margin:8px 0 0;color:var(--muted);font-size:15px}
 .gorunum[hidden]{display:none}
 
@@ -256,7 +256,7 @@ body{overflow-x:clip}
 /* ---------- Takvim ---------- */
 .k3-bas{padding:34px 0 0}
 .k3-ust{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
-.k3-bas h1{margin:0;font-size:34px;line-height:1.12;letter-spacing:-.035em;font-weight:700}
+.k3-bas h1,.k3-bas h2{margin:0;font-size:34px;line-height:1.12;letter-spacing:-.035em;font-weight:700}
 .k3-bas p{margin:8px 0 0;color:var(--muted);font-size:15px}
 .segment{display:inline-flex;padding:3px;border-radius:12px;background:var(--surface-3);gap:2px}
 .segment button{height:34px;padding:0 14px;border:0;border-radius:9px;background:transparent;font:inherit;font-weight:550;font-size:14px;line-height:1;color:var(--muted);cursor:pointer;white-space:nowrap}
@@ -438,7 +438,7 @@ button.hc{cursor:pointer}
   .m-only.profil{margin-top:18px}
   .tumu{padding:18px}
   .sayfa-bas{padding:22px 0 0}
-  .sayfa-bas h1{font-size:26px}
+  .sayfa-bas h1,.sayfa-bas h2{font-size:26px}
   .arama{height:50px;padding:0 6px 0 14px}
   .arama .btn{display:none}
   .k2-bas{padding:20px 0 14px}
@@ -453,7 +453,7 @@ button.hc{cursor:pointer}
   .disinda{flex-direction:column;align-items:flex-start}
   .sonuc-bas{margin-top:18px}
   .k3-bas{padding:20px 0 0}
-  .k3-bas h1{font-size:26px}
+  .k3-bas h1,.k3-bas h2{font-size:26px}
   .k3-bas p{font-size:14.5px}
   .segment{width:100%;margin-top:6px}
   .segment button{flex:1;padding:0 6px;font-size:13px}
