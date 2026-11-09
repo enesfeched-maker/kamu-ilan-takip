@@ -70,7 +70,7 @@ class AdsenseDegerTest(unittest.TestCase):
                 self.assertIn(f'<a href="{kok}{yol}">', t, dosya)
 
     def test_dizinlenmez_akademik_ve_yedi_gun(self):
-        self.assertEqual(site_uret.ESKI_ILAN_GUN, 7)
+        self.assertEqual(site_uret.ESKI_ILAN_GUN, 0)
 
 
 if __name__ == '__main__':

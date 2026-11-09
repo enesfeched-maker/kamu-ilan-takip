@@ -546,7 +546,10 @@ def kurum_dizinlenir(kan, docs):
     """Arama dizinine yalnız KPSS yerleştirme geçmişi olan kurum sayfası girer (1 Kasım 2026, ikinci AdSense reddi):
     tek ilanlı kurum sayfası ilan sayfasının kısa tekrarıdır; sayfa açık kalır, ilan sayfası dizinde kalır."""
     import kurum_zengin
-    return bool(kurum_zengin.yerlestirmeler(kan, docs))
+    return len(kurum_zengin.yerlestirmeler(kan, docs)) >= KURUM_MIN_YERLESTIRME
+
+
+KURUM_MIN_YERLESTIRME = 10   # birkaç satırlık geçmiş sayfayı özgün kılmaz (9 Kasım 2026, AdSense)
 
 
 TR_ALFABE = 'abcçdefgğhıijklmnoöprsştuüvyz'

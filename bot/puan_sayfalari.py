@@ -13,6 +13,7 @@ from kurum_sayfasi import _ascii_slug
 
 DUZEYLER = (('lisans', 'Lisans'), ('onlisans', 'Önlisans'), ('ortaogretim', 'Ortaöğretim'))
 MIN_SATIR = 3
+MIN_DIZIN_SATIR = 5
 KLASOR = 'kpss-taban-puanlari'
 NOT = 'Veriler ÖSYM\'nin yayımladığı sayısal bilgilerden derlenmiştir; resmî sonuç için ÖSYM\'yi kontrol edin.'
 
@@ -137,13 +138,20 @@ def _kes(s, n=160):
     return s if len(s) <= n else s[:n - 1].rstrip(' ,;.') + '…'
 
 
-def _sayfa(base, yol, derinlik, baslik, aciklama, kirinti, icerik):
+def kadro_dizinlenir(donemler):
+    """Son iki dönemde en az MIN_DIZIN_SATIR kaydı olmayan kadro sayfası açık kalır, dizine ve reklama girmez (AdSense, 9 Kasım 2026)."""
+    son_iki = sorted(donemler, key=_donem_anahtar)[-2:]
+    return sum(len(donemler[d]) for d in son_iki) >= MIN_DIZIN_SATIR
+
+
+def _sayfa(base, yol, derinlik, baslik, aciklama, kirinti, icerik, dizin=True):
     """yol: KLASOR'e göre ('' = hub). derinlik: index.html'in docs'a göre klasör derinliği."""
     su = _su()
     kok = '../' * derinlik
     canonical = base + KLASOR + '/' + yol
     aciklama = _kes(aciklama)
-    ek = (f'<meta property="og:url" content="{esc(canonical)}">' + _kirinti_json(base, kirinti) + (_veri_seti_json(base, canonical, aciklama) if not yol else ''))
+    ek = (f'<meta property="og:url" content="{esc(canonical)}">' + _kirinti_json(base, kirinti) + (_veri_seti_json(base, canonical, aciklama) if not yol else '')
+          + ('' if dizin else '<meta name="robots" content="noindex,follow">'))
     govde = (su.sayfa_basi(baslik, aciklama, esc(canonical), kok, ek_head=ek)
              + f'<body class="kurum-page"><a class="skip" href="#icerik">İçeriğe geç</a>{su.ust_html(kok, "puanlar")}{icerik}'
              + f'<p class="wrap kp-note" style="margin:24px auto">{esc(NOT)}</p>{su.alt_html(kok)}</body></html>')
@@ -233,7 +241,7 @@ def kadro_sayfasi(base, duzey_slug, duzey_ad, unvan, slug, donemler, ilk_yil, so
               f'<section class="bolum"><p><a href="../">← Tüm {esc(duzey_ad.lower())} kadroları</a> · <a href="{kok}puanlar/">Puanını gir, tercih robotunu dene →</a></p></section></main>')
     kirinti = [('Ana sayfa', base), ('KPSS Taban Puanları', base + KLASOR + '/'), (duzey_ad, f'{base}{KLASOR}/{duzey_slug}/'),
                (ad, f'{base}{KLASOR}/{duzey_slug}/{slug}/')]
-    return _sayfa(base, f'{duzey_slug}/{slug}/', 3, baslik, aciklama, kirinti, icerik)
+    return _sayfa(base, f'{duzey_slug}/{slug}/', 3, baslik, aciklama, kirinti, icerik, dizin=kadro_dizinlenir(donemler))
 
 
 def duzey_sayfasi(base, duzey_slug, duzey_ad, grup, sluglar, son_donem, ilk_yil, son_yil):
@@ -322,7 +330,8 @@ def puan_sayfalarini_uret(docs, base):
         for unvan, s in sluglar.items():
             url, h = kadro_sayfasi(base, slug, ad, unvan, s, grup[unvan], ilk_yil, son_yil)
             _yaz(docs, f'{slug}/{s}', h)
-            adresler.append(url)
+            if kadro_dizinlenir(grup[unvan]):
+                adresler.append(url)
         url, h = duzey_sayfasi(base, slug, ad, grup, sluglar, son_donem, ilk_yil, son_yil)
         _yaz(docs, slug, h)
         adresler.insert(0, url)

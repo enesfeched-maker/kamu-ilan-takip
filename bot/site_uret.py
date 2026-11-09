@@ -726,7 +726,7 @@ def yapisal_veri(item, canonical, end, alanlar, kayit, gorsel, simdi, is_ilani):
     return sonuc + _ld(is_)
 
 
-ESKI_ILAN_GUN = 7   # son başvurusu bu kadar gün önce geçen ilan sayfası arama dizininden çıkar (sayfa açık kalır)
+ESKI_ILAN_GUN = 0   # son başvurusu bu kadar gün önce geçen ilan sayfası arama dizininden çıkar (sayfa açık kalır); 9 Kasım 2026'dan beri süresi biter bitmez
 
 
 def dizinlenmez(item, simdi=None):

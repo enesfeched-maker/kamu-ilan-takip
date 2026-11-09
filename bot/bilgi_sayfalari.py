@@ -61,7 +61,12 @@ def _iletisim_bolumleri():
     bolumler = [('Telegram', 'Duyurular için kanalımız: @kpsstercihi')]
     if ILETISIM_EPOSTA:
         bolumler.append(('E-posta', 'Soru, düzeltme ve iş birliği için:', f'<a class="yazi-link" href="mailto:{ILETISIM_EPOSTA}">{ILETISIM_EPOSTA}</a>'))
-    bolumler.append(('Hatalı ilan bildirirken', 'İlanın bağlantısını ve hatalı gördüğün bilgiyi yazman yeterli.'))
+    bolumler.append(('Hatalı ilan bildirirken', 'İlanın bağlantısını ve hatalı gördüğün bilgiyi yazman yeterli. Bildirimi resmî ilan belgesiyle karşılaştırır, '
+                     'hata varsa ilan sayfasını düzeltiriz.'))
+    bolumler.append(('Neler için yazabilirsin?', 'Yanlış tarih, kontenjan ya da koşul bildirimi; eksik bir kurum veya kaynak önerisi; taban puanı verisi, tercih robotu ve '
+                     'klavye sınavıyla ilgili sorunlar; iş birliği ve reklam teklifleri.'))
+    bolumler.append(('Yardımcı olamayacağımız konular', 'Kamu kurumlarına bağlı değiliz. Başvuru almıyoruz, başvurunun sonucunu göremiyoruz ve kurumlar adına karar veremiyoruz. '
+                     'Başvuru ve atama sürecindeki sorular için ilanı yayımlayan kurumla görüşmelisin.'))
     return bolumler
 
 
