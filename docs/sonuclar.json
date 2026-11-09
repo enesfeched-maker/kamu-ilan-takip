@@ -14,6 +14,7 @@
   "goc.gov.tr": [
    "https://goc.gov.tr/denetci-yardimciligi-giris-sozlu-sinavi-sonuclari-aciklanmistir0607",
    "https://goc.gov.tr/il-goc-uzman-yardimciligi-giris-sinavi-basvuru-sonuclari-aciklanmistir1026",
+   "https://goc.gov.tr/il-goc-uzman-yardimciligi-giris-yazili-sinavi-sonuclari-aciklanmistir26",
    "https://goc.gov.tr/il-goc-uzmanligi-yeterlik-sinav-sonuclari-hakkinda3006"
   ],
   "hanak.bel.tr": [],
@@ -22,6 +23,7 @@
    "https://bahce.bel.tr/duyurular/memur-alimi-sonuc-aciklama-duyurusu"
   ],
   "mucur.bel.tr": [
+   "https://mucur.bel.tr/Detay/3-itfaiye-eri-1-memur-alimi-kapsaminda-b-ve-c-sinifi-ehliyeti-itfaiye-eri-uygulama-sinavina-cagrilmaya-hak-kazanan-adaylar-listesi.html",
    "https://mucur.bel.tr/Detay/memurluk-sinavina-cagrilmaya-hak-kazanan-adaylar.html",
    "https://mucur.bel.tr/Detay/sinava-cagrilmaya-hak-kazanan-adaylar-listesi.html"
   ],
@@ -44,9 +46,30 @@
   ],
   "posof.bel.tr": [],
   "tga.gov.tr": [],
-  "sile.bel.tr": []
+  "sile.bel.tr": [],
+  "cukurkuyu.bel.tr": []
  },
  "sonuclar": [
+  {
+   "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=30329a62-04f3-445a-985f-f6a0b8c2e1b7",
+   "key": "30329a62-04f3-445a-985f-f6a0b8c2e1b7",
+   "kurum": "GÖÇ İDARESİ BAŞKANLIĞI",
+   "baslik": "İl Göç Uzman Yardımcılığı Giriş (Yazılı) Sınavı Sonuçları Açıklanmıştır",
+   "adres": "https://goc.gov.tr/il-goc-uzman-yardimciligi-giris-yazili-sinavi-sonuclari-aciklanmistir26",
+   "tarih": null,
+   "ilk_gorulme": "2026-11-09T20:36:57+03:00",
+   "kanal": true
+  },
+  {
+   "id": "sbb-866abc35896ad9d91ee671c5",
+   "key": "sbb-866abc35896ad9d91ee671c5",
+   "kurum": "MUCUR BELEDİYE BAŞKANLIĞI",
+   "baslik": "3 İTFAİYE ERİ 1 MEMUR ALIMI KAPSAMINDA B VE C SINIFI EHLİYETİ İTFAİYE ERİ UYGULAMA SINAVINA ÇAĞRILMAYA HAK KAZANAN ADAYLAR LİSTESİ",
+   "adres": "https://mucur.bel.tr/Detay/3-itfaiye-eri-1-memur-alimi-kapsaminda-b-ve-c-sinifi-ehliyeti-itfaiye-eri-uygulama-sinavina-cagrilmaya-hak-kazanan-adaylar-listesi.html",
+   "tarih": null,
+   "ilk_gorulme": "2026-11-09T20:36:57+03:00",
+   "kanal": true
+  },
   {
    "id": "sbb-a2adc236e2ba406c8da7647b",
    "key": "sbb-a2adc236e2ba406c8da7647b",
