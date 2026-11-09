@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'docs/puanlar/**'
+      - 'docs/bolum/**'
       - 'docs/index.html'
       - 'docs/portal.js'
       - 'docs/portal.css'
