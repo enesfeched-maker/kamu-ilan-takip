@@ -21,7 +21,7 @@ AKADEMIK = re.compile(
 OGRENIM = (
     ('lisans', re.compile(
         SOL + r'(?<!yüksek )(?<!ön )lisans (?:mezun|diploma|derece|program|düzey|eğitim)'
-        r'|fakültelerin|fakülte(?:si)? mezun|fakültesinden|dört yıllık|(?:kpss ?|b grubu )p3' + r'(?!\d)')),
+        r'|fakültelerin|fakülte(?:si)? mezun|fakültesinden|dört yıllık|dört yıl süreli|(?:kpss ?|b grubu )p3' + r'(?!\d)')),
     ('onlisans', re.compile(
         r'ön ?lisans|meslek yüksekokul|iki yıllık|' + SOL + r'(?:kpss ?)?p93(?!\d)')),
     ('ortaogretim', re.compile(
@@ -38,7 +38,7 @@ SAGLIK = re.compile(SOL + r'(?:hemşire|ebe' + SAG + r'|sağlık personeli|hasta
 
 P9X = re.compile(SOL + r'(?:kpss ?)?p9[34](?!\d)')
 P3 = re.compile(SOL + r'(?:kpss ?)?p3(?!\d)')
-LISANS_KESIN = re.compile(r'fakültelerin|dört yıllık|lisans mezun')
+LISANS_KESIN = re.compile(r'fakültelerin|dört yıllık|dört yıl süreli|lisans mezun')
 
 
 def kucuk(metin):

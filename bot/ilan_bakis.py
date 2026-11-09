@@ -81,7 +81,10 @@ def bilgiler(item, toplam=None, simdi=None):
     sonuc = []
     if toplam:
         sonuc.append(('Alınacak', f'{toplam} kişi'))
-    puan = re.search(r'(?:en az|asgari|minimum)\s*(\d{2,3})(?:[.,]\d+)?\s*(?:\([^)]{0,20}\)\s*)?puan|(\d{2,3})(?:[.,]\d+)?\s*(?:\([^)]{0,20}\)\s*)?(?:ve üzeri\s*)?puan\s*almış', _kosul_metni(item))
+    metin = _kosul_metni(item)
+    # Yabancı dil puanı (YDS/YÖKDİL) KPSS eşiği değildir: öncesindeki kısa bağlamda dil sınavı geçen eşleşmeler atlanır.
+    puan = next((m for m in re.finditer(r'(?:en az|asgari|minimum)\s*(\d{2,3})(?:[.,]\d+)?\s*(?:\([^)]{0,20}\)\s*)?puan|(\d{2,3})(?:[.,]\d+)?\s*(?:\([^)]{0,20}\)\s*)?(?:ve üzeri\s*)?puan\s*almış', metin)
+                 if not re.search(r'\b(?:yds|ydt|yökdil|toefl|ielts)|yabancı dil', re.split(r'[.;]', metin[max(0, m.start() - 60):m.start()])[-1])), None)
     if puan and not item.get('basvuru_puani_belirtilmemis'):
         sonuc.append(('En düşük puan', puan.group(1) or puan.group(2)))
     from ilan_rehber import basvuru_kanali
