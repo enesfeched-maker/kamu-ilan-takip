@@ -97,8 +97,50 @@ ACIKLAMA_SINIRI = 160
 VARSAYILAN_GORSEL = 'https://kpsstercihi.com/assets/logo-512.png'
 
 
+_SONDA_KALMAZ = {'ve', 'veya', 'ile', 'ya', 'için'}   # kesilen başlık bağlaçla bitmesin ("… Öğretim Görevlisi ve")
+
+
 def _sozcukte_kes(metin, sinir):
-    return metin[:sinir].rsplit(' ', 1)[0].rstrip(' ,;:-–—|')
+    kesik = metin[:sinir].rsplit(' ', 1)[0].rstrip(' ,;:-–—|')
+    while ' ' in kesik and kesik.rsplit(' ', 1)[1].lower() in _SONDA_KALMAZ:
+        kesik = kesik.rsplit(' ', 1)[0].rstrip(' ,;:-–—|')
+    return kesik
+
+
+EDITOR = 'KPSS Tercihi Editörlüğü'
+_AYLAR = ('Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık')
+
+
+def tarih_yazi(iso):
+    """'2026-11-01' -> '1 Kasım 2026'."""
+    yil, ay, gun = (int(x) for x in str(iso)[:10].split('-'))
+    return f'{gun} {_AYLAR[ay - 1]} {yil}'
+
+
+def kunye_html(kok, yayin=None, guncelleme=None):
+    """Yazının görünür künyesi: kim hazırladı, ne zaman yayımlandı ve güncellendi (şemadaki tarihlerle aynı)."""
+    parca = [f'<a href="{kok}hakkimizda/">{EDITOR}</a>']
+    if yayin:
+        parca.append(f'Yayın: {tarih_yazi(yayin)}')
+    if guncelleme and guncelleme != yayin:
+        parca.append(f'Güncelleme: {tarih_yazi(guncelleme)}')
+    return '<p class="muted kunye">' + ' · '.join(parca) + '</p>'
+
+
+def kurulus_ld(base):
+    """Hakkımızda ve İletişim sayfalarındaki yayıncı kimliği (schema.org Organization)."""
+    return {'@type': 'Organization', '@id': base + '#kurulus', 'name': 'KPSS Tercihi', 'url': base,
+            'logo': VARSAYILAN_GORSEL, 'email': 'iletisim@kpsstercihi.com', 'sameAs': ['https://t.me/kpsstercihi']}
+
+
+def cumlede_bitir(metin):
+    """Kaynakta '…' ile kesilmiş metni son tam cümlede bitirir; tam cümle yoksa metne dokunmaz."""
+    metin = (metin or '').rstrip()
+    if not metin.endswith(('…', '...')):
+        return metin
+    govde = metin.rstrip('.… ')
+    son = max(govde.rfind('. '), govde.rfind('! '), govde.rfind('? '))
+    return govde[:son + 1] if son >= 40 else metin
 
 
 def kisa_baslik(baslik):
@@ -843,6 +885,7 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
                 diger += f'<h3>{heading}</h3><p class="muted">Bu bölüm ilan belgesinden düzgün okunamadı; ayrıntılar resmî ilan belgesinde.</p>'
                 gosterilen.append('')
             continue
+        duzgun = cumlede_bitir(duzgun)   # kaynakta yarım kesilmiş cümle sayfada yarım görünmesin
         if any(duzgun in g or g in duzgun for g in gosterilen if g):   # başvuru notu özetin içinde zaten geçiyorsa tekrar yazılmaz
             continue
         gosterilen.append(duzgun)

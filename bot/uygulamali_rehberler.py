@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 
 TARIH = '2026-10-24'
+META_BAS = '<div class="guide-meta"><p>'   # künye bu satırın başına eklenir
 
 
 def icerikler():
@@ -27,13 +28,14 @@ def yaz(docs, base):
         url = base + 'rehber/' + r['slug'] + '/'
         schema = {'@context': 'https://schema.org', '@type': 'Article',
                   'headline': r['title'], 'description': r['description'], 'inLanguage': 'tr',
-                  'datePublished': TARIH, 'dateModified': TARIH, 'mainEntityOfPage': url,
+                  'datePublished': TARIH, 'dateModified': r.get('modified', TARIH), 'mainEntityOfPage': url,
                   'author': {'@type': 'Organization', 'name': 'KPSS Tercihi', 'url': base},
                   'publisher': {'@type': 'Organization', 'name': 'KPSS Tercihi', 'url': base}}
         extra = '<link rel="stylesheet" href="../../rehber.css?v=1"><script type="application/ld+json">' + json.dumps(schema, ensure_ascii=False).replace('</', '<\\/') + '</script>'
         head = su.sayfa_basi(r['title'] + ' | KPSS Tercihi', r['description'], su.esc(url), '../../', 'article', ek_head=extra)
         body = ('<body class="kurum-page"><a class="skip" href="#icerik">İçeriğe geç</a>'
-                + su.ust_html('../../') + r['body'] + su.alt_html('../../') + '</body></html>')
+                + su.ust_html('../../') + r['body'].replace(META_BAS, META_BAS + f'<a href="/hakkimizda/">{su.EDITOR}</a> · ', 1)
+                + su.alt_html('../../') + '</body></html>')
         dest = Path(docs)/'rehber'/r['slug']/'index.html'
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_text(head + body, encoding='utf-8')

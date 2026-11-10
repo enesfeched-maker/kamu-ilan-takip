@@ -222,7 +222,7 @@ def _govde(bulgular, bolumler, kaynak, guncelleme):
     liste = ''.join(f'<li>{esc(b)}</li>' for b in bulgular)
     ust = f'<section class="bolum"><div class="bolum-bas"><h2>Öne çıkanlar</h2></div><ul>{liste}</ul></section>' if liste else ''
     govde = ''.join(f'<section class="bolum"><div class="bolum-bas"><h2>{esc(b)}</h2></div>{h}</section>' for b, h in bolumler)
-    alt = f'<p class="kp-note">{esc(kaynak)} Güncelleme: {esc(guncelleme)}</p>'
+    alt = f'<p class="kp-note">{esc(kaynak)} Hazırlayan: KPSS Tercihi Editörlüğü. Güncelleme: {esc(guncelleme)}</p>'
     return f'<main id="icerik" class="wrap kp-main">{ust}{govde}{alt}</main>'
 
 
