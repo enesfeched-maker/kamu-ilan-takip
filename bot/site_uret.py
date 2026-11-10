@@ -88,7 +88,7 @@ def alt_html(kok, yil=None):
     yil = yil or datetime.now(TR).year
     return (f'<footer class="ab"><div class="ab-ic"><div class="ab-marka"><img src="{kok}assets/logo-96.webp?v={LOGO_SURUM}" alt="" width="36" height="36">'
             f'<div><strong>KPSS Tercihi</strong><span>Kamu ilanları, sade ve tek yerde</span></div></div>'
-            f'<nav class="ab-linkler" aria-label="Alt bilgi"><a href="https://t.me/kpsstercihi" target="_blank" rel="noopener" data-a="telegram" data-a-x="alt">Telegram</a><a href="{kok}katiplik/">Katiplik sınavı</a><a href="{kok}akademik/">Akademik ilanlar</a><a href="{kok}sonuclar/">Sonuç duyuruları</a><a href="{kok}rehber/">Rehberler</a><a href="{kok}analiz/">Analizler</a><a href="{kok}kurum/">Kurumlar</a><a href="{kok}sss/">Sık sorulanlar</a><a href="{kok}hakkimizda/">Hakkımızda</a><a href="{kok}iletisim/">İletişim</a><a href="{kok}gizlilik/">Gizlilik</a><a href="{kok}kullanim-kosullari/">Kullanım koşulları</a></nav>'
+            f'<nav class="ab-linkler" aria-label="Alt bilgi"><a href="https://t.me/kpsstercihi" target="_blank" rel="noopener" data-a="telegram" data-a-x="alt">Telegram</a><a href="{kok}katiplik/">Katiplik sınavı</a><a href="{kok}akademik/">Akademik ilanlar</a><a href="{kok}sonuclar/">Sonuç duyuruları</a><a href="{kok}rehber/">Rehberler</a><a href="{kok}analiz/">Analizler</a><a href="{kok}kurum/">Kurumlar</a><a href="{kok}il/">İller</a><a href="{kok}sss/">Sık sorulanlar</a><a href="{kok}hakkimizda/">Hakkımızda</a><a href="{kok}iletisim/">İletişim</a><a href="{kok}gizlilik/">Gizlilik</a><a href="{kok}kullanim-kosullari/">Kullanım koşulları</a></nav>'
             f'<p class="ab-not">© <span id="yil">{yil}</span> KPSS Tercihi</p></div></footer>')
 
 
@@ -1358,7 +1358,7 @@ def main():
     urls += kurum_adresleri
     try:
         from puan_sayfalari import puan_sayfalarini_uret
-        urls += puan_sayfalarini_uret(docs, BASE)
+        urls += puan_sayfalarini_uret(docs, BASE, gorunen, sayfa_anahtarlari, haritada_olmayan, datetime.now(TR))   # kadro/düzey sayfalarında açık ilanlar
     except Exception as hata:
         print(f'Uyarı: taban puanı sayfaları üretilemedi: {hata}')
     if BASE + 'puanlar/' not in urls:
@@ -1410,6 +1410,11 @@ def main():
         urls += analiz_sayfalari.yaz(docs, BASE, asil_ilanlar, datetime.now(TR))
     except Exception as hata:
         print(f'Uyarı: analiz sayfaları üretilemedi: {hata}')
+    try:
+        import il_sayfalari   # kalıcı il sayfaları (/il/): açık ilanlar + yerleştirme geçmişi; kurum ve taban puanı sayfalarından sonra (bağlantı denetimi)
+        urls += il_sayfalari.yaz(docs, BASE, gorunen, sayfa_anahtarlari, haritada_olmayan, datetime.now(TR))
+    except Exception as hata:
+        print(f'Uyarı: il sayfaları üretilemedi: {hata}')
     bugun = datetime.now(TR).date().isoformat()   # ana sayfa her gün değişir; Google'a tazelik sinyali
     degisim[BASE] = bugun
     (docs / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
