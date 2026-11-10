@@ -5901,11 +5901,11 @@
   }
  },
  "sbb-2a7662aed2b08030660a2828": {
-  "zaman": "2026-11-10T05:11:06+03:00",
+  "zaman": "2026-11-10T17:16:42+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "2e4dcd100aa4144d",
+  "imza": "317007b35e59ca7d",
   "baslik": "JANDARMA GENEL KOMUTANLIĞI - 30 MEMUR TEMİN EDİLECEKTİR",
   "farklar": [],
   "yz": {
@@ -5930,7 +5930,7 @@
      "en_dusuk_puan": 60,
      "il": "Ankara",
      "kosullar": [
-      "Bilgisayar (Bilim/Bilimleri) Mühendisliği lisans programlarından birinden mezun olmak."
+      "Bilgisayar Mühendisliği, Bilgisayar Bilimi ve Mühendisliği veya Bilgisayar Bilimleri ve Mühendisliği lisans programlarından birinden mezun olmak."
      ]
     },
     {
@@ -5952,7 +5952,7 @@
      "en_dusuk_puan": 60,
      "il": "Ankara",
      "kosullar": [
-      "İstatistik veya belgede sayılan eşdeğer istatistik lisans programlarından birinden mezun olmak."
+      "İstatistik veya İstatistik ile ilgili belgede sayılan lisans programlarından birinden mezun olmak."
      ]
     },
     {
@@ -5963,7 +5963,7 @@
      "en_dusuk_puan": 60,
      "il": "Ankara",
      "kosullar": [
-      "Kimya, Kimyager, Kimya Mühendisliği vb. belgede sayılan lisans programlarından birinden mezun olmak."
+      "Kimya, Kimyagerlik, Kimya Mühendisliği vb. belgede sayılan lisans programlarından birinden mezun olmak."
      ]
     },
     {
@@ -5974,7 +5974,7 @@
      "en_dusuk_puan": 60,
      "il": "Karabük / Safranbolu",
      "kosullar": [
-      "Psikoloji veya Davranış Bilimleri - Psikoloji Disiplini lisans programından mezun olmak."
+      "Psikoloji veya Davranış Bilimleri - Psikoloji Disiplini lisans programlarından birinden mezun olmak."
      ]
     },
     {
@@ -5985,24 +5985,20 @@
      "en_dusuk_puan": 60,
      "il": "Ankara",
      "kosullar": [
-      "Radyo-Televizyon-Sinema, Sinema vb. belgede sayılan lisans programlarından birinden mezun olmak.",
-      "Tercihen: en az 3 yıl kameraman/kamera asistanı olarak çalışmış olmak.",
-      "Tercihen: video kurgu, montaj ve post-prodüksiyona hâkim olmak.",
-      "Tercihen: Adobe Premiere Pro ve After Effects'i etkin kullanabilmek."
+      "Radyo-Televizyon-Sinema ve benzeri belgede sayılan lisans programlarından birinden mezun olmak.",
+      "Tercihen en az 3 yıl kameraman veya kamera asistanı olarak çalışmış olmak."
      ]
     },
     {
-     "unvan": "Uzman (Medya/İletişim)",
+     "unvan": "Uzman (Medya ve İletişim)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 60,
      "il": "Ankara",
      "kosullar": [
-      "Medya ve İletişim, Gazetecilik, Halkla İlişkiler, Türk Dili ve Edebiyatı, Siyaset Bilimi, Uluslararası İlişkiler, Sosyoloji, Felsefe vb. …",
-      "Tercihen: mezuniyet bölümüne yönelik yüksek lisansı tamamlamış olmak.",
-      "Tercihen: dil bilgisi ve yazım kurallarına hâkim olmak.",
-      "Tercihen: MEB onaylı Etkili Okuryazarlık Kursu veya metin yazarlığı sertifikasına sahip olmak."
+      "Yeni medya, medya ve iletişim, radyo-televizyon-sinema, gazetecilik, halkla ilişkiler, Türk dili ve edebiyatı, siyaset bilimi, uluslararası ilişkiler, sosyoloji veya felsefe lisans programlarından birinden mezun olmak.",
+      "Tercihen mezuniyet bölümüne yönelik yüksek lisansı tamamlamış olmak."
      ]
     },
     {
@@ -6024,7 +6020,7 @@
      "en_dusuk_puan": 60,
      "il": "Çankırı",
      "kosullar": [
-      "Maliye, Muhasebe, İktisat, İşletme vb. belgede sayılan lisans programlarından birinden mezun olmak."
+      "Maliye, muhasebe, iktisat, işletme, yönetim bilimleri vb. belgede sayılan lisans programlarından birinden mezun olmak."
      ]
     }
    ],
@@ -6034,33 +6030,33 @@
    "baslangic_tarihi": "2026-11-02",
    "kpss_gerekli": true,
    "iller": [
-    "Aksaray",
+    "Kayseri",
     "Ankara",
+    "Van",
+    "Karabük / Safranbolu",
+    "Kastamonu",
+    "Mardin",
+    "Muğla",
+    "Aksaray",
     "Artvin",
     "Erzincan",
     "Gümüşhane",
-    "Isparta",
-    "Karabük / Safranbolu",
-    "Kastamonu",
-    "Kayseri",
     "Kırklareli",
-    "Kırıkkale",
-    "Mardin",
-    "Muğla",
     "Muş",
-    "Nevşehir",
     "Ordu",
-    "Van",
     "Yozgat",
-    "Çankırı"
+    "Çankırı",
+    "Isparta",
+    "Kırıkkale",
+    "Nevşehir"
    ],
    "ortak_kosullar": [
-    "2025-2026 KPSS'den P3 puan türünde en az 60 puan almak.",
-    "Başvuru günü (16 Kasım 2026) itibarıyla 18 yaşını tamamlamış olmak.",
-    "Başvuru yalnızca personeltemin.jandarma.gov.tr üzerinden e-Devlet ile yapılır; adaylar tek unvana başvurabilir.",
-    "Kontenjanın 15 katı aday KPSS sırasıyla mesleki yeterlilik ve/veya mülakat sınavına çağrılır."
+    "KPSS (P3) puan türünden 2025-2026 yıllarında en az 60 puan almış olmak.",
+    "Başvuru son günü (16 Kasım 2026) itibarıyla 18 yaşını tamamlamış olmak.",
+    "Başvuru yalnızca personeltemin.jandarma.gov.tr üzerinden e-Devlet ile yapılır; posta veya şahsen başvuru kabul edilmez.",
+    "Adaylar yalnız bir unvana başvurabilir; kadro sayısının 15 katı aday mesleki yeterlilik/mülakat sınavına çağrılır."
    ],
-   "ozet": "Jandarma Genel Komutanlığı 30 açıktan devlet memuru alacak (avukat, mühendis, psikolog, uzman vb.). Başvurular 2–16 Kasım 2026'da Personel Temin Sistemi'nden e-Devlet ile yapılır.",
+   "ozet": "Jandarma Genel Komutanlığı 30 açıktan devlet memuru alacak (avukat, mühendis, psikolog, uzman vb.). Başvurular 2–16 Kasım 2026'da Personel Temin Sistemi'nden yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -8556,11 +8552,11 @@
   }
  },
  "sbb-d174235c748d2741298002af": {
-  "zaman": "2026-11-10T05:11:06+03:00",
+  "zaman": "2026-11-10T17:16:42+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "6ef2acde3a59bd11",
+  "imza": "b3dc61d388a862b9",
   "baslik": "SOSYAL GÜVENLİK KURUMU BAŞKANLIĞI - 100 SOSYAL GÜVENLİK DENETMEN YARDIMCISI ALACAK",
   "farklar": [
    [
@@ -8574,7 +8570,7 @@
      "P48"
     ],
     [
-     "P39"
+     "P39,P40,P41,P42,P43,P48"
     ],
     false
    ]
@@ -8585,12 +8581,12 @@
      "unvan": "Sosyal Güvenlik Denetmen Yardımcısı",
      "adet": 100,
      "ogrenim": "lisans",
-     "puan_turu": "P39",
+     "puan_turu": "P39, P40, P41, P42, P43, P48",
      "en_dusuk_puan": 70,
      "il": null,
      "kosullar": [
-      "Hukuk, siyasal bilgiler, iktisadi ve idari bilimler, iktisat, işletme fakülte/yüksekokulu veya bunların sosyal hizmetler bölümünden mezun olmak.",
-      "KPSS P39, P40, P41, P42, P43 veya P48 puan türünde en az 70 puan almış olmak."
+      "Hukuk, siyasal bilgiler, iktisadi ve idari bilimler, iktisat, işletme fakülte/yüksekokullarından veya bunların sosyal hizmetler bölümlerinden mezun olmak.",
+      "KPSS 2025 veya 2026'da ilgili puan türünden en az 70 puan almış olmak."
      ]
     }
    ],
@@ -8601,13 +8597,12 @@
    "kpss_gerekli": true,
    "iller": [],
    "ortak_kosullar": [
-    "Giriş sınavının yapıldığı yılın 1 Ocak'ı itibarıyla 35 yaşını doldurmamış olmak.",
-    "2025 veya 2026 yılında yapılan KPSS'den ilgili puan türünde en az 70 puan almak.",
-    "Başvuru yalnızca E-Devlet üzerinden Kariyer Kapısı İşe Alım platformundan yapılır.",
-    "KPSS puan sırasına göre kadro sayısının 4 katı (400) aday sözlü sınava çağrılır.",
-    "Sözlü sınav 28.12.2026–11.01.2027 arasında Ankara'da yapılacaktır."
+    "Giriş sınavının yapıldığı yılın Ocak ayının birinci günü itibarıyla 35 yaşını doldurmamış olmak.",
+    "Başvuru E-Devlet üzerinden Kariyer Kapısı'ndan yapılır; şahsen, kargo ya da posta ile başvuru kabul edilmez.",
+    "Kadro sayısının 4 katı aday KPSS puan sırasına göre sözlü sınava çağrılır; sözlü sınav 28.12.2026-11.01.2027 arasında Ankara'da yapılır.",
+    "Sözlü sınavdan en az 70 puan almak gerekir."
    ],
-   "ozet": "SGK 100 Sosyal Güvenlik Denetmen Yardımcısı alacak. Başvurular 9–22 Kasım 2026'da E-Devlet üzerinden Kariyer Kapısı'ndan yapılır.",
+   "ozet": "Sosyal Güvenlik Kurumu 100 Sosyal Güvenlik Denetmen Yardımcısı alacak. Başvurular 9–22 Kasım 2026'da E-Devlet üzerinden Kariyer Kapısı'ndan yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -8616,7 +8611,7 @@
     "lisans"
    ],
    "puan_turleri": [
-    "P39"
+    "P39, P40, P41, P42, P43, P48"
    ]
   }
  },
