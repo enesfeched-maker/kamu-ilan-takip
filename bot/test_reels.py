@@ -11,6 +11,19 @@ from kart_tasarimlari import TR
 SIMDI = datetime.now(TR).replace(hour=9, minute=0, second=0, microsecond=0)
 
 
+def setUpModule():
+    """Testler depodaki sosyal/ayar.json'a (ajanın kararlarına) bağlı kalmasın: varsayılan ayarlarla koşar."""
+    import sosyal_ajan
+    global _ESKI_AYAR
+    _ESKI_AYAR = sosyal_ajan.AYAR_YOLU
+    sosyal_ajan.AYAR_YOLU = Path(__file__).with_name('yok-ayar.json')
+
+
+def tearDownModule():
+    import sosyal_ajan
+    sosyal_ajan.AYAR_YOLU = _ESKI_AYAR
+
+
 def ilan(kimlik, gun, kadro='Toplam 12 kişi — 10 Memur • 2 Tekniker', kurum='Deneme Kurumu Başkanlığı', gorulme=0, **ek):
     return {'id': kimlik, 'kurum': kurum, 'kadro': kadro, 'ogrenim': ['lisans'], 'kpss': 'kpss', 'iller': ['Ankara'],
             'son_tarih': (SIMDI + timedelta(days=gun)).date().isoformat(),

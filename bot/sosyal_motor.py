@@ -373,7 +373,8 @@ def metin_olustur(konu, vakit, simdi):
     kapanis = _sec(['Tüm ilanlar ve son başvuru tarihleri kpsstercihi.com\'da 💛',
                     'Bütün kamu ilanlarını tek yerde görmek için: kpsstercihi.com 💛'], f'{simdi.date()}{vakit}k')
     # Yorum ve paylaşım (DM) algoritmanın en güçlü sinyalleri: emir kipi yerine soru ve sıcak bir öneri.
-    soru = _sec(SORULAR.get(konu.get('tur'), SORULAR['genel']), f'{simdi.date()}{vakit}s')
+    import sosyal_ajan   # ajan o tür için soru yazdıysa onlar, yoksa sabit liste
+    soru = _sec(sosyal_ajan.sorular(konu.get('tur')) or SORULAR.get(konu.get('tur'), SORULAR['genel']), f'{simdi.date()}{vakit}s')
     takip = 'Başvuracak bir arkadaşın varsa ona da gönderebilirsin; takipte kalırsan yeni ilanlar ilk senin önüne düşer.'
     aciklama = '\n'.join(govde) + f'\n\n{soru}\n\n{kapanis}\n{takip}\n\n' + ' '.join(etiketler)
     baslik = konu['baslik']

@@ -312,7 +312,7 @@ def ilan_kutusu(ilan, logo, simdi, y, bas, sira=None):
 def son_gun_ilanlari(acik, simdi, en_cok=SON_GUN_EN_COK):
     """Son başvurusu bugün ile SON_GUN_UFUK gün sonrası arasında olanlar; en yakın tarih, sonra en kalabalık alım önce."""
     from site_uret import _bitis
-    secim = [i for i in acik if 0 <= (_bitis(i).date() - simdi.date()).days <= SON_GUN_UFUK]
+    secim = [i for i in acik if 0 <= (_bitis(i).date() - simdi.date()).days <= _ayar('son_gun_ufuk')]
     secim.sort(key=lambda i: (_bitis(i).date(), -(k.veri(i, None, simdi)['toplam'] or 0), i.get('id') or ''))
     return secim[:en_cok], len(secim)
 
@@ -568,12 +568,18 @@ ILAN_GUNLUK = 3        # günde en çok tek ilan videosu (YouTube yükleme kotas
 ILAN_TAZE_SAAT = 48    # tek ilan videosu için ilanın en çok kaç saat önce eklenmiş olabileceği
 
 
+def _ayar(ad):
+    """Ajanın sosyal/ayar.json'da değiştirebildiği sınırlı ayarlar (sosyal_ajan.AYAR_SINIR); yoksa varsayılan."""
+    import sosyal_ajan
+    return sosyal_ajan.ayar(ad)
+
+
 def siradaki_ilan(acik, simdi, gecmis=()):
     """Videosu yapılacak sıradaki yeni ilan: son ILAN_TAZE_SAAT saatte eklenmiş, daha önce tek ilan videosu olmamış, en
     kalabalık alım önce. Günlük sınır dolduysa ya da aday yoksa None."""
     from sosyal_motor import _zaman
     tekler = [g for g in gecmis if g.get('tur') == 'ilan']
-    if sum(1 for g in tekler if (_zaman(g.get('zaman')) or simdi - timedelta(days=9)).astimezone(k.TR).date() == simdi.date()) >= ILAN_GUNLUK:
+    if sum(1 for g in tekler if (_zaman(g.get('zaman')) or simdi - timedelta(days=9)).astimezone(k.TR).date() == simdi.date()) >= _ayar('ilan_gunluk'):
         return None
     yapilan = {i for g in tekler for i in g.get('ilanlar') or []}
     adaylar = [i for i in acik if i.get('id') not in yapilan
@@ -603,7 +609,7 @@ def gunluk(vakit, acik, simdi, logo=lambda i: None, gecmis=()):
                 'sahneler': son_gun_videosu(secim, toplam, simdi, logo)}
     if vakit == 'aksam':
         secim = bugunun_ilanlari(acik, simdi)
-        if len(secim) < OZET_EN_AZ:   # tek ilanlık gün zaten tek ilan videosuyla paylaşılır
+        if len(secim) < _ayar('ozet_en_az'):   # tek ilanlık gün zaten tek ilan videosuyla paylaşılır
             return None
         return {'tur': 'ozet', 'muzik': 'aksam', 'anahtar': f'ozet:{simdi.date()}', 'ilanlar': [i['id'] for i in secim],
                 'baslik': f'Bugün {len(secim)} Yeni Kamu İlanı',
