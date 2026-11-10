@@ -81,5 +81,72 @@ class SahneTest(unittest.TestCase):
         self.assertEqual(sum(1 for _ in reels.kareler([reels.Sahne(0.2, [], son=True)])), 6)
 
 
+class GunlukTest(unittest.TestCase):
+    """Bota bağlanan akış: vakte göre sabit biçim, ilan başına sıra ve günlük sınır, paylasim.json ve geçmiş kaydı."""
+
+    def test_siradaki_ilan_sirasi_ve_siniri(self):
+        acik = [ilan('eski', 9, gorulme=5), ilan('kucuk', 9, 'Toplam 2 kişi — 2 Memur'), ilan('buyuk', 9)]
+        self.assertEqual(reels.siradaki_ilan(acik, SIMDI)['id'], 'buyuk')
+        zaman = SIMDI.isoformat(timespec='seconds')
+        gecmis = [{'tur': 'ilan', 'zaman': zaman, 'ilanlar': ['buyuk']}]
+        self.assertEqual(reels.siradaki_ilan(acik, SIMDI, gecmis)['id'], 'kucuk')            # videosu yapılan yeniden yapılmaz
+        gecmis.append({'tur': 'ilan', 'zaman': zaman, 'ilanlar': ['kucuk']})
+        self.assertIsNone(reels.siradaki_ilan(acik, SIMDI, gecmis))                          # 5 gün önce eklenen taze değil
+        dolu = [{'tur': 'ilan', 'zaman': zaman, 'ilanlar': [str(n)]} for n in range(reels.ILAN_GUNLUK)]
+        self.assertIsNone(reels.siradaki_ilan(acik, SIMDI, dolu))                            # günlük sınır
+        dun = [{'tur': 'ilan', 'zaman': (SIMDI - timedelta(days=1)).isoformat(timespec='seconds'), 'ilanlar': [str(n)]} for n in range(5)]
+        self.assertEqual(reels.siradaki_ilan(acik, SIMDI, dun)['id'], 'buyuk')               # dünkü videolar bugünü kısıtlamaz
+
+    def test_gunluk_konular(self):
+        acik = [ilan('a', 1), ilan('b', 9, 'Toplam 4 kişi — 4 Şoför')]
+        sabah = reels.gunluk('sabah', acik, SIMDI)
+        self.assertEqual((sabah['tur'], sabah['muzik'], sabah['ilanlar']), ('son_gun', 'sabah', ['a']))
+        self.assertIn('Deneme Kurumu: 12 kişi · Memur, Tekniker (son gün ', sabah['satirlar'][0])
+        aksam = reels.gunluk('aksam', acik, SIMDI)
+        self.assertEqual((aksam['tur'], aksam['baslik'], aksam['ilanlar']), ('ozet', 'Bugün 2 Yeni Kamu İlanı', ['a', 'b']))
+        tek = reels.gunluk('ilan', acik, SIMDI)
+        self.assertEqual((tek['tur'], tek['anahtar'], tek['baslik']), ('ilan', 'ilan:a', 'Deneme Kurumu 12 kişi alacak'))
+        self.assertEqual(tek['satirlar'], ['• 10 Memur', '• 2 Tekniker'])
+        self.assertIsNone(reels.gunluk('sabah', [ilan('uzak', 9)], SIMDI))
+        self.assertIsNone(reels.gunluk('aksam', [ilan('dun', 9, gorulme=2)], SIMDI))
+        self.assertIsNone(reels.gunluk('aksam', acik[:1], SIMDI))   # tek ilanlık günde özet yok
+        self.assertIsNone(reels.gunluk('ilan', [], SIMDI))
+
+    def test_muzik_yolu_onbellek_ve_hata(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as g:
+            dosya, bas = reels.MUZIK['aksam']
+            (Path(g) / dosya).write_bytes(b'ID3' + b'0' * 200_000)
+            self.assertEqual(reels.muzik_yolu('aksam', g), (Path(g) / dosya, bas))           # önbellekteki dosya indirilmez
+            eski = reels.MUZIK_ADRESI
+            reels.MUZIK_ADRESI = 'http://127.0.0.1:9/{no}.mp3'                              # erişilemeyen adres
+            try:
+                self.assertEqual(reels.muzik_yolu('sabah', g, zaman_asimi=2), (None, 0.0))
+            finally:
+                reels.MUZIK_ADRESI = eski
+
+    def test_sablon_uret_dosyalari_ve_gecmis(self):
+        import json
+        import tempfile
+        import sosyal_motor as sm
+        konu = reels.gunluk('ilan', [ilan('a', 5)], SIMDI)
+        eski = reels.muzik_yolu
+        reels.muzik_yolu = lambda tur, *a, **k: (None, 0.0)                                  # ağ yok: eski parçaya düşer
+        try:
+            with tempfile.TemporaryDirectory() as g:
+                ozet = sm.sablon_uret(konu, 'ilan', Path(g) / 'cikti', SIMDI, [], Path(g) / 'gecmis.json', video=False)
+                kayit = json.loads((Path(g) / 'cikti' / 'paylasim.json').read_text(encoding='utf-8'))
+                gecmis = json.loads((Path(g) / 'gecmis.json').read_text(encoding='utf-8'))
+                kareler = sorted(p.name for p in (Path(g) / 'cikti').glob('*.png'))
+        finally:
+            reels.muzik_yolu = eski
+        self.assertEqual(kareler, ['01.png', '02.png', '03.png', '04.png'])
+        self.assertEqual((kayit['tur'], kayit['sablon'], kayit['kare']), ('ilan', True, 4))
+        self.assertTrue(kayit['baslik'].startswith('Deneme Kurumu 12 kişi alacak'))
+        self.assertIn('• 10 Memur', kayit['aciklama'])
+        self.assertLessEqual(len(kayit['etiketler']), 5)
+        self.assertEqual((gecmis[-1]['tur'], gecmis[-1]['ilanlar'], gecmis[-1]['zaman']), ('ilan', ['a'], ozet['zaman']))
+
+
 if __name__ == '__main__':
     unittest.main()

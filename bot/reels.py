@@ -507,6 +507,34 @@ MUZIK = {'sabah': ('mixkit-158-happy-times.mp3', 47.5),      # Alejandro Magaña
          'aksam': ('mixkit-443-serene-view.mp3', 45.2)}      # Arulo – Serene View, ~78 BPM
 
 
+MUZIK_ADRESI = 'https://assets.mixkit.co/music/{no}/{no}.mp3'
+MUZIK_KLASORU = Path(__file__).resolve().parents[1] / 'sosyal' / 'muzik' / 'reels'   # git dışı önbellek: lisans tek başına dağıtıma izin vermez
+
+
+def muzik_yolu(tur, klasor=None, zaman_asimi=60):
+    """Biçimin parçası ve başlangıç saniyesi. Dosya önbellekte yoksa Mixkit'ten indirilir; alınamazsa (None, 0.0) döner
+    (çağıran eski parçalardan birine düşer, video sessiz kalmaz)."""
+    import re
+    import urllib.request
+    dosya, bas = MUZIK[tur]
+    yol = Path(klasor or MUZIK_KLASORU) / dosya
+    if yol.is_file() and yol.stat().st_size > 100_000:
+        return yol, bas
+    try:
+        no = re.match(r'mixkit-(\d+)-', dosya).group(1)
+        istek = urllib.request.Request(MUZIK_ADRESI.format(no=no), headers={'User-Agent': 'Mozilla/5.0'})
+        with urllib.request.urlopen(istek, timeout=zaman_asimi) as r:
+            veri = r.read()
+        if len(veri) < 100_000 or not (veri[:3] == b'ID3' or veri[:1] == b'\xff'):
+            raise ValueError('mp3 değil')
+        yol.parent.mkdir(parents=True, exist_ok=True)
+        yol.write_bytes(veri)
+        return yol, bas
+    except Exception as hata:
+        print(f'Uyarı: {dosya} indirilemedi: {hata}')
+        return None, 0.0
+
+
 def video_yaz(sahneler, yol, muzik=None, ffmpeg=None, muzik_bas=0.0):
     """MP4 (H.264, yuv420p, 30 fps). muzik yoksa sessiz iz eklenir (platformlar ses izi bekler).
     muzik_bas: parçanın kaçıncı saniyesinden başlanacağı."""
@@ -532,6 +560,76 @@ def video_yaz(sahneler, yol, muzik=None, ffmpeg=None, muzik_bas=0.0):
     if p.wait() != 0:
         raise RuntimeError('ffmpeg video yazamadı')
     return sure
+
+
+# ---------------------------------------------------------------- günlük yayın (sosyal_motor.uret çağırır)
+OZET_EN_AZ = 2         # akşam özeti için o gün eklenmiş en az ilan
+ILAN_GUNLUK = 3        # günde en çok tek ilan videosu (YouTube yükleme kotası: günde ~6 video; 2'si sabah ve akşam)
+ILAN_TAZE_SAAT = 48    # tek ilan videosu için ilanın en çok kaç saat önce eklenmiş olabileceği
+
+
+def siradaki_ilan(acik, simdi, gecmis=()):
+    """Videosu yapılacak sıradaki yeni ilan: son ILAN_TAZE_SAAT saatte eklenmiş, daha önce tek ilan videosu olmamış, en
+    kalabalık alım önce. Günlük sınır dolduysa ya da aday yoksa None."""
+    from sosyal_motor import _zaman
+    tekler = [g for g in gecmis if g.get('tur') == 'ilan']
+    if sum(1 for g in tekler if (_zaman(g.get('zaman')) or simdi - timedelta(days=9)).astimezone(k.TR).date() == simdi.date()) >= ILAN_GUNLUK:
+        return None
+    yapilan = {i for g in tekler for i in g.get('ilanlar') or []}
+    adaylar = [i for i in acik if i.get('id') not in yapilan
+               and (_zaman(i.get('ilk_gorulme')) or simdi - timedelta(days=9)) >= simdi - timedelta(hours=ILAN_TAZE_SAAT)]
+    adaylar.sort(key=lambda i: (-(k.veri(i, None, simdi)['toplam'] or 0), i.get('id') or ''))
+    return adaylar[0] if adaylar else None
+
+
+def _satir(i, simdi):
+    from site_uret import _bitis
+    v = k.veri(i, None, simdi)
+    b = _bitis(i)
+    return f'• {kisa_kurum(i)}: {kisa_ne(v) or "alım"} (son gün {b.day} {AYLAR[b.month - 1]})'
+
+
+def gunluk(vakit, acik, simdi, logo=lambda i: None, gecmis=()):
+    """Vaktin sabit biçimi için konu: sahneler + açıklama metninin parçaları. İçerik yoksa None.
+    vakit: 'sabah' (son günü yaklaşanlar), 'aksam' (bugünün özeti), 'ilan' (sıradaki yeni ilan)."""
+    if vakit == 'sabah':
+        secim, toplam = son_gun_ilanlari(acik, simdi)
+        if not secim:
+            return None
+        return {'tur': 'son_gun', 'muzik': 'sabah', 'anahtar': f'son_gun:{simdi.date()}:sabah', 'ilanlar': [i['id'] for i in secim],
+                'baslik': f'Son Günü Yaklaşan {toplam} Kamu İlanı',
+                'giris': f'⏰ Son başvurusu yaklaşan {toplam} kamu ilanı. En yakın tarih en üstte:',
+                'satirlar': [_satir(i, simdi) for i in secim], 'etiketler': ['#songün', '#başvuru'],
+                'sahneler': son_gun_videosu(secim, toplam, simdi, logo)}
+    if vakit == 'aksam':
+        secim = bugunun_ilanlari(acik, simdi)
+        if len(secim) < OZET_EN_AZ:   # tek ilanlık gün zaten tek ilan videosuyla paylaşılır
+            return None
+        return {'tur': 'ozet', 'muzik': 'aksam', 'anahtar': f'ozet:{simdi.date()}', 'ilanlar': [i['id'] for i in secim],
+                'baslik': f'Bugün {len(secim)} Yeni Kamu İlanı',
+                'giris': f'📢 Bugün {len(secim)} yeni kamu ilanı yayımlandı. Son başvuru tarihleriyle:',
+                'satirlar': [_satir(i, simdi) for i in secim], 'etiketler': ['#yeniilan', '#işilanı'],
+                'sahneler': ozet_videosu(secim, simdi, logo)}
+    ilan = siradaki_ilan(acik, simdi, gecmis)
+    if ilan is None:
+        return None
+    v = k.veri(ilan, None, simdi)
+    sayi, alt = ne_alinacak(v)
+    ne = f'{binlik(sayi)} kişi alacak' if sayi else f'{alt} alacak'
+    return {'tur': 'ilan', 'muzik': 'ilan', 'anahtar': f'ilan:{ilan["id"]}', 'ilanlar': [ilan['id']],
+            'baslik': f'{kisa_kurum(ilan)} {ne}',
+            'giris': f'📢 {kisa_kurum(ilan)} {ne}.' + (f' Son başvuru: {v["tarih"]}.' if v['tarih'] else ''),
+            'satirlar': ['• ' + (f'{binlik(a)} ' if a else '') + ad for a, ad in kadro_satirlari(v, 6)],
+            'etiketler': ['#yeniilan', '#işilanı'], 'sahneler': ilan_videosu(ilan, simdi, logo(ilan))}
+
+
+def sahne_kareleri(sahneler):
+    """Her sahnenin oturmuş hâli (önizleme sürümü ve kapak için)."""
+    an, sonuc = 0.0, []
+    for s in sahneler:
+        sonuc.append(kare(sahneler, an + s.sure - CIKIS - 0.05))
+        an += s.sure
+    return sonuc
 
 
 def uret(tur, cikti, simdi=None, ilan_id=None, muzik=None, docs=None, logo=None):

@@ -347,6 +347,7 @@ SORULAR = {
     'rehber': ['Senin puanın kaç, hangi kadroyu düşünüyorsun? 👇', 'Listede seni şaşırtan bir kadro oldu mu? 👇'],
     'haber': ['Sen bu alımı bekleyenlerden misin? 👇', 'Hangi branşta kaç kadro açılmasını bekliyorsun? 👇'],
     'son_gun': ['Başvurunu yaptın mı, yoksa son güne mi bıraktın? 👇', 'Sen hangisine başvurdun? 👇'],
+    'ilan': ['Başvurmayı düşünüyor musun? 👇', 'Bu kadrolardan sana uygun olan var mı? 👇'],
 }
 MUZIK_KLASORU = ROOT / 'sosyal' / 'muzik'
 
@@ -380,14 +381,53 @@ def metin_olustur(konu, vakit, simdi):
     return {'baslik': sosyal_kalite.temizle(baslik), 'aciklama': sosyal_kalite.aciklama_duzelt(aciklama)[:2150], 'etiketler': etiketler}
 
 
+def sablon_uret(konu, vakit, cikti, simdi, gecmis, gecmis_yolu, video=True, agirlik=None):
+    """Sabit video biçimini (reels.py) yazar: reel.mp4, sahne kareleri, paylasim.json ve geçmiş kaydı."""
+    import reels
+    cikti = Path(cikti)
+    cikti.mkdir(parents=True, exist_ok=True)
+    sahneler = konu['sahneler']
+    for n, im in enumerate(reels.sahne_kareleri(sahneler), 1):
+        im.save(cikti / f'{n:02d}.png', optimize=True)
+    muzik, bas = reels.muzik_yolu(konu['muzik'])
+    if muzik is None:   # Mixkit'e ulaşılamadı: eski parçalardan biri, baştan
+        muzik, bas = muzik_sec(gecmis, f'{simdi.date()}{vakit}m', agirlik=(agirlik or {}).get('muzik')), 0.0
+    if video:
+        reels.video_yaz(sahneler, cikti / 'reel.mp4', muzik, muzik_bas=bas)
+    metin = metin_olustur(konu, vakit, simdi)
+    ozet = {'tur': konu['tur'], 'anahtar': konu['anahtar'], 'vakit': vakit, 'zaman': simdi.isoformat(timespec='seconds'),
+            'kare': len(sahneler), 'sablon': True, 'trend': None, 'ilgili_trendler': [],
+            'muzik': muzik.name if muzik else None, **metin}
+    (cikti / 'paylasim.json').write_text(json.dumps(ozet, ensure_ascii=False, indent=1), encoding='utf-8')
+    gecmis_yaz(gecmis, {'zaman': ozet['zaman'], 'vakit': vakit, 'tur': konu['tur'], 'anahtar': konu['anahtar'],
+                        'ilanlar': konu['ilanlar'], 'muzik': ozet['muzik']}, gecmis_yolu)
+    print(f'Konu: {konu["anahtar"]} ({len(sahneler)} sahne, {reels.video_suresi(sahneler):.1f} sn)')
+    return ozet
+
+
 def uret(vakit, cikti, simdi=None, cfg=None, docs=ROOT / 'docs', gecmis_yolu=GECMIS_YOLU, video=True, trend=True,
-         istatistik_yolu=None):
+         istatistik_yolu=None, sablon=True):
+    """vakit: 'sabah' | 'aksam' | 'ilan'. Sabit video biçimi (reels.py) üretilir; sabah/akşam için o gün içerik yoksa
+    eski konu seçimine düşülür, 'ilan' için sıradaki yeni ilan yoksa hiçbir şey üretilmez (None)."""
     simdi = (simdi or datetime.now(TR)).astimezone(TR)
     agirlik = istatistik_oku(istatistik_yolu or Path(gecmis_yolu).parent / 'istatistik.json')
     cfg = cfg if cfg is not None else json.loads((ROOT / 'config.json').read_text(encoding='utf-8'))
     ilanlar = ilanlari_yukle(docs)
     acik = acik_ilanlar(ilanlar, simdi)
     gecmis = gecmis_oku(gecmis_yolu)
+    if sablon:
+        konu = None
+        try:
+            import reels
+            from kurum_gorseli import kurum_logosu
+            konu = reels.gunluk(vakit, acik, simdi, kurum_logosu, gecmis)
+            if konu:
+                return sablon_uret(konu, vakit, cikti, simdi, gecmis, gecmis_yolu, video, agirlik)
+        except Exception as hata:   # şablon hatası paylaşımı durdurmaz: sabah/akşam eski biçime düşer
+            print(f'::warning::Video şablonu üretilemedi ({vakit}): {hata}')
+    if vakit == 'ilan':
+        print('Videosu yapılacak yeni ilan yok.')
+        return None
     son_paylasilan = {i for g in gecmis if (_zaman(g.get('zaman')) or simdi) > simdi - timedelta(days=3)
                       for i in g.get('ilanlar') or []}
     adaylar = (haber_adaylari(cfg, simdi) + son_gun_adaylari(acik, simdi, vakit) + buyuk_adaylari(acik, simdi)
@@ -419,7 +459,7 @@ def uret(vakit, cikti, simdi=None, cfg=None, docs=ROOT / 'docs', gecmis_yolu=GEC
 
 if __name__ == '__main__':
     p = argparse.ArgumentParser()
-    p.add_argument('--vakit', choices=('sabah', 'aksam'), required=True)
+    p.add_argument('--vakit', choices=('sabah', 'aksam', 'ilan'), required=True)
     p.add_argument('--cikti', default='sosyal-cikti')
     p.add_argument('--videosuz', action='store_true')
     a = p.parse_args()

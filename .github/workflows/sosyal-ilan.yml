@@ -1,0 +1,88 @@
+name: Sosyal medya - yeni ilan videosu
+
+# Günde en çok 3 kez: son 48 saatte eklenen, videosu henüz yapılmamış en kalabalık alımlı ilan için tek ilan videosu
+# (bot/reels.py ilan_videosu). Yeni ilan yoksa hiçbir şey paylaşılmaz. Sabah ve akşam videoları sosyal.yml'dedir.
+on:
+  schedule:
+    - cron: "0 7 * * *"     # ~10:00 TR
+    - cron: "0 12 * * *"    # ~15:00 TR
+    - cron: "30 15 * * *"   # ~18:30 TR
+  workflow_dispatch:
+    inputs:
+      yayinla:
+        description: Platformlara gönder (kapalıysa yalnız önizleme sürümü; geçmişe yazılmaz)
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sosyal
+  cancel-in-progress: false
+
+jobs:
+  paylas:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install Pillow==11.3.0 beautifulsoup4==4.13.5 pypdf==6.0.0 pdfplumber==0.11.7 imageio-ffmpeg==0.6.0
+      - name: Etiket
+        id: v
+        run: echo "etiket=sosyal-$(TZ=Europe/Istanbul date +%Y%m%d)-ilan-$(TZ=Europe/Istanbul date +%H%M)" >> "$GITHUB_OUTPUT"
+      - name: İçerik üret
+        id: uret
+        run: |
+          python bot/sosyal_motor.py --vakit ilan --cikti sosyal-cikti
+          if [ -f sosyal-cikti/paylasim.json ]; then echo "var=1" >> "$GITHUB_OUTPUT"; else echo "var=0" >> "$GITHUB_OUTPUT"; fi
+      - name: Önizleme sürümü
+        if: steps.uret.outputs.var == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ETIKET: ${{ steps.v.outputs.etiket }}
+        run: |
+          python -c "import json;d=json.load(open('sosyal-cikti/paylasim.json',encoding='utf-8'));open('notlar.md','w',encoding='utf-8').write(d['baslik']+'\n\n'+d['aciklama'])"
+          gh release delete "$ETIKET" --yes --cleanup-tag 2>/dev/null || true
+          gh release create "$ETIKET" sosyal-cikti/* --title "$ETIKET" --notes-file notlar.md --prerelease
+          # en yeni 30 paylaşım saklanır
+          gh release list --limit 200 --json tagName -q '.[].tagName' | grep '^sosyal-' | sort -r | tail -n +31 \
+            | xargs -r -n1 gh release delete --yes --cleanup-tag
+      - name: Yayınla
+        if: steps.uret.outputs.var == '1' && (github.event_name == 'schedule' || inputs.yayinla)
+        env:
+          IG_KULLANICI_ID: ${{ secrets.IG_KULLANICI_ID }}
+          IG_ERISIM_ANAHTARI: ${{ secrets.IG_ERISIM_ANAHTARI }}
+          YT_ISTEMCI_KIMLIGI: ${{ secrets.YT_ISTEMCI_KIMLIGI }}
+          YT_ISTEMCI_SIRRI: ${{ secrets.YT_ISTEMCI_SIRRI }}
+          YT_YENILEME_ANAHTARI: ${{ secrets.YT_YENILEME_ANAHTARI }}
+          YT_KANAL: ${{ vars.YT_KANAL }}
+          SOSYAL_KAPALI: ${{ vars.SOSYAL_KAPALI }}
+          TT_ISTEMCI_ANAHTARI: ${{ secrets.TT_ISTEMCI_ANAHTARI }}
+          TT_ISTEMCI_SIRRI: ${{ secrets.TT_ISTEMCI_SIRRI }}
+          TT_YENILEME_ANAHTARI: ${{ secrets.TT_YENILEME_ANAHTARI }}
+          TT_MOD: ${{ vars.TT_MOD }}
+          SOSYAL_GH_ANAHTARI: ${{ secrets.SOSYAL_GH_ANAHTARI }}
+          VIDEO_URL: https://github.com/${{ github.repository }}/releases/download/${{ steps.v.outputs.etiket }}/reel.mp4
+        run: python bot/sosyal_yayinla.py sosyal-cikti
+      - name: Paylaşım geçmişini kaydet
+        if: always() && steps.uret.outputs.var == '1' && (github.event_name == 'schedule' || inputs.yayinla)
+        run: |
+          # Bağlı platformların hepsi hata verdiyse ilan "paylaşıldı" sayılmaz; sonraki çalışmada yeniden denenir.
+          if ! python -c "import json,pathlib,sys;p=pathlib.Path('sosyal-cikti/sonuc.json');s=json.loads(p.read_text(encoding='utf-8')) if p.exists() else {};sys.exit(0 if not s or any('hata' not in v for v in s.values()) else 1)"; then
+            echo "Hiçbir platformda paylaşılamadı; geçmişe yazılmadı."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          python bot/sosyal_istatistik.py sonuc sosyal-cikti || true
+          git add sosyal/gecmis.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Sosyal paylaşım geçmişi (${{ steps.v.outputs.etiket }}) [skip ci]"
+          for i in 1 2 3 4 5; do
+            git pull --rebase -q origin main && git push -q origin HEAD:main && exit 0
+            sleep 5
+          done
+          exit 1
