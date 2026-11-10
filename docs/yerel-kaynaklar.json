@@ -1,11 +1,36 @@
 {
  "schema": 1,
- "guncelleme": "2026-11-10T06:36:42.804212+00:00",
+ "guncelleme": "2026-11-10T07:06:41.784510+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-11-10T06:36:59.238979+00:00",
+   "kontrol": "2026-11-10T07:06:54.486831+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
+    {
+     "id": "sbb-f840f142b620022870a57dff",
+     "baslik": "ASARCIK BELEDİYE BAŞKANLIĞI - İPTAL İLANI",
+     "kurum": "ASARCIK BELEDİYE BAŞKANLIĞI",
+     "kadro": "İPTAL İLANI",
+     "ilan_turu": "Kamu Personeli",
+     "son_tarih": "2026-12-03",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 1 Aralık - 3 Aralık)",
+     "baslangic_zaman": "2026-12-01T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-11-10T10:06:42+03:00",
+     "belge_ozeti": "8d5f31547090f8a71eea87965b95ff89b7dedb522f15c6ab96e21c10e8a5e059",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "duyuru_turu": "İptal duyurusu",
+     "sbb_detay_surumu": 6,
+     "duyuru_cumlesi": "",
+     "belge_uyumsuz": true
+    },
     {
      "id": "sbb-034eaa8d6c92691ff7863b1a",
      "baslik": "SAYIŞTAY BAŞKANLIĞI - 16 SÖZLEŞMELİ PERSONEL ALACAK",
@@ -66,6 +91,31 @@
       "lisans",
       "onlisans"
      ]
+    },
+    {
+     "id": "sbb-ccbfabb1ef291c7aa745ba53",
+     "baslik": "İZMİR BAKIRÇAY ÜNİVERSİTESİ - İPTAL İLANI",
+     "kurum": "İZMİR BAKIRÇAY ÜNİVERSİTESİ",
+     "kadro": "İPTAL İLANI",
+     "ilan_turu": "Kamu Personeli",
+     "son_tarih": "2026-11-10",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 10 Kasım - 10 Kasım)",
+     "baslangic_zaman": "2026-11-10T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-11-10T10:06:43+03:00",
+     "belge_ozeti": "756c5e3f6126cdd95e40ba2664675f3cf4f88ae098b6ef4c173dabff299a8c8e",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "duyuru_turu": "İptal duyurusu",
+     "sbb_detay_surumu": 6,
+     "duyuru_cumlesi": "İzmir Bakırçay Üniversitesi Rektörlüğünden 19.10.2026 tarihli ve 33405 sayılı Resmî Gazete’de yayımlanan doktor öğretim üyesi ilanımız iptal edilmiştir.",
+     "belge_uyumsuz": true
     },
     {
      "id": "sbb-b25570c9f5d0041ca1a692be",
@@ -588,8 +638,8 @@
      "donem": "( 7 Kasım - 21 Kasım)",
      "baslangic_zaman": "2026-11-07T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-10T09:36:45+03:00",
-     "belge_ozeti": "04568b2bc976f752d613a252bc06a9cfdd73e8400ad342bb0c83f972d8ac3fea",
+     "detay_guncelleme": "2026-11-10T10:06:44+03:00",
+     "belge_ozeti": "6a91f71ccec88842908f9a1a651c637dbb9adecf3872b5b57f4d34a3ea5b6e94",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -864,8 +914,8 @@
      "donem": "( 6 Kasım - 16 Kasım)",
      "baslangic_zaman": "2026-11-06T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-10T09:36:46+03:00",
-     "belge_ozeti": "9b265d3f956781a21556db1b9d8bda9958938b9e01146eb34d6af0cb2ce6eead",
+     "detay_guncelleme": "2026-11-10T10:06:45+03:00",
+     "belge_ozeti": "84a8d40bff0882e6cd2ced6ab94a6b64fd9b35a3f912997cf0533e6d067f49e6",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -969,8 +1019,8 @@
      "donem": "( 6 Kasım - 21 Kasım)",
      "baslangic_zaman": "2026-11-06T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-10T09:36:47+03:00",
-     "belge_ozeti": "a34833e789c9c49fe478bae71967940c52e4f5b44f4739fc42aa9ac8366d0e6c",
+     "detay_guncelleme": "2026-11-10T10:06:46+03:00",
+     "belge_ozeti": "f7125b1b56924610373950f216d8b255da53467ef916d99da6399b89dadaabc5",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1349,8 +1399,8 @@
      "donem": "( 5 Kasım - 16 Kasım)",
      "baslangic_zaman": "2026-11-05T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-10T09:36:49+03:00",
-     "belge_ozeti": "e8ed7f411876407e9e90d146e9200dd7254038325f0c04f0ba0318790d7f7003",
+     "detay_guncelleme": "2026-11-10T10:06:48+03:00",
+     "belge_ozeti": "65a558386ff628233420d3f1ccc784409c97cb26897efb8020aeea295323392d",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1670,8 +1720,8 @@
      "donem": "( 3 Kasım - 13 Kasım)",
      "baslangic_zaman": "2026-11-03T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-10T09:36:49+03:00",
-     "belge_ozeti": "fde14306fed7e4216babed465e4d7e680af7e97b1833d4e497785f3b418e5e9e",
+     "detay_guncelleme": "2026-11-10T10:06:49+03:00",
+     "belge_ozeti": "99dade104dc18f607918056449f1491212753fbbb90742bf399452f1a4418a31",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -1804,8 +1854,8 @@
      "donem": "( 2 Kasım - 1 Aralık)",
      "baslangic_zaman": "2026-11-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-10T09:36:50+03:00",
-     "belge_ozeti": "e6dceca3dc5eb9fbe6bffc40d39496efc82538b44d591126029fd8d9b100a4a8",
+     "detay_guncelleme": "2026-11-10T10:06:50+03:00",
+     "belge_ozeti": "a304d2a02347d69c9f10b28c4b06974758e0bd0d93bb8928569ca37e3a1f43e8",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -2921,8 +2971,8 @@
      "donem": "( 27 Ekim - 10 Kasım)",
      "baslangic_zaman": "2026-10-27T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-10T09:36:57+03:00",
-     "belge_ozeti": "7952eadaae0016730a9ad7761310991bed03da9a56a1e9a6cf72b458cc2f396d",
+     "detay_guncelleme": "2026-11-10T10:06:52+03:00",
+     "belge_ozeti": "d0781a96b72a467b49d654e7497d3463a38a3f728e06d7d0a6026ae7491d7cf5",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -3239,8 +3289,8 @@
      "donem": "( 2 Aralık - 4 Aralık)",
      "baslangic_zaman": "2026-12-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-10T09:36:58+03:00",
-     "belge_ozeti": "e5ff355e800529571ab0b7bf6221252691dc9948835dfb70d401f0e7eadc688b",
+     "detay_guncelleme": "2026-11-10T10:06:53+03:00",
+     "belge_ozeti": "f0ad23b0d8580833fa509137c3316863298c86e3fb2f401c31bed31937cd0a36",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -3401,8 +3451,8 @@
      "donem": "( 18 Kasım - 20 Kasım)",
      "baslangic_zaman": "2026-11-18T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-10T09:36:59+03:00",
-     "belge_ozeti": "ed904b5be7c3ac92f97537d0785e43a8c49fe1c5c5256199da54f63588bbb1e3",
+     "detay_guncelleme": "2026-11-10T10:06:54+03:00",
+     "belge_ozeti": "182be044c8b10e5e951be6f05ef33a78aa26d740469e3978dc4247c6f6ac693b",
      "kaynaklar": [
       {
        "ad": "SBB Kamu İlan",
@@ -4152,7 +4202,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-11-10T06:37:00.360274+00:00",
+   "kontrol": "2026-11-10T07:06:55.497899+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
