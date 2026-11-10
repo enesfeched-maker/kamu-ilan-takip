@@ -7067,11 +7067,11 @@
   }
  },
  "sbb-6975c78c3d45204d44f373ea": {
-  "zaman": "2026-11-10T15:15:45+03:00",
+  "zaman": "2026-11-11T01:15:59+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "33d481e5f470314f",
+  "imza": "82823bcdc49af675",
   "baslik": "KAMU DENETÇİLİĞİ KURUMU - 10 KAMU DENETÇİLİĞİ UZMAN YARDIMCISI ALACAK",
   "farklar": [
    [
@@ -7091,25 +7091,25 @@
   "yz": {
    "kadrolar": [
     {
-     "unvan": "Kamu Denetçiliği Uzman Yardımcısı (Hukuk)",
+     "unvan": "Kamu Denetçiliği Uzman Yardımcısı (Hukuk — I. Grup)",
      "adet": 7,
      "ogrenim": "lisans",
      "puan_turu": "P4",
      "en_dusuk_puan": 80,
      "il": null,
      "kosullar": [
-      "Hukuk fakültelerinden veya denkliği kabul edilen yurt içi/yurt dışı kurumlardan mezun olmak."
+      "En az dört yıllık hukuk fakültelerinden veya denkliği kabul edilmiş okullardan mezun olmak."
      ]
     },
     {
-     "unvan": "Kamu Denetçiliği Uzman Yardımcısı (Siyasal Bilgiler / İİBF / İktisat / İşletme)",
+     "unvan": "Kamu Denetçiliği Uzman Yardımcısı (Siyasal Bilgiler, İİBF, İktisat ve İşletme — II. Grup)",
      "adet": 3,
      "ogrenim": "lisans",
      "puan_turu": "P33, P38",
      "en_dusuk_puan": 80,
      "il": null,
      "kosullar": [
-      "Siyasal bilgiler, iktisadi ve idari bilimler, iktisat ve işletme fakültelerinden veya denklerinden mezun olmak."
+      "En az 4 yıllık siyasal bilgiler, iktisadi ve idari bilimler, iktisat veya işletme fakültelerinden mezun olmak."
      ]
     }
    ],
@@ -7120,13 +7120,12 @@
    "kpss_gerekli": true,
    "iller": [],
    "ortak_kosullar": [
-    "2025 veya 2026 KPSS'ye girmiş olmak; ilgili puan türünden en az 80 puan almak.",
-    "01.01.1991 ve sonrası doğumlu olmak (35 yaşını doldurmamış).",
-    "Başvuru e-Devlet ile Kariyer Kapısı üzerinden yapılır.",
-    "Sözlü sınav; kadro sayısının 2 katı aday çağrılır, başarı için en az 70 puan gerekir.",
-    "Adaylar tablodaki gruplardan yalnızca birine başvurabilir."
+    "2025 veya 2026 KPSS'ye girmiş ve ilgili puan türünden en az 80 puan almış olmak.",
+    "01.01.1991 ve sonrasında doğmuş olmak (sınav yılının Ocak ayının ilk günü itibarıyla 35 yaşını doldurmamak).",
+    "Başvuru e-Devlet üzerinden Kariyer Kapısı'ndan yapılır; adaylar yalnız bir gruba başvurabilir.",
+    "Kadro sayısının 2 katı aday sözlü sınava çağrılır; sözlü sınavda en az 70 puan gerekir."
    ],
-   "ozet": "TBMM Kamu Denetçiliği Kurumu 10 uzman yardımcısı alacak: 7 hukuk (P4), 3 siyasal/iktisat/işletme (P33 veya P38). Başvuru 9–22 Kasım 2026, Kariyer Kapısı'ndan.",
+   "ozet": "TBMM Kamu Denetçiliği Kurumu 10 Kamu Denetçiliği Uzman Yardımcısı alacak (7 hukuk, 3 siyasal bilgiler/iktisat/işletme kökenli). Başvurular 9–22 Kasım 2026'da Kariyer Kapısı üzerinden yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
