@@ -4,6 +4,8 @@ Metin docs/portal.js 'bilgi/gizlilik' ve 'bilgi/hakkimizda' ile aynı tutulur.""
 
 ILETISIM = 'https://t.me/kpsstercihi'
 ILETISIM_EPOSTA = 'iletisim@kpsstercihi.com'   # Cloudflare Email Routing ile yönlenir; boşsa /iletisim/ sayfasında E-posta bölümü çıkmaz
+GUNCELLEME = '2026-11-10'   # sayfa metinleri değişince elle artırılır; sayfada "Son güncelleme" olarak görünür
+SEMA_TURU = {'hakkimizda': 'AboutPage', 'iletisim': 'ContactPage'}
 
 SAYFALAR = {
     'gizlilik': ('Gizlilik politikası', 'KPSS Tercihi gizlilik politikası: tarayıcıda saklanan bilgiler, çerezsiz ziyaret istatistikleri ve Google AdSense reklamları.',
@@ -46,6 +48,7 @@ SAYFALAR = {
          'kontenjan ve koşullar kaynağın sunduğu bilgilerle sınırlıdır.'),
         ('Ne sunuyoruz?', 'Açık ilanlar tek listede, son başvuru tarihine göre; kurum sayfaları, KPSS taban puanları ve tercih robotu. Yeni ilanlar '
          'Telegram kanalımızda (@kpsstercihi) da paylaşılır.'),
+        ('Kim hazırlıyor?', 'KPSS Tercihi bağımsız bir yayındır; içerikler “KPSS Tercihi Editörlüğü” adıyla yayımlanır. Herhangi bir kamu kurumuna, kursa ya da yayınevine bağlı değildir. Site ücretsizdir, üyelik istemez; giderleri reklam gelirleriyle karşılanır.'),
         ('Neden kuruldu?', "Kamu ilanları Kariyer Kapısı, İŞKUR, Kamu İlan ve Yerel Yönetimler gibi ayrı kaynaklarda, çoğu zaman uzun PDF belgeleri içinde yayımlanıyor. KPSS Tercihi bu ilanları tek listede toplar; kadroları ve koşulları okunur hâle getirir, ÖSYM'nin geçmiş yerleştirme verileriyle birlikte sunar."),
         ('İlanları nasıl hazırlıyoruz?', 'Kaynaklar gün içinde düzenli olarak taranır. İlan belgeleri otomatik araçlarla ve yapay zekâ desteğiyle okunur; kadro, koşul ve tarih bilgileri belgeyle karşılaştırılır. Aynı ilanın farklı kaynaklardaki kopyaları birleştirilir. Okunamayan ya da belirsiz bilgi tahmin edilmez, resmî belgeye yönlendirilir.'),
         ('Düzeltme ve iptaller', 'Bir ilan için iptal ya da düzeltme duyurusu yayımlandığında bu bilgi ilan sayfasına işlenir. Hatalı bir bilgi fark edersen iletişim sayfasından bildirebilirsin; kontrol edip düzeltiriz.'),
@@ -76,6 +79,17 @@ def _sayfalar():
                                     'Hatalı ilan bildirimi, öneri ya da iş birliği için bize ulaşabilirsin.', _iletisim_bolumleri()))
 
 
+def _sema(ad, base, canonical, baslik, aciklama):
+    """Hakkımızda ve İletişim için yayıncı kimliği (JSON-LD); diğer sayfalarda boş."""
+    if ad not in SEMA_TURU:
+        return ''
+    import json
+    import site_uret as su
+    ld = {'@context': 'https://schema.org', '@type': SEMA_TURU[ad], 'url': canonical, 'name': baslik, 'description': aciklama,
+          'inLanguage': 'tr', 'dateModified': GUNCELLEME, 'mainEntity': su.kurulus_ld(base)}
+    return '<script type="application/ld+json">' + json.dumps(ld, ensure_ascii=False).replace('</', '<\\/') + '</script>'
+
+
 def sayfa(ad, base):
     """(adres, html) — SSS sayfasıyla aynı kabuk."""
     import site_uret as su
@@ -83,8 +97,9 @@ def sayfa(ad, base):
     canonical = base + ad + '/'
     maddeler = ''.join(f'<section class="bolum"><h2>{su.esc(b[0])}</h2><p>{su.esc(b[1])}</p>{b[2] if len(b) > 2 else ""}</section>' for b in bolumler)
     maddeler += f'<p><a class="yazi-link" href="{ILETISIM}" target="_blank" rel="noopener">Telegram ↗</a></p>'
+    maddeler += f'<p class="muted">Son güncelleme: {su.tarih_yazi(GUNCELLEME)}</p>'
     html = (su.sayfa_basi(f'{baslik} — KPSS Tercihi', aciklama, su.esc(canonical), '../',
-                          ek_head=f'<meta property="og:url" content="{su.esc(canonical)}">')
+                          ek_head=f'<meta property="og:url" content="{su.esc(canonical)}">' + _sema(ad, base, canonical, baslik, aciklama))
             + f'<body class="kurum-page"><a class="skip" href="#icerik">İçeriğe geç</a>{su.ust_html("../")}'
             + '<section class="kp-hero"><div class="wrap"><nav class="crumbs" aria-label="Konum"><a href="../">Ana sayfa</a><span aria-hidden="true">/</span>'
             + f'<span>{su.esc(baslik)}</span></nav><h1>{su.esc(baslik)}</h1><p>{su.esc(giris)}</p></div></section>'

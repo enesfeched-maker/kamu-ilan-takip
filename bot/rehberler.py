@@ -853,7 +853,7 @@ def sayfa(r, base, acik=None):
             + f'<body class="kurum-page"><a class="skip" href="#icerik">İçeriğe geç</a>{su.ust_html(kok)}'
             + '<section class="kp-hero"><div class="wrap"><nav class="crumbs" aria-label="Konum"><a href="../../">Ana sayfa</a>'
               '<span aria-hidden="true">/</span><a href="../">Rehberler</a></nav>'
-            + f'<span class="eyebrow">Rehber</span><h1>{su.esc(baslik)}</h1><p>{su.esc(giris)}</p></div></section>'
+            + f'<span class="eyebrow">Rehber</span><h1>{su.esc(baslik)}</h1><p>{su.esc(giris)}</p>{su.kunye_html(kok, YAYIN, GUNCELLEME)}</div></section>'
             + f'<main id="icerik" class="wrap kp-main"><article>{govde}</article></main>{su.alt_html(kok)}</body></html>')
     return canonical, html
 
