@@ -500,17 +500,29 @@ def kare(sahneler, saniye):
         t -= sahne.sure
 
 
-def video_yaz(sahneler, yol, muzik=None, ffmpeg=None):
-    """MP4 (H.264, yuv420p, 30 fps). muzik yoksa sessiz iz eklenir (platformlar ses izi bekler)."""
+# Biçim başına sabit parça ve başlangıç saniyesi (parçanın girişi atlanır, en dolu bölümünden başlar).
+# Kaynak: mixkit.co, Mixkit Stock Music Free License (sosyal medya videosu ve ticari kullanım serbest, atıf gerekmez).
+MUZIK = {'sabah': ('mixkit-158-happy-times.mp3', 47.5),      # Alejandro Magaña – Happy Times, ~118 BPM
+         'ilan': ('mixkit-702-pop-09.mp3', 49.5),            # Grigoriy Nuzhny – Pop 09, ~96 BPM
+         'aksam': ('mixkit-443-serene-view.mp3', 45.2)}      # Arulo – Serene View, ~78 BPM
+
+
+def video_yaz(sahneler, yol, muzik=None, ffmpeg=None, muzik_bas=0.0):
+    """MP4 (H.264, yuv420p, 30 fps). muzik yoksa sessiz iz eklenir (platformlar ses izi bekler).
+    muzik_bas: parçanın kaçıncı saniyesinden başlanacağı."""
     import sosyal_tasarim
     if ffmpeg is None:
         import imageio_ffmpeg
         ffmpeg = imageio_ffmpeg.get_ffmpeg_exe()
     sure = video_suresi(sahneler)
     girdi, filtre = sosyal_tasarim.ses_girdisi(muzik, sure)
+    if muzik and muzik_bas:
+        girdi = ['-ss', f'{muzik_bas:.2f}', '-i', str(muzik)]   # döngü yok: seçilen bölüm videodan uzundur
+    if muzik:   # üç biçim aynı ses düzeyinde çıksın (-14 LUFS: Reels/Shorts/TikTok hedefi); başta 0,3 sn açılır, sonda 1 sn kısılır
+        filtre = ['-af', f'loudnorm=I=-14:TP=-1.5:LRA=11,afade=t=in:d=0.3,afade=t=out:st={max(0.0, sure - 1):.2f}:d=1']
     p = subprocess.Popen([ffmpeg, '-y', '-loglevel', 'error', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-s', f'{VW}x{VH}',
                           '-r', str(FPS), '-i', '-', *girdi, '-map', '0:v', '-map', '1:a', *filtre, '-t', f'{sure:.2f}',
-                          '-c:v', 'libx264', '-preset', 'medium', '-pix_fmt', 'yuv420p', '-crf', '20', '-c:a', 'aac', '-b:a', '160k',
+                          '-c:v', 'libx264', '-preset', 'medium', '-pix_fmt', 'yuv420p', '-crf', '20', '-c:a', 'aac', '-b:a', '160k', '-ar', '48000',
                           '-movflags', '+faststart', str(yol)], stdin=subprocess.PIPE)
     try:
         for im in kareler(sahneler):
