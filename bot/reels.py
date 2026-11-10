@@ -19,12 +19,45 @@ from pathlib import Path
 from PIL import Image, ImageChops, ImageDraw
 
 import kart_tasarimlari as k
-from kart_tasarimlari import F, AYLAR, PETROL, ANA, LIME, KIRMIZI, TURUNCU
+from kart_tasarimlari import F, AYLAR
 
 VW, VH, FPS = 1080, 1920, 30
 SOL, SAG = 72, 1008                 # yatay güvenli alan
 UST, ALT = 300, 1540                # Reels/TikTok arayüzünün örtmediği dikey alan
-KOYU, BEYAZ, SOLUK = '#0b2227', '#ffffff', '#b6cbcc'
+# Renk paletleri. Varsayılan PALET; yeni palet eklemek için buraya bir satır yeterli.
+#   zemin: üstten alta geçiş · yazi/soluk: ana ve ikincil metin · vurgu: iri sayı, başlık, dolu rozet · vurgu_ustu: vurgu
+#   üstündeki yazı · panel: kutu dolgusu · panel_cizgi: açık zeminde kutu kenarı · acil/yakin: kalan gün rozetleri
+PALETLER = {
+    'kagit': dict(zemin_ust=(247, 242, 232), zemin_alt=(238, 230, 214), yazi='#16130f', soluk='#6f675c', vurgu='#2337e6', vurgu_ustu='#ffffff',
+                  panel='#ffffff', panel_cizgi='#e0d6c2', cizgi=(214, 204, 186), cizgi2=(226, 217, 198), acil='#e03131', acil_ustu='#ffffff',
+                  yakin='#f08c00', yakin_ustu='#16130f'),
+    'gece': dict(zemin_ust=(34, 20, 58), zemin_alt=(17, 9, 32), yazi='#ffffff', soluk='#cbbfe0', vurgu='#ffb45c', vurgu_ustu='#21143a',
+                 panel='#36225a', panel_cizgi=None, cizgi=(78, 56, 116), cizgi2=(60, 41, 94), acil='#ff5d5d', acil_ustu='#ffffff',
+                 yakin='#ffe066', yakin_ustu='#21143a'),
+    'bordo': dict(zemin_ust=(236, 224, 202), zemin_alt=(224, 209, 182), yazi='#1b1410', soluk='#6d6052', vurgu='#8a1c2b', vurgu_ustu='#fff7ea',
+                  panel='#fbf5e9', panel_cizgi='#d6c6aa', cizgi=(201, 186, 160), cizgi2=(214, 200, 176), acil='#1b1410', acil_ustu='#fff7ea',
+                  yakin='#d9822b', yakin_ustu='#1b1410'),
+    'petrol': dict(zemin_ust=(16, 46, 53), zemin_alt=(9, 28, 33), yazi='#ffffff', soluk='#b6cbcc', vurgu='#c9f395', vurgu_ustu='#102e35',
+                   panel='#174c46', panel_cizgi=None, cizgi=(52, 92, 90), cizgi2=(31, 74, 70), acil='#d64545', acil_ustu='#ffffff',
+                   yakin='#e0a100', yakin_ustu='#102e35'),
+}
+PALET = 'petrol'
+
+
+class _Renkler:
+    def sec(self, ad):
+        self.__dict__.update(PALETLER[ad], ad=ad)
+
+
+R = _Renkler()
+R.sec(PALET)
+
+
+def palet_sec(ad):
+    """Sonraki videolar bu paletle çizilir (önizleme ve --palet için)."""
+    R.sec(ad)
+
+
 GUNLER = ('Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar')
 GIRIS, CIKIS = 0.38, 0.22           # öğe giriş ve sahne çıkış süresi (sn)
 SON_GUN_EN_COK, OZET_SATIR, OZET_SAHNE = 6, 3, 3
@@ -81,7 +114,8 @@ class Oge:
 class Sayac:
     """0'dan hedefe sayan iri sayı; her karede yeniden yazılır."""
 
-    def __init__(self, hedef, x, y, boy, renk=LIME, bas=0.1, sure=0.9, hiza='lt'):
+    def __init__(self, hedef, x, y, boy, renk=None, bas=0.1, sure=0.9, hiza='lt'):
+        renk = renk or R.vurgu
         self.hedef, self.x, self.y, self.boy, self.renk, self.bas, self.sure, self.hiza = hedef, x, y, boy, renk, bas, sure, hiza
 
     def ciz(self, im, t, cikis):
@@ -108,8 +142,9 @@ def binlik(n):
     return f'{int(n):,}'.replace(',', '.')
 
 
-def yazi(metin, boy, renk=BEYAZ, kalin=True, genislik=None, satir=1, aralik=1.14, hiza='l'):
+def yazi(metin, boy, renk=None, kalin=True, genislik=None, satir=1, aralik=1.14, hiza='l'):
     """Metin katmanı; genislik verilirse en çok `satir` satıra kaydırılır (sığmayan … ile kesilir)."""
+    renk = renk or R.yazi
     yz = F(boy, kalin)
     satirlar = k.lines(_OLC, str(metin), yz, genislik, satir) if genislik else [str(metin)]
     w = max(1, max(round(_OLC.textlength(s, font=yz)) for s in satirlar) + 4)
@@ -124,13 +159,14 @@ def yazi(metin, boy, renk=BEYAZ, kalin=True, genislik=None, satir=1, aralik=1.14
     return im
 
 
-def sigan_yazi(metin, boyutlar, genislik, satir, renk=BEYAZ):
+def sigan_yazi(metin, boyutlar, genislik, satir, renk=None):
     """Verilen boyutlardan satır sınırına sığan en büyüğüyle metin katmanı."""
     satirlar, yz = k.sigdir(_OLC, str(metin), True, boyutlar, genislik, satir)
     return yazi(' '.join(satirlar) if len(satirlar) == 1 else metin, yz.size, renk, genislik=genislik, satir=satir)
 
 
-def hap(metin, dolgu=LIME, renk=PETROL, boy=40, yuk=None, cizgi=None):
+def hap(metin, dolgu=None, renk=None, boy=40, yuk=None, cizgi=None):
+    dolgu, renk = dolgu or R.vurgu, renk or R.vurgu_ustu
     yz = F(boy, True)
     yuk = yuk or round(boy * 1.9)
     w = round(_OLC.textlength(metin, font=yz)) + round(boy * 1.5)
@@ -143,7 +179,9 @@ def hap(metin, dolgu=LIME, renk=PETROL, boy=40, yuk=None, cizgi=None):
     return im
 
 
-def panel(w, h, dolgu=ANA, yaricap=36, cizgi=None):
+def panel(w, h, dolgu=None, yaricap=36, cizgi=None):
+    if dolgu is None:
+        dolgu, cizgi = R.panel, cizgi or R.panel_cizgi
     kat = 2
     buyuk = Image.new('RGBA', (w * kat, h * kat), (0, 0, 0, 0))
     ImageDraw.Draw(buyuk).rounded_rectangle((0, 0, w * kat - 1, h * kat - 1), radius=yaricap * kat, fill=dolgu,
@@ -157,7 +195,7 @@ def logo_rozeti(ilan, logo, cap):
     im = Image.new('RGBA', (cap * kat, cap * kat), (0, 0, 0, 0))
     d = ImageDraw.Draw(im)
     if logo:
-        d.ellipse((0, 0, cap * kat - 1, cap * kat - 1), fill=BEYAZ)
+        d.ellipse((0, 0, cap * kat - 1, cap * kat - 1), fill='#ffffff', outline=R.panel_cizgi, width=2 * kat if R.panel_cizgi else 0)
         with Image.open(io.BytesIO(logo)) as m:
             m = m.convert('RGBA')
             beyaz = Image.new('RGBA', m.size, 'white')
@@ -169,8 +207,9 @@ def logo_rozeti(ilan, logo, cap):
             m = m.resize((max(1, round(m.width * o)), max(1, round(m.height * o))), Image.Resampling.LANCZOS)
         im.alpha_composite(m, ((cap * kat - m.width) // 2, (cap * kat - m.height) // 2))
     else:
-        with Image.open(io.BytesIO(k.bas_harf_amblemi(ilan.get('kurum') or '', cap * kat))) as a:
-            im.alpha_composite(a.convert('RGBA'))
+        d.ellipse((0, 0, cap * kat - 1, cap * kat - 1), fill=R.vurgu)   # logo yoksa baş harfler, palet renginde
+        harf = k.bas_harfler(ilan.get('kurum') or '')
+        d.text((cap * kat / 2, cap * kat / 2), harf, font=F(round(cap * kat * (0.42 if len(harf) < 3 else 0.32)), True), fill=R.vurgu_ustu, anchor='mm')
     return im.resize((cap, cap), Image.Resampling.LANCZOS)
 
 
@@ -180,10 +219,10 @@ def kalan_hapi(v, boy=44):
     if not metin:
         return None
     if v['kalan'] is not None and v['kalan'] <= 1:
-        return hap(metin, KIRMIZI, BEYAZ, boy)
+        return hap(metin, R.acil, R.acil_ustu, boy)
     if v['kalan'] is not None and v['kalan'] <= 6:
-        return hap(metin, TURUNCU, PETROL, boy)
-    return hap(metin, LIME, PETROL, boy)
+        return hap(metin, R.yakin, R.yakin_ustu, boy)
+    return hap(metin, R.vurgu, R.vurgu_ustu, boy)
 
 
 def kisa_kurum(ilan):
@@ -234,10 +273,10 @@ def gun_yazi(gun):
 def zemin():
     """Koyu petrol dikey geçiş + sağ üstte ince lime köşe çizgileri (sabit; her karede kopyalanır)."""
     im = Image.linear_gradient('L').resize((VW, VH))
-    im = Image.merge('RGB', [im.point(lambda p, a=a, b=b: round(a + (b - a) * p / 255)) for a, b in zip((16, 46, 53), (9, 28, 33))])
+    im = Image.merge('RGB', [im.point(lambda p, a=a, b=b: round(a + (b - a) * p / 255)) for a, b in zip(R.zemin_ust, R.zemin_alt)])
     d = ImageDraw.Draw(im)
     for n in range(3):
-        d.line((VW - 260 + n * 70, 0, VW, 260 - n * 70), fill=(31, 74, 70), width=3)
+        d.line((VW - 260 + n * 70, 0, VW, 260 - n * 70), fill=R.cizgi2, width=3)
     return im
 
 
@@ -248,27 +287,27 @@ def ust_serit(im, sahne_no, sahne_sayisi, oran):
     w = (SAG - SOL - bosluk * (sahne_sayisi - 1)) / sahne_sayisi
     for n in range(sahne_sayisi):
         x = SOL + n * (w + bosluk)
-        d.rounded_rectangle((x, y, x + w, y + 8), radius=4, fill=(52, 92, 90))
+        d.rounded_rectangle((x, y, x + w, y + 8), radius=4, fill=R.cizgi)
         dolu = 1.0 if n < sahne_no else oran if n == sahne_no else 0.0
         if dolu > 0:
-            d.rounded_rectangle((x, y, x + max(8, w * dolu), y + 8), radius=4, fill=LIME)
+            d.rounded_rectangle((x, y, x + max(8, w * dolu), y + 8), radius=4, fill=R.vurgu)
     logo = k.logo_kare(56)
     if logo is not None:
         im.paste(logo, (SOL, 232), logo)
-    d.text((SOL + 72, 260), 'KPSS Tercihi', font=F(34, True), fill=BEYAZ, anchor='lm')
+    d.text((SOL + 72, 260), 'KPSS Tercihi', font=F(34, True), fill=R.yazi, anchor='lm')
 
 
 def kapanis_sahnesi(ust_satir, sure=3.0):
     """Son sahne: adres ve Telegram; sahne çıkışı yoktur (video bu karede biter)."""
-    o = [Oge(yazi(ust_satir, 52, SOLUK, genislik=SAG - SOL, satir=2, hiza='m'), SOL, 560, 0.0),
-         Oge(yazi('TÜM İLANLAR', 104, BEYAZ, genislik=SAG - SOL, hiza='m'), SOL, 720, 0.12),
-         Oge(yazi('TEK YERDE', 104, LIME, genislik=SAG - SOL, hiza='m'), SOL, 840, 0.22)]
-    adres = panel(SAG - SOL, 150, LIME, 44)
-    ImageDraw.Draw(adres).text((adres.width / 2, 76), 'kpsstercihi.com', font=F(72, True), fill=PETROL, anchor='mm')
+    o = [Oge(yazi(ust_satir, 52, R.soluk, genislik=SAG - SOL, satir=2, hiza='m'), SOL, 560, 0.0),
+         Oge(yazi('TÜM İLANLAR', 104, R.yazi, genislik=SAG - SOL, hiza='m'), SOL, 720, 0.12),
+         Oge(yazi('TEK YERDE', 104, R.vurgu, genislik=SAG - SOL, hiza='m'), SOL, 840, 0.22)]
+    adres = panel(SAG - SOL, 150, R.vurgu, 44)
+    ImageDraw.Draw(adres).text((adres.width / 2, 76), 'kpsstercihi.com', font=F(72, True), fill=R.vurgu_ustu, anchor='mm')
     o.append(Oge(adres, SOL, 1040, 0.45, 'buyu'))
-    tg = hap('Telegram: @kpsstercihi', ANA, BEYAZ, 44, cizgi=LIME)
+    tg = hap('Telegram: @kpsstercihi', R.panel, R.yazi, 44, cizgi=R.vurgu)
     o.append(Oge(tg, (VW - tg.width) / 2, 1240, 0.7))
-    o.append(Oge(yazi('Kaydet, son güne kalmasın', 44, SOLUK, genislik=SAG - SOL, hiza='m'), SOL, 1400, 0.95))
+    o.append(Oge(yazi('Kaydet, son güne kalmasın', 44, R.soluk, genislik=SAG - SOL, hiza='m'), SOL, 1400, 0.95))
     return Sahne(sure, o, son=True)
 
 
@@ -277,7 +316,7 @@ def ilan_kutusu(ilan, logo, simdi, y, bas, sira=None):
     v = k.veri(ilan, logo, simdi)
     o = []
     if sira:
-        o.append(Oge(hap(sira, ANA, SOLUK, 34, cizgi=(52, 92, 90)), SOL, y, bas))
+        o.append(Oge(hap(sira, R.panel, R.soluk, 34, cizgi=R.cizgi), SOL, y, bas))
     rozet = kalan_hapi(v, 48)
     if rozet:
         o.append(Oge(rozet, SAG - rozet.width, y - 8, bas + 0.05, 'buyu'))
@@ -287,24 +326,24 @@ def ilan_kutusu(ilan, logo, simdi, y, bas, sira=None):
     o.append(Oge(ad, SOL + 230, y + max(0, (190 - ad.height) // 2), bas + 0.18, 'sol'))
     y += 250
     sayi, alt = ne_alinacak(v)
-    kutu = panel(SAG - SOL, 330, ANA, 44)
+    kutu = panel(SAG - SOL, 330, yaricap=44)
     o.append(Oge(kutu, SOL, y, bas + 0.28))
     if sayi:
-        o.append(Sayac(sayi, SOL + 48, y + 28, 170, LIME, bas + 0.34, 0.7))
-        o.append(Oge(yazi(alt, 50, BEYAZ), SOL + 52, y + 232, bas + 0.4))
+        o.append(Sayac(sayi, SOL + 48, y + 28, 170, R.vurgu, bas + 0.34, 0.7))
+        o.append(Oge(yazi(alt, 50, R.yazi), SOL + 52, y + 232, bas + 0.4))
     else:
-        o.append(Oge(sigan_yazi(alt, [84, 70, 58], SAG - SOL - 100, 3, LIME), SOL + 48, y + 40, bas + 0.34))
+        o.append(Oge(sigan_yazi(alt, [84, 70, 58], SAG - SOL - 100, 3, R.vurgu), SOL + 48, y + 40, bas + 0.34))
     y += 370
     adlar = ', '.join(a for _, a in kadro_satirlari(v, 4))
     if sayi and adlar:
-        o.append(Oge(yazi(adlar, 44, BEYAZ, genislik=SAG - SOL, satir=2), SOL, y, bas + 0.5))
+        o.append(Oge(yazi(adlar, 44, R.yazi, genislik=SAG - SOL, satir=2), SOL, y, bas + 0.5))
         y += 130
     kosul = ' · '.join(p for p in (' · '.join(v['duzeyler']), v['kpss']) if p)
     if kosul:
-        o.append(Oge(yazi(kosul, 40, SOLUK, False, genislik=SAG - SOL, satir=2), SOL, y, bas + 0.6))
+        o.append(Oge(yazi(kosul, 40, R.soluk, False, genislik=SAG - SOL, satir=2), SOL, y, bas + 0.6))
         y += 120
     if v['tarih']:
-        o.append(Oge(yazi('Son başvuru: ' + v['tarih'], 44, LIME, genislik=SAG - SOL, satir=1), SOL, min(y + 10, ALT - 70), bas + 0.7))
+        o.append(Oge(yazi('Son başvuru: ' + v['tarih'], 44, R.vurgu, genislik=SAG - SOL, satir=1), SOL, min(y + 10, ALT - 70), bas + 0.7))
     return o
 
 
@@ -326,12 +365,12 @@ def son_gun_videosu(ilanlar, toplam, simdi, logo=lambda i: None):
     bugun, yarin = kalanlar.count(0), kalanlar.count(1)
     ozet = ' · '.join(p for p in (f'bugün {bugun}' if bugun else '', f'yarın {yarin}' if yarin else '',
                                   f'{toplam - bugun - yarin} ilan birkaç gün içinde' if toplam - bugun - yarin > 0 else '') if p)
-    giris = [Oge(hap(gun_yazi(simdi), ANA, BEYAZ, 40, cizgi=LIME), SOL, 420, 0.0, 'buyu'),
-             Oge(yazi('SON GÜNÜ', 132, BEYAZ), SOL, 560, 0.1, 'sol'),
-             Oge(yazi('YAKLAŞAN', 132, BEYAZ), SOL, 710, 0.2, 'sol'),
-             Sayac(toplam, SOL, 880, 300, LIME, 0.3, 0.7),
-             Oge(yazi('İLAN', 132, LIME), SOL + round(_OLC.textlength(binlik(toplam), font=F(300, True))) + 36, 1030, 0.5, 'sol'),
-             Oge(yazi(ozet[0].upper() + ozet[1:] if ozet else '', 46, SOLUK, genislik=SAG - SOL, satir=2), SOL, 1290, 0.75)]
+    giris = [Oge(hap(gun_yazi(simdi), R.panel, R.yazi, 40, cizgi=R.vurgu), SOL, 420, 0.0, 'buyu'),
+             Oge(yazi('SON GÜNÜ', 132, R.yazi), SOL, 560, 0.1, 'sol'),
+             Oge(yazi('YAKLAŞAN', 132, R.yazi), SOL, 710, 0.2, 'sol'),
+             Sayac(toplam, SOL, 880, 300, R.vurgu, 0.3, 0.7),
+             Oge(yazi('İLAN', 132, R.vurgu), SOL + round(_OLC.textlength(binlik(toplam), font=F(300, True))) + 36, 1030, 0.5, 'sol'),
+             Oge(yazi(ozet[0].upper() + ozet[1:] if ozet else '', 46, R.soluk, genislik=SAG - SOL, satir=2), SOL, 1290, 0.75)]
     sahneler = [Sahne(2.4, giris)]
     for n, i in enumerate(ilanlar, 1):
         sahneler.append(Sahne(2.7, ilan_kutusu(i, logo(i), simdi, 400, 0.0, f'{n} / {len(ilanlar)}')))
@@ -345,60 +384,60 @@ def ilan_videosu(ilan, simdi, logo=None):
     v = k.veri(ilan, logo, simdi)
     sayi, alt = ne_alinacak(v)
     # Sahne 1: kim, kaç kişi
-    o = [Oge(hap('YENİ İLAN', LIME, PETROL, 46), SOL, 400, 0.0, 'buyu'),
+    o = [Oge(hap('YENİ İLAN', R.vurgu, R.vurgu_ustu, 46), SOL, 400, 0.0, 'buyu'),
          Oge(logo_rozeti(ilan, logo, 230), SOL, 540, 0.1, 'buyu')]
     ad = sigan_yazi(kisa_kurum(ilan), [68, 60, 52], SAG - SOL, 3)
     o.append(Oge(ad, SOL, 810, 0.2, 'sol'))
     y = 810 + ad.height + 30
     if sayi:
-        o += [Sayac(sayi, SOL, y, 320, LIME, 0.35, 0.8), Oge(yazi(alt, 76, BEYAZ), SOL, y + 400, 0.55)]
+        o += [Sayac(sayi, SOL, y, 320, R.vurgu, 0.35, 0.8), Oge(yazi(alt, 76, R.yazi), SOL, y + 400, 0.55)]
     else:
-        o.append(Oge(sigan_yazi(alt, [120, 100, 84, 70], SAG - SOL, 3, LIME), SOL, y + 20, 0.35))
+        o.append(Oge(sigan_yazi(alt, [120, 100, 84, 70], SAG - SOL, 3, R.vurgu), SOL, y + 20, 0.35))
     sahneler = [Sahne(2.6, o)]
     # Sahne 2: kadrolar
     satirlar = kadro_satirlari(v, 5)
     if satirlar:
-        o = [Oge(yazi('HANGİ KADROLAR?', 60, LIME), SOL, 400, 0.0, 'sol')]
+        o = [Oge(yazi('HANGİ KADROLAR?', 60, R.vurgu), SOL, 400, 0.0, 'sol')]
         for n, (adet, kad) in enumerate(satirlar):
-            kutu = panel(SAG - SOL, 170, ANA, 36)
+            kutu = panel(SAG - SOL, 170, yaricap=36)
             d = ImageDraw.Draw(kutu)
             x = 44
             if adet:
-                d.text((x, 85), binlik(adet), font=F(76, True), fill=LIME, anchor='lm')
+                d.text((x, 85), binlik(adet), font=F(76, True), fill=R.vurgu, anchor='lm')
                 x += round(d.textlength(binlik(adet), font=F(76, True))) + 32
             s, yz = k.sigdir(d, kad, True, [50, 44, 38], kutu.width - x - 40, 2)
             for m, satir in enumerate(s):
-                d.text((x, 85 + (m - (len(s) - 1) / 2) * yz.size * 1.15), satir, font=yz, fill=BEYAZ if adet is not None or len(satirlar) == 1 else SOLUK, anchor='lm')
+                d.text((x, 85 + (m - (len(s) - 1) / 2) * yz.size * 1.15), satir, font=yz, fill=R.yazi if adet is not None or len(satirlar) == 1 else R.soluk, anchor='lm')
             o.append(Oge(kutu, SOL, 520 + n * 194, 0.15 + n * 0.16))
         sahneler.append(Sahne(1.6 + 0.45 * len(satirlar), o))
     # Sahne 3: kimler başvurabilir
     kosullar = kosul_satirlari(v)
     if kosullar:
-        o = [Oge(yazi('KİMLER', 96, BEYAZ), SOL, 400, 0.0, 'sol'), Oge(yazi('BAŞVURABİLİR?', 96, LIME), SOL, 510, 0.1, 'sol')]
+        o = [Oge(yazi('KİMLER', 96, R.yazi), SOL, 400, 0.0, 'sol'), Oge(yazi('BAŞVURABİLİR?', 96, R.vurgu), SOL, 510, 0.1, 'sol')]
         for n, (etiket, deger) in enumerate(kosullar):
-            kutu = panel(SAG - SOL, 220, ANA, 36)
+            kutu = panel(SAG - SOL, 220, yaricap=36)
             d = ImageDraw.Draw(kutu)
-            d.text((44, 34), k.tr_buyuk(etiket), font=F(34, True), fill=SOLUK)
+            d.text((44, 34), k.tr_buyuk(etiket), font=F(34, True), fill=R.soluk)
             s, yz = k.sigdir(d, deger, True, [60, 52, 44, 38], kutu.width - 88, 2)
-            k.blok(d, 44, 92 if len(s) == 1 else 82, s, yz, BEYAZ, aralik=round(yz.size * 1.12))
+            k.blok(d, 44, 92 if len(s) == 1 else 82, s, yz, R.yazi, aralik=round(yz.size * 1.12))
             o.append(Oge(kutu, SOL, 700 + n * 248, 0.3 + n * 0.2))
         sahneler.append(Sahne(2.9, o))
     # Sahne 4: son başvuru + adres (video burada biter)
-    o = [Oge(yazi('SON BAŞVURU', 60, LIME), SOL, 400, 0.0, 'sol')]
+    o = [Oge(yazi('SON BAŞVURU', 60, R.vurgu), SOL, 400, 0.0, 'sol')]
     y = 520
     bitis, saatli = k._bitis(ilan)
     if bitis:
-        o.append(Oge(yazi(f'{bitis.day} {AYLAR[bitis.month - 1]}', 190, BEYAZ), SOL, y, 0.12))
-        o.append(Oge(yazi(GUNLER[bitis.weekday()] + (f' · {bitis:%H:%M}' if saatli else ''), 56, SOLUK), SOL, y + 240, 0.24))
+        o.append(Oge(yazi(f'{bitis.day} {AYLAR[bitis.month - 1]}', 190, R.yazi), SOL, y, 0.12))
+        o.append(Oge(yazi(GUNLER[bitis.weekday()] + (f' · {bitis:%H:%M}' if saatli else ''), 56, R.soluk), SOL, y + 240, 0.24))
         rozet = kalan_hapi(v, 56)
         if rozet:
             o.append(Oge(rozet, SOL, y + 360, 0.4, 'buyu'))
         y += 520
-    kutu = panel(SAG - SOL, 300, LIME, 44)
+    kutu = panel(SAG - SOL, 300, R.vurgu, 44)
     d = ImageDraw.Draw(kutu)
-    d.text((48, 44), 'Şartların tamamı ve başvuru bağlantısı', font=F(38, True), fill=PETROL)
-    d.text((48, 108), 'kpsstercihi.com', font=F(84, True), fill=PETROL)
-    d.text((48, 226), 'Telegram: @kpsstercihi', font=F(38, True), fill=ANA)
+    d.text((48, 44), 'Şartların tamamı ve başvuru bağlantısı', font=F(38, True), fill=R.vurgu_ustu)
+    d.text((48, 108), 'kpsstercihi.com', font=F(84, True), fill=R.vurgu_ustu)
+    d.text((48, 226), 'Telegram: @kpsstercihi', font=F(38, True), fill=R.vurgu_ustu)
     o.append(Oge(kutu, SOL, min(y, ALT - 320), 0.6, 'buyu'))
     sahneler.append(Sahne(3.2, o, son=True))
     return sahneler
@@ -415,16 +454,16 @@ def bugunun_ilanlari(acik, simdi):
 
 def ozet_satiri(ilan, logo, simdi):
     v = k.veri(ilan, logo, simdi)
-    kutu = panel(SAG - SOL, 300, ANA, 40)
+    kutu = panel(SAG - SOL, 300, yaricap=40)
     kutu.alpha_composite(logo_rozeti(ilan, logo, 150), (36, 36))
     d = ImageDraw.Draw(kutu)
     s, yz = k.sigdir(d, kisa_kurum(ilan), True, [46, 40, 36], kutu.width - 240, 2)
-    k.blok(d, 216, 40 if len(s) > 1 else 66, s, yz, BEYAZ, aralik=round(yz.size * 1.12))
+    k.blok(d, 216, 40 if len(s) > 1 else 66, s, yz, R.yazi, aralik=round(yz.size * 1.12))
     ne = k.lines(d, kisa_ne(v), F(42, True), kutu.width - 72, 1)[0]
-    d.text((36, 212), ne, font=F(42, True), fill=LIME)
+    d.text((36, 212), ne, font=F(42, True), fill=R.vurgu)
     bitis, _ = k._bitis(ilan)
     if bitis:
-        d.text((216, 150 if len(s) > 1 else 136), f'Son başvuru {bitis.day} {AYLAR[bitis.month - 1]}', font=F(34), fill=SOLUK)
+        d.text((216, 150 if len(s) > 1 else 136), f'Son başvuru {bitis.day} {AYLAR[bitis.month - 1]}', font=F(34), fill=R.soluk)
     return kutu
 
 
@@ -442,18 +481,18 @@ def ozet_videosu(ilanlar, simdi, logo=lambda i: None):
     kadro = sum(k.veri(i, None, simdi)['toplam'] or 0 for i in ilanlar)
     kurum = len({k._norm(i.get('kurum') or '') for i in ilanlar})
     n = len(ilanlar)
-    o = [Oge(hap(gun_yazi(simdi), ANA, BEYAZ, 40, cizgi=LIME), SOL, 420, 0.0, 'buyu'),
-         Oge(yazi('BUGÜN', 132, BEYAZ), SOL, 560, 0.1, 'sol'),
-         Sayac(n, SOL, 720, 300, LIME, 0.25, 0.7),
-         Oge(yazi('YENİ', 110, LIME), SOL + round(_OLC.textlength(binlik(n), font=F(300, True))) + 36, 790, 0.4, 'sol'),
-         Oge(yazi('İLAN', 110, LIME), SOL + round(_OLC.textlength(binlik(n), font=F(300, True))) + 36, 910, 0.48, 'sol')]
+    o = [Oge(hap(gun_yazi(simdi), R.panel, R.yazi, 40, cizgi=R.vurgu), SOL, 420, 0.0, 'buyu'),
+         Oge(yazi('BUGÜN', 132, R.yazi), SOL, 560, 0.1, 'sol'),
+         Sayac(n, SOL, 720, 300, R.vurgu, 0.25, 0.7),
+         Oge(yazi('YENİ', 110, R.vurgu), SOL + round(_OLC.textlength(binlik(n), font=F(300, True))) + 36, 790, 0.4, 'sol'),
+         Oge(yazi('İLAN', 110, R.vurgu), SOL + round(_OLC.textlength(binlik(n), font=F(300, True))) + 36, 910, 0.48, 'sol')]
     x = SOL
     for m, (deger, etiket) in enumerate(((kadro, 'kadro'), (kurum, 'kurum'))):
         if deger:
-            kutu = panel(450, 230, ANA, 40)
+            kutu = panel(450, 230, yaricap=40)
             d = ImageDraw.Draw(kutu)
-            d.text((40, 30), binlik(deger), font=F(104, True), fill=BEYAZ)
-            d.text((40, 160), etiket, font=F(40, True), fill=SOLUK)
+            d.text((40, 30), binlik(deger), font=F(104, True), fill=R.yazi)
+            d.text((40, 160), etiket, font=F(40, True), fill=R.soluk)
             o.append(Oge(kutu, x, 1170, 0.7 + m * 0.14))
             x += 486
     sahneler = [Sahne(2.8, o)]
@@ -461,8 +500,8 @@ def ozet_videosu(ilanlar, simdi, logo=lambda i: None):
     s = 0
     for boy in parcala(len(gosterilen)):
         parca = gosterilen[s:s + boy]
-        o = [Oge(yazi('BUGÜN AÇILANLAR', 56, LIME), SOL, 400, 0.0, 'sol'),
-             Oge(hap(f'{s + 1}–{s + len(parca)} / {n}', ANA, SOLUK, 34, cizgi=(52, 92, 90)), SAG - 230, 400, 0.0)]
+        o = [Oge(yazi('BUGÜN AÇILANLAR', 56, R.vurgu), SOL, 400, 0.0, 'sol'),
+             Oge(hap(f'{s + 1}–{s + len(parca)} / {n}', R.panel, R.soluk, 34, cizgi=R.cizgi), SAG - 230, 400, 0.0)]
         for m, i in enumerate(parca):
             o.append(Oge(ozet_satiri(i, logo(i), simdi), SOL, 520 + m * 330, 0.15 + m * 0.22))
         sahneler.append(Sahne(1.9 + 0.7 * len(parca), o))
@@ -678,5 +717,7 @@ if __name__ == '__main__':
     a.add_argument('--id')
     a.add_argument('--cikti', default='reels-cikti')
     a.add_argument('--muzik')
+    a.add_argument('--palet', choices=sorted(PALETLER), default=PALET)
     s = a.parse_args()
+    palet_sec(s.palet)
     uret(s.tur, s.cikti, ilan_id=s.id, muzik=s.muzik)
