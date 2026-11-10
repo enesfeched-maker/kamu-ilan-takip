@@ -122,5 +122,48 @@ class GercekOrnekTest(unittest.TestCase):
         self.assertEqual((makale['datePublished'], makale['dateModified']), (uygulamali_rehberler.TARIH, '2026-11-10'))
 
 
+class NitelikOrnegiTest(unittest.TestCase):
+    """Nitelik kodu rehberindeki iki örnek KPSS-2026/1 Tablo-3'ün gerçek satırlarıdır (kılavuz PDF'inden doğrulandı, 10 Kasım 2026)."""
+
+    def setUp(self):
+        self.govde = next(r for r in uygulamali_rehberler.icerikler() if r['slug'] == 'kpss-nitelik-kodu-nasil-okunur')['body']
+        puan = KOK / 'docs' / 'puanlar'
+        self.satirlar = {r['kod']: r for r in json.loads((puan / 'lisans.json').read_text(encoding='utf-8'))['donemler']['2026-1']}
+        bolum = json.loads((puan / 'lisans-bolum.json').read_text(encoding='utf-8'))
+        self.program = lambda kod: [bolum['bolumler'][b] for b in bolum['nitelikler']['2026-1'][kod]]
+
+    def test_temsili_ornek_kalmadi(self):
+        self.assertNotIn('Temsili örnek', self.govde)
+        self.assertNotIn('gerçek bir alım duyurusu değildir', self.govde)
+
+    def test_kimyager_satiri(self):
+        r = self.satirlar['301014630']
+        self.assertEqual((r['kurum'], r['il'], r['unvan'], r['kontenjan'], r['nit']),
+                         ('ELEKTRİK ÜRETİM A.Ş. GENEL MÜDÜRLÜĞÜ', 'ANKARA', 'KİMYAGER', 2, ['4559', '4569']))
+        self.assertEqual((self.program('4559'), self.program('4569')), (['KİMYA'], ['BİYOKİMYA']))
+        self.assertIn('ÖSYM kodu 301014630', self.govde)
+        self.assertIn('Ankara’daki 2 kişilik Kimyager pozisyonunda aranan nitelikler 4559 ve 4569’dur', self.govde)
+
+    def test_avukat_satiri(self):
+        r = self.satirlar['301014595']
+        self.assertEqual((r['kurum'], r['il'], r['unvan']), ('DEVLET SU İŞLERİ GENEL MÜDÜRLÜĞÜ', 'ARTVİN', 'AVUKAT'))
+        self.assertEqual(r['nit'], ['4419'])   # veri yalnız öğrenim kodunu tutar; 7205, 7257, 7361 kılavuz satırından okundu
+        self.assertEqual(self.program('4419'), ['HUKUK'])
+        self.assertIn('Artvin’deki Avukat kadrosunda dört kod var: 4419, 7205, 7257 ve 7361', self.govde)
+
+
+class AracSayfasiTest(unittest.TestCase):
+    """İçeriği tarayıcıda oluşan araç sayfalarında reklam betiği yok; /bolum/ ayrıca dizin dışı (AdSense, 10 Kasım 2026)."""
+
+    def test_reklamsiz_araclar(self):
+        for yol in ('bolum', 'katiplik/oyunlar', 'katiplik/antrenman', 'katiplik/dersler'):
+            t = (KOK / 'docs' / yol / 'index.html').read_text(encoding='utf-8')
+            self.assertNotIn('adsbygoogle.js', t, yol)
+            self.assertIn('google-adsense-account', t, yol)   # doğrulama etiketi kalır
+        self.assertIn('<meta name="robots" content="noindex,follow">', (KOK / 'docs' / 'bolum' / 'index.html').read_text(encoding='utf-8'))
+        for yol in ('katiplik/oyunlar', 'katiplik/antrenman', 'katiplik/dersler', 'katiplik'):
+            self.assertNotIn('noindex', (KOK / 'docs' / yol / 'index.html').read_text(encoding='utf-8'), yol)
+
+
 if __name__ == '__main__':
     unittest.main()

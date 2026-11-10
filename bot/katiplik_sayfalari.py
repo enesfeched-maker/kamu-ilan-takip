@@ -74,9 +74,13 @@ def _sss_html(esc, sorular):
             + ''.join(f'<h3>{esc(s)}</h3><p>{esc(c)}</p>' for s, c in sorular) + '</section>')
 
 
-def _kabuk(su, baslik, aciklama, canonical, kok, kirinti_html, eyebrow, h1, giris, govde, ld, og_tur='article'):
+METIN_DIZINDE = False   # 30 metin sayfasının yarısı Bakanlığın metni, kalanı ortak şablon: açık kalır, dizine ve reklama girmez (AdSense, 10 Kasım 2026)
+
+
+def _kabuk(su, baslik, aciklama, canonical, kok, kirinti_html, eyebrow, h1, giris, govde, ld, og_tur='article', dizin=True):
     ek = (f'<meta property="og:url" content="{su.esc(canonical)}"><meta property="og:image" content="{su.BASE}{OG_GORSEL}">'
-          f'<meta name="twitter:card" content="summary_large_image">{STIL}{_ld(ld)}')
+          f'<meta name="twitter:card" content="summary_large_image">{STIL}{_ld(ld)}'
+          + ('' if dizin else '<meta name="robots" content="noindex,follow">'))
     return (su.sayfa_basi(baslik, aciklama, su.esc(canonical), kok, og_tur, ek_head=ek)
             + f'<body class="kurum-page katip-sayfa"><a class="skip" href="#icerik">İçeriğe geç</a>{su.ust_html(kok, "katiplik")}'
             + f'<section class="kp-hero"><div class="wrap"><nav class="crumbs" aria-label="Konum">{kirinti_html}</nav>'
@@ -145,7 +149,7 @@ def metin_sayfasi(su, base, metinler, i):
            f'<span aria-hidden="true">/</span><a href="../">Sınav metinleri</a>')
     return canonical, _kabuk(su, baslik, aciklama, canonical, kok, kir, 'Zabıt katipliği 2025 · resmî metin', f'2025 sınav metni {no}',
                              f'Bakanlığın 2025 zabıt katibi uygulamalı sınavı için yayımladığı {no}. metin. Oku, sonra aynı metinle 3 dakikalık simülasyonu çöz.',
-                             govde, ld)
+                             govde, ld, dizin=METIN_DIZINDE)
 
 
 def dizin_sayfasi(su, base, metinler):
@@ -307,20 +311,21 @@ def rehber_sayfasi(su, base):
 
 
 def yaz(docs, base):
-    """Katiplik SEO sayfalarını yazar; site haritası için adresleri döner."""
+    """Katiplik SEO sayfalarını yazar; site haritası için (dizinlenen) adresleri döner."""
     import site_uret as su
     docs = Path(docs)
     metinler = metinleri_oku(docs)
     adresler = []
 
-    def kaydet(yol, sonuc):
+    def kaydet(yol, sonuc, dizin=True):
         url, html = sonuc
         (docs / yol).mkdir(parents=True, exist_ok=True)
         (docs / yol / 'index.html').write_text(html, encoding='utf-8')
-        adresler.append(url)
+        if dizin:
+            adresler.append(url)
     kaydet('katiplik/sinav-metinleri', dizin_sayfasi(su, base, metinler))
     for i in range(len(metinler)):
-        kaydet(f'katiplik/sinav-metinleri/metin-{i + 1}', metin_sayfasi(su, base, metinler, i))
+        kaydet(f'katiplik/sinav-metinleri/metin-{i + 1}', metin_sayfasi(su, base, metinler, i), METIN_DIZINDE)
     kaydet('katiplik/degerlendirme-kriterleri', kriter_sayfasi(su, base))
     kaydet('katiplik/klavye-sinavi-rehberi', rehber_sayfasi(su, base))
     return adresler

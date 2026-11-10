@@ -33,7 +33,8 @@ class KatiplikSayfalari(unittest.TestCase):
             (Path(d) / 'katiplik' / 'metin').mkdir(parents=True)
             (Path(d) / 'katiplik' / 'metin' / 'zk2025.js').write_text((DOCS / 'katiplik' / 'metin' / 'zk2025.js').read_text(encoding='utf-8'), encoding='utf-8')
             adresler = katiplik_sayfalari.yaz(d, su.BASE)
-            self.assertEqual(len(adresler), 33)
+            self.assertEqual(len(adresler), 3)   # 30 metin sayfası yazılır ama haritaya girmez
+            self.assertFalse(any('/metin-' in a for a in adresler))
             self.assertTrue((Path(d) / 'katiplik' / 'sinav-metinleri' / 'metin-30' / 'index.html').exists())
             self.assertIn(su.BASE + 'katiplik/degerlendirme-kriterleri/', adresler)
 
@@ -47,6 +48,10 @@ class KatiplikSayfalari(unittest.TestCase):
         self.assertIn('../../../sayfa.css', html)   # ortalama uzunlukta ondalık değiştirme yolları bozmasın
         tipler = [g['@type'] for b in ld_bloklari(html) for g in b['@graph']]
         self.assertEqual(tipler, ['Article', 'BreadcrumbList'])
+        self.assertIn('<meta name="robots" content="noindex,follow">', html)   # resmî metnin kopyası: dizin ve reklam dışı
+        self.assertNotIn('adsbygoogle.js', html)
+        _, dizin = katiplik_sayfalari.dizin_sayfasi(su, su.BASE, self.metinler)
+        self.assertNotIn('noindex', dizin)
 
     def test_kriter_sayfasi_hesaplayici_ve_sss(self):
         _, html = katiplik_sayfalari.kriter_sayfasi(su, su.BASE)
