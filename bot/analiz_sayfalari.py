@@ -249,6 +249,12 @@ def taban_degisimi(veriler):
             'bulgular': bulgular, 'bolumler': bolumler, 'kaynak': KAYNAK_OSYM, 'ozet': bulgular[0]}
 
 
+def _il_baglantisi(il):
+    """İl adı, kalıcı il sayfasına (/il/<slug>/) bağlantılı; her ilin sayfası vardır (il_sayfalari.yaz)."""
+    import kurum_sayfasi as ks
+    return f'<a href="../../il/{esc(ks._ascii_slug(il))}/">{esc(il)}</a>'
+
+
 def il_il(veriler):
     bulgular, bolumler = [], []
     for slug, (ad, donemler) in _kuruldu(veriler).items():
@@ -260,7 +266,7 @@ def il_il(veriler):
         dusuk, yuksek = uc_uclar(oz, 5)
         if dusuk:
             bulgular.append(f'{ad} ({aralik}): medyan en küçük puanı en düşük iller {adlar_cumlesi(dusuk, "il")}; en yüksek iller {adlar_cumlesi(yuksek, "il")}.')
-        tablo = _tablo(['İl', 'Kadro satırı', 'Kontenjan', 'Medyan en küçük puan'], [[esc(o['il']), tam(o['satir']), tam(o['kontenjan']), _p(o['med'])] for o in oz])
+        tablo = _tablo(['İl', 'Kadro satırı', 'Kontenjan', 'Medyan en küçük puan'], [[_il_baglantisi(o['il']), tam(o['satir']), tam(o['kontenjan']), _p(o['med'])] for o in oz])
         bolumler.append((f'{ad}: iller ({aralik})', tablo + f'<p class="kp-note">En az {IL_ESIK} kadro satırı olan {tam(len(oz))} il listelenir; puanı olmayan satırlar medyana girmez.</p>'))
     if not bolumler:
         return None

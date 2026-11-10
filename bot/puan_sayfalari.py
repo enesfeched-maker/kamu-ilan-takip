@@ -14,6 +14,7 @@ from kurum_sayfasi import _ascii_slug
 DUZEYLER = (('lisans', 'Lisans'), ('onlisans', 'Önlisans'), ('ortaogretim', 'Ortaöğretim'))
 MIN_SATIR = 3
 MIN_DIZIN_SATIR = 5
+ACIK_N = 15   # kadro ve düzey sayfasında gösterilen en çok açık ilan
 KLASOR = 'kpss-taban-puanlari'
 NOT = 'Veriler ÖSYM\'nin yayımladığı sayısal bilgilerden derlenmiştir; resmî sonuç için ÖSYM\'yi kontrol edin.'
 
@@ -179,6 +180,23 @@ def _hero(kirinti_html, baslik, giris):
 
 
 # ------------------------------------------------------------------ sayfalar
+def acik_kadro_ilanlari(adaylar, duzey_slug, unvan=None, en_cok=ACIK_N):
+    """adaylar: başvurusu açık liste kayıtları (son tarihe göre sıralı). Düzeyi açıkça `duzey_slug` olan, `unvan` verilmişse
+    kadro unvanlarından biri onunla birebir aynı olan ilanlar; benzerlik ya da tahmin yok."""
+    sade = lambda s: _kucuk(' '.join(str(s or '').split()))
+    hedef = sade(unvan) if unvan else None
+    return [k for k in adaylar or [] if duzey_slug in (k.get('ogrenim') or [])
+            and (hedef is None or hedef in {sade(u) for u in (k.get('unvanlar') or [])})][:en_cok]
+
+
+def _acik_bolum(baslik, liste, kok):
+    if not liste:
+        return ''
+    import il_sayfalari
+    return (f'<section class="bolum"><div class="bolum-bas"><h2>{esc(baslik)} <span class="sayi">{len(liste)}</span></h2></div>'
+            f'{il_sayfalari.acik_satirlari(liste, kok)}</section>')
+
+
 def kadro_cumleleri(donemler):
     """Hesaplanmış kısa tespitler (sabit dolgu yok): son dönem medyanı önceki dönemle, son dönemde en düşük/en yüksek puanlı il.
     Medyan karşılaştırması için puanı olan en az 2 dönem, il cümlesi için son dönemde il+puan bilen en az 3 satır gerekir."""
@@ -203,8 +221,8 @@ def kadro_cumleleri(donemler):
     return cumleler
 
 
-def kadro_sayfasi(base, duzey_slug, duzey_ad, unvan, slug, donemler, ilk_yil, son_yil):
-    """donemler: {dönem: [satır]}."""
+def kadro_sayfasi(base, duzey_slug, duzey_ad, unvan, slug, donemler, ilk_yil, son_yil, acik=None):
+    """donemler: {dönem: [satır]}; acik: bu unvanla başvurusu açık ilan kayıtları."""
     sirali = sorted(donemler, key=_donem_anahtar)
     son = sirali[-1]
     oz = _ozet(donemler[son])
@@ -237,14 +255,14 @@ def kadro_sayfasi(base, duzey_slug, duzey_ad, unvan, slug, donemler, ilk_yil, so
     tespit = ''.join(f'<p>{esc(c)}</p>' for c in kadro_cumleleri(donemler))
     tespit = f'<section class="bolum">{tespit}</section>' if tespit else ''
     icerik = (_hero(_crumbs(kok, kir), f'KPSS {ad} Taban Puanları ({duzey_ad})', ozet_p)
-              + f'<main id="icerik" class="wrap kp-main">{tespit}<section class="bolum"><div class="bolum-bas"><h2>Dönem dönem özet</h2></div>{ozet_tablo}</section>{detay}'
+              + f'<main id="icerik" class="wrap kp-main">{_acik_bolum(f"Başvurusu açık {ad} ilanları", acik, kok)}{tespit}<section class="bolum"><div class="bolum-bas"><h2>Dönem dönem özet</h2></div>{ozet_tablo}</section>{detay}'
               f'<section class="bolum"><p><a href="../">← Tüm {esc(duzey_ad.lower())} kadroları</a> · <a href="{kok}puanlar/">Puanını gir, tercih robotunu dene →</a></p></section></main>')
     kirinti = [('Ana sayfa', base), ('KPSS Taban Puanları', base + KLASOR + '/'), (duzey_ad, f'{base}{KLASOR}/{duzey_slug}/'),
                (ad, f'{base}{KLASOR}/{duzey_slug}/{slug}/')]
     return _sayfa(base, f'{duzey_slug}/{slug}/', 3, baslik, aciklama, kirinti, icerik, dizin=kadro_dizinlenir(donemler))
 
 
-def duzey_sayfasi(base, duzey_slug, duzey_ad, grup, sluglar, son_donem, ilk_yil, son_yil):
+def duzey_sayfasi(base, duzey_slug, duzey_ad, grup, sluglar, son_donem, ilk_yil, son_yil, acik=None):
     """grup: {unvan: {dönem: [satır]}}; sluglar: bağlantılı unvanlar."""
     kok = '../../'
     satirlar, toplam_kadro = [], 0
@@ -266,7 +284,7 @@ def duzey_sayfasi(base, duzey_slug, duzey_ad, grup, sluglar, son_donem, ilk_yil,
              f'Her unvanın son göründüğü dönemdeki kontenjanı ve en düşük puanı ile tüm dönemlerin medyanı aşağıda; ayrıntı için unvana tıklayın.')
     kir = [('KPSS Taban Puanları', '../'), (duzey_ad, None)]
     icerik = (_hero(_crumbs(kok, kir), f'KPSS {duzey_ad} Taban Puanları ({donem_yaz(son_donem)})', giris)
-              + f'<main id="icerik" class="wrap kp-main"><section class="bolum"><div class="bolum-bas"><h2>{esc(duzey_ad)} kadroları <span class="sayi">{len(grup)}</span></h2></div>{tablo}'
+              + f'<main id="icerik" class="wrap kp-main">{_acik_bolum(f"Başvurusu açık {duzey_ad.lower()} ilanları", acik, kok)}<section class="bolum"><div class="bolum-bas"><h2>{esc(duzey_ad)} kadroları <span class="sayi">{len(grup)}</span></h2></div>{tablo}'
               f'<p class="kp-note">Ayrıntı sayfası, en az {MIN_SATIR} kayıt bulunan unvanlar için vardır. Puanlar kadro bazında en küçük puanların özetidir.</p>'
               f'<p><a href="{kok}puanlar/">Puanını gir, tercih robotunu dene →</a></p></section></main>')
     kirinti = [('Ana sayfa', base), ('KPSS Taban Puanları', base + KLASOR + '/'), (duzey_ad, f'{base}{KLASOR}/{duzey_slug}/')]
@@ -289,7 +307,8 @@ def hub_sayfasi(base, ozetler, ilk_yil, son_yil):
     icerik = (_hero(_crumbs(kok, [('KPSS Taban Puanları', None)]), baslik, giris)
               + f'<main id="icerik" class="wrap kp-main"><section class="bolum"><div class="bolum-bas"><h2>Öğrenim düzeyine göre taban puanları</h2></div><ul>{kartlar}</ul>'
               f'<p><a href="{kok}puanlar/">Puanını gir, hangi kadrolara yettiğini gör: tercih robotu →</a></p>'
-              f'<p><a href="{kok}analiz/">Puan verilerinden analizler: değişim, il il karşılaştırma, kadro sıralaması →</a></p></section>'
+              f'<p><a href="{kok}analiz/">Puan verilerinden analizler: değişim, il il karşılaştırma, kadro sıralaması →</a></p>'
+              f'<p><a href="{kok}il/">İllere göre açık ilanlar ve taban puanları →</a></p></section>'
               + (f'<section class="bolum"><div class="bolum-bas"><h2>En çok yerleştirme yapılan kadrolar</h2></div>{one_cikan}</section>' if one_cikan else '')
               + '</main>')
     kirinti = [('Ana sayfa', base), ('KPSS Taban Puanları', base + KLASOR + '/')]
@@ -302,8 +321,15 @@ def _yaz(docs, goreli, html_metin):
     p.write_text(html_metin, encoding='utf-8')
 
 
-def puan_sayfalarini_uret(docs, base):
-    """docs/kpss-taban-puanlari/ altını baştan yazar; üretilen mutlak adresleri döndürür."""
+def puan_sayfalarini_uret(docs, base, ilanlar=None, sayfali=None, noindex=None, simdi=None):
+    """docs/kpss-taban-puanlari/ altını baştan yazar; üretilen mutlak adresleri döndürür.
+    `ilanlar` (liste.json kayıtları) verilirse kadro ve düzey sayfalarına başvurusu açık ilanlar eklenir."""
+    adaylar = []
+    if ilanlar:
+        from datetime import datetime
+        import statik_icerik as si
+        adaylar = si.sec(ilanlar, {k.get('key') for k in ilanlar} if sayfali is None else sayfali, noindex or set(),
+                         simdi or datetime.now(si.TR), en_cok=len(ilanlar))
     docs = Path(docs)
     if not base.endswith('/'):
         base += '/'
@@ -328,11 +354,11 @@ def puan_sayfalarini_uret(docs, base):
         son_donem = max(veri['donemler'], key=_donem_anahtar)
         sluglar = benzersiz_sluglar([u for u, d in grup.items() if sum(len(r) for r in d.values()) >= MIN_SATIR])
         for unvan, s in sluglar.items():
-            url, h = kadro_sayfasi(base, slug, ad, unvan, s, grup[unvan], ilk_yil, son_yil)
+            url, h = kadro_sayfasi(base, slug, ad, unvan, s, grup[unvan], ilk_yil, son_yil, acik_kadro_ilanlari(adaylar, slug, unvan))
             _yaz(docs, f'{slug}/{s}', h)
             if kadro_dizinlenir(grup[unvan]):
                 adresler.append(url)
-        url, h = duzey_sayfasi(base, slug, ad, grup, sluglar, son_donem, ilk_yil, son_yil)
+        url, h = duzey_sayfasi(base, slug, ad, grup, sluglar, son_donem, ilk_yil, son_yil, acik_kadro_ilanlari(adaylar, slug))
         _yaz(docs, slug, h)
         adresler.insert(0, url)
         en_cok = sorted(sluglar, key=lambda u: (-sum(len(r) for r in grup[u].values()), _kucuk(u)))[:10]
