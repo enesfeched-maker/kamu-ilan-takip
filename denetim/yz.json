@@ -7257,11 +7257,11 @@
   }
  },
  "sbb-7f4d800fab4d3d251159b468": {
-  "zaman": "2026-11-10T15:15:45+03:00",
+  "zaman": "2026-11-11T03:11:21+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "12d7acd9bd5b34b0",
+  "imza": "c8f6270dd9a01240",
   "baslik": "ZAFER KALKINMA AJANSI - 2 SÖZLEŞMELİ PERSONEL ALACAK",
   "farklar": [],
   "yz": {
@@ -7274,20 +7274,20 @@
      "en_dusuk_puan": 80,
      "il": null,
      "kosullar": [
-      "Mühendislik bölümlerinden veya Şehir ve Bölge Planlama bölümünden mezun olmak.",
-      "YDS/e-YDS İngilizceden son 5 yıl içinde en az 70 puan almak."
+      "Mühendislik bölümlerinden veya Şehir ve Bölge Planlama bölümünden lisans düzeyinde mezun olmak.",
+      "YDS/e-YDS İngilizceden son 5 yılda en az 70 puan almış olmak."
      ]
     },
     {
-     "unvan": "Uzman Personel (İstatistik, Ekonometri, İktisat, Maliye, İşletme, Kamu Yönetimi, Uluslararası İlişkiler, Çalışma Ekonomisi)",
+     "unvan": "Uzman Personel (İktisat, İşletme, Maliye, Kamu Yönetimi vb.)",
      "adet": 1,
      "ogrenim": "lisans",
-     "puan_turu": "P12-P15, P19, P20, P24, P25, P29, P30, P34, P35, P39, P40",
+     "puan_turu": "P12-P40 (bölüme göre)",
      "en_dusuk_puan": 80,
      "il": null,
      "kosullar": [
-      "İstatistik, Ekonometri, İktisat, Maliye, İşletme, Kamu Yönetimi, Uluslararası İlişkiler veya Çalışma Ekonomisi ve Endüstri İlişkileri bölümlerinden mezun olmak.",
-      "YDS/e-YDS İngilizceden son 5 yıl içinde en az 70 puan almak."
+      "İstatistik, Ekonometri, İktisat, Maliye, İşletme, Kamu Yönetimi, Uluslararası İlişkiler veya Çalışma Ekonomisi ve Endüstri İlişkilerinden mezun olmak.",
+      "YDS/e-YDS İngilizceden son 5 yılda en az 70 puan almış olmak."
      ]
     }
    ],
@@ -7302,12 +7302,11 @@
     "Uşak"
    ],
    "ortak_kosullar": [
-    "Son başvuru tarihinde geçerli KPSS'den mezuniyet alanına göre en az 80 puan almak.",
-    "Başvuru Kariyer Kapısı üzerinden elektronik ortamda yapılır.",
-    "Başvuru sonrası KPSS ve YDS puanına göre kadro sayısının 5 katı aday mülakata çağrılır; başarı için en az 70 puan gerekir.",
-    "Görev yeri Kütahya merkezli; Afyonkarahisar, Kütahya, Manisa ve Uşak'tan birinde görevlendirilir."
+    "Son başvuru tarihi itibarıyla geçerli KPSS'den mezun olunan bölümün puan türünden en az 80 puan almış olmak.",
+    "Başvuru yalnızca Kariyer Kapısı üzerinden elektronik ortamda yapılır.",
+    "Mülakat (sözlü sınav) Ajans Genel Sekreterliği'nde yapılır; başarı için en az 70 puan gerekir."
    ],
-   "ozet": "Zafer Kalkınma Ajansı 2 uzman personel alacak (1 mühendislik/şehir planlama, 1 iktisat-işletme vb.). Başvuru 25 Kasım–14 Aralık 2026, Kariyer Kapısı'ndan.",
+   "ozet": "Zafer Kalkınma Ajansı 2 uzman personel alacak. Başvurular 25 Kasım–14 Aralık 2026'da Kariyer Kapısı'ndan yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -7317,31 +7316,25 @@
    ],
    "puan_turleri": [
     "P1, P2, P3",
-    "P12-P15, P19, P20, P24, P25, P29, P30, P34, P35, P39, P40"
+    "P12-P40 (bölüme göre)"
    ]
   }
  },
  "sbb-8168d2862502fa00b90159b9": {
-  "zaman": "2026-11-10T15:15:45+03:00",
+  "zaman": "2026-11-11T03:11:21+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf-gorsel",
-  "imza": "cd912418807b931e",
+  "imza": "e44eb4532deaca0e",
   "baslik": "MİLLİ SAVUNMA BAKANLIĞI - TÜRK SİLAHLI KUVVETLERİNE FAKÜLTE VEYA YÜKSEKOKUL MEZUNLARINDAN 2026 YILI MUVAZZAF ASTSUBAY ADAYI TEMİNİ",
   "farklar": [],
   "yz": {
    "kadrolar": [],
-   "toplam": null,
-   "son_basvuru_tarihi": null,
-   "baslangic_tarihi": null,
-   "kpss_gerekli": null,
-   "iller": [],
-   "ortak_kosullar": [],
-   "ozet": "",
    "okunabilirlik": "kotu",
    "akademik": false,
    "iptal_veya_duzeltme": false,
-   "duyuru_tipi": "yeni_ilan"
+   "duyuru_tipi": "yeni_ilan",
+   "ortak_kosullar": []
   }
  },
  "sbb-838c1ad20b87efb0ed63d6c7": {
@@ -8278,26 +8271,20 @@
   }
  },
  "sbb-c28e3903f61859d41ea03f2e": {
-  "zaman": "2026-11-10T15:15:45+03:00",
+  "zaman": "2026-11-11T03:11:21+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf-gorsel",
-  "imza": "b06127288c41fabb",
+  "imza": "6ea1eac36d586dd2",
   "baslik": "MİLLİ SAVUNMA BAKANLIĞI - TÜRK SİLAHLI KUVVETLERİNE EN AZ DÖRT YIL SÜRELİ FAKÜLTE VEYA YÜKSEKOKUL MEZUNLARINDAN 2026 YILI BANDO SINIFI MUVAZZAF ASTSUBAY ADAYI TEMİNİ",
   "farklar": [],
   "yz": {
    "kadrolar": [],
-   "toplam": null,
-   "son_basvuru_tarihi": null,
-   "baslangic_tarihi": null,
-   "kpss_gerekli": null,
-   "iller": [],
-   "ortak_kosullar": [],
-   "ozet": "",
    "okunabilirlik": "kotu",
    "akademik": false,
    "iptal_veya_duzeltme": false,
-   "duyuru_tipi": "yeni_ilan"
+   "duyuru_tipi": "yeni_ilan",
+   "ortak_kosullar": []
   }
  },
  "sbb-c799c2bf65cf136277930882": {
