@@ -120,7 +120,7 @@ class KararTest(unittest.TestCase):
             kayit = json.loads((Path(g) / 'durum.json').read_text(encoding='utf-8'))
         self.assertEqual(kayit['ayar_sinirlari']['ilan_gunluk'], {'varsayilan': 3, 'en_az': 1, 'en_cok': 4})
         self.assertEqual(set(d['bu_hafta']), {'paylasim', 'olculen', 'toplam', 'tur'})
-        self.assertTrue(all(set(p) == {'zaman', 'vakit', 'tur', 'muzik', 'ig'} for p in kayit['son_30_gun']))   # ilan kimliği, platform kimliği yok
+        self.assertTrue(all(set(p) == {'zaman', 'vakit', 'tur', 'muzik', 'palet', 'ig'} for p in kayit['son_30_gun']))   # ilan kimliği, platform kimliği yok
 
 
 class BaglamaTest(unittest.TestCase):

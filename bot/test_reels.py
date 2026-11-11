@@ -160,6 +160,25 @@ class GunlukTest(unittest.TestCase):
         self.assertLessEqual(len(kayit['etiketler']), 5)
         self.assertEqual((gecmis[-1]['tur'], gecmis[-1]['ilanlar'], gecmis[-1]['zaman']), ('ilan', ['a'], ozet['zaman']))
 
+    def test_paletler_sirayla_ve_yesilsiz(self):
+        self.assertEqual(reels.PALET_SIRASI, ('kagit', 'bordo'))
+        self.assertEqual(reels.siradaki_palet([]), 'kagit')
+        self.assertEqual(reels.siradaki_palet([{'tur': 'kategori'}, {'palet': 'kagit'}, {'tur': 'haber'}]), 'bordo')   # eski biçimli kayıt sırayı bozmaz
+        self.assertEqual(reels.siradaki_palet([{'palet': 'kagit'}, {'palet': 'bordo'}]), 'kagit')
+        self.assertEqual(reels.siradaki_palet([{'palet': 'petrol'}]), 'kagit')
+        eski = reels.R.ad
+        try:
+            kareler = {}
+            for ad in reels.PALET_SIRASI:
+                reels.palet_sec(ad)
+                kareler[ad] = reels.kare(reels.ilan_videosu(ilan('a', 5), SIMDI), 1.5)
+                r, g, b = kareler[ad].getpixel((540, 1800))   # zemin: açık ve yeşil ağırlıklı değil
+                self.assertGreater(min(r, g, b), 150, ad)
+                self.assertGreaterEqual(r, g, ad)
+            self.assertNotEqual(kareler['kagit'].tobytes(), kareler['bordo'].tobytes())
+        finally:
+            reels.palet_sec(eski)
+
 
 if __name__ == '__main__':
     unittest.main()
