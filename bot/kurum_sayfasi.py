@@ -541,6 +541,12 @@ def kurum_sayfasi(kan, liste, slug, gorseller, simdi, tablolar=None, harita=None
 <div class="kp-stats"><div><strong>{len(acik)}</strong><span>açık ilan</span></div><div><strong>{kadro_yazi}</strong><span>bilinen kadro</span></div><div><strong>{len(liste)}</strong><span>toplam kayıt</span></div></div>
 <div class="kp-actions"><a class="btn btn-tg btn-buyuk" href="https://t.me/kpsstercihi" target="_blank" rel="noopener" data-a="telegram" data-a-x="kurum">Telegram'da takip et ↗</a></div></div></section>
 <main id="icerik" class="wrap kp-main"><section class="bolum"><div class="bolum-bas"><h2>Başvurusu açık ilanlar <span class="sayi">{len(acik)}</span></h2></div>{acik_blok}</section>{zengin}{gecmis_blok}</main>'''
+    # Konum şeması (Google arama sonucunda adres yerine 'Kurumlar › ad' görünür); diğer sayfa türlerinde zaten var.
+    kirinti = {'@context': 'https://schema.org', '@type': 'BreadcrumbList', 'itemListElement': [
+        {'@type': 'ListItem', 'position': n, 'name': k_ad, 'item': k_adres}
+        for n, (k_ad, k_adres) in enumerate([('Ana sayfa', su.BASE), ('Kurumlar', su.BASE + 'kurum/'), (ad, canonical)], 1)]}
+    ek_head += ('<script type="application/ld+json">'
+                + json.dumps(kirinti, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/') + '</script>')
     return su.sayfa_kabugu(baslik + ' | KPSS Tercihi', aciklama, canonical, icerik, 'kurum-page', baslik, ek_head)
 
 

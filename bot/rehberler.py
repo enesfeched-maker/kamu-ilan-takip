@@ -848,7 +848,7 @@ def sayfa(r, base, acik=None):
     govde += (f'<section class="bolum"><h2>İlgili sayfalar</h2><ul>{bag}<li><a href="../">Tüm rehberler</a></li></ul></section>'
               f'<p class="kp-note">{su.esc(NOT)}</p>')
     html = (su.sayfa_basi(f'{baslik} | KPSS Tercihi', aciklama, su.esc(canonical), kok, 'article',
-                          ek_head=f'<meta property="og:url" content="{su.esc(canonical)}"><script type="application/ld+json">'
+                          ek_head=f'{su.varsayilan_gorsel("")}<meta property="og:url" content="{su.esc(canonical)}"><script type="application/ld+json">'
                                   + json.dumps(ld, ensure_ascii=False).replace('</', '<\\/') + '</script>')
             + f'<body class="kurum-page"><a class="skip" href="#icerik">İçeriğe geç</a>{su.ust_html(kok)}'
             + '<section class="kp-hero"><div class="wrap"><nav class="crumbs" aria-label="Konum"><a href="../../">Ana sayfa</a>'

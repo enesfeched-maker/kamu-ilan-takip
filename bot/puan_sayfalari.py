@@ -228,6 +228,11 @@ def kadro_sayfasi(base, duzey_slug, duzey_ad, unvan, slug, donemler, ilk_yil, so
     oz = _ozet(donemler[son])
     ad = baslik_hali(unvan)
     baslik = f'KPSS {ad} Taban Puanları ({duzey_ad}) — {ilk_yil}–{son_yil}'
+    if len(baslik) > _su().TITLE_SINIRI:
+        # Uzun unvanda başlık sondan kesilince '(Lisans)' / '(Önlisans)' düşüyor, iki sayfa aynı başlığı alıyordu.
+        baslik = f'KPSS {ad} Taban Puanları ({duzey_ad})'
+    if len(baslik) > _su().TITLE_SINIRI:
+        baslik = f'{ad} Taban Puanları ({duzey_ad})'
     cumle = (f'{donem_yaz(son)} döneminde {tam(oz["kadro"])} kadroya {tam(oz["yerlesen"])} kişi yerleşti')
     if oz['min'] is not None:
         cumle += f'; en düşük puan {_p(oz["min"])}, en yüksek {_p(oz["max"])}'

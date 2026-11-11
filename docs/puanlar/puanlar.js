@@ -7,7 +7,8 @@ const veriler={};let duzey='lisans',kayitlar=[],sayfa=1,robotSinir=ROBOT_ILK;
 function E(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!=null)n.textContent=text;return n;}
 function kucuk(s){return String(s||'').toLocaleLowerCase('tr').replace(/\s+/g,' ').trim();}
 function donemAdi(d){return d.replace('-','/');}
-function puanYaz(p){return p==null?'—':p.toLocaleString('tr-TR',{minimumFractionDigits:5,maximumFractionDigits:5});}
+/* İki ondalık gösterilir (ÖSYM beş ondalık yayımlar); sıralama ve robot karşılaştırması tam değerle yapılır. */
+function puanYaz(p){return p==null?'—':p.toLocaleString('tr-TR',{minimumFractionDigits:2,maximumFractionDigits:2});}
 const A=(t,p)=>{try{if(typeof window!=='undefined'&&window.kpssA)window.kpssA(t,p);}catch{}};
 function readStore(k,f){try{const v=JSON.parse(localStorage.getItem(k));return v??f;}catch{return f;}}
 function writeStore(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
@@ -214,7 +215,8 @@ async function robot(){
   if(!sonuc.length){kutu.append(E('p','muted','Bu puanla eşleşen kadro bulunamadı. Filtreleri genişletmeyi dene.'));return;}
   const ol=E('ol','robot-liste'),ad={guclu:'Rahat yeterdi',uygun:'Yeterdi',sinirda:'Sınırda'};
   for(const {k,sinif,bd} of sonuc.slice(0,robotSinir)){
-    const li=E('li');li.append(E('span','rozet '+sinif,ad[sinif]));
+    /* 'Rahat' yalnız en yüksek yerleşen puanın en az 1 puan üstündeyse: 0,02 puan farkla 'rahat yeterdi' yazıyordu. */
+    const li=E('li');li.append(E('span','rozet '+sinif,sinif==='guclu'&&puan-k.max<1?ad.uygun:ad[sinif]));
     const orta=E('div');orta.append(E('h3',null,k.unvan));
     orta.append(E('p',null,k.kurum+' · '+[k.il,k.teskilat].filter(Boolean).join(' · ')+' · '+k.kontenjan+' kontenjan'));
     const diger=[...gecmis.get(k.anahtar)].filter(([d])=>d!==k.donem).sort((a,b)=>b[0].localeCompare(a[0]));

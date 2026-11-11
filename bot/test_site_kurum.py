@@ -70,6 +70,11 @@ class IlAyirmaTests(unittest.TestCase):
         kan = next(k for k in g if k.endswith('|canakkale'))
         html = ks.kurum_sayfasi(kan, g[kan], s[kan], {}, SIMDI)
         self.assertIn('Yenice Belediyesi (Çanakkale)', html)
+        # konum şeması: Ana sayfa › Kurumlar › kurum
+        sema = json.loads(html.split('<script type="application/ld+json">')[1].split('</script>')[0])
+        self.assertEqual(sema['@type'], 'BreadcrumbList')
+        self.assertEqual([o['name'] for o in sema['itemListElement']], ['Ana sayfa', 'Kurumlar', 'Yenice Belediyesi (Çanakkale)'])
+        self.assertTrue(sema['itemListElement'][2]['item'].endswith('/kurum/' + s[kan] + '/'))
 
     def test_mucur_hala_birlesir(self):
         g, s = self.bol(ilan(1, 'Kırşehir Mucur Belediyesi'), ilan(2, 'MUCUR BELEDİYE BAŞKANLIĞI', iller=['Kırşehir']),
