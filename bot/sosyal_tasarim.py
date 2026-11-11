@@ -232,11 +232,13 @@ def video_suresi(kare_sayisi, ilk=ILK_SURE, sonraki=SONRAKI_SURE):
 
 
 def video_kareleri(kareler, ilk=ILK_SURE, sonraki=SONRAKI_SURE):
-    """Her kare girişte hafif yakınlaşarak oturur; dikey tuvalin ortasında, üst/alt sarı."""
+    """Her kare girişte hafif yakınlaşarak oturur; dikey tuvalin ortasında, üst/alt sarı.
+    İlk kare (kapak) yakınlaşmadan, yerine oturmuş başlar: platformlar önizleme olarak videonun ilk karesini alır ve
+    yakınlaşmış karede yazı kenardan kesik görünüyordu."""
     for n, im in enumerate(kareler):
         sure = ilk if n == 0 else sonraki
         for f in range(int(FPS * sure)):
-            t = min(1.0, f / 8)
+            t = 1.0 if n == 0 else min(1.0, f / 8)
             olcek = 1.06 - 0.06 * (1 - (1 - t) ** 3)
             w, h = round(W * olcek), round(H * olcek)
             z = Image.new('RGB', (VW, VH), SARI)
