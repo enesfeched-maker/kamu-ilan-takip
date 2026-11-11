@@ -378,7 +378,7 @@ body.kt-sinavda{overflow:hidden}
 
 /* sekme menüsü ikonları */
 .kt-sekme a::before{margin-right:7px}
-.kt-sekme a:nth-child(1)::before{content:"📝"}.kt-sekme a:nth-child(2)::before{content:"⌨️"}.kt-sekme a:nth-child(3)::before{content:"⚡"}.kt-sekme a:nth-child(4)::before{content:"🎮"}
+.kt-sekme a:nth-child(1)::before{content:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2216%22 height=%2216%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%237CB518%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M4 20h4l10-10-4-4L4 16z%22/%3E%3Cpath d=%22M13 7l4 4%22/%3E%3C/svg%3E");vertical-align:-3px}.kt-sekme a:nth-child(2)::before{content:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2216%22 height=%2216%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%232F80ED%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Crect x=%222%22 y=%226%22 width=%2220%22 height=%2212%22 rx=%222%22/%3E%3Cpath d=%22M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10%22/%3E%3C/svg%3E");vertical-align:-3px}.kt-sekme a:nth-child(3)::before{content:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2216%22 height=%2216%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23F2711C%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M13 2L4 14h7l-1 8 9-12h-7z%22/%3E%3C/svg%3E");vertical-align:-3px}.kt-sekme a:nth-child(4)::before{content:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2216%22 height=%2216%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%237B5CE6%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Crect x=%222%22 y=%227%22 width=%2220%22 height=%2210%22 rx=%225%22/%3E%3Cpath d=%22M7 10v4M5 12h4M15.5 11h.01M18 13h.01%22/%3E%3C/svg%3E");vertical-align:-3px}
 .kt-sekme a.aktif{background:linear-gradient(135deg,color-mix(in srgb,var(--k-lime) 28%,var(--surface)),var(--surface));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--k-lime) 45%,transparent)}
 
 /* mod kartları: ikon karosu, üst renk şeridi */
@@ -387,17 +387,17 @@ body.kt-sinavda{overflow:hidden}
 .kt-mod::after{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--r);opacity:.85}
 .kt-mod:hover{border-color:var(--r);box-shadow:0 10px 30px -14px color-mix(in srgb,var(--r) 70%,transparent)}
 .kt-mod.secili{border-color:var(--r);box-shadow:0 0 0 3px color-mix(in srgb,var(--r) 28%,transparent);background:linear-gradient(170deg,color-mix(in srgb,var(--r) 12%,var(--surface)),var(--surface) 65%)}
-.kt-mod[data-mod=sinav]{--r:var(--k-lime)}.kt-mod[data-mod=sinav]::before{content:"📝"}
-.kt-mod[data-mod=antrenman]{--r:var(--k-mavi)}.kt-mod[data-mod=antrenman]::before{content:"🏃"}
-.kt-mod[data-mod=hatali]{--r:var(--k-tur)}.kt-mod[data-mod=hatali]::before{content:"📕"}
-.kt-mod[data-mod=isinma]{--r:var(--k-pembe)}.kt-mod[data-mod=isinma]::before{content:"🔥"}
-.kt-mod[data-mod=ozel]{--r:var(--k-mor)}.kt-mod[data-mod=ozel]::before{content:"📋"}
-.kt-mod[data-mod=hiz]{--r:var(--k-lime)}.kt-mod[data-mod=hiz]::before{content:"⚡"}
-.kt-mod[data-mod=zayif]{--r:var(--k-tur)}.kt-mod[data-mod=zayif]::before{content:"🎯"}
-.kt-mod[data-mod=hedef]{--r:var(--k-mavi)}.kt-mod[data-mod=hedef]::before{content:"⚖️"}
-.kt-mod[data-mod=uzun]{--r:var(--k-mor)}.kt-mod[data-mod=uzun]::before{content:"📏"}
-.kt-mod[data-mod=terim]{--r:var(--k-pembe)}.kt-mod[data-mod=terim]::before{content:"📚"}
-.kt-mod[data-mod=rakam]{--r:var(--k-sari)}.kt-mod[data-mod=rakam]::before{content:"🔢"}
+.kt-mod[data-mod=sinav]{--r:var(--k-lime)}.kt-mod[data-mod=sinav]::before{content:"";background:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%237CB518%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M4 20h4l10-10-4-4L4 16z%22/%3E%3Cpath d=%22M13 7l4 4%22/%3E%3C/svg%3E") center/24px no-repeat,color-mix(in srgb,var(--r) 18%,transparent)}
+.kt-mod[data-mod=antrenman]{--r:var(--k-mavi)}.kt-mod[data-mod=antrenman]::before{content:"";background:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%232F80ED%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Ccircle cx=%2212%22 cy=%2213%22 r=%228%22/%3E%3Cpath d=%22M12 9v4l3 2M9 2h6%22/%3E%3C/svg%3E") center/24px no-repeat,color-mix(in srgb,var(--r) 18%,transparent)}
+.kt-mod[data-mod=hatali]{--r:var(--k-tur)}.kt-mod[data-mod=hatali]::before{content:"";background:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23F2711C%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2z%22/%3E%3Cpath d=%22M5 18a2 2 0 0 1 2-2h12%22/%3E%3C/svg%3E") center/24px no-repeat,color-mix(in srgb,var(--r) 18%,transparent)}
+.kt-mod[data-mod=isinma]{--r:var(--k-pembe)}.kt-mod[data-mod=isinma]::before{content:"";background:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23E8487F%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M12 3c1 3 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-5 1-9z%22/%3E%3C/svg%3E") center/24px no-repeat,color-mix(in srgb,var(--r) 18%,transparent)}
+.kt-mod[data-mod=ozel]{--r:var(--k-mor)}.kt-mod[data-mod=ozel]::before{content:"";background:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%237B5CE6%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Crect x=%225%22 y=%224%22 width=%2214%22 height=%2217%22 rx=%222%22/%3E%3Cpath d=%22M9 4h6v3H9zM9 12h6M9 16h4%22/%3E%3C/svg%3E") center/24px no-repeat,color-mix(in srgb,var(--r) 18%,transparent)}
+.kt-mod[data-mod=hiz]{--r:var(--k-lime)}.kt-mod[data-mod=hiz]::before{content:"";background:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%237CB518%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M13 2L4 14h7l-1 8 9-12h-7z%22/%3E%3C/svg%3E") center/24px no-repeat,color-mix(in srgb,var(--r) 18%,transparent)}
+.kt-mod[data-mod=zayif]{--r:var(--k-tur)}.kt-mod[data-mod=zayif]::before{content:"";background:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23F2711C%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Ccircle cx=%2212%22 cy=%2212%22 r=%229%22/%3E%3Ccircle cx=%2212%22 cy=%2212%22 r=%225%22/%3E%3Ccircle cx=%2212%22 cy=%2212%22 r=%221%22/%3E%3C/svg%3E") center/24px no-repeat,color-mix(in srgb,var(--r) 18%,transparent)}
+.kt-mod[data-mod=hedef]{--r:var(--k-mavi)}.kt-mod[data-mod=hedef]::before{content:"";background:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%232F80ED%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M12 4v16M7 20h10M5 7h14%22/%3E%3Cpath d=%22M5 7l-3 7a3 3 0 0 0 6 0zM19 7l-3 7a3 3 0 0 0 6 0z%22/%3E%3C/svg%3E") center/24px no-repeat,color-mix(in srgb,var(--r) 18%,transparent)}
+.kt-mod[data-mod=uzun]{--r:var(--k-mor)}.kt-mod[data-mod=uzun]::before{content:"";background:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%237B5CE6%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M3 16L16 3l5 5L8 21z%22/%3E%3Cpath d=%22M7 12l2 2M10 9l2 2M13 6l2 2%22/%3E%3C/svg%3E") center/24px no-repeat,color-mix(in srgb,var(--r) 18%,transparent)}
+.kt-mod[data-mod=terim]{--r:var(--k-pembe)}.kt-mod[data-mod=terim]::before{content:"";background:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23E8487F%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M4 5h4v15H4zM8 5h4v15H8z%22/%3E%3Cpath d=%22M13 7l4-1 3 13-4 1z%22/%3E%3C/svg%3E") center/24px no-repeat,color-mix(in srgb,var(--r) 18%,transparent)}
+.kt-mod[data-mod=rakam]{--r:var(--k-sari)}.kt-mod[data-mod=rakam]::before{content:"";background:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23E0A100%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M9 4L7 20M17 4l-2 16M4 9h17M3 15h17%22/%3E%3C/svg%3E") center/24px no-repeat,color-mix(in srgb,var(--r) 18%,transparent)}
 .kt-ayar{border-top:4px solid var(--k-lime)}
 
 /* günün metni ve yol haritası */
@@ -448,9 +448,9 @@ body:has(.kd-duzen) .kt-sayfa-bas{--r:var(--k-lime)}
 body:has(#a-modlar) .kt-sayfa-bas{--r:var(--k-mavi)}
 body:has(.ko-secim) .kt-sayfa-bas{--r:var(--k-pembe)}
 .kt-sayfa-bas h1::after{margin-left:12px}
-body:has(.kd-duzen) .kt-sayfa-bas h1::after{content:"⌨️"}
-body:has(#a-modlar) .kt-sayfa-bas h1::after{content:"⚡"}
-body:has(.ko-secim) .kt-sayfa-bas h1::after{content:"🎮"}
+body:has(.kd-duzen) .kt-sayfa-bas h1::after{content:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2228%22 height=%2228%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%232F80ED%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Crect x=%222%22 y=%226%22 width=%2220%22 height=%2212%22 rx=%222%22/%3E%3Cpath d=%22M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10%22/%3E%3C/svg%3E");margin-left:10px;vertical-align:-3px}
+body:has(#a-modlar) .kt-sayfa-bas h1::after{content:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2228%22 height=%2228%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23F2711C%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M13 2L4 14h7l-1 8 9-12h-7z%22/%3E%3C/svg%3E");margin-left:10px;vertical-align:-3px}
+body:has(.ko-secim) .kt-sayfa-bas h1::after{content:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2228%22 height=%2228%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%237B5CE6%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Crect x=%222%22 y=%227%22 width=%2220%22 height=%2210%22 rx=%225%22/%3E%3Cpath d=%22M7 10v4M5 12h4M15.5 11h.01M18 13h.01%22/%3E%3C/svg%3E");margin-left:10px;vertical-align:-3px}
 
 /* dersler */
 .kd-ders:nth-child(-n+4){--r:var(--k-lime)}.kd-ders:nth-child(n+5):nth-child(-n+7){--r:var(--k-mavi)}.kd-ders:nth-child(n+8):nth-child(-n+10){--r:var(--k-mor)}
@@ -534,3 +534,13 @@ body:has(.ko-secim) .kt-sayfa-bas h1::after{content:"🎮"}
 .kt-le-form{display:flex;gap:8px}
 .kt-le-form[hidden]{display:none}
 .kt-le-form input{height:36px;width:180px;padding:0 10px;border:1px solid #C9B36B;border-radius:6px;background:#fff;color:#1B1F23;font:inherit;font-size:14px}
+
+/* İkonlar: emoji yerine çizgi ikon (11 Kasım 2026). Kutunun kendi rengini (--r) alır; açık ve koyu temada aynı çizgi. */
+.kt-svg{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.16em;flex:none}
+.kt-ik,.kt-kart-ik,.kt-sus-emoji,.ko-ikon{color:color-mix(in srgb,var(--r,var(--lime-ink)) 72%,var(--ink))}
+.kt-sus-emoji{opacity:.55;filter:none}
+.kt-sus-emoji .kt-svg,.kt-kart-ik .kt-svg{stroke-width:1.6}
+.kt-cipler .kt-svg,.eyebrow .kt-svg,h2 .kt-svg,.kt-le-yazi .kt-svg{margin-right:5px;color:color-mix(in srgb,var(--r,var(--lime-ink)) 72%,var(--ink))}
+#d-hak{letter-spacing:2px;color:var(--k-pembe,#e0527d)}
+.sira.m1,.sira.m2,.sira.m3{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;font-weight:800;color:#1b1410}
+.sira.m1{background:#f2c94c}.sira.m2{background:#cfd6dc}.sira.m3{background:#e0a36a}

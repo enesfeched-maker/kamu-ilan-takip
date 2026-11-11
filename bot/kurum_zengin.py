@@ -10,7 +10,7 @@ from pathlib import Path
 
 DUZEY_ADI = {'lisans': 'Lisans', 'onlisans': 'Önlisans', 'ortaogretim': 'Ortaöğretim'}
 EN_COK_DONEM = 3
-EN_COK_SATIR = 15
+EN_COK_SATIR = 30
 AYLAR = 'Ocak Şubat Mart Nisan Mayıs Haziran Temmuz Ağustos Eylül Ekim Kasım Aralık'.split()
 
 
@@ -61,7 +61,24 @@ def yerlestirme_html(kan, docs):
                        for du, d, r in secili[:EN_COK_SATIR]])
     devam = f'<p class="kp-note">Son {len(son)} dönemden {min(len(secili), EN_COK_SATIR)} kadro gösteriliyor.</p>' if len(secili) > EN_COK_SATIR else ''
     return (f'<section class="bolum"><div class="bolum-bas"><h2>KPSS merkezi yerleştirme geçmişi</h2></div><p>{ps.esc(ozet)}</p>'
-            f'{tablo}{devam}<p><a class="yazi-link" href="../../kpss-taban-puanlari/">Tüm kadroların taban puanları →</a></p></section>')
+            f'{donem_ozeti_html(satirlar, donemler)}{tablo}{devam}<p><a class="yazi-link" href="../../kpss-taban-puanlari/">Tüm kadroların taban puanları →</a></p></section>')
+
+
+def donem_ozeti_html(satirlar, donemler):
+    """Kurumun her yerleştirme dönemindeki kadro sayısı, kontenjanı ve en küçük puan aralığı (tek dönemde tablo gereksiz)."""
+    import puan_sayfalari as ps
+    if len(donemler) < 2:
+        return ''
+    govde = []
+    for d in reversed(donemler):
+        s = [r for _, dn, r in satirlar if dn == d]
+        mins = [r['min'] for r in s]
+        duzeyler = sorted({DUZEY_ADI[du] for du, dn, _ in satirlar if dn == d}, key=list(DUZEY_ADI.values()).index)
+        govde.append([ps.esc(ps.donem_yaz(d)), ps.esc(', '.join(duzeyler)), ps.tam(len(s)), ps.tam(sum(r.get('kontenjan') or 0 for r in s)),
+                      ps.sayi(min(mins)), ps.sayi(max(mins))])
+    return ('<h3>Dönem dönem özet</h3>'
+            + ps._tablo(['Dönem', 'Düzey', 'Kadro', 'Kontenjan', 'En düşük taban', 'En yüksek taban'], govde)
+            + '<h3>Kadrolar</h3>')
 
 
 def _tarih(iso):

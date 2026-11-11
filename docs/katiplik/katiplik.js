@@ -279,7 +279,7 @@
     }
     var yr = $('yeni-rozet');
     yr.hidden = !yeniRozet.length;
-    yr.textContent = yeniRozet.length ? 'Yeni rozet kazandın: ' + yeniRozet.map(function (x) { return x.ad; }).join(', ') + ' 🎉' : '';
+    yr.textContent = yeniRozet.length ? 'Yeni rozet kazandın: ' + yeniRozet.map(function (x) { return x.ad; }).join(', ') : '';
     $('r-hatali').hidden = r.hatalar.filter(function (h) { return h.a; }).length === 0;
     $('r-tekrar').hidden = s.metinNo < 0 || s.mod === 'gunluk';
     liderHazirla(r);
@@ -479,8 +479,7 @@
     lider = { anahtar: [].map.call(rb, function (x) { return (x + 256).toString(16).slice(1); }).join(''), ad: '', kimlik: '' };
   }
   var liderTablo = null, liderSekme = 'haftalik', liderAday = null;
-  var MADALYA = ['🥇', '🥈', '🥉'];
-  var LIDER_HATA = {
+    var LIDER_HATA = {
     ad: 'Bu takma ad kullanılamıyor; 2–18 harf/rakam olan başka bir ad dene.', kisa: 'Tabloya girmek için biraz daha yazmalısın.',
     supheli: 'Bu sonuç doğrulanamadı.', hiz: 'Çok sık gönderdin; birkaç dakika sonra tekrar dene.', kota: 'Tablo şu an yoğun; biraz sonra tekrar dene.'
   };
@@ -492,7 +491,7 @@
     $('lider-bos').textContent = liderSekme === 'haftalik' ? 'Bu hafta henüz kimse yok. İlk sen ol!' : 'Henüz kimse yok. İlk sen ol!';
     liste.forEach(function (x, i) {
       var li = E('li', (x.i && x.i === lider.kimlik ? 'ben ' : '') + (i < 3 ? 'ilk' + (i + 1) : ''));
-      li.append(E('span', 'sira', i < 3 ? MADALYA[i] : String(i + 1)), E('span', 'ad', x.ad), E('span', 'dk', x.dk + ' vuruş/dk'), E('b', 'net', x.net + ' net'));
+      li.append(E('span', 'sira' + (i < 3 ? ' m' + (i + 1) : ''), String(i + 1)), E('span', 'ad', x.ad), E('span', 'dk', x.dk + ' vuruş/dk'), E('b', 'net', x.net + ' net'));
       ol.append(li);
     });
   }
@@ -535,7 +534,7 @@
         lider.ad = ad; lider.kimlik = j.kimlik; O.yaz('kit-katip-lider', lider);
         liderTablo = j.tablo; liderCiz(); liderAday = null;
         $('lider-ekle').classList.add('tamam'); $('lider-form').hidden = true;
-        $('lider-ekle-alt').textContent = 'Bu hafta ' + j.sira + '. sıradasın' + (j.sira <= 3 ? ' ' + MADALYA[j.sira - 1] : '') + ' · tablo ana sayfada.';
+        $('lider-ekle-alt').textContent = 'Bu hafta ' + j.sira + '. sıradasın' + ' · tablo ana sayfada.';
         A('tikla', { a: 'katip-lider', x: 'ekle', n: j.net });
       })
       .catch(function () { b.disabled = false; $('lider-ekle-alt').textContent = 'Gönderilemedi; bağlantını kontrol edip tekrar dene.'; });

@@ -326,6 +326,17 @@ def _yaz(docs, goreli, html_metin):
     p.write_text(html_metin, encoding='utf-8')
 
 
+def _degisim_yaz(url, acik):
+    """Sayfadaki açık ilan listesinin son değiştiği gün site haritasına (lastmod) geçsin; açık ilan yoksa tarih yazılmaz."""
+    try:
+        import kurum_sayfasi as ks
+        gun = ks.son_ilan_gunu(acik)
+        if gun:
+            ks.SON_DEGISIM[url] = gun
+    except Exception:
+        pass
+
+
 def puan_sayfalarini_uret(docs, base, ilanlar=None, sayfali=None, noindex=None, simdi=None):
     """docs/kpss-taban-puanlari/ altını baştan yazar; üretilen mutlak adresleri döndürür.
     `ilanlar` (liste.json kayıtları) verilirse kadro ve düzey sayfalarına başvurusu açık ilanlar eklenir."""
@@ -359,11 +370,15 @@ def puan_sayfalarini_uret(docs, base, ilanlar=None, sayfali=None, noindex=None, 
         son_donem = max(veri['donemler'], key=_donem_anahtar)
         sluglar = benzersiz_sluglar([u for u, d in grup.items() if sum(len(r) for r in d.values()) >= MIN_SATIR])
         for unvan, s in sluglar.items():
-            url, h = kadro_sayfasi(base, slug, ad, unvan, s, grup[unvan], ilk_yil, son_yil, acik_kadro_ilanlari(adaylar, slug, unvan))
+            acik_k = acik_kadro_ilanlari(adaylar, slug, unvan)
+            url, h = kadro_sayfasi(base, slug, ad, unvan, s, grup[unvan], ilk_yil, son_yil, acik_k)
             _yaz(docs, f'{slug}/{s}', h)
             if kadro_dizinlenir(grup[unvan]):
                 adresler.append(url)
-        url, h = duzey_sayfasi(base, slug, ad, grup, sluglar, son_donem, ilk_yil, son_yil, acik_kadro_ilanlari(adaylar, slug))
+                _degisim_yaz(url, acik_k)
+        acik_d = acik_kadro_ilanlari(adaylar, slug)
+        url, h = duzey_sayfasi(base, slug, ad, grup, sluglar, son_donem, ilk_yil, son_yil, acik_d)
+        _degisim_yaz(url, acik_d)
         _yaz(docs, slug, h)
         adresler.insert(0, url)
         en_cok = sorted(sluglar, key=lambda u: (-sum(len(r) for r in grup[u].values()), _kucuk(u)))[:10]

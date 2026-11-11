@@ -216,6 +216,26 @@ def _foto_haritasi():
     return {int(p.name[:2]): p.name for p in FOTO_KLASORU.glob('??-*.jpg')} if FOTO_KLASORU.is_dir() else {}
 
 
+MANSET_SINIRI = 110
+
+
+def kisa_manset(adlar, sinir=MANSET_SINIRI):
+    """(manşet, gösterilen kadro sayısı). En kalabalık üç kadro yan yana; sınırı aşarsa önce ortak ad bir kez yazılır
+    ('Uzman Personel (Mühendislik), Uzman Personel (İİBF)' -> 'Uzman Personel (Mühendislik, İİBF)'), o da sığmazsa
+    iki, sonra tek kadro gösterilir (kalanı '+N' rozetinde)."""
+    for adet in (3, 2, 1):
+        secili = adlar[:adet]
+        metin = ', '.join(secili)
+        if len(metin) <= sinir or adet == 1:
+            return metin, len(secili)
+        parcalar = [re.fullmatch(r'(.+?)\s*(?:\((.+)\)|[—–]\s*(.+)|\s-\s*(.+))', a.strip()) for a in secili]
+        if len(secili) > 1 and all(parcalar) and len({kucuk(p.group(1)) for p in parcalar}) == 1:
+            ortak = f'{parcalar[0].group(1).strip()} (' + ', '.join((p.group(2) or p.group(3) or p.group(4)).strip() for p in parcalar) + ')'
+            if len(ortak) <= sinir:
+                return ortak, len(secili)
+    return adlar[0], 1
+
+
 def kart_alanlari(i):
     """Liste kartı için derleme zamanı alanlar: manset, alt, ek, toplam, meslek (1–3 fotoğraf dosya adı)."""
     k = kadrolar(i)
@@ -223,19 +243,21 @@ def kart_alanlari(i):
     toplam = int(m.group(1)) if m else (sum(a or 0 for a, _ in k) or None)
     baslik = temiz_baslik(i)
     sirali = sorted(k, key=lambda x: -(x[0] or 0))
+    gosterilen = 3   # manşette yer alan kadro sayısı (uzun adlarda kisa_manset azaltır)
     if len(k) == 1:
         manset = (f'{k[0][0]} ' if k[0][0] else '') + k[0][1]
         alt = baslik if kucuk(SON_EK.sub('', baslik)) != kucuk(manset) else (i.get('ilan_turu') or '')
     elif k:
-        manset, alt = ', '.join(a for _, a in sirali[:3]), baslik
+        manset, gosterilen = kisa_manset([a for _, a in sirali])
+        alt = baslik
     else:
         manset, alt = baslik, i.get('ilan_turu') or 'Kamu personel alımı'
     nolar = list(dict.fromkeys(meslek_no(a, i.get('kurum')) for _, a in sirali)) or [meslek_no(baslik, i.get('kurum'))]
     nolar = [n for n in nolar if n != 30][:3] or [30]
     foto = _foto_haritasi()
     alan = {'manset': manset[:160], 'alt': alt[:160], 'meslek': [foto[n] for n in nolar if n in foto]}
-    if len(k) > 3:
-        alan['ek'] = len(k) - 3
+    if len(k) > gosterilen:
+        alan['ek'] = len(k) - gosterilen
     if toplam and 0 < toplam < 20000:
         alan['toplam'] = toplam
     return alan
@@ -601,6 +623,16 @@ def kurum_hub_sayfasi(girdiler, simdi=None):
     return canonical, html
 
 
+# {site haritası adresi: 'YYYY-AA-GG'} — sayfanın içeriğini en son değiştiren ilanın ilk görülme günü (site_uret lastmod için okur).
+SON_DEGISIM = {}
+
+
+def son_ilan_gunu(kayitlar):
+    """Kayıtların en yeni 'ilk_gorulme' günü; yoksa ''."""
+    gunler = [str(i.get('ilk_gorulme') or '')[:10] for i in kayitlar or []]
+    return max([g for g in gunler if re.fullmatch(r'\d{4}-\d{2}-\d{2}', g)], default='')
+
+
 def kurum_sayfalarini_uret(ilanlar, docs, gorseller, simdi=None, kopyalar=None):
     """docs/kurum/ altını baştan yazar. (gruplar, slugler, sitemap adresleri, başarıyla yazılan grup anahtarları) döndürür;
     bir grubun sayfası üretilemezse atlanır (klasörü silinir) ve başarılı kümeye girmez."""
@@ -633,6 +665,7 @@ def kurum_sayfalarini_uret(ilanlar, docs, gorseller, simdi=None, kopyalar=None):
             dizin = False
         if dizin:
             adresler.append(su.BASE + 'kurum/' + slug + '/')
+            SON_DEGISIM[adresler[-1]] = son_ilan_gunu(liste)
             try:
                 ad = en_cok_gecen_ad(liste)
                 if '|' in kan and kan.split('|')[1] not in kurum_anahtari(ad).split():
