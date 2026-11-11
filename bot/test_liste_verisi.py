@@ -31,6 +31,9 @@ class BaslikTests(unittest.TestCase):
     def test_baslik_temiz(self):
         self.assertEqual(lv.baslik_temiz('İlk Defa Atanmak Üzere Vhki Alımı İlanı'), 'VHKİ alımı')
         self.assertEqual(lv.baslik_temiz('Memur Sınav İlanı'), 'Memur sınavı')
+        self.assertEqual(lv.baslik_temiz('Uzman Yardımcısı (Sbf, İibf, İktisat — Iı. Grup)'), 'Uzman Yardımcısı (SBF, İİBF, İktisat — II. Grup)')
+        self.assertEqual(lv.baslik_temiz('Uzman (Hukuk — I. Grup), Uzman (Iıı. Grup)'), 'Uzman (Hukuk — I. Grup), Uzman (III. Grup)')
+        self.assertEqual(lv.baslik_temiz('Isıtma Teknisyeni'), 'Isıtma Teknisyeni')   # 'Is…' sözcüğüne dokunulmaz
         self.assertEqual(lv.baslik_temiz('Büro Personeli İlanı'), 'Büro Personeli')
         self.assertEqual(lv.baslik_temiz('.net Uzmanı'), '.NET Uzmanı')
         self.assertEqual(lv.baslik_temiz('İcra Müdür ve İcra Müdür Yardımcısı Alacak.'), 'İcra Müdür ve İcra Müdür Yardımcısı')

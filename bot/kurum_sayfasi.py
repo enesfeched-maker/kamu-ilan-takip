@@ -16,6 +16,8 @@ from siniflandir import akademik_ilan, kucuk, ILLER
 
 TR = timezone(timedelta(hours=3))
 AY = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık']
+# Bulunma eki ünlü ve ünsüz uyumuna göre: Ocak'ta, Nisan'da, Eylül'de (11 Kasım 2026: her aya '’de' yazılıyordu, 'Aralık’de').
+AY_EKI = ['ta', 'ta', 'ta', 'da', 'ta', 'da', 'da', 'ta', 'de', 'de', 'da', 'ta']
 LEVELS = {'lisans': 'Lisans', 'onlisans': 'Önlisans', 'ortaogretim': 'Ortaöğretim'}
 SON_EK = re.compile(r'(?:^|\s+)(?:alacak|alınacak|alinacak|temin edecektir|alımı|alimi)\s*[.,;:]*\s*$', re.I)
 IL_ANAHTAR = {kurum_anahtari(il) for il in ILLER}
@@ -433,7 +435,7 @@ def satir_html(k, simdi, kok='../../', kurum_baglantisi=True):
     if k.get('durum') == 'upcoming' and k.get('baslangic_zaman'):
         try:
             b = datetime.fromisoformat(k['baslangic_zaman']).astimezone(TR)
-            sinyal = f'<p class="sinyal acilis"><span class="ic">{SAAT}</span>Başvuru {b.day} {AY[b.month - 1]}’de açılıyor</p>'
+            sinyal = f'<p class="sinyal acilis"><span class="ic">{SAAT}</span>Başvuru {b.day} {AY[b.month - 1]}’{AY_EKI[b.month - 1]} açılıyor</p>'
         except ValueError:
             pass
     elif k.get('taban_ref'):
