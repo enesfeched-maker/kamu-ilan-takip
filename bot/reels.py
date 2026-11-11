@@ -41,7 +41,8 @@ PALETLER = {
                    panel='#174c46', panel_cizgi=None, cizgi=(52, 92, 90), cizgi2=(31, 74, 70), acil='#d64545', acil_ustu='#ffffff',
                    yakin='#e0a100', yakin_ustu='#102e35'),
 }
-PALET = 'petrol'
+PALET = 'kagit'
+PALET_SIRASI = ('kagit', 'bordo')   # yayında sırayla kullanılır: videolar hep aynı renkte çıkmasın (kullanıcı, 11 Kasım 2026)
 
 
 class _Renkler:
@@ -51,6 +52,12 @@ class _Renkler:
 
 R = _Renkler()
 R.sec(PALET)
+
+
+def siradaki_palet(gecmis=()):
+    """Son şablon videosunda kullanılanın sıradaki paleti; geçmişte palet kaydı yoksa ilki."""
+    son = next((g.get('palet') for g in reversed(list(gecmis)) if g.get('palet') in PALET_SIRASI), None)
+    return PALET_SIRASI[(PALET_SIRASI.index(son) + 1) % len(PALET_SIRASI)] if son else PALET_SIRASI[0]
 
 
 def palet_sec(ad):

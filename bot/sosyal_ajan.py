@@ -223,7 +223,7 @@ def hazirla(simdi=None, klasor=None):
     from site_uret import TR
     simdi = (simdi or datetime.now(TR)).astimezone(TR)
     gecmis = gecmis_oku()
-    son = [{k: g.get(k) for k in ('zaman', 'vakit', 'tur', 'muzik', 'ig')} for g in gecmis
+    son = [{k: g.get(k) for k in ('zaman', 'vakit', 'tur', 'muzik', 'palet', 'ig')} for g in gecmis
            if (_zaman(g.get('zaman')) or simdi) >= simdi - timedelta(days=30)]
     durum = {'zaman': simdi.isoformat(timespec='seconds'),
              'bu_hafta': {k: v for k, v in donem(gecmis, simdi - timedelta(days=7), simdi).items() if k != 'en_iyi'},

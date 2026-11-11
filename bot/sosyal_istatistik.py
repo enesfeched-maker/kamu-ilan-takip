@@ -100,11 +100,11 @@ def agirliklar(gecmis):
     """Her tür/müzik için: grubun medyan skoru / genel medyan. Az örnekli gruplar sıfıra çekilir (n/(n+2))."""
     olculen = [(g, skor(g.get('ig'))) for g in gecmis]
     olculen = [(g, s) for g, s in olculen if s is not None]
-    sonuc = {'olculen': len(olculen), 'tur': {}, 'muzik': {}, 'vakit': {}}
+    sonuc = {'olculen': len(olculen), 'tur': {}, 'muzik': {}, 'vakit': {}, 'palet': {}}
     if len(olculen) < EN_AZ_OLCUM:
         return sonuc
     genel = statistics.median(s for _, s in olculen) or 1
-    for alan in ('tur', 'muzik', 'vakit'):
+    for alan in ('tur', 'muzik', 'vakit', 'palet'):
         gruplar = {}
         for g, s in olculen:
             if g.get(alan):

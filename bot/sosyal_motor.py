@@ -382,7 +382,7 @@ def metin_olustur(konu, vakit, simdi):
     return {'baslik': sosyal_kalite.temizle(baslik), 'aciklama': sosyal_kalite.aciklama_duzelt(aciklama)[:2150], 'etiketler': etiketler}
 
 
-def sablon_uret(konu, vakit, cikti, simdi, gecmis, gecmis_yolu, video=True, agirlik=None):
+def sablon_uret(konu, vakit, cikti, simdi, gecmis, gecmis_yolu, video=True, agirlik=None, palet=None):
     """Sabit video biçimini (reels.py) yazar: reel.mp4, sahne kareleri, paylasim.json ve geçmiş kaydı."""
     import reels
     cikti = Path(cikti)
@@ -397,11 +397,11 @@ def sablon_uret(konu, vakit, cikti, simdi, gecmis, gecmis_yolu, video=True, agir
         reels.video_yaz(sahneler, cikti / 'reel.mp4', muzik, muzik_bas=bas)
     metin = metin_olustur(konu, vakit, simdi)
     ozet = {'tur': konu['tur'], 'anahtar': konu['anahtar'], 'vakit': vakit, 'zaman': simdi.isoformat(timespec='seconds'),
-            'kare': len(sahneler), 'sablon': True, 'trend': None, 'ilgili_trendler': [],
+            'kare': len(sahneler), 'sablon': True, 'palet': palet, 'trend': None, 'ilgili_trendler': [],
             'muzik': muzik.name if muzik else None, **metin}
     (cikti / 'paylasim.json').write_text(json.dumps(ozet, ensure_ascii=False, indent=1), encoding='utf-8')
     gecmis_yaz(gecmis, {'zaman': ozet['zaman'], 'vakit': vakit, 'tur': konu['tur'], 'anahtar': konu['anahtar'],
-                        'ilanlar': konu['ilanlar'], 'muzik': ozet['muzik']}, gecmis_yolu)
+                        'ilanlar': konu['ilanlar'], 'muzik': ozet['muzik'], 'palet': palet}, gecmis_yolu)
     print(f'Konu: {konu["anahtar"]} ({len(sahneler)} sahne, {reels.video_suresi(sahneler):.1f} sn)')
     return ozet
 
@@ -421,9 +421,11 @@ def uret(vakit, cikti, simdi=None, cfg=None, docs=ROOT / 'docs', gecmis_yolu=GEC
         try:
             import reels
             from kurum_gorseli import kurum_logosu
+            palet = reels.siradaki_palet(gecmis)
+            reels.palet_sec(palet)   # sahne katmanları konu kurulurken çizilir; palet ondan önce seçilmeli
             konu = reels.gunluk(vakit, acik, simdi, kurum_logosu, gecmis)
             if konu:
-                return sablon_uret(konu, vakit, cikti, simdi, gecmis, gecmis_yolu, video, agirlik)
+                return sablon_uret(konu, vakit, cikti, simdi, gecmis, gecmis_yolu, video, agirlik, palet)
         except Exception as hata:   # şablon hatası paylaşımı durdurmaz: sabah/akşam eski biçime düşer
             print(f'::warning::Video şablonu üretilemedi ({vakit}): {hata}')
     if vakit == 'ilan':
