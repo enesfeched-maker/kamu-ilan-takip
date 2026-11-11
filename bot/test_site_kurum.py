@@ -76,6 +76,33 @@ class IlAyirmaTests(unittest.TestCase):
         self.assertEqual([o['name'] for o in sema['itemListElement']], ['Ana sayfa', 'Kurumlar', 'Yenice Belediyesi (Çanakkale)'])
         self.assertTrue(sema['itemListElement'][2]['item'].endswith('/kurum/' + s[kan] + '/'))
 
+    def test_uzun_manset_ortak_adla_kisalir(self):
+        m, n = ks.kisa_manset(['Kamu İhale Uzman Yardımcısı (İnşaat Mühendisliği)', 'Kamu İhale Uzman Yardımcısı (Hukuk)',
+                               'Kamu İhale Uzman Yardımcısı (İktisat/Siyasal/İşletme/İİBF)', 'Dördüncü'])
+        self.assertEqual((m, n), ('Kamu İhale Uzman Yardımcısı (İnşaat Mühendisliği, Hukuk, İktisat/Siyasal/İşletme/İİBF)', 3))
+        self.assertEqual(ks.kisa_manset(['Mühendis', 'Mimar', 'Tekniker', 'Şoför']), ('Mühendis, Mimar, Tekniker', 3))
+        uzun = ['A' * 60 + ' Uzmanı', 'B' * 60 + ' Uzmanı', 'C' * 60 + ' Uzmanı']
+        m, n = ks.kisa_manset(uzun)
+        self.assertEqual(n, 1)                      # ortak ad yok, iki ad da sığmıyor: tek kadro + rozet
+        self.assertLessEqual(len(m), ks.MANSET_SINIRI)
+        alan = ks.kart_alanlari(ilan(9, 'A Kurumu', kadro='Toplam 6 kişi — 3 ' + uzun[0] + ' • 2 ' + uzun[1] + ' • 1 ' + uzun[2]))
+        self.assertEqual(alan.get('ek'), 2)
+
+    def test_site_haritasi_tarihi_en_yeni_ilanin_gunu(self):
+        self.assertEqual(ks.son_ilan_gunu([{'ilk_gorulme': '2026-10-01T09:00:00+03:00'}, {'ilk_gorulme': '2026-11-03T10:00:00+03:00'}, {}]), '2026-11-03')
+        self.assertEqual(ks.son_ilan_gunu([{'ilk_gorulme': 'bozuk'}]), '')
+        self.assertEqual(ks.son_ilan_gunu(None), '')
+
+    def test_kurum_donem_ozeti_tablosu(self):
+        import kurum_zengin
+        r = lambda m, k=1: {'min': m, 'kontenjan': k, 'unvan': 'MEMUR', 'il': 'ANKARA'}
+        satirlar = [('lisans', '2025-2', r(80.0, 2)), ('lisans', '2026-1', r(82.5)), ('onlisans', '2026-1', r(70.25, 3))]
+        h = kurum_zengin.donem_ozeti_html(satirlar, ['2025-2', '2026-1'])
+        self.assertIn('Dönem dönem özet', h)
+        self.assertIn('Lisans, Önlisans', h)
+        self.assertLess(h.index('2026/1'), h.index('2025/2'))   # en yeni dönem üstte
+        self.assertEqual(kurum_zengin.donem_ozeti_html(satirlar[:1], ['2025-2']), '')   # tek dönemde tablo gereksiz
+
     def test_mucur_hala_birlesir(self):
         g, s = self.bol(ilan(1, 'Kırşehir Mucur Belediyesi'), ilan(2, 'MUCUR BELEDİYE BAŞKANLIĞI', iller=['Kırşehir']),
                         ilan(3, 'Mucur (Kırşehir) Belediye Başkanlığı'), ilan(4, 'Mucur Belediyesi'))

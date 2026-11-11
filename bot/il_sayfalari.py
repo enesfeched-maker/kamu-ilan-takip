@@ -263,6 +263,8 @@ def yaz(docs, base, ilanlar=None, sayfali=None, noindex=None, simdi=None):
         hedef.write_text(html, encoding='utf-8')
         if il_dizinlenir(dz, secili):
             adresler.append(url)
+            if _ks().son_ilan_gunu(acik):
+                _ks().SON_DEGISIM[url] = _ks().son_ilan_gunu(acik)   # sayfadaki açık ilan listesinin son değiştiği gün
     url, html = hub_sayfasi(base, iller, veriler, secili, acik_sayilari, guncelleme)
     (docs / KLASOR / 'index.html').write_text(html, encoding='utf-8')
     return [url] + sorted(adresler)

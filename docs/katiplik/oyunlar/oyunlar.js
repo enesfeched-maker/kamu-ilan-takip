@@ -35,7 +35,7 @@
     }
     function gosterge() {
       $('d-puan').textContent = st.puan; $('d-seviye').textContent = st.seviye; $('d-seri').textContent = '×' + st.carpan;
-      $('d-hak').textContent = '❤❤❤'.slice(0, st.hak) + '♡♡♡'.slice(0, 3 - st.hak);
+      $('d-hak').textContent = '●●●'.slice(0, st.hak) + '○○○'.slice(0, 3 - st.hak);
       $('d-hak').setAttribute('aria-label', 'Kalan hak ' + st.hak);
     }
     function kartUret() {

@@ -1393,11 +1393,15 @@ def main():
         (docs / 'sss' / 'index.html').write_text(sss_html, encoding='utf-8')
         urls.insert(2, sss_url)
         import bilgi_sayfalari   # gizlilik / hakkımızda: AdSense ve Google için ayrı, taranabilir adresler
-        urls += bilgi_sayfalari.yaz(docs, BASE)
+        bilgi_adresleri = bilgi_sayfalari.yaz(docs, BASE)
+        urls += bilgi_adresleri
+        degisim.update({u: bilgi_sayfalari.GUNCELLEME for u in bilgi_adresleri})
         import sonuc_takip   # kurum sitelerinde yayımlanan sonuç duyuruları
         urls += sonuc_takip.yaz(docs, BASE)
         import rehberler   # özgün rehber yazıları (/rehber/)
-        urls += rehberler.yaz(docs, BASE, gorunen, sayfa_anahtarlari, haritada_olmayan, datetime.now(TR))   # açık ilan blokları için statik ana sayfayla aynı veri
+        rehber_adresleri = rehberler.yaz(docs, BASE, gorunen, sayfa_anahtarlari, haritada_olmayan, datetime.now(TR))   # açık ilan blokları için statik ana sayfayla aynı veri
+        urls += rehber_adresleri
+        degisim.update({u: rehberler.GUNCELLEME for u in rehber_adresleri})
         sayfali = sayfa_anahtarlari
         (docs / 'llms.txt').write_text(yz_gorunurluk.llms_metni(gorunen, BASE, datetime.now(TR), sayfali), encoding='utf-8')
         (docs / 'llms-full.txt').write_text(yz_gorunurluk.llms_tam_metni(gorunen, BASE, datetime.now(TR), sayfali), encoding='utf-8')
@@ -1406,7 +1410,9 @@ def main():
     try:
         import analiz_sayfalari   # özgün veri analizleri (/analiz/): AdSense için siteye özgü içerik
         asil_ilanlar = [i for i in data.get('ilanlar', []) if i.get('id') not in (kopyalar.get('kopya_of') or {})]
-        urls += analiz_sayfalari.yaz(docs, BASE, asil_ilanlar, datetime.now(TR))
+        analiz_adresleri = analiz_sayfalari.yaz(docs, BASE, asil_ilanlar, datetime.now(TR))
+        urls += analiz_adresleri
+        degisim.update({u: datetime.now(TR).date().isoformat() for u in analiz_adresleri})   # sayfada da 'Güncelleme: bugün' yazar
     except Exception as hata:
         print(f'Uyarı: analiz sayfaları üretilemedi: {hata}')
     try:
@@ -1414,6 +1420,13 @@ def main():
         urls += il_sayfalari.yaz(docs, BASE, gorunen, sayfa_anahtarlari, haritada_olmayan, datetime.now(TR))
     except Exception as hata:
         print(f'Uyarı: il sayfaları üretilemedi: {hata}')
+    try:   # kurum, il ve taban puanı sayfaları: içeriklerini en son değiştiren ilanın günü (ilan yoksa tarih yazılmaz)
+        import kurum_sayfasi
+        for u, gun in kurum_sayfasi.SON_DEGISIM.items():
+            if gun:
+                degisim.setdefault(u, gun)
+    except Exception as hata:
+        print(f'Uyarı: site haritası tarihleri okunamadı: {hata}')
     bugun = datetime.now(TR).date().isoformat()   # ana sayfa her gün değişir; Google'a tazelik sinyali
     degisim[BASE] = bugun
     (docs / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
