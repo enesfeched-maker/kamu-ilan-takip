@@ -33,6 +33,17 @@ class EslesmeTest(unittest.TestCase):
     def test_tek_ilan_varsa_ona_baglar(self):
         self.assertEqual(st.ilana_bagla('Sınav sonuçları', [ZABITA])['id'], 'a')
 
+    def test_tek_ilanli_sitede_baska_kadronun_sonucu_baglanmaz(self):
+        # Kurum adı ortak olsa da ('Örnek Belediyesi') duyuru başka kadroyu söylüyor: zabıta ilanının sonucu değildir.
+        zabita = dict(ZABITA, kurum='Örnek Belediyesi', baslik='Örnek Belediyesi 5 Zabıta Memuru alacak')
+        self.assertIsNone(st.ilana_bagla('Örnek Belediyesi itfaiye eri alımı sınav sonuçları', [zabita]))
+        self.assertEqual(st.ilana_bagla('Örnek Belediyesi zabıta memuru alımı sınav sonuçları', [zabita])['id'], zabita['id'])
+        self.assertEqual(st.ilana_bagla('Örnek Belediyesi memur alımı yazılı sınav sonuçları açıklandı', [zabita])['id'], zabita['id'])
+
+    def test_kadrosu_bilinmeyen_tek_ilana_genel_baglanir(self):
+        genel = {'id': 'g', 'kurum': 'Örnek Belediyesi', 'baslik': 'Örnek Belediyesi personel alım ilanı', 'son_tarih': '2026-01-01'}
+        self.assertEqual(st.ilana_bagla('İtfaiye eri alımı sınav sonuçları', [genel])['id'], 'g')
+
     def test_belirsizse_baglamaz(self):
         self.assertIsNone(st.ilana_bagla('Sınav sonuçları', [ZABITA, ITFAIYE]))
 

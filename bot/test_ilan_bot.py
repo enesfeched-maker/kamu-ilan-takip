@@ -120,6 +120,55 @@ class TelegramDeliveryTests(unittest.TestCase):
         self.assertEqual(state['telegram_gonderilen'], [])
         self.assertEqual(self.run_bot(), 15)
 
+    def test_gonderimden_sonraki_beklenmeyen_hata_gecmisi_silmez(self):
+        # Kanala giden mesajların kaydı en sonda yazılıyordu: arada çıkan hata aynı ilanları her taramada yeniden paylaştırırdı.
+        with patch.object(ilan_bot, 'temizle', side_effect=RuntimeError('beklenmeyen')):
+            with self.assertRaises(RuntimeError):
+                self.run_bot('--duyur-mevcut')
+        state = json.loads(self.data.read_text(encoding='utf-8'))
+        self.assertEqual(len(state['telegram_gonderilen']), 15)
+        self.assertEqual(len(state['telegram_mesajlari']), 0)   # sahte gönderici True döndürür, mesaj kimliği yok
+        self.assertEqual(len(state['ilanlar']), 25)              # ilan kayıtlarına dokunulmaz
+        self.assertEqual(self.run_bot('--duyur-mevcut'), 10)     # kalan 10 gider, ilk 15 yeniden gitmez
+        self.assertEqual(ilan_bot._ACIL, {})
+
+    def test_hazirlik_adimindaki_hata_acil_kayit_yapmaz(self):
+        once = self.data.read_text(encoding='utf-8')
+        with patch.object(ilan_bot, 'temizle', side_effect=RuntimeError('beklenmeyen')):
+            with self.assertRaises(RuntimeError):
+                self.run_bot('--prepare', '--duyur-mevcut')
+        self.assertEqual(self.data.read_text(encoding='utf-8'), once)
+
+    def test_kalici_ret_siranin_basini_tikamaz(self):
+        # Telegram'ın HTTP 400 ile reddettiği ilan sırada kalır ama arkasındakiler aynı taramada gider.
+        with patch.object(ilan_bot, 'kalici_hata', return_value=True):
+            with self.assertRaises(SystemExit):
+                self.run_bot('--duyur-mevcut', donus=[False])
+        state = json.loads(self.data.read_text(encoding='utf-8'))
+        self.assertEqual(len(self.gonderimler), 15)
+        self.assertEqual(len(state['telegram_gonderilen']), 14)
+        self.assertEqual(len(state['telegram_bekleyen']), 11)
+
+    def test_gecici_hata_sirayi_durdurur(self):
+        with patch.object(ilan_bot, 'kalici_hata', return_value=False):
+            with self.assertRaises(SystemExit):
+                self.run_bot('--duyur-mevcut', donus=[False])
+        self.assertEqual(len(self.gonderimler), 1)
+
+    def test_telegram_400_kalici_sayilir_ve_aciklama_yazilir(self):
+        import urllib.error
+        hata = urllib.error.HTTPError('https://api.telegram.org/x', 400, 'Bad Request', {},
+                                      io.BytesIO(b'{"ok":false,"description":"Bad Request: wrong file identifier"}'))
+        stderr = io.StringIO()
+        with patch.object(ilan_bot.urllib.request, 'urlopen', side_effect=hata), contextlib.redirect_stderr(stderr):
+            self.assertFalse(ilan_bot.telegram_gonder('gizli-anahtar', '@k', 'metin'))
+        self.assertTrue(ilan_bot.kalici_hata())
+        self.assertIn('wrong file identifier', stderr.getvalue())
+        self.assertNotIn('gizli-anahtar', stderr.getvalue())
+        with patch.object(ilan_bot.urllib.request, 'urlopen', side_effect=urllib.error.URLError('ağ')), contextlib.redirect_stderr(stderr):
+            self.assertFalse(ilan_bot.telegram_gonder('gizli-anahtar', '@k', 'metin'))
+        self.assertFalse(ilan_bot.kalici_hata())
+
     def test_channel_refresh_is_once_and_merge_preserves_new_queue(self):
         from veri_kaydet import merge_registry
         self.run_bot('--duyur-mevcut');self.run_bot()
@@ -538,11 +587,36 @@ class HaftalikArananTests(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()
 
+class ArananUnvanSuzgeciTests(unittest.TestCase):
+    PZT = datetime(2026, 10, 5, 7, 0, tzinfo=timezone(timedelta(hours=3)))
+
+    def sor(self, kelimeler, unvanlar):
+        with patch.object(ilan_bot, 'simdi', return_value=self.PZT):
+            return ilan_bot.haftalik_aranan({}, [], self.PZT, getir=lambda: {'kelimeler': [{'kelime': k} for k in kelimeler]}, unvanlar=unvanlar)
+
+    def test_yalniz_bilinen_unvanlar_kanala_cikar(self):
+        unvanlar = {'veteriner hekim', 'diyetisyen', 'zabita memuru'}
+        self.assertEqual(self.sor(['reklam sitesi', 'diyetisyen', 'küfür', 'veteriner', 'zabıta memuru', 'dij', 12], unvanlar),
+                         ['diyetisyen', 'veteriner', 'zabıta memuru'])
+
+    def test_unvan_listesi_okunamazsa_hicbir_kelime_cikmaz(self):
+        self.assertEqual(self.sor(['diyetisyen'], set()), [])
+        with tempfile.TemporaryDirectory() as bos:
+            self.assertEqual(ilan_bot.bilinen_unvanlar(bos), set())
+
+    def test_depodaki_puan_verisinden_unvanlar_okunur(self):
+        unvanlar = ilan_bot.bilinen_unvanlar()
+        self.assertGreater(len(unvanlar), 50)
+        self.assertTrue(ilan_bot.unvan_mi('Mühendis', unvanlar))
+        self.assertFalse(ilan_bot.unvan_mi('bedava bahis', unvanlar))
+
+
 class ArananTemizlikTests(unittest.TestCase):
     def test_genel_ve_tekrar_kelimeler_elenir(self):
         an = datetime(2026, 10, 12, 9, tzinfo=ilan_bot.TR)
         kel = ['diyetisyen', 'veteriner', 'çocuk', 'veteriner hekim', 'biyolog']
-        sonuc = ilan_bot.haftalik_aranan({}, [], an, getir=lambda: {'kelimeler': [{'kelime': k} for k in kel]})
+        unvanlar = {'diyetisyen', 'veteriner hekim', 'biyolog', 'cocuk gelisimcisi'}
+        sonuc = ilan_bot.haftalik_aranan({}, [], an, getir=lambda: {'kelimeler': [{'kelime': k} for k in kel]}, unvanlar=unvanlar)
         self.assertEqual(sonuc, ['diyetisyen', 'veteriner hekim', 'biyolog'])
 
 

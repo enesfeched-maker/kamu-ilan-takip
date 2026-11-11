@@ -1,16 +1,25 @@
 """Consume the local collector's public, timestamped snapshot."""
 import json
+import sys
 from datetime import datetime,timedelta,timezone
 from pathlib import Path
 
 SNAPSHOT=Path(__file__).resolve().parents[1]/'docs'/'yerel-kaynaklar.json'
+# Bozuk/şişmiş dosyaya karşı üst sınır. 11 Kasım 2026: sınır 3 MB iken dosya 2,2 MB'a ulaşmıştı (14 Ekim'de 1,6 MB);
+# aşıldığında SBB ve ÇŞB hiçbir uyarı vermeden kesilecekti. Sınır yükseltildi, yaklaşınca ve aşılınca uyarı yazılır.
+EN_BUYUK=12_000_000
+UYARI_BOYUTU=8_000_000
 
 
 def oku(path=None):
     try:
         p=path or SNAPSHOT
-        if p.stat().st_size>3_000_000:
+        boyut=p.stat().st_size
+        if boyut>EN_BUYUK:
+            print(f'::error::Yerel kaynak dosyası çok büyük ({boyut//1000} KB > {EN_BUYUK//1000} KB); SBB ve ÇŞB verisi okunmadı.',file=sys.stderr)
             return {}
+        if boyut>UYARI_BOYUTU:
+            print(f'::warning::Yerel kaynak dosyası büyüyor ({boyut//1000} KB); {EN_BUYUK//1000} KB aşılırsa SBB ve ÇŞB verisi okunmaz.',file=sys.stderr)
         data=json.loads(p.read_text(encoding='utf-8'))
         return data if data.get('schema')==1 else {}
     except (OSError,ValueError,TypeError):

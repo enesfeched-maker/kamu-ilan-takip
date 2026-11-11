@@ -251,8 +251,11 @@ $('robot-form').onsubmit=e=>{e.preventDefault();robotSinir=ROBOT_ILK;const p=par
   acikListeYukle().then(()=>{if(!acikListe)return;tabloCiz();if($('robot-sonuc').children.length)robot();});
 }
 /* Çok aranıp ilanı çıkmayan meslekler (analizden, 12 saatte bir): tıklayınca taban puanı tablosunda aranır. */
-fetch('https://api.kpsstercihi.com/aranan').then(r=>r.ok?r.json():null).then(j=>{
-  const k=((j&&j.kelimeler)||[]).slice(0,6);if(!k.length)return;
+fetch('https://api.kpsstercihi.com/aranan').then(r=>r.ok?r.json():null).then(async j=>{
+  /* Analiz herkese açık bir uç: yalnız tabloda gerçekten karşılığı olan (bir unvanda geçen) kelimeler gösterilir. */
+  for(let n=0;n<50&&!kayitlar.length;n++)await new Promise(r=>setTimeout(r,200));   /* tablo verisi yüklenene kadar (en çok 10 sn) */
+  const unvanlar=new Set(kayitlar.map(r=>kucuk(r.unvan)));
+  const k=((j&&j.kelimeler)||[]).filter(x=>x&&typeof x.kelime==='string'&&[...unvanlar].some(u=>(' '+u+' ').includes(' '+kucuk(x.kelime)+' '))).slice(0,6);if(!k.length)return;
   const d=E('div','aranan-cip');d.append(E('span','muted','Çok arananlar:'));
   for(const x of k){const b=E('button','cip',x.kelime);b.type='button';b.onclick=()=>{A('tikla',{a:'aranan_cip',x:x.kelime});$('ara').value=x.kelime;sayfa=1;tabloCiz();$('ara').scrollIntoView({block:'center'});};d.append(b);}
   $('ara').closest('label').parentElement.after(d);
