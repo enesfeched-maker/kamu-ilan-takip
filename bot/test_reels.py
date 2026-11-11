@@ -93,6 +93,23 @@ class SahneTest(unittest.TestCase):
         self.assertNotEqual(bos.tobytes(), dolu.tobytes())
         self.assertEqual(sum(1 for _ in reels.kareler([reels.Sahne(0.2, [], son=True)])), 6)
 
+    def test_ilk_kare_kapaktir(self):
+        # Platformlar önizleme olarak ilk kareyi alır: ilk sahne boş zeminden değil, yerine oturmuş başlamalı.
+        for sahneler in (reels.ilan_videosu(ilan('a', 5), SIMDI),
+                         reels.son_gun_videosu([ilan('a', 0), ilan('b', 1)], 2, SIMDI)):
+            govde = (0, reels.UST, reels.VW, reels.VH)   # üstteki ilerleme şeridi kareden kareye değişir
+            uretec = reels.kareler(sahneler)
+            ilk = next(uretec)
+            oturmus = reels.kare(sahneler, sahneler[0].sure - reels.CIKIS - 0.05)
+            self.assertNotEqual(ilk.crop(govde).tobytes(), reels.zemin().crop(govde).tobytes())
+            self.assertEqual(ilk.crop(govde).tobytes(), oturmus.crop(govde).tobytes())
+            # ikinci sahne hareketli girmeye devam eder: ilk karesi oturmuş hâlinden farklıdır
+            for _ in range(int(reels.FPS * sahneler[0].sure) - 1):
+                next(uretec)
+            ikinci_ilk = next(uretec)
+            ikinci_oturmus = reels.kare(sahneler, sahneler[0].sure + sahneler[1].sure - reels.CIKIS - 0.05)
+            self.assertNotEqual(ikinci_ilk.crop(govde).tobytes(), ikinci_oturmus.crop(govde).tobytes())
+
 
 class GunlukTest(unittest.TestCase):
     """Bota bağlanan akış: vakte göre sabit biçim, ilan başına sıra ve günlük sınır, paylasim.json ve geçmiş kaydı."""

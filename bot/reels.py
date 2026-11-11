@@ -138,10 +138,11 @@ class Sahne:
     def __init__(self, sure, ogeler, son=False):
         self.sure, self.ogeler, self.son = sure, ogeler, son
 
-    def ciz(self, im, t):
+    def ciz(self, im, t, oturmus=False):
+        """oturmus: öğeler giriş hareketi olmadan, yerine oturmuş çizilir (çıkış hareketi yine oynar)."""
         cikis = 0.0 if self.son else yumusak((t - (self.sure - CIKIS)) / CIKIS)
         for o in self.ogeler:
-            o.ciz(im, t, cikis)
+            o.ciz(im, t + OTURMUS_KAYDIRMA if oturmus else t, cikis)
 
 
 # ---------------------------------------------------------------- katman üreticileri
@@ -523,13 +524,19 @@ def video_suresi(sahneler):
     return sum(int(FPS * s.sure) for s in sahneler) / FPS
 
 
+# Platformlar (Instagram, TikTok, YouTube) önizleme/kapak olarak videonun ilk karesini ya da ilk saniyesini alır.
+# 11 Kasım 2026: ilk sahne boş zeminden açıldığı için her videonun kapağı boş çıkıyor, elle düzeltmek gerekiyordu.
+# İlk sahne artık baştan yerine oturmuş başlar: ilk kare = kapak (kurum, kadro, son gün). Sonraki sahneler hareketli girer.
+OTURMUS_KAYDIRMA = 60.0   # giriş hareketlerinin hepsinden uzun bir süre (sn)
+
+
 def kareler(sahneler):
     taban = zemin()
     for no, sahne in enumerate(sahneler):
         adet = int(FPS * sahne.sure)
         for f in range(adet):
             im = taban.copy()
-            sahne.ciz(im, f / FPS)
+            sahne.ciz(im, f / FPS, oturmus=no == 0)
             ust_serit(im, no, len(sahneler), (f + 1) / adet)
             yield im
 
@@ -540,7 +547,7 @@ def kare(sahneler, saniye):
     for no, sahne in enumerate(sahneler):
         if t < sahne.sure or no == len(sahneler) - 1:
             im = zemin()
-            sahne.ciz(im, min(t, sahne.sure - 1 / FPS))
+            sahne.ciz(im, min(t, sahne.sure - 1 / FPS), oturmus=no == 0)
             ust_serit(im, no, len(sahneler), _sinirla(t / sahne.sure))
             return im
         t -= sahne.sure
