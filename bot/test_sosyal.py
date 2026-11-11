@@ -223,6 +223,65 @@ class Yayin(unittest.TestCase):
             sonuc = y.tiktok(Path(t) / 'reel.mp4', {'aciklama': 'A'}, ortam=('k', 's', 'r'), mod='taslak')
         self.assertEqual(sonuc, {'id': 'pid', 'gorunurluk': 'taslak'})
 
+    def test_tiktok_buffer_ile_yayinlar(self):
+        sorgular = []
+
+        def sahte(url, json_veri=None, **kw):
+            self.assertEqual(url, y.BUFFER_ADRESI)
+            self.assertEqual(kw['basliklar'], {'Authorization': 'Bearer gizli'})
+            s = json_veri['query']
+            sorgular.append(s)
+            if 'organizations' in s:
+                return {'data': {'account': {'organizations': [{'id': 'o1'}]}}}
+            if 'channels(' in s:
+                return {'data': {'channels': [{'id': 'ig1', 'service': 'instagram'}, {'id': 'tt1', 'service': 'tiktok'}]}}
+            if 'createPost' in s:
+                return {'data': {'createPost': {'post': {'id': 'g1', 'status': 'sending'}}}}
+            return {'data': {'post': {'status': 'sent', 'error': None}}}
+
+        ortam = {'BUFFER_API_ANAHTARI': 'gizli', 'VIDEO_URL': 'https://ornek/reel.mp4', 'BUFFER_TIKTOK_KANAL': ''}
+        with tempfile.TemporaryDirectory() as t, mock.patch.object(y, '_istek', side_effect=sahte), \
+                mock.patch.object(y.time, 'sleep'), mock.patch.dict(os.environ, ortam):
+            self.klasor(t)
+            sonuc = y.tiktok(Path(t) / 'reel.mp4', {'aciklama': 'DSİ "3 kişi" alacak\n#kpss'})
+        self.assertEqual(sonuc, {'id': 'g1', 'gorunurluk': 'buffer', 'durum': 'sent'})
+        olustur = next(s for s in sorgular if 'createPost' in s)
+        self.assertIn('channelId: "tt1"', olustur)
+        self.assertIn('mode: shareNow', olustur)
+        self.assertIn('url: "https://ornek/reel.mp4"', olustur)
+        self.assertIn('text: "DSİ \\"3 kişi\\" alacak\\n#kpss"', olustur)   # tırnak ve satır sonu kaçışlı
+
+    def test_tiktok_buffer_hatasinda_taslaga_doner(self):
+        def sahte(url, json_veri=None, **kw):
+            if url == y.BUFFER_ADRESI:
+                if 'createPost' in json_veri['query']:
+                    return {'data': {'createPost': {'message': 'Channel limit reached'}}}
+                return {'data': {}}
+            if 'oauth/token' in url:
+                return {'access_token': 'e', 'refresh_token': 'r'}
+            if 'inbox/video/init' in url:
+                return {'data': {'publish_id': 'pid', 'upload_url': 'https://yukle'}}
+            return {}
+
+        ortam = {'BUFFER_API_ANAHTARI': 'gizli', 'VIDEO_URL': 'https://ornek/reel.mp4', 'BUFFER_TIKTOK_KANAL': 'tt1',
+                 'TT_ISTEMCI_ANAHTARI': 'k', 'TT_ISTEMCI_SIRRI': 's', 'TT_YENILEME_ANAHTARI': 'r', 'TT_MOD': 'taslak'}
+        with tempfile.TemporaryDirectory() as t, mock.patch.object(y, '_istek', side_effect=sahte), \
+                mock.patch.object(y, 'sir_guncelle'), mock.patch.object(y.time, 'sleep'), mock.patch.dict(os.environ, ortam):
+            self.klasor(t)
+            sonuc = y.tiktok(Path(t) / 'reel.mp4', {'aciklama': 'A'})
+        self.assertEqual(sonuc, {'id': 'pid', 'gorunurluk': 'taslak'})
+
+    def test_buffer_yayin_hatasi_bildirilir(self):
+        def sahte(url, json_veri=None, **kw):
+            if 'createPost' in json_veri['query']:
+                return {'data': {'createPost': {'post': {'id': 'g1', 'status': 'sending'}}}}
+            return {'data': {'post': {'status': 'error', 'error': {'message': 'TikTok rejected the video'}}}}
+
+        with mock.patch.object(y, '_istek', side_effect=sahte), mock.patch.object(y.time, 'sleep'), \
+                mock.patch.dict(os.environ, {'BUFFER_TIKTOK_KANAL': 'tt1'}):
+            with self.assertRaisesRegex(y.YayinHatasi, 'TikTok rejected'):
+                y.buffer_tiktok({'aciklama': 'A'}, 'gizli', 'https://ornek/reel.mp4')
+
 
 if __name__ == '__main__':
     unittest.main()
