@@ -5,6 +5,28 @@ from pathlib import Path
 from sbb_detay import summarize,document_url,BASE
 from site_uret import detail_page
 
+class PdfGovdesiTests(unittest.TestCase):
+    def test_pdf_arkasindaki_degisen_sayfa_parcasi_ozeti_degistirmez(self):
+        from sbb_detay import pdf_govdesi
+        pdf=b'%PDF-1.7\nicerik\n%%EOF\r\n'
+        a=pdf+b'<form method="post" action="./ilanDetay.aspx?kod=AAA">'
+        b=pdf+b'<form method="post" action="./ilanDetay.aspx?kod=BBB">'
+        self.assertEqual(pdf_govdesi(a),pdf_govdesi(b))
+        self.assertTrue(pdf_govdesi(a).endswith(b'%%EOF\n'))
+        self.assertEqual(pdf_govdesi(b'%PDF-test'),b'%PDF-test')   # işaret yoksa dokunulmaz
+
+    def test_ayni_belge_iki_indirmede_tek_kopya_yazar(self):
+        page=MagicMock();page.extract_text.return_value='Başvurular şahsen yapılacaktır.'
+        with TemporaryDirectory() as folder,patch('sbb_detay.ROOT',Path(folder)),patch('sbb_detay.PdfReader') as reader:
+            reader.return_value.pages=[page]
+            r1=summarize(b'%PDF-1.7\nx\n%%EOF\n<form action="?kod=1">',{'kadro':'1 memur'})
+            r2=summarize(b'%PDF-1.7\nx\n%%EOF\n<form action="?kod=2">',{'kadro':'1 memur'})
+            kopyalar=list((Path(folder)/'docs'/'belgeler'/'sbb').glob('*.pdf'))
+            self.assertEqual(r1['belge_sha256'],r2['belge_sha256'])
+            self.assertEqual(len(kopyalar),1)
+            self.assertTrue(kopyalar[0].read_bytes().endswith(b'%%EOF\n'))
+
+
 class SbbDetailTests(unittest.TestCase):
     def test_justified_column_starts_above_job_number(self):
         text=('2547 sayılı kanuna göre başvuran doçentlerin lisans belgelerini sunması gerekir.\n\n'

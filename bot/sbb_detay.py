@@ -155,6 +155,7 @@ def summarize(raw,row):
     if not conditions:
         # No guessed requirements when a scanned document or table is unreadable.
         summary.append('Özel şartlar aşağıdaki ilan belgesinde yer alıyor.')
+    raw=pdf_govdesi(raw)   # aynı belge her indirmede aynı özeti versin
     digest=hashlib.sha256(raw).hexdigest()
     relative='belgeler/sbb/'+digest+'.pdf'
     target=ROOT/'docs'/relative
@@ -170,6 +171,14 @@ def summarize(raw,row):
         result['duyuru_cumlesi']=duyuru_cumlesi_bul(plain_pages)
         if result['duyuru_cumlesi']:result['ozet']=result['duyuru_cumlesi']
     return result
+
+
+def pdf_govdesi(raw):
+    """SBB'nin yanıtındaki PDF'in kendisi. SBB, PDF'in arkasına her istekte değişen bir sayfa parçası (kişiye özel
+    'ilanDetay.aspx?kod=...' formu) ekliyor: 11 Kasım 2026'da aynı belgenin 111 farklı özetli kopyası depoda birikmişti
+    (8.274 dosya, 2,6 GB; yalnız 323'ü kullanılıyordu). Son '%%EOF' işaretinden sonrası atılır; işaret yoksa veri aynen kalır."""
+    son = raw.rfind(b'%%EOF')
+    return raw[:son + 5] + b'\n' if son > 0 else raw
 
 
 def belge_sayfalari(item, en_buyuk=4_000_000):

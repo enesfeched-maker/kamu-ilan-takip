@@ -1,0 +1,55 @@
+name: Kullanılmayan belgeleri temizle
+
+# docs/belgeler/sbb altında hiçbir ilan kaydının göstermediği PDF kopyalarını depodan çıkarır (bot/belge_temizle.py).
+# Belgelerin kendisi indirilmez (seyrek checkout); yalnız Git dizini üzerinde çalışır. Kaldırılan dosyalar Git geçmişinde durur.
+on:
+  schedule:
+    - cron: "40 1 * * 1"   # pazartesi 04:40 Türkiye
+  workflow_dispatch:
+    inputs:
+      kuru:
+        description: Yalnız say, hiçbir şeyi kaldırma
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: belge-temizle
+  cancel-in-progress: false
+
+jobs:
+  temizle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /bot/
+            /docs/ilanlar.json
+            /docs/yerel-kaynaklar.json
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: "3.12"
+      - name: Temizle ve kaydet
+        env:
+          KURU: ${{ inputs.kuru }}
+        run: |
+          git config user.name ilan-bot
+          git config user.email ilan-bot@users.noreply.github.com
+          if [ "$KURU" = "true" ]; then python bot/belge_temizle.py --kuru; exit 0; fi
+          for deneme in 1 2 3; do
+            # Her denemede güncel main üzerinden yeniden hesaplanır: araya giren tarama yeni belge göstermiş olabilir.
+            git fetch -q --filter=blob:none origin main
+            git reset -q --hard origin/main
+            python bot/belge_temizle.py
+            if git diff --cached --quiet; then echo "Kaldırılacak belge yok."; exit 0; fi
+            git commit -q -m "Kullanılmayan belge kopyalarını kaldır [skip ci]"
+            git push -q origin HEAD:main && exit 0
+            sleep 15
+          done
+          exit 1
