@@ -111,6 +111,10 @@ class Tasarim(unittest.TestCase):
     def test_video_kare_sayisi(self):
         kare = st.kapanis()
         sayi = sum(1 for _ in st.video_kareleri([kare, kare], ilk=1.0, sonraki=0.5))
+        # ilk kare kapaktır: yakınlaşma olmadan, oturmuş hâliyle başlar (önizleme kesik görünmesin)
+        uretilen = list(st.video_kareleri([kare, kare], ilk=1.0, sonraki=0.5))
+        self.assertEqual(uretilen[0].tobytes(), uretilen[int(st.FPS * 1.0) - 1].tobytes())
+        self.assertNotEqual(uretilen[int(st.FPS * 1.0)].tobytes(), uretilen[-1].tobytes())   # ikinci kare hâlâ hareketli girer
         self.assertEqual(sayi, st.FPS + st.FPS // 2)
 
     def test_ses_girdisi_ve_sure(self):
