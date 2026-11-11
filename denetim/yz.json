@@ -5679,11 +5679,11 @@
   }
  },
  "sbb-0789771f8e6c1c43dd7bd8fe": {
-  "zaman": "2026-11-10T19:16:50+03:00",
+  "zaman": "2026-11-11T07:10:41+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "cf52f917e8e94bb5",
+  "imza": "bee94aa67c1578d6",
   "baslik": "YÜKSEKÖĞRETİM KURULU BAŞKANLIĞI - 5 ALACAK",
   "farklar": [],
   "yz": {
@@ -5696,10 +5696,11 @@
      "en_dusuk_puan": null,
      "il": null,
      "kosullar": [
-      "Bilgisayar veya yazılım mühendisliği (ya da denkliği kabul edilen bölümlerden) mezun olmak.",
-      "Lisans sonrası yazılım geliştirici olarak en az 8 yıl çalışma deneyimine sahip olmak.",
-      "Java ve Spring Boot uygulamalarının geliştirme ve bakımında fiilen görev aldığını belgelemek.",
-      "Oracle veya PostgreSQL ile JPA/Hibernate, ileri düzey SQL bilgisi ve deneyimi."
+      "Bilgisayar veya yazılım mühendisliği (ya da denkliği kabul edilmiş) bölümünden mezun olmak.",
+      "Lisans sonrası yazılım geliştirici olarak en az 8 yıl belgeli deneyime sahip olmak.",
+      "Java ve Spring Boot ile uygulama geliştirme ve bakımında fiilen görev aldığını belgelemek.",
+      "Oracle veya PostgreSQL, JPA/Hibernate ve ileri düzey SQL bilgisine sahip olmak.",
+      "Docker, CI/CD, Kubernetes ve mikroservis mimarileri hakkında bilgi sahibi olmak."
      ]
     },
     {
@@ -5710,10 +5711,11 @@
      "en_dusuk_puan": null,
      "il": null,
      "kosullar": [
-      "Bilgisayar veya yazılım mühendisliği (ya da denkliği kabul edilen bölümlerden) mezun olmak.",
-      "Lisans sonrası yazılım geliştirici olarak en az 3 yıl çalışma deneyimine sahip olmak.",
-      "Java ve Spring Boot uygulamalarının geliştirme ve bakımında fiilen görev aldığını belgelemek.",
-      "Oracle veya PostgreSQL ile JPA/Hibernate bilgisi ve deneyimi."
+      "Bilgisayar veya yazılım mühendisliği (ya da denkliği kabul edilmiş) bölümünden mezun olmak.",
+      "Lisans sonrası yazılım geliştirici olarak en az 3 yıl belgeli deneyime sahip olmak.",
+      "Java ve Spring Boot ile uygulama geliştirme ve bakımında fiilen görev aldığını belgelemek.",
+      "Oracle veya PostgreSQL ve JPA/Hibernate bilgisine sahip olmak.",
+      "Web teknolojileri, bir JavaScript framework'ü ve REST/SOAP web servisleri bilmek."
      ]
     }
    ],
@@ -5723,13 +5725,13 @@
    "kpss_gerekli": true,
    "iller": [],
    "ortak_kosullar": [
-    "2026 KPSS P3 puanı istenir; belge sunmayanın puanı 70 sayılır.",
-    "İngilizce YDS/e-YDS veya eşdeğer sınav belgesi istenir; belge sunmayanın dil puanı 0 sayılır.",
-    "Başvuru 2–16 Kasım 2026 arasında e-Devlet üzerinden Kariyer Kapısı'ndan yapılır.",
-    "Sıralama: KPSS P3'ün %70'i + yabancı dil puanının %30'u; pozisyon sayısının 10 katı aday sözlü sınava girer.",
-    "Sözlü sınavda başarı için en az 70 puan gerekir."
+    "2026 KPSS P3 sonuç belgesi istenir; belge sunmayanın puanı 70 sayılır.",
+    "İngilizce YDS/e-YDS puanı istenir; belge sunmayanın yabancı dil puanı 0 sayılır.",
+    "Sıralama: KPSS P3'ün %70'i + yabancı dil puanının %30'u; alınacak sayının 10 katı aday sözlü sınava çağrılır.",
+    "Sözlü sınavda başarı için en az 70 puan gerekir.",
+    "Başvuru yalnız Kariyer Kapısı üzerinden e-Devlet ile elektronik ortamda yapılır."
    ],
-   "ozet": "YÖK sözleşmeli bilişim personeli olarak 2 kıdemli Java uzmanı ve 3 Java uzmanı alacak. Başvurular 2–16 Kasım 2026'da Kariyer Kapısı'ndan yapılır.",
+   "ozet": "YÖK sözleşmeli bilişim personeli alacak: 2 Kıdemli Yazılım Geliştirme Uzmanı ve 3 Yazılım Geliştirme Uzmanı (Java). Başvurular 2–16 Kasım 2026'da Kariyer Kapısı'ndan yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -5743,36 +5745,27 @@
   }
  },
  "sbb-0a0b1d327a7c5924b935242e": {
-  "zaman": "2026-11-10T19:16:50+03:00",
+  "zaman": "2026-11-11T07:10:41+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "3165c41d8b05dea7",
+  "imza": "ab01aa82eb9852c7",
   "baslik": "DOĞU KARADENİZ KALKINMA AJANSI - 1 UZMAN ALACAK",
-  "farklar": [
-   [
-    "puan_turleri",
-    [
-     "P12"
-    ],
-    [
-     "P12,P14,P24,P29,P34"
-    ],
-    false
-   ]
-  ],
+  "farklar": [],
   "yz": {
    "kadrolar": [
     {
-     "unvan": "Uzman Personel",
+     "unvan": "Uzman",
      "adet": 1,
      "ogrenim": "lisans",
-     "puan_turu": "P12, P14, P24, P29, P34",
+     "puan_turu": "P12",
      "en_dusuk_puan": 80,
      "il": "Rize",
      "kosullar": [
-      "İktisat, Ekonomi, İşletme, Kamu Yönetimi, Uluslararası İlişkiler, İstatistik, Siyaset Bilimi ve Kamu Yönetimi ya da Siyaset Bilimi ve Uluslararası İlişkiler bölümlerinden mezun olmak.",
-      "Son 5 yılda YDS/e-YDS İngilizce en az C düzeyinde puan almış olmak (taban 70)."
+      "İktisat, Ekonomi, İşletme, Kamu Yönetimi, Uluslararası İlişkiler veya İstatistik bölümlerinden mezun olmak.",
+      "Siyaset Bilimi ve Kamu Yönetimi ya da Siyaset Bilimi ve Uluslararası İlişkiler bölümlerinden de başvurulabilir.",
+      "KPSS P12, P14, P24, P29 veya P34 puan türlerinden en az 80 puan almak.",
+      "Son 5 yılda YDS/e-YDS İngilizce en az C düzeyinde (taban 70) puan almış olmak."
      ]
     }
    ],
@@ -5785,13 +5778,12 @@
     "Rize"
    ],
    "ortak_kosullar": [
-    "2025-2026 KPSS P12, P14, P24, P29 veya P34'ten en az 80 puan almış olmak.",
-    "Başvuru e-Devlet üzerinden Kariyer Kapısı'ndan yapılır.",
-    "Sözlü sınav; pozisyon sayısının 5 katı aday çağrılır. Sınava katılanlar 11.12.2026'da ilan edilecek.",
-    "Sınav başarı notu 100 üzerinden 70'tir.",
-    "Görev yeri Rize Yatırım Destek Ofisi; TR90 bölgesi illerinde çalışmayı kabul etmek gerekir."
+    "Başvuru Kariyer Kapısı üzerinden e-Devlet ile elektronik ortamda yapılır.",
+    "Sıralama: KPSS %55, YDS %35, yüksek lisans %2, doktora %4, ikinci yabancı dil %4.",
+    "Alınacak sayının 5 katı aday sözlü sınava çağrılır; başarı notu en az 70'tir.",
+    "Uzman, Rize Yatırım Destek Ofisi'nde görevlendirilecektir."
    ],
-   "ozet": "Doğu Karadeniz Kalkınma Ajansı Rize Yatırım Destek Ofisi'ne 1 uzman alacak. Başvurular 23 Kasım–6 Aralık 2026'da Kariyer Kapısı'ndan yapılır.",
+   "ozet": "Doğu Karadeniz Kalkınma Ajansı (DOKA) 1 uzman alacak; görev yeri Rize Yatırım Destek Ofisi. Başvurular 23 Kasım–6 Aralık 2026'da Kariyer Kapısı'ndan yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -5800,7 +5792,7 @@
     "lisans"
    ],
    "puan_turleri": [
-    "P12, P14, P24, P29, P34"
+    "P12"
    ]
   }
  },
@@ -6800,18 +6792,17 @@
   }
  },
  "sbb-5f3fa2414e8b9e9a456461d8": {
-  "zaman": "2026-11-10T19:16:50+03:00",
+  "zaman": "2026-11-11T07:10:41+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "06e8e7cafdd013e0",
+  "imza": "d8caebf80dce9e87",
   "baslik": "GAZİANTEP ÜNİVERSİTESİ - 11 ALACAK",
   "farklar": [],
   "yz": {
    "kadrolar": [],
    "toplam": 0,
    "okunabilirlik": "kotu",
-   "ozet": "Akademik kadro ilanı (öğretim görevlisi/araştırma görevlisi).",
    "akademik": false,
    "iptal_veya_duzeltme": false,
    "duyuru_tipi": "yeni_ilan",
