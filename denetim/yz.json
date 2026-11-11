@@ -5679,11 +5679,11 @@
   }
  },
  "sbb-0789771f8e6c1c43dd7bd8fe": {
-  "zaman": "2026-11-11T07:10:41+03:00",
+  "zaman": "2026-11-11T23:11:41+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "bee94aa67c1578d6",
+  "imza": "489615e14f5e2b68",
   "baslik": "YÜKSEKÖĞRETİM KURULU BAŞKANLIĞI - 5 ALACAK",
   "farklar": [],
   "yz": {
@@ -5696,11 +5696,11 @@
      "en_dusuk_puan": null,
      "il": null,
      "kosullar": [
-      "Bilgisayar veya yazılım mühendisliği (ya da denkliği kabul edilmiş) bölümünden mezun olmak.",
-      "Lisans sonrası yazılım geliştirici olarak en az 8 yıl belgeli deneyime sahip olmak.",
-      "Java ve Spring Boot ile uygulama geliştirme ve bakımında fiilen görev aldığını belgelemek.",
-      "Oracle veya PostgreSQL, JPA/Hibernate ve ileri düzey SQL bilgisine sahip olmak.",
-      "Docker, CI/CD, Kubernetes ve mikroservis mimarileri hakkında bilgi sahibi olmak."
+      "Bilgisayar veya yazılım mühendisliğinden (ya da denkinden) mezun olmak.",
+      "Lisans sonrası yazılım geliştirici olarak en az 8 yıl deneyime sahip olmak.",
+      "Java ve Spring Boot ile uygulama geliştirme/bakımında fiilen görev almış olmak.",
+      "Spring Security, Spring Data, Oracle/PostgreSQL, JPA/Hibernate bilgisi.",
+      "Aylık brüt sözleşme ücret tavanının 4 katına kadar ücret."
      ]
     },
     {
@@ -5711,11 +5711,11 @@
      "en_dusuk_puan": null,
      "il": null,
      "kosullar": [
-      "Bilgisayar veya yazılım mühendisliği (ya da denkliği kabul edilmiş) bölümünden mezun olmak.",
-      "Lisans sonrası yazılım geliştirici olarak en az 3 yıl belgeli deneyime sahip olmak.",
-      "Java ve Spring Boot ile uygulama geliştirme ve bakımında fiilen görev aldığını belgelemek.",
-      "Oracle veya PostgreSQL ve JPA/Hibernate bilgisine sahip olmak.",
-      "Web teknolojileri, bir JavaScript framework'ü ve REST/SOAP web servisleri bilmek."
+      "Bilgisayar veya yazılım mühendisliğinden (ya da denkinden) mezun olmak.",
+      "Lisans sonrası yazılım geliştirici olarak en az 3 yıl deneyime sahip olmak.",
+      "Java ve Spring Boot ile uygulama geliştirme/bakımında fiilen görev almış olmak.",
+      "Spring Security, Spring Data, Oracle/PostgreSQL, JPA/Hibernate bilgisi.",
+      "Aylık brüt sözleşme ücret tavanının 2 katına kadar ücret."
      ]
     }
    ],
@@ -5725,13 +5725,13 @@
    "kpss_gerekli": true,
    "iller": [],
    "ortak_kosullar": [
-    "2026 KPSS P3 sonuç belgesi istenir; belge sunmayanın puanı 70 sayılır.",
-    "İngilizce YDS/e-YDS puanı istenir; belge sunmayanın yabancı dil puanı 0 sayılır.",
-    "Sıralama: KPSS P3'ün %70'i + yabancı dil puanının %30'u; alınacak sayının 10 katı aday sözlü sınava çağrılır.",
-    "Sözlü sınavda başarı için en az 70 puan gerekir.",
-    "Başvuru yalnız Kariyer Kapısı üzerinden e-Devlet ile elektronik ortamda yapılır."
+    "Başvuru 2–16 Kasım 2026 arasında e-Devlet/Kariyer Kapısı üzerinden elektronik ortamda yapılır.",
+    "2026 KPSS P3 puanı istenir; belge ibraz etmeyenin puanı 70 sayılır.",
+    "İngilizce YDS/e-YDS puanı aranır; belge yoksa yabancı dil puanı 0 sayılır.",
+    "Puan: KPSS P3'ün %70'i + yabancı dil puanının %30'u; kontenjanın 10 katı aday sözlü sınava çağrılır.",
+    "Sözlü sınavda başarı için en az 70 puan gerekir."
    ],
-   "ozet": "YÖK sözleşmeli bilişim personeli alacak: 2 Kıdemli Yazılım Geliştirme Uzmanı ve 3 Yazılım Geliştirme Uzmanı (Java). Başvurular 2–16 Kasım 2026'da Kariyer Kapısı'ndan yapılır.",
+   "ozet": "Yükseköğretim Kurulu Başkanlığı 2 kıdemli ve 3 Java yazılım geliştirme uzmanı olmak üzere 5 sözleşmeli bilişim personeli alacak. Başvurular 2–16 Kasım 2026'da Kariyer Kapısı'ndan yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -5745,27 +5745,27 @@
   }
  },
  "sbb-0a0b1d327a7c5924b935242e": {
-  "zaman": "2026-11-11T07:10:41+03:00",
+  "zaman": "2026-11-11T23:11:41+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "ab01aa82eb9852c7",
+  "imza": "ce91ff9ff8cf6094",
   "baslik": "DOĞU KARADENİZ KALKINMA AJANSI - 1 UZMAN ALACAK",
   "farklar": [],
   "yz": {
    "kadrolar": [
     {
-     "unvan": "Uzman",
+     "unvan": "Uzman Personel",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P12",
      "en_dusuk_puan": 80,
-     "il": "Rize",
+     "il": "Trabzon",
      "kosullar": [
-      "İktisat, Ekonomi, İşletme, Kamu Yönetimi, Uluslararası İlişkiler veya İstatistik bölümlerinden mezun olmak.",
-      "Siyaset Bilimi ve Kamu Yönetimi ya da Siyaset Bilimi ve Uluslararası İlişkiler bölümlerinden de başvurulabilir.",
-      "KPSS P12, P14, P24, P29 veya P34 puan türlerinden en az 80 puan almak.",
-      "Son 5 yılda YDS/e-YDS İngilizce en az C düzeyinde (taban 70) puan almış olmak."
+      "İktisat, ekonomi, işletme, kamu yönetimi, uluslararası ilişkiler, istatistik veya siyaset bilimi bölümlerinden mezun olmak.",
+      "KPSS P12, P14, P24, P29 veya P34'ten en az 80 puan almış olmak.",
+      "Son 5 yıl içinde YDS/e-YDS İngilizce en az C düzeyinde puan almış olmak.",
+      "Görev yeri Rize Yatırım Destek Ofisi; TR90 Bölgesi illerinde çalışmayı kabul etmek."
      ]
     }
    ],
@@ -5778,12 +5778,12 @@
     "Rize"
    ],
    "ortak_kosullar": [
-    "Başvuru Kariyer Kapısı üzerinden e-Devlet ile elektronik ortamda yapılır.",
+    "Başvuru 23 Kasım–6 Aralık 2026 (23:59) arasında e-Devlet/Kariyer Kapısı üzerinden yapılır.",
+    "Sınav sözlüdür; başarı notu 100 üzerinden en az 70'tir.",
     "Sıralama: KPSS %55, YDS %35, yüksek lisans %2, doktora %4, ikinci yabancı dil %4.",
-    "Alınacak sayının 5 katı aday sözlü sınava çağrılır; başarı notu en az 70'tir.",
-    "Uzman, Rize Yatırım Destek Ofisi'nde görevlendirilecektir."
+    "Sözlü sınava kontenjanın 5 katı aday çağrılır; çağrılanlar 11.12.2026'da duyurulur."
    ],
-   "ozet": "Doğu Karadeniz Kalkınma Ajansı (DOKA) 1 uzman alacak; görev yeri Rize Yatırım Destek Ofisi. Başvurular 23 Kasım–6 Aralık 2026'da Kariyer Kapısı'ndan yapılır.",
+   "ozet": "Doğu Karadeniz Kalkınma Ajansı Rize Yatırım Destek Ofisi'nde görevlendirilmek üzere 1 uzman alacak. Başvurular 23 Kasım–6 Aralık 2026'da Kariyer Kapısı'ndan yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -6370,28 +6370,28 @@
   }
  },
  "sbb-42ad8a93106df0cfa5840d8e": {
-  "zaman": "2026-11-11T11:13:15+03:00",
+  "zaman": "2026-11-11T23:11:41+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "28c6720178724c61",
+  "imza": "b5dc599be70aaedc",
   "baslik": "BURDUR MEHMET AKİF ERSOY ÜNİVERSİTESİ - 1 ALACAK",
   "farklar": [],
   "yz": {
    "kadrolar": [
     {
-     "unvan": "Sözleşmeli Bilişim Personeli — Sistem Yöneticisi",
+     "unvan": "Sistem Yöneticisi (Sözleşmeli Bilişim Personeli)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": null,
      "il": "Burdur",
      "kosullar": [
-      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak.",
+      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliğinden mezun olmak.",
       "Büyük ölçekli bilgi işlem merkezlerinde en az 3 yıl sistem uzmanı/yöneticisi olarak çalışmış olmak.",
-      "Linux ve BSD işletim sistemlerinde en az orta düzey bilgi ve tecrübeye sahip olmak.",
-      "VMware ve Proxmox sanallaştırma ortamlarında en az orta seviye bilgi ve tecrübeye sahip olmak.",
-      "Yazılım veya büyük ölçekli ağ sistemleri alanında en az 3 yıl (diğerleri için 5 yıl) mesleki tecrübeye sahip olmak."
+      "Linux/BSD, Windows Server, VMware ve Proxmox konularında bilgi ve tecrübe sahibi olmak.",
+      "En az iki güncel programlama dilini bildiğini belgelemek.",
+      "Aylık brüt sözleşme ücret tavanının 2 katına kadar ücret."
      ]
     }
    ],
@@ -6404,12 +6404,12 @@
     "Burdur"
    ],
    "ortak_kosullar": [
-    "En az iki güncel programlama dilini bildiğini belgelemek.",
-    "Başvuru Kariyer Kapısı Kamu İşe Alım platformundan e-Devlet ile yapılır; şahsen veya posta ile başvuru kabul edilmez.",
-    "Değerlendirme puanı: 2026 KPSS P3 puanının %70'i + İngilizce yabancı dil puanının %30'u.",
-    "Sözlü ve uygulamalı sınav 30.11.2026'da Burdur'da yapılacak; başarı için en az 70 puan gerekir."
+    "Başvuru 28.10–11.11.2026 arasında e-Devlet/Kariyer Kapısı üzerinden yapılır; şahsen ve posta kabul edilmez.",
+    "Puan: 2026 KPSS P3'ün %70'i + İngilizce yabancı dil puanının %30'u.",
+    "KPSS belgesi yoksa P3 puanı 70, yabancı dil belgesi yoksa 0 sayılır.",
+    "Kontenjanın 10 katı aday sözlü/uygulamalı sınava çağrılır; sınav 30.11.2026, başarı için en az 70 puan."
    ],
-   "ozet": "Burdur Mehmet Akif Ersoy Üniversitesi 1 sözleşmeli bilişim personeli (sistem yöneticisi) alacak. Başvurular 28 Ekim–11 Kasım 2026 saat 13:00'e kadar Kariyer Kapısı'ndan yapılır.",
+   "ozet": "Burdur Mehmet Akif Ersoy Üniversitesi Bilgi İşlem Daire Başkanlığı'na 1 sistem yöneticisi (sözleşmeli bilişim personeli) alacak. Son başvuru 11 Kasım 2026 saat 13:00.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -6792,21 +6792,26 @@
   }
  },
  "sbb-5f3fa2414e8b9e9a456461d8": {
-  "zaman": "2026-11-11T07:10:41+03:00",
+  "zaman": "2026-11-11T23:11:41+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "d8caebf80dce9e87",
+  "imza": "0b67d2eaa1bec219",
   "baslik": "GAZİANTEP ÜNİVERSİTESİ - 11 ALACAK",
   "farklar": [],
   "yz": {
    "kadrolar": [],
    "toplam": 0,
+   "son_basvuru_tarihi": "2026-11-17",
+   "baslangic_tarihi": "2026-11-03",
+   "kpss_gerekli": false,
+   "iller": [],
+   "ortak_kosullar": [],
+   "ozet": "Akademik kadro ilanı (araştırma görevlisi ve öğretim görevlisi).",
    "okunabilirlik": "kotu",
    "akademik": false,
    "iptal_veya_duzeltme": false,
-   "duyuru_tipi": "yeni_ilan",
-   "ortak_kosullar": []
+   "duyuru_tipi": "yeni_ilan"
   }
  },
  "sbb-6295f6e0ec51fdf233636132": {
