@@ -1,6 +1,6 @@
 name: TikTok deneme yüklemesi
 
-# En son sosyal medya videosunu YALNIZ TikTok'a (taslak olarak) yükler ve TikTok'un cevabını yazar:
+# En son sosyal medya videosunu YALNIZ TikTok'a yükler (BUFFER_API_ANAHTARI varsa Buffer ile YAYINLAR, yoksa taslak) ve cevabı yazar:
 # video telefona ulaştı mı, ulaşmadıysa nedeni nedir. Instagram ve YouTube'a dokunmaz, geçmişe yazmaz.
 on:
   workflow_dispatch:
@@ -22,6 +22,7 @@ jobs:
         run: |
           ETIKET="$(gh release list --limit 1 --json tagName --jq '.[0].tagName')"
           echo "Sürüm: $ETIKET"
+          echo "ETIKET=$ETIKET" >> "$GITHUB_ENV"
           mkdir -p dene
           gh release download "$ETIKET" --dir dene --pattern reel.mp4 --pattern paylasim.json
           ls -la dene
@@ -32,4 +33,7 @@ jobs:
           TT_YENILEME_ANAHTARI: ${{ secrets.TT_YENILEME_ANAHTARI }}
           SOSYAL_GH_ANAHTARI: ${{ secrets.SOSYAL_GH_ANAHTARI }}
           TT_MOD: ${{ vars.TT_MOD }}
+          BUFFER_API_ANAHTARI: ${{ secrets.BUFFER_API_ANAHTARI }}
+          BUFFER_TIKTOK_KANAL: ${{ vars.BUFFER_TIKTOK_KANAL }}
+          VIDEO_URL: https://github.com/${{ github.repository }}/releases/download/${{ env.ETIKET }}/reel.mp4
         run: python bot/sosyal_yayinla.py --tiktok-dene dene

@@ -6,6 +6,9 @@ Her platform yalnız anahtarları GitHub sırlarında tanımlıysa çalışır; 
   TikTok (Content Posting API):                      TT_ISTEMCI_ANAHTARI, TT_ISTEMCI_SIRRI, TT_YENILEME_ANAHTARI
                                                      TT_MOD=taslak (varsayılan; uygulamadaki gelen kutusuna düşer)
                                                      ya da dogrudan (TikTok incelemesi onaylandıktan sonra)
+  TikTok, Buffer üzerinden (önerilen):               BUFFER_API_ANAHTARI tanımlıysa video taslak yerine Buffer ile
+                                                     açıklaması ve kapağıyla hemen yayınlanır; Buffer hata verirse
+                                                     taslak yöntemine dönülür.
 Yenilenen anahtarlar (Instagram haftada bir, TikTok her seferinde dönebilir) SOSYAL_GH_ANAHTARI tanımlıysa
 GitHub sırrına geri yazılır; tanımlı değilse yalnız uyarı verilir. Anahtarlar hiçbir zaman yazdırılmaz.
 
@@ -183,6 +186,56 @@ def youtube_kontrol():
     return True
 
 
+# ---------------------------------------------------------------- Buffer (TikTok'a doğrudan yayın)
+BUFFER_ADRESI = 'https://api.buffer.com'
+BUFFER_KAPAK_MS = 2500   # kapak: videonun bu anındaki kare (ilk sahnenin başlığı yerine oturduktan sonra)
+
+
+def _buffer(sorgu, anahtar):
+    yanit = _istek(BUFFER_ADRESI, json_veri={'query': sorgu}, basliklar={'Authorization': f'Bearer {anahtar}'})
+    if yanit.get('errors'):
+        raise YayinHatasi(f"Buffer: {str(yanit['errors'][0].get('message'))[:200]}")
+    return yanit.get('data') or {}
+
+
+def buffer_kanal(anahtar, servis='tiktok'):
+    """Buffer hesabına bağlı ilk TikTok kanalının kimliği (BUFFER_TIKTOK_KANAL tanımlıysa sorgu yapılmaz)."""
+    hazir = os.environ.get('BUFFER_TIKTOK_KANAL', '').strip()
+    if hazir:
+        return hazir
+    kurumlar = ((_buffer('query { account { organizations { id } } }', anahtar).get('account') or {}).get('organizations')) or []
+    for kurum in kurumlar:
+        sorgu = 'query { channels(input: { organizationId: %s }) { id service isDisconnected } }' % json.dumps(kurum['id'])
+        for kanal in _buffer(sorgu, anahtar).get('channels') or []:
+            if kanal.get('service') == servis and not kanal.get('isDisconnected'):
+                return kanal['id']
+    raise YayinHatasi(f'Buffer hesabında bağlı {servis} kanalı yok')
+
+
+def buffer_tiktok(metin, anahtar, video_url, bekle=40):
+    """Videoyu Buffer üzerinden TikTok'ta hemen yayınlar: açıklama ve kapak karesi dahil.
+
+    TikTok kendi incelemesinden geçmemiş uygulamalara herkese açık paylaşım izni vermiyor; Buffer onaylı bir
+    aracı olduğu için ücretsiz planıyla (API dahil) bu sınır aşılır. Buffer videoyu herkese açık adresten çeker."""
+    kanal = buffer_kanal(anahtar)
+    sorgu = ('mutation { createPost(input: { text: %s channelId: %s schedulingType: automatic mode: shareNow '
+             'assets: [{ video: { url: %s metadata: { thumbnailOffset: %d } } }] }) '
+             '{ ... on PostActionSuccess { post { id status } } ... on MutationError { message } } }'
+             % (json.dumps(metin['aciklama'][:2200], ensure_ascii=False), json.dumps(kanal), json.dumps(video_url), BUFFER_KAPAK_MS))
+    yanit = _buffer(sorgu, anahtar).get('createPost') or {}
+    gonderi = yanit.get('post') or {}
+    if not gonderi.get('id'):
+        raise YayinHatasi(f"Buffer gönderiyi kabul etmedi: {str(yanit.get('message'))[:200]}")
+    durum = gonderi.get('status')
+    if bekle:   # istek kotası dar (30 günde 1000): yalnız bir kez sorulur
+        time.sleep(bekle)
+        son = (_buffer('query { post(input: { id: %s }) { status error { message } } }' % json.dumps(gonderi['id']), anahtar).get('post')) or {}
+        durum = son.get('status') or durum
+        if (son.get('error') or {}).get('message'):
+            raise YayinHatasi(f"Buffer TikTok'ta yayınlayamadı: {son['error']['message'][:200]}")
+    return {'id': gonderi['id'], 'gorunurluk': 'buffer', 'durum': durum}
+
+
 # ---------------------------------------------------------------- TikTok
 def _tiktok_erisim(istemci, sir, yenileme):
     yanit = _istek('https://open.tiktokapis.com/v2/oauth/token/', veri={
@@ -196,6 +249,12 @@ def _tiktok_erisim(istemci, sir, yenileme):
 
 
 def tiktok(video, metin, ortam=None, mod=None):
+    buffer_anahtari, video_url = os.environ.get('BUFFER_API_ANAHTARI', '').strip(), os.environ.get('VIDEO_URL', '').strip()
+    if buffer_anahtari and video_url and ortam is None:
+        try:
+            return buffer_tiktok(metin, buffer_anahtari, video_url)
+        except Exception as hata:   # Buffer aksarsa video yine de taslak olarak telefona düşsün
+            print(f'::warning::Buffer ile TikTok yayını olmadı, taslak yöntemine dönülüyor: {str(hata)[:200]}')
     kimlik = ortam or _env('TT_ISTEMCI_ANAHTARI', 'TT_ISTEMCI_SIRRI', 'TT_YENILEME_ANAHTARI')
     if not kimlik:
         return None
@@ -269,6 +328,8 @@ if __name__ == '__main__':
         k = Path(sys.argv[sys.argv.index('--tiktok-dene') + 1])
         yanit = tiktok(k / 'reel.mp4', json.loads((k / 'paylasim.json').read_text(encoding='utf-8')))
         print('TikTok yükleme isteği:', yanit)
+        if yanit.get('gorunurluk') == 'buffer':
+            sys.exit(0)
         durum = tiktok_durum(yanit['id'])
         print('TikTok durumu:', json.dumps(durum, ensure_ascii=False))
         sys.exit(0 if durum.get('status') in ('SEND_TO_USER_INBOX', 'PUBLISH_COMPLETE') else 1)
