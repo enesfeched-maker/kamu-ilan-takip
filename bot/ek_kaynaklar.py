@@ -251,7 +251,7 @@ def sbb_rows(data):
 
 
 def read_sbb(previous):
-    from sbb_detay import VERSION
+    from sbb_detay import VERSION,pdf_govdesi
     op=session()
     data,_=get(op,SBB)
     records=[]
@@ -286,7 +286,7 @@ def read_sbb(previous):
             # SBB's PDF endpoint rejects navigation outside its own page/session.
             # Link to its working search page rather than publishing a broken PDF URL.
             row.update(link=SBB,detay_guncelleme=now().isoformat(timespec='seconds'),
-                       belge_ozeti=hashlib.sha256(data).hexdigest())
+                       belge_ozeti=hashlib.sha256(pdf_govdesi(data)).hexdigest())
             row['kaynaklar']=[{'ad':row['kaynak'],'link':SBB}]
             if notice(row['baslik']):
                 row['duyuru_turu']='İptal duyurusu' if 'iptal' in norm(row['baslik']) else 'Düzeltme / süre değişikliği'
