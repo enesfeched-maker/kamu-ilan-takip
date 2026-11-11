@@ -1,0 +1,24 @@
+{
+  "name": "kpss-tercihi-uygulama",
+  "version": "1.0.0",
+  "private": true,
+  "description": "KPSS Tercihi Android ve iOS uygulaması (Capacitor)",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "sync": "cap sync",
+    "doctor": "cap doctor"
+  },
+  "dependencies": {
+    "@capacitor-community/admob": "8.3.0",
+    "@capacitor/android": "8.6.0",
+    "@capacitor/core": "8.6.0",
+    "@capacitor/ios": "8.6.0",
+    "@capacitor/local-notifications": "8.3.1",
+    "@capacitor/splash-screen": "8.0.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "8.6.0"
+  }
+}
