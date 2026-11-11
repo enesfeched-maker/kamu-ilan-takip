@@ -6373,27 +6373,28 @@
   }
  },
  "sbb-42ad8a93106df0cfa5840d8e": {
-  "zaman": "2026-11-10T23:15:03+03:00",
+  "zaman": "2026-11-11T11:13:15+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "bf983ccb5984d740",
+  "imza": "28c6720178724c61",
   "baslik": "BURDUR MEHMET AKİF ERSOY ÜNİVERSİTESİ - 1 ALACAK",
   "farklar": [],
   "yz": {
    "kadrolar": [
     {
-     "unvan": "Sistem Yöneticisi (Sözleşmeli Bilişim Personeli)",
+     "unvan": "Sözleşmeli Bilişim Personeli — Sistem Yöneticisi",
      "adet": 1,
      "ogrenim": "lisans",
-     "puan_turu": null,
+     "puan_turu": "P3",
      "en_dusuk_puan": null,
      "il": "Burdur",
      "kosullar": [
-      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik ya da endüstri mühendisliği bölümlerinden mezun olmak.",
+      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden mezun olmak.",
       "Büyük ölçekli bilgi işlem merkezlerinde en az 3 yıl sistem uzmanı/yöneticisi olarak çalışmış olmak.",
-      "Linux/BSD, Windows Server, sanallaştırma (VMware, Proxmox) ve yedekleme sistemlerinde bilgi ve tecrübeye sahip olmak.",
-      "Güncel programlama dillerinden en az ikisini bildiğini belgelemek."
+      "Linux ve BSD işletim sistemlerinde en az orta düzey bilgi ve tecrübeye sahip olmak.",
+      "VMware ve Proxmox sanallaştırma ortamlarında en az orta seviye bilgi ve tecrübeye sahip olmak.",
+      "Yazılım veya büyük ölçekli ağ sistemleri alanında en az 3 yıl (diğerleri için 5 yıl) mesleki tecrübeye sahip olmak."
      ]
     }
    ],
@@ -6401,16 +6402,17 @@
    "son_basvuru_tarihi": "2026-11-11",
    "son_basvuru_saati": "13:00",
    "baslangic_tarihi": "2026-10-28",
-   "kpss_gerekli": false,
+   "kpss_gerekli": true,
    "iller": [
     "Burdur"
    ],
    "ortak_kosullar": [
-    "Başvuru yalnızca e-Devlet üzerinden Kariyer Kapısı Kamu İşe Alım platformundan yapılır.",
-    "Mesleki tecrübe: ücret tavanının 2 katını geçmeyen kadrolarda en az 3, diğerlerinde en az 5 yıl.",
-    "Sözlü ve uygulamalı sınav 30.11.2026'da yapılacak."
+    "En az iki güncel programlama dilini bildiğini belgelemek.",
+    "Başvuru Kariyer Kapısı Kamu İşe Alım platformundan e-Devlet ile yapılır; şahsen veya posta ile başvuru kabul edilmez.",
+    "Değerlendirme puanı: 2026 KPSS P3 puanının %70'i + İngilizce yabancı dil puanının %30'u.",
+    "Sözlü ve uygulamalı sınav 30.11.2026'da Burdur'da yapılacak; başarı için en az 70 puan gerekir."
    ],
-   "ozet": "Burdur Mehmet Akif Ersoy Üniversitesi 1 sözleşmeli bilişim personeli (sistem yöneticisi) alacak. Başvurular 28 Ekim–11 Kasım 2026 saat 13.00'e kadar Kariyer Kapısı'ndan yapılır.",
+   "ozet": "Burdur Mehmet Akif Ersoy Üniversitesi 1 sözleşmeli bilişim personeli (sistem yöneticisi) alacak. Başvurular 28 Ekim–11 Kasım 2026 saat 13:00'e kadar Kariyer Kapısı'ndan yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -6418,7 +6420,9 @@
    "ogrenim": [
     "lisans"
    ],
-   "puan_turleri": []
+   "puan_turleri": [
+    "P3"
+   ]
   }
  },
  "sbb-430c26aecb5c9fc198f2999a": {
