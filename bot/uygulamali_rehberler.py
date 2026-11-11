@@ -32,7 +32,7 @@ def yaz(docs, base):
                   'author': {'@type': 'Organization', 'name': 'KPSS Tercihi', 'url': base},
                   'publisher': {'@type': 'Organization', 'name': 'KPSS Tercihi', 'url': base}}
         extra = '<link rel="stylesheet" href="../../rehber.css?v=1"><script type="application/ld+json">' + json.dumps(schema, ensure_ascii=False).replace('</', '<\\/') + '</script>'
-        head = su.sayfa_basi(r['title'] + ' | KPSS Tercihi', r['description'], su.esc(url), '../../', 'article', ek_head=extra)
+        head = su.sayfa_basi(r['title'] + ' | KPSS Tercihi', r['description'], su.esc(url), '../../', 'article', ek_head=su.varsayilan_gorsel(extra) + extra)
         body = ('<body class="kurum-page"><a class="skip" href="#icerik">İçeriğe geç</a>'
                 + su.ust_html('../../') + r['body'].replace(META_BAS, META_BAS + f'<a href="/hakkimizda/">{su.EDITOR}</a> · ', 1)
                 + su.alt_html('../../') + '</body></html>')

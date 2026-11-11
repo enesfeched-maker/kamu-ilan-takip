@@ -51,6 +51,20 @@ class PuanSayfalariTest(unittest.TestCase):
         self.assertIn('og:url', h)
         self.assertIn('../../../sayfa.css', h)
 
+    def test_uzun_unvanda_baslik_ogrenim_duzeyini_korur(self):
+        # 'Veri Hazırlama ve Kontrol İşletmeni' lisans ve önlisans sayfaları aynı <title>'ı alıyordu (düzey sondan kesiliyordu).
+        import site_uret as su
+        donemler = {'2026-1': [satir('VERİ HAZIRLAMA VE KONTROL İŞLETMENİ', 80.0)]}
+        basliklar = set()
+        for slug, ad in (('lisans', 'Lisans'), ('onlisans', 'Önlisans')):
+            h = ps.kadro_sayfasi(BASE, slug, ad, 'VERİ HAZIRLAMA VE KONTROL İŞLETMENİ', 'veri-hazirlama-ve-kontrol-isletmeni', donemler, 2022, 2026)
+            h = h if isinstance(h, str) else next(x for x in h if isinstance(x, str) and '<title>' in x)
+            baslik = h.split('<title>')[1].split('</title>')[0]
+            self.assertIn(f'({ad})', baslik)
+            self.assertLessEqual(len(baslik), su.TITLE_SINIRI)
+            basliklar.add(baslik)
+        self.assertEqual(len(basliklar), 2)
+
     def test_sayi_bicimi(self):
         self.assertEqual(ps.sayi(71.2346), '71,23')
         self.assertEqual(ps.sayi(71.2346, 3), '71,235')

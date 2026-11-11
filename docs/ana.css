@@ -191,10 +191,10 @@ html{scroll-padding-top:76px}
   .manset-sahne{padding:0}
   .manset-yon{display:none}
   .manset-nokta{gap:0}
-  .manset-nokta button{width:22px;height:28px;border:0;background:none;font-size:0;position:relative}
-  .manset-nokta button::before{content:"";position:absolute;left:6px;top:9px;width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.28)}
+  .manset-nokta button{width:24px;height:44px;border:0;background:none;font-size:0;position:relative}
+  .manset-nokta button::before{content:"";position:absolute;left:7px;top:17px;width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.28)}
   .manset-nokta button[aria-current=true]{background:none}
-  .manset-nokta button[aria-current=true]::before{background:#C8F169;left:3px;width:16px;border-radius:5px}
+  .manset-nokta button[aria-current=true]::before{background:#C8F169;left:4px;width:16px;border-radius:5px}
   .liste-bas h1{font-size:18px}
   .zg{grid-template-columns:44px minmax(0,1fr)}
   .gun-tarih{padding-top:12px}
