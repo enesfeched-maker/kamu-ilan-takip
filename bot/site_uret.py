@@ -559,7 +559,7 @@ def _durum_metni(item, simdi):
     if sinif == 'upcoming' and item.get('baslangic_zaman'):
         try:
             b = datetime.fromisoformat(item['baslangic_zaman']).astimezone(TR)
-            metin = f'Başvuru {b.day} {ks.AY[b.month - 1]}’de açılıyor'
+            metin = f'Başvuru {b.day} {ks.AY[b.month - 1]}’{ks.AY_EKI[b.month - 1]} açılıyor'
         except ValueError:
             pass
     return metin, sinif

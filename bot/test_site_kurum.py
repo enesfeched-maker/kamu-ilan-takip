@@ -300,6 +300,10 @@ class YeniBicimTests(unittest.TestCase):
         self.assertNotIn('Resmî ilana git', kapali)
         yakinda = detail_page(ilan(3, 'A Belediyesi', baslangic_zaman='2026-10-20T09:00:00+03:00'), None, None, None, SIMDI)[1]
         self.assertIn('Başvuru 20 Ekim’de açılıyor', yakinda)
+        aralik = detail_page(ilan(4, 'A Belediyesi', baslangic_zaman='2026-12-21T09:00:00+03:00', son_tarih='2026-12-23'), None, None, None, SIMDI)[1]
+        self.assertIn('Başvuru 21 Aralık’ta açılıyor', aralik)   # 'Aralık’de' yazılıyordu
+        self.assertEqual([a + '’' + e for a, e in zip(ks.AY, ks.AY_EKI)],
+                         ['Ocak’ta', 'Şubat’ta', 'Mart’ta', 'Nisan’da', 'Mayıs’ta', 'Haziran’da', 'Temmuz’da', 'Ağustos’ta', 'Eylül’de', 'Ekim’de', 'Kasım’da', 'Aralık’ta'])
         self.assertIn('?profil=1', h)
     def test_manifest_ve_puanlar(self):
         m = json.loads((site_uret.ROOT / 'docs' / 'manifest.webmanifest').read_text(encoding='utf-8'))

@@ -230,6 +230,9 @@ def _ks():
     return kurum_sayfasi
 
 
+KISALTMA_DUZELT = {'Sbf': 'SBF', 'İibf': 'İİBF', 'Iibf': 'İİBF', 'Kpss': 'KPSS', 'Ales': 'ALES', 'Yds': 'YDS'}
+
+
 def baslik_temiz(s):
     """Satır başlığı: 'İlk Defa Atanmak Üzere … Alımı İlanı' -> '… alımı', 'Vhki' -> 'VHKİ'."""
     s = str(s or '')
@@ -239,6 +242,9 @@ def baslik_temiz(s):
     s = re.sub(r'\s+İlanı$', '', s)
     s = re.sub(r'\s+(?:alacak|alınacak|temin edecektir)\s*[.,;:]*\s*$', '', s, flags=re.I)
     s = s.replace('Vhki', 'VHKİ').replace('.net', '.NET')
+    # Büyük harfli belgeden baş harfe çevrilirken bozulan kısaltmalar ve Roma rakamları ('Iı. Grup', 'Sbf, İibf').
+    s = re.sub(r'\b(?:Sbf|İibf|Iibf|Kpss|Ales|Yds)\b', lambda m: KISALTMA_DUZELT[m.group()], s)
+    s = re.sub(r'\bI(ı{1,2})(?=\b)', lambda m: 'I' + 'I' * len(m.group(1)), s)
     return s[:1].upper() + s[1:]
 
 
