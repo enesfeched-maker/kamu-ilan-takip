@@ -5890,11 +5890,11 @@
   }
  },
  "sbb-2a7662aed2b08030660a2828": {
-  "zaman": "2026-11-11T05:11:02+03:00",
+  "zaman": "2026-11-11T17:16:00+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "9533a2195047bc9d",
+  "imza": "36c7e5eee43a7a9d",
   "baslik": "JANDARMA GENEL KOMUTANLIĞI - 30 MEMUR TEMİN EDİLECEKTİR",
   "farklar": [],
   "yz": {
@@ -5919,7 +5919,7 @@
      "en_dusuk_puan": 60,
      "il": "Ankara",
      "kosullar": [
-      "Bilgisayar Mühendisliği, Bilgisayar Bilimi ve Mühendisliği veya Bilgisayar Bilimleri ve Mühendisliği lisans programlarının birinden mezun olmak."
+      "Bilgisayar Mühendisliği, Bilgisayar Bilimi ve Mühendisliği veya Bilgisayar Bilimleri ve Mühendisliği lisansından mezun olmak."
      ]
     },
     {
@@ -5941,7 +5941,7 @@
      "en_dusuk_puan": 60,
      "il": "Ankara",
      "kosullar": [
-      "İstatistik ve belgede sayılan ilgili lisans programlarının birinden mezun olmak."
+      "İstatistik veya İstatistik-Ekonometri gibi ilgili lisans programlarından mezun olmak."
      ]
     },
     {
@@ -5952,8 +5952,7 @@
      "en_dusuk_puan": 60,
      "il": null,
      "kosullar": [
-      "Kimya, Kimyager, Uygulamalı Kimya, Kimya Mühendisliği vb. belgede sayılan lisans programlarının birinden mezun olmak.",
-      "Dağılım: Ankara 1, Van 1."
+      "Kimya, Kimyagerlik veya Kimya Mühendisliği lisans programlarından mezun olmak."
      ]
     },
     {
@@ -5964,30 +5963,30 @@
      "en_dusuk_puan": 60,
      "il": null,
      "kosullar": [
-      "Psikoloji veya Davranış Bilimleri - Psikoloji Disiplini lisans programlarının birinden mezun olmak.",
-      "Dağılım: Karabük/Safranbolu 1, Kastamonu 1, Mardin 1, Muğla 1."
+      "Psikoloji veya Davranış Bilimleri - Psikoloji Disiplini lisansından mezun olmak."
      ]
     },
     {
-     "unvan": "Uzman (Radyo, TV ve Sinema)",
+     "unvan": "Uzman (Radyo-TV-Sinema)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 60,
      "il": "Ankara",
      "kosullar": [
-      "Radyo-Televizyon ve Sinema, Sinema ve Televizyon vb. belgede sayılan lisans programlarının birinden mezun olmak."
+      "Radyo, Televizyon ve Sinema vb. lisans programlarından mezun olmak.",
+      "Tercihen en az 3 yıl kameraman/kamera asistanı olarak çalışmış olmak."
      ]
     },
     {
-     "unvan": "Uzman (Medya, İletişim, Sosyal Bilimler)",
+     "unvan": "Uzman (Medya, İletişim, Siyaset Bilimi, Sosyoloji, Felsefe)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 60,
      "il": "Ankara",
      "kosullar": [
-      "Medya ve İletişim, Gazetecilik, Halkla İlişkiler, Türk Dili ve Edebiyatı, Uluslararası İlişkiler, Sosyoloji, Felsefe vb. belgede sayılan lisans programlarından mezun olmak."
+      "Medya, iletişim, gazetecilik, halkla ilişkiler, Türk dili, siyaset bilimi, uluslararası ilişkiler, sosyoloji veya felsefe lisansından mezun olmak."
      ]
     },
     {
@@ -5998,8 +5997,7 @@
      "en_dusuk_puan": 60,
      "il": null,
      "kosullar": [
-      "Hukuk lisans programından mezun olmak.",
-      "Dağılım: Ankara 4; Aksaray, Artvin, Erzincan, Gümüşhane, Kırklareli, Muş, Ordu, Yozgat 1'er."
+      "Hukuk lisans programından mezun olmak."
      ]
     },
     {
@@ -6010,8 +6008,7 @@
      "en_dusuk_puan": 60,
      "il": null,
      "kosullar": [
-      "Maliye, Muhasebe, İktisat, İşletme vb. belgede sayılan lisans programlarının birinden mezun olmak.",
-      "Dağılım: Çankırı 1, Isparta 1, Kırıkkale 1, Nevşehir 1."
+      "Maliye, muhasebe, iktisat veya işletme ağırlıklı lisans programlarından mezun olmak."
      ]
     }
    ],
@@ -6021,8 +6018,8 @@
    "baslangic_tarihi": "2026-11-02",
    "kpss_gerekli": true,
    "iller": [
-    "Ankara",
     "Kayseri",
+    "Ankara",
     "Van",
     "Karabük",
     "Kastamonu",
@@ -6042,12 +6039,12 @@
     "Nevşehir"
    ],
    "ortak_kosullar": [
-    "2025-2026 KPSS P3 puan türünden en az 60 puan almış olmak.",
-    "Başvuru 16 Kasım 2026 itibarıyla 18 yaşını tamamlamış olmak.",
-    "Başvuru yalnızca personeltemin.jandarma.gov.tr üzerinden e-Devlet ile yapılır; adaylar tek unvana başvurabilir.",
-    "KPSS sırasına göre kontenjanın 15 katı aday mesleki yeterlilik/mülakat sınavına çağrılır."
+    "2025-2026 KPSS (P3) puan türünden en az 60 puan almak.",
+    "Son başvuru günü itibarıyla 18 yaşını tamamlamış olmak.",
+    "Başvuru yalnızca personeltemin.jandarma.gov.tr üzerinden yapılır; yalnız bir unvana başvurulabilir.",
+    "Kadro sayısının 15 katı aday mesleki yeterlilik ve/veya mülakat sınavına çağrılır."
    ],
-   "ozet": "Jandarma Genel Komutanlığı 30 açıktan devlet memuru alacak (avukat, mühendis, psikolog, uzman vb.). Başvurular 2–16 Kasım 2026'da personeltemin.jandarma.gov.tr üzerinden yapılır.",
+   "ozet": "Jandarma Genel Komutanlığı 30 açıktan devlet memuru alacak (avukat, mühendis, psikolog, uzman vb.). Başvurular 2–16 Kasım 2026'da personeltemin.jandarma.gov.tr'den yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -7064,11 +7061,11 @@
   }
  },
  "sbb-6975c78c3d45204d44f373ea": {
-  "zaman": "2026-11-11T01:15:59+03:00",
+  "zaman": "2026-11-11T17:16:00+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "82823bcdc49af675",
+  "imza": "fc7055f8a29b1c3e",
   "baslik": "KAMU DENETÇİLİĞİ KURUMU - 10 KAMU DENETÇİLİĞİ UZMAN YARDIMCISI ALACAK",
   "farklar": [
    [
@@ -7079,7 +7076,7 @@
      "P4"
     ],
     [
-     "P33,P38",
+     "P33VEYAP38",
      "P4"
     ],
     false
@@ -7095,18 +7092,18 @@
      "en_dusuk_puan": 80,
      "il": null,
      "kosullar": [
-      "En az dört yıllık hukuk fakültelerinden veya denkliği kabul edilmiş okullardan mezun olmak."
+      "En az dört yıllık hukuk fakültesinden mezun olmak."
      ]
     },
     {
-     "unvan": "Kamu Denetçiliği Uzman Yardımcısı (Siyasal Bilgiler, İİBF, İktisat ve İşletme — II. Grup)",
+     "unvan": "Kamu Denetçiliği Uzman Yardımcısı (SBF, İİBF, İktisat, İşletme — II. Grup)",
      "adet": 3,
      "ogrenim": "lisans",
-     "puan_turu": "P33, P38",
+     "puan_turu": "P33 veya P38",
      "en_dusuk_puan": 80,
      "il": null,
      "kosullar": [
-      "En az 4 yıllık siyasal bilgiler, iktisadi ve idari bilimler, iktisat veya işletme fakültelerinden mezun olmak."
+      "Siyasal bilgiler, iktisadi ve idari bilimler, iktisat veya işletme fakültesinden mezun olmak."
      ]
     }
    ],
@@ -7117,12 +7114,12 @@
    "kpss_gerekli": true,
    "iller": [],
    "ortak_kosullar": [
-    "2025 veya 2026 KPSS'ye girmiş ve ilgili puan türünden en az 80 puan almış olmak.",
-    "01.01.1991 ve sonrasında doğmuş olmak (sınav yılının Ocak ayının ilk günü itibarıyla 35 yaşını doldurmamak).",
-    "Başvuru e-Devlet üzerinden Kariyer Kapısı'ndan yapılır; adaylar yalnız bir gruba başvurabilir.",
-    "Kadro sayısının 2 katı aday sözlü sınava çağrılır; sözlü sınavda en az 70 puan gerekir."
+    "2025 veya 2026 KPSS'ye girip ilgili puan türünden en az 80 puan almak.",
+    "01.01.1991 ve sonrasında doğmuş olmak (35 yaşını doldurmamak).",
+    "Başvuru e-Devlet üzerinden Kariyer Kapısı'ndan yapılır; yalnızca bir gruba başvurulabilir.",
+    "Sözlü sınava kadro sayısının 2 katı aday çağrılır; başarı için en az 70 puan gerekir."
    ],
-   "ozet": "TBMM Kamu Denetçiliği Kurumu 10 Kamu Denetçiliği Uzman Yardımcısı alacak (7 hukuk, 3 siyasal bilgiler/iktisat/işletme kökenli). Başvurular 9–22 Kasım 2026'da Kariyer Kapısı üzerinden yapılır.",
+   "ozet": "Kamu Denetçiliği Kurumu 10 uzman yardımcısı alacak (7 hukuk, 3 SBF/İİBF/iktisat/işletme). Başvurular 9–22 Kasım 2026'da Kariyer Kapısı'ndan yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -7131,7 +7128,7 @@
     "lisans"
    ],
    "puan_turleri": [
-    "P33, P38",
+    "P33 veya P38",
     "P4"
    ]
   }
@@ -7254,11 +7251,11 @@
   }
  },
  "sbb-7f4d800fab4d3d251159b468": {
-  "zaman": "2026-11-11T03:11:21+03:00",
+  "zaman": "2026-11-11T17:16:00+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "c8f6270dd9a01240",
+  "imza": "7dd56e2413f2b2ec",
   "baslik": "ZAFER KALKINMA AJANSI - 2 SÖZLEŞMELİ PERSONEL ALACAK",
   "farklar": [],
   "yz": {
@@ -7271,20 +7268,18 @@
      "en_dusuk_puan": 80,
      "il": null,
      "kosullar": [
-      "Mühendislik bölümlerinden veya Şehir ve Bölge Planlama bölümünden lisans düzeyinde mezun olmak.",
-      "YDS/e-YDS İngilizceden son 5 yılda en az 70 puan almış olmak."
+      "Mühendislik bölümlerinden veya Şehir ve Bölge Planlama bölümünden lisans düzeyinde mezun olmak."
      ]
     },
     {
-     "unvan": "Uzman Personel (İktisat, İşletme, Maliye, Kamu Yönetimi vb.)",
+     "unvan": "Uzman Personel (İstatistik, İktisat, Maliye, İşletme, Kamu Yönetimi, Uluslararası İlişkiler vb.)",
      "adet": 1,
      "ogrenim": "lisans",
-     "puan_turu": "P12-P40 (bölüme göre)",
+     "puan_turu": "P12, P13, P14, P15, P19, P20, P24, P25, P29, P30, P34, P35, P39, P40",
      "en_dusuk_puan": 80,
      "il": null,
      "kosullar": [
-      "İstatistik, Ekonometri, İktisat, Maliye, İşletme, Kamu Yönetimi, Uluslararası İlişkiler veya Çalışma Ekonomisi ve Endüstri İlişkilerinden mezun olmak.",
-      "YDS/e-YDS İngilizceden son 5 yılda en az 70 puan almış olmak."
+      "İstatistik, Ekonometri, İktisat, Maliye, İşletme, Kamu Yönetimi, Uluslararası İlişkiler veya Çalışma Ekonomisi ve Endüstri İlişkileri bölümlerinden mezun olmak."
      ]
     }
    ],
@@ -7299,11 +7294,12 @@
     "Uşak"
    ],
    "ortak_kosullar": [
-    "Son başvuru tarihi itibarıyla geçerli KPSS'den mezun olunan bölümün puan türünden en az 80 puan almış olmak.",
-    "Başvuru yalnızca Kariyer Kapısı üzerinden elektronik ortamda yapılır.",
-    "Mülakat (sözlü sınav) Ajans Genel Sekreterliği'nde yapılır; başarı için en az 70 puan gerekir."
+    "KPSS'den mezun olunan bölüme göre belirtilen puan türünden en az 80 puan almak.",
+    "YDS/e-YDS İngilizce'den son 5 yılda en az 70 puan almak veya denk belgeye sahip olmak.",
+    "Başvuru Kariyer Kapısı'ndan yapılır; mülakata hak kazananlar 18.12.2026'da ilan edilir.",
+    "Sınav Kütahya'da sözlü (mülakat) yapılır; görev yeri Afyonkarahisar, Kütahya, Manisa, Uşak'tan biridir."
    ],
-   "ozet": "Zafer Kalkınma Ajansı 2 uzman personel alacak. Başvurular 25 Kasım–14 Aralık 2026'da Kariyer Kapısı'ndan yapılır.",
+   "ozet": "Zafer Kalkınma Ajansı 2 uzman personel alacak (1 mühendislik/şehir planlama, 1 iktisadi-idari bölümler). Başvurular 25 Kasım–14 Aralık 2026'da Kariyer Kapısı'ndan yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -7313,25 +7309,31 @@
    ],
    "puan_turleri": [
     "P1, P2, P3",
-    "P12-P40 (bölüme göre)"
+    "P12, P13, P14, P15, P19, P20, P24, P25, P29, P30, P34, P35, P39, P40"
    ]
   }
  },
  "sbb-8168d2862502fa00b90159b9": {
-  "zaman": "2026-11-11T03:11:21+03:00",
+  "zaman": "2026-11-11T17:16:00+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf-gorsel",
-  "imza": "e44eb4532deaca0e",
+  "imza": "a9f588c7e602b69c",
   "baslik": "MİLLİ SAVUNMA BAKANLIĞI - TÜRK SİLAHLI KUVVETLERİNE FAKÜLTE VEYA YÜKSEKOKUL MEZUNLARINDAN 2026 YILI MUVAZZAF ASTSUBAY ADAYI TEMİNİ",
   "farklar": [],
   "yz": {
    "kadrolar": [],
+   "toplam": null,
+   "son_basvuru_tarihi": null,
+   "baslangic_tarihi": null,
+   "kpss_gerekli": null,
+   "iller": [],
+   "ortak_kosullar": [],
+   "ozet": "",
    "okunabilirlik": "kotu",
    "akademik": false,
    "iptal_veya_duzeltme": false,
-   "duyuru_tipi": "yeni_ilan",
-   "ortak_kosullar": []
+   "duyuru_tipi": "yeni_ilan"
   }
  },
  "sbb-838c1ad20b87efb0ed63d6c7": {
@@ -8268,20 +8270,26 @@
   }
  },
  "sbb-c28e3903f61859d41ea03f2e": {
-  "zaman": "2026-11-11T03:11:21+03:00",
+  "zaman": "2026-11-11T17:16:00+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf-gorsel",
-  "imza": "6ea1eac36d586dd2",
+  "imza": "f6dac83c19157ada",
   "baslik": "MİLLİ SAVUNMA BAKANLIĞI - TÜRK SİLAHLI KUVVETLERİNE EN AZ DÖRT YIL SÜRELİ FAKÜLTE VEYA YÜKSEKOKUL MEZUNLARINDAN 2026 YILI BANDO SINIFI MUVAZZAF ASTSUBAY ADAYI TEMİNİ",
   "farklar": [],
   "yz": {
    "kadrolar": [],
+   "toplam": null,
+   "son_basvuru_tarihi": null,
+   "baslangic_tarihi": null,
+   "kpss_gerekli": null,
+   "iller": [],
+   "ortak_kosullar": [],
+   "ozet": "",
    "okunabilirlik": "kotu",
    "akademik": false,
    "iptal_veya_duzeltme": false,
-   "duyuru_tipi": "yeni_ilan",
-   "ortak_kosullar": []
+   "duyuru_tipi": "yeni_ilan"
   }
  },
  "sbb-c799c2bf65cf136277930882": {
@@ -8527,11 +8535,11 @@
   }
  },
  "sbb-d174235c748d2741298002af": {
-  "zaman": "2026-11-11T05:11:02+03:00",
+  "zaman": "2026-11-11T17:16:00+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "15632741fb70979d",
+  "imza": "07463c38f40b236f",
   "baslik": "SOSYAL GÜVENLİK KURUMU BAŞKANLIĞI - 100 SOSYAL GÜVENLİK DENETMEN YARDIMCISI ALACAK",
   "farklar": [
    [
@@ -8560,7 +8568,7 @@
      "en_dusuk_puan": 70,
      "il": null,
      "kosullar": [
-      "Hukuk, siyasal bilgiler, iktisadi ve idari bilimler, iktisat, işletme fakülte/yüksekokullarından ya da bunların sosyal hizmetler bölümlerinden mezun olmak."
+      "Hukuk, siyasal bilgiler, iktisadi ve idari bilimler, iktisat, işletme fakültesi/yüksekokulundan ya da bu fakültelerin sosyal hizmetler bölümünden mezun olmak."
      ]
     }
    ],
@@ -8571,12 +8579,12 @@
    "kpss_gerekli": true,
    "iller": [],
    "ortak_kosullar": [
-    "Sınav yılının Ocak ayının birinci günü itibarıyla 35 yaşını doldurmamış olmak.",
-    "2025 veya 2026 KPSS'de ilgili puan türünden en az 70 puan almış olmak.",
+    "2025 veya 2026 KPSS'den belirtilen puan türlerinde en az 70 puan almak.",
+    "Sınav yılının 1 Ocak'ı itibarıyla 35 yaşını doldurmamış olmak.",
     "Başvuru yalnızca e-Devlet üzerinden Kariyer Kapısı'ndan yapılır.",
-    "Sözlü sınav: 28.12.2026-11.01.2027 arası Ankara'da; kontenjanın 4 katı aday (en fazla 400) çağrılır."
+    "Sözlü sınav 28.12.2026–11.01.2027 arasında Ankara'da; kadro sayısının 4 katı aday çağrılır."
    ],
-   "ozet": "SGK taşra teşkilatı için 100 Sosyal Güvenlik Denetmen Yardımcısı alacak. Başvurular 9–22 Kasım 2026'da Kariyer Kapısı'ndan e-Devlet ile yapılır.",
+   "ozet": "Sosyal Güvenlik Kurumu 100 sosyal güvenlik denetmen yardımcısı alacak. Başvurular 9–22 Kasım 2026'da Kariyer Kapısı'ndan yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
