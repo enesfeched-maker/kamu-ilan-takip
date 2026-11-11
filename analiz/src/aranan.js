@@ -1,6 +1,8 @@
 // /aranan: son 7 günde çok aranıp sonuç çıkmayan kelimeler (sabah özeti ve taban puanları sayfası için).
 // Yalnız gün özetinden (ozet, boyut='arama') okunur; ham tabloya gidilmez. Sonuç 12 saat önbellekte.
-// Gizlilik: yalnız en az ESIK farklı oturumda aranmış, harf ve boşluktan oluşan kısa kelimeler döner.
+// Gizlilik: yalnız en az ESIK farklı oturumda VE en az ESIK farklı ziyaretçide aranmış, harf ve boşluktan oluşan kısa
+// kelimeler döner. Oturum kodunu tarayıcı kendisi seçtiği için tek başına oturum sayısı sahte isteklerle şişirilebilir;
+// ziyaretçi özeti (IP + tarayıcı) sunucuda hesaplanır. Kanala çıkmadan önce bot ayrıca unvan listesiyle süzer.
 import { izinliKokenler } from './toplama.js';
 import { butceDurumu } from './butce.js';
 import { gunEkle, bugun } from './zaman.js';
@@ -15,14 +17,15 @@ const KELIME_RE = /^[a-zçğıöşü ]{3,30}$/;
 export async function arananHesapla(env, simdiMs = Date.now()) {
   const bu = bugun(simdiMs);
   const r = await env.DB.prepare(
-    `SELECT k1, SUM(CASE WHEN k2 = 'sifir' THEN oturum ELSE 0 END) AS sifir, SUM(CASE WHEN k2 = 'var' THEN oturum ELSE 0 END) AS var_
+    `SELECT k1, SUM(CASE WHEN k2 = 'sifir' THEN oturum ELSE 0 END) AS sifir, SUM(CASE WHEN k2 = 'var' THEN oturum ELSE 0 END) AS var_,
+            SUM(CASE WHEN k2 = 'sifir' THEN tekil ELSE 0 END) AS sifir_tekil
      FROM ozet WHERE boyut = 'arama' AND gun >= ? AND gun < ? GROUP BY k1`,
   ).bind(gunEkle(bu, -ARANAN_GUN), bu).all();
   okumaGunlugu('aranan', r);
   const kelimeler = (r.results || [])
-    .map((s) => ({ k: String(s.k1 || '').trim(), n: Number(s.sifir) || 0, v: Number(s.var_) || 0 }))
+    .map((s) => ({ k: String(s.k1 || '').trim(), n: Number(s.sifir) || 0, v: Number(s.var_) || 0, z: Number(s.sifir_tekil) || 0 }))
     // Çoğunlukla sonuçsuz kalan aramalar: sonuç çıkan oturumlar sıfırların yarısından azsa.
-    .filter((s) => KELIME_RE.test(s.k) && s.n >= ESIK && s.v * 2 < s.n)
+    .filter((s) => KELIME_RE.test(s.k) && s.n >= ESIK && s.z >= ESIK && s.v * 2 < s.n)
     .sort((a, b) => b.n - a.n || a.k.localeCompare(b.k))
     .slice(0, EN_COK)
     .map((s) => ({ kelime: s.k, oturum: s.n }));

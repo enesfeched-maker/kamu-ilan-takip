@@ -8,7 +8,8 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: ilan-tara-2
+  # ilan.yml ile aynı grup olmalı: ikisi aynı anda çalışırsa aynı ilan kanala iki kez gidebilir.
+  group: ilan-tara-3
   cancel-in-progress: false
 jobs:
   gonder:

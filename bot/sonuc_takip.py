@@ -34,6 +34,11 @@ HARIC = re.compile(r'gorevde yukselme|unvan degisikligi|ihale|ogrenci|burs|staj|
                    r'|dekan|arastirma|yarismasi|sonucunda|sonuclanan|sonuc raporu|muhtar|kiralama|satis')
 GENEL = frozenset('''alim alimi ilan ilani personel sozlesmeli memur isci kadro sinav aday kamu belediye belediyesi baskanligi universitesi
 genel mudurlugu bakanligi kurumu ilk defa atanmak uzere yili icin olan'''.split())
+# Sonuç duyurularının kendi kalıp sözleri: bir kadroyu ayırt etmez.
+SONUC_GENEL = frozenset('''sonuc sonucu sonuclari sonuclarina sonuclarinin aciklandi aciklanmistir aciklanan duyuru duyurusu duyurulur
+hakkinda yazili sozlu mulakat uygulamali sinavi sinavina sinavlari girmeye kazanan kazananlar adaylar adaylarin adaylara listesi
+liste asil yedek basarili kesin nihai degerlendirme basvuru basvurulari ilanen teblig atanmaya yerlesen yerlestirme tarihli sayili
+giris alinacak alacak'''.split())
 SITE = re.compile(r'(?:https?://)?((?:www\.)?[a-z0-9-]+(?:\.[a-z0-9-]+)*\.(?:gov|bel|edu|org)\.tr)\b', re.I)
 SITE_DEGIL = re.compile(r'kariyerkapisi|turkiye\.gov|osym|iskur|yok\.gov|nvi\.gov|resmigazete|sbb\.gov|csb\.gov|e-?devlet|ptt\.gov|ziraat')
 
@@ -81,18 +86,32 @@ def baglantilar(sayfa, adres):
     return sonuc
 
 
+def _kurum_kelimeleri(ilan):
+    return set(re.findall(r'[a-z]{4,}', katla(ilan.get('kurum'))))
+
+
 def ayirt_edici(ilan):
-    return {k for k in re.findall(r'[a-z]{4,}', katla(' '.join(str(ilan.get(a) or '') for a in ('baslik', 'kadro')))) if k not in GENEL}
+    """İlanı aynı kurumun başka alımlarından ayıran kelimeler (unvan vb.). Kurum adındaki kelimeler sayılmaz: kurumun
+    sitesindeki her duyuruda geçer, ilanı ayırt etmez."""
+    kelimeler = re.findall(r'[a-z]{4,}', katla(' '.join(str(ilan.get(a) or '') for a in ('baslik', 'kadro'))))
+    return {k for k in kelimeler if k not in GENEL} - _kurum_kelimeleri(ilan)
 
 
 def ilana_bagla(yazi, ilanlar):
-    """Bağlantıyı ilana bağlar: ayırt edici kelime ortaksa onunla, sitede tek ilan varsa ona; belirsizse None."""
+    """Bağlantıyı ilana bağlar: ayırt edici kelime ortaksa onunla; sitede tek ilan varsa ve duyuru başka bir kadroyu
+    işaret etmiyorsa ona; belirsizse None. 11 Kasım 2026: tek ilanlı sitede kurumun başka bir alımının sonucu
+    ('itfaiye eri' duyurusu, 'zabıta memuru' ilanına) kelime eşleşmesi aranmadan bağlanıyordu."""
     kelimeler = set(re.findall(r'[a-z]{4,}', katla(yazi)))
     ortak = [(len(ayirt_edici(i) & kelimeler), i.get('son_tarih') or '', n) for n, i in enumerate(ilanlar)]
     ortak = [o for o in ortak if o[0]]
     if ortak:
         return ilanlar[max(ortak)[2]]
-    return ilanlar[0] if len(ilanlar) == 1 else None
+    if len(ilanlar) != 1:
+        return None
+    ilan = ilanlar[0]
+    ozgul = kelimeler - GENEL - SONUC_GENEL - _kurum_kelimeleri(ilan) - set(AYLAR)
+    # Duyuru kendi kadrosunu söylüyor ve bu, ilanın bilinen kadrosuyla hiç örtüşmüyor: başka bir alımın sonucu.
+    return None if (ozgul and ayirt_edici(ilan)) else ilan
 
 
 def yeni_sonuclar(bag, ilanlar, gorulen):

@@ -21,6 +21,8 @@ DURUM = Path(os.environ.get('BEKCI_DURUM', 'bekci-durum.json'))
 TARAMA_EN_GEC = timedelta(minutes=100)   # tarama yarım saatte bir; GitHub gecikmesi + 22-35 dk çalışma süresi payı
 SITE_EN_GEC = timedelta(minutes=170)
 HATIRLATMA = timedelta(hours=6)
+YEREL_EN_GEC = timedelta(hours=12)       # bilgisayar gece kapalı olabilir; yarım günden uzun kesinti gerçek sorundur
+YEREL_KAYNAKLAR = {'sbb': 'SBB', 'csb': 'ÇŞB'}   # yalnız kullanıcının bilgisayarındaki yerel tarayıcıdan gelen kaynaklar
 
 
 def gh(*args):
@@ -39,7 +41,26 @@ def zaman(deger):
     return datetime.fromisoformat(str(deger).replace('Z', '+00:00'))
 
 
-def sorunlar(simdi, tarama, sosyal, site_guncelleme, site_hata, bekleyen, zaman_kontrol=None):
+def yerel_gecikenler(simdi, kaynak_durumlari):
+    """Yerel tarayıcıdan YEREL_EN_GEC'tir veri gelmeyen kaynakların adları. 'kontrol' yalnız başarılı okumada yazılır
+    (ilan_bot); hiç yazılmamışsa ya da okunamıyorsa kaynak gecikmiş sayılır."""
+    geciken = []
+    for anahtar, ad in YEREL_KAYNAKLAR.items():
+        durum = (kaynak_durumlari or {}).get(anahtar)
+        if not isinstance(durum, dict):
+            continue   # kaynak bu kurulumda hiç kullanılmıyor
+        try:
+            son = zaman(durum.get('kontrol'))
+            son = son if son.tzinfo else son.replace(tzinfo=TR)
+            gecikti = simdi - son > YEREL_EN_GEC
+        except (TypeError, ValueError):
+            gecikti = True
+        if gecikti:
+            geciken.append(ad)
+    return geciken
+
+
+def sorunlar(simdi, tarama, sosyal, site_guncelleme, site_hata, bekleyen, zaman_kontrol=None, kaynak_durumlari=None):
     """{anahtar: 'insan okunur sorun'} — boşsa her şey yolunda. Saf işlev (testli)."""
     s = {}
     biten = [c for c in tarama if c.get('status') == 'completed' and c.get('conclusion') != 'cancelled']
@@ -76,6 +97,10 @@ def sorunlar(simdi, tarama, sosyal, site_guncelleme, site_hata, bekleyen, zaman_
         s['site'] = f'Site okunamadı: {site_hata}'
     elif site_guncelleme and simdi - site_guncelleme > SITE_EN_GEC:
         s['site_eski'] = f'Site {int((simdi - site_guncelleme).total_seconds() // 60)} dakikadır güncellenmemiş.'
+    geciken = yerel_gecikenler(simdi, kaynak_durumlari)
+    if geciken:
+        s['yerel_kaynak'] = (f'{" ve ".join(geciken)} ilanları 12 saatten uzun süredir gelmiyor: bilgisayardaki yerel tarayıcı '
+                             'çalışmıyor ya da gönderdiği dosya okunamıyor. Yeni ilanlar kaçıyor olabilir.')
     if bekleyen is not None and bekleyen >= 6:
         s['kuyruk'] = f'Telegram sırasında {bekleyen} ilan bekliyor (gönderim takılmış olabilir).'
     return s
@@ -109,19 +134,29 @@ def site_oku():
     try:
         req = urllib.request.Request(SITE + 'liste.json?b=' + str(int(datetime.now().timestamp())), headers={'User-Agent': 'kpsstercihi-bekci/1.0'})
         with urllib.request.urlopen(req, timeout=30) as r:
-            return zaman(json.load(r)['guncelleme']), None
+            guncelleme = zaman(json.load(r)['guncelleme'])
+            return (guncelleme if guncelleme.tzinfo else guncelleme.replace(tzinfo=TR)), None
     except Exception as hata:
         return None, type(hata).__name__
 
 
-def bekleyen_oku():
+def depo_oku():
+    """Depodaki ilanlar.json: (Telegram sırasındaki ilan sayısı, kaynak durumları); okunamazsa (None, None)."""
     try:
         depo = os.environ.get('GITHUB_REPOSITORY', 'enesfeched-maker/kamu-ilan-takip')
         req = urllib.request.Request(f'https://raw.githubusercontent.com/{depo}/main/docs/ilanlar.json', headers={'User-Agent': 'kpsstercihi-bekci/1.0'})
         with urllib.request.urlopen(req, timeout=60) as r:
-            return len(json.loads(r.read().decode('utf-8-sig')).get('telegram_bekleyen') or [])
+            veri = json.loads(r.read().decode('utf-8-sig'))
+        return len(veri.get('telegram_bekleyen') or []), veri.get('kaynak_durumlari') or {}
     except Exception:
-        return None
+        return None, None
+
+
+def ozet_metni(tr, guncelleme, bekleyen):
+    """Günde iki kez giden 'her şey yolunda' satırı. Site okunamadıysa (guncelleme None) da metin kurulabilmeli:
+    11 Kasım 2026'ya kadar bu satır site okunamadığında çöküyor, bekçi tam o anda uyarı atamıyordu."""
+    site = f'{guncelleme.astimezone(TR):%H:%M}' if guncelleme else 'okunamadı'
+    return f'✅ Sistem sağlıklı ({tr:%H:%M}). Site güncelleme: {site}' + (f', Telegram sırası: {bekleyen}' if bekleyen is not None else '') + '.'
 
 
 def id_bul(token):
@@ -157,11 +192,11 @@ def ana():
     sosyal = calismalar('sosyal.yml', 4)
     zk = calismalar('zaman-kontrol.yml', 3)
     guncelleme, site_hata = site_oku()
-    bekleyen = bekleyen_oku()
-    s = sorunlar(simdi, tarama, sosyal, guncelleme, site_hata, bekleyen, zk)
+    bekleyen, kaynak_durumlari = depo_oku()
+    s = sorunlar(simdi, tarama, sosyal, guncelleme, site_hata, bekleyen, zk, kaynak_durumlari)
     tr = simdi.astimezone(TR)
     ozet_zamani = tr.hour in (9, 21) and tr.minute < 30
-    ozet = f'✅ Sistem sağlıklı ({tr:%H:%M}). Site güncelleme: {guncelleme.astimezone(TR):%H:%M}' + (f', Telegram sırası: {bekleyen}' if bekleyen is not None else '') + '.'
+    ozet = ozet_metni(tr, guncelleme, bekleyen)
     onceki = json.loads(DURUM.read_text(encoding='utf-8')) if DURUM.exists() else {}
     giden, yeni = mesajlar(onceki, s, simdi, ozet_zamani, ozet)
     print('Sorunlar:', s or 'yok', '| gidecek mesaj:', len(giden))

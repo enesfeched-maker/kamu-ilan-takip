@@ -397,6 +397,15 @@ def ilan_dugmesi(item, bugun=None):
     return f'⏳ Son gün {son.day} {AY_ADLARI[son.month - 1]} — Hemen incele'
 
 
+# Son telegram_gonder çağrısının HTTP hata kodu (başarıda None). 400 = Telegram isteği kalıcı olarak reddetti (bozuk görsel,
+# geçersiz düğme adresi): aynı istek yeniden denense de geçmez, bu yüzden arkasındaki ilanlar bekletilmez (kalici_hata).
+SON_TELEGRAM_HATASI = {'kod': None}
+
+
+def kalici_hata():
+    return SON_TELEGRAM_HATASI['kod'] == 400
+
+
 def telegram_gonder(token, chat_id, metin, ilan_linki="", site_url="", foto=None, yanit=None, ek_dugmeler=(),
                     dugme_yazisi='🔎 İlanı incele'):
     """Gönderir; başarıda Telegram message_id'sini (yoksa True), başarısızlıkta False döndürür.
@@ -436,6 +445,7 @@ def telegram_gonder(token, chat_id, metin, ilan_linki="", site_url="", foto=None
         headers['Content-Type'] = 'multipart/form-data; boundary=' + boundary
     else:
         govde = urllib.parse.urlencode(alanlar).encode()
+    SON_TELEGRAM_HATASI['kod'] = None
     for deneme in range(2):
         try:
             with urllib.request.urlopen(urllib.request.Request(url, data=govde, headers=headers), timeout=30) as response:
@@ -452,7 +462,14 @@ def telegram_gonder(token, chat_id, metin, ilan_linki="", site_url="", foto=None
                     bekle = 5
                 time.sleep(min(int(bekle) + 1, 60))
                 continue
-            print(f"Telegram hatası {h.code}; ilan sırada tutuluyor.", file=sys.stderr)
+            SON_TELEGRAM_HATASI['kod'] = h.code
+            aciklama = ''
+            if h.code == 400:   # kalıcı ret: Telegram'ın açıklaması (anahtar içermez) teşhis için yazılır
+                try:
+                    aciklama = ': ' + str(json.loads(h.read()).get('description') or '')[:160]
+                except Exception:
+                    pass
+            print(f"Telegram hatası {h.code}{aciklama}; ilan sırada tutuluyor.", file=sys.stderr)
             return False
         except (urllib.error.URLError, TimeoutError, OSError, ValueError):
             print("Telegram bağlantısı doğrulanamadı; ilan sırada tutuluyor.", file=sys.stderr)
@@ -1306,7 +1323,33 @@ def aranan_satiri(kelimeler, site_url):
 ARANAN_GENEL = {'cocuk', 'memur', 'personel', 'isci', 'kamu', 'ilan', 'kpss', 'devlet', 'belediye', 'hastane', 'universite', 'okul'}
 
 
-def haftalik_aranan(cfg, ilanlar, zaman, getir=None):
+_UNVAN_ONBELLEK = {}
+
+
+def bilinen_unvanlar(klasor=None):
+    """Taban puanı verisindeki (ÖSYM yerleştirme) unvanların normalize kümesi; okunamazsa boş küme."""
+    klasor = Path(klasor) if klasor else ROOT / 'docs' / 'puanlar'
+    if klasor not in _UNVAN_ONBELLEK:
+        unvanlar = set()
+        for duzey in ('lisans', 'onlisans', 'ortaogretim'):
+            try:
+                donemler = json.loads((klasor / f'{duzey}.json').read_text(encoding='utf-8')).get('donemler') or {}
+            except (OSError, ValueError, AttributeError):
+                continue
+            for kayitlar in donemler.values():
+                unvanlar.update(' '.join(norm(k.get('unvan')).split()) for k in kayitlar if isinstance(k, dict) and k.get('unvan'))
+        unvanlar.discard('')
+        _UNVAN_ONBELLEK[klasor] = unvanlar
+    return _UNVAN_ONBELLEK[klasor]
+
+
+def unvan_mi(kelime, unvanlar):
+    """Kelime, bilinen bir unvanın tamamı ya da tam sözcük(ler)i mi ('veteriner' -> 'veteriner hekim')."""
+    k = ' '.join(norm(kelime).split())
+    return bool(k) and any(f' {k} ' in f' {u} ' for u in unvanlar)
+
+
+def haftalik_aranan(cfg, ilanlar, zaman, getir=None, unvanlar=None):
     """Pazartesi sabahı analizden (/aranan) çok aranıp sonuç çıkmayan kelimeleri alır; şu an açık ilanı olanları eler.
     Analiz erişilemezse ya da GitHub Actions dışında (testler) boş döner; sabah özeti bundan etkilenmez."""
     if zaman.weekday() != 0:
@@ -1326,6 +1369,10 @@ def haftalik_aranan(cfg, ilanlar, zaman, getir=None):
         return []
     acik = [norm(f"{i.get('baslik', '')} {i.get('kadro', '')}") for i in ilanlar
             if not akademik_ilan(i) and not suresi_doldu(i)]
+    # 11 Kasım 2026: analiz herkese açık bir uç; üç sahte istekle istenen kelime kanaldaki sabah mesajına çıkabiliyordu.
+    # Yalnız taban puanı verisinde gerçekten geçen unvanlar duyurulur (liste okunamazsa hiçbiri: güvenli taraf).
+    unvanlar = bilinen_unvanlar() if unvanlar is None else unvanlar
+    kelimeler = [k for k in kelimeler if isinstance(k, str) and unvan_mi(k, unvanlar)]
     adaylar = [k for k in kelimeler if not any(norm(k) in a for a in acik) and norm(k) not in ARANAN_GENEL]
     # 'veteriner' ile 'veteriner hekim' gibi tekrarlarda uzun olan kalır.
     return [k for k in adaylar if not any(k != u and norm(k) in norm(u) for u in adaylar)][:5]
@@ -1412,7 +1459,49 @@ def temizle(ilanlar):
     return kalan
 
 
+# Gönderim başladıktan sonra çıkan beklenmeyen hatada kanala gitmiş mesajların kaydı kaybolmasın diye tutulan canlı
+# başvurular (kümeler/sözlükler yerinde güncellenir). Normal kayıt yapılınca boşaltılır.
+_ACIL = {}
+
+
+def acil_kaydet():
+    """Gönderim geçmişini (gönderilen, bekleyen, mesaj kimlikleri, duyuru yanıtları, sabah/akşam günü) diskteki veri
+    dosyasına işler; ilan kayıtlarına dokunmaz. 11 Kasım 2026: geçmiş yalnız en sonda yazıldığı için gönderimden sonraki
+    herhangi bir hata aynı ilanların her taramada yeniden paylaşılmasına yol açabilirdi."""
+    d = dict(_ACIL)
+    if not d:
+        return False
+    veri = yukle(d['cikti'])
+    sifirlandi = d['surum'] > int(veri.get('telegram_yayin_surumu', 1))   # açık kanal yenilemesi: eski geçmiş bilerek bırakıldı
+    gonderilen = set(d['gonderilen']) | (set() if sifirlandi else set(veri.get('telegram_gonderilen', [])))
+    veri['telegram_gonderilen'] = sorted(gonderilen)
+    veri['telegram_bekleyen'] = sorted(set(d['bekleyen']) - gonderilen)
+    veri['telegram_mesajlari'] = dict(sorted({**veri.get('telegram_mesajlari', {}), **d['mesajlar']}.items()))
+    veri['telegram_duyuru_yanitlari'] = dict(sorted({**veri.get('telegram_duyuru_yanitlari', {}), **d['yanitlar']}.items()))
+    for anahtar in ('telegram_toplu_hatirlatma_gunu', 'telegram_aksam_gunu'):
+        if d.get(anahtar):
+            veri[anahtar] = d[anahtar]
+    veri['telegram_yayin_surumu'] = d['surum']
+    Path(d['cikti']).write_text(json.dumps(veri, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    return True
+
+
 def main():
+    try:
+        _ana()
+    except BaseException:
+        if _ACIL:
+            try:
+                acil_kaydet()
+                print('::error::Gönderim sırasında beklenmeyen hata; gönderim geçmişi acil olarak kaydedildi.', file=sys.stderr)
+            except BaseException as exc:
+                print(f'::error::Gönderim geçmişi acil olarak kaydedilemedi ({type(exc).__name__}).', file=sys.stderr)
+        raise
+    finally:
+        _ACIL.clear()
+
+
+def _ana():
     p = argparse.ArgumentParser()
     p.add_argument("--rss-dosya", help="Ağ yerine yerel RSS dosyası oku (test)")
     p.add_argument("--cikti", default=str(VERI_YOLU), help="Veri dosyası yolu")
@@ -1628,6 +1717,8 @@ def main():
               f"{len(gonderilecek)} ilan sırada bekliyor.")
         kuyruk = []
     limit = calisma_limiti(cfg, len(gonderilecek))
+    if not a.prepare and not a.dry_run:
+        _ACIL.update(cikti=cikti, surum=yayin_surumu, gonderilen=gonderilen, bekleyen=bekleyen, mesajlar=mesajlar, yanitlar=yanitlar)
     site_url = cfg.get('site_url', '')
     hata = False
     adet = 0
@@ -1653,10 +1744,14 @@ def main():
                 print(f'Sabah özeti kartı oluşturulamadı ({type(exc).__name__}); yalnız metin gönderilecek.', file=sys.stderr)
                 foto = None
             mid = telegram_gonder(token, chat_id, metin, '', site_url, foto=foto) if (token and chat_id) else False
+            if not mid and foto and kalici_hata():
+                print('::warning::Sabah kartı Telegram tarafından reddedildi; yalnız metin gönderiliyor.')
+                mid = telegram_gonder(token, chat_id, metin, '', site_url)
             if not mid:
                 hata = True
                 break
             toplu_gun = simdi().date().isoformat()  # gün işareti yalnız başarıda yazılır
+            _ACIL['telegram_toplu_hatirlatma_gunu'] = toplu_gun
             adet += 1
             print(f"Telegram'a sabah özeti gönderildi: {len(yeni_l)} yeni, {len(son_gun_l)} son gün, {acik} açık ilan")
             time.sleep(3.2)
@@ -1679,10 +1774,14 @@ def main():
                 print(f'Akşam ilan düğmeleri hazırlanamadı ({type(exc).__name__}).', file=sys.stderr)
                 ek = []
             mid = telegram_gonder(token, chat_id, metin, '', site_url, foto=foto, ek_dugmeler=ek) if (token and chat_id) else False
+            if not mid and foto and kalici_hata():
+                print('::warning::Akşam kartı Telegram tarafından reddedildi; yalnız metin gönderiliyor.')
+                mid = telegram_gonder(token, chat_id, metin, '', site_url, ek_dugmeler=ek)
             if not mid:
                 hata = True
                 break
             aksam_gun = simdi().date().isoformat()  # gün işareti yalnız başarıda yazılır
+            _ACIL['telegram_aksam_gunu'] = aksam_gun
             adet += 1
             print(f"Telegram'a akşam kartı gönderildi: {len(i)} yayımlanan ilan")
             time.sleep(3.2)
@@ -1720,6 +1819,9 @@ def main():
             mid = telegram_gonder(token, chat_id, metin, hedef, site_url, yanit=yanit) if (token and chat_id) else False
             if not mid:
                 hata = True
+                if token and chat_id and kalici_hata():
+                    print(f"::error::Telegram duyuruyu kalıcı olarak reddetti (HTTP 400), sıradakilere geçiliyor: {i['baslik']}")
+                    continue
                 break
             gonderilen.add(i['id'])
             bekleyen.discard(i['id'])
@@ -1755,6 +1857,11 @@ def main():
         ilan_gonderildi = True
         if not mid:
             hata = True
+            if token and chat_id and kalici_hata():
+                # 11 Kasım 2026: düzelmeyecek bir ret (HTTP 400) her taramada sıranın başında yeniden denenip arkasındaki
+                # ilanları durduruyordu. İlan sırada kalır (iş yine başarısız biter, bekçi haber verir), diğerleri gider.
+                print(f"::error::Telegram ilanı kalıcı olarak reddetti (HTTP 400), sıradakilere geçiliyor: {i['baslik']}")
+                continue
             break
         gonderilen.add(i['id'])
         bekleyen.discard(i['id'])
@@ -1791,6 +1898,7 @@ def main():
     }
     cikti.parent.mkdir(parents=True, exist_ok=True)
     cikti.write_text(json.dumps(veri, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    _ACIL.clear()   # geçmiş normal yoldan yazıldı
     print(f"Tamam: {len(gelen)} ilan okundu, {len(yeniler)} yeni, {len(veri['ilanlar'])} kayıtlı.")
     print(f"Telegram: {adet} mesaj gönderildi, {len(bekleyen - gonderilen)} ilan bekliyor.")
     if detay_hatalari:
