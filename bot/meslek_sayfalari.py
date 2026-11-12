@@ -29,7 +29,21 @@ MESLEKLER = (
     ('avukat', 'Avukat', r'avukat'),
     ('mimar', 'Mimar', r'mimar'),
     ('psikolog', 'Psikolog', r'psikolog'),
+    # 13 Kasım 2026: sitede aranıp açık ilanı bulunamayan, ama geçmiş ilanı ya da taban puanı olan meslekler.
+    ('saglik-teknikeri', 'Sağlık Teknikeri', r'sağlık teknikeri'),
+    ('veteriner-hekim', 'Veteriner Hekim', r'veteriner(?: hekim)?'),
+    ('diyetisyen', 'Diyetisyen', r'diyetisyen'),
+    ('ebe', 'Ebe', r'ebe'),
+    ('kimyager', 'Kimyager', r'kimyager'),
+    ('bilgisayar-isletmeni', 'Bilgisayar İşletmeni', r'bilgisayar işletmeni'),
+    ('veri-hazirlama-ve-kontrol-isletmeni', 'Veri Hazırlama ve Kontrol İşletmeni', r'veri hazırlama ve kontrol işletmeni'),
+    ('programci', 'Programcı', r'programcı'),
+    ('muhasebeci', 'Muhasebeci', r'muhasebeci'),
+    ('sekreter', 'Sekreter', r'(?:tıbbi )?sekreter'),
+    ('sofor', 'Şoför', r'şoför'),
+    ('hizmetli', 'Hizmetli', r'hizmetli'),
 )
+DIZIN = 'dizin.json'     # [[slug, ad]]: içeriği olan sayfalar; sitede sonuçsuz aramada öneri için (docs/portal.js meslekBul)
 
 
 def _sade(unvan):
@@ -247,7 +261,7 @@ def yaz(docs, base, ilanlar=None, sayfali=None, noindex=None, simdi=None, ham=No
     if ilanlar:
         adaylar = si.sec(ilanlar, {k.get('key') for k in ilanlar} if sayfali is None else sayfali, noindex or set(), simdi, en_cok=len(ilanlar))
     gecmis_tum = gecmis_kayitlari(ham, simdi, kopyalar) if ham else []
-    adresler, ozetler = [], []
+    adresler, ozetler, dolu = [], [], []
     for slug, ad, desen in MESLEKLER:
         acik, gecmis, puanlar = _uyan(desen, adaylar), _uyan(desen, gecmis_tum), puan_ozetleri(docs, desen)
         url, html, dizin = meslek_sayfasi(base, slug, ad, acik, gecmis, puanlar, simdi, sayfali, docs)
@@ -255,9 +269,12 @@ def yaz(docs, base, ilanlar=None, sayfali=None, noindex=None, simdi=None, ham=No
         hedef.parent.mkdir(parents=True, exist_ok=True)
         hedef.write_text(html, encoding='utf-8')
         ozetler.append((slug, ad, len(acik), len(gecmis)))
+        if acik or gecmis or puanlar:          # boş sayfa aramada önerilmez
+            dolu.append([slug, ad])
         if dizin:
             adresler.append(url)
             ps._degisim_yaz(url, acik)
     url, html = hub_sayfasi(base, ozetler, simdi)
     (docs / KLASOR / 'index.html').write_text(html, encoding='utf-8')
+    (docs / KLASOR / DIZIN).write_text(json.dumps(dolu, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
     return [url] + adresler

@@ -113,6 +113,22 @@ class MeslekSayfalariTest(unittest.TestCase):
         kok = Path(__file__).resolve().parent.parent
         self.assertIn('<a href="meslek/">Meslekler</a>', (kok / 'docs' / 'index.html').read_text(encoding='utf-8'))
 
+    def test_arama_dizini(self):
+        dizin = json.loads((self.k / ms.DIZIN).read_text(encoding='utf-8'))
+        sluglar = [s for s, _ in dizin]
+        self.assertIn(['zabita-memuru', 'Zabıta Memuru'], dizin)      # açık ilanı var
+        self.assertIn('hemsire', sluglar)                              # yalnız taban puanı var
+        self.assertNotIn('avukat', sluglar)                            # boş sayfa aramada önerilmez
+        e = lambda slug, u: ms.eslesir(next(d for s, _, d in ms.MESLEKLER if s == slug), u)
+        self.assertTrue(e('sekreter', 'Tıbbi Sekreter'))
+        self.assertTrue(e('veteriner-hekim', 'VETERİNER'))
+        self.assertFalse(e('veteriner-hekim', 'veteriner sağlık teknisyeni'))
+        self.assertFalse(e('ebe', 'muhasebeci'))
+        kok = Path(__file__).resolve().parent.parent
+        js = (kok / 'docs' / 'portal.js').read_text(encoding='utf-8')
+        self.assertIn("getJSON('meslek/" + ms.DIZIN + "')", js)        # site bu dosyayı okur; adı birlikte değişmeli
+        self.assertIn("a.href='meslek/'+m[0]+'/'", js)
+
     def test_tarih_araligi_kisa(self):
         self.assertEqual(ms.tarih_araligi('2026-11-18', '2026-11-20'), '18–20 Kasım 2026')
         self.assertEqual(ms.tarih_araligi('2026-11-30', '2026-12-04'), '30 Kasım – 4 Aralık 2026')
