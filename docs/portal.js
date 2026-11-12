@@ -512,10 +512,21 @@ function listeAdi(){if(F.tur)return F.tur;if(F.kat)return (KATEGORI.find(x=>x[0]
 /* Sonuçsuz aramada boş sayfa bırakılmaz: Telegram kanalına katılma, geçmiş ilanlar, sık aranan kelimeler ve taban puanları.
    Analizde sonuçsuz arama yapanların yarısı hiçbir şeye tıklamadan çıkıyordu. Bildirim botu hazır olana kadar kanala yönlendirilir. */
 const TG_KANAL='https://t.me/kpsstercihi',SIK_ARANAN=['memur','mühendis','psikolog','hemşire','büro personeli','sağlık teknikeri'];
+/* Aranan kelime kalıcı bir meslek sayfasıyla (meslek/dizin.json: [[slug, ad]]) eşleşirse o sayfa önerilir: başvurusu biten
+   ilanlar ve taban puanları tek yerde. Eşleşme kelime başından; birden çok uyarsa en uzun ad ("zabıta memuru" > "memur"). */
+let meslekDizin=null;
+function meslekBul(q,liste){
+const nq=normalize(q).replace(/\s+/g,' ').trim();if(nq.length<3)return null;let en=null,boy=0;
+for(const m of liste||[]){const na=normalize(m[1]);
+if(((' '+nq).includes(' '+na)||(nq.length>=4&&na.startsWith(nq)))&&na.length>boy){en=m;boy=na.length;}}
+return en;}
 function sonucsuzOneriler(q){
 const out=[],tg=E('a','btn btn-tg','🔔 Yeni ilanlardan haberdar ol: Telegram kanalına katıl');
 tg.href=TG_KANAL;tg.target='_blank';tg.rel='noopener';tg.onclick=()=>A('tikla',{a:'arama_bildirim',x:normalize(q).slice(0,60)});
 out.push(E('p','bos-not','Şu an açık ilan yok. Yeni ilanlar her gün Telegram kanalımızda paylaşılıyor:'),tg);
+const yer=E('span');yer.hidden=true;out.push(yer);
+(meslekDizin||(meslekDizin=getJSON('meslek/dizin.json').catch(()=>[]))).then(l=>{const m=meslekBul(q,l);if(!m||!yer.parentNode)return;
+const a=E('a','btn btn-ikinci',m[1]+': biten ilanlar ve taban puanları →');a.href='meslek/'+m[0]+'/';a.setAttribute('data-a','arama_meslek');a.setAttribute('data-a-x',m[0]);yer.replaceWith(a);});
 if(loaded&&!F.arsiv){const fa={...F,arsiv:true},n=ilanBase(fa).filter(o=>rowMatches(o,fa)).length;
 if(n){const b=E('button','btn btn-ikinci','Geçmişteki '+n+' ilanı göster');b.type='button';b.onclick=()=>{A('tikla',{a:'arama_gecmis',x:normalize(q).slice(0,60),n});F.arsiv=true;ilanDegisti();};out.push(b);}}
 const cipler=E('div','ara-cip');cipler.append(E('span','','Sık arananlar:'));
