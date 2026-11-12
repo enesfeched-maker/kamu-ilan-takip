@@ -5726,11 +5726,11 @@
   }
  },
  "sbb-0789771f8e6c1c43dd7bd8fe": {
-  "zaman": "2026-11-11T23:11:41+03:00",
+  "zaman": "2026-11-12T07:10:21+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "489615e14f5e2b68",
+  "imza": "d2f3de87c29ae0d5",
   "baslik": "YÜKSEKÖĞRETİM KURULU BAŞKANLIĞI - 5 ALACAK",
   "farklar": [],
   "yz": {
@@ -5743,11 +5743,9 @@
      "en_dusuk_puan": null,
      "il": null,
      "kosullar": [
-      "Bilgisayar veya yazılım mühendisliğinden (ya da denkinden) mezun olmak.",
-      "Lisans sonrası yazılım geliştirici olarak en az 8 yıl deneyime sahip olmak.",
-      "Java ve Spring Boot ile uygulama geliştirme/bakımında fiilen görev almış olmak.",
-      "Spring Security, Spring Data, Oracle/PostgreSQL, JPA/Hibernate bilgisi.",
-      "Aylık brüt sözleşme ücret tavanının 4 katına kadar ücret."
+      "Bilgisayar veya yazılım mühendisliğinden (ya da denkliği kabul edilmiş bölümden) mezun olmak.",
+      "Lisans sonrası en az 8 yıl yazılım geliştirici olarak çalışmış olmak.",
+      "Java ve Spring Boot ile uygulama geliştirme ve bakımında fiilen görev aldığını belgelemek."
      ]
     },
     {
@@ -5758,11 +5756,9 @@
      "en_dusuk_puan": null,
      "il": null,
      "kosullar": [
-      "Bilgisayar veya yazılım mühendisliğinden (ya da denkinden) mezun olmak.",
-      "Lisans sonrası yazılım geliştirici olarak en az 3 yıl deneyime sahip olmak.",
-      "Java ve Spring Boot ile uygulama geliştirme/bakımında fiilen görev almış olmak.",
-      "Spring Security, Spring Data, Oracle/PostgreSQL, JPA/Hibernate bilgisi.",
-      "Aylık brüt sözleşme ücret tavanının 2 katına kadar ücret."
+      "Bilgisayar veya yazılım mühendisliğinden (ya da denkliği kabul edilmiş bölümden) mezun olmak.",
+      "Lisans sonrası en az 3 yıl yazılım geliştirici olarak çalışmış olmak.",
+      "Java ve Spring Boot ile uygulama geliştirme ve bakımında fiilen görev aldığını belgelemek."
      ]
     }
    ],
@@ -5772,13 +5768,12 @@
    "kpss_gerekli": true,
    "iller": [],
    "ortak_kosullar": [
-    "Başvuru 2–16 Kasım 2026 arasında e-Devlet/Kariyer Kapısı üzerinden elektronik ortamda yapılır.",
-    "2026 KPSS P3 puanı istenir; belge ibraz etmeyenin puanı 70 sayılır.",
-    "İngilizce YDS/e-YDS puanı aranır; belge yoksa yabancı dil puanı 0 sayılır.",
-    "Puan: KPSS P3'ün %70'i + yabancı dil puanının %30'u; kontenjanın 10 katı aday sözlü sınava çağrılır.",
-    "Sözlü sınavda başarı için en az 70 puan gerekir."
+    "2026 KPSS P3 sonuç belgesi istenir; belge sunmayanın puanı 70 sayılır.",
+    "İngilizce YDS/e-YDS veya eşdeğer sınav belgesi istenir; belge sunmayanın dil puanı 0 sayılır.",
+    "Başvuru e-Devlet üzerinden Kariyer Kapısı'ndan elektronik yapılır; posta ve şahsen başvuru kabul edilmez.",
+    "Sıralama: KPSS P3'ün %70'i + yabancı dil puanının %30'u; alınacak sayının 10 katı aday sözlüye çağrılır, sözlüde en az 70 puan gerekir."
    ],
-   "ozet": "Yükseköğretim Kurulu Başkanlığı 2 kıdemli ve 3 Java yazılım geliştirme uzmanı olmak üzere 5 sözleşmeli bilişim personeli alacak. Başvurular 2–16 Kasım 2026'da Kariyer Kapısı'ndan yapılır.",
+   "ozet": "Yükseköğretim Kurulu Başkanlığı 2 kıdemli yazılım geliştirme uzmanı ve 3 yazılım geliştirme uzmanı (Java), toplam 5 sözleşmeli bilişim personeli alacak. Başvurular 2–16 Kasım 2026'da Kariyer Kapısı'ndan yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -5792,27 +5787,37 @@
   }
  },
  "sbb-0a0b1d327a7c5924b935242e": {
-  "zaman": "2026-11-11T23:11:41+03:00",
+  "zaman": "2026-11-12T07:10:21+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "ce91ff9ff8cf6094",
+  "imza": "df792084c92fed03",
   "baslik": "DOĞU KARADENİZ KALKINMA AJANSI - 1 UZMAN ALACAK",
-  "farklar": [],
+  "farklar": [
+   [
+    "puan_turleri",
+    [
+     "P12"
+    ],
+    [
+     "P12,P14,P24,P29,P34"
+    ],
+    false
+   ]
+  ],
   "yz": {
    "kadrolar": [
     {
-     "unvan": "Uzman Personel",
+     "unvan": "Uzman",
      "adet": 1,
      "ogrenim": "lisans",
-     "puan_turu": "P12",
+     "puan_turu": "P12, P14, P24, P29, P34",
      "en_dusuk_puan": 80,
-     "il": "Trabzon",
+     "il": "Rize",
      "kosullar": [
-      "İktisat, ekonomi, işletme, kamu yönetimi, uluslararası ilişkiler, istatistik veya siyaset bilimi bölümlerinden mezun olmak.",
-      "KPSS P12, P14, P24, P29 veya P34'ten en az 80 puan almış olmak.",
-      "Son 5 yıl içinde YDS/e-YDS İngilizce en az C düzeyinde puan almış olmak.",
-      "Görev yeri Rize Yatırım Destek Ofisi; TR90 Bölgesi illerinde çalışmayı kabul etmek."
+      "İktisat, ekonomi, işletme, kamu yönetimi, uluslararası ilişkiler, istatistik, siyaset bilimi bölümlerinden mezun olmak.",
+      "YDS/e-YDS İngilizceden son 5 yılda en az C düzeyi puan almış olmak.",
+      "Tercih nedeni: ilgili alanda yüksek lisans/doktora veya ikinci yabancı dil belgesi."
      ]
     }
    ],
@@ -5825,10 +5830,9 @@
     "Rize"
    ],
    "ortak_kosullar": [
-    "Başvuru 23 Kasım–6 Aralık 2026 (23:59) arasında e-Devlet/Kariyer Kapısı üzerinden yapılır.",
-    "Sınav sözlüdür; başarı notu 100 üzerinden en az 70'tir.",
-    "Sıralama: KPSS %55, YDS %35, yüksek lisans %2, doktora %4, ikinci yabancı dil %4.",
-    "Sözlü sınava kontenjanın 5 katı aday çağrılır; çağrılanlar 11.12.2026'da duyurulur."
+    "2025-2026 KPSS'den P12, P14, P24, P29 veya P34 puan türünden en az 80 puan almış olmak.",
+    "Başvuru e-Devlet üzerinden Kariyer Kapısı'ndan elektronik yapılır.",
+    "Sınav sözlüdür; sözlüye alınacak sayının 5 katı aday çağrılır, başarı notu en az 70'tir."
    ],
    "ozet": "Doğu Karadeniz Kalkınma Ajansı Rize Yatırım Destek Ofisi'nde görevlendirilmek üzere 1 uzman alacak. Başvurular 23 Kasım–6 Aralık 2026'da Kariyer Kapısı'ndan yapılır.",
    "okunabilirlik": "iyi",
@@ -5839,7 +5843,7 @@
     "lisans"
    ],
    "puan_turleri": [
-    "P12"
+    "P12, P14, P24, P29, P34"
    ]
   }
  },
@@ -6839,22 +6843,22 @@
   }
  },
  "sbb-5f3fa2414e8b9e9a456461d8": {
-  "zaman": "2026-11-11T23:11:41+03:00",
+  "zaman": "2026-11-12T07:10:21+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "pdf",
-  "imza": "0b67d2eaa1bec219",
+  "imza": "4fddbb0e07a41bfa",
   "baslik": "GAZİANTEP ÜNİVERSİTESİ - 11 ALACAK",
   "farklar": [],
   "yz": {
    "kadrolar": [],
-   "toplam": 0,
+   "toplam": null,
    "son_basvuru_tarihi": "2026-11-17",
    "baslangic_tarihi": "2026-11-03",
    "kpss_gerekli": false,
    "iller": [],
    "ortak_kosullar": [],
-   "ozet": "Akademik kadro ilanı (araştırma görevlisi ve öğretim görevlisi).",
+   "ozet": "Akademik kadro ilanı (öğretim görevlisi ve araştırma görevlisi).",
    "okunabilirlik": "kotu",
    "akademik": false,
    "iptal_veya_duzeltme": false,
