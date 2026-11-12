@@ -335,8 +335,8 @@ def aralik_sayfasi(base, duzey_slug, duzey_ad, alt, son, araliklar, sluglar, onc
     if onceki and onceki[1].get(alt):
         giris += f' {donem_yaz(onceki[0])} döneminde aynı aralıkta {tam(len(onceki[1][alt]))} kadro vardı.'
     baslik = f'KPSS {duzey_ad} {alt}–{ust} Puanla Nereye Atanılır? ({d_yaz})'
-    aciklama = (f'KPSS {duzey_ad.lower()} {alt}–{ust} puanla atanılan kadrolar: {d_yaz} döneminde {tam(len(rows))} kadro, '
-                f'{tam(yerlesen)} yerleşen. Unvan ve il dökümü.')
+    aciklama = (f'KPSS {duzey_ad.lower()} {alt}–{ust} puanla nereye atanılır? {d_yaz} döneminde en küçük puanı bu aralıkta olan '
+                f'{tam(len(rows))} kadroya {tam(yerlesen)} kişi yerleşti. Unvan, il ve kurum dökümü.')
     kok = '../../../'
     unvanlar = {}
     for r in rows:

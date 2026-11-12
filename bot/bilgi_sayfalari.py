@@ -28,7 +28,7 @@ SAYFALAR = {
          'toplanmaz, saklanmaz, paylaşılmaz.'),
         ('İletişim', f'Gizlilikle ilgili soruların için {ILETISIM_EPOSTA} adresine yazabilirsin. Bize yazarsan e-posta adresin ve iletin yalnızca yanıt vermek için kullanılır.'),
     ]),
-    'kullanim-kosullari': ('Kullanım koşulları', 'KPSS Tercihi kullanım koşulları: hizmetin kapsamı, bilgilerin doğruluğu ve sorumluluk.',
+    'kullanim-kosullari': ('Kullanım koşulları', 'KPSS Tercihi kullanım koşulları: hizmetin kapsamı, ilan ve taban puanı bilgilerinin doğruluğu, sitenin resmî olmadığı ve kullanıcının sorumluluğu.',
                            'KPSS Tercihi’ni ve sosyal medya hesaplarımızı kullanarak aşağıdaki koşulları kabul etmiş olursun.', [
         ('Hizmetin kapsamı', 'KPSS Tercihi, resmî kaynaklarda yayımlanan kamu personel ilanlarını derleyen ücretsiz ve bağımsız bir rehberdir. '
          'Üyelik gerektirmez; başvuru almaz, aracılık yapmaz.'),
@@ -41,7 +41,7 @@ SAYFALAR = {
         ('Değişiklikler', 'Bu koşullar gerektiğinde güncellenebilir; güncel metin her zaman bu sayfadadır.'),
         ('İletişim', f'Soruların için {ILETISIM_EPOSTA} adresine yazabilirsin.'),
     ]),
-    'hakkimizda': ('Hakkımızda', 'KPSS Tercihi nedir, ilanlar hangi resmî kaynaklardan derlenir, nasıl iletişim kurulur?',
+    'hakkimizda': ('Hakkımızda', 'KPSS Tercihi nedir, kim hazırlıyor? Kamu personel ilanlarının hangi resmî kaynaklardan derlendiği, taban puanı verisinin kaynağı ve bize nasıl ulaşılacağı.',
                    'KPSS Tercihi, kamu personel ilanlarını daha kolay incelemek ve takip etmek için hazırlanmış bağımsız bir rehberdir.', [
         ('Veriler nereden geliyor?', 'İlanlar Kariyer Kapısı resmî RSS akışından, İŞKUR kamu memur alım ilanları sayfalarından, SBB Kamu İlan '
          'listesinden ve Çevre, Şehircilik ve İklim Değişikliği Bakanlığı Yerel Yönetimler duyurularından (ÇŞB) derlenir. Kurum, görev yeri, '
@@ -75,7 +75,7 @@ def _iletisim_bolumleri():
 
 def _sayfalar():
     """Sabit sayfalar + İletişim (e-posta sabitine göre bölümleri değişir)."""
-    return dict(SAYFALAR, iletisim=('İletişim', 'KPSS Tercihi iletişim: hatalı ilan bildirimi, öneri ve iş birliği.',
+    return dict(SAYFALAR, iletisim=('İletişim', 'KPSS Tercihi iletişim sayfası: hatalı ya da eksik bir ilanı bildirmek, öneride bulunmak ve iş birliği teklifleri için bize nasıl ulaşabileceğini anlatır.',
                                     'Hatalı ilan bildirimi, öneri ya da iş birliği için bize ulaşabilirsin.', _iletisim_bolumleri()))
 
 

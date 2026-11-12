@@ -534,7 +534,11 @@ def kurum_sayfasi(kan, liste, slug, gorseller, simdi, tablolar=None, harita=None
     ozet = ''.join(f'<span>{esc(p)}</span>' for p in (il_yazi, kurum_turu(ad)) if p)
     ozet = f'<div class="kp-ozet">{ozet}</div>' if ozet else ''
     baslik = f'{ad} ilanları'
-    aciklama = f'{ad} kurumunun başvurusu açık kamu personel alım ilanları ({len(acik)}) ve geçmiş duyuruları.'[:190]
+    aciklama = f'{ad} personel alımı ilanları: başvurusu açık {len(acik)} ilan, {len(gecmis)} geçmiş duyuru.'
+    for ek in (' Başvuru tarihleri, kadro sayıları ve aranan koşullar.', ' Varsa KPSS yerleştirme taban puanları.'):
+        if len(aciklama) + len(ek) <= 160:   # kısa açıklama arama sonucunda yetersiz kalıyor (Bing uyarısı)
+            aciklama += ek
+    aciklama = aciklama[:190]
     canonical = su.BASE + 'kurum/' + slug + '/'
     adlar = f'<p>Kaynaklarda geçen adlar: {esc(", ".join(diger))}</p>' if diger else ''
     satirlar = ''.join(kart_html(i, g, simdi, kok, tablolar, harita) for i, g in acik)
@@ -612,7 +616,8 @@ def kurum_hub_sayfasi(girdiler, simdi=None):
             for ad, slug, acik, toplam in gruplar[harf])
         bolumler += f'<section class="bolum"><div class="bolum-bas"><h2>{esc(harf)}</h2></div><ul>{satirlar}</ul></section>'
     baslik = 'Kurumlar: kamu ilanı yayımlayan kurumlar'
-    aciklama = f'{len(girdiler)} kurumun kamu personel alım ilanları ve KPSS yerleştirme geçmişi; şu an {toplam_acik} açık ilan.'
+    aciklama = (f'Kamu ilanı yayımlayan {len(girdiler)} kurumun personel alım ilanları ve KPSS yerleştirme geçmişi; '
+                f'şu an {toplam_acik} başvurusu açık ilan var. Kurumlar ada göre sıralı.')
     giris = (f'{len(girdiler)} kurumun sayfası var; bu kurumlarda şu an {toplam_acik} başvurusu açık ilan bulunuyor. '
              'Kurum adına tıklayınca ilanlarını ve varsa geçmiş KPSS yerleştirme sonuçlarını görürsün.')
     canonical = su.BASE + 'kurum/'
