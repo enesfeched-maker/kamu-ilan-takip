@@ -612,7 +612,7 @@ def kurum_hub_sayfasi(girdiler, simdi=None):
     bolumler = ''
     for harf in sorted(gruplar, key=lambda h: _tr_sira(h)):
         satirlar = ''.join(
-            f'<li><a href="{esc(slug)}/">{esc(ad)}</a> — ' + (f'{acik} açık ilan' if acik else f'{toplam} kayıt') + '</li>'
+            f'<li><a href="{esc(slug)}/">{esc(ad)}</a> — ' + (f'{acik} açık ilan' if acik else f'{toplam} kayıt' if toplam else 'yerleştirme geçmişi') + '</li>'
             for ad, slug, acik, toplam in gruplar[harf])
         bolumler += f'<section class="bolum"><div class="bolum-bas"><h2>{esc(harf)}</h2></div><ul>{satirlar}</ul></section>'
     baslik = 'Kurumlar: kamu ilanı yayımlayan kurumlar'
@@ -636,6 +636,50 @@ def son_ilan_gunu(kayitlar):
     """Kayıtların en yeni 'ilk_gorulme' günü; yoksa ''."""
     gunler = [str(i.get('ilk_gorulme') or '')[:10] for i in kayitlar or []]
     return max([g for g in gunler if re.fullmatch(r'\d{4}-\d{2}-\d{2}', g)], default='')
+
+
+def kalici_kurumlar(docs, dolu_kanlar, dolu_slugler):
+    """İlanı olmayan ama KPSS yerleştirme geçmişi yeterli kurumlar: [(kan, ad, slug)] (12 Kasım 2026).
+    Kurum sayfası ilanı veriden düşünce siliniyor, dizindeki adres 404 veriyordu; geçmişi olan kurumun sayfası artık kalıcı.
+    Belediyeler girmez (aynı adlı belediyeler il ile ayrılır; ilansız belediyede il grubu kurulamaz). Slug çakışan kurum atlanır."""
+    import kurum_zengin
+    sonuc, gorulen = [], set(dolu_slugler)
+    for kan, satirlar in sorted(kurum_zengin._indeks(str(docs)).items()):
+        if kan in dolu_kanlar or kan.endswith(' belediye') or len(satirlar) < KURUM_MIN_YERLESTIRME:
+            continue
+        ham = satirlar[0][2]['kurum']
+        slug = kurum_slug(ham)
+        if slug in gorulen:
+            continue
+        gorulen.add(slug)
+        sonuc.append((kan, ' '.join(kurum_adi(ham).split()), slug))
+    return sonuc
+
+
+def kurum_gecmis_sayfasi(kan, ad, slug, docs):
+    """İlanı olmayan kurumun kalıcı sayfası: açık ilan yok notu + KPSS merkezi yerleştirme geçmişi (tamamı veriden)."""
+    su = _su()
+    import kurum_zengin
+    import puan_sayfalari as ps
+    kok = '../../'
+    satirlar = kurum_zengin.yerlestirmeler(kan, docs)
+    mins = [s[2]['min'] for s in satirlar]
+    canonical = su.BASE + 'kurum/' + slug + '/'
+    baslik = f'{ad} ilanları'
+    aciklama = (f'{ad}: KPSS merkezi yerleştirmede {ps.tam(len(satirlar))} kadro, en küçük puanlar {ps.sayi(min(mins))}–{ps.sayi(max(mins))}. '
+                'Şu an başvurusu açık ilan yok; yeni ilan gelince burada görünür.')
+    tur = kurum_turu(ad)
+    ozet = f'<div class="kp-ozet"><span>{esc(tur)}</span></div>' if tur else ''
+    icerik = f'''<section class="kp-hero"><div class="wrap"><nav class="crumbs" aria-label="Konum"><a href="{kok}">Ana sayfa</a><span aria-hidden="true">/</span><a href="../">Kurumlar</a><span aria-hidden="true">/</span><span>{esc(ad)}</span></nav>
+<div class="kp-id"><div><span class="eyebrow">Kurum</span><h1>{esc(ad)}</h1>{ozet}</div></div>
+<div class="kp-actions"><a class="btn btn-tg btn-buyuk" href="https://t.me/kpsstercihi" target="_blank" rel="noopener" data-a="telegram" data-a-x="kurum">Telegram'da takip et ↗</a></div></div></section>
+<main id="icerik" class="wrap kp-main"><section class="bolum"><div class="bolum-bas"><h2>Başvurusu açık ilanlar <span class="sayi">0</span></h2></div><div class="bos-kutu"><h3>Şu an başvurusu açık ilan yok.</h3><p>Bu kurumdan yeni bir ilan geldiğinde burada görünür. Telegram kanalından da takip edebilirsin.</p></div></section>{kurum_zengin.yerlestirme_html(kan, docs)}</main>'''
+    kirinti = {'@context': 'https://schema.org', '@type': 'BreadcrumbList', 'itemListElement': [
+        {'@type': 'ListItem', 'position': n, 'name': k_ad, 'item': k_adres}
+        for n, (k_ad, k_adres) in enumerate([('Ana sayfa', su.BASE), ('Kurumlar', su.BASE + 'kurum/'), (ad, canonical)], 1)]}
+    ek_head = ('<script type="application/ld+json">'
+               + json.dumps(kirinti, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/') + '</script>')
+    return su.sayfa_kabugu(baslik + ' | KPSS Tercihi', aciklama, canonical, icerik, 'kurum-page', baslik, ek_head)
 
 
 def kurum_sayfalarini_uret(ilanlar, docs, gorseller, simdi=None, kopyalar=None):
@@ -680,6 +724,21 @@ def kurum_sayfalarini_uret(ilanlar, docs, gorseller, simdi=None, kopyalar=None):
             except Exception as hata:
                 print(f'Uyarı: kurum listesine eklenemedi ({slug}): {hata}')
         basarili.add(kan)
+    try:   # ilanı kalmayan ama yerleştirme geçmişi olan kurumlar: adres 404 vermesin, dizinde kalsın
+        veri_docs = Path(docs)   # yayında su.ROOT / 'docs' ile aynı klasör; testlerde geçici klasör (gerçek veri karışmaz)
+        for kan, ad, slug in kalici_kurumlar(veri_docs, {k.split('|')[0] for k in gruplar}, set(slugler.values())):
+            try:
+                html = kurum_gecmis_sayfasi(kan, ad, slug, veri_docs)
+                (kok / slug).mkdir(parents=True, exist_ok=True)
+                (kok / slug / 'index.html').write_text(html, encoding='utf-8')
+            except Exception as hata:
+                print(f'Uyarı: kalıcı kurum sayfası üretilemedi ({slug}): {hata}')
+                shutil.rmtree(kok / slug, ignore_errors=True)
+                continue
+            adresler.append(su.BASE + 'kurum/' + slug + '/')
+            hub_girdileri.append((ad, slug, 0, 0))
+    except Exception as hata:
+        print(f'Uyarı: kalıcı kurum sayfaları üretilemedi: {hata}')
     try:
         hub = kurum_hub_sayfasi(hub_girdileri, simdi)
         if hub:
