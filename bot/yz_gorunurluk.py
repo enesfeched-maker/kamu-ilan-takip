@@ -125,7 +125,7 @@ def sss_sayfasi(base):
     ld = json.dumps(veri, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
     ek = f'<meta property="og:url" content="{su.esc(canonical)}"><script type="application/ld+json">{ld}</script>'
     maddeler = ''.join(f'<section class="bolum"><h2>{su.esc(s)}</h2><p>{su.esc(c)}</p></section>' for s, c in SSS)
-    govde = (su.sayfa_basi('Sık Sorulan Sorular — KPSS Tercihi', 'KPSS Tercihi nedir, kamu ilanları nereden takip edilir, başvuru nasıl yapılır? Kısa cevaplar.',
+    govde = (su.sayfa_basi('Sık Sorulan Sorular — KPSS Tercihi', 'KPSS Tercihi nedir, kamu personel ilanları nereden takip edilir, ilana nasıl başvurulur? Kamu ilanları ve KPSS ile ilgili sık sorulan soruların kısa cevapları.',
                            su.esc(canonical), '../', ek_head=ek)
              + f'<body class="kurum-page"><a class="skip" href="#icerik">İçeriğe geç</a>{su.ust_html("../")}'
              + '<section class="kp-hero"><div class="wrap"><nav class="crumbs" aria-label="Konum"><a href="../">Ana sayfa</a><span aria-hidden="true">/</span>'

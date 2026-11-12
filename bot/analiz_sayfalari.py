@@ -424,7 +424,13 @@ def yaz(docs, base, ilanlar, simdi=None):
         kok = '../../'
         kirinti = [('Ana sayfa', base), ('Analizler', base + KLASOR + '/'), (s['ad'], base + KLASOR + '/' + s['yol'])]
         icerik = _hero(kok, s['ad'], s['baslik'], s['giris']) + _govde(s['bulgular'], s['bolumler'], s['kaynak'], guncelleme)
-        canonical, html = _sayfa(base, s['yol'], s['baslik'], s['aciklama'], kirinti, icerik)
+        aciklama = s['aciklama']
+        for ek in s['bulgular'][1:]:   # kısa açıklama (Bing: "too short") sıradaki bulguyla tamamlanır; _kes 160'ta keser
+            if len(aciklama) >= 120:
+                break
+            if ek != aciklama:
+                aciklama += ' ' + ek
+        canonical, html = _sayfa(base, s['yol'], s['baslik'], aciklama, kirinti, icerik)
         hedef = docs / KLASOR / s['yol'] / 'index.html'
         hedef.parent.mkdir(parents=True, exist_ok=True)
         hedef.write_text(html, encoding='utf-8')
@@ -434,7 +440,7 @@ def yaz(docs, base, ilanlar, simdi=None):
     icerik = (_hero('../', '', 'Analizler', giris)
               + f'<main id="icerik" class="wrap kp-main"><section class="bolum"><div class="bolum-bas"><h2>Analizler</h2></div><ul>{liste}</ul>'
               f'<p class="kp-note">Güncelleme: {esc(guncelleme)}</p></section></main>')
-    canonical, html = _sayfa(base, '', 'KPSS ve kamu ilanı veri analizleri', 'KPSS taban puanı değişimi, il il puanlar, kadro sıralaması ve kamu ilanı istatistikleri.',
+    canonical, html = _sayfa(base, '', 'KPSS ve kamu ilanı veri analizleri', 'KPSS ve kamu ilanı veri analizleri: taban puanlarının dönemden döneme değişimi, il il puanlar, kadro sıralaması, en çok alım yapan kurumlar ve ilan istatistikleri.',
                              [('Ana sayfa', base), ('Analizler', base + KLASOR + '/')], icerik)
     (docs / KLASOR).mkdir(parents=True, exist_ok=True)
     (docs / KLASOR / 'index.html').write_text(html, encoding='utf-8')
