@@ -95,7 +95,7 @@ def alt_html(kok, yil=None):
     yil = yil or datetime.now(TR).year
     return (f'<footer class="ab"><div class="ab-ic"><div class="ab-marka"><img src="{kok}assets/logo-96.webp?v={LOGO_SURUM}" alt="" width="36" height="36">'
             f'<div><strong>KPSS Tercihi</strong><span>Kamu ilanları, sade ve tek yerde</span></div></div>'
-            f'<nav class="ab-linkler" aria-label="Alt bilgi"><a href="https://t.me/kpsstercihi" target="_blank" rel="noopener" data-a="telegram" data-a-x="alt">Telegram</a>{_sosyal_linkler()}<a href="{kok}katiplik/">Katiplik sınavı</a><a href="{kok}akademik/">Akademik ilanlar</a><a href="{kok}sonuclar/">Sonuç duyuruları</a><a href="{kok}rehber/">Rehberler</a><a href="{kok}analiz/">Analizler</a><a href="{kok}kurum/">Kurumlar</a><a href="{kok}il/">İller</a><a href="{kok}sss/">Sık sorulanlar</a><a href="{kok}hakkimizda/">Hakkımızda</a><a href="{kok}iletisim/">İletişim</a><a href="{kok}gizlilik/">Gizlilik</a><a href="{kok}kullanim-kosullari/">Kullanım koşulları</a></nav>'
+            f'<nav class="ab-linkler" aria-label="Alt bilgi"><a href="https://t.me/kpsstercihi" target="_blank" rel="noopener" data-a="telegram" data-a-x="alt">Telegram</a>{_sosyal_linkler()}<a href="{kok}katiplik/">Katiplik sınavı</a><a href="{kok}akademik/">Akademik ilanlar</a><a href="{kok}sonuclar/">Sonuç duyuruları</a><a href="{kok}rehber/">Rehberler</a><a href="{kok}analiz/">Analizler</a><a href="{kok}kurum/">Kurumlar</a><a href="{kok}il/">İller</a><a href="{kok}meslek/">Meslekler</a><a href="{kok}sss/">Sık sorulanlar</a><a href="{kok}hakkimizda/">Hakkımızda</a><a href="{kok}iletisim/">İletişim</a><a href="{kok}gizlilik/">Gizlilik</a><a href="{kok}kullanim-kosullari/">Kullanım koşulları</a></nav>'
             f'<p class="ab-not">© <span id="yil">{yil}</span> KPSS Tercihi</p></div></footer>')
 
 
@@ -1430,6 +1430,11 @@ def main():
         urls += il_sayfalari.yaz(docs, BASE, gorunen, sayfa_anahtarlari, haritada_olmayan, datetime.now(TR))
     except Exception as hata:
         print(f'Uyarı: il sayfaları üretilemedi: {hata}')
+    try:
+        import meslek_sayfalari   # kalıcı meslek sayfaları (/meslek/): ilan bitse de adres yaşar; taban puanı sayfalarından sonra (bağlantı denetimi)
+        urls += meslek_sayfalari.yaz(docs, BASE, gorunen, sayfa_anahtarlari, haritada_olmayan, datetime.now(TR), data.get('ilanlar'), kopyalar)
+    except Exception as hata:
+        print(f'Uyarı: meslek sayfaları üretilemedi: {hata}')
     try:   # kurum, il ve taban puanı sayfaları: içeriklerini en son değiştiren ilanın günü (ilan yoksa tarih yazılmaz)
         import kurum_sayfasi
         for u, gun in kurum_sayfasi.SON_DEGISIM.items():
