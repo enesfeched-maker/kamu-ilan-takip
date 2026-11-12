@@ -113,6 +113,14 @@ class MeslekSayfalariTest(unittest.TestCase):
         kok = Path(__file__).resolve().parent.parent
         self.assertIn('<a href="meslek/">Meslekler</a>', (kok / 'docs' / 'index.html').read_text(encoding='utf-8'))
 
+    def test_tarih_araligi_kisa(self):
+        self.assertEqual(ms.tarih_araligi('2026-11-18', '2026-11-20'), '18–20 Kasım 2026')
+        self.assertEqual(ms.tarih_araligi('2026-11-30', '2026-12-04'), '30 Kasım – 4 Aralık 2026')
+        self.assertEqual(ms.tarih_araligi('2026-12-21', '2027-01-05'), '21 Aralık 2026 – 5 Ocak 2027')
+        self.assertEqual(ms.tarih_araligi('', '2026-11-20'), '20 Kasım 2026')
+        self.assertEqual(ms.tarih_araligi('2026-11-20', '2026-11-20'), '20 Kasım 2026')
+        self.assertEqual(ms.tarih_araligi('2026-11-18', ''), '—')
+
     def test_gecmis_kayitlari_suzer(self):
         ham = [{'id': 'x1', 'kurum': 'A Belediyesi', 'son_tarih': gun(-2), 'baslik': 'Zabıta memuru alımı'},
                {'id': 'x2', 'kurum': 'A Belediyesi', 'son_tarih': gun(5)},

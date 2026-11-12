@@ -50,6 +50,21 @@ def _tarih(iso):
     return si._tarih_yazi(iso)
 
 
+def tarih_araligi(bas, son):
+    """Kısa başvuru aralığı (telefonda tablo hücresine sığsın): '18–20 Kasım 2026', '30 Kasım – 4 Aralık 2026'; yıl farklıysa iki tam tarih."""
+    import statik_icerik as si
+    if not son:
+        return '—'
+    if not bas or bas > son:
+        return _tarih(son)
+    (y1, a1, g1), (y2, a2, g2) = (tuple(int(p) for p in t.split('-')) for t in (bas, son))
+    if y1 != y2:
+        return f'{_tarih(bas)} – {_tarih(son)}'
+    if a1 != a2:
+        return f'{g1} {si.AY[a1 - 1]} – {g2} {si.AY[a2 - 1]} {y2}'
+    return f'{g1}–{g2} {si.AY[a2 - 1]} {y2}' if g1 != g2 else _tarih(son)
+
+
 def gecmis_kayitlari(ham, simdi, kopyalar=None):
     """ilanlar.json kayıtlarından son başvurusu geçmiş ilanların ince kayıtları (duyuru, iptal, akademik ve kopyalar hariç)."""
     import kurum_sayfasi as ks
@@ -167,10 +182,10 @@ def meslek_sayfasi(base, slug, ad, acik, gecmis, puanlar, simdi, sayfali=None, d
         satir = []
         for k in acik:
             bas = str(k.get('baslangic_zaman') or '')[:10]
-            tarih = (f'{_tarih(bas)} – ' if bas else '') + (_tarih(k['son_tarih']) if k.get('son_tarih') else '—')
+            tarih = tarih_araligi(bas, str(k.get('son_tarih') or '')[:10])
             satir.append([f'<a href="{kok}ilan/{esc(k["key"])}/">{esc(k.get("manset") or "Kamu ilanı")}</a>', esc(k.get('kurum') or '—'),
                           esc(', '.join((k.get('iller') or [])[:3]) or k.get('il') or '—'), esc(tarih)])
-        govde += _bolum(f'Başvurusu açık {adk} ilanları', _tablo(['İlan', 'Kurum', 'İl', 'Başvuru tarihleri'], satir), len(acik))
+        govde += _bolum(f'Başvurusu açık {adk} ilanları', _tablo(['İlan', 'Kurum', 'İl', 'Başvuru'], satir), len(acik))
     sc = sorular(ad, acik, gecmis, puanlar, simdi)
     govde += ps._soru_bolumu(sc)
     if puanlar:
