@@ -118,6 +118,20 @@ class PuanSayfalariTest(unittest.TestCase):
         self.assertIn('<td>Memur</td>', h)
         self.assertIn('2022–2026', (self.k / 'index.html').read_text(encoding='utf-8'))
 
+    def test_duzey_kisa_cevaplar_veriden(self):
+        h = (self.k / 'lisans' / 'index.html').read_text(encoding='utf-8')
+        self.assertIn('<h2>Kısa cevaplar</h2>', h)
+        self.assertIn('"@type":"FAQPage"', h)
+        self.assertIn('<h3>2026/1 KPSS lisans en düşük taban puanı kaç?</h3>', h)
+        self.assertIn('kadrosu Hemşire (', h)
+        self.assertIn('oldu: 71,23.', h)
+        self.assertIn('3 lisans kadrosunun 1 tanesinde en küçük puan 75 puanın altındaydı.', h)
+        self.assertNotIn('70 puanla atanılır mı', h)     # 70'in altında kadro yok: soru üretilmez
+        self.assertNotIn('85 puanla atanılır mı', h)     # hepsi 85'in altında: bilgi taşımayan soru üretilmez
+        b = ps.kisa_bilgiler(self.docs)
+        self.assertEqual([(x[0], x[2], x[4]) for x in b], [('lisans', '2026-1', [])])
+        self.assertEqual(ps.duzey_sorulari('Lisans', '2026-1', {}), [])
+
     def test_aralik_gruplama(self):
         g = ps.araliklari_grupla([{'min': 74.999}, {'min': 75.0}, {'min': 100.0}, {'min': None}, {}])
         self.assertEqual({a: len(v) for a, v in g.items()}, {70: 1, 75: 1, 95: 1})

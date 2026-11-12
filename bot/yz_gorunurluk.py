@@ -50,13 +50,13 @@ def _tarih(gun):
     return f'{d.day} {AYLAR[d.month - 1]} {d.year}'
 
 
-def llms_tam_metni(kayitlar, base, simdi, sayfasi_olan=None):
+def llms_tam_metni(kayitlar, base, simdi, sayfasi_olan=None, puan_bilgileri=None):
     """llms-full.txt: tüm açık ilanlar ve sık sorulan soruların cevapları; asistan tek dosyadan cevap verebilsin."""
     sss = ''.join(f'\n### {s}\n{c}\n' for s, c in SSS)
-    return llms_metni(kayitlar, base, simdi, sayfasi_olan, None) + '\n## Sık sorulan sorular\n' + sss
+    return llms_metni(kayitlar, base, simdi, sayfasi_olan, None, puan_bilgileri) + '\n## Sık sorulan sorular\n' + sss
 
 
-def llms_metni(kayitlar, base, simdi, sayfasi_olan=None, en_cok=LLMS_EN_COK):
+def llms_metni(kayitlar, base, simdi, sayfasi_olan=None, en_cok=LLMS_EN_COK, puan_bilgileri=None):
     """kayitlar: liste.json 'ilanlar' (kopyalar hariç). sayfasi_olan: yalnız bu anahtarların ilan sayfası var."""
     acik = [k for k in kayitlar if k.get('durum') not in ('expired', 'belirsiz') and not k.get('kopya_of')
             and (sayfasi_olan is None or k.get('key') in sayfasi_olan)]
@@ -95,6 +95,16 @@ def llms_metni(kayitlar, base, simdi, sayfasi_olan=None, en_cok=LLMS_EN_COK):
         '',
         f'## Açık ilanlar ({len(acik)})',
     ]
+    if puan_bilgileri:   # puan_sayfalari.kisa_bilgiler: asistanın doğrudan alıntılayabileceği, veriden hesaplanmış cevaplar
+        ek = ['## KPSS taban puanları: kısa bilgiler', 'Kaynak: ÖSYM yerleştirme sonuçları sayısal bilgileri (en küçük ve en büyük puanlar).', '']
+        for slug, ad, son, sorular, altlar in puan_bilgileri:
+            adres = f'{base}kpss-taban-puanlari/{slug}/'
+            ek.append(f'### {ad} ({son.replace("-", "/")}): {adres}')
+            ek += [f'- {s} {c}' for s, c in sorular]
+            if altlar:
+                ek.append('- Puana göre kadrolar: ' + ', '.join(f'[{a}–{a + 5} puan]({adres}{a}-{a + 5}-puan/)' for a in altlar))
+            ek.append('')
+        satirlar[-1:-1] = ek
     for k in acik[:en_cok]:
         parca = [k.get('kurum') or 'Kurum belirtilmemiş']
         if k.get('manset'):

@@ -1411,8 +1411,10 @@ def main():
         urls += rehber_adresleri
         degisim.update({u: rehberler.GUNCELLEME for u in rehber_adresleri})
         sayfali = sayfa_anahtarlari
-        (docs / 'llms.txt').write_text(yz_gorunurluk.llms_metni(gorunen, BASE, datetime.now(TR), sayfali), encoding='utf-8')
-        (docs / 'llms-full.txt').write_text(yz_gorunurluk.llms_tam_metni(gorunen, BASE, datetime.now(TR), sayfali), encoding='utf-8')
+        import puan_sayfalari
+        puan_bilgileri = puan_sayfalari.kisa_bilgiler(docs)
+        (docs / 'llms.txt').write_text(yz_gorunurluk.llms_metni(gorunen, BASE, datetime.now(TR), sayfali, puan_bilgileri=puan_bilgileri), encoding='utf-8')
+        (docs / 'llms-full.txt').write_text(yz_gorunurluk.llms_tam_metni(gorunen, BASE, datetime.now(TR), sayfali, puan_bilgileri), encoding='utf-8')
     except Exception as hata:
         print(f'Uyarı: llms.txt / SSS üretilemedi: {hata}')
     try:
