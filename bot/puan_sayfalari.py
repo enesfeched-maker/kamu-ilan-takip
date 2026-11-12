@@ -271,7 +271,7 @@ def kadro_sayfasi(base, duzey_slug, duzey_ad, unvan, slug, donemler, ilk_yil, so
     return _sayfa(base, f'{duzey_slug}/{slug}/', 3, baslik, aciklama, kirinti, icerik, dizin=kadro_dizinlenir(donemler))
 
 
-def duzey_sayfasi(base, duzey_slug, duzey_ad, grup, sluglar, son_donem, ilk_yil, son_yil, acik=None, araliklar=None):
+def duzey_sayfasi(base, duzey_slug, duzey_ad, grup, sluglar, son_donem, ilk_yil, son_yil, acik=None, araliklar=None, sorular=None):
     """grup: {unvan: {dönem: [satır]}}; sluglar: bağlantılı unvanlar; araliklar: {alt: [satır]} — sayfası olan puan aralıkları."""
     aralik_h = (f'<section class="bolum"><div class="bolum-bas"><h2>Puanına göre bak</h2></div><p>{_aralik_baglantilari(araliklar)}</p></section>'
                 if araliklar else '')
@@ -297,7 +297,7 @@ def duzey_sayfasi(base, duzey_slug, duzey_ad, grup, sluglar, son_donem, ilk_yil,
     icerik = (_hero(_crumbs(kok, kir), f'KPSS {duzey_ad} Taban Puanları ({donem_yaz(son_donem)})', giris)
               + f'<main id="icerik" class="wrap kp-main">{_acik_bolum(f"Başvurusu açık {duzey_ad.lower()} ilanları", acik, kok)}{aralik_h}<section class="bolum"><div class="bolum-bas"><h2>{esc(duzey_ad)} kadroları <span class="sayi">{len(grup)}</span></h2></div>{tablo}'
               f'<p class="kp-note">Ayrıntı sayfası, en az {MIN_SATIR} kayıt bulunan unvanlar için vardır. Puanlar kadro bazında en küçük puanların özetidir.</p>'
-              f'<p><a href="{kok}puanlar/">Puanını gir, tercih robotunu dene →</a></p></section></main>')
+              f'<p><a href="{kok}puanlar/">Puanını gir, tercih robotunu dene →</a></p></section>{_soru_bolumu(sorular)}</main>')
     kirinti = [('Ana sayfa', base), ('KPSS Taban Puanları', base + KLASOR + '/'), (duzey_ad, f'{base}{KLASOR}/{duzey_slug}/')]
     return _sayfa(base, f'{duzey_slug}/', 2, baslik, aciklama, kirinti, icerik)
 
@@ -372,6 +372,60 @@ def aralik_sayfasi(base, duzey_slug, duzey_ad, alt, son, araliklar, sluglar, onc
     kirinti = [('Ana sayfa', base), ('KPSS Taban Puanları', base + KLASOR + '/'), (duzey_ad, f'{base}{KLASOR}/{duzey_slug}/'),
                (f'{alt}–{ust} puan', f'{base}{KLASOR}/{yol}')]
     return _sayfa(base, yol, 3, baslik, aciklama, kirinti, icerik, dizin=len(rows) >= MIN_ARALIK_SATIR)
+
+
+SORU_ESIKLERI = (70, 75, 80, 85)
+
+
+def duzey_sorulari(duzey_ad, son_donem, araliklar):
+    """Düzey sayfasının ve llms.txt'nin kısa soru-cevapları (arama motoru ve yapay zekâ asistanı doğrudan alıntılayabilsin).
+    araliklar: araliklari_grupla(son dönem). Tamamı veriden hesaplanır; sabit dolgu ve tahmin yok."""
+    rows = [r for v in araliklar.values() for r in v]
+    if not rows:
+        return []
+    d, dz, n = donem_yaz(son_donem), duzey_ad.lower(), len(rows)
+    en = min(rows, key=lambda r: (r['min'], str(r.get('unvan')), str(r.get('kurum'))))
+    yer = ', '.join(p for p in (_kurum(en.get('kurum')), _duzgun(en.get('il'))) if p)
+    unvan = baslik_hali(' '.join(str(en.get('unvan') or '').split()))
+    sc = [(f'{d} KPSS {dz} en düşük taban puanı kaç?',
+           f'{d} merkezi yerleştirmesinde en düşük puanla yerleşilen {dz} kadrosu {unvan}' + (f' ({yer})' if yer else '') + f' oldu: {sayi(en["min"])}.')]
+    for esik in SORU_ESIKLERI:
+        k = sum(1 for r in rows if r['min'] < esik)
+        if 0 < k < n:
+            sc.append((f'KPSS {dz} {esik} puanla atanılır mı?',
+                       f'{d} döneminde puanı açıklanan {tam(n)} {dz} kadrosunun {tam(k)} tanesinde en küçük puan {esik} puanın altındaydı. '
+                       'Her kadronun nitelik koşulları ayrıca aranır.'))
+    dolu = max(araliklar, key=lambda a: (len(araliklar[a]), -a))
+    if len(araliklar) > 1:
+        sc.append((f'KPSS {dz} kadrolarının çoğu hangi puan aralığında?',
+                   f'{d} döneminde en çok kadro {dolu}–{dolu + ARALIK} puan aralığındaydı: {tam(n)} kadronun {tam(len(araliklar[dolu]))} tanesi.'))
+    return sc
+
+
+def _soru_bolumu(sorular):
+    if not sorular:
+        return ''
+    veri = {'@context': 'https://schema.org', '@type': 'FAQPage',
+            'mainEntity': [{'@type': 'Question', 'name': s, 'acceptedAnswer': {'@type': 'Answer', 'text': c}} for s, c in sorular]}
+    ld = json.dumps(veri, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
+    return ('<section class="bolum"><div class="bolum-bas"><h2>Kısa cevaplar</h2></div>'
+            + ''.join(f'<h3>{esc(s)}</h3><p>{esc(c)}</p>' for s, c in sorular) + f'<script type="application/ld+json">{ld}</script></section>')
+
+
+def kisa_bilgiler(docs):
+    """llms.txt için: [(düzey slug, düzey adı, son dönem, [(soru, cevap)], [dizindeki aralık alt sınırları])]."""
+    sonuc = []
+    for slug, ad in DUZEYLER:
+        try:
+            veri = json.loads((Path(docs) / 'puanlar' / f'{slug}.json').read_text(encoding='utf-8'))
+        except (OSError, ValueError):
+            continue
+        if not veri.get('donemler'):
+            continue
+        son = max(veri['donemler'], key=_donem_anahtar)
+        ar = araliklari_grupla(veri['donemler'][son])
+        sonuc.append((slug, ad, son, duzey_sorulari(ad, son, ar), sorted(a for a in ar if len(ar[a]) >= MIN_ARALIK_SATIR)))
+    return sonuc
 
 
 def hub_sayfasi(base, ozetler, ilk_yil, son_yil):
@@ -463,7 +517,8 @@ def puan_sayfalarini_uret(docs, base, ilanlar=None, sayfali=None, noindex=None, 
             if len(araliklar[alt]) >= MIN_ARALIK_SATIR:
                 adresler.append(url)
         acik_d = acik_kadro_ilanlari(adaylar, slug)
-        url, h = duzey_sayfasi(base, slug, ad, grup, sluglar, son_donem, ilk_yil, son_yil, acik_d, araliklar)
+        url, h = duzey_sayfasi(base, slug, ad, grup, sluglar, son_donem, ilk_yil, son_yil, acik_d, araliklar,
+                               duzey_sorulari(ad, son_donem, araliklar))
         _degisim_yaz(url, acik_d)
         _yaz(docs, slug, h)
         adresler.insert(0, url)
