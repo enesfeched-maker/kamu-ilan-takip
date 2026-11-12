@@ -118,6 +118,42 @@ class PuanSayfalariTest(unittest.TestCase):
         self.assertIn('<td>Memur</td>', h)
         self.assertIn('2022–2026', (self.k / 'index.html').read_text(encoding='utf-8'))
 
+    def test_aralik_gruplama(self):
+        g = ps.araliklari_grupla([{'min': 74.999}, {'min': 75.0}, {'min': 100.0}, {'min': None}, {}])
+        self.assertEqual({a: len(v) for a, v in g.items()}, {70: 1, 75: 1, 95: 1})
+        self.assertEqual(ps.aralik_slug(70), '70-75-puan')
+
+    def test_aralik_sayfasi_veriden(self):
+        h = (self.k / 'lisans' / '70-75-puan' / 'index.html').read_text(encoding='utf-8')
+        self.assertIn('KPSS Lisans 70–75 Puanla Nereye Atanılır? (2026/1)', h)
+        self.assertIn('arasında olan 1 kadro vardı', h)
+        self.assertIn('Puanı açıklanan 3 kadronun 1 tanesinde en küçük puan 75 puanın altındaydı.', h)
+        self.assertIn('2022/1 döneminde aynı aralıkta 2 kadro vardı.', h)
+        self.assertIn('<a href="../hemsire/">Hemşire</a>', h)
+        self.assertIn('71,235', h)
+        self.assertIn('<a href="../75-80-puan/">75–80 puan</a>', h)
+        self.assertNotIn('href="../70-75-puan/"', h)
+        self.assertIn('<link rel="canonical" href="' + BASE + 'kpss-taban-puanlari/lisans/70-75-puan/">', h)
+        self.assertIn('noindex,follow', h)          # 1 kadro: ince sayfa dizine girmez
+        self.assertFalse(any('puan/' in u.rsplit('lisans/', 1)[-1] for u in self.urls))
+        self.assertTrue((self.k / 'lisans' / '80-85-puan' / 'index.html').exists())
+        self.assertFalse((self.k / 'lisans' / '60-65-puan').exists())    # son dönemde o aralıkta kadro yok
+        self.assertIn('<a href="70-75-puan/">70–75 puan</a>', (self.k / 'lisans' / 'index.html').read_text(encoding='utf-8'))
+
+    def test_dolu_aralik_dizine_girer(self):
+        with tempfile.TemporaryDirectory() as t:
+            docs = Path(t)
+            (docs / 'puanlar').mkdir()
+            veri = {'duzey': 'onlisans', 'ad': 'Önlisans', 'kaynak': 'x', 'donemler': {
+                '2026-1': [satir('MEMUR', 80.0 + i / 10) for i in range(ps.MIN_ARALIK_SATIR)] + [satir('MEMUR', 91.0)]}}
+            (docs / 'puanlar' / 'onlisans.json').write_text(json.dumps(veri, ensure_ascii=False), encoding='utf-8')
+            urls = ps.puan_sayfalarini_uret(docs, BASE)
+            self.assertIn(BASE + 'kpss-taban-puanlari/onlisans/80-85-puan/', urls)
+            self.assertNotIn(BASE + 'kpss-taban-puanlari/onlisans/90-95-puan/', urls)
+            h = (docs / 'kpss-taban-puanlari' / 'onlisans' / '80-85-puan' / 'index.html').read_text(encoding='utf-8')
+            self.assertNotIn('noindex', h)
+            self.assertNotIn('döneminde aynı aralıkta', h)   # önceki dönem yok
+
 
 if __name__ == '__main__':
     unittest.main()
