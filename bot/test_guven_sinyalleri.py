@@ -64,6 +64,9 @@ class KunyeTest(unittest.TestCase):
         self.assertEqual(ld['@type'], 'AboutPage')
         self.assertEqual(ld['mainEntity']['@type'], 'Organization')
         self.assertIn('https://t.me/kpsstercihi', ld['mainEntity']['sameAs'])
+        for _, adres in site_uret.SOSYAL:      # sosyal hesaplar: kurum şemasında ve alt bilgide
+            self.assertIn(adres, ld['mainEntity']['sameAs'])
+            self.assertIn(f'href="{adres}"', html)
 
     def test_iletisim_semasi_ve_digerleri(self):
         _, html = bilgi_sayfalari.sayfa('iletisim', BASE)

@@ -82,12 +82,20 @@ def ust_html(kok, aktif=''):
 REKLAM_BETIGI = '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8335827974832277" crossorigin="anonymous"></script>'
 
 
+# Sosyal hesaplar (12 Kasım 2026, kullanıcı onayıyla yayımlandı): alt bilgide bağlantı + Organization sameAs.
+SOSYAL = (('Instagram', 'https://www.instagram.com/kpsstercihii/'), ('TikTok', 'https://www.tiktok.com/@kpsstercihi'), ('YouTube', 'https://www.youtube.com/@KPSSTercihii'))
+
+
+def _sosyal_linkler():
+    return ''.join(f'<a href="{u}" target="_blank" rel="noopener" data-a="sosyal" data-a-x="{ad.lower()}">{ad}</a>' for ad, u in SOSYAL)
+
+
 def alt_html(kok, yil=None):
     """Ana sayfayla aynı koyu alt bilgi: marka, bağlantılar ve bağımsızlık notu."""
     yil = yil or datetime.now(TR).year
     return (f'<footer class="ab"><div class="ab-ic"><div class="ab-marka"><img src="{kok}assets/logo-96.webp?v={LOGO_SURUM}" alt="" width="36" height="36">'
             f'<div><strong>KPSS Tercihi</strong><span>Kamu ilanları, sade ve tek yerde</span></div></div>'
-            f'<nav class="ab-linkler" aria-label="Alt bilgi"><a href="https://t.me/kpsstercihi" target="_blank" rel="noopener" data-a="telegram" data-a-x="alt">Telegram</a><a href="{kok}katiplik/">Katiplik sınavı</a><a href="{kok}akademik/">Akademik ilanlar</a><a href="{kok}sonuclar/">Sonuç duyuruları</a><a href="{kok}rehber/">Rehberler</a><a href="{kok}analiz/">Analizler</a><a href="{kok}kurum/">Kurumlar</a><a href="{kok}il/">İller</a><a href="{kok}sss/">Sık sorulanlar</a><a href="{kok}hakkimizda/">Hakkımızda</a><a href="{kok}iletisim/">İletişim</a><a href="{kok}gizlilik/">Gizlilik</a><a href="{kok}kullanim-kosullari/">Kullanım koşulları</a></nav>'
+            f'<nav class="ab-linkler" aria-label="Alt bilgi"><a href="https://t.me/kpsstercihi" target="_blank" rel="noopener" data-a="telegram" data-a-x="alt">Telegram</a>{_sosyal_linkler()}<a href="{kok}katiplik/">Katiplik sınavı</a><a href="{kok}akademik/">Akademik ilanlar</a><a href="{kok}sonuclar/">Sonuç duyuruları</a><a href="{kok}rehber/">Rehberler</a><a href="{kok}analiz/">Analizler</a><a href="{kok}kurum/">Kurumlar</a><a href="{kok}il/">İller</a><a href="{kok}sss/">Sık sorulanlar</a><a href="{kok}hakkimizda/">Hakkımızda</a><a href="{kok}iletisim/">İletişim</a><a href="{kok}gizlilik/">Gizlilik</a><a href="{kok}kullanim-kosullari/">Kullanım koşulları</a></nav>'
             f'<p class="ab-not">© <span id="yil">{yil}</span> KPSS Tercihi</p></div></footer>')
 
 
@@ -129,7 +137,7 @@ def kunye_html(kok, yayin=None, guncelleme=None):
 def kurulus_ld(base):
     """Hakkımızda ve İletişim sayfalarındaki yayıncı kimliği (schema.org Organization)."""
     return {'@type': 'Organization', '@id': base + '#kurulus', 'name': 'KPSS Tercihi', 'url': base,
-            'logo': VARSAYILAN_GORSEL, 'email': 'iletisim@kpsstercihi.com', 'sameAs': ['https://t.me/kpsstercihi']}
+            'logo': VARSAYILAN_GORSEL, 'email': 'iletisim@kpsstercihi.com', 'sameAs': ['https://t.me/kpsstercihi'] + [u for _, u in SOSYAL]}
 
 
 def cumlede_bitir(metin):

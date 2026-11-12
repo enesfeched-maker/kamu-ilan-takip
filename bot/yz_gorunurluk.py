@@ -91,6 +91,7 @@ def llms_metni(kayitlar, base, simdi, sayfasi_olan=None, en_cok=LLMS_EN_COK):
         f'- [Tüm açık ilanlar ve sık sorulan sorular (tek dosya)]({base}llms-full.txt)',
         f'- [Sık sorulan sorular]({base}sss/)',
         '- [Telegram kanalı](https://t.me/kpsstercihi): yeni ilanlar anında',
+        '- [Instagram](https://www.instagram.com/kpsstercihii/), [TikTok](https://www.tiktok.com/@kpsstercihi), [YouTube](https://www.youtube.com/@KPSSTercihii): kısa ilan videoları',
         '',
         f'## Açık ilanlar ({len(acik)})',
     ]
