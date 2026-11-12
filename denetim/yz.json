@@ -3801,6 +3801,57 @@
    "puan_turleri": []
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=dea72757-7130-466f-bcf2-8d316d02add1": {
+  "zaman": "2026-11-13T01:11:04+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "90788cd785cbee62",
+  "baslik": "BURSA TEKNİK ÜNİVERSİTESİ REKTÖRLÜĞÜ - 1 Sözleşmeli Psikolog Alımı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Psikolog — Erkek",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "il": "Bursa",
+     "kosullar": [
+      "Psikoloji lisans programından mezun olmak.",
+      "Sağlık Bakanlığınca tescilli klinik psikolog olmak (belgelendirilecek).",
+      "Erkek olmak."
+     ]
+    }
+   ],
+   "toplam": 1,
+   "son_basvuru_tarihi": "2026-11-27",
+   "son_basvuru_saati": "13:00",
+   "baslangic_tarihi": "2026-11-13",
+   "kpss_gerekli": true,
+   "iller": [
+    "Bursa"
+   ],
+   "ortak_kosullar": [
+    "2026 KPSS (P3) puanından en az 70 puan almış olmak.",
+    "Son başvuru tarihi itibarıyla 35 yaşından gün almamış olmak.",
+    "Örgün yükseköğretim programlarında aktif/pasif öğrenci kaydı bulunmamak (açık ve uzaktan öğretim hariç).",
+    "Başvuru Kariyer Kapısı üzerinden elektronik ortamda yapılır."
+   ],
+   "ozet": "Bursa Teknik Üniversitesi 1 sözleşmeli erkek klinik psikolog alacak. Başvurular 13–27 Kasım 2026'da Kariyer Kapısı üzerinden yapılır.",
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P3"
+   ]
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=eff11df8-6568-4b54-9deb-2865aa9ac767": {
   "zaman": "2026-10-31T01:13:12+03:00",
   "surum": 4,
@@ -8986,6 +9037,108 @@
    ],
    "puan_turleri": [
     "P3"
+   ]
+  }
+ },
+ "sbb-f1f8102ee6f8f70be5cda855": {
+  "zaman": "2026-11-13T01:11:04+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "pdf",
+  "imza": "2228c3e0f26e6c3e",
+  "baslik": "YÜKSEKÖĞRETİM KALİTE KURULU - 5 UZMAN YARDIMCISI ALACAK",
+  "farklar": [
+   [
+    "puan_turleri",
+    [
+     "P14",
+     "P29",
+     "P3",
+     "P34"
+    ],
+    [
+     "P14-P15-P16-P17-P18",
+     "P29-P30-P31-P32-P33",
+     "P3",
+     "P34-P35-P36-P37-P38"
+    ],
+    false
+   ]
+  ],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Uzman Yardımcısı (A1 – İktisat)",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P14-P15-P16-P17-P18",
+     "en_dusuk_puan": 75,
+     "il": "Ankara",
+     "kosullar": [
+      "İktisat lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Uzman Yardımcısı (A2 – Kamu Yönetimi)",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P29-P30-P31-P32-P33",
+     "en_dusuk_puan": 75,
+     "il": "Ankara",
+     "kosullar": [
+      "Kamu Yönetimi ya da Siyaset Bilimi ve Kamu Yönetimi lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Uzman Yardımcısı (A3 – Uluslararası İlişkiler)",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P34-P35-P36-P37-P38",
+     "en_dusuk_puan": 75,
+     "il": "Ankara",
+     "kosullar": [
+      "Uluslararası İlişkiler ya da Siyaset Bilimi ve Uluslararası İlişkiler lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Uzman Yardımcısı (A4 – İletişim)",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 75,
+     "il": "Ankara",
+     "kosullar": [
+      "İletişim Fakültesinden mezun olmak."
+     ]
+    }
+   ],
+   "toplam": 5,
+   "son_basvuru_tarihi": "2026-12-14",
+   "son_basvuru_saati": "23:59",
+   "baslangic_tarihi": "2026-12-01",
+   "kpss_gerekli": true,
+   "iller": [
+    "Ankara"
+   ],
+   "ortak_kosullar": [
+    "1 Ocak 1991 ve sonrası doğmuş olmak (1 Ocak 2026 itibarıyla 35 yaşını doldurmamış).",
+    "2025 veya 2026 KPSS'den ilgili puan türünden en az 75 puan almak ve sözlü sınava çağrılacak en yüksek puanlı adaylar arasında olmak.",
+    "Başvuru e-Devlet üzerinden YÖKAK-Kariyer Kapısı Kamu İşe Alım ile yapılır; şahsen/posta kabul edilmez.",
+    "Giriş sınavı yalnızca sözlüdür; başarı için en az 70 puan gerekir."
+   ],
+   "ozet": "Yükseköğretim Kalite Kurulu 5 uzman yardımcısı alacak (İktisat, Kamu Yönetimi, Uluslararası İlişkiler, İletişim). Başvurular 1–14 Aralık 2026'da Kariyer Kapısı'ndan yapılır.",
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P14-P15-P16-P17-P18",
+    "P29-P30-P31-P32-P33",
+    "P3",
+    "P34-P35-P36-P37-P38"
    ]
   }
  }
