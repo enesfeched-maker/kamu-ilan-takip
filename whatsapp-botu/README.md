@@ -28,4 +28,4 @@ QR okutulur. Kurulan bağımlılıklar npm kilit dosyasında sabittir. Üst pake
 güvenlik açıklarının bir bölümü tarayıcı indirme/FTP/arşiv kodlarıyla ilgilidir; bu bot
 tarayıcı indirmez, mevcut Brave'i kullanır ve RemoteAuth/arşiv açma kullanmaz.
 
-Test: `npm test`. Durdurma: Görev Zamanlayıcı'dan ilgili görevi durdur/devre dışı bırak.
+Test: `npm test`. Durdurma: Görev Zamanlayıcı'dan ilgili görevi durdur/devre dışı bırak. Alt bot süreci en geç 15 saniye içinde kapanır.

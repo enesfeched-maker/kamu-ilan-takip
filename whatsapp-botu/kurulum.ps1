@@ -18,7 +18,7 @@ $waQuotedRoot = $waRuntime.Replace('"','""')
 $waLauncher = @"
 Set sh = CreateObject("WScript.Shell")
 sh.CurrentDirectory = "$waQuotedRoot"
-WScript.Quit sh.Run("""$waQuotedNode"" ""$waQuotedEntry""", 0, True)
+WScript.Quit sh.Run("""$waQuotedNode"" ""$waQuotedEntry"" --gorev", 0, True)
 "@
 Set-Content -LiteralPath $waVbs -Value $waLauncher -Encoding Unicode
 $waAction = New-ScheduledTaskAction -Execute 'wscript.exe' -Argument ('"' + $waVbs + '"') -WorkingDirectory $waRuntime
