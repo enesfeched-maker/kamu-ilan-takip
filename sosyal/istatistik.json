@@ -1,27 +1,32 @@
 {
- "olculen": 47,
+ "olculen": 48,
  "tur": {
-  "haber": -4.5,
-  "son_gun": 0.4,
-  "yeni": 1.4,
-  "buyuk": 2.4,
-  "kategori": -5.3
+  "haber": -4.3,
+  "son_gun": 1.1,
+  "yeni": 2.0,
+  "buyuk": 2.7,
+  "kategori": -4.9,
+  "ilan": -4.5
  },
  "muzik": {
-  "afro-pop.mp3": 3.6,
-  "latin-carnaval.mp3": 5.1,
-  "pop-dance.mp3": -2.4,
-  "synthwave.mp3": -3.7,
-  "dance-club.mp3": -1.9,
-  "funk-breakbeat.mp3": 0.0,
-  "hip-hop.mp3": 3.1,
-  "future-bass.mp3": 0.4,
-  "mixkit-158-happy-times.mp3": 0.3
+  "afro-pop.mp3": 4.3,
+  "latin-carnaval.mp3": 5.5,
+  "pop-dance.mp3": -2.0,
+  "synthwave.mp3": -3.3,
+  "dance-club.mp3": -1.4,
+  "funk-breakbeat.mp3": 0.5,
+  "hip-hop.mp3": 3.7,
+  "future-bass.mp3": 0.9,
+  "mixkit-158-happy-times.mp3": 0.6,
+  "mixkit-702-pop-09.mp3": -4.5
  },
  "vakit": {
-  "aksam": -2.9,
-  "sabah": 3.7
+  "aksam": -2.3,
+  "sabah": 4.3,
+  "ilan": -4.5
  },
- "palet": {},
- "guncelleme": "2026-11-13T01:53:49+03:00"
+ "palet": {
+  "kagit": -4.5
+ },
+ "guncelleme": "2026-11-13T20:16:00+03:00"
 }
