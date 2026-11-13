@@ -288,52 +288,63 @@ class Yayin(unittest.TestCase):
 
 
 class FacebookYayin(unittest.TestCase):
-    def test_kanal_secilmeden_yayin_yok(self):
-        with mock.patch.dict(os.environ, {'BUFFER_API_ANAHTARI': 'gizli'}, clear=True), \
-                mock.patch.object(y, '_buffer', side_effect=AssertionError('yayın olmamalı')):
+    ORTAM = {'FB_SAYFA_ID': '123', 'FB_ERISIM_ANAHTARI': 'gizli', 'VIDEO_URL': 'https://ornek/reel.mp4'}
+
+    def cevaplar(self, durum='complete'):
+        return [{'id': '123'}, {'video_id': 'v1', 'upload_url': 'https://rupload.facebook.com/video-upload/v27.0/v1'},
+                {'success': True}, {'success': True}, {'status': {'publishing_phase': {'status': durum}}}]
+
+    def test_anahtar_yoksa_atlanir(self):
+        with mock.patch.dict(os.environ, {'BUFFER_API_ANAHTARI': 'x'}, clear=True), \
+                mock.patch.object(y, '_istek', side_effect=AssertionError('yayın yok')):
             self.assertIsNone(y.facebook(None, {'aciklama': 'A'}))
 
-    def test_facebook_reels_dogru_kanala(self):
-        cevaplar = [{'createPost': {'post': {'id': 'fb1', 'status': 'sending'}}},
-                    {'post': {'status': 'sent', 'error': None}}]
-        ortam = {'BUFFER_API_ANAHTARI': 'gizli', 'BUFFER_FACEBOOK_KANAL': 'facebook1',
-                 'BUFFER_TIKTOK_KANAL': 'tiktok1', 'VIDEO_URL': 'https://ornek/reel.mp4'}
-        with mock.patch.dict(os.environ, ortam, clear=True), mock.patch.object(y.time, 'sleep'), \
-                mock.patch.object(y, '_buffer', side_effect=cevaplar) as api:
-            sonuc = y.facebook(None, {'aciklama': 'Başvuru bilgileri\n#kpss'})
-        self.assertEqual(sonuc, {'id': 'fb1', 'gorunurluk': 'buffer', 'durum': 'sent'})
-        sorgu = api.call_args_list[0].args[0]
-        self.assertIn('channelId: "facebook1"', sorgu)
-        self.assertNotIn('tiktok1', sorgu)
-        self.assertIn('facebook: { type: reel }', sorgu)
-        self.assertIn('https://ornek/reel.mp4', sorgu)
+    def test_dogrudan_meta_reels(self):
+        with mock.patch.dict(os.environ, self.ORTAM, clear=True), \
+                mock.patch.object(y, '_istek', side_effect=self.cevaplar()) as api:
+            sonuc = y.facebook(None, {'aciklama': 'A', 'baslik': 'B'})
+        self.assertEqual(sonuc['durum'], 'published')
+        self.assertEqual(sonuc['id'], 'v1')
+        self.assertTrue(all('gizli' not in c.args[0] for c in api.call_args_list))
+        self.assertEqual(api.call_args_list[2].kwargs['basliklar']['file_url'], 'https://ornek/reel.mp4')
+        self.assertEqual(api.call_args_list[3].kwargs['veri']['video_state'], 'PUBLISHED')
 
-    def test_video_adresi_gerekli(self):
-        with mock.patch.dict(os.environ, {'BUFFER_API_ANAHTARI': 'gizli', 'BUFFER_FACEBOOK_KANAL': 'fb1'}, clear=True):
-            with self.assertRaisesRegex(y.YayinHatasi, 'VIDEO_URL'):
+    def test_yanlis_sayfaya_yayin_yok(self):
+        with mock.patch.dict(os.environ, self.ORTAM, clear=True), \
+                mock.patch.object(y, '_istek', return_value={'id': '999'}) as api:
+            with self.assertRaisesRegex(y.YayinHatasi, 'seçilen sayfaya ait değil'):
                 y.facebook(None, {'aciklama': 'A'})
+        self.assertEqual(api.call_count, 1)
 
-    def test_buffer_yayin_reddi(self):
-        ortam = {'BUFFER_API_ANAHTARI': 'gizli', 'BUFFER_FACEBOOK_KANAL': 'fb1', 'VIDEO_URL': 'https://ornek/reel.mp4'}
-        cevaplar = [{'createPost': {'post': {'id': 'fb1', 'status': 'sending'}}},
-                    {'post': {'status': 'error', 'error': {'message': 'Facebook rejected'}}}]
-        with mock.patch.dict(os.environ, ortam, clear=True), mock.patch.object(y.time, 'sleep'), \
-                mock.patch.object(y, '_buffer', side_effect=cevaplar):
-            with self.assertRaisesRegex(y.YayinHatasi, 'Facebook rejected'):
+    def test_islenen_video_yayinlandi_sayilmaz(self):
+        with mock.patch.dict(os.environ, self.ORTAM, clear=True), \
+                mock.patch.object(y, '_istek', side_effect=self.cevaplar('not_started')):
+            self.assertEqual(y.facebook(None, {'aciklama': 'A'})['durum'], 'processing')
+
+    def test_yukleme_adresine_anahtar_sizmaz(self):
+        cevaplar = self.cevaplar()
+        cevaplar[1]['upload_url'] = 'https://example.com/upload'
+        with mock.patch.dict(os.environ, self.ORTAM, clear=True), \
+                mock.patch.object(y, '_istek', side_effect=cevaplar) as api:
+            with self.assertRaisesRegex(y.YayinHatasi, 'beklenmeyen'):
                 y.facebook(None, {'aciklama': 'A'})
+        self.assertEqual(api.call_count, 2)
 
-    def test_buffer_kabul_etmezse_basarili_sayilmaz(self):
-        ortam = {'BUFFER_API_ANAHTARI': 'gizli', 'BUFFER_FACEBOOK_KANAL': 'fb1', 'VIDEO_URL': 'https://ornek/reel.mp4'}
-        with mock.patch.dict(os.environ, ortam, clear=True), \
-                mock.patch.object(y, '_buffer', return_value={'createPost': {'message': 'Disconnected'}}):
-            with self.assertRaisesRegex(y.YayinHatasi, 'Disconnected'):
+    def test_hata_govdesinde_anahtar_yazdirilmaz(self):
+        with mock.patch.dict(os.environ, self.ORTAM, clear=True), \
+                mock.patch.object(y, '_istek', side_effect=y.YayinHatasi('access_token=gizli')):
+            with self.assertRaises(y.YayinHatasi) as hata:
                 y.facebook(None, {'aciklama': 'A'})
+        self.assertNotIn('gizli', str(hata.exception))
 
-    def test_servis_kanallari_karismaz(self):
-        ortam = {'BUFFER_FACEBOOK_KANAL': 'fb1', 'BUFFER_TIKTOK_KANAL': 'tt1'}
-        with mock.patch.dict(os.environ, ortam, clear=True):
-            self.assertEqual(y.buffer_kanal('gizli', 'facebook'), 'fb1')
-            self.assertEqual(y.buffer_kanal('gizli', 'tiktok'), 'tt1')
+    def test_yerel_dosya_yuklenir(self):
+        with tempfile.TemporaryDirectory() as t, mock.patch.dict(os.environ, dict(self.ORTAM, VIDEO_URL=''), clear=True), \
+                mock.patch.object(y, '_istek', side_effect=self.cevaplar()) as api:
+            video = Path(t) / 'v.mp4'
+            video.write_bytes(b'video')
+            y.facebook(video, {'aciklama': 'A'})
+            self.assertEqual(api.call_args_list[2].kwargs['veri'], b'video')
+            self.assertEqual(api.call_args_list[2].kwargs['basliklar']['file_size'], '5')
 
 
 if __name__ == '__main__':

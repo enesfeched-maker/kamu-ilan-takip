@@ -67,18 +67,22 @@ GitHub → Settings (hesap) → Developer settings → **Fine-grained tokens** �
 Actions → **Sosyal medya paylaşımı** → Run workflow. "Platformlara gönder" kapalıysa yalnız önizleme
 sürümü üretilir ve geçmişe yazılmaz.
 
-## Facebook Reels (Buffer)
+## Facebook Reels (doğrudan Meta API)
 
-Facebook sayfası Buffer'a bağlandıktan sonra sayfanın Buffer kanal kimliği GitHub depo
-**Variables** bölümünde `BUFFER_FACEBOOK_KANAL` adıyla tanımlanır. Mevcut
-`BUFFER_API_ANAHTARI` sırrı kullanılır; yeni bir anahtar gerekmez.
+Mevcut Meta uygulamasına **Manage everything on your Page** kullanım durumu eklenir.
+Sayfa için `pages_manage_posts`, `pages_read_engagement`, `pages_show_list` izinleriyle
+Page Access Token oluşturulur. User token veya Instagram tokenı kullanılamaz.
 
-Günlük sosyal paylaşımlar, yeni ilan videoları ve özel videolar aynı sayfaya Reels olarak
-iletilir. Kanal değişkeni boşsa Facebook atlanır; başka platformun kanalı kullanılmaz.
-Sonuç `sonuc.json` içinde `facebook`, paylaşım geçmişinde `fb_id` olarak tutulur.
-Buffer'ın kabul ettiği fakat hâlâ işlediği video `durum` alanında görünür; bu cevap
-Facebook'ta yayının tamamlandığı anlamına gelmez. Hata diğer platformları durdurmaz.
+GitHub depo ayarları:
+- **Variables** → `FB_SAYFA_ID`: Facebook sayfasının sayısal kimliği.
+- **Secrets** → `FB_ERISIM_ANAHTARI`: o sayfanın Page Access Token değeri.
 
-Buffer ücretsiz kanal sınırı doluysa ek bir bağlantı için yer açmak ya da planı yükseltmek
-gerekir. YouTube ve Instagram bu projede kendi API'leriyle yayınlanır; Buffer'daki
-bağlantılarından bağımsızdır.
+Günlük, yeni ilan ve özel video akışları Facebook'a da Reels gönderir. Anahtar veya sayfa
+kimliği yoksa Facebook atlanır. Her yayından önce anahtarın sayfa kimliği doğrulanır;
+başka sayfaya ait anahtarla yayın yapılmaz. Buffer bağlantıları değişmez.
+
+`sonuc.json` içindeki `facebook.durum` değeri `processing` ise Meta videoyu hâlâ işler;
+`published` yalnız yayın tamamlandığında yazılır. Video kimliği `fb_id` olarak geçmişe
+kaydedilir. İşlenen video yeniden yüklenmez. Meta anahtarını asla repoya veya günlüğe yazma.
+
+Kaynak: https://www.postman.com/meta/facebook/documentation/r56bjfd/facebook-api
