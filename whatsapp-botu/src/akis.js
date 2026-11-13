@@ -14,10 +14,10 @@ export function yayinlanmis(metin, gecmis) {
 }
 
 export function kanalMetni(metin) {
-  if (typeof metin.aciklama !== 'string' || !metin.aciklama.trim()) throw new Error('Paylaşım metni boş');
-  let yazi = metin.aciklama.trim().replace(/profildeki bağlantı(?:da|dan)?\.?/gi, SITE);
-  if (!yazi.includes('kpsstercihi.com')) yazi += '\n\nİlanlar ve başvuru bağlantıları: ' + SITE;
-  return yazi.slice(0, 4000);
+  const kaynak = (metin.baslik || metin.aciklama?.split('\n')[0] || '').trim();
+  if (!kaynak) throw new Error('Paylaşım başlığı boş');
+  const baslik = kaynak.replace(/#\S+/g, '').replace(/\s+/g, ' ').trim();
+  return (baslik.length > 180 ? baslik.slice(0, 177).trimEnd() + '…' : baslik) + '\n' + SITE;
 }
 
 export function guvenliDosya(url) {

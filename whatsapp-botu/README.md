@@ -17,7 +17,7 @@ Beş dakikada bir botun GitHub yayınlarını ve `sosyal/gecmis.json` dosyasın�
 Önizleme sürümlerini paylaşmaz: yayın zamanının geçmişle tam eşleşmesi gerekir.
 Başlangıçtan önceki içerikler atlanır. `node src/bot.js --ilk-paylasim`, son 24 saatten
 yalnız en son sosyal paylaşımı bir kez göndererek kurulumun doğrulanmasını sağlar.
-Kapak görseli ve açıklama kullanılır; sitedeki başvuru bağlantısı metne eklenir.
+Video (`reel.mp4`) ve en fazla 180 karakterlik başlık kullanılır; altına site bağlantısı eklenir. `--video-dene` son yayımlanmış içeriği video olarak bir kez gönderir; önceki görsel gönderiminin geçmişini korur.
 
 Gönderimden önce kalıcı `belirsiz` kaydı yazılır. WhatsApp cevabı alınamazsa aynı içerik
 otomatik tekrar gönderilmez; kanalda görülüp görülmediği elle kontrol edilmelidir.
