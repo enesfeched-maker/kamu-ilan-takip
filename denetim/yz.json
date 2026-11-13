@@ -1691,27 +1691,67 @@
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=2b5ee2d8-3958-4fd1-a3cb-219bcb7b536d": {
-  "zaman": "2026-11-13T13:12:24+03:00",
+  "zaman": "2026-11-13T15:14:07+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "metin",
-  "imza": "d28210cd7076bbba",
+  "imza": "0a526dec9926399c",
   "baslik": "HAZİNE VE MALİYE BAKANLIĞI - 2026 YILI STAJYER HAZİNE KONTROLÖRLÜĞÜ GİRİŞ SINAVI İLANI",
-  "farklar": [],
+  "farklar": [
+   [
+    "puan_turleri",
+    [
+     "P17",
+     "P18",
+     "P22",
+     "P23",
+     "P28",
+     "P47",
+     "P48"
+    ],
+    [
+     "P17"
+    ],
+    false
+   ]
+  ],
   "yz": {
-   "kadrolar": [],
-   "toplam": null,
-   "son_basvuru_tarihi": null,
+   "kadrolar": [
+    {
+     "unvan": "Stajyer Hazine Kontrolörü",
+     "adet": 10,
+     "ogrenim": "lisans",
+     "puan_turu": "P17",
+     "en_dusuk_puan": 80,
+     "il": null,
+     "kosullar": [
+      "Hukuk, İktisat, Siyasal Bilgiler, İşletme, İktisadi ve İdari Bilimler Fakültelerinden veya denkliği YÖK'çe kabul edilen okullardan mezun olmak.",
+      "KPSSP17, P18, P22, P23, P28, P47 veya P48 puan türlerinden birinden en az 80 puan almış olmak."
+     ]
+    }
+   ],
+   "toplam": 10,
+   "son_basvuru_tarihi": "2026-12-04",
    "son_basvuru_saati": null,
-   "baslangic_tarihi": null,
-   "kpss_gerekli": null,
+   "baslangic_tarihi": "2026-11-23",
+   "kpss_gerekli": true,
    "iller": [],
-   "ortak_kosullar": [],
-   "ozet": "",
-   "okunabilirlik": "kotu",
+   "ortak_kosullar": [
+    "01/01/1991 veya sonrasında doğmuş olmak (1 Ocak 2026 itibarıyla 35 yaşını doldurmamış olmak).",
+    "2025 ve 2026 yıllarında yapılan KPSS'den geçerli puana sahip olmak.",
+    "Başvuru yalnızca e-Devlet veya Kariyer Kapısı üzerinden elektronik ortamda yapılır; şahsen, kargo veya posta kabul edilmez."
+   ],
+   "ozet": "Hazine ve Maliye Bakanlığı Hazine Kontrolörleri Kurulu Başkanlığı için en fazla 10 Stajyer Hazine Kontrolörü alacak. Başvurular 23 Kasım–4 Aralık 2026 arasında e-Devlet veya Kariyer Kapısı'ndan yapılır.",
+   "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
-   "duyuru_tipi": "yeni_ilan"
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P17"
+   ]
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=320d07cc-b5bc-4bab-9541-6c1100def856": {
