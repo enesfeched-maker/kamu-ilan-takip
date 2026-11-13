@@ -1360,6 +1360,11 @@ def main():
         yonlendirmeleri_yaz(docs, data.get('ilanlar', []), sayfa_anahtarlari)
     except Exception as hata:
         print(f'Uyarı: eski ilan bağlantıları yönlendirilemedi: {hata}')
+    try:
+        import eski_belgeler   # eski SBB belge adresleri: docs/404.html ilan sayfasına yönlendirir
+        eski_belgeler.yaz(docs, data.get('ilanlar', []), _sayfa_anahtari, sayfa_anahtarlari)
+    except Exception as hata:
+        print(f'Uyarı: eski belge adresleri yönlendirilemedi: {hata}')
     if (docs / 'kurum' / 'index.html').is_file():
         urls.append(BASE + 'kurum/')   # A-Z kurum listesi
     urls += kurum_adresleri
