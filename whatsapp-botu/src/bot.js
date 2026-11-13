@@ -133,5 +133,12 @@ async function kapat() {
   process.exit();
 }
 process.on('SIGINT', kapat); process.on('SIGTERM', kapat);
+// Görev Zamanlayıcı wscript'i durdurunca alt Node süreci de oturumunu kapatsın.
+if (process.argv.includes('--gorev')) {
+  setInterval(() => {
+    try { process.kill(process.ppid, 0); }
+    catch (e) { if (e.code === 'ESRCH') kapat(); }
+  }, 15000).unref();
+}
 process.on('exit', () => { try { if (fs.readFileSync(LOCK, 'utf8') === String(process.pid)) fs.unlinkSync(LOCK); } catch {} });
 client.initialize().catch(() => { bilgi('WhatsApp başlatılamadı'); process.exit(1); });
