@@ -3,4 +3,10 @@
 <body><a class="skip" href="#icerik">İçeriğe geç</a>
 <header class="tb" id="tb"><div class="tb-ic"><a class="tb-marka" href="/" aria-label="KPSS Tercihi ana sayfa"><img src="/assets/logo-96.webp?v=2" alt="" width="34" height="34"><span>KPSS Tercihi</span></a></div></header>
 <main id="icerik" class="wrap" style="padding-top:48px;padding-bottom:64px"><article class="d-bas"><span class="eyebrow">404</span><h1>Aradığın sayfa bulunamadı.</h1><p>Adres yanlış yazılmış ya da ilan yayından kalkmış olabilir. Güncel ilanlara ana sayfadan ulaşabilirsin.</p><p><a class="btn btn-ana" href="/">Ana sayfaya dön</a> <a class="btn btn-ikinci" href="/#ilanlar">Açık ilanlar</a></p></article></main>
+<script>/* Eski SBB belge adresi (belgeler/sbb/<sha256>.pdf): ilanın sayfasına yönlendir (bot/eski_belgeler.py). */
+(function(){var m=location.pathname.match(/^\/belgeler\/sbb\/([a-f0-9]{64})\.pdf$/);if(!m)return;
+var h=document.querySelector('h1'),p=h&&h.nextElementSibling,yok=function(){if(p)p.textContent='Belgenin eski kopyası yayından kalktı. Güncel ilanlara aşağıdan ulaşabilirsin.';};
+if(h)h.textContent='İlan belgesi güncellendi.';if(p)p.textContent='İlanın sayfasına yönlendiriliyorsun…';
+fetch('/eski-belgeler.json').then(function(r){return r.ok?r.json():{};}).then(function(j){var y=j&&j[m[1]];
+if(typeof y==='string'&&/^ilan\/[A-Za-z0-9-]+\/$/.test(y))location.replace('/'+y);else yok();}).catch(yok);})();</script>
 </body></html>

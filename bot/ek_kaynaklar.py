@@ -508,5 +508,8 @@ def merge_sources(records, previous):
         ilkler=[o.get('ilk_gorulme') for o in (chosen,prior,item) if o.get('ilk_gorulme')]
         if ilkler:
             merged['ilk_gorulme']=min(ilkler)
+        # Belge özeti değişince eski PDF adresi ilan sayfasına yönlendirilsin diye önceki özetler saklanır (eski_belgeler).
+        from eski_belgeler import isle as eski_belgeleri_isle
+        eski_belgeleri_isle(merged,item,prior,chosen)
         result[ident]=merged
     return list(result.values())

@@ -5,6 +5,8 @@ import subprocess
 from datetime import datetime, timedelta
 from pathlib import Path
 
+from eski_belgeler import isle as isle_eski_belgeler
+
 PATH = 'docs/ilanlar.json'
 
 
@@ -43,6 +45,7 @@ def merge_registry(a, b):
                 refs={s['link']:s for obj in (old,item) for s in obj.get('kaynaklar',[]) if s.get('link')}
                 if refs:
                     item['kaynaklar']=list(refs.values())
+                item=isle_eski_belgeler(dict(item), old)   # iki taraftaki eski belge özetleri birleşir
             merged[item['id']] = item
     sent = set().union(*(set(s.get('telegram_gonderilen',[])) for s in histories))
     aliases={alias:i['id'] for i in merged.values() for alias in i.get('kaynak_kimlikleri',[]) if alias!=i['id']}
