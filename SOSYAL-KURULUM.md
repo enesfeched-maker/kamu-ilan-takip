@@ -66,3 +66,23 @@ GitHub → Settings (hesap) → Developer settings → **Fine-grained tokens** �
 
 Actions → **Sosyal medya paylaşımı** → Run workflow. "Platformlara gönder" kapalıysa yalnız önizleme
 sürümü üretilir ve geçmişe yazılmaz.
+
+## Facebook Reels (doğrudan Meta API)
+
+Mevcut Meta uygulamasına **Manage everything on your Page** kullanım durumu eklenir.
+Sayfa için `pages_manage_posts`, `pages_read_engagement`, `pages_show_list` izinleriyle
+Page Access Token oluşturulur. User token veya Instagram tokenı kullanılamaz.
+
+GitHub depo ayarları:
+- **Variables** → `FB_SAYFA_ID`: Facebook sayfasının sayısal kimliği.
+- **Secrets** → `FB_ERISIM_ANAHTARI`: o sayfanın Page Access Token değeri.
+
+Günlük, yeni ilan ve özel video akışları Facebook'a da Reels gönderir. Anahtar veya sayfa
+kimliği yoksa Facebook atlanır. Her yayından önce anahtarın sayfa kimliği doğrulanır;
+başka sayfaya ait anahtarla yayın yapılmaz. Buffer bağlantıları değişmez.
+
+`sonuc.json` içindeki `facebook.durum` değeri `processing` ise Meta videoyu hâlâ işler;
+`published` yalnız yayın tamamlandığında yazılır. Video kimliği `fb_id` olarak geçmişe
+kaydedilir. İşlenen video yeniden yüklenmez. Meta anahtarını asla repoya veya günlüğe yazma.
+
+Kaynak: https://www.postman.com/meta/facebook/documentation/r56bjfd/facebook-api

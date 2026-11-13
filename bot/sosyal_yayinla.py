@@ -1,6 +1,7 @@
 """Üretilen paylaşımı (sosyal_motor çıktısı: reel.mp4 + paylasim.json) resmî API'lerle yayınlar.
 
 Her platform yalnız anahtarları GitHub sırlarında tanımlıysa çalışır; biri hata verirse diğerleri yine denenir.
+  Facebook Reels (Meta Graph API):                  FB_SAYFA_ID, FB_ERISIM_ANAHTARI
   Instagram (Instagram Login API, profesyonel hesap): IG_KULLANICI_ID, IG_ERISIM_ANAHTARI
   YouTube Shorts (Data API v3, OAuth):               YT_ISTEMCI_KIMLIGI, YT_ISTEMCI_SIRRI, YT_YENILEME_ANAHTARI
   TikTok (Content Posting API):                      TT_ISTEMCI_ANAHTARI, TT_ISTEMCI_SIRRI, TT_YENILEME_ANAHTARI
@@ -199,8 +200,8 @@ def _buffer(sorgu, anahtar):
 
 
 def buffer_kanal(anahtar, servis='tiktok'):
-    """Buffer hesabına bağlı ilk TikTok kanalının kimliği (BUFFER_TIKTOK_KANAL tanımlıysa sorgu yapılmaz)."""
-    hazir = os.environ.get('BUFFER_TIKTOK_KANAL', '').strip()
+    """İstenen servisin kanalı; varsa servise özgü BUFFER_*_KANAL ayarı kullanılır."""
+    hazir = os.environ.get(f'BUFFER_{servis.upper()}_KANAL', '').strip()
     if hazir:
         return hazir
     kurumlar = ((_buffer('query { account { organizations { id } } }', anahtar).get('account') or {}).get('organizations')) or []
@@ -234,6 +235,63 @@ def buffer_tiktok(metin, anahtar, video_url, bekle=40):
         if (son.get('error') or {}).get('message'):
             raise YayinHatasi(f"Buffer TikTok'ta yayınlayamadı: {son['error']['message'][:200]}")
     return {'id': gonderi['id'], 'gorunurluk': 'buffer', 'durum': durum}
+
+
+# ---------------------------------------------------------------- Facebook (doğrudan Meta Graph API)
+FB_SURUM = 'v27.0'
+
+
+def _facebook_istek(url, **kw):
+    try:
+        return _istek(url, **kw)
+    except YayinHatasi:
+        # Meta hata gövdesinde anahtar veya başka hassas değerler bulunabilir.
+        raise YayinHatasi('Facebook API isteği reddedildi; sayfa anahtarını ve yayın izinlerini kontrol edin.') from None
+
+
+def facebook(video, metin):
+    ortam = _env('FB_SAYFA_ID', 'FB_ERISIM_ANAHTARI')
+    if not ortam:
+        return None
+    sayfa, anahtar = ortam
+    if not sayfa.isdigit():
+        raise YayinHatasi('FB_SAYFA_ID sayısal olmalı')
+    taban = f'https://graph.facebook.com/{FB_SURUM}'
+    basliklar = {'Authorization': f'Bearer {anahtar}'}
+    # Sayfa anahtarının kimliği her yayından önce doğrulanır.
+    kimlik = _facebook_istek(f'{taban}/me?fields=id', basliklar=basliklar)
+    if str(kimlik.get('id')) != sayfa:
+        raise YayinHatasi('Facebook anahtarı seçilen sayfaya ait değil; yayın durduruldu')
+    baslat = _facebook_istek(f'{taban}/{sayfa}/video_reels', veri={'upload_phase': 'start'}, basliklar=basliklar)
+    video_id, yukle = baslat.get('video_id'), baslat.get('upload_url')
+    if not video_id or not yukle:
+        raise YayinHatasi('Facebook video oturumu oluşturulamadı')
+    adres = urllib.parse.urlsplit(yukle)
+    if adres.scheme != 'https' or adres.netloc != 'rupload.facebook.com':
+        raise YayinHatasi('Facebook beklenmeyen yükleme adresi döndürdü')
+    yukleme_basliklari = {'Authorization': f'OAuth {anahtar}'}
+    video_url = os.environ.get('VIDEO_URL', '').strip()
+    if video_url:
+        yukleme_basliklari['file_url'] = video_url
+        yuklendi = _facebook_istek(yukle, yontem='POST', basliklar=yukleme_basliklari, zaman_asimi=600)
+    else:
+        veri = Path(video).read_bytes()
+        yukleme_basliklari.update({'offset': '0', 'file_size': str(len(veri)), 'Content-Type': 'application/octet-stream'})
+        yuklendi = _facebook_istek(yukle, veri=veri, basliklar=yukleme_basliklari, zaman_asimi=600)
+    if not yuklendi.get('success'):
+        raise YayinHatasi('Facebook video yüklemesini onaylamadı')
+    yayin = _facebook_istek(f'{taban}/{sayfa}/video_reels', veri={
+        'upload_phase': 'finish', 'video_id': video_id, 'video_state': 'PUBLISHED',
+        'description': metin['aciklama'], 'title': metin.get('baslik', '')[:255]}, basliklar=basliklar)
+    if not yayin.get('success'):
+        raise YayinHatasi('Facebook yayın isteğini onaylamadı')
+    # Kabulü yayın tamamlandı diye göstermeyiz; bekleyen video otomatik tekrar yüklenmez.
+    durum = _facebook_istek(f'{taban}/{video_id}?fields=status', basliklar=basliklar).get('status') or {}
+    if durum.get('video_status') == 'error':
+        raise YayinHatasi(f'Facebook videoyu işleyemedi (video: {video_id})')
+    tamam = (durum.get('publishing_phase') or {}).get('status') == 'complete'
+    return {'id': str(video_id), 'durum': 'published' if tamam else 'processing',
+            'baglanti': f'https://www.facebook.com/reel/{video_id}'}
 
 
 # ---------------------------------------------------------------- TikTok
@@ -297,7 +355,7 @@ def tiktok_durum(publish_id, ortam=None, bekle=90):
     return son
 
 
-PLATFORMLAR = (('instagram', instagram), ('youtube', youtube), ('tiktok', tiktok))
+PLATFORMLAR = (('instagram', instagram), ('youtube', youtube), ('tiktok', tiktok), ('facebook', facebook))
 
 
 def yayinla(klasor):
