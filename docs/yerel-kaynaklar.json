@@ -1,10 +1,10 @@
 {
  "schema": 1,
- "guncelleme": "2026-11-13T06:36:42.363994+00:00",
+ "guncelleme": "2026-11-13T07:06:42.139297+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-11-13T06:36:57.659914+00:00",
-   "hata_sayisi": 0,
+   "kontrol": "2026-11-13T07:07:30.634779+00:00",
+   "hata_sayisi": 1,
    "ilanlar": [
     {
      "id": "sbb-7e9afc80c7421a7d0e9b4dab",
@@ -55,7 +55,7 @@
      "donem": "( 13 Kasım - 27 Kasım)",
      "baslangic_zaman": "2026-11-13T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-13T09:36:43+03:00",
+     "detay_guncelleme": "2026-11-13T10:06:43+03:00",
      "belge_ozeti": "df7914261e32eb09044e252b37be8dee847f2181f399938e719c83ed15ef8233",
      "kaynaklar": [
       {
@@ -122,7 +122,7 @@
      "donem": "( 13 Kasım - 20 Kasım)",
      "baslangic_zaman": "2026-11-13T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-13T09:36:44+03:00",
+     "detay_guncelleme": "2026-11-13T10:06:44+03:00",
      "belge_ozeti": "d66a41b07bac92475f9cd72a3bd68ea7e9db2c6d6d1df8999b91961a97948e8d",
      "kaynaklar": [
       {
@@ -208,6 +208,52 @@
      "duyuru_cumlesi": "İPTAL İLANI 30.10.2026 tarihli ve 33415 sayılı Resmi Gazete’ de aslına uygun olarak yayımlanan Öğretim Üyesi ve Öğretim Üyesi Dışındaki Öğretim Elemanı (Öğretim Görevlisi) alım ilanlarımız İPTAL edilmiştir."
     },
     {
+     "id": "sbb-c26204054fdce06faa1d55cf",
+     "baslik": "HAZİNE VE MALİYE BAKANLIĞI - 10 STAJYER HAZİNE KONTROLÖRÜ ALACAK",
+     "kurum": "HAZİNE VE MALİYE BAKANLIĞI",
+     "kadro": "10 STAJYER HAZİNE KONTROLÖRÜ ALACAK",
+     "ilan_turu": "Kamu Personeli",
+     "son_tarih": "2026-12-04",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 23 Kasım - 4 Aralık)",
+     "baslangic_zaman": "2026-11-23T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-11-13T10:06:45+03:00",
+     "belge_ozeti": "9f95b6e912f66def3a71a76b7d7904ae3d7dfa2d681e80764c4d7336c8d76915",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "10 STAJYER HAZİNE KONTROLÖRÜ alımı. Son başvuru: 04.12.2026. BAŞVURU YERİ, TARİHİ VE GEREKLİ BELGELER Giriş Sınavı için başvurular, 23.11.2026 - 04.12.2026 tarihleri arasında e-Devlet (Hazine ve Maliye Bakanlığı/Kariyer Kapısı Kamu İşe Alım) veya Kariyer Kapısı (https://kariyerkapisi.gov.tr) Platformu üzerinden elektronik ortamda yapılacaktır. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "c) Ölçme, Seçme ve Yerleştirme Merkezi Başkanlığı (ÖSYM) tarafından 2025 ve 2026 yıllarında yapılan Kamu Personel Seçme Sınavlarının KPSSP17, KPSSP18, KPSSP22, KPSSP23, KPSSP28, KPSSP47 ve KPSSP48 puan türlerinin herhangi birinden 80 (seksen) ve üzerinde puan almış olması,"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "d) Giriş sınavının yazılı aşamasının yapıldığı yılın Ocak ayının birinci günü itibarıyla (1 Ocak 2026) 35 (otuz beş) yaşını doldurmamış olması (01/01/1991 tarihinde veya bu tarihten sonra doğmuş olmak),"
+      }
+     ],
+     "basvuru_notu": "Belirtilen süre içerisinde elektronik ortamda yapılmayan başvurular dikkate alınmayacak, şahsen, kargo veya posta yoluyla yapılan başvurular kabul edilmeyecektir.",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/9f95b6e912f66def3a71a76b7d7904ae3d7dfa2d681e80764c4d7336c8d76915.pdf",
+     "belge_sha256": "9f95b6e912f66def3a71a76b7d7904ae3d7dfa2d681e80764c4d7336c8d76915",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "puan_turleri": [
+      "P17",
+      "P18",
+      "P22",
+      "P23",
+      "P28",
+      "P47",
+      "P48"
+     ]
+    },
+    {
      "id": "sbb-8f6aa31c69b62f566802b405",
      "baslik": "SAVUNMA SANAYİİ BAŞKANLIĞI - 26 PROJE BAZLI SÖZLEŞMELİ PERSONEL ALACAK",
      "kurum": "SAVUNMA SANAYİİ BAŞKANLIĞI",
@@ -255,7 +301,7 @@
      "donem": "( 12 Kasım - 16 Kasım)",
      "baslangic_zaman": "2026-11-12T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-13T09:36:45+03:00",
+     "detay_guncelleme": "2026-11-13T10:06:46+03:00",
      "belge_ozeti": "b3e2b217c884cd857b5f172db4f51b7c35df30a29f56807984f11f60f93357a8",
      "kaynaklar": [
       {
@@ -278,7 +324,7 @@
      "donem": "( 12 Kasım - 23 Kasım)",
      "baslangic_zaman": "2026-11-12T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-13T09:36:45+03:00",
+     "detay_guncelleme": "2026-11-13T10:06:47+03:00",
      "belge_ozeti": "d47d217240031cdaf96d3b82f1627511c76356c2500ba8a5d4f32091368821a7",
      "kaynaklar": [
       {
@@ -425,7 +471,7 @@
      "donem": "( 1 Aralık - 3 Aralık)",
      "baslangic_zaman": "2026-12-01T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-13T09:36:47+03:00",
+     "detay_guncelleme": "2026-11-13T10:06:48+03:00",
      "belge_ozeti": "4ee4e6a99394dd9d3bb54c2c42f4e6eb5f97bd0baf0d4e2db8c05c5967377dc0",
      "kaynaklar": [
       {
@@ -1035,7 +1081,7 @@
      "donem": "( 7 Kasım - 21 Kasım)",
      "baslangic_zaman": "2026-11-07T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-13T09:36:48+03:00",
+     "detay_guncelleme": "2026-11-13T10:06:49+03:00",
      "belge_ozeti": "a13f370f75b00355775e8373d64238994a051b14a8735d17b0e4fe50feb013b4",
      "kaynaklar": [
       {
@@ -1419,7 +1465,7 @@
      "donem": "( 6 Kasım - 21 Kasım)",
      "baslangic_zaman": "2026-11-06T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-13T09:36:50+03:00",
+     "detay_guncelleme": "2026-11-13T10:06:51+03:00",
      "belge_ozeti": "c604b790d505e13e843e92f5a072164d58b79e3967923ad7d57bd1ae553171fe",
      "kaynaklar": [
       {
@@ -1587,7 +1633,7 @@
      "donem": "( 6 Kasım - 16 Kasım)",
      "baslangic_zaman": "2026-11-06T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-13T09:36:52+03:00",
+     "detay_guncelleme": "2026-11-13T10:06:54+03:00",
      "belge_ozeti": "6152855fa0d982f34122df83091bcbabed07242d14fdce4c06fc247b52528368",
      "kaynaklar": [
       {
@@ -1829,7 +1875,7 @@
      "donem": "( 5 Kasım - 16 Kasım)",
      "baslangic_zaman": "2026-11-05T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-13T09:36:53+03:00",
+     "detay_guncelleme": "2026-11-13T10:06:55+03:00",
      "belge_ozeti": "6f5eca41ca119f319be4bdb12e6a8ce0330644dac4728f41e9a851c20a6bda5b",
      "kaynaklar": [
       {
@@ -2022,7 +2068,7 @@
      "donem": "( 3 Kasım - 13 Kasım)",
      "baslangic_zaman": "2026-11-03T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-13T09:36:54+03:00",
+     "detay_guncelleme": "2026-11-13T10:06:55+03:00",
      "belge_ozeti": "91c5025049355c42df560253b6ca7d71390d85ea2bd824fe5fc5826a1891e651",
      "kaynaklar": [
       {
@@ -2331,7 +2377,7 @@
      "donem": "( 2 Kasım - 1 Aralık)",
      "baslangic_zaman": "2026-11-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-13T09:36:55+03:00",
+     "detay_guncelleme": "2026-11-13T10:06:57+03:00",
      "belge_ozeti": "58e650c6e56f95a652692e8b12cf1bda73e6e77c5909fc87636a8b575a68f102",
      "kaynaklar": [
       {
@@ -2479,7 +2525,7 @@
      "donem": "( 2 Kasım - 16 Kasım)",
      "baslangic_zaman": "2026-11-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-12T22:06:54+03:00",
+     "detay_guncelleme": "2026-11-13T10:06:59+03:00",
      "belge_ozeti": "3ec69e39af8427782f347283319bc2d6d789f59d5aa623553eb4f0b4f9080154",
      "kaynaklar": [
       {
@@ -2854,7 +2900,7 @@
      "donem": "( 30 Ekim - 13 Kasım)",
      "baslangic_zaman": "2026-10-30T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-12T22:06:59+03:00",
+     "detay_guncelleme": "2026-11-13T10:07:00+03:00",
      "belge_ozeti": "3c7f60a0794808d44ae1b59b53c4ba478161bb24874455c9d686743860a8d375",
      "kaynaklar": [
       {
@@ -2910,7 +2956,7 @@
      "donem": "( 9 Kasım - 20 Kasım)",
      "baslangic_zaman": "2026-11-09T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-12T22:06:56+03:00",
+     "detay_guncelleme": "2026-11-13T10:07:01+03:00",
      "belge_ozeti": "0046e7e1d07a650667bdff5fce20b334d657819f2adf3b8ba31ae26269ab65d4",
      "kaynaklar": [
       {
@@ -3043,7 +3089,7 @@
      "donem": "( 30 Ekim - 13 Kasım)",
      "baslangic_zaman": "2026-10-30T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-12T22:06:55+03:00",
+     "detay_guncelleme": "2026-11-13T10:07:29+03:00",
      "belge_ozeti": "4533c500de882e10efcd9c94bd85a6c93e7c07a60aa922604b08bd815d271ec5",
      "kaynaklar": [
       {
@@ -3412,7 +3458,7 @@
      "donem": "( 2 Aralık - 4 Aralık)",
      "baslangic_zaman": "2026-12-02T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-13T09:36:56+03:00",
+     "detay_guncelleme": "2026-11-13T10:07:29+03:00",
      "belge_ozeti": "7d8a1fc9e3ff3ee6a8a4f8aaec0ea7d4725df10ae2d3ecdb5cccecfb9f6b8abd",
      "kaynaklar": [
       {
@@ -3577,7 +3623,7 @@
      "donem": "( 18 Kasım - 20 Kasım)",
      "baslangic_zaman": "2026-11-18T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-13T09:36:57+03:00",
+     "detay_guncelleme": "2026-11-13T10:07:30+03:00",
      "belge_ozeti": "6f97566125424476250f8c0a77e99662e032ac66689649c918e18a0c1ebc2a7a",
      "kaynaklar": [
       {
@@ -4328,7 +4374,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-11-13T06:36:58.682762+00:00",
+   "kontrol": "2026-11-13T07:07:31.839564+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
