@@ -63,7 +63,7 @@ async function jsonAl(url) {
   if (!r.ok) throw new Error('Yayın kaynağı HTTP ' + r.status);
   return r.json();
 }
-async function tur(ilk = false) {
+async function tur(ilk = false, videoDeneme = false) {
   if (!hazir || mesgul) return;
   mesgul = true;
   try {
@@ -72,6 +72,8 @@ async function tur(ilk = false) {
       jsonAl('https://raw.githubusercontent.com/' + REPO + '/main/sosyal/gecmis.json')]);
     if (!Array.isArray(surumler) || !Array.isArray(gecmis)) throw new Error('Geçersiz yayın kaynağı');
     const secimDurumu = ilk ? {...durum, baslangic: new Date(Date.now() - 86400000).toISOString()} : durum;
+    if (videoDeneme) secimDurumu.gonderimler = Object.fromEntries(
+      Object.entries(durum.gonderimler).filter(([k]) => k.endsWith(':video')).map(([k, v]) => [k.slice(0, -6), v]));
     const adaylar = yeniSurumler(surumler, secimDurumu);
     for (const surum of (ilk ? adaylar.slice(-1) : adaylar.slice(0, 3))) {
       const dosya = surum.assets.find(a => a.name === 'paylasim.json');
@@ -80,21 +82,21 @@ async function tur(ilk = false) {
       // Önizleme sürümleri paylaşılmaz; sosyal botun yayın geçmişiyle tam eşleşme gerekir.
       if (!yayinlanmis(metin, gecmis)) continue;
       const yazi = kanalMetni(metin);
-      const kapak = surum.assets.find(a => a.name === '01.png');
-      let medya;
-      if (kapak) {
-        const r = await fetch(guvenliDosya(kapak.browser_download_url), {signal: AbortSignal.timeout(30000)});
-        if (!r.ok) throw new Error('Kapak indirilemedi');
-        const veri = Buffer.from(await r.arrayBuffer());
-        if (veri.length > 10 * 1024 * 1024) throw new Error('Kapak boyutu fazla');
-        medya = new wweb.MessageMedia('image/png', veri.toString('base64'), 'kpss-tercihi.png');
-      }
+      const video = surum.assets.find(a => a.name === 'reel.mp4');
+      if (!video) throw new Error('Paylaşım videosu bulunamadı');
+      const r = await fetch(guvenliDosya(video.browser_download_url), {signal: AbortSignal.timeout(120000)});
+      if (!r.ok) throw new Error('Video indirilemedi');
+      if (Number(r.headers.get('content-length')) > 64 * 1024 * 1024) throw new Error('Video boyutu fazla');
+      const veri = Buffer.from(await r.arrayBuffer());
+      if (veri.length > 64 * 1024 * 1024) throw new Error('Video boyutu fazla');
+      const medya = new wweb.MessageMedia('video/mp4', veri.toString('base64'), 'kpss-tercihi.mp4');
+      const gonderimAnahtari = surum.tag_name + (videoDeneme ? ':video' : '');
       // Gönderimden önce kaydet: bağlantı koparsa aynı içeriği körlemesine tekrar gönderme.
-      durum.gonderimler[surum.tag_name] = {durum: 'belirsiz', zaman: new Date().toISOString(), onceki_deneme: durum.gonderimler[surum.tag_name]};
+      durum.gonderimler[gonderimAnahtari] = {durum: 'belirsiz', zaman: new Date().toISOString(), onceki_deneme: durum.gonderimler[gonderimAnahtari]};
       kaydet();
-      const sonuc = await kanal.sendMessage(medya || yazi, {...(medya ? {caption: yazi} : {}), sendSeen: false, parseVCards: false, waitUntilMsgSent: true});
+      const sonuc = await kanal.sendMessage(medya, {caption: yazi, sendSeen: false, parseVCards: false, waitUntilMsgSent: true});
       if (!sonuc?.id) throw new Error('WhatsApp gönderim sonucu doğrulanamadı');
-      durum.gonderimler[surum.tag_name] = {durum: 'gonderildi', zaman: new Date().toISOString(), id: sonuc.id._serialized};
+      durum.gonderimler[gonderimAnahtari] = {durum: 'gonderildi', tip: 'video', zaman: new Date().toISOString(), id: sonuc.id._serialized};
       kaydet();
       bilgi('Kanal paylaşımı tamamlandı: ' + surum.tag_name);
     }
@@ -122,7 +124,7 @@ client.on('ready', async () => {
     if (!kanal) kanal = await client.getChannelByInviteCode(KANAL_KODU);
     if (kanal?.id?._serialized !== KANAL_ID || kanal.name !== 'KPSS Tercihi') throw new Error('Hedef kanal eşleşmedi');
     hazir = true; qr = ''; durumAdi = 'Bağlı · otomatik paylaşım açık'; bilgi('KPSS Tercihi kanalı bağlandı');
-    await tur(process.argv.includes('--ilk-paylasim'));
+    await tur(process.argv.includes('--ilk-paylasim') || process.argv.includes('--video-dene'), process.argv.includes('--video-dene'));
   } catch (e) { bilgi('Kanal doğrulama: ' + String(e.message).slice(0, 250)); durumAdi = 'Kanal doğrulanamadı'; sonHata = 'Kanal bağlantısı kontrol ediliyor.'; }
 });
 const interval = setInterval(() => tur(), 5 * 60 * 1000);

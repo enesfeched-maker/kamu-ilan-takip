@@ -26,3 +26,9 @@ test('dosyalar yalnız kendi depomuzun yayınlarından alınır', () => {
   assert.throws(() => guvenliDosya('https://example.com/a.png'));
   assert.throws(() => guvenliDosya('https://github.com/another/repo/releases/download/x/a.png'));
 });
+
+test('video açıklaması kısa başlık ve tek bağlantıdan oluşur', () => {
+  const yazi = kanalMetni({baslik:'Hazine ve Maliye Bakanlığı 10 kişi alacak #shorts', aciklama:'Uzun metin '.repeat(200)});
+  assert.equal(yazi, 'Hazine ve Maliye Bakanlığı 10 kişi alacak\nhttps://kpsstercihi.com/');
+  assert.ok(kanalMetni({baslik:'a'.repeat(1000)}).length < 210);
+});
