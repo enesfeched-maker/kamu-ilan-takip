@@ -56,6 +56,7 @@ jobs:
           TT_MOD: ${{ vars.TT_MOD }}
           BUFFER_API_ANAHTARI: ${{ secrets.BUFFER_API_ANAHTARI }}
           BUFFER_TIKTOK_KANAL: ${{ vars.BUFFER_TIKTOK_KANAL }}
+          BUFFER_FACEBOOK_KANAL: ${{ vars.BUFFER_FACEBOOK_KANAL }}
           SOSYAL_GH_ANAHTARI: ${{ secrets.SOSYAL_GH_ANAHTARI }}
           VIDEO_URL: https://github.com/${{ github.repository }}/releases/download/${{ steps.h.outputs.etiket }}/reel.mp4
         run: python bot/sosyal_yayinla.py sosyal-cikti

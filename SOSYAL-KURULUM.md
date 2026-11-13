@@ -66,3 +66,19 @@ GitHub → Settings (hesap) → Developer settings → **Fine-grained tokens** �
 
 Actions → **Sosyal medya paylaşımı** → Run workflow. "Platformlara gönder" kapalıysa yalnız önizleme
 sürümü üretilir ve geçmişe yazılmaz.
+
+## Facebook Reels (Buffer)
+
+Facebook sayfası Buffer'a bağlandıktan sonra sayfanın Buffer kanal kimliği GitHub depo
+**Variables** bölümünde `BUFFER_FACEBOOK_KANAL` adıyla tanımlanır. Mevcut
+`BUFFER_API_ANAHTARI` sırrı kullanılır; yeni bir anahtar gerekmez.
+
+Günlük sosyal paylaşımlar, yeni ilan videoları ve özel videolar aynı sayfaya Reels olarak
+iletilir. Kanal değişkeni boşsa Facebook atlanır; başka platformun kanalı kullanılmaz.
+Sonuç `sonuc.json` içinde `facebook`, paylaşım geçmişinde `fb_id` olarak tutulur.
+Buffer'ın kabul ettiği fakat hâlâ işlediği video `durum` alanında görünür; bu cevap
+Facebook'ta yayının tamamlandığı anlamına gelmez. Hata diğer platformları durdurmaz.
+
+Buffer ücretsiz kanal sınırı doluysa ek bir bağlantı için yer açmak ya da planı yükseltmek
+gerekir. YouTube ve Instagram bu projede kendi API'leriyle yayınlanır; Buffer'daki
+bağlantılarından bağımsızdır.

@@ -41,7 +41,7 @@ def sonuc_isle(klasor, gecmis_yolu=GECMIS_YOLU):
     kayit = next((g for g in reversed(gecmis) if g.get('zaman') == zaman), None)
     if kayit is None:
         return False
-    for ad, alan in (('instagram', 'ig_id'), ('tiktok', 'tt_id')):
+    for ad, alan in (('instagram', 'ig_id'), ('tiktok', 'tt_id'), ('facebook', 'fb_id')):
         kimlik = (sonuc.get(ad) or {}).get('id')
         if kimlik:
             kayit[alan] = kimlik

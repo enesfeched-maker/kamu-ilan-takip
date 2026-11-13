@@ -1,6 +1,7 @@
 """Üretilen paylaşımı (sosyal_motor çıktısı: reel.mp4 + paylasim.json) resmî API'lerle yayınlar.
 
 Her platform yalnız anahtarları GitHub sırlarında tanımlıysa çalışır; biri hata verirse diğerleri yine denenir.
+  Facebook Reels (Buffer):                          BUFFER_API_ANAHTARI, BUFFER_FACEBOOK_KANAL
   Instagram (Instagram Login API, profesyonel hesap): IG_KULLANICI_ID, IG_ERISIM_ANAHTARI
   YouTube Shorts (Data API v3, OAuth):               YT_ISTEMCI_KIMLIGI, YT_ISTEMCI_SIRRI, YT_YENILEME_ANAHTARI
   TikTok (Content Posting API):                      TT_ISTEMCI_ANAHTARI, TT_ISTEMCI_SIRRI, TT_YENILEME_ANAHTARI
@@ -199,8 +200,8 @@ def _buffer(sorgu, anahtar):
 
 
 def buffer_kanal(anahtar, servis='tiktok'):
-    """Buffer hesabına bağlı ilk TikTok kanalının kimliği (BUFFER_TIKTOK_KANAL tanımlıysa sorgu yapılmaz)."""
-    hazir = os.environ.get('BUFFER_TIKTOK_KANAL', '').strip()
+    """İstenen servisin kanalı; varsa servise özgü BUFFER_*_KANAL ayarı kullanılır."""
+    hazir = os.environ.get(f'BUFFER_{servis.upper()}_KANAL', '').strip()
     if hazir:
         return hazir
     kurumlar = ((_buffer('query { account { organizations { id } } }', anahtar).get('account') or {}).get('organizations')) or []
@@ -233,6 +234,35 @@ def buffer_tiktok(metin, anahtar, video_url, bekle=40):
         durum = son.get('status') or durum
         if (son.get('error') or {}).get('message'):
             raise YayinHatasi(f"Buffer TikTok'ta yayınlayamadı: {son['error']['message'][:200]}")
+    return {'id': gonderi['id'], 'gorunurluk': 'buffer', 'durum': durum}
+
+
+# ---------------------------------------------------------------- Facebook (Buffer üzerinden Reels)
+def facebook(video, metin):
+    # Açıkça seçilen kanal olmadan otomatik keşif yok: yanlış sayfaya yayın yapılmasın.
+    ortam = _env('BUFFER_API_ANAHTARI', 'BUFFER_FACEBOOK_KANAL')
+    if not ortam:
+        return None
+    anahtar, kanal = ortam
+    video_url = os.environ.get('VIDEO_URL', '').strip()
+    if not video_url:
+        raise YayinHatasi('Facebook için VIDEO_URL gerekli')
+    sorgu = ('mutation { createPost(input: { text: %s channelId: %s schedulingType: automatic mode: shareNow '
+             'metadata: { facebook: { type: reel } } assets: [{ video: { url: %s } }] }) '
+             '{ ... on PostActionSuccess { post { id status } } ... on MutationError { message } } }'
+             % (json.dumps(metin['aciklama'], ensure_ascii=False), json.dumps(kanal), json.dumps(video_url)))
+    yanit = _buffer(sorgu, anahtar).get('createPost') or {}
+    gonderi = yanit.get('post') or {}
+    if not gonderi.get('id'):
+        raise YayinHatasi(f"Buffer Facebook gönderisini kabul etmedi: {str(yanit.get('message'))[:200]}")
+    # Kabul ile yayın farklı: yalnız bir kez kontrol et; belirsiz durumda otomatik yeniden gönderme yok.
+    time.sleep(40)
+    son = (_buffer('query { post(input: { id: %s }) { status error { message } } }'
+                   % json.dumps(gonderi['id']), anahtar).get('post')) or {}
+    hata = (son.get('error') or {}).get('message')
+    durum = son.get('status') or gonderi.get('status')
+    if hata or durum == 'error':
+        raise YayinHatasi(f"Buffer Facebook'ta yayınlayamadı: {str(hata or durum)[:200]}")
     return {'id': gonderi['id'], 'gorunurluk': 'buffer', 'durum': durum}
 
 
@@ -297,7 +327,7 @@ def tiktok_durum(publish_id, ortam=None, bekle=90):
     return son
 
 
-PLATFORMLAR = (('instagram', instagram), ('youtube', youtube), ('tiktok', tiktok))
+PLATFORMLAR = (('instagram', instagram), ('youtube', youtube), ('tiktok', tiktok), ('facebook', facebook))
 
 
 def yayinla(klasor):

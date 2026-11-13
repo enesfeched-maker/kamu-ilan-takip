@@ -287,5 +287,54 @@ class Yayin(unittest.TestCase):
                 y.buffer_tiktok({'aciklama': 'A'}, 'gizli', 'https://ornek/reel.mp4')
 
 
+class FacebookYayin(unittest.TestCase):
+    def test_kanal_secilmeden_yayin_yok(self):
+        with mock.patch.dict(os.environ, {'BUFFER_API_ANAHTARI': 'gizli'}, clear=True), \
+                mock.patch.object(y, '_buffer', side_effect=AssertionError('yayın olmamalı')):
+            self.assertIsNone(y.facebook(None, {'aciklama': 'A'}))
+
+    def test_facebook_reels_dogru_kanala(self):
+        cevaplar = [{'createPost': {'post': {'id': 'fb1', 'status': 'sending'}}},
+                    {'post': {'status': 'sent', 'error': None}}]
+        ortam = {'BUFFER_API_ANAHTARI': 'gizli', 'BUFFER_FACEBOOK_KANAL': 'facebook1',
+                 'BUFFER_TIKTOK_KANAL': 'tiktok1', 'VIDEO_URL': 'https://ornek/reel.mp4'}
+        with mock.patch.dict(os.environ, ortam, clear=True), mock.patch.object(y.time, 'sleep'), \
+                mock.patch.object(y, '_buffer', side_effect=cevaplar) as api:
+            sonuc = y.facebook(None, {'aciklama': 'Başvuru bilgileri\n#kpss'})
+        self.assertEqual(sonuc, {'id': 'fb1', 'gorunurluk': 'buffer', 'durum': 'sent'})
+        sorgu = api.call_args_list[0].args[0]
+        self.assertIn('channelId: "facebook1"', sorgu)
+        self.assertNotIn('tiktok1', sorgu)
+        self.assertIn('facebook: { type: reel }', sorgu)
+        self.assertIn('https://ornek/reel.mp4', sorgu)
+
+    def test_video_adresi_gerekli(self):
+        with mock.patch.dict(os.environ, {'BUFFER_API_ANAHTARI': 'gizli', 'BUFFER_FACEBOOK_KANAL': 'fb1'}, clear=True):
+            with self.assertRaisesRegex(y.YayinHatasi, 'VIDEO_URL'):
+                y.facebook(None, {'aciklama': 'A'})
+
+    def test_buffer_yayin_reddi(self):
+        ortam = {'BUFFER_API_ANAHTARI': 'gizli', 'BUFFER_FACEBOOK_KANAL': 'fb1', 'VIDEO_URL': 'https://ornek/reel.mp4'}
+        cevaplar = [{'createPost': {'post': {'id': 'fb1', 'status': 'sending'}}},
+                    {'post': {'status': 'error', 'error': {'message': 'Facebook rejected'}}}]
+        with mock.patch.dict(os.environ, ortam, clear=True), mock.patch.object(y.time, 'sleep'), \
+                mock.patch.object(y, '_buffer', side_effect=cevaplar):
+            with self.assertRaisesRegex(y.YayinHatasi, 'Facebook rejected'):
+                y.facebook(None, {'aciklama': 'A'})
+
+    def test_buffer_kabul_etmezse_basarili_sayilmaz(self):
+        ortam = {'BUFFER_API_ANAHTARI': 'gizli', 'BUFFER_FACEBOOK_KANAL': 'fb1', 'VIDEO_URL': 'https://ornek/reel.mp4'}
+        with mock.patch.dict(os.environ, ortam, clear=True), \
+                mock.patch.object(y, '_buffer', return_value={'createPost': {'message': 'Disconnected'}}):
+            with self.assertRaisesRegex(y.YayinHatasi, 'Disconnected'):
+                y.facebook(None, {'aciklama': 'A'})
+
+    def test_servis_kanallari_karismaz(self):
+        ortam = {'BUFFER_FACEBOOK_KANAL': 'fb1', 'BUFFER_TIKTOK_KANAL': 'tt1'}
+        with mock.patch.dict(os.environ, ortam, clear=True):
+            self.assertEqual(y.buffer_kanal('gizli', 'facebook'), 'fb1')
+            self.assertEqual(y.buffer_kanal('gizli', 'tiktok'), 'tt1')
+
+
 if __name__ == '__main__':
     unittest.main()

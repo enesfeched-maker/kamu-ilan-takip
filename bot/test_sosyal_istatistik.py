@@ -66,10 +66,10 @@ class Kimlik(unittest.TestCase):
             (d / 'gecmis.json').write_text(json.dumps([kayit(1), g]), encoding='utf-8')
             (d / 'paylasim.json').write_text(json.dumps({'zaman': g['zaman']}), encoding='utf-8')
             (d / 'sonuc.json').write_text(json.dumps({'instagram': {'id': '179'}, 'youtube': {'hata': 'x'},
-                                                      'tiktok': {'id': 'v_1'}}), encoding='utf-8')
+                                                      'tiktok': {'id': 'v_1'}, 'facebook': {'id': 'fb_1'}}), encoding='utf-8')
             self.assertTrue(si.sonuc_isle(d, d / 'gecmis.json'))
             son = json.loads((d / 'gecmis.json').read_text(encoding='utf-8'))[-1]
-            self.assertEqual((son['ig_id'], son['tt_id']), ('179', 'v_1'))
+            self.assertEqual((son['ig_id'], son['tt_id'], son['fb_id']), ('179', 'v_1', 'fb_1'))
 
     def test_topla_yalniz_2_30_gunlukleri_olcer(self):
         with tempfile.TemporaryDirectory() as d:
