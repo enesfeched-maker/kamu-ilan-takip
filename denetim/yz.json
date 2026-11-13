@@ -4341,6 +4341,94 @@
    "duyuru_tipi": "yeni_ilan"
   }
  },
+ "iskur-14e23dc574a3dd31ec7cb2c1": {
+  "zaman": "2026-11-13T11:12:08+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "ab12ec2753511447",
+  "baslik": "Sahil Güvenlik Komutanlığı 2026 Yılı Açıktan Devlet memuru Alım İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Mali İşler Uzmanı",
+     "adet": null,
+     "ogrenim": null,
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "il": null,
+     "kosullar": []
+    },
+    {
+     "unvan": "Psikolog",
+     "adet": null,
+     "ogrenim": null,
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "il": null,
+     "kosullar": []
+    },
+    {
+     "unvan": "Yabancı Dil Öğretmeni (İngilizce)",
+     "adet": null,
+     "ogrenim": null,
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "kosullar": []
+    },
+    {
+     "unvan": "Tedarik Uzmanı",
+     "adet": null,
+     "ogrenim": null,
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "kosullar": []
+    },
+    {
+     "unvan": "Video Montaj Teknikeri",
+     "adet": null,
+     "ogrenim": null,
+     "puan_turu": "P93",
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "kosullar": []
+    },
+    {
+     "unvan": "Muhasebeci",
+     "adet": null,
+     "ogrenim": null,
+     "puan_turu": "P93",
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "kosullar": []
+    }
+   ],
+   "toplam": 10,
+   "son_basvuru_tarihi": "2026-11-27",
+   "son_basvuru_saati": null,
+   "baslangic_tarihi": "2026-11-16",
+   "kpss_gerekli": true,
+   "iller": [],
+   "ortak_kosullar": [
+    "Başvuru e-Devlet üzerinden (turkiye.gov.tr Sahil Güvenlik Komutanlığı iş başvurusu) yapılır.",
+    "18 yaşını tamamlamış, 1 Ocak 1991 ve sonrası doğumlu olmak (36 yaşından gün almamış).",
+    "2026 yılı KPSS'ye girmiş olmak; asgari puan bilgilendirme kılavuzunda yazar."
+   ],
+   "ozet": "Sahil Güvenlik Komutanlığı 10 açıktan devlet memuru alacak. Başvurular 16–27 Kasım 2026'da e-Devlet üzerinden yapılır.",
+   "okunabilirlik": "kismi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [],
+   "puan_turleri": [
+    "P3",
+    "P93"
+   ]
+  }
+ },
  "iskur-20df4e86aedf099d725ee262": {
   "zaman": "2026-10-30T23:13:31+03:00",
   "surum": 4,
@@ -5774,6 +5862,46 @@
    "ogrenim": [
     "lisans"
    ]
+  }
+ },
+ "iskur-ef51733cb5e328b633bf6e26": {
+  "zaman": "2026-11-13T11:12:08+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "05a80ba9a5560779",
+  "baslik": "Hazine ve Maliye Bakanlığı Stajyer Hazine Kontrolörlüğü Sınav İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Stajyer Hazine Kontrolörü",
+     "adet": 10,
+     "ogrenim": null,
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "kosullar": []
+    }
+   ],
+   "toplam": 10,
+   "son_basvuru_tarihi": "2026-12-04",
+   "son_basvuru_saati": null,
+   "baslangic_tarihi": "2026-11-23",
+   "kpss_gerekli": false,
+   "iller": [
+    "Ankara"
+   ],
+   "ortak_kosullar": [
+    "Başvuru e-Devlet veya Kariyer Kapısı üzerinden elektronik ortamda yapılır; şahsen, kargo veya posta kabul edilmez."
+   ],
+   "ozet": "Hazine ve Maliye Bakanlığı Hazine Kontrolörleri Kurulu için en fazla 10 Stajyer Hazine Kontrolörü alınacak. Başvurular 23 Kasım–4 Aralık 2026'da e-Devlet veya Kariyer Kapısı'ndan yapılır.",
+   "okunabilirlik": "kismi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [],
+   "puan_turleri": []
   }
  },
  "sbb-0789771f8e6c1c43dd7bd8fe": {
@@ -8181,6 +8309,107 @@
    ],
    "puan_turleri": [
     "P3"
+   ]
+  }
+ },
+ "sbb-b5a1bedd2fcef5d2e3feaa48": {
+  "zaman": "2026-11-13T11:12:08+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "pdf",
+  "imza": "f5778d564a10d2b8",
+  "baslik": "SAHİL GÜVENLİK KOMUTANLIĞI - 10 MEMUR ALACAK",
+  "farklar": [
+   [
+    "puan_turleri",
+    [
+     "P03",
+     "P9"
+    ],
+    [
+     "P3",
+     "P93"
+    ],
+    false
+   ]
+  ],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Mali İşler Uzmanı",
+     "adet": null,
+     "ogrenim": null,
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "il": null,
+     "kosullar": []
+    },
+    {
+     "unvan": "Psikolog",
+     "adet": null,
+     "ogrenim": null,
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "il": null,
+     "kosullar": []
+    },
+    {
+     "unvan": "Yabancı Dil Öğretmeni (İngilizce)",
+     "adet": null,
+     "ogrenim": null,
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "kosullar": []
+    },
+    {
+     "unvan": "Tedarik Uzmanı",
+     "adet": null,
+     "ogrenim": null,
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "kosullar": []
+    },
+    {
+     "unvan": "Video Montaj Teknikeri",
+     "adet": null,
+     "ogrenim": null,
+     "puan_turu": "P93",
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "kosullar": []
+    },
+    {
+     "unvan": "Muhasebeci",
+     "adet": null,
+     "ogrenim": null,
+     "puan_turu": "P93",
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "kosullar": []
+    }
+   ],
+   "toplam": 10,
+   "son_basvuru_tarihi": "2026-11-27",
+   "son_basvuru_saati": null,
+   "baslangic_tarihi": "2026-11-16",
+   "kpss_gerekli": true,
+   "iller": [],
+   "ortak_kosullar": [
+    "Başvuru e-Devlet üzerinden (turkiye.gov.tr Sahil Güvenlik Komutanlığı iş başvurusu) yapılır.",
+    "18 yaşını tamamlamış, 1 Ocak 1991 ve sonrası doğumlu olmak (36 yaşından gün almamış).",
+    "2026 yılı KPSS'ye girmiş olmak; asgari puan bilgilendirme kılavuzunda yazar."
+   ],
+   "ozet": "Sahil Güvenlik Komutanlığı 10 açıktan devlet memuru alacak. Başvurular 16–27 Kasım 2026'da e-Devlet üzerinden yapılır.",
+   "okunabilirlik": "kismi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [],
+   "puan_turleri": [
+    "P3",
+    "P93"
    ]
   }
  },
