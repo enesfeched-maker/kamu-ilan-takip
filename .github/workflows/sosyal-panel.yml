@@ -1,0 +1,46 @@
+name: Sosyal panel verisi
+
+# Yerel sosyal analiz uygulaması (sosyal-panel/) için Instagram/YouTube/Buffer ölçümlerini okur ve
+# "sosyal-panel-veri" iş eserine yazar (depoya commit yok). Buffer'ın istek kotası dar olduğu için Buffer
+# yalnız günde bir kez (06:17 UTC) ve elle çalıştırmada sorulur. Yerel uygulama "Yenile" ile bu işi tetikleyebilir.
+on:
+  schedule:
+    - cron: "17 0,12,18 * * *"
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sosyal-panel
+  cancel-in-progress: false
+
+jobs:
+  topla:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Testler
+        run: |
+          python -m unittest discover -s sosyal-panel/tests
+          cd bot && python -m unittest test_sosyal_panel_topla
+      - name: Ölçümleri topla
+        env:
+          IG_KULLANICI_ID: ${{ secrets.IG_KULLANICI_ID }}
+          IG_ERISIM_ANAHTARI: ${{ secrets.IG_ERISIM_ANAHTARI }}
+          YT_ISTEMCI_KIMLIGI: ${{ secrets.YT_ISTEMCI_KIMLIGI }}
+          YT_ISTEMCI_SIRRI: ${{ secrets.YT_ISTEMCI_SIRRI }}
+          YT_YENILEME_ANAHTARI: ${{ secrets.YT_YENILEME_ANAHTARI }}
+          BUFFER_API_ANAHTARI: ${{ secrets.BUFFER_API_ANAHTARI }}
+          PANEL_BUFFER: ${{ github.event_name == 'workflow_dispatch' || github.event.schedule == '17 6 * * *' }}
+        run: cd bot && python sosyal_panel_topla.py ../panel-veri.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sosyal-panel-veri
+          path: panel-veri.json
+          retention-days: 5
