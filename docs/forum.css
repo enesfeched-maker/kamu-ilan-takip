@@ -145,6 +145,9 @@
 .fr-satir-alt{display:flex;flex-wrap:wrap;gap:0 var(--fr-3);color:var(--fr-silik);font-size:13px}
 .fr-yanit-sayi{flex:none;min-width:32px;color:var(--fr-ink-2);font-size:15px;font-weight:600;font-variant-numeric:tabular-nums;text-align:right}
 .fr-sifir{color:var(--fr-uyari);font-size:13px;font-weight:550}
+.fr-yanit-sayi small{display:none}
+.fr-yanit-sayi b{font-weight:inherit}
+.fr-pano-not{display:none}
 .fr-daha{display:block;margin:var(--fr-3) auto}
 .fr-geri{margin:0 0 var(--fr-4)}
 .fr-baslik-bas{margin:var(--fr-1) 0 var(--fr-4);font-size:24px;line-height:1.3;letter-spacing:-.02em;text-wrap:balance;overflow-wrap:break-word;min-width:0}

@@ -98,6 +98,18 @@
     return '<span class="fr-av" style="--h:' + ton(k.rumuz) + '" aria-hidden="true">' + esc((k.rumuz || '?').charAt(0).toLocaleUpperCase('tr-TR')) + '</span>';
   }
   function kok() { return document.body.classList.contains('detail-page') ? '../../' : document.getElementById('forum') ? '../' : ''; }
+  // Pano görünümü (Hallmark Paste-up, deneme): ?tasarim=pano açar, ?tasarim=klasik kapatır; seçim bu tarayıcıda hatırlanır.
+  var PANO = (function () {
+    var q = new URLSearchParams(location.search).get('tasarim');
+    if (q) yaz('fr-tasarim', q === 'pano' ? 'pano' : null);
+    return (q || oku('fr-tasarim')) === 'pano';
+  })();
+  if (PANO) {
+    document.documentElement.classList.add('fr-pano');
+    [['https://fonts.googleapis.com/css2?family=League+Gothic&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap'], [kok() + 'forum-pano.css?v=1']].forEach(function (h) {
+      var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = h[0]; document.head.appendChild(l);
+    });
+  }
   function katAd(kod) { for (var i = 0; i < KATEGORILER.length; i++) if (KATEGORILER[i].kod === kod) return KATEGORILER[i].ad; return ''; }
   // Bilgi parçaları ayrı öğe olarak yan yana durur (aralık CSS'ten); orta nokta ile birleştirilmez.
   function parcalar(l) { return l.filter(function (x) { return x !== '' && x != null; }).map(function (x) { return '<span>' + esc(x) + '</span>'; }).join(''); }
@@ -404,7 +416,7 @@
       var alt = parcalar([katAd(b.kategori), duzeyAd(b.duzey), b.anket ? 'Anket' : '', b.rumuz, zaman(b.son_hareket || b.olusma)]);
       return '<a class="fr-satir"' + (b.ilan_id ? '' : ' data-ic') + ' href="' + hedef + '"><span class="fr-satir-ic">'
         + '<b class="fr-satir-bas">' + (b.sabit ? '<span class="fr-sabit">Sabit</span> ' : '') + esc(b.baslik) + '</b><span class="fr-satir-alt">' + alt + '</span></span>'
-        + '<span class="fr-yanit-sayi' + (b.yanit_sayisi || b.sabit ? '' : ' fr-sifir') + '">' + (b.yanit_sayisi ? sayi(b.yanit_sayisi) : b.sabit ? '' : 'yanıtsız') + '</span></a>';
+        + '<span class="fr-yanit-sayi' + (b.yanit_sayisi || b.sabit ? '' : ' fr-sifir') + '">' + (b.yanit_sayisi ? '<b>' + sayi(b.yanit_sayisi) + '</b><small>yanıt</small>' : b.sabit ? '' : '<b>yanıtsız</b>') + '</span></a>';
     }
     function liste(p) {
       var secili = p.bekleyen ? 'bekleyen' : p.k;
@@ -414,8 +426,15 @@
           : '<nav class="fr-sekmeler" aria-label="Konular"><a data-ic href="?"' + (!secili ? ' aria-current="page"' : '') + '>Tümü</a>'
             + '<a data-ic href="?bekleyen=1"' + (secili === 'bekleyen' ? ' aria-current="page"' : '') + '>Yanıtsız</a>'
             + KATEGORILER.map(function (c) { return '<a data-ic href="?k=' + c.kod + '"' + (secili === c.kod ? ' aria-current="page"' : '') + '>' + esc(c.ad) + '</a>'; }).join('') + '</nav>')
+        + (PANO && !p.q && !p.bekleyen ? '<div class="fr-pano-not" hidden></div>' : '')
         + '<div class="fr-basliklar"><p class="fr-yukleniyor">Yükleniyor…</p></div>';
       var kap = kok_.querySelector('.fr-basliklar'), f = kok_.querySelector('.fr-ara');
+      var not_ = kok_.querySelector('.fr-pano-not');
+      if (not_) api('/durum').then(function (d) {   // panonun tek floresan kâğıdı: gerçek yanıtsız soru sayısı
+        if (!d.bekleyen) return;
+        not_.innerHTML = '<b>' + sayi(d.bekleyen) + ' soru cevap bekliyor</b><a class="btn" data-ic href="?bekleyen=1">Cevapla</a>';
+        not_.hidden = false;
+      }, function () {});
       f.onsubmit = function (e) { e.preventDefault(); var q = f.querySelector('input').value.trim(); if (q.length >= 2) { iz('forum_ara'); git('?q=' + encodeURIComponent(q)); } else if (!q) git('?'); };
       function getir(sayfa, ekle) {
         var yol = p.q ? '/ara?q=' + encodeURIComponent(p.q) : '/basliklar?kategori=' + encodeURIComponent(p.k || '') + '&sayfa=' + sayfa + (p.bekleyen ? '&bekleyen=1' : '');
@@ -550,6 +569,7 @@
       else if (q.get('yeni')) yeni(q.get('k'));
       else liste({ k: q.get('k') || '', bekleyen: q.get('bekleyen') === '1', q: q.get('q') || '' });
     }
+    kok_.insertAdjacentHTML('afterend', '<p class="fr-gorunum">Görünüm: <a class="yazi-link" href="?tasarim=klasik">Sade</a> veya <a class="yazi-link" href="?tasarim=pano">Pano</a></p>');
     kok_.addEventListener('change', function (e) {
       var c = e.target.closest('[data-bildirim]');
       if (!c) return;
