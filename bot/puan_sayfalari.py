@@ -13,10 +13,10 @@ from kurum_sayfasi import _ascii_slug
 
 DUZEYLER = (('lisans', 'Lisans'), ('onlisans', 'Önlisans'), ('ortaogretim', 'Ortaöğretim'))
 MIN_SATIR = 3
-MIN_DIZIN_SATIR = 5
+MIN_DIZIN_SATIR = 3   # 15 Kasım 2026: 5'ten indi; kadro sayfası artık kısa cevap + kurum tablosu taşıyor, incelik ince_sayfa'da kelimeyle süzülür
 ACIK_N = 15   # kadro ve düzey sayfasında gösterilen en çok açık ilan
 ARALIK = 5              # 'bu puanla nereye atanılır' sayfalarının puan aralığı genişliği
-MIN_ARALIK_SATIR = 20   # daha az kadrolu aralık sayfası açık kalır, dizine ve reklama girmez
+MIN_ARALIK_SATIR = 10   # daha az kadrolu aralık sayfası açık kalır, dizine ve reklama girmez (15 Kasım 2026: 20'den indi; incelik ince_sayfa'da ayrıca süzülür)
 ARALIK_N = 150          # aralık sayfasındaki kadro kadro dökümde en çok satır
 ARALIK_IL_N = 15
 KLASOR = 'kpss-taban-puanlari'
