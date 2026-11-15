@@ -1,7 +1,7 @@
 // KPSS Tercihi forum API'si (Cloudflare Worker + D1).
 import { KATEGORILER, KATEGORI_KODLARI, jsonYanit, hataYanit, simdi, sabitEsit, gecerliIlanKimligi } from './yardimci.js';
 import { denetle, temizle } from './denetim.js';
-import { oturumUret, geciciUret, oturumUyeKimligi, geciciTgKimligi, geciciGoogleKimligi, telegramDogrula, rumuzDogrula } from './oturum.js';
+import { oturumUret, oturumCoz, geciciUret, geciciTgKimligi, geciciGoogleKimligi, telegramDogrula, rumuzDogrula } from './oturum.js';
 import { kayit, girisSifre, girisGoogle, sifreSifirla, benSifre, benKurtarmaKodu, benProfil, benProfilKaydet, girisAyari, girisAyariYaniti } from './kayit.js';
 import { baslikHizi, yanitHizi, ipSiniri } from './hiz.js';
 import { asistanYaniti } from './asistan.js';
@@ -9,6 +9,7 @@ import { ilanKaydiGetir } from './ilan.js';
 import { yanitBildirimi, anmaBildirimi, takipBildirimi } from './bildirim.js';
 import { ozelKonusmalar, ozelKonusma, ozelYeni, ozelGonder, ozelMesajSil, ozelEngelle, engellenenler, ozelSikayet, yonetimOzelSikayetler, ozelOkunmamis } from './ozel.js';
 import { takipDegistir, takipMi, benTakipler } from './takip.js';
+import { yonetimOzet } from './yonetim-ozet.js';
 
 const SAYFA_BOYUTU = 20;
 const DUZEYLER = new Set(['lisans', 'onlisans', 'ortaogretim', 'ekpss', 'agrubu']);
@@ -90,6 +91,7 @@ async function yonlendir(request, env, ctx) {
     if ((m = yol.match(/^\/ozel\/([^/]+)$/))) return ozelKonusma(request, env, url, m[1]);
     if (yol === '/yonetim/sikayetler') return yonetimSikayetler(request, env);
     if (yol === '/yonetim/ozel-sikayetler') return yonetimOzelSikayetler(request, env);
+    if (yol === '/yonetim/ozet') return yonetimOzet(request, env);
     const anonim = !request.headers.get('Authorization') && !url.searchParams.get('kimlik');
     const onb = (uret) => onbellekli(url, ctx, anonim, uret);
     if (yol === '/basliklar') return onb(() => basliklarListe(env, url));
@@ -172,11 +174,13 @@ const kullaniciJson = (u) => ({ id: u.id, rumuz: u.rumuz, kurucu: !!u.kurucu, ro
 export async function oturumUyesi(request, env) {
   const m = (request.headers.get('Authorization') || '').match(/^Bearer (.+)$/);
   if (!m) return null;
-  const id = await oturumUyeKimligi(env, m[1], simdi());
-  if (!id) return null;
-  return env.DB.prepare(
-    'SELECT id, rumuz, kurucu, rol, itibar, bildirim, engelli, kayit, dm_acik, tg_id, sifre_ozet IS NOT NULL AS sifre_var, google_sub IS NOT NULL AS google_var FROM uyeler WHERE id = ?',
-  ).bind(id).first();
+  const j = await oturumCoz(env, m[1], simdi());
+  if (!j) return null;
+  const uye = await env.DB.prepare(
+    'SELECT id, rumuz, kurucu, rol, itibar, bildirim, engelli, kayit, dm_acik, tg_id, oturum_surum, sifre_ozet IS NOT NULL AS sifre_var, google_sub IS NOT NULL AS google_var FROM uyeler WHERE id = ?',
+  ).bind(j.id).first();
+  // şifre / kurtarma kodu değişince oturum sürümü artar: eski jetonlar geçersiz olur
+  return uye && (uye.oturum_surum || 0) === j.surum ? uye : null;
 }
 export async function yazar(request, env) {
   const uye = await oturumUyesi(request, env);
@@ -191,7 +195,8 @@ const ayrik = (n) => Math.max(1, Math.min(Number(n) || 1, 100));
 
 // ---------- giriş ----------
 export async function oturumYaniti(env, uye, ek = {}) {
-  return jsonYanit({ oturum: await oturumUret(env, uye.id, simdi()), uye: kullaniciJson(uye), ...ek });
+  const surum = uye.oturum_surum !== undefined ? uye.oturum_surum : (await env.DB.prepare('SELECT oturum_surum FROM uyeler WHERE id = ?').bind(uye.id).first())?.oturum_surum;
+  return jsonYanit({ oturum: await oturumUret(env, uye.id, simdi(), surum || 0), uye: kullaniciJson(uye), ...ek });
 }
 async function girisTelegram(request, env) {
   if (!env.TELEGRAM_BOT_TOKEN || !env.OTURUM_SIRRI) return hataYanit(503, 'Giriş henüz yapılandırılmadı.');
@@ -208,15 +213,20 @@ async function girisTelegram(request, env) {
 export async function uyeOlustur(env, kimlik, rumuz) {
   const r = rumuzDogrula(rumuz);
   if (!r.tamam) return { hata: hataYanit(400, r.neden) };
-  const var_ = await env.DB.prepare('SELECT id FROM uyeler WHERE rumuz = ?').bind(r.rumuz).first();
+  const var_ = await env.DB.prepare('SELECT id FROM uyeler WHERE rumuz_kat = ? OR rumuz = ?').bind(r.kat, r.rumuz).first();
   if (var_) return { hata: hataYanit(409, 'Bu rumuz alınmış.') };
   const sayi = await env.DB.prepare("SELECT COUNT(*) AS n FROM uyeler WHERE rol NOT IN ('sistem', 'asistan')").first();
   const t = simdi();
   try {
-    await env.DB.prepare('INSERT INTO uyeler (tg_id, rumuz, kayit, kurucu, google_sub, sifre_ozet, kurtarma_ozet) VALUES (?, ?, ?, ?, ?, ?, ?)')
-      .bind(kimlik.tg_id ?? null, r.rumuz, t, (sayi?.n || 0) < KURUCU_SINIRI ? 1 : 0, kimlik.google_sub ?? null, kimlik.sifre_ozet ?? null, kimlik.kurtarma_ozet ?? null).run();
-  } catch { return { hata: hataYanit(409, 'Bu rumuz alınmış.') }; }
-  const uye = await env.DB.prepare('SELECT id, rumuz, kurucu, rol, itibar, dm_acik FROM uyeler WHERE rumuz = ?').bind(r.rumuz).first();
+    await env.DB.prepare('INSERT INTO uyeler (tg_id, rumuz, rumuz_kat, kayit, kurucu, google_sub, sifre_ozet, kurtarma_ozet) VALUES (?, ?, ?, ?, ?, ?, ?, ?)')
+      .bind(kimlik.tg_id ?? null, r.rumuz, r.kat, t, (sayi?.n || 0) < KURUCU_SINIRI ? 1 : 0, kimlik.google_sub ?? null, kimlik.sifre_ozet ?? null, kimlik.kurtarma_ozet ?? null).run();
+  } catch (e) {
+    // yalnız benzersizlik ihlali "rumuz alınmış" demektir (aynı anda iki istek); başka hata gerçek bir arızadır
+    if (/UNIQUE constraint failed/i.test(String(e && e.message))) return { hata: hataYanit(409, 'Bu rumuz alınmış.') };
+    console.error('uyeOlustur:', e && e.message);
+    return { hata: hataYanit(500, 'Üyelik şu an oluşturulamadı. Biraz sonra tekrar dene.') };
+  }
+  const uye = await env.DB.prepare('SELECT id, rumuz, kurucu, rol, itibar, dm_acik, oturum_surum FROM uyeler WHERE rumuz_kat = ?').bind(r.kat).first();
   return { uye };
 }
 async function girisRumuz(request, env) {
@@ -248,7 +258,7 @@ async function girisDeneme(request, env) {
   if (!g) return hataYanit(400, 'Geçersiz istek.');
   const r = rumuzDogrula(g.rumuz);
   if (!r.tamam) return hataYanit(400, r.neden);
-  const mevcut = await env.DB.prepare('SELECT id, rumuz, kurucu, rol, itibar, tg_id, dm_acik FROM uyeler WHERE rumuz = ?').bind(r.rumuz).first();
+  const mevcut = await env.DB.prepare('SELECT id, rumuz, kurucu, rol, itibar, tg_id, dm_acik FROM uyeler WHERE rumuz_kat = ? OR rumuz = ?').bind(r.kat, r.rumuz).first();
   if (mevcut) return mevcut.tg_id < 0 ? oturumYaniti(env, mevcut) : hataYanit(409, 'Bu rumuz alınmış.');
   const s = await uyeOlustur(env, { tg_id: -(1 + (ozetSayi(r.rumuz.toLowerCase()) % 2000000000)) }, r.rumuz);
   return s.hata || oturumYaniti(env, s.uye);

@@ -21,7 +21,13 @@ export async function jetonCoz(env, jeton, simdi) {
     return yuk;
   } catch { return null; }
 }
-export const oturumUret = (env, uyeId, simdi) => jetonImzala(env, { u: uyeId, s: simdi + OTURUM_SURESI });
+// v: üyenin oturum_surum değeri; şifre ya da kurtarma kodu değişince artar ve eski oturumlar geçersiz olur.
+export const oturumUret = (env, uyeId, simdi, surum = 0) => jetonImzala(env, { u: uyeId, v: surum, s: simdi + OTURUM_SURESI });
+export async function oturumCoz(env, jeton, simdi) {
+  const y = await jetonCoz(env, jeton, simdi);
+  if (!y || !Number.isInteger(y.u) || y.t !== undefined || y.g !== undefined) return null;
+  return { id: y.u, surum: Number.isInteger(y.v) ? y.v : 0 };
+}
 export const geciciUret = (env, tgId, simdi) => jetonImzala(env, { t: tgId, s: simdi + GECICI_SURESI });
 export const geciciGoogleUret = (env, sub, simdi) => jetonImzala(env, { g: sub, s: simdi + GECICI_SURESI });
 // Üç jeton türü birbirine karıştırılamaz: oturum {u}, Telegram geçici {t}, Google geçici {g}; her biri yalnız kendi alanını taşır.
@@ -58,9 +64,12 @@ export async function telegramDogrula(env, alanlar, simdi) {
 
 const ayrilmis = ['asistan', 'yonetici', 'admin', 'moderator'];
 const kat = (s) => s.toLocaleLowerCase('tr').replace(/ç/g, 'c').replace(/ğ/g, 'g').replace(/ı/g, 'i').replace(/ö/g, 'o').replace(/ş/g, 's').replace(/ü/g, 'u').replace(/i̇/g, 'i');
+// Benzersizlik anahtarı: Türkçe harfleri ASCII'ye indirir, büyük/küçük harf, "." ve "_" farkını yok sayar.
+// migrations/0005_kayit.sql içindeki SQL ile birebir aynı sonucu vermelidir (testle doğrulanır).
+export const rumuzKat = (s) => kat(String(s).normalize('NFC').trim()).replace(/[._]/g, '');
 export function rumuzDogrula(rumuz) {
   if (typeof rumuz !== 'string') return { tamam: false, neden: 'Rumuz geçersiz.' };
-  const r = rumuz.trim();
+  const r = rumuz.normalize('NFC').trim();
   if (r.length < 3 || r.length > 20) return { tamam: false, neden: 'Rumuz 3-20 karakter olmalı.' };
   if (!/^[A-Za-z0-9ÇĞİÖŞÜçğıöşü_.]+$/.test(r) || !/[A-Za-z0-9ÇĞİÖŞÜçğıöşü]/.test(r)) {
     return { tamam: false, neden: 'Rumuzda yalnızca harf, rakam, _ ve . kullanılabilir.' };
@@ -70,5 +79,5 @@ export function rumuzDogrula(rumuz) {
     return { tamam: false, neden: 'Bu rumuz kullanılamaz.' };
   }
   if (kabaSozVar(r)) return { tamam: false, neden: 'Bu rumuz kullanılamaz.' };
-  return { tamam: true, rumuz: r };
+  return { tamam: true, rumuz: r, kat: n };
 }

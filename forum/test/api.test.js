@@ -22,7 +22,7 @@ test('telegram girişi: yeni üye -> geçici jeton -> rumuz -> oturum; sonra do�
   assert.equal(r2.durum, 200);
   assert.equal(r2.json.uye.rumuz, 'Ali_Veli'); assert.equal(r2.json.uye.kurucu, true); assert.equal(r2.json.uye.rol, 'uye');
   const kayit = env.DB.ham.prepare('SELECT * FROM uyeler WHERE tg_id = 777').get();
-  assert.deepEqual(Object.keys(kayit).sort(), ['bildirim', 'dm_acik', 'engelli', 'google_sub', 'id', 'itibar', 'kayit', 'kurtarma_ozet', 'kurucu', 'profil', 'rol', 'rumuz', 'sifre_ozet', 'tg_id']); // ad/kullanıcı adı/foto saklanmaz
+  assert.deepEqual(Object.keys(kayit).sort(), ['bildirim', 'dm_acik', 'engelli', 'google_sub', 'id', 'itibar', 'kayit', 'kurtarma_ozet', 'kurucu', 'oturum_surum', 'profil', 'rol', 'rumuz', 'rumuz_kat', 'sifre_ozet', 'tg_id']); // ad/kullanıcı adı/foto saklanmaz
   assert.equal(kayit.google_sub, null); assert.equal(kayit.sifre_ozet, null);
   const ben = await cagir(env, 'GET', '/ben', { token: r2.json.oturum });
   assert.equal(ben.durum, 200); assert.equal(ben.json.uye.rumuz, 'Ali_Veli');

@@ -13,7 +13,7 @@ export function profilTemizle(p) {
   const o = {
     v: 1, ogrenim: p.ogrenim,
     puan_turu: typeof p.puan_turu === 'string' && /^P\d{1,3}$/.test(p.puan_turu) ? p.puan_turu : '',
-    iller: (Array.isArray(p.iller) ? p.iller : []).filter((x) => typeof x === 'string' && IL_ADI.test(x)).slice(0, 81),
+    iller: [...new Set((Array.isArray(p.iller) ? p.iller : []).filter((x) => typeof x === 'string' && IL_ADI.test(x)))].slice(0, 81),
     tum_turkiye: p.tum_turkiye === true,
     bolum: typeof p.bolum === 'string' ? p.bolum.slice(0, 60) : '',
     t,

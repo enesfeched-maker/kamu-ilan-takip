@@ -1,9 +1,9 @@
 // Şifre ve kurtarma kodu: PBKDF2-SHA256 + sunucu biberi (pepper), sabit süreli karşılaştırma.
-// Workers ücretsiz planında istek başına 10 ms işlemci süresi var; bu yüzden tekrar sayısı düşük (20000) ve
+// Workers ücretsiz planında istek başına 10 ms işlemci süresi var; bu yüzden tekrar sayısı düşük (10000) ve
 // şifre önce sunucu biberiyle HMAC'lenir. Tekrar sayısı özetin içinde saklanır, sonradan yükseltilebilir.
 import { b64uKodla, b64uCoz, hmacSha256, sabitEsit, hex } from './yardimci.js';
 
-export const PBKDF2_TEKRAR = 20000;
+export const PBKDF2_TEKRAR = 10000;   // 10 ms işlemci bütçesi için düşük; kaba kuvvete direnç sunucu biberinden gelir
 export const SIFRE_EN_AZ = 8;
 export const SIFRE_EN_COK = 72;
 
@@ -14,12 +14,17 @@ const SIK_SIFRELER = new Set([
   'fenerbahce', 'galatasaray', 'besiktas', 'trabzonspor', 'turkiye', 'istanbul', 'ankara06', 'ankara1234',
 ]);
 
-const biberi = (env) => env.SIFRE_BIBERI || env.OTURUM_SIRRI || '';
+// Biber yalnız SIFRE_BIBERI'dir; OTURUM_SIRRI'na geri dönülmez (oturum sırrı sızarsa şifre özetleri de açılmasın).
+// Özetin başındaki sürüm (v1) hangi biberin kullanıldığını söyler; ileride SIFRE_BIBERI_2 ile v2 eklenip eski özetler yeniden yazılabilir.
+const BIBER_ADLARI = { v1: 'SIFRE_BIBERI', v2: 'SIFRE_BIBERI_2' };
+const GUNCEL_SURUM = 'v1';
+const biberi = (env, surum = GUNCEL_SURUM) => env[BIBER_ADLARI[surum]] || '';
 export const sifreYapilandirildi = (env) => !!biberi(env);
 
 // Hata metni ya da null.
 export function sifreKurali(sifre, rumuz) {
   if (typeof sifre !== 'string') return 'Şifre yazmalısın.';
+  sifre = sifre.normalize('NFC');
   if (sifre.length < SIFRE_EN_AZ) return 'Şifre en az 8 karakter olmalı.';
   if (sifre.length > SIFRE_EN_COK) return 'Şifre en çok 72 karakter olabilir.';
   const k = sifre.toLocaleLowerCase('tr');
@@ -28,29 +33,28 @@ export function sifreKurali(sifre, rumuz) {
   return null;
 }
 
-async function pbkdf2(env, sifre, tuz, tekrar) {
-  const ham = await hmacSha256(biberi(env), `sifre:${sifre}`);
+async function pbkdf2(env, sifre, tuz, tekrar, surum) {
+  const ham = await hmacSha256(biberi(env, surum), `sifre:${String(sifre).normalize('NFC')}`);
   const anahtar = await crypto.subtle.importKey('raw', ham, 'PBKDF2', false, ['deriveBits']);
   return new Uint8Array(await crypto.subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt: tuz, iterations: tekrar }, anahtar, 256));
 }
 
 export async function sifreOzetle(env, sifre, tekrar = PBKDF2_TEKRAR) {
   const tuz = crypto.getRandomValues(new Uint8Array(16));
-  return `pbkdf2$${tekrar}$${b64uKodla(tuz)}$${b64uKodla(await pbkdf2(env, sifre, tuz, tekrar))}`;
+  return `pbkdf2$${GUNCEL_SURUM}$${tekrar}$${b64uKodla(tuz)}$${b64uKodla(await pbkdf2(env, sifre, tuz, tekrar, GUNCEL_SURUM))}`;
 }
 
 // Özet yoksa ya da bozuksa da aynı işi yapar (zamanlama farkı hesabın var olup olmadığını sızdırmasın).
-const SAHTE_OZET = 'pbkdf2$20000$AAAAAAAAAAAAAAAAAAAAAA$AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
+const SAHTE_OZET = `pbkdf2$${GUNCEL_SURUM}$${PBKDF2_TEKRAR}$AAAAAAAAAAAAAAAAAAAAAA$AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA`;
 export async function sifreDogrula(env, sifre, ozet) {
   const p = typeof ozet === 'string' ? ozet.split('$') : [];
-  const gecerli = p.length === 4 && p[0] === 'pbkdf2' && Number.isInteger(Number(p[1])) && Number(p[1]) >= 1000 && Number(p[1]) <= 1_000_000;
-  const [, tekrar, tuz, beklenen] = gecerli ? p : SAHTE_OZET.split('$');
+  const gecerli = p.length === 5 && p[0] === 'pbkdf2' && Object.hasOwn(BIBER_ADLARI, p[1]) && Number.isInteger(Number(p[2])) && Number(p[2]) >= 1000 && Number(p[2]) <= 1_000_000;
+  const [, surum, tekrar, tuz, beklenen] = gecerli ? p : SAHTE_OZET.split('$');
   try {
-    const bulunan = b64uKodla(await pbkdf2(env, String(sifre ?? ''), b64uCoz(tuz), Number(tekrar)));
+    const bulunan = b64uKodla(await pbkdf2(env, String(sifre ?? ''), b64uCoz(tuz), Number(tekrar), surum));
     return gecerli && sabitEsit(bulunan, beklenen);
   } catch { return false; }
 }
-
 // ---------- kurtarma kodu (Crockford base32, XXXX-XXXX-XXXX = 60 bit) ----------
 const ALFABE = '0123456789ABCDEFGHJKMNPQRSTVWXYZ';
 export function kurtarmaKoduUret() {

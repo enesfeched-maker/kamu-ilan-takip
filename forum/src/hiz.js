@@ -33,27 +33,45 @@ export async function ozelMesajHizi(env, uye, simdi) {
   return null;
 }
 
-// Üyelik / giriş denemeleri: (tur, anahtar, olusma) indeksiyle ucuz sayım. Anahtar IP özeti ya da küçük harfli rumuz.
-// Sınıra ulaşan istekler yazma yapmaz (yalnız başarısız deneme ve başarılı kayıt satır ekler), böylece D1 yazma kotası korunur.
+// Üyelik / giriş denemeleri: (tur, anahtar, olusma) indeksiyle ucuz sayım. Anahtarlar IP özeti, rumuz ya da ikisi birden.
+// Sınıra ulaşan istekler yazma yapmaz (yalnız başarısız deneme ve kayıt denemesi satır ekler), böylece D1 yazma kotası korunur.
 export const KAYIT_SINIRI = { tur: 'kayit', en_cok: 5, pencere: 3600 };
 export const GIRIS_IP_SINIRI = { tur: 'giris_ip', en_cok: 10, pencere: 900 };
-export const GIRIS_RUMUZ_SINIRI = { tur: 'giris_rumuz', en_cok: 10, pencere: 900 };
+export const GIRIS_RUMUZ_IP_SINIRI = { tur: 'giris_rumuz_ip', en_cok: 10, pencere: 900 };   // rumuz + IP: başkasının rumuzunu kilitlemeyi zorlaştırır
+export const GIRIS_RUMUZ_SINIRI = { tur: 'giris_rumuz', en_cok: 50, pencere: 900 };         // yalnız rumuz: dağıtık saldırı için çok yüksek eşik
+const TEMIZLIK_OMRU = 3600;   // en uzun pencere
 
+// Yalnız CF-Connecting-IP güvenilir (X-Forwarded-For istemci tarafından yazılabilir). Başlık yoksa tek ortak "yok" kovası, normal sınırlarla.
+// IPv6 adresleri /64 ön ekiyle anahtarlanır (bir kullanıcı kendi /64'ünden sayısız adres üretebilir).
+export function ipOnEki(ip) {
+  const s = String(ip || '').trim().toLowerCase().split('%')[0];
+  if (!s) return 'yok';
+  if (!s.includes(':')) return `v4:${s}`;
+  const eslesme = /^::ffff:(\d+\.\d+\.\d+\.\d+)$/.exec(s);
+  if (eslesme) return `v4:${eslesme[1]}`;
+  const [bas, son] = s.split('::');
+  const a = bas ? bas.split(':') : [];
+  const b = son ? son.split(':') : [];
+  const g = s.includes('::') ? [...a, ...Array(Math.max(0, 8 - a.length - b.length)).fill('0'), ...b] : a;
+  return `v6:${g.slice(0, 4).map((x) => (parseInt(x || '0', 16) || 0).toString(16)).join(':')}`;
+}
 export async function ipAnahtari(request) {
-  const ip = request.headers.get('CF-Connecting-IP') || request.headers.get('X-Forwarded-For') || '?';
-  const ozet = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`ip:${ip}`));
+  const onEk = ipOnEki(request.headers.get('CF-Connecting-IP'));
+  const ozet = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`ip:${onEk}`));
   return [...new Uint8Array(ozet).slice(0, 8)].map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 export async function denemeSinirda(env, sinir, anahtar, simdi) {
   const s = await env.DB.prepare('SELECT COUNT(*) AS n FROM giris_denemeleri WHERE tur = ? AND anahtar = ? AND olusma > ?').bind(sinir.tur, anahtar, simdi - sinir.pencere).first();
   return (s?.n || 0) >= sinir.en_cok;
 }
-export async function denemeYaz(env, sinir, anahtar, simdi) {
-  await env.DB.prepare('DELETE FROM giris_denemeleri WHERE tur = ? AND anahtar = ? AND olusma <= ?').bind(sinir.tur, anahtar, simdi - sinir.pencere).run();
+export async function denemeTemizle(env, simdi) {   // eski satırları siler (DELETE ... LIMIT D1'de yok; rowid alt sorgusu kullanılır)
+  await env.DB.prepare('DELETE FROM giris_denemeleri WHERE rowid IN (SELECT rowid FROM giris_denemeleri WHERE olusma < ? LIMIT 200)').bind(simdi - TEMIZLIK_OMRU).run();
+}
+export async function denemeYaz(env, sinir, anahtar, simdi, rastgele = Math.random()) {
   await env.DB.prepare('INSERT INTO giris_denemeleri (tur, anahtar, olusma) VALUES (?, ?, ?)').bind(sinir.tur, anahtar, simdi).run();
+  if (rastgele < 0.01) await denemeTemizle(env, simdi);   // Worker'da zamanlayıcı yok: yazmaların ~%1'inde fırsat temizliği
 }
 export const cokDeneme = () => hataYanit(429, 'Çok fazla deneme yaptın. Biraz sonra tekrar dene.');
-
 // Anonim başvuru yazımı için en iyi çaba bellek içi sınır (izolat başına).
 const kovalar = new Map();
 export function ipSiniri(ip, simdi, limit = 30, pencere = 60) {

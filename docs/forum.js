@@ -47,7 +47,12 @@
   }
   function oturum() { return oku('fr-oturum'); }
   function uye() { return oku('fr-uye'); }
-  function cikis() { yaz('fr-oturum', null); yaz('fr-uye', null); yaz('fr-bildirim-sayi', null); yenile(); }
+  function cikis() {
+    var u = uye();
+    // hesabın profili bu cihazda kalmasın (ortak cihaz); marker yoksa profil giriş öncesinden kalmadır, ona dokunulmaz
+    try { if (u && u.id && oku('kit-profil-uye') === u.id) { yaz('kit-profil', null); yaz('fr-duzey', null); yaz('kit-profil-uye', null); window.dispatchEvent(new Event('kit-profil-sunucudan')); } } catch (e) {}
+    yaz('fr-oturum', null); yaz('fr-uye', null); yaz('fr-bildirim-sayi', null); yenile();
+  }
   // Öğrenim düzeyi: önce forumda seçilen, yoksa sitenin profilinde tek düzey işaretlenmişse o.
   function duzeyim() {
     var d = oku('fr-duzey');
@@ -134,15 +139,21 @@
     return v;
   }
   function ayniProfil(a, b) { return JSON.stringify(kanonik(a)) === JSON.stringify(kanonik(b)); }
+  // "kit-profil-uye": yereldeki profilin hangi üyeye ait olduğu. Ortak cihazda bir üyenin profili ötekine sızmasın:
+  // çıkışta yalnız o üyeye ait profil silinir, girişte yalnız sahibi belli olmayan ya da aynı üyeye ait yerel profil yüklenir.
+  function profilSahibi() { var m = oku('kit-profil-uye'); return typeof m === 'number' ? m : null; }
+  function profilIsaretle() { var u = uye(); if (u && u.id) yaz('kit-profil-uye', u.id); }
   function profilSenkron(sunucu) {
     try {
-      var yerel = oku('kit-profil');
+      var yerel = oku('kit-profil'), ben = uye();
       if (sunucu && sunucu.v === 1) {
+        profilIsaretle();
         if (ayniProfil(sunucu, yerel)) return;
         yaz('kit-profil', sunucu);
         if (sunucu.ogrenim) yaz('fr-duzey', sunucu.ogrenim);
         window.dispatchEvent(new Event('kit-profil-sunucudan'));
-      } else if (yerel && yerel.v === 1 && oturum()) {
+      } else if (yerel && yerel.v === 1 && oturum() && ben && (profilSahibi() === null || profilSahibi() === ben.id)) {
+        profilIsaretle();
         api('/ben/profil', { yontem: 'POST', govde: { profil: yerel } }).then(function () {}, function () {});
       }
     } catch (e) {}
@@ -158,6 +169,7 @@
       try {
         if (!oturum()) return;
         var p = oku('kit-profil');
+        profilIsaretle();   // kullanıcı profili bu hesapta kendisi değiştirdi
         api('/ben/profil', { yontem: 'POST', govde: { profil: p && p.v === 1 ? p : null } }).then(function () {}, function () {});
       } catch (e) {}
     }, 1200);
@@ -240,7 +252,7 @@
     k.kodGoster = function (kod, baslik, sonra) {
       k.kilitli = true;
       kutu.querySelector('.fr-kapat').hidden = true;
-      k.ciz(baslik, '', '<div class="fr-kod-kart"><p class="fr-kod-uyari"><b>Bu kodu sakla — şifreni unutursan tek yolun bu.</b> Ekran görüntüsü al ya da bir yere yaz. Bir daha gösterilmez.</p>'
+      k.ciz(baslik, '', '<div class="fr-kod-kart"><p class="fr-kod-uyari"><b>Bu kodu sakla. Şifreni unutursan hesabına bu kodla dönersin.</b> Ekran görüntüsü al ya da bir yere yaz. Bir daha gösterilmez.</p>'
         + '<p class="fr-kod" id="fr-kod" aria-label="Kurtarma kodun">' + esc(kod) + '</p>'
         + '<button type="button" class="fr-g-ikincil" data-kopyala>Kopyala</button></div>'
         + '<label class="fr-g-onay"><input type="checkbox" id="fr-g-kaydettim"><span>Kaydettim</span></label>'
@@ -395,6 +407,14 @@
     function ana(sekme) {
       turnstileKaldir();
       var uyeMi = sekme !== 'giris';
+      if (ayar.sifre === false) {   // sunucuda şifreli üyelik kapalı (SIFRE_BIBERI yok): yalnız Google / Telegram
+        k.ciz(baslik || 'Foruma katıl', 'Şifreyle üyelik şu an kapalı. Aşağıdaki yöntemlerden biriyle devam edebilirsin.',
+          '<div class="fr-g-sosyal">' + (ayar.google_istemci ? '<div class="fr-g-google" id="fr-g-google"></div>' : '')
+          + '<button type="button" class="fr-g-ikincil" data-telegram>Telegram ile devam et</button><div class="fr-g-tg-yer" hidden></div></div><p class="fr-hata" role="alert" hidden></p>');
+        govde.querySelector('[data-telegram]').onclick = telegramAc;
+        googleKur();
+        return;
+      }
       k.ciz(baslik || 'Foruma katıl', '', '<div class="fr-g-sekmeler" role="tablist" aria-label="Üyelik">'
         + '<button type="button" role="tab" id="fr-g-t-uye" data-sekme="uye" aria-controls="fr-g-panel">Üye ol</button>'
         + '<button type="button" role="tab" id="fr-g-t-giris" data-sekme="giris" aria-controls="fr-g-panel">Giriş yap</button></div>'
@@ -463,7 +483,7 @@
         var y = f.querySelector('#fr-g-yeni').value;
         return y.length < 8 ? 'Şifre en az 8 karakter olmalı.' : { yeni: y };
       }, function (j) {
-        var gnc = oku('fr-uye') || u; gnc.sifre_var = true; yaz('fr-uye', gnc);
+        var gnc = oku('fr-uye') || u; gnc.sifre_var = true; yaz('fr-uye', gnc); if (j.oturum) yaz('fr-oturum', j.oturum);   // sunucu eski oturumları kapatır, taze jeton gelir
         if (j.kurtarma_kodu) k.kodGoster(j.kurtarma_kodu, 'Şifren hazır', function () { k.kapat(); }); else { k.kapat(); bildir('Şifren kaydedildi'); }
       });
       return;
@@ -481,11 +501,11 @@
       var e = f.querySelector('#fr-g-eski').value, y = f.querySelector('#fr-g-yeni').value;
       if (!e) return 'Şimdiki şifreni yaz.';
       return y.length < 8 ? 'Yeni şifre en az 8 karakter olmalı.' : { eski: e, yeni: y };
-    }, function () { k.kapat(); bildir('Şifren değişti'); });
+    }, function (j) { if (j && j.oturum) yaz('fr-oturum', j.oturum); k.kapat(); bildir('Şifren değişti'); });
     gonder(f2, '/ben/kurtarma-kodu', function (f) {
       var s = f.querySelector('#fr-g-kodsifre').value;
       return s ? { sifre: s } : 'Şifreni yaz.';
-    }, function (j) { k.kodGoster(j.kurtarma_kodu, 'Yeni kurtarma kodun', function () { k.kapat(); }); });
+    }, function (j) { if (j.oturum) yaz('fr-oturum', j.oturum); k.kodGoster(j.kurtarma_kodu, 'Yeni kurtarma kodun', function () { k.kapat(); }); });
   }
 
   /* ---------- üye kartı (rumuza dokununca) ---------- */

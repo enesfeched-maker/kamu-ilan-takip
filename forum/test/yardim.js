@@ -13,7 +13,7 @@ export function ortam(ek = {}) {
   ilanOnbellekTemizle(); bildirimSifirla(); ipSinirSifirla();
   return {
     DB: sahteD1(), SITE_URL: SITE, IZINLI_KOKENLER: 'https://kpsstercihi.com,https://www.kpsstercihi.com', YAZMA_KAPALI: '0',
-    TELEGRAM_BOT_ADI: 'kamuilanibot', TELEGRAM_BOT_TOKEN: '123456:TEST-TOKEN', OTURUM_SIRRI: 'sir-sir-sir', YONETICI_ANAHTARI: 'yonetici-anahtar',
+    TELEGRAM_BOT_ADI: 'kamuilanibot', TELEGRAM_BOT_TOKEN: '123456:TEST-TOKEN', OTURUM_SIRRI: 'sir-sir-sir', SIFRE_BIBERI: 'biber-biber-biber', YONETICI_ANAHTARI: 'yonetici-anahtar',
     ...ek,
   };
 }

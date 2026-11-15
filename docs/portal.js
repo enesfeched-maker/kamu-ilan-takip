@@ -857,7 +857,7 @@ route();}
 window.kitTemaUygula=applyTheme;applyTheme();$('year').textContent=new Date().getFullYear();
 profil=validProfile(readStore('kit-profil',null));
 /* Hesaba bağlı profil: üye girişinden sonra sunucudaki profil kit-profil'i değiştirirse (forum.js) ekran yenilenir; sitedeki her profil değişikliği forum.js'e bildirilir (giriş yoksa hiçbir şey yapmaz). */
-window.addEventListener('kit-profil-sunucudan',()=>{profil=validProfile(readStore('kit-profil',null));if(loaded&&!profil-dialog.open)render();});
+window.addEventListener('kit-profil-sunucudan',()=>{profil=validProfile(readStore('kit-profil',null));if(loaded&&!$('profil-dialog').open)render();});
 sonZiyaret=frozenVisit();
 let profilAc=false;
 try{const u=new URL(location.href);if(u.searchParams.get('g')==='bugun')bekleyenKaydirma='bugun';if(u.searchParams.has('g')||u.searchParams.has('profil')){profilAc=u.searchParams.get('profil')==='1';u.searchParams.delete('g');u.searchParams.delete('profil');history.replaceState(null,'',u.pathname+u.search+u.hash);}}catch{}

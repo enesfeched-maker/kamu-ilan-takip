@@ -3,9 +3,11 @@ import assert from 'node:assert/strict';
 import { ortam, cagir, uyeGirisi, kayitEskit, sahteFetch, telegramImzala } from './yardim.js';
 import { b64uKodla, metinB64u } from '../src/yardimci.js';
 import { oturumUret, geciciUret, geciciTgKimligi, geciciGoogleUret, geciciGoogleKimligi, oturumUyeKimligi } from '../src/oturum.js';
-import { sifreKurali, sifreOzetle, sifreDogrula, kurtarmaKoduUret, kurtarmaKoduSadelestir, kurtarmaKoduBicimiGecerli } from '../src/sifre.js';
+import { sifreYapilandirildi, sifreKurali, sifreOzetle, sifreDogrula, kurtarmaKoduUret, kurtarmaKoduSadelestir, kurtarmaKoduBicimiGecerli } from '../src/sifre.js';
 import { googleJetonuDogrula, googleAnahtarOnbellegiTemizle } from '../src/google.js';
 import { profilTemizle } from '../src/profil.js';
+import { ipSinirSifirla, ipOnEki, ipAnahtari, denemeYaz, denemeTemizle, KAYIT_SINIRI } from '../src/hiz.js';
+import { rumuzKat } from '../src/oturum.js';
 
 const SIFRE = 'Guvenli-Sifre-9';
 const KOD_DESENI = /^[0-9A-HJKMNP-TV-Z]{4}-[0-9A-HJKMNP-TV-Z]{4}-[0-9A-HJKMNP-TV-Z]{4}$/;
@@ -24,7 +26,8 @@ test('kayıt: rumuz + şifre ile üyelik, oturum ve kurtarma kodu döner; tg_id 
   const s = satir(env, 'SELECT tg_id, sifre_ozet, kurtarma_ozet, google_sub, kurucu FROM uyeler WHERE rumuz = ?', 'Ayse_01');
   assert.equal(s.tg_id, null);
   assert.equal(s.kurucu, 1);
-  assert.match(s.sifre_ozet, /^pbkdf2\$20000\$[A-Za-z0-9_-]{22}\$[A-Za-z0-9_-]{43}$/);
+  assert.match(s.sifre_ozet, /^pbkdf2\$v1\$10000\$[A-Za-z0-9_-]{22}\$[A-Za-z0-9_-]{43}$/);
+  assert.equal(satir(env, 'SELECT rumuz_kat, oturum_surum FROM uyeler WHERE rumuz = ?', 'Ayse_01').rumuz_kat, 'ayse01');
   assert.ok(!JSON.stringify(s).includes(SIFRE) && !s.kurtarma_ozet.includes(r.json.kurtarma_kodu.replace(/-/g, '')));
   const ben = (await cagir(env, 'GET', '/ben', { token: r.json.oturum })).json;
   assert.equal(ben.uye.telegram, false); assert.equal(ben.uye.sifre_var, true); assert.equal(ben.uye.google_var, false); assert.equal(ben.profil, null);
@@ -48,6 +51,7 @@ test('kayıt: aynı rumuz (büyük/küçük harf fark etmez) 409; geçersiz rumu
 test('kayıt: zayıf şifreler reddedilir', async () => {
   const env = ortam();
   for (const s of ['kisa', '12345678', 'PASSWORD', 'qwerty123', '11111111', 'aaaaaaaaaa', 'ayse_01x'.slice(0, 7), 'x'.repeat(73), '', null, 12345678]) {
+    ipSinirSifirla();   // bellek içi ön süzgeç dakikada 10 kayıt izin verir; döngü bunu aşmasın
     const r = await kayitOl(env, 'Zayif_U', s);
     assert.equal(r.durum, 400, String(s));
     assert.ok(r.json.hata.length > 5);
@@ -90,17 +94,23 @@ test('şifreyle giriş: doğru şifre oturum verir; yanlış şifre ve olmayan r
   assert.equal((await cagir(env, 'POST', '/giris/sifre', { govde: { rumuz: 'Tg_Uye', sifre: SIFRE } })).json.hata, 'Rumuz ya da şifre hatalı.');
 });
 
-test('şifreyle giriş: rumuz başına 15 dakikada 10 başarısız deneme sonrası doğru şifre bile 429', async () => {
+test('şifreyle giriş: rumuz+IP başına 10 başarısız deneme kilitler; başka IP kilitlenmez (kilitleme DoS\'u yok), yalnız rumuz için eşik 50', async () => {
   const env = ortam();
   await kayitOl(env);
-  for (let i = 0; i < 10; i++) {
-    const r = await cagir(env, 'POST', '/giris/sifre', { govde: { rumuz: 'Ayse_01', sifre: `Yanlis-${i}-abc` }, basliklar: { 'CF-Connecting-IP': `198.51.100.${i}` } });
-    assert.equal(r.durum, 401);
-  }
-  const r = await cagir(env, 'POST', '/giris/sifre', { govde: { rumuz: 'Ayse_01', sifre: SIFRE }, basliklar: { 'CF-Connecting-IP': '198.51.100.99' } });
-  assert.equal(r.durum, 429);
-  env.DB.ham.prepare('UPDATE giris_denemeleri SET olusma = olusma - 1000').run();
+  const ip = { 'CF-Connecting-IP': '198.51.100.7' };
+  // büyük/küçük harf ve "." "_" farkı aynı sayaca düşer
+  const adlar = ['Ayse_01', 'ayse_01', 'AYSE.01', 'ayse01', 'Ayse_01', 'ayse_01', 'AYSE.01', 'ayse01', 'Ayse_01', 'ayse_01'];
+  for (let i = 0; i < 10; i++) assert.equal((await cagir(env, 'POST', '/giris/sifre', { govde: { rumuz: adlar[i], sifre: `Yanlis-${i}-abc` }, basliklar: ip })).durum, 401);
+  assert.equal((await cagir(env, 'POST', '/giris/sifre', { govde: { rumuz: 'Ayse_01', sifre: SIFRE }, basliklar: ip })).durum, 429);
+  // gerçek sahibi başka bir ağdan hâlâ girebilir
   assert.equal((await cagir(env, 'POST', '/giris/sifre', { govde: { rumuz: 'Ayse_01', sifre: SIFRE }, basliklar: { 'CF-Connecting-IP': '198.51.100.99' } })).durum, 200);
+  env.DB.ham.prepare('UPDATE giris_denemeleri SET olusma = olusma - 1000').run();
+  assert.equal((await cagir(env, 'POST', '/giris/sifre', { govde: { rumuz: 'Ayse_01', sifre: SIFRE }, basliklar: ip })).durum, 200);
+  // yalnız rumuz sayacı: 50 farklı IP'den başarısız deneme sonrası doğru şifre de 429
+  const env2 = ortam();
+  await kayitOl(env2);
+  env2.DB.ham.prepare("INSERT INTO giris_denemeleri (tur, anahtar, olusma) SELECT 'giris_rumuz', 'ayse01', ? FROM (WITH RECURSIVE n(i) AS (SELECT 1 UNION ALL SELECT i + 1 FROM n WHERE i < 50) SELECT i FROM n)").run(simdi());
+  assert.equal((await cagir(env2, 'POST', '/giris/sifre', { govde: { rumuz: 'Ayse_01', sifre: SIFRE }, basliklar: { 'CF-Connecting-IP': '203.0.113.5' } })).durum, 429);
 });
 
 test('şifreyle giriş: IP başına 15 dakikada 10 başarısız deneme (farklı rumuzlarla da) sonrası 429', async () => {
@@ -148,23 +158,43 @@ test('kurtarma kodu üretimi ve biçimi', () => {
   assert.equal(kurtarmaKoduBicimiGecerli('UUUU-UUUU-UUUU'), false);
 });
 
-test('şifre özeti: tekrar sayısı özetin içinde, biberli, yanlış şifre ve bozuk özet reddedilir', async () => {
+test('şifre özeti: sürüm + tekrar sayısı özetin içinde, biberli, NFC, yanlış şifre ve bozuk özet reddedilir', async () => {
   const env = ortam();
   const o = await sifreOzetle(env, 'Sifrem-Cok-Iyi-1');
+  assert.match(o, /^pbkdf2\$v1\$10000\$/);
   assert.ok(await sifreDogrula(env, 'Sifrem-Cok-Iyi-1', o));
   assert.equal(await sifreDogrula(env, 'Sifrem-Cok-Iyi-2', o), false);
   assert.equal(await sifreDogrula({ ...env, SIFRE_BIBERI: 'baska-biber' }, 'Sifrem-Cok-Iyi-1', o), false);   // biber değişirse özet geçersiz
   assert.equal(await sifreDogrula(env, 'x', null), false);
   assert.equal(await sifreDogrula(env, 'x', 'pbkdf2$abc$x$y'), false);
-  const o2 = await sifreOzetle(env, 'Sifrem-Cok-Iyi-1', 1500);   // eski/farklı tekrar sayısıyla yazılmış özet hâlâ doğrulanır
-  assert.ok(o2.startsWith('pbkdf2$1500$'));
+  assert.equal(await sifreDogrula(env, 'Sifrem-Cok-Iyi-1', o.replace('$v1$', '$v9$')), false);   // bilinmeyen biber sürümü
+  const o2 = await sifreOzetle(env, 'Sifrem-Cok-Iyi-1', 1500);   // farklı tekrar sayısıyla yazılmış özet hâlâ doğrulanır
+  assert.ok(o2.startsWith('pbkdf2$v1$1500$'));
   assert.ok(await sifreDogrula(env, 'Sifrem-Cok-Iyi-1', o2));
-  const e3 = { OTURUM_SIRRI: 'yalniz-oturum' };   // SIFRE_BIBERI yoksa OTURUM_SIRRI kullanılır
-  assert.ok(await sifreDogrula(e3, 'abc', await sifreOzetle(e3, 'abc')));
+  // Unicode: "ş" bileşik ya da ayrık yazılsa da aynı şifre
+  const bilesik = 'Şifrem-Güçlü-1'.normalize('NFC'), ayrik = bilesik.normalize('NFD');
+  assert.notEqual(bilesik, ayrik);
+  assert.ok(await sifreDogrula(env, ayrik, await sifreOzetle(env, bilesik)));
+  assert.equal(sifreKurali(ayrik, 'x'), null);
+  assert.equal(sifreKurali('e\u0301x'.repeat(30), 'x'), null);   // NFC sonrası 40 karakter (72 sınırı NFC üzerinden)
+});
+
+test('SIFRE_BIBERI yoksa şifre özellikleri kapalı (OTURUM_SIRRI\'na geri dönülmez): ayar sifre:false, uçlar 503, Telegram etkilenmez', async () => {
+  const env = ortam({ SIFRE_BIBERI: undefined });
+  assert.equal(sifreYapilandirildi({ OTURUM_SIRRI: 'x' }), false);
+  assert.equal((await cagir(env, 'GET', '/giris/ayar')).json.sifre, false);
+  assert.equal((await cagir(env, 'GET', '/durum')).json.giris.sifre, false);
+  for (const [yol, govde] of [['/kayit', { rumuz: 'Ayse_01', sifre: SIFRE }], ['/giris/sifre', { rumuz: 'Ayse_01', sifre: SIFRE }], ['/sifre-sifirla', { rumuz: 'Ayse_01', kod: 'AAAA-AAAA-AAAA', yeni_sifre: SIFRE }]]) {
+    const r = await cagir(env, 'POST', yol, { govde });
+    assert.equal(r.durum, 503, yol); assert.match(r.json.hata, /kapalı/);
+  }
+  const u = await uyeGirisi(env, 'Tg_Kapali');
+  for (const yol of ['/ben/sifre', '/ben/kurtarma-kodu']) assert.equal((await cagir(env, 'POST', yol, { token: u.token, govde: { yeni: SIFRE, sifre: SIFRE } })).durum, 503, yol);
+  assert.equal((await cagir(env, 'GET', '/ben', { token: u.token })).durum, 200);
 });
 
 // ---------- şifre ve kod yönetimi ----------
-test('/ben/sifre ve /ben/kurtarma-kodu: eski şifre gerekir, yanlışsa reddedilir', async () => {
+test('/ben/sifre ve /ben/kurtarma-kodu: eski şifre gerekir; değişince eski oturumlar kapanır, istek taze jeton alır', async () => {
   const env = ortam();
   const k = await kayitOl(env);
   const token = k.json.oturum;
@@ -174,13 +204,24 @@ test('/ben/sifre ve /ben/kurtarma-kodu: eski şifre gerekir, yanlışsa reddedil
   assert.equal((await cagir(env, 'POST', '/ben/sifre', { token, govde: { eski: SIFRE, yeni: '12345678' } })).durum, 400);
   const d = await cagir(env, 'POST', '/ben/sifre', { token, govde: { eski: SIFRE, yeni: 'Yepyeni-Sifre-3' } });
   assert.equal(d.durum, 200); assert.equal(d.json.kurtarma_kodu, undefined);
+  assert.ok(d.json.oturum && d.json.oturum !== token);
+  assert.equal((await cagir(env, 'GET', '/ben', { token })).durum, 401);   // eski oturum kapandı
+  const yeniToken = d.json.oturum;
+  assert.equal((await cagir(env, 'GET', '/ben', { token: yeniToken })).durum, 200);
+  assert.equal(satir(env, 'SELECT oturum_surum FROM uyeler WHERE rumuz = ?', 'Ayse_01').oturum_surum, 1);
   assert.equal((await cagir(env, 'POST', '/giris/sifre', { govde: { rumuz: 'Ayse_01', sifre: 'Yepyeni-Sifre-3' } })).durum, 200);
   // kurtarma kodunu yenile
-  assert.equal((await cagir(env, 'POST', '/ben/kurtarma-kodu', { token, govde: { sifre: SIFRE } })).durum, 401);   // eski şifre artık yanlış
-  const y = await cagir(env, 'POST', '/ben/kurtarma-kodu', { token, govde: { sifre: 'Yepyeni-Sifre-3' } });
+  assert.equal((await cagir(env, 'POST', '/ben/kurtarma-kodu', { token: yeniToken, govde: { sifre: SIFRE } })).durum, 401);   // eski şifre artık yanlış
+  const y = await cagir(env, 'POST', '/ben/kurtarma-kodu', { token: yeniToken, govde: { sifre: 'Yepyeni-Sifre-3' } });
   assert.equal(y.durum, 200); assert.match(y.json.kurtarma_kodu, KOD_DESENI);
+  assert.equal((await cagir(env, 'GET', '/ben', { token: yeniToken })).durum, 401);   // kod yenilenince de oturumlar kapanır
+  assert.equal((await cagir(env, 'GET', '/ben', { token: y.json.oturum })).durum, 200);
   assert.equal((await cagir(env, 'POST', '/sifre-sifirla', { govde: { rumuz: 'Ayse_01', kod: k.json.kurtarma_kodu, yeni_sifre: 'Bir-Baska-Sifre-4' } })).durum, 401);   // ilk kod bitti
-  assert.equal((await cagir(env, 'POST', '/sifre-sifirla', { govde: { rumuz: 'Ayse_01', kod: y.json.kurtarma_kodu, yeni_sifre: 'Bir-Baska-Sifre-4' } })).durum, 200);
+  const s = await cagir(env, 'POST', '/sifre-sifirla', { govde: { rumuz: 'Ayse_01', kod: y.json.kurtarma_kodu, yeni_sifre: 'Bir-Baska-Sifre-4' } });
+  assert.equal(s.durum, 200);
+  assert.equal((await cagir(env, 'GET', '/ben', { token: y.json.oturum })).durum, 401);   // sıfırlama da oturumları kapatır
+  assert.equal((await cagir(env, 'GET', '/ben', { token: s.json.oturum })).durum, 200);
+  assert.equal((await cagir(env, 'GET', '/ben', { token: s.json.oturum })).json.uye.rumuz, 'Ayse_01');
 });
 
 test('Telegram üyesi şifre ekleyebilir: eski gerekmez, kurtarma kodu bir kez verilir, sonra eski gerekir', async () => {
@@ -190,19 +231,21 @@ test('Telegram üyesi şifre ekleyebilir: eski gerekmez, kurtarma kodu bir kez v
   assert.equal((await cagir(env, 'POST', '/ben/kurtarma-kodu', { token, govde: { sifre: 'x' } })).durum, 400);   // şifresizken kod yenilenemez
   const r = await cagir(env, 'POST', '/ben/sifre', { token, govde: { yeni: SIFRE } });
   assert.equal(r.durum, 200); assert.match(r.json.kurtarma_kodu, KOD_DESENI);
+  const yt = r.json.oturum;
   assert.equal((await cagir(env, 'POST', '/giris/sifre', { govde: { rumuz: 'Tg_Ekle', sifre: SIFRE } })).durum, 200);
-  assert.equal((await cagir(env, 'POST', '/ben/sifre', { token, govde: { yeni: 'Yepyeni-Sifre-3' } })).durum, 401);
-  assert.equal((await cagir(env, 'GET', '/ben', { token })).json.uye.sifre_var, true);
+  assert.equal((await cagir(env, 'POST', '/ben/sifre', { token: yt, govde: { yeni: 'Yepyeni-Sifre-3' } })).durum, 401);
+  assert.equal((await cagir(env, 'GET', '/ben', { token: yt })).json.uye.sifre_var, true);
 });
 
 // ---------- Turnstile ve genel ayar ----------
-test('Turnstile: gizli anahtar varsa /kayit jeton ister ve siteverify ile doğrular; yoksa atlanır', async () => {
+test('Turnstile: gizli anahtar varsa /kayit jeton ister, siteverify ile doğrular ve hostname\'i kontrol eder; yoksa atlanır', async () => {
   const env = ortam({ TURNSTILE_GIZLI: 'gizli', TURNSTILE_SITE: 'site-anahtari' });
   const ayar = await cagir(env, 'GET', '/giris/ayar');
   assert.equal(ayar.json.turnstile_site, 'site-anahtari'); assert.equal(ayar.json.google_istemci, ''); assert.equal(ayar.json.sifre, true);
   assert.equal((await cagir(env, 'GET', '/durum')).json.giris.turnstile_site, 'site-anahtari');
   assert.equal((await cagir(ortam(), 'GET', '/giris/ayar')).json.turnstile_site, '');
-  const f = sahteFetch(async (url, s) => new Response(JSON.stringify({ success: String(s.body).includes('response=iyi') }), { status: 200 }));
+  const yanit = (govde) => async (url, s) => new Response(JSON.stringify(govde(String(s.body))), { status: 200 });
+  const f = sahteFetch(yanit((b) => ({ success: b.includes('response=iyi'), hostname: 'kpsstercihi.com' })));
   try {
     assert.equal((await kayitOl(env)).durum, 400);
     assert.equal(f.cagrilar.length, 0);   // jeton yoksa dış istek yapılmaz
@@ -210,13 +253,20 @@ test('Turnstile: gizli anahtar varsa /kayit jeton ister ve siteverify ile doğru
     assert.equal((await kayitOl(env, 'Ayse_01', SIFRE, { turnstile: 'iyi' })).durum, 200);
     assert.equal(f.cagrilar[0].url, 'https://challenges.cloudflare.com/turnstile/v0/siteverify');
     assert.ok(String(f.cagrilar[0].secenek.body).includes('secret=gizli'));
-    f.geri();
-    const f2 = sahteFetch(async () => { throw new Error('ağ'); });
-    try { assert.equal((await kayitOl(env, 'Baska_Uye', SIFRE, { turnstile: 'iyi' })).durum, 400); } finally { f2.geri(); }
-    assert.equal((await kayitOl(ortam(), 'Ayse_01')).durum, 200);   // yapılandırılmamışsa jeton aranmaz
   } finally { f.geri(); }
+  for (const [host, beklenen] of [['www.kpsstercihi.com', 200], ['baska-site.example.net', 400], [undefined, 400]]) {
+    const g = sahteFetch(yanit(() => ({ success: true, hostname: host })));
+    try { assert.equal((await kayitOl(env, `Host_${beklenen}_${String(host).length}`, SIFRE, { turnstile: 'iyi' })).durum, beklenen, String(host)); } finally { g.geri(); }
+  }
+  const yerel = ortam({ TURNSTILE_GIZLI: 'gizli', ORTAM: 'yerel' });
+  const h = sahteFetch(yanit(() => ({ success: true, hostname: 'localhost' })));
+  try { assert.equal((await kayitOl(yerel, 'Yerel_U', SIFRE, { turnstile: 'iyi' })).durum, 200); } finally { h.geri(); }
+  const h2 = sahteFetch(yanit(() => ({ success: true, hostname: 'localhost' })));
+  try { assert.equal((await kayitOl(env, 'Yerel_V', SIFRE, { turnstile: 'iyi' })).durum, 400); } finally { h2.geri(); }   // üretimde localhost kabul edilmez
+  const f2 = sahteFetch(async () => { throw new Error('ağ'); });
+  try { assert.equal((await kayitOl(env, 'Baska_Uye', SIFRE, { turnstile: 'iyi' })).durum, 400); } finally { f2.geri(); }
+  assert.equal((await kayitOl(ortam(), 'Ayse_01')).durum, 200);   // yapılandırılmamışsa jeton aranmaz
 });
-
 // ---------- Google ----------
 const GOOGLE_ISTEMCI = '1234567890-abc.apps.googleusercontent.com';
 async function anahtarCifti() {
@@ -271,6 +321,18 @@ test('Google jeton doğrulama: geçerli jeton kabul; yanlış aud/iss, süresi d
   } finally { f.geri(); googleAnahtarOnbellegiTemizle(); }
 });
 
+test('Google JWKS: bilinmeyen kid için zorla yenileme dakikada en çok bir kez', async () => {
+  googleAnahtarOnbellegiTemizle();
+  const env = ortam({ GOOGLE_ISTEMCI_KIMLIGI: GOOGLE_ISTEMCI });
+  const { ozel, jwk } = await anahtarCifti();
+  const sayac = { n: 0 };
+  const f = jwksFetch(jwk, sayac);
+  try {
+    assert.equal((await googleJetonuDogrula(env, await googleJetonu(ozel), simdi())).tamam, true);   // ilk çekim
+    for (let i = 0; i < 5; i++) assert.equal((await googleJetonuDogrula(env, await googleJetonu(ozel, {}, { kid: `sahte-${i}` }), simdi())).tamam, false);
+    assert.equal(sayac.n, 2);   // ilk çekim + tek zorla yenileme; 4 sahte kid daha Google'a gitmedi
+  } finally { f.geri(); googleAnahtarOnbellegiTemizle(); }
+});
 test('POST /giris/google: yeni üye rumuz seçer, sonraki girişte doğrudan oturum; kapalıysa 404; e-posta saklanmaz', async () => {
   googleAnahtarOnbellegiTemizle();
   const env = ortam({ GOOGLE_ISTEMCI_KIMLIGI: GOOGLE_ISTEMCI });
@@ -384,12 +446,162 @@ test('profil: /ben/profil kaydeder, /ben döner; beyaz liste dışı alanlar at�
   assert.equal((await cagir(env, 'POST', '/ben/profil', { token, govde: { profil: { ...PROFIL, iller: Array.from({ length: 5000 }, () => 'Ankara') } } })).durum, 400);
   assert.equal((await cagir(env, 'POST', '/ben/profil', { token, govde: {} })).durum, 400);
   assert.deepEqual((await cagir(env, 'GET', '/ben', { token })).json.profil, PROFIL);   // bozuk istekler eskisini bozmadı
+  ipSinirSifirla();   // üye başına dakikada 10 kayıt sınırı bellek içidir
   const atla = await cagir(env, 'POST', '/ben/profil', { token, govde: { profil: { v: 1, atlandi: true, t: '2026-11-02' } } });
   assert.deepEqual(atla.json.profil, { v: 1, atlandi: true, t: '2026-11-02' });
   assert.equal((await cagir(env, 'POST', '/ben/profil', { token, govde: { profil: null } })).durum, 200);
   assert.equal((await cagir(env, 'GET', '/ben', { token })).json.profil, null);
 });
 
+test('profil: değişmediyse UPDATE yapılmaz, iller tekrarsız, üye başına dakikada 10 kayıt', async () => {
+  const env = ortam();
+  const k = await kayitOl(env);
+  const token = k.json.oturum;
+  const degisiklik = () => env.DB.ham.prepare('SELECT total_changes() AS n').get().n;
+  const r1 = await cagir(env, 'POST', '/ben/profil', { token, govde: { profil: { ...PROFIL, iller: ['Ankara', 'Ankara', 'İzmir', 'Ankara'] } } });
+  assert.deepEqual(r1.json.profil.iller, ['Ankara', 'İzmir']);
+  const once = degisiklik();
+  const r2 = await cagir(env, 'POST', '/ben/profil', { token, govde: { profil: { ...PROFIL, iller: ['Ankara', 'İzmir'] } } });
+  assert.equal(r2.durum, 200);
+  assert.equal(degisiklik(), once);   // aynı profil: satır değişmedi
+  await cagir(env, 'POST', '/ben/profil', { token, govde: { profil: { ...PROFIL, bolum: 'Başka' } } });
+  assert.equal(degisiklik(), once + 1);
+  for (let i = 0; i < 7; i++) assert.equal((await cagir(env, 'POST', '/ben/profil', { token, govde: { profil: PROFIL } })).durum, 200);
+  assert.equal((await cagir(env, 'POST', '/ben/profil', { token, govde: { profil: PROFIL } })).durum, 429);   // 11. istek
+  assert.equal((await cagir(env, 'GET', '/ben', { token })).durum, 200);
+});
+
+// ---------- Türkçe harfe duyarsız benzersiz rumuz ----------
+const KAT_ORNEKLERI = ['Çağlar', 'ÇAĞLAR', 'caglar', 'Şükrü.1', 'sukru_1', 'İREM', 'Irmak', 'ırmak', 'IRMAK', 'iremi', 'ışık_x', 'IŞIK.X', 'ÖMER', 'ömer', 'Ümit', 'umit', 'Gül_Şen', 'GUL.SEN', 'ali.veli', 'Ali_Veli', 'ALİ', 'ali', 'Ağrı35', 'agri35', 'ÜÇ_ÖĞ', 'uc.og', 'Ab.c_d1'];
+test('rumuz_kat: JS rumuzKat ile migration SQL aynı sonucu verir', async () => {
+  const { DatabaseSync } = await import('node:sqlite');
+  const { readFileSync } = await import('node:fs');
+  const dosya = (y) => readFileSync(new URL(y, import.meta.url), 'utf8');
+  const db = new DatabaseSync(':memory:');
+  db.exec(dosya('./eski-schema.sql'));
+  for (const m of ['0002_ozellikler', '0003_odalar', '0004_ozel_takip']) db.exec(dosya(`../migrations/${m}.sql`));
+  const tekil = new Map(); const cakisanlar = new Set();
+  for (const r of KAT_ORNEKLERI) { const k = rumuzKat(r); if (tekil.has(k)) cakisanlar.add(r); else tekil.set(k, r); }
+  assert.ok(cakisanlar.size > 5);
+  const ekle2 = db.prepare('INSERT INTO uyeler (tg_id, rumuz, kayit) VALUES (?, ?, 1)');
+  [...tekil.values()].forEach((r, i) => ekle2.run(2000 + i, r));
+  db.exec(dosya('../migrations/0005_kayit.sql'));
+  for (const s of db.prepare('SELECT rumuz, rumuz_kat FROM uyeler').all()) assert.equal(s.rumuz_kat, rumuzKat(s.rumuz), s.rumuz);
+  // taze şemadaki indeks gerçekten çakışmayı engeller
+  const taze = new DatabaseSync(':memory:'); taze.exec(dosya('../schema.sql'));
+  taze.prepare("INSERT INTO uyeler (rumuz, rumuz_kat) VALUES ('Ayşe_1', ?)").run(rumuzKat('Ayşe_1'));
+  assert.throws(() => taze.prepare("INSERT INTO uyeler (rumuz, rumuz_kat) VALUES ('AYSE.1', ?)").run(rumuzKat('AYSE.1')), /UNIQUE/);
+  assert.equal(rumuzKat('İREM'), rumuzKat('irem')); assert.equal(rumuzKat('Irmak'), rumuzKat('ırmak'));
+});
+
+test('kayıt: Türkçe harf, büyük/küçük harf, "." ve "_" farkıyla aynı rumuz alınamaz (tüm giriş yollarında)', async () => {
+  const env = ortam();
+  assert.equal((await kayitOl(env, 'Çağlar_Ş')).durum, 200);
+  for (const r of ['CAGLAR_S', 'çağlar.ş', 'ÇAĞLARŞ', 'caglar_s']) { ipSinirSifirla(); assert.equal((await kayitOl(env, r)).durum, 409, r); }
+  assert.equal(satir(env, 'SELECT rumuz_kat FROM uyeler WHERE rumuz = ?', 'Çağlar_Ş').rumuz_kat, 'caglars');
+  // deneme girişi (yerel) ve Telegram geçici jetonu da aynı denetimden geçer
+  assert.equal((await cagir({ ...env, ORTAM: 'yerel' }, 'POST', '/giris/deneme', { govde: { rumuz: 'CAGLAR.S' } })).durum, 409);
+  const tg = await geciciUret(env, 99, simdi());
+  assert.equal((await cagir(env, 'POST', '/giris/rumuz', { govde: { gecici: tg, rumuz: 'caglar_ş' } })).durum, 409);
+  const gg = await geciciGoogleUret(env, '555', simdi());
+  assert.equal((await cagir(env, 'POST', '/giris/rumuz', { govde: { gecici: gg, rumuz: 'ÇAĞLAR.Ş' } })).durum, 409);
+  // giriş ve sıfırlama farklı yazımla da çalışır; kod sıfırlama aynı hesaba gider
+  assert.equal((await cagir(env, 'POST', '/giris/sifre', { govde: { rumuz: 'caglar.s', sifre: SIFRE } })).durum, 200);
+  // NFC: ayrık (NFD) yazılmış rumuz aynı hesaba çözülür
+  assert.equal((await cagir(env, 'POST', '/giris/sifre', { govde: { rumuz: 'Çağlar_Ş'.normalize('NFD'), sifre: SIFRE } })).durum, 200);
+  env.DB.ham.prepare('DELETE FROM giris_denemeleri').run();
+  const nfd = await kayitOl(env, 'Şule_Ç'.normalize('NFD'));
+  assert.equal(nfd.durum, 200); assert.equal(nfd.json.uye.rumuz, 'Şule_Ç'.normalize('NFC'));
+});
+
+test('uyeOlustur: yalnız UNIQUE hatası 409 olur, başka D1 hatası 500 + günlük', async () => {
+  const env = ortam();
+  const gercek = env.DB.prepare.bind(env.DB);
+  const gunluk = []; const eskiLog = console.error; console.error = (...a) => gunluk.push(a.join(' '));
+  try {
+    env.DB.prepare = (sql) => {
+      if (/^INSERT INTO uyeler/.test(sql)) return { bind() { return this; }, async run() { throw new Error('D1_ERROR: database is locked'); } };
+      return gercek(sql);
+    };
+    const r = await kayitOl(env, 'Hata_U');
+    assert.equal(r.durum, 500);
+    assert.ok(gunluk.some((s) => /database is locked/.test(s)));
+    env.DB.prepare = (sql) => {
+      if (/^INSERT INTO uyeler/.test(sql)) return { bind() { return this; }, async run() { throw new Error('D1_ERROR: UNIQUE constraint failed: uyeler.rumuz_kat'); } };
+      return gercek(sql);
+    };
+    ipSinirSifirla();
+    assert.equal((await kayitOl(env, 'Hata_V')).durum, 409);
+  } finally { console.error = eskiLog; }
+});
+
+// ---------- IP anahtarı, ön süzgeç, temizlik ----------
+test('IP anahtarı: IPv6 /64 ile, X-Forwarded-For yok sayılır, başlık yoksa tek "yok" kovası', async () => {
+  assert.equal(ipOnEki('2001:db8:1:2:aaaa:bbbb:cccc:dddd'), ipOnEki('2001:0db8:0001:0002::1'));
+  assert.notEqual(ipOnEki('2001:db8:1:2::1'), ipOnEki('2001:db8:1:3::1'));
+  assert.equal(ipOnEki('2001:db8::5'), 'v6:2001:db8:0:0');
+  assert.equal(ipOnEki('::ffff:192.0.2.9'), ipOnEki('192.0.2.9'));
+  assert.equal(ipOnEki(null), 'yok'); assert.equal(ipOnEki(''), 'yok');
+  const ist = (h) => ipAnahtari(new Request('https://x/', { headers: h }));
+  assert.equal(await ist({ 'CF-Connecting-IP': '2001:db8:1:2:1:2:3:4' }), await ist({ 'CF-Connecting-IP': '2001:db8:1:2:ffff::9' }));
+  assert.equal(await ist({ 'X-Forwarded-For': '1.2.3.4' }), await ist({ 'X-Forwarded-For': '5.6.7.8' }));   // sahte başlıkla kova değişmez
+  assert.equal(await ist({}), await ist({ 'X-Forwarded-For': '9.9.9.9' }));
+  assert.notEqual(await ist({ 'CF-Connecting-IP': '192.0.2.1' }), await ist({}));
+  // /64 içinden değişen adreslerle sınır aşılamaz
+  const env = ortam();
+  for (let i = 0; i < 5; i++) assert.equal((await kayitOl(env, `V6_${i}x`, SIFRE, {}, { 'CF-Connecting-IP': `2001:db8:5:5::${i + 1}` })).durum, 200);
+  assert.equal((await kayitOl(env, 'V6_son', SIFRE, {}, { 'CF-Connecting-IP': '2001:db8:5:5:aaaa::1' })).durum, 429);
+});
+
+test('bellek içi ön süzgeç D1 yazmasından önce çalışır (kayıt, giriş, sıfırlama, Google, şifre, profil uçları)', async () => {
+  const env = ortam({ GOOGLE_ISTEMCI_KIMLIGI: GOOGLE_ISTEMCI });
+  const u = await uyeGirisi(env, 'Sinir_U');
+  const yaz = () => env.DB.ham.prepare('SELECT COUNT(*) AS n FROM giris_denemeleri').get().n;
+  const durumlar = {};
+  const uclar = [['/kayit', { rumuz: 'ab', sifre: 'x' }, 10], ['/giris/sifre', { rumuz: 'Yok_Biri', sifre: 'yanlis-sifre-1' }, 20],
+    ['/sifre-sifirla', { rumuz: 'Yok_Biri', kod: 'AAAA-AAAA-AAAA', yeni_sifre: SIFRE }, 10], ['/giris/google', { kimlik_jetonu: 'x' }, 20],
+    ['/ben/sifre', { eski: 'x', yeni: SIFRE }, 10], ['/ben/kurtarma-kodu', { sifre: 'x' }, 10], ['/ben/profil', { profil: null }, 30]];
+  for (const [yol, govde, limit] of uclar) {
+    ipSinirSifirla();
+    let son;
+    for (let i = 0; i < limit + 1; i++) son = await cagir(env, 'POST', yol, { govde, token: u.token });
+    durumlar[yol] = son.durum;
+    const once = yaz();
+    const bir = await cagir(env, 'POST', yol, { govde, token: u.token });
+    assert.equal(bir.durum, 429, yol);
+    assert.equal(yaz(), once, `${yol}: sınır aşıldıktan sonra D1'e yazılmamalı`);
+  }
+  assert.ok(Object.values(durumlar).every((d) => d === 429));
+});
+
+test('giris_denemeleri: fırsat temizliği eski satırları siler, taze satırları korur', async () => {
+  const env = ortam();
+  const t = simdi();
+  env.DB.ham.prepare("INSERT INTO giris_denemeleri (tur, anahtar, olusma) VALUES ('kayit', 'a', ?), ('kayit', 'b', ?), ('giris_ip', 'c', ?)").run(t - 7200, t - 5000, t - 10);
+  await denemeTemizle(env, t);
+  assert.deepEqual(env.DB.ham.prepare('SELECT anahtar FROM giris_denemeleri').all().map((r) => r.anahtar), ['c']);
+  env.DB.ham.prepare("INSERT INTO giris_denemeleri (tur, anahtar, olusma) VALUES ('kayit', 'eski', ?)").run(t - 9000);
+  await denemeYaz(env, KAYIT_SINIRI, 'yeni', t, 0);   // rastgele < 0.01: temizlik tetiklenir
+  assert.deepEqual(env.DB.ham.prepare('SELECT anahtar FROM giris_denemeleri ORDER BY anahtar').all().map((r) => r.anahtar), ['c', 'yeni']);
+});
+
+test('kayıt: rumuz uygunluğu ve sayaç özetlemeden önce; başarısız (alınmış rumuz) denemeler de IP sınırına işler', async () => {
+  const env = ortam();
+  const ip = { 'CF-Connecting-IP': '203.0.113.77' };
+  assert.equal((await kayitOl(env, 'Ayse_01', SIFRE, {}, ip)).durum, 200);
+  for (let i = 0; i < 4; i++) assert.equal((await kayitOl(env, 'ayse.01', SIFRE, {}, ip)).durum, 409);
+  assert.equal(satir(env, "SELECT COUNT(*) AS n FROM giris_denemeleri WHERE tur = 'kayit'").n, 5);
+  assert.equal((await kayitOl(env, 'Bambaska_U', SIFRE, {}, ip)).durum, 429);
+  // geçersiz rumuz / zayıf şifre D1'e yazmaz (yalnız özetleme öncesi sayaç)
+  const env2 = ortam();
+  await kayitOl(env2, 'ab'); await kayitOl(env2, 'Gecerli_U', '12345678');
+  assert.equal(satir(env2, 'SELECT COUNT(*) AS n FROM giris_denemeleri').n, 0);
+  // özetleme yapılmadan 409 döner: hash çağrısı gerekmediği için sahte biber bile yanıtı değiştirmez
+  const env3 = ortam();
+  await kayitOl(env3, 'Ayse_01');
+  const sure = Date.now(); const r = await kayitOl(env3, 'AYSE_01'); 
+  assert.equal(r.durum, 409); assert.ok(Date.now() - sure < 2000);
+});
 test('profilTemizle: 2 KB sınırı, sayı ve il adı kuralları', () => {
   assert.equal(profilTemizle({ ...PROFIL, puan: 500 }).puan, undefined);
   assert.deepEqual(profilTemizle({ ...PROFIL, iller: ['Ankara', '<script>', 5, 'A'.repeat(50)] }).iller, ['Ankara']);

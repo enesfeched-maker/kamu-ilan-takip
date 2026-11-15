@@ -13,7 +13,9 @@ CREATE TABLE IF NOT EXISTS uyeler (
   sifre_ozet TEXT,                   -- pbkdf2$<tekrar>$<tuz>$<ozet>; yalnız şifreli üyelerde
   kurtarma_ozet TEXT,                -- kurtarma kodunun HMAC özeti
   google_sub TEXT,                   -- Google hesap kimliği (e-posta saklanmaz)
-  profil TEXT                        -- sitedeki kit-profil (JSON, beyaz listeli)
+  profil TEXT,                       -- sitedeki kit-profil (JSON, beyaz listeli)
+  rumuz_kat TEXT,                    -- küçük harf, Türkçe harfler ASCII, "." ve "_" atılmış rumuz (benzersiz)
+  oturum_surum INTEGER DEFAULT 0     -- şifre/kurtarma kodu değişince artar, eski oturumlar kapanır
 );
 CREATE TABLE IF NOT EXISTS basliklar (
   id INTEGER PRIMARY KEY,
@@ -124,11 +126,13 @@ CREATE TABLE IF NOT EXISTS takipler (
 );
 CREATE INDEX IF NOT EXISTS takipler_baslik ON takipler(baslik_id);
 CREATE UNIQUE INDEX IF NOT EXISTS uyeler_google_sub ON uyeler(google_sub);
+CREATE UNIQUE INDEX IF NOT EXISTS uyeler_rumuz_kat ON uyeler(rumuz_kat);
 CREATE TABLE IF NOT EXISTS giris_denemeleri (
-  tur TEXT,                          -- kayit | giris_ip | giris_rumuz
+  tur TEXT,                          -- kayit | giris_ip | giris_rumuz_ip | giris_rumuz
   anahtar TEXT,                     -- IP özeti ya da küçük harfli rumuz
   olusma INTEGER
 );
 CREATE INDEX IF NOT EXISTS giris_denemeleri_anahtar ON giris_denemeleri(tur, anahtar, olusma);
-INSERT OR IGNORE INTO uyeler (id, tg_id, rumuz, kayit, kurucu, rol, bildirim) VALUES (1, NULL, 'KPSS Tercihi', 0, 0, 'sistem', 0);
-INSERT OR IGNORE INTO uyeler (id, tg_id, rumuz, kayit, kurucu, rol, bildirim) VALUES (2, NULL, 'Asistan', 0, 0, 'asistan', 0);
+CREATE INDEX IF NOT EXISTS giris_denemeleri_olusma ON giris_denemeleri(olusma);
+INSERT OR IGNORE INTO uyeler (id, tg_id, rumuz, rumuz_kat, kayit, kurucu, rol, bildirim) VALUES (1, NULL, 'KPSS Tercihi', 'kpss tercihi', 0, 0, 'sistem', 0);
+INSERT OR IGNORE INTO uyeler (id, tg_id, rumuz, rumuz_kat, kayit, kurucu, rol, bildirim) VALUES (2, NULL, 'Asistan', 'asistan', 0, 0, 'asistan', 0);

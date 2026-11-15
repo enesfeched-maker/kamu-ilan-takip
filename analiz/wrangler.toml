@@ -31,6 +31,9 @@ IZINLI_KOKENLER = "https://kpsstercihi.com,https://www.kpsstercihi.com"
 TOPLAMA_KAPALI = "0"
 
 # Sir (degeri buraya YAZILMAZ): PANEL_ANAHTARI -> `wrangler secret put PANEL_ANAHTARI --config wrangler.toml`
+# Forum bolumu icin ikinci sir: FORUM_YONETICI_ANAHTARI -> forum Worker'indaki YONETICI_ANAHTARI ile ayni deger
+#   `wrangler secret put FORUM_YONETICI_ANAHTARI --config wrangler.toml`. Yoksa panelde "Forum anahtari tanimli degil" yazar, panel calisir.
+#   Istege bagli [vars] FORUM_API (varsayilan https://forum-api.kpsstercihi.com). Anahtar tarayiciya gitmez; /panel/forum sunucuda 5 dk onbellekli ceker.
 # (kurulum.ps1 bunu gizli girisle sorar).
 # Yerel deneme icin: `wrangler dev --local --var ORTAM:yerel --var PANEL_ANAHTARI:deneme` (ORTAM=yerel panel girisini atlar;
 # uretimde ORTAM tanimli degildir).

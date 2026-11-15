@@ -8,8 +8,10 @@ const EN_COK_YASAM = 24 * 3600;
 const VARSAYILAN_SN = 3600;
 const ISSUERLAR = new Set(['accounts.google.com', 'https://accounts.google.com']);
 
+const ZORLA_ARALIK = 60_000;   // bilinmeyen kid için JWKS en çok dakikada bir zorla yenilenir (sahte kid ile Google'a istek yağdırılamaz)
+let sonZorla = 0;
 let bellek = null;           // { anahtarlar, bitis (ms) }
-export function googleAnahtarOnbellegiTemizle() { bellek = null; }
+export function googleAnahtarOnbellegiTemizle() { bellek = null; sonZorla = 0; }
 
 function maxAge(yanit) {
   const m = /max-age=(\d+)/i.exec(yanit.headers.get('Cache-Control') || '');
@@ -59,7 +61,10 @@ export async function googleJetonuDogrula(env, jeton, simdi) {
   try {
     let anahtarlar = await anahtarlariGetir();
     let jwk = anahtarlar.find((k) => k.kid === baslik.kid);
-    if (!jwk) { anahtarlar = await anahtarlariGetir(true); jwk = anahtarlar.find((k) => k.kid === baslik.kid); }   // anahtar yenilenmiş olabilir
+    if (!jwk && Date.now() - sonZorla >= ZORLA_ARALIK) {   // anahtar yenilenmiş olabilir
+      sonZorla = Date.now();
+      anahtarlar = await anahtarlariGetir(true); jwk = anahtarlar.find((k) => k.kid === baslik.kid);
+    }
     if (!jwk || jwk.kty !== 'RSA') return { tamam: false, neden: 'anahtar' };
     const k = await crypto.subtle.importKey('jwk', { kty: jwk.kty, n: jwk.n, e: jwk.e, alg: 'RS256', ext: true }, { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' }, false, ['verify']);
     imzaTamam = await crypto.subtle.verify('RSASSA-PKCS1-v1_5', k, b64uCoz(parcalar[2]), new TextEncoder().encode(`${parcalar[0]}.${parcalar[1]}`));

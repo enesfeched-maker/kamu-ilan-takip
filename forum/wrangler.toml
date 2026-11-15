@@ -26,6 +26,8 @@ TELEGRAM_BOT_ADI = "kamuilanibot"
 #   TELEGRAM_BOT_TOKEN  - giris dogrulamasi ve bildirimler
 #   OTURUM_SIRRI        - oturum jetonlarinin imzasi (uzun rastgele metin)
 #   YONETICI_ANAHTARI   - X-Yonetici basligi icin yonetim anahtari
-# Yerel deneme: wrangler dev --local --var ORTAM:yerel --var OTURUM_SIRRI:deneme --var YONETICI_ANAHTARI:deneme
+#   SIFRE_BIBERI        - ZORUNLU (sifre/kurtarma kodu icin; OTURUM_SIRRI'ndan farkli uzun rastgele metin). Yoksa sifreli uyelik kapali.
+#   TURNSTILE_GIZLI     - istege bagli (robot kontrolu); TURNSTILE_SITE ve GOOGLE_ISTEMCI_KIMLIGI [vars] olarak tanimlanir
+# Yerel deneme: wrangler dev --local --var ORTAM:yerel --var OTURUM_SIRRI:deneme --var SIFRE_BIBERI:deneme --var YONETICI_ANAHTARI:deneme
 # (ORTAM=yerel: /giris/deneme acilir, localhost kokenleri izinli olur, Telegram bildirimi gonderilmez.
 #  Uretimde ORTAM tanimli degildir.)
