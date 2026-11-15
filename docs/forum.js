@@ -1,7 +1,7 @@
 /* KPSS Tercihi — forum (Kasım 2026, sohbet sürümü).
-   Kitle günü Telegram'da geçiriyor; forum da bir mesajlaşma uygulaması gibi çalışır:
-   - /forum/ #forum: solda sohbet odaları ve sorular (okunmamış sayılarıyla), sağda açık konuşma (telefonda tek panel);
-   - ilan sayfası #tartisma: başvuran sayısı + ilanla ilgili sorular, aynı mesaj balonlarıyla;
+   Forum iki ayrı bölümdür: Soru-Cevap (kalıcı sorular, kart cevaplar) ve Sohbet odaları (anlık, mesaj balonları).
+   - /forum/ #forum: üstte iki bölüm sekmesi; soru listesi/sayfası ya da odalar (geniş ekranda iki panel);
+   - ilan sayfası #tartisma: başvuran sayısı + ilanla ilgili sorular (soru-cevap dili);
    - her sayfada: menüdeki "Forum" bağlantısına okunmamış bildirim sayısı, ana sayfa listesinde konuşulan ilan rozeti.
    Otomatik yanıt ve site hesabı her zaman etiketlidir; sayılar gerçek veridir, uydurma etkinlik gösterilmez.
    Yoklama ucuzdur: yalnız son mesajdan sonrası istenir (/baslik/:id/yeni). */
@@ -230,8 +230,32 @@
     });
     return h;
   }
-  function yaziciHtml(yer, ipucu, hizli) {
-    return '<form class="fr-yazici" data-yer="' + yer + '">'
+  /* ---------- soru-cevap: cevap kartları ---------- */
+  // Forum dili: her cevap ayrı bir kart; en çok "faydalı" bulunan insan cevabı (en az 1 oy) etiketlenip en üste alınır.
+  function cevapHtml(mesajlar, secenek) {
+    secenek = secenek || {};
+    var harita = {}; mesajlar.forEach(function (m) { harita[m.id] = m; });
+    var u = uye(), enIyi = null;
+    if (!secenek.siraKoru) mesajlar.forEach(function (m) { if (insanMi(m) && m.faydali >= 1 && (!enIyi || m.faydali > enIyi.faydali)) enIyi = m; });
+    var sirali = enIyi && mesajlar.length > 1 ? [enIyi].concat(mesajlar.filter(function (m) { return m !== enIyi; })) : mesajlar;
+    return sirali.map(function (m) {
+      var ben = m.benim || (u && u.rumuz === m.rumuz && insanMi(m));
+      var ust = m.ust_id ? harita[m.ust_id] : null;
+      var eylem = ben ? (m.faydali ? '<span class="fr-faydali-sayi">' + sayi(m.faydali) + ' kişi faydalı buldu</span>' : '')
+        : '<button type="button" class="fr-eylem fr-faydali-d" data-faydali="' + m.id + '" aria-pressed="' + (m.oyladim ? 'true' : 'false') + '">' + ikon(BASPARMAK) + '<span>Faydalı' + (m.faydali ? ' ' + sayi(m.faydali) : '') + '</span></button>';
+      eylem += '<button type="button" class="fr-eylem" data-yanitla="' + m.id + '" data-rumuz="' + esc(m.rumuz) + '" data-rol="' + esc(m.rol) + '">Yanıtla</button>';
+      if (ben) eylem += '<button type="button" class="fr-eylem fr-sik" data-sil="' + m.id + '">Sil</button>';
+      else if (insanMi(m)) eylem += '<button type="button" class="fr-eylem fr-sik" data-sikayet="' + m.id + '">Bildir</button>';
+      return '<article class="fr-cevap' + (m === enIyi ? ' fr-en-iyi' : '') + (m.rol === 'asistan' ? ' fr-cevap-bot' : '') + (ben ? ' fr-benim' : '') + (secenek.yeniden && m.id > secenek.yeniden ? ' fr-yeni' : '') + '" id="y' + m.id + '">'
+        + (m === enIyi ? '<p class="fr-en-iyi-et">En faydalı cevap</p>' : '')
+        + '<header>' + avatar(m) + '<div><button type="button" class="fr-ad" data-uye="' + esc(m.rumuz) + '"' + (insanMi(m) ? '' : ' disabled') + '>' + esc(m.rumuz) + '</button>' + etiket(m)
+        + '<time datetime="' + new Date(m.olusma * 1000).toISOString() + '">' + zaman(m.olusma) + '</time></div></header>'
+        + (m.ust_id ? '<button type="button" class="fr-yanitlanan-et" data-git="y' + m.ust_id + '">' + (ust ? esc(ust.rumuz) + ' kişisine yanıt' : 'Önceki bir mesaja yanıt') + '</button>' : '')
+        + '<div class="fr-metin">' + metin(m.govde) + '</div><footer>' + eylem + '</footer></article>';
+    }).join('');
+  }
+  function yaziciHtml(yer, ipucu, hizli, tur) {
+    return '<form class="fr-yazici' + (tur === 'sohbet' ? ' fr-yazici-sohbet' : ' fr-yazici-cevap') + '" data-yer="' + yer + '">'
       + (hizli ? '<div class="fr-hizli">' + hizli.map(function (s) { return '<button type="button" class="fr-cip" data-hizli>' + esc(s) + '</button>'; }).join('') + '</div>' : '')
       + '<div class="fr-yanitlanan" hidden><span></span><button type="button" class="fr-eylem" data-iptal aria-label="Yanıtı iptal et">×</button></div>'
       + '<div class="fr-yazici-ic"><label class="sr-only" for="fr-metin-' + yer + '">Mesajın</label><textarea id="fr-metin-' + yer + '" rows="1" maxlength="2000" placeholder="' + esc(ipucu) + '" enterkeyhint="send"></textarea>'
@@ -266,9 +290,10 @@
       etk.hidden = false;
       ta.focus();
     });
-    // Telefonda Enter yeni satır; masaüstünde Enter gönderir, Shift+Enter yeni satır (mesajlaşma uygulamalarındaki gibi).
+    // Sohbette (masaüstü) Enter gönderir, Shift+Enter yeni satır; cevap yazarken Enter yeni satır, Ctrl+Enter gönderir.
     ta.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' && !e.shiftKey && !e.isComposing && GENIS.matches) { e.preventDefault(); f.requestSubmit(); }
+      if (e.key === 'Enter' && !e.shiftKey && !e.isComposing && GENIS.matches && f.classList.contains('fr-yazici-sohbet')) { e.preventDefault(); f.requestSubmit(); }
+      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); f.requestSubmit(); }
     });
     f.onsubmit = function (e) {
       if (e && e.preventDefault) e.preventDefault();
@@ -324,10 +349,10 @@
   function ilanBolumu(kap) {
     var ilan = kap.getAttribute('data-ilan'), ad = kap.getAttribute('data-ad') || 'Bu ilan', acik = kap.getAttribute('data-acik') === '1';
     var mesajlar = [], baslikId = null;
-    kap.innerHTML = '<div class="fr-ilan"><header class="fr-ilan-bas"><h2>Sorular</h2><span class="fr-not" data-ozet></span><a class="yazi-link fr-ilan-forum" hidden>Sohbette aç</a></header>'
-      + '<div class="fr-basvuru"></div><div class="fr-liste"></div>'
-      + yaziciHtml('ilan', 'Bu ilanla ilgili sorunu yaz…', HIZLI_SORULAR) + '</div>';
-    var liste = kap.querySelector('.fr-liste'), bas = kap.querySelector('.fr-basvuru');
+    kap.innerHTML = '<div class="fr-ilan"><header class="fr-ilan-bas"><h2>Sorular</h2><span class="fr-not" data-ozet></span><a class="yazi-link fr-ilan-forum" hidden>Forumda aç</a></header>'
+      + '<div class="fr-basvuru"></div><div class="fr-cevaplar" aria-live="polite"></div>'
+      + yaziciHtml('ilan', 'Bu ilanla ilgili sorunu yaz…', HIZLI_SORULAR, 'cevap') + '</div>';
+    var liste = kap.querySelector('.fr-cevaplar'), bas = kap.querySelector('.fr-basvuru');
 
     function basvuruCiz(b) {
       b = b || { sayi: 0 };
@@ -377,7 +402,7 @@
       } else basvur(null);
     });
     function ciz(yeniden) {
-      liste.innerHTML = sohbetHtml(mesajlar, { yeniden: yeniden });
+      liste.innerHTML = cevapHtml(mesajlar, { yeniden: yeniden, siraKoru: true });
       var n = mesajlar.filter(insanMi).length;
       kap.querySelector('[data-ozet]').textContent = n ? sayi(n) + ' mesaj' : 'Henüz soru yok';
       ctaGuncelle(n);
@@ -411,7 +436,7 @@
     eylemleriBagla(kap, function () { return mesajlar; }, function () { ciz(); });
     yenileyiciler.push(function () {
       var y = kap.querySelector('.fr-yazici');
-      if (y) { y.replaceWith(el(yaziciHtml('ilan', 'Bu ilanla ilgili sorunu yaz…', HIZLI_SORULAR))); yaziciBagla(kap, 'ilan-' + ilan, gonder); }
+      if (y) { y.replaceWith(el(yaziciHtml('ilan', 'Bu ilanla ilgili sorunu yaz…', HIZLI_SORULAR, 'cevap'))); yaziciBagla(kap, 'ilan-' + ilan, gonder); }
       return yukle();
     });
     canliTut(yukle);
@@ -514,9 +539,17 @@
     }).join('') + '<small class="fr-not">' + sayi(a.toplam) + ' oy</small></div>';
   }
 
+  // Forum sayfası iki ayrı bölümdür ve bilerek farklı görünür:
+  //   Soru-Cevap (?, ?b=<id>, ?yeni=1): kalıcı sorular, kart cevaplar, en faydalı cevap öne çıkar; klasik tek sütun.
+  //   Sohbet odaları (?bolum=sohbet, ?oda=<id>): yalnız odalar, mesaj balonları, anlık; geniş ekranda iki panel.
   function forumSayfasi(kok_) {
     var durdur = null, seciliOda = 0;
-    function git(q) { history.pushState(null, '', q || location.pathname); ciz(); if (!GENIS.matches) window.scrollTo(0, 0); }
+    function git(q) { history.pushState(null, '', q || location.pathname); ciz(); if (!GENIS.matches || !/oda=/.test(q || '')) window.scrollTo(0, 0); }
+    kok_.innerHTML = '<div class="fr-bas"><nav class="fr-bolumler" aria-label="Forum bölümleri">'
+      + '<a data-ic data-bolum="soru" href="?">' + ikon('M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.5h.01M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z') + '<span><b>Soru-Cevap</b><small>Sor, cevaplar kalıcı kalsın</small></span></a>'
+      + '<a data-ic data-bolum="sohbet" href="?bolum=sohbet">' + ikon(SOHBET) + '<span><b>Sohbet odaları</b><small>Aynı sınava hazırlananlarla anlık konuş</small></span><i class="fr-bolum-sayi" data-oda-sayi hidden></i></a>'
+      + '</nav><div class="fr-araclar"></div></div><div class="fr-icerik"></div>';
+    var icerik = kok_.querySelector('.fr-icerik'), araclar = kok_.querySelector('.fr-araclar');
     kok_.addEventListener('click', function (e) {
       var a = e.target.closest('a[data-ic]');
       if (a && !e.metaKey && !e.ctrlKey && !e.shiftKey) { e.preventDefault(); var p = document.getElementById('fr-bildirimler'); if (p) p.remove(); git(a.getAttribute('href')); return; }
@@ -527,7 +560,7 @@
       var d = e.target.closest('[data-duzey-sec]');
       if (d) {
         yaz('fr-duzey', d.getAttribute('data-duzey-sec')); iz('forum_duzey', d.getAttribute('data-duzey-sec'));
-        var Ls = kok_.querySelector('.fr-sh-liste'); if (Ls) Ls.removeAttribute('data-p');   // liste yeniden çizilsin (senin odan öne gelir)
+        var Ls = icerik.querySelector('.fr-sh-liste'); if (Ls) Ls.removeAttribute('data-p');
         ciz();
       }
       var pl = e.target.closest('[data-paylas]');
@@ -538,65 +571,48 @@
       }
     });
     window.addEventListener('popstate', ciz);
-
-    function ustCubuk(p) {
+    function araclarCiz() {
       var u = uye();
-      return '<div class="fr-ust"><form class="fr-ara" role="search"><input type="search" maxlength="60" placeholder="Ara" value="' + esc(p.q) + '" aria-label="Forumda ara"></form>'
-        + '<button type="button" class="fr-zil" data-zil aria-label="Bildirimler">' + ikon(ZIL) + '<b data-zil-sayi hidden></b></button>'
+      araclar.innerHTML = '<button type="button" class="fr-zil" data-zil aria-label="Bildirimler">' + ikon(ZIL) + '<b data-zil-sayi hidden></b></button>'
         + (u ? '<details class="fr-ben"><summary aria-label="Hesabım">' + avatar(u) + '</summary><div><p><b>' + esc(u.rumuz) + '</b></p>'
           + (u.kurucu ? '<p>Kurucu üye</p>' : '') + (u.itibar ? '<p>' + sayi(u.itibar) + ' kez faydalı bulundu</p>' : '')
           + '<label><input type="checkbox" data-bildirim' + (u.bildirim === 0 ? '' : ' checked') + '> Yanıtları Telegram\'dan bildir</label>'
           + '<button type="button" class="fr-eylem" data-cikis>Çıkış</button></div></details>'
-          : '<button type="button" class="fr-eylem fr-giris-d" data-giris>Giriş</button>')
-        + '</div>';
-    }
-    function odaSatiri(b, odaMi) {
-      var g = gorulen()[b.id], okunmamis = g != null ? Math.max(0, b.yanit_sayisi - g) : 0;
-      var benimDuzey = odaMi && b.duzey && b.duzey === duzeyim();
-      var ozet = b.kisa || katAd(b.kategori);
-      var sag = okunmamis ? '<span class="fr-oda-sayi" aria-label="' + okunmamis + ' okunmamış">' + sayi(okunmamis) + '</span>'
-        : b.yanit_sayisi ? '<span class="fr-oda-toplam">' + sayi(b.yanit_sayisi) + '</span>'
-          : (b.sabit || odaMi ? '' : '<span class="fr-oda-bekliyor">yanıtsız</span>');
-      return '<a class="fr-satir fr-oda-satir' + (b.id === seciliOda ? ' fr-secili' : '') + (okunmamis ? ' fr-okunmamis' : '') + '" data-ic href="?b=' + b.id + '"' + (b.id === seciliOda ? ' aria-current="page"' : '') + '>'
-        + (odaMi ? '<span class="fr-av fr-av-oda" aria-hidden="true">' + ikon(SOHBET) + '</span>' : avatar(b))
-        + '<span class="fr-satir-ic"><span class="fr-oda-ust"><b class="fr-satir-bas">' + esc(b.baslik) + '</b>' + (benimDuzey ? '<span class="fr-et fr-et-sen">senin odan</span>' : '') + '<time>' + zaman(b.son_hareket || b.olusma) + '</time></span>'
-        + '<span class="fr-oda-alt"><span class="fr-oda-ozet">' + (b.ilan_id ? '<span class="fr-et">ilan</span> ' : b.anket ? '<span class="fr-et">anket</span> ' : '') + esc(ozet) + '</span>' + sag + '</span></span></a>';
-    }
-    function liste(p, hedef) {
-      hedef = hedef || kok_;
-      var secili = p.bekleyen ? 'bekleyen' : p.k;
-      var dz = duzeyim(), sorulmadi = !oku('fr-duzey') && !dz;
-      hedef.innerHTML = ustCubuk(p)
-        + (sorulmadi && !p.q ? '<div class="fr-duzey-sor"><span>Hangi sınava hazırlanıyorsun?</span><div>' + DUZEYLER.slice(0, 4).map(function (d) { return '<button type="button" class="fr-cip" data-duzey-sec="' + d.kod + '">' + d.ad + '</button>'; }).join('')
-          + '<button type="button" class="fr-eylem" data-duzey-sec="yok">Geç</button></div></div>' : '')
-        + (p.q ? '<p class="fr-arama-bas"><span>“' + esc(p.q) + '” için sonuçlar</span><a class="yazi-link" data-ic href="?">Temizle</a></p>'
-          : '<nav class="fr-sekmeler" aria-label="Konular"><a data-ic href="?"' + (!secili ? ' aria-current="page"' : '') + '>Tümü</a>'
-            + '<a data-ic href="?bekleyen=1"' + (secili === 'bekleyen' ? ' aria-current="page"' : '') + '>Yanıtsız</a>'
-            + KATEGORILER.filter(function (c) { return c.kod !== 'oda'; }).map(function (c) { return '<a data-ic href="?k=' + c.kod + '"' + (secili === c.kod ? ' aria-current="page"' : '') + '>' + esc(c.ad) + '</a>'; }).join('') + '</nav>')
-        + '<div class="fr-basliklar">' + (!p.q && !secili ? '<div class="fr-grup" data-odalar hidden><h3>Sohbet odaları</h3><div></div></div><h3 class="fr-grup-bas" data-sorular-bas hidden>Sorular</h3>' : '')
-        + '<div data-sorular><p class="fr-yukleniyor">Yükleniyor…</p></div></div>'
-        + '<a class="fr-yeni-dugme btn btn-ana" data-ic href="?yeni=1' + (p.k && p.k !== 'ilan' && p.k !== 'etkinlik' ? '&k=' + p.k : '') + '">' + ikon('M12 5v14M5 12h14') + '<span>Soru sor</span></a>';
-      var kap = hedef.querySelector('[data-sorular]'), f = hedef.querySelector('.fr-ara');
-      f.onsubmit = function (e) { e.preventDefault(); var q = f.querySelector('input').value.trim(); if (q.length >= 2) { iz('forum_ara'); git('?q=' + encodeURIComponent(q)); } else if (!q) git('?'); };
+          : '<button type="button" class="fr-eylem fr-giris-d" data-giris>Giriş</button>');
       bildirimleriYokla();
-      var odaKap = hedef.querySelector('[data-odalar]');
-      if (odaKap) api('/basliklar?kategori=oda').then(function (j) {
-        var o = (j.basliklar || []).slice();
-        if (!o.length) return;
-        o.sort(function (a, b) { return (b.duzey && b.duzey === dz) - (a.duzey && a.duzey === dz) || (b.son_hareket - a.son_hareket); });
-        odaKap.querySelector('div').innerHTML = o.map(function (b) { return odaSatiri(b, true); }).join('');
-        odaKap.hidden = false;
-        var sb = hedef.querySelector('[data-sorular-bas]'); if (sb) sb.hidden = false;
-      }, function () {});
+    }
+    function okunmamis(b) { var g = gorulen()[b.id]; return g != null ? Math.max(0, b.yanit_sayisi - g) : 0; }
+
+    /* ----- Soru-Cevap ----- */
+    function soruSatiri(b) {
+      var yeniN = okunmamis(b), n = b.yanit_sayisi || 0;
+      var hedef = '?b=' + b.id;
+      return '<a class="fr-soru-satir' + (yeniN ? ' fr-okunmamis' : '') + '" data-ic href="' + hedef + '">'
+        + '<span class="fr-cevap-kutu' + (n ? ' fr-cevapli' : b.sabit ? '' : ' fr-yanitsiz') + '"><b>' + sayi(n) + '</b><small>cevap</small></span>'
+        + '<span class="fr-soru-ic"><b class="fr-soru-bas">' + (b.sabit ? '<span class="fr-sabit">Sabit</span> ' : '') + esc(b.baslik) + '</b>'
+        + '<span class="fr-soru-alt">' + parcalar([b.ilan_id ? 'İlan sorusu' : katAd(b.kategori), duzeyAd(b.duzey), b.anket ? 'Anket' : '', b.rumuz, zaman(b.son_hareket || b.olusma)]) + '</span></span>'
+        + (yeniN ? '<span class="fr-yeni-cevap">' + sayi(yeniN) + ' yeni</span>' : '') + '</a>';
+    }
+    function soruListesi(p) {
+      var secili = p.bekleyen ? 'bekleyen' : p.k;
+      icerik.innerHTML = '<div class="fr-qa-ust"><form class="fr-ara" role="search"><input type="search" maxlength="60" placeholder="Sorularda ara" value="' + esc(p.q) + '" aria-label="Sorularda ara"></form>'
+        + '<a class="btn btn-ana" data-ic href="?yeni=1' + (p.k && p.k !== 'ilan' && p.k !== 'etkinlik' ? '&k=' + p.k : '') + '">Soru sor</a></div>'
+        + (p.q ? '<p class="fr-arama-bas"><span>“' + esc(p.q) + '” için sonuçlar</span><a class="yazi-link" data-ic href="?">Temizle</a></p>'
+          : '<nav class="fr-sekmeler" aria-label="Soru konuları"><a data-ic href="?"' + (!secili ? ' aria-current="page"' : '') + '>Tümü</a>'
+            + '<a data-ic href="?bekleyen=1"' + (secili === 'bekleyen' ? ' aria-current="page"' : '') + '>Cevap bekleyenler</a>'
+            + KATEGORILER.filter(function (c) { return c.kod !== 'oda'; }).map(function (c) { return '<a data-ic href="?k=' + c.kod + '"' + (secili === c.kod ? ' aria-current="page"' : '') + '>' + esc(c.ad) + '</a>'; }).join('') + '</nav>')
+        + '<div class="fr-sorular"><p class="fr-yukleniyor">Yükleniyor…</p></div>';
+      var kap = icerik.querySelector('.fr-sorular'), f = icerik.querySelector('.fr-ara');
+      f.onsubmit = function (e) { e.preventDefault(); var q = f.querySelector('input').value.trim(); if (q.length >= 2) { iz('forum_ara'); git('?q=' + encodeURIComponent(q)); } else if (!q) git('?'); };
       function getir(sayfa, ekle) {
         var yol = p.q ? '/ara?q=' + encodeURIComponent(p.q) : '/basliklar?kategori=' + encodeURIComponent(p.k || '') + '&sayfa=' + sayfa + (p.bekleyen ? '&bekleyen=1' : '');
         return api(yol).then(function (j) {
-          var b = (j.basliklar || []).filter(function (x) { return p.q || p.k === 'oda' || x.kategori !== 'oda'; });
+          var b = (j.basliklar || []).filter(function (x) { return x.kategori !== 'oda'; });
           var eski = kap.querySelector('.fr-daha'); if (eski) eski.remove();
-          if (!ekle) kap.innerHTML = b.length ? '' : '<p class="fr-bos">' + (p.q ? 'Sonuç yok. <a class="yazi-link" data-ic href="?yeni=1">Sorunu sor</a>, bilen biri cevaplar.' : p.bekleyen ? 'Yanıtsız soru yok.' : 'Henüz soru yok. <a class="yazi-link" data-ic href="?yeni=1">İlk soruyu sen sor</a>.') + '</p>';
-          kap.insertAdjacentHTML('beforeend', b.map(function (x) { return odaSatiri(x, x.kategori === 'oda'); }).join(''));
+          if (!ekle) kap.innerHTML = b.length ? '' : '<p class="fr-bos">' + (p.q ? 'Sonuç yok. <a class="yazi-link" data-ic href="?yeni=1">Sorunu sor</a>, bilen biri cevaplar.' : p.bekleyen ? 'Cevap bekleyen soru yok.' : 'Henüz soru yok. <a class="yazi-link" data-ic href="?yeni=1">İlk soruyu sen sor</a>.') + '</p>';
+          kap.insertAdjacentHTML('beforeend', b.map(soruSatiri).join(''));
           if (j.sonraki && !p.q) {
-            var d = el('<button type="button" class="fr-eylem fr-daha">Daha fazla</button>');
+            var d = el('<button type="button" class="fr-eylem fr-daha">Daha fazla soru</button>');
             d.onclick = function () { d.disabled = true; getir(sayfa + 1, true); };
             kap.appendChild(d);
           }
@@ -604,68 +620,57 @@
       }
       getir(1);
     }
-    function baslik(id, hedef) {
-      hedef = hedef || kok_;
-      hedef.innerHTML = '<div class="fr-baslik"><header class="fr-oda-bas"><a class="fr-geri" data-ic href="?" aria-label="Konulara dön">' + ikon('M15 6l-6 6 6 6') + '</a><div class="fr-oda-bas-ic"><h2 class="fr-baslik-bas">Yükleniyor…</h2><p class="fr-ust-bilgi"></p></div>'
-        + '<button type="button" class="fr-eylem" data-paylas>Paylaş</button></header><div class="fr-oda-akis"><div data-ilk></div><button type="button" class="fr-eylem fr-eskiler" hidden>Daha eski mesajlar</button><div class="fr-liste" data-liste aria-live="polite"></div></div>'
-        + yaziciHtml('baslik-' + id, 'Mesaj yaz…') + '</div>';
-      var kap = hedef.querySelector('.fr-baslik'), sc = hedef.closest('.fr-sh-oda'), b = null, mesajlar = [], dahaEski = false;
-      var listeKap = kap.querySelector('[data-liste]'), eskiDugme = kap.querySelector('.fr-eskiler');
-      function cizMesajlar(yeniden) {
-        listeKap.innerHTML = mesajlar.length ? sohbetHtml(mesajlar, { yeniden: yeniden }) : '<p class="fr-sessiz">' + (b && b.kategori === 'oda' ? 'Odada henüz kimse yazmadı. Selam ver, sohbeti sen başlat.' : 'Henüz yanıt yok. Bildiğin bir şey varsa ilk sen yaz.') + '</p>';
-        eskiDugme.hidden = !dahaEski;
+    function soruSayfasi(id) {
+      icerik.innerHTML = '<p class="fr-geri-link"><a class="yazi-link" data-ic href="?">Tüm sorular</a></p><div class="fr-soru-sayfa"><p class="fr-yukleniyor">Yükleniyor…</p></div>';
+      var kap = icerik.querySelector('.fr-soru-sayfa'), b = null, mesajlar = [], dahaEski = false;
+      function cizCevaplar(yeniden) {
+        var l = kap.querySelector('[data-cevaplar]');
+        kap.querySelector('[data-cevap-sayi]').textContent = mesajlar.length ? sayi(mesajlar.length) + ' cevap' : 'Henüz cevap yok';
+        l.innerHTML = mesajlar.length ? cevapHtml(mesajlar, { yeniden: yeniden }) : '<p class="fr-bos">Bu soruya ilk cevabı sen ver. Bildiğin kadarı bile yardımcı olur.</p>';
+        kap.querySelector('.fr-eskiler').hidden = !dahaEski;
       }
       function ilkCiz(j) {
         b = j.baslik;
-        document.title = b.baslik + ' — Forum — KPSS Tercihi';
-        var oda = b.kategori === 'oda';
-        kap.querySelector('.fr-baslik-bas').textContent = b.baslik;
-        kap.querySelector('.fr-ust-bilgi').innerHTML = parcalar([oda ? 'Sohbet odası' : katAd(b.kategori), duzeyAd(b.duzey), b.puan_turu && b.puan != null ? b.puan_turu + ' ' + String(b.puan).replace('.', ',') : '', sayi(b.yanit_sayisi) + ' mesaj']);
+        document.title = b.baslik + ' — Soru-Cevap — KPSS Tercihi';
         var benim = uye() && uye().rumuz === b.rumuz;
-        kap.querySelector('[data-ilk]').innerHTML = !b.govde ? (b.ilan_id ? '<p class="fr-oda-not"><a class="yazi-link" href="../ilan/' + encodeURIComponent(b.ilan_id) + '/">İlan sayfasını aç</a></p>' : '')
-          : oda ? '<p class="fr-oda-not">' + esc(b.govde) + '</p>'
-            : '<div class="fr-ilk">' + avatar(b) + '<div class="fr-ilk-ic"><header><button type="button" class="fr-ad" data-uye="' + esc(b.rumuz) + '"' + (insanMi(b) ? '' : ' disabled') + '>' + esc(b.rumuz) + '</button>' + etiket(b) + '<time>' + zaman(b.olusma) + '</time></header><div class="fr-metin">' + metin(b.govde) + '</div>'
-              + '<div data-anket-yer></div><div data-puan-ozet></div>'
-              + '<footer>' + (benim || !insanMi(b) ? '' : '<button type="button" class="fr-eylem" data-baslik-oy aria-pressed="' + (b.oyladim ? 'true' : 'false') + '">Faydalı' + (b.faydali ? ' ' + sayi(b.faydali) : '') + '</button>') + '</footer></div></div>'
-              + (b.ilan_id ? '<p class="fr-oda-not"><a class="yazi-link" href="../ilan/' + encodeURIComponent(b.ilan_id) + '/">İlan sayfasını aç</a></p>' : '');
+        kap.innerHTML = '<article class="fr-soru-kart"><p class="fr-ust-bilgi">' + parcalar([b.ilan_id ? 'İlan sorusu' : katAd(b.kategori), duzeyAd(b.duzey), b.puan_turu && b.puan != null ? b.puan_turu + ' ' + String(b.puan).replace('.', ',') : '']) + '</p>'
+          + '<h2 class="fr-soru-baslik">' + esc(b.baslik) + '</h2>'
+          + '<header>' + avatar(b) + '<div><button type="button" class="fr-ad" data-uye="' + esc(b.rumuz) + '"' + (insanMi(b) ? '' : ' disabled') + '>' + esc(b.rumuz) + '</button>' + etiket(b) + '<time>' + zaman(b.olusma) + '</time></div></header>'
+          + (b.govde ? '<div class="fr-metin">' + metin(b.govde) + '</div>' : '')
+          + (b.ilan_id ? '<p><a class="yazi-link" href="../ilan/' + encodeURIComponent(b.ilan_id) + '/">İlan sayfasını aç</a></p>' : '')
+          + '<div data-anket-yer></div><div data-puan-ozet></div>'
+          + '<footer>' + (benim || !insanMi(b) ? '' : '<button type="button" class="fr-eylem fr-faydali-d" data-baslik-oy aria-pressed="' + (b.oyladim ? 'true' : 'false') + '">' + ikon(BASPARMAK) + '<span>Faydalı soru' + (b.faydali ? ' ' + sayi(b.faydali) : '') + '</span></button>')
+          + '<button type="button" class="fr-eylem" data-paylas>Paylaş</button></footer></article>'
+          + '<h3 class="fr-cevap-bas" data-cevap-sayi></h3><button type="button" class="fr-eylem fr-eskiler" hidden>Önceki cevaplar</button><div class="fr-cevaplar" data-cevaplar aria-live="polite"></div>'
+          + '<div class="fr-cevap-yaz"><h3>Cevabın</h3>' + yaziciHtml('soru-' + id, 'Bildiğini paylaş. Kimlik no, telefon yazma.', null, 'cevap') + '</div>';
         var ay = kap.querySelector('[data-anket-yer]'); if (ay) ay.innerHTML = anketHtml(j.anket);
         puanOzeti(kap, b);
+        kap.querySelector('.fr-eskiler').onclick = function () {
+          var d = this; d.disabled = true;
+          api('/baslik/' + id + '?once=' + mesajlar[0].id).then(function (k) { mesajlar = (k.yanitlar || []).concat(mesajlar); dahaEski = !!k.daha_eski; cizCevaplar(); }, function (h) { bildir(h.message); }).then(function () { d.disabled = false; });
+        };
+        yaziciBagla(kap, 'soru-' + id, function (g, ust) {
+          var govde = { govde: g }; if (ust) govde.ust_id = ust;
+          return api('/baslik/' + id + '/yanit', { yontem: 'POST', govde: govde }).then(function () { iz('forum_yanit', 'soru'); bildir('Cevabın eklendi'); return yukle(true); });
+        });
       }
-      function okunduSay() { if (b) gorulduIsaretle(id, b.yanit_sayisi); }
       function yukle(sessiz) {
-        if (sessiz === true && b) {   // yoklama: yalnız son mesajdan sonrası (tek indeksli sorgu)
-          var son = mesajlar.length ? mesajlar[mesajlar.length - 1].id : 0, altta = enAltta(sc);
+        if (sessiz === true && b) {
+          var son = mesajlar.reduce(function (a, m) { return Math.max(a, m.id); }, 0);
           return api('/baslik/' + id + '/yeni?sonra=' + son).then(function (j) {
             var y = (j.yanitlar || []).filter(function (m) { return !mesajlar.some(function (x) { return x.id === m.id; }); });
             if (j.yanit_sayisi != null) b.yanit_sayisi = j.yanit_sayisi;
             if (!y.length) return;
-            mesajlar = mesajlar.concat(y); cizMesajlar(son); okunduSay();
-            if (altta) enAltaIn(sc); else bildir('Yeni mesaj');
+            mesajlar = mesajlar.concat(y); cizCevaplar(son); gorulduIsaretle(id, b.yanit_sayisi);
           }, function () {});
         }
         return api('/baslik/' + id).then(function (j) {
+          if (j.baslik.kategori === 'oda') { history.replaceState(null, '', '?oda=' + id + location.hash); ciz(); return; }
           mesajlar = j.yanitlar || []; dahaEski = !!j.daha_eski;
-          ilkCiz(j); cizMesajlar(); okunduSay();
+          ilkCiz(j); cizCevaplar(); gorulduIsaretle(id, j.baslik.yanit_sayisi);
           if (location.hash && document.getElementById(location.hash.slice(1))) document.getElementById(location.hash.slice(1)).scrollIntoView({ block: 'center' });
-          else if (b.kategori === 'oda' || mesajlar.length > 6) enAltaIn(sc);
-        }, function (h) { kap.innerHTML = '<p class="fr-bos">' + (h.durum === 404 ? 'Bu konu bulunamadı ya da kaldırıldı. <a class="yazi-link" data-ic href="?">Konulara dön</a>' : esc(h.message)) + '</p>'; });
+        }, function (h) { kap.innerHTML = '<p class="fr-bos">' + (h.durum === 404 ? 'Bu soru bulunamadı ya da kaldırıldı. <a class="yazi-link" data-ic href="?">Tüm sorular</a>' : esc(h.message)) + '</p>'; });
       }
-      eskiDugme.onclick = function () {
-        if (!mesajlar.length) return;
-        eskiDugme.disabled = true;
-        var yukseklik = sc ? sc.scrollHeight : document.documentElement.scrollHeight;
-        api('/baslik/' + id + '?once=' + mesajlar[0].id).then(function (j) {
-          mesajlar = (j.yanitlar || []).concat(mesajlar); dahaEski = !!j.daha_eski; cizMesajlar();
-          if (sc) sc.scrollTop += sc.scrollHeight - yukseklik; else window.scrollBy(0, document.documentElement.scrollHeight - yukseklik);
-        }, function (h) { bildir(h.message); }).then(function () { eskiDugme.disabled = false; });
-      };
-      yaziciBagla(kap, 'baslik-' + id, function (g, ust) {
-        var govde = { govde: g }; if (ust) govde.ust_id = ust;
-        return api('/baslik/' + id + '/yanit', { yontem: 'POST', govde: govde }).then(function () {
-          iz('forum_yanit', b && b.kategori === 'oda' ? 'oda' : 'baslik');
-          return yukle(true);
-        }).then(function () { enAltaIn(sc); });
-      });
       kap.addEventListener('click', function (e) {
         var o = e.target.closest('[data-oy]'), bo = e.target.closest('[data-baslik-oy]');
         if (o) {
@@ -676,23 +681,22 @@
         } else if (bo) {
           if (girisGerekli('Giriş yap')) return;
           api('/baslik/' + id + '/faydali', { yontem: 'POST', govde: {} }).then(function (j) {
-            bo.setAttribute('aria-pressed', String(!!j.oyladim)); bo.textContent = 'Faydalı' + (j.faydali ? ' ' + sayi(j.faydali) : '');
+            bo.setAttribute('aria-pressed', String(!!j.oyladim)); bo.querySelector('span').textContent = 'Faydalı soru' + (j.faydali ? ' ' + sayi(j.faydali) : '');
           }, function (h) { bildir(h.message); });
         }
       });
-      eylemleriBagla(kap, function () { return mesajlar; }, function () { cizMesajlar(); });
+      eylemleriBagla(kap, function () { return mesajlar; }, function () { cizCevaplar(); });
       yenileyiciler = [function () { return yukle(); }];
-      durdur = canliTut(yukle, 20);
+      durdur = canliTut(yukle, 45);
       yukle();
     }
-    function yeni(kategori, hedef) {
-      hedef = hedef || kok_;
+    function yeni(kategori) {
       var u = uye();
       var secenek = KATEGORILER.filter(function (c) { return c.kod !== 'ilan' && c.kod !== 'oda' && (c.kod !== 'etkinlik' || (u && (u.rol === 'yonetici' || u.rol === 'sistem'))); });
       var t = oku('fr-taslak-yeni') || {};
       var dz = t.duzey != null ? t.duzey : duzeyim();
       var ekAcik = !!(t.puan || (t.anket && t.anket.length));
-      hedef.innerHTML = '<form class="fr-form fr-yeni"><header class="fr-oda-bas"><a class="fr-geri" data-ic href="?" aria-label="Konulara dön">' + ikon('M15 6l-6 6 6 6') + '</a><h2>Soru sor</h2></header>'
+      icerik.innerHTML = '<p class="fr-geri-link"><a class="yazi-link" data-ic href="?">Tüm sorular</a></p><form class="fr-form fr-yeni"><h2>Soru sor</h2><p class="fr-not">Sorun kalıcı bir başlık olur; bilenler cevap yazar, en faydalı cevap öne çıkar. Anlık sohbet için <a class="yazi-link" data-ic href="?bolum=sohbet">sohbet odalarına</a> geç.</p>'
         + '<input id="fr-b" maxlength="120" required placeholder="Başlık: ör. Önlisans 72 puanla nereye başvurabilirim?" value="' + esc(t.baslik || '') + '" aria-label="Başlık">'
         + '<textarea id="fr-g" rows="5" maxlength="4000" required placeholder="Ayrıntı: bölümün, puanın, aklına takılan…" aria-label="Ayrıntı">' + esc(t.govde || '') + '</textarea>'
         + '<div class="fr-yeni-satir"><select id="fr-k" aria-label="Konu">' + secenek.map(function (c) { return '<option value="' + c.kod + '"' + ((t.kategori || kategori || 'puan') === c.kod ? ' selected' : '') + '>' + esc(c.ad) + '</option>'; }).join('') + '</select>'
@@ -702,8 +706,8 @@
         + '<input id="fr-p" inputmode="decimal" placeholder="Puanın" value="' + esc(t.puan || '') + '" aria-label="Puan"></span>'
         + '<div class="fr-anket-g">' + [0, 1, 2, 3].map(function (i) { return '<input maxlength="80" placeholder="Anket seçeneği ' + (i + 1) + '" value="' + esc((t.anket || [])[i] || '') + '">'; }).join('') + '</div>'
         + '</div></details>'
-        + '<button class="btn btn-ana btn-buyuk" type="submit">Gönder</button><p class="fr-hata" role="alert" hidden></p></form>';
-      var f = hedef.querySelector('form');
+        + '<button class="btn btn-ana btn-buyuk" type="submit">Soruyu yayınla</button><p class="fr-hata" role="alert" hidden></p></form>';
+      var f = icerik.querySelector('form');
       function deger() {
         return { kategori: f.querySelector('#fr-k').value, duzey: f.querySelector('#fr-d').value, puan_turu: f.querySelector('#fr-pt').value,
           puan: String(f.querySelector('#fr-p').value).trim().replace(',', '.'), baslik: f.querySelector('#fr-b').value.trim(), govde: f.querySelector('#fr-g').value.trim(),
@@ -734,33 +738,121 @@
         }, function (h) { hata(h.message); d.disabled = false; });
       };
     }
+
+    /* ----- Sohbet odaları ----- */
+    function odaSatiri(b) {
+      var yeniN = okunmamis(b), benimDuzey = b.duzey && b.duzey === duzeyim();
+      return '<a class="fr-oda-satir' + (b.id === seciliOda ? ' fr-secili' : '') + (yeniN ? ' fr-okunmamis' : '') + '" data-ic href="?oda=' + b.id + '"' + (b.id === seciliOda ? ' aria-current="page"' : '') + '>'
+        + '<span class="fr-av fr-av-oda" aria-hidden="true">' + ikon(SOHBET) + '</span>'
+        + '<span class="fr-satir-ic"><span class="fr-oda-ust"><b class="fr-satir-bas">' + esc(b.baslik) + '</b>' + (benimDuzey ? '<span class="fr-et fr-et-sen">senin odan</span>' : '') + '<time>' + zaman(b.son_hareket || b.olusma) + '</time></span>'
+        + '<span class="fr-oda-alt"><span class="fr-oda-ozet">' + esc(b.yanit_sayisi ? sayi(b.yanit_sayisi) + ' mesaj' : 'Henüz mesaj yok') + '</span>'
+        + (yeniN ? '<span class="fr-oda-sayi" aria-label="' + yeniN + ' okunmamış">' + sayi(yeniN) + '</span>' : '') + '</span></span></a>';
+    }
+    function odaListesi(hedef) {
+      var dz = duzeyim(), sorulmadi = !oku('fr-duzey') && !dz;
+      hedef.innerHTML = (sorulmadi ? '<div class="fr-duzey-sor"><span>Hangi sınava hazırlanıyorsun? Odanı öne alalım.</span><div>' + DUZEYLER.slice(0, 4).map(function (d) { return '<button type="button" class="fr-cip" data-duzey-sec="' + d.kod + '">' + d.ad + '</button>'; }).join('')
+          + '<button type="button" class="fr-eylem" data-duzey-sec="yok">Geç</button></div></div>' : '')
+        + '<div class="fr-odalar"><p class="fr-yukleniyor">Yükleniyor…</p></div>'
+        + '<p class="fr-oda-bilgi">Odalarda konuşulanlar akıp gider. Kalıcı cevap istediğin soruları <a class="yazi-link" data-ic href="?yeni=1">Soru-Cevap</a> bölümüne sor.</p>';
+      var kap = hedef.querySelector('.fr-odalar');
+      api('/basliklar?kategori=oda').then(function (j) {
+        var o = (j.basliklar || []).slice();
+        o.sort(function (a, b) { return ((b.duzey && b.duzey === dz) ? 1 : 0) - ((a.duzey && a.duzey === dz) ? 1 : 0) || (b.son_hareket - a.son_hareket); });
+        kap.innerHTML = o.length ? o.map(odaSatiri).join('') : '<p class="fr-bos">Odalar yakında açılacak.</p>';
+        var top = o.reduce(function (a, b) { return a + okunmamis(b); }, 0), s = kok_.querySelector('[data-oda-sayi]');
+        if (s) { s.textContent = top ? sayi(top) : ''; s.hidden = !top; }
+      }, function (h) { kap.innerHTML = '<p class="fr-bos">' + esc(h.message) + '</p>'; });
+    }
+    function sohbetOdasi(id, hedef) {
+      hedef.innerHTML = '<div class="fr-oda"><header class="fr-oda-bas"><a class="fr-geri" data-ic href="?bolum=sohbet" aria-label="Odalara dön">' + ikon('M15 6l-6 6 6 6') + '</a>'
+        + '<span class="fr-av fr-av-oda" aria-hidden="true">' + ikon(SOHBET) + '</span><div class="fr-oda-bas-ic"><h2 class="fr-oda-adi">Yükleniyor…</h2><p class="fr-ust-bilgi"></p></div></header>'
+        + '<div class="fr-oda-akis"><p class="fr-oda-not" hidden></p><button type="button" class="fr-eylem fr-eskiler" hidden>Daha eski mesajlar</button><div class="fr-liste" data-liste aria-live="polite"></div></div>'
+        + yaziciHtml('oda-' + id, 'Mesaj yaz…', null, 'sohbet') + '</div>';
+      var kap = hedef.querySelector('.fr-oda'), sc = hedef.closest('.fr-sh-oda'), b = null, mesajlar = [], dahaEski = false;
+      var listeKap = kap.querySelector('[data-liste]'), eskiDugme = kap.querySelector('.fr-eskiler');
+      function cizMesajlar(yeniden) {
+        listeKap.innerHTML = mesajlar.length ? sohbetHtml(mesajlar, { yeniden: yeniden }) : '<p class="fr-sessiz">Odada henüz kimse yazmadı. Selam ver, sohbeti sen başlat.</p>';
+        eskiDugme.hidden = !dahaEski;
+      }
+      function yukle(sessiz) {
+        if (sessiz === true && b) {
+          var son = mesajlar.length ? mesajlar[mesajlar.length - 1].id : 0, altta = enAltta(sc);
+          return api('/baslik/' + id + '/yeni?sonra=' + son).then(function (j) {
+            var y = (j.yanitlar || []).filter(function (m) { return !mesajlar.some(function (x) { return x.id === m.id; }); });
+            if (j.yanit_sayisi != null) b.yanit_sayisi = j.yanit_sayisi;
+            if (!y.length) return;
+            mesajlar = mesajlar.concat(y); cizMesajlar(son); gorulduIsaretle(id, b.yanit_sayisi);
+            if (altta) enAltaIn(sc); else bildir('Yeni mesaj');
+          }, function () {});
+        }
+        return api('/baslik/' + id).then(function (j) {
+          if (j.baslik.kategori !== 'oda') { history.replaceState(null, '', '?b=' + id + location.hash); ciz(); return; }
+          b = j.baslik; mesajlar = j.yanitlar || []; dahaEski = !!j.daha_eski;
+          document.title = b.baslik + ' — Sohbet — KPSS Tercihi';
+          kap.querySelector('.fr-oda-adi').textContent = b.baslik;
+          kap.querySelector('.fr-ust-bilgi').innerHTML = parcalar(['Sohbet odası', duzeyAd(b.duzey), sayi(b.yanit_sayisi) + ' mesaj']);
+          var not_ = kap.querySelector('.fr-oda-not'); if (b.govde) { not_.textContent = b.govde; not_.hidden = false; }
+          cizMesajlar(); gorulduIsaretle(id, b.yanit_sayisi);
+          var sat = icerik.querySelector('.fr-oda-satir[href="?oda=' + id + '"]');
+          if (sat) { sat.classList.remove('fr-okunmamis'); var c = sat.querySelector('.fr-oda-sayi'); if (c) c.remove(); }
+          if (location.hash && document.getElementById(location.hash.slice(1))) document.getElementById(location.hash.slice(1)).scrollIntoView({ block: 'center' });
+          else enAltaIn(sc);
+        }, function (h) { kap.innerHTML = '<p class="fr-bos">' + (h.durum === 404 ? 'Bu oda bulunamadı. <a class="yazi-link" data-ic href="?bolum=sohbet">Odalara dön</a>' : esc(h.message)) + '</p>'; });
+      }
+      eskiDugme.onclick = function () {
+        if (!mesajlar.length) return;
+        eskiDugme.disabled = true;
+        var yukseklik = sc ? sc.scrollHeight : document.documentElement.scrollHeight;
+        api('/baslik/' + id + '?once=' + mesajlar[0].id).then(function (j) {
+          mesajlar = (j.yanitlar || []).concat(mesajlar); dahaEski = !!j.daha_eski; cizMesajlar();
+          if (sc) sc.scrollTop += sc.scrollHeight - yukseklik; else window.scrollBy(0, document.documentElement.scrollHeight - yukseklik);
+        }, function (h) { bildir(h.message); }).then(function () { eskiDugme.disabled = false; });
+      };
+      yaziciBagla(kap, 'oda-' + id, function (g, ust) {
+        var govde = { govde: g }; if (ust) govde.ust_id = ust;
+        return api('/baslik/' + id + '/yanit', { yontem: 'POST', govde: govde }).then(function () { iz('forum_yanit', 'oda'); return yukle(true); }).then(function () { enAltaIn(sc); });
+      });
+      eylemleriBagla(kap, function () { return mesajlar; }, function () { cizMesajlar(); });
+      yenileyiciler = [function () { return yukle(); }];
+      durdur = canliTut(yukle, 20);
+      yukle();
+    }
+
     function ciz() {
       if (durdur) { durdur(); durdur = null; }
       var q = new URLSearchParams(location.search);
       document.title = 'Forum — KPSS Tercihi';
       yenileyiciler = [ciz];
-      var lp = { k: q.get('k') || '', bekleyen: q.get('bekleyen') === '1', q: q.get('q') || '' };
-      seciliOda = +q.get('b') || 0;
-      document.body.classList.toggle('fr-konusmada', !!(seciliOda || q.get('yeni')));
-      if (GENIS.matches) {   // geniş ekran: solda liste, sağda konuşma
-        var L = kok_.querySelector('.fr-sh-liste'), O = kok_.querySelector('.fr-sh-oda');
-        if (!L) {
-          kok_.innerHTML = '<div class="fr-sh"><section class="fr-sh-liste" aria-label="Konular"></section><section class="fr-sh-oda" aria-label="Konuşma"></section></div>';
-          L = kok_.querySelector('.fr-sh-liste'); O = kok_.querySelector('.fr-sh-oda');
-        }
-        var eskiP = L.getAttribute('data-p'), yeniP = JSON.stringify(lp);
-        if (eskiP !== yeniP) { L.setAttribute('data-p', yeniP); liste(lp, L); }
-        else L.querySelectorAll('.fr-oda-satir').forEach(function (a) { var s = a.getAttribute('href') === '?b=' + seciliOda; a.classList.toggle('fr-secili', s); if (s) { a.setAttribute('aria-current', 'page'); a.classList.remove('fr-okunmamis'); var c = a.querySelector('.fr-oda-sayi'); if (c) c.remove(); } else a.removeAttribute('aria-current'); });
-        if (seciliOda) baslik(seciliOda, O);
-        else if (q.get('yeni')) yeni(q.get('k'), O);
-        else O.innerHTML = '<div class="fr-sh-bos">' + ikon(SOHBET) + '<b>Bir oda ya da soru seç</b><p class="fr-not">Ya da aklındakini sor; adaylar ve otomatik yanıt cevaplar.</p><a class="btn btn-ana" data-ic href="?yeni=1">Soru sor</a></div>';
+      seciliOda = +q.get('oda') || 0;
+      var soruId = +q.get('b') || 0, bolum = seciliOda || q.get('bolum') === 'sohbet' ? 'sohbet' : 'soru';
+      kok_.querySelectorAll('[data-bolum]').forEach(function (a) { var s = a.getAttribute('data-bolum') === bolum; a.classList.toggle('fr-aktif', s); if (s) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+      kok_.setAttribute('data-bolum', bolum);
+      document.body.classList.toggle('fr-konusmada', !!seciliOda && !GENIS.matches);
+      araclarCiz();
+      if (bolum === 'soru') {
+        icerik.className = 'fr-icerik fr-qa';
+        if (soruId) soruSayfasi(soruId);
+        else if (q.get('yeni')) yeni(q.get('k'));
+        else soruListesi({ k: q.get('k') || '', bekleyen: q.get('bekleyen') === '1', q: q.get('q') || '' });
         return;
       }
-      if (seciliOda) baslik(seciliOda);
-      else if (q.get('yeni')) yeni(q.get('k'));
-      else liste(lp);
+      icerik.className = 'fr-icerik fr-chat';
+      if (GENIS.matches) {   // geniş ekran: solda odalar, sağda açık oda
+        var L = icerik.querySelector('.fr-sh-liste'), O = icerik.querySelector('.fr-sh-oda');
+        if (!L) {
+          icerik.innerHTML = '<div class="fr-sh"><section class="fr-sh-liste" aria-label="Sohbet odaları"></section><section class="fr-sh-oda" aria-label="Oda"></section></div>';
+          L = icerik.querySelector('.fr-sh-liste'); O = icerik.querySelector('.fr-sh-oda');
+        }
+        if (!L.hasAttribute('data-p')) { L.setAttribute('data-p', '1'); odaListesi(L); }
+        else L.querySelectorAll('.fr-oda-satir').forEach(function (a) { var s = a.getAttribute('href') === '?oda=' + seciliOda; a.classList.toggle('fr-secili', s); if (s) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+        if (seciliOda) sohbetOdasi(seciliOda, O);
+        else O.innerHTML = '<div class="fr-sh-bos">' + ikon(SOHBET) + '<b>Bir oda seç</b><p class="fr-not">Odalar anlık sohbet içindir. Kalıcı cevap istediğin sorular için <a class="yazi-link" data-ic href="?">Soru-Cevap</a>.</p></div>';
+        return;
+      }
+      if (seciliOda) sohbetOdasi(seciliOda, icerik);
+      else odaListesi(icerik);
     }
-    if (GENIS.addEventListener) GENIS.addEventListener('change', function () { kok_.innerHTML = ''; ciz(); });
+    if (GENIS.addEventListener) GENIS.addEventListener('change', function () { icerik.innerHTML = ''; ciz(); });
     kok_.addEventListener('change', function (e) {
       var c = e.target.closest('[data-bildirim]');
       if (!c) return;
