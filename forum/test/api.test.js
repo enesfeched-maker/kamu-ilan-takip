@@ -363,7 +363,7 @@ test('CORS: izinli köken, reddedilen köken, localhost yalnız yerelde, preflig
   const env = ortam();
   const ok = await cagir(env, 'GET', '/kategoriler', { origin: 'https://kpsstercihi.com' });
   assert.equal(ok.basliklar.get('Access-Control-Allow-Origin'), 'https://kpsstercihi.com');
-  assert.equal(ok.json.kategoriler.length, 7); assert.equal(ok.json.kategoriler[0].kod, 'ilan');
+  assert.equal(ok.json.kategoriler.length, 8); assert.equal(ok.json.kategoriler[0].kod, 'ilan');
   assert.equal((await cagir(env, 'GET', '/kategoriler', { origin: 'https://www.kpsstercihi.com' })).basliklar.get('Access-Control-Allow-Origin'), 'https://www.kpsstercihi.com');
   assert.equal((await cagir(env, 'GET', '/kategoriler', { origin: 'https://evil.com' })).basliklar.get('Access-Control-Allow-Origin'), null);
   assert.equal((await cagir(env, 'GET', '/kategoriler', { origin: 'http://localhost:8000' })).basliklar.get('Access-Control-Allow-Origin'), null);
@@ -393,7 +393,7 @@ test('/durum: gerçek üye ve son 24 saat sayıları; site ve asistan hesapları
   const d0 = (await cagir(env, 'GET', '/durum')).json;
   assert.deepEqual(d0, {
     uye: 0, kurucu_kalan: 200, bugun_mesaj: 0, bugun_yazar: 0,
-    kategoriler: { ilan: 0, puan: 0, kurum: 0, mulakat: 0, haklar: 0, hazirlik: 0, etkinlik: 0 }, bekleyen: 0, gundem: [], bekleyenler: [],
+    kategoriler: { ilan: 0, puan: 0, kurum: 0, mulakat: 0, haklar: 0, hazirlik: 0, etkinlik: 0, oda: 0 }, bekleyen: 0, gundem: [], bekleyenler: [],
   });
   const { token } = await uyeGirisi(env, 'ayse_k');
   const b = await cagir(env, 'POST', '/baslik', { token, govde: BASLIK });

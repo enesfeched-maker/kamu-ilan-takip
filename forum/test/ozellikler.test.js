@@ -263,7 +263,7 @@ test('/durum: kategori sayıları, bekleyen sayısı, gündem ve bekleyenler lis
   hamBaslik(env, { kategori: 'puan', son_hareket: simdi - 10, yanit_sayisi: 0, gizli: 1 });
   const E = hamBaslik(env, { kategori: 'hazirlik', olusma: simdi - 900, son_hareket: simdi - 900, yanit_sayisi: 0, duzey: 'agrubu' });
   const d = (await cagir(env, 'GET', '/durum')).json;
-  assert.deepEqual(d.kategoriler, { ilan: 0, puan: 1, kurum: 2, mulakat: 0, haklar: 0, hazirlik: 1, etkinlik: 1 });
+  assert.deepEqual(d.kategoriler, { ilan: 0, puan: 1, kurum: 2, mulakat: 0, haklar: 0, hazirlik: 1, etkinlik: 1, oda: 0 });
   assert.equal(d.bekleyen, 2);
   assert.deepEqual(d.gundem.map((x) => x.id), [B, A, D, E]);
   assert.deepEqual(d.bekleyenler.map((x) => x.id), [A, E]);

@@ -46,6 +46,8 @@ CREATE TABLE IF NOT EXISTS yanitlar (
 );
 CREATE INDEX IF NOT EXISTS yanitlar_baslik ON yanitlar(baslik_id, id);
 CREATE INDEX IF NOT EXISTS yanitlar_uye ON yanitlar(uye_id, olusma);
+CREATE INDEX IF NOT EXISTS yanitlar_ust ON yanitlar(ust_id);
+CREATE INDEX IF NOT EXISTS yanitlar_olusma ON yanitlar(olusma);
 CREATE TABLE IF NOT EXISTS oylar (
   yanit_id INTEGER,
   uye_id INTEGER,

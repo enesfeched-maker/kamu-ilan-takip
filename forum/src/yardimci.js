@@ -7,6 +7,7 @@ export const KATEGORILER = [
   { kod: 'haklar', ad: 'Haklar ve tayin' },
   { kod: 'hazirlik', ad: 'Sınava hazırlık' },
   { kod: 'etkinlik', ad: 'Etkinlik' },
+  { kod: 'oda', ad: 'Sohbet odaları' },
 ];
 export const KATEGORI_KODLARI = new Set(KATEGORILER.map((k) => k.kod));
 

@@ -9,7 +9,8 @@ def forum_sayfasi(base):
     import site_uret as su
     canonical = base + 'forum/'
     ek = (f'<meta name="robots" content="noindex,follow"><meta property="og:url" content="{su.esc(canonical)}">'
-          f'<link rel="stylesheet" href="../forum.css?v={su.FORUM_SURUM}">')
+          f'<link rel="stylesheet" href="../forum.css?v={su.FORUM_SURUM}">'
+          f'<link rel="stylesheet" href="../forum-sohbet.css?v={su.FORUM_SURUM}">')
     govde = (su.sayfa_basi('Forum — KPSS Tercihi', 'KPSS adaylarının ilanlar, puanlar, tercih, kurumlar ve mülakatlar hakkında soru sorup deneyim paylaştığı forum.',
                            su.esc(canonical), '../', ek_head=ek)
              + f'<body class="kurum-page forum-page"><a class="skip" href="#icerik">İçeriğe geç</a>{su.ust_html("../", "forum")}'
