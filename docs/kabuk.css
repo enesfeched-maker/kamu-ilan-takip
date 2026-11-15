@@ -93,6 +93,8 @@
 .tg-metin small{font-size:12px;color:var(--kb-soluk)}
 .tg-ok{margin-left:auto;color:var(--kb-lime);font-weight:700;font-size:18px}
 @media (min-width:1021px){.tb-tg{order:9}}
+/* Forum menüye eklenince (Kasım 2026) dar masaüstünde marka ile menü çakışmasın */
+@media (min-width:1021px) and (max-width:1240px){.tb-ic{gap:12px}.tb-nav>a{padding:8px 8px;letter-spacing:.03em}.tb-tg{margin-left:6px}.tb-tg .tam{display:none}.tb-tg .kisa{display:inline}}
 @media (max-width:1020px){.tb-tg{margin-left:auto;margin-right:8px}}
 @media (max-width:760px){.tb-tg{padding:7px 12px 7px 10px;font-size:12.5px}.tb-tg .tam{display:none}.tb-tg .kisa{display:inline}.tg-kart{display:none}}
 
