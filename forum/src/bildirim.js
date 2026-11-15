@@ -3,7 +3,7 @@ const SINIR_SN = 600;
 const son = new Map(); // "alici:baslik" -> unix sn (en iyi çaba)
 export const bildirimSifirla = () => son.clear();
 
-export async function yanitBildirimi(env, { baslikId, baslikAdi, yanitlayan, aliciIdleri }, simdi = Math.floor(Date.now() / 1000)) {
+export async function yanitBildirimi(env, { baslikId, baslikAdi, yanitlayan, aliciIdleri, bildirilen = [] }, simdi = Math.floor(Date.now() / 1000)) {
   const idler = [...new Set(aliciIdleri)].filter((i) => Number.isInteger(i) && i > 2 && i !== yanitlayan.id);
   if (!idler.length) return 0;
   const { results } = await env.DB.prepare(
@@ -16,6 +16,7 @@ export async function yanitBildirimi(env, { baslikId, baslikAdi, yanitlayan, ali
     if (!(u.tg_id > 0) || u.bildirim !== 1 || u.rol === 'sistem' || u.rol === 'asistan' || u.engelli) continue;
     const anahtar = `${u.id}:${baslikId}`;
     if (simdi - (son.get(anahtar) || 0) < SINIR_SN) continue;
+    bildirilen.push(u.id);
     if (!env.TELEGRAM_BOT_TOKEN || env.ORTAM === 'yerel') { console.log('bildirim (gönderilmedi):', u.id, baslikId); continue; }
     son.set(anahtar, simdi);
     if (son.size > 5000) son.clear();
@@ -31,8 +32,58 @@ export async function yanitBildirimi(env, { baslikId, baslikAdi, yanitlayan, ali
   return gonderilen;
 }
 
+const uygun = (u) => u.tg_id > 0 && u.bildirim === 1 && u.rol !== 'sistem' && u.rol !== 'asistan' && !u.engelli;
+async function telegramaYaz(env, tgId, metin) {
+  try {
+    await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: tgId, text: metin, disable_web_page_preview: true }),
+    });
+    return true;
+  } catch { return false; /* bildirim hatası yazmayı etkilemez */ }
+}
+
+// Özel mesaj bildirimi: mesaj metni ASLA gönderilmez (gizlilik); gönderen→alıcı çifti için 10 dakikada en çok bir kez.
+// alici: { id, tg_id, rol, bildirim, engelli }
+export async function ozelMesajBildirimi(env, { gonderen, alici }, simdi = Math.floor(Date.now() / 1000)) {
+  if (!alici || !uygun(alici)) return 0;
+  const anahtar = `ozel:${gonderen.id}:${alici.id}`;
+  if (simdi - (son.get(anahtar) || 0) < SINIR_SN) return 0;
+  if (!env.TELEGRAM_BOT_TOKEN || env.ORTAM === 'yerel') { console.log('özel mesaj bildirimi (gönderilmedi):', alici.id); return 0; }
+  son.set(anahtar, simdi);
+  if (son.size > 5000) son.clear();
+  const adres = `${env.SITE_URL || 'https://kpsstercihi.com/'}forum/?mesaj=${encodeURIComponent(gonderen.rumuz)}`;
+  return (await telegramaYaz(env, alici.tg_id, `${gonderen.rumuz} sana özel mesaj gönderdi\n${adres}`)) ? 1 : 0;
+}
+
+// Takip edilen başlığa yanıt gelince takipçilere (yazan ve haricIdler hariç, en çok 50 kişi) kısa mesaj.
+// Aynı kişi+başlık için yanıt bildirimiyle ortak 10 dakikalık sınır kullanılır.
+export async function takipBildirimi(env, { baslikId, baslikAdi, kategori, yanitlayan, haricIdler = [] }, simdi = Math.floor(Date.now() / 1000)) {
+  const haric = [...new Set([yanitlayan.id, ...haricIdler])].filter((i) => Number.isInteger(i));
+  const { results } = await env.DB.prepare(
+    `SELECT u.id, u.tg_id, u.rol, u.bildirim, u.engelli FROM takipler t JOIN uyeler u ON u.id = t.uye_id
+     WHERE t.baslik_id = ? AND u.tg_id > 0 AND u.bildirim = 1 AND u.engelli = 0 AND u.rol NOT IN ('sistem', 'asistan')
+     AND u.id NOT IN (${haric.map(() => '?').join(',')}) LIMIT 50`,
+  ).bind(baslikId, ...haric).all();
+  if (!results.length) return 0;
+  const adres = `${env.SITE_URL || 'https://kpsstercihi.com/'}forum/?${kategori === 'oda' ? 'oda' : 'b'}=${baslikId}`;
+  const metin = `${String(baslikAdi).slice(0, 60)}: yeni mesaj\n${adres}`;
+  let gonderilen = 0;
+  for (const u of results) {
+    if (!uygun(u)) continue;
+    const anahtar = `${u.id}:${baslikId}`;
+    if (simdi - (son.get(anahtar) || 0) < SINIR_SN || simdi - (son.get(`anma:${anahtar}`) || 0) < SINIR_SN) continue;   // yanıt ya da anma bildirimi yeni gittiyse tekrar yok
+    if (!env.TELEGRAM_BOT_TOKEN || env.ORTAM === 'yerel') { console.log('takip bildirimi (gönderilmedi):', u.id, baslikId); continue; }
+    son.set(anahtar, simdi);
+    if (son.size > 5000) son.clear();
+    if (await telegramaYaz(env, u.tg_id, metin)) gonderilen++;
+  }
+  return gonderilen;
+}
+
 // Yanıtta "@rumuz" ile anılan üyelere kısa Telegram mesajı (anmalar saklanmaz). haricIdler: bu istekte zaten haber verilenler.
-export async function anmaBildirimi(env, { baslikId, baslikAdi, yanitId, yanitlayan, rumuzlar, haricIdler = [] }, simdi = Math.floor(Date.now() / 1000)) {
+export async function anmaBildirimi(env, { baslikId, baslikAdi, yanitId, yanitlayan, rumuzlar, haricIdler = [], bildirilen = [] }, simdi = Math.floor(Date.now() / 1000)) {
   const adlar = [...new Set((rumuzlar || []).map((r) => String(r).toLowerCase()))].slice(0, 3);
   if (!adlar.length) return 0;
   const { results } = await env.DB.prepare(
@@ -46,6 +97,7 @@ export async function anmaBildirimi(env, { baslikId, baslikAdi, yanitId, yanitla
     if (!(u.tg_id > 0) || u.bildirim !== 1 || u.rol === 'sistem' || u.rol === 'asistan' || u.engelli) continue;
     const anahtar = `anma:${u.id}:${baslikId}`;
     if (simdi - (son.get(anahtar) || 0) < SINIR_SN) continue;
+    bildirilen.push(u.id);
     if (!env.TELEGRAM_BOT_TOKEN || env.ORTAM === 'yerel') { console.log('anma bildirimi (gönderilmedi):', u.id, baslikId); continue; }
     son.set(anahtar, simdi);
     if (son.size > 5000) son.clear();

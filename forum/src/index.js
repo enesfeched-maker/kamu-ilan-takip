@@ -5,7 +5,9 @@ import { oturumUret, geciciUret, oturumUyeKimligi, geciciTgKimligi, telegramDogr
 import { baslikHizi, yanitHizi, ipSiniri } from './hiz.js';
 import { asistanYaniti } from './asistan.js';
 import { ilanKaydiGetir } from './ilan.js';
-import { yanitBildirimi, anmaBildirimi } from './bildirim.js';
+import { yanitBildirimi, anmaBildirimi, takipBildirimi } from './bildirim.js';
+import { ozelKonusmalar, ozelKonusma, ozelYeni, ozelGonder, ozelMesajSil, ozelEngelle, engellenenler, ozelSikayet, yonetimOzelSikayetler, ozelOkunmamis } from './ozel.js';
+import { takipDegistir, takipMi, benTakipler } from './takip.js';
 
 const SAYFA_BOYUTU = 20;
 const DUZEYLER = new Set(['lisans', 'onlisans', 'ortaogretim', 'ekpss', 'agrubu']);
@@ -79,7 +81,13 @@ async function yonlendir(request, env, ctx) {
     if (yol === '/kategoriler') return jsonYanit({ kategoriler: KATEGORILER }, 200, { 'Cache-Control': 'public, max-age=300' });
     if (yol === '/ben') return benGetir(request, env);
     if (yol === '/ben/bildirimler') return benBildirimler(request, env, url);
+    if (yol === '/ben/takipler') return benTakipler(request, env);
+    if (yol === '/ben/engellenenler') return engellenenler(request, env);
+    if (yol === '/ozel') return ozelKonusmalar(request, env);
+    if ((m = yol.match(/^\/ozel\/([^/]+)\/yeni$/))) return ozelYeni(request, env, url, m[1]);
+    if ((m = yol.match(/^\/ozel\/([^/]+)$/))) return ozelKonusma(request, env, url, m[1]);
     if (yol === '/yonetim/sikayetler') return yonetimSikayetler(request, env);
+    if (yol === '/yonetim/ozel-sikayetler') return yonetimOzelSikayetler(request, env);
     const anonim = !request.headers.get('Authorization') && !url.searchParams.get('kimlik');
     const onb = (uret) => onbellekli(url, ctx, anonim, uret);
     if (yol === '/basliklar') return onb(() => basliklarListe(env, url));
@@ -99,6 +107,11 @@ async function yonlendir(request, env, ctx) {
     if (yol === '/giris/rumuz') return girisRumuz(request, env);
     if (yol === '/giris/deneme') return girisDeneme(request, env);
     if (yol === '/ben/bildirim') return benBildirim(request, env);
+    if (yol === '/ben/ayar') return benAyar(request, env);
+    if ((m = yol.match(/^\/baslik\/(\d+)\/takip$/))) return takipDegistir(request, env, Number(m[1]));
+    if ((m = yol.match(/^\/ozel\/([^/]+)\/engelle$/))) return ozelEngelle(request, env, m[1]);
+    if ((m = yol.match(/^\/ozel\/([^/]+)\/sikayet$/))) return ozelSikayet(request, env, m[1]);
+    if ((m = yol.match(/^\/ozel\/([^/]+)$/))) return ozelGonder(request, env, ctx, m[1]);
     if (yol === '/baslik') return baslikOlustur(request, env);
     if ((m = yol.match(/^\/baslik\/(\d+)\/yanit$/))) return yanitYaz(request, env, ctx, Number(m[1]));
     if ((m = yol.match(/^\/baslik\/(\d+)\/anket$/))) return anketOyla(request, env, Number(m[1]));
@@ -113,6 +126,7 @@ async function yonlendir(request, env, ctx) {
     return hataYanit(404, 'Bulunamadı.');
   }
 
+  if (yontem === 'DELETE' && (m = yol.match(/^\/ozel\/mesaj\/(\d+)$/))) return ozelMesajSil(request, env, Number(m[1]));
   if (yontem === 'DELETE' && (m = yol.match(/^\/yanit\/(\d+)$/))) return yanitSil(request, env, Number(m[1]));
   if (yontem === 'DELETE' && (m = yol.match(/^\/basvuru\/([^/]+)$/))) return basvuruSil(request, env, new URL(request.url), decodeURIComponent(m[1]));
   return hataYanit(405, 'Yöntem desteklenmiyor.');
@@ -136,7 +150,7 @@ async function onbellekli(url, ctx, anonim, uret, sn = ONBELLEK_SN) {
 }
 
 // ---------- ortak ----------
-async function govdeOku(request) {
+export async function govdeOku(request) {
   try {
     const t = await request.text();
     if (t.length > 20000) return null;
@@ -144,22 +158,22 @@ async function govdeOku(request) {
     return j && typeof j === 'object' && !Array.isArray(j) ? j : null;
   } catch { return null; }
 }
-const kullaniciJson = (u) => ({ id: u.id, rumuz: u.rumuz, kurucu: !!u.kurucu, rol: u.rol, itibar: u.itibar || 0 });
+const kullaniciJson = (u) => ({ id: u.id, rumuz: u.rumuz, kurucu: !!u.kurucu, rol: u.rol, itibar: u.itibar || 0, dm_acik: u.dm_acik !== 0 });
 
-async function oturumUyesi(request, env) {
+export async function oturumUyesi(request, env) {
   const m = (request.headers.get('Authorization') || '').match(/^Bearer (.+)$/);
   if (!m) return null;
   const id = await oturumUyeKimligi(env, m[1], simdi());
   if (!id) return null;
-  return env.DB.prepare('SELECT id, rumuz, kurucu, rol, itibar, bildirim, engelli, kayit FROM uyeler WHERE id = ?').bind(id).first();
+  return env.DB.prepare('SELECT id, rumuz, kurucu, rol, itibar, bildirim, engelli, kayit, dm_acik FROM uyeler WHERE id = ?').bind(id).first();
 }
-async function yazar(request, env) {
+export async function yazar(request, env) {
   const uye = await oturumUyesi(request, env);
   if (!uye) return { hata: hataYanit(401, 'Giriş yapmalısın.') };
   if (uye.engelli) return { hata: hataYanit(403, 'Hesabın yazmaya kapatıldı.') };
   return { uye };
 }
-function yoneticiMi(request, env) {
+export function yoneticiMi(request, env) {
   return !!env.YONETICI_ANAHTARI && sabitEsit(request.headers.get('X-Yonetici') || '', env.YONETICI_ANAHTARI);
 }
 const ayrik = (n) => Math.max(1, Math.min(Number(n) || 1, 100));
@@ -174,7 +188,7 @@ async function girisTelegram(request, env) {
   if (!g) return hataYanit(400, 'Geçersiz istek.');
   const d = await telegramDogrula(env, g, simdi());
   if (!d.tamam) return hataYanit(401, d.neden === 'eski' ? 'Giriş süresi dolmuş, tekrar dene.' : 'Telegram girişi doğrulanamadı.');
-  const uye = await env.DB.prepare('SELECT id, rumuz, kurucu, rol, itibar FROM uyeler WHERE tg_id = ?').bind(d.tgId).first();
+  const uye = await env.DB.prepare('SELECT id, rumuz, kurucu, rol, itibar, dm_acik FROM uyeler WHERE tg_id = ?').bind(d.tgId).first();
   if (uye) return oturumYaniti(env, uye);
   return jsonYanit({ yeni: true, gecici: await geciciUret(env, d.tgId, simdi()) });
 }
@@ -188,7 +202,7 @@ async function uyeOlustur(env, tgId, rumuz) {
   try {
     await env.DB.prepare('INSERT INTO uyeler (tg_id, rumuz, kayit, kurucu) VALUES (?, ?, ?, ?)').bind(tgId, r.rumuz, t, (sayi?.n || 0) < KURUCU_SINIRI ? 1 : 0).run();
   } catch { return { hata: hataYanit(409, 'Bu rumuz alınmış.') }; }
-  const uye = await env.DB.prepare('SELECT id, rumuz, kurucu, rol, itibar FROM uyeler WHERE tg_id = ?').bind(tgId).first();
+  const uye = await env.DB.prepare('SELECT id, rumuz, kurucu, rol, itibar, dm_acik FROM uyeler WHERE tg_id = ?').bind(tgId).first();
   return { uye };
 }
 async function girisRumuz(request, env) {
@@ -196,7 +210,7 @@ async function girisRumuz(request, env) {
   if (!g) return hataYanit(400, 'Geçersiz istek.');
   const tgId = await geciciTgKimligi(env, g.gecici, simdi());
   if (!tgId) return hataYanit(401, 'Giriş süresi dolmuş, Telegram ile tekrar dene.');
-  const mevcut = await env.DB.prepare('SELECT id, rumuz, kurucu, rol, itibar FROM uyeler WHERE tg_id = ?').bind(tgId).first();
+  const mevcut = await env.DB.prepare('SELECT id, rumuz, kurucu, rol, itibar, dm_acik FROM uyeler WHERE tg_id = ?').bind(tgId).first();
   if (mevcut) return oturumYaniti(env, mevcut);
   const s = await uyeOlustur(env, tgId, g.rumuz);
   return s.hata || oturumYaniti(env, s.uye);
@@ -213,7 +227,7 @@ async function girisDeneme(request, env) {
   if (!g) return hataYanit(400, 'Geçersiz istek.');
   const r = rumuzDogrula(g.rumuz);
   if (!r.tamam) return hataYanit(400, r.neden);
-  const mevcut = await env.DB.prepare('SELECT id, rumuz, kurucu, rol, itibar, tg_id FROM uyeler WHERE rumuz = ?').bind(r.rumuz).first();
+  const mevcut = await env.DB.prepare('SELECT id, rumuz, kurucu, rol, itibar, tg_id, dm_acik FROM uyeler WHERE rumuz = ?').bind(r.rumuz).first();
   if (mevcut) return mevcut.tg_id < 0 ? oturumYaniti(env, mevcut) : hataYanit(409, 'Bu rumuz alınmış.');
   const s = await uyeOlustur(env, -(1 + (ozetSayi(r.rumuz.toLowerCase()) % 2000000000)), r.rumuz);
   return s.hata || oturumYaniti(env, s.uye);
@@ -221,7 +235,28 @@ async function girisDeneme(request, env) {
 async function benGetir(request, env) {
   const u = await oturumUyesi(request, env);
   if (!u) return hataYanit(401, 'Giriş yapmalısın.');
-  return jsonYanit({ uye: { ...kullaniciJson(u), bildirim: u.bildirim === 1, engelli: !!u.engelli } });
+  return jsonYanit({ uye: await benNesnesi(env, u) });
+}
+async function benNesnesi(env, u) {
+  return { ...kullaniciJson(u), bildirim: u.bildirim === 1, engelli: !!u.engelli, ozel_okunmamis: await ozelOkunmamis(env, u.id) };
+}
+// Ayarlar: dm_acik (özel mesaj alır) ve bildirim (Telegram); en az biri verilmeli. Güncel /ben nesnesini döner.
+async function benAyar(request, env) {
+  const u = await oturumUyesi(request, env);
+  if (!u) return hataYanit(401, 'Giriş yapmalısın.');
+  const g = await govdeOku(request);
+  if (!g) return hataYanit(400, 'Geçersiz istek.');
+  const alanlar = [];
+  const deger = [];
+  for (const ad of ['dm_acik', 'bildirim']) {
+    if (g[ad] === undefined) continue;
+    if (typeof g[ad] !== 'boolean') return hataYanit(400, `${ad} alanı true/false olmalı.`);
+    alanlar.push(`${ad} = ?`); deger.push(g[ad] ? 1 : 0);
+    u[ad] = g[ad] ? 1 : 0;
+  }
+  if (!alanlar.length) return hataYanit(400, 'dm_acik ya da bildirim verilmeli.');
+  await env.DB.prepare(`UPDATE uyeler SET ${alanlar.join(', ')} WHERE id = ?`).bind(...deger, u.id).run();
+  return jsonYanit({ uye: await benNesnesi(env, u) });
 }
 async function benBildirim(request, env) {
   const u = await oturumUyesi(request, env);
@@ -236,10 +271,10 @@ async function benBildirim(request, env) {
 const BASLIK_ALANLARI = `b.id, b.kategori, b.baslik, b.kaynak, b.sabit, b.olusma, b.son_hareket, b.yanit_sayisi, b.ilan_id, b.govde,
   b.duzey, b.puan_turu, b.puan, b.faydali, b.anket, u.rumuz, u.kurucu, u.rol, u.itibar`;
 // liste/özet sorguları: gövdenin yalnız ilk 140 karakteri
-const LISTE_ALANLARI = `b.id, b.kategori, b.baslik, substr(b.govde, 1, 140) AS govde, b.kaynak, b.sabit, b.olusma, b.son_hareket, b.yanit_sayisi, b.ilan_id,
+export const LISTE_ALANLARI = `b.id, b.kategori, b.baslik, substr(b.govde, 1, 140) AS govde, b.kaynak, b.sabit, b.olusma, b.son_hareket, b.yanit_sayisi, b.ilan_id,
   b.duzey, b.puan_turu, b.puan, b.faydali, b.anket, u.rumuz, u.kurucu, u.rol, u.itibar`;
 const KURUCU_SINIRI = 200;   // ilk 200 üye "Kurucu üye" rozeti alır
-function baslikCikti(r, govdeli) {
+export function baslikCikti(r, govdeli) {
   const o = {
     id: r.id, kategori: r.kategori, baslik: r.baslik, rumuz: r.rumuz, kurucu: !!r.kurucu, rol: r.rol, itibar: r.itibar || 0, kaynak: r.kaynak,
     sabit: !!r.sabit, olusma: r.olusma, son_hareket: r.son_hareket, yanit_sayisi: r.yanit_sayisi, ilan_id: r.ilan_id,
@@ -355,7 +390,7 @@ async function yanitTek(env, id, uye) {
   const r = await env.DB.prepare(`${YANIT_SECIM} WHERE y.id = ?`).bind(id).first();
   return r ? yanitCikti(r, uye, new Set()) : null;
 }
-const negatifsizTamsayi = (s) => (typeof s === 'string' && /^\d{1,15}$/.test(s) ? Number(s) : null);
+export const negatifsizTamsayi = (s) => (typeof s === 'string' && /^\d{1,15}$/.test(s) ? Number(s) : null);
 async function baslikGetir(request, env, url, id) {
   const lim = negatifsizTamsayi(url.searchParams.get('limit'));
   const limit = lim ? Math.min(lim, 200) : 100;
@@ -366,7 +401,10 @@ async function baslikGetir(request, env, url, id) {
   if (!b) return hataYanit(404, 'Başlık bulunamadı.');
   const uye = await oturumUyesi(request, env);
   const baslik = baslikCikti(b, true);
-  if (uye) baslik.oyladim = !!(await env.DB.prepare('SELECT 1 AS v FROM baslik_oylar WHERE baslik_id = ? AND uye_id = ?').bind(id, uye.id).first());
+  if (uye) {
+    baslik.oyladim = !!(await env.DB.prepare('SELECT 1 AS v FROM baslik_oylar WHERE baslik_id = ? AND uye_id = ?').bind(id, uye.id).first());
+    baslik.takip = await takipMi(env, uye.id, id);
+  }
   const { yanitlar, daha_eski } = await yanitlariGetir(env, id, uye, limit, once);
   return jsonYanit({ baslik, anket: b.anket ? await anketGetir(env, id, uye) : null, yanitlar, daha_eski });
 }
@@ -419,8 +457,10 @@ async function ilanGetir(request, env, url, ilanId) {
   const b = await baslikSatiri(env, 'b.ilan_id = ?', ilanId);
   let kimlik = url.searchParams.get('kimlik') || '';
   kimlik = uye ? `u${uye.id}` : KIMLIK_DESENI.test(kimlik) ? kimlik : '';
+  const baslik = b ? baslikCikti(b, true) : null;
+  if (baslik && uye) baslik.takip = await takipMi(env, uye.id, b.id);
   return jsonYanit({
-    baslik: b ? baslikCikti(b, true) : null,
+    baslik,
     yanitlar: b ? (await yanitlariGetir(env, b.id, uye, 200)).yanitlar : [],
     basvuru: await basvuruOzeti(env, ilanId, kimlik),
   });
@@ -439,7 +479,7 @@ async function ozet(env, url) {
 
 // ---------- yazma: başlık / yanıt ----------
 const tekSatir = (s) => temizle(s).replace(/\s+/g, ' ');
-function metinDenetle(metin, en, fazla, ad) {
+export function metinDenetle(metin, en, fazla, ad) {
   const t = temizle(metin);
   if (t.length < en || t.length > fazla) return { hata: hataYanit(400, `${ad} ${en}-${fazla} karakter olmalı.`) };
   const d = denetle(t);
@@ -491,10 +531,12 @@ export function anmalariBul(metin) {
   }
   return [...bulunan.values()];
 }
-async function yanitBildirimleri(env, { baslikId, baslikAdi, yanitId, yanitlayan, aliciIdleri, metin }) {
-  await yanitBildirimi(env, { baslikId, baslikAdi, yanitlayan, aliciIdleri });
+async function yanitBildirimleri(env, { baslikId, baslikAdi, kategori, yanitId, yanitlayan, aliciIdleri, metin }) {
+  const bildirilen = [];   // bu istekte zaten haber verilenler (başlık sahibi, yanıtlanan, anılanlar): takip bildirimi atlar
+  await yanitBildirimi(env, { baslikId, baslikAdi, yanitlayan, aliciIdleri, bildirilen });
   const rumuzlar = anmalariBul(metin);
-  if (rumuzlar.length) await anmaBildirimi(env, { baslikId, baslikAdi, yanitId, yanitlayan, rumuzlar, haricIdler: aliciIdleri });
+  if (rumuzlar.length) await anmaBildirimi(env, { baslikId, baslikAdi, yanitId, yanitlayan, rumuzlar, haricIdler: aliciIdleri, bildirilen });
+  await takipBildirimi(env, { baslikId, baslikAdi, kategori, yanitlayan, haricIdler: [...aliciIdleri, ...bildirilen] });
 }
 async function baslikOlustur(request, env) {
   const { uye, hata } = await yazar(request, env);
@@ -517,14 +559,16 @@ async function baslikOlustur(request, env) {
   const r = await env.DB.prepare(
     "INSERT INTO basliklar (kategori, baslik, govde, uye_id, kaynak, olusma, son_hareket, duzey, puan_turu, puan, anket) VALUES (?, ?, ?, ?, 'uye', ?, ?, ?, ?, ?, ?)",
   ).bind(g.kategori, b.temiz, o.temiz, uye.id, t, t, ek.duzey, ek.puan_turu, ek.puan, ek.secenekler ? 1 : 0).run();
+  if (g.kategori !== 'oda') await env.DB.prepare('INSERT OR IGNORE INTO takipler (uye_id, baslik_id, olusma) VALUES (?, ?, ?)').bind(uye.id, r.meta.last_row_id, t).run();
   if (ek.secenekler) await anketSecenekleriEkle(env, r.meta.last_row_id, ek.secenekler);
   const satir = await baslikSatiri(env, 'b.id = ?', r.meta.last_row_id);
   return jsonYanit({ baslik: baslikCikti(satir, true) }, 201);
 }
-async function yanitEkle(env, baslikId, uyeId, govde, ustId, t) {
+async function yanitEkle(env, baslikId, uyeId, govde, ustId, t, takipEt = false) {
   const r = await env.DB.batch([
     env.DB.prepare('INSERT INTO yanitlar (baslik_id, uye_id, govde, olusma, ust_id) VALUES (?, ?, ?, ?, ?)').bind(baslikId, uyeId, govde, t, ustId ?? null),
     env.DB.prepare('UPDATE basliklar SET yanit_sayisi = yanit_sayisi + 1, son_hareket = ? WHERE id = ?').bind(t, baslikId),
+    ...(takipEt ? [env.DB.prepare('INSERT OR IGNORE INTO takipler (uye_id, baslik_id, olusma) VALUES (?, ?, ?)').bind(uyeId, baslikId, t)] : []),
   ]);
   return r[0].meta.last_row_id;
 }
@@ -535,7 +579,7 @@ async function yanitYaz(request, env, ctx, baslikId) {
   if (!g) return hataYanit(400, 'Geçersiz istek.');
   const o = metinDenetle(g.govde, 2, 2000, 'Yanıt');
   if (o.hata) return o.hata;
-  const b = await env.DB.prepare('SELECT id, baslik, uye_id FROM basliklar WHERE id = ? AND gizli = 0').bind(baslikId).first();
+  const b = await env.DB.prepare('SELECT id, baslik, uye_id, kategori FROM basliklar WHERE id = ? AND gizli = 0').bind(baslikId).first();
   if (!b) return hataYanit(404, 'Başlık bulunamadı.');
   let ust = null;
   if (g.ust_id !== undefined && g.ust_id !== null) {
@@ -544,8 +588,8 @@ async function yanitYaz(request, env, ctx, baslikId) {
   }
   const sinir = await yanitHizi(env, uye, simdi());
   if (sinir) return hataYanit(sinir.durum, sinir.hata);
-  const id = await yanitEkle(env, baslikId, uye.id, o.temiz, ust ? ust.id : null, simdi());
-  bekle(ctx, yanitBildirimleri(env, { baslikId, baslikAdi: b.baslik, yanitId: id, yanitlayan: uye, aliciIdleri: [b.uye_id, ust ? ust.uye_id : 0], metin: o.temiz }));
+  const id = await yanitEkle(env, baslikId, uye.id, o.temiz, ust ? ust.id : null, simdi(), b.kategori !== 'oda');
+  bekle(ctx, yanitBildirimleri(env, { baslikId, baslikAdi: b.baslik, kategori: b.kategori, yanitId: id, yanitlayan: uye, aliciIdleri: [b.uye_id, ust ? ust.uye_id : 0], metin: o.temiz }));
   return jsonYanit({ yanit: await yanitTek(env, id, uye) }, 201);
 }
 async function ilanYanitYaz(request, env, ctx, ilanId) {
@@ -578,9 +622,8 @@ async function ilanYanitYaz(request, env, ctx, ilanId) {
     ).bind(ad, ilanId, t, t).run();
     b = await env.DB.prepare('SELECT id, gizli, baslik FROM basliklar WHERE ilan_id = ?').bind(ilanId).first();
   }
-  const soruId = await yanitEkle(env, b.id, uye.id, o.temiz, null, t);
-  const anilan = anmalariBul(o.temiz);
-  if (anilan.length) bekle(ctx, anmaBildirimi(env, { baslikId: b.id, baslikAdi: b.baslik, yanitId: soruId, yanitlayan: uye, rumuzlar: anilan }));
+  const soruId = await yanitEkle(env, b.id, uye.id, o.temiz, null, t, true);
+  bekle(ctx, yanitBildirimleri(env, { baslikId: b.id, baslikAdi: b.baslik, kategori: 'ilan', yanitId: soruId, yanitlayan: uye, aliciIdleri: [], metin: o.temiz }));
   const yanitlar = [await yanitTek(env, soruId, uye)];
   try {
     const cevap = kayit ? asistanYaniti(o.temiz, kayit) : null;
@@ -774,9 +817,9 @@ async function yanitSil(request, env, id) {
 }
 
 // ---------- uygulama içi bildirimler ----------
-const ONCELIK = { yanit: 1, anma: 2, alinti: 3 };
+const ONCELIK = { takip: 0, yanit: 1, anma: 2, alinti: 3 };
 const kisalt = (s) => String(s || '').slice(0, 90);
-const BILDIRIM_SECIM = `SELECT y.id AS yanit_id, y.baslik_id, y.govde, y.olusma, b.baslik, u.rumuz, u.rol
+const BILDIRIM_SECIM = `SELECT y.id AS yanit_id, y.baslik_id, y.govde, y.olusma, b.baslik, b.kategori, u.rumuz, u.rol
   FROM yanitlar y JOIN basliklar b ON b.id = y.baslik_id JOIN uyeler u ON u.id = y.uye_id`;
 async function benBildirimler(request, env, url) {
   const uye = await oturumUyesi(request, env);
@@ -817,20 +860,30 @@ async function benBildirimler(request, env, url) {
   ).bind(esik, uye.id, ...bicimler).all();
   const benim = trKucuk(uye.rumuz);
   ekle('anma', n.results.filter((r) => anmalariBul(r.govde).some((x) => trKucuk(x) === benim)));
+  // takip: takip edilen başlıklardaki başkalarının yanıtları (en düşük öncelik)
+  const tk = await env.DB.prepare(
+    `${BILDIRIM_SECIM} JOIN takipler t ON t.baslik_id = y.baslik_id AND t.uye_id = ?
+     WHERE y.olusma > ? AND y.uye_id <> ? AND y.gizli = 0 AND b.gizli = 0 ORDER BY y.id DESC LIMIT 30`,
+  ).bind(uye.id, esik, uye.id).all();
+  ekle('takip', tk.results);
   const bildirimler = [...bulunan.values()]
     .sort((x, z) => z.r.yanit_id - x.r.yanit_id).slice(0, 30)
-    .map(({ tur, r }) => ({ tur, baslik_id: r.baslik_id, baslik: r.baslik, yanit_id: r.yanit_id, rumuz: r.rumuz, rol: r.rol, kisa: kisalt(r.govde), olusma: r.olusma }));
+    .map(({ tur, r }) => ({ tur, baslik_id: r.baslik_id, baslik: r.baslik, yanit_id: r.yanit_id, rumuz: r.rumuz, rol: r.rol, kisa: kisalt(r.govde), olusma: r.olusma, oda: r.kategori === 'oda' }));
   return jsonYanit({ bildirimler, simdi: t });
 }
 
 // ---------- herkese açık üye kartı ----------
-async function uyeKarti(env, ham) {
+// Yol parçasından üye satırı (yasaklı dahil; çağıran karar verir). rumuz sütunu ASCII'de büyük/küçük duyarsız;
+// Türkçe harfler için ek yazımlar (küçük, BÜYÜK, İlk harf büyük) da denenir.
+export async function uyeRumuzla(env, ham) {
   let rumuz;
-  try { rumuz = decodeURIComponent(ham); } catch { return hataYanit(404, 'Üye bulunamadı.'); }
-  // rumuz sütunu ASCII'de büyük/küçük duyarsız; Türkçe harfler için ek yazımlar (küçük, BÜYÜK, İlk harf büyük) da denenir
+  try { rumuz = decodeURIComponent(ham); } catch { return null; }
   const kucuk = trKucuk(rumuz), buyuk = trBuyuk(rumuz), ilkBuyuk = trBuyuk(kucuk.slice(0, 1)) + kucuk.slice(1);
   const adaylar = [...new Set([rumuz, kucuk, buyuk, ilkBuyuk])].slice(0, 4);
-  const u = await env.DB.prepare(`SELECT id, rumuz, rol, kurucu, itibar, kayit, engelli FROM uyeler WHERE rumuz IN (${adaylar.map(() => '?').join(',')}) ORDER BY rumuz = ? DESC LIMIT 1`).bind(...adaylar, rumuz).first();
+  return env.DB.prepare(`SELECT id, rumuz, rol, kurucu, itibar, kayit, engelli, dm_acik, tg_id, bildirim FROM uyeler WHERE rumuz IN (${adaylar.map(() => '?').join(',')}) ORDER BY rumuz = ? DESC LIMIT 1`).bind(...adaylar, rumuz).first();
+}
+async function uyeKarti(env, ham) {
+  const u = await uyeRumuzla(env, ham);
   if (!u || u.engelli) return hataYanit(404, 'Üye bulunamadı.');
   const say = await env.DB.prepare('SELECT COUNT(*) AS n FROM yanitlar WHERE uye_id = ? AND gizli = 0').bind(u.id).first();
   const son = await env.DB.prepare(
@@ -838,7 +891,7 @@ async function uyeKarti(env, ham) {
      JOIN basliklar b ON b.id = t.baslik_id WHERE b.gizli = 0 ORDER BY t.son DESC LIMIT 5`,
   ).bind(u.id).all();
   return jsonYanit({
-    rumuz: u.rumuz, rol: u.rol, kurucu: !!u.kurucu, itibar: u.itibar || 0, kayit: u.kayit, mesaj_sayisi: say?.n || 0,
+    rumuz: u.rumuz, rol: u.rol, kurucu: !!u.kurucu, itibar: u.itibar || 0, dm_acik: u.dm_acik !== 0, kayit: u.kayit, mesaj_sayisi: say?.n || 0,
     son_basliklar: son.results.map((r) => ({ id: r.id, baslik: r.baslik, ilan_id: r.ilan_id })),
   });
 }

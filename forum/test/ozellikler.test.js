@@ -29,15 +29,17 @@ function hamBaslik(env, o) {
 const itibarOku = (env, id) => env.DB.ham.prepare('SELECT itibar FROM uyeler WHERE id = ?').get(id).itibar;
 
 // ---------- göç ----------
-test('göç 0002: eski şemanın üstüne temiz uygulanır, veri korunur, sonuç taze şemayla aynı', () => {
+test('göç 0002+0003+0004: eski şemanın üstüne temiz uygulanır, veri korunur, sonuç taze şemayla aynı', () => {
   const eski = new DatabaseSync(':memory:');
   eski.exec(dosya('./eski-schema.sql'));
   eski.exec("INSERT INTO basliklar (kategori, baslik, govde, uye_id, olusma, son_hareket) VALUES ('puan', 'eski baslik', 'govde', 1, 5, 5)");
   eski.exec(dosya('../migrations/0002_ozellikler.sql'));
+  eski.exec(dosya('../migrations/0003_odalar.sql'));
+  eski.exec(dosya('../migrations/0004_ozel_takip.sql'));
   const taze = new DatabaseSync(':memory:');
   taze.exec(dosya('../schema.sql'));
   const kolonlar = (db, t) => db.prepare(`PRAGMA table_info(${t})`).all().map((r) => r.name).sort();
-  for (const t of ['uyeler', 'basliklar', 'baslik_oylar', 'anket_secenekleri', 'anket_oylari', 'yanitlar']) {
+  for (const t of ['uyeler', 'basliklar', 'baslik_oylar', 'anket_secenekleri', 'anket_oylari', 'yanitlar', 'ozel_mesajlar', 'engeller', 'ozel_sikayetler', 'takipler']) {
     assert.deepEqual(kolonlar(eski, t), kolonlar(taze, t), t);
   }
   const b = eski.prepare('SELECT * FROM basliklar').get();

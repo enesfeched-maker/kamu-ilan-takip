@@ -22,6 +22,16 @@ export async function yanitHizi(env, uye, simdi) {
   return null;
 }
 
+// Özel mesaj hızı: saatte 20, günde 100 (gizlenen mesajlar da sayılır). (gonderen, olusma) indeksi.
+export async function ozelMesajHizi(env, uye, simdi) {
+  const s = await env.DB.prepare(
+    'SELECT COUNT(*) AS gun, COALESCE(SUM(CASE WHEN olusma > ? THEN 1 ELSE 0 END), 0) AS saat FROM ozel_mesajlar WHERE gonderen = ? AND olusma > ?',
+  ).bind(simdi - 3600, uye.id, simdi - GUN).first();
+  if ((s?.saat || 0) >= 20) return ret('Saatte en fazla 20 özel mesaj gönderebilirsin. Biraz sonra tekrar dene.');
+  if ((s?.gun || 0) >= 100) return ret('Bugün için özel mesaj sınırına ulaştın. Yarın tekrar dene.');
+  return null;
+}
+
 // Anonim başvuru yazımı için en iyi çaba bellek içi sınır (izolat başına).
 const kovalar = new Map();
 export function ipSiniri(ip, simdi, limit = 30, pencere = 60) {

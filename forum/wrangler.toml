@@ -1,7 +1,7 @@
 # KPSS Tercihi - forum / topluluk API'si (Cloudflare Worker + D1).
 # Uretim adimlari icin KURULUM.md dosyasina bak. Buradaki hicbir sey kendiliginden dagitilmaz.
 name = "kpss-forum"
-main = "src/index.js"
+main = "src/giris.js"   # yalnız varsayılan işleyici; bkz. src/giris.js
 compatibility_date = "2026-05-22"
 
 [[routes]]
