@@ -74,6 +74,7 @@ async function yonlendir(request, env, ctx) {
     const onb = (uret) => onbellekli(url, ctx, anonim, uret);
     if (yol === '/basliklar') return onb(() => basliklarListe(env, url));
     if (yol === '/son') return onb(() => sonBasliklar(env));
+    if (yol === '/durum') return onb(() => forumDurumu(env));
     if (yol === '/ozet') return onb(() => ozet(env, url));
     if ((m = yol.match(/^\/baslik\/(\d+)$/))) return onb(() => baslikGetir(request, env, Number(m[1])));
     if ((m = yol.match(/^\/ilan\/([^/]+)$/))) return onb(() => ilanGetir(request, env, url, decodeURIComponent(m[1])));
@@ -169,7 +170,7 @@ async function uyeOlustur(env, tgId, rumuz) {
   const sayi = await env.DB.prepare("SELECT COUNT(*) AS n FROM uyeler WHERE rol NOT IN ('sistem', 'asistan')").first();
   const t = simdi();
   try {
-    await env.DB.prepare('INSERT INTO uyeler (tg_id, rumuz, kayit, kurucu) VALUES (?, ?, ?, ?)').bind(tgId, r.rumuz, t, (sayi?.n || 0) < 200 ? 1 : 0).run();
+    await env.DB.prepare('INSERT INTO uyeler (tg_id, rumuz, kayit, kurucu) VALUES (?, ?, ?, ?)').bind(tgId, r.rumuz, t, (sayi?.n || 0) < KURUCU_SINIRI ? 1 : 0).run();
   } catch { return { hata: hataYanit(409, 'Bu rumuz alınmış.') }; }
   const uye = await env.DB.prepare('SELECT id, rumuz, kurucu, rol FROM uyeler WHERE tg_id = ?').bind(tgId).first();
   return { uye };
@@ -218,6 +219,7 @@ async function benBildirim(request, env) {
 // ---------- okuma ----------
 const BASLIK_ALANLARI = `b.id, b.kategori, b.baslik, b.kaynak, b.sabit, b.olusma, b.son_hareket, b.yanit_sayisi, b.ilan_id, b.govde,
   u.rumuz, u.kurucu, u.rol`;
+const KURUCU_SINIRI = 200;   // ilk 200 üye "Kurucu üye" rozeti alır
 function baslikCikti(r, govdeli) {
   const o = {
     id: r.id, kategori: r.kategori, baslik: r.baslik, rumuz: r.rumuz, kurucu: !!r.kurucu, rol: r.rol, kaynak: r.kaynak,
@@ -233,6 +235,7 @@ async function basliklarListe(env, url) {
   const bag = [];
   let kosul = 'b.gizli = 0';
   if (kategori) { kosul += ' AND b.kategori = ?'; bag.push(kategori); }
+  if (url.searchParams.get('bekleyen') === '1') kosul += ' AND b.yanit_sayisi = 0 AND b.sabit = 0';   // henüz yanıtlanmamış sorular
   bag.push(SAYFA_BOYUTU + 1, (sayfa - 1) * SAYFA_BOYUTU);
   const { results } = await env.DB.prepare(
     `SELECT b.id, b.kategori, b.baslik, substr(b.govde, 1, 140) AS govde, b.kaynak, b.sabit, b.olusma, b.son_hareket, b.yanit_sayisi, b.ilan_id,
@@ -249,6 +252,15 @@ async function sonBasliklar(env) {
      FROM basliklar b JOIN uyeler u ON u.id = b.uye_id WHERE b.gizli = 0 ORDER BY b.son_hareket DESC LIMIT 10`,
   ).all();
   return jsonYanit({ basliklar: results.map((r) => baslikCikti(r, false)) });
+}
+// Forum sayfasının üst şeridi: üye sayısı, kalan kurucu rozeti, son 24 saatin mesaj ve yazar sayısı (gerçek sayılar; önbellekli).
+export async function forumDurumu(env, simdi = Math.floor(Date.now() / 1000)) {
+  const u = await env.DB.prepare("SELECT COUNT(*) AS n FROM uyeler WHERE rol NOT IN ('sistem', 'asistan')").first();
+  const g = await env.DB.prepare(
+    "SELECT COUNT(*) AS mesaj, COUNT(DISTINCT y.uye_id) AS yazar FROM yanitlar y JOIN uyeler u ON u.id = y.uye_id WHERE y.olusma > ? AND y.gizli = 0 AND u.rol NOT IN ('sistem', 'asistan')",
+  ).bind(simdi - 86400).first();
+  const uye = u?.n || 0;
+  return jsonYanit({ uye, kurucu_kalan: Math.max(0, KURUCU_SINIRI - uye), bugun_mesaj: g?.mesaj || 0, bugun_yazar: g?.yazar || 0 });
 }
 async function baslikSatiri(env, kosul, deger) {
   return env.DB.prepare(`SELECT ${BASLIK_ALANLARI} FROM basliklar b JOIN uyeler u ON u.id = b.uye_id WHERE ${kosul} AND b.gizli = 0`).bind(deger).first();

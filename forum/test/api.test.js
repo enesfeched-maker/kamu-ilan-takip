@@ -388,6 +388,18 @@ test('/son: son hareketli 10 başlık; bilinmeyen yol 404', async () => {
   assert.equal((await cagir(env, 'GET', '/yok')).durum, 404);
 });
 
+test('/durum: gerçek üye ve son 24 saat sayıları; site ve asistan hesapları sayılmaz', async () => {
+  const env = ortam();
+  const d0 = (await cagir(env, 'GET', '/durum')).json;
+  assert.deepEqual(d0, { uye: 0, kurucu_kalan: 200, bugun_mesaj: 0, bugun_yazar: 0 });
+  const { token } = await uyeGirisi(env, 'ayse_k');
+  const b = await cagir(env, 'POST', '/baslik', { token, govde: BASLIK });
+  await cagir(env, 'POST', `/baslik/${b.json.baslik.id}/yanit`, { token, govde: { govde: 'Bir ek not yazayım.' } });
+  const d = (await cagir(env, 'GET', '/durum')).json;
+  assert.equal(d.uye, 1); assert.equal(d.kurucu_kalan, 199);
+  assert.equal(d.bugun_mesaj, 1); assert.equal(d.bugun_yazar, 1);
+});
+
 // ---------- bildirim ----------
 test('bildirim: başlık sahibine Telegram mesajı; kendine, kapalıysa, 10 dk içinde tekrar yok', async () => {
   const env = ortam();

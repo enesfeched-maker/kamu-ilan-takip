@@ -21,12 +21,13 @@ EN_COK_LOGO_INDIRME = 150
 CSS_SURUM = 23
 LOGO_SURUM = 2
 ACIK_ZEMIN, KOYU_ZEMIN = '#F6F6F1', '#0D0E0C'
-FORUM_SURUM = 1   # docs/forum.js + docs/forum.css önbellek sürümü
+FORUM_SURUM = 2   # docs/forum.js + docs/forum.css önbellek sürümü
 ANALIZ_SURUM = 3  # docs/a.js (çerezsiz ziyaret istatistiği) önbellek sürümü
 # <head> içinde, theme-color etiketinden sonra: kit-theme (elle seçim) > sistem koyu tercihi > gece 20:00-07:00 koyu > açık.
 TEMA_BETIGI = ('<script>try{var r=document.documentElement,O=window.kitOto=function(){try{if(matchMedia("(prefers-color-scheme: dark)").matches)return!0}catch(e){}var h=new Date().getHours();return h>=20||h<7},K=window.kitKoyu=function(){var s,o=O();try{s=JSON.parse(localStorage.getItem("kit-theme"))}catch(e){}if(s&&typeof s==="object"&&s.a===o&&(s.t==="dark"||s.t==="light"))return s.t==="dark";if(s!=null)try{localStorage.removeItem("kit-theme")}catch(e){}return o},U=function(){if(window.kitTemaUygula)return window.kitTemaUygula();var d=K(),m=document.querySelector("meta[name=theme-color]");r.dataset.theme=d?"dark":"light";if(m)m.content=d?"' + KOYU_ZEMIN + '":"' + ACIK_ZEMIN + '"},C=function(){if((K()?"dark":"light")!==r.dataset.theme)U()};U();setInterval(C,3e5);try{matchMedia("(prefers-color-scheme: dark)").addEventListener("change",C)}catch(e){}}catch(e){document.documentElement.dataset.theme="light"}</script>')
 TG_IKON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 4-18 7.2 6 2.3M21 4l-3 16-8.5-6.5M21 4 9.5 13.5v5.5l3-3.5"/></svg>'
-KISI_IKON = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5"/></svg>'
+SOHBET_IKON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12.5a7.5 7.5 0 0 1-11 6.6L4 20l1-4.3A7.5 7.5 0 1 1 20 12.5z"/></svg>'
+KISI_IKON ='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5"/></svg>'
 
 
 def esc(value):
@@ -859,10 +860,10 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
         tablo = _kadro_tablosu(item)
     if (pdf_satirlari or kk_kadrolar) and item.get('ozet'):  # kartlar özetin üstünde: "koşullar aşağıda gösterilmiştir" cümlesi yanıltır
         item = dict(item, ozet=item['ozet'].replace(' Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.', ''))
-    bolum = ''
+    bolum = bakis = ''
     try:   # 20 Ekim 2026: en üstte yalnız bilinmesi gerekenler, anahtar kelimelerle; ayrıntı aşağıda
         import ilan_bakis
-        bolum += ilan_bakis.bolum_html(item, alanlar.get('toplam'), simdi)
+        bakis = ilan_bakis.bolum_html(item, alanlar.get('toplam'), simdi)
     except Exception as hata:
         print(f'Uyarı: bir bakışta bölümü üretilemedi ({item.get("id")}): {hata}')
     if tablo:
@@ -924,7 +925,8 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
     ikincil_veri = f' data-ikincil="{esc(",".join((kopya or {}).get("ikincil_idler") or []))}"' if (kopya or {}).get('ikincil_idler') else ''
     from kurum_sayfasi import BOOKMARK
     cta = (f'<div class="d-cta"><a class="btn btn-ana btn-buyuk" href="{esc(target)}" target="_blank" rel="noopener noreferrer" data-a="resmi_ilan" data-a-h="{esc(key)}">{button}</a>'
-           f'<button type="button" class="btn btn-ikinci btn-buyuk" id="kaydet-btn" data-kaydet="{kayit_id}"{ikincil_veri} data-ad="{esc(h1)}" aria-pressed="false">{BOOKMARK}<span data-yazi>Kaydet</span></button></div>')
+           f'<button type="button" class="btn btn-ikinci btn-buyuk" id="kaydet-btn" data-kaydet="{kayit_id}"{ikincil_veri} data-ad="{esc(h1)}" aria-pressed="false">{BOOKMARK}<span data-yazi>Kaydet</span></button>'
+           f'<a class="btn btn-ikinci btn-buyuk fr-cta" href="#tartisma" data-a="forum_cta">{SOHBET_IKON}<span data-fr-cta>Soru sor</span></a></div>')
     benzer_html = ''
     if benzer:
         benzer_html = ('<section class="benzer"><div class="bolum-bas"><h2>Benzer ilanlar</h2></div><div class="liste">'
@@ -942,7 +944,7 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
         og_gorsel += '<meta name="robots" content="noindex,follow">'
     govde = (f'<main id="icerik" class="wrap"><article class="d-bas"><nav class="crumbs" aria-label="Konum"><a href="{kok}">Ana sayfa</a><span aria-hidden="true">/</span><a href="{kok}#ilanlar">İlanlar</a>{kurum_kirinti}</nav>'
              f'{hero_html(item, gorsel, kayit, simdi)}{kurum_ici_not}{duzeltme_kutusu}{kopya_ust}{cta}{kopya_alt}</article>'
-             f'<div class="d-ana"><section class="d-bolum">{sections}{bolum}{diger}</section>{tartisma}{benzer_html}</div></main>')
+             f'<div class="d-ana"><section class="d-bolum">{sections}{bakis}</section>{tartisma}<section class="d-bolum">{bolum}{diger}</section>{benzer_html}</div></main>')
     return key, (sayfa_basi(title, description, canonical, kok, 'article', og_gorsel, og_baslik=title)
                  + f'<body class="detail-page"><a class="skip" href="#icerik">İçeriğe geç</a>{ust_html(kok)}{govde}{alt_html(kok)}</body></html>')
 
