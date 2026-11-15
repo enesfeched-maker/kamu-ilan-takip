@@ -99,6 +99,8 @@
   }
   function kok() { return document.body.classList.contains('detail-page') ? '../../' : document.getElementById('forum') ? '../' : ''; }
   function katAd(kod) { for (var i = 0; i < KATEGORILER.length; i++) if (KATEGORILER[i].kod === kod) return KATEGORILER[i].ad; return ''; }
+  // Bilgi parçaları ayrı öğe olarak yan yana durur (aralık CSS'ten); orta nokta ile birleştirilmez.
+  function parcalar(l) { return l.filter(function (x) { return x !== '' && x != null; }).map(function (x) { return '<span>' + esc(x) + '</span>'; }).join(''); }
   function duzeyAd(k) { for (var i = 0; i < DUZEYLER.length; i++) if (DUZEYLER[i].kod === k) return DUZEYLER[i].ad; return ''; }
 
   /* ---------- giriş ---------- */
@@ -261,7 +263,7 @@
         var p = b.puan, en = p.en_dusuk, ek = p.en_yuksek, ara = Math.max(ek - en, 0.01);
         var yz = function (x) { return ((x - en) / ara * 100).toFixed(1) + '%'; };
         h += '<details class="fr-ac"><summary>Başvuranların puanları (' + sayi(p.adet) + ')</summary>'
-          + '<p class="fr-not">' + esc(p.puan_turu) + ' · en düşük ' + esc(en) + ' · ortanca ' + esc(p.medyan) + ' · en yüksek ' + esc(ek) + (p.sira ? ' · sen ' + sayi(p.sira) + '.' : '') + '</p>'
+          + '<p class="fr-not fr-ara-bilgi">' + parcalar([p.puan_turu, 'en düşük ' + en, 'ortanca ' + p.medyan, 'en yüksek ' + ek, p.sira ? 'sen ' + sayi(p.sira) + '. sıradasın' : '']) + '</p>'
           + '<div class="fr-cubuk" aria-hidden="true"><span class="fr-kutu-c" style="left:' + yz(p.ceyrek1) + ';width:calc(' + yz(p.ceyrek3) + ' - ' + yz(p.ceyrek1) + ')"></span><span class="fr-medyan" style="left:' + yz(p.medyan) + '"></span>'
           + (benim && benim.puan && benim.puan_turu === p.puan_turu ? '<span class="fr-sen" style="left:' + yz(Math.min(Math.max(benim.puan, en), ek)) + '"></span>' : '') + '</div>'
           + '<p class="fr-not">Gönüllü paylaşılan puanlar; resmî değildir.</p></details>';
@@ -370,7 +372,7 @@
       var uyan = v.donemler[donem].filter(function (s) { return s.min != null && s.min <= b.puan; });
       var p = String(b.puan).replace('.', ',');
       yer.innerHTML = '<p class="fr-puan-ozet"><span class="fr-et">site verisi</span> ' + esc(donem.replace('-', '/')) + ' yerleştirmesinde ' + esc(v.ad.toLocaleLowerCase('tr-TR')) + ' ' + p
-        + ' ve altı puanla yerleşilen <b>' + sayi(uyan.length) + ' kadro</b> vardı. <a href="../puanlar/">Bölümüne uyanları gör →</a></p>';
+        + ' ve altı puanla yerleşilen <b>' + sayi(uyan.length) + ' kadro</b> vardı. Bölümüne uyanlar için <a href="../puanlar/">tercih robotu</a>.</p>';
     }, function () {});
   }
   function forumSayfasi(kok_) {
@@ -399,7 +401,7 @@
     }
     function satir(b) {
       var hedef = b.ilan_id ? '../ilan/' + encodeURIComponent(b.ilan_id) + '/#tartisma' : '?b=' + b.id;
-      var alt = [katAd(b.kategori), duzeyAd(b.duzey), b.anket ? 'Anket' : '', esc(b.rumuz || ''), zaman(b.son_hareket || b.olusma)].filter(Boolean).join(' · ');
+      var alt = parcalar([katAd(b.kategori), duzeyAd(b.duzey), b.anket ? 'Anket' : '', b.rumuz, zaman(b.son_hareket || b.olusma)]);
       return '<a class="fr-satir"' + (b.ilan_id ? '' : ' data-ic') + ' href="' + hedef + '"><span class="fr-satir-ic">'
         + '<b class="fr-satir-bas">' + (b.sabit ? '<span class="fr-sabit">Sabit</span> ' : '') + esc(b.baslik) + '</b><span class="fr-satir-alt">' + alt + '</span></span>'
         + '<span class="fr-yanit-sayi' + (b.yanit_sayisi || b.sabit ? '' : ' fr-sifir') + '">' + (b.yanit_sayisi ? sayi(b.yanit_sayisi) : b.sabit ? '' : 'yanıtsız') + '</span></a>';
@@ -408,7 +410,7 @@
       var secili = p.bekleyen ? 'bekleyen' : p.k;
       kok_.innerHTML = '<div class="fr-ust"><form class="fr-ara" role="search"><input type="search" maxlength="60" placeholder="Forumda ara" value="' + esc(p.q) + '" aria-label="Forumda ara"></form>'
         + '<a class="btn btn-ana" data-ic href="?yeni=1' + (p.k && p.k !== 'ilan' && p.k !== 'etkinlik' ? '&k=' + p.k : '') + '">Soru sor</a>' + uyeCubugu() + '</div>'
-        + (p.q ? '<p class="fr-arama-bas">“' + esc(p.q) + '” · <a class="yazi-link" data-ic href="?">temizle</a></p>'
+        + (p.q ? '<p class="fr-arama-bas"><span>“' + esc(p.q) + '” için sonuçlar</span><a class="yazi-link" data-ic href="?">Aramayı temizle</a></p>'
           : '<nav class="fr-sekmeler" aria-label="Konular"><a data-ic href="?"' + (!secili ? ' aria-current="page"' : '') + '>Tümü</a>'
             + '<a data-ic href="?bekleyen=1"' + (secili === 'bekleyen' ? ' aria-current="page"' : '') + '>Yanıtsız</a>'
             + KATEGORILER.map(function (c) { return '<a data-ic href="?k=' + c.kod + '"' + (secili === c.kod ? ' aria-current="page"' : '') + '>' + esc(c.ad) + '</a>'; }).join('') + '</nav>')
@@ -420,7 +422,7 @@
         return api(yol).then(function (j) {
           var b = j.basliklar || [];
           var eski = kap.querySelector('.fr-daha'); if (eski) eski.remove();
-          if (!ekle) kap.innerHTML = b.length ? '' : '<p class="fr-bos">' + (p.q ? 'Sonuç yok. <a class="yazi-link" data-ic href="?yeni=1">Sorunu sor →</a>' : p.bekleyen ? 'Yanıtsız soru yok.' : 'Henüz başlık yok. <a class="yazi-link" data-ic href="?yeni=1">İlk soruyu sor →</a>') + '</p>';
+          if (!ekle) kap.innerHTML = b.length ? '' : '<p class="fr-bos">' + (p.q ? 'Sonuç yok. <a class="yazi-link" data-ic href="?yeni=1">Sorunu sor</a>, bilen biri cevaplar.' : p.bekleyen ? 'Yanıtsız soru yok.' : 'Henüz başlık yok. <a class="yazi-link" data-ic href="?yeni=1">İlk soruyu sen sor</a>.') + '</p>';
           kap.insertAdjacentHTML('beforeend', b.map(satir).join(''));
           if (j.sonraki && !p.q) {
             var d = el('<button type="button" class="fr-eylem fr-daha">Daha fazla</button>');
@@ -441,7 +443,7 @@
       }).join('') + '<small class="fr-not">' + sayi(a.toplam) + ' oy</small></div>';
     }
     function baslik(id) {
-      kok_.innerHTML = '<p class="fr-geri"><a class="yazi-link" data-ic href="?">← Forum</a></p><div class="fr-baslik"><p class="fr-yukleniyor">Yükleniyor…</p></div>';
+      kok_.innerHTML = '<p class="fr-geri"><a class="yazi-link" data-ic href="?">Foruma dön</a></p><div class="fr-baslik"><p class="fr-yukleniyor">Yükleniyor…</p></div>';
       var kap = kok_.querySelector('.fr-baslik'), sonId = 0, ilk = true;
       function yukle(sessiz) {
         return api('/baslik/' + id).then(function (j) {
@@ -450,14 +452,14 @@
           if (sessiz === true) { if (enBuyuk <= sonId) return; bildir('Yeni yanıt'); }
           document.title = b.baslik + ' — Forum — KPSS Tercihi';
           if (!kap.querySelector('.fr-yazici')) {
-            var ust = [katAd(b.kategori), duzeyAd(b.duzey), b.puan_turu && b.puan != null ? b.puan_turu + ' ' + String(b.puan).replace('.', ',') : ''].filter(Boolean).join(' · ');
+            var ust = parcalar([katAd(b.kategori), duzeyAd(b.duzey), b.puan_turu && b.puan != null ? b.puan_turu + ' ' + String(b.puan).replace('.', ',') : '']);
             var benim = uye() && uye().rumuz === b.rumuz;
-            kap.innerHTML = '<p class="fr-not">' + esc(ust) + '</p><h2 class="fr-baslik-bas">' + esc(b.baslik) + '</h2>'
+            kap.innerHTML = '<p class="fr-ust-bilgi">' + ust + '</p><h2 class="fr-baslik-bas">' + esc(b.baslik) + '</h2>'
               + (b.govde ? '<div class="fr-ilk"><header><b>' + esc(b.rumuz) + '</b>' + etiket(b) + '<time>' + zaman(b.olusma) + '</time></header><div class="fr-metin">' + metin(b.govde) + '</div>'
                 + '<div data-anket-yer></div><div data-puan-ozet></div>'
                 + '<footer>' + (benim || !insanMi(b) ? '' : '<button type="button" class="fr-eylem" data-baslik-oy aria-pressed="' + (b.oyladim ? 'true' : 'false') + '">Faydalı' + (b.faydali ? ' ' + sayi(b.faydali) : '') + '</button>')
                 + '<button type="button" class="fr-eylem" data-paylas>Paylaş</button></footer></div>' : '')
-              + (b.ilan_id ? '<p><a class="yazi-link" href="../ilan/' + encodeURIComponent(b.ilan_id) + '/#tartisma">İlanı aç →</a></p>' : '')
+              + (b.ilan_id ? '<p><a class="yazi-link" href="../ilan/' + encodeURIComponent(b.ilan_id) + '/#tartisma">İlanı aç</a></p>' : '')
               + '<h3 class="fr-alt-bas" data-sayi></h3><div data-liste></div>' + yaziciHtml('baslik-' + id, 'Yanıtını yaz…');
             yaziciBagla(kap, 'baslik-' + id, function (g, ust_) {
               var govde = { govde: g }; if (ust_) govde.ust_id = ust_;
@@ -497,7 +499,7 @@
       var secenek = KATEGORILER.filter(function (c) { return c.kod !== 'ilan' && (c.kod !== 'etkinlik' || (u && (u.rol === 'yonetici' || u.rol === 'sistem'))); });
       var t = oku('fr-taslak-yeni') || {};
       var ekAcik = !!(t.duzey || t.puan || (t.anket && t.anket.length));
-      kok_.innerHTML = '<p class="fr-geri"><a class="yazi-link" data-ic href="?">← Forum</a></p>'
+      kok_.innerHTML = '<p class="fr-geri"><a class="yazi-link" data-ic href="?">Foruma dön</a></p>'
         + '<form class="fr-form fr-yeni"><h2>Soru sor</h2>'
         + '<input id="fr-b" maxlength="120" required placeholder="Başlık: ör. Önlisans 72 puanla nereye başvurabilirim?" value="' + esc(t.baslik || '') + '" aria-label="Başlık">'
         + '<textarea id="fr-g" rows="5" maxlength="4000" required placeholder="Ayrıntı" aria-label="Ayrıntı">' + esc(t.govde || '') + '</textarea>'
