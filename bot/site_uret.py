@@ -1449,6 +1449,12 @@ def main():
         print(f'Uyarı: site haritası tarihleri okunamadı: {hata}')
     bugun = datetime.now(TR).date().isoformat()   # ana sayfa her gün değişir; Google'a tazelik sinyali
     degisim[BASE] = bugun
+    try:   # ince şablon sayfaları (kurum/meslek/il/puan) noindex + reklamsız; AdSense 'düşük değer' (15 Kasım 2026)
+        import ince_sayfa
+        urls, ince = ince_sayfa.suz(docs, BASE, list(dict.fromkeys(urls)))
+        print(f'İnce sayfa kalkanı: {len(ince)} sayfa haritadan çıktı')
+    except Exception as hata:
+        print(f'Uyarı: ince sayfa kalkanı çalışmadı: {hata}')
     (docs / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
                                       + ''.join('<url><loc>' + esc(u) + '</loc>'
                                                 + (f'<lastmod>{degisim[u]}</lastmod>' if re.fullmatch(r'\d{4}-\d{2}-\d{2}', degisim.get(u, '')) else '')
