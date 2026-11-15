@@ -197,6 +197,7 @@ def bulut_isle(depo, veri):
         if not link:
             continue
         servis = (g.get('channelService') or '').lower()
+        link = link.split('?')[0]   # Buffer'ın eklediği utm izleme parametreleri atılır
         if servis == 'tiktok':
             depo.gonderi_yaz('tiktok', g['id'], url=link, metin=g.get('text'), baslik=baslik(g.get('text')) or None,
                              yayin=g.get('sentAt') or g.get('dueAt'))

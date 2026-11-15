@@ -161,7 +161,7 @@ class KaynakIslemeTesti(unittest.TestCase):
                      'timestamp': '2026-11-11T09:00:00+0000', 'media_type': 'IMAGE', 'like_count': 4, 'insights': {'reach': 80}}]},
                 'youtube': {'durum': 'hata', 'aciklama': 'izin yok'},
                 'buffer': {'durum': 'hazir', 'aciklama': '1', 'gonderiler': [
-                    {'id': 'bf1', 'channelService': 'tiktok', 'externalLink': 'https://www.tiktok.com/@kpsstercihi/video/1',
+                    {'id': 'bf1', 'channelService': 'tiktok', 'externalLink': 'https://www.tiktok.com/@kpsstercihi/video/1?utm_source=1',
                      'text': 'Metin', 'sentAt': '2026-11-10T09:32:00Z'}]}}
         s = k.bulut_isle(self.d, veri)
         self.assertEqual(s['instagram'][2], 2)
