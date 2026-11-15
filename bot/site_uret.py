@@ -103,7 +103,7 @@ def alt_html(kok, yil=None):
             f'<p class="ab-not">© <span id="yil">{yil}</span> KPSS Tercihi</p></div></footer>')
 
 
-TITLE_SINIRI = 62
+TITLE_SINIRI = 62   # 60'a inince '(Önlisans)'/'(Lisans)' gibi ayırt edici ekler düşüp başlıklar çakışıyor (15 Kasım 2026 denemesi)
 ACIKLAMA_SINIRI = 160
 VARSAYILAN_GORSEL = 'https://kpsstercihi.com/assets/logo-512.png'
 
@@ -140,7 +140,7 @@ def kunye_html(kok, yayin=None, guncelleme=None):
 
 def kurulus_ld(base):
     """Hakkımızda ve İletişim sayfalarındaki yayıncı kimliği (schema.org Organization)."""
-    return {'@type': 'Organization', '@id': base + '#kurulus', 'name': 'KPSS Tercihi', 'url': base,
+    return {'@type': 'Organization', '@id': base + '#org', 'name': 'KPSS Tercihi', 'url': base,   # ana sayfadaki kuruluşla aynı kimlik (tek varlık)
             'logo': VARSAYILAN_GORSEL, 'email': 'iletisim@kpsstercihi.com', 'sameAs': ['https://t.me/kpsstercihi'] + [u for _, u in SOSYAL]}
 
 
@@ -184,7 +184,25 @@ def sayfa_basi(baslik, aciklama, canonical, kok, og_tur='website', ek_head='', o
             f'<meta property="og:title" content="{esc(og_baslik or baslik)}"><meta property="og:description" content="{esc(ozet)}"><meta property="og:type" content="{og_tur}"><meta property="og:site_name" content="KPSS Tercihi"><meta property="og:locale" content="tr_TR">{ek_head}{"" if og_tur == "article" else varsayilan_gorsel(ek_head)}'
             f'<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
             f'<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap">'
-            f'<link rel="stylesheet" href="{kok}sayfa.css?v={CSS_SURUM}"><link rel="stylesheet" href="{kok}kabuk.css?v={KABUK_SURUM}">{ikonlar(kok)}<script src="{kok}a.js?v={ANALIZ_SURUM}" defer></script><script src="{kok}sayfa.js?v={CSS_SURUM}" defer></script></head>')
+            f'<link rel="stylesheet" href="{kok}sayfa.css?v={CSS_SURUM}"><link rel="stylesheet" href="{kok}kabuk.css?v={KABUK_SURUM}">{ikonlar(kok)}<script src="{kok}a.js?v={ANALIZ_SURUM}" defer></script><script src="{kok}sayfa.js?v={CSS_SURUM}" defer></script>'
+            f'{ORTAK_HEAD}</head>')
+
+
+# 15 Kasım 2026 SEO denetimi: yönlendiren adres politikası (sunucu başlığı GitHub Pages'te verilemiyor), yeni ilan akışı
+# ve ilan bağlantılarının üzerine gelince önceden yüklenmesi (Speculation Rules; yalnız prefetch, reklam sayfası önceden çalışmaz).
+ORTAK_HEAD = ('<meta name="referrer" content="strict-origin-when-cross-origin">'
+              '<link rel="alternate" type="application/rss+xml" title="KPSS Tercihi: yeni kamu ilanları" href="https://kpsstercihi.com/rss.xml">'
+              '<script type="speculationrules">{"prefetch":[{"source":"document","where":{"href_matches":"/ilan/*"},"eagerness":"moderate"}]}</script>')
+
+
+def ilk_gorsel_hemen(html):
+    """<main> içindeki ilk görsel tembel yüklenmesin (ekranın üstünde; LCP adayı)."""
+    bas = html.find('<main')
+    img = html.find('<img', bas) if bas >= 0 else -1
+    if img < 0:
+        return html
+    son = html.find('>', img)
+    return html[:img] + html[img:son].replace(' loading="lazy"', '') + html[son:]
 
 
 def _kurum_bloklari(item, gorsel, logo_html):
@@ -209,7 +227,7 @@ def sayfa_kabugu(baslik, aciklama, canonical, icerik, govde_sinifi='', og_baslik
     """Kurum sayfaları için ortak iskelet (ilan sayfasıyla aynı üst/alt bölüm)."""
     kok = '../../'
     return (sayfa_basi(baslik, aciklama, canonical, kok, ek_head=ek_head, og_baslik=og_baslik)
-            + f'<body class="{govde_sinifi}"><a class="skip" href="#icerik">İçeriğe geç</a>{ust_html(kok)}{icerik}{alt_html(kok)}'
+            + f'<body class="{govde_sinifi}"><a class="skip" href="#icerik">İçeriğe geç</a>{ust_html(kok)}{ilk_gorsel_hemen(icerik)}{alt_html(kok)}'
               f'<noscript><div class="not wrap">Bazı özellikler (kaydetme, kalan gün) için JavaScript gerekir.</div></noscript></body></html>')
 
 
@@ -646,9 +664,11 @@ def hero_html(item, gorsel, kayit, simdi, kok='../../'):
     bilgi = (f'<dl class="dh-bilgi">{son_html}{hucre("Yer", yer)}'
              f'{hucre("Öğrenim", " / ".join(ks.LEVELS[o] for o in ogr))}{hucre("KPSS", kpss)}</dl>')
     ust = f'<div class="dh-ust">{pill_html}</div>' if pill_html else ''
+    # H1 tek başına 'Uzman' / 'Memur' kalıyordu (SEO denetimi, 15 Kasım 2026): kurum adı başlığın parçası, görünüm aynı (hemen üstünde yazıyor)
+    h1_kurum = f'<span class="sr-only"> — {esc(ks.kurum_adi(item.get("kurum")))}</span>' if (item.get('kurum') or '').strip() else ''
     return (f'<section class="dh{"" if afis else " afissiz"}" aria-labelledby="dh-baslik">'
             f'<div class="dh-ana">{kurum}<div class="dh-baslik">{ust}'
-            f'<h1 id="dh-baslik">{esc(h1)}</h1></div></div>{afis}{bilgi}</section>')
+            f'<h1 id="dh-baslik">{esc(h1)}{h1_kurum}</h1></div></div>{afis}{bilgi}</section>')
 
 
 def _tarih_yazi(d):
@@ -734,17 +754,18 @@ def _ld(veri):
             + '</script>')
 
 
-def yapisal_veri(item, canonical, end, alanlar, kayit, gorsel, simdi, is_ilani):
+def yapisal_veri(item, canonical, end, alanlar, kayit, gorsel, simdi, is_ilani, ad=None):
     """Kırıntı (BreadcrumbList) her ilanda; JobPosting yalnız başvurusu açık, son tarihi belli, esas kayıtta (Google İş İlanları).
-    Süresi dolan ilan sayfası her derlemede yeniden yazıldığı için JobPosting kendiliğinden kalkar."""
+    Süresi dolan ilan sayfası her derlemede yeniden yazıldığı için JobPosting kendiliğinden kalkar.
+    ad: kırıntının son adımı (arama başlığı); verilmezse kaynaktaki ilan başlığı."""
     import kurum_sayfasi as ks
-    kirinti = [{'@type': 'ListItem', 'position': 1, 'name': 'Ana sayfa', 'item': BASE},
-               {'@type': 'ListItem', 'position': 2, 'name': 'İlanlar', 'item': BASE + '#ilanlar'}]
+    # '#ilanlar' sayfa içi çapadır, ayrı bir sayfa değil: kırıntı Ana sayfa › Kurum › İlan (SEO denetimi, 15 Kasım 2026)
+    kirinti = [{'@type': 'ListItem', 'position': 1, 'name': 'Ana sayfa', 'item': BASE}]
     kurum = ks.kurum_adi(item.get('kurum')) if (item.get('kurum') or '').strip() else ''
     if kurum:
         slug = (gorsel or {}).get('kurum_slug') or ks.kurum_slug(item['kurum'])
-        kirinti.append({'@type': 'ListItem', 'position': 3, 'name': kurum, 'item': BASE + 'kurum/' + slug + '/'})
-    kirinti.append({'@type': 'ListItem', 'position': len(kirinti) + 1, 'name': item.get('baslik') or 'İlan', 'item': canonical})
+        kirinti.append({'@type': 'ListItem', 'position': 2, 'name': kurum, 'item': BASE + 'kurum/' + slug + '/'})
+    kirinti.append({'@type': 'ListItem', 'position': len(kirinti) + 1, 'name': ad or item.get('baslik') or 'İlan', 'item': canonical})
     sonuc = _ld({'@context': 'https://schema.org', '@type': 'BreadcrumbList', 'itemListElement': kirinti})
     if not (is_ilani and kurum and end and end > simdi):
         return sonuc
@@ -772,7 +793,7 @@ def yapisal_veri(item, canonical, end, alanlar, kayit, gorsel, simdi, is_ilani):
            'employmentType': 'FULL_TIME', 'directApply': False, 'url': canonical,
            'hiringOrganization': {'@type': 'Organization', 'name': kurum},
            'jobLocation': yerler[0] if len(yerler) == 1 else yerler,
-           'identifier': {'@type': 'PropertyValue', 'name': 'KPSS Tercihi', 'value': item.get('id') or canonical}}
+           'identifier': {'@type': 'PropertyValue', 'name': kurum, 'value': item.get('id') or canonical}}   # Google: kimliği işveren verir
     if (gorsel or {}).get('logo'):
         is_['hiringOrganization']['logo'] = BASE + gorsel['logo']
     if alanlar.get('toplam'):
@@ -941,14 +962,49 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
     og_gorsel += (f'<link rel="stylesheet" href="{kok}forum.css?v={FORUM_SURUM}">'
                   f'<link rel="stylesheet" href="{kok}forum-sohbet.css?v={FORUM_SURUM}">')
     is_ilani = acik_ilan and not ikincil and not (kayit or {}).get('kurum_ici')
-    og_gorsel += yapisal_veri(item, canonical, end, alanlar, kayit, gorsel, simdi, is_ilani)
-    if dizinlenmez(item, simdi):
+    og_gorsel += yapisal_veri(item, canonical, end, alanlar, kayit, gorsel, simdi, is_ilani, ad=title.removesuffix(' | KPSS Tercihi'))
+    if dizinlenmez(item, simdi) and not ikincil:   # kopya sayfa esas kayda canonical verir; noindex ile birlikte çelişkili sinyal olur
         og_gorsel += '<meta name="robots" content="noindex,follow">'
     govde = (f'<main id="icerik" class="wrap"><article class="d-bas"><nav class="crumbs" aria-label="Konum"><a href="{kok}">Ana sayfa</a><span aria-hidden="true">/</span><a href="{kok}#ilanlar">İlanlar</a>{kurum_kirinti}</nav>'
              f'{hero_html(item, gorsel, kayit, simdi)}{kurum_ici_not}{duzeltme_kutusu}{kopya_ust}{cta}{kopya_alt}</article>'
              f'<div class="d-ana"><section class="d-bolum">{sections}{bakis}</section>{tartisma}<section class="d-bolum">{bolum}{diger}</section>{benzer_html}</div></main>')
     return key, (sayfa_basi(title, description, canonical, kok, 'article', og_gorsel, og_baslik=title)
                  + f'<body class="detail-page"><a class="skip" href="#icerik">İçeriğe geç</a>{ust_html(kok)}{govde}{alt_html(kok)}</body></html>')
+
+
+RSS_N = 50
+
+
+def rss_xml(gorunen, sayfali, noindex, simdi):
+    """Başvurusu açık, sayfası dizinlenen ilanlar; en yeni eklenen önce (RSS 2.0)."""
+    from email.utils import format_datetime
+    import statik_icerik as si
+    bugun = simdi.astimezone(TR).date().isoformat()
+    ilanlar = [k for k in si.uygun_ilanlar(gorunen)
+               if k.get('key') in sayfali and k.get('key') not in noindex and (k.get('son_tarih') or '') >= bugun]
+
+    def zaman(k):
+        try:
+            z = datetime.fromisoformat(str(k.get('ilk_gorulme') or ''))
+            return z if z.tzinfo else z.replace(tzinfo=TR)
+        except ValueError:
+            return None
+    ilanlar.sort(key=lambda k: (zaman(k) or simdi - timedelta(days=3650)), reverse=True)
+    ogeler = ''
+    for k in ilanlar[:RSS_N]:
+        url = BASE + 'ilan/' + k['key'] + '/'
+        kurum = k.get('kurum') or ''
+        baslik = f'{kurum}: {k.get("manset") or "Kamu ilanı"}' if kurum else (k.get('manset') or 'Kamu ilanı')
+        ozet = ' · '.join(x for x in (k.get('il'), ' / '.join(si.LEVELS[o] for o in (k.get('ogrenim') or []) if o in si.LEVELS),
+                                      f'Son başvuru: {si._tarih_yazi(k["son_tarih"])}' if k.get('son_tarih') else '') if x)
+        z = zaman(k)
+        ogeler += (f'<item><title>{esc(baslik)}</title><link>{esc(url)}</link><guid isPermaLink="true">{esc(url)}</guid>'
+                   + (f'<pubDate>{format_datetime(z)}</pubDate>' if z else '') + f'<description>{esc(ozet)}</description></item>')
+    return ('<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>'
+            f'<title>KPSS Tercihi: yeni kamu ilanları</title><link>{BASE}</link>'
+            '<description>Başvurusu açık kamu personel alım ilanları; resmî kaynaklardan derlenir.</description><language>tr</language>'
+            f'<atom:link href="{BASE}rss.xml" rel="self" type="application/rss+xml"/><lastBuildDate>{format_datetime(simdi)}</lastBuildDate>'
+            + ogeler + '</channel></rss>\n')
 
 
 def kurum_ici_sayfasi(item):
@@ -1493,6 +1549,10 @@ def main():
                                                 + (f'<lastmod>{degisim[u]}</lastmod>' if re.fullmatch(r'\d{4}-\d{2}-\d{2}', degisim.get(u, '')) else '')
                                                 + '</url>' for u in dict.fromkeys(urls))
                                       + '</urlset>\n', encoding='utf-8')
+    try:   # yeni ilan akışı (RSS): haber okuyucular, toplayıcılar ve yapay zekâ asistanları için
+        (docs / 'rss.xml').write_text(rss_xml(gorunen, sayfa_anahtarlari, haritada_olmayan, datetime.now(TR)), encoding='utf-8')
+    except Exception as hata:
+        print(f'Uyarı: RSS akışı üretilemedi: {hata}')
     bot = bot_ilanlari(data.get('ilanlar', []))
     (docs / 'bot-ilanlar.json').write_text(json.dumps(bot, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
     try:

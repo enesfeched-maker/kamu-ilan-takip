@@ -357,7 +357,7 @@ class HeroKartiTests(unittest.TestCase):
         h = self.sayfa(ilan(1, 'A Belediyesi', kadro='3 Zabıta Memuru'), {'meslek': ['07-zabita.jpg']})
         self.assertIn('<figure class="dh-afis"><img src="../../assets/meslek/kucuk/07-zabita.jpg"', h)
         self.assertIn('<figcaption><b>3</b><small>kadro</small></figcaption>', h)
-        self.assertIn('<h1 id="dh-baslik">Zabıta Memuru</h1>', h)  # sayı başlıktan düştü
+        self.assertRegex(h, r'<h1 id="dh-baslik">Zabıta Memuru<span class="sr-only"> — [^<]+</span></h1>')  # sayı başlıktan düştü; kurum adı gizli ek
         self.assertNotIn('class="afis"', h)
         self.assertNotIn('d-facts', h)
 

@@ -275,7 +275,7 @@ mansetImza=imz;root.dataset.hazir='1';mansetL=L;if(mansetSira>=L.length)mansetSi
 root.hidden=!L.length;if(!L.length){root.replaceChildren();return;}
 const ic_=E('div','manset-ic'),sl=E('div','manset-slaytlar');
 L.forEach((o,i)=>{
-const s=E('article','slayt');s.setAttribute('role','group');s.setAttribute('aria-roledescription','slayt');s.setAttribute('aria-label',(i+1)+' / '+L.length+': '+o.kurum);s.hidden=i!==mansetSira;
+const s=E('div','slayt');s.setAttribute('role','group');s.setAttribute('aria-roledescription','slayt');s.setAttribute('aria-label',(i+1)+' / '+L.length+': '+o.kurum);s.hidden=i!==mansetSira;
 const a=E('a','slayt-link'),tx=E('span','slayt-metin'),hb=mansetBaslik(o);a.href=ilanHref(o);a.setAttribute('data-a','manset_tikla');a.setAttribute('data-a-h',o.key);a.setAttribute('data-a-n',String(i+1));
 tx.append(E('span','slayt-kurum',o.kurum||'Kurum belirtilmemiş'),E('strong','slayt-baslik',hb.b));if(hb.alt)tx.append(E('span','slayt-alt',hb.alt));
 const t=E('span','slayt-tarih');t.append(ic('saat'),tarihAraligi(o));tx.append(t);
@@ -306,7 +306,7 @@ return null;}
 function satirEl(o,res){
 const n=E('article','satir'),g=E('div','satir-govde'),k=E('p','satir-kurum');
 if(o.kurum_slug){const a=E('a','',o.kurum||'Kurum');a.setAttribute('data-a','kurum_tikla');a.setAttribute('data-a-h',o.kurum_slug);a.href='kurum/'+o.kurum_slug+'/';a.title=(o.kurum||'Kurum')+' — kurumun tüm ilanları';k.append(a);}else k.append(o.kurum||'Kurum belirtilmemiş');
-const h=E('h3','satir-baslik'),a=E('a','satir-link',o.manset||'Kamu ilanı');a.href=ilanHref(o);a.setAttribute('data-a','satir_tikla');a.setAttribute('data-a-h',o.key);h.append(a);if(o.ek)h.append(' ',E('span','ek','+'+o.ek));
+const h=E('h3','satir-baslik'),a=E('a','satir-link');a.append(E('span','sr-only',(o.kurum||'Kurum belirtilmemiş')+': '),o.manset||'Kamu ilanı');a.href=ilanHref(o);a.setAttribute('data-a','satir_tikla');a.setAttribute('data-a-h',o.key);h.append(a);if(o.ek)h.append(' ',E('span','ek','+'+o.ek));
 h.append(' ',E('span','satir-tarih','('+tarihAraligi(o)+')'));g.append(k,h);
 const alt=[o.il,o.ogrenim.map(x=>LEVELS[x]).join(' / '),o.toplam&&!/^\d/.test(o.manset)?sayiTr(o.toplam)+' kadro':''].filter(Boolean);
 if(F.q&&sorguVaryant(F.q).length&&fullOf(o)&&!baslikUyar(o,F.q))alt.push('Aradığın ifade ilan metninde geçiyor');

@@ -225,6 +225,62 @@ def kadro_cumleleri(donemler):
     return cumleler
 
 
+def kadro_sorulari(ad, duzey_ad, donemler):
+    """Kadro sayfasının kısa cevapları (15 Kasım 2026 SEO denetimi: kadro sayfalarının çoğu ince kalıp dizin dışındaydı).
+    Tamamı veriden: son dönemin en düşük puanı ve medyanı, kontenjan/yerleşen, en çok kadro açan kurumlar, dönem dönem kontenjan."""
+    sirali = sorted(donemler, key=_donem_anahtar)
+    son = sirali[-1]
+    d, dz = donem_yaz(son), duzey_ad.lower()
+    sc = []
+    rows = [r for r in donemler[son] if isinstance(r.get('min'), (int, float))]
+    if rows:
+        en = min(rows, key=lambda r: (r['min'], str(r.get('kurum'))))
+        yer = ', '.join(p for p in (_kurum(en.get('kurum')), _duzgun(en.get('il'))) if p)
+        cevap = f'{d} döneminde {ad} ({dz}) kadrolarında en düşük yerleşme puanı {sayi(en["min"])} oldu' + (f' ({yer})' if yer else '') + '.'
+        if len(rows) >= 2:
+            cevap += f' Puanı açıklanan {tam(len(rows))} kadronun yarısında en küçük puan {sayi(statistics.median(r["min"] for r in rows))} ya da altındaydı.'
+        sc.append((f'KPSS {ad} ({dz}) kaç puanla atanılır?', cevap + ' Her kadronun nitelik koşulları ayrıca aranır.'))
+    oz = _ozet(donemler[son])
+    if oz['kontenjan'] and oz['yerlesen']:
+        bos = oz['kontenjan'] - oz['yerlesen']
+        sc.append((f'{d} döneminde kaç {ad} kontenjanı vardı?',
+                   f'{d} KPSS {dz} yerleştirmesinde {tam(oz["kadro"])} {ad} kadrosunda {tam(oz["kontenjan"])} kontenjan vardı; {tam(oz["yerlesen"])} kişi yerleşti'
+                   + (f', {tam(bos)} kontenjan boş kaldı.' if bos > 0 else ', kontenjanların hepsi doldu.')))
+    kurumlar = {}
+    for x in sirali:
+        for r in donemler[x]:
+            k = _kurum(r.get('kurum'))
+            if k:
+                kurumlar[k] = kurumlar.get(k, 0) + 1
+    if len(kurumlar) >= 2:
+        ilk = sorted(kurumlar, key=lambda k: (-kurumlar[k], _kucuk(k)))[:3]
+        sc.append((f'{ad} kadrosu en çok hangi kurumlarda açıldı?',
+                   f'{donem_yaz(sirali[0])}–{d} arasındaki {len(sirali)} dönemde en çok {ad} kadrosu açan kurumlar: '
+                   + ', '.join(f'{k} ({kurumlar[k]} kadro)' for k in ilk) + '.'))
+    if len(sirali) >= 2:
+        sc.append((f'{ad} kontenjanı dönemden döneme nasıl değişti?',
+                   'Dönem dönem toplam kontenjan: ' + ', '.join(f'{donem_yaz(x)}: {tam(_ozet(donemler[x])["kontenjan"])}' for x in sirali) + '.'))
+    return sc
+
+
+def kurum_bolumu(ad, donemler):
+    """Kurumlara göre (tüm dönemler): kadro sayısı, toplam kontenjan, en düşük puan; en az iki kurum varsa."""
+    g = {}
+    for x in donemler:
+        for r in donemler[x]:
+            k = _kurum(r.get('kurum'))
+            if k:
+                g.setdefault(k, []).append(r)
+    if len(g) < 2:
+        return ''
+    satir = []
+    for k in sorted(g, key=lambda k: (-len(g[k]), _kucuk(k)))[:15]:
+        o = _ozet(g[k])
+        satir.append([esc(k), tam(o['kadro']), tam(o['kontenjan']), _p(o['min'])])
+    return (f'<section class="bolum"><div class="bolum-bas"><h2>{esc(ad)} kadrosu açan kurumlar <span class="sayi">{len(g)}</span></h2></div>'
+            + _tablo(['Kurum', 'Kadro sayısı', 'Toplam kontenjan', 'En düşük puan'], satir) + '</section>')
+
+
 def kadro_sayfasi(base, duzey_slug, duzey_ad, unvan, slug, donemler, ilk_yil, son_yil, acik=None):
     """donemler: {dönem: [satır]}; acik: bu unvanla başvurusu açık ilan kayıtları."""
     sirali = sorted(donemler, key=_donem_anahtar)
@@ -265,6 +321,7 @@ def kadro_sayfasi(base, duzey_slug, duzey_ad, unvan, slug, donemler, ilk_yil, so
     tespit = f'<section class="bolum">{tespit}</section>' if tespit else ''
     icerik = (_hero(_crumbs(kok, kir), f'KPSS {ad} Taban Puanları ({duzey_ad})', ozet_p)
               + f'<main id="icerik" class="wrap kp-main">{_acik_bolum(f"Başvurusu açık {ad} ilanları", acik, kok)}{tespit}<section class="bolum"><div class="bolum-bas"><h2>Dönem dönem özet</h2></div>{ozet_tablo}</section>{detay}'
+              f'{kurum_bolumu(ad, donemler)}{_soru_bolumu(kadro_sorulari(ad, duzey_ad, donemler))}'
               f'<section class="bolum"><p><a href="../">← Tüm {esc(duzey_ad.lower())} kadroları</a> · <a href="{kok}puanlar/">Puanını gir, tercih robotunu dene →</a></p></section></main>')
     kirinti = [('Ana sayfa', base), ('KPSS Taban Puanları', base + KLASOR + '/'), (duzey_ad, f'{base}{KLASOR}/{duzey_slug}/'),
                (ad, f'{base}{KLASOR}/{duzey_slug}/{slug}/')]
@@ -407,7 +464,7 @@ def _soru_bolumu(sorular):
         return ''
     veri = {'@context': 'https://schema.org', '@type': 'FAQPage',
             'mainEntity': [{'@type': 'Question', 'name': s, 'acceptedAnswer': {'@type': 'Answer', 'text': c}} for s, c in sorular]}
-    ld = json.dumps(veri, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
+    ld = json.dumps(veri, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c').replace('>', '\\u003e')
     return ('<section class="bolum"><div class="bolum-bas"><h2>Kısa cevaplar</h2></div>'
             + ''.join(f'<h3>{esc(s)}</h3><p>{esc(c)}</p>' for s, c in sorular) + f'<script type="application/ld+json">{ld}</script></section>')
 
