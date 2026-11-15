@@ -1,7 +1,8 @@
 // KPSS Tercihi forum API'si (Cloudflare Worker + D1).
 import { KATEGORILER, KATEGORI_KODLARI, jsonYanit, hataYanit, simdi, sabitEsit, gecerliIlanKimligi } from './yardimci.js';
 import { denetle, temizle } from './denetim.js';
-import { oturumUret, geciciUret, oturumUyeKimligi, geciciTgKimligi, telegramDogrula, rumuzDogrula } from './oturum.js';
+import { oturumUret, geciciUret, oturumUyeKimligi, geciciTgKimligi, geciciGoogleKimligi, telegramDogrula, rumuzDogrula } from './oturum.js';
+import { kayit, girisSifre, girisGoogle, sifreSifirla, benSifre, benKurtarmaKodu, benProfil, benProfilKaydet, girisAyari, girisAyariYaniti } from './kayit.js';
 import { baslikHizi, yanitHizi, ipSiniri } from './hiz.js';
 import { asistanYaniti } from './asistan.js';
 import { ilanKaydiGetir } from './ilan.js';
@@ -79,6 +80,7 @@ async function yonlendir(request, env, ctx) {
   if (yontem === 'GET' || yontem === 'HEAD') {
     if (yol === '/') return new Response('kpss-forum', { headers: { 'Cache-Control': 'no-store' } });
     if (yol === '/kategoriler') return jsonYanit({ kategoriler: KATEGORILER }, 200, { 'Cache-Control': 'public, max-age=300' });
+    if (yol === '/giris/ayar') return girisAyariYaniti(env);
     if (yol === '/ben') return benGetir(request, env);
     if (yol === '/ben/bildirimler') return benBildirimler(request, env, url);
     if (yol === '/ben/takipler') return benTakipler(request, env);
@@ -106,6 +108,13 @@ async function yonlendir(request, env, ctx) {
     if (yol === '/giris/telegram') return girisTelegram(request, env);
     if (yol === '/giris/rumuz') return girisRumuz(request, env);
     if (yol === '/giris/deneme') return girisDeneme(request, env);
+    if (yol === '/kayit') return kayit(request, env);
+    if (yol === '/giris/sifre') return girisSifre(request, env);
+    if (yol === '/giris/google') return girisGoogle(request, env);
+    if (yol === '/sifre-sifirla') return sifreSifirla(request, env);
+    if (yol === '/ben/sifre') return benSifre(request, env);
+    if (yol === '/ben/kurtarma-kodu') return benKurtarmaKodu(request, env);
+    if (yol === '/ben/profil') return benProfilKaydet(request, env);
     if (yol === '/ben/bildirim') return benBildirim(request, env);
     if (yol === '/ben/ayar') return benAyar(request, env);
     if ((m = yol.match(/^\/baslik\/(\d+)\/takip$/))) return takipDegistir(request, env, Number(m[1]));
@@ -165,7 +174,9 @@ export async function oturumUyesi(request, env) {
   if (!m) return null;
   const id = await oturumUyeKimligi(env, m[1], simdi());
   if (!id) return null;
-  return env.DB.prepare('SELECT id, rumuz, kurucu, rol, itibar, bildirim, engelli, kayit, dm_acik FROM uyeler WHERE id = ?').bind(id).first();
+  return env.DB.prepare(
+    'SELECT id, rumuz, kurucu, rol, itibar, bildirim, engelli, kayit, dm_acik, tg_id, sifre_ozet IS NOT NULL AS sifre_var, google_sub IS NOT NULL AS google_var FROM uyeler WHERE id = ?',
+  ).bind(id).first();
 }
 export async function yazar(request, env) {
   const uye = await oturumUyesi(request, env);
@@ -179,8 +190,8 @@ export function yoneticiMi(request, env) {
 const ayrik = (n) => Math.max(1, Math.min(Number(n) || 1, 100));
 
 // ---------- giriş ----------
-async function oturumYaniti(env, uye) {
-  return jsonYanit({ oturum: await oturumUret(env, uye.id, simdi()), uye: kullaniciJson(uye) });
+export async function oturumYaniti(env, uye, ek = {}) {
+  return jsonYanit({ oturum: await oturumUret(env, uye.id, simdi()), uye: kullaniciJson(uye), ...ek });
 }
 async function girisTelegram(request, env) {
   if (!env.TELEGRAM_BOT_TOKEN || !env.OTURUM_SIRRI) return hataYanit(503, 'Giriş henüz yapılandırılmadı.');
@@ -192,7 +203,9 @@ async function girisTelegram(request, env) {
   if (uye) return oturumYaniti(env, uye);
   return jsonYanit({ yeni: true, gecici: await geciciUret(env, d.tgId, simdi()) });
 }
-async function uyeOlustur(env, tgId, rumuz) {
+// kimlik: { tg_id } | { google_sub } | { sifre_ozet, kurtarma_ozet }. Şifreli ve Google üyelerinde tg_id NULL kalır
+// (UNIQUE sütunda birden çok NULL serbesttir); Telegram bildirimleri tg_id > 0 koşuluyla bu üyeleri atlar.
+export async function uyeOlustur(env, kimlik, rumuz) {
   const r = rumuzDogrula(rumuz);
   if (!r.tamam) return { hata: hataYanit(400, r.neden) };
   const var_ = await env.DB.prepare('SELECT id FROM uyeler WHERE rumuz = ?').bind(r.rumuz).first();
@@ -200,19 +213,27 @@ async function uyeOlustur(env, tgId, rumuz) {
   const sayi = await env.DB.prepare("SELECT COUNT(*) AS n FROM uyeler WHERE rol NOT IN ('sistem', 'asistan')").first();
   const t = simdi();
   try {
-    await env.DB.prepare('INSERT INTO uyeler (tg_id, rumuz, kayit, kurucu) VALUES (?, ?, ?, ?)').bind(tgId, r.rumuz, t, (sayi?.n || 0) < KURUCU_SINIRI ? 1 : 0).run();
+    await env.DB.prepare('INSERT INTO uyeler (tg_id, rumuz, kayit, kurucu, google_sub, sifre_ozet, kurtarma_ozet) VALUES (?, ?, ?, ?, ?, ?, ?)')
+      .bind(kimlik.tg_id ?? null, r.rumuz, t, (sayi?.n || 0) < KURUCU_SINIRI ? 1 : 0, kimlik.google_sub ?? null, kimlik.sifre_ozet ?? null, kimlik.kurtarma_ozet ?? null).run();
   } catch { return { hata: hataYanit(409, 'Bu rumuz alınmış.') }; }
-  const uye = await env.DB.prepare('SELECT id, rumuz, kurucu, rol, itibar, dm_acik FROM uyeler WHERE tg_id = ?').bind(tgId).first();
+  const uye = await env.DB.prepare('SELECT id, rumuz, kurucu, rol, itibar, dm_acik FROM uyeler WHERE rumuz = ?').bind(r.rumuz).first();
   return { uye };
 }
 async function girisRumuz(request, env) {
   const g = await govdeOku(request);
   if (!g) return hataYanit(400, 'Geçersiz istek.');
   const tgId = await geciciTgKimligi(env, g.gecici, simdi());
-  if (!tgId) return hataYanit(401, 'Giriş süresi dolmuş, Telegram ile tekrar dene.');
-  const mevcut = await env.DB.prepare('SELECT id, rumuz, kurucu, rol, itibar, dm_acik FROM uyeler WHERE tg_id = ?').bind(tgId).first();
+  if (tgId) {
+    const mevcut = await env.DB.prepare('SELECT id, rumuz, kurucu, rol, itibar, dm_acik FROM uyeler WHERE tg_id = ?').bind(tgId).first();
+    if (mevcut) return oturumYaniti(env, mevcut);
+    const s = await uyeOlustur(env, { tg_id: tgId }, g.rumuz);
+    return s.hata || oturumYaniti(env, s.uye);
+  }
+  const sub = await geciciGoogleKimligi(env, g.gecici, simdi());
+  if (!sub) return hataYanit(401, 'Giriş süresi dolmuş, tekrar dene.');
+  const mevcut = await env.DB.prepare('SELECT id, rumuz, kurucu, rol, itibar, dm_acik FROM uyeler WHERE google_sub = ?').bind(sub).first();
   if (mevcut) return oturumYaniti(env, mevcut);
-  const s = await uyeOlustur(env, tgId, g.rumuz);
+  const s = await uyeOlustur(env, { google_sub: sub }, g.rumuz);
   return s.hata || oturumYaniti(env, s.uye);
 }
 function ozetSayi(metin) {
@@ -229,16 +250,19 @@ async function girisDeneme(request, env) {
   if (!r.tamam) return hataYanit(400, r.neden);
   const mevcut = await env.DB.prepare('SELECT id, rumuz, kurucu, rol, itibar, tg_id, dm_acik FROM uyeler WHERE rumuz = ?').bind(r.rumuz).first();
   if (mevcut) return mevcut.tg_id < 0 ? oturumYaniti(env, mevcut) : hataYanit(409, 'Bu rumuz alınmış.');
-  const s = await uyeOlustur(env, -(1 + (ozetSayi(r.rumuz.toLowerCase()) % 2000000000)), r.rumuz);
+  const s = await uyeOlustur(env, { tg_id: -(1 + (ozetSayi(r.rumuz.toLowerCase()) % 2000000000)) }, r.rumuz);
   return s.hata || oturumYaniti(env, s.uye);
 }
 async function benGetir(request, env) {
   const u = await oturumUyesi(request, env);
   if (!u) return hataYanit(401, 'Giriş yapmalısın.');
-  return jsonYanit({ uye: await benNesnesi(env, u) });
+  return jsonYanit({ uye: await benNesnesi(env, u), profil: await benProfil(env, u.id) });
 }
 async function benNesnesi(env, u) {
-  return { ...kullaniciJson(u), bildirim: u.bildirim === 1, engelli: !!u.engelli, ozel_okunmamis: await ozelOkunmamis(env, u.id) };
+  return {
+    ...kullaniciJson(u), bildirim: u.bildirim === 1, engelli: !!u.engelli, ozel_okunmamis: await ozelOkunmamis(env, u.id),
+    telegram: u.tg_id > 0, sifre_var: !!u.sifre_var, google_var: !!u.google_var,   // hangi giriş yöntemleri bağlı
+  };
 }
 // Ayarlar: dm_acik (özel mesaj alır) ve bildirim (Telegram); en az biri verilmeli. Güncel /ben nesnesini döner.
 async function benAyar(request, env) {
@@ -354,7 +378,7 @@ export async function forumDurumu(env, simdi = Math.floor(Date.now() / 1000)) {
   const uye = u?.n || 0;
   return jsonYanit({
     uye, kurucu_kalan: Math.max(0, KURUCU_SINIRI - uye), bugun_mesaj: g?.mesaj || 0, bugun_yazar: g?.yazar || 0,
-    kategoriler, bekleyen,
+    kategoriler, bekleyen, giris: girisAyari(env),
     gundem: gundem.results.map((r) => baslikCikti(r, false)),
     bekleyenler: bekleyenler.results.map((r) => baslikCikti(r, false)),
   });

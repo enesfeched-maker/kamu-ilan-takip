@@ -9,7 +9,11 @@ CREATE TABLE IF NOT EXISTS uyeler (
   bildirim INTEGER DEFAULT 1,
   engelli INTEGER DEFAULT 0,
   dm_acik INTEGER DEFAULT 1,         -- 1: özel mesaj alır
-  itibar INTEGER DEFAULT 0           -- yazılarının aldığı "faydalı" oyu sayısı
+  itibar INTEGER DEFAULT 0,          -- yazılarının aldığı "faydalı" oyu sayısı
+  sifre_ozet TEXT,                   -- pbkdf2$<tekrar>$<tuz>$<ozet>; yalnız şifreli üyelerde
+  kurtarma_ozet TEXT,                -- kurtarma kodunun HMAC özeti
+  google_sub TEXT,                   -- Google hesap kimliği (e-posta saklanmaz)
+  profil TEXT                        -- sitedeki kit-profil (JSON, beyaz listeli)
 );
 CREATE TABLE IF NOT EXISTS basliklar (
   id INTEGER PRIMARY KEY,
@@ -119,5 +123,12 @@ CREATE TABLE IF NOT EXISTS takipler (
   PRIMARY KEY (uye_id, baslik_id)
 );
 CREATE INDEX IF NOT EXISTS takipler_baslik ON takipler(baslik_id);
+CREATE UNIQUE INDEX IF NOT EXISTS uyeler_google_sub ON uyeler(google_sub);
+CREATE TABLE IF NOT EXISTS giris_denemeleri (
+  tur TEXT,                          -- kayit | giris_ip | giris_rumuz
+  anahtar TEXT,                     -- IP özeti ya da küçük harfli rumuz
+  olusma INTEGER
+);
+CREATE INDEX IF NOT EXISTS giris_denemeleri_anahtar ON giris_denemeleri(tur, anahtar, olusma);
 INSERT OR IGNORE INTO uyeler (id, tg_id, rumuz, kayit, kurucu, rol, bildirim) VALUES (1, NULL, 'KPSS Tercihi', 0, 0, 'sistem', 0);
 INSERT OR IGNORE INTO uyeler (id, tg_id, rumuz, kayit, kurucu, rol, bildirim) VALUES (2, NULL, 'Asistan', 0, 0, 'asistan', 0);

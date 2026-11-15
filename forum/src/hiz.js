@@ -1,4 +1,5 @@
 // Yazma hız sınırları: D1'de ucuz, indeksli sayımlar.
+import { hataYanit } from './yardimci.js';
 const GUN = 86400;
 const ret = (mesaj) => ({ durum: 429, hata: mesaj });
 
@@ -31,6 +32,27 @@ export async function ozelMesajHizi(env, uye, simdi) {
   if ((s?.gun || 0) >= 100) return ret('Bugün için özel mesaj sınırına ulaştın. Yarın tekrar dene.');
   return null;
 }
+
+// Üyelik / giriş denemeleri: (tur, anahtar, olusma) indeksiyle ucuz sayım. Anahtar IP özeti ya da küçük harfli rumuz.
+// Sınıra ulaşan istekler yazma yapmaz (yalnız başarısız deneme ve başarılı kayıt satır ekler), böylece D1 yazma kotası korunur.
+export const KAYIT_SINIRI = { tur: 'kayit', en_cok: 5, pencere: 3600 };
+export const GIRIS_IP_SINIRI = { tur: 'giris_ip', en_cok: 10, pencere: 900 };
+export const GIRIS_RUMUZ_SINIRI = { tur: 'giris_rumuz', en_cok: 10, pencere: 900 };
+
+export async function ipAnahtari(request) {
+  const ip = request.headers.get('CF-Connecting-IP') || request.headers.get('X-Forwarded-For') || '?';
+  const ozet = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`ip:${ip}`));
+  return [...new Uint8Array(ozet).slice(0, 8)].map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+export async function denemeSinirda(env, sinir, anahtar, simdi) {
+  const s = await env.DB.prepare('SELECT COUNT(*) AS n FROM giris_denemeleri WHERE tur = ? AND anahtar = ? AND olusma > ?').bind(sinir.tur, anahtar, simdi - sinir.pencere).first();
+  return (s?.n || 0) >= sinir.en_cok;
+}
+export async function denemeYaz(env, sinir, anahtar, simdi) {
+  await env.DB.prepare('DELETE FROM giris_denemeleri WHERE tur = ? AND anahtar = ? AND olusma <= ?').bind(sinir.tur, anahtar, simdi - sinir.pencere).run();
+  await env.DB.prepare('INSERT INTO giris_denemeleri (tur, anahtar, olusma) VALUES (?, ?, ?)').bind(sinir.tur, anahtar, simdi).run();
+}
+export const cokDeneme = () => hataYanit(429, 'Çok fazla deneme yaptın. Biraz sonra tekrar dene.');
 
 // Anonim başvuru yazımı için en iyi çaba bellek içi sınır (izolat başına).
 const kovalar = new Map();

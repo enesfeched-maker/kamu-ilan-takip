@@ -12,3 +12,8 @@
 7. Acil durdurma: `YAZMA_KAPALI = "1"` yapip yeniden dagit (yonetim uclari calismaya devam eder).
 
 Testler: `cd forum; node --test "test/*.test.js"` (bagimlilik yok, Node 22+).
+## Üyelik yöntemleri (rumuz + sifre, Google)
+- Once D1'e gocu uygula (kod yeni sutunlari okur): `wrangler d1 execute kpss-forum --remote --file=migrations/0005_kayit.sql --config wrangler.toml`
+- Istege bagli sirlar: `SIFRE_BIBERI` (sifre ozetine karisan sunucu biberi; yoksa OTURUM_SIRRI kullanilir; sonradan degisirse tum sifreler gecersiz olur),
+  `TURNSTILE_GIZLI` (Cloudflare Turnstile gizli anahtari; /kayit robot kontrolu ister).
+- Istege bagli degiskenler ([vars]): `TURNSTILE_SITE` (Turnstile site anahtari), `GOOGLE_ISTEMCI_KIMLIGI` (Google OAuth web istemci kimligi; bos ise Google dugmesi gorunmez).

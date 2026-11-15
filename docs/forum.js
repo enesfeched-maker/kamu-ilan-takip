@@ -126,55 +126,367 @@
   function duzeyAd(k) { for (var i = 0; i < DUZEYLER.length; i++) if (DUZEYLER[i].kod === k) return DUZEYLER[i].ad; return ''; }
   function parcalar(l) { return l.filter(function (x) { return x !== '' && x != null; }).map(function (x) { return '<span>' + esc(x) + '</span>'; }).join(''); }
 
-  /* ---------- giriş ---------- */
+  /* ---------- hesaba bağlı profil ---------- */
+  // Sitedeki profil (kit-profil) giriş yapılmışsa hesapla birlikte gezer: sunucuda varsa sunucu kazanır, yoksa yereldeki yüklenir.
+  function kanonik(v) {
+    if (Array.isArray(v)) return v.map(kanonik);
+    if (v && typeof v === 'object') { var o = {}; Object.keys(v).sort().forEach(function (k) { o[k] = kanonik(v[k]); }); return o; }
+    return v;
+  }
+  function ayniProfil(a, b) { return JSON.stringify(kanonik(a)) === JSON.stringify(kanonik(b)); }
+  function profilSenkron(sunucu) {
+    try {
+      var yerel = oku('kit-profil');
+      if (sunucu && sunucu.v === 1) {
+        if (ayniProfil(sunucu, yerel)) return;
+        yaz('kit-profil', sunucu);
+        if (sunucu.ogrenim) yaz('fr-duzey', sunucu.ogrenim);
+        window.dispatchEvent(new Event('kit-profil-sunucudan'));
+      } else if (yerel && yerel.v === 1 && oturum()) {
+        api('/ben/profil', { yontem: 'POST', govde: { profil: yerel } }).then(function () {}, function () {});
+      }
+    } catch (e) {}
+  }
+  function profilCek() {   // /ben'i okur, üye bilgisini ve profili günceller
+    if (!oturum()) return Promise.resolve();
+    return api('/ben').then(function (j) { yaz('fr-uye', j.uye); profilSenkron(j.profil); }, function () {});
+  }
+  var profilZamanlayici = 0;
+  window.kitProfilGonder = function () {   // site profil ekranı çağırır; giriş yoksa hiçbir şey yapmaz
+    clearTimeout(profilZamanlayici);
+    profilZamanlayici = setTimeout(function () {
+      try {
+        if (!oturum()) return;
+        var p = oku('kit-profil');
+        api('/ben/profil', { yontem: 'POST', govde: { profil: p && p.v === 1 ? p : null } }).then(function () {}, function () {});
+      } catch (e) {}
+    }, 1200);
+  };
+
+  /* ---------- giriş ve üyelik ---------- */
   var girisSonrasi = null;
-  function girisKutusu(baslik) {
+  var girisAyari = null;
+  function girisAyariGetir() {
+    if (girisAyari) return Promise.resolve(girisAyari);
+    return api('/giris/ayar').then(function (j) { girisAyari = j || {}; return girisAyari; }, function () { return {}; });
+  }
+  var betikler = {};
+  function betikYukle(url) {   // üçüncü taraf betikler yalnız gerektiğinde, bir kez yüklenir
+    if (!betikler[url]) {
+      betikler[url] = new Promise(function (ok, red) {
+        var s = document.createElement('script');
+        s.async = true; s.src = url; s.onload = ok;
+        s.onerror = function () { delete betikler[url]; red(new Error('betik')); };
+        document.head.appendChild(s);
+      });
+    }
+    return betikler[url];
+  }
+  function girisAlani(ad, etiket, ozellik, ipucu, sifreMi) {
+    var girdi_ = '<input id="fr-g-' + ad + '" ' + ozellik + (ipucu ? ' aria-describedby="fr-g-' + ad + '-ip"' : '') + '>';
+    return '<div class="fr-g-alan"><label for="fr-g-' + ad + '">' + esc(etiket) + '</label>'
+      + (sifreMi ? '<div class="fr-g-sifre">' + girdi_ + '<button type="button" class="fr-g-goz" aria-pressed="false" aria-controls="fr-g-' + ad + '">Göster</button></div>' : girdi_)
+      + (ipucu ? '<small id="fr-g-' + ad + '-ip">' + esc(ipucu) + '</small>' : '') + '</div>';
+  }
+  var RUMUZ_OZ = 'type="text" name="username" maxlength="20" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" required';
+  function sifreOz(yeni) { return 'type="password" name="' + (yeni ? 'new-password' : 'password') + '" maxlength="72" autocomplete="' + (yeni ? 'new-password' : 'current-password') + '" required'; }
+
+  // Giriş ve hesap pencerelerinin ortak kabuğu: odak tuzağı, Escape, kilit (kurtarma kodu görünürken kapanmaz).
+  function kabukAc() {
     var eski = document.getElementById('fr-giris');
     if (eski) eski.remove();
-    var kutu = el('<div class="fr-perde" id="fr-giris" role="dialog" aria-modal="true" aria-labelledby="fr-giris-bas"><div class="fr-kutu">'
+    var kutu = el('<div class="fr-perde fr-giris-perde" id="fr-giris" role="dialog" aria-modal="true" aria-labelledby="fr-giris-bas"><div class="fr-kutu fr-giris-kutu" tabindex="-1">'
       + '<button type="button" class="fr-kapat" aria-label="Kapat">×</button>'
-      + '<h2 id="fr-giris-bas">' + esc(baslik || 'Giriş yap') + '</h2><p class="fr-not">Telegram ile girersin. Sitede yalnız rumuzun görünür.</p>'
-      + '<div class="fr-giris-alan"></div><p class="fr-hata" role="alert" hidden></p></div></div>');
+      + '<h2 id="fr-giris-bas"></h2><p class="fr-not fr-giris-not" hidden></p><div class="fr-giris-govde"></div></div></div>');
     document.body.appendChild(kutu);
-    var alan = kutu.querySelector('.fr-giris-alan');
-    function kapat() { kutu.remove(); document.removeEventListener('keydown', tus); }
-    function tus(e) { if (e.key === 'Escape') kapat(); }
-    document.addEventListener('keydown', tus);
-    kutu.querySelector('.fr-kapat').onclick = kapat;
-    kutu.onclick = function (e) { if (e.target === kutu) kapat(); };
-    function hata(m) { var p = kutu.querySelector('.fr-hata'); p.textContent = m; p.hidden = !m; }
-    function girdi(j) {
-      if (j.yeni) return rumuzSor(j.gecici);
-      yaz('fr-oturum', j.oturum); yaz('fr-uye', j.uye); kapat(); iz('forum_giris');
-      var f = girisSonrasi; girisSonrasi = null;
-      if (f) f(); else yenile();
+    var ic = kutu.querySelector('.fr-kutu'), govde = kutu.querySelector('.fr-giris-govde'), bas = kutu.querySelector('h2'), not_ = kutu.querySelector('.fr-giris-not');
+    var onceki = document.activeElement;
+    var k = { kutu: kutu, govde: govde, kilitli: false };
+    k.kapat = function () {
+      document.removeEventListener('keydown', tus);
+      kutu.remove();
+      try { if (onceki && onceki.focus && document.body.contains(onceki)) onceki.focus(); } catch (e) {}
+    };
+    function tus(e) {
+      if (!document.body.contains(kutu)) { document.removeEventListener('keydown', tus); return; }
+      if (e.key === 'Escape' && !k.kilitli) { k.kapat(); return; }
+      if (e.key !== 'Tab') return;
+      var l = Array.prototype.filter.call(ic.querySelectorAll('button,input,a[href],select,textarea,[tabindex="0"]'), function (x) { return !x.disabled && !x.hidden && x.getAttribute('tabindex') !== '-1' && x.offsetParent !== null; });
+      if (!l.length) return;
+      var ilk = l[0], son = l[l.length - 1];
+      if (e.shiftKey && (document.activeElement === ilk || document.activeElement === ic)) { e.preventDefault(); son.focus(); }
+      else if (!e.shiftKey && document.activeElement === son) { e.preventDefault(); ilk.focus(); }
     }
-    function rumuzForm(ipucu, yol, govdeYap) {
-      alan.innerHTML = '<form class="fr-form"><input id="fr-rumuz" maxlength="20" autocomplete="nickname" required placeholder="' + ipucu + '" aria-label="Rumuz">'
-        + '<button class="btn btn-ana" type="submit">Devam</button></form>';
-      var f = alan.querySelector('form'), g = f.querySelector('input');
-      g.focus();
+    document.addEventListener('keydown', tus);
+    kutu.querySelector('.fr-kapat').onclick = function () { if (!k.kilitli) k.kapat(); };
+    kutu.onclick = function (e) { if (e.target === kutu && !k.kilitli) k.kapat(); };
+    govde.addEventListener('click', function (e) {   // şifre göster / gizle (tüm görünümlerde)
+      var g = e.target.closest('.fr-g-goz');
+      if (!g) return;
+      var i = document.getElementById(g.getAttribute('aria-controls'));
+      if (!i) return;
+      var ac = i.type === 'password';
+      i.type = ac ? 'text' : 'password';
+      g.textContent = ac ? 'Gizle' : 'Göster'; g.setAttribute('aria-pressed', ac ? 'true' : 'false');
+    });
+    k.ciz = function (b, n, html) {
+      bas.textContent = b; not_.textContent = n || ''; not_.hidden = !n; govde.innerHTML = html;
+      var ilkAlan = govde.querySelector('input:not([type=hidden]):not([readonly]):not([type=checkbox])');
+      if (ilkAlan && matchMedia('(pointer:fine)').matches) ilkAlan.focus(); else ic.focus({ preventScroll: true });
+    };
+    k.hata = function (m) { var p = govde.querySelector('.fr-hata'); if (p) { p.textContent = m || ''; p.hidden = !m; } };
+    k.mesgul = function (d, acik, yazi) { if (!d) return; d.disabled = !!acik; if (acik) { d._yazi = d.textContent; d.textContent = yazi || 'Bekle…'; } else if (d._yazi) d.textContent = d._yazi; };
+    // Kurtarma kodu: bir kez gösterilir; "Kaydettim" işaretlenmeden devam edilemez ve pencere kapanmaz.
+    k.kodGoster = function (kod, baslik, sonra) {
+      k.kilitli = true;
+      kutu.querySelector('.fr-kapat').hidden = true;
+      k.ciz(baslik, '', '<div class="fr-kod-kart"><p class="fr-kod-uyari"><b>Bu kodu sakla — şifreni unutursan tek yolun bu.</b> Ekran görüntüsü al ya da bir yere yaz. Bir daha gösterilmez.</p>'
+        + '<p class="fr-kod" id="fr-kod" aria-label="Kurtarma kodun">' + esc(kod) + '</p>'
+        + '<button type="button" class="fr-g-ikincil" data-kopyala>Kopyala</button></div>'
+        + '<label class="fr-g-onay"><input type="checkbox" id="fr-g-kaydettim"><span>Kaydettim</span></label>'
+        + '<button type="button" class="fr-g-btn" data-devam disabled>Devam et</button>');
+      var kop = govde.querySelector('[data-kopyala]'), onay = govde.querySelector('#fr-g-kaydettim'), dev = govde.querySelector('[data-devam]');
+      kop.onclick = function () {
+        function tamam() { kop.textContent = 'Kopyalandı'; setTimeout(function () { kop.textContent = 'Kopyala'; }, 2000); }
+        function yedek() {
+          try {
+            var r = document.createRange(); r.selectNodeContents(govde.querySelector('#fr-kod'));
+            var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+            if (document.execCommand('copy')) tamam(); else bildir('Kodu seçip elle kopyalayabilirsin.');
+          } catch (e) { bildir('Kodu seçip elle kopyalayabilirsin.'); }
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(kod).then(tamam, yedek); else yedek();
+      };
+      onay.onchange = function () { dev.disabled = !onay.checked; };
+      dev.onclick = function () { k.kilitli = false; if (sonra) sonra(); else k.kapat(); };
+      kop.focus();
+    };
+    return k;
+  }
+
+  function girisKutusu(baslik, ilkSekme) {
+    var k = kabukAc(), govde = k.govde, ayar = {};
+    var jeton = '', tsKimlik = null;
+    function oturumAc(j) {
+      yaz('fr-oturum', j.oturum); yaz('fr-uye', j.uye); yaz('fr-giris-yontem', 1); iz('forum_giris');
+      return profilCek();
+    }
+    function bitir(bekle) {
+      var tamam = false;
+      function son() { if (tamam) return; tamam = true; k.kapat(); var f = girisSonrasi; girisSonrasi = null; if (f) f(); else yenile(); }
+      Promise.race([bekle || Promise.resolve(), new Promise(function (ok) { setTimeout(ok, 1500); })]).then(son, son);
+    }
+    function girdi(j, kodBasligi) {
+      if (j.yeni) return rumuzSor(j.gecici);
+      var bekle = oturumAc(j);
+      if (j.kurtarma_kodu) return k.kodGoster(j.kurtarma_kodu, kodBasligi || 'Kurtarma kodun hazır', function () { bitir(bekle); });
+      bitir(bekle);
+    }
+    function turnstileKur() {
+      var yer = govde.querySelector('.fr-g-turnstile');
+      if (!ayar.turnstile_site || !yer) return;
+      betikYukle('https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit').then(function () {
+        if (!document.body.contains(yer) || !window.turnstile) return;
+        tsKimlik = window.turnstile.render(yer, {
+          sitekey: ayar.turnstile_site, language: 'tr', theme: 'auto',
+          callback: function (t) { jeton = t; }, 'expired-callback': function () { jeton = ''; }, 'error-callback': function () { jeton = ''; }
+        });
+      }, function () { k.hata('Robot kontrolü yüklenemedi. Bağlantını kontrol edip sayfayı yenile.'); });
+    }
+    function turnstileSifirla() { jeton = ''; try { if (window.turnstile && tsKimlik !== null) window.turnstile.reset(tsKimlik); } catch (e) {} }
+    function turnstileKaldir() { try { if (window.turnstile && tsKimlik !== null) window.turnstile.remove(tsKimlik); } catch (e) {} tsKimlik = null; jeton = ''; }
+
+    function rumuzSor(gecici) {
+      k.ciz('Bir rumuz seç', '3–20 karakter. Sonradan değişmez, sitede yalnız bu görünür.',
+        '<form class="fr-g-form" novalidate>' + girisAlani('rumuz', 'Rumuz', RUMUZ_OZ.replace('autocomplete="username"', 'autocomplete="nickname"').replace('name="username"', 'name="rumuz"'), 'ör. memuradayi35')
+        + '<p class="fr-hata" role="alert" hidden></p><button class="fr-g-btn" type="submit">Devam et</button></form>');
+      var f = govde.querySelector('form'), g = f.querySelector('input'), d = f.querySelector('button[type=submit]');
       f.onsubmit = function (e) {
-        e.preventDefault(); hata('');
-        api(yol, { yontem: 'POST', govde: govdeYap(g.value.trim()) }).then(girdi, function (h) { hata(h.message); });
+        e.preventDefault(); k.hata('');
+        k.mesgul(d, true);
+        api('/giris/rumuz', { yontem: 'POST', govde: { gecici: gecici, rumuz: g.value.trim() } }).then(function (j) { girdi(j); }, function (h) { k.hata(h.message); }).then(function () { k.mesgul(d, false); });
       };
     }
-    function rumuzSor(gecici) {
-      kutu.querySelector('h2').textContent = 'Bir rumuz seç';
-      kutu.querySelector('.fr-not').textContent = '3–20 karakter. Sonradan değişmez.';
-      rumuzForm('ör. memuradayi35', '/giris/rumuz', function (r) { return { gecici: gecici, rumuz: r }; });
+
+    function unuttum() {
+      k.ciz('Şifreni sıfırla', 'Üye olurken sana gösterilen kurtarma kodu lazım.',
+        '<form class="fr-g-form" novalidate>' + girisAlani('rumuz', 'Rumuz', RUMUZ_OZ)
+        + girisAlani('kod', 'Kurtarma kodu', 'type="text" name="kod" maxlength="20" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" placeholder="XXXX-XXXX-XXXX" required')
+        + girisAlani('yeni', 'Yeni şifre', sifreOz(true), 'En az 8 karakter.', true)
+        + '<p class="fr-hata" role="alert" hidden></p><button class="fr-g-btn" type="submit">Şifreyi yenile</button>'
+        + '<button type="button" class="fr-g-bag" data-geri>Girişe dön</button></form>');
+      var f = govde.querySelector('form'), d = f.querySelector('button[type=submit]');
+      f.querySelector('[data-geri]').onclick = function () { ana('giris'); };
+      f.onsubmit = function (e) {
+        e.preventDefault(); k.hata('');
+        var rumuz = f.querySelector('#fr-g-rumuz').value.trim(), kod = f.querySelector('#fr-g-kod').value.trim(), yeni = f.querySelector('#fr-g-yeni').value;
+        if (!rumuz || !kod) return k.hata('Rumuzunu ve kurtarma kodunu yaz.');
+        if (yeni.length < 8) return k.hata('Yeni şifre en az 8 karakter olmalı.');
+        k.mesgul(d, true);
+        api('/sifre-sifirla', { yontem: 'POST', govde: { rumuz: rumuz, kod: kod, yeni_sifre: yeni } }).then(function (j) { girdi(j, 'Şifren yenilendi'); }, function (h) { k.hata(h.message); }).then(function () { k.mesgul(d, false); });
+      };
     }
-    if (YEREL) rumuzForm('Deneme rumuzu (yalnız yerelde)', '/giris/deneme', function (r) { return { rumuz: r }; });
-    else {
-      window.frTelegram = function (k) { hata(''); api('/giris/telegram', { yontem: 'POST', govde: k }).then(girdi, function (h) { hata(h.message); }); };
+
+    function uyePaneli(panel) {
+      panel.innerHTML = '<form class="fr-g-form" novalidate>' + girisAlani('rumuz', 'Rumuz', RUMUZ_OZ, '3–20 karakter. Sonradan değişmez, sitede yalnız bu görünür.')
+        + girisAlani('sifre', 'Şifre', sifreOz(true), 'En az 8 karakter.', true)
+        + (ayar.turnstile_site ? '<div class="fr-g-turnstile" role="group" aria-label="Robot kontrolü"></div>' : '')
+        + '<p class="fr-hata" role="alert" hidden></p><button class="fr-g-btn" type="submit">Üye ol</button></form>';
+      var f = panel.querySelector('form'), d = f.querySelector('button[type=submit]');
+      f.onsubmit = function (e) {
+        e.preventDefault(); k.hata('');
+        var rumuz = f.querySelector('#fr-g-rumuz').value.trim(), sifre = f.querySelector('#fr-g-sifre').value;
+        if (rumuz.length < 3) return k.hata('Rumuz en az 3 karakter olmalı.');
+        if (sifre.length < 8) return k.hata('Şifre en az 8 karakter olmalı.');
+        if (ayar.turnstile_site && !jeton) return k.hata('Önce robot kontrolünü tamamla.');
+        k.mesgul(d, true, 'Üye olunuyor…');
+        api('/kayit', { yontem: 'POST', govde: { rumuz: rumuz, sifre: sifre, turnstile: jeton || undefined } })
+          .then(function (j) { girdi(j, 'Üyeliğin hazır'); }, function (h) { k.hata(h.message); turnstileSifirla(); })
+          .then(function () { k.mesgul(d, false); });
+      };
+      turnstileKur();
+    }
+    function girisPaneli(panel) {
+      panel.innerHTML = '<form class="fr-g-form" novalidate>' + girisAlani('rumuz', 'Rumuz', RUMUZ_OZ) + girisAlani('sifre', 'Şifre', sifreOz(false), '', true)
+        + '<p class="fr-hata" role="alert" hidden></p><button class="fr-g-btn" type="submit">Giriş yap</button>'
+        + '<button type="button" class="fr-g-bag" data-unuttum>Şifremi unuttum</button></form>';
+      var f = panel.querySelector('form'), d = f.querySelector('button[type=submit]');
+      f.querySelector('[data-unuttum]').onclick = unuttum;
+      f.onsubmit = function (e) {
+        e.preventDefault(); k.hata('');
+        var rumuz = f.querySelector('#fr-g-rumuz').value.trim(), sifre = f.querySelector('#fr-g-sifre').value;
+        if (!rumuz || !sifre) return k.hata('Rumuzunu ve şifreni yaz.');
+        k.mesgul(d, true, 'Giriliyor…');
+        api('/giris/sifre', { yontem: 'POST', govde: { rumuz: rumuz, sifre: sifre } }).then(function (j) { girdi(j); }, function (h) { k.hata(h.message); }).then(function () { k.mesgul(d, false); });
+      };
+    }
+
+    function googleKur() {
+      var yer = govde.querySelector('#fr-g-google');
+      if (!ayar.google_istemci || !yer) return;
+      betikYukle('https://accounts.google.com/gsi/client').then(function () {
+        if (!document.body.contains(yer) || !window.google || !window.google.accounts) { yer.hidden = true; return; }
+        window.google.accounts.id.initialize({
+          client_id: ayar.google_istemci, ux_mode: 'popup', auto_select: false, itp_support: true,
+          callback: function (r) { k.hata(''); api('/giris/google', { yontem: 'POST', govde: { kimlik_jetonu: r.credential } }).then(function (j) { girdi(j); }, function (h) { k.hata(h.message); }); }
+        });
+        var koyu = document.documentElement.getAttribute('data-theme') === 'dark';
+        window.google.accounts.id.renderButton(yer, { type: 'standard', theme: koyu ? 'filled_black' : 'outline', size: 'large', text: 'continue_with', shape: 'rectangular', logo_alignment: 'center', locale: 'tr', width: Math.max(200, Math.min(400, yer.clientWidth || 300)) });
+      }, function () { yer.hidden = true; });
+    }
+    function telegramAc() {
+      var yer = govde.querySelector('.fr-g-tg-yer'), dugme = govde.querySelector('[data-telegram]');
+      dugme.hidden = true; yer.hidden = false;
+      if (YEREL) {   // yerelde Telegram çalışmaz: deneme girişi
+        yer.innerHTML = '<form class="fr-g-form"><p class="fr-not">Yalnız yerel geliştirmede: deneme rumuzu.</p>' + girisAlani('deneme', 'Deneme rumuzu', RUMUZ_OZ.replace('name="username"', 'name="deneme"').replace('autocomplete="username"', 'autocomplete="off"'))
+          + '<button class="fr-g-ikincil" type="submit">Deneme girişi</button></form>';
+        var f = yer.querySelector('form');
+        f.onsubmit = function (e) { e.preventDefault(); k.hata(''); api('/giris/deneme', { yontem: 'POST', govde: { rumuz: f.querySelector('input').value.trim() } }).then(function (j) { girdi(j); }, function (h) { k.hata(h.message); }); };
+        return;
+      }
+      window.frTelegram = function (u) { k.hata(''); api('/giris/telegram', { yontem: 'POST', govde: u }).then(function (j) { girdi(j); }, function (h) { k.hata(h.message); }); };
       var s = document.createElement('script');
       s.async = true; s.src = 'https://telegram.org/js/telegram-widget.js?22';
-      s.setAttribute('data-telegram-login', BOT); s.setAttribute('data-size', 'large'); s.setAttribute('data-radius', '10');
+      s.setAttribute('data-telegram-login', BOT); s.setAttribute('data-size', 'large'); s.setAttribute('data-radius', '12');
       s.setAttribute('data-onauth', 'frTelegram(user)'); s.setAttribute('data-request-access', 'write');
-      alan.appendChild(s);
+      yer.appendChild(s);
     }
+
+    function ana(sekme) {
+      turnstileKaldir();
+      var uyeMi = sekme !== 'giris';
+      k.ciz(baslik || 'Foruma katıl', '', '<div class="fr-g-sekmeler" role="tablist" aria-label="Üyelik">'
+        + '<button type="button" role="tab" id="fr-g-t-uye" data-sekme="uye" aria-controls="fr-g-panel">Üye ol</button>'
+        + '<button type="button" role="tab" id="fr-g-t-giris" data-sekme="giris" aria-controls="fr-g-panel">Giriş yap</button></div>'
+        + '<div id="fr-g-panel" role="tabpanel"></div>'
+        + '<div class="fr-g-ayrac"><span>ya da</span></div>'
+        + '<div class="fr-g-sosyal">' + (ayar.google_istemci ? '<div class="fr-g-google" id="fr-g-google"></div>' : '')
+        + '<button type="button" class="fr-g-ikincil" data-telegram>Telegram ile devam et</button><div class="fr-g-tg-yer" hidden></div></div>');
+      var panel = govde.querySelector('#fr-g-panel');
+      var sekmeler = govde.querySelectorAll('[role=tab]');
+      function sec(s, odakla) {
+        turnstileKaldir();
+        Array.prototype.forEach.call(sekmeler, function (b) { var acik = b.getAttribute('data-sekme') === s; b.setAttribute('aria-selected', acik ? 'true' : 'false'); b.tabIndex = acik ? 0 : -1; });
+        panel.setAttribute('aria-labelledby', 'fr-g-t-' + s);
+        if (s === 'giris') girisPaneli(panel); else uyePaneli(panel);
+        if (odakla) { var i = panel.querySelector('input'); if (i) i.focus(); }
+      }
+      Array.prototype.forEach.call(sekmeler, function (b) {
+        b.onclick = function () { sec(b.getAttribute('data-sekme'), true); };
+        b.onkeydown = function (e) {
+          if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+          e.preventDefault();
+          var h = b.getAttribute('data-sekme') === 'uye' ? 'giris' : 'uye';
+          sec(h, false); govde.querySelector('#fr-g-t-' + h).focus();
+        };
+      });
+      govde.querySelector('[data-telegram]').onclick = telegramAc;
+      sec(uyeMi ? 'uye' : 'giris', false);
+      if (matchMedia('(pointer:fine)').matches) { var i0 = panel.querySelector('input'); if (i0) i0.focus(); }
+      googleKur();
+    }
+    // Google düğmesi ve robot kontrolü sunucu ayarına bağlı: ayar gelmeden form çizilmez (ilk açılıştan sonra önbellekten anında gelir).
+    k.ciz(baslik || 'Foruma katıl', '', '<p class="fr-yukleniyor">Yükleniyor…</p>');
+    girisAyariGetir().then(function (a) {
+      ayar = a || {};
+      if (document.body.contains(k.kutu)) ana(ilkSekme || (oku('fr-giris-yontem') ? 'giris' : 'uye'));
+    });
   }
   function girisGerekli(baslik, sonra) { if (oturum()) return false; girisSonrasi = sonra || null; girisKutusu(baslik); return true; }
+
+  // Hesap menüsü: şifre belirle / değiştir, kurtarma kodunu yenile.
+  function hesapKutusu() {
+    if (!oturum()) { girisKutusu(); return; }
+    var k = kabukAc();
+    k.ciz('Şifre ve kurtarma kodu', '', '<p class="fr-yukleniyor">Yükleniyor…</p>');
+    api('/ben').then(function (j) { yaz('fr-uye', j.uye); hesapCiz(k, j.uye); }, function (h) { k.ciz('Şifre ve kurtarma kodu', '', '<p class="fr-hata" role="alert">' + esc(h.message) + '</p>'); });
+  }
+  function hesapCiz(k, u) {
+    var govde = k.govde;
+    var gizli = '<input class="fr-g-gizli" type="text" name="username" autocomplete="username" value="' + esc(u.rumuz) + '" readonly tabindex="-1" aria-hidden="true">';
+    function gonder(f, yol, govdeYap, ok) {
+      var d = f.querySelector('button[type=submit]'), p = f.querySelector('.fr-hata');
+      function hata(m) { p.textContent = m || ''; p.hidden = !m; }
+      f.onsubmit = function (e) {
+        e.preventDefault(); hata('');
+        var g = govdeYap(f);
+        if (typeof g === 'string') return hata(g);
+        k.mesgul(d, true);
+        api(yol, { yontem: 'POST', govde: g }).then(ok, function (h) { hata(h.message); }).then(function () { k.mesgul(d, false); });
+      };
+    }
+    if (!u.sifre_var) {
+      k.ciz('Şifre belirle', 'Şu an yalnız ' + (u.google_var ? 'Google' : 'Telegram') + ' ile giriyorsun. Şifre belirlersen rumuzunla da girebilirsin.',
+        '<form class="fr-g-form" novalidate>' + gizli + girisAlani('yeni', 'Yeni şifre', sifreOz(true), 'En az 8 karakter.', true)
+        + '<p class="fr-hata" role="alert" hidden></p><button class="fr-g-btn" type="submit">Şifre belirle</button></form>');
+      gonder(govde.querySelector('form'), '/ben/sifre', function (f) {
+        var y = f.querySelector('#fr-g-yeni').value;
+        return y.length < 8 ? 'Şifre en az 8 karakter olmalı.' : { yeni: y };
+      }, function (j) {
+        var gnc = oku('fr-uye') || u; gnc.sifre_var = true; yaz('fr-uye', gnc);
+        if (j.kurtarma_kodu) k.kodGoster(j.kurtarma_kodu, 'Şifren hazır', function () { k.kapat(); }); else { k.kapat(); bildir('Şifren kaydedildi'); }
+      });
+      return;
+    }
+    k.ciz('Şifre ve kurtarma kodu', '',
+      '<form class="fr-g-form fr-g-bolum" data-form="sifre" novalidate><h3>Şifreni değiştir</h3>' + gizli
+      + girisAlani('eski', 'Şimdiki şifre', sifreOz(false), '', true) + girisAlani('yeni', 'Yeni şifre', sifreOz(true), 'En az 8 karakter.', true)
+      + '<p class="fr-hata" role="alert" hidden data-hata="sifre"></p><button class="fr-g-btn" type="submit">Şifreyi değiştir</button></form>'
+      + '<form class="fr-g-form fr-g-bolum" data-form="kod" novalidate><h3>Kurtarma kodu</h3>'
+      + '<p class="fr-not">Şifreni unutursan hesabına bu kodla dönersin. Yeni kod oluşturursan eskisi geçersiz olur.</p>' + gizli
+      + girisAlani('kodsifre', 'Şifren', sifreOz(false), '', true)
+      + '<p class="fr-hata" role="alert" hidden data-hata="kod"></p><button class="fr-g-ikincil" type="submit">Yeni kod oluştur</button></form>');
+    var f1 = govde.querySelector('[data-form=sifre]'), f2 = govde.querySelector('[data-form=kod]');
+    gonder(f1, '/ben/sifre', function (f) {
+      var e = f.querySelector('#fr-g-eski').value, y = f.querySelector('#fr-g-yeni').value;
+      if (!e) return 'Şimdiki şifreni yaz.';
+      return y.length < 8 ? 'Yeni şifre en az 8 karakter olmalı.' : { eski: e, yeni: y };
+    }, function () { k.kapat(); bildir('Şifren değişti'); });
+    gonder(f2, '/ben/kurtarma-kodu', function (f) {
+      var s = f.querySelector('#fr-g-kodsifre').value;
+      return s ? { sifre: s } : 'Şifreni yaz.';
+    }, function (j) { k.kodGoster(j.kurtarma_kodu, 'Yeni kurtarma kodun', function () { k.kapat(); }); });
+  }
 
   /* ---------- üye kartı (rumuza dokununca) ---------- */
   function uyeKarti(rumuz, cikis_) {
@@ -531,7 +843,7 @@
   function benYenile() {   // /ben: rumuz, ayarlar ve okunmamış özel mesaj sayısı (en çok 2 dakikada bir)
     if (!oturum() || Date.now() - benZamani < 120000) return;
     benZamani = Date.now();
-    api('/ben').then(function (j) { yaz('fr-uye', j.uye); ozelSayisiGoster((j.uye && j.uye.ozel_okunmamis) || j.ozel_okunmamis || 0); }, function () {});
+    api('/ben').then(function (j) { yaz('fr-uye', j.uye); ozelSayisiGoster((j.uye && j.uye.ozel_okunmamis) || j.ozel_okunmamis || 0); profilSenkron(j.profil); }, function () {});
   }
 
   /* ---------- forum sayfası ---------- */
@@ -575,6 +887,7 @@
       var a = e.target.closest('a[data-ic]');
       if (a && !e.metaKey && !e.ctrlKey && !e.shiftKey) { e.preventDefault(); var p = document.getElementById('fr-bildirimler'); if (p) p.remove(); git(a.getAttribute('href')); return; }
       if (e.target.closest('[data-cikis]')) cikis();
+      if (e.target.closest('[data-hesap]')) { var mn = e.target.closest('details'); if (mn) mn.open = false; hesapKutusu(); }
       if (e.target.closest('[data-giris]')) girisKutusu();
       var z = e.target.closest('[data-zil]');
       if (z) { if (girisGerekli('Bildirimler için giriş yap')) return; bildirimPaneli(z); }
@@ -609,8 +922,8 @@
           + (u.kurucu ? '<p>Kurucu üye</p>' : '') + (u.itibar ? '<p>' + sayi(u.itibar) + ' kez faydalı bulundu</p>' : '')
           + '<a class="fr-ben-bag" data-ic href="?takip=1">Takip ettiklerim</a><a class="fr-ben-bag" data-ic href="?bolum=mesaj">Mesajlarım</a>'
           + '<label class="fr-anahtar-s"><input type="checkbox" data-ayar="dm_acik"' + (u.dm_acik === 0 ? '' : ' checked') + '><span>Özel mesaj alabilirim</span></label>'
-          + '<label class="fr-anahtar-s"><input type="checkbox" data-ayar="bildirim"' + (u.bildirim === 0 ? '' : ' checked') + '><span>Telegram\'dan bildirim al</span></label>'
-          + '<button type="button" class="fr-eylem" data-cikis>Çıkış</button></div></details>'
+          + (u.telegram === false ? '' : '<label class="fr-anahtar-s"><input type="checkbox" data-ayar="bildirim"' + (u.bildirim === 0 ? '' : ' checked') + '><span>Telegram\'dan bildirim al</span></label>')
+          + '<button type="button" class="fr-eylem" data-hesap>Şifre ve kurtarma kodu</button><button type="button" class="fr-eylem" data-cikis>Çıkış</button></div></details>'
           : '<button type="button" class="fr-eylem fr-giris-d" data-giris>Giriş</button>');
       bildirimleriYokla();
       ozelSayisiGoster((oku('fr-ozel-sayi') || 0));

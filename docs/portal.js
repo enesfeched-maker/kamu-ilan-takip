@@ -784,8 +784,9 @@ function addIl(){const r=ilCoz($('p-il').value);if(r.bos)return true;if(r.hata){
 /* "75", "75,5", "75.47987" (en çok 5 ondalık); bilimsel/onaltılık gösterim, binlik ayırıcı ve fazlası reddedilir. */
 function puanOku(raw){const m=String(raw||'').trim().match(/^(\d{1,3})(?:[.,](\d{1,5}))?$/);return m?Number(m[1]+'.'+(m[2]||'0')):NaN;}
 function openProfile(){duzenleme=!!activeProfile();draft=duzenleme?{...profil,iller:[...profil.iller]}:{ogrenim:'',puan_turu:'',iller:[],tum_turkiye:false,bolum:''};fillForm();$('p-sifirla-kutu').hidden=!duzenleme;if(!$('profil-dialog').open){kaydirKilidi(true);$('profil-dialog').showModal();}}
+function profilDegisti(){try{if(window.kitProfilGonder)window.kitProfilGonder();}catch{}}
 /* Profili sıfırla: yalnız kit-profil silinir (Kayıtlı, tema, son ziyaret kalır); ekran profilsiz varsayılana döner. */
-function resetProfile(){if(!confirm('Profil tercihlerin silinsin mi?'))return;try{localStorage.removeItem('kit-profil');}catch{}profil=null;draft=null;$('profil-dialog').close();kaydirKilidi(false);render();notify('Profilin sıfırlandı.');}
+function resetProfile(){if(!confirm('Profil tercihlerin silinsin mi?'))return;try{localStorage.removeItem('kit-profil');}catch{}profilDegisti();profil=null;draft=null;$('profil-dialog').close();kaydirKilidi(false);render();notify('Profilin sıfırlandı.');}
 function saveProfile(){
 profilHataTemizle();
 if(!draft.ogrenim){profilHata('Önce öğrenim düzeyini seç.','p-ogrenim');return;}
@@ -793,8 +794,8 @@ if(!addIl())return;
 const raw=$('p-puan').value.trim();let puan=null;
 if(raw!==''){puan=puanOku(raw);if(!(puan>=40&&puan<=100)){profilHata('Puanı 40–100 arasında gir (örn. 82,15).','p-puan');return;}}
 const p={v:1,ogrenim:draft.ogrenim,puan_turu:formTur(),iller:draft.iller,tum_turkiye:$('p-tum').checked,bolum:$('p-bolum').value.trim().slice(0,60),t:today()};if(puan!==null)p.puan=puan;
-profil=validProfile(p);writeStore('kit-profil',profil);if(profil&&profil.ogrenim)A('tikla',{a:'profil_kaydet',x:profil.ogrenim,n:profil.iller.length});$('profil-dialog').close();kaydirKilidi(false);render();notify('Profilin kaydedildi.');}
-function skipProfile(){if(duzenleme){$('profil-dialog').close();kaydirKilidi(false);return;}profil={v:1,atlandi:true,t:today()};writeStore('kit-profil',profil);$('profil-dialog').close();kaydirKilidi(false);render();}
+profil=validProfile(p);writeStore('kit-profil',profil);profilDegisti();if(profil&&profil.ogrenim)A('tikla',{a:'profil_kaydet',x:profil.ogrenim,n:profil.iller.length});$('profil-dialog').close();kaydirKilidi(false);render();notify('Profilin kaydedildi.');}
+function skipProfile(){if(duzenleme){$('profil-dialog').close();kaydirKilidi(false);return;}profil={v:1,atlandi:true,t:today()};writeStore('kit-profil',profil);profilDegisti();$('profil-dialog').close();kaydirKilidi(false);render();}
 function initProfile(){
 ilKombo=kombo($('p-il'),{kaynak:()=>IL_LIST,secili:()=>new Set(draft?draft.iller:[]),
 sec:il=>{if(!draft)return false;draft.iller=draft.iller.includes(il)?draft.iller.filter(x=>x!==il):[...draft.iller,il];renderIller();profilHataTemizle();return true;}});
@@ -855,6 +856,8 @@ if(!loaded){$('result-count').textContent='';$('cards').hidden=false;$('cards').
 route();}
 window.kitTemaUygula=applyTheme;applyTheme();$('year').textContent=new Date().getFullYear();
 profil=validProfile(readStore('kit-profil',null));
+/* Hesaba bağlı profil: üye girişinden sonra sunucudaki profil kit-profil'i değiştirirse (forum.js) ekran yenilenir; sitedeki her profil değişikliği forum.js'e bildirilir (giriş yoksa hiçbir şey yapmaz). */
+window.addEventListener('kit-profil-sunucudan',()=>{profil=validProfile(readStore('kit-profil',null));if(loaded&&!profil-dialog.open)render();});
 sonZiyaret=frozenVisit();
 let profilAc=false;
 try{const u=new URL(location.href);if(u.searchParams.get('g')==='bugun')bekleyenKaydirma='bugun';if(u.searchParams.has('g')||u.searchParams.has('profil')){profilAc=u.searchParams.get('profil')==='1';u.searchParams.delete('g');u.searchParams.delete('profil');history.replaceState(null,'',u.pathname+u.search+u.hash);}}catch{}

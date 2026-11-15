@@ -21,7 +21,7 @@ EN_COK_LOGO_INDIRME = 150
 CSS_SURUM = 23
 LOGO_SURUM = 2
 ACIK_ZEMIN, KOYU_ZEMIN = '#F6F6F1', '#0D0E0C'
-FORUM_SURUM = 9   # docs/forum.js + docs/forum.css önbellek sürümü
+FORUM_SURUM = 10   # docs/forum.js + docs/forum.css önbellek sürümü
 ANALIZ_SURUM = 3  # docs/a.js (çerezsiz ziyaret istatistiği) önbellek sürümü
 # <head> içinde, theme-color etiketinden sonra: kit-theme (elle seçim) > sistem koyu tercihi > gece 20:00-07:00 koyu > açık.
 TEMA_BETIGI = ('<script>try{var r=document.documentElement,O=window.kitOto=function(){try{if(matchMedia("(prefers-color-scheme: dark)").matches)return!0}catch(e){}var h=new Date().getHours();return h>=20||h<7},K=window.kitKoyu=function(){var s,o=O();try{s=JSON.parse(localStorage.getItem("kit-theme"))}catch(e){}if(s&&typeof s==="object"&&s.a===o&&(s.t==="dark"||s.t==="light"))return s.t==="dark";if(s!=null)try{localStorage.removeItem("kit-theme")}catch(e){}return o},U=function(){if(window.kitTemaUygula)return window.kitTemaUygula();var d=K(),m=document.querySelector("meta[name=theme-color]");r.dataset.theme=d?"dark":"light";if(m)m.content=d?"' + KOYU_ZEMIN + '":"' + ACIK_ZEMIN + '"},C=function(){if((K()?"dark":"light")!==r.dataset.theme)U()};U();setInterval(C,3e5);try{matchMedia("(prefers-color-scheme: dark)").addEventListener("change",C)}catch(e){}}catch(e){document.documentElement.dataset.theme="light"}</script>')
@@ -1433,7 +1433,13 @@ def main():
         (docs / 'llms-full.txt').write_text(yz_gorunurluk.llms_tam_metni(gorunen, BASE, datetime.now(TR), sayfali, puan_bilgileri), encoding='utf-8')
     except Exception as hata:
         print(f'Uyarı: llms.txt / SSS üretilemedi: {hata}')
-    try:   # forum kabuğu (içerik forum.js ile gelir; noindex olduğundan site haritasına girmez)
+    forum_adresleri = []
+    try:   # forum soru/konu sayfaları (FORUM_DIZINLE kapalıyken hepsi noindex, haritada yok); API hatası derlemeyi düşürmez
+        import forum_seo
+        forum_adresleri = forum_seo.yaz(docs, BASE)
+    except Exception as hata:
+        print(f'Uyarı: forum SEO sayfaları üretilemedi: {hata}')
+    try:   # forum kabuğu (içerik forum.js ile gelir; FORUM_DIZINLE kapalıyken noindex olduğundan site haritasına girmez)
         import forum_sayfasi
         _, forum_html = forum_sayfasi.forum_sayfasi(BASE)
         (docs / 'forum').mkdir(exist_ok=True)
@@ -1473,6 +1479,14 @@ def main():
         print(f'İnce sayfa kalkanı: {len(ince)} sayfa haritadan çıktı')
     except Exception as hata:
         print(f'Uyarı: ince sayfa kalkanı çalışmadı: {hata}')
+    try:   # dizinlenebilir forum sayfaları (yalnız FORUM_DIZINLE açıksa dolu); ince sayfa kalkanından sonra
+        import forum_seo
+        urls += forum_adresleri
+        degisim.update(forum_seo.SON_DEGISIM)
+        if forum_seo.kabuk_dizinli():
+            urls.append(BASE + 'forum/')
+    except Exception as hata:
+        print(f'Uyarı: forum adresleri haritaya eklenemedi: {hata}')
     (docs / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
                                       + ''.join('<url><loc>' + esc(u) + '</loc>'
                                                 + (f'<lastmod>{degisim[u]}</lastmod>' if re.fullmatch(r'\d{4}-\d{2}-\d{2}', degisim.get(u, '')) else '')

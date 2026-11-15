@@ -23,13 +23,19 @@ export async function jetonCoz(env, jeton, simdi) {
 }
 export const oturumUret = (env, uyeId, simdi) => jetonImzala(env, { u: uyeId, s: simdi + OTURUM_SURESI });
 export const geciciUret = (env, tgId, simdi) => jetonImzala(env, { t: tgId, s: simdi + GECICI_SURESI });
+export const geciciGoogleUret = (env, sub, simdi) => jetonImzala(env, { g: sub, s: simdi + GECICI_SURESI });
+// Üç jeton türü birbirine karıştırılamaz: oturum {u}, Telegram geçici {t}, Google geçici {g}; her biri yalnız kendi alanını taşır.
 export async function oturumUyeKimligi(env, jeton, simdi) {
   const y = await jetonCoz(env, jeton, simdi);
-  return y && Number.isInteger(y.u) && y.t === undefined ? y.u : null;
+  return y && Number.isInteger(y.u) && y.t === undefined && y.g === undefined ? y.u : null;
 }
 export async function geciciTgKimligi(env, jeton, simdi) {
   const y = await jetonCoz(env, jeton, simdi);
-  return y && Number.isInteger(y.t) && y.u === undefined ? y.t : null;
+  return y && Number.isInteger(y.t) && y.u === undefined && y.g === undefined ? y.t : null;
+}
+export async function geciciGoogleKimligi(env, jeton, simdi) {
+  const y = await jetonCoz(env, jeton, simdi);
+  return y && typeof y.g === 'string' && /^\d{1,40}$/.test(y.g) && y.u === undefined && y.t === undefined ? y.g : null;
 }
 
 // Telegram Login Widget: https://core.telegram.org/widgets/login#checking-authorization

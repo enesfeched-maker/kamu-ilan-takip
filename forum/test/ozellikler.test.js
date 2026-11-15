@@ -36,6 +36,7 @@ test('göç 0002+0003+0004: eski şemanın üstüne temiz uygulanır, veri korun
   eski.exec(dosya('../migrations/0002_ozellikler.sql'));
   eski.exec(dosya('../migrations/0003_odalar.sql'));
   eski.exec(dosya('../migrations/0004_ozel_takip.sql'));
+  eski.exec(dosya('../migrations/0005_kayit.sql'));
   const taze = new DatabaseSync(':memory:');
   taze.exec(dosya('../schema.sql'));
   const kolonlar = (db, t) => db.prepare(`PRAGMA table_info(${t})`).all().map((r) => r.name).sort();

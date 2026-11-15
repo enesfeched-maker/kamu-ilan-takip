@@ -22,7 +22,8 @@ test('telegram girişi: yeni üye -> geçici jeton -> rumuz -> oturum; sonra do�
   assert.equal(r2.durum, 200);
   assert.equal(r2.json.uye.rumuz, 'Ali_Veli'); assert.equal(r2.json.uye.kurucu, true); assert.equal(r2.json.uye.rol, 'uye');
   const kayit = env.DB.ham.prepare('SELECT * FROM uyeler WHERE tg_id = 777').get();
-  assert.deepEqual(Object.keys(kayit).sort(), ['bildirim', 'dm_acik', 'engelli', 'id', 'itibar', 'kayit', 'kurucu', 'rol', 'rumuz', 'tg_id']); // ad/kullanıcı adı/foto saklanmaz
+  assert.deepEqual(Object.keys(kayit).sort(), ['bildirim', 'dm_acik', 'engelli', 'google_sub', 'id', 'itibar', 'kayit', 'kurtarma_ozet', 'kurucu', 'profil', 'rol', 'rumuz', 'sifre_ozet', 'tg_id']); // ad/kullanıcı adı/foto saklanmaz
+  assert.equal(kayit.google_sub, null); assert.equal(kayit.sifre_ozet, null);
   const ben = await cagir(env, 'GET', '/ben', { token: r2.json.oturum });
   assert.equal(ben.durum, 200); assert.equal(ben.json.uye.rumuz, 'Ali_Veli');
   const r3 = await cagir(env, 'POST', '/giris/telegram', { govde: a });
@@ -393,7 +394,7 @@ test('/durum: gerçek üye ve son 24 saat sayıları; site ve asistan hesapları
   const d0 = (await cagir(env, 'GET', '/durum')).json;
   assert.deepEqual(d0, {
     uye: 0, kurucu_kalan: 200, bugun_mesaj: 0, bugun_yazar: 0,
-    kategoriler: { ilan: 0, puan: 0, kurum: 0, mulakat: 0, haklar: 0, hazirlik: 0, etkinlik: 0, oda: 0 }, bekleyen: 0, gundem: [], bekleyenler: [],
+    kategoriler: { ilan: 0, puan: 0, kurum: 0, mulakat: 0, haklar: 0, hazirlik: 0, etkinlik: 0, oda: 0 }, bekleyen: 0, giris: { turnstile_site: '', google_istemci: '', sifre: true }, gundem: [], bekleyenler: [],
   });
   const { token } = await uyeGirisi(env, 'ayse_k');
   const b = await cagir(env, 'POST', '/baslik', { token, govde: BASLIK });

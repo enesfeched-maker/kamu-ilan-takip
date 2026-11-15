@@ -27,6 +27,7 @@ test('göç 0004: 0002+0003 sonrası temiz uygulanır, dm_acik varsayılan 1, in
   eski.exec(dosya('../migrations/0002_ozellikler.sql'));
   eski.exec(dosya('../migrations/0003_odalar.sql'));
   eski.exec(dosya('../migrations/0004_ozel_takip.sql'));
+  eski.exec(dosya('../migrations/0005_kayit.sql'));
   assert.equal(eski.prepare('SELECT dm_acik FROM uyeler WHERE id = 10').get().dm_acik, 1);
   const taze = new DatabaseSync(':memory:');
   taze.exec(dosya('../schema.sql'));
