@@ -1,0 +1,120 @@
+/* KPSS Tercihi — forum, sohbet görünümü (?tasarim=sohbet).
+   Fikir: kitle günü Telegram'da geçiriyor; forum da alıştıkları mesajlaşma uygulaması gibi okunsun.
+   Geniş ekranda solda konular (son mesaj özeti, saat, yanıt sayısı), sağda açık konuşma; mesajlar balon,
+   kendi mesajın sağda ve yeşil, yazma kutusu hep altta. Telefonda tek panel: liste, dokununca konuşma.
+   Renk ve yazı sitenin kendisi: koyu petrol kabuk, açık yeşil, Inter. Bütün kurallar html.fr-sohbet altında. */
+
+html.fr-sohbet{
+  --sh-panel:var(--surface);--sh-zemin:var(--surface-2);--sh-cizgi:var(--line);
+  --sh-balon:var(--surface-2);--sh-balon-ben:var(--lime);--sh-balon-ben-yazi:#111310;
+  --sh-secili:var(--lime-soft);--sh-rozet:var(--lime);--sh-rozet-yazi:#111310;
+  --sh-ust:60px;
+}
+
+/* sayfa başı: sohbet ekranına yer açmak için kısa */
+html.fr-sohbet .forum-page .kp-hero{padding:16px 0 0}
+html.fr-sohbet .forum-page .kp-hero h1{margin:4px 0 0;font-size:22px;letter-spacing:-.02em}
+html.fr-sohbet .fr-kok{max-width:none;margin-top:12px}
+
+/* ---------- iki panel ---------- */
+html.fr-sohbet .fr-sh{display:grid;grid-template-columns:minmax(300px,360px) minmax(0,1fr);height:calc(100dvh - var(--sh-ust) - 120px);min-height:520px;border:1px solid var(--sh-cizgi);border-radius:18px;overflow:hidden;background:var(--sh-panel);box-shadow:var(--shadow)}
+html.fr-sohbet .fr-sh-liste{display:flex;flex-direction:column;min-height:0;border-right:1px solid var(--sh-cizgi);background:var(--sh-panel)}
+html.fr-sohbet .fr-sh-oda{position:relative;min-height:0;overflow-y:auto;background:var(--sh-zemin);scroll-behavior:smooth}
+html.fr-sohbet .fr-sh-bos{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;height:100%;padding:24px;color:var(--muted);text-align:center}
+html.fr-sohbet .fr-sh-bos svg{width:44px;height:44px;color:var(--lime-ink);stroke-width:1.4}
+html.fr-sohbet .fr-sh-bos b{color:var(--ink);font-size:17px;font-weight:600}
+
+/* sol panel: arama, sekmeler, konu listesi */
+html.fr-sohbet .fr-sh-liste .fr-ust{flex:none;flex-wrap:nowrap;gap:8px;margin:0;padding:12px;border-bottom:1px solid var(--sh-cizgi)}
+html.fr-sohbet .fr-sh-liste .fr-ara input{height:40px;border-radius:999px;background:var(--sh-zemin);border-color:transparent;font-size:15px;padding:0 16px}
+html.fr-sohbet .fr-sh-liste .fr-ust .btn{height:40px;padding:0 14px;border-radius:999px;font-size:14px}
+html.fr-sohbet .fr-sh-liste .fr-ben{display:none}
+html.fr-sohbet .fr-sh-liste .fr-sekmeler{flex:none;gap:6px;margin:0;padding:10px 12px;border-bottom:1px solid var(--sh-cizgi)}
+html.fr-sohbet .fr-sekmeler a{padding:6px 12px;border:0;border-radius:999px;background:var(--sh-zemin);font-size:13.5px;margin:0}
+html.fr-sohbet .fr-sekmeler a[aria-current=page]{background:var(--btn);color:var(--btn-ink)}
+html.fr-sohbet .fr-sh-liste .fr-arama-bas{padding:10px 14px;margin:0;font-size:14px}
+html.fr-sohbet .fr-sh-liste .fr-basliklar{flex:1;min-height:0;overflow-y:auto}
+
+/* konu satırı: mesajlaşma uygulamasındaki sohbet satırı gibi */
+html.fr-sohbet .fr-oda-satir{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid var(--sh-cizgi);border-radius:0;text-decoration:none;color:inherit}
+html.fr-sohbet .fr-oda-satir:hover{background:var(--sh-zemin)}
+html.fr-sohbet .fr-oda-satir.fr-secili{background:var(--sh-secili)}
+html.fr-sohbet .fr-oda-satir:focus-visible{outline:2px solid var(--focus);outline-offset:-2px}
+html.fr-sohbet .fr-oda-satir .fr-av{width:44px;height:44px;font-size:17px}
+html.fr-sohbet .fr-oda-satir .fr-satir-ic{gap:2px}
+html.fr-sohbet .fr-oda-ust,html.fr-sohbet .fr-oda-alt{display:flex;align-items:center;gap:8px;min-width:0}
+html.fr-sohbet .fr-oda-satir .fr-satir-bas{flex:1;min-width:0;font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-wrap:nowrap}
+html.fr-sohbet .fr-oda-satir:hover .fr-satir-bas{text-decoration:none}
+html.fr-sohbet .fr-oda-ust time{flex:none;color:var(--faint);font-size:12px}
+html.fr-sohbet .fr-oda-ozet{flex:1;min-width:0;color:var(--muted);font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html.fr-sohbet .fr-oda-sayi{flex:none;min-width:22px;height:22px;padding:0 7px;border-radius:999px;background:var(--sh-rozet);color:var(--sh-rozet-yazi);font-size:12px;font-weight:700;display:grid;place-items:center;font-variant-numeric:tabular-nums}
+html.fr-sohbet .fr-oda-bekliyor{flex:none;color:var(--alert);font-size:12px;font-weight:600}
+html.fr-sohbet .fr-basliklar .fr-bos,html.fr-sohbet .fr-basliklar .fr-yukleniyor{padding:20px 16px}
+
+/* ---------- konuşma ---------- */
+html.fr-sohbet .fr-sh-oda .fr-geri{display:none}
+html.fr-sohbet .fr-baslik{display:flex;flex-direction:column;min-height:100%;max-width:none}
+html.fr-sohbet .fr-sh-oda .fr-baslik>.fr-ust-bilgi,html.fr-sohbet .fr-sh-oda .fr-baslik>.fr-baslik-bas{padding:0 24px}
+html.fr-sohbet .fr-sh-oda .fr-baslik>.fr-ust-bilgi{padding-top:18px}
+html.fr-sohbet .fr-baslik-bas{font-size:21px;margin:4px 0 14px}
+html.fr-sohbet .fr-ilk{margin:0 24px;padding:16px 18px;border:1px solid var(--sh-cizgi);border-radius:16px;background:var(--sh-panel)}
+html.fr-sohbet .fr-baslik>p:not(.fr-ust-bilgi){margin:10px 24px 0}
+html.fr-sohbet .fr-alt-bas{margin:22px auto 6px;padding:3px 12px;border-radius:999px;background:var(--sh-panel);font-size:12px;font-weight:600;color:var(--muted);text-align:center;align-self:center}
+html.fr-sohbet [data-liste]{flex:1;padding:4px 24px 12px}
+html.fr-sohbet .fr-sh-oda .fr-yazici{position:sticky;bottom:0;margin:0;padding:12px 24px 16px;background:linear-gradient(transparent,var(--sh-zemin) 30%)}
+
+/* mesaj balonları */
+html.fr-sohbet .fr-liste{gap:2px}
+html.fr-sohbet .fr-yanit{gap:8px;padding:6px 0;border:0;align-items:flex-end;max-width:min(620px,85%)}
+html.fr-sohbet .fr-yanit .fr-av{width:28px;height:28px;font-size:12px}
+html.fr-sohbet .fr-yanit-ic{display:flex;flex-direction:column;align-items:flex-start}
+html.fr-sohbet .fr-yanit header{order:1;gap:6px;padding:0 4px 3px;font-size:12.5px}
+html.fr-sohbet .fr-yanit header b{font-size:12.5px}
+html.fr-sohbet .fr-yanit time{font-size:11.5px}
+html.fr-sohbet .fr-yanit .fr-govde{order:2;margin:0;padding:9px 14px;border-radius:18px 18px 18px 6px;background:var(--sh-panel);font-size:15.5px;line-height:1.45;box-shadow:0 1px 1px rgba(0,0,0,.05)}
+html.fr-sohbet .fr-ilan .fr-yanit .fr-govde{background:var(--sh-balon)}
+html.fr-sohbet .fr-yanit footer{order:3;margin:2px 0 0;padding:0 2px;opacity:0;transition:opacity .15s}
+html.fr-sohbet .fr-yanit:hover footer,html.fr-sohbet .fr-yanit:focus-within footer{opacity:1}
+html.fr-sohbet .fr-yanit footer .fr-eylem{font-size:12px;padding:2px 6px}
+html.fr-sohbet .fr-cocuk{margin-left:36px}
+html.fr-sohbet .fr-benim{flex-direction:row-reverse;align-self:flex-end;margin-left:auto}
+html.fr-sohbet .fr-benim .fr-yanit-ic{align-items:flex-end}
+html.fr-sohbet .fr-benim .fr-govde{border-radius:18px 18px 6px 18px;background:var(--sh-balon-ben);color:var(--sh-balon-ben-yazi)}
+html.fr-sohbet .fr-benim .fr-govde a,html.fr-sohbet .fr-benim .fr-anma{color:var(--sh-balon-ben-yazi)}
+html.fr-sohbet .fr-benim>.fr-av{box-shadow:none}
+html.fr-sohbet .fr-yanit-bot .fr-govde{background:transparent;border:1px dashed var(--line-2);box-shadow:none;color:var(--ink-2)}
+html.fr-sohbet .fr-yeni .fr-govde{animation:sh-gel .35s ease-out}
+@keyframes sh-gel{from{opacity:0;transform:translateY(6px)}}
+
+/* yazma kutusu */
+html.fr-sohbet .fr-yazici textarea{border-color:transparent;background:var(--sh-panel);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+html.fr-sohbet .fr-gonder{background:var(--sh-panel)}
+html.fr-sohbet .fr-dolu .fr-gonder{background:var(--lime);color:#111310}
+
+/* sağ panelde yeni soru formu */
+html.fr-sohbet .fr-sh-oda .fr-yeni{padding:24px}
+
+/* ilan sayfası: aynı balonlar */
+html.fr-sohbet .fr-ilan{padding:16px;border-radius:18px;background:var(--surface-2)}
+html.fr-sohbet .fr-ilan .fr-yanit .fr-govde{background:var(--surface)}
+html.fr-sohbet .fr-ilan .fr-benim .fr-govde{background:var(--sh-balon-ben)}
+html.fr-sohbet .fr-ilan .fr-basvuru{border-color:var(--line-2)}
+
+/* ---------- telefon: tek panel ---------- */
+@media (max-width:899px){
+  html.fr-sohbet .fr-basliklar{margin:0 -16px}
+  html.fr-sohbet .fr-ust{margin-bottom:10px}
+  html.fr-sohbet .fr-ara input{border-radius:999px}
+  html.fr-sohbet .fr-sekmeler{margin-bottom:6px}
+  html.fr-sohbet .fr-baslik .fr-ilk{margin:0}
+  html.fr-sohbet .fr-baslik>.fr-ust-bilgi,html.fr-sohbet .fr-baslik>.fr-baslik-bas{padding:0}
+  html.fr-sohbet [data-liste]{padding:4px 0 12px}
+  html.fr-sohbet .fr-baslik .fr-yazici{position:sticky;bottom:0;margin:0 -16px;padding:10px 16px 14px;background:linear-gradient(transparent,var(--bg) 30%)}
+  html.fr-sohbet .fr-yanit{max-width:90%}
+}
+@media (prefers-reduced-motion:reduce){
+  html.fr-sohbet .fr-yeni .fr-govde{animation:none}
+  html.fr-sohbet .fr-yanit footer{transition:none}
+  html.fr-sohbet .fr-sh-oda{scroll-behavior:auto}
+}
+@media (hover:none){html.fr-sohbet .fr-yanit footer{opacity:1}}

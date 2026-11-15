@@ -99,11 +99,16 @@
   }
   function kok() { return document.body.classList.contains('detail-page') ? '../../' : document.getElementById('forum') ? '../' : ''; }
   // Pano görünümü (Hallmark Paste-up, deneme): ?tasarim=pano açar, ?tasarim=klasik kapatır; seçim bu tarayıcıda hatırlanır.
-  var PANO = (function () {
+  var TASARIM = (function () {
     var q = new URLSearchParams(location.search).get('tasarim');
-    if (q) yaz('fr-tasarim', q === 'pano' ? 'pano' : null);
-    return (q || oku('fr-tasarim')) === 'pano';
+    if (q) yaz('fr-tasarim', q === 'pano' || q === 'sohbet' ? q : null);
+    return q || oku('fr-tasarim') || 'klasik';
   })();
+  var PANO = TASARIM === 'pano', SOHBET = TASARIM === 'sohbet';
+  if (SOHBET) {
+    document.documentElement.classList.add('fr-sohbet');
+    var sl = document.createElement('link'); sl.rel = 'stylesheet'; sl.href = kok() + 'forum-sohbet.css?v=1'; document.head.appendChild(sl);
+  }
   if (PANO) {
     document.documentElement.classList.add('fr-pano');
     [['https://fonts.googleapis.com/css2?family=League+Gothic&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap'], [kok() + 'forum-pano.css?v=1']].forEach(function (h) {
@@ -412,15 +417,22 @@
         + '<button type="button" class="fr-eylem" data-cikis>Çıkış</button></div></details>';
     }
     function satir(b) {
-      var hedef = b.ilan_id ? '../ilan/' + encodeURIComponent(b.ilan_id) + '/#tartisma' : '?b=' + b.id;
+      var hedef = b.ilan_id && !SOHBET ? '../ilan/' + encodeURIComponent(b.ilan_id) + '/#tartisma' : '?b=' + b.id;
+      if (SOHBET) {
+        return '<a class="fr-satir fr-oda-satir' + (b.id === seciliOda ? ' fr-secili' : '') + '" data-ic href="' + hedef + '"' + (b.id === seciliOda ? ' aria-current="page"' : '') + '>' + avatar(b)
+          + '<span class="fr-satir-ic"><span class="fr-oda-ust"><b class="fr-satir-bas">' + esc(b.baslik) + '</b><time>' + zaman(b.son_hareket || b.olusma) + '</time></span>'
+          + '<span class="fr-oda-alt"><span class="fr-oda-ozet">' + esc(b.kisa || katAd(b.kategori)) + '</span>'
+          + (b.yanit_sayisi ? '<span class="fr-oda-sayi">' + sayi(b.yanit_sayisi) + '</span>' : b.sabit ? '' : '<span class="fr-oda-bekliyor">yanıtsız</span>') + '</span></span></a>';
+      }
       var alt = parcalar([katAd(b.kategori), duzeyAd(b.duzey), b.anket ? 'Anket' : '', b.rumuz, zaman(b.son_hareket || b.olusma)]);
       return '<a class="fr-satir"' + (b.ilan_id ? '' : ' data-ic') + ' href="' + hedef + '"><span class="fr-satir-ic">'
         + '<b class="fr-satir-bas">' + (b.sabit ? '<span class="fr-sabit">Sabit</span> ' : '') + esc(b.baslik) + '</b><span class="fr-satir-alt">' + alt + '</span></span>'
         + '<span class="fr-yanit-sayi' + (b.yanit_sayisi || b.sabit ? '' : ' fr-sifir') + '">' + (b.yanit_sayisi ? '<b>' + sayi(b.yanit_sayisi) + '</b><small>yanıt</small>' : b.sabit ? '' : '<b>yanıtsız</b>') + '</span></a>';
     }
-    function liste(p) {
+    function liste(p, hedef) {
+      hedef = hedef || kok_;
       var secili = p.bekleyen ? 'bekleyen' : p.k;
-      kok_.innerHTML = '<div class="fr-ust"><form class="fr-ara" role="search"><input type="search" maxlength="60" placeholder="Forumda ara" value="' + esc(p.q) + '" aria-label="Forumda ara"></form>'
+      hedef.innerHTML = '<div class="fr-ust"><form class="fr-ara" role="search"><input type="search" maxlength="60" placeholder="Forumda ara" value="' + esc(p.q) + '" aria-label="Forumda ara"></form>'
         + '<a class="btn btn-ana" data-ic href="?yeni=1' + (p.k && p.k !== 'ilan' && p.k !== 'etkinlik' ? '&k=' + p.k : '') + '">Soru sor</a>' + uyeCubugu() + '</div>'
         + (p.q ? '<p class="fr-arama-bas"><span>“' + esc(p.q) + '” için sonuçlar</span><a class="yazi-link" data-ic href="?">Aramayı temizle</a></p>'
           : '<nav class="fr-sekmeler" aria-label="Konular"><a data-ic href="?"' + (!secili ? ' aria-current="page"' : '') + '>Tümü</a>'
@@ -428,8 +440,8 @@
             + KATEGORILER.map(function (c) { return '<a data-ic href="?k=' + c.kod + '"' + (secili === c.kod ? ' aria-current="page"' : '') + '>' + esc(c.ad) + '</a>'; }).join('') + '</nav>')
         + (PANO && !p.q && !p.bekleyen ? '<div class="fr-pano-not" hidden></div>' : '')
         + '<div class="fr-basliklar"><p class="fr-yukleniyor">Yükleniyor…</p></div>';
-      var kap = kok_.querySelector('.fr-basliklar'), f = kok_.querySelector('.fr-ara');
-      var not_ = kok_.querySelector('.fr-pano-not');
+      var kap = hedef.querySelector('.fr-basliklar'), f = hedef.querySelector('.fr-ara');
+      var not_ = hedef.querySelector('.fr-pano-not');
       if (not_) api('/durum').then(function (d) {   // panonun tek floresan kâğıdı: gerçek yanıtsız soru sayısı
         if (!d.bekleyen) return;
         not_.innerHTML = '<b>' + sayi(d.bekleyen) + ' soru cevap bekliyor</b><a class="btn" data-ic href="?bekleyen=1">Cevapla</a>';
@@ -461,9 +473,10 @@
           : '<div class="fr-anket-s fr-sonuc' + (a.benim === s.sira ? ' fr-on' : '') + '"><i style="width:' + y + '%"></i><span>' + esc(s.metin) + '</span><b>%' + y + '</b></div>';
       }).join('') + '<small class="fr-not">' + sayi(a.toplam) + ' oy</small></div>';
     }
-    function baslik(id) {
-      kok_.innerHTML = '<p class="fr-geri"><a class="yazi-link" data-ic href="?">Foruma dön</a></p><div class="fr-baslik"><p class="fr-yukleniyor">Yükleniyor…</p></div>';
-      var kap = kok_.querySelector('.fr-baslik'), sonId = 0, ilk = true;
+    function baslik(id, hedef) {
+      hedef = hedef || kok_;
+      hedef.innerHTML = '<p class="fr-geri"><a class="yazi-link" data-ic href="?">Foruma dön</a></p><div class="fr-baslik"><p class="fr-yukleniyor">Yükleniyor…</p></div>';
+      var kap = hedef.querySelector('.fr-baslik'), sonId = 0, ilk = true;
       function yukle(sessiz) {
         return api('/baslik/' + id).then(function (j) {
           var b = j.baslik, y = j.yanitlar || [];
@@ -482,7 +495,11 @@
               + '<h3 class="fr-alt-bas" data-sayi></h3><div data-liste></div>' + yaziciHtml('baslik-' + id, 'Yanıtını yaz…');
             yaziciBagla(kap, 'baslik-' + id, function (g, ust_) {
               var govde = { govde: g }; if (ust_) govde.ust_id = ust_;
-              return api('/baslik/' + id + '/yanit', { yontem: 'POST', govde: govde }).then(function () { iz('forum_yanit', 'baslik'); return yukle(); });
+              return api('/baslik/' + id + '/yanit', { yontem: 'POST', govde: govde }).then(function () { iz('forum_yanit', 'baslik'); return yukle(); }).then(function () {
+                if (!SOHBET) return;   // sohbet görünümü: gönderilen mesaj görünsün diye konuşmanın sonuna in
+                var sc = hedef.closest('.fr-sh-oda');
+                if (sc) sc.scrollTop = sc.scrollHeight; else window.scrollTo(0, document.documentElement.scrollHeight);
+              });
             });
             puanOzeti(kap, b);
           }
@@ -513,12 +530,13 @@
       durdur = canliTut(yukle);
       yukle();
     }
-    function yeni(kategori) {
+    function yeni(kategori, hedef) {
+      hedef = hedef || kok_;
       var u = uye();
       var secenek = KATEGORILER.filter(function (c) { return c.kod !== 'ilan' && (c.kod !== 'etkinlik' || (u && (u.rol === 'yonetici' || u.rol === 'sistem'))); });
       var t = oku('fr-taslak-yeni') || {};
       var ekAcik = !!(t.duzey || t.puan || (t.anket && t.anket.length));
-      kok_.innerHTML = '<p class="fr-geri"><a class="yazi-link" data-ic href="?">Foruma dön</a></p>'
+      hedef.innerHTML = '<p class="fr-geri"><a class="yazi-link" data-ic href="?">Foruma dön</a></p>'
         + '<form class="fr-form fr-yeni"><h2>Soru sor</h2>'
         + '<input id="fr-b" maxlength="120" required placeholder="Başlık: ör. Önlisans 72 puanla nereye başvurabilirim?" value="' + esc(t.baslik || '') + '" aria-label="Başlık">'
         + '<textarea id="fr-g" rows="5" maxlength="4000" required placeholder="Ayrıntı" aria-label="Ayrıntı">' + esc(t.govde || '') + '</textarea>'
@@ -530,7 +548,7 @@
         + '<div class="fr-anket-g">' + [0, 1, 2, 3].map(function (i) { return '<input maxlength="80" placeholder="Anket seçeneği ' + (i + 1) + '" value="' + esc((t.anket || [])[i] || '') + '">'; }).join('') + '</div>'
         + '</div></details>'
         + '<button class="btn btn-ana btn-buyuk" type="submit">Gönder</button><p class="fr-hata" role="alert" hidden></p></form>';
-      var f = kok_.querySelector('form');
+      var f = hedef.querySelector('form');
       function deger() {
         return { kategori: f.querySelector('#fr-k').value, duzey: f.querySelector('#fr-d').value, puan_turu: f.querySelector('#fr-pt').value,
           puan: String(f.querySelector('#fr-p').value).trim().replace(',', '.'), baslik: f.querySelector('#fr-b').value.trim(), govde: f.querySelector('#fr-g').value.trim(),
@@ -553,23 +571,37 @@
         }
         if (g.anket.length === 1) return hata('Anket için en az iki seçenek yaz.');
         if (g.anket.length >= 2) govde.anket = { secenekler: g.anket };
-        if (girisGerekli('Göndermek için giriş yap', function () { git('?yeni=1'); setTimeout(function () { var x = kok_.querySelector('form.fr-yeni'); if (x) x.requestSubmit(); }, 300); })) return;
+        if (girisGerekli('Göndermek için giriş yap', function () { git('?yeni=1'); setTimeout(function () { var x = document.querySelector('form.fr-yeni'); if (x) x.requestSubmit(); }, 300); })) return;
         api('/baslik', { yontem: 'POST', govde: govde }).then(function (j) {
           yaz('fr-taslak-yeni', null); iz('forum_baslik', g.kategori);
           git('?b=' + j.baslik.id);
         }, function (h) { hata(h.message); });
       };
     }
+    var seciliOda = 0;
     function ciz() {
       if (durdur) { durdur(); durdur = null; }
       var q = new URLSearchParams(location.search);
       document.title = 'Forum — KPSS Tercihi';
       yenileyiciler = [ciz];
-      if (q.get('b')) baslik(+q.get('b'));
+      var lp = { k: q.get('k') || '', bekleyen: q.get('bekleyen') === '1', q: q.get('q') || '' };
+      seciliOda = +q.get('b') || 0;
+      // Sohbet görünümü, geniş ekranda: solda konular, sağda açık konuşma (telefonda tek panel, sırayla).
+      if (SOHBET && matchMedia('(min-width: 900px)').matches) {
+        kok_.innerHTML = '<div class="fr-sh"><section class="fr-sh-liste" aria-label="Konular"></section><section class="fr-sh-oda" aria-live="polite"></section></div>';
+        var L = kok_.querySelector('.fr-sh-liste'), O = kok_.querySelector('.fr-sh-oda');
+        liste(lp, L);
+        if (seciliOda) baslik(seciliOda, O);
+        else if (q.get('yeni')) yeni(q.get('k'), O);
+        else O.innerHTML = '<div class="fr-sh-bos">' + ikon(SOHBET) + '<b>Bir konu seç ya da yeni soru sor</b><a class="btn btn-ana" data-ic href="?yeni=1">Soru sor</a></div>';
+        return;
+      }
+      if (seciliOda) baslik(seciliOda);
       else if (q.get('yeni')) yeni(q.get('k'));
-      else liste({ k: q.get('k') || '', bekleyen: q.get('bekleyen') === '1', q: q.get('q') || '' });
+      else liste(lp);
     }
-    kok_.insertAdjacentHTML('afterend', '<p class="fr-gorunum">Görünüm: <a class="yazi-link" href="?tasarim=klasik">Sade</a> veya <a class="yazi-link" href="?tasarim=pano">Pano</a></p>');
+    if (SOHBET) { var genisMi = matchMedia('(min-width: 900px)'); if (genisMi.addEventListener) genisMi.addEventListener('change', ciz); }
+    kok_.insertAdjacentHTML('afterend', '<p class="fr-gorunum">Görünüm: <a class="yazi-link" href="?tasarim=klasik">Sade</a>, <a class="yazi-link" href="?tasarim=pano">Pano</a> veya <a class="yazi-link" href="?tasarim=sohbet">Sohbet</a></p>');
     kok_.addEventListener('change', function (e) {
       var c = e.target.closest('[data-bildirim]');
       if (!c) return;
