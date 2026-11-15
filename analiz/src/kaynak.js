@@ -1,6 +1,12 @@
 // Trafik kaynağı sınıflandırması: önce utm_source, yoksa yönlendiren (referrer) alan adı.
 
+// Yapay zekâ asistanları (ChatGPT cevaptaki bağlantılara utm_source=chatgpt.com ekler) Google'dan önce
+// denenir: gemini.google.com aksi halde Google araması sayılırdı.
+const YZ_UTM = /^(chatgpt\.com|chat\.openai\.com|openai|perplexity(\.ai)?|gemini\.google\.com|copilot\.microsoft\.com|claude\.ai)$/;
+const YZ_HOST = /(^|\.)(chatgpt\.com|chat\.openai\.com|perplexity\.ai|gemini\.google\.com|copilot\.microsoft\.com|claude\.ai)$/;
+
 const UTM = [
+  [YZ_UTM, 'Yapay zekâ'],
   [/^(google|gclid|adwords)/, 'Google'],
   [/^bing/, 'Bing'],
   [/^yandex/, 'Yandex'],
@@ -12,6 +18,7 @@ const UTM = [
 ];
 
 const HOST = [
+  [YZ_HOST, 'Yapay zekâ'],
   [/(^|\.)google\.[a-z.]+$|^com\.google\.android\.googlequicksearchbox$/, 'Google'],
   [/(^|\.)bing\.com$/, 'Bing'],
   [/(^|\.)yandex\.[a-z.]+$|(^|\.)ya\.ru$/, 'Yandex'],

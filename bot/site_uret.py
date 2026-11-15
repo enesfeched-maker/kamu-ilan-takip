@@ -56,7 +56,7 @@ def ust_html(kok, aktif=''):
     """Ana sayfayla aynı ince koyu üst bar (docs/index.html .tb, docs/kabuk.css); bağlantılar `kok` göreli."""
     # Taban puanı sayfaları (kpss-taban-puanlari/) da 'puanlar' bölümüdür; menüde tek sekme robot ve tablo sayfasına gider.
     # Akademik menüden çıktı (Kasım 2026): aramadan gelenler için /akademik/ sayfası ve alt bilgi bağlantısı var.
-    # Katiplik yeni bölüm olarak vurgulu (tb-yeni) ve "Yeni" rozetli gösterilir.
+    # Forum yeni bölüm olarak vurgulu (tb-yeni) ve "Yeni" rozetli gösterilir (Kasım 2026'da Katiplik'ten taşındı).
     menu = [('İlanlar', f'{kok}#ilanlar', 'ilanlar'),
             ('Taban Puanları', f'{kok}puanlar/', 'puanlar'),
             ('Katiplik', f'{kok}katiplik/', 'katiplik'),
@@ -64,13 +64,13 @@ def ust_html(kok, aktif=''):
             ('Kayıtlı', f'{kok}#kayitli', '')]
 
     def sinif(ad, a):
-        s = (['aktif'] if a and a == aktif else []) + (['tb-yeni'] if ad == 'Katiplik' else [])
+        s = (['aktif'] if a and a == aktif else []) + (['tb-yeni'] if ad == 'Forum' else [])
         return (f' class="{" ".join(s)}"' if s else '') + (' aria-current="page"' if a and a == aktif else '')
 
     def ek(ad):
         if ad == 'Kayıtlı':
             return '<b class="tb-sayi" id="saved-count-m" hidden>0</b>'
-        return '<b class="tb-rozet">Yeni</b>' if ad == 'Katiplik' else ''
+        return '<b class="tb-rozet">Yeni</b>' if ad == 'Forum' else ''
     bagla = ''.join(f'<a href="{h}" data-a="menu" data-a-x="{ad}"{sinif(ad, a)}>{ad}{ek(ad)}</a>' for ad, h, a in menu)
     return (f'<header class="tb" id="tb"><div class="tb-ic"><a class="tb-marka" href="{kok}" aria-label="KPSS Tercihi ana sayfa">'
             f'<img src="{kok}assets/logo-96.webp?v={LOGO_SURUM}" alt="" width="34" height="34"><span>KPSS Tercihi</span></a>'
