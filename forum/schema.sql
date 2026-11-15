@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS uyeler (
   kurucu INTEGER DEFAULT 0,
   rol TEXT DEFAULT 'uye',            -- uye | yonetici | asistan | sistem
   bildirim INTEGER DEFAULT 1,
-  engelli INTEGER DEFAULT 0
+  engelli INTEGER DEFAULT 0,
+  itibar INTEGER DEFAULT 0           -- yazılarının aldığı "faydalı" oyu sayısı
 );
 CREATE TABLE IF NOT EXISTS basliklar (
   id INTEGER PRIMARY KEY,
@@ -21,8 +22,14 @@ CREATE TABLE IF NOT EXISTS basliklar (
   olusma INTEGER,
   son_hareket INTEGER,
   yanit_sayisi INTEGER DEFAULT 0,
-  gizli INTEGER DEFAULT 0
+  gizli INTEGER DEFAULT 0,
+  duzey TEXT,                        -- lisans | onlisans | ortaogretim | ekpss | agrubu | NULL
+  puan_turu TEXT,
+  puan REAL,
+  faydali INTEGER DEFAULT 0,
+  anket INTEGER DEFAULT 0
 );
+CREATE INDEX IF NOT EXISTS basliklar_duzey ON basliklar(duzey, son_hareket);
 CREATE INDEX IF NOT EXISTS basliklar_kategori ON basliklar(kategori, son_hareket);
 CREATE INDEX IF NOT EXISTS basliklar_hareket ON basliklar(son_hareket);
 CREATE INDEX IF NOT EXISTS basliklar_uye ON basliklar(uye_id, olusma);
@@ -43,6 +50,24 @@ CREATE TABLE IF NOT EXISTS oylar (
   yanit_id INTEGER,
   uye_id INTEGER,
   PRIMARY KEY (yanit_id, uye_id)
+);
+CREATE TABLE IF NOT EXISTS baslik_oylar (
+  baslik_id INTEGER,
+  uye_id INTEGER,
+  PRIMARY KEY (baslik_id, uye_id)
+);
+CREATE TABLE IF NOT EXISTS anket_secenekleri (
+  baslik_id INTEGER,
+  sira INTEGER,
+  metin TEXT,
+  oy INTEGER DEFAULT 0,
+  PRIMARY KEY (baslik_id, sira)
+);
+CREATE TABLE IF NOT EXISTS anket_oylari (
+  baslik_id INTEGER,
+  uye_id INTEGER,
+  sira INTEGER,
+  PRIMARY KEY (baslik_id, uye_id)
 );
 CREATE TABLE IF NOT EXISTS sikayetler (
   yanit_id INTEGER,
