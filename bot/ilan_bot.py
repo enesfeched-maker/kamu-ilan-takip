@@ -776,6 +776,9 @@ def telegram_sirasi(mevcut, gelen, yeniler, gonderilen, bekleyen, ilk_calisma, d
     uygun = []
     for kimlik in sorted(bekleyen - gonderilen):
         i = mevcut.get(kimlik)
+        if i and suresi_doldu(i) and not i.get('duyuru_turu'):
+            bekleyen.discard(kimlik)   # son günü geçmiş ilan, kaynağı o çalışmada okunamasa da sıradan düşer
+            continue
         if i and kimlik not in canli and i.get('kaynak_turu') in cfg.get('_basarisiz_kaynaklar', []):
             continue
         if not i or kimlik not in canli:

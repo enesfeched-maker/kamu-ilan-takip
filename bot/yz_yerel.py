@@ -83,11 +83,22 @@ def _sbb_pdf(item):
     return veri if veri[:4] == b'%PDF' and len(veri) <= yd.EN_BUYUK_PDF else None
 
 
+def kk_ayrinti_bekliyor(item):
+    """Kariyer Kapısı kaydının resmî ayrıntısı (kadrolar, koşullar) henüz inmedi mi? 16 Kasım 2026: Kariyer Kapısı yavaşken
+    yapay zekâ yalnız başlığı okuyup ilanı 'okunamadı' saydı, ilanlar 4 saat bekledi. Ayrıntı inince okunur; hiç inmezse
+    yayina_hazir'ın 4 saatlik sınırı geçerli (ilan botun verisiyle gider)."""
+    kimlik = str(item.get('id') or '')
+    return kimlik.startswith('https://kariyerkapisi.gov.tr/') and not item.get('kk_detay_surumu') \
+        and not item.get('kadro_detay') and not item.get('sartlar')
+
+
 def metin_al(item, sbb_pdf=None, csb_indir=None):
     """(metin, kaynak). kaynak: 'pdf', 'csb', 'metin', 'taranmis' (metin çıkmadı, okutulmaz) ya da 'bekle' (SBB belgesi
     bu bilgisayara henüz inmedi; sonraki çalışmada denenir)."""
     import yz_denetim as yd
     from sbb_detay import document_url
+    if kk_ayrinti_bekliyor(item):
+        return '', 'bekle'
     pdf = (sbb_pdf or _sbb_pdf)(item)
     if not pdf and document_url(item):
         return '', 'bekle'
