@@ -1754,6 +1754,23 @@
    ]
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=31b4b404-05cb-4298-9460-1ab3b13b33e8": {
+  "zaman": "2026-11-16T09:12:00+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "82a07100b07cd676",
+  "baslik": "ANADOLU ÜNİVERSİTESİ REKTÖRLÜĞÜ - SÖZLEŞMELİ PERSONEL ALIMI İLANI 2026 - 2",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [],
+   "okunabilirlik": "kotu",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ortak_kosullar": []
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=320d07cc-b5bc-4bab-9541-6c1100def856": {
   "zaman": "2026-10-30T14:31:39+03:00",
   "surum": 4,
@@ -4377,6 +4394,35 @@
    ]
   }
  },
+ "iskur-1297f2230bae0ab64bde59fd": {
+  "zaman": "2026-11-16T09:12:00+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "3230e8b7ed4a4ce1",
+  "baslik": "Dicle Kalkınma Ajansı Personel Alım İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [],
+   "toplam": null,
+   "son_basvuru_tarihi": "2026-12-18",
+   "son_basvuru_saati": "17:00",
+   "baslangic_tarihi": "2026-12-04",
+   "kpss_gerekli": true,
+   "iller": [
+    "Mardin"
+   ],
+   "ortak_kosullar": [
+    "KPSS'den Tablo 2'deki ilgili puan türlerinden en az 80 puan almış olmak.",
+    "Başvuru 4-18 Aralık 2026 arasında kariyerkapisi.gov.tr üzerinden yapılır."
+   ],
+   "ozet": "Dicle Kalkınma Ajansı personel alımı yapıyor. Başvurular 4-18 Aralık 2026 arasında Kariyer Kapısı üzerinden yapılır.",
+   "okunabilirlik": "kotu",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
+  }
+ },
  "iskur-1447040f913261353bf46dd0": {
   "zaman": "2026-10-30T13:14:13+03:00",
   "surum": 4,
@@ -5892,6 +5938,54 @@
    "puan_turleri": [
     "P1, P2, P3",
     "P12-P40 (bölüme göre)"
+   ]
+  }
+ },
+ "iskur-ca3cc4b686d1b962db765ec2": {
+  "zaman": "2026-11-16T09:12:00+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "0974d308a85ef9fa",
+  "baslik": "AFAD Afet ve Acil Durum Yönetimi Uzman Yardımcısı Sınav İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Afet ve Acil Durum Yönetimi Uzman Yardımcısı",
+     "adet": 13,
+     "ogrenim": "lisans",
+     "puan_turu": "P13",
+     "en_dusuk_puan": 80,
+     "il": "Ankara",
+     "kosullar": [
+      "KPSSP13, KPSSP33 veya KPSSP48 puan türlerinden birinden en az 80 puan almış olmak."
+     ]
+    }
+   ],
+   "toplam": 13,
+   "son_basvuru_tarihi": "2026-11-30",
+   "son_basvuru_saati": "17:00",
+   "baslangic_tarihi": "2026-11-23",
+   "kpss_gerekli": true,
+   "iller": [
+    "Ankara"
+   ],
+   "ortak_kosullar": [
+    "ÖSYM'nin 2025 veya 2026 yıllarında yaptığı KPSS'den KPSSP13, KPSSP33 veya KPSSP48'den en az 80 puan almış olmak.",
+    "Başvuru 23 Kasım 2026 saat 10:00 - 30 Kasım 2026 saat 17:00 arasında Kariyer Kapısı üzerinden elektronik ortamda yapılır.",
+    "Giriş sınavı sözlü olarak yapılır."
+   ],
+   "ozet": "AFAD merkez teşkilatında genel idare hizmetleri sınıfında 13 Uzman Yardımcısı alınacak. Başvurular 23-30 Kasım 2026 arasında Kariyer Kapısı üzerinden yapılır.",
+   "okunabilirlik": "kismi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P13"
    ]
   }
  },
