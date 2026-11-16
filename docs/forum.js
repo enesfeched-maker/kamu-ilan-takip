@@ -1287,7 +1287,7 @@
     function git(q) { history.pushState(null, '', q || location.pathname); ciz(); if (!GENIS.matches || !/oda=/.test(q || '')) window.scrollTo(0, 0); }
     kok_.innerHTML = '<div class="fr-bas"><nav class="fr-bolumler" aria-label="Forum bölümleri">'
       + '<a data-ic data-bolum="soru" href="?">' + ikon('M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.5h.01M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z') + '<span><b>Soru-Cevap</b><small>Sor, cevaplar kalıcı kalsın</small></span></a>'
-      + '<a data-ic data-bolum="sohbet" href="?bolum=sohbet">' + ikon(SOHBET) + '<span><b>Sohbet odaları</b><small>Aynı sınava hazırlananlarla anlık konuş</small></span><i class="fr-bolum-sayi" data-oda-sayi hidden></i></a>'
+      + '<a data-ic data-bolum="sohbet" href="?bolum=sohbet">' + ikon(SOHBET) + '<span><b>Sohbet odaları</b><small>Tercih ve başvuru yapanlarla anlık konuş</small></span><i class="fr-bolum-sayi" data-oda-sayi hidden></i></a>'
       + '<a data-ic data-bolum="mesaj" href="?bolum=mesaj">' + ikon(ZARF) + '<span><b>Mesajlar</b><small>Üyelerle bire bir yazış</small></span><i class="fr-bolum-sayi" data-ozel-sayi hidden></i></a>'
       + '</nav><div class="fr-araclar"></div></div><div class="fr-icerik"></div>';
     var icerik = kok_.querySelector('.fr-icerik'), araclar = kok_.querySelector('.fr-araclar');
@@ -1508,7 +1508,7 @@
     }
     function odaListesi(hedef) {
       var dz = duzeyim(), sorulmadi = !oku('fr-duzey') && !dz;
-      hedef.innerHTML = (sorulmadi ? '<div class="fr-duzey-sor"><span>Hangi sınava hazırlanıyorsun? Odanı öne alalım.</span><div>' + DUZEYLER.slice(0, 4).map(function (d) { return '<button type="button" class="fr-cip" data-duzey-sec="' + d.kod + '">' + d.ad + '</button>'; }).join('')
+      hedef.innerHTML = (sorulmadi ? '<div class="fr-duzey-sor"><span>Hangi düzeyde tercih yapıyorsun? Odanı öne alalım.</span><div>' + DUZEYLER.slice(0, 4).map(function (d) { return '<button type="button" class="fr-cip" data-duzey-sec="' + d.kod + '">' + d.ad + '</button>'; }).join('')
           + '<button type="button" class="fr-eylem" data-duzey-sec="yok">Geç</button></div></div>' : '')
         + '<div class="fr-odalar"><p class="fr-yukleniyor">Yükleniyor…</p></div>'
         + '<p class="fr-oda-bilgi">Odalarda konuşulanlar akıp gider. Kalıcı cevap istediğin soruları <a class="yazi-link" data-ic href="?yeni=1">Soru-Cevap</a> bölümüne sor.</p>';
