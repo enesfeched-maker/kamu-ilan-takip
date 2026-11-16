@@ -1003,12 +1003,16 @@ def kopyasiz(secilen, ilanlar):
             return 0
 
     from kopya import _hostlar
+    from urllib.parse import urlparse
     gruplar, sira = {}, []
     for i in secilen:
         k = kurum_kimligi(i)
         grup = ('g', kof.get(i['id'], i['id']))
         kurum_gun = ('k', i.get('son_tarih'), k[:2] if k else i['id'])
-        hostlar = _hostlar(i)
+        # 16 Kasım 2026: İŞKUR kaydı eski bir SBB kaydıyla birleşince kaynak listesi SBB'yi de içeriyordu; yeni SBB kaydıyla
+        # ortak host çıkıp aynı Dicle KA ilanı kartta iki kez göründü. Kaynak karşılaştırması kaydın KENDİ bağlantısına bakar.
+        kendi = urlparse(i.get('link') or '').hostname
+        hostlar = {kendi} if kendi else _hostlar(i)
         # Aynı kurum + aynı son gün yalnız FARKLI kaynaktan geliyorsa kopya sayılır. 14 Ekim 2026: SBB'deki iki ayrı MSB ilanı
         # (Deniz Kuvvetleri ve TSK subay alımı, ikisi de 2 Kasım) tek ilana indirilmiş, akşam kartında biri görünmemişti.
         hedef = next((g for g in sira if grup in gruplar[g]['anahtar']

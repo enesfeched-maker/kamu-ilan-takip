@@ -641,6 +641,19 @@ class AksamKartiTests(unittest.TestCase):
         self.assertIn('Bugün 2 yeni kamu ilanı yayımlandı', ilan_bot.aksam_mesaj(sonuc))
 
 
+    def test_kopyasiz_birlesmis_kaynak_hostu_ayri_kaynagi_engellemez(self):
+        """16 Kasım 2026: İŞKUR kaydı eski bir SBB kaydıyla birleşip SBB host'unu taşıyınca, aynı ilanın yeni SBB kaydı
+        kopya sayılmayıp kartta iki kez çıkıyordu. Karşılaştırma kaydın kendi bağlantısına bakar."""
+        iskur = {'id': 'iskur-1', 'kurum': 'Dicle Kalkınma Ajansı', 'son_tarih': '2026-12-18', 'link': 'https://www.iskur.gov.tr/x.pdf',
+                 'kaynaklar': [{'ad': 'İŞKUR', 'link': 'https://www.iskur.gov.tr/x.pdf'},
+                               {'ad': 'SBB', 'link': 'https://kamuilan.sbb.gov.tr/'}]}
+        sbb = {'id': 'sbb-2', 'kurum': 'DİCLE KALKINMA AJANSI', 'son_tarih': '2026-12-18', 'link': 'https://kamuilan.sbb.gov.tr/',
+               'kadro': '4 Sözleşmeli Uzman Personel'}
+        diger = {'id': 'sbb-3', 'kurum': 'DİCLE KALKINMA AJANSI', 'son_tarih': '2026-12-18', 'link': 'https://kamuilan.sbb.gov.tr/'}
+        self.assertEqual(len(ilan_bot.kopyasiz([iskur, sbb], [iskur, sbb])), 1)
+        self.assertEqual(len(ilan_bot.kopyasiz([sbb, diger], [sbb, diger])), 2)   # aynı kaynaktan iki ayrı ilan ayrı kalır
+
+
 class GununSozuTests(unittest.TestCase):
     def test_gunlere_gore_soz(self):
         tr = ilan_bot.TR
