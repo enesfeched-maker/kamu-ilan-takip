@@ -21,6 +21,8 @@ IZINLI_KOKENLER = "https://kpsstercihi.com,https://www.kpsstercihi.com"
 # Acil durumda tum yazmalari durdurmak icin "1" yap ve yeniden dagit (yonetim uclari acik kalir).
 YAZMA_KAPALI = "0"
 TELEGRAM_BOT_ADI = "kamuilanibot"
+# Google ile giris (Google Cloud > KPSS Tercihi > OAuth istemcisi; gizli degil, tarayicida da gorunur).
+GOOGLE_ISTEMCI_KIMLIGI = "518005490003-av27v4bupeul4po4a6mihi5bdtd7fejt.apps.googleusercontent.com"
 
 # Sirlar (degerleri buraya YAZILMAZ): `wrangler secret put <AD> --config wrangler.toml`
 #   TELEGRAM_BOT_TOKEN  - giris dogrulamasi ve bildirimler
