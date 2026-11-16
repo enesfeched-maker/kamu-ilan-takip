@@ -26,6 +26,7 @@
     veri.gecmis = Array.isArray(s.gecmis) ? s.gecmis : []; veri.hatalar = s.hatalar && typeof s.hatalar === 'object' ? s.hatalar : {};
     veri.rozetler = Array.isArray(s.rozetler) ? s.rozetler : []; veri.gunluk = s.gunluk && typeof s.gunluk === 'object' ? s.gunluk : {};
     veri.yol = Object.assign({ tarih: '', hedef: 90 }, s.yol || {});
+    if (typeof s.z === 'number') veri.z = s.z; else delete veri.z;
     try { if (typeof ozetCiz === 'function') ozetCiz(); if (typeof yolCiz === 'function') yolCiz(); } catch (e) { /* ekran tazelenemezse veri yine de güncel */ }
   });
   if (!KUT.bul(ayar.kutuphane)) ayar.kutuphane = 'zk2025';
@@ -498,11 +499,12 @@
     return avVaadi;
   }
   function hesapUyesi() { var u = O.oku('fr-uye', null); return O.oku('fr-oturum', null) && u && typeof u.rumuz === 'string' ? u : null; }
-  function liderAvatar(u) {   // tabloya giden avatar: seçtiği hazır avatar; fotoğraf ya da otomatik ise rumuzdan türeyen (sprite yoksa gönderilmez)
+  function liderAvatar(u) {   // tabloya giden avatar: yalnız üye açıkça bir SVG avatar seçtiyse ve kartında katiplik sonuçları görünürse (kg)
+    if (u.kg !== true) return null;   // varsayılan gizli: takma adlı tablo satırı forum kimliğine bağlanmasın
     var a = window.kitAvatar;
     var c = a ? a.coz(u.av) : null;
-    if (!c || c.set !== 'svg') c = a ? a.varsayilanSvg(u.rumuz) : null;   // tablo yalnız SVG setini bilir (Piixpal / fotoğraf yerine rumuzdan türeyen SVG gider)
-    return c ? c.k + ':' + c.r : null;
+    if (!c || c.set !== 'svg') return null;   // otomatik (rumuzdan türeyen), fotoğraf ya da Piixpal gönderilmez
+    return c.k + ':' + c.r;
   }
   function liderAd(x) {
     var s = E('span', 'ad'), a = window.kitAvatar;
@@ -594,7 +596,10 @@
   $('y-hedef').oninput = function () { var v = Number(this.value.replace(/\D/g, '')); if (v) { veri.yol.hedef = v; veri.yol.g = Date.now(); kaydet(); yolCiz(); } };
   $('gecmis-sil').onclick = function () {
     if (!confirm('Tüm deneme geçmişin, hatalı kelimelerin, günlük sonuçların ve rozetlerin silinsin mi?')) return;
-    veri.gecmis = []; veri.hatalar = {}; veri.rozetler = []; veri.gunluk = {}; O.yaz('kit-katip', veri); ozetCiz(); modSec(mod);
+    veri.gecmis = []; veri.hatalar = {}; veri.rozetler = []; veri.gunluk = {};
+    // hesaba bağlı veride sıfırlama zamanı tutulur: eşitlemede diğer cihazlar ve hesap da bu andan eski kayıtları düşer (katip-senkron.js)
+    if (O.oku('fr-oturum', null) || O.oku('kit-katip-uye', null) != null) veri.z = Date.now();
+    O.yaz('kit-katip', veri); ozetCiz(); modSec(mod);
   };
 
   yazim.addEventListener('keydown', function (e) {

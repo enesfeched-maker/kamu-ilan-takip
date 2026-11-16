@@ -145,3 +145,16 @@ test('avatar: nesne biçimi kabul edilir; geçersiz biçimler hata değil yok sa
   const r2 = await gonder(db, govde({ yazi: yazi(0, 120), avatar: 'panda:gok' }));
   assert.equal((await r2.json()).tablo.haftalik[0].av, 'panda:gok');
 });
+
+test('avatar sütunu yokken (0005 göçü uygulanmadan kod dağıtıldıysa) liderlik çalışmaya devam eder', async () => {
+  const db = sahteD1();
+  db.ham.exec('ALTER TABLE liderlik DROP COLUMN avatar');
+  const r = await gonder(db, govde({ yazi: yazi(0, 120), avatar: 'kedi:lila' }));
+  assert.equal(r.status, 200);
+  const j = await r.json();
+  assert.equal(j.tablo.haftalik.length, 1);
+  assert.equal('av' in j.tablo.haftalik[0], false);
+  const t = await liderlikIstegi(istek(null, { url: URL_, yontem: 'GET' }), env(db), SIMDI);
+  assert.equal(t.status, 200);
+  assert.equal((await t.json()).tum.length, 1);
+});

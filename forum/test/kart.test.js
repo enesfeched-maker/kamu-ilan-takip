@@ -41,7 +41,8 @@ test('/ben/kart: kaydeder, /ben döner; varsayılanlar yazılmaz, tam değiştir
   const u = await uyeGirisi(env, 'Kart_Sahibi');
   assert.equal((await cagir(env, 'POST', '/ben/kart', { govde: { avatar: 'kedi:mavi' } })).durum, 401);
   const b0 = (await cagir(env, 'GET', '/ben', { token: u.token })).json;
-  assert.equal(b0.kart.avatar, null); assert.equal(b0.kart.durum, null); assert.deepEqual(b0.kart.gizlilik, { profil: 'herkes', puan_goster: false, il_goster: true, katiplik_goster: true });
+  assert.equal(b0.kart.avatar, null); assert.equal(b0.kart.durum, null); assert.deepEqual(b0.kart.gizlilik, { profil: 'herkes', puan_goster: false, il_goster: false, katiplik_goster: false });   // puan, il, katiplik varsayılan gizli
+  assert.equal(b0.uye.kg, false);
   assert.deepEqual(b0.basvurular, []);
   const g = { avatar: { k: 'kedi', r: 'mavi' }, hakkimda: '  Adalet   katipliği hedefliyorum.  ', hedef: 'Ankara adliye katipliği', durum: 'basvuru-yapiyorum', kart_rengi: 'mor', gizlilik: { profil: 'uyeler', puan_goster: true, il_goster: false, katiplik_goster: true } };
   const r = await cagir(env, 'POST', '/ben/kart', { token: u.token, govde: g });
@@ -54,7 +55,8 @@ test('/ben/kart: kaydeder, /ben döner; varsayılanlar yazılmaz, tam değiştir
   assert.equal(ben.uye.av, 'kedi:mavi');
   // yalnız varsayılan dışı alanlar saklanır
   const sakli = JSON.parse(satir(env, 'SELECT kart FROM uyeler WHERE id = ?', u.id).kart);
-  assert.deepEqual(sakli.gizlilik, { profil: 'uyeler', puan_goster: true, il_goster: false });
+  assert.deepEqual(sakli.gizlilik, { profil: 'uyeler', puan_goster: true, katiplik_goster: true });
+  assert.equal(ben.uye.kg, true);
   // tam değiştirme: eksik alanlar temizlenir
   const r2 = await cagir(env, 'POST', '/ben/kart', { token: u.token, govde: { avatar: null } });
   assert.equal(r2.durum, 200); assert.equal(r2.json.kart.hakkimda, ''); assert.equal(r2.json.kart.avatar, null);
@@ -133,14 +135,14 @@ test('kartTemizle / kartSakla / kartOku: saf işlevler', () => {
 });
 
 // ---------- gizlilik ----------
-test('/uye/:rumuz gizlilik: herkes tam; puan varsayılan gizli, il görünür; uyeler girişsize kısıtlı; gizli yalnız rumuz+avatar; kendi kartı tam', async () => {
+test('/uye/:rumuz gizlilik: herkes tam; puan ve il varsayılan gizli; uyeler girişsize kısıtlı; gizli yalnız rumuz+avatar; kendi kartı tam', async () => {
   const env = ortam();
   const u = await uyeGirisi(env, 'Gizli_Deneme');
   const bakan = await uyeGirisi(env, 'Bakan_Uye');
   await cagir(env, 'POST', '/ben/profil', { token: u.token, govde: { profil: PROFIL } });
   await cagir(env, 'POST', '/ben/kart', { token: u.token, govde: { avatar: 'kedi:mavi', hakkimda: 'Selam, ben katip adayıyım', hedef: 'Adliye', durum: 'yerlestim', kart_rengi: 'mavi' } });
   let r = (await cagir(env, 'GET', '/uye/Gizli_Deneme')).json;
-  assert.equal(r.duzey, 'lisans'); assert.deepEqual(r.iller, ['Ankara', 'İstanbul']); assert.equal(r.puan, undefined); assert.equal(r.puan_turu, undefined);
+  assert.equal(r.duzey, 'lisans'); assert.equal(r.iller, undefined); assert.equal(r.puan, undefined); assert.equal(r.puan_turu, undefined);
   assert.equal(r.hakkimda, 'Selam, ben katip adayıyım'); assert.equal(r.hedef, 'Adliye'); assert.equal(r.durum, 'yerlestim'); assert.equal(r.kart_rengi, 'mavi'); assert.equal(r.av, 'kedi:mavi');
   assert.ok(r.rozetler.includes('yerlesti'));
   assert.equal(r.gizlilik, undefined);   // gizlilik ayarları yalnız sahibine döner
@@ -449,6 +451,32 @@ test('/ben/katip: kaydeder, GET döner; değişmediyse yazma yok; 401, 413, hız
   assert.equal((await cagir(env, 'POST', '/ben/katip', { token: u.token, govde: { katip: katipVerisi() } })).durum, 429);
 });
 
+test('/ben/katip: iki cihaz birbirini ezmez (birleşim / en büyük); "geçmişi sil" (z) her yerde eski kayıtları düşürür', async () => {
+  const env = ortam();
+  const u = await uyeGirisi(env, 'Iki_Cihaz');
+  const gonder = async (katip) => { ipSinirSifirla(); const r = await cagir(env, 'POST', '/ben/katip', { token: u.token, govde: { katip } }); assert.equal(r.durum, 200); return (await cagir(env, 'GET', '/ben/katip', { token: u.token })).json.katip; };
+  const s = (t, net) => ({ t, m: 'sinav', net, dk: 40, top: 120, hat: 3, b: 1 });
+  // A cihazı: r1; B cihazı (A'yı görmeden): r2, daha düşük oyun rekoru, başka gün ve hata
+  await gonder({ k: { gecmis: [s(AN + 1000, 100)], hatalar: { elma: 3 }, rozetler: ['ilk'], gunluk: { '2026-09-10': { net: 100 } }, yol: { tarih: '2026-12-01', hedef: 100, g: 5 } }, d: { Q: { 0: { y: 3, t: AN } } }, o: { dosya: 50, hata: 1 }, a: { rekor: { hiz: 60 }, gecmis: [] } });
+  let g = await gonder({ k: { gecmis: [s(AN + 2000, 90)], hatalar: { elma: 1, armut: 2 }, rozetler: ['seri3'], gunluk: { '2026-09-10': { net: 80 }, '2026-09-11': { net: 70 } }, yol: { tarih: '2026-12-15', hedef: 120, g: 9 } }, d: { Q: { 0: { y: 1, t: AN + 5 }, 1: { y: 2, t: AN } } }, o: { dosya: 10, hata: 4 }, a: { rekor: { hiz: 40, uzun: 30 }, gecmis: [] } });
+  assert.deepEqual(g.k.gecmis.map((x) => x.t), [AN + 2000, AN + 1000]);
+  assert.deepEqual(g.k.hatalar, { elma: 3, armut: 2 });
+  assert.deepEqual([...g.k.rozetler].sort(), ['ilk', 'seri3']);
+  assert.equal(g.k.gunluk['2026-09-10'].net, 100); assert.equal(g.k.gunluk['2026-09-11'].net, 70);
+  assert.equal(g.k.yol.hedef, 120);   // daha yeni yol değişikliği (g) kazanır
+  assert.equal(g.d.Q[0].y, 3); assert.equal(g.d.Q[1].y, 2);
+  assert.deepEqual(g.o, { dosya: 50, hata: 4 }); assert.deepEqual(g.a.rekor, { hiz: 60, uzun: 30 });
+  // A geçmişi siler (z), sonra yeni sonuç r3 yapar
+  const Z = AN + 5000;
+  g = await gonder({ k: { gecmis: [s(AN + 6000, 95)], hatalar: {}, rozetler: [], gunluk: {}, yol: { tarih: '2026-12-15', hedef: 120, g: 9 } }, d: {}, o: { dosya: 0, hata: 0 }, a: { rekor: {}, gecmis: [] }, z: Z });
+  assert.deepEqual(g.k.gecmis.map((x) => x.t), [AN + 6000]); assert.deepEqual(g.k.hatalar, {}); assert.deepEqual(g.k.rozetler, []); assert.equal(g.z, Z);
+  assert.deepEqual(g.k.gunluk, {});
+  assert.deepEqual(g.a.rekor, { hiz: 60, uzun: 30 });   // sıfırlama yalnız sınav geçmişi, hata, rozet ve günlük sonuçları siler
+  // B sıfırlamayı görmeden eski verisiyle gönderir: eski kayıtları geri gelmez, sıfırlamadan sonraki r4 eklenir
+  g = await gonder({ k: { gecmis: [s(AN + 7000, 99), s(AN + 2000, 90)], hatalar: { elma: 9 }, rozetler: ['seri3'], gunluk: { '2026-09-11': { net: 70 } }, yol: { g: 1 } }, d: {}, o: { dosya: 0, hata: 0 }, a: { rekor: {}, gecmis: [] } });
+  assert.deepEqual(g.k.gecmis.map((x) => x.t), [AN + 7000, AN + 6000]); assert.deepEqual(g.k.hatalar, {}); assert.deepEqual(g.k.rozetler, []); assert.deepEqual(g.k.gunluk, {}); assert.equal(g.z, Z);
+});
+
 test('/ben/katip: en kötü durum 32 KB altında kalır (200 geçmiş + 120 gün + 100 hata)', async () => {
   const env = ortam();
   const u = await uyeGirisi(env, 'Katip_Dolu');
@@ -471,6 +499,10 @@ test('katiplik özeti kartta: en iyi net, net/dk, ders, seri; gizlilik kapatınc
   k.k.rozetler = ['seri30'];
   assert.equal((await cagir(env, 'POST', '/ben/katip', { token: u.token, govde: { katip: k } })).durum, 200);
   let r = (await cagir(env, 'GET', '/uye/Katip_Karti')).json;
+  assert.equal(r.katip, undefined);   // varsayılan gizli
+  ipSinirSifirla();
+  await cagir(env, 'POST', '/ben/kart', { token: u.token, govde: { gizlilik: { katiplik_goster: true } } });
+  r = (await cagir(env, 'GET', '/uye/Katip_Karti', { token: bakan.token })).json;
   assert.deepEqual(r.katip, { net: 102, dk: 85, ders: 16, seri: 3 });
   for (const x of ['katip-hiz-80', 'katip-seri-30', 'ders-yildizi']) assert.ok(r.rozetler.includes(x), x);
   ipSinirSifirla();

@@ -136,7 +136,11 @@
       is.ok(url); siradaki();
     });
   }
+  var hazirlanan = {};   // aynı avatar için tek iş: listede 20 kez geçse de bir kare alınır; kare alınamazsa yukselt() -> html() yeniden denemez (sonsuz döngü olmaz)
   function pxHazirla(c) {   // durağan görüntü hazır olunca yer tutucular değişir
+    var ah = anahtarSnap(c);
+    if (hazirlanan[ah]) return;
+    hazirlanan[ah] = 1;
     var p = (c.r || 'pixel') === 'pixel' && !c.h ? anlikYukle().then(function () { return anlik(c); }) : Promise.resolve(anlik(c));
     p.then(function (u) { return u || kareAl(c); }).then(function () { yukselt(); });
   }

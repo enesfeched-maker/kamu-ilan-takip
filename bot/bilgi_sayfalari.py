@@ -11,7 +11,7 @@ SAYFALAR = {
     'gizlilik': ('Gizlilik politikası', 'KPSS Tercihi gizlilik politikası: tarayıcıda saklanan bilgiler, çerezsiz ziyaret istatistikleri ve Google AdSense reklamları.',
                  'Bu site üyelik zorunlu tutmaz; üyelik yalnızca foruma katılmak ve kayıtlı ilanlarını hesabına bağlamak içindir. Özgeçmiş, kimlik bilgisi veya başvuru belgesi toplamak için bir form içermez.', [
         ('Bu cihazda saklanan bilgiler', 'Kaydettiğin ilanların kimlikleri, profilin (öğrenim düzeyi, puan, iller), son ziyaret zamanın ve renk teması '
-         'tercihin tarayıcının yerel depolamasında tutulur. Katiplik klavye sınavı, ders, antrenman ve oyunlarındaki sonuçların, hatalı kelimelerin ve tuş istatistiklerin de yalnızca bu tarayıcıda tutulur; yazdığın metin sunucuya gönderilmez. Bunlar başka cihazlara taşınmaz ve sunucumuza gönderilmez. Tarayıcı verilerini silerek '
+         'tercihin tarayıcının yerel depolamasında tutulur. Katiplik klavye sınavı, ders, antrenman ve oyunlarındaki sonuçların, hatalı kelimelerin ve tuş istatistiklerin de yalnızca bu tarayıcıda tutulur; yazdığın metin sunucuya gönderilmez. Giriş yapmadıysan bunlar başka cihazlara taşınmaz ve sunucumuza gönderilmez. Tarayıcı verilerini silerek '
          'ya da ana sayfadaki Gizlilik bölümündeki düğmeyle temizleyebilirsin.'),
         ('Dış bağlantılar ve barındırma', 'Resmî başvuru sayfası ve Telegram bağlantıları kendi hizmetlerine yönlendirir. Bu hizmetlerin veri '
          'uygulamaları ayrıdır. Site dosyaları bir barındırma hizmeti üzerinden sunulur; bu hizmet teknik erişim kayıtlarını işleyebilir.'),
@@ -28,10 +28,10 @@ SAYFALAR = {
          'toplanmaz, saklanmaz, paylaşılmaz.'),
         ('Üyelik ve forum', 'Üyelik isteğe bağlıdır; site üye olmadan da kullanılır. Üye olursan şunlar saklanır: seçtiğin rumuz; e-posta adresin '
          '(yalnızca giriş kodu ve şifre sıfırlama göndermek için); şifren, yalnızca tek yönlü özet olarak; Google ile girersen Google hesabından yalnızca '
-         'kimlik numaran ve e-posta adresin; Telegram ile girersen Telegram kimliğin; forumdaki yazıların ve özel mesajların. '
+         'kimlik numaran ve e-posta adresin; Telegram ile girersen Telegram kimliğin; forumdaki yazıların ve özel mesajların. Profil kartını doldurursan avatarın, yüklediğin fotoğraf, hakkında yazın, hedefin ve durumun; giriş yapmışken katiplik sonuçların (yazdığın metin ve tuş istatistikleri hariç) ve “başvurdum” işaretlerin de hesabında saklanır. Puanının, illerinin ve katiplik sonuçlarının kartında kime görüneceğini Profilim, Kartım bölümünden seçersin. '
          'Giriş kodu e-postaları Brevo üzerinden gönderilir; Brevo bu işte adresini bizim adımıza işleyen taraftır. '
          'Hiçbir veri satılmaz ya da reklam için paylaşılmaz. Hesabını Hesabım menüsündeki Hesap ayarları, Hesabı sil bölümünden istediğin zaman silebilirsin: '
-         'giriş bilgilerin, e-posta adresin, profilin ve kayıtlı ilanların silinir; forumdaki yazıların ve gönderdiğin özel mesajlar karşı tarafta “Silinmiş üye” adıyla kalır; başkası taklit edemesin diye eski rumuzun 180 gün kimseye verilmez. '
+         'giriş bilgilerin, e-posta adresin, profilin, profil kartın, fotoğrafın, katiplik verin ve kayıtlı ilanların silinir; forumdaki yazıların ve gönderdiğin özel mesajlar karşı tarafta “Silinmiş üye” adıyla kalır; başkası taklit edemesin diye eski rumuzun 180 gün kimseye verilmez. '
          f'Sorular için {ILETISIM_EPOSTA} adresine yazabilirsin.'),
         ('İletişim', f'Gizlilikle ilgili soruların için {ILETISIM_EPOSTA} adresine yazabilirsin. Bize yazarsan e-posta adresin ve iletin yalnızca yanıt vermek için kullanılır.'),
     ]),

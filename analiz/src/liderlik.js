@@ -81,11 +81,19 @@ export function sonucDogrula(g) {
   return { ad, anahtar: g.anahtar, net: r.net, dogru: r.dogru, hatali: r.hatali, dk: r.dakikaVurus, avatar: avatarDogrula(g.avatar) };
 }
 
+// migrations/0005_liderlik_avatar.sql henüz uygulanmamışsa (kod önce dağıtıldıysa) avatar sütunu yoktur: sorgular avatarsız biçime düşer, liderlik bozulmaz.
+const sutunYok = (e) => /no such column|has no column named/i.test(String(e && e.message || e));
+async function avatarliDene(avatarli, avatarsiz) {
+  try { return await avatarli(); } catch (e) { if (!sutunYok(e)) throw e; return avatarsiz(); }
+}
+
 export async function tabloHesapla(env, simdiMs) {
   const hafta = haftaBasi(simdiMs);
-  const h = await env.DB.prepare('SELECT kimlik, ad, net, dk, avatar FROM liderlik WHERE hafta = ? ORDER BY net DESC, ts ASC LIMIT ?').bind(hafta, EN_COK).all();
+  const sec = (av) => env.DB.prepare(`SELECT kimlik, ad, net, dk${av} FROM liderlik WHERE hafta = ? ORDER BY net DESC, ts ASC LIMIT ?`).bind(hafta, EN_COK).all();
+  const h = await avatarliDene(() => sec(', avatar'), () => sec(''));
   // Tüm zamanlar: kişi başına en iyi hafta (SQLite'ta MAX ile seçilen satırın diğer sütunları o satırdan gelir).
-  const t = await env.DB.prepare('SELECT kimlik, ad, MAX(net) AS net, dk, avatar FROM liderlik GROUP BY kimlik ORDER BY net DESC LIMIT ?').bind(EN_COK).all();
+  const tsec = (av) => env.DB.prepare(`SELECT kimlik, ad, MAX(net) AS net, dk${av} FROM liderlik GROUP BY kimlik ORDER BY net DESC LIMIT ?`).bind(EN_COK).all();
+  const t = await avatarliDene(() => tsec(', avatar'), () => tsec(''));
   okumaGunlugu('liderlik', h, t);
   const satir = (r) => (r.avatar ? { i: r.kimlik, ad: r.ad, net: r.net, dk: r.dk, av: r.avatar } : { i: r.kimlik, ad: r.ad, net: r.net, dk: r.dk });
   return { guncelleme: new Date(simdiMs).toISOString(), hafta, haftalik: (h.results || []).map(satir), tum: (t.results || []).map(satir) };
@@ -122,15 +130,16 @@ export async function liderlikIstegi(request, env, simdiMs = Date.now()) {
 
   const hafta = haftaBasi(simdiMs);
   const kimlik = (await sha256Hex(s.anahtar)).slice(0, 16);
-  await env.DB.prepare(
-    `INSERT INTO liderlik (hafta, kimlik, ad, net, dogru, hatali, dk, ts, avatar) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-     ON CONFLICT (hafta, kimlik) DO UPDATE SET ad = excluded.ad, avatar = excluded.avatar,
+  const yaz = (av) => env.DB.prepare(
+    `INSERT INTO liderlik (hafta, kimlik, ad, net, dogru, hatali, dk, ts${av ? ', avatar' : ''}) VALUES (?, ?, ?, ?, ?, ?, ?, ?${av ? ', ?' : ''})
+     ON CONFLICT (hafta, kimlik) DO UPDATE SET ad = excluded.ad,${av ? ' avatar = excluded.avatar,' : ''}
        dogru = CASE WHEN excluded.net > liderlik.net THEN excluded.dogru ELSE liderlik.dogru END,
        hatali = CASE WHEN excluded.net > liderlik.net THEN excluded.hatali ELSE liderlik.hatali END,
        dk = CASE WHEN excluded.net > liderlik.net THEN excluded.dk ELSE liderlik.dk END,
        ts = CASE WHEN excluded.net > liderlik.net THEN excluded.ts ELSE liderlik.ts END,
        net = MAX(liderlik.net, excluded.net)`,
-  ).bind(hafta, kimlik, s.ad, s.net, s.dogru, s.hatali, s.dk, simdiSn, s.avatar).run();
+  ).bind(...[hafta, kimlik, s.ad, s.net, s.dogru, s.hatali, s.dk, simdiSn, ...(av ? [s.avatar] : [])]).run();
+  await avatarliDene(() => yaz(true), () => yaz(false));
   // Eklenen kişi tabloyu hemen görsün: önbellek yeniden üretilir ve yanıtla birlikte döner.
   const tablo = await tabloHesapla(env, simdiMs);
   await onbellegeYaz('liderlik', JSON.stringify(tablo), ONBELLEK_SN, simdiMs);

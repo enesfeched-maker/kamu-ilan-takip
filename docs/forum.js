@@ -56,16 +56,17 @@
     try { if (u && u.id && oku('kit-profil-uye') === u.id) { yaz('kit-profil', null); yaz('fr-duzey', null); yaz('kit-profil-uye', null); window.dispatchEvent(new Event('kit-profil-sunucudan')); } } catch (e) {}
     // kayıtlı ilanlar da böyle: hesaptan gelen liste cihazda kalmaz; hesapla eşleşmemiş (giriş öncesi) liste korunur. Bekleyen değişiklik önce gönderilir.
     try {
+      // Gönderim başarısızsa veri silinmez: hesaba işaretli ve "kirli" kalır, aynı hesapla yeniden girişte yüklenir (başka hesap girerse eşleme onu atar).
       if (u && u.id && oku('kit-saved-uye') === u.id) {
-        if (oku('kit-saved-kirli')) kayitliGonder_();
-        yaz('kit-saved', null); yaz('kit-saved-uye', null); yaz('kit-saved-kirli', null); window.dispatchEvent(new Event('kit-kayitli-sunucudan'));
+        var kTemizle = function () { yaz('kit-saved', null); yaz('kit-saved-uye', null); yaz('kit-saved-kirli', null); window.dispatchEvent(new Event('kit-kayitli-sunucudan')); };
+        if (oku('kit-saved-kirli')) kayitliGonder_().then(function (ok) { if (ok) kTemizle(); else yaz('kit-saved-kirli', 1); }); else kTemizle();
       }
     } catch (e) {}
     // başvurdum işaretleri ve katiplik verisi de öyle: hesaptan gelenler cihazda kalmaz, bekleyen değişiklik önce gönderilir
     try {
       if (u && u.id && oku('fr-basvuru-uye') === u.id) {
-        if (oku('fr-basvuru-kirli')) basvuruGonder_();
-        yaz('fr-basvuru', null); yaz('fr-basvuru-uye', null); yaz('fr-basvuru-kirli', null);
+        var bTemizle = function () { yaz('fr-basvuru', null); yaz('fr-basvuru-uye', null); yaz('fr-basvuru-kirli', null); };
+        if (oku('fr-basvuru-kirli')) basvuruGonder_().then(function (ok) { if (ok) bTemizle(); else yaz('fr-basvuru-kirli', 1); }); else bTemizle();
       }
       if (u && u.id && oku('kit-katip-uye') === u.id) katipCikis_();
     } catch (e) {}
@@ -76,7 +77,8 @@
     var jeton = oturum();
     function temizle() { KATIP_ANAHTARLAR.forEach(function (a) { yaz(a, null); }); }
     if (!oku('kit-katip-kirli')) { temizle(); return; }
-    betikYukle(TABAN + 'katip-senkron.js?v=' + SURUM).then(function () { return window.kitKatip.gonder(jeton); }).then(temizle, temizle);
+    // gönderilemezse silinmez: hesaba işaretli ve kirli kalır, aynı hesapla yeniden girişte yüklenir
+    betikYukle(TABAN + 'katip-senkron.js?v=' + SURUM).then(function () { return window.kitKatip.gonder(jeton); }).then(temizle, function () { yaz('kit-katip-kirli', 1); });
   }
   function hesapOlayi() { try { window.dispatchEvent(new Event('kit-hesap')); } catch (e) {} }   // üst çubuktaki hesap girişi (hesap.js) kendini yeniler
   // Öğrenim düzeyi: önce forumda seçilen, yoksa sitenin profilinde tek düzey işaretlenmişse o.
@@ -221,11 +223,11 @@
   }
   function kayitliGonder_() {
     var K = window.kitKayitli;
-    if (!oturum() || !K) return;
+    if (!oturum() || !K) return Promise.resolve(false);
     var giden = K.gonderilecek(yerelKayitli());
-    // yanıt gelene kadar yeni değişiklik olduysa "kirli" kalır (sonraki gönderim onu taşır)
-    function temizse() { if (ayniDizi(K.gonderilecek(yerelKayitli()), giden)) yaz('kit-saved-kirli', null); }
-    api('/ben/kayitli', { yontem: 'POST', govde: { kayitli: giden } }).then(temizse, function (h) { if (h && h.durum === 400) temizse(); });
+    // yanıt gelene kadar yeni değişiklik olduysa "kirli" kalır (sonraki gönderim onu taşır). Söz: true = hesaba ulaştı (ya da kalıcı biçim hatası)
+    function temizse() { if (ayniDizi(K.gonderilecek(yerelKayitli()), giden)) yaz('kit-saved-kirli', null); return true; }
+    return api('/ben/kayitli', { yontem: 'POST', govde: { kayitli: giden } }).then(temizse, function (h) { if (h && h.durum === 400) return temizse(); return false; });
   }
   var kayitliZamanlayici = 0;
   window.kitKayitliGonder = function () {   // site kayıtlı listesi değişince çağırır; giriş ya da eşleşme yoksa hiçbir şey yapmaz
@@ -269,10 +271,10 @@
     } catch (e) {}
   }
   function basvuruGonder_() {
-    if (!oturum()) return;
+    if (!oturum()) return Promise.resolve(false);
     var giden = basvuruAnahtarlari();
-    function temizse() { if (ayniDizi(basvuruAnahtarlari(), giden)) yaz('fr-basvuru-kirli', null); }
-    api('/ben/basvurular', { yontem: 'POST', govde: { basvurular: giden } }).then(temizse, function (h) { if (h && h.durum === 400) temizse(); });
+    function temizse() { if (ayniDizi(basvuruAnahtarlari(), giden)) yaz('fr-basvuru-kirli', null); return true; }
+    return api('/ben/basvurular', { yontem: 'POST', govde: { basvurular: giden } }).then(temizse, function (h) { if (h && h.durum === 400) return temizse(); return false; });
   }
   var basvuruZamanlayici = 0;
   function basvuruDegisti() {   // ilan sayfasındaki "Başvurdum" işareti değişince çağrılır
@@ -907,6 +909,7 @@
     var u = uye(); if (!u) return;
     if (k && k.avatar) u.av = k.avatar; else delete u.av;
     if (k && k.foto_surum) { u.fs = k.foto_surum; u.fu = u.id; } else { delete u.fs; delete u.fu; }
+    if (k && k.gizlilik) u.kg = k.gizlilik.katiplik_goster === true;   // katiplik liderlik tablosuna avatar yalnız açıkken gider
     yaz('fr-uye', u); hesapOlayi();
   }
   window.kitForumApi = {
@@ -1791,10 +1794,12 @@
   var yenileyiciler = [];
   function yenile() { yenileyiciler.forEach(function (f) { try { f(); } catch (e) {} }); }
   function basla() {
-    avatarKit();   // sprite ve liste ilk çizimle paralel iner; harf avatarları hazır olunca kendiliğinden değişir
     var t = document.getElementById('tartisma');
-    if (t && t.getAttribute('data-ilan')) ilanBolumu(t);
     var f = document.getElementById('forum');
+    // sprite ve liste ilk çizimle paralel iner; harf avatarları hazır olunca kendiliğinden değişir.
+    // Ana sayfa gibi avatar çizilmeyen sayfalarda girişsiz ziyaretçiye ek istek yapılmaz (girişliyse hesap.js zaten yükler).
+    if (t || f || oturum()) avatarKit();
+    if (t && t.getAttribute('data-ilan')) ilanBolumu(t);
     if (f) forumSayfasi(f);
     if (!t && !f && !window.kitForumTembel) listeRozetleri();   // hesap.js'in tembel yüklediği sayfada yalnız hesap penceresi çalışır
     benYenile();

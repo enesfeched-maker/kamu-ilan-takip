@@ -299,7 +299,9 @@ async function benGetir(request, env) {
   const u = await oturumUyesi(request, env);
   if (!u) return hataYanit(401, 'Giriş yapmalısın.');
   const { profil, kayitli, kart, basvurular } = await benTumu(env, u.id);
-  return jsonYanit({ uye: await benNesnesi(env, u), profil, kayitli, kart, basvurular });
+  const uye = await benNesnesi(env, u);
+  uye.kg = !!(kart && kart.gizlilik && kart.gizlilik.katiplik_goster);   // katiplik sonuçlarım görünür mü: site liderlik tablosuna avatar yalnız açıksa gider
+  return jsonYanit({ uye, profil, kayitli, kart, basvurular });
 }
 async function benNesnesi(env, u) {
   return {

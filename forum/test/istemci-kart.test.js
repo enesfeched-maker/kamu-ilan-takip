@@ -170,3 +170,21 @@ test('istemci ve sunucu katiplik biçimi uyumlu: birleşik veri sunucu temizleyi
   assert.deepEqual(s.k.hatalar, b.k.hatalar); assert.deepEqual(s.k.rozetler, b.k.rozetler); assert.deepEqual(s.k.gunluk, b.k.gunluk); assert.deepEqual(s.k.yol, b.k.yol);
   assert.deepEqual(s.d, b.d); assert.deepEqual(s.o, b.o); assert.deepEqual(s.a, b.a);
 });
+
+
+test('katip birlestir: sıfırlama (z) iki yönde de eski kayıtları düşürür; uygula yerel eski geçmişi z öncesinden geri getirmez', () => {
+  const Z = T0 + 5000;
+  const sunucu = { k: { gecmis: [g(T0 + 6000)], hatalar: {}, rozetler: [] }, z: Z };
+  const yerel = { k: { gecmis: [g(T0 + 7000), g(T0 + 1000)], hatalar: { elma: 4 }, rozetler: ['ilk'], gunluk: { '2026-09-01': { net: 90 } } } };
+  for (const r of [duz(K.birlestir(sunucu, yerel)), duz(K.birlestir(yerel, sunucu))]) {
+    assert.deepEqual(r.k.gecmis.map((x) => x.t), [T0 + 7000, T0 + 6000]);
+    assert.deepEqual(r.k.hatalar, {}); assert.deepEqual(r.k.rozetler, []); assert.deepEqual(r.k.gunluk, {}); assert.equal(r.z, Z);
+  }
+  const depo = { 'kit-katip': { gecmis: [g(T0 + 7000), g(T0 + 1000)], hatalar: { elma: 4 } } };
+  const oku = (a) => (depo[a] === undefined ? null : JSON.parse(JSON.stringify(depo[a])));
+  const yaz = (a, v) => { depo[a] = JSON.parse(JSON.stringify(v)); };
+  K.uygula(K.birlestir(sunucu, K.topla(oku)), oku, yaz, true);
+  assert.deepEqual(depo['kit-katip'].gecmis.map((x) => x.t), [T0 + 7000, T0 + 6000]); assert.equal(depo['kit-katip'].z, Z);
+  assert.equal(duz(K.topla(oku)).z, Z);   // yerel sıfırlama zamanı sonraki gönderimde de gider
+  assert.equal(katipTemizle(duz(K.topla(oku))).z, Z);
+});

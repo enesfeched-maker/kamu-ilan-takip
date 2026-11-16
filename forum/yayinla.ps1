@@ -213,7 +213,8 @@ if (-not $db) {
   }
   # e-posta ile giris sutunlari: 0005 e-postasiz haliyle daha once uygulanmissa (sifre_ozet var, eposta yok) yalniz eksik sutunlar eklenir
   $sutunEklendi = $false
-  foreach ($ek in @(@('eposta', 'TEXT'), @('eposta_dogrulandi', 'INTEGER'), @('silindi', 'INTEGER'))) {
+  # profil karti sutunlari (avatar..basvurular) da 0005'e sonradan eklendi: 0005 onceki haliyle uygulanmissa bunlar da tek tek eklenir (yoksa oturum sorgusu kirilir)
+  foreach ($ek in @(@('eposta', 'TEXT'), @('eposta_dogrulandi', 'INTEGER'), @('silindi', 'INTEGER'), @('avatar', 'TEXT'), @('foto_surum', 'INTEGER'), @('foto_gun', 'INTEGER'), @('foto_sayi', 'INTEGER'), @('foto_yasak', 'INTEGER'), @('kart', 'TEXT'), @('basvurular', 'TEXT'))) {
     if ($bekleyen -contains '0005') { break }   # 0005 dosyasi zaten ekler
     if ($uyeS -notcontains $ek[0]) {
       if ($Kuru) { Kuru ("uyeler." + $ek[0] + " sutunu eklenecek") }

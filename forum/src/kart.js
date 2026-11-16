@@ -11,7 +11,9 @@ import { oturumUyesi, yazar, yoneticiMi, uyeRumuzla, metinDenetle, govdeOku, neg
 
 export const DURUMLAR = ['tercih-yapacagim', 'basvuru-yapiyorum', 'basvurdum', 'yerlestim', 'atandim', 'calisiyorum'];
 export const KART_RENKLERI = ['yesil', 'mavi', 'mor', 'pembe', 'turuncu', 'sari', 'turkuaz', 'gri'];
-export const GIZLILIK_VARSAYILAN = { profil: 'herkes', puan_goster: false, il_goster: true, katiplik_goster: true };
+// Puan, il ve katiplik sonuçları varsayılan olarak GİZLİ (üye düzenleyicide "görünür olsun" demedikçe). Varsayılanlar saklanmadığı için kartını hiç
+// kaydetmemiş (ya da bu alanları değiştirmemiş) üyeler de gizli görünür.
+export const GIZLILIK_VARSAYILAN = { profil: 'herkes', puan_goster: false, il_goster: false, katiplik_goster: false };
 const PROFIL_GORUNURLUK = new Set(['herkes', 'uyeler', 'gizli']);
 const AV_ANAHTAR = /^[a-z0-9-]{1,24}$/;
 const AV_RENK = /^[a-z-]{1,16}$/;
@@ -241,6 +243,7 @@ export async function benFotoSil(request, env) {
     env.DB.prepare('DELETE FROM fotolar WHERE uye_id = ?').bind(uye.id),
     env.DB.prepare("UPDATE uyeler SET foto_surum = NULL, avatar = CASE WHEN avatar = 'foto' THEN NULL ELSE avatar END WHERE id = ?").bind(uye.id),
   ]);
+  await ucOnbellektenSil(new URL(request.url), uye.id, uye.foto_surum);
   return jsonYanit({ tamam: true, avatar: uye.avatar === 'foto' ? null : uye.avatar || null });
 }
 const ucOnbellek = () => (typeof caches !== 'undefined' ? caches.default : null);
@@ -260,11 +263,14 @@ export async function fotoGetir(request, env, ctx, url, id) {
     status: 200,
     headers: {
       'Content-Type': r.tur, 'X-Content-Type-Options': 'nosniff', 'Cross-Origin-Resource-Policy': 'cross-origin',
+      'Content-Security-Policy': "default-src 'none'; sandbox",   // görüntü doğrudan açılsa da içindeki hiçbir şey çalışmaz
       'Cache-Control': eslesti ? 'public, max-age=31536000, immutable' : 'public, max-age=300',
     },
   });
   if (c && anahtar && eslesti) {
-    const p = Promise.resolve(c.put(anahtar, yanit.clone())).catch(() => {});
+    // uç önbellekte en çok 1 gün: yönetici kaldırdığında silme yalnız bu ucu temizler, diğer uçlardaki kopya en geç 1 günde düşer
+    const kopya = new Response(b, { status: 200, headers: { ...Object.fromEntries(yanit.headers), 'Cache-Control': 'public, max-age=86400' } });
+    const p = Promise.resolve(c.put(anahtar, kopya)).catch(() => {});
     if (ctx && ctx.waitUntil) ctx.waitUntil(p);
   }
   return yanit;
@@ -392,10 +398,51 @@ export function katipTemizle(girdi) {
     d: ders,
     o: { dosya: TAM(o.dosya, 0, 1e6) || 0, hata: TAM(o.hata, 0, 1e6) || 0 },
     a: { rekor, gecmis: gecmisTemizle(a.gecmis, 30) },
+    z: TAM(k.z, 0, 4e12) || 0,   // "geçmişi sil" zamanı (ms); 0 = hiç sıfırlanmadı
   };
+  if (temiz.z) temiz.k.gecmis = temiz.k.gecmis.filter((x) => x.t > temiz.z);
   // en eski geçmiş kayıtları düşerek 32 KB'a sığdır (istemci de aynısını yapar)
   while (JSON.stringify(temiz).length > KATIP_EN_COK && temiz.k.gecmis.length > 20) temiz.k.gecmis.pop();
   return JSON.stringify(temiz).length <= KATIP_EN_COK ? temiz : null;
+}
+// Hesaptaki veri ile gelen veriyi birleştirir (iki cihaz birbirinin sonucunu ezmesin). Girdiler katipTemizle çıktısıdır; sonuç yeniden temizlenir.
+// Kurallar docs/katip-senkron.js birlestir ile aynı: geçmiş zaman damgasıyla birleşir; en iyi değerlerin büyüğü; rozetler birleşir; günlük sonuçta
+// net büyük olan; yolda yeni değişiklik (yol.g); ayarda gelen. Sıfırlama (z, "geçmişi sil" zamanı): büyük z kazanır, z'den eski geçmiş düşer;
+// sıfırlamayı görmemiş tarafın hata ve rozetleri alınmaz, günlük sonuçlarından yalnız sıfırlama gününden sonrakiler kalır.
+const trGunAnahtari = (ms) => new Date(ms + 3 * 3600 * 1000).toISOString().slice(0, 10);
+export function katipBirlestir(eski, yeni) {
+  if (!eski) return yeni;
+  const z = Math.max(eski.z || 0, yeni.z || 0);
+  const kes = (t) => {
+    if ((t.z || 0) >= z) return t.k;
+    const gun = trGunAnahtari(z), gunluk = {};
+    for (const [g, e] of Object.entries(t.k.gunluk)) if (g > gun) gunluk[g] = e;
+    return { ...t.k, hatalar: {}, rozetler: [], gunluk };
+  };
+  const ek = kes(eski), yk = kes(yeni);
+  const hatalar = { ...ek.hatalar };
+  for (const [w, n] of Object.entries(yk.hatalar)) hatalar[w] = Math.max(hatalar[w] || 0, n);
+  const gunluk = { ...ek.gunluk };
+  for (const [g, e] of Object.entries(yk.gunluk)) if (!gunluk[g] || (e.net || 0) >= (gunluk[g].net || 0)) gunluk[g] = e;
+  const ders = {};
+  for (const d of ['Q', 'F']) {
+    const c = { ...(eski.d[d] || {}) };
+    for (const [i, y] of Object.entries(yeni.d[d] || {})) { const p = c[i]; if (!p || y.y > p.y || (y.y === p.y && y.t >= p.t)) c[i] = y; }
+    if (Object.keys(c).length) ders[d] = c;
+  }
+  const rekor = { ...eski.a.rekor };
+  for (const [ad, v] of Object.entries(yeni.a.rekor)) rekor[ad] = Math.max(rekor[ad] || 0, v);
+  return katipTemizle({   // tekrarları atar, sıralar, sınırlara (200 geçmiş, 100 hata, 120 gün, 32 KB) indirir
+    v: 1,
+    k: {
+      gecmis: [...yk.gecmis, ...ek.gecmis], hatalar, rozetler: [...new Set([...yk.rozetler, ...ek.rozetler])], gunluk,
+      yol: (yk.yol.g || 0) >= (ek.yol.g || 0) ? yk.yol : ek.yol, ayar: yk.ayar,
+    },
+    d: ders,
+    o: { dosya: Math.max(eski.o.dosya, yeni.o.dosya), hata: Math.max(eski.o.hata, yeni.o.hata) },
+    a: { rekor, gecmis: [...yeni.a.gecmis, ...eski.a.gecmis] },
+    z,
+  });
 }
 const trGun = (ms) => Math.floor((ms + 3 * 3600 * 1000) / 86400000);   // Türkiye günü numarası
 export function katipOzeti(t, simdiSn) {
@@ -440,8 +487,13 @@ export async function benKatipKaydet(request, env) {
   if (!ipSiniri(`katip-uye:${u.id}`, simdi(), 10, 60)) return cokDeneme();   // üye başına dakikada 10 kayıt
   const g = await buyukGovde(request, KATIP_EN_COK);
   if (!g) return hataYanit(413, 'Katiplik verisi çok büyük ya da geçersiz.');
-  const t = katipTemizle(g.katip);
-  if (!t) return hataYanit(400, 'Katiplik verisi geçersiz ya da çok büyük.');
+  const gelen = katipTemizle(g.katip);
+  if (!gelen) return hataYanit(400, 'Katiplik verisi geçersiz ya da çok büyük.');
+  // tam değiştirme değil birleştirme: başka cihazın gönderdiği sonuçlar silinmez (silme yalnız z ile, bkz. katipBirlestir)
+  const r = await env.DB.prepare('SELECT veri FROM uye_katip WHERE uye_id = ?').bind(u.id).first();
+  let eski = null;
+  try { eski = r && r.veri ? katipTemizle(JSON.parse(r.veri)) : null; } catch { eski = null; }
+  const t = katipBirlestir(eski, gelen) || gelen;
   const veri = JSON.stringify(t), ozet = JSON.stringify(katipOzeti(t, simdi()));
   await env.DB.prepare(
     `INSERT INTO uye_katip (uye_id, veri, ozet, guncelleme) VALUES (?, ?, ?, ?)

@@ -511,7 +511,7 @@ body.kars-acik{padding-bottom:96px}
 :root[data-theme=dark] .segment small,:root[data-theme=dark] .ay-izgara small{color:var(--muted)}
 /* ---------- Profil penceresi sekmeleri (portal.js) ---------- */
 .pk-sekmeler[hidden]{display:none}
-.pk-sekmeler{display:flex;gap:4px;margin:0 0 16px;padding:4px;border-radius:12px;background:var(--surface-2)}
+.pk-sekmeler{display:flex;gap:4px;margin:0 44px 16px 0;padding:4px;border-radius:12px;background:var(--surface-2)}
 .pk-sekmeler button{flex:1;min-height:44px;padding:0 12px;border:0;border-radius:9px;background:transparent;color:var(--ink-2);font:inherit;font-size:15px;font-weight:600;cursor:pointer}
 .pk-sekmeler button[aria-selected=true]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgb(0 0 0 / .12)}
 .pk-sekmeler button:focus-visible{outline:2px solid var(--focus,#2563EB);outline-offset:2px}

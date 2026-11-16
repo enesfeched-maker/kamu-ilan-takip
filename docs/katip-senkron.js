@@ -67,10 +67,21 @@
     Object.keys(a).concat(Object.keys(b)).forEach(function (k) { c[k] = enCok(a[k], b[k]); });
     return c;
   }
-  // a: sunucu, b: yerel; ikisi de { k, d, o, a } biçiminde.
+  // Sıfırlama: z = "geçmişi sil" zamanı (ms). Büyük z kazanır; z'den eski sınav geçmişi her yerde düşer; sıfırlamayı görmemiş tarafın
+  // hata ve rozetleri alınmaz, günlük sonuçlarından yalnız sıfırlama gününden sonrakiler kalır. Sunucu (forum/src/kart.js katipBirlestir) aynısını yapar.
+  function trGunAnahtari(ms) { return new Date(ms + 3 * 3600 * 1000).toISOString().slice(0, 10); }
+  function eskiyiKes(k, z) {
+    var gun = trGunAnahtari(z), gl = {}, g = obje(k.gunluk);
+    Object.keys(g).forEach(function (x) { if (x > gun) gl[x] = g[x]; });
+    return { gecmis: k.gecmis, hatalar: {}, rozetler: [], gunluk: gl, yol: k.yol, ayar: k.ayar };
+  }
+  // a: sunucu, b: yerel; ikisi de { k, d, o, a, z } biçiminde.
   function birlestir(a, b) {
     a = obje(a); b = obje(b);
+    var za = say(a.z), zb = say(b.z), z = Math.max(za, zb);
     var ak = obje(a.k), bk = obje(b.k), ao = obje(a.o), bo = obje(b.o), aa = obje(a.a), ba = obje(b.a);
+    if (za < z) ak = eskiyiKes(ak, z);
+    if (zb < z) bk = eskiyiKes(bk, z);
     var roz = [], gor = Object.create(null);
     (Array.isArray(ak.rozetler) ? ak.rozetler : []).concat(Array.isArray(bk.rozetler) ? bk.rozetler : []).forEach(function (r) { if (typeof r === 'string' && !gor[r]) { gor[r] = 1; roz.push(r); } });
     var hatalar = {};
@@ -78,13 +89,14 @@
     return {
       v: 1,
       k: {
-        gecmis: tekrarsizGecmis((Array.isArray(ak.gecmis) ? ak.gecmis : []).concat(Array.isArray(bk.gecmis) ? bk.gecmis : []), GECMIS),
+        gecmis: tekrarsizGecmis((Array.isArray(ak.gecmis) ? ak.gecmis : []).concat(Array.isArray(bk.gecmis) ? bk.gecmis : []), GECMIS).filter(function (x) { return x.t > z; }),
         hatalar: hatalariKirp(hatalar), rozetler: roz.slice(0, 40), gunluk: gunlukBirlestir(ak.gunluk, bk.gunluk), yol: yolBirlestir(ak.yol, bk.yol),
         ayar: { klavye: obje(bk.ayar).klavye === 'F' || (!obje(bk.ayar).klavye && obje(ak.ayar).klavye === 'F') ? 'F' : 'Q' }
       },
       d: dersBirlestir(a.d, b.d),
       o: { dosya: enCok(ao.dosya, bo.dosya), hata: enCok(ao.hata, bo.hata) },
-      a: { rekor: rekorBirlestir(aa.rekor, ba.rekor), gecmis: tekrarsizGecmis((Array.isArray(aa.gecmis) ? aa.gecmis : []).concat(Array.isArray(ba.gecmis) ? ba.gecmis : []), ANT_GECMIS) }
+      a: { rekor: rekorBirlestir(aa.rekor, ba.rekor), gecmis: tekrarsizGecmis((Array.isArray(aa.gecmis) ? aa.gecmis : []).concat(Array.isArray(ba.gecmis) ? ba.gecmis : []), ANT_GECMIS) },
+      z: z
     };
   }
   // Sunucuya gidecek boyuta indirir (en eski geçmiş kayıtlarını düşer).
@@ -98,19 +110,22 @@
   // Yerel depodan okunan ham nesnelerle yükleme biçimi: oku(anahtar) -> nesne ya da null
   function topla(oku) {
     var k = obje(oku(ANAHTAR.k)), d = obje(oku(ANAHTAR.d)), o = obje(oku(ANAHTAR.o)), a = obje(oku(ANAHTAR.a));
-    return birlestir({}, { k: { gecmis: k.gecmis, hatalar: k.hatalar, rozetler: k.rozetler, gunluk: k.gunluk, yol: k.yol, ayar: k.ayar }, d: d, o: o, a: { rekor: a.rekor, gecmis: a.gecmis } });
+    return birlestir({}, { k: { gecmis: k.gecmis, hatalar: k.hatalar, rozetler: k.rozetler, gunluk: k.gunluk, yol: k.yol, ayar: k.ayar }, d: d, o: o, a: { rekor: a.rekor, gecmis: a.gecmis }, z: k.z });
   }
   // Birleşik veriyi yerel anahtarlara yazar; sunucuya gitmeyen alanlar (özel metin, aday adı, antrenman ayarı ...) korunur.
-  function uygula(p, oku, yaz) {
+  // koru: bu cihazdaki eski kayıtlar (eşitleme sınırının ötesindeki geçmiş: sınav 300'e, antrenman 100'e kadar) yerelde kalır; başka hesabın verisiyse koru=false.
+  function uygula(p, oku, yaz, koru) {
     var k = obje(oku(ANAHTAR.k));
-    k.gecmis = p.k.gecmis; k.hatalar = p.k.hatalar; k.rozetler = p.k.rozetler; k.gunluk = p.k.gunluk;
+    var z = say(p.z);
+    if (z) k.z = z; else delete k.z;
+    k.gecmis = koru ? tekrarsizGecmis(p.k.gecmis.concat(Array.isArray(k.gecmis) ? k.gecmis : []), 300).filter(function (x) { return x.t > z; }) : p.k.gecmis;k.hatalar = p.k.hatalar; k.rozetler = p.k.rozetler; k.gunluk = p.k.gunluk;
     k.yol = Object.assign({ tarih: '', hedef: 90 }, obje(k.yol), { tarih: p.k.yol.tarih, hedef: p.k.yol.hedef }); if (p.k.yol.g) k.yol.g = p.k.yol.g;
     k.ayar = Object.assign({}, obje(k.ayar), { klavye: p.k.ayar.klavye });
     yaz(ANAHTAR.k, k);
     yaz(ANAHTAR.d, p.d);
     yaz(ANAHTAR.o, p.o);
     var a = obje(oku(ANAHTAR.a));
-    a.rekor = p.a.rekor; a.gecmis = p.a.gecmis;
+    a.rekor = p.a.rekor; a.gecmis = koru ? tekrarsizGecmis(p.a.gecmis.concat(Array.isArray(a.gecmis) ? a.gecmis : []), 100) : p.a.gecmis;
     yaz(ANAHTAR.a, a);
   }
   var disari = { birlestir: birlestir, topla: topla, uygula: uygula, kirp: kirp, bos: bos, bosMu: bosMu, ANAHTAR: ANAHTAR };
@@ -139,6 +154,8 @@
       return j;
     });
   }
+  // Çıkışta (forum.js katipCikis_) oturum anahtarı silindikten sonra yüklenir: gonder(jeton) aşağıdaki giriş koşulundan önce erişilebilir olmalı.
+  window.kitKatip = { gonder: gonder, birlestir: birlestir, topla: function () { return topla(oku); } };
 
   var ben = oku('fr-uye'), jeton = oku('fr-oturum'), son = '', zamanlayici = 0, hazir = false;
   if (!ben || !ben.id || !jeton) return;
@@ -173,11 +190,11 @@
     }, 3000);
   }
   function baslat(sunucu) {
-    var sahip = oku('kit-katip-uye'), yerel = topla(oku), sonuc;
-    if (typeof sahip === 'number' && sahip !== ben.id) yerel = bos();   // başka üyeye ait veri sızmasın
+    var sahip = oku('kit-katip-uye'), yerel = topla(oku), sonuc, baskasi = typeof sahip === 'number' && sahip !== ben.id;
+    if (baskasi) yerel = bos();   // başka üyeye ait veri sızmasın
     var sunucuVeri = sunucu ? birlestir(sunucu, {}) : bos();
     sonuc = birlestir(sunucuVeri, yerel);   // yerelde sonradan silinen geçmiş, sonraki değişiklikte (boş gönderim) hesaptan da silinir
-    uygula(sonuc, oku, yaz);
+    uygula(sonuc, oku, yaz, !baskasi);
     yaz('kit-katip-uye', ben.id);
     son = ham(); hazir = true;
     var fark = JSON.stringify(birlestir(sunucuVeri, {})) !== JSON.stringify(kirp(birlestir({}, sonuc)));

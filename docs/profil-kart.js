@@ -39,7 +39,7 @@
   ];
   var RENKLER = [['yesil', 'Yeşil'], ['mavi', 'Mavi'], ['mor', 'Mor'], ['pembe', 'Pembe'], ['turuncu', 'Turuncu'], ['sari', 'Sarı'], ['turkuaz', 'Turkuaz'], ['gri', 'Gri']];
   var DUZEYLER = { lisans: 'Lisans', onlisans: 'Önlisans', ortaogretim: 'Ortaöğretim' };
-  var GIZLILIK_VARSAYILAN = { profil: 'herkes', puan_goster: false, il_goster: true, katiplik_goster: true };
+  var GIZLILIK_VARSAYILAN = { profil: 'herkes', puan_goster: false, il_goster: false, katiplik_goster: false };   // sunucuyla aynı: varsayılan gizli
   var ZARF = 'M4 6h16v12H4zM4 7l8 6 8-6';
   var HEDEF_IKON = 'M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11zM12 12a2.2 2.2 0 1 0 0-4.4 2.2 2.2 0 0 0 0 4.4z';
 
@@ -373,7 +373,8 @@
         + '<fieldset class="pk-bolum"><legend>Gizlilik</legend><div class="pk-secenekler pk-durumlar" role="radiogroup" aria-label="Profilimi kim görebilir">'
         + [['herkes', 'Herkes görebilir'], ['uyeler', 'Yalnız üyeler'], ['gizli', 'Gizli']].map(function (x) { return '<label class="pk-sec pk-yazi' + (d.gizlilik.profil === x[0] ? ' pk-secili' : '') + '"><input type="radio" name="pk-gprofil" value="' + x[0] + '"' + (d.gizlilik.profil === x[0] ? ' checked' : '') + '><span>' + x[1] + '</span></label>'; }).join('')
         + '</div><p class="pk-not">Gizli profilde yalnız rumuzun ve avatarın görünür. Rumuzun, mesajların ve avatarın her zaman forumda görünür.</p>'
-        + [['puan_goster', 'KPSS puanımı kartta göster'], ['il_goster', 'Çalışmak istediğim illeri göster'], ['katiplik_goster', 'Katiplik sonuçlarımı göster']].map(function (x) {
+        + '<p class="pk-not"><b>Puanın, illerin ve katiplik sonuçların varsayılan olarak gizlidir.</b> Kartında görünmesini istediklerini aç. Katiplik sonuçların görünürse seçtiğin hazır avatar katiplik liderlik tablosunda da gösterilir.</p>'
+        + [['puan_goster', 'KPSS puanım görünür olsun'], ['il_goster', 'Çalışmak istediğim iller görünür olsun'], ['katiplik_goster', 'Katiplik sonuçlarım görünür olsun']].map(function (x) {
           return '<label class="pk-anahtar"><input type="checkbox" data-g="' + x[0] + '"' + (d.gizlilik[x[0]] ? ' checked' : '') + '><span>' + x[1] + '</span></label>';
         }).join('') + '<p class="pk-not">Öğrenim düzeyin her zaman görünür.</p></fieldset>'
         + '<p class="pk-hata" role="alert" hidden data-hata></p>'
@@ -410,7 +411,11 @@
         if (ad === 'pk-pxb') cur.r = kap.querySelector('input[name=pk-pxb]:checked').value; else cur.h = Number(kap.querySelector('input[name=pk-pxt]:checked').value);
         d.avatar = A.dizge(cur);
       }
-    }    yerlestir();
+    }
+    // yerlestir() formu baştan çizer (fotoğraf yükleyince/kaldırınca da): dinleyiciler her çizimden sonra yeni forma yeniden bağlanır.
+    function yenidenCiz() { yerlestir(); bagla(); }
+    yenidenCiz();
+    function bagla() {
     var form = kap.querySelector('form');
     form.addEventListener('change', function (e) {
       var t = e.target;
@@ -445,7 +450,7 @@
         K().api('/ben/foto', { yontem: 'POST', ham: blob }).then(function (j) {
           fotoSurum = j.foto_surum; d.avatar = 'foto'; kayitli = JSON.stringify(Object.assign({}, JSON.parse(kayitli), { avatar: 'foto' }));
           K().uyeGuncelle({ avatar: 'foto', foto_surum: fotoSurum }); K().bildir('Fotoğrafın yüklendi');
-          yerlestir();
+          yenidenCiz();
         }, function (h) { fotoHata(h.message); });
       }, function () {});
     };
@@ -455,7 +460,7 @@
       K().api('/ben/foto', { yontem: 'DELETE' }).then(function (j) {
         fotoSurum = null; if (d.avatar === 'foto') d.avatar = j.avatar || null;
         kayitli = JSON.stringify(Object.assign({}, JSON.parse(kayitli), { avatar: d.avatar }));
-        K().uyeGuncelle({ avatar: d.avatar, foto_surum: null }); K().bildir('Fotoğrafın kaldırıldı'); yerlestir();
+        K().uyeGuncelle({ avatar: d.avatar, foto_surum: null }); K().bildir('Fotoğrafın kaldırıldı'); yenidenCiz();
       }, function (h) { fotoHata(h.message); });
     };
     form.addEventListener('submit', function (e) {
@@ -469,6 +474,7 @@
         b.textContent = yazi; dugme(); onizle();
       }, function (h) { hataGoster(h.message); b.textContent = yazi; b.disabled = false; });
     });
+    }
   }
 
   window.kitKart = { kartHtml: kartHtml, ac: ac, sayfa: sayfa, duzenleyici: duzenleyici, css: css, rozetler: ROZETLER, durumlar: DURUMLAR, renkler: RENKLER, avatarHtml: avatarHtml };
