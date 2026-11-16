@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS uyeler (
   kurtarma_ozet TEXT,                -- kurtarma kodunun HMAC özeti
   google_sub TEXT,                   -- Google hesap kimliği (e-posta saklanmaz)
   profil TEXT,                       -- sitedeki kit-profil (JSON, beyaz listeli)
+  kayitli TEXT,                      -- sitedeki kit-saved: kayıtlı ilan kimlikleri (JSON dizi, en çok 300, en çok 8 KB)
   rumuz_kat TEXT,                    -- küçük harf, Türkçe harfler ASCII, "." ve "_" atılmış rumuz (benzersiz)
   oturum_surum INTEGER DEFAULT 0     -- şifre/kurtarma kodu değişince artar, eski oturumlar kapanır
 );

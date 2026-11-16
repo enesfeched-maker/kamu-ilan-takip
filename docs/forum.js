@@ -51,8 +51,16 @@
     var u = uye();
     // hesabın profili bu cihazda kalmasın (ortak cihaz); marker yoksa profil giriş öncesinden kalmadır, ona dokunulmaz
     try { if (u && u.id && oku('kit-profil-uye') === u.id) { yaz('kit-profil', null); yaz('fr-duzey', null); yaz('kit-profil-uye', null); window.dispatchEvent(new Event('kit-profil-sunucudan')); } } catch (e) {}
-    yaz('fr-oturum', null); yaz('fr-uye', null); yaz('fr-bildirim-sayi', null); yenile();
+    // kayıtlı ilanlar da böyle: hesaptan gelen liste cihazda kalmaz; hesapla eşleşmemiş (giriş öncesi) liste korunur. Bekleyen değişiklik önce gönderilir.
+    try {
+      if (u && u.id && oku('kit-saved-uye') === u.id) {
+        if (oku('kit-saved-kirli')) kayitliGonder_();
+        yaz('kit-saved', null); yaz('kit-saved-uye', null); yaz('kit-saved-kirli', null); window.dispatchEvent(new Event('kit-kayitli-sunucudan'));
+      }
+    } catch (e) {}
+    yaz('fr-oturum', null); yaz('fr-uye', null); yaz('fr-bildirim-sayi', null); yaz('fr-ben-t', null); ozelSayisiGoster(0); hesapOlayi(); yenile();
   }
+  function hesapOlayi() { try { window.dispatchEvent(new Event('kit-hesap')); } catch (e) {} }   // üst çubuktaki hesap girişi (hesap.js) kendini yeniler
   // Öğrenim düzeyi: önce forumda seçilen, yoksa sitenin profilinde tek düzey işaretlenmişse o.
   function duzeyim() {
     var d = oku('fr-duzey');
@@ -72,7 +80,7 @@
     return fetch(API + yol, { method: secenek.yontem || 'GET', headers: h, body: secenek.govde !== undefined ? JSON.stringify(secenek.govde) : undefined })
       .then(function (r) {
         return r.json().catch(function () { return {}; }).then(function (j) {
-          if (r.status === 401 && o) { yaz('fr-oturum', null); yaz('fr-uye', null); }
+          if (r.status === 401 && o) { yaz('fr-oturum', null); yaz('fr-uye', null); hesapOlayi(); }
           if (!r.ok) { var e = new Error(j.hata || 'Bir sorun oluştu, biraz sonra yeniden dene.'); e.durum = r.status; throw e; }
           return j;
         });
@@ -158,10 +166,51 @@
       }
     } catch (e) {}
   }
-  function profilCek() {   // /ben'i okur, üye bilgisini ve profili günceller
+  function profilCek() {   // /ben'i okur, üye bilgisini, profili ve kayıtlı ilanları günceller
     if (!oturum()) return Promise.resolve();
-    return api('/ben').then(function (j) { yaz('fr-uye', j.uye); profilSenkron(j.profil); }, function () {});
+    return api('/ben').then(function (j) { yaz('fr-uye', j.uye); yaz('fr-ben-t', Date.now()); profilSenkron(j.profil); kayitliSenkron(j.kayitli); hesapOlayi(); }, function () {});
   }
+
+  /* ---------- hesaba bağlı kayıtlı ilanlar ---------- */
+  // Yerel liste "kit-saved". "kit-saved-uye": listenin hangi hesapla eşlendiği; "kit-saved-kirli": gönderilmemiş yerel değişiklik var.
+  // Girişte (eşleşme yokken) sunucu ve yerel liste birleşir (önce sunucu sırası) ve değiştiyse bir kez yüklenir; eşleştikten sonra
+  // hesap esastır (başka cihazdaki silmeler de gelir), yerel değişiklikler 1,5 sn gecikmeyle gönderilir.
+  // Hesapta ilan ANAHTARI tutulur (UUID, sbb-…, iskur-…, csb-…); yerel listedeki "id"lerle dönüşüm hesap.js'te (kitKayitli).
+  function ayniDizi(a, b) { return a.length === b.length && a.every(function (x, i) { return x === b[i]; }); }
+  function yerelKayitli() { var l = oku('kit-saved'); return Array.isArray(l) ? l : []; }
+  function kayitliOlayi() { try { window.dispatchEvent(new Event('kit-kayitli-sunucudan')); } catch (e) {} }
+  function kayitliSenkron(sunucu) {
+    try {
+      var ben = uye(), K = window.kitKayitli;
+      if (!oturum() || !ben || !ben.id || !Array.isArray(sunucu) || !K) return;
+      var sahip = oku('kit-saved-uye'), yerel = yerelKayitli();
+      if (sahip === ben.id) {
+        if (oku('kit-saved-kirli')) { kayitliGonder_(); return; }
+        var e = K.esitle(sunucu, yerel);
+        if (!e.ayni) { yaz('kit-saved', e.yerel); kayitliOlayi(); }
+        return;
+      }
+      var r = K.birlestir(sunucu, typeof sahip === 'number' ? [] : yerel);   // başka üyeye ait liste sızmasın
+      yaz('kit-saved-uye', ben.id);
+      if (!ayniDizi(r.yerel, yerel)) { yaz('kit-saved', r.yerel); kayitliOlayi(); }
+      if (r.degisti) kayitliGonder_();
+    } catch (e) {}
+  }
+  function kayitliGonder_() {
+    var K = window.kitKayitli;
+    if (!oturum() || !K) return;
+    api('/ben/kayitli', { yontem: 'POST', govde: { kayitli: K.gonderilecek(yerelKayitli()) } }).then(function () { yaz('kit-saved-kirli', null); }, function (h) { if (h && h.durum === 400) yaz('kit-saved-kirli', null); });
+  }
+  var kayitliZamanlayici = 0;
+  window.kitKayitliGonder = function () {   // site kayıtlı listesi değişince çağırır; giriş ya da eşleşme yoksa hiçbir şey yapmaz
+    try {
+      var ben = uye();
+      if (!oturum() || !ben || oku('kit-saved-uye') !== ben.id) return;
+      yaz('kit-saved-kirli', 1);
+      clearTimeout(kayitliZamanlayici);
+      kayitliZamanlayici = setTimeout(kayitliGonder_, 1500);
+    } catch (e) {}
+  };
   var profilZamanlayici = 0;
   window.kitProfilGonder = function () {   // site profil ekranı çağırır; giriş yoksa hiçbir şey yapmaz
     clearTimeout(profilZamanlayici);
@@ -280,7 +329,7 @@
     var k = kabukAc(), govde = k.govde, ayar = {};
     var jeton = '', tsKimlik = null;
     function oturumAc(j) {
-      yaz('fr-oturum', j.oturum); yaz('fr-uye', j.uye); yaz('fr-giris-yontem', 1); iz('forum_giris');
+      yaz('fr-oturum', j.oturum); yaz('fr-uye', j.uye); yaz('fr-giris-yontem', 1); iz('forum_giris'); hesapOlayi();
       return profilCek();
     }
     function bitir(bekle) {
@@ -507,6 +556,35 @@
       return s ? { sifre: s } : 'Şifreni yaz.';
     }, function (j) { if (j.oturum) yaz('fr-oturum', j.oturum); k.kodGoster(j.kurtarma_kodu, 'Yeni kurtarma kodun', function () { k.kapat(); }); });
   }
+
+  // Bildirim ayarları (üst çubuktaki hesap menüsünden): özel mesaj izni; Telegram bildirimi yalnız Telegram ile bağlı üyelerde.
+  // Sunucu /ben'de dm_acik ve bildirimi true/false verir, giriş yanıtları 0/1 olabilir: ikisi de "kapalı" sayılır.
+  function kapali(v) { return v === 0 || v === false; }
+  function ayarKutusu() {
+    if (!oturum()) { girisKutusu(); return; }
+    var k = kabukAc();
+    k.ciz('Bildirim ayarları', '', '<p class="fr-yukleniyor">Yükleniyor…</p>');
+    api('/ben').then(function (j) { yaz('fr-uye', j.uye); ayarCiz(k, j.uye); hesapOlayi(); }, function (h) { k.ciz('Bildirim ayarları', '', '<p class="fr-hata" role="alert">' + esc(h.message) + '</p>'); });
+  }
+  function ayarCiz(k, u) {
+    k.ciz('Bildirim ayarları', '',
+      '<div class="fr-ayar-liste"><label class="fr-anahtar-s"><input type="checkbox" data-ayar="dm_acik"' + (kapali(u.dm_acik) ? '' : ' checked') + '><span>Özel mesaj alabilirim</span></label>'
+      + (u.telegram === false
+        ? '<p class="fr-not">Yanıtlar, anmalar ve mesajlar sitede, üst çubuktaki hesap menüsünde ve forumdaki zil simgesinde görünür.</p>'
+        : '<label class="fr-anahtar-s"><input type="checkbox" data-ayar="bildirim"' + (kapali(u.bildirim) ? '' : ' checked') + '><span>Telegram\'dan bildirim al</span></label>')
+      + '</div><p class="fr-hata" role="alert" hidden></p>');
+    k.govde.onchange = function (e) {
+      var c = e.target.closest('[data-ayar]');
+      if (!c) return;
+      var ad = c.getAttribute('data-ayar'), g = {}; g[ad] = c.checked;
+      k.hata('');
+      api('/ben/ayar', { yontem: 'POST', govde: g }).then(function (j) {
+        var gnc = oku('fr-uye') || u; yaz('fr-uye', Object.assign(gnc, j.uye || {}));
+        bildir(ad === 'dm_acik' ? (c.checked ? 'Özel mesajlar açık' : 'Özel mesajlar kapalı; kimse sana yeni mesaj gönderemez') : (c.checked ? 'Telegram bildirimleri açık' : 'Telegram bildirimleri kapalı'));
+      }, function (h) { c.checked = !c.checked; k.hata(h.message); });
+    };
+  }
+  window.kitHesap = { giris: function (baslik) { girisSonrasi = null; girisKutusu(baslik || 'Üye ol ya da giriş yap'); }, ayar: ayarKutusu, cikis: cikis };
 
   /* ---------- üye kartı (rumuza dokununca) ---------- */
   function uyeKarti(rumuz, cikis_) {
@@ -860,10 +938,12 @@
     var b = oku('fr-bildirim-sayi'); bildirimSayisiGoster((b && b.n) || 0);
   }
   var benZamani = 0;
-  function benYenile() {   // /ben: rumuz, ayarlar ve okunmamış özel mesaj sayısı (en çok 2 dakikada bir)
-    if (!oturum() || Date.now() - benZamani < 120000) return;
-    benZamani = Date.now();
-    api('/ben').then(function (j) { yaz('fr-uye', j.uye); ozelSayisiGoster((j.uye && j.uye.ozel_okunmamis) || j.ozel_okunmamis || 0); profilSenkron(j.profil); }, function () {});
+  function benYenile() {   // /ben: rumuz, ayarlar, okunmamış özel mesaj sayısı, profil ve kayıtlı ilanlar (en çok 2 dakikada bir; sayfalar arası da)
+    if (!oturum() || Date.now() - benZamani < 120000 || Date.now() - (oku('fr-ben-t') || 0) < 120000) return;
+    benZamani = Date.now(); yaz('fr-ben-t', benZamani);
+    api('/ben').then(function (j) {
+      yaz('fr-uye', j.uye); ozelSayisiGoster((j.uye && j.uye.ozel_okunmamis) || j.ozel_okunmamis || 0); profilSenkron(j.profil); kayitliSenkron(j.kayitli); hesapOlayi();
+    }, function () {});
   }
 
   /* ---------- forum sayfası ---------- */
@@ -895,7 +975,7 @@
   //   Soru-Cevap (?, ?b=<id>, ?yeni=1): kalıcı sorular, kart cevaplar, en faydalı cevap öne çıkar; klasik tek sütun.
   //   Sohbet odaları (?bolum=sohbet, ?oda=<id>): yalnız odalar, mesaj balonları, anlık; geniş ekranda iki panel.
   function forumSayfasi(kok_) {
-    var durdur = null, seciliOda = 0, seciliKisi = '';
+    var durdur = null, listeDurdur = null, seciliOda = 0, seciliKisi = '';
     function git(q) { history.pushState(null, '', q || location.pathname); ciz(); if (!GENIS.matches || !/oda=/.test(q || '')) window.scrollTo(0, 0); }
     kok_.innerHTML = '<div class="fr-bas"><nav class="fr-bolumler" aria-label="Forum bölümleri">'
       + '<a data-ic data-bolum="soru" href="?">' + ikon('M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.5h.01M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z') + '<span><b>Soru-Cevap</b><small>Sor, cevaplar kalıcı kalsın</small></span></a>'
@@ -941,8 +1021,8 @@
         + (u ? '<details class="fr-ben"><summary aria-label="Hesabım">' + avatar(u) + '</summary><div><p><b>' + esc(u.rumuz) + '</b></p>'
           + (u.kurucu ? '<p>Kurucu üye</p>' : '') + (u.itibar ? '<p>' + sayi(u.itibar) + ' kez faydalı bulundu</p>' : '')
           + '<a class="fr-ben-bag" data-ic href="?takip=1">Takip ettiklerim</a><a class="fr-ben-bag" data-ic href="?bolum=mesaj">Mesajlarım</a>'
-          + '<label class="fr-anahtar-s"><input type="checkbox" data-ayar="dm_acik"' + (u.dm_acik === 0 ? '' : ' checked') + '><span>Özel mesaj alabilirim</span></label>'
-          + (u.telegram === false ? '' : '<label class="fr-anahtar-s"><input type="checkbox" data-ayar="bildirim"' + (u.bildirim === 0 ? '' : ' checked') + '><span>Telegram\'dan bildirim al</span></label>')
+          + '<label class="fr-anahtar-s"><input type="checkbox" data-ayar="dm_acik"' + (kapali(u.dm_acik) ? '' : ' checked') + '><span>Özel mesaj alabilirim</span></label>'
+          + (u.telegram === false ? '' : '<label class="fr-anahtar-s"><input type="checkbox" data-ayar="bildirim"' + (kapali(u.bildirim) ? '' : ' checked') + '><span>Telegram\'dan bildirim al</span></label>')
           + '<button type="button" class="fr-eylem" data-hesap>Şifre ve kurtarma kodu</button><button type="button" class="fr-eylem" data-cikis>Çıkış</button></div></details>'
           : '<button type="button" class="fr-eylem fr-giris-d" data-giris>Giriş</button>');
       bildirimleriYokla();
@@ -1198,8 +1278,13 @@
       if (!oturum()) return mesajGirisIste(hedef);
       hedef.innerHTML = '<div class="fr-dm-ust"><b>Mesajlar</b><span class="fr-not" data-dm-durum></span></div><div class="fr-dm-liste"><p class="fr-yukleniyor">Yükleniyor…</p></div>';
       var kap = hedef.querySelector('.fr-dm-liste'), u = uye();
-      hedef.querySelector('[data-dm-durum]').textContent = u && u.dm_acik === 0 ? 'Özel mesajların kapalı' : '';
-      api('/ozel').then(function (j) {
+      hedef.querySelector('[data-dm-durum]').textContent = u && kapali(u.dm_acik) ? 'Özel mesajların kapalı' : '';
+      dmListeDoldur(kap, false);
+      listeDurdur = canliTut(function () { dmListeYenile(); }, 60);   // yeni bir kişi yazarsa konuşma listede kendiliğinden belirir
+    }
+    // Konuşma listesini (sol panel) yeniden çeker. İlk mesaj gönderilince ya da yeni konuşma gelince liste güncellenir.
+    function dmListeDoldur(kap, sessiz) {
+      return api('/ozel').then(function (j) {
         var l = j.konusmalar || [];
         ozelSayisiGoster(j.toplam_okunmamis || 0);
         kap.innerHTML = l.length ? l.map(function (k) {
@@ -1207,7 +1292,12 @@
             + '<span class="fr-satir-ic"><span class="fr-oda-ust"><b class="fr-satir-bas">' + esc(k.rumuz) + '</b><time>' + zaman(k.son.olusma) + '</time></span>'
             + '<span class="fr-oda-alt"><span class="fr-oda-ozet">' + (k.son.benden ? 'Sen: ' : '') + esc(k.son.govde) + '</span>' + (k.okunmamis ? '<span class="fr-oda-sayi">' + sayi(k.okunmamis) + '</span>' : '') + '</span></span></a>';
         }).join('') : '<p class="fr-bos">Henüz özel mesajın yok. Bir üyenin adına dokunup "Mesaj gönder" diyebilirsin.</p>';
-      }, function (h) { kap.innerHTML = '<p class="fr-bos">' + esc(h.message) + '</p>'; });
+      }, function (h) { if (!sessiz) kap.innerHTML = '<p class="fr-bos">' + esc(h.message) + '</p>'; });
+    }
+    function dmListeYenile() {
+      if (!oturum()) return;
+      var kap = icerik.querySelector('.fr-dm-liste');   // dar ekranda açık konuşmayla birlikte liste yoktur
+      if (kap) dmListeDoldur(kap, true);
     }
     function ozelKonusma(rumuz, hedef) {
       if (!oturum()) return mesajGirisIste(hedef);
@@ -1238,7 +1328,7 @@
         else if (!yerYazici.querySelector('.fr-yazici')) {
           yerYazici.innerHTML = yaziciHtml('dm-' + rumuz, 'Mesaj yaz…', null, 'sohbet');
           yaziciBagla(kap, 'dm-' + rumuz, function (g) {
-            return api('/ozel/' + encodeURIComponent(rumuz), { yontem: 'POST', govde: { govde: g } }).then(function () { iz('forum_ozel_mesaj'); return yukle(true); }).then(function () { enAltaIn(sc); });
+            return api('/ozel/' + encodeURIComponent(rumuz), { yontem: 'POST', govde: { govde: g } }).then(function () { iz('forum_ozel_mesaj'); return yukle(true); }).then(function () { enAltaIn(sc); dmListeYenile(); });
           });
         }
       }
@@ -1248,7 +1338,7 @@
           return api('/ozel/' + encodeURIComponent(rumuz) + '/yeni?sonra=' + son).then(function (j) {
             var y = (j.mesajlar || []).filter(function (m) { return !mesajlar.some(function (x) { return x.id === m.id; }); });
             if (!y.length) return;
-            mesajlar = mesajlar.concat(y); ciz_(); if (altta) enAltaIn(sc);
+            mesajlar = mesajlar.concat(y); ciz_(); if (altta) enAltaIn(sc); dmListeYenile();
           }, function () {});
         }
         return api('/ozel/' + encodeURIComponent(rumuz)).then(function (j) {
@@ -1296,6 +1386,7 @@
 
     function ciz() {
       if (durdur) { durdur(); durdur = null; }
+      if (listeDurdur) { listeDurdur(); listeDurdur = null; }
       var q = new URLSearchParams(location.search);
       document.title = 'Forum — KPSS Tercihi';
       yenileyiciler = [ciz];
@@ -1392,7 +1483,7 @@
     if (t && t.getAttribute('data-ilan')) ilanBolumu(t);
     var f = document.getElementById('forum');
     if (f) forumSayfasi(f);
-    if (!t && !f) listeRozetleri();
+    if (!t && !f && !window.kitForumTembel) listeRozetleri();   // hesap.js'in tembel yüklediği sayfada yalnız hesap penceresi çalışır
     benYenile();
     if (!f) bildirimleriYokla();   // forum sayfası kendi yoklar
   }

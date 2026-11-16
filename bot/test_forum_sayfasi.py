@@ -53,6 +53,13 @@ class ForumKabugu(unittest.TestCase):
     def test_menude_forum(self):
         self.assertIn('href="../forum/"', su.ust_html('../'))
 
+    def test_ust_cubukta_hesap_girisi(self):
+        # her sayfada hesap.js (ertelenmiş); forum.js'in sürümü tembel yükleme için data-f ile verilir
+        for kok in ('', '../', '../../'):
+            h = su.ust_html(kok)
+            self.assertIn(f'<script src="{kok}hesap.js?v={su.HESAP_SURUM}" data-f="{su.FORUM_SURUM}" defer></script>', h)
+            self.assertIn('class="tb-ikon"', h)   # Profil girişsiz kullanıcı için durur; hesap.js girişliyken gizler
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -6,6 +6,7 @@ import { oturumUret, geciciUret, geciciTgKimligi, geciciGoogleUret, geciciGoogle
 import { sifreYapilandirildi, sifreKurali, sifreOzetle, sifreDogrula, kurtarmaKoduUret, kurtarmaKoduSadelestir, kurtarmaKoduBicimiGecerli } from '../src/sifre.js';
 import { googleJetonuDogrula, googleAnahtarOnbellegiTemizle } from '../src/google.js';
 import { profilTemizle } from '../src/profil.js';
+import { kayitliTemizle, kayitliOku } from '../src/kayitli.js';
 import { ipSinirSifirla, ipOnEki, ipAnahtari, denemeYaz, denemeTemizle, KAYIT_SINIRI } from '../src/hiz.js';
 import { rumuzKat } from '../src/oturum.js';
 
@@ -471,6 +472,73 @@ test('profil: değişmediyse UPDATE yapılmaz, iller tekrarsız, üye başına d
   assert.equal((await cagir(env, 'GET', '/ben', { token })).durum, 200);
 });
 
+// ---------- kayıtlı ilanlar ----------
+const U1 = '9c82aab5-022e-43c8-b7f1-e6cf329d205b', U2 = '11111111-2222-4333-8444-555555555555', SBB = `sbb-${'a1b2c3d4e5f6'.repeat(2)}`, CSB = 'csb-12345';
+
+test('kayıtlı: /ben/kayitli kaydeder, /ben döner; tekrar ve geçersiz kimlikler atılır, bozuk istek 400', async () => {
+  const env = ortam();
+  const k = await kayitOl(env);
+  const token = k.json.oturum;
+  assert.equal((await cagir(env, 'POST', '/ben/kayitli', { govde: { kayitli: [U1] } })).durum, 401);
+  assert.deepEqual((await cagir(env, 'GET', '/ben', { token })).json.kayitli, []);
+  const r = await cagir(env, 'POST', '/ben/kayitli', { token, govde: { kayitli: [U1, SBB, U1, 'x'.repeat(40), '<script>', 5, CSB] } });
+  assert.equal(r.durum, 200);
+  assert.deepEqual(r.json.kayitli, [U1, SBB, CSB]);
+  assert.deepEqual((await cagir(env, 'GET', '/ben', { token })).json.kayitli, [U1, SBB, CSB]);
+  for (const kotu of ['metin', 5, null, { a: 1 }, undefined]) {
+    assert.equal((await cagir(env, 'POST', '/ben/kayitli', { token, govde: { kayitli: kotu } })).durum, 400, JSON.stringify(kotu));
+  }
+  assert.equal((await cagir(env, 'POST', '/ben/kayitli', { token, govde: {} })).durum, 400);
+  assert.deepEqual((await cagir(env, 'GET', '/ben', { token })).json.kayitli, [U1, SBB, CSB]);   // bozuk istekler eskisini bozmadı
+  const bos = await cagir(env, 'POST', '/ben/kayitli', { token, govde: { kayitli: [] } });
+  assert.deepEqual(bos.json.kayitli, []);
+  assert.deepEqual((await cagir(env, 'GET', '/ben', { token })).json.kayitli, []);
+});
+
+test('kayıtlı: 300 kimlik sınırı, değişmediyse UPDATE yapılmaz, üye başına dakikada 10 kayıt', async () => {
+  const env = ortam();
+  const k = await kayitOl(env);
+  const token = k.json.oturum;
+  const degisiklik = () => env.DB.ham.prepare('SELECT total_changes() AS n').get().n;
+  const uuid = (i) => `00000000-0000-4000-8000-${String(i).padStart(12, '0')}`;
+  const tam = Array.from({ length: 300 }, (_, i) => uuid(i));
+  assert.equal((await cagir(env, 'POST', '/ben/kayitli', { token, govde: { kayitli: tam } })).durum, 200);
+  assert.equal((await cagir(env, 'POST', '/ben/kayitli', { token, govde: { kayitli: [...tam, uuid(300)] } })).durum, 400);   // 301
+  assert.equal((await cagir(env, 'POST', '/ben/kayitli', { token, govde: { kayitli: Array.from({ length: 5000 }, (_, i) => uuid(i)) } })).durum, 400);
+  assert.equal((await cagir(env, 'GET', '/ben', { token })).json.kayitli.length, 300);
+  const once = degisiklik();
+  assert.equal((await cagir(env, 'POST', '/ben/kayitli', { token, govde: { kayitli: tam } })).durum, 200);
+  assert.equal(degisiklik(), once);   // aynı liste: satır değişmedi
+  await cagir(env, 'POST', '/ben/kayitli', { token, govde: { kayitli: [U1] } });
+  assert.equal(degisiklik(), once + 1);
+  await cagir(env, 'POST', '/ben/kayitli', { token, govde: { kayitli: [] } });
+  const bosSonrasi = degisiklik();
+  await cagir(env, 'POST', '/ben/kayitli', { token, govde: { kayitli: [] } });
+  assert.equal(degisiklik(), bosSonrasi);   // zaten boşken boş liste yazmaz
+  ipSinirSifirla();
+  let ok = 0, ret = 0;
+  for (let i = 0; i < 12; i++) { const d = (await cagir(env, 'POST', '/ben/kayitli', { token, govde: { kayitli: [i % 2 ? U1 : U2] } })).durum; if (d === 200) ok++; else if (d === 429) ret++; }
+  assert.equal(ok, 10); assert.equal(ret, 2);
+});
+
+test('kayıtlı: bir üyenin listesi ötekine görünmez', async () => {
+  const env = ortam();
+  const a = await uyeGirisi(env, 'Kayitli_A'), b = await uyeGirisi(env, 'Kayitli_B');
+  await cagir(env, 'POST', '/ben/kayitli', { token: a.token, govde: { kayitli: [U1] } });
+  assert.deepEqual((await cagir(env, 'GET', '/ben', { token: b.token })).json.kayitli, []);
+  assert.deepEqual((await cagir(env, 'GET', '/ben', { token: a.token })).json.kayitli, [U1]);
+});
+
+test('kayitliTemizle: kimlik deseni, tekrar, 300 ve 8 KB sınırı', () => {
+  assert.deepEqual(kayitliTemizle([U1, U1, CSB, 'csb-12', 'sbb-zz']), [U1, CSB]);
+  assert.equal(kayitliTemizle('x'), null);
+  assert.equal(kayitliTemizle(Array.from({ length: 301 }, (_, i) => `csb-${100000 + i}`)), null);
+  assert.equal(kayitliTemizle(Array.from({ length: 300 }, (_, i) => `csb-${100000 + i}`)).length, 300);
+  assert.deepEqual(kayitliOku('bozuk{'), []);
+  assert.deepEqual(kayitliOku(null), []);
+  assert.deepEqual(kayitliOku(JSON.stringify([U1])), [U1]);
+});
+
 // ---------- Türkçe harfe duyarsız benzersiz rumuz ----------
 const KAT_ORNEKLERI = ['Çağlar', 'ÇAĞLAR', 'caglar', 'Şükrü.1', 'sukru_1', 'İREM', 'Irmak', 'ırmak', 'IRMAK', 'iremi', 'ışık_x', 'IŞIK.X', 'ÖMER', 'ömer', 'Ümit', 'umit', 'Gül_Şen', 'GUL.SEN', 'ali.veli', 'Ali_Veli', 'ALİ', 'ali', 'Ağrı35', 'agri35', 'ÜÇ_ÖĞ', 'uc.og', 'Ab.c_d1'];
 test('rumuz_kat: JS rumuzKat ile migration SQL aynı sonucu verir', async () => {
@@ -560,7 +628,7 @@ test('bellek içi ön süzgeç D1 yazmasından önce çalışır (kayıt, giriş
   const durumlar = {};
   const uclar = [['/kayit', { rumuz: 'ab', sifre: 'x' }, 10], ['/giris/sifre', { rumuz: 'Yok_Biri', sifre: 'yanlis-sifre-1' }, 20],
     ['/sifre-sifirla', { rumuz: 'Yok_Biri', kod: 'AAAA-AAAA-AAAA', yeni_sifre: SIFRE }, 10], ['/giris/google', { kimlik_jetonu: 'x' }, 20],
-    ['/ben/sifre', { eski: 'x', yeni: SIFRE }, 10], ['/ben/kurtarma-kodu', { sifre: 'x' }, 10], ['/ben/profil', { profil: null }, 30]];
+    ['/ben/sifre', { eski: 'x', yeni: SIFRE }, 10], ['/ben/kurtarma-kodu', { sifre: 'x' }, 10], ['/ben/profil', { profil: null }, 30], ['/ben/kayitli', { kayitli: [] }, 30]];
   for (const [yol, govde, limit] of uclar) {
     ipSinirSifirla();
     let son;

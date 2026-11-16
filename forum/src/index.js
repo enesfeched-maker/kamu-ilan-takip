@@ -2,7 +2,7 @@
 import { KATEGORILER, KATEGORI_KODLARI, jsonYanit, hataYanit, simdi, sabitEsit, gecerliIlanKimligi } from './yardimci.js';
 import { denetle, temizle } from './denetim.js';
 import { oturumUret, oturumCoz, geciciUret, geciciTgKimligi, geciciGoogleKimligi, telegramDogrula, rumuzDogrula } from './oturum.js';
-import { kayit, girisSifre, girisGoogle, sifreSifirla, benSifre, benKurtarmaKodu, benProfil, benProfilKaydet, girisAyari, girisAyariYaniti } from './kayit.js';
+import { kayit, girisSifre, girisGoogle, sifreSifirla, benSifre, benKurtarmaKodu, benProfil, benProfilKayitli, benProfilKaydet, benKayitliKaydet, girisAyari, girisAyariYaniti } from './kayit.js';
 import { baslikHizi, yanitHizi, ipSiniri } from './hiz.js';
 import { asistanYaniti } from './asistan.js';
 import { ilanKaydiGetir } from './ilan.js';
@@ -117,6 +117,7 @@ async function yonlendir(request, env, ctx) {
     if (yol === '/ben/sifre') return benSifre(request, env);
     if (yol === '/ben/kurtarma-kodu') return benKurtarmaKodu(request, env);
     if (yol === '/ben/profil') return benProfilKaydet(request, env);
+    if (yol === '/ben/kayitli') return benKayitliKaydet(request, env);
     if (yol === '/ben/bildirim') return benBildirim(request, env);
     if (yol === '/ben/ayar') return benAyar(request, env);
     if ((m = yol.match(/^\/baslik\/(\d+)\/takip$/))) return takipDegistir(request, env, Number(m[1]));
@@ -266,7 +267,8 @@ async function girisDeneme(request, env) {
 async function benGetir(request, env) {
   const u = await oturumUyesi(request, env);
   if (!u) return hataYanit(401, 'Giriş yapmalısın.');
-  return jsonYanit({ uye: await benNesnesi(env, u), profil: await benProfil(env, u.id) });
+  const { profil, kayitli } = await benProfilKayitli(env, u.id);
+  return jsonYanit({ uye: await benNesnesi(env, u), profil, kayitli });
 }
 async function benNesnesi(env, u) {
   return {

@@ -9,6 +9,7 @@ import {
 } from './hiz.js';
 import { googleJetonuDogrula } from './google.js';
 import { profilTemizle, profilOku, PROFIL_EN_COK } from './profil.js';
+import { kayitliTemizle, kayitliOku } from './kayitli.js';
 import { govdeOku, oturumUyesi, oturumYaniti, uyeOlustur } from './index.js';
 
 const TURNSTILE_ADRESI = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
@@ -230,6 +231,30 @@ export async function girisGoogle(request, env) {
 export async function benProfil(env, uyeId) {
   const s = await env.DB.prepare('SELECT profil FROM uyeler WHERE id = ?').bind(uyeId).first();
   return profilOku(s && s.profil);
+}
+// /ben için tek okumada profil ve kayıtlı ilanlar.
+export async function benProfilKayitli(env, uyeId) {
+  const s = await env.DB.prepare('SELECT profil, kayitli FROM uyeler WHERE id = ?').bind(uyeId).first();
+  return { profil: profilOku(s && s.profil), kayitli: kayitliOku(s && s.kayitli) };
+}
+// Kayıtlı ilanlar: profille aynı tutumluluk (değişmediyse yazma yok, IP ve üye başına bellek içi sınır).
+export async function benKayitliKaydet(request, env) {
+  const { ret: kaba } = await kabaSinir(request, 'kayitli', 30);
+  if (kaba) return kaba;
+  const u = await oturumUyesi(request, env);
+  if (!u) return hataYanit(401, 'Giriş yapmalısın.');
+  if (!ipSiniri(`kayitli-uye:${u.id}`, simdi(), 10, 60)) return cokDeneme();   // üye başına dakikada 10 kayıt
+  const g = await govdeOku(request);
+  if (!g || !Array.isArray(g.kayitli)) return hataYanit(400, 'Geçersiz istek.');
+  const k = kayitliTemizle(g.kayitli);
+  if (!k) return hataYanit(400, 'Kayıtlı ilan listesi geçersiz ya da çok büyük.');
+  if (!k.length) {
+    await env.DB.prepare('UPDATE uyeler SET kayitli = NULL WHERE id = ? AND kayitli IS NOT NULL').bind(u.id).run();
+    return jsonYanit({ kayitli: [] });
+  }
+  const m = JSON.stringify(k);
+  await env.DB.prepare('UPDATE uyeler SET kayitli = ? WHERE id = ? AND kayitli IS NOT ?').bind(m, u.id, m).run();   // değişmediyse yazma yok
+  return jsonYanit({ kayitli: k });
 }
 export async function benProfilKaydet(request, env) {
   const { ret: kaba } = await kabaSinir(request, 'profil', 30);

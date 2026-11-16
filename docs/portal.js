@@ -57,7 +57,10 @@ const rowOf=i=>i.L||fallbackModel(i);
 let alias=new Map(),gizli=new Set(),idKey=new Map();
 const idsOf=o=>[o.id,...(alias.get(o.key)||[])];
 const isSaved=o=>idsOf(o).some(x=>saved.has(x));
-function save(i){const was=isSaved(i);A('tikla',{a:was?'kaydi_sil':'kaydet',h:i.key});if(was){for(const x of idsOf(i)){saved.delete(x);compared.delete(x);}}else saved.add(i.id);const ok=writeStore('kit-saved',[...saved]);render();const full=items.find(x=>x.id===i.id);if(location.hash.startsWith('#ilan/')&&full)showDetail(full);notify(ok?(was?'İlan kaydedilenlerden kaldırıldı.':'İlan bu tarayıcıya kaydedildi.'):'Tarayıcı depolaması kapalı; seçim yalnızca bu oturumda saklanır.');}
+/* Kayıtlı ilanlar üye hesabıyla eşlenir (forum.js/hesap.js): her değişiklik bildirilir (giriş yoksa hiçbir şey yapmaz); hesaptan gelen liste olayla alınır. */
+function kayitliDegisti(){try{if(window.kitKayitliGonder)window.kitKayitliGonder();}catch{}}
+function hesapta(){try{return !!readStore('fr-oturum',null)&&readStore('kit-saved-uye',null)!==null;}catch{return false;}}
+function save(i){const was=isSaved(i);A('tikla',{a:was?'kaydi_sil':'kaydet',h:i.key});if(was){for(const x of idsOf(i)){saved.delete(x);compared.delete(x);}}else saved.add(i.id);const ok=writeStore('kit-saved',[...saved]);kayitliDegisti();render();const full=items.find(x=>x.id===i.id);if(location.hash.startsWith('#ilan/')&&full)showDetail(full);notify(ok?(was?'İlan kaydedilenlerden kaldırıldı.':hesapta()?'İlan hesabına kaydedildi.':'İlan bu tarayıcıya kaydedildi.'):'Tarayıcı depolaması kapalı; seçim yalnızca bu oturumda saklanır.');}
 function saveButton(i){const on=isSaved(i),b=E('button','kaydet'+(on?' dolu':''));b.type='button';b.setAttribute('aria-label',(on?'Kaydı kaldır: ':'İlanı kaydet: ')+(i.manset||title(i)));b.setAttribute('aria-pressed',String(on));b.innerHTML=IC.kayit;b.onclick=e=>{e.stopPropagation();save(i);};return b;}
 function notify(text){$('toast').textContent=text;$('toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').hidden=true,3500);}
 function pickImages(g){const o={};if(!g)return o;if(IMG_PATH.test(g.kart||''))o.kart=g.kart,o.kart_yukseklik=Number(g.kart_yukseklik)||900;if(IMG_PATH.test(g.logo||''))o.logo=g.logo;if(Array.isArray(g.meslek)){const m=g.meslek.filter(f=>typeof f==='string'&&MESLEK.test(f)).slice(0,3);if(m.length)o.meslek=m;}if(typeof g.kurum_slug==='string'&&g.kurum_slug.length<=80&&SLUG.test(g.kurum_slug))o.kurum_slug=g.kurum_slug;for(const [k,max] of [['kurum_sayisi',100000],['ek',1000],['toplam',20000]])if(Number.isInteger(g[k])&&g[k]>0&&g[k]<max)o[k]=g[k];for(const k of ['manset','alt'])if(typeof g[k]==='string'&&g[k].trim())o[k]=g[k].slice(0,160);return o;}
@@ -858,6 +861,7 @@ window.kitTemaUygula=applyTheme;applyTheme();$('year').textContent=new Date().ge
 profil=validProfile(readStore('kit-profil',null));
 /* Hesaba bağlı profil: üye girişinden sonra sunucudaki profil kit-profil'i değiştirirse (forum.js) ekran yenilenir; sitedeki her profil değişikliği forum.js'e bildirilir (giriş yoksa hiçbir şey yapmaz). */
 window.addEventListener('kit-profil-sunucudan',()=>{profil=validProfile(readStore('kit-profil',null));if(loaded&&!$('profil-dialog').open)render();});
+window.addEventListener('kit-kayitli-sunucudan',()=>{const l=readStore('kit-saved',[]);saved=new Set((Array.isArray(l)?l:[]).filter(s=>typeof s==='string'&&s.length>0&&s.length<=80));for(const x of [...compared])if(!saved.has(x))compared.delete(x);if(loaded||listeLoaded)render();});
 sonZiyaret=frozenVisit();
 let profilAc=false;
 try{const u=new URL(location.href);if(u.searchParams.get('g')==='bugun')bekleyenKaydirma='bugun';if(u.searchParams.has('g')||u.searchParams.has('profil')){profilAc=u.searchParams.get('profil')==='1';u.searchParams.delete('g');u.searchParams.delete('profil');history.replaceState(null,'',u.pathname+u.search+u.hash);}}catch{}

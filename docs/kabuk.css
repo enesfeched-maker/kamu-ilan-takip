@@ -108,4 +108,33 @@
 .tb-ac::after{content:"";position:absolute;top:7px;right:7px;width:8px;height:8px;border-radius:50%;background:var(--kb-lime);box-shadow:0 0 0 2px var(--kb-zemin)}
 .tb.acik .tb-ac::after{display:none}
 @media (max-width:1020px){.tb-nav>a.tb-yeni{margin:6px 0;border-radius:10px;padding:13px 12px;border-bottom:0;justify-content:space-between}}
-@media (prefers-reduced-motion:reduce){.tb-nav>a.tb-yeni{animation:none}}
+@media (prefers-reduced-motion:reduce){.tb-nav>a.tb-yeni{animation:none}}
+/* ---------- Hesap girişi (hesap.js): giriş yoksa "Giriş yap", varsa avatar ve küçük menü ---------- */
+.tb-nav .tb-ikon[hidden]{display:none}
+.hs{position:relative;display:inline-flex}
+.hs-giris,.hs-av{display:inline-flex;align-items:center;min-height:44px;border:0;background:transparent;color:var(--kb-yazi);font:inherit;cursor:pointer;border-radius:9px}
+.hs-giris{padding:0 14px;border:1px solid var(--kb-cizgi);font-size:14px;font-weight:600;white-space:nowrap}
+.hs-giris:hover,.hs-av:hover{background:var(--kb-zemin-2)}
+.hs-av{position:relative;gap:10px;min-width:44px;padding:0 6px;justify-content:center}
+.hs-d{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;flex:none;font-size:14px;font-weight:700;background:hsl(var(--h,90) 38% 30%);color:hsl(var(--h,90) 75% 90%)}
+.hs-d svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+.hs-ad{display:none}
+.hs-av .tb-sayi{position:absolute;top:3px;right:0;min-width:16px;height:16px;padding:0 4px;font-size:10px}
+.hs-menu{position:absolute;right:0;top:calc(100% + 6px);z-index:45;width:248px;padding:6px;border:1px solid var(--kb-cizgi);border-radius:12px;background:var(--kb-zemin-2);box-shadow:0 18px 30px -14px rgba(0,0,0,.6)}
+.hs-menu[hidden]{display:none}
+.hs-kim{margin:0 0 4px;padding:8px 10px 10px;border-bottom:1px solid var(--kb-cizgi);color:var(--kb-yazi);font-size:15px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hs-menu a,.hs-menu button{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-height:44px;margin:0;padding:0 10px;border:0;border-radius:8px;background:transparent;color:var(--kb-yazi);font:inherit;font-size:15px;font-weight:500;line-height:1.2;text-align:left;text-decoration:none;cursor:pointer}
+.hs-menu a:hover,.hs-menu button:hover{background:var(--kb-zemin)}
+.hs-menu .hs-cikis{margin-top:4px;border-top:1px solid var(--kb-cizgi);border-radius:0 0 8px 8px;color:var(--kb-soluk)}
+.hs-toast{position:fixed;left:50%;bottom:20px;z-index:70;transform:translateX(-50%);max-width:calc(100% - 32px);padding:11px 16px;border-radius:10px;background:#0D1A1B;color:#EAF1EC;font-size:14px;box-shadow:0 8px 24px -12px rgba(0,0,0,.5)}
+.hs-toast[hidden]{display:none}
+@media (max-width:1020px){
+  .hs{display:block;border-bottom:1px solid var(--kb-cizgi)}
+  .hs-giris{display:flex;width:100%;min-height:48px;padding:0 4px;border:0;border-bottom:1px solid var(--kb-cizgi);border-radius:0;color:var(--kb-soluk)}
+  .hs-av{display:flex;width:100%;min-height:52px;padding:4px;justify-content:flex-start;border-radius:0}
+  .hs-ad{display:inline;color:var(--kb-soluk);font-size:14px;font-weight:600}
+  .hs-av .tb-sayi{top:6px;left:30px;right:auto}
+  .hs-menu{position:static;width:auto;margin:0 0 8px;padding:0 0 0 44px;border:0;background:transparent;box-shadow:none}
+  .hs-kim{display:none}
+  .hs-menu .hs-cikis{border-radius:0}
+}

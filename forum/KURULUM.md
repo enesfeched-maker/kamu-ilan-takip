@@ -1,5 +1,7 @@
 # Forum API kurulumu
 
+**Hazir betik:** `powershell -ExecutionPolicy Bypass -File .\yayinla.ps1 -Kuru` (once ne yapacagini gosterir), sonra `-Kuru` olmadan. Asagidaki adimlari idempotent sekilde uygular (D1, gocler, sirlar, dagitim, duman testi); sirlari `%USERPROFILE%\.kpss-forum-sirlari.txt` dosyasina yedekler.
+
 1. D1 olustur: `npx wrangler d1 create kpss-forum` ; cikan `database_id` degerini `wrangler.toml` icindeki BURAYA-ID yerine yaz.
 2. Tablolari kur: `npx wrangler d1 execute kpss-forum --remote --file=schema.sql --config wrangler.toml`
 3. Sirlari ekle (her biri icin degeri sorar):

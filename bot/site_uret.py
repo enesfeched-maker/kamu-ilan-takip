@@ -18,10 +18,11 @@ TR = timezone(timedelta(hours=3))
 KART_GENISLIK = 720
 LOGO_BOYUT = 128
 EN_COK_LOGO_INDIRME = 150
-CSS_SURUM = 23
+CSS_SURUM = 24
 LOGO_SURUM = 2
 ACIK_ZEMIN, KOYU_ZEMIN = '#F6F6F1', '#0D0E0C'
-FORUM_SURUM = 11   # docs/forum.js + docs/forum.css önbellek sürümü
+FORUM_SURUM = 12   # docs/forum.js + docs/forum.css önbellek sürümü
+HESAP_SURUM = 1   # docs/hesap.js (üst çubuktaki hesap girişi) önbellek sürümü
 ANALIZ_SURUM = 3  # docs/a.js (çerezsiz ziyaret istatistiği) önbellek sürümü
 # <head> içinde, theme-color etiketinden sonra: kit-theme (elle seçim) > sistem koyu tercihi > gece 20:00-07:00 koyu > açık.
 TEMA_BETIGI = ('<script>try{var r=document.documentElement,O=window.kitOto=function(){try{if(matchMedia("(prefers-color-scheme: dark)").matches)return!0}catch(e){}var h=new Date().getHours();return h>=20||h<7},K=window.kitKoyu=function(){var s,o=O();try{s=JSON.parse(localStorage.getItem("kit-theme"))}catch(e){}if(s&&typeof s==="object"&&s.a===o&&(s.t==="dark"||s.t==="light"))return s.t==="dark";if(s!=null)try{localStorage.removeItem("kit-theme")}catch(e){}return o},U=function(){if(window.kitTemaUygula)return window.kitTemaUygula();var d=K(),m=document.querySelector("meta[name=theme-color]");r.dataset.theme=d?"dark":"light";if(m)m.content=d?"' + KOYU_ZEMIN + '":"' + ACIK_ZEMIN + '"},C=function(){if((K()?"dark":"light")!==r.dataset.theme)U()};U();setInterval(C,3e5);try{matchMedia("(prefers-color-scheme: dark)").addEventListener("change",C)}catch(e){}}catch(e){document.documentElement.dataset.theme="light"}</script>')
@@ -43,7 +44,7 @@ def ikonlar(kok):
             f'<link rel="manifest" href="{kok}manifest.webmanifest">')
 
 
-KABUK_SURUM = 5
+KABUK_SURUM = 6
 TG_DOLU = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.5 3.6 2.9 10.8c-1.1.4-1.1 1.2-.2 1.5l4.8 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.4l2.4-2.3 4.9 3.6c.9.5 1.5.2 1.8-.8l3.2-15.1c.3-1.3-.5-1.9-1.4-1.6zM9 13.4l9.3-5.9c.4-.3.8-.1.5.2l-7.9 7.1-.3 3.4z"/></svg>'
 HAMBURGER_IKON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>'
 # Mobil menü düğmesi: iç sayfaların kendi betiğine bağlı kalmasın diye üst barın hemen ardından çalışır.
@@ -79,7 +80,7 @@ def ust_html(kok, aktif=''):
             f'<nav class="tb-nav" id="tb-nav" aria-label="Ana menü">{bagla}<span class="tb-ayrac" aria-hidden="true"></span>'
             f'<a class="tb-ikon" href="{kok}?profil=1" aria-label="Profil">{KISI_IKON}<span class="tb-etiket">Profil</span></a>'
             f'<span class="tb-tema"><span class="tb-tema-et">Tema</span><button type="button" class="anahtar" id="theme" aria-pressed="false" aria-label="Koyu temaya geç"><span class="bulut"></span><span class="yildiz y1"></span><span class="yildiz y2"></span><span class="yildiz y3"></span><span class="top"></span></button></span>'
-            f'</nav></div></header>{MENU_BETIGI}')
+            f'</nav></div></header>{MENU_BETIGI}<script src="{kok}hesap.js?v={HESAP_SURUM}" data-f="{FORUM_SURUM}" defer></script>')
 
 
 REKLAM_BETIGI = '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8335827974832277" crossorigin="anonymous"></script>'
