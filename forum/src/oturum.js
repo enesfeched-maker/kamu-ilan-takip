@@ -25,23 +25,37 @@ export async function jetonCoz(env, jeton, simdi) {
 export const oturumUret = (env, uyeId, simdi, surum = 0) => jetonImzala(env, { u: uyeId, v: surum, s: simdi + OTURUM_SURESI });
 export async function oturumCoz(env, jeton, simdi) {
   const y = await jetonCoz(env, jeton, simdi);
-  if (!y || !Number.isInteger(y.u) || y.t !== undefined || y.g !== undefined) return null;
+  if (!y || !Number.isInteger(y.u) || y.t !== undefined || y.g !== undefined || y.e !== undefined) return null;
   return { id: y.u, surum: Number.isInteger(y.v) ? y.v : 0 };
 }
 export const geciciUret = (env, tgId, simdi) => jetonImzala(env, { t: tgId, s: simdi + GECICI_SURESI });
-export const geciciGoogleUret = (env, sub, simdi) => jetonImzala(env, { g: sub, s: simdi + GECICI_SURESI });
-// Üç jeton türü birbirine karıştırılamaz: oturum {u}, Telegram geçici {t}, Google geçici {g}; her biri yalnız kendi alanını taşır.
+// m: Google'ın doğrulanmış e-postası (isteğe bağlı); üyelik açılırken hesaba yazılır, böylece sonradan e-posta koduyla da girilebilir.
+export const geciciGoogleUret = (env, sub, simdi, eposta) => jetonImzala(env, eposta ? { g: sub, m: eposta, s: simdi + GECICI_SURESI } : { g: sub, s: simdi + GECICI_SURESI });
+// e: kodu doğrulanmış e-posta adresi (küçük harf); rumuz seçilince hesap bu adresle açılır.
+export const geciciEpostaUret = (env, eposta, simdi) => jetonImzala(env, { e: eposta, s: simdi + GECICI_SURESI });
+// Dört jeton türü birbirine karıştırılamaz: oturum {u}, Telegram geçici {t}, Google geçici {g}, e-posta geçici {e}; her biri yalnız kendi alanını taşır.
+const BASKA = { u: ['t', 'g', 'e'], t: ['u', 'g', 'e'], g: ['u', 't', 'e'], e: ['u', 't', 'g'] };
+const saf = (y, tur) => BASKA[tur].every((a) => y[a] === undefined);
 export async function oturumUyeKimligi(env, jeton, simdi) {
   const y = await jetonCoz(env, jeton, simdi);
-  return y && Number.isInteger(y.u) && y.t === undefined && y.g === undefined ? y.u : null;
+  return y && Number.isInteger(y.u) && saf(y, 'u') ? y.u : null;
 }
 export async function geciciTgKimligi(env, jeton, simdi) {
   const y = await jetonCoz(env, jeton, simdi);
-  return y && Number.isInteger(y.t) && y.u === undefined && y.g === undefined ? y.t : null;
+  return y && Number.isInteger(y.t) && saf(y, 't') ? y.t : null;
 }
 export async function geciciGoogleKimligi(env, jeton, simdi) {
   const y = await jetonCoz(env, jeton, simdi);
-  return y && typeof y.g === 'string' && /^\d{1,40}$/.test(y.g) && y.u === undefined && y.t === undefined ? y.g : null;
+  return y && typeof y.g === 'string' && /^\d{1,40}$/.test(y.g) && saf(y, 'g') ? y.g : null;
+}
+// Google geçici jetonundaki e-posta (yoksa null). Önce geciciGoogleKimligi ile jeton türü doğrulanmış olmalı.
+export async function geciciGoogleEposta(env, jeton, simdi) {
+  const y = await jetonCoz(env, jeton, simdi);
+  return y && typeof y.g === 'string' && saf(y, 'g') && typeof y.m === 'string' && y.m.length <= 254 ? y.m : null;
+}
+export async function geciciEpostaKimligi(env, jeton, simdi) {
+  const y = await jetonCoz(env, jeton, simdi);
+  return y && typeof y.e === 'string' && y.e.length <= 254 && /^[^\s@]+@[^\s@]+$/.test(y.e) && saf(y, 'e') ? y.e : null;
 }
 
 // Telegram Login Widget: https://core.telegram.org/widgets/login#checking-authorization

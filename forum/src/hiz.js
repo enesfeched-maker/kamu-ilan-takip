@@ -39,6 +39,11 @@ export const KAYIT_SINIRI = { tur: 'kayit', en_cok: 5, pencere: 3600 };
 export const GIRIS_IP_SINIRI = { tur: 'giris_ip', en_cok: 10, pencere: 900 };
 export const GIRIS_RUMUZ_IP_SINIRI = { tur: 'giris_rumuz_ip', en_cok: 10, pencere: 900 };   // rumuz + IP: başkasının rumuzunu kilitlemeyi zorlaştırır
 export const GIRIS_RUMUZ_SINIRI = { tur: 'giris_rumuz', en_cok: 50, pencere: 900 };         // yalnız rumuz: dağıtık saldırı için çok yüksek eşik
+// E-posta kodu gönderimi (src/eposta.js). Sınıra ulaşan istekler yazma yapmaz; gönderimler sayılır.
+export const EPOSTA_IP_SINIRI = { tur: 'eposta_ip', en_cok: 10, pencere: 3600 };          // IP başına saatte 10 kod isteği
+export const EPOSTA_ADRES_SINIRI = { tur: 'eposta_adres', en_cok: 5, pencere: 3600 };      // adres başına saatte 5 kod
+export const SIFIRLA_SAAT_SINIRI = { tur: 'sifirla_istek', en_cok: 5, pencere: 3600 };     // şifre sıfırlama isteği (rumuz ya da adres) başına saatte 5
+export const SIFIRLA_BEKLEME = { tur: 'sifirla_istek', en_cok: 1, pencere: 60 };           // ... ve en çok dakikada 1 (aynı tür; hesap var olsa da olmasa da aynı davranır)
 const TEMIZLIK_OMRU = 3600;   // en uzun pencere
 
 // Yalnız CF-Connecting-IP güvenilir (X-Forwarded-For istemci tarafından yazılabilir). Başlık yoksa tek ortak "yok" kovası, normal sınırlarla.

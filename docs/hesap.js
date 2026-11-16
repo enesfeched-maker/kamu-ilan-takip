@@ -147,6 +147,7 @@
         + '<a href="' + KOK + 'forum/" data-hs="forum">Forum</a>'
         + '<a href="' + KOK + 'forum/?bolum=mesaj" data-hs="mesaj">Mesajlar<b class="tb-sayi" data-ozel-sayi hidden></b></a>'
         + '<button type="button" data-hs="ayar">Bildirim ayarları</button>'
+        + '<button type="button" data-hs="hesap">Hesap ayarları</button>'
         + '<button type="button" class="hs-cikis" data-hs="cikis">Çıkış</button></div>';
       var d = kap.querySelector('.hs-av'), m = kap.querySelector('.hs-menu');
       d.onclick = function () {
@@ -157,7 +158,7 @@
         var x = e.target.closest ? e.target.closest('[data-hs]') : null;
         if (!x) return;
         var ne = x.getAttribute('data-hs');
-        if (ne === 'ayar' || ne === 'cikis') { menuKapat(false); cekmeceKapat(); forumdan(ne); return; }
+        if (ne === 'ayar' || ne === 'hesap' || ne === 'cikis') { menuKapat(false); cekmeceKapat(); forumdan(ne); return; }
         var np = ne === 'profil' && document.getElementById('nav-profile');   // ana sayfada profil ekranı yerinde açılır
         if (np) { e.preventDefault(); menuKapat(false); cekmeceKapat(); np.click(); return; }
         menuKapat(false); cekmeceKapat();   // bağlantılar normal gezinir

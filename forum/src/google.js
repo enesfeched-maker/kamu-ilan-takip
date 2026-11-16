@@ -1,5 +1,6 @@
-// Google Identity Services kimlik jetonu (RS256 JWT) doğrulaması. Yalnız `sub` kullanılır; e-posta ve ad saklanmaz.
+// Google Identity Services kimlik jetonu (RS256 JWT) doğrulaması. Kullanılan alanlar: `sub` ve doğrulanmış `email`; ad ve fotoğraf saklanmaz.
 import { b64uCoz, b64uMetin } from './yardimci.js';
+import { epostaNormalle } from './epostabicim.js';
 
 const JWKS_ADRESI = 'https://www.googleapis.com/oauth2/v3/certs';
 const ONBELLEK_ANAHTARI = 'https://forum-api.kpsstercihi.com/_onbellek/google-jwks';
@@ -77,5 +78,7 @@ export async function googleJetonuDogrula(env, jeton, simdi) {
   if (typeof yuk.iat !== 'number' || yuk.iat - SAPMA > simdi) return { tamam: false, neden: 'gelecek' };
   if (yuk.email_verified !== true && yuk.email_verified !== 'true') return { tamam: false, neden: 'eposta' };
   if (typeof yuk.sub !== 'string' || !/^\d{1,40}$/.test(yuk.sub)) return { tamam: false, neden: 'sub' };
-  return { tamam: true, sub: yuk.sub };
+  // doğrulanmış e-posta (yukarıda email_verified sınandı): kayıtlı e-posta hesaplarıyla eşleştirmek ve sonradan e-posta koduyla girebilmek için
+  const eposta = typeof yuk.email === 'string' ? epostaNormalle(yuk.email) : null;
+  return eposta ? { tamam: true, sub: yuk.sub, eposta } : { tamam: true, sub: yuk.sub };
 }

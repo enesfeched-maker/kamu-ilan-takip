@@ -70,6 +70,10 @@ export const kurtarmaKoduBicimiGecerli = (kod) => /^[0-9A-HJKMNP-TV-Z]{12}$/.tes
 export async function kurtarmaOzeti(env, kod) {
   return hex(await hmacSha256(biberi(env), `kurtarma:${kurtarmaKoduSadelestir(kod)}`));
 }
+// E-posta kodları ve sayaç anahtarları: aynı biberle HMAC (adresin ve kodun kendisi veritabanına yazılmaz; ayrı alanlar ayrı önek taşır).
+export async function biberliOzet(env, alan, metin) {
+  return hex(await hmacSha256(biberi(env), `${alan}:${metin}`));
+}
 export async function kurtarmaDogrula(env, kod, ozet) {
   const bulunan = await kurtarmaOzeti(env, kod);
   return typeof ozet === 'string' && ozet.length > 0 && sabitEsit(bulunan, ozet);

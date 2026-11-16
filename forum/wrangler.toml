@@ -30,6 +30,11 @@ GOOGLE_ISTEMCI_KIMLIGI = "518005490003-av27v4bupeul4po4a6mihi5bdtd7fejt.apps.goo
 #   YONETICI_ANAHTARI   - X-Yonetici basligi icin yonetim anahtari
 #   SIFRE_BIBERI        - ZORUNLU (sifre/kurtarma kodu icin; OTURUM_SIRRI'ndan farkli uzun rastgele metin). Yoksa sifreli uyelik kapali.
 #   TURNSTILE_GIZLI     - istege bagli (robot kontrolu); TURNSTILE_SITE ve GOOGLE_ISTEMCI_KIMLIGI [vars] olarak tanimlanir
+#   BREVO_ANAHTARI      - istege bagli (e-posta ile giris kodu / sifre sifirlama): Brevo API anahtari. Sahibi KENDISI ekler:
+#                         npx wrangler secret put BREVO_ANAHTARI --config wrangler.toml   (yayinla.ps1 uretmez, sormaz; yalnizca tanimli mi diye raporlar)
+#                         Yoksa e-posta ile giris gizlenir (/giris/ayar eposta:false). Ucretsiz plan gunde 300 e-posta; kod 280'de durur.
+#   EPOSTA_GONDEREN     - istege bagli [vars]: gonderen adresi (Brevo'da dogrulanmis olmali); varsayilan bildirim@kpsstercihi.com
 # Yerel deneme: wrangler dev --local --var ORTAM:yerel --var OTURUM_SIRRI:deneme --var SIFRE_BIBERI:deneme --var YONETICI_ANAHTARI:deneme
 # (ORTAM=yerel: /giris/deneme acilir, localhost kokenleri izinli olur, Telegram bildirimi gonderilmez.
+#  BREVO_ANAHTARI yokken e-posta kodu gonderilmez, wrangler konsoluna "[eposta-gelistirme] ..." olarak yazilir.
 #  Uretimde ORTAM tanimli degildir.)

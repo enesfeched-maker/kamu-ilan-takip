@@ -81,7 +81,7 @@
       .then(function (r) {
         return r.json().catch(function () { return {}; }).then(function (j) {
           if (r.status === 401 && o) { yaz('fr-oturum', null); yaz('fr-uye', null); hesapOlayi(); }
-          if (!r.ok) { var e = new Error(j.hata || 'Bir sorun oluştu, biraz sonra yeniden dene.'); e.durum = r.status; throw e; }
+          if (!r.ok) { var e = new Error(j.hata || 'Bir sorun oluştu, biraz sonra yeniden dene.'); e.durum = r.status; e.veri = j; throw e; }
           return j;
         });
       }, function () { throw new Error('Foruma şu an ulaşılamıyor.'); });
@@ -258,6 +258,30 @@
   }
   var RUMUZ_OZ = 'type="text" name="username" maxlength="20" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" required';
   function sifreOz(yeni) { return 'type="password" name="' + (yeni ? 'new-password' : 'password') + '" maxlength="72" autocomplete="' + (yeni ? 'new-password' : 'current-password') + '" required'; }
+  var EPOSTA_OZ = 'type="email" name="email" maxlength="254" autocomplete="email" inputmode="email" autocapitalize="none" autocorrect="off" spellcheck="false" required';
+  var KOD_OZ = 'type="text" name="kod" maxlength="12" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="123456" required';
+  function rakamlar(v) { return String(v || '').replace(/\D/g, '').slice(0, 6); }
+  // Kod alanı: yalnız rakam, yapıştırılan "123 456" da kabul; altı hane dolunca (yapıştırma dahil) formu kendisi gönderir.
+  function kodAlaniBagla(f, girdi_, d) {
+    girdi_.addEventListener('input', function () {
+      var r = rakamlar(girdi_.value);
+      if (girdi_.value !== r) girdi_.value = r;
+      if (r.length === 6 && !d.disabled) { if (f.requestSubmit) f.requestSubmit(); else f.dispatchEvent(new Event('submit', { cancelable: true })); }
+    });
+  }
+  // Yeniden gönder düğmesi: sn saniye geri sayar, düğme sayfadan kalkınca durur. Dönen işlev sayımı yeniden başlatır.
+  function geriSayim(d, yazi, ilk) {
+    var son = 0, z = 0;
+    function tik() {
+      if (!document.body.contains(d)) { clearInterval(z); return; }
+      var kalan = Math.ceil((son - Date.now()) / 1000);
+      if (kalan > 0) { d.disabled = true; d.textContent = yazi + ' (' + kalan + ')'; }
+      else { clearInterval(z); d.disabled = false; d.textContent = yazi; }
+    }
+    function baslat(sn) { clearInterval(z); son = Date.now() + (sn || 60) * 1000; tik(); z = setInterval(tik, 500); }
+    baslat(ilk);
+    return baslat;
+  }
 
   // Giriş ve hesap pencerelerinin ortak kabuğu: odak tuzağı, Escape, kilit (kurtarma kodu görünürken kapanmaz).
   function kabukAc() {
@@ -344,8 +368,8 @@
       function son() { if (tamam) return; tamam = true; k.kapat(); var f = girisSonrasi; girisSonrasi = null; if (f) f(); else yenile(); }
       Promise.race([bekle || Promise.resolve(), new Promise(function (ok) { setTimeout(ok, 1500); })]).then(son, son);
     }
-    function girdi(j, kodBasligi) {
-      if (j.yeni) return rumuzSor(j.gecici);
+    function girdi(j, kodBasligi, kaynak) {
+      if (j.yeni) return rumuzSor(j.gecici, kaynak);
       var bekle = oturumAc(j);
       if (j.kurtarma_kodu) return k.kodGoster(j.kurtarma_kodu, kodBasligi || 'Kurtarma kodun hazır', function () { bitir(bekle); });
       bitir(bekle);
@@ -364,8 +388,10 @@
     function turnstileSifirla() { jeton = ''; try { if (window.turnstile && tsKimlik !== null) window.turnstile.reset(tsKimlik); } catch (e) {} }
     function turnstileKaldir() { try { if (window.turnstile && tsKimlik !== null) window.turnstile.remove(tsKimlik); } catch (e) {} tsKimlik = null; jeton = ''; }
 
-    function rumuzSor(gecici) {
-      k.ciz('Bir rumuz seç', '3–20 karakter. Sonradan değişmez, sitede yalnız bu görünür.',
+    function rumuzSor(gecici, kaynak) {
+      k.ciz('Bir rumuz seç', kaynak === 'eposta'
+        ? 'E-postan doğrulandı. Forumda görünecek bir rumuz seç: 3–20 karakter, sonradan değişmez. E-posta adresin kimseye gösterilmez.'
+        : '3–20 karakter. Sonradan değişmez, sitede yalnız bu görünür.',
         '<form class="fr-g-form" novalidate>' + girisAlani('rumuz', 'Rumuz', RUMUZ_OZ.replace('autocomplete="username"', 'autocomplete="nickname"').replace('name="username"', 'name="rumuz"'), 'ör. memuradayi35')
         + '<p class="fr-hata" role="alert" hidden></p><button class="fr-g-btn" type="submit">Devam et</button></form>');
       var f = govde.querySelector('form'), g = f.querySelector('input'), d = f.querySelector('button[type=submit]');
@@ -376,15 +402,70 @@
       };
     }
 
-    function unuttum() {
+    // Şifre sıfırlama: e-posta açıksa önce e-posta kodu yolu; kurtarma kodu yolu her zaman durur (e-postası olmayan üyeler için).
+    function unuttum() { if (ayar.eposta) unuttumEposta(); else unuttumKod(); }
+    function unuttumEposta(kim0) {
+      turnstileKaldir();
+      k.ciz('Şifreni sıfırla', 'Hesabında e-posta adresi varsa ona 6 haneli bir kod göndeririz.',
+        '<form class="fr-g-form" novalidate>' + girisAlani('kim', 'Rumuz ya da e-posta adresi', 'type="text" name="username" maxlength="254" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" required')
+        + (ayar.turnstile_site ? '<div class="fr-g-turnstile" role="group" aria-label="Robot kontrolü"></div>' : '')
+        + '<p class="fr-hata" role="alert" hidden></p><button class="fr-g-btn" type="submit">Kod gönder</button>'
+        + '<button type="button" class="fr-g-bag" data-kod>Kurtarma kodum var</button><button type="button" class="fr-g-bag" data-geri>Girişe dön</button></form>');
+      var f = govde.querySelector('form'), d = f.querySelector('button[type=submit]');
+      if (kim0) f.querySelector('#fr-g-kim').value = kim0;
+      f.querySelector('[data-geri]').onclick = function () { rumuzEkrani('giris'); };
+      f.querySelector('[data-kod]').onclick = unuttumKod;
+      f.onsubmit = function (e) {
+        e.preventDefault(); k.hata('');
+        var kim = f.querySelector('#fr-g-kim').value.trim();
+        if (!kim) return k.hata('Rumuzunu ya da e-posta adresini yaz.');
+        if (ayar.turnstile_site && !jeton) return k.hata('Önce robot kontrolünü tamamla.');
+        k.mesgul(d, true, 'Gönderiliyor…');
+        var g = { turnstile: jeton || undefined }; g[kim.indexOf('@') > 0 ? 'eposta' : 'rumuz'] = kim;
+        api('/sifre-sifirla/eposta', { yontem: 'POST', govde: g }).then(function (j) { unuttumEpostaKod(kim, (j && j.bekle) || 60); }, function (h) { k.hata(h.message); turnstileSifirla(); }).then(function () { k.mesgul(d, false); });
+      };
+      turnstileKur();
+    }
+    function unuttumEpostaKod(kim, bekle) {
+      turnstileKaldir();
+      k.ciz('Kodu gir', 'Hesabın varsa ve e-posta adresi kayıtlıysa 6 haneli bir kod gönderdik. 10 dakika geçerli, gelmediyse gereksiz klasörüne de bak.',
+        '<form class="fr-g-form" novalidate>' + girisAlani('kod', '6 haneli kod', KOD_OZ)
+        + girisAlani('yeni', 'Yeni şifre', sifreOz(true), 'En az 8 karakter.', true)
+        + '<p class="fr-hata" role="alert" hidden></p><button class="fr-g-btn" type="submit">Şifreyi yenile</button>'
+        + '<button type="button" class="fr-g-ikincil" data-tekrar>Kodu yeniden gönder</button>'
+        + '<button type="button" class="fr-g-bag" data-geri>Başa dön</button></form>');
+      var f = govde.querySelector('form'), d = f.querySelector('button[type=submit]'), t = f.querySelector('[data-tekrar]');
+      var sayim = geriSayim(t, 'Kodu yeniden gönder', bekle);
+      f.querySelector('[data-geri]').onclick = function () { unuttumEposta(kim); };
+      t.onclick = function () {
+        k.hata('');
+        if (ayar.turnstile_site) return unuttumEposta(kim);   // robot kontrolü her istekte yeni jeton ister
+        var g = {}; g[kim.indexOf('@') > 0 ? 'eposta' : 'rumuz'] = kim;
+        api('/sifre-sifirla/eposta', { yontem: 'POST', govde: g }).then(function (j) { sayim((j && j.bekle) || 60); bildir('Kod yeniden gönderildi'); },
+          function (h) { k.hata(h.message); sayim((h.veri && h.veri.bekle) || 60); });
+      };
+      kodAlaniBagla(f, f.querySelector('#fr-g-kod'), d);
+      f.onsubmit = function (e) {
+        e.preventDefault(); k.hata('');
+        var kod = rakamlar(f.querySelector('#fr-g-kod').value), yeni = f.querySelector('#fr-g-yeni').value;
+        if (kod.length !== 6) return k.hata('6 haneli kodu yaz.');
+        if (yeni.length < 8) return k.hata('Yeni şifre en az 8 karakter olmalı.');
+        k.mesgul(d, true);
+        var g = { eposta_kodu: kod, yeni_sifre: yeni }; g[kim.indexOf('@') > 0 ? 'eposta' : 'rumuz'] = kim;
+        api('/sifre-sifirla', { yontem: 'POST', govde: g }).then(function (j) { girdi(j, 'Şifren yenilendi'); }, function (h) { k.hata(h.message); }).then(function () { k.mesgul(d, false); });
+      };
+    }
+    function unuttumKod() {
       k.ciz('Şifreni sıfırla', 'Üye olurken sana gösterilen kurtarma kodu lazım.',
         '<form class="fr-g-form" novalidate>' + girisAlani('rumuz', 'Rumuz', RUMUZ_OZ)
         + girisAlani('kod', 'Kurtarma kodu', 'type="text" name="kod" maxlength="20" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" placeholder="XXXX-XXXX-XXXX" required')
         + girisAlani('yeni', 'Yeni şifre', sifreOz(true), 'En az 8 karakter.', true)
         + '<p class="fr-hata" role="alert" hidden></p><button class="fr-g-btn" type="submit">Şifreyi yenile</button>'
+        + (ayar.eposta ? '<button type="button" class="fr-g-bag" data-eposta>E-posta ile sıfırla</button>' : '')
         + '<button type="button" class="fr-g-bag" data-geri>Girişe dön</button></form>');
       var f = govde.querySelector('form'), d = f.querySelector('button[type=submit]');
-      f.querySelector('[data-geri]').onclick = function () { ana('giris'); };
+      if (ayar.eposta) f.querySelector('[data-eposta]').onclick = function () { unuttumEposta(); };
+      f.querySelector('[data-geri]').onclick = function () { rumuzEkrani('giris'); };
       f.onsubmit = function (e) {
         e.preventDefault(); k.hata('');
         var rumuz = f.querySelector('#fr-g-rumuz').value.trim(), kod = f.querySelector('#fr-g-kod').value.trim(), yeni = f.querySelector('#fr-g-yeni').value;
@@ -460,24 +541,86 @@
       yer.appendChild(s);
     }
 
-    function ana(sekme) {
+    /* ----- e-posta ile devam et: adres -> 6 haneli kod -> (yeni üyeyse) rumuz ----- */
+    function epostaAdim1(e0) {
+      turnstileKaldir();
+      k.ciz('E-posta ile devam et', 'Adresine 6 haneli bir kod göndereceğiz. Şifre gerekmez; hesabın yoksa kodu girince açılır.',
+        '<form class="fr-g-form" novalidate>' + girisAlani('eposta', 'E-posta adresi', EPOSTA_OZ)
+        + (ayar.turnstile_site ? '<div class="fr-g-turnstile" role="group" aria-label="Robot kontrolü"></div>' : '')
+        + '<p class="fr-hata" role="alert" hidden></p><button class="fr-g-btn" type="submit">Kod gönder</button>'
+        + '<button type="button" class="fr-g-bag" data-geri>Diğer yöntemler</button></form>');
+      var f = govde.querySelector('form'), g = f.querySelector('input'), d = f.querySelector('button[type=submit]');
+      if (e0) g.value = e0;
+      f.querySelector('[data-geri]').onclick = ana;
+      f.onsubmit = function (e) {
+        e.preventDefault(); k.hata('');
+        var eposta = g.value.trim();
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(eposta)) return k.hata('Geçerli bir e-posta adresi yaz.');
+        if (ayar.turnstile_site && !jeton) return k.hata('Önce robot kontrolünü tamamla.');
+        k.mesgul(d, true, 'Gönderiliyor…');
+        api('/giris/eposta/kod', { yontem: 'POST', govde: { eposta: eposta, turnstile: jeton || undefined } })
+          .then(function (j) { epostaAdim2(eposta, (j && j.bekle) || 60); }, function (h) { k.hata(h.message); turnstileSifirla(); if (h.veri && h.veri.bekle) epostaAdim2(eposta, h.veri.bekle); })
+          .then(function () { k.mesgul(d, false); });
+      };
+      turnstileKur();
+    }
+    function epostaAdim2(eposta, bekle) {
+      turnstileKaldir();
+      k.ciz('Kodu gir', eposta + ' adresine 6 haneli bir kod gönderdik. 10 dakika geçerli. Gelmediyse gereksiz klasörüne de bak.',
+        '<form class="fr-g-form" novalidate>' + girisAlani('kod', '6 haneli kod', KOD_OZ)
+        + '<p class="fr-hata" role="alert" hidden></p><button class="fr-g-btn" type="submit">Devam et</button>'
+        + '<button type="button" class="fr-g-ikincil" data-tekrar>Kodu yeniden gönder</button>'
+        + '<button type="button" class="fr-g-bag" data-adres>Adresi değiştir</button></form>');
+      var f = govde.querySelector('form'), g = f.querySelector('input'), d = f.querySelector('button[type=submit]'), t = f.querySelector('[data-tekrar]');
+      var sayim = geriSayim(t, 'Kodu yeniden gönder', bekle);
+      f.querySelector('[data-adres]').onclick = function () { epostaAdim1(eposta); };
+      t.onclick = function () {
+        k.hata('');
+        if (ayar.turnstile_site) return epostaAdim1(eposta);   // robot kontrolü her istekte yeni jeton ister: adres adımına dön
+        api('/giris/eposta/kod', { yontem: 'POST', govde: { eposta: eposta } }).then(function (j) { sayim((j && j.bekle) || 60); bildir('Kod yeniden gönderildi'); },
+          function (h) { k.hata(h.message); sayim((h.veri && h.veri.bekle) || 60); });
+      };
+      kodAlaniBagla(f, g, d);
+      f.onsubmit = function (e) {
+        e.preventDefault(); k.hata('');
+        var kod = rakamlar(g.value);
+        if (kod.length !== 6) return k.hata('6 haneli kodu yaz.');
+        k.mesgul(d, true, 'Doğrulanıyor…');
+        api('/giris/eposta/dogrula', { yontem: 'POST', govde: { eposta: eposta, kod: kod } })
+          .then(function (j) { girdi(j, null, 'eposta'); }, function (h) { k.hata(h.message); g.focus(); })
+          .then(function () { k.mesgul(d, false); });
+      };
+    }
+
+    // Ana ekran: Google ve e-posta birincil; rumuz+şifre küçük bağlantı; Telegram en altta.
+    function ana() {
+      turnstileKaldir();
+      if (!ayar.google_istemci && !ayar.eposta && ayar.sifre !== false) return rumuzEkrani(oku('fr-giris-yontem') ? 'giris' : 'uye');   // yalnız rumuz+şifre (ve Telegram) açıksa doğrudan form
+      k.ciz(baslik || 'Foruma katıl', ayar.google_istemci || ayar.eposta ? 'Üye olmak ya da giriş yapmak için bir yöntem seç.' : 'Şifreyle üyelik şu an kapalı. Aşağıdaki yöntemlerden biriyle devam edebilirsin.',
+        '<div class="fr-g-sosyal">' + (ayar.google_istemci ? '<div class="fr-g-google" id="fr-g-google"></div>' : '')
+        + (ayar.eposta ? '<button type="button" class="fr-g-ikincil fr-g-ana" data-eposta>E-posta ile devam et</button>' : '') + '</div>'
+        + '<p class="fr-hata" role="alert" hidden></p>'
+        + (ayar.sifre !== false ? '<button type="button" class="fr-g-bag fr-g-kucuk" data-rumuz>Rumuz ve şifreyle giriş</button>' : '')
+        + '<div class="fr-g-ayrac"><span>ya da</span></div>'
+        + '<div class="fr-g-sosyal"><button type="button" class="fr-g-ikincil" data-telegram>Telegram ile devam et</button><div class="fr-g-tg-yer" hidden></div></div>');
+      var e = govde.querySelector('[data-eposta]'), r = govde.querySelector('[data-rumuz]');
+      if (e) e.onclick = function () { epostaAdim1(); };
+      if (r) r.onclick = function () { rumuzEkrani(oku('fr-giris-yontem') ? 'giris' : 'uye'); };
+      govde.querySelector('[data-telegram]').onclick = telegramAc;
+      googleKur();
+    }
+
+    // Rumuz + şifre: "Üye ol" / "Giriş yap" sekmeleri. Başka yöntem de açıksa "Diğer yöntemler" bağlantısı ana ekrana döner.
+    function rumuzEkrani(sekme) {
       turnstileKaldir();
       var uyeMi = sekme !== 'giris';
-      if (ayar.sifre === false) {   // sunucuda şifreli üyelik kapalı (SIFRE_BIBERI yok): yalnız Google / Telegram
-        k.ciz(baslik || 'Foruma katıl', 'Şifreyle üyelik şu an kapalı. Aşağıdaki yöntemlerden biriyle devam edebilirsin.',
-          '<div class="fr-g-sosyal">' + (ayar.google_istemci ? '<div class="fr-g-google" id="fr-g-google"></div>' : '')
-          + '<button type="button" class="fr-g-ikincil" data-telegram>Telegram ile devam et</button><div class="fr-g-tg-yer" hidden></div></div><p class="fr-hata" role="alert" hidden></p>');
-        govde.querySelector('[data-telegram]').onclick = telegramAc;
-        googleKur();
-        return;
-      }
+      var tek = !ayar.google_istemci && !ayar.eposta;   // başka yöntem yoksa: Telegram eskisi gibi altta
       k.ciz(baslik || 'Foruma katıl', '', '<div class="fr-g-sekmeler" role="tablist" aria-label="Üyelik">'
         + '<button type="button" role="tab" id="fr-g-t-uye" data-sekme="uye" aria-controls="fr-g-panel">Üye ol</button>'
         + '<button type="button" role="tab" id="fr-g-t-giris" data-sekme="giris" aria-controls="fr-g-panel">Giriş yap</button></div>'
         + '<div id="fr-g-panel" role="tabpanel"></div>'
-        + '<div class="fr-g-ayrac"><span>ya da</span></div>'
-        + '<div class="fr-g-sosyal">' + (ayar.google_istemci ? '<div class="fr-g-google" id="fr-g-google"></div>' : '')
-        + '<button type="button" class="fr-g-ikincil" data-telegram>Telegram ile devam et</button><div class="fr-g-tg-yer" hidden></div></div>');
+        + (tek ? '<div class="fr-g-ayrac"><span>ya da</span></div><div class="fr-g-sosyal"><button type="button" class="fr-g-ikincil" data-telegram>Telegram ile devam et</button><div class="fr-g-tg-yer" hidden></div></div>'
+          : '<button type="button" class="fr-g-bag fr-g-kucuk" data-geri>Diğer yöntemler</button>'));
       var panel = govde.querySelector('#fr-g-panel');
       var sekmeler = govde.querySelectorAll('[role=tab]');
       function sec(s, odakla) {
@@ -496,72 +639,131 @@
           sec(h, false); govde.querySelector('#fr-g-t-' + h).focus();
         };
       });
-      govde.querySelector('[data-telegram]').onclick = telegramAc;
+      if (tek) govde.querySelector('[data-telegram]').onclick = telegramAc; else govde.querySelector('[data-geri]').onclick = ana;
       sec(uyeMi ? 'uye' : 'giris', false);
       if (matchMedia('(pointer:fine)').matches) { var i0 = panel.querySelector('input'); if (i0) i0.focus(); }
-      googleKur();
     }
     // Google düğmesi ve robot kontrolü sunucu ayarına bağlı: ayar gelmeden form çizilmez (ilk açılıştan sonra önbellekten anında gelir).
     k.ciz(baslik || 'Foruma katıl', '', '<p class="fr-yukleniyor">Yükleniyor…</p>');
     girisAyariGetir().then(function (a) {
       ayar = a || {};
-      if (document.body.contains(k.kutu)) ana(ilkSekme || (oku('fr-giris-yontem') ? 'giris' : 'uye'));
+      if (document.body.contains(k.kutu)) { if (ilkSekme) rumuzEkrani(ilkSekme); else ana(); }
     });
   }
   function girisGerekli(baslik, sonra) { if (oturum()) return false; girisSonrasi = sonra || null; girisKutusu(baslik); return true; }
 
-  // Hesap menüsü: şifre belirle / değiştir, kurtarma kodunu yenile.
+  // Hesap ayarları (üst çubuktaki hesap menüsünden): e-posta ekle / değiştir, şifre belirle / değiştir, kurtarma kodu, hesabı sil.
   function hesapKutusu() {
     if (!oturum()) { girisKutusu(); return; }
     var k = kabukAc();
-    k.ciz('Şifre ve kurtarma kodu', '', '<p class="fr-yukleniyor">Yükleniyor…</p>');
-    api('/ben').then(function (j) { yaz('fr-uye', j.uye); hesapCiz(k, j.uye); }, function (h) { k.ciz('Şifre ve kurtarma kodu', '', '<p class="fr-hata" role="alert">' + esc(h.message) + '</p>'); });
+    k.ciz('Hesap ayarları', '', '<p class="fr-yukleniyor">Yükleniyor…</p>');
+    Promise.all([api('/ben'), girisAyariGetir()]).then(function (s) { yaz('fr-uye', s[0].uye); hesapCiz(k, s[0].uye, s[1] || {}); },
+      function (h) { k.ciz('Hesap ayarları', '', '<p class="fr-hata" role="alert">' + esc(h.message) + '</p>'); });
   }
-  function hesapCiz(k, u) {
+  function hesapCiz(k, u, ayar) {
     var govde = k.govde;
     var gizli = '<input class="fr-g-gizli" type="text" name="username" autocomplete="username" value="' + esc(u.rumuz) + '" readonly tabindex="-1" aria-hidden="true">';
+    var hata = function (ad) { return '<p class="fr-hata" role="alert" hidden' + (ad ? ' data-hata="' + ad + '"' : '') + '></p>'; };
     function gonder(f, yol, govdeYap, ok) {
       var d = f.querySelector('button[type=submit]'), p = f.querySelector('.fr-hata');
-      function hata(m) { p.textContent = m || ''; p.hidden = !m; }
+      function h_(m) { p.textContent = m || ''; p.hidden = !m; }
       f.onsubmit = function (e) {
-        e.preventDefault(); hata('');
+        e.preventDefault(); h_('');
         var g = govdeYap(f);
-        if (typeof g === 'string') return hata(g);
+        if (typeof g === 'string') return h_(g);
         k.mesgul(d, true);
-        api(yol, { yontem: 'POST', govde: g }).then(ok, function (h) { hata(h.message); }).then(function () { k.mesgul(d, false); });
+        api(yol, { yontem: 'POST', govde: g }).then(ok, function (h) { h_(h.message); }).then(function () { k.mesgul(d, false); });
       };
     }
-    if (!u.sifre_var) {
-      k.ciz('Şifre belirle', 'Şu an yalnız ' + (u.google_var ? 'Google' : 'Telegram') + ' ile giriyorsun. Şifre belirlersen rumuzunla da girebilirsin.',
-        '<form class="fr-g-form" novalidate>' + gizli + girisAlani('yeni', 'Yeni şifre', sifreOz(true), 'En az 8 karakter.', true)
-        + '<p class="fr-hata" role="alert" hidden></p><button class="fr-g-btn" type="submit">Şifre belirle</button></form>');
-      gonder(govde.querySelector('form'), '/ben/sifre', function (f) {
-        var y = f.querySelector('#fr-g-yeni').value;
-        return y.length < 8 ? 'Şifre en az 8 karakter olmalı.' : { yeni: y };
-      }, function (j) {
-        var gnc = oku('fr-uye') || u; gnc.sifre_var = true; yaz('fr-uye', gnc); if (j.oturum) yaz('fr-oturum', j.oturum);   // sunucu eski oturumları kapatır, taze jeton gelir
-        if (j.kurtarma_kodu) k.kodGoster(j.kurtarma_kodu, 'Şifren hazır', function () { k.kapat(); }); else { k.kapat(); bildir('Şifren kaydedildi'); }
-      });
-      return;
+    var sifreAcik = ayar.sifre !== false;
+    var html = '';
+    // ----- e-posta -----
+    if (ayar.eposta || u.eposta) {
+      html += '<div class="fr-g-bolum" data-bolum="eposta"><h3>E-posta</h3>'
+        + '<p class="fr-not">' + (u.eposta ? esc(u.eposta) + ' adresin doğrulanmış. Giriş kodu ve şifre sıfırlama bu adrese gelir.' : 'Hesabında e-posta adresi yok. Eklersen kodla giriş yapabilir ve şifreni unutursan sıfırlayabilirsin.') + '</p>'
+        + (ayar.eposta ? '<div data-alan></div>' : '') + '</div>';
     }
-    k.ciz('Şifre ve kurtarma kodu', '',
-      '<form class="fr-g-form fr-g-bolum" data-form="sifre" novalidate><h3>Şifreni değiştir</h3>' + gizli
-      + girisAlani('eski', 'Şimdiki şifre', sifreOz(false), '', true) + girisAlani('yeni', 'Yeni şifre', sifreOz(true), 'En az 8 karakter.', true)
-      + '<p class="fr-hata" role="alert" hidden data-hata="sifre"></p><button class="fr-g-btn" type="submit">Şifreyi değiştir</button></form>'
-      + '<form class="fr-g-form fr-g-bolum" data-form="kod" novalidate><h3>Kurtarma kodu</h3>'
-      + '<p class="fr-not">Şifreni unutursan hesabına bu kodla dönersin. Yeni kod oluşturursan eskisi geçersiz olur.</p>' + gizli
-      + girisAlani('kodsifre', 'Şifren', sifreOz(false), '', true)
-      + '<p class="fr-hata" role="alert" hidden data-hata="kod"></p><button class="fr-g-ikincil" type="submit">Yeni kod oluştur</button></form>');
-    var f1 = govde.querySelector('[data-form=sifre]'), f2 = govde.querySelector('[data-form=kod]');
-    gonder(f1, '/ben/sifre', function (f) {
+    // ----- şifre -----
+    if (sifreAcik) {
+      if (!u.sifre_var) {
+        html += '<form class="fr-g-form fr-g-bolum" data-form="sifre-yeni" novalidate><h3>Şifre belirle</h3>'
+          + '<p class="fr-not">Şu an yalnız ' + (u.google_var ? 'Google' : u.telegram ? 'Telegram' : 'e-posta kodu') + ' ile giriyorsun. Şifre belirlersen rumuzunla da girebilirsin.</p>'
+          + gizli + girisAlani('yeni', 'Yeni şifre', sifreOz(true), 'En az 8 karakter.', true) + hata('') + '<button class="fr-g-ikincil" type="submit">Şifre belirle</button></form>';
+      } else {
+        html += '<form class="fr-g-form fr-g-bolum" data-form="sifre" novalidate><h3>Şifreni değiştir</h3>' + gizli
+          + girisAlani('eski', 'Şimdiki şifre', sifreOz(false), '', true) + girisAlani('yeni', 'Yeni şifre', sifreOz(true), 'En az 8 karakter.', true)
+          + hata('sifre') + '<button class="fr-g-ikincil" type="submit">Şifreyi değiştir</button></form>'
+          + '<form class="fr-g-form fr-g-bolum" data-form="kod" novalidate><h3>Kurtarma kodu</h3>'
+          + '<p class="fr-not">Şifreni unutursan hesabına bu kodla dönersin. Yeni kod oluşturursan eskisi geçersiz olur.</p>' + gizli
+          + girisAlani('kodsifre', 'Şifren', sifreOz(false), '', true)
+          + hata('kod') + '<button class="fr-g-ikincil" type="submit">Yeni kod oluştur</button></form>';
+      }
+    }
+    // ----- hesabı sil -----
+    html += '<details class="fr-g-bolum fr-g-sil"><summary>Hesabı sil</summary><form class="fr-g-form" data-form="sil" novalidate>'
+      + '<p class="fr-not">Hesabın, giriş bilgilerin, e-posta adresin ve kayıtlı ilanların silinir. Forumdaki yazıların “Silinmiş üye” adıyla kalır. Bu işlem geri alınamaz.</p>'
+      + girisAlani('onay', 'Onaylamak için SİL yaz', 'type="text" name="onay" maxlength="10" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" required')
+      + hata('') + '<button class="fr-g-btn fr-g-tehlike" type="submit">Hesabı sil</button></form></details>';
+    k.ciz('Hesap ayarları', '', html);
+
+    // e-posta ekle / değiştir: adres -> kod -> kaydedildi
+    var alan = govde.querySelector('[data-alan]');
+    function epostaYenile() {
+      api('/ben').then(function (j) { yaz('fr-uye', j.uye); hesapOlayi(); hesapCiz(k, j.uye, ayar); }, function () {});
+    }
+    function epostaAdim1() {
+      alan.innerHTML = '<form class="fr-g-form" data-form="eposta" novalidate>' + girisAlani('yeni-eposta', u.eposta ? 'Yeni e-posta adresi' : 'E-posta adresi', EPOSTA_OZ)
+        + hata('') + '<button class="fr-g-ikincil" type="submit">Kod gönder</button></form>';
+      var f = alan.querySelector('form');
+      gonder(f, '/ben/eposta', function (x) {
+        var a = x.querySelector('input').value.trim();
+        return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(a) ? { eposta: a } : 'Geçerli bir e-posta adresi yaz.';
+      }, function (j) { epostaAdim2(f.querySelector('input').value.trim(), (j && j.bekle) || 60); });
+    }
+    function epostaAdim2(adres, bekle) {
+      alan.innerHTML = '<form class="fr-g-form" data-form="eposta-kod" novalidate><p class="fr-not"></p>' + girisAlani('kod', '6 haneli kod', KOD_OZ)
+        + hata('') + '<button class="fr-g-ikincil" type="submit">Doğrula</button>'
+        + '<button type="button" class="fr-g-ikincil" data-tekrar>Kodu yeniden gönder</button><button type="button" class="fr-g-bag" data-geri>Adresi değiştir</button></form>';
+      var f = alan.querySelector('form'), g = f.querySelector('#fr-g-kod'), d = f.querySelector('button[type=submit]'), t = f.querySelector('[data-tekrar]'), p = f.querySelector('.fr-hata');
+      f.querySelector('.fr-not').textContent = adres + ' adresine kod gönderdik. 10 dakika geçerli.';
+      var sayim = geriSayim(t, 'Kodu yeniden gönder', bekle);
+      f.querySelector('[data-geri]').onclick = epostaAdim1;
+      t.onclick = function () {
+        p.hidden = true;
+        api('/ben/eposta', { yontem: 'POST', govde: { eposta: adres } }).then(function (j) { sayim((j && j.bekle) || 60); bildir('Kod yeniden gönderildi'); },
+          function (h) { p.textContent = h.message; p.hidden = false; sayim((h.veri && h.veri.bekle) || 60); });
+      };
+      kodAlaniBagla(f, g, d);
+      gonder(f, '/ben/eposta', function () {
+        var kod = rakamlar(g.value);
+        return kod.length === 6 ? { eposta: adres, kod: kod } : '6 haneli kodu yaz.';
+      }, function () { bildir('E-posta adresin kaydedildi'); epostaYenile(); });
+    }
+    if (alan) epostaAdim1();
+
+    // şifre
+    var fy = govde.querySelector('[data-form=sifre-yeni]'), f1 = govde.querySelector('[data-form=sifre]'), f2 = govde.querySelector('[data-form=kod]');
+    if (fy) gonder(fy, '/ben/sifre', function (f) {
+      var y = f.querySelector('#fr-g-yeni').value;
+      return y.length < 8 ? 'Şifre en az 8 karakter olmalı.' : { yeni: y };
+    }, function (j) {
+      var gnc = oku('fr-uye') || u; gnc.sifre_var = true; yaz('fr-uye', gnc); if (j.oturum) yaz('fr-oturum', j.oturum);   // sunucu eski oturumları kapatır, taze jeton gelir
+      if (j.kurtarma_kodu) k.kodGoster(j.kurtarma_kodu, 'Şifren hazır', function () { k.kapat(); }); else { k.kapat(); bildir('Şifren kaydedildi'); }
+    });
+    if (f1) gonder(f1, '/ben/sifre', function (f) {
       var e = f.querySelector('#fr-g-eski').value, y = f.querySelector('#fr-g-yeni').value;
       if (!e) return 'Şimdiki şifreni yaz.';
       return y.length < 8 ? 'Yeni şifre en az 8 karakter olmalı.' : { eski: e, yeni: y };
     }, function (j) { if (j && j.oturum) yaz('fr-oturum', j.oturum); k.kapat(); bildir('Şifren değişti'); });
-    gonder(f2, '/ben/kurtarma-kodu', function (f) {
+    if (f2) gonder(f2, '/ben/kurtarma-kodu', function (f) {
       var s = f.querySelector('#fr-g-kodsifre').value;
       return s ? { sifre: s } : 'Şifreni yaz.';
     }, function (j) { if (j.oturum) yaz('fr-oturum', j.oturum); k.kodGoster(j.kurtarma_kodu, 'Yeni kurtarma kodun', function () { k.kapat(); }); });
+
+    // hesabı sil
+    gonder(govde.querySelector('[data-form=sil]'), '/ben/hesap-sil', function (f) {
+      return f.querySelector('#fr-g-onay').value.trim().toLocaleUpperCase('tr-TR') === 'SİL' ? { onay: 'SİL' } : 'Silmek için SİL yaz.';
+    }, function () { k.kapat(); cikis(); bildir('Hesabın silindi'); });
   }
 
   // Bildirim ayarları (üst çubuktaki hesap menüsünden): özel mesaj izni; Telegram bildirimi yalnız Telegram ile bağlı üyelerde.
@@ -591,7 +793,7 @@
       }, function (h) { c.checked = !c.checked; k.hata(h.message); });
     };
   }
-  window.kitHesap = { giris: function (baslik) { girisSonrasi = null; girisKutusu(baslik || 'Üye ol ya da giriş yap'); }, ayar: ayarKutusu, cikis: cikis };
+  window.kitHesap = { giris: function (baslik) { girisSonrasi = null; girisKutusu(baslik || 'Üye ol ya da giriş yap'); }, ayar: ayarKutusu, hesap: hesapKutusu, cikis: cikis };
 
   /* ---------- üye kartı (rumuza dokununca) ---------- */
   function uyeKarti(rumuz, cikis_) {
@@ -1030,7 +1232,7 @@
           + '<a class="fr-ben-bag" data-ic href="?takip=1">Takip ettiklerim</a><a class="fr-ben-bag" data-ic href="?bolum=mesaj">Mesajlarım</a>'
           + '<label class="fr-anahtar-s"><input type="checkbox" data-ayar="dm_acik"' + (kapali(u.dm_acik) ? '' : ' checked') + '><span>Özel mesaj alabilirim</span></label>'
           + (u.telegram === false ? '' : '<label class="fr-anahtar-s"><input type="checkbox" data-ayar="bildirim"' + (kapali(u.bildirim) ? '' : ' checked') + '><span>Telegram\'dan bildirim al</span></label>')
-          + '<button type="button" class="fr-eylem" data-hesap>Şifre ve kurtarma kodu</button><button type="button" class="fr-eylem" data-cikis>Çıkış</button></div></details>'
+          + '<button type="button" class="fr-eylem" data-hesap>Hesap ayarları</button><button type="button" class="fr-eylem" data-cikis>Çıkış</button></div></details>'
           : '<button type="button" class="fr-eylem fr-giris-d" data-giris>Giriş</button>');
       bildirimleriYokla();
       ozelSayisiGoster((oku('fr-ozel-sayi') || 0));

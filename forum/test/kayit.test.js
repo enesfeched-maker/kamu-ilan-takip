@@ -296,7 +296,7 @@ test('Google jeton doğrulama: geçerli jeton kabul; yanlış aud/iss, süresi d
   try {
     const dogrula = (j, e = env) => googleJetonuDogrula(e, j, simdi());
     const iyi = await dogrula(await googleJetonu(ozel));
-    assert.deepEqual(iyi, { tamam: true, sub: '110169484474386276334' });
+    assert.deepEqual(iyi, { tamam: true, sub: '110169484474386276334', eposta: 'x@example.com' });
     assert.equal((await dogrula(await googleJetonu(ozel, { iss: 'accounts.google.com' }))).tamam, true);
     assert.equal(sayac.n, 1);   // anahtarlar önbellekten gelir
     assert.equal((await dogrula(await googleJetonu(ozel, { aud: 'baska.apps.googleusercontent.com' }))).neden, 'aud');
@@ -353,11 +353,12 @@ test('POST /giris/google: yeni üye rumuz seçer, sonraki girişte doğrudan otu
     assert.equal(r.durum, 200); assert.equal(r.json.uye.rumuz, 'Google_Uye');
     const s = satir(env, 'SELECT * FROM uyeler WHERE rumuz = ?', 'Google_Uye');
     assert.equal(s.google_sub, '110169484474386276334'); assert.equal(s.tg_id, null);
-    assert.equal(JSON.stringify(s).includes('example.com'), false);
-    const g2 = await cagir(env, 'POST', '/giris/google', { govde: { kimlik_jetonu: await googleJetonu(ozel) } });
+    assert.equal(s.eposta, 'x@example.com'); assert.ok(s.eposta_dogrulandi > 0);   // Google'ın doğrulanmış adresi hesaba yazılır (sonradan e-posta koduyla girmek için)
+    const g2 =await cagir(env, 'POST', '/giris/google', { govde: { kimlik_jetonu: await googleJetonu(ozel) } });
     assert.equal(g2.durum, 200); assert.equal(g2.json.uye.id, r.json.uye.id); assert.ok(g2.json.oturum);
     const ben = await cagir(env, 'GET', '/ben', { token: g2.json.oturum });
     assert.equal(ben.json.uye.google_var, true); assert.equal(ben.json.uye.telegram, false);
+    assert.equal(ben.json.uye.eposta, 'x***@example.com'); assert.equal(JSON.stringify(ben.json).includes('x@example.com'), false);   // tam adres hiçbir yanıtta dönmez
     // aynı geçici jetonla ikinci üyelik açılmaz; var olan üyenin oturumu döner
     const r2 = await cagir(env, 'POST', '/giris/rumuz', { govde: { gecici: g1.json.gecici, rumuz: 'Baska_Rumuz' } });
     assert.equal(r2.json.uye.id, r.json.uye.id);

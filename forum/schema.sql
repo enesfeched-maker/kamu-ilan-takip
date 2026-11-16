@@ -12,7 +12,10 @@ CREATE TABLE IF NOT EXISTS uyeler (
   itibar INTEGER DEFAULT 0,          -- yazılarının aldığı "faydalı" oyu sayısı
   sifre_ozet TEXT,                   -- pbkdf2$<tekrar>$<tuz>$<ozet>; yalnız şifreli üyelerde
   kurtarma_ozet TEXT,                -- kurtarma kodunun HMAC özeti
-  google_sub TEXT,                   -- Google hesap kimliği (e-posta saklanmaz)
+  google_sub TEXT,                   -- Google hesap kimliği
+  eposta TEXT,                       -- yalnız DOĞRULANMIŞ adres (küçük harf, NFC): giriş kodu ve şifre sıfırlama için; Google ile girilince Google'ın doğrulanmış adresi de buraya yazılır
+  eposta_dogrulandi INTEGER,         -- doğrulama zamanı (unix sn)
+  silindi INTEGER,                   -- hesap silme zamanı; kimlik bilgileri temizlenir, yazılar "Silinmiş üye" adıyla kalır
   profil TEXT,                       -- sitedeki kit-profil (JSON, beyaz listeli)
   kayitli TEXT,                      -- sitedeki kit-saved: kayıtlı ilan kimlikleri (JSON dizi, en çok 300, en çok 8 KB)
   rumuz_kat TEXT,                    -- küçük harf, Türkçe harfler ASCII, "." ve "_" atılmış rumuz (benzersiz)
@@ -128,6 +131,19 @@ CREATE TABLE IF NOT EXISTS takipler (
 CREATE INDEX IF NOT EXISTS takipler_baslik ON takipler(baslik_id);
 CREATE UNIQUE INDEX IF NOT EXISTS uyeler_google_sub ON uyeler(google_sub);
 CREATE UNIQUE INDEX IF NOT EXISTS uyeler_rumuz_kat ON uyeler(rumuz_kat);
+CREATE UNIQUE INDEX IF NOT EXISTS uyeler_eposta ON uyeler(eposta);
+CREATE TABLE IF NOT EXISTS eposta_kodlari (
+  anahtar TEXT PRIMARY KEY,         -- HMAC(biber, amaç + adres/üye): adresin kendisi saklanmaz
+  kod_ozet TEXT,                    -- HMAC(biber, anahtar + kod): kodun kendisi saklanmaz
+  bitis INTEGER,                    -- geçerlilik sonu (unix sn, 10 dk)
+  deneme INTEGER DEFAULT 0,         -- yanlış doğrulama sayısı (en çok 5)
+  son_gonderim INTEGER              -- en erken 60 sn sonra yeniden gönderilir
+);
+CREATE INDEX IF NOT EXISTS eposta_kodlari_bitis ON eposta_kodlari(bitis);
+CREATE TABLE IF NOT EXISTS eposta_gunluk (
+  gun TEXT PRIMARY KEY,             -- UTC gün (YYYY-AA-GG); Brevo ücretsiz plan günde 300, biz 280'de durdururuz
+  n INTEGER DEFAULT 0
+);
 CREATE TABLE IF NOT EXISTS giris_denemeleri (
   tur TEXT,                          -- kayit | giris_ip | giris_rumuz_ip | giris_rumuz
   anahtar TEXT,                     -- IP özeti ya da küçük harfli rumuz

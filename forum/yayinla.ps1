@@ -211,10 +211,19 @@ if (-not $db) {
       [void](D1Calistir '--command' 'ALTER TABLE uyeler ADD COLUMN kayitli TEXT')
     } elseif ($Kuru -and $uyeS -notcontains 'kayitli' -and $bekleyen -notcontains '0005') { Kuru 'uyeler.kayitli sutunu eklenecek' }
   }
+  # e-posta ile giris sutunlari: 0005 e-postasiz haliyle daha once uygulanmissa (sifre_ozet var, eposta yok) yalniz eksik sutunlar eklenir
+  $sutunEklendi = $false
+  foreach ($ek in @(@('eposta', 'TEXT'), @('eposta_dogrulandi', 'INTEGER'), @('silindi', 'INTEGER'))) {
+    if ($bekleyen -contains '0005') { break }   # 0005 dosyasi zaten ekler
+    if ($uyeS -notcontains $ek[0]) {
+      if ($Kuru) { Kuru ("uyeler." + $ek[0] + " sutunu eklenecek") }
+      else { Bilgi ("  uyeler." + $ek[0] + " sutunu ekleniyor ..."); [void](D1Calistir '--command' ("ALTER TABLE uyeler ADD COLUMN " + $ek[0] + " " + $ek[1])); $sutunEklendi = $true }
+    }
+  }
   # eksik tablo/indeksler icin (idempotent) guncel sema
-  $beklenen = [regex]::Matches([IO.File]::ReadAllText($schema), 'CREATE TABLE IF NOT EXISTS (\w+)') | ForEach-Object { $_.Groups[1].Value }
+  $beklenen =[regex]::Matches([IO.File]::ReadAllText($schema), 'CREATE TABLE IF NOT EXISTS (\w+)') | ForEach-Object { $_.Groups[1].Value }
   $eksik = @($beklenen | Where-Object { (@(D1Oku "SELECT name FROM sqlite_master WHERE type='table' AND name='$_'")).Count -eq 0 })
-  if ($eksik.Count -gt 0 -or $bekleyen.Count -gt 0) { DosyaCalistir $schema 'schema.sql (eksik tablo/indeksler)' } else { Bilgi 'Sema guncel.' }
+  if ($eksik.Count -gt 0 -or $bekleyen.Count -gt 0 -or $sutunEklendi) { DosyaCalistir $schema 'schema.sql (eksik tablo/indeksler)' } else { Bilgi 'Sema guncel.' }
 }
 # sabit sohbet odalari (dosya zaten "yoksa ekle" mantigiyla yazilmis; yine de gereksiz calistirma)
 $odaDosya = Join-Path $PSScriptRoot 'odalar.sql'
@@ -245,6 +254,10 @@ $varOlan = @()
 if ($isciVar) { $varOlan = @($sl) }
 if ($isciVar) { Bilgi ('Worker mevcut; tanimli sirlar: ' + $(if ($varOlan.Count) { $varOlan -join ', ' } else { '(yok)' })) }
 else { Bilgi 'Worker henuz yok: sirlar ilk dagitimdan hemen sonra yazilacak.' }
+# BREVO_ANAHTARI (e-posta ile giris): bu betik URETMEZ ve SORMAZ; sahibi kendisi ekler. Yalnizca tanimli mi diye raporlanir.
+$brevoVar = $varOlan -contains 'BREVO_ANAHTARI'
+if ($brevoVar) { Bilgi 'E-posta ile giris: BREVO_ANAHTARI tanimli.' }
+else { Bilgi 'E-posta ile giris KAPALI: BREVO_ANAHTARI tanimli degil (istege bagli; sahibi kendisi ekler, bkz. Sonraki adimlar).' }
 $dosyadaki = SirDosyasiOku
 $yazilacak = @{}      # ad -> deger (bellekte; ekrana basilmaz)
 foreach ($ad in @('OTURUM_SIRRI', 'YONETICI_ANAHTARI', 'SIFRE_BIBERI')) {
@@ -316,6 +329,7 @@ else {
     try {
       $g = Invoke-RestMethod -Uri "$adres/giris/ayar" -Method Get -TimeoutSec 20
       if (-not $g.sifre) { Uyari 'giris/ayar sifre:false: SIFRE_BIBERI tanimli degil gorunuyor.' } else { Bilgi '  /giris/ayar: rumuz+sifre uyeligi acik.' }
+      if ($g.eposta) { Bilgi '  /giris/ayar: e-posta ile giris acik.' } else { Bilgi '  /giris/ayar: e-posta ile giris kapali (BREVO_ANAHTARI yok); Google ve rumuz+sifre calisir.' }
     } catch { $Error.Clear(); Uyari '/giris/ayar okunamadi.' }
   }
 }
@@ -328,6 +342,10 @@ Bilgi '     cd ..\analiz'
 Bilgi '     npx wrangler secret put FORUM_YONETICI_ANAHTARI --config wrangler.toml     (deger: yukaridaki dosyadaki YONETICI_ANAHTARI satiri)'
 Bilgi '     npx wrangler deploy --config wrangler.toml'
 Bilgi '3) BotFather''da Telegram giris araci icin: /setdomain -> @kamuilanibot -> kpsstercihi.com (bir kez).'
+if (-not $brevoVar) {
+  Bilgi '   E-posta ile giris (istege bagli; Brevo ucretsiz plan, gunde 300 e-posta, biz 280''de dururuz): Brevo hesabinda gonderen adresi dogrula, API anahtari olustur, sonra KENDIN:'
+  Bilgi '     npx wrangler secret put BREVO_ANAHTARI --config wrangler.toml     (istege bagli gonderen: wrangler.toml [vars] EPOSTA_GONDEREN, varsayilan bildirim@kpsstercihi.com)'
+}
 Bilgi '4) Siteyi (docs/, forum.js ?v= surumleriyle) yayina al; forum ve hesap girisi ancak o zaman sitede gorunur.'
 if ($uyarilar.Count -gt 0) { Write-Host ''; Write-Host 'Uyarilar:' -ForegroundColor Yellow; $uyarilar | ForEach-Object { Write-Host (' - ' + $_) -ForegroundColor Yellow } }
 if ($Kuru) { Write-Host ''; Write-Host 'Kuru calisma bitti; uzakta hicbir sey degismedi.' -ForegroundColor Yellow }

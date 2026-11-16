@@ -1,8 +1,10 @@
 // KPSS Tercihi forum API'si (Cloudflare Worker + D1).
 import { KATEGORILER, KATEGORI_KODLARI, jsonYanit, hataYanit, simdi, sabitEsit, gecerliIlanKimligi } from './yardimci.js';
 import { denetle, temizle } from './denetim.js';
-import { oturumUret, oturumCoz, geciciUret, geciciTgKimligi, geciciGoogleKimligi, telegramDogrula, rumuzDogrula } from './oturum.js';
-import { kayit, girisSifre, girisGoogle, sifreSifirla, benSifre, benKurtarmaKodu, benProfil, benProfilKayitli, benProfilKaydet, benKayitliKaydet, girisAyari, girisAyariYaniti } from './kayit.js';
+import { oturumUret, oturumCoz, geciciUret, geciciTgKimligi, geciciGoogleKimligi, geciciGoogleEposta, geciciEpostaKimligi, telegramDogrula, rumuzDogrula } from './oturum.js';
+import { kayit, girisSifre, girisGoogle, sifreSifirla, benSifre, benKurtarmaKodu, benProfil, benProfilKayitli, benProfilKaydet, benKayitliKaydet, benHesapSil, girisAyari, girisAyariYaniti } from './kayit.js';
+import { epostaKod, epostaDogrula, sifirlaEposta, benEposta } from './eposta.js';
+import { epostaMaskele } from './epostabicim.js';
 import { baslikHizi, yanitHizi, ipSiniri } from './hiz.js';
 import { asistanYaniti } from './asistan.js';
 import { ilanKaydiGetir } from './ilan.js';
@@ -113,7 +115,12 @@ async function yonlendir(request, env, ctx) {
     if (yol === '/kayit') return kayit(request, env);
     if (yol === '/giris/sifre') return girisSifre(request, env);
     if (yol === '/giris/google') return girisGoogle(request, env);
+    if (yol === '/giris/eposta/kod') return epostaKod(request, env);
+    if (yol === '/giris/eposta/dogrula') return epostaDogrula(request, env);
     if (yol === '/sifre-sifirla') return sifreSifirla(request, env);
+    if (yol === '/sifre-sifirla/eposta') return sifirlaEposta(request, env);
+    if (yol === '/ben/eposta') return benEposta(request, env);
+    if (yol === '/ben/hesap-sil') return benHesapSil(request, env);
     if (yol === '/ben/sifre') return benSifre(request, env);
     if (yol === '/ben/kurtarma-kodu') return benKurtarmaKodu(request, env);
     if (yol === '/ben/profil') return benProfilKaydet(request, env);
@@ -178,7 +185,7 @@ export async function oturumUyesi(request, env) {
   const j = await oturumCoz(env, m[1], simdi());
   if (!j) return null;
   const uye = await env.DB.prepare(
-    'SELECT id, rumuz, kurucu, rol, itibar, bildirim, engelli, kayit, dm_acik, tg_id, oturum_surum, sifre_ozet IS NOT NULL AS sifre_var, google_sub IS NOT NULL AS google_var FROM uyeler WHERE id = ?',
+    'SELECT id, rumuz, kurucu, rol, itibar, bildirim, engelli, kayit, dm_acik, tg_id, oturum_surum, eposta, eposta_dogrulandi, sifre_ozet IS NOT NULL AS sifre_var, google_sub IS NOT NULL AS google_var FROM uyeler WHERE id = ?',
   ).bind(j.id).first();
   // şifre / kurtarma kodu değişince oturum sürümü artar: eski jetonlar geçersiz olur
   return uye && (uye.oturum_surum || 0) === j.surum ? uye : null;
@@ -209,7 +216,7 @@ async function girisTelegram(request, env) {
   if (uye) return oturumYaniti(env, uye);
   return jsonYanit({ yeni: true, gecici: await geciciUret(env, d.tgId, simdi()) });
 }
-// kimlik: { tg_id } | { google_sub } | { sifre_ozet, kurtarma_ozet }. Şifreli ve Google üyelerinde tg_id NULL kalır
+// kimlik: { tg_id } | { google_sub, eposta? } | { eposta } | { sifre_ozet, kurtarma_ozet }. eposta yalnız doğrulanmış adrestir. Şifreli ve Google üyelerinde tg_id NULL kalır
 // (UNIQUE sütunda birden çok NULL serbesttir); Telegram bildirimleri tg_id > 0 koşuluyla bu üyeleri atlar.
 export async function uyeOlustur(env, kimlik, rumuz) {
   const r = rumuzDogrula(rumuz);
@@ -219,10 +226,12 @@ export async function uyeOlustur(env, kimlik, rumuz) {
   const sayi = await env.DB.prepare("SELECT COUNT(*) AS n FROM uyeler WHERE rol NOT IN ('sistem', 'asistan')").first();
   const t = simdi();
   try {
-    await env.DB.prepare('INSERT INTO uyeler (tg_id, rumuz, rumuz_kat, kayit, kurucu, google_sub, sifre_ozet, kurtarma_ozet) VALUES (?, ?, ?, ?, ?, ?, ?, ?)')
-      .bind(kimlik.tg_id ?? null, r.rumuz, r.kat, t, (sayi?.n || 0) < KURUCU_SINIRI ? 1 : 0, kimlik.google_sub ?? null, kimlik.sifre_ozet ?? null, kimlik.kurtarma_ozet ?? null).run();
+    await env.DB.prepare('INSERT INTO uyeler (tg_id, rumuz, rumuz_kat, kayit, kurucu, google_sub, sifre_ozet, kurtarma_ozet, eposta, eposta_dogrulandi) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
+      .bind(kimlik.tg_id ?? null, r.rumuz, r.kat, t, (sayi?.n || 0) < KURUCU_SINIRI ? 1 : 0, kimlik.google_sub ?? null, kimlik.sifre_ozet ?? null, kimlik.kurtarma_ozet ?? null,
+        kimlik.eposta ?? null, kimlik.eposta ? t : null).run();
   } catch (e) {
     // yalnız benzersizlik ihlali "rumuz alınmış" demektir (aynı anda iki istek); başka hata gerçek bir arızadır
+    if (/UNIQUE constraint failed: uyeler\.eposta/i.test(String(e && e.message))) return { hata: hataYanit(409, 'Bu e-posta adresiyle bir hesap zaten var. Girişi baştan dene.') };
     if (/UNIQUE constraint failed/i.test(String(e && e.message))) return { hata: hataYanit(409, 'Bu rumuz alınmış.') };
     console.error('uyeOlustur:', e && e.message);
     return { hata: hataYanit(500, 'Üyelik şu an oluşturulamadı. Biraz sonra tekrar dene.') };
@@ -240,11 +249,20 @@ async function girisRumuz(request, env) {
     const s = await uyeOlustur(env, { tg_id: tgId }, g.rumuz);
     return s.hata || oturumYaniti(env, s.uye);
   }
+  const eposta = await geciciEpostaKimligi(env, g.gecici, simdi());
+  if (eposta) {   // e-posta koduyla doğrulanmış yeni üye: rumuz seçince hesap bu adresle açılır
+    const var_ = await env.DB.prepare('SELECT id, rumuz, kurucu, rol, itibar, dm_acik FROM uyeler WHERE eposta = ?').bind(eposta).first();
+    if (var_) return oturumYaniti(env, var_);   // aynı geçici jetonla ikinci üyelik açılmaz
+    const s = await uyeOlustur(env, { eposta }, g.rumuz);
+    return s.hata || oturumYaniti(env, s.uye);
+  }
   const sub = await geciciGoogleKimligi(env, g.gecici, simdi());
   if (!sub) return hataYanit(401, 'Giriş süresi dolmuş, tekrar dene.');
   const mevcut = await env.DB.prepare('SELECT id, rumuz, kurucu, rol, itibar, dm_acik FROM uyeler WHERE google_sub = ?').bind(sub).first();
   if (mevcut) return oturumYaniti(env, mevcut);
-  const s = await uyeOlustur(env, { google_sub: sub }, g.rumuz);
+  let gEposta = await geciciGoogleEposta(env, g.gecici, simdi());
+  if (gEposta && await env.DB.prepare('SELECT 1 AS x FROM uyeler WHERE eposta = ?').bind(gEposta).first()) gEposta = null;   // başka hesapta kayıtlıysa yazılmaz
+  const s = await uyeOlustur(env, { google_sub: sub, eposta: gEposta || undefined }, g.rumuz);
   return s.hata || oturumYaniti(env, s.uye);
 }
 function ozetSayi(metin) {
@@ -274,6 +292,7 @@ async function benNesnesi(env, u) {
   return {
     ...kullaniciJson(u), bildirim: u.bildirim === 1, engelli: !!u.engelli, ozel_okunmamis: await ozelOkunmamis(env, u.id),
     telegram: u.tg_id > 0, sifre_var: !!u.sifre_var, google_var: !!u.google_var,   // hangi giriş yöntemleri bağlı
+    eposta: epostaMaskele(u.eposta), eposta_dogrulandi: !!u.eposta && !!u.eposta_dogrulandi,   // adres yalnız maskeli döner (a***@gmail.com)
   };
 }
 // Ayarlar: dm_acik (özel mesaj alır) ve bildirim (Telegram); en az biri verilmeli. Güncel /ben nesnesini döner.

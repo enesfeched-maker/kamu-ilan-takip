@@ -4,12 +4,12 @@ Metin docs/portal.js 'bilgi/gizlilik' ve 'bilgi/hakkimizda' ile aynı tutulur.""
 
 ILETISIM = 'https://t.me/kpsstercihi'
 ILETISIM_EPOSTA = 'iletisim@kpsstercihi.com'   # Cloudflare Email Routing ile yönlenir; boşsa /iletisim/ sayfasında E-posta bölümü çıkmaz
-GUNCELLEME = '2026-11-10'   # sayfa metinleri değişince elle artırılır; sayfada "Son güncelleme" olarak görünür
+GUNCELLEME = '2026-11-16'   # sayfa metinleri değişince elle artırılır; sayfada "Son güncelleme" olarak görünür
 SEMA_TURU = {'hakkimizda': 'AboutPage', 'iletisim': 'ContactPage'}
 
 SAYFALAR = {
     'gizlilik': ('Gizlilik politikası', 'KPSS Tercihi gizlilik politikası: tarayıcıda saklanan bilgiler, çerezsiz ziyaret istatistikleri ve Google AdSense reklamları.',
-                 'Bu site üyelik istemez. Özgeçmiş, kimlik bilgisi veya başvuru belgesi toplamak için bir form içermez.', [
+                 'Bu site üyelik zorunlu tutmaz; üyelik yalnızca foruma katılmak ve kayıtlı ilanlarını hesabına bağlamak içindir. Özgeçmiş, kimlik bilgisi veya başvuru belgesi toplamak için bir form içermez.', [
         ('Bu cihazda saklanan bilgiler', 'Kaydettiğin ilanların kimlikleri, profilin (öğrenim düzeyi, puan, iller), son ziyaret zamanın ve renk teması '
          'tercihin tarayıcının yerel depolamasında tutulur. Katiplik klavye sınavı, ders, antrenman ve oyunlarındaki sonuçların, hatalı kelimelerin ve tuş istatistiklerin de yalnızca bu tarayıcıda tutulur; yazdığın metin sunucuya gönderilmez. Bunlar başka cihazlara taşınmaz ve sunucumuza gönderilmez. Tarayıcı verilerini silerek '
          'ya da ana sayfadaki Gizlilik bölümündeki düğmeyle temizleyebilirsin.'),
@@ -26,6 +26,13 @@ SAYFALAR = {
         ('Sosyal medya hesaplarımız', 'Instagram, YouTube ve TikTok hesaplarımızdaki paylaşımlar, bu platformların resmî paylaşım '
          'arayüzleriyle yalnız kendi hesaplarımıza yapılır. Bu bağlantılar üzerinden takipçilerin ya da ziyaretçilerin kişisel verisi '
          'toplanmaz, saklanmaz, paylaşılmaz.'),
+        ('Üyelik ve forum', 'Üyelik isteğe bağlıdır; site üye olmadan da kullanılır. Üye olursan şunlar saklanır: seçtiğin rumuz; e-posta adresin '
+         '(yalnızca giriş kodu ve şifre sıfırlama göndermek için); şifren, yalnızca tek yönlü özet olarak; Google ile girersen Google hesabından yalnızca '
+         'kimlik numaran ve e-posta adresin; Telegram ile girersen Telegram kimliğin; forumdaki yazıların ve özel mesajların. '
+         'Giriş kodu e-postaları Brevo üzerinden gönderilir; Brevo bu işte adresini bizim adımıza işleyen taraftır. '
+         'Hiçbir veri satılmaz ya da reklam için paylaşılmaz. Hesabını Hesabım menüsündeki Hesap ayarları, Hesabı sil bölümünden istediğin zaman silebilirsin: '
+         'giriş bilgilerin, e-posta adresin, profilin ve kayıtlı ilanların silinir; forumdaki yazıların “Silinmiş üye” adıyla kalır. '
+         f'Sorular için {ILETISIM_EPOSTA} adresine yazabilirsin.'),
         ('İletişim', f'Gizlilikle ilgili soruların için {ILETISIM_EPOSTA} adresine yazabilirsin. Bize yazarsan e-posta adresin ve iletin yalnızca yanıt vermek için kullanılır.'),
     ]),
     'kullanim-kosullari': ('Kullanım koşulları', 'KPSS Tercihi kullanım koşulları: hizmetin kapsamı, ilan ve taban puanı bilgilerinin doğruluğu, sitenin resmî olmadığı ve kullanıcının sorumluluğu.',

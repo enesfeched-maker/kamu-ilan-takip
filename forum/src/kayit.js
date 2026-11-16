@@ -2,7 +2,9 @@
 // index.js ile döngüsel içe aktarma güvenlidir: yardımcılar yalnız istek sırasında çağrılır.
 import { jsonYanit, hataYanit, simdi } from './yardimci.js';
 import { rumuzDogrula, rumuzKat, geciciGoogleUret, oturumUret } from './oturum.js';
-import { sifreYapilandirildi, sifreKurali, sifreOzetle, sifreDogrula, kurtarmaKoduUret, kurtarmaOzeti, kurtarmaDogrula } from './sifre.js';
+import { epostaAcik, sifirlamaKoduDogrula, kodBicimi } from './eposta.js';
+import { epostaNormalle } from './epostabicim.js';
+import { sifreYapilandirildi, sifreKurali, sifreOzetle, sifreDogrula, kurtarmaKoduUret, kurtarmaOzeti, kurtarmaDogrula, biberliOzet } from './sifre.js';
 import {
   ipAnahtari, ipSiniri, denemeSinirda, denemeYaz, cokDeneme,
   KAYIT_SINIRI, GIRIS_IP_SINIRI, GIRIS_RUMUZ_IP_SINIRI, GIRIS_RUMUZ_SINIRI,
@@ -15,13 +17,14 @@ import { govdeOku, oturumUyesi, oturumYaniti, uyeOlustur } from './index.js';
 const TURNSTILE_ADRESI = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 const GENEL_GIRIS_HATASI = 'Rumuz ya da şifre hatalı.';
 const GENEL_KOD_HATASI = 'Rumuz ya da kurtarma kodu hatalı.';
+const GENEL_EPOSTA_KOD_HATASI = 'Kod hatalı ya da süresi dolmuş. Yeni bir kod isteyebilirsin.';
 const SIFRE_KAPALI = 'Şifreyle üyelik şu an kapalı. Telegram ya da Google ile devam edebilirsin.';
-const UYE_ALANLARI = 'id, rumuz, kurucu, rol, itibar, dm_acik, sifre_ozet, kurtarma_ozet, oturum_surum';
+export const UYE_ALANLARI = 'id, rumuz, kurucu, rol, itibar, dm_acik, sifre_ozet, kurtarma_ozet, oturum_surum, eposta';
 
 // Şifre özellikleri yalnız SIFRE_BIBERI tanımlıysa açıktır.
 const yapilandirildi = (env) => !!env.OTURUM_SIRRI && sifreYapilandirildi(env);
 const metinMi = (v, en_cok = 200) => typeof v === 'string' && v.length > 0 && v.length <= en_cok;
-const uyeBul = async (env, rumuz) => {
+export const uyeBul = async (env, rumuz) => {
   const ham = String(rumuz).normalize('NFC').trim();
   const k = rumuzKat(ham);
   return k ? env.DB.prepare(`SELECT ${UYE_ALANLARI} FROM uyeler WHERE rumuz_kat = ? OR rumuz = ?`).bind(k, ham).first() : null;
@@ -35,7 +38,7 @@ export async function kabaSinir(request, ad, limit = 20, pencere = 60) {
 
 // Herkese açık giriş ayarı: arayüz hangi düğmeleri göstereceğini buradan öğrenir.
 export function girisAyari(env) {
-  return { turnstile_site: env.TURNSTILE_SITE || '', google_istemci: env.GOOGLE_ISTEMCI_KIMLIGI || '', sifre: yapilandirildi(env) };
+  return { turnstile_site: env.TURNSTILE_SITE || '', google_istemci: env.GOOGLE_ISTEMCI_KIMLIGI || '', sifre: yapilandirildi(env), eposta: epostaAcik(env) };
 }
 export const girisAyariYaniti = (env) => jsonYanit(girisAyari(env), 200, { 'Cache-Control': 'public, max-age=300' });
 
@@ -46,7 +49,7 @@ function turnstileHostlari(env) {
   if (env.ORTAM === 'yerel') { l.add('localhost'); l.add('127.0.0.1'); l.add('example.com'); }   // example.com: Cloudflare deneme anahtarları
   return l;
 }
-async function turnstileDogrula(env, jeton, request) {
+export async function turnstileDogrula(env, jeton, request) {
   if (!metinMi(jeton, 2048)) return false;
   const f = new URLSearchParams({ secret: env.TURNSTILE_GIZLI, response: jeton });
   const ip = request.headers.get('CF-Connecting-IP');
@@ -130,6 +133,7 @@ export async function sifreSifirla(request, env) {
   const { ipA, ret: kaba } = await kabaSinir(request, 'sifirla', 10);
   if (kaba) return kaba;
   const g = await govdeOku(request);
+  if (g && g.eposta_kodu !== undefined) return sifreSifirlaEposta(request, env, g, ipA);
   if (!g || !metinMi(g.rumuz, 40) || !metinMi(g.kod, 64) || !metinMi(g.yeni_sifre, 200)) return hataYanit(400, 'Rumuz, kurtarma kodu ve yeni şifre yazmalısın.');
   const t = simdi();
   const kat = rumuzKat(g.rumuz);
@@ -148,6 +152,38 @@ export async function sifreSifirla(request, env) {
     .bind(await sifreOzetle(env, g.yeni_sifre), await kurtarmaOzeti(env, kod), uye.id).run();
   const taze = await env.DB.prepare(`SELECT ${UYE_ALANLARI} FROM uyeler WHERE id = ?`).bind(uye.id).first();
   return sifreliYanit(env, taze, kod);
+}
+
+// E-postayla gelen kodla sıfırlama: { rumuz | eposta, eposta_kodu, yeni_sifre }. Kurtarma koduna bağlı yol aynen kalır.
+// Kod hesabın kayıtlı adresine gitmiştir; hesap yoksa ya da adresi yoksa aynı genel hata döner. Başarıda oturum sürümü artar.
+async function sifreSifirlaEposta(request, env, g, ipA) {
+  if (!epostaAcik(env)) return hataYanit(503, 'E-posta ile sıfırlama şu an kapalı. Kurtarma kodunu kullanabilirsin.');
+  const girdi = typeof g.eposta === 'string' ? g.eposta : g.rumuz;
+  if (!metinMi(girdi, 254) || !kodBicimi(g.eposta_kodu) || !metinMi(g.yeni_sifre, 200)) return hataYanit(400, 'Rumuz ya da e-posta, kod ve yeni şifre yazmalısın.');
+  const t = simdi();
+  const eposta = girdi.includes('@') ? epostaNormalle(girdi) : null;
+  const kat = eposta ? null : rumuzKat(girdi);
+  if (!eposta && !kat) return hataYanit(400, 'Rumuz ya da e-posta, kod ve yeni şifre yazmalısın.');
+  // Şifre kuralı kodu tüketmeden önce sınanır (zayıf şifre kodu yakmasın); rumuz kuralı yalnız yazılan rumuza bakar, hesap varlığı sızmaz.
+  const kural = sifreKurali(g.yeni_sifre, eposta ? null : girdi);
+  if (kural) return hataYanit(400, kural);
+  const sayacAnahtari = kat || await biberliOzet(env, 'eposta-adres', eposta);   // sayaç tablosuna adres düz yazılmaz
+  const ret = await denemeKontrol(env, ipA, sayacAnahtari, t);
+  if (ret) return ret;
+  const uye = eposta
+    ? await env.DB.prepare(`SELECT ${UYE_ALANLARI} FROM uyeler WHERE eposta = ?`).bind(eposta).first()
+    : await uyeBul(env, girdi);
+  const sonuc = await sifirlamaKoduDogrula(env, uye && uye.eposta ? uye.id : 0, g.eposta_kodu, t);   // hesap yoksa da aynı işi yapar
+  if (!uye || !uye.eposta || sonuc !== 'tamam') {
+    await denemeKaydet(env, ipA, sayacAnahtari, t);
+    return hataYanit(401, GENEL_EPOSTA_KOD_HATASI);   // deneme hakkı bitse de aynı yanıt: hesap varlığı sızmaz
+  }
+  const kod =uye.kurtarma_ozet ? null : kurtarmaKoduUret();   // kurtarma kodu olmayan (Google/e-posta) üyeye ilk şifresiyle birlikte verilir
+  const ozet = await sifreOzetle(env, g.yeni_sifre);
+  if (kod) await env.DB.prepare('UPDATE uyeler SET sifre_ozet = ?, kurtarma_ozet = ?, oturum_surum = COALESCE(oturum_surum, 0) + 1 WHERE id = ?').bind(ozet, await kurtarmaOzeti(env, kod), uye.id).run();
+  else await env.DB.prepare('UPDATE uyeler SET sifre_ozet = ?, oturum_surum = COALESCE(oturum_surum, 0) + 1 WHERE id = ?').bind(ozet, uye.id).run();
+  const taze = await env.DB.prepare(`SELECT ${UYE_ALANLARI} FROM uyeler WHERE id = ?`).bind(uye.id).first();
+  return kod ? sifreliYanit(env, taze, kod) : oturumYaniti(env, taze);
 }
 
 // Oturumdaki üyenin şifre bilgisi (özetlerle birlikte).
@@ -222,9 +258,51 @@ export async function girisGoogle(request, env) {
   if (!g) return hataYanit(400, 'Geçersiz istek.');
   const d = await googleJetonuDogrula(env, g.kimlik_jetonu, simdi());
   if (!d.tamam) return hataYanit(401, d.neden === 'eski' ? 'Giriş süresi dolmuş, tekrar dene.' : 'Google girişi doğrulanamadı.');
-  const uye = await env.DB.prepare('SELECT id, rumuz, kurucu, rol, itibar, dm_acik, oturum_surum FROM uyeler WHERE google_sub = ?').bind(d.sub).first();
-  if (uye) return oturumYaniti(env, uye);
-  return jsonYanit({ yeni: true, gecici: await geciciGoogleUret(env, d.sub, simdi()) });
+  const t = simdi();
+  const uye = await env.DB.prepare('SELECT id, rumuz, kurucu, rol, itibar, dm_acik, oturum_surum, eposta FROM uyeler WHERE google_sub = ?').bind(d.sub).first();
+  if (uye) {
+    // Google'ın doğrulanmış adresi hesapta yoksa eklenir (sonradan e-posta koduyla da girilebilsin); başka hesapta kayıtlıysa dokunulmaz.
+    if (!uye.eposta && d.eposta) {
+      await env.DB.prepare('UPDATE uyeler SET eposta = ?, eposta_dogrulandi = ? WHERE id = ? AND eposta IS NULL AND NOT EXISTS (SELECT 1 FROM uyeler WHERE eposta = ?)').bind(d.eposta, t, uye.id, d.eposta).run();
+    }
+    return oturumYaniti(env, uye);
+  }
+  let adresSerbest = !!d.eposta;
+  if (d.eposta) {
+    // Aynı doğrulanmış adrese sahip, henüz Google bağlamamış bir hesap varsa (örn. e-posta koduyla açılmış) Google kimliği ona bağlanır.
+    const e = await env.DB.prepare('SELECT id, rumuz, kurucu, rol, itibar, dm_acik, oturum_surum, google_sub FROM uyeler WHERE eposta = ?').bind(d.eposta).first();
+    if (e) {
+      adresSerbest = false;
+      if (!e.google_sub) {
+        await env.DB.prepare('UPDATE uyeler SET google_sub = ? WHERE id = ? AND google_sub IS NULL').bind(d.sub, e.id).run();
+        return oturumYaniti(env, e);
+      }
+    }
+  }
+  return jsonYanit({ yeni: true, gecici: await geciciGoogleUret(env, d.sub, t, adresSerbest ? d.eposta : undefined) });
+}
+
+// ---------- POST /ben/hesap-sil ----------
+// Hesabı siler: yazılar kalır ama yazar "Silinmiş üye #id" olur; giriş yöntemleri, e-posta, profil, kayıtlı ilanlar silinir, oturumlar kapanır.
+export async function benHesapSil(request, env) {
+  const { ret: kaba } = await kabaSinir(request, 'hesapsil', 10);
+  if (kaba) return kaba;
+  const u = await oturumUyesi(request, env);
+  if (!u) return hataYanit(401, 'Giriş yapmalısın.');
+  const g = await govdeOku(request);
+  if (!g) return hataYanit(400, 'Geçersiz istek.');
+  if (typeof g.onay !== 'string' || g.onay.normalize('NFC').trim().toLocaleUpperCase('tr') !== 'SİL') return hataYanit(400, 'Silmek için onay kutusuna SİL yaz.');
+  if (u.rol === 'sistem' || u.rol === 'asistan') return hataYanit(403, 'Bu hesap silinemez.');
+  const ad = `Silinmiş üye #${u.id}`;   // rumuz kuralları "#" ve boşluğa izin vermez: kimse bu adı alamaz
+  await env.DB.batch([
+    env.DB.prepare(
+      "UPDATE uyeler SET rumuz = ?, rumuz_kat = ?, eposta = NULL, eposta_dogrulandi = NULL, sifre_ozet = NULL, kurtarma_ozet = NULL, google_sub = NULL, tg_id = NULL, "
+      + "profil = NULL, kayitli = NULL, bildirim = 0, dm_acik = 0, engelli = 1, kurucu = 0, rol = 'uye', silindi = ?, oturum_surum = COALESCE(oturum_surum, 0) + 1 WHERE id = ?",
+    ).bind(ad, `silinmis-${u.id}`, simdi(), u.id),
+    env.DB.prepare('DELETE FROM takipler WHERE uye_id = ?').bind(u.id),
+    env.DB.prepare('DELETE FROM engeller WHERE uye_id = ? OR engellenen = ?').bind(u.id, u.id),
+  ]);
+  return jsonYanit({ tamam: true });
 }
 
 // ---------- hesaba bağlı profil ----------
