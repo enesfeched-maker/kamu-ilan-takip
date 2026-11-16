@@ -1755,20 +1755,54 @@
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=31b4b404-05cb-4298-9460-1ab3b13b33e8": {
-  "zaman": "2026-11-16T09:12:00+03:00",
+  "zaman": "2026-11-16T13:11:14+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "metin",
-  "imza": "82a07100b07cd676",
+  "imza": "3091e0865fe0110f",
   "baslik": "ANADOLU ÜNİVERSİTESİ REKTÖRLÜĞÜ - SÖZLEŞMELİ PERSONEL ALIMI İLANI 2026 - 2",
   "farklar": [],
   "yz": {
-   "kadrolar": [],
-   "okunabilirlik": "kotu",
+   "kadrolar": [
+    {
+     "unvan": "Çevre Mühendisi (Erkek)",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 60,
+     "il": "Eskişehir",
+     "kosullar": [
+      "Lisans programlarının Çevre Mühendisliği bölümünden mezun olmak.",
+      "2026 KPSS (B) KPSSP3 puan türünden en az 60 puan almış olmak.",
+      "Alanında en az 3 yıl mesleki tecrübeye sahip olmak (barkodlu SGK Hizmet Dökümü ile belgelenir).",
+      "Mesai saatleri dışında ve hafta sonları çalışmaya engeli olmamak."
+     ]
+    }
+   ],
+   "toplam": 1,
+   "son_basvuru_tarihi": "2026-11-30",
+   "son_basvuru_saati": "13:00",
+   "baslangic_tarihi": "2026-11-16",
+   "kpss_gerekli": true,
+   "iller": [
+    "Eskişehir"
+   ],
+   "ortak_kosullar": [
+    "İlan son günü itibarıyla 35 yaşından gün almamış olmak.",
+    "Başvuru yalnızca belirtilen yoldan yapılır; posta ile yapılan müracaatlar kabul edilmez.",
+    "Sözleşmeli personel sayısı kadar aday arasına en yüksek KPSS puanıyla girmek."
+   ],
+   "ozet": "Anadolu Üniversitesi 1 erkek Çevre Mühendisi'ni 657 sayılı Kanun 4/B kapsamında sözleşmeli alacak. Başvurular 16–30 Kasım 2026 arasındadır.",
+   "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
    "duyuru_tipi": "yeni_ilan",
-   "ortak_kosullar": []
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P3"
+   ]
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=320d07cc-b5bc-4bab-9541-6c1100def856": {
@@ -3059,27 +3093,83 @@
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=8892720e-d38e-46f8-994e-138c6d4b7d81": {
-  "zaman": "2026-11-16T11:14:14+03:00",
+  "zaman": "2026-11-16T13:11:14+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "metin",
-  "imza": "b879c07635b02fb7",
+  "imza": "5b64808eab44853d",
   "baslik": "AFET VE ACİL DURUM YÖNETİMİ BAŞKANLIĞI (AFAD) - Afet ve Acil Durum Yönetimi Uzman Yardımcısı Giriş Sınavı İlanı (2026)",
-  "farklar": [],
+  "farklar": [
+   [
+    "puan_turleri",
+    [
+     "P16",
+     "P21",
+     "P32",
+     "P4",
+     "P43",
+     "P8",
+     "P9"
+    ],
+    [
+     "P4",
+     "P8"
+    ],
+    false
+   ]
+  ],
   "yz": {
-   "kadrolar": [],
-   "toplam": null,
-   "son_basvuru_tarihi": null,
-   "son_basvuru_saati": null,
-   "baslangic_tarihi": null,
-   "kpss_gerekli": null,
-   "iller": [],
-   "ortak_kosullar": [],
-   "ozet": "",
-   "okunabilirlik": "kotu",
+   "kadrolar": [
+    {
+     "unvan": "Afet ve Acil Durum Yönetimi Uzman Yardımcısı (İktisat/İşletme/Kamu Yönetimi vb. grubu)",
+     "adet": 10,
+     "ogrenim": "lisans",
+     "puan_turu": "P8",
+     "en_dusuk_puan": 70,
+     "il": "Ankara",
+     "kosullar": [
+      "İktisat, İşletme, Kamu Yönetimi, Siyaset Bilimi ve Kamu Yönetimi, Siyaset Bilimi ve Uluslararası İlişkiler, Uluslararası İlişkiler, Maliye veya Çalışma Ekonomisi ve Endüstri İlişkileri bölümünden mezun olmak.",
+      "2025 veya 2026 KPSS'de KPSSP8, P9, P16, P21, P32 veya P43'ten en az 70 puan almış olmak."
+     ]
+    },
+    {
+     "unvan": "Afet ve Acil Durum Yönetimi Uzman Yardımcısı (Hukuk)",
+     "adet": 3,
+     "ogrenim": "lisans",
+     "puan_turu": "P4",
+     "en_dusuk_puan": 70,
+     "il": "Ankara",
+     "kosullar": [
+      "Hukuk fakültesi (Hukuk öğrenim dalı) mezunu olmak.",
+      "2025 veya 2026 KPSS'de KPSSP4 puan türünden en az 70 puan almış olmak."
+     ]
+    }
+   ],
+   "toplam": 13,
+   "son_basvuru_tarihi": "2026-11-30",
+   "son_basvuru_saati": "17:00",
+   "baslangic_tarihi": "2026-11-23",
+   "kpss_gerekli": true,
+   "iller": [
+    "Ankara"
+   ],
+   "ortak_kosullar": [
+    "2027 yılı Ocak ayının birinci günü itibarıyla 35 yaşını doldurmamış olmak (01.01.1992 sonrası doğumlu).",
+    "23 Kasım 2024'ten sonraki YDS/e-YDS'den (Almanca, Fransızca, İngilizce) en az 70 puan almış olmak.",
+    "Uzman Yardımcısı Giriş Sınavına iki defadan fazla katılmamış olmak."
+   ],
+   "ozet": "AFAD merkez teşkilatına 13 Afet ve Acil Durum Yönetimi Uzman Yardımcısı alınacak (10 iktisat-işletme grubu, 3 hukuk). Kariyer Kapısı başvuruları 23–30 Kasım 2026 arasındadır.",
+   "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
-   "duyuru_tipi": "yeni_ilan"
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P4",
+    "P8"
+   ]
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=9ff8772a-9434-42fb-84ad-f8080f79640d": {
@@ -4178,27 +4268,80 @@
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=f82ad1a8-39b9-4732-acb4-be6cbe8f772e": {
-  "zaman": "2026-11-16T11:14:14+03:00",
+  "zaman": "2026-11-16T13:11:14+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "metin",
-  "imza": "5b3c72ee17a097c4",
+  "imza": "4a069780e18043b7",
   "baslik": "AFET VE ACİL DURUM YÖNETİMİ BAŞKANLIĞI (AFAD) - Afet ve Acil Durum Yönetimi Denetçi Yardımcısı Giriş Sınavı İlanı (2026)",
-  "farklar": [],
+  "farklar": [
+   [
+    "puan_turleri",
+    [
+     "P13",
+     "P3",
+     "P33",
+     "P48"
+    ],
+    [
+     "P13",
+     "P3"
+    ],
+    false
+   ]
+  ],
   "yz": {
-   "kadrolar": [],
-   "toplam": null,
-   "son_basvuru_tarihi": null,
-   "son_basvuru_saati": null,
-   "baslangic_tarihi": null,
-   "kpss_gerekli": null,
-   "iller": [],
-   "ortak_kosullar": [],
-   "ozet": "",
-   "okunabilirlik": "kotu",
+   "kadrolar": [
+    {
+     "unvan": "Afet ve Acil Durum Yönetimi Denetçi Yardımcısı (İktisat/İşletme/Kamu Yönetimi vb. grubu)",
+     "adet": 4,
+     "ogrenim": "lisans",
+     "puan_turu": "P13",
+     "en_dusuk_puan": 80,
+     "il": "Ankara",
+     "kosullar": [
+      "İktisat, İşletme, Kamu Yönetimi, Siyaset Bilimi ve Kamu Yönetimi, Siyaset Bilimi ve Uluslararası İlişkiler, Uluslararası İlişkiler, Maliye veya Çalışma Ekonomisi ve Endüstri İlişkileri bölümünden mezun olmak.",
+      "2025 veya 2026 KPSS'de KPSSP13, KPSSP33 veya KPSSP48'den en az 80 puan almış olmak."
+     ]
+    },
+    {
+     "unvan": "Afet ve Acil Durum Yönetimi Denetçi Yardımcısı (Bilgisayar/Yazılım/Endüstri/Matematik Mühendisliği grubu)",
+     "adet": 3,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 80,
+     "il": "Ankara",
+     "kosullar": [
+      "Bilgisayar, Yazılım, Endüstri veya Matematik Mühendisliği bölümünden mezun olmak.",
+      "2025 veya 2026 KPSS'de KPSSP3 puan türünden en az 80 puan almış olmak."
+     ]
+    }
+   ],
+   "toplam": 7,
+   "son_basvuru_tarihi": "2026-11-30",
+   "son_basvuru_saati": "17:00",
+   "baslangic_tarihi": "2026-11-23",
+   "kpss_gerekli": true,
+   "iller": [
+    "Ankara"
+   ],
+   "ortak_kosullar": [
+    "2027 yılı Ocak ayının birinci günü itibarıyla 35 yaşını doldurmamış olmak (01.01.1992 sonrası doğumlu).",
+    "Başvuru 23 Kasım 2026 10:00 – 30 Kasım 2026 17:00 arasında Kariyer Kapısı üzerinden yapılır.",
+    "Türkiye'nin her yerinde görev yapmaya ve her türlü vasıta ile seyahat etmeye elverişli olmak."
+   ],
+   "ozet": "AFAD merkez teşkilatına 7 Afet ve Acil Durum Yönetimi Denetçi Yardımcısı alınacak (4 iktisat-işletme grubu, 3 mühendislik grubu). Başvurular 23–30 Kasım 2026'da Kariyer Kapısı'ndan yapılır.",
+   "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
-   "duyuru_tipi": "yeni_ilan"
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P13",
+    "P3"
+   ]
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=ff6084a1-bbdd-45d7-b62e-a649a026a2b2": {
@@ -7227,6 +7370,84 @@
    "puan_turleri": []
   }
  },
+ "sbb-568adcd45b2fba387d9f136c": {
+  "zaman": "2026-11-16T13:11:14+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "pdf",
+  "imza": "bd344796b9e45d4d",
+  "baslik": "AFET VE ACİL DURUM YÖNETİMİ BAŞKANLIĞI - 7 AFET VE ACİL DURUM YÖNETİMİ DENETÇİ YARDIMCISI ALACAK",
+  "farklar": [
+   [
+    "puan_turleri",
+    [
+     "P13",
+     "P3",
+     "P33",
+     "P48"
+    ],
+    [
+     "P13",
+     "P3"
+    ],
+    false
+   ]
+  ],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Afet ve Acil Durum Yönetimi Denetçi Yardımcısı (İktisat/İşletme/Kamu Yönetimi vb. grubu)",
+     "adet": 4,
+     "ogrenim": "lisans",
+     "puan_turu": "P13",
+     "en_dusuk_puan": 80,
+     "il": "Ankara",
+     "kosullar": [
+      "İktisat, İşletme, Kamu Yönetimi, Siyaset Bilimi ve Kamu Yönetimi, Siyaset Bilimi ve Uluslararası İlişkiler, Uluslararası İlişkiler, Maliye veya Çalışma Ekonomisi ve Endüstri İlişkileri bölümünden mezun olmak.",
+      "2025 veya 2026 KPSS'de KPSSP13, KPSSP33 veya KPSSP48'den en az 80 puan almış olmak."
+     ]
+    },
+    {
+     "unvan": "Afet ve Acil Durum Yönetimi Denetçi Yardımcısı (Bilgisayar/Yazılım/Endüstri/Matematik Mühendisliği grubu)",
+     "adet": 3,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 80,
+     "il": "Ankara",
+     "kosullar": [
+      "Bilgisayar, Yazılım, Endüstri veya Matematik Mühendisliği bölümünden mezun olmak.",
+      "2025 veya 2026 KPSS'de KPSSP3 puan türünden en az 80 puan almış olmak."
+     ]
+    }
+   ],
+   "toplam": 7,
+   "son_basvuru_tarihi": "2026-11-30",
+   "son_basvuru_saati": "17:00",
+   "baslangic_tarihi": "2026-11-23",
+   "kpss_gerekli": true,
+   "iller": [
+    "Ankara"
+   ],
+   "ortak_kosullar": [
+    "2027 yılı Ocak ayının birinci günü itibarıyla 35 yaşını doldurmamış olmak (01.01.1992 sonrası doğumlu).",
+    "Başvuru 23 Kasım 2026 10:00 – 30 Kasım 2026 17:00 arasında Kariyer Kapısı üzerinden yapılır.",
+    "Giriş sınavı sözlü olarak 19-20 Ocak 2027'de AFAD hizmet binasında yapılır; başarı için en az 70 puan gerekir.",
+    "Türkiye'nin her yerinde görev yapmaya ve her türlü vasıta ile seyahat etmeye elverişli olmak."
+   ],
+   "ozet": "AFAD merkez teşkilatına 7 Afet ve Acil Durum Yönetimi Denetçi Yardımcısı alınacak (4 iktisat-işletme grubu, 3 mühendislik grubu). Başvurular 23–30 Kasım 2026'da Kariyer Kapısı'ndan yapılır.",
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P13",
+    "P3"
+   ]
+  }
+ },
  "sbb-5f3fa2414e8b9e9a456461d8": {
   "zaman": "2026-11-12T07:10:21+03:00",
   "surum": 4,
@@ -7248,6 +7469,67 @@
    "akademik": false,
    "iptal_veya_duzeltme": false,
    "duyuru_tipi": "yeni_ilan"
+  }
+ },
+ "sbb-60d850a0c27b9b6af78a65a1": {
+  "zaman": "2026-11-16T13:11:14+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "pdf",
+  "imza": "c21a2d277273baa1",
+  "baslik": "AKDENİZ ÜNİVERSİTESİ - 3 SüREKLİ İŞÇİ ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Sürekli İşçi (Hayvan Bakıcısı)",
+     "adet": 1,
+     "ogrenim": null,
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "il": "Antalya",
+     "kosullar": [
+      "En az ilköğretim mezunu olmak.",
+      "18-30 yaş aralığında olmak.",
+      "Hayvan sağlığı, beslenmesi ve bakımı konusunda tecrübeye sahip olmak.",
+      "Hayvancılık işletmesinde çalışmasına engel kronik rahatsızlığı, engeli veya sağlık problemi olmamak."
+     ]
+    },
+    {
+     "unvan": "Sürekli İşçi (Tarım İşçisi - Karma Çiftlik)",
+     "adet": 2,
+     "ogrenim": null,
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "il": "Antalya",
+     "kosullar": [
+      "En az ilköğretim mezunu olmak.",
+      "18-30 yaş aralığında olmak.",
+      "Her türlü iklim şartlarında açık arazide çalışmaya engel kronik rahatsızlığı veya sağlık problemi olmamak."
+     ]
+    }
+   ],
+   "toplam": 3,
+   "son_basvuru_tarihi": "2026-11-20",
+   "son_basvuru_saati": null,
+   "baslangic_tarihi": "2026-11-16",
+   "kpss_gerekli": false,
+   "iller": [
+    "Antalya"
+   ],
+   "ortak_kosullar": [
+    "İlan tarihi itibarıyla Antalya il merkezinde ikamet etmek.",
+    "Başvuru yalnızca İŞKUR internet sitesinden online yapılır; her aday tek meslek koluna başvurabilir.",
+    "Noter kurası 27/11/2026, sözlü mülakat 03/12/2026'da Ziraat Fakültesinde yapılır.",
+    "Herhangi bir sosyal güvenlik kurumundan emeklilik, yaşlılık veya malullük aylığı almıyor olmak."
+   ],
+   "ozet": "Akdeniz Üniversitesi Ziraat Fakültesi için 1 hayvan bakıcısı ve 2 tarım işçisi olmak üzere 3 sürekli işçi alacak. Başvurular 16–20 Kasım 2026'da İŞKUR üzerinden online yapılır.",
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [],
+   "puan_turleri": []
   }
  },
  "sbb-6295f6e0ec51fdf233636132": {
