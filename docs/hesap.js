@@ -96,7 +96,9 @@
   /* ---------- /ben (forum.js olmayan sayfalarda; olan sayfalarda forum.js yoklar) ---------- */
   function benCek() {
     var o = oku('fr-oturum');
-    if (window.kitHesap || !o || Date.now() - (oku('fr-hesap-t') || 0) < 120000) return;
+    // forum.js sayfadaysa (ilan ve forum sayfalarında hesap.js'ten SONRA çalışır) /ben'i o çeker; iki kez D1 okuması olmasın
+    if (window.kitHesap || !o || document.querySelector('script[src*="forum.js"]')) return;
+    if (Date.now() - (oku('fr-hesap-t') || 0) < 120000 || Date.now() - (oku('fr-ben-t') || 0) < 120000) return;
     yaz('fr-hesap-t', Date.now());
     fetch(API + '/ben', { headers: { Authorization: 'Bearer ' + o } }).then(function (r) {
       if (r.status === 401) { yaz('fr-oturum', null); yaz('fr-uye', null); ciz(); return null; }
@@ -176,7 +178,8 @@
   // Bu sayfada forum.js yoksa kayıtlı listede değişiklik olunca (sayfa içi kaydet düğmeleri) gönderme işi forum.js'e devredilir.
   if (!window.kitKayitliGonder) {
     var kg = window.kitKayitliGonder = function () {
-      if (!oku('fr-oturum') || !oku('fr-uye') || oku('kit-saved-uye') !== oku('fr-uye').id) return;
+      if (!oku('fr-oturum')) { if (oku('kit-saved-uye') != null) yaz('kit-saved-kirli', 1); return; }   // oturumu düşmüş hesap listesi: yeniden girişte ezilmesin (forum.js ile aynı)
+      if (!oku('fr-uye') || oku('kit-saved-uye') !== oku('fr-uye').id) return;
       forumYukle().then(function () { if (window.kitKayitliGonder && window.kitKayitliGonder !== kg) window.kitKayitliGonder(); }, function () {});
     };
   }

@@ -193,19 +193,26 @@
       var r = K.birlestir(sunucu, typeof sahip === 'number' ? [] : yerel);   // başka üyeye ait liste sızmasın
       yaz('kit-saved-uye', ben.id);
       if (!ayniDizi(r.yerel, yerel)) { yaz('kit-saved', r.yerel); kayitliOlayi(); }
+      // birleşen liste gönderilemezse (ağ, 429, 5xx) "kirli" kalır: sonraki eşitlemede sunucu listesi yerel eklemeleri silmesin
+      yaz('kit-saved-kirli', r.degisti ? 1 : null);
       if (r.degisti) kayitliGonder_();
     } catch (e) {}
   }
   function kayitliGonder_() {
     var K = window.kitKayitli;
     if (!oturum() || !K) return;
-    api('/ben/kayitli', { yontem: 'POST', govde: { kayitli: K.gonderilecek(yerelKayitli()) } }).then(function () { yaz('kit-saved-kirli', null); }, function (h) { if (h && h.durum === 400) yaz('kit-saved-kirli', null); });
+    var giden = K.gonderilecek(yerelKayitli());
+    // yanıt gelene kadar yeni değişiklik olduysa "kirli" kalır (sonraki gönderim onu taşır)
+    function temizse() { if (ayniDizi(K.gonderilecek(yerelKayitli()), giden)) yaz('kit-saved-kirli', null); }
+    api('/ben/kayitli', { yontem: 'POST', govde: { kayitli: giden } }).then(temizse, function (h) { if (h && h.durum === 400) temizse(); });
   }
   var kayitliZamanlayici = 0;
   window.kitKayitliGonder = function () {   // site kayıtlı listesi değişince çağırır; giriş ya da eşleşme yoksa hiçbir şey yapmaz
     try {
       var ben = uye();
-      if (!oturum() || !ben || oku('kit-saved-uye') !== ben.id) return;
+      // oturum süresi dolmuş ama liste hâlâ hesaba bağlı: değişiklik "kirli" işaretlenir, aynı hesapla yeniden girişte sunucu listesi onu ezmez
+      if (!oturum()) { if (oku('kit-saved-uye') != null) yaz('kit-saved-kirli', 1); return; }
+      if (!ben || oku('kit-saved-uye') !== ben.id) return;
       yaz('kit-saved-kirli', 1);
       clearTimeout(kayitliZamanlayici);
       kayitliZamanlayici = setTimeout(kayitliGonder_, 1500);

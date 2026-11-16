@@ -46,12 +46,14 @@ function Wr([string[]]$Arg, [string]$Girdi = $null) {
   if ($script:wr) { $psi.FileName = $script:wr; $a = $Arg } else { $psi.FileName = 'npx.cmd'; $a = @('wrangler') + $Arg }
   $psi.Arguments = (($a | ForEach-Object { if ($_ -match '[\s"]') { '"' + ($_ -replace '"', '\"') + '"' } else { $_ } }) -join ' ')
   $psi.UseShellExecute = $false
-  $psi.RedirectStandardOutput = $true; $psi.RedirectStandardError = $true; $psi.RedirectStandardInput = ($null -ne $Girdi)
+  # stdin her zaman yonlendirilip kapatilir: wrangler hicbir komutta gorunmez bir soruda takili kalmaz
+  $psi.RedirectStandardOutput = $true; $psi.RedirectStandardError = $true; $psi.RedirectStandardInput = $true
   $psi.StandardOutputEncoding = [Text.Encoding]::UTF8; $psi.StandardErrorEncoding = [Text.Encoding]::UTF8
   $psi.WorkingDirectory = $PSScriptRoot
   $p = [System.Diagnostics.Process]::Start($psi)
   $o = $p.StandardOutput.ReadToEndAsync(); $e = $p.StandardError.ReadToEndAsync()
-  if ($null -ne $Girdi) { $p.StandardInput.Write($Girdi + "`n"); $p.StandardInput.Close() }
+  if ($null -ne $Girdi -and $Girdi -ne '') { $p.StandardInput.Write($Girdi) }
+  $p.StandardInput.Close()
   $p.WaitForExit()
   return [pscustomobject]@{ Kod = $p.ExitCode; Cikti = $o.Result; Hata = $e.Result }
 }
@@ -89,7 +91,8 @@ function SirDosyasiOku {
   $h = @{}
   if (Test-Path $sirDosyasi) {
     foreach ($s in [IO.File]::ReadAllLines($sirDosyasi)) {
-      if ($s -match '^\s*([A-Z_]+)=(.+)$') { $h[$Matches[1]] = $Matches[2].Trim() }
+      # -cmatch sart: tr-TR kulturunde -match [A-Z] ile "I" eslesmez, yedek hic okunmazdi
+      if ($s -cmatch '^\s*([A-Z_]+)=(.+)$') { $h[$Matches[1]] = $Matches[2].Trim() }
     }
   }
   return $h
@@ -153,7 +156,7 @@ else {
 $tomlYol = Join-Path $PSScriptRoot $ayar
 $toml = [IO.File]::ReadAllText($tomlYol)
 if ($db) {
-  if ($toml -match 'database_id\s*=\s*"BURAYA-ID"') {
+  if ($toml -match 'database_id\s*=\s*"BURAYA-ID"') {   # kuru calismada da yazilir (yalniz yerel dosya; okuma sorgulari dogru kimlige ihtiyac duyar)
     [IO.File]::WriteAllText($tomlYol, ($toml -replace 'database_id\s*=\s*"BURAYA-ID"', ('database_id = "' + $db.uuid + '"')), (New-Object Text.UTF8Encoding $false))
     Bilgi 'wrangler.toml icine database_id yazildi.'
   } elseif ($toml -match 'database_id\s*=\s*"([^"]+)"' -and $Matches[1] -ne $db.uuid) {
@@ -190,12 +193,14 @@ if (-not $db) {
     # 0005 oncesi kontrol: rumuz_kat cakismasi benzersiz indeksi kurdurmaz.
     $metin = [IO.File]::ReadAllText((Join-Path $PSScriptRoot $goc['0005']))
     if ($metin -notmatch '(?m)^-- ONCE KONTROL:\s*(?<q>SELECT .+?HAVING COUNT\(\*\) > 1\))') { throw '0005 on kontrol sorgusu dosyada bulunamadi.' }
-    $tmp = Join-Path $env:TEMP 'kpss-forum-0005-kontrol.sql'
-    [IO.File]::WriteAllText($tmp, $Matches['q'] + ';', (New-Object Text.UTF8Encoding $false))
-    $kj = @(JsonCoz (D1Calistir '--file' $tmp).Cikti)
-    Remove-Item $tmp -ErrorAction SilentlyContinue
-    $cakisma = 0
-    if ($kj.Count -gt 0 -and $kj[0].results -and @($kj[0].results).Count -gt 0) { $cakisma = [int](@($kj[0].results)[0].PSObject.Properties | Select-Object -First 1).Value }
+    # --remote --file ice aktarma API'sini kullanir ve SELECT sonucunu DONDURMEZ (yalniz "Total queries executed" ozeti);
+    # bu yuzden sorgu --command ile calisir. Komut satirinda Turkce harf bozulmasin diye 'C' gibi tek harfli metinler char(kod) olur.
+    $q = [regex]::Replace($Matches['q'], "'([^\x00-\x7F])'", [Text.RegularExpressions.MatchEvaluator]{ param($m) 'char(' + [int][char]$m.Groups[1].Value + ')' })
+    # -cmatch: tr-TR kulturunde buyuk/kucuk harf duyarsiz eslemede "I" bile ASCII disi sayilir
+    if ($q -cmatch '[^\x00-\x7F]') { throw '0005 on kontrol sorgusu ASCII yapilamadi.' }
+    $kr = @(D1Oku $q)
+    if ($kr.Count -eq 0) { throw '0005 on kontrol sorgusu sonuc dondurmedi; yayin durduruldu.' }
+    $cakisma = [int](@($kr[0].PSObject.Properties)[0].Value)
     if ($cakisma -gt 0) { throw "0005 durduruldu: $cakisma rumuz grubu Turkce harf/buyuk-kucuk harf/nokta/alt cizgi farkiyla cakisiyor. Cakisan hesaplardan birinin rumuzunu elle degistirip yeniden calistir." }
     Bilgi '0005 on kontrolu temiz (cakisan rumuz yok).'
   }
@@ -224,10 +229,20 @@ else { DosyaCalistir $odaDosya 'odalar.sql' }
 # ---------- 5. Sirlar ----------
 Adim '5/7 Sirlar'
 $gerekli = @('OTURUM_SIRRI', 'YONETICI_ANAHTARI', 'SIFRE_BIBERI', 'TELEGRAM_BOT_TOKEN')
-$sl = Wr @('secret', 'list', '--config', $ayar)
-$isciVar = ($sl.Kod -eq 0)
+function SirListesi {   # tanimli sir adlari; Worker yoksa $null. Baska her hata yayini DURDURUR: liste okunamazken
+  # "sir yok" sanip SIFRE_BIBERI'ni yeni degerle ezmek tum sifreleri gecersiz kilar.
+  $r = Wr @('secret', 'list', '--format', 'json', '--config', $ayar)
+  if ($r.Kod -ne 0) {
+    if (($r.Hata + "`n" + $r.Cikti) -match '(?i)Worker "[^"]+".* not found|workers\.api\.error\.script_not_found|\[code: 10007\]') { return $null }
+    WrHata 'secret list' $r
+  }
+  if ($r.Cikti -notmatch '\[') { throw "secret list ciktisi JSON degil; sirlara dokunulmadan durduruldu." }
+  return ,@(@(JsonCoz $r.Cikti) | ForEach-Object { $_.name } | Where-Object { $_ })
+}
+$sl = SirListesi
+$isciVar = ($null -ne $sl)
 $varOlan = @()
-if ($isciVar) { $varOlan = @(@(JsonCoz $sl.Cikti) | ForEach-Object { $_.name }) }
+if ($isciVar) { $varOlan = @($sl) }
 if ($isciVar) { Bilgi ('Worker mevcut; tanimli sirlar: ' + $(if ($varOlan.Count) { $varOlan -join ', ' } else { '(yok)' })) }
 else { Bilgi 'Worker henuz yok: sirlar ilk dagitimdan hemen sonra yazilacak.' }
 $dosyadaki = SirDosyasiOku
@@ -249,7 +264,8 @@ if ($varOlan -notcontains 'TELEGRAM_BOT_TOKEN') {
     Bilgi "TELEGRAM_BOT_TOKEN gerekli: @$botAdi belirteci (bildirim botuyla AYNI; bildirim-botu Worker'indaki BOT_TOKEN geri okunamaz, BotFather > /mybots > @$botAdi > API Token'dan al)."
     $tg = DuzMetin (Read-Host 'Bot belirteci (ekranda gorunmez; bos birakirsan Telegram girisi/bildirimi simdilik kapali kalir)' -AsSecureString)
     if ($tg) {
-      if ($tg -notmatch '^\d+:[A-Za-z0-9_-]{30,}$') { throw 'Belirtec bicimi hatali. BotFather satirini oldugu gibi yapistir.' }
+      # -cnotmatch: tr-TR kulturunde "I"/"i" iceren gecerli belirtec reddedilirdi
+      if ($tg -cnotmatch '^\d+:[A-Za-z0-9_-]{30,}$') { throw 'Belirtec bicimi hatali. BotFather satirini oldugu gibi yapistir.' }
       try { $ben = Invoke-RestMethod -Uri ("https://api.telegram.org/bot$tg/getMe") -Method Get }
       catch { $Error.Clear(); throw "Telegram getMe basarisiz (belirtec gecersiz ya da iptal edilmis olabilir)." }
       if ($ben.result.username -ne $botAdi) { throw "Belirtec @$($ben.result.username) botuna ait; beklenen @$botAdi (wrangler.toml TELEGRAM_BOT_ADI)." }
@@ -259,7 +275,11 @@ if ($varOlan -notcontains 'TELEGRAM_BOT_TOKEN') {
   }
 }
 function SirlariYaz {
+  # yazmadan hemen once yeniden oku: o arada tanimlanmis bir sir (ozellikle SIFRE_BIBERI) asla ezilmez
+  $simdiki = @()
+  if (-not $Kuru) { $l = SirListesi; if ($null -ne $l) { $simdiki = @($l) } }
   foreach ($ad in @($yazilacak.Keys)) {
+    if ($simdiki -contains $ad) { Bilgi "  $ad Cloudflare'da zaten tanimli; degistirilmedi"; continue }
     if ($Kuru) { Kuru "wrangler secret put $ad"; continue }
     $p = Wr @('secret', 'put', $ad, '--config', $ayar) $yazilacak[$ad]
     if ($p.Kod -ne 0) { WrHata "secret put $ad" $p }
