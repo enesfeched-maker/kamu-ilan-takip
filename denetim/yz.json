@@ -8291,6 +8291,85 @@
    ]
   }
  },
+ "sbb-95069478a487e902808af609": {
+  "zaman": "2026-11-16T19:13:41+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "pdf",
+  "imza": "805d896d15903aad",
+  "baslik": "DİCLE KALKINMA AJANSI - 4 SÖZLEŞMELİ UZMAN PERSONEL ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Uzman Personel (İktisat, İşletme, Maliye)",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P14, P15, P16, P24, P25, P26, P19, P20, P21",
+     "en_dusuk_puan": 80,
+     "il": null,
+     "kosullar": [
+      "İktisat, İşletme veya Maliye bölümlerinden lisans düzeyinde mezun olmak.",
+      "YDS/e-YDS İngilizce en az 70 puan (son 5 yıl) veya denk belgeye sahip olmak."
+     ]
+    },
+    {
+     "unvan": "Uzman Personel (Kamu Yönetimi, Çalışma Ekonomisi, Uluslararası İlişkiler, Hukuk)",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P29, P30, P31, P39, P40, P41, P34, P35, P36, P4",
+     "en_dusuk_puan": 80,
+     "il": null,
+     "kosullar": [
+      "Siyaset Bilimi ve Kamu Yönetimi/Kamu Yönetimi, Çalışma Ekonomisi ve Endüstri İlişkileri, Uluslararası İlişkiler veya Hukuk bölümlerinden mezun olmak.",
+      "YDS/e-YDS İngilizce en az 70 puan (son 5 yıl) veya denk belgeye sahip olmak."
+     ]
+    },
+    {
+     "unvan": "Uzman Personel (İstatistik, Matematik, Şehir ve Bölge Planlama, Mühendislik)",
+     "adet": 2,
+     "ogrenim": "lisans",
+     "puan_turu": "P1, P2, P3",
+     "en_dusuk_puan": 80,
+     "il": null,
+     "kosullar": [
+      "İstatistik, Matematik, Şehir ve Bölge Planlama veya ilanda sayılan mühendislik bölümlerinden mezun olmak.",
+      "YDS/e-YDS İngilizce en az 70 puan (son 5 yıl) veya denk belgeye sahip olmak."
+     ]
+    }
+   ],
+   "toplam": 4,
+   "son_basvuru_tarihi": "2026-12-18",
+   "son_basvuru_saati": null,
+   "baslangic_tarihi": "2026-12-04",
+   "kpss_gerekli": true,
+   "iller": [
+    "Mardin",
+    "Batman",
+    "Siirt",
+    "Şırnak"
+   ],
+   "ortak_kosullar": [
+    "Başvurular 4–18 Aralık 2026 arasında kariyerkapisi.gov.tr üzerinden elektronik ortamda yapılır.",
+    "Geçerli KPSS'den ilgili puan türünden en az 80 puan almış olmak.",
+    "Değerlendirme: KPSS %55, YDS %35; en yüksek puanlı 5 katı aday sözlü sınava çağrılır, başarı notu en az 70.",
+    "Her aday yalnızca bir pozisyona başvurabilir."
+   ],
+   "ozet": "Dicle Kalkınma Ajansı Mardin, Batman, Siirt ve Şırnak'ta görevlendirilmek üzere 4 uzman personel alacak. Başvurular 4–18 Aralık 2026'da kariyerkapisi.gov.tr üzerinden yapılır.",
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P1, P2, P3",
+    "P14, P15, P16, P24, P25, P26, P19, P20, P21",
+    "P29, P30, P31, P39, P40, P41, P34, P35, P36, P4"
+   ]
+  }
+ },
  "sbb-996152b017d1af5f445dfade": {
   "zaman": "2026-11-06T23:12:36+03:00",
   "surum": 4,
