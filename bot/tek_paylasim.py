@@ -19,8 +19,16 @@ ROOT = Path(__file__).resolve().parents[1]
 SITE = 'https://kpsstercihi.com/'
 
 
+def _dugme(d):
+    """["Yazı", "adres"] ya da ["Yazı", "adres", "success"] (kanaldaki yeşil ilan düğmesi gibi)."""
+    dugme = {'text': d[0], 'url': utm_ekle(d[1], SITE)}
+    if len(d) > 2 and d[2]:
+        dugme['style'] = d[2]
+    return dugme
+
+
 def govde_hazirla(tanim, chat_id):
-    klavye = [[{'text': y, 'url': utm_ekle(u, SITE)} for y, u in satir] for satir in tanim.get('dugmeler') or []]
+    klavye = [[_dugme(d) for d in satir] for satir in tanim.get('dugmeler') or []]
     alanlar = {'chat_id': chat_id}
     if klavye:
         alanlar['reply_markup'] = json.dumps({'inline_keyboard': klavye}, ensure_ascii=False)
