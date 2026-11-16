@@ -93,6 +93,25 @@
     t.textContent = m; t.hidden = false; clearTimeout(tTimer); tTimer = setTimeout(function () { t.hidden = true; }, 2800);
   }
 
+  /* ---------- avatar (avatar-ortak.js yalnız giriş yapılmışsa yüklenir) ve katiplik eşitleme ---------- */
+  var avVaadi = null;
+  function avatarKit() {
+    if (!avVaadi) {
+      avVaadi = (window.kitAvatar ? Promise.resolve() : new Promise(function (ok, red) {
+        var s = document.createElement('script'); s.async = true; s.src = TABAN + 'avatar-ortak.js?v=' + FS; s.onload = ok; s.onerror = red; document.head.appendChild(s);
+      })).then(function () { return window.kitAvatar.yukle(); }, function () {});
+    }
+    return avVaadi;
+  }
+  var katipYuklendi = false;
+  function katipBaslat() {   // katiplik sayfalarında, giriş varsa: veriyi hesapla eşitleyen küçük modül
+    if (katipYuklendi || !/\/katiplik\//.test(location.pathname) || !oku('fr-oturum')) return;
+    katipYuklendi = true;
+    var s = document.createElement('script'); s.async = true; s.src = TABAN + 'katip-senkron.js?v=' + FS;
+    s.onerror = function () { katipYuklendi = false; };
+    document.head.appendChild(s);
+  }
+
   /* ---------- /ben (forum.js olmayan sayfalarda; olan sayfalarda forum.js yoklar) ---------- */
   function benCek() {
     var o = oku('fr-oturum');
@@ -126,7 +145,7 @@
   }
   function ciz() {
     var o = oku('fr-oturum'), u = oku('fr-uye');
-    var yeni = o ? 'u:' + (u && u.rumuz || '') : 'x';
+    var yeni = o ? 'u:' + (u && u.rumuz || '') + '|' + (u && u.av || '') + '|' + (u && u.fs || '') : 'x';
     if (kap && yeni === imza) { rozetler(); return; }
     var acikti = kap && kap.querySelector('.hs-menu') && !kap.querySelector('.hs-menu').hidden;
     if (kap) { kap.remove(); kap = null; }
@@ -139,10 +158,11 @@
       var ad = (u && u.rumuz) || '', bas = ad ? ad.charAt(0).toLocaleUpperCase('tr-TR') : '';
       kap = document.createElement('div'); kap.className = 'hs';
       kap.innerHTML = '<button type="button" class="hs-av" id="hs-ac" aria-haspopup="true" aria-expanded="false" aria-controls="hs-menu" aria-label="Hesabım' + (ad ? ': ' + esc(ad) : '') + '">'
-        + '<span class="hs-d" style="--h:' + ton(ad) + '" aria-hidden="true">' + (esc(bas) || '<svg viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5"/></svg>') + '</span>'
+        + '<span class="hs-d' + (ad && window.kitAvatar ? ' hs-d-av' : '') + '" style="--h:' + ton(ad) + '" aria-hidden="true">' + (ad && window.kitAvatar ? window.kitAvatar.html({ rumuz: ad, av: u.av, fs: u.fs, fu: u.fu }, 32) : ad ? '<span class="fr-av" data-avu="' + esc(JSON.stringify({ u: { rumuz: ad, av: u.av, fs: u.fs, fu: u.fu }, b: 32 })) + '" style="--h:' + ton(ad) + '" aria-hidden="true">' + esc(bas) + '</span>' : esc(bas) || '<svg viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5"/></svg>') + '</span>'
         + '<span class="hs-ad">Hesabım</span><b class="tb-sayi" data-ozel-sayi hidden></b></button>'
         + '<div class="hs-menu" id="hs-menu" hidden>' + (ad ? '<p class="hs-kim">' + esc(ad) + '</p>' : '')
-        + '<a href="' + KOK + '?profil=1" data-hs="profil">Profilim</a>'
+        + '<a href="' + KOK + '?profil=kart" data-hs="profil">Profilim</a>'
+        + (ad ? '<a href="' + KOK + 'forum/?uye=' + encodeURIComponent(ad) + '" data-hs="sayfa">Profil sayfam</a>' : '')
         + '<a href="' + KOK + '#kayitli" data-hs="kayitli">Kayıtlı ilanlarım</a>'
         + '<a href="' + KOK + 'forum/" data-hs="forum">Forum</a>'
         + '<a href="' + KOK + 'forum/?bolum=mesaj" data-hs="mesaj">Mesajlar<b class="tb-sayi" data-ozel-sayi hidden></b></a>'
@@ -160,7 +180,7 @@
         var ne = x.getAttribute('data-hs');
         if (ne === 'ayar' || ne === 'hesap' || ne === 'cikis') { menuKapat(false); cekmeceKapat(); forumdan(ne); return; }
         var np = ne === 'profil' && document.getElementById('nav-profile');   // ana sayfada profil ekranı yerinde açılır
-        if (np) { e.preventDefault(); menuKapat(false); cekmeceKapat(); np.click(); return; }
+        if (np) { e.preventDefault(); menuKapat(false); cekmeceKapat(); if (window.kitProfilAc) window.kitProfilAc('kart'); else np.click(); return; }
         menuKapat(false); cekmeceKapat();   // bağlantılar normal gezinir
       };
       if (profil) profil.hidden = true;   // "Profil" artık hesap menüsünde (Profilim)
@@ -168,6 +188,7 @@
     }
     if (profil && profil.parentNode) profil.parentNode.insertBefore(kap, profil); else nav.appendChild(kap);
     rozetler();
+    if (o) { if (window.kitAvatar) avatarKit(); else avatarKit().then(function () { imza = ''; ciz(); }); katipBaslat(); }
   }
 
   document.addEventListener('click', function (e) { if (kap && !kap.contains(e.target)) menuKapat(false); });

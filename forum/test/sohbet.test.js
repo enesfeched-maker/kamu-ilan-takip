@@ -203,7 +203,7 @@ test('/uye/:rumuz: alanlar, büyük/küçük harf ve URL çözme, tg_id yok, eng
   hamYanit(env, b[0], u.id, 'gizlenmiş yanıt', { gizli: 1 });
   const r = await cagir(env, 'GET', `/uye/${encodeURIComponent('çağrı_hoca')}`);
   assert.equal(r.durum, 200);
-  assert.deepEqual(Object.keys(r.json).sort(), ['dm_acik', 'itibar', 'kayit', 'kurucu', 'mesaj_sayisi', 'rol', 'rumuz', 'son_basliklar']);
+  assert.deepEqual(Object.keys(r.json).sort(), ['cevap_sayisi', 'dm_acik', 'itibar', 'kayit', 'kurucu', 'mesaj_sayisi', 'rol', 'rozetler', 'rumuz', 'sohbet_sayisi', 'son_basliklar', 'soru_sayisi']);
   assert.equal(r.json.rumuz, 'Çağrı_Hoca'); assert.equal(r.json.itibar, 7); assert.equal(r.json.rol, 'uye');
   assert.equal(r.json.mesaj_sayisi, 15); assert.equal(r.json.kurucu, true);
   assert.deepEqual(r.json.son_basliklar.map((x) => x.id), [b[6], b[5], b[4], b[3], b[2]]);

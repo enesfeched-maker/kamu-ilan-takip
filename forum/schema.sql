@@ -19,7 +19,14 @@ CREATE TABLE IF NOT EXISTS uyeler (
   profil TEXT,                       -- sitedeki kit-profil (JSON, beyaz listeli)
   kayitli TEXT,                      -- sitedeki kit-saved: kayıtlı ilan kimlikleri (JSON dizi, en çok 300, en çok 8 KB)
   rumuz_kat TEXT,                    -- küçük harf, Türkçe harfler ASCII, "." ve "_" atılmış rumuz (benzersiz)
-  oturum_surum INTEGER DEFAULT 0     -- şifre/kurtarma kodu değişince artar, eski oturumlar kapanır
+  oturum_surum INTEGER DEFAULT 0,    -- şifre/kurtarma kodu değişince artar, eski oturumlar kapanır
+  avatar TEXT,                       -- "<avatar-anahtarı>:<renk-anahtarı>" ya da 'foto'; boş = rumuzdan türetilen varsayılan hayvan
+  foto_surum INTEGER,                -- yüklenen fotoğrafın sürümü (unix sn); boş = fotoğraf yok
+  foto_gun INTEGER,                  -- fotoğraf yükleme sayacı: UTC gün numarası
+  foto_sayi INTEGER,                 -- o gün yapılan yükleme (günde en çok 3)
+  foto_yasak INTEGER,                -- yönetici fotoğrafı kaldırınca 1: yeni fotoğraf yüklenemez
+  kart TEXT,                         -- profil kartı JSON: hakkimda, hedef, durum, kart_rengi, gizlilik (varsayılanlar yazılmaz)
+  basvurular TEXT                    -- sitedeki fr-basvuru: başvurdum dediği ilan kimlikleri (JSON dizi, en çok 300)
 );
 CREATE TABLE IF NOT EXISTS basliklar (
   id INTEGER PRIMARY KEY,
@@ -144,6 +151,19 @@ CREATE TABLE IF NOT EXISTS eposta_gunluk (
   gun TEXT PRIMARY KEY,             -- UTC gün (YYYY-AA-GG); Brevo ücretsiz plan günde 300, biz 280'de durdururuz
   n INTEGER DEFAULT 0
 );
+CREATE TABLE IF NOT EXISTS eposta_sayac (
+  tur TEXT,                         -- gonder_ip (IP /24 günlük gönderim) | eposta_adres (adres saatlik gönderim) | dogrula_ip (IP 15 dk deneme) | hata_hedef (hedef başına günlük deneme)
+  anahtar TEXT,                     -- biberli özet ya da IP özeti
+  dilim INTEGER,                    -- zaman dilimi numarası (gün / saat / 15 dk)
+  n INTEGER DEFAULT 0,
+  olusma INTEGER,                   -- son yazma (fırsat temizliği)
+  PRIMARY KEY (tur, anahtar, dilim)
+);
+CREATE INDEX IF NOT EXISTS eposta_sayac_olusma ON eposta_sayac(olusma);
+CREATE TABLE IF NOT EXISTS ayrilmis_rumuzlar (
+  kat TEXT PRIMARY KEY,             -- silinen hesabın rumuz_kat değeri; 180 gün başkası alamaz
+  bitis INTEGER
+);
 CREATE TABLE IF NOT EXISTS giris_denemeleri (
   tur TEXT,                          -- kayit | giris_ip | giris_rumuz_ip | giris_rumuz
   anahtar TEXT,                     -- IP özeti ya da küçük harfli rumuz
@@ -153,3 +173,23 @@ CREATE INDEX IF NOT EXISTS giris_denemeleri_anahtar ON giris_denemeleri(tur, ana
 CREATE INDEX IF NOT EXISTS giris_denemeleri_olusma ON giris_denemeleri(olusma);
 INSERT OR IGNORE INTO uyeler (id, tg_id, rumuz, rumuz_kat, kayit, kurucu, rol, bildirim) VALUES (1, NULL, 'KPSS Tercihi', 'kpss tercihi', 0, 0, 'sistem', 0);
 INSERT OR IGNORE INTO uyeler (id, tg_id, rumuz, rumuz_kat, kayit, kurucu, rol, bildirim) VALUES (2, NULL, 'Asistan', 'asistan', 0, 0, 'asistan', 0);
+CREATE TABLE IF NOT EXISTS fotolar (
+  uye_id INTEGER PRIMARY KEY,
+  veri BLOB,                         -- 160x160 WebP/JPEG/PNG, en çok 24 KB
+  tur TEXT,                          -- image/webp | image/jpeg | image/png
+  surum INTEGER,
+  guncelleme INTEGER
+);
+CREATE TABLE IF NOT EXISTS foto_bildirimleri (
+  uye_id INTEGER,                    -- fotoğrafı bildirilen üye
+  bildiren INTEGER,
+  surum INTEGER,                     -- bildirilen fotoğrafın sürümü
+  olusma INTEGER,
+  PRIMARY KEY (uye_id, bildiren)
+);
+CREATE TABLE IF NOT EXISTS uye_katip (
+  uye_id INTEGER PRIMARY KEY,
+  veri TEXT,                         -- kit-katip + ders/oyun/antrenman ilerlemesi (JSON, en çok 32 KB)
+  ozet TEXT,                         -- karta konan özet (JSON)
+  guncelleme INTEGER
+);

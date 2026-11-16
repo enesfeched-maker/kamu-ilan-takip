@@ -1,6 +1,6 @@
 // Google Identity Services kimlik jetonu (RS256 JWT) doğrulaması. Kullanılan alanlar: `sub` ve doğrulanmış `email`; ad ve fotoğraf saklanmaz.
 import { b64uCoz, b64uMetin } from './yardimci.js';
-import { epostaNormalle } from './epostabicim.js';
+import { epostaNormalle, gmailMi } from './epostabicim.js';
 
 const JWKS_ADRESI = 'https://www.googleapis.com/oauth2/v3/certs';
 const ONBELLEK_ANAHTARI = 'https://forum-api.kpsstercihi.com/_onbellek/google-jwks';
@@ -78,7 +78,11 @@ export async function googleJetonuDogrula(env, jeton, simdi) {
   if (typeof yuk.iat !== 'number' || yuk.iat - SAPMA > simdi) return { tamam: false, neden: 'gelecek' };
   if (yuk.email_verified !== true && yuk.email_verified !== 'true') return { tamam: false, neden: 'eposta' };
   if (typeof yuk.sub !== 'string' || !/^\d{1,40}$/.test(yuk.sub)) return { tamam: false, neden: 'sub' };
-  // doğrulanmış e-posta (yukarıda email_verified sınandı): kayıtlı e-posta hesaplarıyla eşleştirmek ve sonradan e-posta koduyla girebilmek için
+  // E-posta yalnız güvenilir kaynaktaysa döner (hesapla eşleştirmek ve sonradan e-posta koduyla girebilmek için): @gmail.com / @googlemail.com
+  // Google'ın kendi adresidir; başka alan adlarında yalnız jetonun `hd` (Workspace alanı) değeri adresin alan adına eşitse güvenilir.
+  // Aksi hâlde email_verified tek başına yetmez (alan sahibi Google hesabıyla başkasının adresini "doğrulatabilir"): eposta dönmez, bağlama olmaz.
   const eposta = typeof yuk.email === 'string' ? epostaNormalle(yuk.email) : null;
-  return eposta ? { tamam: true, sub: yuk.sub, eposta } : { tamam: true, sub: yuk.sub };
+  const alan = eposta ? eposta.slice(eposta.lastIndexOf('@') + 1) : '';
+  const guvenilir = !!eposta && (gmailMi(eposta) || (typeof yuk.hd === 'string' && yuk.hd.toLowerCase() === alan));
+  return guvenilir ? { tamam: true, sub: yuk.sub, eposta } : { tamam: true, sub: yuk.sub };
 }

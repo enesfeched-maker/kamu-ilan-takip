@@ -2,7 +2,7 @@
 // index.js ile döngüsel içe aktarma güvenlidir: yardımcılar yalnız istek sırasında çağrılır.
 import { jsonYanit, hataYanit, simdi } from './yardimci.js';
 import { rumuzDogrula, rumuzKat, geciciGoogleUret, oturumUret } from './oturum.js';
-import { epostaAcik, sifirlamaKoduDogrula, kodBicimi } from './eposta.js';
+import { epostaAcik, sifirlamaKoduDogrula, kodBicimi, dogrulamaIzni, dogrulamaBasari } from './eposta.js';
 import { epostaNormalle } from './epostabicim.js';
 import { sifreYapilandirildi, sifreKurali, sifreOzetle, sifreDogrula, kurtarmaKoduUret, kurtarmaOzeti, kurtarmaDogrula, biberliOzet } from './sifre.js';
 import {
@@ -168,17 +168,18 @@ async function sifreSifirlaEposta(request, env, g, ipA) {
   const kural = sifreKurali(g.yeni_sifre, eposta ? null : girdi);
   if (kural) return hataYanit(400, kural);
   const sayacAnahtari = kat || await biberliOzet(env, 'eposta-adres', eposta);   // sayaç tablosuna adres düz yazılmaz
-  const ret = await denemeKontrol(env, ipA, sayacAnahtari, t);
+  const hedef = `sifirla:${sayacAnahtari}`;
+  const ret = await dogrulamaIzni(env, ipA, hedef, t);   // atomik artır-sonra-kontrol: IP 15 dk'da 10, hedef günde 20; hesap varlığından bağımsız
   if (ret) return ret;
   const uye = eposta
     ? await env.DB.prepare(`SELECT ${UYE_ALANLARI} FROM uyeler WHERE eposta = ?`).bind(eposta).first()
     : await uyeBul(env, girdi);
   const sonuc = await sifirlamaKoduDogrula(env, uye && uye.eposta ? uye.id : 0, g.eposta_kodu, t);   // hesap yoksa da aynı işi yapar
   if (!uye || !uye.eposta || sonuc !== 'tamam') {
-    await denemeKaydet(env, ipA, sayacAnahtari, t);
     return hataYanit(401, GENEL_EPOSTA_KOD_HATASI);   // deneme hakkı bitse de aynı yanıt: hesap varlığı sızmaz
   }
-  const kod =uye.kurtarma_ozet ? null : kurtarmaKoduUret();   // kurtarma kodu olmayan (Google/e-posta) üyeye ilk şifresiyle birlikte verilir
+  await dogrulamaBasari(env, hedef, t);
+  const kod = uye.kurtarma_ozet ? null : kurtarmaKoduUret();   // kurtarma kodu olmayan (Google/e-posta) üyeye ilk şifresiyle birlikte verilir
   const ozet = await sifreOzetle(env, g.yeni_sifre);
   if (kod) await env.DB.prepare('UPDATE uyeler SET sifre_ozet = ?, kurtarma_ozet = ?, oturum_surum = COALESCE(oturum_surum, 0) + 1 WHERE id = ?').bind(ozet, await kurtarmaOzeti(env, kod), uye.id).run();
   else await env.DB.prepare('UPDATE uyeler SET sifre_ozet = ?, oturum_surum = COALESCE(oturum_surum, 0) + 1 WHERE id = ?').bind(ozet, uye.id).run();
@@ -297,10 +298,15 @@ export async function benHesapSil(request, env) {
   await env.DB.batch([
     env.DB.prepare(
       "UPDATE uyeler SET rumuz = ?, rumuz_kat = ?, eposta = NULL, eposta_dogrulandi = NULL, sifre_ozet = NULL, kurtarma_ozet = NULL, google_sub = NULL, tg_id = NULL, "
-      + "profil = NULL, kayitli = NULL, bildirim = 0, dm_acik = 0, engelli = 1, kurucu = 0, rol = 'uye', silindi = ?, oturum_surum = COALESCE(oturum_surum, 0) + 1 WHERE id = ?",
+      + "profil = NULL, kayitli = NULL, avatar = NULL, foto_surum = NULL, kart = NULL, basvurular = NULL, "   // basvurular: "başvurdum" işaretleri
+      + "bildirim = 0, dm_acik = 0, engelli = 1, kurucu = 0, rol = 'uye', silindi = ?, oturum_surum = COALESCE(oturum_surum, 0) + 1 WHERE id = ?",
     ).bind(ad, `silinmis-${u.id}`, simdi(), u.id),
     env.DB.prepare('DELETE FROM takipler WHERE uye_id = ?').bind(u.id),
     env.DB.prepare('DELETE FROM engeller WHERE uye_id = ? OR engellenen = ?').bind(u.id, u.id),
+    env.DB.prepare('DELETE FROM fotolar WHERE uye_id = ?').bind(u.id),
+    env.DB.prepare('DELETE FROM uye_katip WHERE uye_id = ?').bind(u.id),
+    // eski rumuz 180 gün başkasına verilmez (kimlik taklidi); gönderilen özel mesajlar karşı tarafta kalır, gönderen artık "Silinmiş üye #id" görünür
+    env.DB.prepare('INSERT OR REPLACE INTO ayrilmis_rumuzlar (kat, bitis) VALUES (?, ?)').bind(rumuzKat(u.rumuz), simdi() + 180 * 86400),
   ]);
   return jsonYanit({ tamam: true });
 }

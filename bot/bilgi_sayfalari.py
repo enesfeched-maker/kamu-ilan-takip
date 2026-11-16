@@ -31,7 +31,7 @@ SAYFALAR = {
          'kimlik numaran ve e-posta adresin; Telegram ile girersen Telegram kimliğin; forumdaki yazıların ve özel mesajların. '
          'Giriş kodu e-postaları Brevo üzerinden gönderilir; Brevo bu işte adresini bizim adımıza işleyen taraftır. '
          'Hiçbir veri satılmaz ya da reklam için paylaşılmaz. Hesabını Hesabım menüsündeki Hesap ayarları, Hesabı sil bölümünden istediğin zaman silebilirsin: '
-         'giriş bilgilerin, e-posta adresin, profilin ve kayıtlı ilanların silinir; forumdaki yazıların “Silinmiş üye” adıyla kalır. '
+         'giriş bilgilerin, e-posta adresin, profilin ve kayıtlı ilanların silinir; forumdaki yazıların ve gönderdiğin özel mesajlar karşı tarafta “Silinmiş üye” adıyla kalır; başkası taklit edemesin diye eski rumuzun 180 gün kimseye verilmez. '
          f'Sorular için {ILETISIM_EPOSTA} adresine yazabilirsin.'),
         ('İletişim', f'Gizlilikle ilgili soruların için {ILETISIM_EPOSTA} adresine yazabilirsin. Bize yazarsan e-posta adresin ve iletin yalnızca yanıt vermek için kullanılır.'),
     ]),

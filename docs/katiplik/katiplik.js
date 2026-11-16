@@ -19,6 +19,15 @@
   veri.gunluk = veri.gunluk && typeof veri.gunluk === 'object' ? veri.gunluk : {};
   veri.yol = Object.assign({ tarih: '', hedef: 90 }, veri.yol || {});
   var ayar = veri.ayar;
+  // Hesapla eşitleme (katip-senkron.js) yerel veriyi birleştirince bellekteki kopya tazelenir; eski kopya birleşmiş veriyi ezmesin.
+  window.addEventListener('kit-katip-sunucudan', function () {
+    var s = O.oku('kit-katip', null);
+    if (!s || typeof s !== 'object') return;
+    veri.gecmis = Array.isArray(s.gecmis) ? s.gecmis : []; veri.hatalar = s.hatalar && typeof s.hatalar === 'object' ? s.hatalar : {};
+    veri.rozetler = Array.isArray(s.rozetler) ? s.rozetler : []; veri.gunluk = s.gunluk && typeof s.gunluk === 'object' ? s.gunluk : {};
+    veri.yol = Object.assign({ tarih: '', hedef: 90 }, s.yol || {});
+    try { if (typeof ozetCiz === 'function') ozetCiz(); if (typeof yolCiz === 'function') yolCiz(); } catch (e) { /* ekran tazelenemezse veri yine de güncel */ }
+  });
   if (!KUT.bul(ayar.kutuphane)) ayar.kutuphane = 'zk2025';
   // Başka sayfalar (ders, antrenman) de 'kit-katip' içine yazar; kaydetmeden önce onların alanlarını koru.
   function kaydet() {
@@ -479,6 +488,28 @@
     lider = { anahtar: [].map.call(rb, function (x) { return (x + 256).toString(16).slice(1); }).join(''), ad: '', kimlik: '' };
   }
   var liderTablo = null, liderSekme = 'haftalik', liderAday = null;
+  // Avatarlar (forum hesabı): avatar-ortak.js yalnız tabloda avatarlı satır ya da giriş varsa yüklenir; avatarsız eski satırlar harfle gösterilir.
+  var AV_BET = document.currentScript, AV_ADRES = AV_BET && AV_BET.src ? AV_BET.src.replace(/katiplik\/katiplik\.js.*$/, 'avatar-ortak.js?v=' + ((/[?&]v=(\w+)/.exec(AV_BET.src) || [0, '1'])[1])) : '', avVaadi = null;
+  function avatarKit() {
+    if (avVaadi) return avVaadi;
+    avVaadi = (window.kitAvatar ? Promise.resolve() : new Promise(function (ok, red) {
+      var s = document.createElement('script'); s.async = true; s.src = AV_ADRES; s.onload = ok; s.onerror = red; document.head.appendChild(s);
+    })).then(function () { return window.kitAvatar.yukle(); }, function () {});
+    return avVaadi;
+  }
+  function hesapUyesi() { var u = O.oku('fr-uye', null); return O.oku('fr-oturum', null) && u && typeof u.rumuz === 'string' ? u : null; }
+  function liderAvatar(u) {   // tabloya giden avatar: seçtiği hazır avatar; fotoğraf ya da otomatik ise rumuzdan türeyen (sprite yoksa gönderilmez)
+    var a = window.kitAvatar;
+    var c = a ? a.coz(u.av) : null;
+    if (!c || c.set !== 'svg') c = a ? a.varsayilanSvg(u.rumuz) : null;   // tablo yalnız SVG setini bilir (Piixpal / fotoğraf yerine rumuzdan türeyen SVG gider)
+    return c ? c.k + ':' + c.r : null;
+  }
+  function liderAd(x) {
+    var s = E('span', 'ad'), a = window.kitAvatar;
+    if (a && a.hazir()) s.insertAdjacentHTML('afterbegin', x.av ? a.html({ rumuz: x.ad, av: x.av }, 26, 'kt-lider-av') : a.harf(x.ad, 26, 'kt-lider-av'));
+    s.append(document.createTextNode(x.ad));
+    return s;
+  }
     var LIDER_HATA = {
     ad: 'Bu takma ad kullanılamıyor; 2–18 harf/rakam olan başka bir ad dene.', kisa: 'Tabloya girmek için biraz daha yazmalısın.',
     supheli: 'Bu sonuç doğrulanamadı.', hiz: 'Çok sık gönderdin; birkaç dakika sonra tekrar dene.', kota: 'Tablo şu an yoğun; biraz sonra tekrar dene.'
@@ -491,12 +522,12 @@
     $('lider-bos').textContent = liderSekme === 'haftalik' ? 'Bu hafta henüz kimse yok. İlk sen ol!' : 'Henüz kimse yok. İlk sen ol!';
     liste.forEach(function (x, i) {
       var li = E('li', (x.i && x.i === lider.kimlik ? 'ben ' : '') + (i < 3 ? 'ilk' + (i + 1) : ''));
-      li.append(E('span', 'sira' + (i < 3 ? ' m' + (i + 1) : ''), String(i + 1)), E('span', 'ad', x.ad), E('span', 'dk', x.dk + ' vuruş/dk'), E('b', 'net', x.net + ' net'));
+      li.append(E('span', 'sira' + (i < 3 ? ' m' + (i + 1) : ''), String(i + 1)), liderAd(x), E('span', 'dk', x.dk + ' vuruş/dk'), E('b', 'net', x.net + ' net'));
       ol.append(li);
     });
   }
   function liderYukle() {
-    fetch(LIDER_URL).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { if (j) { liderTablo = j; liderCiz(); } }).catch(function () {});
+    fetch(LIDER_URL).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { if (j) { liderTablo = j; liderCiz(); var avli = ['haftalik', 'tum'].some(function (s) { return (j[s] || []).some(function (x) { return x.av; }); }); if (avli || hesapUyesi()) avatarKit().then(liderCiz); } }).catch(function () {});
   }
   [].forEach.call(document.querySelectorAll('[data-lt]'), function (b) {
     b.onclick = function () {
@@ -516,7 +547,8 @@
     liderAday = klavyeli ? { mod: s.mod, kut: s.kutuphane, no: s.metinNo, yazi: yazim.value, vurus: s.kayit.vuruslar.length } : null;
     kutu.classList.remove('tamam');
     $('lider-form').hidden = !klavyeli;
-    $('lider-ad').value = lider.ad || (ayar.aday && ayar.aday !== 'Misafir Aday' ? ayar.aday.slice(0, 18) : '');
+    var hu = hesapUyesi();   // giriş yapmışsa takma ad olarak rumuz önerilir (değiştirilebilir)
+    $('lider-ad').value = hu ? hu.rumuz.slice(0, 18) : lider.ad || (ayar.aday && ayar.aday !== 'Misafir Aday' ? ayar.aday.slice(0, 18) : '');
     $('lider-gonder').disabled = false;
     $('lider-ekle-alt').textContent = klavyeli ? r.net + ' net ile bu haftanın tablosuna gir.' : 'Liderlik tablosu yalnız fiziksel klavyeyle yapılan sınavları kabul eder.';
   }
@@ -526,7 +558,8 @@
     if (ad.length < 2) { $('lider-ad').focus(); $('lider-ekle-alt').textContent = 'Önce bir takma ad yaz (2–18 karakter).'; return; }
     var b = $('lider-gonder'); b.disabled = true;
     $('lider-ekle-alt').textContent = 'Gönderiliyor…';
-    var g = Object.assign({ ad: ad, anahtar: lider.anahtar }, liderAday);
+    var g = Object.assign({ ad: ad, anahtar: lider.anahtar }, liderAday), hu = hesapUyesi(), av = hu ? liderAvatar(hu) : null;
+    if (av) g.avatar = av;
     fetch(LIDER_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body: JSON.stringify(g) })
       .then(function (r) { return r.json().catch(function () { return { hata: 'ag' }; }); })
       .then(function (j) {
@@ -557,8 +590,8 @@
   $('g-basla').onclick = function () { sinavAc('gunluk'); };
   $('g-paylas').onclick = function () { paylas(this, gunlukPaylasimMetni() + '\n', 'https://kpsstercihi.com/katiplik/?utm_source=paylas&utm_medium=gunluk#gunun-metni', 'Günün duruşması'); };
   $('defter-calis').onclick = function () { modSec('hatali'); sinavAc('hatali'); };
-  $('y-tarih').onchange = function () { veri.yol.tarih = this.value; kaydet(); yolCiz(); A('tikla', { a: 'katip-yol', x: 'tarih' }); };
-  $('y-hedef').oninput = function () { var v = Number(this.value.replace(/\D/g, '')); if (v) { veri.yol.hedef = v; kaydet(); yolCiz(); } };
+  $('y-tarih').onchange = function () { veri.yol.tarih = this.value; veri.yol.g = Date.now(); kaydet(); yolCiz(); A('tikla', { a: 'katip-yol', x: 'tarih' }); };
+  $('y-hedef').oninput = function () { var v = Number(this.value.replace(/\D/g, '')); if (v) { veri.yol.hedef = v; veri.yol.g = Date.now(); kaydet(); yolCiz(); } };
   $('gecmis-sil').onclick = function () {
     if (!confirm('Tüm deneme geçmişin, hatalı kelimelerin, günlük sonuçların ve rozetlerin silinsin mi?')) return;
     veri.gecmis = []; veri.hatalar = {}; veri.rozetler = []; veri.gunluk = {}; O.yaz('kit-katip', veri); ozetCiz(); modSec(mod);

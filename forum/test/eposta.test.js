@@ -17,8 +17,9 @@ const bugun = () => new Date().toISOString().slice(0, 10);
 const satir = (env, sql, ...p) => env.DB.ham.prepare(sql).get(...p);
 const tum = (env, sql, ...p) => env.DB.ham.prepare(sql).all(...p);
 const calistir = (env, sql, ...p) => env.DB.ham.prepare(sql).run(...p);
-const ortamE = (ek = {}) => ortam({ BREVO_ANAHTARI: 'brevo-test-anahtari', ...ek });
-const IP = (n) => ({ 'CF-Connecting-IP': `203.0.113.${n}` });
+// ORTAM=yerel: Turnstile şartı yok (üretimde şart; ayrı test). Brevo anahtarı verildiği için gerçek gönderim yolu (taklit fetch) kullanılır.
+const ortamE = (ek = {}) => ortam({ BREVO_ANAHTARI: 'brevo-test-anahtari', ORTAM: 'yerel', ...ek });
+const IP = (n) => ({ 'CF-Connecting-IP': `203.0.${n}.1` });   // her n ayrı /24 kovası (günlük gönderim sayacı /24 başınadır)
 
 // Brevo + (isteğe bağlı) Google JWKS taklidi.
 function ag({ brevoDurum = 201, jwk = null } = {}) {
@@ -36,7 +37,11 @@ function ag({ brevoDurum = 201, jwk = null } = {}) {
 const sonKod = (a) => /: (\d{6})\./.exec(a.posta[a.posta.length - 1].textContent)[1];
 const kodIste = (env, eposta, ek = {}, basliklar = IP(1)) => cagir(env, 'POST', '/giris/eposta/kod', { govde: { eposta, ...ek }, basliklar });
 const dogrula = (env, eposta, kod, basliklar = IP(1)) => cagir(env, 'POST', '/giris/eposta/dogrula', { govde: { eposta, kod }, basliklar });
-const gerisar = (env) => calistir(env, 'UPDATE eposta_kodlari SET son_gonderim = son_gonderim - 120');   // 60 sn bekleme dolmuş sayılsın
+const gerisar = (env) => {   // 60 sn bekleme dolmuş ve IP günlük gönderim sayacı sıfırlanmış sayılsın
+  calistir(env, 'UPDATE eposta_kodlari SET son_gonderim = son_gonderim - 120');
+  calistir(env, "DELETE FROM eposta_sayac WHERE tur = 'gonder_ip'");
+};
+const sayac = (env, tur) => tum(env, 'SELECT * FROM eposta_sayac WHERE tur = ?', tur);
 
 // Üç adım: kod iste → doğrula → (yeni üyeyse) rumuz seç. Dönen: son yanıt.
 async function epostaylaGir(env, a, eposta, rumuz, basliklar = IP(1)) {
@@ -262,24 +267,71 @@ test('yeniden gönderim: 60 sn bekleme (429 + bekle), adres başına saatte 5, I
     const alti = await kodIste(env, 'bekle@example.com');
     assert.equal(alti.durum, 429); assert.match(alti.json.hata, /Bu adrese çok fazla/);
     assert.equal(a.posta.length, 5);
-    calistir(env, 'UPDATE giris_denemeleri SET olusma = olusma - 3700');   // saat geçti
+    calistir(env, "DELETE FROM eposta_sayac WHERE tur = 'eposta_adres'");   // saat geçti
     ipSinirSifirla(); gerisar(env);
     assert.equal((await kodIste(env, 'bekle@example.com')).durum, 200);
-    // IP başına saatte 10 (farklı adreslerle)
-    const env2 = ortamE();
-    for (let i = 0; i < 10; i++) { ipSinirSifirla(); assert.equal((await kodIste(env2, `ip${i}@example.com`, {}, IP(30))).durum, 200); }
-    ipSinirSifirla();
-    const on1 = await kodIste(env2, 'ip10@example.com', {}, IP(30));
-    assert.equal(on1.durum, 429); assert.match(on1.json.hata, /Bu bağlantıdan/);
-    assert.equal((await kodIste(env2, 'ip10@example.com', {}, IP(31))).durum, 200);
-    assert.ok(!tum(env2, 'SELECT anahtar FROM giris_denemeleri').some((x) => x.anahtar.includes('203.0.113') || x.anahtar.includes('@')));   // ham IP ve adres saklanmaz
+    assert.ok(!tum(env, 'SELECT anahtar FROM giris_denemeleri').some((x) => x.anahtar.includes('@')) && !sayac(env, 'eposta_adres').some((x) => x.anahtar.includes('@')));   // adres düz yazılmaz
   } finally { a.geri(); }
 });
 
-test('kaba ön süzgeç: aynı IP dakikada 10 kod isteğinden sonra D1\'e dokunmadan 429', async () => {
+test('IP günlük gönderim sınırı (M2b): /24 kovası başına günde 5; başka /24 etkilenmez; gün dönünce açılır; ham IP saklanmaz', async () => {
   const env = ortamE(); const a = ag();
   try {
-    for (let i = 0; i < 10; i++) await kodIste(env, `kaba${i}@example.com`, {}, IP(44));
+    for (let i = 0; i < 5; i++) { ipSinirSifirla(); assert.equal((await kodIste(env, `ip${i}@example.com`, {}, { 'CF-Connecting-IP': `203.0.113.${10 + i}` })).durum, 200); }   // aynı /24, farklı IP'ler
+    ipSinirSifirla();
+    const alti = await kodIste(env, 'ip5@example.com', {}, { 'CF-Connecting-IP': '203.0.113.99' });
+    assert.equal(alti.durum, 429); assert.match(alti.json.hata, /bugün çok fazla/);
+    assert.equal(a.posta.length, 5);
+    ipSinirSifirla();
+    assert.equal((await kodIste(env, 'ip5@example.com', {}, { 'CF-Connecting-IP': '203.0.114.1' })).durum, 200);   // başka /24
+    // IPv6: /64 kovası
+    const v6 = (son) => ({ 'CF-Connecting-IP': `2001:db8:1:2:${son}::1` });
+    for (let i = 0; i < 5; i++) { ipSinirSifirla(); assert.equal((await kodIste(env, `v6${i}@example.com`, {}, v6(i + 1))).durum, 200); }
+    ipSinirSifirla();
+    assert.equal((await kodIste(env, 'v66@example.com', {}, v6(77))).durum, 429);
+    // şifre sıfırlama ve /ben/eposta da aynı kovayı kullanır
+    ipSinirSifirla();
+    assert.equal((await sifirlaIste(env, { rumuz: 'Birisi' }, { 'CF-Connecting-IP': '203.0.113.5' })).durum, 429);
+    // gün döndü
+    calistir(env, "UPDATE eposta_sayac SET dilim = dilim - 1 WHERE tur = 'gonder_ip'");
+    ipSinirSifirla();
+    assert.equal((await kodIste(env, 'ip9@example.com', {}, { 'CF-Connecting-IP': '203.0.113.99' })).durum, 200);
+    const dokum = JSON.stringify(tum(env, 'SELECT * FROM eposta_sayac'));
+    assert.equal(/203\.0\.11|2001:db8|@/.test(dokum), false);   // ham IP ve adres saklanmaz
+  } finally { a.geri(); }
+});
+
+test('kanonik adres (M2c): gmail noktaları/+ekler ve googlemail, tüm alanlarda +ek tek sayaç; saklanan adres değişmez', async () => {
+  const env = ortamE(); const a = ag();
+  try {
+    const biçimler = ['ayse.yilmaz@gmail.com', 'ayseyilmaz@gmail.com', 'a.y.s.e.yilmaz+x@googlemail.com', 'AYSEYILMAZ+deneme@Gmail.com', 'ay.se.yilmaz+y@gmail.com'];
+    for (let i = 0; i < 5; i++) { ipSinirSifirla(); gerisar(env); assert.equal((await kodIste(env, biçimler[i], {}, IP(20 + i))).durum, 200, biçimler[i]); }
+    ipSinirSifirla(); gerisar(env);
+    const alti = await kodIste(env, 'ayse.yilmaz+z@gmail.com', {}, IP(30));
+    assert.equal(alti.durum, 429); assert.match(alti.json.hata, /Bu adrese çok fazla/);
+    assert.equal(sayac(env, 'eposta_adres').length, 1);   // hepsi tek sayaç
+    // gmail dışı alanlarda yalnız +ek atılır (noktalar anlamlıdır)
+    const env2 = ortamE();
+    for (let i = 0; i < 5; i++) { ipSinirSifirla(); gerisar(env2); assert.equal((await kodIste(env2, `ali+${i}@sirket.com`, {}, IP(40 + i))).durum, 200); }
+    ipSinirSifirla(); gerisar(env2);
+    assert.equal((await kodIste(env2, 'ali+9@sirket.com', {}, IP(50))).durum, 429);
+    assert.equal((await kodIste(env2, 'a.li@sirket.com', {}, IP(51))).durum, 200);
+    // kod, farklı gmail biçimlerinde aynı posta kutusu için geçerli; üyede yazıldığı gibi saklanan adres kullanılır
+    const env3 = ortamE(); const b = ag();
+    try {
+      await kodIste(env3, 'ayse.yilmaz@gmail.com');
+      const d = await dogrula(env3, 'ayseyilmaz+x@gmail.com', sonKod(b));
+      assert.equal(d.json.yeni, true);
+      const r = await cagir(env3, 'POST', '/giris/rumuz', { govde: { gecici: d.json.gecici, rumuz: 'Gmail_Uye' } });
+      assert.equal(satir(env3, 'SELECT eposta FROM uyeler WHERE id = ?', r.json.uye.id).eposta, 'ayseyilmaz+x@gmail.com');   // yazılan biçim, kanonik değil
+    } finally { b.geri(); }
+  } finally { a.geri(); }
+});
+
+test('kaba ön süzgeç: aynı IP dakikada 10 isteğten sonra D1\'e dokunmadan 429', async () => {
+  const env = ortamE(); const a = ag();
+  try {
+    for (let i = 0; i < 10; i++) await kodIste(env, 'gecersiz', {}, IP(44));
     const once = env.DB.sayac.sorgu;
     const r = await kodIste(env, 'kaba11@example.com', {}, IP(44));
     assert.equal(r.durum, 429); assert.equal(env.DB.sayac.sorgu, once);
@@ -290,14 +342,17 @@ test('günlük sınır: 280\'de durur, dostça hata, Brevo çağrılmaz; yeni UT
   const env = ortamE(); const a = ag();
   try {
     assert.equal(GUNLUK_SINIR, 280);
-    calistir(env, 'INSERT INTO eposta_gunluk (gun, n) VALUES (?, 279)', bugun());
+    await epostaylaGir(env, a, 'son@example.com', 'Son_Uye');   // hesabı olan adres (kota yedeği yalnız hesapsız adresleri keser)
+    const onceki = a.posta.length;
+    calistir(env, 'UPDATE eposta_gunluk SET n = 279 WHERE gun = ?', bugun());
+    ipSinirSifirla(); gerisar(env);
     assert.equal((await kodIste(env, 'son@example.com')).durum, 200);
     assert.equal(satir(env, 'SELECT n FROM eposta_gunluk WHERE gun = ?', bugun()).n, 280);
     const r = await kodIste(env, 'sonrasi@example.com', {}, IP(2));
     assert.equal(r.durum, 503); assert.equal(r.json.hata, 'Şu an e-posta gönderemiyoruz, Google ya da rumuzla devam edebilirsin.'); assert.equal(r.json.hata, GUNLUK_DOLU);
-    assert.equal(a.posta.length, 1);
+    assert.equal(a.posta.length, onceki + 1);
     assert.equal(satir(env, 'SELECT n FROM eposta_gunluk WHERE gun = ?', bugun()).n, 280);   // sayaç aşılmaz
-    assert.equal(satir(env, "SELECT COUNT(*) AS n FROM eposta_kodlari").n, 1);                 // sınır dolunca kod satırı da yazılmaz
+    assert.equal(satir(env, "SELECT COUNT(*) AS n FROM eposta_kodlari WHERE anahtar IS NOT NULL").n, 1);   // sınır dolunca yeni kod satırı da yazılmaz
     // şifre sıfırlama da aynı sayaca bağlı
     const s = await cagir(env, 'POST', '/sifre-sifirla/eposta', { govde: { rumuz: 'Birisi' }, basliklar: IP(3) });
     assert.equal(s.durum, 503); assert.equal(s.json.hata, GUNLUK_DOLU);
@@ -312,23 +367,37 @@ test('günlük sınır: 280\'de durur, dostça hata, Brevo çağrılmaz; yeni UT
   } finally { a.geri(); }
 });
 
-test('Brevo hatası: 502, kod satırı ve günlük hak geri alınır (hata bekleme süresini yakmaz)', async () => {
+test('Brevo hatası: gönderim arka planda yapılır (yanıt aynı 200), başarısızsa kod satırı ve günlük hak geri alınır', async () => {
   const env = ortamE();
   for (const durum of [401, 400, 500]) {
     const a = ag({ brevoDurum: durum });
     try {
-      ipSinirSifirla();
+      ipSinirSifirla(); gerisar(env);
       const r = await kodIste(env, 'hata@example.com');
-      assert.equal(r.durum, 502, String(durum)); assert.match(r.json.hata, /Kod gönderilemedi/);
+      assert.equal(r.durum, 200, String(durum)); assert.deepEqual(r.json, { tamam: true, bekle: 60 });   // hata yanıta sızmaz (zamanlama da aynı)
+      assert.equal(a.posta.length, 1);
       assert.equal(satir(env, 'SELECT COUNT(*) AS n FROM eposta_kodlari').n, 0);
       assert.equal(satir(env, 'SELECT COALESCE(MAX(n), 0) AS n FROM eposta_gunluk').n, 0);
-      assert.equal(JSON.stringify(r.json).includes('api-key'), false);
     } finally { a.geri(); }
   }
   const f = sahteFetch(async () => { throw new Error('ağ yok'); });
-  try { ipSinirSifirla(); assert.equal((await kodIste(env, 'hata2@example.com', {}, IP(5))).durum, 502); } finally { f.geri(); }
+  try { ipSinirSifirla(); assert.equal((await kodIste(env, 'hata2@example.com', {}, IP(5))).durum, 200); assert.equal(satir(env, 'SELECT COUNT(*) AS n FROM eposta_kodlari').n, 0); } finally { f.geri(); }
   const iyi = ag();
-  try { ipSinirSifirla(); assert.equal((await kodIste(env, 'hata@example.com')).durum, 200); } finally { iyi.geri(); }   // hemen yeniden denenebilir
+  try { ipSinirSifirla(); gerisar(env); assert.equal((await kodIste(env, 'hata@example.com')).durum, 200); assert.equal(iyi.posta.length, 1); } finally { iyi.geri(); }   // hemen yeniden denenebilir
+});
+
+test('arka plan gönderimi (O3): yanıt Brevo çağrısını beklemez; ctx.waitUntil ile tamamlanır', async () => {
+  const env = ortamE();
+  let cevap; const kapi = new Promise((ok) => { cevap = ok; });
+  const f = sahteFetch(async (url) => { if (url === BREVO) await kapi; return new Response('{}', { status: 201 }); });
+  try {
+    const bekleyen = [];
+    const r = await cagir(env, 'POST', '/giris/eposta/kod', { govde: { eposta: 'arka@example.com' }, basliklar: IP(1), ctx: { waitUntil: (p) => bekleyen.push(p) } });
+    assert.equal(r.durum, 200);   // Brevo yanıtı hâlâ bekliyor, ama istek döndü
+    assert.equal(f.cagrilar.filter((c) => c.url === BREVO).length, 1);
+    cevap(); await Promise.all(bekleyen);
+    assert.equal(satir(env, 'SELECT COUNT(*) AS n FROM eposta_kodlari').n, 1);
+  } finally { cevap(); f.geri(); }
 });
 
 test('robot kontrolü: TURNSTILE_GIZLI tanımlıysa jeton şart', async () => {
@@ -372,7 +441,7 @@ async function anahtarCifti() {
 async function googleJetonu(ozel, yuk = {}) {
   const t = simdi();
   const b = metinB64u(JSON.stringify({ alg: 'RS256', kid: 'anahtar-1', typ: 'JWT' }));
-  const p = metinB64u(JSON.stringify({ iss: 'https://accounts.google.com', aud: GOOGLE_ISTEMCI, sub: '110169484474386276334', email_verified: true, iat: t, exp: t + 3600, email: 'Ayse@Example.com', ...yuk }));
+  const p = metinB64u(JSON.stringify({ iss: 'https://accounts.google.com', aud: GOOGLE_ISTEMCI, sub: '110169484474386276334', email_verified: true, iat: t, exp: t + 3600, email: 'Ayse@Gmail.com', ...yuk }));
   const imza = new Uint8Array(await crypto.subtle.sign('RSASSA-PKCS1-v1_5', ozel, new TextEncoder().encode(`${b}.${p}`)));
   return `${b}.${p}.${b64uKodla(imza)}`;
 }
@@ -383,17 +452,17 @@ test('Google bağlama: aynı doğrulanmış adresli e-posta üyesine Google kiml
   const env = ortamE({ GOOGLE_ISTEMCI_KIMLIGI: GOOGLE_ISTEMCI });
   const { ozel, jwk } = await anahtarCifti(); const a = ag({ jwk });
   try {
-    const e = await epostaylaGir(env, a, 'ayse@example.com', 'Ayse_Eposta');
+    const e = await epostaylaGir(env, a, 'ayse@gmail.com', 'Ayse_Eposta');
     const g = await googleGir(env, await googleJetonu(ozel));   // Google e-postası 'Ayse@Example.com' (büyük harfli) -> normalleşir
     assert.equal(g.durum, 200); assert.equal(g.json.yeni, undefined); assert.equal(g.json.uye.id, e.json.uye.id); assert.ok(g.json.oturum);
     assert.equal(satir(env, 'SELECT google_sub FROM uyeler WHERE id = ?', e.json.uye.id).google_sub, '110169484474386276334');
     assert.equal(satir(env, 'SELECT COUNT(*) AS n FROM uyeler WHERE rol = ?', 'uye').n, 1);   // ikinci hesap açılmadı
     const ben = (await cagir(env, 'GET', '/ben', { token: g.json.oturum })).json.uye;
-    assert.equal(ben.google_var, true); assert.equal(ben.eposta, 'a***@example.com');
+    assert.equal(ben.google_var, true); assert.equal(ben.eposta, 'a***@gmail.com');
     // sonraki Google girişi sub ile
     assert.equal((await googleGir(env, await googleJetonu(ozel))).json.uye.id, e.json.uye.id);
     // e-posta koduyla da girmeye devam eder
-    const k = await epostaylaGir(env, a, 'ayse@example.com', 'x');
+    const k = await epostaylaGir(env, a, 'ayse@gmail.com', 'x');
     assert.equal(k.json.uye.id, e.json.uye.id);
   } finally { a.geri(); googleAnahtarOnbellegiTemizle(); }
 });
@@ -403,20 +472,20 @@ test('Google: yeni Google üyesinin adresi hesaba yazılır; e-posta koduyla gir
   const env = ortamE({ GOOGLE_ISTEMCI_KIMLIGI: GOOGLE_ISTEMCI });
   const { ozel, jwk } = await anahtarCifti(); const a = ag({ jwk });
   try {
-    const g1 = await googleGir(env, await googleJetonu(ozel, { email: 'gizli.kisi@example.com' }));
+    const g1 = await googleGir(env, await googleJetonu(ozel, { email: 'gizli.kisi@gmail.com' }));
     assert.equal(g1.json.yeni, true);
     assert.equal(await geciciGoogleKimligi(env, g1.json.gecici, simdi()), '110169484474386276334');
-    assert.equal(await geciciGoogleEposta(env, g1.json.gecici, simdi()), 'gizli.kisi@example.com');
+    assert.equal(await geciciGoogleEposta(env, g1.json.gecici, simdi()), 'gizli.kisi@gmail.com');
     const r = await cagir(env, 'POST', '/giris/rumuz', { govde: { gecici: g1.json.gecici, rumuz: 'Google_Eposta' } });
     assert.equal(r.durum, 200);
     const s = satir(env, 'SELECT * FROM uyeler WHERE rumuz = ?', 'Google_Eposta');
-    assert.equal(s.eposta, 'gizli.kisi@example.com'); assert.ok(s.eposta_dogrulandi > 0); assert.equal(s.google_sub, '110169484474386276334');
-    const k = await epostaylaGir(env, a, 'gizli.kisi@example.com', 'x');
+    assert.equal(s.eposta, 'gizli.kisi@gmail.com'); assert.ok(s.eposta_dogrulandi > 0); assert.equal(s.google_sub, '110169484474386276334');
+    const k = await epostaylaGir(env, a, 'gizli.kisi@gmail.com', 'x');
     assert.equal(k.json.uye.id, r.json.uye.id);
     // adresi olmayan eski Google üyesi: sonraki Google girişinde adres eklenir
     calistir(env, 'UPDATE uyeler SET eposta = NULL, eposta_dogrulandi = NULL WHERE id = ?', r.json.uye.id);
-    assert.equal((await googleGir(env, await googleJetonu(ozel, { email: 'gizli.kisi@example.com' }))).durum, 200);
-    assert.equal(satir(env, 'SELECT eposta FROM uyeler WHERE id = ?', r.json.uye.id).eposta, 'gizli.kisi@example.com');
+    assert.equal((await googleGir(env, await googleJetonu(ozel, { email: 'gizli.kisi@gmail.com' }))).durum, 200);
+    assert.equal(satir(env, 'SELECT eposta FROM uyeler WHERE id = ?', r.json.uye.id).eposta, 'gizli.kisi@gmail.com');
     // doğrulanmamış Google e-postası kabul edilmez (mevcut davranış): hesap açılmaz, bağlama olmaz
     assert.equal((await googleGir(env, await googleJetonu(ozel, { email_verified: false, sub: '777' }))).durum, 401);
   } finally { a.geri(); googleAnahtarOnbellegiTemizle(); }
@@ -427,16 +496,16 @@ test('Google: adres başka Google kimliğine bağlı hesaptaysa bağlanmaz, adre
   const env = ortamE({ GOOGLE_ISTEMCI_KIMLIGI: GOOGLE_ISTEMCI });
   const { ozel, jwk } = await anahtarCifti(); const a = ag({ jwk });
   try {
-    const e = await epostaylaGir(env, a, 'cakisma@example.com', 'Cakisma_Uye');
+    const e = await epostaylaGir(env, a, 'cakisma@gmail.com', 'Cakisma_Uye');
     calistir(env, "UPDATE uyeler SET google_sub = '999' WHERE id = ?", e.json.uye.id);
-    const g = await googleGir(env, await googleJetonu(ozel, { sub: '555', email: 'cakisma@example.com' }));
+    const g = await googleGir(env, await googleJetonu(ozel, { sub: '555', email: 'cakisma@gmail.com' }));
     assert.equal(g.json.yeni, true);
     assert.equal(await geciciGoogleEposta(env, g.json.gecici, simdi()), null);
     const r = await cagir(env, 'POST', '/giris/rumuz', { govde: { gecici: g.json.gecici, rumuz: 'Baska_Google' } });
     assert.equal(r.durum, 200); assert.notEqual(r.json.uye.id, e.json.uye.id);
     assert.equal(satir(env, 'SELECT eposta FROM uyeler WHERE id = ?', r.json.uye.id).eposta, null);
     // jeton üretildikten sonra adres başka hesapta alınmışsa da yazılmaz
-    const g2 = await geciciGoogleUret(env, '556', simdi(), 'cakisma@example.com');
+    const g2 = await geciciGoogleUret(env, '556', simdi(), 'cakisma@gmail.com');
     const r2 = await cagir(env, 'POST', '/giris/rumuz', { govde: { gecici: g2, rumuz: 'Google_Iki' } });
     assert.equal(r2.durum, 200); assert.equal(satir(env, 'SELECT eposta FROM uyeler WHERE id = ?', r2.json.uye.id).eposta, null);
   } finally { a.geri(); googleAnahtarOnbellegiTemizle(); }
@@ -536,11 +605,15 @@ test('şifre sıfırlama: hesap var/yok/e-postasız hep aynı yanıt; yalnız e-
     await sifreliUye(env, 'Var_Uye', 'var@example.com');
     await sifreliUye(env, 'Eposta_Yok', null);
     const sonuc = [];
-    for (const [n, govde] of [[1, { rumuz: 'Var_Uye' }], [2, { rumuz: 'Olmayan_Biri' }], [3, { rumuz: 'Eposta_Yok' }], [4, { eposta: 'var@example.com' }], [5, { eposta: 'hic@example.com' }]]) {
+    for (const [n, govde] of [[1, { rumuz: 'Var_Uye' }], [2, { rumuz: 'Olmayan_Biri' }], [3, { rumuz: 'Eposta_Yok' }], [5, { eposta: 'hic@example.com' }]]) {
       ipSinirSifirla(); sonuc.push(await sifirlaIste(env, govde, IP(60 + n)));
     }
     for (const r of sonuc) { assert.equal(r.durum, 200); assert.deepEqual(r.json, { tamam: true, bekle: 60 }); }
-    assert.equal(a.posta.length, 2);   // yalnız Var_Uye (rumuzla ve adresle)
+    assert.equal(a.posta.length, 1);   // yalnız Var_Uye
+    // aynı üye için adresle istek, rumuzla isteğin sayacını paylaşır (tek hedef sayacı): bekleme sürerken 429
+    ipSinirSifirla();
+    assert.equal((await sifirlaIste(env, { eposta: 'var@example.com' }, IP(64))).durum, 429);
+    assert.equal(a.posta.length, 1);
     // hemen ikinci istek: hepsi aynı 429
     const bekle = [];
     for (const [n, govde] of [[1, { rumuz: 'Var_Uye' }], [2, { rumuz: 'Olmayan_Biri' }], [3, { rumuz: 'Eposta_Yok' }]]) { ipSinirSifirla(); bekle.push(await sifirlaIste(env, govde, IP(60 + n))); }
@@ -559,6 +632,8 @@ test('şifre sıfırlama: hesap var/yok/e-postasız hep aynı yanıt; yalnız e-
     assert.equal((await sifirlaIste(env, { eposta: 'a@@b' }, IP(100))).durum, 400);
     // sayaç tablosunda adres/rumuz düz yazılmaz
     assert.equal(JSON.stringify(tum(env, 'SELECT * FROM giris_denemeleri')).includes('example.com'), false);
+    // sıfırlama, üyenin KAYITLI adresinin saatlik gönderim sayacına da yazar (giriş kodu bütçesiyle ortak)
+    assert.equal(sayac(env, 'eposta_adres').length, 1);
   } finally { a.geri(); }
 });
 
@@ -579,36 +654,72 @@ test('şifre sıfırlama: saatte 5 istek sınırı (tanımlayıcı başına) ve 
 });
 
 // ---------- hesapta e-posta ekleme / değiştirme ----------
-test('/ben/eposta: oturum şart; yeni adrese kod gider, doğrulanınca hesaba yazılır; oturum sürümüne dokunulmaz', async () => {
+const benE = (env, token, govde, basliklar = IP(1)) => cagir(env, 'POST', '/ben/eposta', { token, govde, basliklar });
+
+test('/ben/eposta: oturum şart; yeni adrese kod gider, doğrulanınca yazılır; oturum sürümü artar, taze jeton gelir; eski adrese bildirim gider (O4)', async () => {
   const env = ortamE(); const a = ag();
   try {
-    const k = await sifreliUye(env, 'Ekle_Uye', null);
-    assert.equal((await cagir(env, 'POST', '/ben/eposta', { govde: { eposta: 'a@example.com' } })).durum, 401);
-    assert.equal((await cagir(env, 'POST', '/ben/eposta', { token: k.oturum, govde: { eposta: 'gecersiz' } })).durum, 400);
-    const i = await cagir(env, 'POST', '/ben/eposta', { token: k.oturum, govde: { eposta: 'Yeni.Adres@Example.com' } });
+    const k = await uyeGirisi(env, 'Ekle_Uye');   // e-postası ve şifresi yok
+    assert.equal((await benE(env, undefined, { eposta: 'a@example.com' })).durum, 401);
+    assert.equal((await benE(env, k.token, { eposta: 'gecersiz' })).durum, 400);
+    const i = await benE(env, k.token, { eposta: 'Yeni.Adres@Example.com' });
     assert.equal(i.durum, 200); assert.deepEqual(i.json, { tamam: true, bekle: 60 });
     assert.deepEqual(a.posta[0].to, [{ email: 'yeni.adres@example.com' }]);
     assert.match(a.posta[0].subject, /^KPSS Tercihi e-posta doğrulama kodun: \d{6}$/);
-    assert.equal(satir(env, 'SELECT eposta FROM uyeler WHERE id = ?', k.uye.id).eposta, null);   // kod girilene kadar yazılmaz
+    assert.equal(satir(env, 'SELECT eposta FROM uyeler WHERE id = ?', k.id).eposta, null);   // kod girilene kadar yazılmaz
     const kod = sonKod(a);
-    assert.equal((await cagir(env, 'POST', '/ben/eposta', { token: k.oturum, govde: { eposta: 'yeni.adres@example.com', kod: kod === '000009' ? '000008' : '000009' } })).durum, 400);
-    // başka adresin koduyla doğrulanamaz
-    assert.equal((await cagir(env, 'POST', '/ben/eposta', { token: k.oturum, govde: { eposta: 'baska@example.com', kod } })).durum, 400);
-    const ok = await cagir(env, 'POST', '/ben/eposta', { token: k.oturum, govde: { eposta: 'yeni.adres@example.com', kod } });
-    assert.equal(ok.durum, 200); assert.deepEqual(ok.json, { tamam: true, eposta: 'y***@example.com', eposta_dogrulandi: true });
-    const s = satir(env, 'SELECT eposta, eposta_dogrulandi, oturum_surum FROM uyeler WHERE id = ?', k.uye.id);
-    assert.equal(s.eposta, 'yeni.adres@example.com'); assert.ok(s.eposta_dogrulandi > 0); assert.equal(s.oturum_surum, 0);
-    const ben = await cagir(env, 'GET', '/ben', { token: k.oturum });
+    assert.equal((await benE(env, k.token, { eposta: 'yeni.adres@example.com', kod: kod === '000009' ? '000008' : '000009' })).durum, 400);
+    assert.equal((await benE(env, k.token, { eposta: 'baska@example.com', kod })).durum, 400);   // başka adresin koduyla olmaz
+    const ok = await benE(env, k.token, { eposta: 'yeni.adres@example.com', kod });
+    assert.equal(ok.durum, 200);
+    assert.deepEqual({ ...ok.json, oturum: undefined }, { tamam: true, eposta: 'y***@example.com', eposta_dogrulandi: true, oturum: undefined });
+    assert.ok(ok.json.oturum && ok.json.oturum !== k.token);
+    const s = satir(env, 'SELECT eposta, eposta_dogrulandi, oturum_surum FROM uyeler WHERE id = ?', k.id);
+    assert.equal(s.eposta, 'yeni.adres@example.com'); assert.ok(s.eposta_dogrulandi > 0); assert.equal(s.oturum_surum, 1);
+    assert.equal((await cagir(env, 'GET', '/ben', { token: k.token })).durum, 401);   // eski oturum kapandı
+    const ben = await cagir(env, 'GET', '/ben', { token: ok.json.oturum });
     assert.equal(ben.durum, 200); assert.equal(ben.json.uye.eposta, 'y***@example.com'); assert.equal(ben.json.uye.eposta_dogrulandi, true);
-    // aynı adresi tekrar eklemek anlamsız; yeni adrese değiştirme çalışır
-    assert.equal((await cagir(env, 'POST', '/ben/eposta', { token: k.oturum, govde: { eposta: 'yeni.adres@example.com' } })).durum, 400);
+    assert.equal(a.posta.length, 1);   // eski adres yoktu: bildirim yok
+    // aynı adresi tekrar eklemek anlamsız
+    assert.equal((await benE(env, ok.json.oturum, { eposta: 'yeni.adres@example.com' })).durum, 400);
+    // değiştirme: ESKİ adrese bildirim gider, yeni jeton yine gelir
     ipSinirSifirla(); gerisar(env);
-    await cagir(env, 'POST', '/ben/eposta', { token: k.oturum, govde: { eposta: 'ikinci@example.com' } });
-    const ok2 = await cagir(env, 'POST', '/ben/eposta', { token: k.oturum, govde: { eposta: 'ikinci@example.com', kod: sonKod(a) } });
-    assert.equal(ok2.durum, 200); assert.equal(satir(env, 'SELECT eposta FROM uyeler WHERE id = ?', k.uye.id).eposta, 'ikinci@example.com');
-    // eski adresle artık giriş kodu yeni hesap açar, yenisiyle bu hesaba girilir
-    const g = await epostaylaGir(env, a, 'ikinci@example.com', 'x');
-    assert.equal(g.json.uye.id, k.uye.id);
+    await benE(env, ok.json.oturum, { eposta: 'ikinci@example.com' });
+    const ok2 = await benE(env, ok.json.oturum, { eposta: 'ikinci@example.com', kod: sonKod(a) });
+    assert.equal(ok2.durum, 200); assert.equal(satir(env, 'SELECT eposta FROM uyeler WHERE id = ?', k.id).eposta, 'ikinci@example.com');
+    assert.equal(satir(env, 'SELECT oturum_surum FROM uyeler WHERE id = ?', k.id).oturum_surum, 2);
+    assert.equal((await cagir(env, 'GET', '/ben', { token: ok.json.oturum })).durum, 401);
+    const bildirim = a.posta[a.posta.length - 1];
+    assert.deepEqual(bildirim.to, [{ email: 'yeni.adres@example.com' }]);
+    assert.equal(bildirim.subject, 'KPSS Tercihi: e-posta adresin değiştirildi');
+    assert.equal(bildirim.textContent, "E-posta adresin değiştirildi; sen yapmadıysan iletisim@kpsstercihi.com'a yaz.");
+    assert.equal(/[—–]/.test(bildirim.textContent + bildirim.htmlContent), false);
+    // eski adresle artık yeni hesap açılır, yenisiyle bu hesaba girilir
+    assert.equal((await epostaylaGir(env, a, 'ikinci@example.com', 'x')).json.uye.id, k.id);
+  } finally { a.geri(); }
+});
+
+test('/ben/eposta (O4): şifresi olan üye her iki adımda mevcut şifreyi vermeli; yanlış şifre ve deneme bütçesi', async () => {
+  const env = ortamE(); const a = ag();
+  try {
+    const k = await sifreliUye(env, 'Sifreli_Ekle', 'eski.adres@example.com');
+    assert.equal((await benE(env, k.oturum, { eposta: 'yeni@example.com' })).json.hata, 'Mevcut şifre yanlış.');   // şifre yok
+    assert.equal((await benE(env, k.oturum, { eposta: 'yeni@example.com', sifre: 'Yanlis-Sifre-1' })).durum, 401);
+    assert.equal(a.posta.length, 0);   // şifresiz/yanlış şifreyle kod gönderilmez
+    const i = await benE(env, k.oturum, { eposta: 'yeni@example.com', sifre: SIFRE });
+    assert.equal(i.durum, 200); assert.equal(a.posta.length, 1);
+    const kod = sonKod(a);
+    assert.equal((await benE(env, k.oturum, { eposta: 'yeni@example.com', kod })).durum, 401);   // 2. adımda da şifre şart
+    assert.equal((await benE(env, k.oturum, { eposta: 'yeni@example.com', kod, sifre: 'Yanlis-Sifre-1' })).durum, 401);
+    assert.equal(satir(env, 'SELECT eposta FROM uyeler WHERE id = ?', k.uye.id).eposta, 'eski.adres@example.com');
+    const ok = await benE(env, k.oturum, { eposta: 'yeni@example.com', kod, sifre: SIFRE });   // yanlış şifre kodu yakmadı
+    assert.equal(ok.durum, 200); assert.ok(ok.json.oturum);
+    assert.equal((await cagir(env, 'GET', '/ben', { token: k.oturum })).durum, 401);
+    assert.deepEqual(a.posta[a.posta.length - 1].to, [{ email: 'eski.adres@example.com' }]);   // eski adrese bildirim
+    // hedef başına günlük deneme bütçesi: yanlış şifreler de sayılır, 20'den sonra doğru şifre de 429
+    for (let i2 = 0; i2 < 25; i2++) { ipSinirSifirla(); calistir(env, "DELETE FROM eposta_sayac WHERE tur = 'dogrula_ip'"); await benE(env, ok.json.oturum, { eposta: 'x@example.com', sifre: 'Yanlis-Sifre-1' }, IP(70 + (i2 % 5))); }
+    ipSinirSifirla(); calistir(env, "DELETE FROM eposta_sayac WHERE tur = 'dogrula_ip'");
+    assert.equal((await benE(env, ok.json.oturum, { eposta: 'x@example.com', sifre: SIFRE }, IP(79))).durum, 429);
   } finally { a.geri(); }
 });
 
@@ -616,21 +727,21 @@ test('/ben/eposta: adres başka hesaptaysa 409 (hesap ele geçirilemez); kod ba�
   const env = ortamE(); const a = ag();
   try {
     const diger = await epostaylaGir(env, a, 'dolu@example.com', 'Dolu_Uye');
-    const k = await sifreliUye(env, 'Cakisan_Uye', null);
+    const k = await uyeGirisi(env, 'Cakisan_Uye');
     ipSinirSifirla(); gerisar(env);
-    assert.equal((await cagir(env, 'POST', '/ben/eposta', { token: k.oturum, govde: { eposta: 'dolu@example.com' } })).durum, 200);   // hesap varlığı bu adımda sızmaz
+    assert.equal((await benE(env, k.token, { eposta: 'dolu@example.com' })).durum, 200);   // hesap varlığı bu adımda sızmaz
     const kod = sonKod(a);
-    const r = await cagir(env, 'POST', '/ben/eposta', { token: k.oturum, govde: { eposta: 'dolu@example.com', kod } });
+    const r = await benE(env, k.token, { eposta: 'dolu@example.com', kod });
     assert.equal(r.durum, 409);
-    assert.equal(satir(env, 'SELECT eposta FROM uyeler WHERE id = ?', k.uye.id).eposta, null);
+    assert.equal(satir(env, 'SELECT eposta FROM uyeler WHERE id = ?', k.id).eposta, null);
     assert.equal(satir(env, 'SELECT eposta FROM uyeler WHERE id = ?', diger.json.uye.id).eposta, 'dolu@example.com');
     // başka üyenin oturumuyla aynı kod kullanılamaz (kod üyeye bağlı)
-    const k2 = await sifreliUye(env, 'Ucuncu_Uye', null);
+    const k2 = await uyeGirisi(env, 'Ucuncu_Uye');
     ipSinirSifirla(); gerisar(env);
-    await cagir(env, 'POST', '/ben/eposta', { token: k.oturum, govde: { eposta: 'serbest@example.com' } });
+    await benE(env, k.token, { eposta: 'serbest@example.com' });
     const kod2 = sonKod(a);
-    assert.equal((await cagir(env, 'POST', '/ben/eposta', { token: k2.oturum, govde: { eposta: 'serbest@example.com', kod: kod2 } })).durum, 400);
-    assert.equal((await cagir(env, 'POST', '/ben/eposta', { token: k.oturum, govde: { eposta: 'serbest@example.com', kod: kod2 } })).durum, 200);
+    assert.equal((await benE(env, k2.token, { eposta: 'serbest@example.com', kod: kod2 })).durum, 400);
+    assert.equal((await benE(env, k.token, { eposta: 'serbest@example.com', kod: kod2 })).durum, 200);
   } finally { a.geri(); }
 });
 
@@ -656,7 +767,9 @@ test('hesap silme: onay şart; kimlik bilgileri silinir, yazılar "Silinmiş üy
     assert.equal(r.durum, 200); assert.deepEqual(r.json, { tamam: true });
     const s = satir(env, 'SELECT * FROM uyeler WHERE id = ?', id);
     assert.equal(s.rumuz, `Silinmiş üye #${id}`); assert.equal(s.rumuz_kat, `silinmis-${id}`);
-    for (const alan of ['eposta', 'eposta_dogrulandi', 'sifre_ozet', 'kurtarma_ozet', 'google_sub', 'tg_id', 'profil', 'kayitli']) assert.equal(s[alan], null, alan);
+    for (const alan of ['eposta', 'eposta_dogrulandi', 'sifre_ozet', 'kurtarma_ozet', 'google_sub', 'tg_id', 'profil', 'kayitli', 'avatar', 'foto_surum', 'kart', 'basvurular']) assert.equal(s[alan], null, alan);
+    assert.equal(satir(env, 'SELECT COUNT(*) AS n FROM fotolar WHERE uye_id = ?', id).n, 0);
+    assert.equal(satir(env, 'SELECT COUNT(*) AS n FROM uye_katip WHERE uye_id = ?', id).n, 0);
     assert.ok(s.silindi > 0); assert.equal(s.engelli, 1); assert.equal(s.oturum_surum, 1); assert.equal(s.bildirim, 0); assert.equal(s.dm_acik, 0);
     assert.equal(satir(env, 'SELECT COUNT(*) AS n FROM takipler WHERE uye_id = ?', id).n, 0);
     // yazı kaldı, yazar "Silinmiş üye"
@@ -671,6 +784,13 @@ test('hesap silme: onay şart; kimlik bilgileri silinir, yazılar "Silinmiş üy
     await kodIste(env, 'sil@example.com');
     const d = await dogrula(env, 'sil@example.com', sonKod(a));
     assert.equal(d.json.yeni, true);
+    // N3: eski rumuz 180 gün ayrılır (kimlik taklidi olmasın); büyük/küçük harf ve "." "_" farkı da aynı kat
+    assert.equal((await cagir(env, 'POST', '/kayit', { govde: { rumuz: 'Silinecek_Uye', sifre: SIFRE } })).durum, 409);
+    assert.equal((await cagir(env, 'POST', '/kayit', { govde: { rumuz: 'silinecek.uye', sifre: SIFRE } })).durum, 409);
+    assert.equal((await cagir(env, 'POST', '/giris/rumuz', { govde: { gecici: d.json.gecici, rumuz: 'SILINECEK_uye' } })).durum, 409);
+    const rez = satir(env, 'SELECT kat, bitis FROM ayrilmis_rumuzlar');
+    assert.equal(rez.kat, 'silinecekuye'); assert.ok(Math.abs(rez.bitis - (simdi() + 180 * 86400)) < 5);
+    calistir(env, 'UPDATE ayrilmis_rumuzlar SET bitis = ?', simdi() - 1);   // 180 gün doldu
     assert.equal((await cagir(env, 'POST', '/kayit', { govde: { rumuz: 'Silinecek_Uye', sifre: SIFRE } })).durum, 200);
     // kimse "Silinmiş üye" adını alamaz
     assert.equal((await cagir(env, 'POST', '/kayit', { govde: { rumuz: 'Silinmis uye 1', sifre: SIFRE } })).durum, 400);
@@ -688,4 +808,172 @@ test('hesap silme: sistem/asistan hesabı silinemez; başka üyelerin verisi etk
   assert.equal((await cagir(env, 'GET', '/ben', { token: u1.token })).durum, 200);
   const sis = await oturumUret(env, 2, simdi(), 0);   // Asistan hesabına sahte oturum
   assert.equal((await cagir(env, 'POST', '/ben/hesap-sil', { token: sis, govde: { onay: 'SİL' } })).durum, 403);
+});
+
+// ---------- M1: atomik deneme sayacı ----------
+test('M1: kod doğrulama tek atomik UPDATE ... RETURNING kullanır; paralel isteklerle 5 denemeden fazlası geçmez, doğru kod yalnız bir kez geçer', async () => {
+  const env = ortamE(); const a = ag();
+  try {
+    await kodIste(env, 'yaris@example.com');
+    const kod = sonKod(a); const yanlis = kod === '111111' ? '222222' : '111111';
+    // SQL yolu: sayaç artışı ve karşılaştırma verisi aynı ifadede (okuma-sonra-yazma yok)
+    const sqller = []; const asil = env.DB.prepare.bind(env.DB);
+    env.DB.prepare = (sql) => { sqller.push(sql); return asil(sql); };
+    const r = await dogrula(env, 'yaris@example.com', yanlis);
+    assert.equal(r.durum, 400);
+    assert.ok(sqller.some((s) => /UPDATE eposta_kodlari SET deneme = deneme \+ 1 WHERE anahtar = \? AND bitis > \? AND deneme < \? RETURNING kod_ozet, deneme/.test(s)));
+    assert.equal(sqller.some((s) => /SELECT kod_ozet, bitis, deneme FROM eposta_kodlari/.test(s)), false);   // eski okuma-sonra-yazma kalıbı yok
+    assert.ok(sqller.some((s) => /INSERT INTO eposta_sayac .* RETURNING n/.test(s)));                       // IP ve hedef sayaçları da atomik
+    env.DB.prepare = asil;
+    // 8 paralel yanlış deneme (1 yapıldı): satırdaki sayaç 5'i geçmez, hiçbiri başarılı olamaz
+    const sonuclar = await Promise.all(Array.from({ length: 8 }, (_, i) => dogrula(env, 'yaris@example.com', yanlis, IP(100 + i))));
+    assert.equal(satir(env, 'SELECT deneme FROM eposta_kodlari').deneme, 5);
+    assert.equal(sonuclar.filter((x) => x.durum === 400).length, 3);   // 1 + 3 = 4 yanlış, 5. yanlış ve sonrası 429
+    assert.equal(sonuclar.filter((x) => x.durum === 429).length, 5);
+    assert.equal((await dogrula(env, 'yaris@example.com', kod)).durum, 429);   // 5. denemeden sonra doğru kod da geçmez
+    // paralel doğru kodlar: tam bir tanesi tüketir
+    ipSinirSifirla(); gerisar(env);
+    await kodIste(env, 'yaris@example.com');
+    const k2 = sonKod(a);
+    const dogrular = await Promise.all(Array.from({ length: 4 }, (_, i) => dogrula(env, 'yaris@example.com', k2, IP(110 + i))));
+    assert.equal(dogrular.filter((x) => x.durum === 200).length, 1);
+    assert.equal(dogrular.filter((x) => x.durum !== 200).length, 3);
+  } finally { a.geri(); }
+});
+
+test('M1: IP doğrulama sayacı artır-sonra-kontrol: paralel patlama sınırı aşamaz (15 dakikada 10)', async () => {
+  const env = ortamE(); const a = ag();
+  try {
+    const sonuclar = await Promise.all(Array.from({ length: 14 }, (_, i) => dogrula(env, `p${i}@example.com`, '123456', IP(120))));
+    assert.equal(sonuclar.filter((x) => x.durum === 400).length, 10);
+    assert.equal(sonuclar.filter((x) => x.durum === 429).length, 4);
+    assert.equal(satir(env, "SELECT n FROM eposta_sayac WHERE tur = 'dogrula_ip'").n, 14);
+  } finally { a.geri(); }
+});
+
+// ---------- O1: kalıcı hedef bütçesi ----------
+test('O1: hedef başına günde 20 yanlış kod; yeni kod istemek bütçeyi sıfırlamaz; başka hedef etkilenmez; gün dönünce açılır', async () => {
+  const env = ortamE(); const a = ag();
+  try {
+    let yanlisSayisi = 0;
+    for (let tur = 0; tur < 5; tur++) {
+      ipSinirSifirla(); gerisar(env); calistir(env, "DELETE FROM eposta_sayac WHERE tur = 'eposta_adres'");
+      assert.equal((await kodIste(env, 'butce@example.com', {}, IP(130 + tur))).durum, 200);
+      const kod = sonKod(a); const yanlis = kod === '333333' ? '444444' : '333333';
+      for (let i = 0; i < 4; i++) {
+        calistir(env, "DELETE FROM eposta_sayac WHERE tur = 'dogrula_ip'"); ipSinirSifirla();
+        assert.equal((await dogrula(env, 'butce@example.com', yanlis, IP(140 + tur))).durum, 400); yanlisSayisi++;
+      }
+    }
+    assert.equal(yanlisSayisi, 20);
+    // 21. deneme: taze kod ve DOĞRU kod bile reddedilir
+    ipSinirSifirla(); gerisar(env); calistir(env, "DELETE FROM eposta_sayac WHERE tur = 'eposta_adres'");
+    assert.equal((await kodIste(env, 'butce@example.com', {}, IP(150))).durum, 200);
+    calistir(env, "DELETE FROM eposta_sayac WHERE tur = 'dogrula_ip'"); ipSinirSifirla();
+    const r = await dogrula(env, 'butce@example.com', sonKod(a), IP(150));
+    assert.equal(r.durum, 429); assert.match(r.json.hata, /bugünlük deneme hakkı/);
+    // başka adres etkilenmez
+    ipSinirSifirla(); gerisar(env);
+    await kodIste(env, 'baska.butce@example.com', {}, IP(151));
+    assert.equal((await dogrula(env, 'baska.butce@example.com', sonKod(a), IP(151))).durum, 200);
+    // başarılı doğrulama hedef hakkını geri verir (meşru kullanıcı bütçeyi tüketmez)
+    assert.equal(sayac(env, 'hata_hedef').filter((x) => x.n === 0).length, 1);
+    // gün döndü
+    calistir(env, "UPDATE eposta_sayac SET dilim = dilim - 1 WHERE tur = 'hata_hedef'");
+    calistir(env, "DELETE FROM eposta_sayac WHERE tur = 'dogrula_ip'"); ipSinirSifirla();
+    assert.equal((await dogrula(env, 'butce@example.com', sonKod(a), IP(152))).durum, 400);   // bütçe açık (kod bu kez 20+ sonra yanmış/yanlış adres)
+  } finally { a.geri(); }
+});
+
+// ---------- M2a: üretimde Turnstile şart ----------
+test('M2a: üretimde e-posta girişi Turnstile (site + gizli anahtar) olmadan kapalı; açıkken kod isteği, sıfırlama ve /ben/eposta geçerli jeton ister', async () => {
+  const kapaliler = [{ BREVO_ANAHTARI: 'x' }, { BREVO_ANAHTARI: 'x', TURNSTILE_GIZLI: 'g' }, { BREVO_ANAHTARI: 'x', TURNSTILE_SITE: 's' }, { TURNSTILE_GIZLI: 'g', TURNSTILE_SITE: 's' }];
+  for (const ek of kapaliler) {
+    const e = ortam(ek);
+    assert.equal((await cagir(e, 'GET', '/giris/ayar')).json.eposta, false, JSON.stringify(ek));
+    assert.equal((await kodIste(e, 'a@example.com')).durum, 503);
+  }
+  const env = ortam({ BREVO_ANAHTARI: 'x', TURNSTILE_GIZLI: 'g', TURNSTILE_SITE: 's' });   // ORTAM yok = üretim
+  assert.equal((await cagir(env, 'GET', '/giris/ayar')).json.eposta, true);
+  const a = ag();
+  const tf = sahteFetch(async (url, s) => {
+    if (url === BREVO) { a.posta.push(JSON.parse(s.body)); return new Response('{}', { status: 201 }); }
+    if (url.startsWith('https://challenges.cloudflare.com/')) return new Response(JSON.stringify({ success: String(s.body).includes('response=iyi'), hostname: 'kpsstercihi.com' }), { status: 200 });
+    return new Response('yok', { status: 404 });
+  });
+  try {
+    const k = await uyeGirisi(env, 'Robot_Uye');
+    await cagir(env, 'POST', '/kayit', { govde: { rumuz: 'Robot_Sifre', sifre: SIFRE, turnstile: 'iyi' } });
+    calistir(env, "UPDATE uyeler SET eposta = 'robot@example.com', eposta_dogrulandi = 1 WHERE rumuz = 'Robot_Sifre'");
+    for (const [yol, govde, token] of [
+      ['/giris/eposta/kod', { eposta: 'r@example.com' }, undefined],
+      ['/sifre-sifirla/eposta', { rumuz: 'Robot_Sifre' }, undefined],
+      ['/ben/eposta', { eposta: 'r2@example.com' }, k.token],
+    ]) {
+      const onceki = a.posta.length;
+      ipSinirSifirla(); calistir(env, "DELETE FROM eposta_sayac WHERE tur = 'gonder_ip'"); calistir(env, "DELETE FROM giris_denemeleri WHERE tur = 'sifirla_istek'");
+      assert.equal((await cagir(env, 'POST', yol, { govde, token, basliklar: IP(160) })).durum, 400, `${yol}: jetonsuz`);
+      assert.equal((await cagir(env, 'POST', yol, { govde: { ...govde, turnstile: 'kotu' }, token, basliklar: IP(160) })).durum, 400, `${yol}: geçersiz jeton`);
+      assert.equal(a.posta.length, onceki);   // jetonsuz ya da geçersiz jetonla hiçbir e-posta gitmedi
+      const ok = await cagir(env, 'POST', yol, { govde: { ...govde, turnstile: 'iyi' }, token, basliklar: IP(160) });
+      assert.equal(ok.durum, 200, `${yol}: geçerli jeton`);
+    }
+    assert.equal(a.posta.length, 3);
+  } finally { tf.geri(); a.geri(); }
+});
+
+// ---------- M2d: kota yedeği ----------
+test('M2d: kalan kota 60\'ın altındayken hesabı olmayan adrese giriş kodu gönderilmez (yanıt aynı), mevcut üyelere giriş ve sıfırlama kodu gider', async () => {
+  const env = ortamE(); const a = ag();
+  try {
+    const m = await epostaylaGir(env, a, 'mevcut@example.com', 'Mevcut_Uye');
+    await sifreliUye(env, 'Sifre_Var', 'sifrevar@example.com');
+    calistir(env, 'UPDATE eposta_gunluk SET n = 230 WHERE gun = ?', bugun());   // kalan 50 < 60
+    const onceki = a.posta.length;
+    ipSinirSifirla(); gerisar(env);
+    const var_ = await kodIste(env, 'mevcut@example.com', {}, IP(170));
+    const yok = await kodIste(env, 'yeni.kisi@example.com', {}, IP(171));
+    assert.equal(var_.durum, 200); assert.deepEqual(var_.json, yok.json);   // sızmaz
+    assert.equal(a.posta.length, onceki + 1); assert.deepEqual(a.posta[onceki].to, [{ email: 'mevcut@example.com' }]);
+    assert.equal(satir(env, 'SELECT n FROM eposta_gunluk WHERE gun = ?', bugun()).n, 231);   // hesapsız adres kota harcamadı
+    // bekleme davranışı da aynı (hesapsız adres için de 60 sn)
+    const v2 = await kodIste(env, 'mevcut@example.com', {}, IP(170)); const y2 = await kodIste(env, 'yeni.kisi@example.com', {}, IP(171));
+    assert.equal(v2.durum, 429); assert.equal(y2.durum, 429);
+    // hesapsız adrese giden "kod" yok: doğrulama hiçbir kodla geçmez
+    assert.equal((await dogrula(env, 'yeni.kisi@example.com', '000000', IP(172))).durum, 400);
+    // şifre sıfırlama kota yedeğinden etkilenmez
+    ipSinirSifirla();
+    assert.equal((await sifirlaIste(env, { rumuz: 'Sifre_Var' }, IP(173))).durum, 200);
+    assert.equal(a.posta.length, onceki + 2); assert.deepEqual(a.posta[onceki + 1].to, [{ email: 'sifrevar@example.com' }]);
+    // yedek bitince (kalan >= 60) yeni adreslere yine gönderilir
+    calistir(env, 'UPDATE eposta_gunluk SET n = 100 WHERE gun = ?', bugun());
+    ipSinirSifirla(); gerisar(env);
+    assert.equal((await kodIste(env, 'yeni.kisi@example.com', {}, IP(174))).durum, 200);
+    assert.equal(a.posta.length, onceki + 3);
+    assert.ok(m);
+  } finally { a.geri(); }
+});
+
+// ---------- N2: silinen üyenin özel mesajları karşı tarafta kalır ----------
+test('N2: silinen üyenin gönderdiği özel mesajlar karşı tarafın listesinde "Silinmiş üye #id" adıyla kalır', async () => {
+  const env = ortamE();
+  const a = await uyeGirisi(env, 'Mesaj_Atan'); const b = await uyeGirisi(env, 'Mesaj_Alan');
+  kayitEskit(env, a.id); kayitEskit(env, b.id);
+  const g = await cagir(env, 'POST', '/ozel/Mesaj_Alan', { token: a.token, govde: { govde: 'Selam, bir sorum var.' } });
+  assert.equal(g.durum, 201);
+  assert.equal((await cagir(env, 'POST', '/ben/hesap-sil', { token: a.token, govde: { onay: 'SİL' } })).durum, 200);
+  const liste = await cagir(env, 'GET', '/ozel', { token: b.token });
+  assert.equal(liste.durum, 200);
+  assert.equal(liste.json.konusmalar.length, 1);
+  assert.equal(liste.json.konusmalar[0].rumuz, `Silinmiş üye #${a.id}`);
+  assert.equal(JSON.stringify(liste.json).includes('Mesaj_Atan'), false);
+});
+
+test('N4: yönetici engel kaldırma silinmiş üyeye dokunmaz (engelli=1 kalır)', async () => {
+  const env = ortamE();
+  const u = await uyeGirisi(env, 'Silinen_Yok');
+  await cagir(env, 'POST', '/ben/hesap-sil', { token: u.token, govde: { onay: 'SİL' } });
+  const r = await cagir(env, 'POST', '/yonetim/engelle', { govde: { uye_id: u.id, engelli: false }, basliklar: { 'X-Yonetici': 'yonetici-anahtar' } });
+  assert.equal(r.durum, 200);
+  assert.equal(satir(env, 'SELECT engelli FROM uyeler WHERE id = ?', u.id).engelli, 1);
 });

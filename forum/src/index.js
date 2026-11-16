@@ -1,5 +1,5 @@
 // KPSS Tercihi forum API'si (Cloudflare Worker + D1).
-import { KATEGORILER, KATEGORI_KODLARI, jsonYanit, hataYanit, simdi, sabitEsit, gecerliIlanKimligi } from './yardimci.js';
+import { KATEGORILER, KATEGORI_KODLARI, jsonYanit, hataYanit, simdi, sabitEsit, gecerliIlanKimligi, avCikti } from './yardimci.js';
 import { denetle, temizle } from './denetim.js';
 import { oturumUret, oturumCoz, geciciUret, geciciTgKimligi, geciciGoogleKimligi, geciciGoogleEposta, geciciEpostaKimligi, telegramDogrula, rumuzDogrula } from './oturum.js';
 import { kayit, girisSifre, girisGoogle, sifreSifirla, benSifre, benKurtarmaKodu, benProfil, benProfilKayitli, benProfilKaydet, benKayitliKaydet, benHesapSil, girisAyari, girisAyariYaniti } from './kayit.js';
@@ -12,6 +12,7 @@ import { yanitBildirimi, anmaBildirimi, takipBildirimi } from './bildirim.js';
 import { ozelKonusmalar, ozelKonusma, ozelYeni, ozelGonder, ozelMesajSil, ozelEngelle, engellenenler, ozelSikayet, yonetimOzelSikayetler, ozelOkunmamis } from './ozel.js';
 import { takipDegistir, takipMi, benTakipler } from './takip.js';
 import { yonetimOzet } from './yonetim-ozet.js';
+import { benTumu, benKartKaydet, benBasvurularKaydet, benKatipGetir, benKatipKaydet, benFotoYukle, benFotoSil, fotoGetir, fotoBildir, yonetimFotoBildirimleri, yonetimFotoKaldir, uyeKartiYaniti } from './kart.js';
 
 const SAYFA_BOYUTU = 20;
 const DUZEYLER = new Set(['lisans', 'onlisans', 'ortaogretim', 'ekpss', 'agrubu']);
@@ -87,6 +88,9 @@ async function yonlendir(request, env, ctx) {
     if (yol === '/ben') return benGetir(request, env);
     if (yol === '/ben/bildirimler') return benBildirimler(request, env, url);
     if (yol === '/ben/takipler') return benTakipler(request, env);
+    if (yol === '/ben/katip') return benKatipGetir(request, env);
+    if ((m = yol.match(/^\/foto\/(\d+)$/))) return fotoGetir(request, env, ctx, url, m[1]);
+    if (yol === '/yonetim/foto-bildirimleri') return yonetimFotoBildirimleri(request, env);
     if (yol === '/ben/engellenenler') return engellenenler(request, env);
     if (yol === '/ozel') return ozelKonusmalar(request, env);
     if ((m = yol.match(/^\/ozel\/([^/]+)\/yeni$/))) return ozelYeni(request, env, url, m[1]);
@@ -103,7 +107,7 @@ async function yonlendir(request, env, ctx) {
     if (yol === '/ozet') return onb(() => ozet(env, url));
     if ((m = yol.match(/^\/baslik\/(\d+)$/))) return onb(() => baslikGetir(request, env, url, Number(m[1])));
     if ((m = yol.match(/^\/baslik\/(\d+)\/yeni$/))) return onbellekli(url, ctx, anonim, () => yeniYanitlar(request, env, url, Number(m[1])), YENI_ONBELLEK_SN);
-    if ((m = yol.match(/^\/uye\/([^/]+)$/))) return onb(() => uyeKarti(env, m[1]));
+    if ((m = yol.match(/^\/uye\/([^/]+)$/))) return onb(() => uyeKartiYaniti(request, env, url, m[1]));
     if ((m = yol.match(/^\/ilan\/([^/]+)$/))) return onb(() => ilanGetir(request, env, url, decodeURIComponent(m[1])));
     return hataYanit(404, 'Bulunamadı.');
   }
@@ -115,16 +119,22 @@ async function yonlendir(request, env, ctx) {
     if (yol === '/kayit') return kayit(request, env);
     if (yol === '/giris/sifre') return girisSifre(request, env);
     if (yol === '/giris/google') return girisGoogle(request, env);
-    if (yol === '/giris/eposta/kod') return epostaKod(request, env);
+    if (yol === '/giris/eposta/kod') return epostaKod(request, env, ctx);
     if (yol === '/giris/eposta/dogrula') return epostaDogrula(request, env);
     if (yol === '/sifre-sifirla') return sifreSifirla(request, env);
-    if (yol === '/sifre-sifirla/eposta') return sifirlaEposta(request, env);
-    if (yol === '/ben/eposta') return benEposta(request, env);
+    if (yol === '/sifre-sifirla/eposta') return sifirlaEposta(request, env, ctx);
+    if (yol === '/ben/eposta') return benEposta(request, env, ctx);
     if (yol === '/ben/hesap-sil') return benHesapSil(request, env);
     if (yol === '/ben/sifre') return benSifre(request, env);
     if (yol === '/ben/kurtarma-kodu') return benKurtarmaKodu(request, env);
     if (yol === '/ben/profil') return benProfilKaydet(request, env);
     if (yol === '/ben/kayitli') return benKayitliKaydet(request, env);
+    if (yol === '/ben/kart') return benKartKaydet(request, env);
+    if (yol === '/ben/basvurular') return benBasvurularKaydet(request, env);
+    if (yol === '/ben/katip') return benKatipKaydet(request, env);
+    if (yol === '/ben/foto') return benFotoYukle(request, env);
+    if ((m = yol.match(/^\/uye\/([^/]+)\/foto-bildir$/))) return fotoBildir(request, env, m[1]);
+    if (yol === '/yonetim/foto-kaldir') return yonetimFotoKaldir(request, env, url);
     if (yol === '/ben/bildirim') return benBildirim(request, env);
     if (yol === '/ben/ayar') return benAyar(request, env);
     if ((m = yol.match(/^\/baslik\/(\d+)\/takip$/))) return takipDegistir(request, env, Number(m[1]));
@@ -145,6 +155,7 @@ async function yonlendir(request, env, ctx) {
     return hataYanit(404, 'Bulunamadı.');
   }
 
+  if (yontem === 'DELETE' && yol === '/ben/foto') return benFotoSil(request, env);
   if (yontem === 'DELETE' && (m = yol.match(/^\/ozel\/mesaj\/(\d+)$/))) return ozelMesajSil(request, env, Number(m[1]));
   if (yontem === 'DELETE' && (m = yol.match(/^\/yanit\/(\d+)$/))) return yanitSil(request, env, Number(m[1]));
   if (yontem === 'DELETE' && (m = yol.match(/^\/basvuru\/([^/]+)$/))) return basvuruSil(request, env, new URL(request.url), decodeURIComponent(m[1]));
@@ -177,7 +188,7 @@ export async function govdeOku(request) {
     return j && typeof j === 'object' && !Array.isArray(j) ? j : null;
   } catch { return null; }
 }
-const kullaniciJson = (u) => ({ id: u.id, rumuz: u.rumuz, kurucu: !!u.kurucu, rol: u.rol, itibar: u.itibar || 0, dm_acik: u.dm_acik !== 0 });
+const kullaniciJson = (u) => ({ id: u.id, rumuz: u.rumuz, kurucu: !!u.kurucu, rol: u.rol, itibar: u.itibar || 0, dm_acik: u.dm_acik !== 0, ...avCikti(u, u.id) });
 
 export async function oturumUyesi(request, env) {
   const m = (request.headers.get('Authorization') || '').match(/^Bearer (.+)$/);
@@ -185,7 +196,7 @@ export async function oturumUyesi(request, env) {
   const j = await oturumCoz(env, m[1], simdi());
   if (!j) return null;
   const uye = await env.DB.prepare(
-    'SELECT id, rumuz, kurucu, rol, itibar, bildirim, engelli, kayit, dm_acik, tg_id, oturum_surum, eposta, eposta_dogrulandi, sifre_ozet IS NOT NULL AS sifre_var, google_sub IS NOT NULL AS google_var FROM uyeler WHERE id = ?',
+    'SELECT id, rumuz, kurucu, rol, itibar, bildirim, engelli, kayit, dm_acik, tg_id, oturum_surum, eposta, eposta_dogrulandi, avatar, foto_surum, foto_gun, foto_sayi, foto_yasak, sifre_ozet IS NOT NULL AS sifre_var, google_sub IS NOT NULL AS google_var FROM uyeler WHERE id = ?',
   ).bind(j.id).first();
   // şifre / kurtarma kodu değişince oturum sürümü artar: eski jetonlar geçersiz olur
   return uye && (uye.oturum_surum || 0) === j.surum ? uye : null;
@@ -223,7 +234,9 @@ export async function uyeOlustur(env, kimlik, rumuz) {
   if (!r.tamam) return { hata: hataYanit(400, r.neden) };
   const var_ = await env.DB.prepare('SELECT id FROM uyeler WHERE rumuz_kat = ? OR rumuz = ?').bind(r.kat, r.rumuz).first();
   if (var_) return { hata: hataYanit(409, 'Bu rumuz alınmış.') };
-  const sayi = await env.DB.prepare("SELECT COUNT(*) AS n FROM uyeler WHERE rol NOT IN ('sistem', 'asistan')").first();
+  const ayrilmis = await env.DB.prepare('SELECT 1 AS x FROM ayrilmis_rumuzlar WHERE kat = ? AND bitis > ?').bind(r.kat, simdi()).first();   // silinen hesabın rumuzu 180 gün ayrılır
+  if (ayrilmis) return { hata: hataYanit(409, 'Bu rumuz alınmış.') };
+  const sayi =await env.DB.prepare("SELECT COUNT(*) AS n FROM uyeler WHERE rol NOT IN ('sistem', 'asistan')").first();
   const t = simdi();
   try {
     await env.DB.prepare('INSERT INTO uyeler (tg_id, rumuz, rumuz_kat, kayit, kurucu, google_sub, sifre_ozet, kurtarma_ozet, eposta, eposta_dogrulandi) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
@@ -285,8 +298,8 @@ async function girisDeneme(request, env) {
 async function benGetir(request, env) {
   const u = await oturumUyesi(request, env);
   if (!u) return hataYanit(401, 'Giriş yapmalısın.');
-  const { profil, kayitli } = await benProfilKayitli(env, u.id);
-  return jsonYanit({ uye: await benNesnesi(env, u), profil, kayitli });
+  const { profil, kayitli, kart, basvurular } = await benTumu(env, u.id);
+  return jsonYanit({ uye: await benNesnesi(env, u), profil, kayitli, kart, basvurular });
 }
 async function benNesnesi(env, u) {
   return {
@@ -324,16 +337,16 @@ async function benBildirim(request, env) {
 
 // ---------- okuma ----------
 const BASLIK_ALANLARI = `b.id, b.kategori, b.baslik, b.kaynak, b.sabit, b.olusma, b.son_hareket, b.yanit_sayisi, b.ilan_id, b.govde,
-  b.duzey, b.puan_turu, b.puan, b.faydali, b.anket, u.rumuz, u.kurucu, u.rol, u.itibar`;
+  b.duzey, b.puan_turu, b.puan, b.faydali, b.anket, u.rumuz, u.kurucu, u.rol, u.itibar, u.avatar, u.foto_surum, CASE WHEN u.foto_surum IS NOT NULL THEN u.id END AS fu`;
 // liste/özet sorguları: gövdenin yalnız ilk 140 karakteri
 export const LISTE_ALANLARI = `b.id, b.kategori, b.baslik, substr(b.govde, 1, 140) AS govde, b.kaynak, b.sabit, b.olusma, b.son_hareket, b.yanit_sayisi, b.ilan_id,
-  b.duzey, b.puan_turu, b.puan, b.faydali, b.anket, u.rumuz, u.kurucu, u.rol, u.itibar`;
+  b.duzey, b.puan_turu, b.puan, b.faydali, b.anket, u.rumuz, u.kurucu, u.rol, u.itibar, u.avatar, u.foto_surum, CASE WHEN u.foto_surum IS NOT NULL THEN u.id END AS fu`;
 const KURUCU_SINIRI = 200;   // ilk 200 üye "Kurucu üye" rozeti alır
 export function baslikCikti(r, govdeli) {
   const o = {
     id: r.id, kategori: r.kategori, baslik: r.baslik, rumuz: r.rumuz, kurucu: !!r.kurucu, rol: r.rol, itibar: r.itibar || 0, kaynak: r.kaynak,
     sabit: !!r.sabit, olusma: r.olusma, son_hareket: r.son_hareket, yanit_sayisi: r.yanit_sayisi, ilan_id: r.ilan_id,
-    duzey: r.duzey ?? null, puan_turu: r.puan_turu ?? null, puan: r.puan ?? null, faydali: r.faydali || 0, anket: !!r.anket,
+    duzey: r.duzey ?? null, puan_turu: r.puan_turu ?? null, puan: r.puan ?? null, faydali: r.faydali || 0, anket: !!r.anket, ...avCikti(r),
   };
   if (govdeli) o.govde = r.govde; else o.kisa = String(r.govde || '').slice(0, 140);
   return o;
@@ -418,11 +431,11 @@ async function baslikSatiri(env, kosul, deger) {
   return env.DB.prepare(`SELECT ${BASLIK_ALANLARI} FROM basliklar b JOIN uyeler u ON u.id = b.uye_id WHERE ${kosul} AND b.gizli = 0`).bind(deger).first();
 }
 function yanitCikti(r, uye, oylar) {
-  const o = { id: r.id, govde: r.govde, rumuz: r.rumuz, rol: r.rol, kurucu: !!r.kurucu, itibar: r.itibar || 0, faydali: r.faydali, ust_id: r.ust_id, olusma: r.olusma };
+  const o = { id: r.id, govde: r.govde, rumuz: r.rumuz, rol: r.rol, kurucu: !!r.kurucu, itibar: r.itibar || 0, faydali: r.faydali, ust_id: r.ust_id, olusma: r.olusma, ...avCikti(r) };
   if (uye) { o.benim = r.uye_id === uye.id; o.oyladim = oylar.has(r.id); }
   return o;
 }
-const YANIT_SECIM = `SELECT y.id, y.govde, y.olusma, y.faydali, y.ust_id, y.uye_id, u.rumuz, u.rol, u.kurucu, u.itibar FROM yanitlar y JOIN uyeler u ON u.id = y.uye_id`;
+const YANIT_SECIM = `SELECT y.id, y.govde, y.olusma, y.faydali, y.ust_id, y.uye_id, u.rumuz, u.rol, u.kurucu, u.itibar, u.avatar, u.foto_surum, CASE WHEN u.foto_surum IS NOT NULL THEN u.id END AS fu FROM yanitlar y JOIN uyeler u ON u.id = y.uye_id`;
 async function oylananlar(env, uye, satirlar) {
   if (!uye || !satirlar.length) return new Set();
   const ilk = satirlar[0].id, son = satirlar[satirlar.length - 1].id;
@@ -845,7 +858,7 @@ async function yonetimEngelle(request, env) {
   if (!yoneticiMi(request, env)) return hataYanit(401, 'Yetkisiz.');
   const g = await govdeOku(request);
   if (!g || !Number.isInteger(g.uye_id) || typeof g.engelli !== 'boolean') return hataYanit(400, 'Geçersiz istek.');
-  await env.DB.prepare("UPDATE uyeler SET engelli = ? WHERE id = ? AND rol NOT IN ('sistem', 'asistan')").bind(g.engelli ? 1 : 0, g.uye_id).run();
+  await env.DB.prepare("UPDATE uyeler SET engelli = ? WHERE id = ? AND silindi IS NULL AND rol NOT IN ('sistem', 'asistan')").bind(g.engelli ? 1 : 0, g.uye_id).run();
   return jsonYanit({ tamam: true });
 }
 async function yonetimSikayetler(request, env) {
@@ -874,7 +887,7 @@ async function yanitSil(request, env, id) {
 // ---------- uygulama içi bildirimler ----------
 const ONCELIK = { takip: 0, yanit: 1, anma: 2, alinti: 3 };
 const kisalt = (s) => String(s || '').slice(0, 90);
-const BILDIRIM_SECIM = `SELECT y.id AS yanit_id, y.baslik_id, y.govde, y.olusma, b.baslik, b.kategori, u.rumuz, u.rol
+const BILDIRIM_SECIM = `SELECT y.id AS yanit_id, y.baslik_id, y.govde, y.olusma, b.baslik, b.kategori, u.rumuz, u.rol, u.avatar, u.foto_surum, CASE WHEN u.foto_surum IS NOT NULL THEN u.id END AS fu
   FROM yanitlar y JOIN basliklar b ON b.id = y.baslik_id JOIN uyeler u ON u.id = y.uye_id`;
 async function benBildirimler(request, env, url) {
   const uye = await oturumUyesi(request, env);
@@ -923,7 +936,7 @@ async function benBildirimler(request, env, url) {
   ekle('takip', tk.results);
   const bildirimler = [...bulunan.values()]
     .sort((x, z) => z.r.yanit_id - x.r.yanit_id).slice(0, 30)
-    .map(({ tur, r }) => ({ tur, baslik_id: r.baslik_id, baslik: r.baslik, yanit_id: r.yanit_id, rumuz: r.rumuz, rol: r.rol, kisa: kisalt(r.govde), olusma: r.olusma, oda: r.kategori === 'oda' }));
+    .map(({ tur, r }) => ({ tur, baslik_id: r.baslik_id, baslik: r.baslik, yanit_id: r.yanit_id, rumuz: r.rumuz, rol: r.rol, kisa: kisalt(r.govde), olusma: r.olusma, oda: r.kategori === 'oda', ...avCikti(r) }));
   return jsonYanit({ bildirimler, simdi: t });
 }
 
@@ -935,18 +948,5 @@ export async function uyeRumuzla(env, ham) {
   try { rumuz = decodeURIComponent(ham); } catch { return null; }
   const kucuk = trKucuk(rumuz), buyuk = trBuyuk(rumuz), ilkBuyuk = trBuyuk(kucuk.slice(0, 1)) + kucuk.slice(1);
   const adaylar = [...new Set([rumuz, kucuk, buyuk, ilkBuyuk])].slice(0, 4);
-  return env.DB.prepare(`SELECT id, rumuz, rol, kurucu, itibar, kayit, engelli, dm_acik, tg_id, bildirim FROM uyeler WHERE rumuz IN (${adaylar.map(() => '?').join(',')}) ORDER BY rumuz = ? DESC LIMIT 1`).bind(...adaylar, rumuz).first();
-}
-async function uyeKarti(env, ham) {
-  const u = await uyeRumuzla(env, ham);
-  if (!u || u.engelli) return hataYanit(404, 'Üye bulunamadı.');
-  const say = await env.DB.prepare('SELECT COUNT(*) AS n FROM yanitlar WHERE uye_id = ? AND gizli = 0').bind(u.id).first();
-  const son = await env.DB.prepare(
-    `SELECT b.id, b.baslik, b.ilan_id FROM (SELECT baslik_id, MAX(id) AS son FROM yanitlar WHERE uye_id = ? AND gizli = 0 GROUP BY baslik_id ORDER BY son DESC LIMIT 20) t
-     JOIN basliklar b ON b.id = t.baslik_id WHERE b.gizli = 0 ORDER BY t.son DESC LIMIT 5`,
-  ).bind(u.id).all();
-  return jsonYanit({
-    rumuz: u.rumuz, rol: u.rol, kurucu: !!u.kurucu, itibar: u.itibar || 0, dm_acik: u.dm_acik !== 0, kayit: u.kayit, mesaj_sayisi: say?.n || 0,
-    son_basliklar: son.results.map((r) => ({ id: r.id, baslik: r.baslik, ilan_id: r.ilan_id })),
-  });
+  return env.DB.prepare(`SELECT id, rumuz, rol, kurucu, itibar, kayit, engelli, dm_acik, tg_id, bildirim, avatar, foto_surum, kart, profil FROM uyeler WHERE rumuz IN (${adaylar.map(() => '?').join(',')}) ORDER BY rumuz = ? DESC LIMIT 1`).bind(...adaylar, rumuz).first();
 }

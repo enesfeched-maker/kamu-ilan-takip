@@ -258,6 +258,9 @@ else { Bilgi 'Worker henuz yok: sirlar ilk dagitimdan hemen sonra yazilacak.' }
 $brevoVar = $varOlan -contains 'BREVO_ANAHTARI'
 if ($brevoVar) { Bilgi 'E-posta ile giris: BREVO_ANAHTARI tanimli.' }
 else { Bilgi 'E-posta ile giris KAPALI: BREVO_ANAHTARI tanimli degil (istege bagli; sahibi kendisi ekler, bkz. Sonraki adimlar).' }
+# Uretimde e-posta girisi Turnstile olmadan acilmaz (kota tuketme / e-posta bombalama): gizli anahtar secret, site anahtari wrangler.toml [vars]. Yalniz raporlanir.
+$tsGizli = $varOlan -contains 'TURNSTILE_GIZLI'; $tsSite = ($toml -match 'TURNSTILE_SITE\s*=\s*"[^"]+"')
+if ($brevoVar -and -not ($tsGizli -and $tsSite)) { Uyari 'BREVO_ANAHTARI tanimli ama Turnstile eksik (TURNSTILE_GIZLI secret ve wrangler.toml TURNSTILE_SITE): uretimde e-posta girisi KAPALI kalir.' }
 $dosyadaki = SirDosyasiOku
 $yazilacak = @{}      # ad -> deger (bellekte; ekrana basilmaz)
 foreach ($ad in @('OTURUM_SIRRI', 'YONETICI_ANAHTARI', 'SIFRE_BIBERI')) {

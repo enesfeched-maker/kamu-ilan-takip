@@ -29,6 +29,8 @@ html.fr-sohbet{
 :root[data-theme=dark] .fr-anket-cip{color:#FCD34D}
 .fr-av{background:hsl(var(--h,90) 85% 90%)!important;color:hsl(var(--h,90) 55% 32%)!important}
 :root[data-theme=dark] .fr-av{background:hsl(var(--h,90) 45% 28%)!important;color:hsl(var(--h,90) 85% 86%)!important}
+.fr-av.fr-av-px,:root[data-theme=dark] .fr-av.fr-av-px{background:var(--surface-3,#E9E6F0)!important}
+svg.fr-av.fr-av-svg,img.fr-av.fr-av-foto,:root[data-theme=dark] svg.fr-av.fr-av-svg,:root[data-theme=dark] img.fr-av.fr-av-foto{background:none!important}
 .fr-av-bot{background:var(--surface-3)!important;color:var(--muted)!important}
 .fr-av-site{background:#0D1A1B!important}
 .fr-av-oda{background:color-mix(in srgb,var(--r-sohbet) 18%,transparent)!important;color:var(--r-sohbet)!important}

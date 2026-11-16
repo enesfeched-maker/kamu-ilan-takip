@@ -513,6 +513,7 @@ body:has(.ko-secim) .kt-sayfa-bas h1::after{content:url("data:image/svg+xml,%3Cs
 .kt-lider-liste .sira{text-align:center;font-weight:800;color:var(--muted);font-variant-numeric:tabular-nums}
 .kt-lider-liste .ilk1 .sira,.kt-lider-liste .ilk2 .sira,.kt-lider-liste .ilk3 .sira{font-size:22px}
 .kt-lider-liste .ad{font-weight:650;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kt-lider-liste .ad .kt-lider-av{width:26px;height:26px;margin-right:8px;font-size:12px}
 .kt-lider-liste .dk{font-size:12px;color:var(--muted);white-space:nowrap}
 .kt-lider-liste .net{font-size:16px;font-variant-numeric:tabular-nums;white-space:nowrap}
 .kt-lider-liste .ilk1{background:color-mix(in srgb,var(--k-sari) 22%,var(--surface))!important}

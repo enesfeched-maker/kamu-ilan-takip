@@ -22,7 +22,7 @@ test('telegram girişi: yeni üye -> geçici jeton -> rumuz -> oturum; sonra do�
   assert.equal(r2.durum, 200);
   assert.equal(r2.json.uye.rumuz, 'Ali_Veli'); assert.equal(r2.json.uye.kurucu, true); assert.equal(r2.json.uye.rol, 'uye');
   const kayit = env.DB.ham.prepare('SELECT * FROM uyeler WHERE tg_id = 777').get();
-  assert.deepEqual(Object.keys(kayit).sort(), ['bildirim', 'dm_acik', 'engelli', 'eposta', 'eposta_dogrulandi', 'google_sub', 'id', 'itibar', 'kayit', 'kayitli', 'kurtarma_ozet', 'kurucu', 'oturum_surum', 'profil', 'rol', 'rumuz', 'rumuz_kat', 'sifre_ozet', 'silindi', 'tg_id']); // ad/kullanıcı adı/foto saklanmaz
+  assert.deepEqual(Object.keys(kayit).sort(), ['avatar', 'basvurular', 'bildirim', 'dm_acik', 'engelli', 'eposta', 'eposta_dogrulandi', 'foto_gun', 'foto_sayi', 'foto_surum', 'foto_yasak', 'google_sub', 'id', 'itibar', 'kart', 'kayit', 'kayitli', 'kurtarma_ozet', 'kurucu', 'oturum_surum', 'profil', 'rol', 'rumuz', 'rumuz_kat', 'sifre_ozet', 'silindi', 'tg_id']); // ad/kullanıcı adı/foto saklanmaz
   assert.equal(kayit.eposta, null);   // Telegram üyesinde e-posta yok
   assert.equal(kayit.google_sub, null); assert.equal(kayit.sifre_ozet, null);
   const ben = await cagir(env, 'GET', '/ben', { token: r2.json.oturum });

@@ -23,6 +23,9 @@
   var BASPARMAK = 'M7 11v9H4v-9zM7 11l4-7c1.5 0 2.5 1 2.2 2.6L12.6 10H18a2 2 0 0 1 2 2.3l-1.2 6A2 2 0 0 1 16.8 20H7';
   var GENIS = matchMedia('(min-width: 900px)');
   document.documentElement.classList.add('fr-sohbet');
+  var BET = document.currentScript;
+  var TABAN = BET && BET.src ? BET.src.replace(/forum\.js.*$/, '') : '';
+  var SURUM = (BET && /[?&]v=(\w+)/.exec(BET.src) || [0, '1'])[1];
 
   /* ---------- yardımcılar ---------- */
   function oku(a) { try { return JSON.parse(localStorage.getItem(a)); } catch (e) { return null; } }
@@ -58,7 +61,22 @@
         yaz('kit-saved', null); yaz('kit-saved-uye', null); yaz('kit-saved-kirli', null); window.dispatchEvent(new Event('kit-kayitli-sunucudan'));
       }
     } catch (e) {}
+    // başvurdum işaretleri ve katiplik verisi de öyle: hesaptan gelenler cihazda kalmaz, bekleyen değişiklik önce gönderilir
+    try {
+      if (u && u.id && oku('fr-basvuru-uye') === u.id) {
+        if (oku('fr-basvuru-kirli')) basvuruGonder_();
+        yaz('fr-basvuru', null); yaz('fr-basvuru-uye', null); yaz('fr-basvuru-kirli', null);
+      }
+      if (u && u.id && oku('kit-katip-uye') === u.id) katipCikis_();
+    } catch (e) {}
     yaz('fr-oturum', null); yaz('fr-uye', null); yaz('fr-bildirim-sayi', null); yaz('fr-ben-t', null); ozelSayisiGoster(0); hesapOlayi(); yenile();
+  }
+  var KATIP_ANAHTARLAR = ['kit-katip', 'kit-katip-ders', 'kit-katip-oyun', 'kit-katip-antrenman', 'kit-katip-uye', 'kit-katip-kirli'];
+  function katipCikis_() {   // gönderilmemiş değişiklik varsa katip-senkron.js ile gönderilir, sonra yerel katiplik verisi silinir
+    var jeton = oturum();
+    function temizle() { KATIP_ANAHTARLAR.forEach(function (a) { yaz(a, null); }); }
+    if (!oku('kit-katip-kirli')) { temizle(); return; }
+    betikYukle(TABAN + 'katip-senkron.js?v=' + SURUM).then(function () { return window.kitKatip.gonder(jeton); }).then(temizle, temizle);
   }
   function hesapOlayi() { try { window.dispatchEvent(new Event('kit-hesap')); } catch (e) {} }   // üst çubuktaki hesap girişi (hesap.js) kendini yeniler
   // Öğrenim düzeyi: önce forumda seçilen, yoksa sitenin profilinde tek düzey işaretlenmişse o.
@@ -77,7 +95,8 @@
     var h = {}, o = oturum();
     if (o) h.Authorization = 'Bearer ' + o;
     if (secenek.govde !== undefined) h['Content-Type'] = 'application/json';
-    return fetch(API + yol, { method: secenek.yontem || 'GET', headers: h, body: secenek.govde !== undefined ? JSON.stringify(secenek.govde) : undefined })
+    if (secenek.ham !== undefined) h['Content-Type'] = secenek.ham.type || 'application/octet-stream';   // fotoğraf yükleme: ham bayt
+    return fetch(API + yol, { method: secenek.yontem || 'GET', headers: h, body: secenek.ham !== undefined ? secenek.ham : secenek.govde !== undefined ? JSON.stringify(secenek.govde) : undefined })
       .then(function (r) {
         return r.json().catch(function () { return {}; }).then(function (j) {
           if (r.status === 401 && o) { yaz('fr-oturum', null); yaz('fr-uye', null); hesapOlayi(); }
@@ -132,7 +151,9 @@
   function avatar(k) {
     if (k.rol === 'asistan') return '<span class="fr-av fr-av-bot" aria-hidden="true">' + ikon('M7 9h10v9H7zM12 5v4M10 13h.01M14 13h.01') + '</span>';
     if (k.rol === 'sistem') return '<span class="fr-av fr-av-site" aria-hidden="true"><img src="' + kok() + 'assets/logo-96.webp?v=2" alt="" width="32" height="32"></span>';
-    return '<span class="fr-av" style="--h:' + ton(k.rumuz) + '" aria-hidden="true">' + esc((k.rumuz || '?').charAt(0).toLocaleUpperCase('tr-TR')) + '</span>';
+    if (window.kitAvatar) return window.kitAvatar.html(k);   // hazır avatar, fotoğraf ya da rumuzdan türetilen varsayılan; sprite yüklenemezse harf
+    // avatar-ortak.js henüz yüklenmediyse harf çizilir; yüklenince data-avu ile gerçek avatarla değişir
+    return '<span class="fr-av" data-avu="' + esc(JSON.stringify({ u: { rumuz: k.rumuz, av: k.av, fs: k.fs, fu: k.fu } })) + '" style="--h:' + ton(k.rumuz) + '" aria-hidden="true">' + esc((k.rumuz || '?').charAt(0).toLocaleUpperCase('tr-TR')) + '</span>';
   }
   function kok() { return document.body.classList.contains('detail-page') ? '../../' : document.getElementById('forum') ? '../' : ''; }
   function katAd(kod) { for (var i = 0; i < KATEGORILER.length; i++) if (KATEGORILER[i].kod === kod) return KATEGORILER[i].ad; return ''; }
@@ -168,7 +189,7 @@
   }
   function profilCek() {   // /ben'i okur, üye bilgisini, profili ve kayıtlı ilanları günceller
     if (!oturum()) return Promise.resolve();
-    return api('/ben').then(function (j) { yaz('fr-uye', j.uye); yaz('fr-ben-t', Date.now()); profilSenkron(j.profil); kayitliSenkron(j.kayitli); hesapOlayi(); }, function () {});
+    return api('/ben').then(function (j) { yaz('fr-uye', j.uye); yaz('fr-ben-t', Date.now()); profilSenkron(j.profil); kayitliSenkron(j.kayitli); basvuruSenkron(j.basvurular); hesapOlayi(); }, function () {});
   }
 
   /* ---------- hesaba bağlı kayıtlı ilanlar ---------- */
@@ -218,8 +239,53 @@
       kayitliZamanlayici = setTimeout(kayitliGonder_, 1500);
     } catch (e) {}
   };
-  var profilZamanlayici = 0;
-  window.kitProfilGonder = function () {   // site profil ekranı çağırır; giriş yoksa hiçbir şey yapmaz
+  /* ---------- hesaba bağlı başvurdum işaretleri ---------- */
+  // Yerel "fr-basvuru" { ilanKimligi: {ad, puan_turu, puan} }; hesapta yalnız ilan kimlikleri (en çok 300) tutulur.
+  // "fr-basvuru-uye": listenin hangi hesapla eşlendiği, "fr-basvuru-kirli": gönderilmemiş değişiklik. Mantık kayıtlı ilanlarla aynıdır.
+  function basvuruAnahtarlari() {
+    var K = window.kitKayitli;
+    return Object.keys(basvurularim()).filter(function (k) { return K ? K.gecerli(k) : true; }).slice(-300);
+  }
+  function basvuruSenkron(sunucu) {
+    try {
+      var ben = uye(), K = window.kitKayitli;
+      if (!oturum() || !ben || !ben.id || !Array.isArray(sunucu)) return;
+      var m = basvurularim(), sahip = oku('fr-basvuru-uye');
+      if (sahip === ben.id) {
+        if (oku('fr-basvuru-kirli')) { basvuruGonder_(); return; }
+        var degisti = false;   // eşleşmiş hesapta hesap esastır
+        Object.keys(m).forEach(function (k) { if (sunucu.indexOf(k) < 0 && (!K || K.gecerli(k))) { delete m[k]; degisti = true; } });
+        sunucu.forEach(function (k) { if (!m[k]) { m[k] = {}; degisti = true; } });
+        if (degisti) yaz('fr-basvuru', m);
+        return;
+      }
+      if (typeof sahip === 'number') m = {};   // başka üyeye ait liste sızmasın
+      var birlesik = sunucu.concat(Object.keys(m).filter(function (k) { return (!K || K.gecerli(k)) && sunucu.indexOf(k) < 0; })).slice(-300);
+      birlesik.forEach(function (k) { if (!m[k]) m[k] = {}; });
+      yaz('fr-basvuru', m); yaz('fr-basvuru-uye', ben.id);
+      var fark = birlesik.length !== sunucu.length;
+      yaz('fr-basvuru-kirli', fark ? 1 : null);
+      if (fark) basvuruGonder_();
+    } catch (e) {}
+  }
+  function basvuruGonder_() {
+    if (!oturum()) return;
+    var giden = basvuruAnahtarlari();
+    function temizse() { if (ayniDizi(basvuruAnahtarlari(), giden)) yaz('fr-basvuru-kirli', null); }
+    api('/ben/basvurular', { yontem: 'POST', govde: { basvurular: giden } }).then(temizse, function (h) { if (h && h.durum === 400) temizse(); });
+  }
+  var basvuruZamanlayici = 0;
+  function basvuruDegisti() {   // ilan sayfasındaki "Başvurdum" işareti değişince çağrılır
+    try {
+      var ben = uye();
+      if (!oturum()) { if (oku('fr-basvuru-uye') != null) yaz('fr-basvuru-kirli', 1); return; }
+      if (!ben || oku('fr-basvuru-uye') !== ben.id) return;
+      yaz('fr-basvuru-kirli', 1);
+      clearTimeout(basvuruZamanlayici);
+      basvuruZamanlayici = setTimeout(basvuruGonder_, 1500);
+    } catch (e) {}
+  }
+  var profilZamanlayici = 0;  window.kitProfilGonder = function () {   // site profil ekranı çağırır; giriş yoksa hiçbir şey yapmaz
     clearTimeout(profilZamanlayici);
     profilZamanlayici = setTimeout(function () {
       try {
@@ -431,6 +497,7 @@
       k.ciz('Kodu gir', 'Hesabın varsa ve e-posta adresi kayıtlıysa 6 haneli bir kod gönderdik. 10 dakika geçerli, gelmediyse gereksiz klasörüne de bak.',
         '<form class="fr-g-form" novalidate>' + girisAlani('kod', '6 haneli kod', KOD_OZ)
         + girisAlani('yeni', 'Yeni şifre', sifreOz(true), 'En az 8 karakter.', true)
+        + (ayar.turnstile_site ? '<div class="fr-g-turnstile" role="group" aria-label="Robot kontrolü"></div>' : '')
         + '<p class="fr-hata" role="alert" hidden></p><button class="fr-g-btn" type="submit">Şifreyi yenile</button>'
         + '<button type="button" class="fr-g-ikincil" data-tekrar>Kodu yeniden gönder</button>'
         + '<button type="button" class="fr-g-bag" data-geri>Başa dön</button></form>');
@@ -439,11 +506,12 @@
       f.querySelector('[data-geri]').onclick = function () { unuttumEposta(kim); };
       t.onclick = function () {
         k.hata('');
-        if (ayar.turnstile_site) return unuttumEposta(kim);   // robot kontrolü her istekte yeni jeton ister
-        var g = {}; g[kim.indexOf('@') > 0 ? 'eposta' : 'rumuz'] = kim;
-        api('/sifre-sifirla/eposta', { yontem: 'POST', govde: g }).then(function (j) { sayim((j && j.bekle) || 60); bildir('Kod yeniden gönderildi'); },
-          function (h) { k.hata(h.message); sayim((h.veri && h.veri.bekle) || 60); });
+        if (ayar.turnstile_site && !jeton) return k.hata('Önce robot kontrolünü tamamla.');   // widget bu adımda da durur; her istek yeni jeton ister, sayfa yenilenmez
+        var g = { turnstile: jeton || undefined }; g[kim.indexOf('@') > 0 ? 'eposta' : 'rumuz'] = kim;
+        api('/sifre-sifirla/eposta', { yontem: 'POST', govde: g }).then(function (j) { sayim((j && j.bekle) || 60); bildir('Kod yeniden gönderildi'); turnstileSifirla(); },
+          function (h) { k.hata(h.message); sayim((h.veri && h.veri.bekle) || 60); turnstileSifirla(); });
       };
+      turnstileKur();
       kodAlaniBagla(f, f.querySelector('#fr-g-kod'), d);
       f.onsubmit = function (e) {
         e.preventDefault(); k.hata('');
@@ -568,6 +636,7 @@
       turnstileKaldir();
       k.ciz('Kodu gir', eposta + ' adresine 6 haneli bir kod gönderdik. 10 dakika geçerli. Gelmediyse gereksiz klasörüne de bak.',
         '<form class="fr-g-form" novalidate>' + girisAlani('kod', '6 haneli kod', KOD_OZ)
+        + (ayar.turnstile_site ? '<div class="fr-g-turnstile" role="group" aria-label="Robot kontrolü"></div>' : '')
         + '<p class="fr-hata" role="alert" hidden></p><button class="fr-g-btn" type="submit">Devam et</button>'
         + '<button type="button" class="fr-g-ikincil" data-tekrar>Kodu yeniden gönder</button>'
         + '<button type="button" class="fr-g-bag" data-adres>Adresi değiştir</button></form>');
@@ -576,10 +645,11 @@
       f.querySelector('[data-adres]').onclick = function () { epostaAdim1(eposta); };
       t.onclick = function () {
         k.hata('');
-        if (ayar.turnstile_site) return epostaAdim1(eposta);   // robot kontrolü her istekte yeni jeton ister: adres adımına dön
-        api('/giris/eposta/kod', { yontem: 'POST', govde: { eposta: eposta } }).then(function (j) { sayim((j && j.bekle) || 60); bildir('Kod yeniden gönderildi'); },
-          function (h) { k.hata(h.message); sayim((h.veri && h.veri.bekle) || 60); });
+        if (ayar.turnstile_site && !jeton) return k.hata('Önce robot kontrolünü tamamla.');   // widget bu adımda da durur; her istek yeni jeton ister, sayfa yenilenmez
+        api('/giris/eposta/kod', { yontem: 'POST', govde: { eposta: eposta, turnstile: jeton || undefined } }).then(function (j) { sayim((j && j.bekle) || 60); bildir('Kod yeniden gönderildi'); turnstileSifirla(); },
+          function (h) { k.hata(h.message); sayim((h.veri && h.veri.bekle) || 60); turnstileSifirla(); });
       };
+      turnstileKur();
       kodAlaniBagla(f, g, d);
       f.onsubmit = function (e) {
         e.preventDefault(); k.hata('');
@@ -711,18 +781,40 @@
     function epostaYenile() {
       api('/ben').then(function (j) { yaz('fr-uye', j.uye); hesapOlayi(); hesapCiz(k, j.uye, ayar); }, function () {});
     }
+    // robot kontrolü (Turnstile; üretimde e-posta gönderimi için şart): kod isteği her seferinde yeni jeton ister, widget yeniden çizilir
+    var tsK = null, tsJeton = '';
+    function tsKaldir() { try { if (window.turnstile && tsK !== null) window.turnstile.remove(tsK); } catch (e) {} tsK = null; tsJeton = ''; }
+    function tsSifirla() { tsJeton = ''; try { if (window.turnstile && tsK !== null) window.turnstile.reset(tsK); } catch (e) {} }
+    function tsKur(yer) {
+      if (!ayar.turnstile_site || !yer) return;
+      betikYukle('https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit').then(function () {
+        if (!document.body.contains(yer) || !window.turnstile) return;
+        tsK = window.turnstile.render(yer, { sitekey: ayar.turnstile_site, language: 'tr', theme: 'auto',
+          callback: function (t) { tsJeton = t; }, 'expired-callback': function () { tsJeton = ''; }, 'error-callback': function () { tsJeton = ''; } });
+      }, function () {});
+    }
+    var tsYeri = function () { return ayar.turnstile_site ? '<div class="fr-g-turnstile" role="group" aria-label="Robot kontrolü"></div>' : ''; };
+    var sifre_ = '';   // şifresi olan üyede adres değişikliği için mevcut şifre (yalnız bellekte, adımlar arası)
     function epostaAdim1() {
+      tsKaldir();
       alan.innerHTML = '<form class="fr-g-form" data-form="eposta" novalidate>' + girisAlani('yeni-eposta', u.eposta ? 'Yeni e-posta adresi' : 'E-posta adresi', EPOSTA_OZ)
-        + hata('') + '<button class="fr-g-ikincil" type="submit">Kod gönder</button></form>';
+        + (u.sifre_var ? girisAlani('esifre', 'Şimdiki şifren', sifreOz(false), 'Adres değişikliği için şifreni doğrulaman gerekir.', true) : '')
+        + tsYeri() + hata('') + '<button class="fr-g-ikincil" type="submit">Kod gönder</button></form>';
       var f = alan.querySelector('form');
       gonder(f, '/ben/eposta', function (x) {
-        var a = x.querySelector('input').value.trim();
-        return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(a) ? { eposta: a } : 'Geçerli bir e-posta adresi yaz.';
-      }, function (j) { epostaAdim2(f.querySelector('input').value.trim(), (j && j.bekle) || 60); });
+        var a = x.querySelector('#fr-g-yeni-eposta').value.trim();
+        sifre_ = u.sifre_var ? x.querySelector('#fr-g-esifre').value : '';
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(a)) return 'Geçerli bir e-posta adresi yaz.';
+        if (u.sifre_var && !sifre_) return 'Şimdiki şifreni yaz.';
+        if (ayar.turnstile_site && !tsJeton) return 'Önce robot kontrolünü tamamla.';
+        return { eposta: a, sifre: u.sifre_var ? sifre_ : undefined, turnstile: tsJeton || undefined };
+      }, function (j) { epostaAdim2(f.querySelector('#fr-g-yeni-eposta').value.trim(), (j && j.bekle) || 60); });
+      tsKur(f.querySelector('.fr-g-turnstile'));
     }
     function epostaAdim2(adres, bekle) {
+      tsKaldir();
       alan.innerHTML = '<form class="fr-g-form" data-form="eposta-kod" novalidate><p class="fr-not"></p>' + girisAlani('kod', '6 haneli kod', KOD_OZ)
-        + hata('') + '<button class="fr-g-ikincil" type="submit">Doğrula</button>'
+        + tsYeri() + hata('') + '<button class="fr-g-ikincil" type="submit">Doğrula</button>'
         + '<button type="button" class="fr-g-ikincil" data-tekrar>Kodu yeniden gönder</button><button type="button" class="fr-g-bag" data-geri>Adresi değiştir</button></form>';
       var f = alan.querySelector('form'), g = f.querySelector('#fr-g-kod'), d = f.querySelector('button[type=submit]'), t = f.querySelector('[data-tekrar]'), p = f.querySelector('.fr-hata');
       f.querySelector('.fr-not').textContent = adres + ' adresine kod gönderdik. 10 dakika geçerli.';
@@ -730,14 +822,19 @@
       f.querySelector('[data-geri]').onclick = epostaAdim1;
       t.onclick = function () {
         p.hidden = true;
-        api('/ben/eposta', { yontem: 'POST', govde: { eposta: adres } }).then(function (j) { sayim((j && j.bekle) || 60); bildir('Kod yeniden gönderildi'); },
-          function (h) { p.textContent = h.message; p.hidden = false; sayim((h.veri && h.veri.bekle) || 60); });
+        if (ayar.turnstile_site && !tsJeton) { p.textContent = 'Önce robot kontrolünü tamamla.'; p.hidden = false; return; }
+        api('/ben/eposta', { yontem: 'POST', govde: { eposta: adres, sifre: u.sifre_var ? sifre_ : undefined, turnstile: tsJeton || undefined } }).then(function (j) { sayim((j && j.bekle) || 60); bildir('Kod yeniden gönderildi'); tsSifirla(); },
+          function (h) { p.textContent = h.message; p.hidden = false; sayim((h.veri && h.veri.bekle) || 60); tsSifirla(); });
       };
       kodAlaniBagla(f, g, d);
       gonder(f, '/ben/eposta', function () {
         var kod = rakamlar(g.value);
-        return kod.length === 6 ? { eposta: adres, kod: kod } : '6 haneli kodu yaz.';
-      }, function () { bildir('E-posta adresin kaydedildi'); epostaYenile(); });
+        return kod.length === 6 ? { eposta: adres, kod: kod, sifre: u.sifre_var ? sifre_ : undefined } : '6 haneli kodu yaz.';
+      }, function (j) {
+        if (j && j.oturum) yaz('fr-oturum', j.oturum);   // sunucu eski oturumları kapattı, bu cihaza taze jeton geldi
+        bildir('E-posta adresin kaydedildi'); epostaYenile();
+      });
+      tsKur(f.querySelector('.fr-g-turnstile'));
     }
     if (alan) epostaAdim1();
 
@@ -796,31 +893,30 @@
   window.kitHesap = { giris: function (baslik) { girisSonrasi = null; girisKutusu(baslik || 'Üye ol ya da giriş yap'); }, ayar: ayarKutusu, hesap: hesapKutusu, cikis: cikis };
 
   /* ---------- üye kartı (rumuza dokununca) ---------- */
-  function uyeKarti(rumuz, cikis_) {
-    var eski = document.getElementById('fr-uye-kart');
-    if (eski) eski.remove();
-    var kutu = el('<div class="fr-perde" id="fr-uye-kart" role="dialog" aria-modal="true" aria-label="' + esc(rumuz) + '"><div class="fr-kutu fr-uye-kutu">'
-      + '<button type="button" class="fr-kapat" aria-label="Kapat">×</button><p class="fr-yukleniyor">Yükleniyor…</p></div></div>');
-    document.body.appendChild(kutu);
-    function kapat() { kutu.remove(); document.removeEventListener('keydown', tus); }
-    function tus(e) { if (e.key === 'Escape') kapat(); }
-    document.addEventListener('keydown', tus);
-    kutu.onclick = function (e) { if (e.target === kutu || e.target.closest('.fr-kapat') || e.target.closest('a')) kapat(); };
-    var ic = kutu.querySelector('.fr-kutu');
-    api('/uye/' + encodeURIComponent(rumuz)).then(function (u) {
-      var rozet = [u.kurucu ? 'Kurucu üye' : '', u.itibar >= 5 ? 'Yardımsever' : ''].filter(Boolean);
-      ic.innerHTML = '<button type="button" class="fr-kapat" aria-label="Kapat">×</button><div class="fr-uye-ust">' + avatar(u) + '<div><h2>' + esc(u.rumuz) + '</h2>'
-        + (rozet.length ? '<p class="fr-uye-rozet">' + rozet.map(function (r) { return '<span>' + r + '</span>'; }).join('') + '</p>' : '') + '</div></div>'
-        + '<dl class="fr-uye-sayilar"><div><dt>Mesaj</dt><dd>' + sayi(u.mesaj_sayisi) + '</dd></div><div><dt>Faydalı bulundu</dt><dd>' + sayi(u.itibar) + '</dd></div>'
-        + '<div><dt>Katıldı</dt><dd>' + new Date(u.kayit * 1000).toLocaleDateString('tr-TR', { month: 'long', year: 'numeric' }) + '</dd></div></dl>'
-        + (uye() && uye().rumuz === u.rumuz ? '' : u.dm_acik === false ? '<p class="fr-not fr-uye-dm">Bu üye özel mesaj almıyor.</p>' : '<a class="btn btn-ana fr-uye-dm" href="' + kok() + 'forum/?mesaj=' + encodeURIComponent(u.rumuz) + '">' + ikon(ZARF) + '<span>Mesaj gönder</span></a>')
-        + (u.son_basliklar && u.son_basliklar.length ? '<h3>Son yazdığı konular</h3><ul class="fr-uye-konular">' + u.son_basliklar.map(function (b) {
-          return '<li><a href="' + kok() + 'forum/?b=' + b.id + '">' + esc(b.baslik) + '</a></li>';
-        }).join('') + '</ul>' : '');
-    }, function (h) { ic.innerHTML = '<button type="button" class="fr-kapat" aria-label="Kapat">×</button><p class="fr-bos">' + esc(h.durum === 404 ? 'Bu üye bulunamadı.' : h.message) + '</p>'; });
-    iz('forum_uye_kart');
+  // Kart, profil sayfası ve düzenleyici profil-kart.js'te; yalnız gerektiğinde yüklenir. avatar-ortak.js ise ilk çizimden önce istenir.
+  var avatarVaadi = null, kartVaadi = null;
+  function avatarKit() {
+    if (!avatarVaadi) avatarVaadi = (window.kitAvatar ? Promise.resolve() : betikYukle(TABAN + 'avatar-ortak.js?v=' + SURUM)).then(function () { return window.kitAvatar.yukle(); }, function () {});
+    return avatarVaadi;
   }
-  document.addEventListener('click', function (e) {
+  function kitKartYukle() {
+    if (!kartVaadi) kartVaadi = avatarKit().then(function () { return window.kitKart ? 0 : betikYukle(TABAN + 'profil-kart.js?v=' + SURUM); }).catch(function (e) { kartVaadi = null; throw e; });
+    return kartVaadi;
+  }
+  function uyeGuncelle(k) {   // kartta avatar / fotoğraf değişince üst çubuktaki ve sayfadaki bilgi tazelenir
+    var u = uye(); if (!u) return;
+    if (k && k.avatar) u.av = k.avatar; else delete u.av;
+    if (k && k.foto_surum) { u.fs = k.foto_surum; u.fu = u.id; } else { delete u.fs; delete u.fu; }
+    yaz('fr-uye', u); hesapOlayi();
+  }
+  window.kitForumApi = {
+    api: api, uye: uye, oturum: oturum, bildir: bildir, kok: kok, uyeGuncelle: uyeGuncelle, kartYukle: kitKartYukle, yenile: function () { yaz('fr-ben-t', null); return profilCek(); },
+    giris: function (baslik, sonra) { return girisGerekli(baslik || 'Üye ol ya da giriş yap', sonra); }
+  };
+  function uyeKarti(rumuz) {
+    kitKartYukle().then(function () { window.kitKart.ac(rumuz); }, function () { bildir('Kart şu an yüklenemedi, tekrar dene.'); });
+    iz('forum_uye_kart');
+  }  document.addEventListener('click', function (e) {
     var u = e.target.closest('[data-uye]');
     if (u && (u.closest('#forum') || u.closest('#tartisma'))) { e.preventDefault(); uyeKarti(u.getAttribute('data-uye')); }
   });
@@ -1008,7 +1104,7 @@
       var govde = { kimlik: kimlik() };
       if (puan) { govde.puan_turu = puan.puan_turu; govde.puan = puan.puan; }
       api('/basvuru/' + encodeURIComponent(ilan), { yontem: 'POST', govde: govde }).then(function (j) {
-        var m = basvurularim(), k = m[ilan] || {}; k.ad = ad; if (puan) { k.puan_turu = puan.puan_turu; k.puan = puan.puan; } m[ilan] = k; yaz('fr-basvuru', m);
+        var m = basvurularim(), k = m[ilan] || {}; k.ad = ad; if (puan) { k.puan_turu = puan.puan_turu; k.puan = puan.puan; } m[ilan] = k; yaz('fr-basvuru', m); basvuruDegisti();
         iz('forum_basvurdum', puan ? 'puan' : ''); bildir(puan ? 'Puanın eklendi' : 'Bol şans!');
         basvuruCiz(j.basvuru);
       }, function (h) { bildir(h.message); });
@@ -1018,7 +1114,7 @@
       if (basvurularim()[ilan]) {
         if (!confirm('Başvurdum işaretini kaldırayım mı?')) return;
         api('/basvuru/' + encodeURIComponent(ilan) + '?kimlik=' + kimlik(), { yontem: 'DELETE' }).then(function (j) {
-          var m = basvurularim(); delete m[ilan]; yaz('fr-basvuru', m); basvuruCiz(j.basvuru);
+          var m = basvurularim(); delete m[ilan]; yaz('fr-basvuru', m); basvuruDegisti(); basvuruCiz(j.basvuru);
         }, function (h) { bildir(h.message); });
       } else basvur(null);
     });
@@ -1151,7 +1247,7 @@
     if (!oturum() || Date.now() - benZamani < 120000 || Date.now() - (oku('fr-ben-t') || 0) < 120000) return;
     benZamani = Date.now(); yaz('fr-ben-t', benZamani);
     api('/ben').then(function (j) {
-      yaz('fr-uye', j.uye); ozelSayisiGoster((j.uye && j.uye.ozel_okunmamis) || j.ozel_okunmamis || 0); profilSenkron(j.profil); kayitliSenkron(j.kayitli); hesapOlayi();
+      yaz('fr-uye', j.uye); ozelSayisiGoster((j.uye && j.uye.ozel_okunmamis) || j.ozel_okunmamis || 0); profilSenkron(j.profil); kayitliSenkron(j.kayitli); basvuruSenkron(j.basvurular); hesapOlayi();
     }, function () {});
   }
 
@@ -1229,6 +1325,7 @@
       araclar.innerHTML = '<button type="button" class="fr-zil" data-zil aria-label="Bildirimler">' + ikon(ZIL) + '<b data-zil-sayi hidden></b></button>'
         + (u ? '<details class="fr-ben"><summary aria-label="Hesabım">' + avatar(u) + '</summary><div><p><b>' + esc(u.rumuz) + '</b></p>'
           + (u.kurucu ? '<p>Kurucu üye</p>' : '') + (u.itibar ? '<p>' + sayi(u.itibar) + ' kez faydalı bulundu</p>' : '')
+          + '<a class="fr-ben-bag" data-ic href="?uye=' + encodeURIComponent(u.rumuz) + '">Profilim</a><a class="fr-ben-bag" href="' + kok() + '?profil=1">Profil kartımı düzenle</a>'
           + '<a class="fr-ben-bag" data-ic href="?takip=1">Takip ettiklerim</a><a class="fr-ben-bag" data-ic href="?bolum=mesaj">Mesajlarım</a>'
           + '<label class="fr-anahtar-s"><input type="checkbox" data-ayar="dm_acik"' + (kapali(u.dm_acik) ? '' : ' checked') + '><span>Özel mesaj alabilirim</span></label>'
           + (u.telegram === false ? '' : '<label class="fr-anahtar-s"><input type="checkbox" data-ayar="bildirim"' + (kapali(u.bildirim) ? '' : ' checked') + '><span>Telegram\'dan bildirim al</span></label>')
@@ -1605,6 +1702,12 @@
       kok_.setAttribute('data-bolum', bolum);
       document.body.classList.toggle('fr-konusmada', !!(seciliOda || seciliKisi) && !GENIS.matches);
       araclarCiz(); benYenile();
+      if (q.get('uye')) {   // herkese açık profil sayfası
+        kok_.querySelectorAll('[data-bolum]').forEach(function (a) { a.classList.remove('fr-aktif'); a.removeAttribute('aria-current'); });
+        icerik.className = 'fr-icerik fr-uyesayfa';
+        kitKartYukle().then(function () { window.kitKart.sayfa(icerik, q.get('uye')); }, function () { icerik.innerHTML = '<p class="fr-bos">Profil şu an yüklenemedi. <a class="yazi-link" data-ic href="?">Foruma dön</a></p>'; });
+        return;
+      }
       if (bolum === 'mesaj') {   // özel mesajlar: sohbet gibi iki panel, mercan vurgulu
         icerik.className = 'fr-icerik fr-chat fr-mesajlar';
         if (GENIS.matches) {
@@ -1688,6 +1791,7 @@
   var yenileyiciler = [];
   function yenile() { yenileyiciler.forEach(function (f) { try { f(); } catch (e) {} }); }
   function basla() {
+    avatarKit();   // sprite ve liste ilk çizimle paralel iner; harf avatarları hazır olunca kendiliğinden değişir
     var t = document.getElementById('tartisma');
     if (t && t.getAttribute('data-ilan')) ilanBolumu(t);
     var f = document.getElementById('forum');

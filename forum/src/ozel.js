@@ -1,6 +1,6 @@
 // Özel mesajlar: engelleme, şikayet, hız sınırı ve denetim varsayılan olarak açık.
 // index.js ile döngüsel içe aktarma güvenlidir: yardımcılar yalnız istek sırasında çağrılır.
-import { jsonYanit, hataYanit, simdi } from './yardimci.js';
+import { jsonYanit, hataYanit, simdi, avCikti } from './yardimci.js';
 import { ozelMesajHizi } from './hiz.js';
 import { ozelMesajBildirimi } from './bildirim.js';
 import { oturumUyesi, yazar, govdeOku, metinDenetle, uyeRumuzla, yoneticiMi, negatifsizTamsayi } from './index.js';
@@ -15,7 +15,7 @@ const giris = async (request, env) => {
   return uye ? { uye } : { hata: hataYanit(401, 'Giriş yapmalısın.') };
 };
 const mesajCikti = (r, benId) => ({ id: r.id, govde: r.govde, olusma: r.olusma, benden: r.gonderen === benId });
-const uyeCikti = (u) => ({ rumuz: u.rumuz, rol: u.rol, kurucu: !!u.kurucu, itibar: u.itibar || 0 });
+const uyeCikti = (u) => ({ rumuz: u.rumuz, rol: u.rol, kurucu: !!u.kurucu, itibar: u.itibar || 0, ...avCikti(u, u.id) });
 const sistemHesabi = (u) => u.rol === 'sistem' || u.rol === 'asistan';
 
 // Okunmamış gelen mesaj sayısı (engellenen kişilerden gelenler sayılmaz). Tek indeksli COUNT.
@@ -50,7 +50,7 @@ export async function ozelKonusmalar(request, env) {
   if (hata) return hata;
   // iki yönün tek taraması, eş başına MAX(id) ile gruplanır; sonra son mesaj ve üye bilgisi geri birleştirilir
   const { results } = await env.DB.prepare(
-    `SELECT g.esl, g.son_id, g.okunmamis, m.govde, m.olusma, m.gonderen, u.rumuz, u.rol, u.kurucu, u.itibar
+    `SELECT g.esl, g.son_id, g.okunmamis, m.govde, m.olusma, m.gonderen, u.rumuz, u.rol, u.kurucu, u.itibar, u.avatar, u.foto_surum, CASE WHEN u.foto_surum IS NOT NULL THEN u.id END AS fu
      FROM (
        SELECT esl, MAX(id) AS son_id, SUM(oku) AS okunmamis FROM (
          SELECT id, alici AS esl, 0 AS oku FROM ozel_mesajlar WHERE gonderen = ? AND gizli = 0
@@ -60,7 +60,7 @@ export async function ozelKonusmalar(request, env) {
      ) g
      JOIN ozel_mesajlar m ON m.id = g.son_id
      JOIN uyeler u ON u.id = g.esl
-     WHERE u.engelli = 0 AND g.esl NOT IN (SELECT engellenen FROM engeller WHERE uye_id = ?)
+     WHERE (u.engelli = 0 OR u.silindi IS NOT NULL) AND g.esl NOT IN (SELECT engellenen FROM engeller WHERE uye_id = ?)
      ORDER BY g.son_id DESC LIMIT 50`,
   ).bind(uye.id, uye.id, uye.id).all();
   return jsonYanit({

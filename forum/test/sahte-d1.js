@@ -6,7 +6,7 @@ export function sahteD1() {
   const db = new DatabaseSync(':memory:');
   db.exec(readFileSync(new URL('../schema.sql', import.meta.url), 'utf8'));
   const sayac = { sorgu: 0, batch: 0 };
-  const duzelt = (a) => a.map((x) => (x === undefined ? null : x));
+  const duzelt = (a) => a.map((x) => (x === undefined ? null : x instanceof ArrayBuffer ? new Uint8Array(x) : x));   // D1 BLOB için ArrayBuffer alır; node:sqlite TypedArray ister
   function hazirla(sql) {
     return {
       sql, p: [],
@@ -17,6 +17,10 @@ export function sahteD1() {
         if (/^\s*(select|with)/i.test(sql)) {
           const results = s.all(...this.p);
           return { results, meta: { rows_read: results.length, rows_written: 0, changes: 0 } };
+        }
+        if (/\breturning\b/i.test(sql)) {   // INSERT/UPDATE/DELETE ... RETURNING: D1'deki gibi satırlar döner
+          const results = s.all(...this.p);
+          return { results, meta: { rows_read: 0, rows_written: results.length, changes: results.length } };
         }
         const r = s.run(...this.p);
         const changes = Number(r.changes) || 0;

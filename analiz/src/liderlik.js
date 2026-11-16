@@ -54,6 +54,15 @@ export function adDogrula(ham) {
   return ad;
 }
 
+// İsteğe bağlı avatar: forum üyesinin hazır avatarı (anahtar:renk). Geçersiz biçim hata sayılmaz, yok sayılır (satır harfle gösterilir).
+const AV_ANAHTAR = /^[a-z0-9-]{1,24}$/, AV_RENK = /^[a-z-]{1,16}$/;
+export function avatarDogrula(v) {
+  let k, r;
+  if (typeof v === 'string') { const p = v.split(':'); if (p.length === 2) [k, r] = p; }
+  else if (v && typeof v === 'object' && !Array.isArray(v)) { k = v.k; r = v.r; }
+  return typeof k === 'string' && typeof r === 'string' && AV_ANAHTAR.test(k) && AV_RENK.test(r) ? k + ':' + r : null;
+}
+
 // Gönderimi doğrular ve yeniden puanlar. Hata varsa { hata } döner.
 export function sonucDogrula(g) {
   if (!g || typeof g !== 'object') return { hata: 'bicim' };
@@ -69,16 +78,16 @@ export function sonucDogrula(g) {
   const r = puanla(zincir(RESMI_METINLER, g.no, SURE), g.yazi, { sure: SURE, saniye: SURE });
   if (r.toplam < 10 || r.net < 1) return { hata: 'kisa' };
   if (r.dakikaVurus > MAKS_DK_VURUS || r.net > MAKS_NET) return { hata: 'supheli' };
-  return { ad, anahtar: g.anahtar, net: r.net, dogru: r.dogru, hatali: r.hatali, dk: r.dakikaVurus };
+  return { ad, anahtar: g.anahtar, net: r.net, dogru: r.dogru, hatali: r.hatali, dk: r.dakikaVurus, avatar: avatarDogrula(g.avatar) };
 }
 
 export async function tabloHesapla(env, simdiMs) {
   const hafta = haftaBasi(simdiMs);
-  const h = await env.DB.prepare('SELECT kimlik, ad, net, dk FROM liderlik WHERE hafta = ? ORDER BY net DESC, ts ASC LIMIT ?').bind(hafta, EN_COK).all();
+  const h = await env.DB.prepare('SELECT kimlik, ad, net, dk, avatar FROM liderlik WHERE hafta = ? ORDER BY net DESC, ts ASC LIMIT ?').bind(hafta, EN_COK).all();
   // Tüm zamanlar: kişi başına en iyi hafta (SQLite'ta MAX ile seçilen satırın diğer sütunları o satırdan gelir).
-  const t = await env.DB.prepare('SELECT kimlik, ad, MAX(net) AS net, dk FROM liderlik GROUP BY kimlik ORDER BY net DESC LIMIT ?').bind(EN_COK).all();
+  const t = await env.DB.prepare('SELECT kimlik, ad, MAX(net) AS net, dk, avatar FROM liderlik GROUP BY kimlik ORDER BY net DESC LIMIT ?').bind(EN_COK).all();
   okumaGunlugu('liderlik', h, t);
-  const satir = (r) => ({ i: r.kimlik, ad: r.ad, net: r.net, dk: r.dk });
+  const satir = (r) => (r.avatar ? { i: r.kimlik, ad: r.ad, net: r.net, dk: r.dk, av: r.avatar } : { i: r.kimlik, ad: r.ad, net: r.net, dk: r.dk });
   return { guncelleme: new Date(simdiMs).toISOString(), hafta, haftalik: (h.results || []).map(satir), tum: (t.results || []).map(satir) };
 }
 
@@ -114,14 +123,14 @@ export async function liderlikIstegi(request, env, simdiMs = Date.now()) {
   const hafta = haftaBasi(simdiMs);
   const kimlik = (await sha256Hex(s.anahtar)).slice(0, 16);
   await env.DB.prepare(
-    `INSERT INTO liderlik (hafta, kimlik, ad, net, dogru, hatali, dk, ts) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-     ON CONFLICT (hafta, kimlik) DO UPDATE SET ad = excluded.ad,
+    `INSERT INTO liderlik (hafta, kimlik, ad, net, dogru, hatali, dk, ts, avatar) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+     ON CONFLICT (hafta, kimlik) DO UPDATE SET ad = excluded.ad, avatar = excluded.avatar,
        dogru = CASE WHEN excluded.net > liderlik.net THEN excluded.dogru ELSE liderlik.dogru END,
        hatali = CASE WHEN excluded.net > liderlik.net THEN excluded.hatali ELSE liderlik.hatali END,
        dk = CASE WHEN excluded.net > liderlik.net THEN excluded.dk ELSE liderlik.dk END,
        ts = CASE WHEN excluded.net > liderlik.net THEN excluded.ts ELSE liderlik.ts END,
        net = MAX(liderlik.net, excluded.net)`,
-  ).bind(hafta, kimlik, s.ad, s.net, s.dogru, s.hatali, s.dk, simdiSn).run();
+  ).bind(hafta, kimlik, s.ad, s.net, s.dogru, s.hatali, s.dk, simdiSn, s.avatar).run();
   // Eklenen kişi tabloyu hemen görsün: önbellek yeniden üretilir ve yanıtla birlikte döner.
   const tablo = await tabloHesapla(env, simdiMs);
   await onbellegeYaz('liderlik', JSON.stringify(tablo), ONBELLEK_SN, simdiMs);

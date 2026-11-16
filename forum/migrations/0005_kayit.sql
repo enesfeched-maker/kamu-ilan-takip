@@ -35,3 +35,44 @@ CREATE TABLE IF NOT EXISTS eposta_gunluk (
   gun TEXT PRIMARY KEY,       -- UTC gun (YYYY-AA-GG); Brevo ucretsiz plan: gunde 300, biz 280'de durdururuz
   n INTEGER DEFAULT 0
 );
+CREATE TABLE IF NOT EXISTS eposta_sayac (
+  tur TEXT,                   -- gonder_ip | eposta_adres | dogrula_ip | hata_hedef (atomik sayaclar, src/eposta.js)
+  anahtar TEXT,
+  dilim INTEGER,              -- zaman dilimi numarasi (gun / saat / 15 dk)
+  n INTEGER DEFAULT 0,
+  olusma INTEGER,
+  PRIMARY KEY (tur, anahtar, dilim)
+);
+CREATE INDEX IF NOT EXISTS eposta_sayac_olusma ON eposta_sayac(olusma);
+CREATE TABLE IF NOT EXISTS ayrilmis_rumuzlar (
+  kat TEXT PRIMARY KEY,       -- silinen hesabin rumuz_kat degeri; 180 gun baskasi alamaz
+  bitis INTEGER
+);
+-- Profil karti (avatar, fotograf, hakkimda, hedef, durum, kart rengi, gizlilik), hesaba bagli katiplik verisi ve basvurdum isaretleri.
+ALTER TABLE uyeler ADD COLUMN avatar TEXT;          -- "<avatar-anahtari>:<renk-anahtari>" ya da 'foto'; bos = rumuzdan turetilen varsayilan hayvan
+ALTER TABLE uyeler ADD COLUMN foto_surum INTEGER;   -- yuklenen fotografin surumu (unix sn); bos = fotograf yok. /foto/:id?v=<surum>
+ALTER TABLE uyeler ADD COLUMN foto_gun INTEGER;     -- fotograf yukleme sayaci: UTC gun numarasi
+ALTER TABLE uyeler ADD COLUMN foto_sayi INTEGER;    -- o gun yapilan yukleme sayisi (gunde en cok 3)
+ALTER TABLE uyeler ADD COLUMN foto_yasak INTEGER;   -- yonetici fotografi kaldirinca 1: yeni fotograf yuklenemez
+ALTER TABLE uyeler ADD COLUMN kart TEXT;            -- profil karti JSON: hakkimda, hedef, durum, kart_rengi, gizlilik (varsayilanlar yazilmaz)
+ALTER TABLE uyeler ADD COLUMN basvurular TEXT;      -- sitedeki fr-basvuru: "basvurdum" dedigi ilan kimlikleri (JSON dizi, en cok 300)
+CREATE TABLE IF NOT EXISTS fotolar (
+  uye_id INTEGER PRIMARY KEY,
+  veri BLOB,                  -- 160x160 WebP/JPEG/PNG, en cok 24 KB (sunucu sihirli baytlari kontrol eder)
+  tur TEXT,                   -- image/webp | image/jpeg | image/png
+  surum INTEGER,
+  guncelleme INTEGER
+);
+CREATE TABLE IF NOT EXISTS foto_bildirimleri (
+  uye_id INTEGER,             -- fotografi bildirilen uye
+  bildiren INTEGER,
+  surum INTEGER,              -- bildirilen fotografin surumu; yeni fotograf yuklenince eski bildirimler listede gorunmez
+  olusma INTEGER,
+  PRIMARY KEY (uye_id, bildiren)
+);
+CREATE TABLE IF NOT EXISTS uye_katip (
+  uye_id INTEGER PRIMARY KEY,
+  veri TEXT,                  -- kit-katip + ders/oyun/antrenman ilerlemesi (JSON, en cok 32 KB)
+  ozet TEXT,                  -- karta konan ozet (JSON): en iyi net, net/dk, ders sayisi, seri, rozetler
+  guncelleme INTEGER
+);

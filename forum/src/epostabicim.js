@@ -19,6 +19,23 @@ export function epostaNormalle(ham) {
   return s;
 }
 
+const GMAIL = new Set(['gmail.com', 'googlemail.com']);
+export const gmailMi = (eposta) => typeof eposta === 'string' && GMAIL.has(eposta.slice(eposta.lastIndexOf('@') + 1));
+
+// Aynı posta kutusuna giden adres biçimleri tek anahtara iner (yalnız kod ve sayaç anahtarları için; üyede saklanan adres değişmez).
+// gmail.com / googlemail.com: noktalar ve +ek atılır, googlemail -> gmail.
+export function epostaTekil(eposta) {
+  const i = eposta.lastIndexOf('@');
+  let yerel = eposta.slice(0, i); let alan = eposta.slice(i + 1);
+  if (GMAIL.has(alan)) { yerel = yerel.split('+')[0].replace(/\./g, ''); alan = 'gmail.com'; }
+  return `${yerel}@${alan}`;
+}
+// Hız sınırı sayaçları için: tekil biçim + tüm alan adlarında +ek atılır (a+1@x.com ile a+2@x.com tek sayaç).
+export function epostaSayacAdresi(eposta) {
+  const t = epostaTekil(eposta); const i = t.lastIndexOf('@');
+  return `${t.slice(0, i).split('+')[0]}${t.slice(i)}`;
+}
+
 // a***@gmail.com biçimi (adresin tamamı hiçbir yanıtta dönmez).
 export function epostaMaskele(eposta) {
   if (typeof eposta !== 'string') return null;

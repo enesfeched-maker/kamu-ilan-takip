@@ -57,3 +57,10 @@ export const hataYanit = (durum, mesaj, ek = {}) => jsonYanit({ hata: mesaj, ...
 
 export const ILAN_KIMLIK_DESENI = /^(?:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|(?:sbb|iskur)-[a-f0-9]{24}|csb-\d{4,9})$/i;
 export const gecerliIlanKimligi = (k) => typeof k === 'string' && ILAN_KIMLIK_DESENI.test(k);
+// Yazar çıktılarına eklenen en küçük avatar bilgisi: av = "anahtar:renk" ya da 'foto', fs = fotoğraf sürümü, fu = fotoğrafın üye kimliği. Satırda yoksa hiçbir şey eklenmez.
+export const avCikti = (r, id) => {
+  const o = {};
+  if (r && r.avatar) o.av = r.avatar;
+  if (r && r.foto_surum) { o.fs = r.foto_surum; const f = r.fu ?? id; if (f) o.fu = f; }   // fu: fotoğraf adresi için üye kimliği (yalnız fotoğrafı olanlarda)
+  return o;
+};

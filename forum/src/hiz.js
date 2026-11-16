@@ -40,8 +40,7 @@ export const GIRIS_IP_SINIRI = { tur: 'giris_ip', en_cok: 10, pencere: 900 };
 export const GIRIS_RUMUZ_IP_SINIRI = { tur: 'giris_rumuz_ip', en_cok: 10, pencere: 900 };   // rumuz + IP: başkasının rumuzunu kilitlemeyi zorlaştırır
 export const GIRIS_RUMUZ_SINIRI = { tur: 'giris_rumuz', en_cok: 50, pencere: 900 };         // yalnız rumuz: dağıtık saldırı için çok yüksek eşik
 // E-posta kodu gönderimi (src/eposta.js). Sınıra ulaşan istekler yazma yapmaz; gönderimler sayılır.
-export const EPOSTA_IP_SINIRI = { tur: 'eposta_ip', en_cok: 10, pencere: 3600 };          // IP başına saatte 10 kod isteği
-export const EPOSTA_ADRES_SINIRI = { tur: 'eposta_adres', en_cok: 5, pencere: 3600 };      // adres başına saatte 5 kod
+// (IP başına günlük gönderim, adres başına saatlik gönderim ve yanlış kod sayaçları atomik eposta_sayac tablosundadır: src/eposta.js)
 export const SIFIRLA_SAAT_SINIRI = { tur: 'sifirla_istek', en_cok: 5, pencere: 3600 };     // şifre sıfırlama isteği (rumuz ya da adres) başına saatte 5
 export const SIFIRLA_BEKLEME = { tur: 'sifirla_istek', en_cok: 1, pencere: 60 };           // ... ve en çok dakikada 1 (aynı tür; hesap var olsa da olmasa da aynı davranır)
 const TEMIZLIK_OMRU = 3600;   // en uzun pencere
@@ -63,6 +62,13 @@ export function ipOnEki(ip) {
 export async function ipAnahtari(request) {
   const onEk = ipOnEki(request.headers.get('CF-Connecting-IP'));
   const ozet = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`ip:${onEk}`));
+  return [...new Uint8Array(ozet).slice(0, 8)].map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+// Günlük e-posta gönderim sayacı için daha geniş kova: IPv4 /24, IPv6 /64 (ipOnEki zaten /64 verir).
+export async function ipGunAnahtari(request) {
+  let onEk = ipOnEki(request.headers.get('CF-Connecting-IP'));
+  if (onEk.startsWith('v4:')) onEk = `v4:${onEk.slice(3).split('.').slice(0, 3).join('.')}.0/24`;
+  const ozet = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`ipgun:${onEk}`));
   return [...new Uint8Array(ozet).slice(0, 8)].map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 export async function denemeSinirda(env, sinir, anahtar, simdi) {
