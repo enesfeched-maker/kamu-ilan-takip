@@ -227,7 +227,7 @@ def yayina_hazir(item, veri=None, simdi=None):
     if _yayina_girmez(k):
         return True, ''
     if yz.get('okunabilirlik') == 'kotu':
-        return (True, '') if _bekleme_doldu(item, simdi) else (False, 'Gemini belgeyi okuyamadı; en çok 1 saat beklenir')
+        return (True, '') if _bekleme_doldu(item, simdi) else (False, 'yapay zekâ belgeyi okuyamadı; en çok 4 saat beklenir')
     if yz.get('akademik'):
         return False, 'Gemini akademik ilan dedi'
     if iptal_mi(item, veri):

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sosyal Panel · KPSS Tercihi</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%232b59c3'/%3E%3Cpath d='M4 11V7M8 11V4M12 11V8' stroke='white' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="stil.css">
+<script>
+  try { const t = localStorage.getItem('tema'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+</head>
+<body>
+<div id="ornek-seridi" hidden>Örnek veri — geliştirme modu. Bu sayılar gerçek değil.</div>
+<header class="ust">
+  <div class="marka"><span class="logo" aria-hidden="true"></span>KPSS Tercihi <span class="soluk">/ sosyal</span></div>
+  <nav class="sekmeler" role="tablist">
+    <button data-gorunum="akis" class="secili" role="tab">Akış</button>
+    <button data-gorunum="analiz" role="tab">Analiz</button>
+  </nav>
+  <div class="donem" role="group" aria-label="Dönem">
+    <button data-gun="7">7 gün</button>
+    <button data-gun="30" class="secili">30 gün</button>
+    <button data-gun="90">90 gün</button>
+    <button data-gun="">Tümü</button>
+  </div>
+  <input id="ara" type="search" placeholder="Ara…  /" autocomplete="off">
+  <div class="sag">
+    <span id="toplama-durumu" class="soluk"></span>
+    <button id="yenile" title="Verileri şimdi topla (r)">Yenile</button>
+    <button id="tema" title="Tema (t)" aria-label="Temayı değiştir"></button>
+    <button id="yardim-ac" title="Kısayollar (?)" aria-label="Kısayollar">?</button>
+  </div>
+</header>
+
+<div class="govde">
+  <aside class="kenar">
+    <div class="kenar-baslik">Platformlar</div>
+    <ul id="platformlar" class="liste"></ul>
+    <div class="kenar-baslik">Şablon</div>
+    <ul id="sablonlar" class="liste"></ul>
+    <div class="kenar-baslik">Kaynaklar</div>
+    <ul id="kaynaklar" class="kaynak-liste"></ul>
+  </aside>
+
+  <main id="akis" class="akis">
+    <div class="tablo-kap">
+      <table class="tablo" id="tablo">
+        <thead>
+          <tr>
+            <th data-sirala="yayin" class="t-tarih">Tarih</th>
+            <th class="t-platform">Platform</th>
+            <th data-sirala="baslik">Paylaşım</th>
+            <th data-sirala="deger" class="sayi">İzlenme</th>
+            <th data-sirala="degisim_24s" class="sayi">24 sa</th>
+            <th data-sirala="etkilesim_orani" class="sayi">Etkileşim</th>
+            <th data-sirala="puan" class="t-puan">Puan</th>
+          </tr>
+        </thead>
+        <tbody id="satirlar"></tbody>
+      </table>
+      <div id="bos" class="bos" hidden></div>
+    </div>
+    <section id="ayrinti" class="ayrinti" aria-live="polite"></section>
+  </main>
+
+  <main id="analiz" class="analiz" hidden></main>
+</div>
+
+<dialog id="yardim">
+  <h2>Kısayollar</h2>
+  <dl class="kisayol">
+    <dt><kbd>j</kbd> <kbd>k</kbd></dt><dd>Sonraki / önceki paylaşım</dd>
+    <dt><kbd>Enter</kbd> <kbd>o</kbd></dt><dd>Paylaşımı platformda aç</dd>
+    <dt><kbd>/</kbd></dt><dd>Ara</dd>
+    <dt><kbd>0</kbd>–<kbd>6</kbd></dt><dd>Platform süzgeci (0 = tümü)</dd>
+    <dt><kbd>a</kbd></dt><dd>Akış ↔ Analiz</dd>
+    <dt><kbd>r</kbd></dt><dd>Verileri yenile</dd>
+    <dt><kbd>t</kbd></dt><dd>Açık / koyu tema</dd>
+    <dt><kbd>Esc</kbd></dt><dd>Aramayı ve süzgeçleri temizle</dd>
+  </dl>
+  <form method="dialog"><button>Kapat</button></form>
+</dialog>
+<script src="uygulama.js"></script>
+</body>
+</html>
