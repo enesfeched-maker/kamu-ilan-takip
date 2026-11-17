@@ -37,6 +37,13 @@ h2.bolum{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(
 .izgara.genis{grid-template-columns:repeat(auto-fit,minmax(520px,1fr))}
 @media (max-width:600px){.izgara,.izgara.genis{grid-template-columns:1fr}}
 .kart{padding:14px 16px 16px;min-width:0}
+.uye-ara{width:100%;max-width:320px;padding:8px 10px;border:1px solid var(--cizgi);border-radius:8px;background:transparent;color:inherit;font:inherit;margin-bottom:10px}
+.uye-tablo{overflow-x:auto;max-height:520px;overflow-y:auto}
+.uye-tablo table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+.uye-tablo th{position:sticky;top:0;background:var(--kart);text-align:left;font-weight:600;color:var(--soluk);font-size:12px;cursor:pointer;white-space:nowrap}
+.uye-tablo th,.uye-tablo td{padding:7px 8px;border-bottom:1px solid var(--cizgi);white-space:nowrap}
+.uye-tablo td.sayi,.uye-tablo th.sayi{text-align:right}
+.uye-tablo a{color:inherit;font-weight:600}
 .kart h3{margin:0 0 10px;font-size:15px;font-weight:600}
 .kart h3 small{font-weight:400;color:var(--soluk);margin-left:6px;font-size:12.5px}
 .not{color:var(--soluk);font-size:13px;margin:8px 0 0}
@@ -210,6 +217,35 @@ function saatGrafik(kap,saat){
   kap.appendChild(s);
   kap.appendChild(h('p','not','Türkiye saati. En yoğun: '+iki(enS)+':00–'+iki((enS+1)%24)+':00 ('+tr(en)+' yazı).'))
 }
+// Tüm üyeler: rumuz araması ve sütuna tıklayınca sıralama. Rumuz forumdaki herkese açık profile bağlanır.
+function uyeTablosu(kok,liste,toplam){
+  var g=bolum(kok,'Tüm üyeler');g.className='izgara genis';
+  var c=kart(g,'Üye listesi',tr(liste.length)+(toplam>liste.length?' / '+tr(toplam)+' (en yeni '+tr(liste.length)+')':' üye'));
+  if(!liste.length){bosKart(c,'Henüz üye yok.');return}
+  var ara=h('input','uye-ara');ara.type='search';ara.placeholder='Rumuz ara';ara.setAttribute('aria-label','Rumuz ara');c.appendChild(ara);
+  var kap=h('div','uye-tablo'),tb=h('table'),bas=h('thead'),gv=h('tbody');tb.appendChild(bas);tb.appendChild(gv);kap.appendChild(tb);c.appendChild(kap);
+  var tarih=function(sn){return sn?new Date(sn*1000).toLocaleDateString('tr-TR',{timeZone:'Europe/Istanbul',day:'numeric',month:'short',year:'2-digit'}):'—'};
+  var once=function(sn){if(!sn)return 'hiç yazmadı';var d=Math.floor((Date.now()/1000-sn)/86400);return d<=0?'bugün':d===1?'dün':tr(d)+' gün önce'};
+  var sut=[['rumuz','Rumuz'],['kayit','Katıldı'],['son','Son yazı'],['yol','Giriş'],['soru','Soru',1],['cevap','Cevap',1],['sohbet','Sohbet',1],['itibar','İtibar',1]];
+  var sira={k:'kayit',ters:true},tr1=h('tr');
+  sut.forEach(function(s){var th=h('th',s[2]?'sayi':null,s[1]);th.setAttribute('scope','col');th.onclick=function(){sira.ters=sira.k===s[0]?!sira.ters:s[0]!=='rumuz';sira.k=s[0];ciz()};tr1.appendChild(th)});
+  bas.appendChild(tr1);
+  function ciz(){
+    var q=ara.value.trim().toLocaleLowerCase('tr');
+    var l=liste.filter(function(u){return !q||String(u.rumuz).toLocaleLowerCase('tr').indexOf(q)>=0});
+    l.sort(function(a,b){var x=a[sira.k],y=b[sira.k];if(sira.k==='yol'){x=x.join(',');y=y.join(',')}
+      var r=typeof x==='string'?x.localeCompare(y,'tr'):(x||0)-(y||0);return sira.ters?-r:r});
+    gv.replaceChildren();
+    l.forEach(function(u){
+      var tr2=h('tr'),td=h('td'),a=h('a',null,u.rumuz);a.href='https://kpsstercihi.com/forum/?uye='+encodeURIComponent(u.rumuz);a.target='_blank';a.rel='noopener';td.appendChild(a);
+      if(u.kurucu)td.appendChild(h('span','rozet','kurucu'));if(u.engelli)td.appendChild(h('span','rozet','engelli'));tr2.appendChild(td);
+      tr2.appendChild(h('td',null,tarih(u.kayit)));tr2.appendChild(h('td',null,once(u.son)));tr2.appendChild(h('td',null,u.yol.join(', ')||'—'));
+      ['soru','cevap','sohbet','itibar'].forEach(function(k){tr2.appendChild(h('td','sayi',tr(u[k])))});
+      gv.appendChild(tr2)});
+    if(!l.length){var b=h('tr'),t=h('td',null,'Eşleşen rumuz yok.');t.colSpan=sut.length;b.appendChild(t);gv.appendChild(b)}
+  }
+  ara.oninput=ciz;ciz();
+}
 function forumCiz(F){
   var kok=$('forum-icerik');kok.replaceChildren();
   if(!F||F.durum!=='tamam'){var d=F&&F.durum;kok.appendChild(h('p',d==='anahtar_yok'?'bos':'bos hata-mesaj',FORUM_DURUM[d]||FORUM_DURUM.hata));return}
@@ -262,6 +298,8 @@ function forumCiz(F){
   c.appendChild(h('p','not','Bu dönemde katılan '+tr(Hn.yeni)+' üyeden '+tr(Hn.yeni_yazan)+' tanesi yazı yazdı.'));
   c=kart(g,'Giriş yöntemi','bir üyede birden çok olabilir');cubuklar(c,[{ad:'Google',v:U.yontem.google},{ad:'E-posta',v:U.yontem.eposta},{ad:'Telegram',v:U.yontem.telegram},{ad:'Rumuz + şifre',v:U.yontem.sifre}],{bos:'Üye yok.'});
   c.appendChild(h('p','not',tr(U.kurucu)+' kurucu · '+tr(U.fotolu)+' fotoğraflı · '+tr(U.kartli)+' profil kartı dolu · '+tr(U.silinen)+' silinen hesap.'));
+
+  uyeTablosu(kok,V.uye_listesi||[],U.toplam);
 
   g=bolum(kok,'Etkileşim ve denetim');
   c=kart(g,'Etkileşim','tüm zamanlar');kutular(c,[['Faydalı (cevap)',E.yanit_oy],['Faydalı (soru)',E.baslik_oy],['Anket',E.anket],['Anket oyu',E.anket_oy],['Takip',E.takip]]);

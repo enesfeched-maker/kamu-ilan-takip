@@ -126,6 +126,12 @@ test('/yonetim/analiz: gizli alan sızmaz (e-posta, kimlik, DM metni, yönetici 
       assert.ok(!metin.includes(yasak), `${yasak} sızdı (gun=${gun})`);
     }
     for (const k of r.json.katkilar) assert.deepEqual(Object.keys(k).sort(), ['cevap', 'itibar', 'kurucu', 'rumuz', 'sohbet', 'soru']);
+    // üye listesi: yalnız rumuz, tarihler, giriş yolu adları ve sayılar
+    assert.ok(Array.isArray(r.json.uye_listesi) && r.json.uye_listesi.length > 0);
+    for (const u of r.json.uye_listesi) {
+      assert.deepEqual(Object.keys(u).sort(), ['cevap', 'engelli', 'itibar', 'kayit', 'kurucu', 'rumuz', 'sohbet', 'son', 'soru', 'yol']);
+      assert.ok(u.yol.every((y) => ['Google', 'E-posta', 'Telegram'].includes(y)));
+    }
   }
 });
 
