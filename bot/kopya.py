@@ -104,6 +104,15 @@ TAMAMLANAN_ALANLAR = ('kadro', 'sartlar', 'ozet', 'ogrenim', 'belge_ogrenim', 'p
                       'baslangic_zaman', 'basvuru_notu', 'yer', 'iller', 'ilan_turu', 'kpss', 'kadro_detay', 'kadro_ortak', 'kurum_logo')
 
 
+YZ_ALANLARI = ('yz_kadrolar', 'yz_ortak', 'basvuru_kisa_sartlar', 'basvuru_puani_belirtilmemis')
+SBB_YER_TUTUCU = 'şartlar aşağıdaki ilan belgesinde yer alıyor'
+
+
+def _ozet_bos(ozet):
+    """SBB'nin koşul bulunamayınca yazdığı yer tutucu özet ('… Özel şartlar aşağıdaki ilan belgesinde yer alıyor.') ya da boş."""
+    return not ozet or SBB_YER_TUTUCU in str(ozet)
+
+
 def kaynak_turu(item):
     t = item.get('kaynak_turu')
     if t in ('sbb', 'csb', 'iskur'):
@@ -139,8 +148,16 @@ def birlestir(ilanlar, kopyalar):
                 for alan in TAMAMLANAN_ALANLAR:
                     if alan in ('son_zaman', 'baslangic_zaman') and m.get('son_tarih') != yeni.get('son_tarih'):
                         continue   # saat/başlangıç ancak aynı son güne ait kayıttan alınır
+                    if alan == 'ozet' and _ozet_bos(yeni.get('ozet')) and m.get(alan) and not _ozet_bos(m.get(alan)):
+                        yeni[alan] = m[alan]   # SBB'nin 'özel şartlar belgede' yer tutucusu gerçek özetin önüne geçmesin
+                        continue
                     if not yeni.get(alan) and m.get(alan):
                         yeni[alan] = m[alan]
+                # Yapay zekâ okumaları (kadrolar, ortak şartlar, kısa şart anahtarları) bir bütündür: esas kayıtta hiçbiri yoksa birlikte alınır
+                if not any(yeni.get(a) for a in YZ_ALANLARI) and any(m.get(a) for a in YZ_ALANLARI):
+                    for a in YZ_ALANLARI:
+                        if m.get(a) is not None and a not in yeni:
+                            yeni[a] = m[a]
             i = yeni
         sonuc.append(i)
     return sonuc

@@ -429,6 +429,48 @@ class SayfaKopyaTests(unittest.TestCase):
         self.assertEqual({m['kurum_sayisi'] for m in meta.values()}, {1})
 
 
+class KosulTasimaTests(unittest.TestCase):
+    """Gerçek veri (18 Kasım 2026): SBB esas kayıt + Kariyer Kapısı/İŞKUR kopyası; koşullar kopyada, esas kayıtta eksik ya da yer tutucu."""
+    SBB = 'sbb-' + 'a' * 24
+    KK = 'https://kariyerkapisi.gov.tr/IlanDetay?i=f7ee3ab4-6c25-48f1-8a78-588066e3cf52'
+
+    def kay(self, sbb, kk):
+        sbb = {'id': self.SBB, 'kaynak_turu': 'sbb', 'kadro': '1 ALACAK', 'son_tarih': '2026-11-11', **sbb}
+        kk = {'id': self.KK, 'link': self.KK, 'kadro': '1 SÖZLEŞMELİ BİLİŞİM PERSONELİ', 'son_tarih': '2026-11-11', **kk}
+        return sbb, kk, kopya.birlestir([sbb, kk], {'uyeler': {self.SBB: [sbb, kk]}})[0]
+
+    def test_sbb_yer_tutucu_ozeti_kopyanin_gercek_ozetiyle_degisir(self):
+        sbb, kk, y = self.kay(
+            {'ozet': '1 alımı. Son başvuru: 11.11.2026. Özel şartlar aşağıdaki ilan belgesinde yer alıyor.'},
+            {'ozet': 'Bilgi İşlem Dairesi Başkanlığı bünyesinde sözleşmeli bilişim personeli alınacaktır.',
+             'sartlar': [{'kadro': 'Sistem Yöneticisi', 'metin': 'Linux bilgisi.'}]})
+        self.assertEqual(y['ozet'], kk['ozet'])
+        self.assertEqual(y['sartlar'], kk['sartlar'])
+        self.assertIn('Özel şartlar aşağıdaki', sbb['ozet'])   # girdi değişmez
+
+    def test_esas_kaydin_gercek_ozeti_ezilmez(self):
+        _, _, y = self.kay({'ozet': 'Gerçek özet.'}, {'ozet': 'Başka özet.'})
+        self.assertEqual(y['ozet'], 'Gerçek özet.')
+
+    def test_yer_tutucu_kopyada_da_varsa_degismez(self):
+        yer = 'X alımı. Özel şartlar aşağıdaki ilan belgesinde yer alıyor.'
+        _, _, y = self.kay({'ozet': yer}, {'ozet': 'Y alımı. Özel şartlar aşağıdaki ilan belgesinde yer alıyor.'})
+        self.assertEqual(y['ozet'], yer)
+
+    def test_yz_okumalari_bir_butun_olarak_tasinir(self):
+        yz = {'yz_kadrolar': [{'unvan': 'Sistem Yöneticisi', 'adet': 1}], 'yz_ortak': ['KPSS P3 en az 70 puan.'],
+              'basvuru_kisa_sartlar': ['B sınıfı ehliyet'], 'basvuru_puani_belirtilmemis': True}
+        _, _, y = self.kay({}, yz)
+        for alan, deger in yz.items():
+            self.assertEqual(y[alan], deger)
+
+    def test_esas_kayitta_yz_okumasi_varsa_kopyanin_okumasi_karismaz(self):
+        _, _, y = self.kay({'yz_ortak': ['Esas.']}, {'yz_ortak': ['Kopya.'], 'yz_kadrolar': [{'unvan': 'X', 'adet': 1}], 'basvuru_kisa_sartlar': ['Z']})
+        self.assertEqual(y['yz_ortak'], ['Esas.'])
+        self.assertNotIn('yz_kadrolar', y)
+        self.assertNotIn('basvuru_kisa_sartlar', y)
+
+
 class YerMetniTests(unittest.TestCase):
     def y(self, yer, **ek):
         return ks.yer_metni({'yer': yer, **ek})
