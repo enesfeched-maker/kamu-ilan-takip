@@ -5,7 +5,9 @@ import os
 import sys
 import threading
 import time
+import traceback
 import urllib.parse
+from datetime import datetime
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
@@ -107,24 +109,73 @@ def calistir(port=8765, ornek=False, tarayici=True, topla=True, veri=None):
     if sys.stdout is None or sys.stderr is None:   # pythonw (penceresiz): çıktılar günlük dosyasına
         gunluk = open(klasor / 'panel.log', 'a', encoding='utf-8', buffering=1)
         sys.stdout = sys.stderr = gunluk
-    depo = Depo(klasor / ('ornek.db' if ornek else 'panel.db'))
-    if ornek and not depo.gonderiler():
-        from .ornek import doldur
-        doldur(depo)
-    uyg = Uygulama(depo, ornek=ornek, topla=topla)
-    sunucu = ThreadingHTTPServer(('127.0.0.1', port), isleyici(uyg))
-    adres = f'http://127.0.0.1:{port}/'
-    if topla and not ornek:
-        def dongu():
-            while True:
-                hepsini_topla(depo)
-                time.sleep(OTOMATIK_ARALIK)
-        threading.Thread(target=dongu, daemon=True).start()
-    if tarayici:
-        import webbrowser
-        threading.Timer(0.6, lambda: webbrowser.open(adres)).start()
-    print(f'Sosyal panel: {adres}  (veri: {depo.yol})')
+    gunluk_dosyasi = klasor / 'panel.log'
+    hata_kancalari_kur(gunluk_dosyasi)
     try:
+        depo = Depo(klasor / ('ornek.db' if ornek else 'panel.db'))
+        if ornek and not depo.gonderiler():
+            from .ornek import doldur
+            doldur(depo)
+        uyg = Uygulama(depo, ornek=ornek, topla=topla)
+        sunucu = DayanikliSunucu(('127.0.0.1', port), isleyici(uyg))
+        sunucu.gunluk_dosyasi = gunluk_dosyasi
+        adres = f'http://127.0.0.1:{port}/'
+        if topla and not ornek:
+            threading.Thread(target=lambda: toplama_dongusu(depo, gunluk_dosyasi), daemon=True).start()
+        if tarayici:
+            import webbrowser
+            threading.Timer(0.6, lambda: webbrowser.open(adres)).start()
+        print(f'Sosyal panel: {adres}  (veri: {depo.yol})')
         sunucu.serve_forever()
     except KeyboardInterrupt:
         pass
+    except BaseException:   # sessizce kapanmasın: neden panel.log'a yazılır, sonra çıkış sürer
+        gunluge_yaz(gunluk_dosyasi, 'Sunucu beklenmeyen hatayla kapanıyor', traceback.format_exc())
+        raise
+
+
+def gunluge_yaz(dosya, baslik, ayrinti=''):
+    """panel.log'a zaman damgalı satır ekler; kendisi asla hata fırlatmaz."""
+    try:
+        with open(dosya, 'a', encoding='utf-8') as f:
+            f.write(f"[{datetime.now().isoformat(timespec='seconds')}] {baslik}\n{ayrinti}")
+            if ayrinti and not ayrinti.endswith('\n'):
+                f.write('\n')
+    except OSError:
+        pass
+
+
+def hata_kancalari_kur(dosya):
+    """Yakalanmamış istisnalar (ana iş parçacığı ve diğer iş parçacıkları) panel.log'a düşer."""
+    def ana(tur, deger, iz):
+        gunluge_yaz(dosya, f'Yakalanmamış hata: {tur.__name__}', ''.join(traceback.format_exception(tur, deger, iz)))
+
+    def parca(a):
+        if a.exc_type is SystemExit:
+            return
+        gunluge_yaz(dosya, f'Yakalanmamış hata (iş parçacığı {getattr(a.thread, "name", "?")}): {a.exc_type.__name__}',
+                    ''.join(traceback.format_exception(a.exc_type, a.exc_value, a.exc_traceback)))
+    sys.excepthook = ana
+    threading.excepthook = parca
+
+
+def toplama_dongusu(depo, dosya, aralik=None, tur=None):
+    """Saatlik toplayıcı: hiçbir hata döngüyü (ve sunucuyu) öldürmez."""
+    sayac = 0
+    while tur is None or sayac < tur:
+        sayac += 1
+        try:
+            hepsini_topla(depo)
+        except BaseException:   # SystemExit/KeyboardInterrupt dahil: bu iş parçacığı sunucuyu düşüremez
+            gunluge_yaz(dosya, 'Otomatik toplama hatası (döngü sürüyor)', traceback.format_exc())
+        time.sleep(OTOMATIK_ARALIK if aralik is None else aralik)
+
+
+class DayanikliSunucu(ThreadingHTTPServer):
+    gunluk_dosyasi = None
+
+    def handle_error(self, request, client_address):
+        if self.gunluk_dosyasi:
+            gunluge_yaz(self.gunluk_dosyasi, f'İstek hatası ({client_address[0]})', traceback.format_exc())
+        else:
+            super().handle_error(request, client_address)

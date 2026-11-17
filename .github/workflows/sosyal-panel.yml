@@ -37,6 +37,8 @@ jobs:
           YT_ISTEMCI_SIRRI: ${{ secrets.YT_ISTEMCI_SIRRI }}
           YT_YENILEME_ANAHTARI: ${{ secrets.YT_YENILEME_ANAHTARI }}
           BUFFER_API_ANAHTARI: ${{ secrets.BUFFER_API_ANAHTARI }}
+          FB_SAYFA_ID: ${{ vars.FB_SAYFA_ID }}
+          FB_ERISIM_ANAHTARI: ${{ secrets.FB_ERISIM_ANAHTARI }}
           PANEL_BUFFER: ${{ github.event_name == 'workflow_dispatch' || github.event.schedule == '17 6 * * *' }}
         run: cd bot && python sosyal_panel_topla.py ../panel-veri.json
       - uses: actions/upload-artifact@v4

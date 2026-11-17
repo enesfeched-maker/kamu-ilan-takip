@@ -44,7 +44,7 @@ def _topla(depo, bulut_tetikle, gh_anahtari):
 
     # 2) Bulut eseri: Instagram insights + YouTube API + Buffer
     bulut, hata = _dene(depo, 'bulut', lambda: k.bulut_indir(anahtar), gunluk)
-    ig_durum = None
+    ig_durum = tt_durum = fb_durum = None
     if bulut:
         veri, eser_zamani = bulut
         sonuc = k.bulut_isle(depo, veri)
@@ -56,6 +56,7 @@ def _topla(depo, bulut_tetikle, gh_anahtari):
         d, a, n = sonuc['buffer']
         if d != 'atlandi':
             depo.durum_yaz('buffer', d, a, n)
+        tt_durum, fb_durum = sonuc.get('tiktok'), sonuc.get('facebook')
         if bulut_tetikle and (yas is None or yas > 2):
             _dene(depo, 'bulut-tetikle', lambda: k.bulut_tetikle(anahtar), gunluk)
     else:
@@ -82,9 +83,16 @@ def _topla(depo, bulut_tetikle, gh_anahtari):
         neden = (ig_durum[1] if ig_durum else depo.db.execute("SELECT aciklama FROM kaynak_durum WHERE kaynak='bulut'").fetchone()['aciklama'])
         depo.durum_yaz('instagram', 'kismi', f'Yalnız bot Reels ölçümleri (gecmis.json). Bulut verisi yok: {neden}')
     tt_link = depo.db.execute("SELECT COUNT(*) n FROM gonderi WHERE platform='tiktok' AND url NOT LIKE '%/@kpsstercihi'").fetchone()['n']
-    depo.durum_yaz('tiktok', 'bekliyor', 'Ölçüm için TikTok Display API anahtarı (video.list izni) bekleniyor; paylaşımlar Buffer kayıtlarından listeleniyor'
-                   + ('' if tt_link else ', bağlantılar Buffer verisi gelince açılır'))
-    depo.durum_yaz('facebook', 'bekliyor', 'Ölçüm okunmuyor (Facebook sayfa insights anahtarı bekleniyor); bağlantılar açılır')
+    if tt_durum:
+        depo.durum_yaz('tiktok', *tt_durum)
+    elif not depo.db.execute("SELECT 1 FROM kaynak_durum WHERE kaynak='tiktok'").fetchone():
+        # Buffer bu çalışmada sorulmadıysa (günde bir kez sorulur) önceki TikTok durumu korunur.
+        depo.durum_yaz('tiktok', 'bekliyor', 'Ölçüm Buffer metrics ile okunur (günde bir kez); henüz Buffer verisi gelmedi'
+                       + ('' if tt_link else ', bağlantılar da Buffer verisi gelince açılır'))
+    if fb_durum:
+        depo.durum_yaz('facebook', *fb_durum)
+    else:
+        depo.durum_yaz('facebook', 'bekliyor', 'Bulut verisi yok: Facebook ölçümü bulut toplayıcıdan gelir; bağlantılar bot geçmişinden')
     depo.durum_yaz('x', 'kapali', 'X hesabı bağlı değil (X API ücretli; karar bekleniyor)')
     depo.ayar_yaz('toplama', {'basladi': depo.ayar('toplama')['basladi'],
                               'bitti': datetime.now(timezone.utc).isoformat(timespec='seconds'), 'gunluk': gunluk})

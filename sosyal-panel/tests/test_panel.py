@@ -175,6 +175,53 @@ class KaynakIslemeTesti(unittest.TestCase):
         self.assertEqual(g['instagram:333']['son']['likes'], 4)
         self.assertEqual(g['tiktok:bf1']['url'], 'https://www.tiktok.com/@kpsstercihi/video/1')
 
+    def test_facebook_ve_tiktok_olcumleri(self):
+        k.gecmis_isle(self.d, [{'zaman': '2026-11-10T12:30:00+03:00', 'vakit': 'sabah', 'tur': 'son_gun',
+                                'tt_id': 'bf1', 'fb_id': '777'}])
+        veri = {'zaman': '2026-11-15T10:00:00+00:00',
+                'facebook': {'durum': 'hazir', 'aciklama': '2 reel', 'reels': [
+                    {'id': '777', 'description': 'Son gün yaklaşan ilanlar', 'created_time': '2026-11-10T09:31:00+0000',
+                     'permalink_url': 'https://www.facebook.com/reel/777', 'picture': 'https://cdn/p.jpg',
+                     'insights': {'views': 410, 'reach': 300, 'likes': 12, 'comments': 2, 'shares': 3, 'avg_watch_ms': 5100}},
+                    {'id': '888', 'description': 'x', 'insights_hata': 'izin yok'}]},
+                'buffer': {'durum': 'hazir', 'aciklama': '1', 'gonderiler': [
+                    {'id': 'bf1', 'channelService': 'tiktok', 'externalLink': 'https://www.tiktok.com/@kpsstercihi/video/1',
+                     'text': 'Metin', 'sentAt': '2026-11-10T09:32:00Z', 'metricsUpdatedAt': '2026-11-14T00:00:00Z',
+                     'metrics': [{'name': 'Views', 'type': 'views', 'unit': 'count', 'value': 1500.0},
+                                 {'name': 'Likes', 'type': 'reactions', 'unit': 'count', 'value': 40},
+                                 {'name': 'Comments', 'type': 'comments', 'unit': 'count', 'value': 3},
+                                 {'name': 'Engagement', 'type': 'engagementRate', 'unit': 'percentage', 'value': 4.2}]}]}}
+        s = k.bulut_isle(self.d, veri)
+        g = {x['id']: x for x in self.d.gonderiler()}
+        self.assertEqual(g['facebook:777']['son']['views'], 410)
+        self.assertEqual(g['facebook:777']['son']['shares'], 3)
+        self.assertEqual(g['facebook:777']['sablon'], 'Sabah son gün')   # bot şablonu korunur
+        self.assertEqual(g['facebook:777']['url'], 'https://www.facebook.com/reel/777')
+        self.assertIsNone(g['facebook:888']['son'])
+        self.assertEqual(s['facebook'][0], 'hazir')
+        self.assertEqual(s['facebook'][2], 1)
+        self.assertEqual(g['tiktok:bf1']['son']['views'], 1500)
+        self.assertEqual(g['tiktok:bf1']['son']['likes'], 40)
+        self.assertEqual(g['tiktok:bf1']['son']['comments'], 3)
+        self.assertEqual(s['tiktok'][0], 'hazir')
+
+    def test_tiktok_metrics_yoksa_kismi_facebook_yoksa_bekliyor(self):
+        veri = {'buffer': {'durum': 'hazir', 'aciklama': '1', 'gonderiler': [
+            {'id': 'bf2', 'channelService': 'tiktok', 'externalLink': 'https://www.tiktok.com/@kpsstercihi/video/2'}]},
+            'facebook': {'durum': 'bekliyor', 'aciklama': 'FB_* yok'}}
+        s = k.bulut_isle(self.d, veri)
+        self.assertEqual(s['tiktok'][0], 'kismi')
+        self.assertEqual(s['facebook'][0], 'bekliyor')
+        self.assertIsNone(k.bulut_isle(self.d, {'buffer': {'durum': 'atlandi'}})['tiktok'])
+
+    def test_buffer_metrik_eslemesi(self):
+        m = k.buffer_metrikleri([{'type': 'impressions', 'unit': 'count', 'value': 900},
+                                 {'type': 'views', 'unit': 'count', 'value': 700},
+                                 {'type': 'reach', 'unit': 'count', 'value': 5},
+                                 {'type': 'averageTimeWatched', 'unit': 'count', 'value': 9}, None])
+        self.assertEqual(m, {'views': 700, 'reach': 5})
+        self.assertEqual(k.buffer_metrikleri(None), {})
+
     def test_youtube_bot_paylasimiyla_eslesir(self):
         k.gecmis_isle(self.d, [{'zaman': '2026-11-15T19:27:09+03:00', 'vakit': 'aksam', 'tur': 'kategori',
                                 'muzik': 'hip-hop.mp3', 'ig_id': '9'}])
@@ -224,6 +271,45 @@ class AnalizTesti(unittest.TestCase):
         an.zenginlestir([g], simdi=SIMDI)
         self.assertIsNone(g['puan'])
         self.assertIsNone(g['deger'])
+
+
+class DayaniklilikTesti(unittest.TestCase):
+    def test_toplama_dongusu_hatada_olmez_ve_gunluge_yazar(self):
+        import tempfile
+        from unittest import mock
+        from panel import sunucu
+        with tempfile.TemporaryDirectory() as t:
+            log = Path(t) / 'panel.log'
+            with mock.patch.object(sunucu, 'hepsini_topla', side_effect=[RuntimeError('patladi'), SystemExit(3), None]) as m:
+                sunucu.toplama_dongusu(None, log, aralik=0, tur=3)
+            self.assertEqual(m.call_count, 3)   # üç tur de çalıştı: hata döngüyü öldürmedi
+            metin = log.read_text(encoding='utf-8')
+            self.assertIn('Otomatik toplama hatası', metin)
+            self.assertIn('RuntimeError: patladi', metin)
+            self.assertIn('Traceback', metin)
+            self.assertRegex(metin, r'^\[\d{4}-\d\d-\d\dT')
+
+    def test_yakalanmamis_hata_kancasi_gunluge_yazar(self):
+        import tempfile
+        from panel import sunucu
+        eski = sys.excepthook, threading.excepthook
+        try:
+            with tempfile.TemporaryDirectory() as t:
+                log = Path(t) / 'panel.log'
+                sunucu.hata_kancalari_kur(log)
+                try:
+                    raise ValueError('ana')
+                except ValueError:
+                    sys.excepthook(*sys.exc_info())
+                th = threading.Thread(target=lambda: 1 / 0, name='deneme')
+                th.start()
+                th.join()
+                metin = log.read_text(encoding='utf-8')
+                self.assertIn('ValueError: ana', metin)
+                self.assertIn('ZeroDivisionError', metin)
+                self.assertIn('deneme', metin)
+        finally:
+            sys.excepthook, threading.excepthook = eski
 
 
 class SunucuTesti(unittest.TestCase):

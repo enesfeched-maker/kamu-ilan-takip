@@ -191,7 +191,7 @@ def bulut_isle(depo, veri):
     sonuc['youtube_api'] = (yt.get('durum', 'hata'), yt.get('aciklama', ''), adet)
 
     bf = veri.get('buffer') or {}
-    adet = 0
+    adet = olcumlu = 0
     for g in bf.get('gonderiler') or []:
         link = g.get('externalLink')
         if not link:
@@ -199,12 +199,83 @@ def bulut_isle(depo, veri):
         servis = (g.get('channelService') or '').lower()
         link = link.split('?')[0]   # Buffer'ın eklediği utm izleme parametreleri atılır
         if servis == 'tiktok':
-            depo.gonderi_yaz('tiktok', g['id'], url=link, metin=g.get('text'), baslik=baslik(g.get('text')) or None,
-                             yayin=g.get('sentAt') or g.get('dueAt'))
+            gid = depo.gonderi_yaz('tiktok', g['id'], url=link, metin=g.get('text'), baslik=baslik(g.get('text')) or None,
+                                   yayin=g.get('sentAt') or g.get('dueAt'))
+            olcum = buffer_metrikleri(g.get('metrics'))
+            if olcum:
+                depo.olcum_yaz(gid, olcum, zaman=g.get('metricsUpdatedAt') or zaman, kaynak='buffer-metrics')
+                olcumlu += 1
             adet += 1
     sonuc['buffer'] = (bf.get('durum', 'hata'), bf.get('aciklama', ''), adet)
+    sonuc['tiktok'] = tiktok_durumu(bf, adet, olcumlu)
+
+    fb = veri.get('facebook') or {}
+    adet = olcumlu = 0
+    for r in fb.get('reels') or []:
+        if not r.get('id'):
+            continue
+        var = depo.db.execute('SELECT sablon FROM gonderi WHERE id=?', (f"facebook:{r['id']}",)).fetchone()
+        alan = dict(url=r.get('permalink_url'), metin=r.get('description'), baslik=baslik(r.get('description')) or None,
+                    yayin=r.get('created_time'), kapak=r.get('picture'), bicim='Reels')
+        if not (var and var['sablon']):
+            alan['sablon'] = metin_sablonu(r.get('description'))
+        gid = depo.gonderi_yaz('facebook', r['id'], **alan)
+        ins = {k: v for k, v in (r.get('insights') or {}).items() if isinstance(v, (int, float)) and not isinstance(v, bool)}
+        if ins:
+            depo.olcum_yaz(gid, ins, zaman=zaman, kaynak='facebook-api')
+            olcumlu += 1
+        adet += 1
+    sonuc['facebook'] = facebook_durumu(fb, adet, olcumlu)
     depo.kaydet()
     return sonuc
+
+
+# Buffer PostMetric.type adları (developers.buffer.com): ağdan ağa değişir; bilinen adlar panel ölçütlerine eşlenir.
+BUFFER_OLCUT = {'views': 'views', 'videoviews': 'views', 'viewcount': 'views', 'plays': 'views', 'videoplays': 'views',
+                'impressions': 'views', 'reach': 'reach', 'likes': 'likes', 'likecount': 'likes', 'reactions': 'likes',
+                'comments': 'comments', 'commentcount': 'comments', 'shares': 'shares', 'sharecount': 'shares',
+                'saves': 'saved', 'favorites': 'saved'}
+
+
+def buffer_metrikleri(metrikler):
+    """Buffer Post.metrics ([{name,type,unit,value}]) -> panel ölçütleri. Yüzde birimli ölçütler ve bilinmeyen adlar atlanır."""
+    ham = {}
+    for m in metrikler or []:
+        if not isinstance(m, dict) or (m.get('unit') or 'count').lower() == 'percentage':
+            continue
+        ad = re.sub(r'[^a-z]', '', str(m.get('type') or m.get('name') or '').lower())
+        hedef, deger = BUFFER_OLCUT.get(ad), m.get('value')
+        if hedef and isinstance(deger, (int, float)) and not isinstance(deger, bool):
+            ham.setdefault(hedef, {})[ad] = deger
+    sonuc = {}
+    for hedef, adlar in ham.items():
+        if len(adlar) > 1:
+            adlar.pop('impressions', None)   # izlenme için gerçek izlenme adı varsa gösterim sayısı kullanılmaz
+        sonuc[hedef] = max(adlar.values())
+    return sonuc
+
+
+def tiktok_durumu(bf, adet, olcumlu):
+    """(durum, açıklama, adet) — Buffer eserine göre TikTok kartı."""
+    if bf.get('durum') == 'atlandi':
+        return None   # bu çalışmada Buffer sorulmadı: önceki durum korunur
+    if bf.get('durum') != 'hazir':
+        return ('bekliyor', f"Buffer verisi alınamadı: {bf.get('aciklama', '')}"[:300], 0)
+    if olcumlu:
+        return ('hazir', f'Buffer metrics: {olcumlu} paylaşımda ölçüm, {adet} bağlantı (Buffer günde bir yeniler)', olcumlu)
+    if adet:
+        return ('kismi', f'{adet} bağlantı var, Buffer ölçüm (metrics) döndürmedi: yeni paylaşımlarda Buffer ölçümü ~1 gün sonra gelir', adet)
+    return ('bekliyor', 'Buffer’da gönderilmiş TikTok paylaşımı bulunamadı', 0)
+
+
+def facebook_durumu(fb, adet, olcumlu):
+    if fb.get('durum') == 'hazir':
+        if olcumlu:
+            return ('hazir', f"Graph API video_insights: {olcumlu}/{adet} reelde ölçüm. {fb.get('aciklama', '')}"[:300], olcumlu)
+        return ('kismi', f"{adet} reel listelendi ama ölçüm okunamadı (read_insights izni?). {fb.get('aciklama', '')}"[:300], adet)
+    if fb.get('durum') == 'hata':
+        return ('hata', fb.get('aciklama', 'Facebook okunamadı')[:300], 0)
+    return ('bekliyor', 'FB_SAYFA_ID / FB_ERISIM_ANAHTARI bulut çalışmasında yok; ölçüm okunmuyor, bağlantılar bot geçmişinden', 0)
 
 
 def _sayi(v):
