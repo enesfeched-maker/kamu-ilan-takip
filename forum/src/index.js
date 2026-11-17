@@ -12,6 +12,7 @@ import { yanitBildirimi, anmaBildirimi, takipBildirimi } from './bildirim.js';
 import { ozelKonusmalar, ozelKonusma, ozelYeni, ozelGonder, ozelMesajSil, ozelEngelle, engellenenler, ozelSikayet, yonetimOzelSikayetler, ozelOkunmamis } from './ozel.js';
 import { takipDegistir, takipMi, benTakipler } from './takip.js';
 import { yonetimOzet } from './yonetim-ozet.js';
+import { yonetimAnaliz } from './yonetim-analiz.js';
 import { aracYanitSil, aracBaslikSil, aracOzelSil, aracHesapKapat, benArac, kimlikKapaliMi } from './arac.js';
 import { rastgelePx } from './kart.js';
 import { benTumu, benKartKaydet, benBasvurularKaydet, benKatipGetir, benKatipKaydet, benFotoYukle, benFotoSil, fotoGetir, fotoBildir, yonetimFotoBildirimleri, yonetimFotoKaldir, uyeKartiYaniti } from './kart.js';
@@ -101,6 +102,7 @@ async function yonlendir(request, env, ctx) {
     if (yol === '/yonetim/sikayetler') return yonetimSikayetler(request, env);
     if (yol === '/yonetim/ozel-sikayetler') return yonetimOzelSikayetler(request, env);
     if (yol === '/yonetim/ozet') return yonetimOzet(request, env);
+    if (yol === '/yonetim/analiz') return yonetimAnaliz(request, env);
     const anonim = !request.headers.get('Authorization') && !url.searchParams.get('kimlik');
     const onb = (uret) => onbellekli(url, ctx, anonim, uret);
     if (yol === '/basliklar') return onb(() => basliklarListe(env, url));

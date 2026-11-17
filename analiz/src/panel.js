@@ -6,6 +6,7 @@ import { raporUret, canli } from './rapor.js';
 import { panelSayfasi, girisSayfasi } from './arayuz.js';
 import { onbellekli } from './onbellek.js';
 import { butceDurumu, butceOzeti } from './butce.js';
+import { forumAnalizi } from './forum-analiz.js';
 
 export const COOKIE = 'kpss_panel';
 export const OTURUM_SN = 30 * 86400;
@@ -169,6 +170,9 @@ export async function panelIstegi(request, env, url, secenek = {}) {
   }
   if (yol === '/panel/forum' && request.method === 'GET') {
     return json(await forumOzeti(env, simdiMs, secenek.forumGetir));
+  }
+  if (yol === '/panel/forum-analiz' && request.method === 'GET') {
+    return json(await forumAnalizi(env, url.searchParams.get('gun'), simdiMs, secenek.forumGetir));
   }
   if (yol === '/panel/butce' && request.method === 'GET') {
     return json(butceOzeti(await butceDurumu(env, simdiMs)));

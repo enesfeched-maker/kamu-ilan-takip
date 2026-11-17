@@ -17,7 +17,9 @@ Betik sırayla şunları yapar (her adım yeniden çalıştırılabilir):
 2. `wrangler d1 execute kpss-analiz --remote --file=schema.sql` ile tabloları kurar.
 3. `wrangler secret put PANEL_ANAHTARI`: anahtarı gizli girişle sorar (ekrana/diske yazılmaz).
    Forum bölümü için ayrıca `wrangler secret put FORUM_YONETICI_ANAHTARI` (forum Worker'ındaki `YONETICI_ANAHTARI` ile aynı değer).
-   Tanımlı değilse panel çalışır, Forum bölümü "Forum anahtarı tanımlı değil" notunu gösterir. Adres değişirse `FORUM_API` değişkeni (varsayılan `https://forum-api.kpsstercihi.com`).
+   Tanımlı değilse panel çalışır, Forum sekmesi "Forum anahtarı tanımlı değil" notunu gösterir.
+   Forum sekmesi (`/panel?sekme=forum`) forumun `/yonetim/analiz?gun=7|30|90` çıktısını `/panel/forum-analiz` üzerinden 5 dk önbellekle alır; analiz D1'ine gitmez.
+   Forum Worker'ı da yeniden yayınlanmalıdır (uç nokta yeni). Adres değişirse `FORUM_API` değişkeni (varsayılan `https://forum-api.kpsstercihi.com`).
    Yerel deneme: `--var FORUM_API:http://127.0.0.1:8790 --var FORUM_YONETICI_ANAHTARI:deneme`.
 4. `wrangler deploy`: Worker'ı yayınlar. `api.kpsstercihi.com` özel alan adı ve DNS kaydı dağıtım sırasında
    otomatik oluşturulur (`kpsstercihi.com` Cloudflare hesabında olmalı). Günlük bakım cron'u da bu adımda kurulur.

@@ -50,7 +50,7 @@ test('/panel/forum: oturumsuz 401; panel sayfası forum bölümünü içerir, an
   assert.equal(r.status, 401);
   const e = yerel({ FORUM_YONETICI_ANAHTARI: 'forum-gizli' });
   const s = await (await panelIstegi(new Request('https://api.kpsstercihi.com/panel'), e, new URL('https://api.kpsstercihi.com/panel'), { simdiMs: T0 })).text();
-  assert.ok(s.includes("bolum(kok,'Forum')") && s.includes('/panel/forum'));
+  assert.ok(s.includes('id="sekme-forum"') && s.includes('/panel/forum-analiz'));
   assert.ok(!s.includes('forum-gizli'));
   const j = await panelIstegi(new Request('https://api.kpsstercihi.com/panel/forum'), e, new URL('https://api.kpsstercihi.com/panel/forum'), { simdiMs: T0, forumGetir: yanit(OZET) });
   assert.equal((await j.json()).durum, 'tamam');
