@@ -1,12 +1,13 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 class Element {
-  constructor(tag='div'){this.tag=tag;this.children=[];this.value='';this.dataset={};this.attrs={};this.classList={toggle(){},add(){}};this.hidden=false;this.style={setProperty(){}};this.className='';this.innerHTML='';this.textContent='';}
+  constructor(tag='div'){this.tag=tag;this.children=[];this.value='';this.dataset={};this.attrs={};this.classList={toggle(){},add(){},remove(){},contains(){return false;}};this.hidden=false;this.style={setProperty(){}};this.className='';this.innerHTML='';this.textContent='';}
+  get parentElement(){if(!this._pe){this._pe=new Element();}return this._pe;}
   append(...nodes){this.children.push(...nodes);} prepend(...nodes){this.children.unshift(...nodes);}
   replaceChildren(...nodes){this.children=nodes;}
   setAttribute(k,v){this.attrs[k]=v;} removeAttribute(){}
   querySelectorAll(){return this._qs||[];} querySelector(){return(this._qs||[])[0]||null;}
-  replaceWith(){} remove(){}
-  addEventListener(){} showModal(){this.open=true;} close(){this.open=false;} scrollIntoView(){} click(){} focus(){} select(){}
+  replaceWith(){} remove(){} insertBefore(){} insertAdjacentElement(){} contains(){return false;}
+  addEventListener(tip,f){(this._ev=this._ev||{})[tip]=(this._ev[tip]||[]).concat(f);} dispatch(tip,e={}){for(const f of (this._ev&&this._ev[tip])||[])f(e);} showModal(){this.open=true;} close(){this.open=false;} scrollIntoView(){} click(){} focus(){} select(){}
 }
 const text=n=>typeof n==='string'?n:(n.textContent||'')+(n.children||[]).map(text).join('');
 /* Zaman çizelgesindeki ilan satırları (gün grupları içinde) */
@@ -39,8 +40,8 @@ function make({href='https://kpsstercihi.com/?g=bugun',hash='',store={},liste:L=
   confirm:m=>{ctx.__confirmMsg=m;return ctx.__confirmCevap!==false;},
   localStorage:{getItem:k=>k in store?store[k]:null,setItem(k,v){store[k]=v;stored.push(k);},removeItem(k){delete store[k];},key:i=>Object.keys(store)[i]??null,get length(){return Object.keys(store).length;}},
   location:loc,history:{replaceState(a,b,u){ctx.__replaced=u;const n=new URL(u,loc.href);loc.href=n.href;loc.hash=n.hash;},pushState(a,b,u){ctx.__pushed=u;const n=new URL(u,loc.href);loc.href=n.href;loc.hash=n.hash;}},
-  navigator:{},window:{innerWidth:1280,addEventListener(t,f){(ctx.__h[t]=ctx.__h[t]||[]).push(f);}},matchMedia:()=>({matches:false}),setInterval(){},setTimeout(){},clearTimeout(){},
-  fetch:async url=>url==='https://api.kpsstercihi.com/populer'&&pop!==undefined?(typeof pop==='function'?pop():pop):({ok:true,json:async()=>url==='ilanlar.json'?{ilanlar:fixture,guncelleme:nowIso}:url==='liste.json'?L:url==='sponsors.json'?{enabled:false}:{}})});
+  navigator:{},window:{innerWidth:1280,kitOnay:o=>{ctx.__confirmMsg=o.baslik;return Promise.resolve(ctx.__confirmCevap!==false);},addEventListener(t,f){(ctx.__h[t]=ctx.__h[t]||[]).push(f);}},matchMedia:()=>({matches:false}),setInterval(){},setTimeout(){},clearTimeout(){},
+  fetch:async url=>url==='https://api.kpsstercihi.com/populer'&&pop!==undefined?(typeof pop==='function'?pop():pop):({ok:true,json:async()=>url==='ilanlar.json'?{ilanlar:fixture,guncelleme:nowIso}:url==='liste.json'?L:url==='sponsors.json'?{enabled:false}:/dizin\.json/.test(url)?[]:{}})});
  ctx.__h={};get('p-ogrenim')._qs=['ortaogretim','onlisans','lisans'].map(v=>{const b=new Element('button');b.dataset.v=v;return b;});vm.runInContext(fs.readFileSync('docs/portal.js','utf8'),ctx);
  return{ctx,get,stored,loc,run:s=>vm.runInContext(s,ctx)};
 }
@@ -55,12 +56,12 @@ assert.equal(run('liste.length'),5,'invalid liste row dropped');
 // ---- İlanlar: sorgu ayrıştırma / yazma
 const J=s=>JSON.stringify(run(s));
 const f1=JSON.parse(J("parseQuery('?q=b%C3%BCro&il=istanbul,Ankara,Atlantis&ogr=lisans&sb=2&tur=S%C3%B6zle%C5%9Fmeli&yeni=1&uygun=0&sira=yeni&arsiv=1')"));
-assert.deepEqual(f1,{q:'büro',il:['İstanbul','Ankara'],ogr:'lisans',sb:'2',tur:'Sözleşmeli',kat:'',yeni:true,uygun:false,sira:'yeni',arsiv:true},'query parsed');
-assert.deepEqual(JSON.parse(J("parseQuery('?ogr=x&sb=99&sira=zzz&uygun=7&il=foo')")),{q:'',il:[],ogr:'',sb:'',tur:'',kat:'',yeni:false,uygun:null,sira:'son',arsiv:false},'invalid values dropped');
+assert.deepEqual(f1,{q:'büro',il:['İstanbul','Ankara'],ogr:'lisans',sb:'2',tur:'Sözleşmeli',kat:'',bel:false,yeni:true,uygun:false,sira:'yeni',arsiv:true},'query parsed');
+assert.deepEqual(JSON.parse(J("parseQuery('?ogr=x&sb=99&sira=zzz&uygun=7&il=foo')")),{q:'',il:[],ogr:'',sb:'',tur:'',kat:'',bel:false,yeni:false,uygun:null,sira:'son',arsiv:false},'invalid values dropped');
 assert.equal(J("parseQuery('?kat=memur').kat"),'"memur"');assert.equal(J("parseQuery('?kat=yok').kat"),'""');assert.equal(run("queryOf({...defaultF(),kat:'isci'},true)"),'kat=isci');
-assert.equal(run("queryOf(parseQuery('?q=b%C3%BCro&il=istanbul,ankara&ogr=lisans&sb=2&yeni=1&uygun=0&sira=yeni'),true)"),'q=b%C3%BCro&il=istanbul%2Cankara&ogr=lisans&sb=2&yeni=1&uygun=0&sira=yeni','query serialized');
+assert.equal(run("queryOf(parseQuery('?q=b%C3%BCro&il=istanbul,ankara&ogr=lisans&sb=2&yeni=1&uygun=0&sira=yeni'),true)"),'q=b%C3%BCro&il=istanbul%2Cankara&ogr=lisans&sb=2&yeni=1&sira=yeni','query serialized');
 assert.equal(run("queryOf(defaultF(),true)"),'','defaults leave URL clean');
-assert.equal(run("queryOf({...defaultF(),uygun:true},true)"),'','uygun default on with profile');assert.equal(run("queryOf({...defaultF(),uygun:true},false)"),'uygun=1');
+assert.equal(run("queryOf({...defaultF(),uygun:true},true)"),'uygun=1','uygun=true always serialized (default is null)');assert.equal(run("queryOf({...defaultF(),uygun:true},false)"),'uygun=1');
 assert.equal(run("queryHas('?g=bugun')"),false);assert.equal(run("queryHas('?il=ankara')"),true);
 // ---- İlanlar: süzme (profil yok)
 run("showTab('ilanlar')");
@@ -119,7 +120,7 @@ const popData={ok:true,json:async()=>({guncelleme:nowIso,gun:7,ilanlar:{[k(26)]:
 // kategori ağacı: tür etiketinden üst kategori; seçim listeyi süzer
 assert.equal(run("katOf({ilan_turu:'Sözleşmeli Personel İlanları'})"),'sozlesmeli');assert.equal(run("katOf({ilan_turu:'İşçi'})"),'isci');assert.equal(run("katOf({ilan_turu:'Kamu Personeli'})"),'memur');assert.equal(run("katOf({ilan_turu:'Askeri Personel'})"),'diger');assert.equal(run("katOf({ilan_turu:'',kategori:'akademik'})"),'akademik');
 assert.match(text(get('kategoriler')),/Tüm İlanlar4/);assert.match(text(get('kategoriler')),/Memur1/);assert.match(text(get('kategoriler')),/Sözleşmeli Personel1/);
-run("F={...defaultF(),kat:'memur'};render()");assert.equal(satirSay(get('cards')),1,'kategori süzgeci');assert.equal(get('liste-ad').textContent,'Memur');run("F=defaultF();render()");assert.equal(get('liste-ad').textContent,'Tüm İlanlar');
+run("F={...defaultF(),kat:'memur'};render()");assert.equal(satirSay(get('cards')),1,'kategori süzgeci');assert.equal(get('liste-ad').textContent,'Memur');run("F=defaultF();render()");assert.equal(get('liste-ad').textContent,'Kamu Personel İlanları');
 // URL eşitleme: İlanlar'dayken yazılır, başka sekmede temizlenir
 run("F={...defaultF(),il:['Ankara'],ogr:'onlisans'};render()");assert.match(ctx.__replaced,/\?il=ankara&ogr=onlisans$/);
 run("showTab('takvim')");assert.equal(ctx.__replaced,'/','filters cleared from URL on other tabs');
@@ -127,19 +128,22 @@ run("F=defaultF()");
 // ---- profil ile: Profilime uygun, kaçış kapısı
 run("profil={v:1,ogrenim:'lisans',puan_turu:'P3',puan:82.15,iller:['İstanbul'],tum_turkiye:false,bolum:'',t:'2026-10-04'};showTab('ilanlar')");
 let res=JSON.parse(J("(()=>{const r=filterIlan(ilanBase(F),F,activeProfile());return{on:r.on,n:r.list.length,uyan:r.uyan,disinda:r.disinda}})()"));
-assert.deepEqual(res,{on:true,n:2,uyan:2,disinda:2},'Profilime uygun default on');
+assert.deepEqual(res,{on:false,n:4,uyan:2,disinda:0},'Profilime uygun is opt-in (default off)');
+run("F.uygun=true;render()");
+res=JSON.parse(J("(()=>{const r=filterIlan(ilanBase(F),F,activeProfile());return{on:r.on,n:r.list.length,uyan:r.uyan,disinda:r.disinda}})()"));
+assert.deepEqual(res,{on:true,n:2,uyan:2,disinda:2},'Profilime uygun on when opted in');
 assert.equal(satirSay(get('cards')),2);assert.match(text(get('disinda')),/Profilinin dışında 2 açık ilan daha/);assert.equal(get('disinda').hidden,false);
 run("F.uygun=false;render()");assert.equal(satirSay(get('cards')),4);assert.equal(get('disinda').hidden,true);
-assert.equal(run("queryOf(F,true)"),'uygun=0');
+assert.equal(run("queryOf(F,true)"),'');run("F.uygun=true");assert.equal(run("queryOf(F,true)"),'uygun=1');run("F.uygun=null");
 // alt düzey ilan 'uygun' içinde işaretlenir
 assert.equal(run("(()=>{const r=filterIlan([{...liste[0],ogrenim:['onlisans'],puan_turleri:[]}],defaultF(),profil);return r.seviye.get(liste[0].key)})()"),'alt');
 // Bugün'den derin bağlantılar
-assert.equal(run("ilanLink('Tümü',{uygun:true}).href"),'./#ilanlar');
-assert.equal(run("ilanLink('Son günler',{sb:'2',uygun:false}).href"),'?sb=2&uygun=0#ilanlar');
-assert.equal(run("ilanLink('Yakında',{sb:'yakinda',uygun:false}).href"),'?sb=yakinda&uygun=0#ilanlar');
-run("openIlanlar({sb:'2',uygun:false})");assert.equal(run('F.sb'),'2');assert.equal(run('F.uygun'),false);assert.equal(T.loc.hash,'#ilanlar','deep link navigates to İlanlar');assert.equal(get('v-ana').hidden,false,'İlanlar ana görünümde');assert.match(ctx.__pushed,/\?sb=2&uygun=0#ilanlar$/);assert.equal(run('tab'),'ilanlar');
+assert.equal(run("ilanLink('Tümü',{uygun:true}).href"),'?uygun=1#ilanlar');
+assert.equal(run("ilanLink('Son günler',{sb:'2',uygun:false}).href"),'?sb=2#ilanlar');
+assert.equal(run("ilanLink('Yakında',{sb:'yakinda',uygun:false}).href"),'?sb=yakinda#ilanlar');
+run("openIlanlar({sb:'2',uygun:false})");assert.equal(run('F.sb'),'2');assert.equal(run('F.uygun'),false);assert.equal(T.loc.hash,'#ilanlar','deep link navigates to İlanlar');assert.equal(get('v-ana').hidden,false,'İlanlar ana görünümde');assert.match(ctx.__pushed,/\?sb=2#ilanlar$/);assert.equal(run('tab'),'ilanlar');
 // ---- Takvim
-run("F=defaultF();saved.clear();showTab('takvim')");
+run("F=defaultF();saved.clear();showTab('takvim');renderTakvim()");
 const tg=JSON.parse(J("(()=>{const g=takvimGruplari(takvimRows('tumu'));return{keys:[...g.gr.keys()],tarihsiz:g.tarihsiz.length}})()"));
 assert.deepEqual(tg,{keys:[iso(0),iso(1),iso(10)],tarihsiz:1},'grouped by deadline day, undated separate');
 assert.equal(get('takvim-icerik').children.length,4,'3 day groups + Tarihi ilanda');
@@ -179,7 +183,7 @@ assert.equal(run("Object.keys(cleanL({key:'abc',taban_ref:{lisans:{medyan:80,n:3
 assert.equal(run("validProfile({v:1,ogrenim:'x'})"),null);assert.equal(run("validProfile({v:1,ogrenim:'lisans',iller:['Ankara','<b>'],puan:150}).iller.length"),1);
 assert.equal(run("ekSi(1)"),'1’i');assert.equal(run("ekSi(30)"),'30’u');assert.equal(run("baslikTemiz('İlk Defa Atanmak Üzere Vhki Alımı İlanı')"),'VHKİ alımı');
 // Bugün: profilsiz -> kurulum kartı, Telegram saati 09:00
-run("profil=null;saved.clear();compared.clear();showTab('takvim')");
+run("profil=null;saved.clear();compared.clear();showTab('takvim');renderTakvim()");
 const tk=text(get('takvim-sol'));assert.match(tk,/Her sabah 09:00 civarı/);assert.doesNotMatch(tk,/08:30/);
 run("showTab('bugun')");assert.match(text(get('suzgecler')),/^Filtreler/);assert.doesNotMatch(text(get('suzgecler')),/Profilini oluştur|Hesap gerekmez|profilime uygun/,'profilsiz: yan sütunda açıklama/profil kutusu yok');
 // Profil: Senin için, taban sinyali, kayıt
@@ -200,9 +204,9 @@ assert.ok(!stored.includes('kit-son-ziyaret'),'last visit not written immediatel
 const B=make({href:'https://kpsstercihi.com/?il=ankara&sb=14&uygun=0',hash:''});await tick();
 assert.equal(B.run('tab'),'ilanlar','query on load opens İlanlar');assert.equal(B.run("JSON.stringify(F.il)"),'["Ankara"]');assert.equal(B.run('F.sb'),'14');assert.equal(B.run('F.uygun'),false);
 assert.match(B.ctx.__replaced,/#ilanlar$/,'hash set without extra history entry');assert.equal(satirSay(B.get('cards')),2,'Ankara + <=14 days (Zabıta, Teknisyen)');
-assert.match(B.loc.href,/\?il=ankara&sb=14&uygun=0#ilanlar$/,'shareable URL kept');
-const C=make({href:'https://kpsstercihi.com/?q=zab%C4%B1ta#takvim'});await tick();
-assert.equal(C.run('tab'),'takvim','explicit hash tab wins over query');assert.equal(C.run('F.q'),'zabıta');
+assert.match(B.loc.href,/\?il=ankara&sb=14#ilanlar$/,'shareable URL kept');
+const C=make({href:'https://kpsstercihi.com/?q=zab%C4%B1ta#kayitli'});await tick();
+assert.equal(C.run('tab'),'kayitli','explicit hash tab wins over query');assert.equal(C.run('F.q'),'zabıta');
 const D=make({href:'https://kpsstercihi.com/?g=bugun'});await tick();assert.equal(D.run('tab'),'bugun');assert.equal(D.run('queryHas(new URL(location.href).search)'),false);
 const SD=h=>D.run('sourceDocument({belge_kopyasi:"'+h+'"})');{const p='aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.pdf';assert.equal(SD('https://kpsstercihi.com/belgeler/sbb/'+p),'https://kpsstercihi.com/belgeler/sbb/'+p,'yeni alan adi kabul');assert.equal(SD('https://enesfeched-maker.github.io/kamu-ilan-takip/belgeler/sbb/'+p),'https://kpsstercihi.com/belgeler/sbb/'+p,'eski onek kendi alan adina cevrilir');assert.equal(SD('https://evil.test/belgeler/sbb/'+p),null,'yabanci alan reddedilir');}
 // ---- Geri/ileri: yalnız sorgu değişse de sekme ve süzgeç eşitlenir (popstate)
@@ -272,9 +276,9 @@ const U=(row_,p)=>Z.run(`uygun(listeTum.find(o=>o.id==='${row_.id}'),${JSON.stri
 const onlAnk=PR('onlisans'),lisAnk=PR('lisans'),lisAnkara=lisAnk;
 // 1) düzeyi okunamayan ilan hiçbir profile sessizce uymaz; "okunamayan N ilan" bağlantısı
 assert.equal(U(unk,onlAnk),'bilinmiyor');
-Z.run("showTab('bugun')");
-assert.equal(Z.run("filterIlan(ilanBase(F),F,activeProfile()).list.some(o=>o.manset==='Bilinmeyen satır')"),false,'unknown-level row not listed as uygun');assert.match(text(Z.get('filter-summary')),/1 ilanın öğrenim şartı okunamadı/);
-assert.equal(Z.run("queryOf({...defaultF(),...bilinmiyorYama(activeProfile())},true)"),'il=ankara&ogr=bilinmiyor&uygun=0');
+Z.run("F.uygun=true;showTab('bugun')");
+assert.equal(Z.run("filterIlan(ilanBase(F),F,activeProfile()).list.some(o=>o.manset==='Bilinmeyen satır')"),true,'unknown-level row is kept (not hidden) when uygun is on');assert.match(text(Z.get('filter-summary')),/1 ilanın öğrenim şartı okunamadı; gizlenmedi/);
+assert.equal(Z.run("queryOf({...defaultF(),il:['Ankara'],ogr:'bilinmiyor'},true)"),'il=ankara&ogr=bilinmiyor');
 // bağlantının açtığı liste tam olarak o N satırdır
 Z.run("openIlanlar({ogr:'bilinmiyor',uygun:false,il:['Ankara']})");assert.deepEqual(JSON.parse(Z.run("JSON.stringify(filterIlan(ilanBase(F),F,activeProfile()).list.map(o=>o.manset))")),['Bilinmeyen satır']);
 // 2) puan türü düzeyi ima eder
@@ -288,17 +292,18 @@ for(const o of ['ortaogretim','onlisans','lisans'])assert.equal(U(ici,PR(o)),fal
 assert.equal(Z.run("mansetSecimi().some(o=>o.kurum_ici)"),false,'kurum içi: manşette yok');
 assert.equal(Z.run("listeTum.some(o=>o.kurum_ici)"),true,'kurum içi: İlanlar için listede durur');
 // 5) sayılar tüm yüzeylerde aynı; alt, tam'dan sonra
-Z.run(`profil=validProfile(${JSON.stringify(lisAnk)});F=defaultF();showTab('bugun')`);
+Z.run(`profil=validProfile(${JSON.stringify(lisAnk)});F=Object.assign({},defaultF(),{uygun:true});showTab('bugun')`);
+const UF="Object.assign({},defaultF(),{uygun:true})";
 const sn=Z.run("filterIlan(ilanBase(defaultF()),defaultF(),activeProfile()).uyan");
-assert.equal(sn,Z.run("takvimRows('uygun').length"),'Profilime uygun = Takvim Bana uygun');assert.equal(sn,5);
-assert.equal(Z.run("filterIlan(ilanBase(defaultF()),defaultF(),activeProfile()).list.map(o=>o.manset).join()"),'P3 satırı,Lisans satırı,Ulusal,Önlisans satırı,Lise satırı','İlanlar: alt tam satırlardan sonra, tarih sırasında önde olsa da');
+assert.equal(sn,Z.run("takvimRows('uygun').length"),'Profilime uygun = Takvim Bana uygun');assert.equal(sn,6,'5 matching + 1 unknown-level (kept)');
+assert.equal(Z.run("filterIlan(ilanBase("+UF+"),"+UF+",activeProfile()).list.map(o=>o.manset).join()"),'P3 satırı,Lisans satırı,Ulusal,Bilinmeyen satır,Önlisans satırı,Lise satırı','İlanlar: alt tam satırlardan sonra, tarih sırasında önde olsa da');
 assert.match(text(Z.get('suzgecler')),new RegExp('Yalnız profilime uygun '+sn),'yan sütun aynı sayıyı kullanır');
-Z.run("F=defaultF();showTab('ilanlar');render()");assert.match(text(Z.get('filter-summary')),/1 ilanın öğrenim şartı okunamadı/);assert.match(text(Z.get('filter-summary')),/göster/);
+Z.run("F=Object.assign({},defaultF(),{uygun:true});showTab('ilanlar');render()");assert.match(text(Z.get('filter-summary')),/1 ilanın öğrenim şartı okunamadı/);
 // 6) il seçilmemiş = tüm Türkiye
 assert.equal(U(multi,{...lisAnk,iller:[],tum_turkiye:false}),'tam');assert.equal(U(multi,lisAnk),false,'il seçili ve eşleşmiyorsa dışarıda');assert.equal(U(multi,{...lisAnk,iller:['Burdur']}),'tam');
 assert.equal(U(ulusalRow,lisAnk),'tam');
 // Tüm Türkiye açıkken seçilen iller öne alınır
-Z.run(`profil=validProfile(${JSON.stringify({...lisAnk,tum_turkiye:true})})`);{const s=Z.run("filterIlan(ilanBase(defaultF()),defaultF(),activeProfile()).list.map(o=>o.manset)");assert.ok(s.indexOf('Çok il')>s.indexOf('Lisans satırı'),'seçili il önce');assert.equal(s[s.length-1],'Lise satırı');}
+Z.run(`profil=validProfile(${JSON.stringify({...lisAnk,tum_turkiye:true})})`);{const s=Z.run("filterIlan(ilanBase("+UF+"),"+UF+",activeProfile()).list.map(o=>o.manset)");assert.ok(s.indexOf('Çok il')>s.indexOf('Lisans satırı'),'seçili il önce');assert.equal(s[s.length-1],'Lise satırı');}
 // 7) validProfile: düzeyle uyumlu puan türü
 const vp=(o,t)=>Z.run(`validProfile({v:1,ogrenim:'${o}',puan_turu:${JSON.stringify(t)}}).puan_turu`);
 assert.equal(vp('lisans','P94'),'P3');assert.equal(vp('onlisans','P3'),'P93');assert.equal(vp('lisans','P999'),'P3');assert.equal(vp('lisans','P25'),'P25');assert.equal(vp('ortaogretim','P93'),'P94');
@@ -329,7 +334,7 @@ for(const [raw,beklenen] of [['75,5',75.5],['75.47987',75.47987],[' 82,15 ',82.1
 assert.equal(F1.run("profilHataTemizle(),$('p-hata').hidden"),true);
 // il önek tamamlama
 F1.run("openProfile();draft.ogrenim='lisans';fillForm()");
-F1.get('p-il').value='ank';F1.get('p-il').onkeydown({key:'Enter',preventDefault(){}});assert.equal(F1.run("draft.iller.join()"),'Ankara','ank + Enter -> Ankara');
+F1.get('p-il').value='ank';F1.get('p-il').dispatch('input');F1.get('p-il').dispatch('keydown',{key:'Enter',preventDefault(){},stopPropagation(){}});assert.equal(F1.run("draft.iller.join()"),'Ankara','ank + Enter -> Ankara');
 F1.get('p-il').value='İzmir';assert.equal(F1.run('addIl()'),true);assert.equal(F1.run("draft.iller.join()"),'Ankara,İzmir');
 F1.get('p-il').value='ka';assert.equal(F1.run('addIl()'),false);assert.match(F1.get('p-hata').textContent,/Birden fazla il eşleşiyor/);assert.equal(F1.get('p-il').attrs['aria-invalid'],'true');
 F1.get('p-il').value='zzz';assert.equal(F1.run('addIl()'),false);assert.match(F1.get('p-hata').textContent,/İl adını listeden seç/);
@@ -343,8 +348,8 @@ const rStore={'kit-profil':JSON.stringify(PR('lisans')),'kit-saved':JSON.stringi
 const RS=make({store:rStore});await tick();
 RS.run("showTab('bugun')");assert.ok(RS.run('activeProfile()'),'profil var');assert.match(text(RS.get('suzgecler')),/Yalnız profilime uygun/);
 RS.run('openProfile()');assert.equal(RS.get('p-sifirla-kutu').hidden,false,'profil varken sıfırla düğmesi görünür');assert.equal(RS.get('profil-dialog').open,true);
-RS.ctx.__confirmCevap=false;RS.get('p-sifirla').onclick();assert.equal(RS.ctx.__confirmMsg,'Profil tercihlerin silinsin mi?');assert.ok('kit-profil' in rStore,'onay verilmezse silinmez');assert.ok(RS.run('activeProfile()'));
-RS.ctx.__confirmCevap=true;RS.get('p-sifirla').onclick();
+RS.ctx.__confirmCevap=false;RS.get('p-sifirla').onclick();await tick();assert.equal(RS.ctx.__confirmMsg,'Tercih bilgilerin silinsin mi?');assert.ok('kit-profil' in rStore,'onay verilmezse silinmez');assert.ok(RS.run('activeProfile()'));
+RS.ctx.__confirmCevap=true;RS.get('p-sifirla').onclick();await tick();
 assert.ok(!('kit-profil' in rStore),'kit-profil silindi');assert.deepEqual(Object.keys(rStore).sort(),['kit-saved','kit-son-ziyaret','kit-theme'],'diğer anahtarlar yerinde');
 assert.equal(rStore['kit-saved'],JSON.stringify(['abc']));assert.equal(rStore['kit-theme'],'"dark"');
 assert.equal(RS.run('activeProfile()'),null);assert.equal(RS.get('profil-dialog').open,false,'pencere kapandı');
@@ -360,8 +365,9 @@ RS.run('openProfile()');assert.equal(RS.get('p-sifirla-kutu').hidden,true,'profi
    localStorage:{getItem:k=>k==='kit-theme'&&kayit!==null?kayit:null},
    document:{documentElement:cl.r={dataset:{}},querySelector:()=>meta}}));
   return{tema:cl.r.dataset.theme,renk:meta.content,w,cl};};
- assert.equal(tema('"dark"',false,12).tema,'dark','elle koyu kazanır (gündüz, açık sistem)');
- assert.equal(tema('"light"',true,23).tema,'light','elle açık kazanır (gece, koyu sistem)');
+ assert.equal(tema(JSON.stringify({t:'dark',a:false}),false,12).tema,'dark','elle koyu kazanır (gündüz, açık sistem)');
+ assert.equal(tema(JSON.stringify({t:'dark',a:true}),false,12).tema,'light','otomatik değer değişince eski elle seçim geçersiz');
+ assert.equal(tema(JSON.stringify({t:'light',a:true}),true,23).tema,'light','elle açık kazanır (gece, koyu sistem)');
  assert.equal(tema(null,true,12).tema,'dark','sistem koyu → koyu');
  assert.equal(tema(null,false,21).tema,'dark','açık sistem, 21:00 → koyu');
  assert.equal(tema(null,false,3).tema,'dark','açık sistem, 03:00 → koyu');
@@ -376,7 +382,7 @@ function sayfaYap(dataset,profilVeri){
  const senin=new Element('section');senin.dataset=dataset;senin.querySelector=s=>s==='[data-profil]'?hedef:null;
  const doc={getElementById:id=>id==='senin'?senin:null,createElement:t=>new Element(t),querySelector:()=>null,querySelectorAll:()=>[],documentElement:{dataset:{}}};
  const st={'kit-profil':JSON.stringify(profilVeri)};
- const c=vm.createContext({document:doc,localStorage:{getItem:k=>k in st?st[k]:null,setItem(){},removeItem(){}},Date,Intl,JSON,Array,Number,String,Math,isNaN,isFinite,RegExp,parseFloat});
+ const c=vm.createContext({document:doc,window:{addEventListener(){},removeEventListener(){}},localStorage:{getItem:k=>k in st?st[k]:null,setItem(){},removeItem(){}},Date,Intl,JSON,Array,Number,String,Math,isNaN,isFinite,RegExp,parseFloat});
  vm.runInContext(fs.readFileSync('docs/sayfa.js','utf8'),c);return text(hedef);}
 const sd={ogr:'lisans',pt:'',il:'Antalya +1',iller:'Antalya,Burdur',ref:'{}'};
 assert.match(sayfaYap(sd,PR('lisans',{iller:['Burdur']})),/Görev yeri Burdur seçtiğin illerden biri/,'çoklu il: ikinci il eşleşir');
