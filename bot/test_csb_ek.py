@@ -300,6 +300,30 @@ class SbbBelgeUyumuTesti(unittest.TestCase):
     def test_tarihsiz_belge_uyumsuz_sayilmaz(self):
         self.assertFalse(ek.belge_uyumsuz('Başvurular 15 gün içinde yapılır.', '( 28 Ekim - 8 Kasım)'))
 
+    def test_duyuru_tarihi_donemden_once_olan_gecerli_belge_uyumsuz_sayilmaz(self):
+        # 18 Kasım 2026 gerçek verisi: Resmî Gazete/yönetmelik/duyuru tarihleri başvuru dönemi sanılıyordu.
+        resmi_gazete = 'DÜZELTME İLANI 13.10.2026 tarih ve 33399 sayılı Resmî Gazete’de yayımlanan ilanda yer alan tablo düzeltilmiştir.'
+        self.assertFalse(ek.belge_uyumsuz(resmi_gazete, '( 15 Ekim - 28 Ekim)'))
+        self.assertFalse(ek.belge_uyumsuz('İPTAL İLANI 22.10.2026 tarihli ve 33408 sayılı Resmi Gazete’de yayımlanan ilan iptal edilmiştir. Başvurular alınmayacaktır.', '( 30 Ekim - 5 Kasım)'))
+        yonerge = ('başvuruları kabul edilmeyecektir. 10) İlanımızda; 01.01.2018 tarihinde yürürlüğe giren 2547 sayılı Kanun’un Ek madde. '
+                   '14) Atamalar 04.03.2026 tarihli, E.16294 sayılı yazı ile bildirilmiştir.')
+        self.assertFalse(ek.belge_uyumsuz(yonerge, '( 7 Ekim - 21 Ekim)'))
+
+    def test_donemi_belgede_baska_cumlede_gecen_belge_uyumsuz_sayilmaz(self):
+        metin = ('İlan şartlarımızı taşıyan adayların 23.10.2026 tarihinden 06.11.2026 tarihine kadar internetten başvuru yapmaları gerekmekte olup, '
+                 'dosya halinde başvuruda teslim edilmesi gereken belgeleri ise en geç 13.11.2026 tarihi mesai bitimine kadar teslim etmelidir.')
+        self.assertFalse(ek.belge_uyumsuz(metin, '( 23 Ekim - 6 Kasım)'))
+
+    def test_bildirimde_tarih_sinanmaz(self):
+        self.assertFalse(ek.belge_uyumsuz('Başvurular 12.10.2026 tarihinde başlayıp 22.10.2026 tarihinde sona erecektir.', '( 28 Ekim - 8 Kasım)', bildirim=True))
+
+    def test_uyumlu_cikan_belgede_eski_uyumsuz_isareti_kalkar(self):
+        eski = {'id': 'sbb-1', 'kurum': 'X', 'kaynak_turu': 'sbb', 'belge_uyumsuz': True, 'ilk_gorulme': '2026-10-28T11:06:07+03:00'}
+        yeni = {'id': 'sbb-1', 'kurum': 'X', 'kaynak_turu': 'sbb', 'belge_sha256': 'a' * 64, 'ozet': 'Yeni.'}
+        birlesik = ek.merge_sources([yeni], {'sbb-1': eski})[0]
+        self.assertNotIn('belge_uyumsuz', birlesik)
+        self.assertEqual(birlesik['ozet'], 'Yeni.')
+
     def test_uyumsuz_belgenin_eski_alanlari_birlesmede_silinir(self):
         # 31 Ekim 2026: Milli Saraylar '3 MEMUR' satırında 158 kişilik ilanın şartları ve PDF bağlantısı eski kayıttan geri geliyordu.
         eski = {'id': 'sbb-1', 'kurum': 'Milli Saraylar İdaresi Başkanlığı', 'kaynak_turu': 'sbb', 'kadro': '3 MEMUR ALACAK',
