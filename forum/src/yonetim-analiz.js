@@ -34,7 +34,7 @@ export async function yonetimAnaliz(request, env) {
   const hepsi = async (sql, ...b) => (await db.prepare(sql).bind(...b).all()).results;
   const gunAd = (alan) => `strftime('%Y-%m-%d', ${alan} + ${TR}, 'unixepoch')`;
 
-  const [uy, uyeG, basG, yanG, ozelG, takipG, aktif, huni, sorular, cevapsiz, cevapsizSay, enIyi, ilanS, odalar, isi, katki, top] = await Promise.all([
+  const [uy, uyeG, basG, yanG, ozelG, takipG, aktif, huni, sorular, cevapsiz, cevapsizSay, enIyi, ilanS, odalar, isi, katki, top, liste] = await Promise.all([
     ilk(`SELECT SUM(silindi IS NULL) AS toplam, SUM(silindi IS NOT NULL) AS silinen, SUM(kayit >= ?) AS yeni,
            SUM(kayit >= ?) AS g1, SUM(kayit >= ?) AS g7, SUM(kayit >= ?) AS g30,
            SUM(google_sub IS NOT NULL) AS google, SUM(tg_id > 0) AS telegram,
@@ -116,6 +116,16 @@ export async function yonetimAnaliz(request, env) {
            (SELECT COUNT(*) FROM engeller WHERE olusma >= ?) AS engel,
            (SELECT COUNT(*) FROM yanitlar WHERE gizli = 1 AND olusma >= ?) AS gizli_yanit,
            (SELECT COUNT(*) FROM basliklar WHERE gizli = 1 AND olusma >= ?) AS gizli_baslik`, bas, bas, bas),
+    // üye listesi (sahibin isteği): yalnız rumuz, tarih, giriş yolu bayrakları ve sayılar; kimlik/e-posta/yöneticilik yok. En yeni 500.
+    hepsi(`SELECT u.rumuz, u.kayit, u.kurucu, u.engelli, u.itibar,
+             (u.google_sub IS NOT NULL) AS g, (u.tg_id > 0) AS tg, (u.eposta IS NOT NULL) AS ep,
+             (SELECT COUNT(*) FROM basliklar b WHERE b.uye_id = u.id AND b.kategori NOT IN ${SORU_DISI}) AS soru,
+             (SELECT COUNT(*) FROM yanitlar y JOIN basliklar b ON b.id = y.baslik_id WHERE y.uye_id = u.id AND b.kategori != 'oda') AS cevap,
+             (SELECT COUNT(*) FROM yanitlar y JOIN basliklar b ON b.id = y.baslik_id WHERE y.uye_id = u.id AND b.kategori = 'oda') AS sohbet,
+             MAX(COALESCE((SELECT MAX(olusma) FROM yanitlar WHERE uye_id = u.id), 0),
+                 COALESCE((SELECT MAX(olusma) FROM basliklar WHERE uye_id = u.id), 0),
+                 COALESCE((SELECT MAX(olusma) FROM ozel_mesajlar WHERE gonderen = u.id), 0)) AS son
+           FROM uyeler u WHERE u.${UYE} AND u.silindi IS NULL ORDER BY u.kayit DESC, u.id DESC LIMIT 500`),
   ]);
 
   // günlük seri (Türkiye günü): boş günler 0
@@ -185,6 +195,17 @@ export async function yonetimAnaliz(request, env) {
     odalar: odalar.map((r) => ({ id: r.id, ad: r.baslik, mesaj: sayi(r.mesaj), kisi: sayi(r.kisi), son: r.son == null ? null : sayi(r.son) })),
     saat,
     isi: isiListe,
+    uye_listesi: liste.map((r) => {
+      const yol = [];
+      if (sayi(r.g)) yol.push('Google');
+      if (sayi(r.ep) && !sayi(r.g)) yol.push('E-posta');
+      if (sayi(r.tg)) yol.push('Telegram');
+      return {
+        rumuz: r.rumuz, kayit: sayi(r.kayit), son: sayi(r.son) || null, yol,
+        soru: sayi(r.soru), cevap: sayi(r.cevap), sohbet: sayi(r.sohbet), itibar: sayi(r.itibar),
+        kurucu: sayi(r.kurucu) === 1, engelli: sayi(r.engelli) === 1,
+      };
+    }),
     katkilar: katki.map((r) => ({ rumuz: r.rumuz, soru: sayi(r.soru), cevap: sayi(r.cevap), sohbet: sayi(r.sohbet), itibar: sayi(r.itibar), kurucu: sayi(r.kurucu) === 1 })),
     etkilesim: {
       yanit_oy: sayi(top?.yanit_oy), baslik_oy: sayi(top?.baslik_oy), anket: sayi(top?.anket), anket_oy: sayi(top?.anket_oy), takip: sayi(top?.takip),
