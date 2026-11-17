@@ -16,6 +16,17 @@ const kayitOl = (env, rumuz = 'Ayse_01', sifre = SIFRE, ek = {}, basliklar = {})
 const satir = (env, sql, ...p) => env.DB.ham.prepare(sql).get(...p);
 const simdi = () => Math.floor(Date.now() / 1000);
 
+test('rumuz + şifreyle yeni üyelik üretimde kapalı: SIFRE_KAYIT yoksa 403, üye açılmaz; şifreli giriş ucu durur', async () => {
+  for (const deger of [undefined, '', '1', 'kapali']) {
+    const env = ortam({ SIFRE_KAYIT: deger });
+    const r = await kayitOl(env);
+    assert.equal(r.durum, 403);
+    assert.equal(satir(env, "SELECT COUNT(*) AS n FROM uyeler WHERE rumuz = 'Ayse_01'").n, 0);
+  }
+  const env = ortam({ SIFRE_KAYIT: undefined });
+  assert.notEqual((await cagir(env, 'POST', '/giris/sifre', { govde: { rumuz: 'Ayse_01', sifre: SIFRE } })).durum, 403);
+});
+
 // ---------- kayıt ----------
 test('kayıt: rumuz + şifre ile üyelik, oturum ve kurtarma kodu döner; tg_id boş, şifre özetlenmiş', async () => {
   const env = ortam();

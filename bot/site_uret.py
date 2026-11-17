@@ -21,7 +21,7 @@ EN_COK_LOGO_INDIRME = 150
 CSS_SURUM = 24
 LOGO_SURUM = 2
 ACIK_ZEMIN, KOYU_ZEMIN = '#F6F6F1', '#0D0E0C'
-FORUM_SURUM = 18   # docs/forum.js + docs/forum.css önbellek sürümü
+FORUM_SURUM = 19   # docs/forum.js + docs/forum.css önbellek sürümü
 HESAP_SURUM = 5   # docs/hesap.js (üst çubuktaki hesap girişi) önbellek sürümü
 ANALIZ_SURUM = 3  # docs/a.js (çerezsiz ziyaret istatistiği) önbellek sürümü
 # <head> içinde, theme-color etiketinden sonra: kit-theme (elle seçim) > sistem koyu tercihi > gece 20:00-07:00 koyu > açık.

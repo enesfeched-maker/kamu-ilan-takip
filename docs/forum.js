@@ -683,13 +683,12 @@
     // Ana ekran: tüm sağlayıcılar aynı boyda alt alta (Google, e-posta, Telegram); rumuz + şifre "ya da" altında ikincil bağlantı.
     function ana() {
       turnstileKaldir();
-      if (!ayar.google_istemci && !ayar.eposta && ayar.sifre !== false) return rumuzEkrani(oku('fr-giris-yontem') ? 'giris' : 'uye');   // yalnız rumuz+şifre (ve Telegram) açıksa doğrudan form
+      // Rumuz + şifreyle yeni üyelik kapalı (sunucu /kayit 403); giriş penceresinde yalnız Google, e-posta ve Telegram var.
       k.ciz(baslik || 'Foruma katıl', 'Soru sor, cevap ver, aynı dönemde tercih yapanlarla konuş.',
         '<div class="fr-g-sosyal">' + (ayar.google_istemci ? '<div class="fr-g-google" id="fr-g-google"></div>' : '')
         + (ayar.eposta ? '<button type="button" class="fr-g-saglayici" data-eposta>' + ikon(ZARF) + '<span>E-posta ile devam et</span></button>' : '')
         + '<button type="button" class="fr-g-saglayici fr-g-tg" data-telegram>' + TG_IKON + '<span>Telegram ile devam et</span></button><div class="fr-g-tg-yer" hidden></div></div>'
         + '<p class="fr-hata" role="alert" hidden></p>'
-        + (ayar.sifre !== false ? '<div class="fr-g-ayrac"><span>ya da</span></div><button type="button" class="fr-g-bag fr-g-kucuk" data-rumuz>Rumuz ve şifreyle giriş</button>' : '')
         + '<p class="fr-g-dip">Üyelik ücretsiz. Forumda yalnız rumuzun görünür.</p>', true);
       var e = govde.querySelector('[data-eposta]'), r = govde.querySelector('[data-rumuz]');
       if (e) e.onclick = function () { epostaAdim1(); };

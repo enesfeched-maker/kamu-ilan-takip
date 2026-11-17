@@ -85,7 +85,11 @@ async function surumArtir(env, uyeId) {
 }
 
 // ---------- POST /kayit ----------
+// Rumuz + şifreyle YENİ üyelik kapalı (17 Kasım 2026): kapatılan hesabın engellenecek kimliği (Google/Telegram/e-posta) olmaz.
+// Yalnız SIFRE_KAYIT = "acik" iken açılır (testler). Var olan şifreli hesapların girişi ve şifre sıfırlama çalışmaya devam eder.
+export const SIFRE_KAYIT_KAPALI = 'Yeni üyelik Google, e-posta ya da Telegram ile yapılır.';
 export async function kayit(request, env) {
+  if (env.SIFRE_KAYIT !== 'acik') return hataYanit(403, SIFRE_KAYIT_KAPALI);
   if (!yapilandirildi(env)) return hataYanit(503, SIFRE_KAPALI);
   const { ipA, ret } = await kabaSinir(request, 'kayit', 10);
   if (ret) return ret;
