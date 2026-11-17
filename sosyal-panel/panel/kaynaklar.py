@@ -237,6 +237,9 @@ BUFFER_OLCUT = {'views': 'views', 'videoviews': 'views', 'viewcount': 'views', '
                 'saves': 'saved', 'favorites': 'saved'}
 
 
+BUFFER_SURE = {'averagetimewatched': ('avg_watch_ms', 1000), 'totaltimewatched': ('total_watch_ms', 60000)}
+
+
 def buffer_metrikleri(metrikler):
     """Buffer Post.metrics ([{name,type,unit,value}]) -> panel ölçütleri. Yüzde birimli ölçütler ve bilinmeyen adlar atlanır."""
     ham = {}
@@ -245,6 +248,9 @@ def buffer_metrikleri(metrikler):
             continue
         ad = re.sub(r'[^a-z]', '', str(m.get('type') or m.get('name') or '').lower())
         hedef, deger = BUFFER_OLCUT.get(ad), m.get('value')
+        if ad in BUFFER_SURE and isinstance(deger, (int, float)) and not isinstance(deger, bool):
+            hedef, carpan = BUFFER_SURE[ad]   # Buffer: ortalama süre saniye, toplam süre dakika
+            deger = round(deger * carpan)
         if hedef and isinstance(deger, (int, float)) and not isinstance(deger, bool):
             ham.setdefault(hedef, {})[ad] = deger
     sonuc = {}
@@ -252,6 +258,8 @@ def buffer_metrikleri(metrikler):
         if len(adlar) > 1:
             adlar.pop('impressions', None)   # izlenme için gerçek izlenme adı varsa gösterim sayısı kullanılmaz
         sonuc[hedef] = max(adlar.values())
+    if sonuc.get('reach') == 0 and sonuc.get('views'):
+        sonuc.pop('reach')   # TikTok'ta Buffer erişimi hep 0 döndürüyor; izlenme varken 0 erişim yanıltır
     return sonuc
 
 

@@ -218,8 +218,14 @@ class KaynakIslemeTesti(unittest.TestCase):
         m = k.buffer_metrikleri([{'type': 'impressions', 'unit': 'count', 'value': 900},
                                  {'type': 'views', 'unit': 'count', 'value': 700},
                                  {'type': 'reach', 'unit': 'count', 'value': 5},
-                                 {'type': 'averageTimeWatched', 'unit': 'count', 'value': 9}, None])
-        self.assertEqual(m, {'views': 700, 'reach': 5})
+                                 {'type': 'averageTimeWatched', 'unit': 'count', 'value': 2.67},
+                                 {'type': 'totalTimeWatched', 'unit': 'count', 'value': 4.57}, None])
+        self.assertEqual(m, {'views': 700, 'reach': 5, 'avg_watch_ms': 2670, 'total_watch_ms': 274200})
+        # Buffer'ın TikTok için döndürdüğü gerçek biçim: erişim hep 0 → atılır
+        m = k.buffer_metrikleri([{'type': 'views', 'unit': 'count', 'value': 73},
+                                 {'type': 'reach', 'unit': 'count', 'value': 0},
+                                 {'type': 'reactions', 'unit': 'count', 'value': 1}])
+        self.assertEqual(m, {'views': 73, 'likes': 1})
         self.assertEqual(k.buffer_metrikleri(None), {})
 
     def test_youtube_bot_paylasimiyla_eslesir(self):
