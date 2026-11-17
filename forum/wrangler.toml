@@ -13,7 +13,7 @@ custom_domain = true
 [[d1_databases]]
 binding = "DB"
 database_name = "kpss-forum"
-database_id = "BURAYA-ID"
+database_id = "6759af36-dcb9-4bbe-87f5-665cf869b0f9"
 
 [vars]
 SITE_URL = "https://kpsstercihi.com/"
@@ -23,6 +23,8 @@ YAZMA_KAPALI = "0"
 TELEGRAM_BOT_ADI = "kamuilanibot"
 # Google ile giris (Google Cloud > KPSS Tercihi > OAuth istemcisi; gizli degil, tarayicida da gorunur).
 GOOGLE_ISTEMCI_KIMLIGI = "518005490003-av27v4bupeul4po4a6mihi5bdtd7fejt.apps.googleusercontent.com"
+# Turnstile robot kontrolu site anahtari (Cloudflare > Turnstile > "KPSS Tercihi forum"; gizli degil). Gizli eslegi TURNSTILE_GIZLI sirridir.
+TURNSTILE_SITE = "0x4AAAAAAGFUYA3GyKl4hLRF"
 
 # Sirlar (degerleri buraya YAZILMAZ): `wrangler secret put <AD> --config wrangler.toml`
 #   TELEGRAM_BOT_TOKEN  - giris dogrulamasi ve bildirimler
