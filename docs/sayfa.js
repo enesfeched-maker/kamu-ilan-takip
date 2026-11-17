@@ -69,10 +69,18 @@
       var id = b.getAttribute('data-kaydet'), ids = kimlikler(b), acik = ids.some(function (x) { return kayitli.indexOf(x) >= 0; });
       if (acik) kayitli = kayitli.filter(function (x) { return ids.indexOf(x) < 0; }); else kayitli.push(id);
       yaz('kit-saved', kayitli); sayac();
+      try { if (window.kitKayitliGonder) window.kitKayitliGonder(); } catch (x) {}   // üye girişliyse hesapla eşitle (hesap.js / forum.js)
       var kart = b.closest ? b.closest('article') : null, bag = kart ? kart.querySelector('a[href*="ilan/"]') : null, mm = ((bag && bag.getAttribute('href')) || location.pathname).match(/ilan\/([A-Za-z0-9-]+)/);
       iz('tikla', { a: acik ? 'kaydi_sil' : 'kaydet', h: mm ? mm[1] : '' });
       Array.prototype.forEach.call(document.querySelectorAll('[data-kaydet]'), function (x) { if (x.getAttribute('data-kaydet') === id) kaydetCiz(x); });
     });
+  });
+
+  /* Giriş yapılınca ya da çıkılınca hesaptaki liste yerel listeye yansır (forum.js olayı): düğmeler ve sayaç yenilenir. */
+  window.addEventListener('kit-kayitli-sunucudan', function () {
+    kayitli = oku('kit-saved', []); if (!Array.isArray(kayitli)) kayitli = [];
+    sayac();
+    Array.prototype.forEach.call(document.querySelectorAll('[data-kaydet]'), kaydetCiz);
   });
 
   /* satırlardaki tarih bloğu: derleme anındaki değer, sayfa açılışında bugüne göre yenilenir */

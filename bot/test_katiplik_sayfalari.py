@@ -61,12 +61,13 @@ class KatiplikSayfalari(unittest.TestCase):
         tipler = [g['@type'] for b in ld_bloklari(html) for g in b['@graph']]
         self.assertIn('FAQPage', tipler)
 
-    def test_ust_menu_katiplik_vurgulu_akademik_yok(self):
+    def test_ust_menu_yeni_rozeti_forumda_akademik_yok(self):
         ust = su.ust_html('../', 'katiplik')
         self.assertNotIn('Akademik', ust)
-        self.assertIn('class="aktif tb-yeni" aria-current="page"', ust)
-        self.assertIn('<b class="tb-rozet">Yeni</b>', ust)
-        self.assertIn('class="tb-yeni"', su.ust_html('../'))
+        self.assertIn('class="aktif" aria-current="page">Katiplik</a>', ust)
+        self.assertIn('Forum<b class="tb-rozet">Yeni</b>', ust)
+        self.assertEqual(ust.count('tb-rozet'), 1)
+        self.assertIn('class="aktif tb-yeni" aria-current="page">Forum', su.ust_html('../', 'forum'))
         self.assertIn('akademik/">Akademik ilanlar</a>', su.alt_html('../'))
 
 

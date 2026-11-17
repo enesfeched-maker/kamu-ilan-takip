@@ -93,6 +93,8 @@
 .tg-metin small{font-size:12px;color:var(--kb-soluk)}
 .tg-ok{margin-left:auto;color:var(--kb-lime);font-weight:700;font-size:18px}
 @media (min-width:1021px){.tb-tg{order:9}}
+/* Forum menüye eklenince (Kasım 2026) dar masaüstünde marka ile menü çakışmasın */
+@media (min-width:1021px) and (max-width:1240px){.tb-ic{gap:12px}.tb-nav>a{padding:8px 8px;letter-spacing:.03em}.tb-tg{margin-left:6px}.tb-tg .tam{display:none}.tb-tg .kisa{display:inline}}
 @media (max-width:1020px){.tb-tg{margin-left:auto;margin-right:8px}}
 @media (max-width:760px){.tb-tg{padding:7px 12px 7px 10px;font-size:12.5px}.tb-tg .tam{display:none}.tb-tg .kisa{display:inline}.tg-kart{display:none}}
 
@@ -106,4 +108,52 @@
 .tb-ac::after{content:"";position:absolute;top:7px;right:7px;width:8px;height:8px;border-radius:50%;background:var(--kb-lime);box-shadow:0 0 0 2px var(--kb-zemin)}
 .tb.acik .tb-ac::after{display:none}
 @media (max-width:1020px){.tb-nav>a.tb-yeni{margin:6px 0;border-radius:10px;padding:13px 12px;border-bottom:0;justify-content:space-between}}
-@media (prefers-reduced-motion:reduce){.tb-nav>a.tb-yeni{animation:none}}
+@media (prefers-reduced-motion:reduce){.tb-nav>a.tb-yeni{animation:none}}
+/* ---------- Hesap girişi (hesap.js): giriş yoksa "Giriş yap", varsa avatar ve küçük menü ---------- */
+.tb-nav .tb-ikon[hidden]{display:none}
+.hs{position:relative;display:inline-flex}
+.hs-giris,.hs-av{display:inline-flex;align-items:center;min-height:44px;border:0;background:transparent;color:var(--kb-yazi);font:inherit;cursor:pointer;border-radius:9px}
+.hs-giris{padding:0 14px;border:1px solid var(--kb-cizgi);font-size:14px;font-weight:600;white-space:nowrap}
+.hs-giris:hover,.hs-av:hover{background:var(--kb-zemin-2)}
+.hs-av{position:relative;gap:10px;min-width:44px;padding:0 6px;justify-content:center}
+.hs-d{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;flex:none;font-size:14px;font-weight:700;background:hsl(var(--h,90) 38% 30%);color:hsl(var(--h,90) 75% 90%)}
+.hs-d svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+/* avatar-ortak.js çıktısı (üst çubuk, katiplik, forum): hazır avatar svg'si, fotoğraf ya da harf */
+.fr-av{display:inline-grid;place-items:center;flex:none;width:32px;height:32px;border-radius:50%;overflow:hidden;vertical-align:middle;background:hsl(var(--h,90) 55% 90%);color:hsl(var(--h,90) 45% 28%);font-size:14px;font-weight:650}
+:root[data-theme=dark] .fr-av{background:hsl(var(--h,90) 20% 24%);color:hsl(var(--h,90) 50% 82%)}
+svg.fr-av-svg,img.fr-av-foto{display:block;background:none!important;object-fit:cover}
+/* Piixpal (piksel) avatarlar: durağan kare daire içinde, canlı bileşen yalnız büyük kartta */
+/* Piksel görüntü dairenin içindeki <img>'dir (dış kutu boyutu taşır); img'ye yüzde dolgu verilmez, kapsayıcıya göre büyür */
+.fr-av-px{display:inline-grid;place-items:center;box-sizing:border-box;background:var(--surface-3,#E9E6F0)!important}
+.fr-av.fr-av-px>img{display:block;width:76%;height:76%;max-width:none;object-fit:contain;image-rendering:pixelated}
+img.fr-av,svg.fr-av{box-sizing:border-box;max-width:none;padding:0}
+.hs-d.hs-d-av{padding:0;background:none;overflow:hidden}
+.hs-d-av .fr-av{width:32px;height:32px}
+.hs-ad{display:none}
+.hs-av .tb-sayi{position:absolute;top:3px;right:0;min-width:16px;height:16px;padding:0 4px;font-size:10px}
+.hs-menu{position:absolute;right:0;top:calc(100% + 6px);z-index:45;width:248px;padding:6px;border:1px solid var(--kb-cizgi);border-radius:12px;background:var(--kb-zemin-2);box-shadow:0 18px 30px -14px rgba(0,0,0,.6)}
+.hs-menu[hidden]{display:none}
+.hs-kim{margin:0 0 4px;padding:8px 10px 10px;border-bottom:1px solid var(--kb-cizgi);color:var(--kb-yazi);font-size:15px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hs-menu a,.hs-menu button{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-height:44px;margin:0;padding:0 10px;border:0;border-radius:8px;background:transparent;color:var(--kb-yazi);font:inherit;font-size:15px;font-weight:500;line-height:1.2;text-align:left;text-decoration:none;cursor:pointer}
+.hs-menu a:hover,.hs-menu button:hover{background:var(--kb-zemin)}
+.hs-menu a.hs-kim{justify-content:flex-start;gap:10px;min-height:56px;margin:0 0 4px;padding:6px 10px;border-bottom:1px solid var(--kb-cizgi);border-radius:8px 8px 0 0;font-size:15px;font-weight:700;white-space:nowrap}
+.hs-kim-av{display:grid;flex:none;line-height:0}
+.hs-kim-av .fr-av{width:36px;height:36px}
+.hs-kim-ad{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.hs-menu .hs-cikis{margin-top:4px;border-top:1px solid var(--kb-cizgi);border-radius:0 0 8px 8px;color:var(--kb-soluk)}
+.hs-toast{position:fixed;left:50%;bottom:20px;z-index:70;transform:translateX(-50%);max-width:calc(100% - 32px);padding:11px 16px;border-radius:10px;background:#0D1A1B;color:#EAF1EC;font-size:14px;box-shadow:0 8px 24px -12px rgba(0,0,0,.5)}
+.hs-toast[hidden]{display:none}
+@media (max-width:1020px){
+  .hs{display:block;border-bottom:1px solid var(--kb-cizgi)}
+  .hs-giris{display:flex;width:100%;min-height:48px;padding:0 4px;border:0;border-bottom:1px solid var(--kb-cizgi);border-radius:0;color:var(--kb-soluk)}
+  .hs-av{display:flex;width:100%;min-height:52px;padding:4px;justify-content:flex-start;border-radius:0}
+  .hs-ad{display:inline;color:var(--kb-soluk);font-size:14px;font-weight:600}
+  .hs-av .tb-sayi{top:6px;left:30px;right:auto}
+  .hs-menu{position:static;width:auto;margin:0 0 8px;padding:0 0 0 44px;border:0;background:transparent;box-shadow:none}
+  .hs-kim{display:none}
+  .hs-menu .hs-cikis{border-radius:0}
+}
+/* katiplik: hesaba bağlı bilgi ve sonuç notu (katip-senkron.js) */
+.kt-hesap,.kt-profil-not{display:flex;align-items:center;gap:10px;margin:10px 0 0;color:var(--ink-2,#555);font-size:14px}
+.kt-hesap .fr-av,.kt-profil-not .fr-av{width:24px;height:24px;font-size:11px}
+.kt-profil-not{margin:0 0 12px;padding:10px 12px;border-radius:10px;background:var(--surface-2,#f1f1ec)}

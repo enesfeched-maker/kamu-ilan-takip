@@ -11,6 +11,10 @@
   var DERSLER = [], aktif = 0, adim = 0;
   var klavye = null;
   var ayar = Object.assign({ ses: false, klavye: true }, O.oku('kit-katip-ders-ayar', {}));
+  window.addEventListener('kit-katip-sunucudan', function () {   // hesapla eşitleme ilerlemeyi birleştirdi
+    ilerleme = O.oku('kit-katip-ders', {}) || {};
+    try { if (typeof listeCiz === 'function') listeCiz(); } catch (e) { /* ekran tazelenemezse veri yine de güncel */ }
+  });
 
   function harfler(s) { return s.split('').filter(function (c) { return /[a-zçğıöşü]/.test(c); }); }
   function el(c) { var p = KK.parmak(c, duzen); return p <= 4 ? 'sol' : 'sag'; }

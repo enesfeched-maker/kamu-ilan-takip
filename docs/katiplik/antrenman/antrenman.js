@@ -14,6 +14,10 @@
   var veri = O.oku('kit-katip-antrenman', {}) || {};
   veri.rekor = veri.rekor || {}; veri.ayar = Object.assign({ mod: 'hiz', adet: 200, sure: {} }, veri.ayar || {});
   var duzen = O.klavyeTuru(), mod = veri.ayar.mod, sik = [], s = null, zaman = 0;
+  window.addEventListener('kit-katip-sunucudan', function () {   // hesapla eşitleme rekor ve geçmişi birleştirdi
+    var b = O.oku('kit-katip-antrenman', {}) || {};
+    veri.rekor = b.rekor || {}; veri.gecmis = b.gecmis || veri.gecmis;
+  });
 
   function havuz() {
     if (mod === 'hiz') return sik.slice(0, 300);

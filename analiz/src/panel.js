@@ -107,6 +107,24 @@ async function girisIstegi(request, env, simdiSn) {
   return html(girisSayfasi('Anahtar hatalı.'), 401);
 }
 
+// Forum bölümü: forum Worker'ının /yonetim/ozet çıktısı. Anahtar yalnız sunucuda kalır; tarayıcı /panel/forum'dan hazır JSON alır.
+// Panel sayfası çizilirken çağrılır, 5 dakika önbelleğe alınır (caches.default); hata/eksik anahtar önbelleğe yazılmaz.
+export const FORUM_ONBELLEK_SN = 300;
+export const FORUM_ZAMAN_ASIMI_MS = 4000;
+export async function forumOzeti(env, simdiMs, getir = fetch) {
+  if (!env.FORUM_YONETICI_ANAHTARI) return { durum: 'anahtar_yok' };
+  const taban = String(env.FORUM_API || 'https://forum-api.kpsstercihi.com').replace(/\/+$/, '');
+  try {
+    const o = await onbellekli('forum:ozet', FORUM_ONBELLEK_SN, async () => {
+      const r = await getir(taban + '/yonetim/ozet', { headers: { 'X-Yonetici': env.FORUM_YONETICI_ANAHTARI }, signal: AbortSignal.timeout(FORUM_ZAMAN_ASIMI_MS) });
+      if (!r.ok) throw new Error('forum ' + r.status);
+      const veri = await r.json();
+      if (!veri || !veri.uyeler || !Array.isArray(veri.seri)) throw new Error('forum biçimi');
+      return JSON.stringify(veri);
+    }, simdiMs);
+    return { durum: 'tamam', veri: JSON.parse(o.govde) };
+  } catch { return { durum: 'hata' }; }
+}
 export async function panelIstegi(request, env, url, secenek = {}) {
   const simdiMs = secenek.simdiMs ?? Date.now();
   const simdiSn = Math.floor(simdiMs / 1000);
@@ -148,6 +166,9 @@ export async function panelIstegi(request, env, url, secenek = {}) {
     // Önbellekteki gövdeye güncel bütçe durumu eklenir (rapor nesnesi '}' ile biter).
     const govde = o.govde.endsWith('}') ? o.govde.slice(0, -1) + ',"butce":' + JSON.stringify(ozet) + '}' : o.govde;
     return new Response(govde, { status: 200, headers: { 'Content-Type': 'application/json; charset=utf-8', ...GUVENLIK, 'X-Onbellek': o.onbellekte ? 'var' : 'yok' } });
+  }
+  if (yol === '/panel/forum' && request.method === 'GET') {
+    return json(await forumOzeti(env, simdiMs, secenek.forumGetir));
   }
   if (yol === '/panel/butce' && request.method === 'GET') {
     return json(butceOzeti(await butceDurumu(env, simdiMs)));

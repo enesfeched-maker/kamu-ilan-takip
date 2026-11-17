@@ -79,6 +79,7 @@ CREATE TABLE IF NOT EXISTS liderlik (
   hatali INTEGER NOT NULL,
   dk     INTEGER NOT NULL,
   ts     INTEGER NOT NULL,
+  avatar TEXT,                 -- istege bagli: 'anahtar:renk' (migrations/0005_liderlik_avatar.sql)
   PRIMARY KEY (hafta, kimlik)
 ) WITHOUT ROWID;
 CREATE INDEX IF NOT EXISTS liderlik_net ON liderlik (hafta, net DESC);

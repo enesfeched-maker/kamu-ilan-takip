@@ -11,6 +11,8 @@ test('yönlendirenlerin sınıflandırılması', () => {
     ['m.facebook.com', '', 'Facebook'], ['l.facebook.com', '', 'Facebook'], ['wa.me', '', 'WhatsApp'], ['api.whatsapp.com', '', 'WhatsApp'],
     ['', '', 'Doğrudan'], [null, '', 'Doğrudan'], ['kpsstercihi.com', '', 'Doğrudan'], ['blog.ornek.com', '', 'Diğer'],
     ['duckduckgo.com', '', 'Arama (diğer)'],
+    ['', 'chatgpt.com', 'Yapay zekâ'], ['chatgpt.com', '', 'Yapay zekâ'], ['www.perplexity.ai', '', 'Yapay zekâ'],
+    ['gemini.google.com', '', 'Yapay zekâ'], ['copilot.microsoft.com', '', 'Yapay zekâ'], ['claude.ai', '', 'Yapay zekâ'],
     ['', 'telegram', 'Telegram'], ['', 'Instagram', 'Instagram'], ['google.com', 'telegram', 'Telegram'], ['', 'bulten', 'Diğer'],
   ];
   for (const [h, u, beklenen] of c) assert.equal(kaynakSinifla(h, u), beklenen, `${h}|${u}`);

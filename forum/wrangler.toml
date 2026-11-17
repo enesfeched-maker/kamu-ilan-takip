@@ -1,0 +1,43 @@
+# KPSS Tercihi - forum / topluluk API'si (Cloudflare Worker + D1).
+# Uretim adimlari icin KURULUM.md dosyasina bak. Buradaki hicbir sey kendiliginden dagitilmaz.
+name = "kpss-forum"
+main = "src/giris.js"   # yalnız varsayılan işleyici; bkz. src/giris.js
+compatibility_date = "2026-05-22"
+
+[[routes]]
+pattern = "forum-api.kpsstercihi.com"
+custom_domain = true
+
+# D1: once `wrangler d1 create kpss-forum` calistir, cikan id'yi asagiya yaz,
+# sonra `wrangler d1 execute kpss-forum --remote --file=schema.sql --config wrangler.toml`.
+[[d1_databases]]
+binding = "DB"
+database_name = "kpss-forum"
+database_id = "6759af36-dcb9-4bbe-87f5-665cf869b0f9"
+
+[vars]
+SITE_URL = "https://kpsstercihi.com/"
+IZINLI_KOKENLER = "https://kpsstercihi.com,https://www.kpsstercihi.com"
+# Acil durumda tum yazmalari durdurmak icin "1" yap ve yeniden dagit (yonetim uclari acik kalir).
+YAZMA_KAPALI = "0"
+TELEGRAM_BOT_ADI = "kamuilanibot"
+# Google ile giris (Google Cloud > KPSS Tercihi > OAuth istemcisi; gizli degil, tarayicida da gorunur).
+GOOGLE_ISTEMCI_KIMLIGI = "518005490003-av27v4bupeul4po4a6mihi5bdtd7fejt.apps.googleusercontent.com"
+# Turnstile robot kontrolu site anahtari (Cloudflare > Turnstile > "KPSS Tercihi forum"; gizli degil). Gizli eslegi TURNSTILE_GIZLI sirridir.
+TURNSTILE_SITE = "0x4AAAAAAGFUYA3GyKl4hLRF"
+
+# Sirlar (degerleri buraya YAZILMAZ): `wrangler secret put <AD> --config wrangler.toml`
+#   TELEGRAM_BOT_TOKEN  - giris dogrulamasi ve bildirimler
+#   OTURUM_SIRRI        - oturum jetonlarinin imzasi (uzun rastgele metin)
+#   YONETICI_ANAHTARI   - X-Yonetici basligi icin yonetim anahtari
+#   SIFRE_BIBERI        - ZORUNLU (sifre/kurtarma kodu icin; OTURUM_SIRRI'ndan farkli uzun rastgele metin). Yoksa sifreli uyelik kapali.
+#   TURNSTILE_GIZLI     - istege bagli (robot kontrolu); TURNSTILE_SITE ve GOOGLE_ISTEMCI_KIMLIGI [vars] olarak tanimlanir
+#   BREVO_ANAHTARI      - istege bagli (e-posta ile giris kodu / sifre sifirlama): Brevo API anahtari. Sahibi KENDISI ekler:
+#                         npx wrangler secret put BREVO_ANAHTARI --config wrangler.toml   (yayinla.ps1 uretmez, sormaz; yalnizca tanimli mi diye raporlar)
+#                         Yoksa e-posta ile giris gizlenir (/giris/ayar eposta:false). Ucretsiz plan gunde 300 e-posta; kod 280'de durur.
+#                         URETIMDE TURNSTILE ZORUNLU: TURNSTILE_GIZLI (secret) + TURNSTILE_SITE ([vars]) de tanimli degilse e-posta girisi kapali kalir.
+#   EPOSTA_GONDEREN     - istege bagli [vars]: gonderen adresi (Brevo'da dogrulanmis olmali); varsayilan bildirim@kpsstercihi.com
+# Yerel deneme: wrangler dev --local --var ORTAM:yerel --var OTURUM_SIRRI:deneme --var SIFRE_BIBERI:deneme --var YONETICI_ANAHTARI:deneme
+# (ORTAM=yerel: /giris/deneme acilir, localhost kokenleri izinli olur, Telegram bildirimi gonderilmez.
+#  BREVO_ANAHTARI yokken e-posta kodu gonderilmez, wrangler konsoluna "[eposta-gelistirme] ..." olarak yazilir.
+#  Uretimde ORTAM tanimli degildir.)

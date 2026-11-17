@@ -18,14 +18,17 @@ TR = timezone(timedelta(hours=3))
 KART_GENISLIK = 720
 LOGO_BOYUT = 128
 EN_COK_LOGO_INDIRME = 150
-CSS_SURUM = 23
+CSS_SURUM = 24
 LOGO_SURUM = 2
 ACIK_ZEMIN, KOYU_ZEMIN = '#F6F6F1', '#0D0E0C'
+FORUM_SURUM = 19   # docs/forum.js + docs/forum.css önbellek sürümü
+HESAP_SURUM = 5   # docs/hesap.js (üst çubuktaki hesap girişi) önbellek sürümü
 ANALIZ_SURUM = 3  # docs/a.js (çerezsiz ziyaret istatistiği) önbellek sürümü
 # <head> içinde, theme-color etiketinden sonra: kit-theme (elle seçim) > sistem koyu tercihi > gece 20:00-07:00 koyu > açık.
 TEMA_BETIGI = ('<script>try{var r=document.documentElement,O=window.kitOto=function(){try{if(matchMedia("(prefers-color-scheme: dark)").matches)return!0}catch(e){}var h=new Date().getHours();return h>=20||h<7},K=window.kitKoyu=function(){var s,o=O();try{s=JSON.parse(localStorage.getItem("kit-theme"))}catch(e){}if(s&&typeof s==="object"&&s.a===o&&(s.t==="dark"||s.t==="light"))return s.t==="dark";if(s!=null)try{localStorage.removeItem("kit-theme")}catch(e){}return o},U=function(){if(window.kitTemaUygula)return window.kitTemaUygula();var d=K(),m=document.querySelector("meta[name=theme-color]");r.dataset.theme=d?"dark":"light";if(m)m.content=d?"' + KOYU_ZEMIN + '":"' + ACIK_ZEMIN + '"},C=function(){if((K()?"dark":"light")!==r.dataset.theme)U()};U();setInterval(C,3e5);try{matchMedia("(prefers-color-scheme: dark)").addEventListener("change",C)}catch(e){}}catch(e){document.documentElement.dataset.theme="light"}</script>')
 TG_IKON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 4-18 7.2 6 2.3M21 4l-3 16-8.5-6.5M21 4 9.5 13.5v5.5l3-3.5"/></svg>'
-KISI_IKON = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5"/></svg>'
+SOHBET_IKON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12.5a7.5 7.5 0 0 1-11 6.6L4 20l1-4.3A7.5 7.5 0 1 1 20 12.5z"/></svg>'
+KISI_IKON ='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5"/></svg>'
 
 
 def esc(value):
@@ -41,7 +44,7 @@ def ikonlar(kok):
             f'<link rel="manifest" href="{kok}manifest.webmanifest">')
 
 
-KABUK_SURUM = 4
+KABUK_SURUM = 10
 TG_DOLU = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.5 3.6 2.9 10.8c-1.1.4-1.1 1.2-.2 1.5l4.8 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.4l2.4-2.3 4.9 3.6c.9.5 1.5.2 1.8-.8l3.2-15.1c.3-1.3-.5-1.9-1.4-1.6zM9 13.4l9.3-5.9c.4-.3.8-.1.5.2l-7.9 7.1-.3 3.4z"/></svg>'
 HAMBURGER_IKON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>'
 # Mobil menü düğmesi: iç sayfaların kendi betiğine bağlı kalmasın diye üst barın hemen ardından çalışır.
@@ -54,20 +57,21 @@ def ust_html(kok, aktif=''):
     """Ana sayfayla aynı ince koyu üst bar (docs/index.html .tb, docs/kabuk.css); bağlantılar `kok` göreli."""
     # Taban puanı sayfaları (kpss-taban-puanlari/) da 'puanlar' bölümüdür; menüde tek sekme robot ve tablo sayfasına gider.
     # Akademik menüden çıktı (Kasım 2026): aramadan gelenler için /akademik/ sayfası ve alt bilgi bağlantısı var.
-    # Katiplik yeni bölüm olarak vurgulu (tb-yeni) ve "Yeni" rozetli gösterilir.
+    # Forum yeni bölüm olarak vurgulu (tb-yeni) ve "Yeni" rozetli gösterilir (Kasım 2026'da Katiplik'ten taşındı).
     menu = [('İlanlar', f'{kok}#ilanlar', 'ilanlar'),
             ('Taban Puanları', f'{kok}puanlar/', 'puanlar'),
             ('Katiplik', f'{kok}katiplik/', 'katiplik'),
+            ('Forum', f'{kok}forum/', 'forum'),
             ('Kayıtlı', f'{kok}#kayitli', '')]
 
     def sinif(ad, a):
-        s = (['aktif'] if a and a == aktif else []) + (['tb-yeni'] if ad == 'Katiplik' else [])
+        s = (['aktif'] if a and a == aktif else []) + (['tb-yeni'] if ad == 'Forum' else [])
         return (f' class="{" ".join(s)}"' if s else '') + (' aria-current="page"' if a and a == aktif else '')
 
     def ek(ad):
         if ad == 'Kayıtlı':
             return '<b class="tb-sayi" id="saved-count-m" hidden>0</b>'
-        return '<b class="tb-rozet">Yeni</b>' if ad == 'Katiplik' else ''
+        return '<b class="tb-rozet">Yeni</b>' if ad == 'Forum' else ''
     bagla = ''.join(f'<a href="{h}" data-a="menu" data-a-x="{ad}"{sinif(ad, a)}>{ad}{ek(ad)}</a>' for ad, h, a in menu)
     return (f'<header class="tb" id="tb"><div class="tb-ic"><a class="tb-marka" href="{kok}" aria-label="KPSS Tercihi ana sayfa">'
             f'<img src="{kok}assets/logo-96.webp?v={LOGO_SURUM}" alt="" width="34" height="34"><span>KPSS Tercihi</span></a>'
@@ -76,7 +80,7 @@ def ust_html(kok, aktif=''):
             f'<nav class="tb-nav" id="tb-nav" aria-label="Ana menü">{bagla}<span class="tb-ayrac" aria-hidden="true"></span>'
             f'<a class="tb-ikon" href="{kok}?profil=1" aria-label="Profil">{KISI_IKON}<span class="tb-etiket">Profil</span></a>'
             f'<span class="tb-tema"><span class="tb-tema-et">Tema</span><button type="button" class="anahtar" id="theme" aria-pressed="false" aria-label="Koyu temaya geç"><span class="bulut"></span><span class="yildiz y1"></span><span class="yildiz y2"></span><span class="yildiz y3"></span><span class="top"></span></button></span>'
-            f'</nav></div></header>{MENU_BETIGI}')
+            f'</nav></div></header>{MENU_BETIGI}<script src="{kok}hesap.js?v={HESAP_SURUM}" data-f="{FORUM_SURUM}" defer></script>')
 
 
 REKLAM_BETIGI = '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8335827974832277" crossorigin="anonymous"></script>'
@@ -857,10 +861,10 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
         tablo = _kadro_tablosu(item)
     if (pdf_satirlari or kk_kadrolar) and item.get('ozet'):  # kartlar özetin üstünde: "koşullar aşağıda gösterilmiştir" cümlesi yanıltır
         item = dict(item, ozet=item['ozet'].replace(' Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.', ''))
-    bolum = ''
+    bolum = bakis = ''
     try:   # 20 Ekim 2026: en üstte yalnız bilinmesi gerekenler, anahtar kelimelerle; ayrıntı aşağıda
         import ilan_bakis
-        bolum += ilan_bakis.bolum_html(item, alanlar.get('toplam'), simdi)
+        bakis = ilan_bakis.bolum_html(item, alanlar.get('toplam'), simdi)
     except Exception as hata:
         print(f'Uyarı: bir bakışta bölümü üretilemedi ({item.get("id")}): {hata}')
     if tablo:
@@ -922,19 +926,27 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
     ikincil_veri = f' data-ikincil="{esc(",".join((kopya or {}).get("ikincil_idler") or []))}"' if (kopya or {}).get('ikincil_idler') else ''
     from kurum_sayfasi import BOOKMARK
     cta = (f'<div class="d-cta"><a class="btn btn-ana btn-buyuk" href="{esc(target)}" target="_blank" rel="noopener noreferrer" data-a="resmi_ilan" data-a-h="{esc(key)}">{button}</a>'
-           f'<button type="button" class="btn btn-ikinci btn-buyuk" id="kaydet-btn" data-kaydet="{kayit_id}"{ikincil_veri} data-ad="{esc(h1)}" aria-pressed="false">{BOOKMARK}<span data-yazi>Kaydet</span></button></div>')
+           f'<button type="button" class="btn btn-ikinci btn-buyuk" id="kaydet-btn" data-kaydet="{kayit_id}"{ikincil_veri} data-ad="{esc(h1)}" aria-pressed="false">{BOOKMARK}<span data-yazi>Kaydet</span></button>'
+           f'<a class="btn btn-ikinci btn-buyuk fr-cta" href="#tartisma" data-a="forum_cta">{SOHBET_IKON}<span data-fr-cta>Soru sor</span></a></div>')
     benzer_html = ''
     if benzer:
         benzer_html = ('<section class="benzer"><div class="bolum-bas"><h2>Benzer ilanlar</h2></div><div class="liste">'
                        + ''.join(ks.satir_html(k, simdi, '../../') for k in benzer[:5]) + '</div></section>')
     kok = '../../'
+    # Tartışma (forum, Kasım 2026): kopya/düzeltme sayfası esas ilanın başlığını kullanır; içerik forum.js ile gelir.
+    tartisma_anahtari = kopya['birincil'] if ikincil else key
+    tartisma = (f'<section class="d-bolum tartisma" id="tartisma" data-ilan="{esc(tartisma_anahtari)}" data-ad="{esc(h1)}"'
+                f' data-acik="{1 if acik_ilan else 0}" aria-label="İlan hakkında konuşma"></section>'
+                f'<script src="{kok}forum.js?v={FORUM_SURUM}" defer></script>')
+    og_gorsel += (f'<link rel="stylesheet" href="{kok}forum.css?v={FORUM_SURUM}">'
+                  f'<link rel="stylesheet" href="{kok}forum-sohbet.css?v={FORUM_SURUM}">')
     is_ilani = acik_ilan and not ikincil and not (kayit or {}).get('kurum_ici')
     og_gorsel += yapisal_veri(item, canonical, end, alanlar, kayit, gorsel, simdi, is_ilani)
     if dizinlenmez(item, simdi):
         og_gorsel += '<meta name="robots" content="noindex,follow">'
     govde = (f'<main id="icerik" class="wrap"><article class="d-bas"><nav class="crumbs" aria-label="Konum"><a href="{kok}">Ana sayfa</a><span aria-hidden="true">/</span><a href="{kok}#ilanlar">İlanlar</a>{kurum_kirinti}</nav>'
              f'{hero_html(item, gorsel, kayit, simdi)}{kurum_ici_not}{duzeltme_kutusu}{kopya_ust}{cta}{kopya_alt}</article>'
-             f'<div class="d-ana"><section class="d-bolum">{sections}{bolum}{diger}</section>{benzer_html}</div></main>')
+             f'<div class="d-ana"><section class="d-bolum">{sections}{bakis}</section>{tartisma}<section class="d-bolum">{bolum}{diger}</section>{benzer_html}</div></main>')
     return key, (sayfa_basi(title, description, canonical, kok, 'article', og_gorsel, og_baslik=title)
                  + f'<body class="detail-page"><a class="skip" href="#icerik">İçeriğe geç</a>{ust_html(kok)}{govde}{alt_html(kok)}</body></html>')
 
@@ -1422,6 +1434,19 @@ def main():
         (docs / 'llms-full.txt').write_text(yz_gorunurluk.llms_tam_metni(gorunen, BASE, datetime.now(TR), sayfali, puan_bilgileri), encoding='utf-8')
     except Exception as hata:
         print(f'Uyarı: llms.txt / SSS üretilemedi: {hata}')
+    forum_adresleri = []
+    try:   # forum soru/konu sayfaları (FORUM_DIZINLE kapalıyken hepsi noindex, haritada yok); API hatası derlemeyi düşürmez
+        import forum_seo
+        forum_adresleri = forum_seo.yaz(docs, BASE)
+    except Exception as hata:
+        print(f'Uyarı: forum SEO sayfaları üretilemedi: {hata}')
+    try:   # forum kabuğu (içerik forum.js ile gelir; FORUM_DIZINLE kapalıyken noindex olduğundan site haritasına girmez)
+        import forum_sayfasi
+        _, forum_html = forum_sayfasi.forum_sayfasi(BASE)
+        (docs / 'forum').mkdir(exist_ok=True)
+        (docs / 'forum' / 'index.html').write_text(forum_html, encoding='utf-8')
+    except Exception as hata:
+        print(f'Uyarı: forum sayfası üretilemedi: {hata}')
     try:
         import analiz_sayfalari   # özgün veri analizleri (/analiz/): AdSense için siteye özgü içerik
         asil_ilanlar = [i for i in data.get('ilanlar', []) if i.get('id') not in (kopyalar.get('kopya_of') or {})]
@@ -1455,6 +1480,14 @@ def main():
         print(f'İnce sayfa kalkanı: {len(ince)} sayfa haritadan çıktı')
     except Exception as hata:
         print(f'Uyarı: ince sayfa kalkanı çalışmadı: {hata}')
+    try:   # dizinlenebilir forum sayfaları (yalnız FORUM_DIZINLE açıksa dolu); ince sayfa kalkanından sonra
+        import forum_seo
+        urls += forum_adresleri
+        degisim.update(forum_seo.SON_DEGISIM)
+        if forum_seo.kabuk_dizinli():
+            urls.append(BASE + 'forum/')
+    except Exception as hata:
+        print(f'Uyarı: forum adresleri haritaya eklenemedi: {hata}')
     (docs / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
                                       + ''.join('<url><loc>' + esc(u) + '</loc>'
                                                 + (f'<lastmod>{degisim[u]}</lastmod>' if re.fullmatch(r'\d{4}-\d{2}-\d{2}', degisim.get(u, '')) else '')

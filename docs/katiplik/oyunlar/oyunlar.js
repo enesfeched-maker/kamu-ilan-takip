@@ -4,6 +4,11 @@
   'use strict';
   var O = window.KatipOrtak, KK = window.KatipKlavye, $ = O.$, E = O.E;
   var rekor = O.oku('kit-katip-oyun', {}) || {};
+  window.addEventListener('kit-katip-sunucudan', function () {   // hesapla eşitleme rekorları birleştirdi
+    var b = O.oku('kit-katip-oyun', {}) || {};
+    rekor.dosya = b.dosya; rekor.hata = b.hata;
+    try { if (typeof rekorYaz === 'function') rekorYaz(); } catch (e) { /* ekran tazelenemezse veri yine de güncel */ }
+  });
   var duzen = O.klavyeTuru(), kelimeler = [], kume = {};
   function rekorYaz() {
     $('rek-dosya').textContent = 'Rekor: ' + (rekor.dosya || '—');

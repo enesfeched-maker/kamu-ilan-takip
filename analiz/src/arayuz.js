@@ -123,21 +123,51 @@ function kart(ust,baslik,alt,gen){var k=h('section','kart'),b=h('h3',null,baslik
 function bolum(kok,baslik){kok.appendChild(h('h2','bolum',baslik));var g=h('div','izgara');kok.appendChild(g);return g}
 function ilanAd(r){return r.ad||r.k}
 
-function cizgiGrafik(kap,gunler){
+function cizgiGrafik(kap,gunler,o){
+  o=o||{};var al=o.alan||'ziyaretci';
   if(gunler.length<2){bosKart(kap,'Çizgi grafik için en az iki gün gerekir; 7 gün seç.');return}
-  var W=720,H=220,L=36,R=10,T=10,B=26,en=Math.max.apply(null,gunler.map(function(g){return g.ziyaretci}))||1;
+  var W=720,H=220,L=36,R=10,T=10,B=26,en=Math.max.apply(null,gunler.map(function(g){return g[al]}))||1;
   var yu=en<=5?5:Math.ceil(en/4)*4;
-  var s=svg('svg',{viewBox:'0 0 '+W+' '+H,'class':'grafik',role:'img','aria-label':'Günlük tekil ziyaretçi sayısı'});
+  var s=svg('svg',{viewBox:'0 0 '+W+' '+H,'class':'grafik',role:'img','aria-label':o.ad||'Günlük tekil ziyaretçi sayısı'});
   [0,.5,1].forEach(function(f){var y=T+(H-T-B)*(1-f);s.appendChild(svg('line',{x1:L,x2:W-R,y1:y,y2:y,'class':'izgara-cizgi'}));var t=svg('text',{x:L-6,y:y+4,'text-anchor':'end'});t.textContent=tr(Math.round(yu*f));s.appendChild(t)});
   var n=gunler.length,xs=function(i){return L+(W-L-R)*(n===1?.5:i/(n-1))},ys=function(v){return T+(H-T-B)*(1-v/yu)};
-  var nok=gunler.map(function(g,i){return xs(i)+','+ys(g.ziyaretci)});
+  var nok=gunler.map(function(g,i){return xs(i)+','+ys(g[al])});
   s.appendChild(svg('polygon',{points:xs(0)+','+(H-B)+' '+nok.join(' ')+' '+xs(n-1)+','+(H-B),'class':'alan'}));
   s.appendChild(svg('polyline',{points:nok.join(' '),'class':'hat'}));
   var adim=Math.max(1,Math.ceil(n/7));
   gunler.forEach(function(g,i){
-    if(n<=31){var c=svg('circle',{cx:xs(i),cy:ys(g.ziyaretci),r:n<=14?4:3,'class':'nokta-g'});var t=svg('title',{});t.textContent=gunKisa(g.gun)+': '+tr(g.ziyaretci)+' tekil ziyaretçi, '+tr(g.sayfa)+' görüntüleme';c.appendChild(t);s.appendChild(c)}
+    if(n<=31){var c=svg('circle',{cx:xs(i),cy:ys(g[al]),r:n<=14?4:3,'class':'nokta-g'});var t=svg('title',{});t.textContent=o.ipucu?gunKisa(g.gun)+': '+tr(g[al])+' '+o.ipucu:gunKisa(g.gun)+': '+tr(g.ziyaretci)+' tekil ziyaretçi, '+tr(g.sayfa)+' görüntüleme';c.appendChild(t);s.appendChild(c)}
     if(i%adim===0||i===n-1){var x=svg('text',{x:xs(i),y:H-8,'text-anchor':'middle'});x.textContent=gunKisa(g.gun);s.appendChild(x)}});
   kap.appendChild(s)
+}
+/* Forum bölümü: /panel/forum (sunucu forum Worker'ından çeker; anahtar tarayıcıya gelmez). Başlıklar yalnız textContent ile yazılır. */
+function forumCiz(g,F){
+  g.replaceChildren();g.className='';
+  if(F.durum!=='tamam'){g.appendChild(h('p','bos',F.durum==='anahtar_yok'?'Forum anahtarı tanımlı değil.':'Forum verisi alınamadı.'));return}
+  var V=F.veri,U=V.uyeler,S=V.soru,c,kp=h('div','kpi'),bek=(V.sikayet.genel||0)+(V.sikayet.ozel||0);
+  g.appendChild(kp);
+  [['Toplam üye',tr(U.toplam),tr(U.yeni.g1)+' yeni (24 sa) · '+tr(U.yeni.g30)+' (30 gün)',0],['7 günde yeni üye',tr(U.yeni.g7),'',0],['7 günde aktif yazan',tr(V.aktif.g7),tr(V.aktif.g1)+' (24 sa) · '+tr(V.aktif.g30)+' (30 gün)',0],
+   ['Cevapsız soru',tr(S.cevapsiz),tr(S.toplam)+' sorudan'+(S.ilk_cevap_dk!=null?' · ilk cevap ort. '+String(S.ilk_cevap_dk).replace('.',',')+' dk (7 gün)':''),S.cevapsiz],
+   ['Bekleyen şikâyet',tr(bek),tr(V.sikayet.genel)+' yanıt · '+tr(V.sikayet.ozel)+' özel mesaj',bek]].forEach(function(a){
+    var d=h('div');d.appendChild(h('span',null,a[0]));d.appendChild(h('strong',a[3]>0?'hata-mesaj':null,a[1]));d.appendChild(h('em',null,a[2]));kp.appendChild(d)});
+  var iz=h('div','izgara');g.appendChild(iz);
+  [['Yeni üye','uye','yeni üye'],['Yeni soru','soru','yeni soru'],['Cevap','cevap','cevap'],['Sohbet mesajı','sohbet','sohbet mesajı'],['Özel mesaj','ozel','özel mesaj']].forEach(function(a){
+    var top=V.seri.reduce(function(x,r){return x+r[a[1]]},0);c=kart(iz,a[0],'son 30 gün · toplam '+tr(top));cizgiGrafik(c,V.seri,{alan:a[1],ad:'Günlük '+a[2],ipucu:a[2]})});
+  c=kart(iz,'Giriş yöntemi','üye');cubuklar(c,[{ad:'Telegram',v:U.yontem.telegram},{ad:'Google',v:U.yontem.google},{ad:'Rumuz + şifre',v:U.yontem.sifre}],{bos:'Üye yok.'});
+  c.appendChild(h('p','not',tr(U.kurucu)+' kurucu üye · '+tr(U.engelli)+' engelli · '+tr(U.dm_kapali)+' kişi özel mesajı kapattı.'));
+  c=kart(iz,'Kategoriye göre sorular','üye soruları');cubuklar(c,S.kategori.map(function(r){return {ad:r.ad,v:r.n}}),{bos:'Henüz soru yok.'});
+  c=kart(iz,'Oda etkinliği','son 7 gün · mesaj');cubuklar(c,V.sohbet.map(function(r){return {ad:r.ad,v:r.mesaj}}),{bos:'Sohbet odası yok.'});
+  c=kart(iz,'En çok cevap alan sorular','son 30 gün');
+  if(!S.populer.length)bosKart(c,'Cevaplanan soru yok.');
+  else{var en=S.populer[0].cevap||1;S.populer.forEach(function(r){
+    var s=h('div','satir'),ad=h('div','ad'),a=h('a',null,r.baslik);a.href='https://kpsstercihi.com/forum/?b='+encodeURIComponent(r.id);a.target='_blank';a.rel='noopener noreferrer';ad.title=r.baslik;ad.appendChild(a);
+    var cb=h('div','cubuk'),i=h('i');i.style.width=Math.max(2,Math.round(r.cevap/en*100))+'%';cb.appendChild(i);
+    s.appendChild(ad);s.appendChild(h('div','say',tr(r.cevap)+' cevap'));s.appendChild(cb);c.appendChild(s)})}
+  c.appendChild(h('p','not','Takip edilen konu: '+tr(V.takip)+' · son 24 saatte '+tr(V.engel_24s)+' özel mesaj engeli.'))
+}
+function forumYukle(g){
+  g.className='';g.appendChild(h('p','bos','Forum verisi yükleniyor…'));
+  fetch('/panel/forum',{credentials:'same-origin'}).then(function(r){if(r.status===401){location.href='/panel';throw 0}if(!r.ok)throw new Error(r.status);return r.json()}).then(function(F){forumCiz(g,F)}).catch(function(e){if(e!==0)forumCiz(g,{durum:'hata'})})
 }
 function isiHaritasi(kap,isi){
   if(!isi.length){bosKart(kap);return}
@@ -271,6 +301,8 @@ function ciz(d){
   c=kart(g,'Kampanyalar','utm');cubuklar(c,d.utm.map(function(r){return {ad:r.kaynak,alt:r.kampanya==='-'?'':r.kampanya,v:r.oturum}}),{bos:'utm_ etiketli bağlantı henüz kullanılmadı.'});
   c=kart(g,'Şehir');cubuklar(c,d.sehir.slice(0,15).map(function(r){return {ad:r.ad,alt:r.ulke&&r.ulke!=='TR'?r.ulke:'',v:r.oturum}}));
   c=kart(g,'Ülke');cubuklar(c,d.ulke.map(function(r){return {ad:r.ad,v:r.oturum}}));
+
+  forumYukle(bolum(kok,'Forum'));
 
   g=bolum(kok,'Cihaz');
   c=kart(g,'Cihaz türü');cubuklar(c,d.cihaz.map(function(r){return {ad:r.ad,v:r.oturum}}));

@@ -115,3 +115,53 @@ test('hafta Türkiye saatine göre pazartesi başlar', () => {
   assert.equal(haftaBasi(Date.parse('2026-11-01T23:30:00+03:00')), '2026-10-26'); // pazar gecesi
   assert.equal(haftaBasi(Date.parse('2026-11-02T00:10:00+03:00')), '2026-11-02'); // pazartesi
 });
+
+test('avatar: geçerli anahtar:renk saklanır ve tabloda av olarak döner; avatarsız eski satırlarda av yok', async () => {
+  const db = sahteD1();
+  db.ham.prepare("INSERT INTO liderlik (hafta, kimlik, ad, net, dogru, hatali, dk, ts) VALUES ('2026-10-26', 'eskikimlik00000001', 'Eski Kayıt', 50, 55, 5, 40, 1)").run();   // avatar sütunu eklenmeden önceki satır
+  const r = await gonder(db, govde({ yazi: yazi(0, 120), avatar: 'kedi:lila' }));
+  assert.equal(r.status, 200);
+  const j = await r.json();
+  const ben = j.tablo.haftalik.find((x) => x.ad === 'Ayşe K.');
+  assert.equal(ben.av, 'kedi:lila');
+  const eski = j.tablo.haftalik.find((x) => x.ad === 'Eski Kayıt');
+  assert.ok(eski); assert.equal('av' in eski, false);
+  const t = await (await liderlikIstegi(istek(null, { url: URL_, yontem: 'GET' }), env(db), SIMDI)).json();
+  assert.equal(t.tum.find((x) => x.ad === 'Ayşe K.').av, 'kedi:lila');
+  assert.equal('av' in t.tum.find((x) => x.ad === 'Eski Kayıt'), false);
+});
+
+test('avatar: nesne biçimi kabul edilir; geçersiz biçimler hata değil yok sayılır; yeni gönderim avatarı günceller', async () => {
+  const db = sahteD1();
+  const r1 = await gonder(db, govde({ yazi: yazi(0, 120), avatar: { k: 'tilki', r: 'nane' } }));
+  assert.equal((await r1.json()).tablo.haftalik[0].av, 'tilki:nane');
+  for (const kotu of ['KEDI:lila', 'kedi', 'kedi:Lila', 'kedi:lila:fazla', 'a'.repeat(25) + ':lila', 'kedi:' + 'b'.repeat(17), 'foto', '<svg>:lila', { k: 'kedi' }, 5, ['kedi', 'lila'], null]) {
+    liderlikHizSifirla();
+    const r = await gonder(db, govde({ yazi: yazi(0, 120), avatar: kotu }));
+    assert.equal(r.status, 200, JSON.stringify(kotu));   // sonuç reddedilmez
+    assert.equal('av' in (await r.json()).tablo.haftalik[0], false, JSON.stringify(kotu));
+  }
+  liderlikHizSifirla();
+  const r2 = await gonder(db, govde({ yazi: yazi(0, 120), avatar: 'panda:gok' }));
+  assert.equal((await r2.json()).tablo.haftalik[0].av, 'panda:gok');
+  // piksel karakter (Kasım 2026): yalnız düz piksel biçim ve izinli tonlar
+  liderlikHizSifirla();
+  assert.equal((await (await gonder(db, govde({ yazi: yazi(0, 120), avatar: 'px.loaf:pixel.270' }))).json()).tablo.haftalik[0].av, 'px.loaf:pixel.270');
+  for (const kotu of ['px.loaf:dots.0', 'px.loaf:pixel.17', 'px.LOAF:pixel.0', 'px.loaf:pixel.0.0']) {
+    liderlikHizSifirla();
+    assert.equal('av' in (await (await gonder(db, govde({ yazi: yazi(0, 120), avatar: kotu }))).json()).tablo.haftalik[0], false, kotu);
+  }
+});
+
+test('avatar sütunu yokken (0005 göçü uygulanmadan kod dağıtıldıysa) liderlik çalışmaya devam eder', async () => {
+  const db = sahteD1();
+  db.ham.exec('ALTER TABLE liderlik DROP COLUMN avatar');
+  const r = await gonder(db, govde({ yazi: yazi(0, 120), avatar: 'kedi:lila' }));
+  assert.equal(r.status, 200);
+  const j = await r.json();
+  assert.equal(j.tablo.haftalik.length, 1);
+  assert.equal('av' in j.tablo.haftalik[0], false);
+  const t = await liderlikIstegi(istek(null, { url: URL_, yontem: 'GET' }), env(db), SIMDI);
+  assert.equal(t.status, 200);
+  assert.equal((await t.json()).tum.length, 1);
+});
