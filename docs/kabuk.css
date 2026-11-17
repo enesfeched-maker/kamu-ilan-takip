@@ -123,8 +123,10 @@
 :root[data-theme=dark] .fr-av{background:hsl(var(--h,90) 20% 24%);color:hsl(var(--h,90) 50% 82%)}
 svg.fr-av-svg,img.fr-av-foto{display:block;background:none!important;object-fit:cover}
 /* Piixpal (piksel) avatarlar: durağan kare daire içinde, canlı bileşen yalnız büyük kartta */
-img.fr-av-px,.fr-av-px.fr-av-canli{display:grid;place-items:center;box-sizing:border-box;background:var(--surface-3,#E9E6F0)!important}
-img.fr-av-px{padding:12%;object-fit:contain;image-rendering:pixelated}
+/* Piksel görüntü dairenin içindeki <img>'dir (dış kutu boyutu taşır); img'ye yüzde dolgu verilmez, kapsayıcıya göre büyür */
+.fr-av-px{display:inline-grid;place-items:center;box-sizing:border-box;background:var(--surface-3,#E9E6F0)!important}
+.fr-av.fr-av-px>img{display:block;width:76%;height:76%;max-width:none;object-fit:contain;image-rendering:pixelated}
+img.fr-av,svg.fr-av{box-sizing:border-box;max-width:none;padding:0}
 .hs-d.hs-d-av{padding:0;background:none;overflow:hidden}
 .hs-d-av .fr-av{width:32px;height:32px}
 .hs-ad{display:none}

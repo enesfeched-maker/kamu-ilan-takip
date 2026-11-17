@@ -3,7 +3,8 @@
    Boşsa avatar rumuzdan türetilir (rumuz sonradan değişmez): iki setin birleşik listesinden kararlı bir seçim; herkesin bir avatarı vardır.
    Piixpal canlı bir bileşendir; yalnız büyük kartta, profil sayfasında ve tercih önizlemesinde canlı gösterilir (canli()). Listelerde, sohbette ve üst çubukta
    durağan görüntü kullanılır: piksel/ton 0 için hazır görüntüler (avatar/piixpal-anlik.js), diğerleri için bileşenin tek karesi bir kez alınıp sessionStorage'a yazılır.
-   Betikler (piixpal.min.js, görüntü listesi) yalnız bir Piixpal avatarı gösterilecekse yüklenir. Hata olursa harf avatarına dönülür. */
+   Betikler (piixpal.min.js, görüntü listesi) yalnız bir Piixpal avatarı gösterilecekse yüklenir. Hata olursa harf avatarına dönülür.
+   Boyut: her çıktı .fr-av sınıfını taşır (varsayılan 32 px); boyut verilirse satır içi width/height da yazılır. Piksel görüntü bir <span> içindedir. */
 (function () {
   'use strict';
   if (window.kitAvatar) return;
@@ -160,7 +161,8 @@
     if (a.set === 'px') {
       if (pxHata) return harf(uye.rumuz, boyut, sinif);
       var u = anlik(a);
-      if (u) return '<img class="fr-av fr-av-px' + s + '" src="' + esc(u) + '" alt=""' + b + (bs ? ' style="' + bs + '"' : '') + '>';
+      // Görüntü dairenin içinde ortalanır: dış kutu boyutu taşır, iç görüntü %76 (img'de yüzde dolgu, kapsayıcı genişliğine göre büyüyordu)
+      if (u) return '<span class="fr-av fr-av-px' + s + '" aria-hidden="true"' + (bs ? ' style="' + bs + '"' : '') + '><img src="' + esc(u) + '" alt=""' + b + ' decoding="async"></span>';
       pxHazirla(a);
       return harf(uye.rumuz, boyut, sinif, { u: { rumuz: uye.rumuz, av: uye.av, fs: uye.fs, fu: uye.fu }, b: boyut, s: sinif });
     }

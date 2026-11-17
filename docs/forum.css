@@ -51,6 +51,10 @@
 :root[data-theme=dark] .fr-av{background:hsl(var(--h,90) 20% 24%);color:hsl(var(--h,90) 50% 82%)}
 .fr-av img{display:block;width:100%;height:100%}
 .fr-av svg{width:16px;height:16px}
+/* piksel avatar: görüntü dairenin içinde küçük durur; img/svg avatarlar hiçbir kapta kendi boyutunu aşmaz */
+.fr-av.fr-av-px{display:grid;place-items:center;box-sizing:border-box}
+.fr-av.fr-av-px>img{width:76%;height:76%;object-fit:contain;image-rendering:pixelated}
+img.fr-av,svg.fr-av{box-sizing:border-box;max-width:none;padding:0;object-fit:cover}
 .fr-av-bot{background:var(--fr-zemin-3)!important;color:var(--fr-soluk)!important}
 .fr-av-site{background:var(--fr-site)!important}
 .fr-liste{display:flex;flex-direction:column}
@@ -186,11 +190,14 @@ button.fr-anket-s:hover{border-color:var(--fr-ink)}
 .fr-kutu h2{margin:0 0 var(--fr-1);font-size:20px;text-wrap:balance}
 .fr-kutu .fr-not{margin-bottom:var(--fr-4)}
 .fr-kutu .fr-form{flex-direction:row}
-.fr-kapat{position:absolute;top:var(--fr-2);right:var(--fr-2);width:36px;height:36px;border:0;border-radius:var(--fr-r-kucuk);background:transparent;color:var(--fr-soluk);font-size:22px;cursor:pointer}
+.fr-kapat{position:absolute;top:var(--fr-2);right:var(--fr-2);display:grid;place-items:center;width:44px;height:44px;border:0;border-radius:var(--fr-r);background:transparent;color:var(--fr-soluk);font-size:22px;cursor:pointer}
+.fr-kapat svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
 .fr-kapat:hover{background:var(--fr-zemin-2);color:var(--fr-ink)}
 .fr-giris-alan{min-height:44px}
 
-.fr-toast{position:fixed;bottom:var(--fr-6);left:50%;z-index:70;padding:var(--fr-2) var(--fr-4);border-radius:var(--fr-r);background:var(--fr-ink);color:var(--fr-zemin);font-size:15px;transform:translateX(-50%);transition:opacity .3s}
+.fr-toast{position:fixed;bottom:calc(var(--fr-6) + env(safe-area-inset-bottom,0px));left:50%;z-index:70;max-width:calc(100% - 32px);padding:11px var(--fr-4);border-radius:var(--fr-r);background:var(--fr-ink);color:var(--fr-zemin);font-size:15px;line-height:1.4;box-shadow:var(--fr-golge);transform:translateX(-50%);transition:opacity .3s;animation:fr-toast-gel .25s ease-out}
+@keyframes fr-toast-gel{from{opacity:0;transform:translate(-50%,8px)}}
+body.fr-konusmada .fr-toast{bottom:calc(96px + env(safe-area-inset-bottom,0px))}
 .fr-toast.fr-git{opacity:0}
 
 /* ana sayfa listesi: konuşulan ilan rozeti */
@@ -208,4 +215,5 @@ button.fr-anket-s:hover{border-color:var(--fr-ink)}
 @media (prefers-reduced-motion:reduce){
   .fr-yeni .fr-govde{animation:none}
   .fr-eylem,.fr-cip,.fr-basvurdum,.fr-gonder,.fr-anket-s,.fr-kapat,.fr-yuzen,.fr-ac>summary::after,.fr-toast{transition:none}
+  .fr-toast{animation:none}
 }

@@ -21,6 +21,7 @@
   var ZARF = 'M4 6h16v12H4zM4 7l8 6 8-6';
   var ZIL = 'M6 16V11a6 6 0 1 1 12 0v5l1.5 2h-15zM10 20a2 2 0 0 0 4 0';
   var BASPARMAK = 'M7 11v9H4v-9zM7 11l4-7c1.5 0 2.5 1 2.2 2.6L12.6 10H18a2 2 0 0 1 2 2.3l-1.2 6A2 2 0 0 1 16.8 20H7';
+  var TG_IKON = '<svg class="fr-g-tg-ikon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.5 3.6 2.9 10.8c-1.1.4-1.1 1.2-.2 1.5l4.8 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.4l2.4-2.3 4.9 3.6c.9.5 1.5.2 1.8-.8l3.2-15.1c.3-1.3-.5-1.9-1.4-1.6zM9 13.4l9.3-5.9c.4-.3.8-.1.5.2l-7.9 7.1-.3 3.4z"/></svg>';
   var GENIS = matchMedia('(min-width: 900px)');
   document.documentElement.classList.add('fr-sohbet');
   var BET = document.currentScript;
@@ -125,9 +126,19 @@
   }
   function sayi(n) { return Number(n || 0).toLocaleString('tr-TR'); }
   function bildir(m) {
+    var eski = document.querySelector('.fr-toast'); if (eski) eski.remove();   // üst üste binmesin
     var t = el('<div class="fr-toast" role="status">' + esc(m) + '</div>');
-    document.body.appendChild(t);
+    // açık bir <dialog> (ör. profil penceresi) varsa not onun içine konur: üst katmandaki pencerenin arkasında görünmez kalmasın
+    var ac = document.querySelectorAll('dialog[open]');
+    (ac.length ? ac[ac.length - 1] : document.body).appendChild(t);
     setTimeout(function () { t.classList.add('fr-git'); setTimeout(function () { t.remove(); }, 400); }, 2400);
+  }
+  // Sayfa içi onay penceresi (onay.js, ilk gerektiğinde yüklenir). o: { baslik, metin, evet, hayir, tehlike }. Söz: true = onaylandı.
+  // onay.js sürümü portal.js ve katiplik.js ile aynı tutulur (ONAY_SURUM); dosya değişince üçünde birlikte artırılır.
+  var ONAY_SURUM = '1';
+  function onayla(o) {
+    var y = window.kitOnay ? Promise.resolve() : betikYukle(TABAN + 'onay.js?v=' + ONAY_SURUM);
+    return y.then(function () { return window.kitOnay(o); }, function () { return window.confirm(o.baslik + (o.metin ? '\n\n' + o.metin : '')); });
   }
   var IZINLI_BAG = /^https:\/\/([a-z0-9-]+\.)*(gov\.tr|edu\.tr|kpsstercihi\.com)(\/[^\s<]*)?$|^https:\/\/t\.me\/kpsstercihi\b/i;
   function metin(govde) {
@@ -356,7 +367,8 @@
     var eski = document.getElementById('fr-giris');
     if (eski) eski.remove();
     var kutu = el('<div class="fr-perde fr-giris-perde" id="fr-giris" role="dialog" aria-modal="true" aria-labelledby="fr-giris-bas"><div class="fr-kutu fr-giris-kutu" tabindex="-1">'
-      + '<button type="button" class="fr-kapat" aria-label="Kapat">×</button>'
+      + '<button type="button" class="fr-kapat" aria-label="Kapat">' + ikon('M6 6l12 12M18 6 6 18') + '</button>'
+      + '<img class="fr-giris-logo" src="' + esc(TABAN) + 'assets/logo-96.webp?v=2" alt="" width="48" height="48" hidden>'
       + '<h2 id="fr-giris-bas"></h2><p class="fr-not fr-giris-not" hidden></p><div class="fr-giris-govde"></div></div></div>');
     document.body.appendChild(kutu);
     var ic = kutu.querySelector('.fr-kutu'), govde = kutu.querySelector('.fr-giris-govde'), bas = kutu.querySelector('h2'), not_ = kutu.querySelector('.fr-giris-not');
@@ -389,8 +401,11 @@
       i.type = ac ? 'text' : 'password';
       g.textContent = ac ? 'Gizle' : 'Göster'; g.setAttribute('aria-pressed', ac ? 'true' : 'false');
     });
-    k.ciz = function (b, n, html) {
+    var logo = kutu.querySelector('.fr-giris-logo');
+    logo.onerror = function () { logo.remove(); };
+    k.ciz = function (b, n, html, karsilama) {   // karsilama: giriş ana ekranı (marka ve hoş geldin satırı ortalı)
       bas.textContent = b; not_.textContent = n || ''; not_.hidden = !n; govde.innerHTML = html;
+      ic.classList.toggle('fr-g-karsilama', !!karsilama); if (logo.parentNode) logo.hidden = !karsilama;
       var ilkAlan = govde.querySelector('input:not([type=hidden]):not([readonly]):not([type=checkbox])');
       if (ilkAlan && matchMedia('(pointer:fine)').matches) ilkAlan.focus(); else ic.focus({ preventScroll: true });
     };
@@ -589,8 +604,9 @@
           client_id: ayar.google_istemci, ux_mode: 'popup', auto_select: false, itp_support: true,
           callback: function (r) { k.hata(''); api('/giris/google', { yontem: 'POST', govde: { kimlik_jetonu: r.credential } }).then(function (j) { girdi(j); }, function (h) { k.hata(h.message); }); }
         });
-        var koyu = document.documentElement.getAttribute('data-theme') === 'dark';
-        window.google.accounts.id.renderButton(yer, { type: 'standard', theme: koyu ? 'filled_black' : 'outline', size: 'large', text: 'continue_with', shape: 'rectangular', logo_alignment: 'center', locale: 'tr', width: Math.max(200, Math.min(400, yer.clientWidth || 300)) });
+        // Her iki temada da beyaz "outline" düğme: koyu "filled_black" sürümü logoyu beyaz kare içinde koyu şeride yapıştırıyordu.
+        // Biçim (hap, ortalı logo, kap genişliği) diğer sağlayıcı düğmeleriyle aynı hizaya oturur.
+        window.google.accounts.id.renderButton(yer, { type: 'standard', theme: 'outline', size: 'large', text: 'continue_with', shape: 'pill', logo_alignment: 'left', locale: 'tr', width: Math.max(200, Math.min(400, Math.floor(yer.getBoundingClientRect().width) || 300)) });
       }, function () { yer.hidden = true; });
     }
     function telegramAc() {
@@ -664,17 +680,17 @@
       };
     }
 
-    // Ana ekran: Google ve e-posta birincil; rumuz+şifre küçük bağlantı; Telegram en altta.
+    // Ana ekran: tüm sağlayıcılar aynı boyda alt alta (Google, e-posta, Telegram); rumuz + şifre "ya da" altında ikincil bağlantı.
     function ana() {
       turnstileKaldir();
       if (!ayar.google_istemci && !ayar.eposta && ayar.sifre !== false) return rumuzEkrani(oku('fr-giris-yontem') ? 'giris' : 'uye');   // yalnız rumuz+şifre (ve Telegram) açıksa doğrudan form
-      k.ciz(baslik || 'Foruma katıl', ayar.google_istemci || ayar.eposta ? 'Üye olmak ya da giriş yapmak için bir yöntem seç.' : 'Şifreyle üyelik şu an kapalı. Aşağıdaki yöntemlerden biriyle devam edebilirsin.',
+      k.ciz(baslik || 'Foruma katıl', 'Soru sor, cevap ver, aynı dönemde tercih yapanlarla konuş.',
         '<div class="fr-g-sosyal">' + (ayar.google_istemci ? '<div class="fr-g-google" id="fr-g-google"></div>' : '')
-        + (ayar.eposta ? '<button type="button" class="fr-g-ikincil fr-g-ana" data-eposta>E-posta ile devam et</button>' : '') + '</div>'
+        + (ayar.eposta ? '<button type="button" class="fr-g-saglayici" data-eposta>' + ikon(ZARF) + '<span>E-posta ile devam et</span></button>' : '')
+        + '<button type="button" class="fr-g-saglayici fr-g-tg" data-telegram>' + TG_IKON + '<span>Telegram ile devam et</span></button><div class="fr-g-tg-yer" hidden></div></div>'
         + '<p class="fr-hata" role="alert" hidden></p>'
-        + (ayar.sifre !== false ? '<button type="button" class="fr-g-bag fr-g-kucuk" data-rumuz>Rumuz ve şifreyle giriş</button>' : '')
-        + '<div class="fr-g-ayrac"><span>ya da</span></div>'
-        + '<div class="fr-g-sosyal"><button type="button" class="fr-g-ikincil" data-telegram>Telegram ile devam et</button><div class="fr-g-tg-yer" hidden></div></div>');
+        + (ayar.sifre !== false ? '<div class="fr-g-ayrac"><span>ya da</span></div><button type="button" class="fr-g-bag fr-g-kucuk" data-rumuz>Rumuz ve şifreyle giriş</button>' : '')
+        + '<p class="fr-g-dip">Üyelik ücretsiz. Forumda yalnız rumuzun görünür.</p>', true);
       var e = govde.querySelector('[data-eposta]'), r = govde.querySelector('[data-rumuz]');
       if (e) e.onclick = function () { epostaAdim1(); };
       if (r) r.onclick = function () { rumuzEkrani(oku('fr-giris-yontem') ? 'giris' : 'uye'); };
@@ -691,8 +707,8 @@
         + '<button type="button" role="tab" id="fr-g-t-uye" data-sekme="uye" aria-controls="fr-g-panel">Üye ol</button>'
         + '<button type="button" role="tab" id="fr-g-t-giris" data-sekme="giris" aria-controls="fr-g-panel">Giriş yap</button></div>'
         + '<div id="fr-g-panel" role="tabpanel"></div>'
-        + (tek ? '<div class="fr-g-ayrac"><span>ya da</span></div><div class="fr-g-sosyal"><button type="button" class="fr-g-ikincil" data-telegram>Telegram ile devam et</button><div class="fr-g-tg-yer" hidden></div></div>'
-          : '<button type="button" class="fr-g-bag fr-g-kucuk" data-geri>Diğer yöntemler</button>'));
+        + (tek ? '<div class="fr-g-ayrac"><span>ya da</span></div><div class="fr-g-sosyal"><button type="button" class="fr-g-saglayici fr-g-tg" data-telegram>' + TG_IKON + '<span>Telegram ile devam et</span></button><div class="fr-g-tg-yer" hidden></div></div>'
+          : '<button type="button" class="fr-g-bag fr-g-kucuk" data-geri>' + ikon('M15 6l-6 6 6 6') + 'Diğer yöntemler</button>'));
       var panel = govde.querySelector('#fr-g-panel');
       var sekmeler = govde.querySelectorAll('[role=tab]');
       function sec(s, odakla) {
@@ -913,7 +929,7 @@
     yaz('fr-uye', u); hesapOlayi();
   }
   window.kitForumApi = {
-    api: api, uye: uye, oturum: oturum, bildir: bildir, kok: kok, uyeGuncelle: uyeGuncelle, kartYukle: kitKartYukle, yenile: function () { yaz('fr-ben-t', null); return profilCek(); },
+    api: api, uye: uye, oturum: oturum, bildir: bildir, onayla: onayla, kok: kok, uyeGuncelle: uyeGuncelle, kartYukle: kitKartYukle, yenile: function () { yaz('fr-ben-t', null); return profilCek(); },
     giris: function (baslik, sonra) { return girisGerekli(baslik || 'Üye ol ya da giriş yap', sonra); }
   };
   function uyeKarti(rumuz) {
@@ -1029,6 +1045,7 @@
   // Mesaj eylemleri; liste: o görünümün mesaj dizisi (silinen çıkarılır), ciz: yeniden çizer.
   function eylemleriBagla(kap, liste, ciz) {
     kap.addEventListener('click', function (e) {
+      balonSec(e, kap);
       var f = e.target.closest('[data-faydali]'), s = e.target.closest('[data-sikayet]'), sl = e.target.closest('[data-sil]'), g = e.target.closest('[data-git]');
       if (g) { var hedef = document.getElementById(g.getAttribute('data-git')); if (hedef) { hedef.scrollIntoView({ behavior: 'smooth', block: 'center' }); hedef.classList.add('fr-vurgu'); setTimeout(function () { hedef.classList.remove('fr-vurgu'); }, 1600); } return; }
       if (f) {
@@ -1040,21 +1057,45 @@
         }, function (h) { bildir(h.message); });
       } else if (s) {
         if (girisGerekli('Giriş yap')) return;
-        if (!confirm('Bu mesajı kurallara aykırı diye bildirmek istiyor musun?')) return;
-        api('/yanit/' + s.getAttribute('data-sikayet') + '/sikayet', { yontem: 'POST', govde: {} }).then(function () {
-          s.textContent = 'Bildirildi'; s.disabled = true; bildir('Teşekkürler, inceleyeceğiz.');
-        }, function (h) { bildir(h.message); });
+        onayla({ baslik: 'Bu mesaj bildirilsin mi?', metin: 'Kurallara aykırı mesajları yöneticiler inceler. Kimin bildirdiği gösterilmez.', evet: 'Bildir' }).then(function (ok) {
+          if (!ok) return;
+          api('/yanit/' + s.getAttribute('data-sikayet') + '/sikayet', { yontem: 'POST', govde: {} }).then(function () {
+            s.textContent = 'Bildirildi'; s.disabled = true; bildir('Teşekkürler, inceleyeceğiz.');
+          }, function (h) { bildir(h.message); });
+        });
       } else if (sl) {
-        if (!confirm('Mesajın silinsin mi?')) return;
         var sid = +sl.getAttribute('data-sil');
-        api('/yanit/' + sid, { yontem: 'DELETE' }).then(function () {
-          var l = liste(), i = l.findIndex(function (m) { return m.id === sid; });
-          if (i >= 0) l.splice(i, 1);
-          ciz(); bildir('Mesaj silindi');
-        }, function (h) { bildir(h.message); });
+        onayla({ baslik: 'Mesajın silinsin mi?', metin: 'Silinen mesaj geri getirilemez.', evet: 'Sil', tehlike: true }).then(function (ok) {
+          if (!ok) return;
+          api('/yanit/' + sid, { yontem: 'DELETE' }).then(function () {
+            var l = liste(), i = l.findIndex(function (m) { return m.id === sid; });
+            if (i >= 0) l.splice(i, 1);
+            ciz(); bildir('Mesaj silindi');
+          }, function (h) { bildir(h.message); });
+        });
       }
     });
   }
+  // Dokunmatik ekranda balona dokununca o mesajın eylemleri açılır (CSS: hover:none); bağlantı ve düğmelere dokunmak etkilenmez.
+  function balonSec(e, kap) {
+    var g = e.target.closest('.fr-yanit .fr-govde');
+    if (!g || !kap.contains(g) || e.target.closest('a,button') || !matchMedia('(hover: none)').matches) return;
+    var ar = g.closest('.fr-yanit'), ac = !ar.classList.contains('fr-secik');
+    kap.querySelectorAll('.fr-secik').forEach(function (x) { x.classList.remove('fr-secik'); });
+    if (ac) ar.classList.add('fr-secik');
+  }
+  // Telefonda ekran klavyesi açılınca sohbetin yazma kutusu klavyenin üstünde kalsın: klavye yüksekliği --fr-klavye değişkenine yazılır.
+  (function () {
+    var vv = window.visualViewport;
+    if (!vv) return;
+    var son = -1;
+    function olc() {
+      var k = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+      k = k > 80 ? Math.round(k) : 0;   // adres çubuğunun küçük oynamaları klavye sayılmaz
+      if (k !== son) { son = k; document.documentElement.style.setProperty('--fr-klavye', k + 'px'); }
+    }
+    vv.addEventListener('resize', olc); vv.addEventListener('scroll', olc);
+  })();
   function enAltta(sc) { return sc ? sc.scrollHeight - sc.scrollTop - sc.clientHeight < 80 : (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 120); }
   function enAltaIn(sc) { if (sc) sc.scrollTop = sc.scrollHeight; else window.scrollTo(0, document.documentElement.scrollHeight); }
   // Görünür sekmede yeni mesajları yoklar: odada 20 sn, diğerlerinde 45 sn; sekme gizliyken durur.
@@ -1115,10 +1156,12 @@
     bas.addEventListener('click', function (e) {
       if (!e.target.closest('[data-basvurdum]')) return;
       if (basvurularim()[ilan]) {
-        if (!confirm('Başvurdum işaretini kaldırayım mı?')) return;
-        api('/basvuru/' + encodeURIComponent(ilan) + '?kimlik=' + kimlik(), { yontem: 'DELETE' }).then(function (j) {
-          var m = basvurularim(); delete m[ilan]; yaz('fr-basvuru', m); basvuruDegisti(); basvuruCiz(j.basvuru);
-        }, function (h) { bildir(h.message); });
+        onayla({ baslik: 'Başvurdum işareti kaldırılsın mı?', metin: 'Eklediğin puan da başvuranlar listesinden çıkar.', evet: 'Kaldır' }).then(function (ok) {
+          if (!ok) return;
+          api('/basvuru/' + encodeURIComponent(ilan) + '?kimlik=' + kimlik(), { yontem: 'DELETE' }).then(function (j) {
+            var m = basvurularim(); delete m[ilan]; yaz('fr-basvuru', m); basvuruDegisti(); basvuruCiz(j.basvuru);
+          }, function (h) { bildir(h.message); });
+        });
       } else basvur(null);
     });
     function ciz(yeniden) {
@@ -1328,7 +1371,7 @@
       araclar.innerHTML = '<button type="button" class="fr-zil" data-zil aria-label="Bildirimler">' + ikon(ZIL) + '<b data-zil-sayi hidden></b></button>'
         + (u ? '<details class="fr-ben"><summary aria-label="Hesabım">' + avatar(u) + '</summary><div><p><b>' + esc(u.rumuz) + '</b></p>'
           + (u.kurucu ? '<p>Kurucu üye</p>' : '') + (u.itibar ? '<p>' + sayi(u.itibar) + ' kez faydalı bulundu</p>' : '')
-          + '<a class="fr-ben-bag" data-ic href="?uye=' + encodeURIComponent(u.rumuz) + '">Profilim</a><a class="fr-ben-bag" href="' + kok() + '?profil=1">Profil kartımı düzenle</a>'
+          + '<a class="fr-ben-bag" data-ic href="?uye=' + encodeURIComponent(u.rumuz) + '">Profilim</a><a class="fr-ben-bag" href="' + kok() + '?profil=kart">Profil kartımı düzenle</a>'
           + '<a class="fr-ben-bag" data-ic href="?takip=1">Takip ettiklerim</a><a class="fr-ben-bag" data-ic href="?bolum=mesaj">Mesajlarım</a>'
           + '<label class="fr-anahtar-s"><input type="checkbox" data-ayar="dm_acik"' + (kapali(u.dm_acik) ? '' : ' checked') + '><span>Özel mesaj alabilirim</span></label>'
           + (u.telegram === false ? '' : '<label class="fr-anahtar-s"><input type="checkbox" data-ayar="bildirim"' + (kapali(u.bildirim) ? '' : ' checked') + '><span>Telegram\'dan bildirim al</span></label>')
@@ -1346,7 +1389,8 @@
       return '<a class="fr-soru-satir' + (yeniN ? ' fr-okunmamis' : '') + '" data-kat="' + esc(b.ilan_id ? 'ilan' : b.kategori) + '" data-ic href="' + hedef + '">'
         + '<span class="fr-cevap-kutu' + (n ? ' fr-cevapli' : b.sabit ? '' : ' fr-yanitsiz') + '"><b>' + sayi(n) + '</b><small>cevap</small></span>'
         + '<span class="fr-soru-ic"><b class="fr-soru-bas">' + (b.sabit ? '<span class="fr-sabit">Sabit</span> ' : '') + esc(b.baslik) + '</b>'
-        + '<span class="fr-soru-alt"><span class="fr-kat-cip">' + esc(b.ilan_id ? 'İlan sorusu' : katAd(b.kategori)) + '</span>' + (b.duzey ? '<span class="fr-duzey-cip" data-duzey="' + esc(b.duzey) + '">' + esc(duzeyAd(b.duzey)) + '</span>' : '') + (b.anket ? '<span class="fr-anket-cip">Anket</span>' : '') + parcalar([b.rumuz, zaman(b.son_hareket || b.olusma)]) + '</span></span>'
+        + (b.kisa && !b._oda ? '<span class="fr-soru-kisa">' + esc(kisalt(b.kisa, 160)) + '</span>' : '')
+        + '<span class="fr-soru-alt"><span class="fr-kat-cip">' + esc(b.ilan_id ? 'İlan sorusu' : katAd(b.kategori)) + '</span>' + (b.duzey ? '<span class="fr-duzey-cip" data-duzey="' + esc(b.duzey) + '">' + esc(duzeyAd(b.duzey)) + '</span>' : '') + (b.anket ? '<span class="fr-anket-cip">Anket</span>' : '') + (b.rumuz ? '<span class="fr-yazar">' + esc(b.rumuz) + '</span>' : '') + parcalar([zaman(b.son_hareket || b.olusma)]) + '</span></span>'
         + (yeniN ? '<span class="fr-yeni-cevap">' + sayi(yeniN) + ' yeni</span>' : '') + '</a>';
     }
     function soruListesi(p) {
@@ -1668,24 +1712,32 @@
         }, function (h) { bildir(h.message); }).then(function () { eskiDugme.disabled = false; });
       };
       kap.addEventListener('click', function (e) {
+        balonSec(e, kap);
         var en = e.target.closest('[data-dm-engel]'), sk = e.target.closest('[data-dm-sikayet]'), sl = e.target.closest('[data-dm-sil]');
+        var menu = kap.querySelector('.fr-dm-menu');
+        if ((en || sk) && menu) menu.open = false;
         if (en) {
           var yeniDurum = !durum.engelledim;
-          if (yeniDurum && !confirm(rumuz + ' engellensin mi? Sana mesaj gönderemez.')) return;
-          api('/ozel/' + encodeURIComponent(rumuz) + '/engelle', { yontem: 'POST', govde: { engel: yeniDurum } }).then(function (j) {
-            durum.engelledim = !!j.engelledim; yerYazici.innerHTML = ''; ciz_(); bildir(durum.engelledim ? 'Engellendi' : 'Engel kaldırıldı');
-            var m = kap.querySelector('.fr-dm-menu'); if (m) m.open = false;
-          }, function (h) { bildir(h.message); });
+          (yeniDurum ? onayla({ baslik: rumuz + ' engellensin mi?', metin: 'Sana mesaj gönderemez. Engeli istediğin zaman kaldırabilirsin.', evet: 'Engelle', tehlike: true }) : Promise.resolve(true)).then(function (ok) {
+            if (!ok) return;
+            api('/ozel/' + encodeURIComponent(rumuz) + '/engelle', { yontem: 'POST', govde: { engel: yeniDurum } }).then(function (j) {
+              durum.engelledim = !!j.engelledim; yerYazici.innerHTML = ''; ciz_(); bildir(durum.engelledim ? 'Engellendi' : 'Engel kaldırıldı');
+            }, function (h) { bildir(h.message); });
+          });
         } else if (sk) {
-          if (!confirm('Bu konuşmayı yöneticilere bildirmek ve ' + rumuz + ' kişisini engellemek istiyor musun?')) return;
-          var sonGelen = mesajlar.filter(function (m) { return !m.benden; }).pop();
-          api('/ozel/' + encodeURIComponent(rumuz) + '/sikayet', { yontem: 'POST', govde: sonGelen ? { mesaj_id: sonGelen.id } : {} }).then(function () {
-            durum.engelledim = true; yerYazici.innerHTML = ''; ciz_(); bildir('Bildirildi ve engellendi. Teşekkürler.');
-          }, function (h) { bildir(h.message); });
+          onayla({ baslik: 'Bildir ve engelle', metin: 'Bu konuşma yöneticilere bildirilir ve ' + rumuz + ' sana yeniden yazamaz.', evet: 'Bildir ve engelle', tehlike: true }).then(function (ok) {
+            if (!ok) return;
+            var sonGelen = mesajlar.filter(function (m) { return !m.benden; }).pop();
+            api('/ozel/' + encodeURIComponent(rumuz) + '/sikayet', { yontem: 'POST', govde: sonGelen ? { mesaj_id: sonGelen.id } : {} }).then(function () {
+              durum.engelledim = true; yerYazici.innerHTML = ''; ciz_(); bildir('Bildirildi ve engellendi. Teşekkürler.');
+            }, function (h) { bildir(h.message); });
+          });
         } else if (sl) {
-          if (!confirm('Mesajın silinsin mi?')) return;
           var id = +sl.getAttribute('data-dm-sil');
-          api('/ozel/mesaj/' + id, { yontem: 'DELETE' }).then(function () { mesajlar = mesajlar.filter(function (m) { return m.id !== id; }); ciz_(); }, function (h) { bildir(h.message); });
+          onayla({ baslik: 'Mesajın silinsin mi?', metin: 'Mesaj iki taraftan da kalkar ve geri getirilemez.', evet: 'Sil', tehlike: true }).then(function (ok) {
+            if (!ok) return;
+            api('/ozel/mesaj/' + id, { yontem: 'DELETE' }).then(function () { mesajlar = mesajlar.filter(function (m) { return m.id !== id; }); ciz_(); }, function (h) { bildir(h.message); });
+          });
         }
       });
       yenileyiciler = [function () { return yukle(); }];

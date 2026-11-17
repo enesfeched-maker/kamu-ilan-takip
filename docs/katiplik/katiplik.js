@@ -142,7 +142,7 @@
       sure = 60; metin = kelimeTekrari(ISINMA, sure); baslik = 'Türkçe karakter ısınması';
     } else if (m === 'ozel') {
       var ham = O.sinavBicimi($('ozel-metin').value);
-      if (ham.split(' ').length < 10) { alert('Lütfen en az 10 kelimelik bir metin yapıştır.'); $('ozel-metin').focus(); return; }
+      if (ham.split(' ').length < 10) { bildirim('Lütfen en az 10 kelimelik bir metin yapıştır.'); $('ozel-metin').focus(); return; }
       veri.ozel = $('ozel-metin').value.slice(0, 20000); kaydet();
       sure = ayar.sure; var tekrar = [ham];
       while (tekrar.join(' ').split(' ').length < sure / 60 * 70 + 60) tekrar.push(ham);
@@ -490,6 +490,18 @@
   }
   var liderTablo = null, liderSekme = 'haftalik', liderAday = null;
   // Avatarlar (forum hesabı): avatar-ortak.js yalnız tabloda avatarlı satır ya da giriş varsa yüklenir; avatarsız eski satırlar harfle gösterilir.
+  // Onay penceresi ve kısa bildirim (docs/onay.js; forum.js ve portal.js ile aynı sürüm): yalnız gerektiğinde yüklenir.
+  var ONAY_ADRES = document.currentScript && document.currentScript.src ? document.currentScript.src.replace(/katiplik\/katiplik\.js.*$/, 'onay.js?v=1') : '', onayVaadi = null;
+  function onayYukle() {
+    if (window.kitOnay) return Promise.resolve();
+    if (!onayVaadi) onayVaadi = new Promise(function (ok, red) {
+      if (!ONAY_ADRES) { red(new Error('onay')); return; }
+      var b = document.createElement('script'); b.async = true; b.src = ONAY_ADRES; b.onload = ok; b.onerror = function () { onayVaadi = null; red(new Error('onay')); }; document.head.appendChild(b);
+    });
+    return onayVaadi;
+  }
+  function onayla(o) { return onayYukle().then(function () { return window.kitOnay(o); }, function () { return window.confirm(o.baslik + (o.metin ? '\n\n' + o.metin : '')); }); }
+  function bildirim(m) { onayYukle().then(function () { window.kitOnay.bildir(m); }, function () { window.alert(m); }); }
   var AV_BET = document.currentScript, AV_ADRES = AV_BET && AV_BET.src ? AV_BET.src.replace(/katiplik\/katiplik\.js.*$/, 'avatar-ortak.js?v=' + ((/[?&]v=(\w+)/.exec(AV_BET.src) || [0, '1'])[1])) : '', avVaadi = null;
   function avatarKit() {
     if (avVaadi) return avVaadi;
@@ -595,11 +607,13 @@
   $('y-tarih').onchange = function () { veri.yol.tarih = this.value; veri.yol.g = Date.now(); kaydet(); yolCiz(); A('tikla', { a: 'katip-yol', x: 'tarih' }); };
   $('y-hedef').oninput = function () { var v = Number(this.value.replace(/\D/g, '')); if (v) { veri.yol.hedef = v; veri.yol.g = Date.now(); kaydet(); yolCiz(); } };
   $('gecmis-sil').onclick = function () {
-    if (!confirm('Tüm deneme geçmişin, hatalı kelimelerin, günlük sonuçların ve rozetlerin silinsin mi?')) return;
-    veri.gecmis = []; veri.hatalar = {}; veri.rozetler = []; veri.gunluk = {};
-    // hesaba bağlı veride sıfırlama zamanı tutulur: eşitlemede diğer cihazlar ve hesap da bu andan eski kayıtları düşer (katip-senkron.js)
-    if (O.oku('fr-oturum', null) || O.oku('kit-katip-uye', null) != null) veri.z = Date.now();
-    O.yaz('kit-katip', veri); ozetCiz(); modSec(mod);
+    onayla({ baslik: 'Geçmişin silinsin mi?', metin: 'Tüm deneme geçmişin, hatalı kelimelerin, günlük sonuçların ve rozetlerin silinir. Bu işlem geri alınamaz.', evet: 'Sil', tehlike: true }).then(function (ok) {
+      if (!ok) return;
+      veri.gecmis = []; veri.hatalar = {}; veri.rozetler = []; veri.gunluk = {};
+      // hesaba bağlı veride sıfırlama zamanı tutulur: eşitlemede diğer cihazlar ve hesap da bu andan eski kayıtları düşer (katip-senkron.js)
+      if (O.oku('fr-oturum', null) || O.oku('kit-katip-uye', null) != null) veri.z = Date.now();
+      O.yaz('kit-katip', veri); ozetCiz(); modSec(mod);
+    });
   };
 
   yazim.addEventListener('keydown', function (e) {
@@ -612,8 +626,20 @@
   yazim.addEventListener('input', takip);
   ['paste', 'drop', 'cut', 'contextmenu'].forEach(function (t) { yazim.addEventListener(t, function (e) { e.preventDefault(); }); });
   $('s-metin').addEventListener('copy', function (e) { e.preventDefault(); });
-  $('s-bitir').onclick = function () { if (s.durum === 'yaziyor' && confirm('Süre dolmadan bitirmek istiyor musun?')) bitir(false); };
-  $('s-iptal').onclick = function () { if (s.durum !== 'yaziyor' || confirm('Bu deneme kaydedilmeden kapatılsın mı?')) kapat(); };
+  // Sayfa içi onay penceresi süreyi durdurmaz: onaydan sonra deneme hâlâ sürüyorsa işlem yapılır, vazgeçilirse yazma alanına dönülür.
+  $('s-bitir').onclick = function () {
+    if (s.durum !== 'yaziyor') return;
+    onayla({ baslik: 'Deneme bitirilsin mi?', metin: 'Süre dolmadan bitirirsen şimdiye kadar yazdığın puanlanır.', evet: 'Bitir' }).then(function (ok) {
+      if (s.durum !== 'yaziyor') return;
+      if (ok) bitir(false); else yazim.focus();
+    });
+  };
+  $('s-iptal').onclick = function () {
+    if (s.durum !== 'yaziyor') { kapat(); return; }
+    onayla({ baslik: 'Deneme kapatılsın mı?', metin: 'Bu deneme kaydedilmez.', evet: 'Kapat', tehlike: true }).then(function (ok) {
+      if (ok) { if (s.durum === 'yaziyor') kapat(); } else if (s.durum === 'yaziyor') yazim.focus();
+    });
+  };
   [].forEach.call(document.querySelectorAll('[data-font]'), function (b) {
     b.onclick = function () { s.font = Math.max(11, Math.min(26, s.font + Number(b.dataset.font))); ayar.font = s.font; kaydet(); fontUygula(); if (s.durum === 'yaziyor') yazim.focus(); };
   });

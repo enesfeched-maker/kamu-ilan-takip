@@ -50,6 +50,8 @@
     var l = document.createElement('link'); l.id = 'pk-css'; l.rel = 'stylesheet'; l.href = TABAN + 'profil-kart.css?v=' + SURUM; document.head.appendChild(l);
   }
   function avatarYukle() { var a = AV(); return a ? a.yukle() : Promise.resolve(); }
+  // Sayfa içi onay penceresi (forum.js -> onay.js); eski bir forum.js önbellekteyse yerleşik pencere.
+  function onayla(o) { return K().onayla ? K().onayla(o) : Promise.resolve(window.confirm(o.baslik + (o.metin ? '\n\n' + o.metin : ''))); }
   function avatarHtml(u, boyut) {
     var a = AV();
     if (!a) return '';
@@ -113,7 +115,7 @@
     }
     if (!o.onizleme) {
       h += '<div class="pk-eylemler">';
-      if (kendi) h += '<a class="btn btn-ana" href="' + esc(K().kok()) + '?profil=1">Profilimi düzenle</a>';
+      if (kendi) h += '<a class="btn btn-ana" href="' + esc(K().kok()) + '?profil=kart">Profilimi düzenle</a>';
       else if (u.dm_acik === false) h += '<p class="pk-not">Bu üye özel mesaj almıyor.</p>';
       else h += '<a class="btn btn-ana" href="' + esc(K().kok()) + 'forum/?mesaj=' + encodeURIComponent(u.rumuz) + '">' + ikon(ZARF) + '<span>Mesaj gönder</span></a>';
       if (!o.sayfa) h += '<a class="btn btn-ikinci" href="' + esc(K().kok()) + 'forum/?uye=' + encodeURIComponent(u.rumuz) + '">Profil sayfası</a>';
@@ -130,10 +132,12 @@
       if (ne === 'giris') { if (ustKapat) ustKapat(); K().giris('Profili görmek için giriş yap'); }
       if (ne === 'foto-bildir') {
         if (!K().oturum()) { if (ustKapat) ustKapat(); K().giris('Bildirmek için giriş yap'); return; }
-        if (!confirm('Bu üyenin fotoğrafı yöneticilere bildirilsin mi?')) return;
-        K().api('/uye/' + encodeURIComponent(d.getAttribute('data-rumuz')) + '/foto-bildir', { yontem: 'POST', govde: {} }).then(function (j) {
-          K().bildir(j.zaten ? 'Bunu zaten bildirdin' : 'Bildirildi, teşekkürler'); d.disabled = true;
-        }, function (h) { K().bildir(h.message); });
+        onayla({ baslik: 'Fotoğraf bildirilsin mi?', metin: 'Uygunsuz fotoğrafları yöneticiler inceler ve kaldırır.', evet: 'Bildir' }).then(function (ok) {
+          if (!ok) return;
+          K().api('/uye/' + encodeURIComponent(d.getAttribute('data-rumuz')) + '/foto-bildir', { yontem: 'POST', govde: {} }).then(function (j) {
+            K().bildir(j.zaten ? 'Bunu zaten bildirdin' : 'Bildirildi, teşekkürler'); d.disabled = true;
+          }, function (h) { K().bildir(h.message); });
+        });
       }
     });
   }
@@ -269,26 +273,49 @@
   }
 
   /* ---------- "Kartım" düzenleyicisi ---------- */
-  function duzenleyici(kap) {
+  // Üç kısa bölüm: Görünüm (avatar, fotoğraf, kart rengi), Bilgiler (durum, hedef, hakkında), Gizlilik. Önizleme geniş ekranda yanda sabit,
+  // telefonda tek dokunuşla açılır. Avatarlar setlere (önce piksel karakterler, sonra çizimler) ve gruplara ayrılmış, kayan küçük bir ızgaradadır.
+  // secenek: { gomulu: profil penceresinin içinde (bölüm sekmeleri ve Kaydet düğmesi pencerededir), bolum: ilk bölüm,
+  //            degisti(): kaydedilmemiş değişiklik durumu değişince, girisIste(): üye olmayan kişi "Üye ol" deyince }
+  // Dönen denetçi: { uye, kirli(), kaydet() -> Promise<boolean>, bolum(ad) }. Gömülü değilse sekmeler ve Kaydet düğmesi düzenleyicinin içindedir.
+  var KISIMLAR = [['gorunum', 'Görünüm'], ['bilgiler', 'Bilgiler'], ['gizlilik', 'Gizlilik']];
+  var OK_IKON = 'M6 9l6 6 6-6';
+  function duzenleyici(kap, secenek, ctrl) {
+    secenek = secenek || {};
+    ctrl = ctrl || {
+      uye: false, _bolum: secenek.bolum || 'gorunum',
+      kirli: function () { return false; }, kaydet: function () { return Promise.resolve(true); }, bolum: function (ad) { ctrl._bolum = ad; }
+    };
     css();
-    if (!K().oturum()) { girisKarti(kap); return; }
+    ctrl.uye = !!K().oturum();
+    if (!ctrl.uye) { girisKarti(kap, secenek, ctrl); return ctrl; }
     kap.innerHTML = '<p class="fr-yukleniyor">Yükleniyor…</p>';
+    // Aynı kaba yeniden kurulursa (pencere kapanıp hızla açıldı) geç gelen eski yükleme yeni düzenleyicinin üstüne çizmesin
+    var nesil = kap._pkNesil = (kap._pkNesil || 0) + 1;
     var ben = K().uye();
-    Promise.all([K().api('/ben'), K().api('/uye/' + encodeURIComponent(ben.rumuz)), avatarYukle()]).then(function (s) {
-      kur(kap, s[0], s[1]);
-    }, function (h) { kap.innerHTML = '<p class="fr-bos">' + esc(h.message) + '</p>'; });
+    var benIste = ben && ben.rumuz ? Promise.resolve(null) : K().api('/ben');
+    benIste.then(function (b0) {
+      var rumuz = b0 && b0.uye ? b0.uye.rumuz : ben.rumuz;
+      return Promise.all([b0 || K().api('/ben'), K().api('/uye/' + encodeURIComponent(rumuz)), avatarYukle()]);
+    }).then(function (s) {
+      if (!document.body.contains(kap) || kap._pkNesil !== nesil) return;
+      kur(kap, s[0], s[1], secenek, ctrl);
+    }, function (h) { if (kap._pkNesil !== nesil) return; kap.innerHTML = '<p class="fr-bos">' + esc(h && h.message ? h.message : 'Profil kartı şu an yüklenemedi.') + '</p>'; });
+    return ctrl;
   }
-  function girisKarti(kap) {
+  function girisKarti(kap, secenek, ctrl) {
     var rumuz = 'Misafir';
-    kap.innerHTML = '<div class="pk-cta"><div class="pk-av">' + (AV() ? AV().html({ rumuz: rumuz }, 72) : '') + '</div><h3>Üye ol, profil kartını oluştur</h3>'
+    kap.innerHTML = '<div class="pk-cta"><div class="pk-av">' + (AV() ? AV().html({ rumuz: rumuz }, 72) : '') + '</div><h3>Profil kartını oluştur</h3>'
       + '<p>Avatarını seç, kendini tanıt, hedefini yaz. Kartın forumda adının yanında görünür; neyin görüneceğine sen karar verirsin.</p>'
       + '<button type="button" class="btn btn-ana" data-pk-giris>Üye ol ya da giriş yap</button>'
-      + '<p class="pk-not">Üyelik ücretsiz. Tercih bilgilerin (öğrenim, puan, iller) üye olmadan da bu tarayıcıda çalışır.</p></div>';
+      + '<p class="pk-not">Üyelik ücretsiz. Tercih bilgilerin üye olmadan da bu tarayıcıda çalışır.</p></div>';
     avatarYukle().then(function () { var a = kap.querySelector('.pk-cta .pk-av'); if (a && AV()) a.innerHTML = AV().html({ rumuz: rumuz }, 72); });
-    kap.querySelector('[data-pk-giris]').onclick = function () { K().giris('Profil kartın için giriş yap', function () { duzenleyici(kap); }); };
+    kap.querySelector('[data-pk-giris]').onclick = function () {
+      if (secenek.girisIste) secenek.girisIste();
+      else K().giris('Profil kartın için giriş yap', function () { duzenleyici(kap, secenek, ctrl); });
+    };
   }
-  function esitMi(a, b) { return JSON.stringify(a) === JSON.stringify(b); }
-  function kur(kap, ben, kendiKart) {
+  function kur(kap, ben, kendiKart, secenek, ctrl) {
     var u = ben.uye, kart = ben.kart || {};
     var d = {
       avatar: kart.avatar || null, hakkimda: kart.hakkimda || '', hedef: kart.hedef || '', durum: kart.durum || null, kart_rengi: kart.kart_rengi || null,
@@ -296,9 +323,10 @@
     };
     var fotoSurum = kart.foto_surum || null;
     var kayitli = JSON.stringify(d);
-    var A = AV(), man = A && A.liste();
+    var A = AV(), man = A && A.liste(), px = A && A.pxListe();
     var gruplar = man && man.gruplar ? man.gruplar : [{ anahtar: 'hepsi', ad: 'Avatarlar' }];
     var yasSn = Math.floor(Date.now() / 1000) - (kendiKart.kayit || 0), fotoIzin = yasSn >= 86400;
+    var gomulu = !!secenek.gomulu, onizAcik = false, sonDurum = null;
 
     function onizlemeNesnesi() {
       var o = Object.assign({}, kendiKart, { rumuz: u.rumuz, rol: 'uye', kurucu: !!u.kurucu });
@@ -310,81 +338,116 @@
     // Seçici durağan görüntü gösterir (tek tek 49 canlı sprite çalıştırılmaz); canlı önizleme yalnız kart önizlemesindedir.
     var oncekiSvgRenk = '', oncekiPx = { r: 'pixel', h: 0 };
     function secilen() { return d.avatar && d.avatar !== 'foto' && A ? A.coz(d.avatar) : null; }
+    // Açık set ve grup: seçili avatarınki; yoksa ilk piksel grubu (piksel karakterler önce gelir).
+    var aktifSet = px ? 'px' : 'svg', aktifGrup = '';
+    (function () {
+      var c = secilen();
+      if (!c) return;
+      var l = c.set === 'px' ? (px ? px.avatarlar : []) : (man ? man.avatarlar : []);
+      for (var i = 0; i < l.length; i++) if (l[i].anahtar === c.k) { aktifSet = c.set; aktifGrup = l[i].grup; return; }
+    })();
+    function tile(deger, secili, ic, ad, yazili) {
+      return '<label class="pk-sec' + (yazili ? ' pk-sec-yazili' : '') + (secili ? ' pk-secili' : '') + '" title="' + esc(ad) + '"><input type="radio" name="pk-av" value="' + esc(deger) + '"' + (secili ? ' checked' : '') + '>'
+        + '<span class="pk-sec-ic">' + ic + '</span><span class="' + (yazili ? 'pk-sec-et' : 'pk-sec-ad') + '">' + esc(ad) + '</span></label>';
+    }
+    function dugmeler(l, ad, secili) {
+      return l.map(function (x) { return '<button type="button" data-' + ad + '="' + esc(x[0]) + '" aria-pressed="' + (x[0] === secili ? 'true' : 'false') + '">' + esc(x[1]) + '</button>'; }).join('');
+    }
     function avatarSeceneklerHtml() {
       var varsay = A ? A.varsayilanSvg(u.rumuz) : null, c = secilen();
       var seciliK = c && c.set === 'svg' ? c.k : '', seciliR = c && c.set === 'svg' ? c.r : (oncekiSvgRenk || (varsay ? varsay.r : 'lila'));
-      var px = A && A.pxListe(), seciliP = c && c.set === 'px' ? c.k : '';
-      function tile(deger, secili, ic, ad) { return '<label class="pk-sec' + (secili ? ' pk-secili' : '') + '" title="' + esc(ad) + '"><input type="radio" name="pk-av" value="' + esc(deger) + '"' + (secili ? ' checked' : '') + '><span class="pk-sec-ic">' + ic + '</span><span class="pk-sec-ad">' + esc(ad) + '</span></label>'; }
-      var h = '<div class="pk-secenekler" role="radiogroup" aria-label="Avatar">' + tile('', !d.avatar, A ? A.html({ rumuz: u.rumuz }, 44) : '', 'Otomatik');
-      if (fotoSurum) h += tile('foto', d.avatar === 'foto', A.html({ rumuz: u.rumuz, av: 'foto', fs: fotoSurum, fu: u.id }, 44), 'Fotoğrafım');
+      var seciliP = c && c.set === 'px' ? c.k : '';
+      var h = '<div class="pk-secenekler pk-ust-sec" role="radiogroup" aria-label="Avatar">' + tile('', !d.avatar, A ? A.html({ rumuz: u.rumuz }, 40) : '', 'Otomatik', true);
+      if (fotoSurum && A) h += tile('foto', d.avatar === 'foto', A.html({ rumuz: u.rumuz, av: 'foto', fs: fotoSurum, fu: u.id }, 40), 'Fotoğrafım', true);
       h += '</div>';
-      if (man) {
-        h += '<h4 class="pk-set">Çizim avatarlar</h4>';
-        gruplar.forEach(function (g) {
-          var l = man.avatarlar.filter(function (a) { return a.grup === g.anahtar; });
-          if (!l.length) return;
-          h += '<div class="pk-grup"><h4>' + esc(g.ad) + '</h4><div class="pk-secenekler" role="radiogroup" aria-label="' + esc(g.ad) + '">' + l.map(function (a) {
-            return tile('s:' + a.anahtar, seciliK === a.anahtar, A.html({ rumuz: u.rumuz, av: a.anahtar + ':' + seciliR }, 44), a.ad);
-          }).join('') + '</div></div>';
-        });
-      }
-      if (px) {
-        h += '<h4 class="pk-set">Piksel karakterler</h4>';
-        px.gruplar.forEach(function (g) {
-          var l = px.avatarlar.filter(function (a) { return a.grup === g.anahtar; });
-          if (!l.length) return;
-          h += '<div class="pk-grup"><h4>' + esc(g.ad) + '</h4><div class="pk-secenekler" role="radiogroup" aria-label="' + esc(g.ad) + '">' + l.map(function (a) {
-            return tile('p:' + a.anahtar, seciliP === a.anahtar, A.html({ rumuz: u.rumuz, av: 'px.' + a.anahtar + ':pixel.0' }, 44), a.ad);
-          }).join('') + '</div></div>';
-        });
+      var setler = [];
+      if (px) setler.push(['px', 'Piksel karakterler']);
+      if (man) setler.push(['svg', 'Çizimler']);
+      if (setler.length) {
+        if (!setler.some(function (s) { return s[0] === aktifSet; })) aktifSet = setler[0][0];
+        var liste = aktifSet === 'px' ? px.avatarlar : man.avatarlar;
+        var gl = (aktifSet === 'px' ? px.gruplar : gruplar).filter(function (g) { return liste.some(function (a) { return a.grup === g.anahtar; }); });
+        if (!gl.some(function (g) { return g.anahtar === aktifGrup; })) aktifGrup = gl.length ? gl[0].anahtar : '';
+        var grupAdi = ''; gl.forEach(function (g) { if (g.anahtar === aktifGrup) grupAdi = g.ad; });
+        h += '<div class="pk-setler" role="group" aria-label="Avatar seti">' + dugmeler(setler, 'pk-set', aktifSet) + '</div>'
+          + '<div class="pk-gruplar" role="group" aria-label="Grup">' + dugmeler(gl.map(function (g) { return [g.anahtar, g.ad]; }), 'pk-grup', aktifGrup) + '</div>'
+          + '<div class="pk-secenekler pk-izgara" role="radiogroup" aria-label="' + esc(grupAdi) + '">' + liste.filter(function (a) { return a.grup === aktifGrup; }).map(function (a) {
+            return aktifSet === 'px'
+              ? tile('p:' + a.anahtar, seciliP === a.anahtar, A.html({ rumuz: u.rumuz, av: 'px.' + a.anahtar + ':pixel.0' }, 44), a.ad)
+              : tile('s:' + a.anahtar, seciliK === a.anahtar, A.html({ rumuz: u.rumuz, av: a.anahtar + ':' + seciliR }, 44), a.ad);
+          }).join('') + '</div>';
       }
       if (c && c.set === 'svg' && man) {
-        h += '<div class="pk-grup"><h4>Avatar zemin rengi</h4><div class="pk-secenekler pk-renkler" role="radiogroup" aria-label="Avatar zemin rengi">' + man.renkler.map(function (r) {
+        h += '<fieldset class="pk-ince"><legend>Avatar zemini</legend><div class="pk-secenekler pk-renkler" role="radiogroup" aria-label="Avatar zemin rengi">' + man.renkler.map(function (r) {
           var secili = seciliR === r.anahtar;
           return '<label class="pk-sec pk-renk' + (secili ? ' pk-secili' : '') + '" title="' + esc(r.ad) + '"><input type="radio" name="pk-avr" value="' + esc(r.anahtar) + '"' + (secili ? ' checked' : '') + '><span class="pk-ornek" style="background:' + esc(r.renk) + '"></span><span class="pk-sec-ad">' + esc(r.ad) + '</span></label>';
-        }).join('') + '</div></div>';
+        }).join('') + '</div></fieldset>';
       }
       if (c && c.set === 'px' && px) {
-        h += '<div class="pk-grup"><h4>Görünüm</h4><div class="pk-secenekler" role="radiogroup" aria-label="Piksel karakter görünümü">' + px.bicimler.map(function (b) {
+        h += '<fieldset class="pk-ince"><legend>Çizim biçimi</legend><div class="pk-secenekler" role="radiogroup" aria-label="Piksel karakter görünümü">' + px.bicimler.map(function (b) {
           return '<label class="pk-sec pk-yazi' + (c.r === b.anahtar ? ' pk-secili' : '') + '"><input type="radio" name="pk-pxb" value="' + esc(b.anahtar) + '"' + (c.r === b.anahtar ? ' checked' : '') + '><span>' + esc(b.ad) + '</span></label>';
-        }).join('') + '</div></div><div class="pk-grup"><h4>Renk tonu</h4><div class="pk-secenekler pk-renkler" role="radiogroup" aria-label="Renk tonu">' + px.tonlar.map(function (t) {
-          return '<label class="pk-sec pk-renk' + (c.h === t.ton ? ' pk-secili' : '') + '" title="' + esc(t.ad) + '"><input type="radio" name="pk-pxt" value="' + t.ton + '"' + (c.h === t.ton ? ' checked' : '') + '><span class="pk-ornek pk-ton">' + (A.anlik({ k: c.k, r: 'pixel', h: 0 }) ? '<img alt="" src="' + esc(A.anlik({ k: c.k, r: 'pixel', h: 0 })) + '" style="filter:hue-rotate(' + t.ton + 'deg)">' : '') + '</span><span class="pk-sec-ad">' + esc(t.ad) + '</span></label>';
-        }).join('') + '</div></div>';
+        }).join('') + '</div></fieldset><fieldset class="pk-ince"><legend>Renk tonu</legend><div class="pk-secenekler pk-renkler" role="radiogroup" aria-label="Renk tonu">' + px.tonlar.map(function (t) {
+          var resim = A.anlik({ k: c.k, r: 'pixel', h: 0 });
+          return '<label class="pk-sec pk-renk' + (c.h === t.ton ? ' pk-secili' : '') + '" title="' + esc(t.ad) + '"><input type="radio" name="pk-pxt" value="' + t.ton + '"' + (c.h === t.ton ? ' checked' : '') + '><span class="pk-ornek pk-ton">' + (resim ? '<img alt="" src="' + esc(resim) + '" style="filter:hue-rotate(' + t.ton + 'deg)">' : '') + '</span><span class="pk-sec-ad">' + esc(t.ad) + '</span></label>';
+        }).join('') + '</div></fieldset>';
       }
       return h;
-    }    function yerlestir() {
-      var onizlemeAcik = kap.querySelector('.pk-onizleme') ? kap.querySelector('.pk-onizleme').innerHTML : null;
-      kap.innerHTML = '<div class="pk-duzen"><div class="pk-onizleme" aria-live="polite" aria-label="Kart önizlemesi"></div><form class="pk-form" novalidate>'
+    }
+    function secim(ad, deger, etiket) {   // yazılı radyo düğmesi (durum, gizlilik)
+      return '<label class="pk-sec pk-yazi' + (deger.secili ? ' pk-secili' : '') + '"><input type="radio" name="' + ad + '" value="' + esc(deger.v) + '"' + (deger.secili ? ' checked' : '') + '><span>' + esc(etiket) + '</span></label>';
+    }
+    function yerlestir() {
+      var b = ctrl._bolum;
+      if (!KISIMLAR.some(function (x) { return x[0] === b; })) b = ctrl._bolum = 'gorunum';
+      kap.innerHTML = '<div class="pk-duzen' + (gomulu ? ' pk-gomulu' : '') + '">'
+        + '<aside class="pk-onizleme' + (onizAcik ? ' pk-acik' : '') + '" aria-label="Kart önizlemesi">'
+        + '<button type="button" class="pk-onizleme-d" aria-expanded="' + (onizAcik ? 'true' : 'false') + '" aria-controls="pk-oniz-ic"><span class="pk-mini" data-mini></span><span>Kartını önizle</span>' + ikon(OK_IKON, 'pk-ok') + '</button>'
+        + '<div class="pk-onizleme-ic" id="pk-oniz-ic" aria-live="polite"></div>'
+        + '<a class="pk-sayfam" href="' + esc(K().kok()) + 'forum/?uye=' + encodeURIComponent(u.rumuz) + '">Herkese açık sayfanı gör</a></aside>'
+        + '<form class="pk-form" novalidate>'
+        + (gomulu ? '' : '<div class="pk-kisim-sekme" role="tablist" aria-label="Kart bölümleri">' + KISIMLAR.map(function (x) {
+          return '<button type="button" role="tab" id="pk-k-' + x[0] + '" data-pk-kisim="' + x[0] + '" aria-controls="pk-kisim-' + x[0] + '" aria-selected="' + (x[0] === b ? 'true' : 'false') + '" tabindex="' + (x[0] === b ? '0' : '-1') + '">' + x[1] + '</button>';
+        }).join('') + '</div>')
+        + '<p class="pk-hata" role="alert" hidden data-hata></p>'
+        // ----- Görünüm -----
+        + '<section class="pk-kisim" id="pk-kisim-gorunum" data-kisim="gorunum"' + (gomulu ? ' aria-label="Görünüm"' : ' role="tabpanel" aria-labelledby="pk-k-gorunum"') + (b === 'gorunum' ? '' : ' hidden') + '>'
         + '<fieldset class="pk-bolum"><legend>Avatarın</legend><div data-avatarlar></div>'
-        + '<div class="pk-foto"><button type="button" class="btn btn-ikinci" data-foto-sec' + (fotoIzin ? '' : ' disabled') + '>Fotoğraf yükle</button>'
-        + (fotoSurum ? '<button type="button" class="btn btn-ikinci" data-foto-sil>Fotoğrafı kaldır</button>' : '')
+        + '<div class="pk-foto"><button type="button" class="btn btn-ikinci" data-foto-sec' + (fotoIzin ? '' : ' disabled') + '>' + (fotoSurum ? 'Fotoğrafı değiştir' : 'Fotoğraf yükle') + '</button>'
+        + (fotoSurum ? '<button type="button" class="btn btn-ikinci pk-tehlike" data-foto-sil>Fotoğrafı kaldır</button>' : '')
         + '<input type="file" accept="image/*" hidden data-foto-dosya>'
-        + '<p class="pk-not">' + (fotoIzin ? 'Fotoğrafın kare kırpılır ve küçültülür; en çok günde 3 kez yükleyebilirsin. Uygunsuz fotoğraflar kaldırılır.' : 'Fotoğraf yüklemek için hesabın 24 saatlik olmalı; o zamana kadar hazır avatarlardan seç.') + '</p>'
+        + '<p class="pk-not">' + (fotoIzin ? 'Kare kırpılır ve küçültülür; günde en çok 3 kez yükleyebilirsin. Uygunsuz fotoğraflar kaldırılır.' : 'Fotoğraf yüklemek için hesabının 24 saatlik olması gerekir; o zamana kadar hazır avatarlardan seç.') + '</p>'
         + '<p class="pk-hata" role="alert" hidden data-foto-hata></p></div><div data-kirp-yer></div></fieldset>'
-        + '<fieldset class="pk-bolum"><legend>Durumun</legend><div class="pk-secenekler pk-durumlar" role="radiogroup" aria-label="Durum">'
-        + '<label class="pk-sec pk-yazi' + (!d.durum ? ' pk-secili' : '') + '"><input type="radio" name="pk-durum" value=""' + (!d.durum ? ' checked' : '') + '><span>Belirtme</span></label>'
-        + DURUMLAR.map(function (x) { return '<label class="pk-sec pk-yazi' + (d.durum === x[0] ? ' pk-secili' : '') + '"><input type="radio" name="pk-durum" value="' + x[0] + '"' + (d.durum === x[0] ? ' checked' : '') + '><span>' + esc(x[1]) + '</span></label>'; }).join('')
-        + '</div><p class="pk-not">“Yerleştim” ve “Atandım” kendi beyanındır, kartında “beyan” etiketiyle görünür.</p></fieldset>'
-        + '<div class="pk-bolum"><label for="pk-hedef">Hedefin</label><input class="alan" id="pk-hedef" maxlength="60" autocomplete="off" placeholder="Örn. Ankara adliye katipliği" value="' + esc(d.hedef) + '"><p class="pk-say" data-say="hedef"></p></div>'
-        + '<div class="pk-bolum"><label for="pk-hakkimda">Hakkında</label><textarea class="alan" id="pk-hakkimda" maxlength="160" rows="3" placeholder="Kendini kısaca tanıt (bağlantı, telefon, e-posta yazma)">' + esc(d.hakkimda) + '</textarea><p class="pk-say" data-say="hakkimda"></p></div>'
         + '<fieldset class="pk-bolum"><legend>Kart rengi</legend><div class="pk-secenekler pk-renkler" role="radiogroup" aria-label="Kart rengi">'
         + RENKLER.map(function (r) { var secili = (d.kart_rengi || '') === r[0]; return '<label class="pk-sec pk-renk' + (secili ? ' pk-secili' : '') + '" title="' + r[1] + '"><input type="radio" name="pk-krenk" value="' + r[0] + '"' + (secili ? ' checked' : '') + '><span class="pk-ornek pk-kr" data-renk="' + r[0] + '"></span><span class="pk-sec-ad">' + r[1] + '</span></label>'; }).join('')
-        + '</div></fieldset>'
-        + '<fieldset class="pk-bolum"><legend>Gizlilik</legend><div class="pk-secenekler pk-durumlar" role="radiogroup" aria-label="Profilimi kim görebilir">'
-        + [['herkes', 'Herkes görebilir'], ['uyeler', 'Yalnız üyeler'], ['gizli', 'Gizli']].map(function (x) { return '<label class="pk-sec pk-yazi' + (d.gizlilik.profil === x[0] ? ' pk-secili' : '') + '"><input type="radio" name="pk-gprofil" value="' + x[0] + '"' + (d.gizlilik.profil === x[0] ? ' checked' : '') + '><span>' + x[1] + '</span></label>'; }).join('')
-        + '</div><p class="pk-not">Gizli profilde yalnız rumuzun ve avatarın görünür. Rumuzun, mesajların ve avatarın her zaman forumda görünür.</p>'
-        + '<p class="pk-not"><b>Puanın, illerin ve katiplik sonuçların varsayılan olarak gizlidir.</b> Kartında görünmesini istediklerini aç. Katiplik sonuçların görünürse seçtiğin hazır avatar katiplik liderlik tablosunda da gösterilir.</p>'
-        + [['puan_goster', 'KPSS puanım görünür olsun'], ['il_goster', 'Çalışmak istediğim iller görünür olsun'], ['katiplik_goster', 'Katiplik sonuçlarım görünür olsun']].map(function (x) {
-          return '<label class="pk-anahtar"><input type="checkbox" data-g="' + x[0] + '"' + (d.gizlilik[x[0]] ? ' checked' : '') + '><span>' + x[1] + '</span></label>';
-        }).join('') + '<p class="pk-not">Öğrenim düzeyin her zaman görünür.</p></fieldset>'
-        + '<p class="pk-hata" role="alert" hidden data-hata></p>'
-        + '<div class="pk-alt-cubuk"><button type="submit" class="btn btn-ana" data-kaydet disabled>Kaydet</button><a class="btn btn-ikinci" href="' + esc(K().kok()) + 'forum/?uye=' + encodeURIComponent(u.rumuz) + '">Herkese açık sayfam</a></div></form></div>';
+        + '</div></fieldset></section>'
+        // ----- Bilgiler -----
+        + '<section class="pk-kisim" id="pk-kisim-bilgiler" data-kisim="bilgiler"' + (gomulu ? ' aria-label="Bilgiler"' : ' role="tabpanel" aria-labelledby="pk-k-bilgiler"') + (b === 'bilgiler' ? '' : ' hidden') + '>'
+        + '<fieldset class="pk-bolum"><legend>Durumun</legend><div class="pk-secenekler pk-durumlar" role="radiogroup" aria-label="Durum">'
+        + secim('pk-durum', { v: '', secili: !d.durum }, 'Belirtme') + DURUMLAR.map(function (x) { return secim('pk-durum', { v: x[0], secili: d.durum === x[0] }, x[1]); }).join('')
+        + '</div><p class="pk-not">“Yerleştim” ve “Atandım” kendi beyanındır; kartında “beyan” etiketiyle görünür.</p></fieldset>'
+        + '<div class="pk-bolum"><label for="pk-hedef">Hedefin</label><input class="alan" id="pk-hedef" maxlength="60" autocomplete="off" placeholder="Örn. Ankara adliye katipliği" value="' + esc(d.hedef) + '"><p class="pk-say" data-say="hedef"></p></div>'
+        + '<div class="pk-bolum"><label for="pk-hakkimda">Hakkında</label><textarea class="alan" id="pk-hakkimda" maxlength="160" rows="3" placeholder="Kendini kısaca tanıt (bağlantı, telefon, e-posta yazma)">' + esc(d.hakkimda) + '</textarea><p class="pk-say" data-say="hakkimda"></p></div>'
+        + '</section>'
+        // ----- Gizlilik -----
+        + '<section class="pk-kisim" id="pk-kisim-gizlilik" data-kisim="gizlilik"' + (gomulu ? ' aria-label="Gizlilik"' : ' role="tabpanel" aria-labelledby="pk-k-gizlilik"') + (b === 'gizlilik' ? '' : ' hidden') + '>'
+        + '<fieldset class="pk-bolum"><legend>Profilini kim görebilir?</legend><div class="pk-secenekler pk-durumlar" role="radiogroup" aria-label="Profilimi kim görebilir">'
+        + [['herkes', 'Herkes'], ['uyeler', 'Yalnız üyeler'], ['gizli', 'Gizli']].map(function (x) { return secim('pk-gprofil', { v: x[0], secili: d.gizlilik.profil === x[0] }, x[1]); }).join('')
+        + '</div><p class="pk-not">Gizli profilde kartında yalnız rumuzun ve avatarın görünür. Mesajların forumda her zaman görünür.</p></fieldset>'
+        + '<fieldset class="pk-bolum"><legend>Kartında görünsün</legend>'
+        + [['puan_goster', 'KPSS puanım'], ['il_goster', 'Çalışmak istediğim iller'], ['katiplik_goster', 'Katiplik sonuçlarım']].map(function (x) {
+          return '<label class="pk-anahtar"><span>' + x[1] + '</span><input type="checkbox" data-g="' + x[0] + '"' + (d.gizlilik[x[0]] ? ' checked' : '') + '></label>';
+        }).join('')
+        + '<p class="pk-not">Hepsi varsayılan olarak gizlidir. Katiplik sonuçların açıksa avatarın katiplik liderlik tablosunda da görünür. Öğrenim düzeyin her zaman görünür.</p></fieldset>'
+        + '</section>'
+        + (gomulu ? '' : '<div class="pk-alt-cubuk"><p class="pk-kayit-durum" data-kayit-durum aria-live="polite"></p><button type="submit" class="btn btn-ana" data-kaydet disabled>Kaydet</button></div>')
+        + '</form></div>';
       kap.querySelector('[data-avatarlar]').innerHTML = avatarSeceneklerHtml();
-      sayaclar(); onizle(); dugme();
+      sayaclar(); onizle(); durumGuncelle(true);
     }
     function onizle() {
-      var yer = kap.querySelector('.pk-onizleme');
-      if (yer) yer.innerHTML = '<h3 class="pk-onizleme-bas">Önizleme</h3>' + kartHtml(onizlemeNesnesi(), { onizleme: true, tum: false });
+      var yer = kap.querySelector('.pk-onizleme-ic'), o = onizlemeNesnesi();
+      if (yer) yer.innerHTML = kartHtml(o, { onizleme: true, tum: false });
+      var m = kap.querySelector('[data-mini]'); if (m && A) m.innerHTML = A.html(o, 28);
       var c = secilen();
       if (A && ((c && c.set === 'px') || (!d.avatar && (A.varsayilan(u.rumuz) || {}).set === 'px')) && !A.pxHazirMi()) A.piixYukle().then(function (ok) { if (ok && document.body.contains(kap)) onizle(); });
     }
@@ -393,9 +456,19 @@
       kap.querySelector('[data-say=hedef]').textContent = h.value.length + '/60';
       kap.querySelector('[data-say=hakkimda]').textContent = k.value.length + '/160';
     }
-    function dugme() { var b = kap.querySelector('[data-kaydet]'); if (b) b.disabled = JSON.stringify(d) === kayitli; }
+    ctrl.kirli = function () { return JSON.stringify(d) !== kayitli; };
+    // Kaydet düğmesi ve durum yazısı (gömülüyse pencere kendi düğmesini secenek.degisti ile günceller)
+    function durumGuncelle(ilk, kaydedildi) {
+      var k = ctrl.kirli();
+      var b = kap.querySelector('[data-kaydet]'), y = kap.querySelector('[data-kayit-durum]');
+      if (b) b.disabled = !k;
+      if (y) y.textContent = k ? 'Kaydedilmemiş değişiklik var' : kaydedildi ? 'Kaydedildi' : '';
+      if (y) y.classList.toggle('pk-kirli', k);
+      if (secenek.degisti && (ilk || sonDurum !== k || kaydedildi)) secenek.degisti(k, !!kaydedildi);
+      sonDurum = k;
+    }
     function hataGoster(m) { var p = kap.querySelector('[data-hata]'); if (p) { p.textContent = m || ''; p.hidden = !m; } }
-    function degisti() { sayaclar(); onizle(); dugme(); }
+    function degisti() { sayaclar(); onizle(); durumGuncelle(); }
     function avatarSec(ad) {   // ad: değişen denetim adı
       var cur = secilen();
       if (ad === 'pk-av') {
@@ -412,68 +485,105 @@
         d.avatar = A.dizge(cur);
       }
     }
+    function secenekleriCiz(odakSecici) {
+      var y = kap.querySelector('[data-avatarlar]'); y.innerHTML = avatarSeceneklerHtml();
+      var odak = odakSecici && kap.querySelector(odakSecici); if (odak) odak.focus();
+    }
+    ctrl.bolum = function (ad) {
+      if (!KISIMLAR.some(function (x) { return x[0] === ad; })) return;
+      ctrl._bolum = ad;
+      kap.querySelectorAll('.pk-kisim').forEach(function (s) { s.hidden = s.getAttribute('data-kisim') !== ad; });
+      kap.querySelectorAll('[data-pk-kisim]').forEach(function (t) { var a = t.getAttribute('data-pk-kisim') === ad; t.setAttribute('aria-selected', a ? 'true' : 'false'); t.tabIndex = a ? 0 : -1; });
+    };
+    ctrl.kaydet = function () {
+      if (!ctrl.kirli()) return Promise.resolve(true);
+      hataGoster('');
+      var b = kap.querySelector('[data-kaydet]'); if (b) { b.disabled = true; b.textContent = 'Kaydediliyor…'; }
+      return K().api('/ben/kart', { yontem: 'POST', govde: d }).then(function (j) {
+        var k = j.kart || {};
+        d.avatar = k.avatar || null; d.hakkimda = k.hakkimda || ''; d.hedef = k.hedef || '';
+        kayitli = JSON.stringify(d);
+        var h = kap.querySelector('#pk-hedef'), t = kap.querySelector('#pk-hakkimda');   // sunucu boşlukları kırpabilir: alanlar kayıtla aynı kalsın
+        if (h) h.value = d.hedef; if (t) t.value = d.hakkimda;
+        K().uyeGuncelle(k);
+        if (b) b.textContent = 'Kaydet';
+        sayaclar(); onizle(); durumGuncelle(false, true);
+        return true;
+      }, function (h) { hataGoster(h.message); if (b) { b.textContent = 'Kaydet'; b.disabled = false; } return false; });
+    };
     // yerlestir() formu baştan çizer (fotoğraf yükleyince/kaldırınca da): dinleyiciler her çizimden sonra yeni forma yeniden bağlanır.
     function yenidenCiz() { yerlestir(); bagla(); }
     yenidenCiz();
     function bagla() {
-    var form = kap.querySelector('form');
-    form.addEventListener('change', function (e) {
-      var t = e.target;
-      if (t.name === 'pk-av' || t.name === 'pk-avr' || t.name === 'pk-pxb' || t.name === 'pk-pxt') {
-        avatarSec(t.name);
-        // renk seçilince seçili avatar korunur; avatar seçilince renk korunur: seçenek listesini yeniden çiz (önizleme renkleri de güncellensin)
-        var y = kap.querySelector('[data-avatarlar]'); y.innerHTML = avatarSeceneklerHtml();
-        var odak = kap.querySelector('input[name=' + t.name + ']:checked'); if (odak) odak.focus();
-      } else if (t.name === 'pk-durum') d.durum = t.value || null;
-      else if (t.name === 'pk-krenk') d.kart_rengi = t.value || null;
-      else if (t.name === 'pk-gprofil') d.gizlilik.profil = t.value;
-      else if (t.getAttribute('data-g')) d.gizlilik[t.getAttribute('data-g')] = t.checked;
-      kap.querySelectorAll('.pk-sec').forEach(function (l) { var i = l.querySelector('input'); if (i && i.type === 'radio') l.classList.toggle('pk-secili', i.checked); });
-      degisti();
-    });
-    form.addEventListener('input', function (e) {
-      if (e.target.id === 'pk-hedef') d.hedef = e.target.value;
-      else if (e.target.id === 'pk-hakkimda') d.hakkimda = e.target.value;
-      else return;
-      degisti();
-    });
-    var dosya = kap.querySelector('[data-foto-dosya]'), fHata = kap.querySelector('[data-foto-hata]');
-    function fotoHata(m) { fHata.textContent = m || ''; fHata.hidden = !m; }
-    kap.querySelector('[data-foto-sec]').onclick = function () { fotoHata(''); dosya.value = ''; dosya.click(); };
-    dosya.onchange = function () {
-      var f = dosya.files && dosya.files[0];
-      if (!f) return;
-      if (!/^image\//.test(f.type) && f.type) { fotoHata('Lütfen bir görsel dosyası seç.'); return; }
-      if (f.size > 15 * 1024 * 1024) { fotoHata('Dosya çok büyük (en çok 15 MB).'); return; }
-      kirpPenceresi(kap.querySelector('[data-kirp-yer]'), f, function (blob) {
-        fotoHata('Yükleniyor…');
-        K().api('/ben/foto', { yontem: 'POST', ham: blob }).then(function (j) {
-          fotoSurum = j.foto_surum; d.avatar = 'foto'; kayitli = JSON.stringify(Object.assign({}, JSON.parse(kayitli), { avatar: 'foto' }));
-          K().uyeGuncelle({ avatar: 'foto', foto_surum: fotoSurum }); K().bildir('Fotoğrafın yüklendi');
-          yenidenCiz();
-        }, function (h) { fotoHata(h.message); });
-      }, function () {});
-    };
-    var sil = kap.querySelector('[data-foto-sil]');
-    if (sil) sil.onclick = function () {
-      if (!confirm('Fotoğrafın kaldırılsın mı?')) return;
-      K().api('/ben/foto', { yontem: 'DELETE' }).then(function (j) {
-        fotoSurum = null; if (d.avatar === 'foto') d.avatar = j.avatar || null;
-        kayitli = JSON.stringify(Object.assign({}, JSON.parse(kayitli), { avatar: d.avatar }));
-        K().uyeGuncelle({ avatar: d.avatar, foto_surum: null }); K().bildir('Fotoğrafın kaldırıldı'); yenidenCiz();
-      }, function (h) { fotoHata(h.message); });
-    };
-    form.addEventListener('submit', function (e) {
-      e.preventDefault(); hataGoster('');
-      var b = kap.querySelector('[data-kaydet]'); b.disabled = true; var yazi = b.textContent; b.textContent = 'Kaydediliyor…';
-      K().api('/ben/kart', { yontem: 'POST', govde: d }).then(function (j) {
-        var k = j.kart || {};
-        d.avatar = k.avatar || null; d.hakkimda = k.hakkimda || ''; d.hedef = k.hedef || '';
-        kayitli = JSON.stringify(d);
-        K().uyeGuncelle(k); K().bildir('Kartın kaydedildi');
-        b.textContent = yazi; dugme(); onizle();
-      }, function (h) { hataGoster(h.message); b.textContent = yazi; b.disabled = false; });
-    });
+      var form = kap.querySelector('form'), onz = kap.querySelector('.pk-onizleme');
+      kap.querySelector('.pk-onizleme-d').onclick = function () {
+        onizAcik = !onizAcik; onz.classList.toggle('pk-acik', onizAcik); this.setAttribute('aria-expanded', onizAcik ? 'true' : 'false');
+      };
+      form.addEventListener('click', function (e) {
+        var s = e.target.closest('[data-pk-set]'), g = e.target.closest('[data-pk-grup]'), t = e.target.closest('[data-pk-kisim]');
+        if (s) { aktifSet = s.getAttribute('data-pk-set'); aktifGrup = ''; secenekleriCiz('[data-pk-set="' + aktifSet + '"]'); }
+        else if (g) { aktifGrup = g.getAttribute('data-pk-grup'); secenekleriCiz('[data-pk-grup="' + aktifGrup + '"]'); }
+        else if (t) ctrl.bolum(t.getAttribute('data-pk-kisim'));
+      });
+      var sekme = kap.querySelector('.pk-kisim-sekme');
+      if (sekme) sekme.addEventListener('keydown', function (e) {
+        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+        e.preventDefault();
+        var i = 0; KISIMLAR.forEach(function (x, n) { if (x[0] === ctrl._bolum) i = n; });
+        var y = KISIMLAR[(i + (e.key === 'ArrowRight' ? 1 : KISIMLAR.length - 1)) % KISIMLAR.length][0];
+        ctrl.bolum(y); kap.querySelector('#pk-k-' + y).focus();
+      });
+      form.addEventListener('change', function (e) {
+        var t = e.target;
+        if (t.name === 'pk-av' || t.name === 'pk-avr' || t.name === 'pk-pxb' || t.name === 'pk-pxt') {
+          avatarSec(t.name);
+          // renk seçilince seçili avatar korunur; avatar seçilince renk korunur: seçenekleri yeniden çiz (önizleme renkleri de güncellensin)
+          secenekleriCiz('input[name=' + t.name + ']:checked');
+        } else if (t.name === 'pk-durum') d.durum = t.value || null;
+        else if (t.name === 'pk-krenk') d.kart_rengi = t.value || null;
+        else if (t.name === 'pk-gprofil') d.gizlilik.profil = t.value;
+        else if (t.getAttribute('data-g')) d.gizlilik[t.getAttribute('data-g')] = t.checked;
+        kap.querySelectorAll('.pk-sec').forEach(function (l) { var i = l.querySelector('input'); if (i && i.type === 'radio') l.classList.toggle('pk-secili', i.checked); });
+        degisti();
+      });
+      form.addEventListener('input', function (e) {
+        if (e.target.id === 'pk-hedef') d.hedef = e.target.value;
+        else if (e.target.id === 'pk-hakkimda') d.hakkimda = e.target.value;
+        else return;
+        degisti();
+      });
+      var dosya = kap.querySelector('[data-foto-dosya]'), fHata = kap.querySelector('[data-foto-hata]');
+      function fotoHata(m) { fHata.textContent = m || ''; fHata.hidden = !m; }
+      kap.querySelector('[data-foto-sec]').onclick = function () { fotoHata(''); dosya.value = ''; dosya.click(); };
+      dosya.onchange = function () {
+        var f = dosya.files && dosya.files[0];
+        if (!f) return;
+        if (!/^image\//.test(f.type) && f.type) { fotoHata('Lütfen bir görsel dosyası seç.'); return; }
+        if (f.size > 15 * 1024 * 1024) { fotoHata('Dosya çok büyük (en çok 15 MB).'); return; }
+        kirpPenceresi(kap.querySelector('[data-kirp-yer]'), f, function (blob) {
+          fotoHata('Yükleniyor…');
+          K().api('/ben/foto', { yontem: 'POST', ham: blob }).then(function (j) {
+            fotoSurum = j.foto_surum; d.avatar = 'foto'; kayitli = JSON.stringify(Object.assign({}, JSON.parse(kayitli), { avatar: 'foto' }));
+            K().uyeGuncelle({ avatar: 'foto', foto_surum: fotoSurum }); K().bildir('Fotoğrafın yüklendi');
+            yenidenCiz();
+          }, function (h) { fotoHata(h.message); });
+        }, function () {});
+      };
+      var sil = kap.querySelector('[data-foto-sil]');
+      if (sil) sil.onclick = function () {
+        onayla({ baslik: 'Fotoğrafın kaldırılsın mı?', metin: 'Yerine otomatik avatarın ya da seçtiğin hazır avatar görünür.', evet: 'Kaldır', tehlike: true }).then(function (ok) {
+          if (!ok) return;
+          K().api('/ben/foto', { yontem: 'DELETE' }).then(function (j) {
+            fotoSurum = null; if (d.avatar === 'foto') d.avatar = j.avatar || null;
+            kayitli = JSON.stringify(Object.assign({}, JSON.parse(kayitli), { avatar: d.avatar }));
+            K().uyeGuncelle({ avatar: d.avatar, foto_surum: null }); K().bildir('Fotoğrafın kaldırıldı'); yenidenCiz();
+          }, function (h) { fotoHata(h.message); });
+        });
+      };
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (!gomulu) ctrl.kaydet();
+      });
     }
   }
 

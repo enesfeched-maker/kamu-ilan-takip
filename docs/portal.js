@@ -786,45 +786,103 @@ return{hata:'İl adını listeden seç.'};}
 function addIl(){const r=ilCoz($('p-il').value);if(r.bos)return true;if(r.hata){profilHata(r.hata,'p-il');return false;}if(!draft.iller.includes(r.il))draft.iller.push(r.il);$('p-il').value='';renderIller();return true;}
 /* "75", "75,5", "75.47987" (en çok 5 ondalık); bilimsel/onaltılık gösterim, binlik ayırıcı ve fazlası reddedilir. */
 function puanOku(raw){const m=String(raw||'').trim().match(/^(\d{1,3})(?:[.,](\d{1,5}))?$/);return m?Number(m[1]+'.'+(m[2]||'0')):NaN;}
-/* Profil penceresi iki sekmedir: "Kartım" (profil kartı; hesap gerekir, profil-kart.js tembel yüklenir) ve "Tercih bilgilerim" (aşağıdaki form).
-   Sekmeler hesap varken, profil kayıtlıyken ya da açıkça istenince görünür; ilk kurulum akışı (hesapsız, profilsiz) eskisi gibi sekmesizdir. */
+/* Profil penceresi tek akıştır (Kasım 2026): üstte bölüm sekmeleri, altta tek "Kaydet".
+   Hesap varsa: Tercih · Görünüm · Bilgiler · Gizlilik; hesap yoksa: Tercih · Profil kartı (üye olma çağrısı).
+   Tercih bölümü aşağıdaki formdur (hesap gerekmez, kit-profil'e yazılır; girişliyse forum.js hesapla eşitler);
+   kart bölümleri profil-kart.js düzenleyicisidir (hesap gerekir, tembel yüklenir). Kaydet yalnız değişen kısmı kaydeder.
+   İlk kurulum (hesapsız, profilsiz, açıkça istenmemiş) eskisi gibi sekmesiz formdur ("Kaydet ve ilanlarımı göster"). */
 const pkHesapVar=()=>{try{return !!JSON.parse(localStorage.getItem('fr-oturum'));}catch{return false;}};
+const PK_KART=[['gorunum','Görünüm'],['bilgiler','Bilgiler'],['gizlilik','Gizlilik']];
+let pkCtrl=null,pkTok=0,pkBolum='tercih',pkTercihKirli=false,pkKartKirli=false,pkSonra=false;
+const pkBirlesik=()=>{const p=$('pk-panel');return !!p&&!p.hidden;};
+const pkKirli=()=>pkTercihKirli||pkKartKirli;
+/* Sayfa içi onay penceresi (onay.js; forum.js ve katiplik.js ile aynı sürüm). */
+function onayla(o){const y=window.kitOnay?Promise.resolve():new Promise((ok,red)=>{const s=document.createElement('script');s.async=true;s.src='onay.js?v=1';s.onload=ok;s.onerror=red;document.head.append(s);});
+return y.then(()=>window.kitOnay(o),()=>window.confirm(o.baslik+(o.metin?'\n\n'+o.metin:'')));}
 function pkKur(){
-const d=$('profil-dialog');if($('pk-sekmeler'))return;
+const d=$('profil-dialog');if($('pk-panel'))return;
+const panel=E('div','pk-birlesik');panel.id='pk-panel';panel.hidden=true;
+const tut=E('div','tutamak');tut.setAttribute('aria-hidden','true');
+const ust=E('div','pk-panel-ust'),h=E('h2','','Profilin'),alt=E('p','alt-yazi'),x=E('button','kapat');h.id='pk-baslik';alt.id='pk-alt-yazi';
+x.type='button';x.setAttribute('aria-label','Pencereyi kapat');x.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>';x.onclick=profilKapat;
+ust.append(h,alt);
 const bar=E('div','pk-sekmeler');bar.id='pk-sekmeler';bar.setAttribute('role','tablist');bar.setAttribute('aria-label','Profil bölümleri');
-for(const [k,ad] of [['kart','Kartım'],['tercih','Tercih bilgilerim']]){const b=E('button','',ad);b.type='button';b.id='pk-s-'+k;b.setAttribute('role','tab');b.setAttribute('aria-controls',k==='kart'?'pk-panel':'profil-form');b.dataset.sekme=k;b.onclick=()=>pkSec(k);bar.append(b);}
-bar.addEventListener('keydown',e=>{if(e.key!=='ArrowLeft'&&e.key!=='ArrowRight')return;e.preventDefault();const k=bar.querySelector('[aria-selected=true]').dataset.sekme==='kart'?'tercih':'kart';pkSec(k);$('pk-s-'+k).focus();});
-const panel=E('div');panel.id='pk-panel';panel.hidden=true;panel.setAttribute('role','tabpanel');panel.setAttribute('aria-labelledby','pk-s-kart');
-const ust=E('div','pk-panel-ust'),h=E('h2','','Profil kartın'),x=E('button','kapat');x.type='button';x.setAttribute('aria-label','Pencereyi kapat');x.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>';x.onclick=()=>{d.close();kaydirKilidi(false);};
-ust.append(h,x);const ic=E('div');ic.id='pk-icerik';panel.append(ust,ic);
-d.insertBefore(bar,d.firstChild);d.append(panel);}
+bar.addEventListener('keydown',e=>{if(e.key!=='ArrowLeft'&&e.key!=='ArrowRight')return;e.preventDefault();const l=[...bar.querySelectorAll('[role=tab]')],i=l.findIndex(b=>b.getAttribute('aria-selected')==='true'),y=l[(i+(e.key==='ArrowRight'?1:l.length-1))%l.length];if(y){pkSec(y.dataset.sekme);y.focus();}});
+const govde=E('div','pk-govde');govde.id='pk-govde';
+const tercih=E('div','pk-tercih');tercih.id='pk-tercih';tercih.setAttribute('role','tabpanel');
+const kart=E('div','pk-kart-yer');kart.id='pk-icerik';kart.setAttribute('role','tabpanel');kart.hidden=true;
+govde.append(tercih,kart);
+const ayak=E('div','pk-panel-alt'),durum=E('p','pk-panel-durum'),kaydet=E('button','btn btn-ana','Kaydet');durum.id='pk-durum';durum.setAttribute('aria-live','polite');
+kaydet.type='button';kaydet.id='pk-kaydet';kaydet.disabled=true;kaydet.onclick=pkKaydet;ayak.append(durum,kaydet);
+panel.append(tut,x,ust,bar,govde,ayak);d.append(panel);
+/* Tercih formundaki her değişiklik "kaydedilmedi" sayılır (yazma, seçim, il ekleme/kaldırma, öğrenim düğmeleri). */
+const f=$('profil-form'),kirlet=()=>{if(pkBirlesik()&&!pkTercihKirli){pkTercihKirli=true;pkDurum();}};
+f.addEventListener('input',kirlet);f.addEventListener('change',kirlet);
+f.addEventListener('click',e=>{if(e.target.closest('#p-ogrenim button,.il-cip button,.kombo-liste li'))kirlet();});}
+function pkSekmeler(){
+const l=[['tercih','Tercih']].concat(pkHesapVar()?PK_KART:[['kart','Profil kartı']]);
+$('pk-sekmeler').replaceChildren(...l.map(([k,ad])=>{const b=E('button','',ad);b.type='button';b.id='pk-s-'+k;b.setAttribute('role','tab');b.dataset.sekme=k;b.setAttribute('aria-controls',k==='tercih'?'pk-tercih':'pk-icerik');b.onclick=()=>pkSec(k);return b;}));
+$('pk-alt-yazi').textContent=pkHesapVar()?'Tercih bilgilerin ve kartın hesabınla eşitlenir.':'Tercih bilgilerin hesap gerekmeden bu tarayıcıda saklanır.';}
 function pkSec(k){
-const d=$('profil-dialog'),kart=k==='kart';
-$('pk-sekmeler').querySelectorAll('button').forEach(b=>{const a=b.dataset.sekme===k;b.setAttribute('aria-selected',String(a));b.tabIndex=a?0:-1;});
-$('profil-form').hidden=kart;$('pk-panel').hidden=!kart;d.classList.toggle('pk-genis',kart);
-if(!kart)return;
-const ic=$('pk-icerik');ic.replaceChildren(E('p','alt-yazi','Yükleniyor…'));
-let bekle=0;const dene=()=>{const api=window.kitForumApi;
-if(!api){if(++bekle>50){ic.replaceChildren(E('p','alt-yazi','Profil kartı şu an açılamadı. Sayfayı yenileyip tekrar dene.'));return;}setTimeout(dene,100);return;}
-api.kartYukle().then(()=>window.kitKart.duzenleyici(ic),()=>ic.replaceChildren(E('p','alt-yazi','Profil kartı şu an yüklenemedi. Biraz sonra tekrar dene.')));};dene();}
+pkBolum=k;const tercih=k==='tercih';
+$('pk-sekmeler').querySelectorAll('[role=tab]').forEach(b=>{const a=b.dataset.sekme===k;b.setAttribute('aria-selected',String(a));b.tabIndex=a?0:-1;});
+$('pk-tercih').hidden=!tercih;$('pk-icerik').hidden=tercih;
+$(tercih?'pk-tercih':'pk-icerik').setAttribute('aria-labelledby','pk-s-'+k);
+$('pk-govde').scrollTop=0;
+if(!tercih)pkKartAc(k==='kart'?'gorunum':k);}
+/* Kart düzenleyicisi ilk kart sekmesinde bir kez kurulur; sonra yalnız görünen bölüm değişir. */
+function pkKartAc(bolum){
+if(pkCtrl){pkCtrl.bolum(bolum);return;}
+const ic=$('pk-icerik'),tok=pkTok;if(ic.dataset.kuruluyor===String(tok))return;ic.dataset.kuruluyor=String(tok);
+ic.replaceChildren(E('p','alt-yazi','Yükleniyor…'));
+let bekle=0;const hata=m=>{if(tok!==pkTok)return;delete ic.dataset.kuruluyor;ic.replaceChildren(E('p','alt-yazi',m));};
+const dene=()=>{if(tok!==pkTok)return;const api=window.kitForumApi;
+if(!api){if(++bekle>50){hata('Profil kartı şu an açılamadı. Sayfayı yenileyip tekrar dene.');return;}setTimeout(dene,100);return;}
+api.kartYukle().then(()=>{if(tok!==pkTok)return;
+const c=window.kitKart.duzenleyici(ic,{gomulu:true,bolum:pkBolum==='kart'?'gorunum':pkBolum,degisti:(kirli,kaydedildi)=>{if(tok!==pkTok)return;pkKartKirli=kirli;pkDurum(kaydedildi);},girisIste:pkGirisIste});
+pkCtrl=c||{bolum(){},kirli:()=>false,kaydet:()=>Promise.resolve(true)};},()=>hata('Profil kartı şu an yüklenemedi. Biraz sonra tekrar dene.'));};dene();}
+/* Üye olmayan kişi "Üye ol" derse: giriş penceresi profil penceresinin arkasında kalmasın diye profil kapanır, girişten sonra kart bölümüyle yeniden açılır. */
+function pkGirisIste(){const api=window.kitForumApi;if(!api)return;
+/* kaydedilmemiş tercih değişikliği pencere kapanınca kaybolmasın: önce kaydedilir (geçersizse Tercih bölümünde hata gösterilir) */
+if(pkTercihKirli&&!tercihYaz()){pkSec('tercih');pkDurum();return;}
+pkTercihKirli=pkKartKirli=false;$('profil-dialog').close();api.giris('Profil kartın için giriş yap',()=>openProfile('kart'));}
+function pkDurum(kaydedildi){
+const b=$('pk-kaydet'),y=$('pk-durum');if(!b)return;
+const k=pkKirli();b.disabled=!k;y.textContent=k?'Kaydedilmemiş değişiklik var':kaydedildi?'Kaydedildi':'';y.classList.toggle('pk-kirli',k);}
+async function pkKaydet(){
+const b=$('pk-kaydet');if(b.disabled)return;
+if(pkTercihKirli&&!tercihYaz()){if(pkBolum!=='tercih')pkSec('tercih');pkDurum();return;}
+if(pkCtrl&&pkCtrl.kirli()){b.disabled=true;b.textContent='Kaydediliyor…';let ok=false;try{ok=await pkCtrl.kaydet();}catch{ok=false;}b.textContent='Kaydet';
+if(!ok){if(pkBolum==='tercih')pkSec(pkCtrl._bolum||'gorunum');pkDurum();return;}pkKartKirli=false;}
+pkDurum(true);}
 function pkHazirla(istenen){
-pkKur();const goster=pkHesapVar()||duzenleme||!!istenen;
-$('pk-sekmeler').hidden=!goster;
-if(!goster){$('profil-form').hidden=false;$('pk-panel').hidden=true;$('profil-dialog').classList.remove('pk-genis');return;}
-pkSec(istenen==='kart'?'kart':'tercih');}
+pkKur();const d=$('profil-dialog'),f=$('profil-form'),panel=$('pk-panel');
+pkTok++;pkCtrl=null;pkTercihKirli=false;pkKartKirli=false;pkSonra=false;const ic=$('pk-icerik');ic.replaceChildren();delete ic.dataset.kuruluyor;ic._pkNesil=(ic._pkNesil||0)+1;
+const birlesik=pkHesapVar()||duzenleme||!!istenen;
+if(!birlesik){if(f.parentNode!==d)d.insertBefore(f,panel);panel.hidden=true;f.hidden=false;d.classList.remove('pk-genis','pk-birlesik-acik');d.setAttribute('aria-labelledby','profil-baslik');return;}
+$('pk-tercih').append(f);f.hidden=false;panel.hidden=false;d.classList.add('pk-genis','pk-birlesik-acik');d.setAttribute('aria-labelledby','pk-baslik');
+pkSekmeler();pkSec(istenen==='kart'?(pkHesapVar()?'gorunum':'kart'):'tercih');pkDurum();}
 function openProfile(sekme){duzenleme=!!activeProfile();draft=duzenleme?{...profil,iller:[...profil.iller]}:{ogrenim:'',puan_turu:'',iller:[],tum_turkiye:false,bolum:''};fillForm();$('p-sifirla-kutu').hidden=!duzenleme;pkHazirla(typeof sekme==='string'?sekme:'');if(!$('profil-dialog').open){kaydirKilidi(true);$('profil-dialog').showModal();}}
 window.kitProfilAc=openProfile;
 function profilDegisti(){try{if(window.kitProfilGonder)window.kitProfilGonder();}catch{}}
+/* Kapatma: tek akışta kaydedilmemiş değişiklik varsa sorulur (X, Esc, perdeye dokunma). */
+function profilKapat(){const d=$('profil-dialog');if(!d.open)return;
+if(!pkBirlesik()||!pkKirli()){d.close();return;}
+onayla({baslik:'Değişiklikler kaydedilmedi',metin:'Kaydetmeden çıkarsan yaptığın değişiklikler silinir.',evet:'Kaydetmeden çık',hayir:'Geri dön',tehlike:true}).then(ok=>{if(ok){pkTercihKirli=pkKartKirli=false;d.close();}});}
 /* Profili sıfırla: yalnız kit-profil silinir (Kayıtlı, tema, son ziyaret kalır); ekran profilsiz varsayılana döner. */
-function resetProfile(){if(!confirm('Profil tercihlerin silinsin mi?'))return;try{localStorage.removeItem('kit-profil');}catch{}profilDegisti();profil=null;draft=null;$('profil-dialog').close();kaydirKilidi(false);render();notify('Profilin sıfırlandı.');}
-function saveProfile(){
+function resetProfile(){onayla({baslik:'Tercih bilgilerin silinsin mi?',metin:'Öğrenim düzeyin, puanın ve illerin silinir; ilanlar varsayılan görünüme döner. Kayıtlı ilanların kalır.',evet:'Sil',tehlike:true}).then(ok=>{if(!ok)return;
+try{localStorage.removeItem('kit-profil');}catch{}profilDegisti();profil=null;draft=null;pkTercihKirli=pkKartKirli=false;pkSonra=false;$('profil-dialog').close();kaydirKilidi(false);render();notify('Profilin sıfırlandı.');});}
+/* Tercih formunu doğrular ve kaydeder; pencereyi kapatmaz. false: hata formda gösterildi. */
+function tercihYaz(){
 profilHataTemizle();
-if(!draft.ogrenim){profilHata('Önce öğrenim düzeyini seç.','p-ogrenim');return;}
-if(!addIl())return;
+if(!draft.ogrenim){profilHata('Önce öğrenim düzeyini seç.','p-ogrenim');return false;}
+if(!addIl())return false;
 const raw=$('p-puan').value.trim();let puan=null;
-if(raw!==''){puan=puanOku(raw);if(!(puan>=40&&puan<=100)){profilHata('Puanı 40–100 arasında gir (örn. 82,15).','p-puan');return;}}
+if(raw!==''){puan=puanOku(raw);if(!(puan>=40&&puan<=100)){profilHata('Puanı 40–100 arasında gir (örn. 82,15).','p-puan');return false;}}
 const p={v:1,ogrenim:draft.ogrenim,puan_turu:formTur(),iller:draft.iller,tum_turkiye:$('p-tum').checked,bolum:$('p-bolum').value.trim().slice(0,60),t:today()};if(puan!==null)p.puan=puan;
-profil=validProfile(p);writeStore('kit-profil',profil);profilDegisti();if(profil&&profil.ogrenim)A('tikla',{a:'profil_kaydet',x:profil.ogrenim,n:profil.iller.length});$('profil-dialog').close();kaydirKilidi(false);render();notify('Profilin kaydedildi.');}
+profil=validProfile(p);writeStore('kit-profil',profil);profilDegisti();if(profil&&profil.ogrenim)A('tikla',{a:'profil_kaydet',x:profil.ogrenim,n:profil.iller.length});
+duzenleme=true;draft={...profil,iller:[...profil.iller]};$('p-sifirla-kutu').hidden=false;$('p-atla').textContent='Vazgeç';pkTercihKirli=false;pkSonra=true;return true;}
+function saveProfile(){if(!tercihYaz())return;pkSonra=false;$('profil-dialog').close();kaydirKilidi(false);render();notify('Profilin kaydedildi.');}
 function skipProfile(){if(duzenleme){$('profil-dialog').close();kaydirKilidi(false);return;}profil={v:1,atlandi:true,t:today()};writeStore('kit-profil',profil);profilDegisti();$('profil-dialog').close();kaydirKilidi(false);render();}
 function initProfile(){
 ilKombo=kombo($('p-il'),{kaynak:()=>IL_LIST,secili:()=>new Set(draft?draft.iller:[]),
@@ -836,9 +894,11 @@ $('p-tur').onchange=()=>{$('p-tur-a').hidden=$('p-tur').value!=='A';profilHataTe
 for(const id of ['p-puan','p-il','p-tur-a','p-tum','p-bolum'])$(id).addEventListener('input',profilHataTemizle);
 $('p-bolum').addEventListener('focus',bolumListeDoldur);$('p-bolum').addEventListener('input',bolumListeDoldur);
 $('p-il').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.defaultPrevented){e.preventDefault();addIl();if(ilKombo)ilKombo.ciz();}});
-$('profil-form').onsubmit=e=>{e.preventDefault();saveProfile();};$('p-atla').onclick=skipProfile;$('p-sifirla').onclick=resetProfile;$('p-kapat').onclick=()=>{$('profil-dialog').close();kaydirKilidi(false);};$('nav-profile').onclick=openProfile;
-$('profil-dialog').addEventListener('close',()=>kaydirKilidi(false));
-$('profil-dialog').addEventListener('click',e=>{if(e.target===$('profil-dialog')){const r=$('profil-dialog').getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)$('profil-dialog').close();}});}
+$('profil-form').onsubmit=e=>{e.preventDefault();if(pkBirlesik())pkKaydet();else saveProfile();};$('p-atla').onclick=skipProfile;$('p-sifirla').onclick=resetProfile;$('p-kapat').onclick=profilKapat;$('nav-profile').onclick=openProfile;
+/* Tek akışta kaydedilen tercih, liste pencere kapanınca yeniden çizilir (açık pencerenin arkasında çizim yapılmaz). */
+$('profil-dialog').addEventListener('close',()=>{kaydirKilidi(false);if(pkSonra){pkSonra=false;render();notify('Profilin kaydedildi.');}});
+$('profil-dialog').addEventListener('cancel',e=>{if(pkBirlesik()&&pkKirli()){e.preventDefault();profilKapat();}});
+$('profil-dialog').addEventListener('click',e=>{if(e.target===$('profil-dialog')){const r=$('profil-dialog').getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)profilKapat();}});}
 /* ---------- tema, yükleme ---------- */
 function applyTheme(){const dark=window.kitKoyu?window.kitKoyu():readStore('kit-theme',null)==='dark';document.documentElement.dataset.theme=dark?'dark':'light';const t=$('theme');if(!t.dataset.hazir){t.dataset.hazir='1';if(typeof requestAnimationFrame==='function')requestAnimationFrame(()=>requestAnimationFrame(()=>t.classList.add('anahtar-hazir')));}t.setAttribute('aria-pressed',String(dark));t.setAttribute('aria-label',dark?'Açık temaya geç':'Koyu temaya geç');const m=document.querySelector&&document.querySelector('meta[name=theme-color]');if(m)m.content=dark?'#0D0E0C':'#F6F6F1';}
 async function loadSponsors(){try{const r=await fetch('sponsors.json',{cache:'no-store'});if(!r.ok)return;const cfg=await r.json();if(!cfg.enabled)return;for(const placement of ['sidebar','feed']){const s=cfg[placement],url=s&&safeURL(s.url);if(!s||!url||!s.title)continue;const box=E('aside','sponsor');box.setAttribute('aria-label','Reklam');box.append(E('span','eyebrow','REKLAM · SPONSORLU'));const a=external(url,s.title,'');a.rel='sponsored noopener noreferrer';box.append(a,E('p','',s.description||''));adBox[placement].replaceChildren(box);adBox[placement].hidden=false;}}catch{/* Optional sponsorship cannot break listing discovery. */}}

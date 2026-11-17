@@ -498,7 +498,7 @@ body.kars-acik{padding-bottom:96px}
 #icerik:focus{outline:0}
 .onay{align-items:flex-start;gap:8px}
 .onay input{margin:2px 0 0;flex-shrink:0}
-#profil-dialog{position:relative}
+#profil-dialog{position:fixed}
 #profil-dialog .kapat{position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:10px;border:0;background:var(--surface-2);color:var(--ink-2);display:grid;place-items:center;cursor:pointer;padding:0}
 #profil-dialog .kapat svg{width:18px;height:18px}
 #profil-dialog h2{padding-right:44px}
@@ -509,13 +509,38 @@ body.kars-acik{padding-bottom:96px}
 @media (min-width:761px){.cip-perde{display:none!important}}
 .mbas:focus{outline:0}
 :root[data-theme=dark] .segment small,:root[data-theme=dark] .ay-izgara small{color:var(--muted)}
-/* ---------- Profil penceresi sekmeleri (portal.js) ---------- */
-.pk-sekmeler[hidden]{display:none}
-.pk-sekmeler{display:flex;gap:4px;margin:0 44px 16px 0;padding:4px;border-radius:12px;background:var(--surface-2)}
-.pk-sekmeler button{flex:1;min-height:44px;padding:0 12px;border:0;border-radius:9px;background:transparent;color:var(--ink-2);font:inherit;font-size:15px;font-weight:600;cursor:pointer}
+/* ---------- Profil penceresi tek akış (portal.js): başlık, bölüm sekmeleri, kayan gövde, altta sabit Kaydet ---------- */
+#pk-panel[hidden],.pk-tercih[hidden],.pk-kart-yer[hidden]{display:none}
+#profil-dialog.pk-birlesik-acik{width:min(560px,calc(100% - 32px));height:min(780px,calc(100dvh - 48px));max-height:none;padding:0;overflow:hidden}
+#profil-dialog.pk-birlesik-acik[open]{display:flex;flex-direction:column}
+.pk-birlesik{display:flex;flex:1;flex-direction:column;min-height:0}
+.pk-panel-ust{padding:24px 24px 0}
+.pk-panel-ust h2{margin:0}
+.pk-sekmeler{display:flex;flex:none;gap:4px;margin:16px 24px 0;padding:4px;border-radius:12px;background:var(--surface-2);overflow-x:auto;scrollbar-width:none}
+.pk-sekmeler::-webkit-scrollbar{display:none}
+.pk-sekmeler button{flex:1 0 auto;min-height:44px;padding:0 14px;border:0;border-radius:9px;background:transparent;color:var(--ink-2);font:inherit;font-size:15px;font-weight:600;white-space:nowrap;cursor:pointer;transition:background .15s,color .15s}
+.pk-sekmeler button:hover{color:var(--ink)}
 .pk-sekmeler button[aria-selected=true]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgb(0 0 0 / .12)}
 .pk-sekmeler button:focus-visible{outline:2px solid var(--focus,#2563EB);outline-offset:2px}
-#pk-panel{display:block}
-#pk-panel[hidden]{display:none}
-.pk-panel-ust{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}
-.pk-panel-ust h2{margin:0}
+/* kimlikle seçilir: profil-kart.css'teki kart sayfası .pk-govde kuralıyla (display:flex, align-items:flex-start, dolgu) çakışmasın */
+#pk-govde{display:block;flex:1;min-height:0;padding:20px 24px 28px;overflow-y:auto;overscroll-behavior:contain}
+#pk-tercih #profil-form{max-width:600px;margin:0 auto}
+#pk-tercih #profil-form>.tutamak,#pk-tercih #p-kapat,#pk-tercih #profil-baslik,#pk-tercih #profil-form>.alt-yazi,#pk-tercih .sheet-alt{display:none}
+#pk-tercih #profil-form>.adim:first-of-type{margin-top:0}
+.pk-panel-alt{display:flex;flex:none;align-items:center;gap:12px;padding:12px 24px;border-top:1px solid var(--line);background:var(--surface)}
+.pk-panel-durum{flex:1;min-width:0;margin:0;color:var(--muted);font-size:14px}
+.pk-panel-durum.pk-kirli{color:var(--alert);font-weight:600}
+.pk-panel-alt .btn{min-height:48px;padding:0 28px;font-size:15px}
+.pk-panel-alt .btn:disabled{opacity:.45;cursor:default}
+@media (min-width:1000px){#profil-dialog.pk-birlesik-acik{width:min(900px,calc(100% - 32px))}}
+@media (max-width:760px){
+  #profil-dialog.pk-birlesik-acik{width:auto;height:94dvh;padding:0}
+  .pk-birlesik>.tutamak{margin:10px auto 0}
+  .pk-panel-ust{padding:12px 18px 0}
+  .pk-sekmeler{margin:12px 18px 0}
+  .pk-sekmeler button{padding:0 10px;font-size:14px}
+  #pk-govde{padding:16px 18px 24px}
+  .pk-panel-alt{padding:10px 18px calc(10px + env(safe-area-inset-bottom,0px))}
+  .pk-panel-alt .btn{padding:0 22px}
+}
+@media (prefers-reduced-motion:reduce){.pk-sekmeler button{transition:none}}
