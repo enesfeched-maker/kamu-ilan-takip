@@ -55,11 +55,11 @@ MENU_BETIGI = ('<script>(function(){var h=document.getElementById("tb"),b=docume
 
 def ust_html(kok, aktif=''):
     """Ana sayfayla aynı ince koyu üst bar (docs/index.html .tb, docs/kabuk.css); bağlantılar `kok` göreli."""
-    # Taban puanı sayfaları (kpss-taban-puanlari/) da 'puanlar' bölümüdür; menüde tek sekme robot ve tablo sayfasına gider.
+    # Menüde 'Tercih Robotu' /puanlar/ aracına gider; veri dizini /kpss-taban-puanlari/ alt bilgideki 'KPSS taban puanları' bağlantısından ve robot sayfasındaki bağlantıdan erişilir (18 Kasım 2026: iki giriş aynı niyeti hedefliyordu).
     # Akademik menüden çıktı (Kasım 2026): aramadan gelenler için /akademik/ sayfası ve alt bilgi bağlantısı var.
     # Forum yeni bölüm olarak vurgulu (tb-yeni) ve "Yeni" rozetli gösterilir (Kasım 2026'da Katiplik'ten taşındı).
     menu = [('İlanlar', f'{kok}#ilanlar', 'ilanlar'),
-            ('Taban Puanları', f'{kok}puanlar/', 'puanlar'),
+            ('Tercih Robotu', f'{kok}puanlar/', 'puanlar'),
             ('Katiplik', f'{kok}katiplik/', 'katiplik'),
             ('Forum', f'{kok}forum/', 'forum'),
             ('Kayıtlı', f'{kok}#kayitli', '')]
@@ -99,7 +99,7 @@ def alt_html(kok, yil=None):
     yil = yil or datetime.now(TR).year
     return (f'<footer class="ab"><div class="ab-ic"><div class="ab-marka"><img src="{kok}assets/logo-96.webp?v={LOGO_SURUM}" alt="" width="36" height="36">'
             f'<div><strong>KPSS Tercihi</strong><span>Kamu ilanları, sade ve tek yerde</span></div></div>'
-            f'<nav class="ab-linkler" aria-label="Alt bilgi"><a href="https://t.me/kpsstercihi" target="_blank" rel="noopener" data-a="telegram" data-a-x="alt">Telegram</a>{_sosyal_linkler()}<a href="{kok}katiplik/">Katiplik sınavı</a><a href="{kok}akademik/">Akademik ilanlar</a><a href="{kok}sonuclar/">Sonuç duyuruları</a><a href="{kok}rehber/">Rehberler</a><a href="{kok}analiz/">Analizler</a><a href="{kok}kurum/">Kurumlar</a><a href="{kok}il/">İller</a><a href="{kok}meslek/">Meslekler</a><a href="{kok}sss/">Sık sorulanlar</a><a href="{kok}hakkimizda/">Hakkımızda</a><a href="{kok}iletisim/">İletişim</a><a href="{kok}gizlilik/">Gizlilik</a><a href="{kok}kullanim-kosullari/">Kullanım koşulları</a></nav>'
+            f'<nav class="ab-linkler" aria-label="Alt bilgi"><a href="https://t.me/kpsstercihi" target="_blank" rel="noopener" data-a="telegram" data-a-x="alt">Telegram</a>{_sosyal_linkler()}<a href="{kok}katiplik/">Katiplik sınavı</a><a href="{kok}akademik/">Akademik ilanlar</a><a href="{kok}kpss-taban-puanlari/">KPSS taban puanları</a><a href="{kok}sonuclar/">Sonuç duyuruları</a><a href="{kok}rehber/">Rehberler</a><a href="{kok}analiz/">Analizler</a><a href="{kok}kurum/">Kurumlar</a><a href="{kok}il/">İller</a><a href="{kok}meslek/">Meslekler</a><a href="{kok}sss/">Sık sorulanlar</a><a href="{kok}hakkimizda/">Hakkımızda</a><a href="{kok}iletisim/">İletişim</a><a href="{kok}gizlilik/">Gizlilik</a><a href="{kok}kullanim-kosullari/">Kullanım koşulları</a></nav>'
             f'<p class="ab-not">© <span id="yil">{yil}</span> KPSS Tercihi</p></div></footer>')
 
 

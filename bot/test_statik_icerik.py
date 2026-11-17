@@ -80,7 +80,8 @@ class AnaSayfaTest(unittest.TestCase):
             self.assertIn('109,00000', p)
             self.assertIn('2026/1 dönemi: 61 kadro', p)
             self.assertIn('href="../analiz/"', p)
-            self.assertEqual(p.count('statik-baglanti'), 1)
+            self.assertIn('href="../kpss-taban-puanlari/">Dönem dönem bütün taban puanları →</a>', p)
+            self.assertEqual(p.count('statik-baglanti'), 2)
             self.assertEqual(si.yaz(docs, self.liste, self.sayfali, {'noindex'}, SIMDI), [True, True])
             self.assertEqual((docs / 'puanlar' / 'index.html').read_text(encoding='utf-8'), p)   # idempotent
             self.assertEqual((docs / 'index.html').read_text(encoding='utf-8'), ana)

@@ -136,13 +136,14 @@ def puan_html(metin, secim):
     """Tercih robotu sayfasının tablo gövdesini ve /analiz/ bağlantısını doldurur; işaret yoksa None."""
     govde = re.compile(r'(<tbody id="satirlar">).*?(</tbody>)', re.S)
     ozet = re.compile(r'(<span class="sayi" id="tablo-ozet">)[^<]*(</span>)')
-    giris = re.compile(r'(<section class="puan-intro"><h1>[^<]*</h1>)(?:<p class="statik-baglanti">.*?</p>)?(</section>)', re.S)
+    giris = re.compile(r'(<section class="puan-intro"><h1>[^<]*</h1>)(?:<p class="statik-baglanti">.*?</p>)*(</section>)', re.S)
     if not (govde.search(metin) and ozet.search(metin) and giris.search(metin)) or not secim:
         return None
     donem, satirlar, toplam = secim
     yeni = govde.sub(lambda m: m.group(1) + ''.join(puan_satiri(donem, r) for r in satirlar) + m.group(2), metin, count=1)
     yeni = ozet.sub(lambda m: m.group(1) + f'{esc(donem.replace("-", "/"))} dönemi: {tam(toplam)} kadro' + m.group(2), yeni, count=1)
-    baglanti = '<p class="statik-baglanti"><a href="../analiz/">Puan verilerinden analizler: değişim, il il karşılaştırma, kadro sıralaması →</a></p>'
+    baglanti = ('<p class="statik-baglanti"><a href="../kpss-taban-puanlari/">Dönem dönem bütün taban puanları →</a></p>'
+                '<p class="statik-baglanti"><a href="../analiz/">Puan verilerinden analizler: değişim, il il karşılaştırma, kadro sıralaması →</a></p>')
     return giris.sub(lambda m: m.group(1) + baglanti + m.group(2), yeni, count=1)
 
 
