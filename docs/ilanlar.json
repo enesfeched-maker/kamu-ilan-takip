@@ -1,5 +1,5 @@
 {
- "guncelleme": "2026-11-17T10:36:47+03:00",
+ "guncelleme": "2026-11-17T10:40:24+03:00",
  "ilanlar": [
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=9c82aab5-022e-43c8-b7f1-e6cf329d205b",
@@ -36115,6 +36115,7 @@
   "sbb-866abc35896ad9d91ee671c5",
   "sbb-88240428a1026a054a7d3bb8",
   "sbb-88a9760a607c548d73c7b5c9",
+  "sbb-88d838ea7d80d027a3d523d0",
   "sbb-89c8b060891cf9aed29dbcdc",
   "sbb-8a62442fbdabe75f3d80199d",
   "sbb-8aec380e7ccafce20f013c1c",
@@ -36211,7 +36212,6 @@
  ],
  "telegram_bekleyen": [
   "sbb-1b5d1f3068575a269a3a23ad",
-  "sbb-88d838ea7d80d027a3d523d0",
   "sbb-d899f32eaa9140b2a3b909d2",
   "sbb-f444cce2b9f1fa1a8ec71292"
  ],
@@ -36324,6 +36324,7 @@
   "sbb-8168d2862502fa00b90159b9": 460,
   "sbb-838c1ad20b87efb0ed63d6c7": 351,
   "sbb-88240428a1026a054a7d3bb8": 303,
+  "sbb-88d838ea7d80d027a3d523d0": 542,
   "sbb-89c8b060891cf9aed29dbcdc": 280,
   "sbb-8f95a85a84773c07862778cf": 332,
   "sbb-97dc5702fc63408885c15aef": 402,
@@ -36351,6 +36352,7 @@
  "telegram_duyuru_yanitlari": {
   "m:duzeltme:belediye:malazgirt|": "2026-10-09",
   "m:duzeltme:belediye:tokat|itfaiy": "2026-10-09",
+  "m:duzeltme:kurum:hazine ve maliye bakanligi|kontro,stajye": "2026-11-17",
   "m:iptal:belediye:asarcik|memur": "2026-11-09",
   "m:iptal:belediye:doganyol|": "2026-10-26",
   "m:iptal:belediye:eleskirt|memur": "2026-11-06",
@@ -36364,6 +36366,7 @@
   "m:iptal:|ardaha,ilcesi,posof": "2026-11-02",
   "m:iptal:|beledi,dogany,malaty": "2026-10-26",
   "m:iptal:|beledi,elmaka": "2026-10-21",
+  "o:duzeltme:iskur-ef51733cb5e328b633bf6e26:diger:2026-11-17": "2026-11-17",
   "o:iptal:csb-478572": "2026-11-09"
  },
  "telegram_toplu_hatirlatma_gunu": "2026-11-17",
