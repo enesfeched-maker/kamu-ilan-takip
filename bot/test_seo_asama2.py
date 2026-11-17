@@ -2,6 +2,7 @@
 import json
 import re
 import unittest
+from datetime import date, datetime
 from pathlib import Path
 
 import site_uret as su
@@ -55,6 +56,97 @@ class YayinTetikleyicileriTesti(unittest.TestCase):
         self.assertEqual(sorted(gorulen - listeli), [])
         for yeni in ('il_sayfalari', 'meslek_sayfalari', 'puan_sayfalari', 'yz_gorunurluk', 'kurum_sayfasi', 'ince_sayfa', 'analiz_sayfalari'):
             self.assertIn(yeni, listeli)
+
+
+def _is_ilanlari(html):
+    return [v for v in (json.loads(m) for m in re.findall(r'<script type="application/ld\+json">(.*?)</script>', html)) if v.get('@type') == 'JobPosting']
+
+
+class IsIlaniSemasiTesti(unittest.TestCase):
+    """Google İş İlanları: gerekli/önerilen alanlar. Veri, depodaki gerçek kayıt defteridir; "şimdi" kayıt defterinin kendi
+    güncelleme zamanıdır (sabit yakın tarih yok, veri yenilendikçe test kendiliğinden kayar)."""
+
+    @classmethod
+    def setUpClass(cls):
+        veri = json.loads((KOK / 'docs' / 'ilanlar.json').read_text(encoding='utf-8'))
+        cls.simdi = datetime.fromisoformat(veri['guncelleme']).astimezone(su.TR)
+        bugun = cls.simdi.date().isoformat()
+        cls.acik = [i for i in veri['ilanlar'] if str(i.get('son_tarih') or '9999') >= bugun and not i.get('iptal_edildi') and not i.get('duyuru_turu')]
+        cls.kapali = [i for i in veri['ilanlar'] if i.get('son_tarih') and str(i['son_tarih']) < bugun][:25]
+
+    def test_gercek_veride_her_is_ilani_eksiksiz(self):
+        sayac = 0
+        for item in self.acik:
+            sonuc = su.detail_page(item, simdi=self.simdi)
+            if not sonuc:
+                continue
+            html = sonuc[1]
+            for j in _is_ilanlari(html):
+                sayac += 1
+                kimlik = item.get('id')
+                self.assertNotIn('noindex', html, f'{kimlik}: noindex sayfada JobPosting olmamalı')
+                self.assertEqual(j['@context'], 'https://schema.org')
+                self.assertTrue(str(j.get('title') or '').strip(), kimlik)
+                self.assertGreaterEqual(len(re.sub(r'<[^>]+>', '', j['description']).strip()), 40, kimlik)
+                self.assertRegex(j['datePosted'], r'^\d{4}-\d{2}-\d{2}$', kimlik)
+                yayim = date.fromisoformat(j['datePosted'])
+                bitis = datetime.fromisoformat(j['validThrough'])
+                self.assertIsNotNone(bitis.tzinfo, f'{kimlik}: validThrough saat dilimi taşımalı')
+                self.assertGreater(bitis, self.simdi, f'{kimlik}: süresi dolmuş ilan JobPosting yazmamalı')
+                self.assertLessEqual(yayim, bitis.date(), kimlik)
+                self.assertLessEqual(yayim, self.simdi.date(), kimlik)
+                kurum = j['hiringOrganization']
+                self.assertEqual(kurum['@type'], 'Organization')
+                self.assertTrue(kurum['name'].strip(), kimlik)
+                yerler = j['jobLocation'] if isinstance(j['jobLocation'], list) else [j['jobLocation']]
+                self.assertTrue(yerler, kimlik)
+                for yer in yerler:
+                    adres = yer['address']
+                    self.assertEqual(adres['@type'], 'PostalAddress')
+                    self.assertEqual(adres['addressCountry'], 'TR', kimlik)
+                    self.assertEqual('addressRegion' in adres, 'addressLocality' in adres, kimlik)
+                self.assertIn(j['employmentType'], {'FULL_TIME', 'PART_TIME', 'CONTRACTOR', 'TEMPORARY', 'INTERN', 'VOLUNTEER', 'PER_DIEM', 'OTHER'})
+                self.assertIs(j['directApply'], False)
+                self.assertTrue(j['identifier']['name'] and j['identifier']['value'], kimlik)
+                self.assertTrue(j['url'].startswith(su.BASE + 'ilan/'), kimlik)
+        self.assertGreater(sayac, 0, 'gerçek veride hiç JobPosting üretilmedi')
+
+    def test_suresi_dolan_ilanda_is_ilani_yok(self):
+        self.assertTrue(self.kapali)
+        for item in self.kapali:
+            sonuc = su.detail_page(item, simdi=self.simdi)
+            if sonuc:
+                self.assertEqual(_is_ilanlari(sonuc[1]), [], item.get('id'))
+
+    def _ilan(self, **ek):
+        item = {'baslik': 'ÖRNEK BAKANLIĞI - 5 MEMUR ALACAK', 'kurum': 'ÖRNEK BAKANLIĞI', 'kadro': '5 MEMUR', 'ozet': 'Örnek bakanlığına memur alınacaktır. Başvurular internetten alınır.',
+                'link': 'https://kariyerkapisi.gov.tr/IlanDetay?i=11111111-1111-4111-8111-111111111111', 'son_tarih': '2099-01-01', 'ilk_gorulme': '2098-12-01T10:00:00+03:00'}
+        item.update(ek)
+        return item
+
+    def test_ulke_geneli_ilanda_yalniz_ulke(self):
+        simdi = datetime(2098, 12, 5, tzinfo=su.TR)
+        html = su.detail_page(self._ilan(), kayit={'il': 'Türkiye geneli', 'iller': []}, simdi=simdi)[1]
+        yer = _is_ilanlari(html)[0]['jobLocation']
+        self.assertEqual(yer, {'@type': 'Place', 'address': {'@type': 'PostalAddress', 'addressCountry': 'TR'}})
+        cok_il = ['Adana', 'Ankara', 'Antalya', 'Bursa', 'Çorum', 'Denizli', 'Edirne', 'Hatay', 'İzmir', 'Konya', 'Muğla', 'Van']
+        html = su.detail_page(self._ilan(), kayit={'il': 'Adana +11', 'iller': cok_il}, simdi=simdi)[1]
+        self.assertEqual(_is_ilanlari(html)[0]['jobLocation']['address'], {'@type': 'PostalAddress', 'addressCountry': 'TR'})
+
+    def test_tek_ilde_bolge_ve_sehir_yazilir(self):
+        simdi = datetime(2098, 12, 5, tzinfo=su.TR)
+        html = su.detail_page(self._ilan(), kayit={'il': 'Van', 'iller': ['Van']}, simdi=simdi)[1]
+        self.assertEqual(_is_ilanlari(html)[0]['jobLocation']['address'],
+                         {'@type': 'PostalAddress', 'addressCountry': 'TR', 'addressRegion': 'Van', 'addressLocality': 'Van'})
+
+    def test_noindex_ve_kapali_sayfada_is_ilani_yok(self):
+        simdi = datetime(2098, 12, 5, tzinfo=su.TR)
+        icerik_yok = self._ilan(kadro=None, ozet=None)
+        html = su.detail_page(icerik_yok, kayit={'il': 'Van', 'iller': ['Van']}, simdi=simdi)[1]
+        self.assertIn('noindex', html)
+        self.assertEqual(_is_ilanlari(html), [])
+        html = su.detail_page(self._ilan(son_tarih='2098-11-01'), kayit={'il': 'Van', 'iller': ['Van']}, simdi=simdi)[1]
+        self.assertEqual(_is_ilanlari(html), [])
 
 
 if __name__ == '__main__':

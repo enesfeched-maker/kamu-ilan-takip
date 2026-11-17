@@ -781,9 +781,13 @@ def yapisal_veri(item, canonical, end, alanlar, kayit, gorsel, simdi, is_ilani, 
         yayim = simdi.date().isoformat()
     # Search Console 'addressRegion/addressLocality eksik': il (Türkiye'de il = şehir) her iki alana; çok illi ilanda il başına bir yer
     iller = [i for i in dict.fromkeys(list((kayit or {}).get('iller') or []) + [(kayit or {}).get('il') or ''])
-             if i and ks.kurum_anahtari(i) in ks.IL_ADI][:10]
+             if i and ks.kurum_anahtari(i) in ks.IL_ADI]
     import liste_verisi
-    if not iller:   # il yazmayan ilanda kurumun merkezi ('Ankara Üniversitesi' -> Ankara, bakanlık -> Ankara, TMSF -> İstanbul)
+    # Ülke geneli ilan (Türkiye geneli ya da çok sayıda il): tek tek il sayılırsa yarım liste yanıltır; yalnız addressCountry yazılır (18 Kasım 2026).
+    ulke_geneli = ks.kurum_anahtari((kayit or {}).get('il') or '').startswith('turkiye geneli') or len(iller) > ULKE_GENELI_IL
+    if ulke_geneli:
+        iller = []
+    elif not iller:   # il yazmayan ilanda kurumun merkezi ('Ankara Üniversitesi' -> Ankara, bakanlık -> Ankara, TMSF -> İstanbul)
         iller = [i for i in [liste_verisi.merkez_il(item)] if i]
     yerler = [{'@type': 'Place', 'address': {'@type': 'PostalAddress', 'addressCountry': 'TR', 'addressRegion': i, 'addressLocality': i}}
               for i in iller] or [{'@type': 'Place', 'address': {'@type': 'PostalAddress', 'addressCountry': 'TR'}}]
@@ -801,6 +805,7 @@ def yapisal_veri(item, canonical, end, alanlar, kayit, gorsel, simdi, is_ilani, 
     return sonuc + _ld(is_)
 
 
+ULKE_GENELI_IL = 10   # bir ilanda bundan çok il varsa jobLocation yalnız ülkedir
 ESKI_ILAN_GUN = 0   # son başvurusu bu kadar gün önce geçen ilan sayfası arama dizininden çıkar (sayfa açık kalır); 9 Kasım 2026'dan beri süresi biter bitmez
 
 
@@ -961,7 +966,8 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
                 f'<script src="{kok}forum.js?v={FORUM_SURUM}" defer></script>')
     og_gorsel += (f'<link rel="stylesheet" href="{kok}forum.css?v={FORUM_SURUM}">'
                   f'<link rel="stylesheet" href="{kok}forum-sohbet.css?v={FORUM_SURUM}">')
-    is_ilani = acik_ilan and not ikincil and not (kayit or {}).get('kurum_ici')
+    # JobPosting yalnız dizinlenen, başvurusu süren esas sayfada: noindex sayfada şema Google'a yarar sağlamaz, kapalı ilanda hiç yok (18 Kasım 2026)
+    is_ilani = acik_ilan and not ikincil and not (kayit or {}).get('kurum_ici') and not dizinlenmez(item, simdi)
     og_gorsel += yapisal_veri(item, canonical, end, alanlar, kayit, gorsel, simdi, is_ilani, ad=title.removesuffix(' | KPSS Tercihi'))
     if dizinlenmez(item, simdi) and not ikincil:   # kopya sayfa esas kayda canonical verir; noindex ile birlikte çelişkili sinyal olur
         og_gorsel += '<meta name="robots" content="noindex,follow">'
