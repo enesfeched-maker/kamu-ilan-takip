@@ -74,6 +74,30 @@ h2.bolum{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(
 .akis span{overflow-wrap:anywhere}
 .hata-mesaj{color:var(--uyari)}
 footer{margin-top:36px;color:var(--soluk);font-size:12.5px}
+.sekmeler{display:flex;gap:4px;margin:-6px 0 18px;border-bottom:1px solid var(--cizgi)}
+.sekmeler button{border:0;background:none;color:var(--soluk);font:inherit;font-weight:600;padding:8px 14px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+.sekmeler button[aria-selected=true]{color:var(--yazi);border-bottom-color:var(--ac)}
+[hidden]{display:none!important}
+/* Forum sekmesi renkleri colors.elwyn.co hazır kombinasyonlarından:
+   açık tema #286 Burnt Sienna #ae5224 · Orange Yellow #fcb315 · Peacock Blue #00939b · Violet Blue #40456a
+   koyu tema #300 Grenadine Pink #f48067 · Cream Yellow #fdbf68 · Turquoise Green #b5decc · Calamine Blue #78cdd0 */
+.forum{--ac:#00939b;--ac-yumusak:color-mix(in srgb,#00939b 16%,transparent);--uyari:#ae5224;--s-soru:#00939b;--s-cevap:#40456a;--s-sohbet:#fcb315;--s-ozel:#ae5224}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .forum{--ac:#78cdd0;--ac-yumusak:color-mix(in srgb,#78cdd0 18%,transparent);--uyari:#f48067;--s-soru:#78cdd0;--s-cevap:#b5decc;--s-sohbet:#fdbf68;--s-ozel:#f48067}}
+:root[data-theme=dark] .forum{--ac:#78cdd0;--ac-yumusak:color-mix(in srgb,#78cdd0 18%,transparent);--uyari:#f48067;--s-soru:#78cdd0;--s-cevap:#b5decc;--s-sohbet:#fdbf68;--s-ozel:#f48067}
+.forum .kpi strong.uyar{color:var(--uyari)}
+.oneri{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.oneri li{display:grid;grid-template-columns:10px minmax(0,1fr);gap:10px;align-items:baseline;font-size:14.5px}
+.oneri li::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ac);transform:translateY(-1px)}
+.oneri li.uyari::before{background:var(--uyari)}
+.lejant{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--soluk);margin:0 0 8px}
+.lejant i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.grafik .s-soru{fill:var(--s-soru)}.grafik .s-cevap{fill:var(--s-cevap)}.grafik .s-sohbet{fill:var(--s-sohbet)}.grafik .s-ozel{fill:var(--s-ozel)}
+.s-soru-b{background:var(--s-soru)}.s-cevap-b{background:var(--s-cevap)}.s-sohbet-b{background:var(--s-sohbet)}.s-ozel-b{background:var(--s-ozel)}
+.grafik .cubuk-s{fill:var(--ac)}
+.satir .det{grid-column:1/-1;font-size:12.5px;color:var(--soluk);overflow-wrap:anywhere}
+.satir a{color:inherit}
+.rozet{font-size:11px;border:1px solid var(--cizgi);border-radius:6px;padding:0 5px;margin-left:6px;color:var(--soluk)}
+.donusum strong.uyar{color:var(--uyari)}
 `;
 
 const GIRIS_CSS = String.raw`
@@ -140,48 +164,139 @@ function cizgiGrafik(kap,gunler,o){
     if(i%adim===0||i===n-1){var x=svg('text',{x:xs(i),y:H-8,'text-anchor':'middle'});x.textContent=gunKisa(g.gun);s.appendChild(x)}});
   kap.appendChild(s)
 }
-/* Forum bölümü: /panel/forum (sunucu forum Worker'ından çeker; anahtar tarayıcıya gelmez). Başlıklar yalnız textContent ile yazılır. */
-function forumCiz(g,F){
-  g.replaceChildren();g.className='';
-  if(F.durum!=='tamam'){g.appendChild(h('p','bos',F.durum==='anahtar_yok'?'Forum anahtarı tanımlı değil.':'Forum verisi alınamadı.'));return}
-  var V=F.veri,U=V.uyeler,S=V.soru,c,kp=h('div','kpi'),bek=(V.sikayet.genel||0)+(V.sikayet.ozel||0);
-  g.appendChild(kp);
-  [['Toplam üye',tr(U.toplam),tr(U.yeni.g1)+' yeni (24 sa) · '+tr(U.yeni.g30)+' (30 gün)',0],['7 günde yeni üye',tr(U.yeni.g7),'',0],['7 günde aktif yazan',tr(V.aktif.g7),tr(V.aktif.g1)+' (24 sa) · '+tr(V.aktif.g30)+' (30 gün)',0],
-   ['Cevapsız soru',tr(S.cevapsiz),tr(S.toplam)+' sorudan'+(S.ilk_cevap_dk!=null?' · ilk cevap ort. '+String(S.ilk_cevap_dk).replace('.',',')+' dk (7 gün)':''),S.cevapsiz],
-   ['Bekleyen şikâyet',tr(bek),tr(V.sikayet.genel)+' yanıt · '+tr(V.sikayet.ozel)+' özel mesaj',bek]].forEach(function(a){
-    var d=h('div');d.appendChild(h('span',null,a[0]));d.appendChild(h('strong',a[3]>0?'hata-mesaj':null,a[1]));d.appendChild(h('em',null,a[2]));kp.appendChild(d)});
-  var iz=h('div','izgara');g.appendChild(iz);
-  [['Yeni üye','uye','yeni üye'],['Yeni soru','soru','yeni soru'],['Cevap','cevap','cevap'],['Sohbet mesajı','sohbet','sohbet mesajı'],['Özel mesaj','ozel','özel mesaj']].forEach(function(a){
-    var top=V.seri.reduce(function(x,r){return x+r[a[1]]},0);c=kart(iz,a[0],'son 30 gün · toplam '+tr(top));cizgiGrafik(c,V.seri,{alan:a[1],ad:'Günlük '+a[2],ipucu:a[2]})});
-  c=kart(iz,'Giriş yöntemi','üye');cubuklar(c,[{ad:'Telegram',v:U.yontem.telegram},{ad:'Google',v:U.yontem.google},{ad:'Rumuz + şifre',v:U.yontem.sifre}],{bos:'Üye yok.'});
-  c.appendChild(h('p','not',tr(U.kurucu)+' kurucu üye · '+tr(U.engelli)+' engelli · '+tr(U.dm_kapali)+' kişi özel mesajı kapattı.'));
-  c=kart(iz,'Kategoriye göre sorular','üye soruları');cubuklar(c,S.kategori.map(function(r){return {ad:r.ad,v:r.n}}),{bos:'Henüz soru yok.'});
-  c=kart(iz,'Oda etkinliği','son 7 gün · mesaj');cubuklar(c,V.sohbet.map(function(r){return {ad:r.ad,v:r.mesaj}}),{bos:'Sohbet odası yok.'});
-  c=kart(iz,'En çok cevap alan sorular','son 30 gün');
-  if(!S.populer.length)bosKart(c,'Cevaplanan soru yok.');
-  else{var en=S.populer[0].cevap||1;S.populer.forEach(function(r){
-    var s=h('div','satir'),ad=h('div','ad'),a=h('a',null,r.baslik);a.href='https://kpsstercihi.com/forum/?b='+encodeURIComponent(r.id);a.target='_blank';a.rel='noopener noreferrer';ad.title=r.baslik;ad.appendChild(a);
-    var cb=h('div','cubuk'),i=h('i');i.style.width=Math.max(2,Math.round(r.cevap/en*100))+'%';cb.appendChild(i);
-    s.appendChild(ad);s.appendChild(h('div','say',tr(r.cevap)+' cevap'));s.appendChild(cb);c.appendChild(s)})}
-  c.appendChild(h('p','not','Takip edilen konu: '+tr(V.takip)+' · son 24 saatte '+tr(V.engel_24s)+' özel mesaj engeli.'))
+/* Forum sekmesi: /panel/forum-analiz?gun= (sunucu forum Worker'ından çeker; anahtar tarayıcıya gelmez). Kullanıcı metinleri yalnız textContent ile yazılır. */
+var forumGun=30,forumYuklendi=false,siteYuklendi=false;
+var FORUM_DURUM={anahtar_yok:'Forum anahtarı tanımlı değil. FORUM_YONETICI_ANAHTARI sırrını ekle.',yetkisiz:'Forum anahtarı uyuşmuyor. FORUM_YONETICI_ANAHTARI, forumdaki YONETICI_ANAHTARI ile aynı olmalı.',hata:'Foruma ulaşılamadı. Biraz sonra yeniden dene.'};
+var SERI=[['soru','Soru'],['cevap','Cevap'],['sohbet','Sohbet'],['ozel','Özel mesaj']];
+function iki(n){return (n<10?'0':'')+n}
+function forumBag(r){var a=h('a',null,r.baslik);a.href='https://kpsstercihi.com/forum/?b='+encodeURIComponent(r.id);a.target='_blank';a.rel='noopener noreferrer';return a}
+function satirDet(kap,ad,say,det){
+  var s=h('div','satir'),a=h('div','ad');if(typeof ad==='string')a.textContent=ad;else a.appendChild(ad);a.title=a.textContent;
+  s.appendChild(a);s.appendChild(h('div','say',say));if(det)s.appendChild(h('div','det',det));kap.appendChild(s);return a
 }
-function forumYukle(g){
-  g.className='';g.appendChild(h('p','bos','Forum verisi yükleniyor…'));
-  fetch('/panel/forum',{credentials:'same-origin'}).then(function(r){if(r.status===401){location.href='/panel';throw 0}if(!r.ok)throw new Error(r.status);return r.json()}).then(function(F){forumCiz(g,F)}).catch(function(e){if(e!==0)forumCiz(g,{durum:'hata'})})
+function kutular(kap,liste){var d=h('div','donusum');liste.forEach(function(a){var x=h('div');x.appendChild(h('span',null,a[0]));x.appendChild(h('strong',a[2]?'uyar':null,tr(a[1])));d.appendChild(x)});kap.appendChild(d)}
+/* Yığılmış günlük çubuk: soru (ilan sorusu dahil), cevap, sohbet, özel mesaj. */
+function yiginGrafik(kap,seri){
+  var veri=seri.map(function(g){return {gun:g.gun,soru:g.soru+g.ilan_soru,cevap:g.cevap,sohbet:g.sohbet,ozel:g.ozel}});
+  var lj=h('p','lejant');
+  SERI.forEach(function(sr){var top=veri.reduce(function(x,r){return x+r[sr[0]]},0),sp=h('span');sp.appendChild(h('i','s-'+sr[0]+'-b'));sp.appendChild(document.createTextNode(sr[1]+' '+tr(top)));lj.appendChild(sp)});
+  kap.appendChild(lj);
+  var W=720,H=220,L=36,R=6,T=10,B=26,n=veri.length,en=Math.max.apply(null,veri.map(function(r){return r.soru+r.cevap+r.sohbet+r.ozel}))||1;
+  var yu=en<=5?5:Math.ceil(en/4)*4,bw=(W-L-R)/n,pay=Math.min(2,bw*.15);
+  var s=svg('svg',{viewBox:'0 0 '+W+' '+H,'class':'grafik',role:'img','aria-label':'Günlük forum etkinliği: soru, cevap, sohbet, özel mesaj'});
+  [0,.5,1].forEach(function(f){var y=T+(H-T-B)*(1-f);s.appendChild(svg('line',{x1:L,x2:W-R,y1:y,y2:y,'class':'izgara-cizgi'}));var t=svg('text',{x:L-6,y:y+4,'text-anchor':'end'});t.textContent=tr(Math.round(yu*f));s.appendChild(t)});
+  var adim=Math.max(1,Math.ceil(n/7));
+  veri.forEach(function(r,i){
+    var gr=svg('g',{}),y=H-B;
+    gr.appendChild(svg('rect',{x:L+i*bw,y:T,width:bw,height:H-T-B,fill:'transparent'}));
+    SERI.forEach(function(sr){var v=r[sr[0]];if(!v)return;var hh=(H-T-B)*v/yu;y-=hh;gr.appendChild(svg('rect',{x:L+i*bw+pay,y:y,width:Math.max(1,bw-2*pay),height:hh,'class':'s-'+sr[0]}))});
+    var ti=svg('title',{});ti.textContent=gunKisa(r.gun)+': '+SERI.map(function(sr){return tr(r[sr[0]])+' '+sr[1].toLocaleLowerCase('tr-TR')}).join(', ');gr.appendChild(ti);
+    s.appendChild(gr);
+    if(i%adim===0||i===n-1){var t=svg('text',{x:L+i*bw+bw/2,y:H-8,'text-anchor':'middle'});t.textContent=gunKisa(r.gun);s.appendChild(t)}});
+  kap.appendChild(s)
 }
-function isiHaritasi(kap,isi){
+/* Günün saatine göre yazı sayısı (Türkiye saati); en yoğun saat tam renkli. */
+function saatGrafik(kap,saat){
+  var top=saat.reduce(function(x,y){return x+y},0);
+  if(!top){bosKart(kap,'Bu dönemde yazı yok.');return}
+  var W=720,H=180,L=36,R=6,T=10,B=24,en=Math.max.apply(null,saat)||1,bw=(W-L-R)/24,enS=saat.indexOf(en);
+  var s=svg('svg',{viewBox:'0 0 '+W+' '+H,'class':'grafik',role:'img','aria-label':'Günün saatine göre yazı sayısı'});
+  [0,1].forEach(function(f){var y=T+(H-T-B)*(1-f);s.appendChild(svg('line',{x1:L,x2:W-R,y1:y,y2:y,'class':'izgara-cizgi'}));var t=svg('text',{x:L-6,y:y+4,'text-anchor':'end'});t.textContent=tr(Math.round(en*f));s.appendChild(t)});
+  saat.forEach(function(v,i){
+    var hh=(H-T-B)*v/en,r=svg('rect',{x:L+i*bw+2,y:H-B-hh,width:bw-4,height:hh,rx:2,'class':'cubuk-s'});
+    if(i!==enS)r.setAttribute('fill-opacity','.5');
+    var ti=svg('title',{});ti.textContent=iki(i)+':00 — '+tr(v)+' yazı';r.appendChild(ti);s.appendChild(r);
+    if(i%3===0){var t=svg('text',{x:L+i*bw+bw/2,y:H-8,'text-anchor':'middle'});t.textContent=iki(i);s.appendChild(t)}});
+  kap.appendChild(s);
+  kap.appendChild(h('p','not','Türkiye saati. En yoğun: '+iki(enS)+':00–'+iki((enS+1)%24)+':00 ('+tr(en)+' yazı).'))
+}
+function forumCiz(F){
+  var kok=$('forum-icerik');kok.replaceChildren();
+  if(!F||F.durum!=='tamam'){var d=F&&F.durum;kok.appendChild(h('p',d==='anahtar_yok'?'bos':'bos hata-mesaj',FORUM_DURUM[d]||FORUM_DURUM.hata));return}
+  var V=F.veri,U=V.uyeler,A=V.aktif,S=V.soru,Hn=V.huni,D=V.denetim,E=V.etkilesim,c,g,donem='son '+V.gun+' gün';
+  var bek=D.sikayet+D.ozel_sikayet+D.foto_bildirim;
+  g=h('div','izgara genis');kok.appendChild(g);
+  c=kart(g,'Ne yapmalı?',donem);var ul=h('ul','oneri');(F.oneriler||[]).forEach(function(o){ul.appendChild(h('li',o.tur==='uyari'?'uyari':null,o.metin))});c.appendChild(ul);
+  var kp=h('div','kpi');kp.style.marginTop='12px';kok.appendChild(kp);
+  [['Üye',tr(U.toplam),'+'+tr(U.yeni)+' bu dönemde · '+tr(U.son.g1)+' son 24 sa'],
+   ['Aktif yazan (7 gün)',tr(A.g7),tr(A.g1)+' son 24 sa · '+tr(A.g30)+' son 30 gün'],
+   ['Geri dönen',A.donem?yuzde(A.geri_donen/A.donem):'—',tr(A.geri_donen)+' / '+tr(A.donem)+' yazan, 2+ farklı gün'],
+   ['Soru',tr(S.donem),S.donem?yuzde(S.cevaplanan/S.donem)+' cevap aldı':'bu dönemde soru yok'],
+   ['İlk cevap (medyan)',S.ilk_cevap_medyan_dk==null?'—':sure(S.ilk_cevap_medyan_dk*60),S.cevaplanan?tr(S.bir_saatte)+' soru 1 saat içinde cevaplandı':''],
+   ['Cevapsız soru',tr(S.cevapsiz),'tüm zamanlar',S.cevapsiz>0],
+   ['Bekleyen şikâyet',tr(bek),tr(D.sikayet)+' yazı · '+tr(D.ozel_sikayet)+' özel · '+tr(D.foto_bildirim)+' fotoğraf',bek>0]].forEach(function(a){
+    var x=h('div');x.appendChild(h('span',null,a[0]));x.appendChild(h('strong',a[3]?'uyar':null,a[1]));x.appendChild(h('em',null,a[2]));kp.appendChild(x)});
+
+  g=bolum(kok,'Günlük');g.className='izgara genis';
+  c=kart(g,'Günlük etkinlik',donem+' · yazı');yiginGrafik(c,V.seri);
+  c=kart(g,'Yeni üye',donem+' · toplam '+tr(V.toplam.uye));cizgiGrafik(c,V.seri,{alan:'uye',ad:'Günlük yeni üye',ipucu:'yeni üye'});
+  c.appendChild(h('p','not','Bu dönemde '+tr(V.toplam.takip)+' takip, '+tr(V.toplam.anket)+' yeni anket.'));
+
+  g=bolum(kok,'Sorular');
+  c=kart(g,'Cevapsız sorular','en eskiden');
+  if(!S.cevapsiz_liste.length)bosKart(c,'Cevapsız soru yok.');
+  else S.cevapsiz_liste.forEach(function(r){satirDet(c,forumBag(r),r.gun===0?'bugün':tr(r.gun)+' gün',r.kategori)});
+  if(S.cevapsiz>S.cevapsiz_liste.length)c.appendChild(h('p','not','Toplam '+tr(S.cevapsiz)+' cevapsız soru; en eski '+S.cevapsiz_liste.length+' tanesi görünüyor.'));
+  c=kart(g,'En çok ilgi gören sorular',donem);
+  if(!S.en_iyi.length)bosKart(c,'Bu dönemde cevap ya da oy alan soru yok.');
+  else S.en_iyi.forEach(function(r){satirDet(c,forumBag(r),tr(r.cevap)+' cevap',tr(r.faydali)+' faydalı · '+tr(r.takip)+' takip · '+r.kategori)});
+  c=kart(g,'Kategoriye göre',donem+' · soru');cubuklar(c,S.kategori.map(function(r){return {ad:r.ad,v:r.n,ek:yuzde(r.n?r.cevaplanan/r.n:0)+' cevaplı'}}),{bos:'Bu dönemde soru yok.'});
+  c=kart(g,'İlan sayfasından gelen sorular',donem);kutular(c,[['Soru',S.ilan.n],['Üye cevabı alan',S.ilan.insan],['Asistan cevabı alan',S.ilan.asistan]]);
+
+  g=bolum(kok,'Odalar ve saatler');
+  c=kart(g,'Sohbet odaları',donem+' · mesaj');cubuklar(c,V.odalar.map(function(r){return {ad:r.ad,v:r.mesaj,ek:tr(r.kisi)+' kişi'}}),{bos:'Sohbet odası yok.'});
+  c=kart(g,'Hangi saatte yazıyorlar',donem);saatGrafik(c,V.saat);
+  c=kart(g,'Gün ve saat',donem+' · yazı');isiHaritasi(c,V.isi,'yazı');
+
+  g=bolum(kok,'Üyeler');
+  c=kart(g,'En çok katkı',donem);
+  if(!V.katkilar.length)bosKart(c,'Bu dönemde yazan yok.');
+  else V.katkilar.forEach(function(k){var a=satirDet(c,k.rumuz,tr(k.soru+k.cevap)+' yazı',tr(k.soru)+' soru · '+tr(k.cevap)+' cevap · '+tr(k.sohbet)+' sohbet · itibar '+tr(k.itibar));if(k.kurucu)a.appendChild(h('span','rozet','kurucu'))});
+  c=kart(g,'Üyeler ne yapıyor','tüm üyeler');
+  var w=h('div','huni'),hen=Math.max(Hn.toplam,1);
+  [['Üye',Hn.toplam],['Yazı yazdı',Hn.yazan],['Yalnız oy, takip, mesaj',Hn.yalniz_etkilesim],['Yalnız okuyor',Hn.iz_yok]].forEach(function(a,i){
+    var s=h('div','huni-adim');s.appendChild(h('span',null,a[0]));
+    var cb=h('div','cubuk'),b=h('i');b.style.width=Math.max(a[1]?2:0,Math.round(a[1]/hen*100))+'%';cb.appendChild(b);s.appendChild(cb);
+    s.appendChild(h('span','say',tr(a[1])+(i&&Hn.toplam?' · '+yuzde(a[1]/Hn.toplam):'')));w.appendChild(s)});
+  c.appendChild(w);
+  c.appendChild(h('p','not','Bu dönemde katılan '+tr(Hn.yeni)+' üyeden '+tr(Hn.yeni_yazan)+' tanesi yazı yazdı.'));
+  c=kart(g,'Giriş yöntemi','bir üyede birden çok olabilir');cubuklar(c,[{ad:'Google',v:U.yontem.google},{ad:'E-posta',v:U.yontem.eposta},{ad:'Telegram',v:U.yontem.telegram},{ad:'Rumuz + şifre',v:U.yontem.sifre}],{bos:'Üye yok.'});
+  c.appendChild(h('p','not',tr(U.kurucu)+' kurucu · '+tr(U.fotolu)+' fotoğraflı · '+tr(U.kartli)+' profil kartı dolu · '+tr(U.silinen)+' silinen hesap.'));
+
+  g=bolum(kok,'Etkileşim ve denetim');
+  c=kart(g,'Etkileşim','tüm zamanlar');kutular(c,[['Faydalı (cevap)',E.yanit_oy],['Faydalı (soru)',E.baslik_oy],['Anket',E.anket],['Anket oyu',E.anket_oy],['Takip',E.takip]]);
+  c=kart(g,'Denetim');kutular(c,[['Yazı şikâyeti',D.sikayet,D.sikayet>0],['Özel mesaj şikâyeti',D.ozel_sikayet,D.ozel_sikayet>0],['Bildirilen fotoğraf',D.foto_bildirim,D.foto_bildirim>0],['Gizlenen yazı',D.gizlenen],['Engelleme',D.engel],['Engelli üye',D.engelli],['Kapatılan kimlik',D.kapali_kimlik]]);
+  c.appendChild(h('p','not','Şikâyetler bekleyenlerdir. Gizlenen yazı ve engelleme bu dönemdendir.'));
+  kok.appendChild(h('footer',null,'Veri '+new Date(V.uretildi*1000).toLocaleString('tr-TR',{timeZone:'Europe/Istanbul'})+' itibarıyla, en çok 5 dakika gecikir. Özel mesaj metni ve e-posta adresi panele gelmez.'))
+}
+function forumYukle(gun){
+  forumGun=gun;forumYuklendi=true;
+  document.querySelectorAll('#forum-aralik button').forEach(function(b){b.setAttribute('aria-pressed',String(Number(b.dataset.g)===gun))});
+  $('forum-icerik').replaceChildren(h('p','bos','Forum verisi yükleniyor…'));
+  fetch('/panel/forum-analiz?gun='+gun,{credentials:'same-origin'}).then(function(r){if(r.status===401){location.href='/panel';throw 0}if(!r.ok)throw new Error(r.status);return r.json()}).then(forumCiz).catch(function(e){if(e!==0)forumCiz({durum:'hata'})})
+}
+function sekmeAc(ad){
+  var forum=ad==='forum';
+  $('sekme-site').setAttribute('aria-selected',String(!forum));$('sekme-forum').setAttribute('aria-selected',String(forum));
+  $('icerik').hidden=forum;$('forum-icerik').hidden=!forum;$('site-aralik').hidden=forum;$('forum-aralik').hidden=!forum;
+  if(forum){try{history.replaceState(null,'','?sekme=forum')}catch(e){}if(!forumYuklendi)forumYukle(forumGun)}
+  else if(!siteYuklendi){var q=new URLSearchParams(location.search).get('aralik');yukle(['bugun','7g','30g','90g'].indexOf(q)>=0?q:aralik)}
+  else{try{history.replaceState(null,'','?aralik='+aralik)}catch(e){}}
+}
+function isiHaritasi(kap,isi,birim){
+  birim=birim||'görüntüleme';
   if(!isi.length){bosKart(kap);return}
   var m={},en=1;isi.forEach(function(r){m[r[0]+'-'+r[1]]=r[2];if(r[2]>en)en=r[2]});
   var W=720,L=34,hw=(W-L-4)/24,hh=20,H=7*hh+26;
-  var s=svg('svg',{viewBox:'0 0 '+W+' '+H,'class':'grafik',role:'img','aria-label':'Haftanın günü ve saate göre sayfa görüntüleme'});
+  var s=svg('svg',{viewBox:'0 0 '+W+' '+H,'class':'grafik',role:'img','aria-label':'Haftanın günü ve saate göre '+birim});
   for(var g=0;g<7;g++){
     var t=svg('text',{x:L-6,y:g*hh+hh*.7,'text-anchor':'end'});t.textContent=GUNAD[g];s.appendChild(t);
     for(var sa=0;sa<24;sa++){
       var v=m[g+'-'+sa]||0,r=svg('rect',{x:L+sa*hw+1,y:g*hh+1,width:hw-2,height:hh-2,rx:3,'class':v?'hucre':'hucre-bos'});
       if(v)r.setAttribute('fill-opacity',(0.18+0.82*v/en).toFixed(2));
-      var ti=svg('title',{});ti.textContent=GUNAD[g]+' '+(sa<10?'0':'')+sa+':00 — '+tr(v)+' görüntüleme';r.appendChild(ti);s.appendChild(r)}}
+      var ti=svg('title',{});ti.textContent=GUNAD[g]+' '+(sa<10?'0':'')+sa+':00 — '+tr(v)+' '+birim;r.appendChild(ti);s.appendChild(r)}}
   [0,3,6,9,12,15,18,21].forEach(function(sa){var t=svg('text',{x:L+sa*hw+hw/2,y:H-8,'text-anchor':'middle'});t.textContent=(sa<10?'0':'')+sa;s.appendChild(t)});
-  kap.appendChild(s);kap.appendChild(h('p','not','Türkiye saati. Koyu hücre = daha çok sayfa görüntüleme.'))
+  kap.appendChild(s);kap.appendChild(h('p','not','Türkiye saati. Koyu hücre = daha çok '+(birim==='görüntüleme'?'sayfa görüntüleme':birim)+'.'))
 }
 function huni(kap,hn){
   var adimlar=[['Oturum',hn.oturum],['Ana sayfayı gördü',hn.ana],['İlan ayrıntısı açtı',hn.ilan],['Ana sayfa → ilan',hn.anaIlan],['Resmî ilana gitti',hn.resmi]];
@@ -302,8 +417,6 @@ function ciz(d){
   c=kart(g,'Şehir');cubuklar(c,d.sehir.slice(0,15).map(function(r){return {ad:r.ad,alt:r.ulke&&r.ulke!=='TR'?r.ulke:'',v:r.oturum}}));
   c=kart(g,'Ülke');cubuklar(c,d.ulke.map(function(r){return {ad:r.ad,v:r.oturum}}));
 
-  forumYukle(bolum(kok,'Forum'));
-
   g=bolum(kok,'Cihaz');
   c=kart(g,'Cihaz türü');cubuklar(c,d.cihaz.map(function(r){return {ad:r.ad,v:r.oturum}}));
   c=kart(g,'Tarayıcı');cubuklar(c,d.tarayici.map(function(r){return {ad:r.ad,v:r.oturum}}));
@@ -347,16 +460,17 @@ function ciz(d){
   canliGuncelle()
 }
 function yukle(a,taze){
-  aralik=a;
-  document.querySelectorAll('.segment button').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.a===a))});
+  aralik=a;siteYuklendi=true;
+  document.querySelectorAll('#site-aralik button').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.a===a))});
   try{history.replaceState(null,'','?aralik='+a)}catch(e){}
   $('icerik').replaceChildren(h('p','bos','Yükleniyor…'));
   fetch('/panel/veri?aralik='+a+(taze?'&taze=1':''),{credentials:'same-origin'}).then(function(r){if(r.status===401){location.href='/panel';throw 0}if(!r.ok)throw new Error(r.status);return r.json()}).then(ciz).catch(function(e){if(e!==0)$('icerik').replaceChildren(h('p','bos hata-mesaj','Veri alınamadı. Yeniden dene.'))})
 }
-document.querySelectorAll('.segment button').forEach(function(b){b.onclick=function(){yukle(b.dataset.a)}});
-$('yenile').onclick=function(){yukle(aralik,true)};
-var q=new URLSearchParams(location.search).get('aralik');
-yukle(['bugun','7g','30g','90g'].indexOf(q)>=0?q:'7g');
+document.querySelectorAll('#site-aralik button').forEach(function(b){b.onclick=function(){yukle(b.dataset.a)}});
+document.querySelectorAll('#forum-aralik button').forEach(function(b){b.onclick=function(){forumYukle(Number(b.dataset.g))}});
+$('sekme-site').onclick=function(){sekmeAc('site')};$('sekme-forum').onclick=function(){sekmeAc('forum')};
+$('yenile').onclick=function(){if(!$('forum-icerik').hidden)forumYukle(forumGun);else yukle(aralik,true)};
+sekmeAc(new URLSearchParams(location.search).get('sekme')==='forum'?'forum':'site');canliGuncelle();
 setInterval(function(){if(!document.hidden)canliGuncelle()},60000);document.addEventListener('visibilitychange',function(){if(!document.hidden)canliGuncelle()});
 })();
 `;
@@ -364,8 +478,10 @@ setInterval(function(){if(!document.hidden)canliGuncelle()},60000);document.addE
 export function panelSayfasi(nonce) {
   const govde = `<body><div class="kap"><header class="ust"><h1>KPSS Tercihi · Site analizi<small>Çerezsiz, anonim ziyaret istatistikleri</small></h1><span class="bosluk"></span>
 <span class="canli"><span class="nokta" aria-hidden="true"></span>Şu an aktif <b id="canli-sayi">–</b><span>(son 5 dk)</span></span>
-<div class="segment" role="group" aria-label="Zaman aralığı"><button type="button" data-a="bugun" aria-pressed="false">Bugün</button><button type="button" data-a="7g" aria-pressed="true">7 gün</button><button type="button" data-a="30g" aria-pressed="false">30 gün</button><button type="button" data-a="90g" aria-pressed="false">90 gün</button></div>
+<div class="segment" id="site-aralik" role="group" aria-label="Zaman aralığı"><button type="button" data-a="bugun" aria-pressed="false">Bugün</button><button type="button" data-a="7g" aria-pressed="true">7 gün</button><button type="button" data-a="30g" aria-pressed="false">30 gün</button><button type="button" data-a="90g" aria-pressed="false">90 gün</button></div>
+<div class="segment" id="forum-aralik" role="group" aria-label="Forum dönemi" hidden><button type="button" data-g="7" aria-pressed="false">7 gün</button><button type="button" data-g="30" aria-pressed="true">30 gün</button><button type="button" data-g="90" aria-pressed="false">90 gün</button></div>
 <div class="segment"><button type="button" id="yenile">Yenile</button></div><a class="cikis" href="/panel/cikis">Çıkış</a></header>
-<main id="icerik" aria-live="polite"></main></div><script nonce="${nonce}">${ISTEMCI}</script></body></html>`;
+<nav class="sekmeler" role="tablist" aria-label="Bölüm"><button type="button" role="tab" id="sekme-site" aria-selected="true" aria-controls="icerik">Site</button><button type="button" role="tab" id="sekme-forum" aria-selected="false" aria-controls="forum-icerik">Forum</button></nav>
+<main id="icerik" aria-live="polite"></main><main id="forum-icerik" class="forum" aria-live="polite" hidden></main></div><script nonce="${nonce}">${ISTEMCI}</script></body></html>`;
   return kafa('Site analizi', PANEL_CSS, nonce) + govde;
 }
