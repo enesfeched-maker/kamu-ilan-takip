@@ -42,7 +42,7 @@ EK_ADRESI = re.compile(r'^https://webdosya\.csb\.gov\.tr/v2/yerelyonetimler/\d{4
 KURUM = re.compile(r'^(?:(?P<il>\S+)\s+İLL?İ\s+)?(?P<ad>.+?)\s+'
                    r'(?P<tur>BELEDİYE\s+BAŞKANLIĞI(?:NA)?|BELEDİYESİ(?:NE)?|BELEDİYE|GENEL\s+MÜDÜRLÜ[ĞG]Ü(?:NE)?)\b\s*(?P<kalan>.*)$')
 ARALIK = re.compile(r'(\d{1,2})\s*[./]\s*(\d{1,2})\s*[./]\s*(20\d{2})\s*[-–—/]\s*'
-                    r'(\d{1,2})\s*[./]\s*(\d{1,2})\s*[./]\s*(20\d{2})\s*tarihleri\s+aras')
+                    r'(\d{1,2})\s*[./]\s*(\d{1,2})\s*[./]\s*(20\d{2})(?!\d)(?:\s*tarihleri\s+aras)?')   # 'tarihleri arasında' yazılmayabilir: '01/12/2026-3/12/2026 istenilen belgeler…'
 
 
 def guvenli_adres(deger, taban=''):
@@ -218,6 +218,21 @@ def son_basvuru(metin):
     acik.discard(None)
     if acik:
         return next(iter(acik)).isoformat() if len(acik) == 1 else None
+    bitisler = {son for _, son in basvuru_araliklari(metin)}
+    return next(iter(bitisler)).isoformat() if len(bitisler) == 1 else None
+
+
+def basvuru_baslangici(metin):
+    """Belgede tek bir başvuru aralığı açıkça yazılıysa (başlangıç günü, bitiş günü) ISO çifti; yoksa/çelişiyorsa None."""
+    araliklar = basvuru_araliklari(metin)
+    if len(araliklar) != 1:
+        return None
+    ilk, son = next(iter(araliklar))
+    return ilk.isoformat(), son.isoformat()
+
+
+def basvuru_araliklari(metin):
+    """Belgede açıkça yazılı başvuru aralıkları: {(ilk gün, son gün)}."""
     bitisler = set()
     for g in ARALIK.finditer(metin):
         cumle = re.split(r'\n|\.\s', metin[max(0, g.start() - 250):g.start()])[-1]
@@ -231,7 +246,7 @@ def son_basvuru(metin):
             continue
         ilk, son = _gun(*g.group(1, 2, 3)), _gun(*g.group(4, 5, 6))
         if ilk and son and son >= ilk:
-            bitisler.add(son)
+            bitisler.add((ilk, son))
     for g in ARALIK_KADAR.finditer(metin):
         onceki = re.split(r'\n|\.\s', metin[max(0, g.start() - 250):g.start()])[-1]
         sonraki = re.split(r'\n|\.\s', metin[g.end():g.end() + 400])[0]
@@ -240,8 +255,8 @@ def son_basvuru(metin):
             continue
         ilk, son = _gun(*g.group(1, 2, 3)), _gun(*g.group(4, 5, 6))
         if ilk and son and son >= ilk:
-            bitisler.add(son)
-    return next(iter(bitisler)).isoformat() if len(bitisler) == 1 else None
+            bitisler.add((ilk, son))
+    return bitisler
 
 
 def kayit_olustur(satir, detay, tarih):
@@ -327,14 +342,18 @@ def belge_kopyalari(kayitlar, indir_=None):
 
 def duyuru_oku(satir):
     detay = detay_ayristir(indir(satir['link']))
-    tarihler, okunamayan, alanlar = set(), 0, {}
+    tarihler, okunamayan, alanlar, araliklar = set(), 0, {}, set()
     for sira, ek in enumerate(detay['ekler']):
         if sira:
             time.sleep(.3)    # aynı sunucuya art arda istek: kısa bekleme (en çok AZAMI_BELGE belge)
         try:
             veri = _ek_indir(ek, satir['link'])
             _kopya_sakla(ek, veri)
-            tarihler.add(son_basvuru(belge_metni(ek, veri)))
+            metin = belge_metni(ek, veri)
+            tarihler.add(son_basvuru(metin))
+            aralik = basvuru_baslangici(metin)
+            if aralik:
+                araliklar.add(aralik)
         except Exception as exc:
             okunamayan += 1
             print(f'ÇŞB ek belge okunamadı ({type(exc).__name__}: {str(getattr(exc, "reason", exc))[:80]}): {ek.rsplit("/", 1)[-1][:60]}', flush=True)
@@ -349,6 +368,11 @@ def duyuru_oku(satir):
     # Farklı belgeler çelişirse tarih yazılmaz.
     kayit = kayit_olustur(satir, detay, next(iter(tarihler)) if len(tarihler) == 1 else None)
     kayit.update(alanlar)
+    # Başvuru başlangıcı: yalnız belgedeki tek aralığın bitişi kaydın son gününe eşitse yazılır (çelişkide tahmin yok).
+    if len(araliklar) == 1:
+        bas, bit = next(iter(araliklar))
+        if kayit.get('son_tarih') == bit:
+            kayit['baslangic_zaman'] = bas + 'T00:00:00+03:00'
     if okunamayan:
         kayit['ek_okunamadi'] = okunamayan   # eksik ayrıntı: "taze" sayılmaz, sonraki taramada yeniden denenir
     return kayit
