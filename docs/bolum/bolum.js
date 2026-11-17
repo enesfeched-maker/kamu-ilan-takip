@@ -173,7 +173,7 @@
   }
 
   let duzey = 'lisans';
-  const proper = (s) => String(s).toLocaleLowerCase('tr').replace(/(^|[\s(\/-])(\p{L})/gu, (m, a, b) => a + b.toLocaleUpperCase('tr'));
+  const proper = (s) => String(s).toLocaleLowerCase('tr').replace(/(^|[\s(\/-])([A-Za-z\u00C0-\u024F\u0370-\u052F])/g, (m, a, b) => a + b.toLocaleUpperCase('tr'));
   async function listeDoldur() {
     const dl = $('bf-liste');
     try {

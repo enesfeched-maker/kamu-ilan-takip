@@ -9,9 +9,9 @@ function kucuk(s){return String(s||'').toLocaleLowerCase('tr').replace(/\s+/g,' 
 function donemAdi(d){return d.replace('-','/');}
 /* İki ondalık gösterilir (ÖSYM beş ondalık yayımlar); sıralama ve robot karşılaştırması tam değerle yapılır. */
 function puanYaz(p){return p==null?'—':p.toLocaleString('tr-TR',{minimumFractionDigits:2,maximumFractionDigits:2});}
-const A=(t,p)=>{try{if(typeof window!=='undefined'&&window.kpssA)window.kpssA(t,p);}catch{}};
-function readStore(k,f){try{const v=JSON.parse(localStorage.getItem(k));return v??f;}catch{return f;}}
-function writeStore(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
+const A=(t,p)=>{try{if(typeof window!=='undefined'&&window.kpssA)window.kpssA(t,p);}catch(_e){}};
+function readStore(k,f){try{const v=JSON.parse(localStorage.getItem(k));return (v===null||v===undefined)?f:v;}catch(_e){return f;}}
+function writeStore(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(_e){}}
 function applyTheme(){const dark=window.kitKoyu?window.kitKoyu():readStore('kit-theme',null)==='dark';document.documentElement.dataset.theme=dark?'dark':'light';const m=document.querySelector('meta[name=theme-color]');if(m)m.content=dark?'#0D0E0C':'#F6F6F1';const b=$('theme');if(b){if(!b.dataset.hazir){b.dataset.hazir='1';if(typeof requestAnimationFrame==='function')requestAnimationFrame(()=>requestAnimationFrame(()=>b.classList.add('anahtar-hazir')));}b.setAttribute('aria-pressed',String(dark));b.setAttribute('aria-label',dark?'Açık temaya geç':'Koyu temaya geç');}}
 /* kit-profil (ana sayfadaki profil): doğrulanır; geçersizse yok sayılır */
 const LEVELS={lisans:'Lisans',onlisans:'Önlisans',ortaogretim:'Ortaöğretim'};
@@ -22,7 +22,7 @@ function profilOku(){const p=readStore('kit-profil',null);if(!p||typeof p!=='obj
 let acikListe=null;const acikOnbellek=new Map();
 /* Python kucuk() ile aynı: Türkçe küçük harf, kesme işareti atılır, boşluk tekilleşir; parantezli ek atılır. VHKİ kısaltması tam adıyla eşleşir. */
 const dizge=s=>{const k=String(s||'').toLocaleLowerCase('tr').replace(/['’`´]/g,'').replace(/\s*\(.*?\)/g,'').replace(/\s+/g,' ').trim();return k==='veri hazırlama ve kontrol işletmeni'?'vhki':k;};
-async function acikListeYukle(){try{const r=await fetch('../liste.json',{cache:'no-cache'});if(!r.ok)return;const v=await r.json();if(v&&Array.isArray(v.ilanlar))acikListe=v.ilanlar.filter(i=>i&&Array.isArray(i.unvanlar)).map(i=>({u:new Set(i.unvanlar.filter(x=>typeof x==='string').map(dizge))}));}catch{}}
+async function acikListeYukle(){try{const r=await fetch('../liste.json',{cache:'no-cache'});if(!r.ok)return;const v=await r.json();if(v&&Array.isArray(v.ilanlar))acikListe=v.ilanlar.filter(i=>i&&Array.isArray(i.unvanlar)).map(i=>({u:new Set(i.unvanlar.filter(x=>typeof x==='string').map(dizge))}));}catch(_e){}}
 function acikSayi(unvan){if(!acikListe)return 0;const u=dizge(unvan);if(u.length<2)return 0;if(!acikOnbellek.has(u))acikOnbellek.set(u,acikListe.filter(i=>i.u.has(u)).length);return acikOnbellek.get(u);}
 function acikBaglanti(unvan){const n=acikSayi(unvan);if(!n)return null;const a=E('a','acik-link','Bu ünvanda açık ilanlar ('+n+') →');a.href='../?q='+encodeURIComponent(unvan)+'#ilanlar';return a;}
 /* Açılır seçim kutusu (tek tip görünüm): data-coklu="1" ise onay kutulu çoklu seçim, data-ara varsa listede arama.
@@ -89,7 +89,7 @@ function durum(metin){$('durum').hidden=!metin;$('durum').textContent=metin||'';
 
 async function yukle(d){
   if(!(d in veriler)){
-    try{const r=await fetch(d+'.json',{cache:'no-cache'});veriler[d]=r.ok?await r.json():null;}catch{veriler[d]=null;}
+    try{const r=await fetch(d+'.json',{cache:'no-cache'});veriler[d]=r.ok?await r.json():null;}catch(_e){veriler[d]=null;}
   }
   return veriler[d];
 }
@@ -97,7 +97,7 @@ async function yukle(d){
 const bolumVerileri={};let bolumListesiDuzey='',robotNo=0;
 async function bolumYukle(d){
   if(!(d in bolumVerileri)){
-    try{const r=await fetch(d+'-bolum.json',{cache:'no-cache'});if(!r.ok)return null;bolumVerileri[d]=await r.json();}catch{return null;}  // hata önbelleğe yazılmaz, tekrar denenir
+    try{const r=await fetch(d+'-bolum.json',{cache:'no-cache'});if(!r.ok)return null;bolumVerileri[d]=await r.json();}catch(_e){return null;}  // hata önbelleğe yazılmaz, tekrar denenir
   }
   return bolumVerileri[d];
 }
@@ -140,7 +140,7 @@ async function duzeyAc(d){
   else{
     durum('');
     for(const [donem,liste] of Object.entries(v.donemler))for(const k of liste){
-      kayitlar.push({...k,donem,anahtar:[kucuk(k.kurum),k.il,k.teskilat,kucuk(k.unvan)].join('|'),metin:kucuk(k.kurum+' '+k.unvan+' '+k.il)});
+      kayitlar.push(Object.assign({},k,{donem,anahtar:[kucuk(k.kurum),k.il,k.teskilat,kucuk(k.unvan)].join('|'),metin:kucuk(k.kurum+' '+k.unvan+' '+k.il)}));
     }
   }
   const donemler=[...new Set(kayitlar.map(k=>k.donem))].sort().reverse();
@@ -153,8 +153,8 @@ async function duzeyAc(d){
 function suzulmus(){
   const donem=new Set(SEC.donem.degerler()),il=new Set(SEC.il.degerler()),ara=kucuk($('ara').value).split(' ').filter(Boolean);
   const l=kayitlar.filter(k=>(!donem.size||donem.has(k.donem))&&(!il.size||il.has(k.il))&&ara.every(a=>k.metin.includes(a)));
-  const s=$('sirala').value,yok=x=>x.min??-1;
-  const sira={'min-azalan':(a,b)=>yok(b)-yok(a),'min-artan':(a,b)=>(a.min??999)-(b.min??999),
+  const s=$('sirala').value,yok=x=>(x.min===null||x.min===undefined)?-1:x.min;
+  const sira={'min-azalan':(a,b)=>yok(b)-yok(a),'min-artan':(a,b)=>((a.min===null||a.min===undefined)?999:a.min)-((b.min===null||b.min===undefined)?999:b.min),
     donem:(a,b)=>b.donem.localeCompare(a.donem)||yok(b)-yok(a),kurum:(a,b)=>a.kurum.localeCompare(b.kurum,'tr')||b.donem.localeCompare(a.donem)}[s];
   return l.sort(sira);
 }
@@ -196,7 +196,7 @@ async function robot(){
   // Her program kodu ayrı kadrodur (aynı unvan farklı nitelik isteyebilir); kodlar dönemler arasında
   // değiştiği için diğer dönemler yalnız aynı kurum/il/unvan için bilgi olarak gösterilir.
   const gecmis=new Map();
-  for(const k of kayitlar)if(k.min!=null){const g=gecmis.get(k.anahtar)||new Map();g.set(k.donem,Math.min(g.get(k.donem)??999,k.min));gecmis.set(k.anahtar,g);}
+  for(const k of kayitlar)if(k.min!=null){const g=gecmis.get(k.anahtar)||new Map();g.set(k.donem,Math.min(((x=>x===null||x===undefined?999:x)(g.get(k.donem))),k.min));gecmis.set(k.anahtar,g);}
   const sonuc=[];
   for(const k of kayitlar){
     if(k.min==null||il.size&&!il.has(k.il)||!ara.every(a=>k.metin.includes(a)))continue;
