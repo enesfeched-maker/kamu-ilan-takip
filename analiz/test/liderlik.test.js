@@ -144,6 +144,13 @@ test('avatar: nesne biçimi kabul edilir; geçersiz biçimler hata değil yok sa
   liderlikHizSifirla();
   const r2 = await gonder(db, govde({ yazi: yazi(0, 120), avatar: 'panda:gok' }));
   assert.equal((await r2.json()).tablo.haftalik[0].av, 'panda:gok');
+  // piksel karakter (Kasım 2026): yalnız düz piksel biçim ve izinli tonlar
+  liderlikHizSifirla();
+  assert.equal((await (await gonder(db, govde({ yazi: yazi(0, 120), avatar: 'px.loaf:pixel.270' }))).json()).tablo.haftalik[0].av, 'px.loaf:pixel.270');
+  for (const kotu of ['px.loaf:dots.0', 'px.loaf:pixel.17', 'px.LOAF:pixel.0', 'px.loaf:pixel.0.0']) {
+    liderlikHizSifirla();
+    assert.equal('av' in (await (await gonder(db, govde({ yazi: yazi(0, 120), avatar: kotu }))).json()).tablo.haftalik[0], false, kotu);
+  }
 });
 
 test('avatar sütunu yokken (0005 göçü uygulanmadan kod dağıtıldıysa) liderlik çalışmaya devam eder', async () => {

@@ -511,12 +511,12 @@
     return avVaadi;
   }
   function hesapUyesi() { var u = O.oku('fr-uye', null); return O.oku('fr-oturum', null) && u && typeof u.rumuz === 'string' ? u : null; }
-  function liderAvatar(u) {   // tabloya giden avatar: yalnız üye açıkça bir SVG avatar seçtiyse ve kartında katiplik sonuçları görünürse (kg)
+  function liderAvatar(u) {   // tabloya giden avatar: üyenin piksel karakteri, yalnız kartında katiplik sonuçları görünürse (kg)
     if (u.kg !== true) return null;   // varsayılan gizli: takma adlı tablo satırı forum kimliğine bağlanmasın
     var a = window.kitAvatar;
     var c = a ? a.coz(u.av) : null;
-    if (!c || c.set !== 'svg') return null;   // otomatik (rumuzdan türeyen), fotoğraf ya da Piixpal gönderilmez
-    return c.k + ':' + c.r;
+    if (!c || c.k === a.MUHTAR) return null;   // fotoğraf ve tek kişiye özel karakter gönderilmez
+    return a.dizge(c);   // eski değerler de düz piksel biçimde gider (px.ad:pixel.ton)
   }
   function liderAd(x) {
     var s = E('span', 'ad'), a = window.kitAvatar;

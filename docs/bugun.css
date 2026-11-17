@@ -375,13 +375,13 @@ button.hc{cursor:pointer}
 .kombo-liste li.aktif,.kombo-liste li:hover{background:var(--surface-2)}
 .kombo-liste li.secili{font-weight:650}.kombo-liste li.secili::after{content:"✓";flex:none}
 .kombo-liste li.kombo-bos{color:var(--muted);cursor:default;background:none}
-.il-ekle .alan{height:38px;font-size:14px}
+.il-ekle .alan{height:44px;font-size:15px}
 .onay{display:flex;align-items:center;gap:10px;margin-top:12px;font-size:14px;color:var(--ink-2);cursor:pointer}
 .onay input{width:18px;height:18px;accent-color:var(--ink);margin:0}
 .sheet-alt{display:flex;flex-direction:column;gap:6px;margin-top:26px}
 .sheet-alt .btn{height:48px;font-size:15px;width:100%}
 .sifirla{margin:18px 0 0;padding-top:16px;border-top:1px solid var(--line-2);display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px}
-.sifirla .btn{height:38px;padding:0 16px;font-size:14px}
+.sifirla .btn{height:44px;padding:0 18px;font-size:14px}
 .sifirla .btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .sifirla .ipucu{margin:0;flex:1 1 200px}
 .sheet-alt .atla-link{background:none;border:0;font:inherit;font-size:14px;color:var(--muted);padding:8px;cursor:pointer}

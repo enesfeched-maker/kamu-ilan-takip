@@ -16,8 +16,23 @@ export async function baslikHizi(env, uye, simdi) {
   if ((uye.kayit || 0) > simdi - GUN && n >= 3) return ret('Yeni üyeler ilk gün en fazla 3 başlık açabilir.');
   return null;
 }
-export async function yanitHizi(env, uye, simdi) {
-  const { n, son } = await say(env, 'yanitlar', uye.id, simdi - GUN);
+// Cevap (soru-cevap, ilan soruları): 20 sn ara, günde 60. Sohbet odası: sohbet akmalı; yalnız gerçek seli durdurur:
+// 15 sn'de en çok 10 mesaj, aynı 2 sn içinde en çok 3 mesaj (≈0,7 sn ara), günde 400. Sohbet mesajları cevap sınırına sayılmaz (ve tersi).
+export const ODA_SINIRI = { pencere: 15, en_cok: 10, kisa: 2, kisa_en_cok: 3, gunluk: 400 };
+export async function yanitHizi(env, uye, simdi, oda = false) {
+  const s = await env.DB.prepare(
+    `SELECT COUNT(*) AS n, MAX(y.olusma) AS son,
+       COALESCE(SUM(CASE WHEN y.olusma > ? THEN 1 ELSE 0 END), 0) AS pencere,
+       COALESCE(SUM(CASE WHEN y.olusma > ? THEN 1 ELSE 0 END), 0) AS kisa
+     FROM yanitlar y JOIN basliklar b ON b.id = y.baslik_id
+     WHERE y.uye_id = ? AND y.olusma > ? AND ${oda ? "b.kategori = 'oda'" : "b.kategori <> 'oda'"}`,
+  ).bind(simdi - ODA_SINIRI.pencere, simdi - ODA_SINIRI.kisa, uye.id, simdi - GUN).first();
+  const n = s?.n || 0, son = s?.son || 0;
+  if (oda) {
+    if ((s?.kisa || 0) >= ODA_SINIRI.kisa_en_cok || (s?.pencere || 0) >= ODA_SINIRI.en_cok) return ret('Çok hızlı yazıyorsun. Birkaç saniye bekle.');
+    if (n >= ODA_SINIRI.gunluk) return ret('Bugün için sohbet sınırına ulaştın. Yarın tekrar dene.');
+    return null;
+  }
   if (son > simdi - 20) return ret('Çok hızlı yazıyorsun. Birkaç saniye bekle.');
   if (n >= 60) return ret('Bugün için yanıt sınırına ulaştın. Yarın tekrar dene.');
   return null;

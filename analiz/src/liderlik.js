@@ -54,9 +54,11 @@ export function adDogrula(ham) {
   return ad;
 }
 
-// İsteğe bağlı avatar: forum üyesinin hazır avatarı (anahtar:renk). Geçersiz biçim hata sayılmaz, yok sayılır (satır harfle gösterilir).
-const AV_ANAHTAR = /^[a-z0-9-]{1,24}$/, AV_RENK = /^[a-z-]{1,16}$/;
+// İsteğe bağlı avatar: forum üyesinin piksel karakteri ("px.<ad>:pixel.<ton>", Kasım 2026'dan beri) ya da eski çizim avatarı (anahtar:renk;
+// site bunu piksel karaktere çevirerek gösterir). Geçersiz biçim hata sayılmaz, yok sayılır (satır harfle gösterilir).
+const AV_ANAHTAR = /^[a-z0-9-]{1,24}$/, AV_RENK = /^[a-z-]{1,16}$/, AV_PX = /^px\.[a-z]{2,10}:pixel\.(0|45|90|135|180|225|270|315)$/;
 export function avatarDogrula(v) {
+  if (typeof v === 'string' && AV_PX.test(v)) return v.startsWith('px.muhtar:') ? null : v;   // yöneticiye özel karakter tabloda taklit edilemez
   let k, r;
   if (typeof v === 'string') { const p = v.split(':'); if (p.length === 2) [k, r] = p; }
   else if (v && typeof v === 'object' && !Array.isArray(v)) { k = v.k; r = v.r; }

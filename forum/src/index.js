@@ -12,6 +12,8 @@ import { yanitBildirimi, anmaBildirimi, takipBildirimi } from './bildirim.js';
 import { ozelKonusmalar, ozelKonusma, ozelYeni, ozelGonder, ozelMesajSil, ozelEngelle, engellenenler, ozelSikayet, yonetimOzelSikayetler, ozelOkunmamis } from './ozel.js';
 import { takipDegistir, takipMi, benTakipler } from './takip.js';
 import { yonetimOzet } from './yonetim-ozet.js';
+import { aracYanitSil, aracBaslikSil, aracOzelSil, aracHesapKapat, benArac, kimlikKapaliMi } from './arac.js';
+import { rastgelePx } from './kart.js';
 import { benTumu, benKartKaydet, benBasvurularKaydet, benKatipGetir, benKatipKaydet, benFotoYukle, benFotoSil, fotoGetir, fotoBildir, yonetimFotoBildirimleri, yonetimFotoKaldir, uyeKartiYaniti } from './kart.js';
 
 const SAYFA_BOYUTU = 20;
@@ -89,6 +91,7 @@ async function yonlendir(request, env, ctx) {
     if (yol === '/ben/bildirimler') return benBildirimler(request, env, url);
     if (yol === '/ben/takipler') return benTakipler(request, env);
     if (yol === '/ben/katip') return benKatipGetir(request, env);
+    if (yol === '/ben/arac') return benArac(request, env);
     if ((m = yol.match(/^\/foto\/(\d+)$/))) return fotoGetir(request, env, ctx, url, m[1]);
     if (yol === '/yonetim/foto-bildirimleri') return yonetimFotoBildirimleri(request, env);
     if (yol === '/ben/engellenenler') return engellenenler(request, env);
@@ -134,6 +137,7 @@ async function yonlendir(request, env, ctx) {
     if (yol === '/ben/katip') return benKatipKaydet(request, env);
     if (yol === '/ben/foto') return benFotoYukle(request, env);
     if ((m = yol.match(/^\/uye\/([^/]+)\/foto-bildir$/))) return fotoBildir(request, env, m[1]);
+    if ((m = yol.match(/^\/arac\/uye\/([^/]+)\/kapat$/))) return aracHesapKapat(request, env, m[1]);
     if (yol === '/yonetim/foto-kaldir') return yonetimFotoKaldir(request, env, url);
     if (yol === '/ben/bildirim') return benBildirim(request, env);
     if (yol === '/ben/ayar') return benAyar(request, env);
@@ -156,6 +160,9 @@ async function yonlendir(request, env, ctx) {
   }
 
   if (yontem === 'DELETE' && yol === '/ben/foto') return benFotoSil(request, env);
+  if (yontem === 'DELETE' && (m = yol.match(/^\/arac\/yanit\/(\d+)$/))) return aracYanitSil(request, env, Number(m[1]));
+  if (yontem === 'DELETE' && (m = yol.match(/^\/arac\/baslik\/(\d+)$/))) return aracBaslikSil(request, env, Number(m[1]));
+  if (yontem === 'DELETE' && (m = yol.match(/^\/arac\/ozel\/(\d+)$/))) return aracOzelSil(request, env, Number(m[1]));
   if (yontem === 'DELETE' && (m = yol.match(/^\/ozel\/mesaj\/(\d+)$/))) return ozelMesajSil(request, env, Number(m[1]));
   if (yontem === 'DELETE' && (m = yol.match(/^\/yanit\/(\d+)$/))) return yanitSil(request, env, Number(m[1]));
   if (yontem === 'DELETE' && (m = yol.match(/^\/basvuru\/([^/]+)$/))) return basvuruSil(request, env, new URL(request.url), decodeURIComponent(m[1]));
@@ -236,12 +243,15 @@ export async function uyeOlustur(env, kimlik, rumuz) {
   if (var_) return { hata: hataYanit(409, 'Bu rumuz alınmış.') };
   const ayrilmis = await env.DB.prepare('SELECT 1 AS x FROM ayrilmis_rumuzlar WHERE kat = ? AND bitis > ?').bind(r.kat, simdi()).first();   // silinen hesabın rumuzu 180 gün ayrılır
   if (ayrilmis) return { hata: hataYanit(409, 'Bu rumuz alınmış.') };
+  // yönetici tarafından kapatılmış hesabın Google / Telegram / e-posta kimliğiyle yeniden üyelik açılmaz (yalnız özetler saklanır)
+  if (await kimlikKapaliMi(env, kimlik)) return { hata: hataYanit(403, 'Bu hesapla üyelik açılamıyor.') };
   const sayi =await env.DB.prepare("SELECT COUNT(*) AS n FROM uyeler WHERE rol NOT IN ('sistem', 'asistan')").first();
   const t = simdi();
   try {
-    await env.DB.prepare('INSERT INTO uyeler (tg_id, rumuz, rumuz_kat, kayit, kurucu, google_sub, sifre_ozet, kurtarma_ozet, eposta, eposta_dogrulandi) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
+    // her yeni üye rastgele bir piksel karakterle başlar (istediği zaman değiştirir)
+    await env.DB.prepare('INSERT INTO uyeler (tg_id, rumuz, rumuz_kat, kayit, kurucu, google_sub, sifre_ozet, kurtarma_ozet, eposta, eposta_dogrulandi, avatar) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
       .bind(kimlik.tg_id ?? null, r.rumuz, r.kat, t, (sayi?.n || 0) < KURUCU_SINIRI ? 1 : 0, kimlik.google_sub ?? null, kimlik.sifre_ozet ?? null, kimlik.kurtarma_ozet ?? null,
-        kimlik.eposta ?? null, kimlik.eposta ? t : null).run();
+        kimlik.eposta ?? null, kimlik.eposta ? t : null, rastgelePx()).run();
   } catch (e) {
     // yalnız benzersizlik ihlali "rumuz alınmış" demektir (aynı anda iki istek); başka hata gerçek bir arızadır
     if (/UNIQUE constraint failed: uyeler\.eposta/i.test(String(e && e.message))) return { hata: hataYanit(409, 'Bu e-posta adresiyle bir hesap zaten var. Girişi baştan dene.') };
@@ -249,7 +259,7 @@ export async function uyeOlustur(env, kimlik, rumuz) {
     console.error('uyeOlustur:', e && e.message);
     return { hata: hataYanit(500, 'Üyelik şu an oluşturulamadı. Biraz sonra tekrar dene.') };
   }
-  const uye = await env.DB.prepare('SELECT id, rumuz, kurucu, rol, itibar, dm_acik, oturum_surum FROM uyeler WHERE rumuz_kat = ?').bind(r.kat).first();
+  const uye = await env.DB.prepare('SELECT id, rumuz, kurucu, rol, itibar, dm_acik, oturum_surum, avatar FROM uyeler WHERE rumuz_kat = ?').bind(r.kat).first();
   return { uye };
 }
 async function girisRumuz(request, env) {
@@ -656,7 +666,7 @@ async function yanitYaz(request, env, ctx, baslikId) {
     ust = await env.DB.prepare('SELECT id, uye_id FROM yanitlar WHERE id = ? AND baslik_id = ? AND gizli = 0').bind(Number(g.ust_id), baslikId).first();
     if (!ust) return hataYanit(400, 'Yanıtlanan mesaj bulunamadı.');
   }
-  const sinir = await yanitHizi(env, uye, simdi());
+  const sinir = await yanitHizi(env, uye, simdi(), b.kategori === 'oda');
   if (sinir) return hataYanit(sinir.durum, sinir.hata);
   const id = await yanitEkle(env, baslikId, uye.id, o.temiz, ust ? ust.id : null, simdi(), b.kategori !== 'oda');
   bekle(ctx, yanitBildirimleri(env, { baslikId, baslikAdi: b.baslik, kategori: b.kategori, yanitId: id, yanitlayan: uye, aliciIdleri: [b.uye_id, ust ? ust.uye_id : 0], metin: o.temiz }));

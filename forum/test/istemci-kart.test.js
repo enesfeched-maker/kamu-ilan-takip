@@ -8,39 +8,45 @@ import { katipTemizle } from '../src/kart.js';
 const docs = (a) => readFileSync(new URL(`../../docs/${a}`, import.meta.url), 'utf8');
 const duz = (x) => JSON.parse(JSON.stringify(x));   // vm bölgesinden gelen nesneleri ana bölgeye çevirir (deepEqual için)
 
-function avatarKit({ spriteTamam = true } = {}) {
+function avatarKit({ anlik = true } = {}) {
   const pencere = {};
   const kutu = { window: pencere, document: { currentScript: { src: 'https://kpsstercihi.com/avatar-ortak.js?v=3' }, querySelectorAll: () => [] }, location: { hostname: 'kpsstercihi.com' },
-    fetch: async () => ({ ok: spriteTamam }), Event: class {}, console };
+    Event: class {}, console, matchMedia: () => ({ matches: false }) };
   pencere.dispatchEvent = () => true;
-  vm.runInNewContext(docs('avatar/avatarlar.js'), kutu);
   vm.runInNewContext(docs('avatar/piixpal.js'), kutu);
+  if (anlik) vm.runInNewContext(docs('avatar/piixpal-anlik.js'), kutu);
   kutu.sessionStorage = { getItem: () => null, setItem: () => {} };
   vm.runInNewContext(docs('avatar-ortak.js'), kutu);
   return pencere.kitAvatar;
 }
 
-test('avatar: varsayılan rumuzdan türer, kararlı, iki setin birleşik listesinden; büyük/küçük harf fark etmez', () => {
+test('avatar: varsayılan rumuzdan türer, kararlı, yalnız piksel karakter; büyük/küçük harf fark etmez', () => {
   const a = avatarKit();
   const v = duz(a.varsayilan('Ayse_Kaya'));
   assert.deepEqual(duz(a.varsayilan('ayse_kaya')), v);
-  assert.deepEqual(duz(a.varsayilan('Ayse_Kaya')), v);
-  const m = a.liste(), p = a.pxListe();
+  const p = a.pxListe();
   const ornek = Array.from({ length: 400 }, (_, i) => duz(a.varsayilan(`uye${i}`)));
-  assert.ok(ornek.every((x) => (x.set === 'svg' && m.avatarlar.some((y) => y.anahtar === x.k) && m.renkler.some((r) => r.anahtar === x.r && !r.koyu)) || (x.set === 'px' && p.avatarlar.some((y) => y.anahtar === x.k) && x.r === 'pixel' && x.h === 0)));
-  const px = ornek.filter((x) => x.set === 'px').length, svg = ornek.length - px;
-  assert.ok(px > 80 && svg > 80, `iki set de seçiliyor: ${px}/${svg}`);   // birleşik listeden orantılı dağılım
-  assert.equal(new Set(ornek.map((x) => x.k)).size > 40, true);
-  assert.equal(a.varsayilanSvg('x').set, 'svg');
+  assert.ok(ornek.every((x) => x.set === 'px' && p.avatarlar.some((y) => y.anahtar === x.k) && x.r === 'pixel' && x.h === 0));
+  assert.ok(new Set(ornek.map((x) => x.k)).size > 30);
 });
 
-test('avatar: coz svg ve Piixpal biçimlerini kabul eder; bozuk ya da listede olmayan (kaldırılmış) anahtar null -> varsayılana düşülür', () => {
+test('avatar: coz yalnız piksele çözer; eski çizim ve biçim değerleri en yakın piksel karaktere çevrilir; bozuk değer null', () => {
   const a = avatarKit();
-  assert.deepEqual(duz(a.coz('kedi:lila')), { set: 'svg', k: 'kedi', r: 'lila' });
   assert.deepEqual(duz(a.coz('px.loaf:pixel.0')), { set: 'px', k: 'loaf', r: 'pixel', h: 0 });
-  assert.deepEqual(duz(a.coz('px.wizard:voxel.270')), { set: 'px', k: 'wizard', r: 'voxel', h: 270 });
-  assert.equal(a.dizge(a.coz('px.tofu:dots.45')), 'px.tofu:dots.45'); assert.equal(a.dizge(a.coz('kedi:lila')), 'kedi:lila');
-  for (const kotu of [null, undefined, 5, '', 'kedi', 'kedi:', ':lila', 'KEDI:lila', 'yok-boyle-bir-avatar:lila', 'kedi:lila:x', 'foto', '<svg>:lila', 'px.loti:pixel.0', 'px.loaf:neon.0', 'px.loaf', 'px.loaf:pixel']) assert.equal(a.coz(kotu), null, String(kotu));
+  assert.deepEqual(duz(a.coz('px.wizard:voxel.270')), { set: 'px', k: 'wizard', r: 'pixel', h: 270 });
+  assert.deepEqual(duz(a.coz('kedi:lila')), { set: 'px', k: 'loaf', r: 'pixel', h: 270 });
+  assert.deepEqual(duz(a.coz('robot:bilinmeyen')), { set: 'px', k: 'robo', r: 'pixel', h: 0 });
+  assert.deepEqual(duz(a.coz('px.muhtar:pixel.0')), { set: 'px', k: 'muhtar', r: 'pixel', h: 0 });
+  assert.equal(a.dizge(a.coz('px.tofu:dots.45')), 'px.tofu:pixel.45');
+  for (const kotu of [null, undefined, 5, '', 'kedi', 'kedi:', ':lila', 'KEDI:lila', 'yok-boyle-bir-avatar:lila', 'kedi:lila:x', 'foto', '<svg>:lila', 'px.loti:pixel.0', 'px.loaf:neon.0', 'px.loaf', 'px.loaf:pixel', 'px.loaf:pixel.17', 'px.muhtar:pixel.45']) assert.equal(a.coz(kotu), null, String(kotu));
+});
+
+test('avatar: eski çizim tablosu sunucuyla (kart.js) aynı ve her hedef piksel listesinde', async () => {
+  const a = avatarKit();
+  const { ESKI_SVG_PX, ESKI_RENK_TON, PX_ADLAR } = await import('../src/kart.js');
+  assert.deepEqual(duz(a.eskiTablo), { ...ESKI_SVG_PX });
+  assert.deepEqual(duz(a.eskiTon), { ...ESKI_RENK_TON });
+  for (const v of Object.values(ESKI_SVG_PX)) assert.ok(a.pxListe().avatarlar.some((x) => x.anahtar === v) && PX_ADLAR.has(v), v);
 });
 
 test('Piixpal manifesti: 49 ad (loti yok), her biri bir gruba bağlı, biçim ve ton listeleri sunucuyla aynı', async () => {
@@ -48,7 +54,6 @@ test('Piixpal manifesti: 49 ad (loti yok), her biri bir gruba bağlı, biçim ve
   assert.equal(p.avatarlar.length, 49);
   assert.ok(!p.avatarlar.some((x) => x.anahtar === 'loti'));
   for (const x of p.avatarlar) assert.ok(p.gruplar.some((g) => g.anahtar === x.grup), x.anahtar);
-  assert.deepEqual(duz(p.gruplar.map((g) => g.ad)), ['Hayvanlar', 'Masa başı', 'Doğa', 'Karakterler', 'Tatlılar', 'Teknoloji']);
   const { PX_ADLAR, PX_BICIMLER, PX_TONLAR } = await import('../src/kart.js');
   assert.deepEqual([...PX_ADLAR].sort(), duz(p.avatarlar.map((x) => x.anahtar).sort()));
   assert.deepEqual([...PX_BICIMLER].sort(), duz(p.bicimler.map((x) => x.anahtar).sort()));
@@ -56,35 +61,26 @@ test('Piixpal manifesti: 49 ad (loti yok), her biri bir gruba bağlı, biçim ve
   const anlik = {}; vm.runInNewContext(docs('avatar/piixpal-anlik.js'), { window: anlik });
   for (const x of p.avatarlar) assert.match(anlik.KIT_PIIX_ANLIK[x.anahtar], /^data:image\/png;base64,/, x.anahtar);
 });
-test('avatar html: yükleme bitmeden harf (sonra svg ile değişir), sonra sprite; fotoğraf img; tüm metin kaçışlı', async () => {
+
+test('avatar html: yükleme bitmeden harf (sonra değişir), sonra piksel görüntü; eski değer piksel çizilir; muhtar hemen; fotoğraf img; kaçış', async () => {
   const a = avatarKit();
-  const once = a.html({ rumuz: 'Zeynep', av: 'kedi:pembe' }, 32);
+  const once = a.html({ rumuz: 'Zeynep', av: 'px.loaf:pixel.0' }, 32);
   assert.match(once, /^<span class="fr-av"[^>]*data-avu=/);
   assert.match(once, />Z<\/span>$/);
   await a.yukle();
   assert.equal(a.hazir(), true);
-  const svg = a.html({ rumuz: 'Zeynep', av: 'kedi:pembe' }, 32);
-  assert.match(svg, /^<svg class="fr-av fr-av-svg"/);
-  assert.match(svg, /--av-z:#FBDCE8/);
-  assert.match(svg, /<use href="https:\/\/kpsstercihi\.com\/avatar\/avatarlar\.svg#av-kedi"\/>/);
-  assert.match(svg, /aria-hidden="true"/);
-  // anahtar yoksa ya da bilinmiyorsa varsayılan hayvan çizilir
-  for (const x of [{ rumuz: 'Zeynep' }, { rumuz: 'Zeynep', av: 'yok-boyle:lila' }, { rumuz: 'Zeynep', av: 'px.loti:pixel.0' }]) assert.match(a.html(x), /^<(svg|span|img) class="fr-av/);   // varsayılan: svg ya da (Piixpal ise görüntü yüklenene kadar) yer tutucu
-  assert.match(a.html({ rumuz: 'Zeynep', av: 'px.loaf:pixel.0' }), /^<span class="fr-av"[^>]*data-avu=/);   // durağan görüntü hazır olana kadar harf
+  const px = a.html({ rumuz: 'Zeynep', av: 'px.loaf:pixel.0' }, 32);
+  assert.match(px, /^<span class="fr-av fr-av-px" aria-hidden="true" style="width:32px;height:32px"><img src="data:image\/png;base64,/);
+  assert.equal(a.html({ rumuz: 'Zeynep', av: 'kedi:kum' }, 32), px);   // eski çizim avatarı kırık görsel değil, piksel karakter
+  for (const x of [{ rumuz: 'Zeynep' }, { rumuz: 'Zeynep', av: 'yok-boyle:lila' }, { rumuz: 'Zeynep', av: 'px.loti:pixel.0' }]) assert.match(a.html(x), /^<span class="fr-av fr-av-px"/);
+  assert.match(avatarKit().html({ rumuz: 'M', av: 'px.muhtar:pixel.0' }, 40), /^<span class="fr-av fr-av-px"[^>]*><img src="data:image\/png;base64,/);   // yükleme beklemeden
   const foto = a.html({ rumuz: 'Zeynep', av: 'foto', fs: 1790000001, fu: 7 }, 48);
-  assert.match(foto, /^<img class="fr-av fr-av-foto" src="http:\/\/127\.0\.0\.1:8790\/foto\/7\?v=1790000001"|^<img class="fr-av fr-av-foto" src="https:\/\/forum-api\.kpsstercihi\.com\/foto\/7\?v=1790000001"/);
+  assert.match(foto, /^<img class="fr-av fr-av-foto" src="https:\/\/forum-api\.kpsstercihi\.com\/foto\/7\?v=1790000001"/);
   assert.match(foto, /alt="" loading="lazy" decoding="async" width="48" height="48"/);
-  // fotoğraf bilgisi eksikse varsayılana düşer, kaçış
-  assert.match(a.html({ rumuz: 'Zeynep', av: 'foto' }), /^<(svg|span)/);
-  const sinir = avatarKit({ spriteTamam: false });
-  return sinir.yukle().then(() => {
-    assert.equal(sinir.hazir(), false);
-    const harf = sinir.html({ rumuz: '"><img src=x onerror=1>', av: 'kedi:lila' });
-    assert.match(harf, /^<span class="fr-av"/);
-    assert.ok(!harf.includes('<img'));
-  });
+  assert.match(a.html({ rumuz: 'Zeynep', av: 'foto' }), /^<span class="fr-av fr-av-px"/);   // fotoğraf bilgisi eksik: varsayılan
+  const harf = a.harf('"><img src=x onerror=1>', 24);
+  assert.ok(!harf.includes('<img') && harf.includes('>&quot;</span>'));
 });
-
 // ---------- katiplik birleştirme ----------
 const K = (() => { const m = { exports: {} }; vm.runInNewContext(docs('katip-senkron.js'), { module: m }); return m.exports; })();
 const g = (t, ek = {}) => ({ t, m: 'sinav', s: 180, top: 100, hat: 3, atl: 0, net: 90, dk: 50, b: 1, no: 1, k: 'zk2025', ...ek });

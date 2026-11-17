@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS uyeler (
   kayitli TEXT,                      -- sitedeki kit-saved: kayıtlı ilan kimlikleri (JSON dizi, en çok 300, en çok 8 KB)
   rumuz_kat TEXT,                    -- küçük harf, Türkçe harfler ASCII, "." ve "_" atılmış rumuz (benzersiz)
   oturum_surum INTEGER DEFAULT 0,    -- şifre/kurtarma kodu değişince artar, eski oturumlar kapanır
-  avatar TEXT,                       -- "<avatar-anahtarı>:<renk-anahtarı>" ya da 'foto'; boş = rumuzdan türetilen varsayılan hayvan
+  avatar TEXT,                       -- piksel karakter "px.<ad>:pixel.<ton>" (üyelikte rastgele atanır) ya da 'foto'
   foto_surum INTEGER,                -- yüklenen fotoğrafın sürümü (unix sn); boş = fotoğraf yok
   foto_gun INTEGER,                  -- fotoğraf yükleme sayacı: UTC gün numarası
   foto_sayi INTEGER,                 -- o gün yapılan yükleme (günde en çok 3)
@@ -192,4 +192,15 @@ CREATE TABLE IF NOT EXISTS uye_katip (
   veri TEXT,                         -- kit-katip + ders/oyun/antrenman ilerlemesi (JSON, en çok 32 KB)
   ozet TEXT,                         -- karta konan özet (JSON)
   guncelleme INTEGER
+);
+-- Gizli yöneticiler (0006): uyeler.rol'den ayrı; hiçbir herkese açık çıktıda görünmez. Yalnız SQL ile elle eklenir:
+--   INSERT OR IGNORE INTO gizli_yoneticiler (uye_id) SELECT id FROM uyeler WHERE rumuz = '<rumuz>';
+CREATE TABLE IF NOT EXISTS gizli_yoneticiler (
+  uye_id INTEGER PRIMARY KEY
+);
+-- Yönetici "Hesabı kapat" dediği hesapların kimlik özetleri (0006): HMAC(biber, 'kapali:google:<sub>' | 'kapali:tg:<id>' | 'kapali:eposta:<adres>').
+-- Kimliğin kendisi saklanmaz; aynı Google / Telegram / e-posta ile yeniden üyelik açılmaz.
+CREATE TABLE IF NOT EXISTS kapali_kimlikler (
+  ozet TEXT PRIMARY KEY,
+  olusma INTEGER
 );

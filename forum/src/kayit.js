@@ -13,6 +13,7 @@ import { googleJetonuDogrula } from './google.js';
 import { profilTemizle, profilOku, PROFIL_EN_COK } from './profil.js';
 import { kayitliTemizle, kayitliOku } from './kayitli.js';
 import { govdeOku, oturumUyesi, oturumYaniti, uyeOlustur } from './index.js';
+import { kimlikKapaliMi } from './arac.js';
 
 const TURNSTILE_ADRESI = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 const GENEL_GIRIS_HATASI = 'Rumuz ya da şifre hatalı.';
@@ -263,7 +264,7 @@ export async function girisGoogle(request, env) {
   const uye = await env.DB.prepare('SELECT id, rumuz, kurucu, rol, itibar, dm_acik, oturum_surum, eposta FROM uyeler WHERE google_sub = ?').bind(d.sub).first();
   if (uye) {
     // Google'ın doğrulanmış adresi hesapta yoksa eklenir (sonradan e-posta koduyla da girilebilsin); başka hesapta kayıtlıysa dokunulmaz.
-    if (!uye.eposta && d.eposta) {
+    if (!uye.eposta && d.eposta && !(await kimlikKapaliMi(env, { eposta: d.eposta }))) {   // kapatılmış hesabın adresi bağlanmaz
       await env.DB.prepare('UPDATE uyeler SET eposta = ?, eposta_dogrulandi = ? WHERE id = ? AND eposta IS NULL AND NOT EXISTS (SELECT 1 FROM uyeler WHERE eposta = ?)').bind(d.eposta, t, uye.id, d.eposta).run();
     }
     return oturumYaniti(env, uye);
@@ -274,7 +275,7 @@ export async function girisGoogle(request, env) {
     const e = await env.DB.prepare('SELECT id, rumuz, kurucu, rol, itibar, dm_acik, oturum_surum, google_sub FROM uyeler WHERE eposta = ?').bind(d.eposta).first();
     if (e) {
       adresSerbest = false;
-      if (!e.google_sub) {
+      if (!e.google_sub && !(await kimlikKapaliMi(env, { google_sub: d.sub }))) {   // kapatılmış hesabın Google kimliği bağlanmaz
         await env.DB.prepare('UPDATE uyeler SET google_sub = ? WHERE id = ? AND google_sub IS NULL').bind(d.sub, e.id).run();
         return oturumYaniti(env, e);
       }

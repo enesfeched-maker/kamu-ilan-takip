@@ -41,18 +41,18 @@ test('/ben/kart: kaydeder, /ben döner; varsayılanlar yazılmaz, tam değiştir
   const u = await uyeGirisi(env, 'Kart_Sahibi');
   assert.equal((await cagir(env, 'POST', '/ben/kart', { govde: { avatar: 'kedi:mavi' } })).durum, 401);
   const b0 = (await cagir(env, 'GET', '/ben', { token: u.token })).json;
-  assert.equal(b0.kart.avatar, null); assert.equal(b0.kart.durum, null); assert.deepEqual(b0.kart.gizlilik, { profil: 'herkes', puan_goster: false, il_goster: false, katiplik_goster: false });   // puan, il, katiplik varsayılan gizli
+  assert.match(b0.kart.avatar, /^px\.[a-z]+:pixel\.\d+$/); assert.equal(b0.kart.durum, null);   // yeni üye rastgele piksel karakterle başlar assert.deepEqual(b0.kart.gizlilik, { profil: 'herkes', puan_goster: false, il_goster: false, katiplik_goster: false });   // puan, il, katiplik varsayılan gizli
   assert.equal(b0.uye.kg, false);
   assert.deepEqual(b0.basvurular, []);
   const g = { avatar: { k: 'kedi', r: 'mavi' }, hakkimda: '  Adalet   katipliği hedefliyorum.  ', hedef: 'Ankara adliye katipliği', durum: 'basvuru-yapiyorum', kart_rengi: 'mor', gizlilik: { profil: 'uyeler', puan_goster: true, il_goster: false, katiplik_goster: true } };
   const r = await cagir(env, 'POST', '/ben/kart', { token: u.token, govde: g });
   assert.equal(r.durum, 200);
-  assert.equal(r.json.kart.avatar, 'kedi:mavi'); assert.equal(r.json.kart.hakkimda, 'Adalet katipliği hedefliyorum.');
+  assert.equal(r.json.kart.avatar, 'px.loaf:pixel.0'); assert.equal(r.json.kart.hakkimda, 'Adalet katipliği hedefliyorum.');
   assert.equal(r.json.kart.durum, 'basvuru-yapiyorum'); assert.equal(r.json.kart.kart_rengi, 'mor');
   assert.deepEqual(r.json.kart.gizlilik, { profil: 'uyeler', puan_goster: true, il_goster: false, katiplik_goster: true });
   const ben = (await cagir(env, 'GET', '/ben', { token: u.token })).json;
   assert.deepEqual(ben.kart, r.json.kart);
-  assert.equal(ben.uye.av, 'kedi:mavi');
+  assert.equal(ben.uye.av, 'px.loaf:pixel.0');   // eski çizim avatarı en yakın piksel karaktere çevrilir
   // yalnız varsayılan dışı alanlar saklanır
   const sakli = JSON.parse(satir(env, 'SELECT kart FROM uyeler WHERE id = ?', u.id).kart);
   assert.deepEqual(sakli.gizlilik, { profil: 'uyeler', puan_goster: true, katiplik_goster: true });
@@ -81,29 +81,29 @@ test('/ben/kart: geçersiz alanlar 400, hakkımda denetimi 422, bozuk istek eski
     ipSinirSifirla();
     assert.equal((await cagir(env, 'POST', '/ben/kart', { token: u.token, govde: k })).durum, 422, JSON.stringify(k));
   }
-  assert.equal(satir(env, 'SELECT avatar FROM uyeler WHERE id = ?', u.id).avatar, 'tilki:sari');
+  assert.equal(satir(env, 'SELECT avatar FROM uyeler WHERE id = ?', u.id).avatar, 'px.loaf:pixel.0');
   assert.equal(JSON.parse(satir(env, 'SELECT kart FROM uyeler WHERE id = ?', u.id).kart).hakkimda, 'Merhaba herkese');
 });
 
-test('/ben/kart: Piixpal avatarı izin listesiyle doğrulanır (ad, biçim, ton), nesne biçimi de kabul edilir', async () => {
+test('/ben/kart: Piixpal avatarı izin listesiyle doğrulanır (ad, biçim, ton), her biçim düz piksele çevrilir, nesne biçimi de kabul edilir', async () => {
   const env = ortam();
   const u = await uyeGirisi(env, 'Piksel_Uye');
   for (const iyi of ['px.loaf:pixel.0', 'px.wizard:voxel.270', 'px.tofu:halftone.45', { set: 'px', k: 'robo', r: 'dots', renk: 135 }]) {
     ipSinirSifirla();
     const r = await cagir(env, 'POST', '/ben/kart', { token: u.token, govde: { avatar: iyi } });
     assert.equal(r.durum, 200, JSON.stringify(iyi));
-    assert.match(r.json.kart.avatar, /^px\.[a-z]+:[a-z]+\.\d+$/);
+    assert.match(r.json.kart.avatar, /^px\.[a-z]+:pixel\.\d+$/);
   }
-  assert.equal((await cagir(env, 'GET', '/ben', { token: u.token })).json.uye.av, 'px.robo:dots.135');
+  assert.equal((await cagir(env, 'GET', '/ben', { token: u.token })).json.uye.av, 'px.robo:pixel.135');
   for (const kotu of ['px.loti:pixel.0', 'px.loaf:neon.0', 'px.loaf:pixel.17', 'px.loaf:pixel.360', 'px.loaf:pixel.045', 'px.loaf:pixel', 'px.:pixel.0', 'px.LOAF:pixel.0', 'px.loaf:pixel.0.0', 'px.<b>:pixel.0',
     { set: 'px', k: 'loti' }, { set: 'px', k: 'loaf', r: 'x' }, { set: 'px', k: 'loaf', renk: 7 }, { set: 'px', k: 'loaf', renk: 'kirmizi' }]) {
     ipSinirSifirla();
     assert.equal((await cagir(env, 'POST', '/ben/kart', { token: u.token, govde: { avatar: kotu } })).durum, 400, JSON.stringify(kotu));
   }
-  assert.equal((await cagir(env, 'GET', '/uye/Piksel_Uye')).json.av, 'px.robo:dots.135');
+  assert.equal((await cagir(env, 'GET', '/uye/Piksel_Uye')).json.av, 'px.robo:pixel.135');
   const t = Math.floor(Date.now() / 1000);
   const b = Number(env.DB.ham.prepare("INSERT INTO basliklar (kategori, baslik, govde, uye_id, olusma, son_hareket) VALUES ('puan', 'Piksel başlığı deneme', 'gövde', ?, ?, ?)").run(u.id, t, t).lastInsertRowid);
-  assert.equal((await cagir(env, 'GET', `/baslik/${b}`)).json.baslik.av, 'px.robo:dots.135');   // yazar çıktısı en küçük avatar bilgisini taşır
+  assert.equal((await cagir(env, 'GET', `/baslik/${b}`)).json.baslik.av, 'px.robo:pixel.135');   // yazar çıktısı en küçük avatar bilgisini taşır
 });
 
 test('/ben/kart: değişmediyse yazma yok, üye başına dakikada 10 kayıt, engelli üye 403', async () => {
@@ -143,7 +143,7 @@ test('/uye/:rumuz gizlilik: herkes tam; puan ve il varsayılan gizli; uyeler gir
   await cagir(env, 'POST', '/ben/kart', { token: u.token, govde: { avatar: 'kedi:mavi', hakkimda: 'Selam, ben katip adayıyım', hedef: 'Adliye', durum: 'yerlestim', kart_rengi: 'mavi' } });
   let r = (await cagir(env, 'GET', '/uye/Gizli_Deneme')).json;
   assert.equal(r.duzey, 'lisans'); assert.equal(r.iller, undefined); assert.equal(r.puan, undefined); assert.equal(r.puan_turu, undefined);
-  assert.equal(r.hakkimda, 'Selam, ben katip adayıyım'); assert.equal(r.hedef, 'Adliye'); assert.equal(r.durum, 'yerlestim'); assert.equal(r.kart_rengi, 'mavi'); assert.equal(r.av, 'kedi:mavi');
+  assert.equal(r.hakkimda, 'Selam, ben katip adayıyım'); assert.equal(r.hedef, 'Adliye'); assert.equal(r.durum, 'yerlestim'); assert.equal(r.kart_rengi, 'mavi'); assert.equal(r.av, 'px.loaf:pixel.0');
   assert.ok(r.rozetler.includes('yerlesti'));
   assert.equal(r.gizlilik, undefined);   // gizlilik ayarları yalnız sahibine döner
   // puan açık, il kapalı
@@ -255,7 +255,7 @@ test('foto yükleme: 24 saatten genç hesap 403, yetişkin hesap 201; avatar fot
   const liste = (await cagir(env, 'GET', '/basliklar')).json.basliklar[0];
   assert.equal(liste.fs, r.json.foto_surum);
   // avatar tekrar hazır avatara çevrilir, foto kalır; yeniden 'foto' seçilebilir
-  assert.equal((await cagir(env, 'POST', '/ben/kart', { token: u.token, govde: { avatar: 'kedi:mavi' } })).json.kart.avatar, 'kedi:mavi');
+  assert.equal((await cagir(env, 'POST', '/ben/kart', { token: u.token, govde: { avatar: 'px.cactus:pixel.90' } })).json.kart.avatar, 'px.cactus:pixel.90');
   assert.equal((await cagir(env, 'POST', '/ben/kart', { token: u.token, govde: { avatar: 'foto' } })).json.kart.avatar, 'foto');
 });
 
@@ -325,15 +325,15 @@ test('DELETE /ben/foto: fotoğrafı siler, avatar foto ise varsayılana döner; 
   assert.equal(degisiklik(env), once);
   await ham(env, 'POST', '/ben/foto', { token: u.token, bayt: webp() });
   const r = await ham(env, 'DELETE', '/ben/foto', { token: u.token });
-  assert.equal(r.durum, 200); assert.equal(r.json.avatar, null);
+  assert.equal(r.durum, 200); assert.match(r.json.avatar, /^px\.[a-z]+:pixel\.\d+$/);   // fotoğraf gidince yine bir piksel karakter
   assert.equal(satir(env, 'SELECT COUNT(*) AS n FROM fotolar').n, 0);
   const row = satir(env, 'SELECT avatar, foto_surum FROM uyeler WHERE id = ?', u.id);
-  assert.equal(row.avatar, null); assert.equal(row.foto_surum, null);
+  assert.equal(row.avatar, r.json.avatar); assert.equal(row.foto_surum, null);
   assert.equal((await ham(env, 'GET', '/foto/' + u.id + '?v=1')).durum, 404);
   // hazır avatar seçiliyken silmek avatarı değiştirmez
   await ham(env, 'POST', '/ben/foto', { token: u.token, bayt: webp() });
-  await cagir(env, 'POST', '/ben/kart', { token: u.token, govde: { avatar: 'kedi:mavi' } });
-  assert.equal((await ham(env, 'DELETE', '/ben/foto', { token: u.token })).json.avatar, 'kedi:mavi');
+  await cagir(env, 'POST', '/ben/kart', { token: u.token, govde: { avatar: 'px.cactus:pixel.90' } });
+  assert.equal((await ham(env, 'DELETE', '/ben/foto', { token: u.token })).json.avatar, 'px.cactus:pixel.90');
 });
 
 test('foto bildir + yönetim: bildirim listesi, kaldır avatarı sıfırlar ve yeni yüklemeyi kapatır', async () => {
@@ -365,7 +365,7 @@ test('foto bildir + yönetim: bildirim listesi, kaldır avatarı sıfırlar ve y
   const k = await cagir(env, 'POST', '/yonetim/foto-kaldir', { basliklar: YONETICI, govde: { uye_id: sahip.id } });
   assert.equal(k.durum, 200); assert.equal(k.json.yasak, true);
   const row = satir(env, 'SELECT avatar, foto_surum, foto_yasak FROM uyeler WHERE id = ?', sahip.id);
-  assert.equal(row.avatar, null); assert.equal(row.foto_surum, null); assert.equal(row.foto_yasak, 1);
+  assert.match(row.avatar, /^px\.[a-z]+:pixel\.\d+$/); assert.equal(row.foto_surum, null); assert.equal(row.foto_yasak, 1);
   assert.equal(satir(env, 'SELECT COUNT(*) AS n FROM fotolar').n, 0);
   assert.equal(satir(env, 'SELECT COUNT(*) AS n FROM foto_bildirimleri').n, 0);
   assert.equal((await ham(env, 'POST', '/ben/foto', { token: sahip.token, bayt: webp() })).durum, 403);   // yasak

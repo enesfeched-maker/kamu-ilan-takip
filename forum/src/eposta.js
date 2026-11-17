@@ -14,6 +14,7 @@ import { denemeSinirda, denemeYaz, cokDeneme, ipSiniri, ipGunAnahtari, SIFIRLA_S
 import { epostaNormalle, epostaMaskele, epostaTekil, epostaSayacAdresi } from './epostabicim.js';
 import { kabaSinir, turnstileDogrula, UYE_ALANLARI, uyeBul } from './kayit.js';
 import { govdeOku, oturumUyesi, oturumYaniti } from './index.js';
+import { kimlikKapaliMi } from './arac.js';
 
 const BREVO_ADRESI = 'https://api.brevo.com/v3/smtp/email';
 export const KOD_OMRU = 600;             // 10 dakika
@@ -326,6 +327,7 @@ export async function benEposta(request, env, ctx) {
   };
   if (g.kod === undefined) {
     if (u.eposta === eposta) return hataYanit(400, 'Bu adres zaten hesabında kayıtlı.');
+    if (await kimlikKapaliMi(env, { eposta })) return hataYanit(403, 'Bu adres kullanılamıyor.');   // kapatılmış hesabın adresi
     if (sifreOzeti) { const e = await sina(); if (e) return e; await dogrulamaBasari(env, hedef, t); }
     if (!(await robotKontrol(env, g, request))) return hataYanit(400, ROBOT_HATASI);
     return kodIstegi(request, env, ctx, { amac: 'degistir', eposta, parcalar: [u.id, epostaTekil(eposta)], t });

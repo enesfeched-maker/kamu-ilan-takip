@@ -179,7 +179,7 @@ function IndeksVar([string]$ad) { return (@(D1Oku "SELECT name FROM sqlite_maste
 if (-not $db) {
   Kuru 'Veritabani olusunca: bos ise schema.sql + odalar.sql uygulanir (gocler yeni semada gerekmez)'
 } elseif (-not $uyelerVar) {
-  Bilgi 'Bos veritabani: schema.sql guncel semayi kurar; gocler (0002-0005) gerekmez, zaten icindedir.'
+  Bilgi 'Bos veritabani: schema.sql guncel semayi kurar; gocler (0002-0006) gerekmez, zaten icindedir.'
   DosyaCalistir $schema 'schema.sql'
 } else {
   $uyeS = Sutunlar 'uyeler'; $basS = Sutunlar 'basliklar'
@@ -220,6 +220,10 @@ if (-not $db) {
       if ($Kuru) { Kuru ("uyeler." + $ek[0] + " sutunu eklenecek") }
       else { Bilgi ("  uyeler." + $ek[0] + " sutunu ekleniyor ..."); [void](D1Calistir '--command' ("ALTER TABLE uyeler ADD COLUMN " + $ek[0] + " " + $ek[1])); $sutunEklendi = $true }
     }
+  }
+  # 0006 (gizli yoneticiler, kapali kimlikler, yalniz piksel avatarlar): idempotent; sutun eklemelerinden SONRA calisir (silindi/avatar sutunlarini kullanir)
+  if ($tablolar -notcontains 'gizli_yoneticiler') {
+    if ($Kuru) { Kuru 'goc 0006 uygulanacak' } else { DosyaCalistir (Join-Path $PSScriptRoot 'migrations\0006_yonetim_piksel.sql') 'goc 0006' }
   }
   # eksik tablo/indeksler icin (idempotent) guncel sema
   $beklenen =[regex]::Matches([IO.File]::ReadAllText($schema), 'CREATE TABLE IF NOT EXISTS (\w+)') | ForEach-Object { $_.Groups[1].Value }

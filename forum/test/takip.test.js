@@ -235,7 +235,7 @@ test('bildirimler: takip türü, oda bayrağı, öncelik (alıntı > anma > yan�
   assert.deepEqual(r.json.bildirimler.map((b) => [b.yanit_id, b.tur, b.oda]), [
     [y5, 'alinti', false], [y4, 'anma', false], [y3, 'yanit', false], [y2, 'takip', true], [y1, 'takip', false],
   ]);
-  assert.deepEqual(Object.keys(r.json.bildirimler[4]).sort(), ['baslik', 'baslik_id', 'kisa', 'oda', 'olusma', 'rol', 'rumuz', 'tur', 'yanit_id']);
+  assert.deepEqual(Object.keys(r.json.bildirimler[4]).sort(), ['av', 'baslik', 'baslik_id', 'kisa', 'oda', 'olusma', 'rol', 'rumuz', 'tur', 'yanit_id']);
   assert.equal(r.json.bildirimler[3].baslik, 'Takip edilen oda'); assert.equal(r.json.bildirimler[3].rumuz, 'Diger_Z');
   // takip bırakılınca takip bildirimleri kalkar, diğerleri kalır
   await cagir(env, 'POST', `/baslik/${dize}/takip`, { token: ben.token, govde: { takip: false } });

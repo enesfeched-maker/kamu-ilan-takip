@@ -8,6 +8,7 @@ import { profilOku } from './profil.js';
 import { kayitliOku, kayitliTemizle } from './kayitli.js';
 import { kabaSinir } from './kayit.js';
 import { oturumUyesi, yazar, yoneticiMi, uyeRumuzla, metinDenetle, govdeOku, negatifsizTamsayi } from './index.js';
+import { gizliYoneticiMi } from './arac.js';
 
 export const DURUMLAR = ['tercih-yapacagim', 'basvuru-yapiyorum', 'basvurdum', 'yerlestim', 'atandim', 'calisiyorum'];
 export const KART_RENKLERI = ['yesil', 'mavi', 'mor', 'pembe', 'turuncu', 'sari', 'turkuaz', 'gri'];
@@ -70,27 +71,49 @@ export function kartSakla(k) {
   if (Object.keys(g).length) o.gizlilik = g;
   return Object.keys(o).length ? JSON.stringify(o) : null;
 }
-// Avatar değeri: null | 'foto' | "anahtar:renk" | { k, r }. Geçerliyse { avatar } (null olabilir), değilse { hata }.
-export function avatarTemizle(v, fotoVar) {
+// Avatarlar yalnız piksel karakterdir (Kasım 2026): "px.<anahtar>:pixel.<ton>". Eski çizim seti ("kedi:lila") ve diğer piksel biçimleri
+// (dots/halftone/voxel) kayıtta en yakın piksel karaktere çevrilir; bu tablo docs/avatar-ortak.js ve migrations/0006 ile aynıdır.
+export const ESKI_SVG_PX = {
+  kedi: 'loaf', tavsan: 'hops', panda: 'mumu', tilki: 'loaf', baykus: 'star', ayicik: 'mumu', penguen: 'whale', koala: 'mumu', sincap: 'hops', kuzu: 'fluff',
+  ordek: 'egg', hamster: 'mochi', kirpi: 'cactus', geyik: 'llama', kelebek: 'heart', astronot: 'astronaut', kaptan: 'wizard', kitapkurdu: 'brain', dagci: 'planet',
+  bisikletci: 'bolt', asci: 'cookie', ressam: 'star', gitarist: 'flick', satranc: 'keycap', kahve: 'coffee', saksi: 'cactus', robot: 'robo', dinozor: 'dragon',
+  ayikaptan: 'mumu', kurt: 'dragon', aslan: 'loaf', kartal: 'cloud', kalem: 'prompty', dosya: 'inbox', muhur: 'token', cay: 'boba', tus: 'keycap', kitap: 'floppy',
+};
+export const ESKI_RENK_TON = { lila: 270, pembe: 315, seftali: 45, limon: 45, nane: 135, gok: 225, lavanta: 270, kum: 0, mercan: 315, adacayi: 90 };
+// Gizli yöneticilere özel karakter: başkası seçemez (sunucu reddeder, seçicide görünmez).
+export const MUHTAR_AVATAR = 'px.muhtar:pixel.0';
+// Eski ya da başka biçimli değeri piksel değere çevirir; tanınmazsa null.
+export function pxNormalle(v) {
+  if (typeof v !== 'string') return null;
+  if (v === MUHTAR_AVATAR) return v;
+  const m = PX_DEGER.exec(v);
+  if (m) return PX_ADLAR.has(m[1]) && PX_BICIMLER.has(m[2]) && PX_TONLAR.has(Number(m[3])) && String(Number(m[3])) === m[3] ? `px.${m[1]}:pixel.${m[3]}` : null;
+  const p = v.split(':');
+  if (p.length !== 2 || !AV_ANAHTAR.test(p[0]) || !AV_RENK.test(p[1]) || !Object.hasOwn(ESKI_SVG_PX, p[0])) return null;
+  return `px.${ESKI_SVG_PX[p[0]]}:pixel.${Object.hasOwn(ESKI_RENK_TON, p[1]) ? ESKI_RENK_TON[p[1]] : 0}`;
+}
+// Yeni üyeye rastgele piksel karakter ve ton (üye istediği zaman değiştirir).
+export function rastgelePx() {
+  const r = new Uint32Array(2); crypto.getRandomValues(r);
+  const adlar = [...PX_ADLAR], tonlar = [...PX_TONLAR];
+  return `px.${adlar[r[0] % adlar.length]}:pixel.${tonlar[r[1] % tonlar.length]}`;
+}
+// Avatar değeri: null | 'foto' | piksel değer | eski "anahtar:renk" | { set: 'px', k, renk }. Geçerliyse { avatar } (null olabilir), değilse { hata }.
+// yonetici: gizli yönetici (yalnız o MUHTAR_AVATAR'ı seçebilir).
+export function avatarTemizle(v, fotoVar, yonetici = false) {
   if (v === undefined || v === null || v === '') return { avatar: null };
   if (v === 'foto') return fotoVar ? { avatar: 'foto' } : { hata: 'Önce bir fotoğraf yüklemelisin.' };
-  let k, r;
-  if (typeof v === 'string' && v.startsWith('px.')) {   // Piixpal: izin listesi dışı her şey reddedilir
-    const m = PX_DEGER.exec(v);
-    return m && PX_ADLAR.has(m[1]) && PX_BICIMLER.has(m[2]) && PX_TONLAR.has(Number(m[3])) && String(Number(m[3])) === m[3] ? { avatar: v } : { hata: 'Avatar geçersiz.' };
+  if (v && typeof v === 'object' && !Array.isArray(v)) {
+    if (v.set === 'px') return avatarTemizle(`px.${v.k}:${v.r || 'pixel'}.${v.renk ?? 0}`, fotoVar, yonetici);
+    return avatarTemizle(typeof v.k === 'string' && typeof (v.renk ?? v.r) === 'string' ? `${v.k}:${v.renk ?? v.r}` : null, fotoVar, yonetici);
   }
-  if (v && typeof v === 'object' && !Array.isArray(v) && v.set === 'px') {
-    const s = `px.${v.k}:${v.r || 'pixel'}.${v.renk ?? 0}`;
-    return avatarTemizle(s, fotoVar);
-  }
-  if (typeof v === 'string') [k, r] = v.split(':');
-  else if (v && typeof v === 'object' && !Array.isArray(v)) { k = v.k; r = v.renk ?? v.r; }
-  if (typeof k !== 'string' || !AV_ANAHTAR.test(k) || typeof r !== 'string' || !AV_RENK.test(r)) return { hata: 'Avatar geçersiz.' };
-  return { avatar: `${k}:${r}` };
-}
-// Kullanıcının gönderdiği kartı doğrular (tam değiştirme). { hata } ya da { avatar, kart }.
-export function kartTemizle(g, fotoVar) {
-  const a = avatarTemizle(g.avatar, fotoVar);
+  const n = pxNormalle(v);
+  if (!n) return { hata: 'Avatar geçersiz.' };
+  if (n === MUHTAR_AVATAR && !yonetici) return { hata: 'Avatar geçersiz.' };
+  return { avatar: n };
+}// Kullanıcının gönderdiği kartı doğrular (tam değiştirme). { hata } ya da { avatar, kart }.
+export function kartTemizle(g, fotoVar, yonetici = false) {
+  const a = avatarTemizle(g.avatar, fotoVar, yonetici);
   if (a.hata) return { hata: hataYanit(400, a.hata) };
   let durum = null;
   if (g.durum !== undefined && g.durum !== null && g.durum !== '') {
@@ -135,7 +158,7 @@ export async function benKartKaydet(request, env) {
   if (!ipSiniri(`kart-uye:${uye.id}`, simdi(), 10, 60)) return cokDeneme();   // üye başına dakikada 10 kayıt
   const g = await govdeOku(request);
   if (!g) return hataYanit(400, 'Geçersiz istek.');
-  const s = kartTemizle(g, !!uye.foto_surum);
+  const s = kartTemizle(g, !!uye.foto_surum, g.avatar === MUHTAR_AVATAR && await gizliYoneticiMi(env, uye.id));
   if (s.hata) return s.hata;
   const m = kartSakla(s.kart);
   await env.DB.prepare('UPDATE uyeler SET avatar = ?, kart = ? WHERE id = ? AND (avatar IS NOT ? OR kart IS NOT ?)').bind(s.avatar, m, uye.id, s.avatar, m).run();   // değişmediyse yazma yok
@@ -239,12 +262,13 @@ export async function benFotoSil(request, env) {
   const { uye, hata } = await yazar(request, env);
   if (hata) return hata;
   if (!uye.foto_surum) return jsonYanit({ tamam: true });
+  const yeniAv = uye.avatar === 'foto' || !uye.avatar ? rastgelePx() : uye.avatar;   // fotoğraf gidince yine bir piksel karakteri olur
   await env.DB.batch([
     env.DB.prepare('DELETE FROM fotolar WHERE uye_id = ?').bind(uye.id),
-    env.DB.prepare("UPDATE uyeler SET foto_surum = NULL, avatar = CASE WHEN avatar = 'foto' THEN NULL ELSE avatar END WHERE id = ?").bind(uye.id),
+    env.DB.prepare('UPDATE uyeler SET foto_surum = NULL, avatar = ? WHERE id = ?').bind(yeniAv, uye.id),
   ]);
   await ucOnbellektenSil(new URL(request.url), uye.id, uye.foto_surum);
-  return jsonYanit({ tamam: true, avatar: uye.avatar === 'foto' ? null : uye.avatar || null });
+  return jsonYanit({ tamam: true, avatar: yeniAv });
 }
 const ucOnbellek = () => (typeof caches !== 'undefined' ? caches.default : null);
 // GET /foto/:uye_id?v=<surum>. Sürüm eşleşirse 1 yıl değişmez önbellek (tarayıcı + uç); eşleşmezse güncel görüntü kısa süre.
@@ -319,7 +343,7 @@ export async function yonetimFotoKaldir(request, env, url) {
   const yasak = g.yasak === false ? 0 : 1;
   await env.DB.batch([
     env.DB.prepare('DELETE FROM fotolar WHERE uye_id = ?').bind(u.id),
-    env.DB.prepare("UPDATE uyeler SET foto_surum = NULL, avatar = CASE WHEN avatar = 'foto' THEN NULL ELSE avatar END, foto_yasak = ? WHERE id = ?").bind(yasak, u.id),
+    env.DB.prepare("UPDATE uyeler SET foto_surum = NULL, avatar = CASE WHEN avatar = 'foto' OR avatar IS NULL THEN ? ELSE avatar END, foto_yasak = ? WHERE id = ?").bind(rastgelePx(), yasak, u.id),
     env.DB.prepare('DELETE FROM foto_bildirimleri WHERE uye_id = ?').bind(u.id),
   ]);
   await ucOnbellektenSil(url, u.id, u.foto_surum);

@@ -1,12 +1,13 @@
 /* KPSS Tercihi — profil kartı (profil-kart.js). forum.css'in --fr-* belirteçlerini ve sitenin kendi renklerini kullanır.
    Düz renk bandı, yuvarlak rozet çipleri; gradyan, emoji ve geniş harf aralığı yok. 360 px'te tek sütun, açık ve koyu tema. */
 
-/* ---------- kart renkleri (kapak bandı) ---------- */
+/* ---------- kart renkleri (kapak bandı) ----------
+   Canlı, neşeli bant renkleri; iki temada aynı (bant kartın üstündedir, rumuz bandın altında kart zemininde durur).
+   Hepsi colors.elwyn.co (Sanzo Wada, A Dictionary of Color Combinations) hazır birleşimlerinden:
+   #326 Night Green #87c540 · Peach Red #f15a30 — #257 Blue #006eb8 · Aconite Violet #a36aa5 · Orange Yellow #fcb315
+   #284 Sea Green #00b49b — #165 Spinel Red #f27291 — #241 Dark Medici Blue #547076 */
 :root{
-  --pk-yesil:#CFE6A8;--pk-mavi:#BCD7F5;--pk-mor:#D5CAF5;--pk-pembe:#F5C8D9;--pk-turuncu:#F7D2AE;--pk-sari:#F1E3A0;--pk-turkuaz:#B4E3DC;--pk-gri:#D6D9D2;
-}
-:root[data-theme=dark]{
-  --pk-yesil:#3D5B2C;--pk-mavi:#2D4C75;--pk-mor:#483C7C;--pk-pembe:#7A3C57;--pk-turuncu:#7A4C28;--pk-sari:#6C5B20;--pk-turkuaz:#205B56;--pk-gri:#3C403B;
+  --pk-yesil:#87C540;--pk-mavi:#006EB8;--pk-mor:#A36AA5;--pk-pembe:#F27291;--pk-turuncu:#F15A30;--pk-sari:#FCB315;--pk-turkuaz:#00B49B;--pk-gri:#547076;
 }
 [data-renk=yesil]{--pk-r:var(--pk-yesil)}[data-renk=mavi]{--pk-r:var(--pk-mavi)}[data-renk=mor]{--pk-r:var(--pk-mor)}[data-renk=pembe]{--pk-r:var(--pk-pembe)}
 [data-renk=turuncu]{--pk-r:var(--pk-turuncu)}[data-renk=sari]{--pk-r:var(--pk-sari)}[data-renk=turkuaz]{--pk-r:var(--pk-turkuaz)}[data-renk=gri]{--pk-r:var(--pk-gri)}
@@ -117,27 +118,20 @@ svg.fr-av-svg,img.fr-av-foto{display:block;background:none!important;object-fit:
 .pk-sec.pk-sec-yazili.pk-secili{border-width:2px;padding:4px 15px 4px 4px;border-color:var(--fr-ink,var(--ink))}
 .pk-sec-yazili .pk-sec-ic .fr-av{width:40px;height:40px;font-size:16px}
 .pk-sec-et{font-size:14px;font-weight:650}
-.pk-setler{display:flex;gap:4px;margin:0 0 10px;padding:4px;border-radius:12px;background:var(--fr-zemin-2,var(--surface-2))}
-.pk-setler button{flex:1;min-height:40px;padding:0 10px;border:0;border-radius:9px;background:transparent;color:var(--fr-ink-2,var(--ink-2));font:inherit;font-size:14px;font-weight:650;cursor:pointer;transition:background .15s,color .15s}
-.pk-setler button:hover{color:var(--fr-ink,var(--ink))}
-.pk-setler button[aria-pressed=true]{background:var(--fr-zemin,var(--surface));color:var(--fr-ink,var(--ink));box-shadow:0 1px 2px rgb(0 0 0 / .14)}
-.pk-gruplar{display:flex;gap:6px;margin:0 0 8px;padding:2px;overflow-x:auto;scrollbar-width:none}
-.pk-gruplar::-webkit-scrollbar{display:none}
-.pk-gruplar button{flex:none;min-height:36px;padding:0 13px;border:1px solid var(--fr-cizgi-2,var(--line-2));border-radius:999px;background:transparent;color:var(--fr-ink-2,var(--ink-2));font:inherit;font-size:13.5px;font-weight:600;white-space:nowrap;cursor:pointer;transition:background .15s,border-color .15s,color .15s}
-.pk-gruplar button:hover{border-color:var(--fr-ink-2,var(--ink-2));color:var(--fr-ink,var(--ink))}
-.pk-gruplar button[aria-pressed=true]{border-color:var(--fr-ink,var(--ink));background:var(--fr-ink,var(--ink));color:var(--fr-zemin,var(--surface))}
-.pk-setler button:focus-visible,.pk-gruplar button:focus-visible,.pk-kisim-sekme button:focus-visible,.pk-onizleme-d:focus-visible{outline:2px solid var(--fr-odak,var(--focus,#2563EB));outline-offset:2px}
 .pk-izgara{display:grid;grid-template-columns:repeat(auto-fill,minmax(60px,1fr));gap:4px;max-height:232px;padding:6px;overflow-y:auto;overscroll-behavior:contain;border:1px solid var(--fr-cizgi,var(--line));border-radius:14px;background:var(--fr-zemin-2,var(--surface-2))}
 .pk-izgara .pk-sec{min-width:0}
 .pk-izgara .pk-sec:hover,.pk-izgara .pk-secili{background:var(--fr-zemin,var(--surface))}
-@media (pointer:coarse){.pk-setler button,.pk-gruplar button{min-height:44px}}
+.pk-kisim-sekme button:focus-visible,.pk-onizleme-d:focus-visible{outline:2px solid var(--fr-odak,var(--focus,#2563EB));outline-offset:2px}
 .pk-foto{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
 .pk-foto .btn{min-height:44px;padding:0 16px;width:auto}
 .pk-foto .pk-not,.pk-foto .pk-hata{flex-basis:100%}
 .btn.pk-tehlike{color:#B42318}
 :root[data-theme=dark] .btn.pk-tehlike{color:#FF8F80}
 /* gizlilik anahtarları */
-.pk-anahtar{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:48px;border-bottom:1px solid var(--fr-cizgi,var(--line));font-size:15px;cursor:pointer}
+/* .pk-bolum>label (blok) kuralı anahtar satırlarını ezmesin: etiket solda, anahtar hep aynı sağ kenarda */
+.pk-anahtar,.pk-bolum>label.pk-anahtar{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;min-height:52px;margin:0;padding:0;border-bottom:1px solid var(--fr-cizgi,var(--line));font-size:15px;font-weight:500;cursor:pointer}
+.pk-anahtar>span{flex:1;min-width:0}
+.pk-bolum>legend+.pk-anahtar{border-top:1px solid var(--fr-cizgi,var(--line))}
 .pk-anahtar input{appearance:none;-webkit-appearance:none;position:relative;flex:none;width:42px;height:24px;margin:0;border-radius:999px;background:var(--surface-3,#ECECE4);cursor:pointer;transition:background .15s}
 .pk-anahtar input::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgb(0 0 0 / .3);transition:transform .15s}
 .pk-anahtar input:checked{background:var(--r-sohbet,#1FA88E)}
@@ -203,7 +197,24 @@ svg.fr-av-svg,img.fr-av-foto{display:block;background:none!important;object-fit:
 }
 @media (prefers-reduced-motion:reduce){
   .pk-sayfa,.pk-onizleme-ic .pk-kart{animation:none}
-  .pk-sec,.pk-setler button,.pk-gruplar button,.pk-anahtar input,.pk-anahtar input::after,.pk-ok{transition:none}
+  .pk-sec,.pk-anahtar input,.pk-anahtar input::after,.pk-ok{transition:none}
 }
 .pk-av .fr-av-canli{width:96px;height:96px}
 .pk-av .fr-av-canli piix-sprite{pointer-events:auto}
+/* tek ızgara: bütün piksel karakterler; altında tek sıra renk tonu */
+.pk-izgara{grid-template-columns:repeat(auto-fill,minmax(56px,1fr));max-height:252px}
+.pk-izgara .pk-sec{min-height:56px}
+.pk-ton-satir{display:flex;flex-direction:column;gap:6px;margin-top:12px}
+.pk-ton-et{color:var(--fr-soluk,var(--muted));font-size:13px;font-weight:650}
+.pk-tonlar{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px;max-width:420px}
+.pk-tonlar .pk-renk{min-width:0;min-height:44px;padding:2px}
+.pk-tonlar .pk-ton{width:30px;height:30px}
+/* fotoğraf düğmesi: diğer ikincil düğmelerle aynı boy, ikonlu */
+.pk-foto .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 16px;width:auto;font-size:14.5px;font-weight:600}
+.pk-foto .btn svg{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+/* kendi profil sayfası: yalnız sahibine çizilen "Kayıtlı ilanlarım" */
+.pk-liste h3 small{margin-left:6px;color:var(--fr-soluk,var(--muted));font-size:12px;font-weight:500}
+.pk-bos{margin:0;padding:14px 16px;border:1px dashed var(--fr-cizgi-2,var(--line-2));border-radius:12px;color:var(--fr-soluk,var(--muted));font-size:14px;line-height:1.5}
+.pk-kayitli li a{font-weight:600}
+.pk-bildir.pk-kapat-d{color:#cb2f43}
+:root[data-theme=dark] .pk-bildir.pk-kapat-d{color:#f58e84}

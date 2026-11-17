@@ -197,7 +197,7 @@ test('konuşma: okundu işareti, toplam_okunmamis, /ben.ozel_okunmamis, /yeni yo
   assert.equal(liste.json.toplam_okunmamis, 2);
   assert.equal(liste.json.konusmalar.length, 1);
   const k = liste.json.konusmalar[0];
-  assert.deepEqual(Object.keys(k).sort(), ['itibar', 'kurucu', 'okunmamis', 'rol', 'rumuz', 'son']);
+  assert.deepEqual(Object.keys(k).sort(), ['av', 'itibar', 'kurucu', 'okunmamis', 'rol', 'rumuz', 'son']);
   assert.equal(k.rumuz, 'Oku_A'); assert.equal(k.okunmamis, 2); assert.equal(k.son.govde, 'iki'); assert.equal(k.son.benden, false);
   // listeyi görmek okundu yapmaz
   assert.equal((await cagir(env, 'GET', '/ben', { token: b.token })).json.uye.ozel_okunmamis, 2);
@@ -206,7 +206,9 @@ test('konuşma: okundu işareti, toplam_okunmamis, /ben.ozel_okunmamis, /yeni yo
   assert.equal(ga.konusmalar[0].okunmamis, 0); assert.equal(ga.konusmalar[0].son.benden, true); assert.equal(ga.toplam_okunmamis, 0);
   const c = await cagir(env, 'GET', '/ozel/Oku_A', { token: b.token });
   assert.equal(c.durum, 200);
-  assert.deepEqual(c.json.uye, { rumuz: 'Oku_A', rol: 'uye', kurucu: true, itibar: 0, dm_acik: true });
+  const { av: oAv, ...oUye } = c.json.uye;
+  assert.match(oAv, /^px\.[a-z]+:pixel\.\d+$/);   // her üyenin bir piksel karakteri var
+  assert.deepEqual(oUye, { rumuz: 'Oku_A', rol: 'uye', kurucu: true, itibar: 0, dm_acik: true });
   assert.deepEqual(c.json.mesajlar.map((m) => [m.govde, m.benden]), [['bir', false], ['iki', false]]);
   assert.deepEqual(Object.keys(c.json.mesajlar[0]).sort(), ['benden', 'govde', 'id', 'olusma']);
   assert.equal(c.json.daha_eski, false); assert.equal(c.json.engelledim, false); assert.equal(c.json.engellendim, false);

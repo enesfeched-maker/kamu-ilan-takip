@@ -160,11 +160,10 @@
       kap.innerHTML = '<button type="button" class="hs-av" id="hs-ac" aria-haspopup="true" aria-expanded="false" aria-controls="hs-menu" aria-label="Hesabım' + (ad ? ': ' + esc(ad) : '') + '">'
         + '<span class="hs-d' + (ad && window.kitAvatar ? ' hs-d-av' : '') + '" style="--h:' + ton(ad) + '" aria-hidden="true">' + (ad && window.kitAvatar ? window.kitAvatar.html({ rumuz: ad, av: u.av, fs: u.fs, fu: u.fu }, 32) : ad ? '<span class="fr-av" data-avu="' + esc(JSON.stringify({ u: { rumuz: ad, av: u.av, fs: u.fs, fu: u.fu }, b: 32 })) + '" style="--h:' + ton(ad) + '" aria-hidden="true">' + esc(bas) + '</span>' : esc(bas) || '<svg viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5"/></svg>') + '</span>'
         + '<span class="hs-ad">Hesabım</span><b class="tb-sayi" data-ozel-sayi hidden></b></button>'
-        + '<div class="hs-menu" id="hs-menu" hidden>' + (ad ? '<p class="hs-kim">' + esc(ad) + '</p>' : '')
-        + '<a href="' + KOK + '?profil=kart" data-hs="profil">Profilim</a>'
-        + (ad ? '<a href="' + KOK + 'forum/?uye=' + encodeURIComponent(ad) + '" data-hs="sayfa">Profil sayfam</a>' : '')
-        + '<a href="' + KOK + '#kayitli" data-hs="kayitli">Kayıtlı ilanlarım</a>'
-        + '<a href="' + KOK + 'forum/" data-hs="forum">Forum</a>'
+        // Menü: başlıkta avatar + rumuz (kendi profil sayfası); Profilim (sayfa: kart, kayıtlı ilanlar, son yazılar), Profili düzenle (pencere), Mesajlar, ayarlar, çıkış.
+        + '<div class="hs-menu" id="hs-menu" hidden>' + (ad ? '<a class="hs-kim" href="' + KOK + 'forum/?uye=' + encodeURIComponent(ad) + '" data-hs="sayfa"><span class="hs-kim-av" aria-hidden="true">' + (window.kitAvatar ? window.kitAvatar.html({ rumuz: ad, av: u.av, fs: u.fs, fu: u.fu }, 36) : '') + '</span><span class="hs-kim-ad">' + esc(ad) + '</span></a>' : '')
+        + (ad ? '<a href="' + KOK + 'forum/?uye=' + encodeURIComponent(ad) + '" data-hs="sayfa">Profilim</a>' : '')
+        + '<a href="' + KOK + '?profil=kart" data-hs="duzenle">Profili düzenle</a>'
         + '<a href="' + KOK + 'forum/?bolum=mesaj" data-hs="mesaj">Mesajlar<b class="tb-sayi" data-ozel-sayi hidden></b></a>'
         + '<button type="button" data-hs="ayar">Bildirim ayarları</button>'
         + '<button type="button" data-hs="hesap">Hesap ayarları</button>'
@@ -179,7 +178,7 @@
         if (!x) return;
         var ne = x.getAttribute('data-hs');
         if (ne === 'ayar' || ne === 'hesap' || ne === 'cikis') { menuKapat(false); cekmeceKapat(); forumdan(ne); return; }
-        var np = ne === 'profil' && document.getElementById('nav-profile');   // ana sayfada profil ekranı yerinde açılır
+        var np = ne === 'duzenle' && document.getElementById('nav-profile');   // ana sayfada düzenleyici yerinde açılır
         if (np) { e.preventDefault(); menuKapat(false); cekmeceKapat(); if (window.kitProfilAc) window.kitProfilAc('kart'); else np.click(); return; }
         menuKapat(false); cekmeceKapat();   // bağlantılar normal gezinir
       };

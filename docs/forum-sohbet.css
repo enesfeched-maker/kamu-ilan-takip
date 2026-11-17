@@ -550,13 +550,7 @@ div.fr-g-bolum{display:flex;flex-direction:column;gap:var(--fr-3)}
   .fr-chat .fr-yanit footer .fr-eylem{min-height:44px;padding:0 12px;font-size:13px}
 }
 
-/* ---------- hareket: yeni çizilen listeler hafifçe belirir ---------- */
-@media (prefers-reduced-motion:no-preference){
-  .fr-sorular>.fr-soru-satir,.fr-odalar>.fr-oda-satir,.fr-dm-liste>.fr-dm-satir{animation:fr-gir .28s ease-out both}
-  .fr-sorular>.fr-soru-satir:nth-child(2),.fr-odalar>.fr-oda-satir:nth-child(2){animation-delay:.03s}
-  .fr-sorular>.fr-soru-satir:nth-child(3),.fr-odalar>.fr-oda-satir:nth-child(3){animation-delay:.06s}
-  .fr-sorular>.fr-soru-satir:nth-child(n+4),.fr-odalar>.fr-oda-satir:nth-child(n+4){animation-delay:.09s}
-}
+/* ---------- hareket: sekme değişince liste girişi animasyonu YOK (ekran titremesin); yalnız hover ve yeni mesaj ---------- */
 @keyframes fr-gir{from{opacity:0;transform:translateY(6px)}}
 @media (prefers-reduced-motion:reduce){
   .fr-giris-perde,.fr-giris-kutu{animation:none}
@@ -580,3 +574,31 @@ div.fr-g-bolum{display:flex;flex-direction:column;gap:var(--fr-3)}
   .fr-hizli .fr-cip{height:44px}
   .fr-yanitlanan .fr-eylem{min-width:44px;min-height:44px}
 }
+
+/* ---------- sekme değişimi sabit: kaydırma çubuğu yeri ayrılır, şerit genişliği bölümden bölüme değişmez, içerik boşken çökmez ---------- */
+html:has(body.forum-page){scrollbar-gutter:stable}   /* yalnız forum sayfası: bu dosya ana sayfada ve ilan sayfalarında da yüklenir */
+.fr-kok[data-bolum] .fr-bas{max-width:none}
+.fr-bolumler a{min-width:0;min-height:64px;contain:layout paint}
+.fr-bolumler a b,.fr-bolumler a small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fr-bolumler a.fr-aktif{box-shadow:inset 0 -3px 0 var(--r)}
+.fr-icerik{min-height:min(70vh,640px)}
+.fr-icerik>.fr-yukleniyor,.fr-sorular>.fr-yukleniyor,.fr-odalar>.fr-yukleniyor{min-height:240px}
+@media (max-width:899px){.fr-bolumler a{min-height:84px;justify-content:flex-start}.fr-bolumler a b{white-space:normal;line-height:1.2;overflow-wrap:anywhere}}
+
+/* ---------- gizli yönetici menüsü ("…"): yalnız yöneticinin ekranında çizilir ---------- */
+.fr-arac{position:relative;display:inline-flex;margin-left:auto}
+.fr-arac>summary{display:grid;place-items:center;width:36px;height:32px;border-radius:8px;color:var(--muted);list-style:none;cursor:pointer}
+.fr-arac>summary::-webkit-details-marker{display:none}
+.fr-arac>summary:hover{background:var(--surface-2);color:var(--ink)}
+.fr-arac>summary:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.fr-arac>summary svg{width:20px;height:20px;stroke-width:2.6}
+.fr-arac>div{position:absolute;right:0;bottom:calc(100% + 4px);z-index:25;display:flex;flex-direction:column;min-width:170px;padding:6px;border:1px solid var(--line);border-radius:12px;background:var(--surface);box-shadow:0 14px 30px -14px rgb(0 0 0 / .45)}
+.fr-arac-d{display:flex;align-items:center;min-height:44px;padding:0 12px;border:0;border-radius:8px;background:transparent;color:#cb2f43;font:inherit;font-size:14px;font-weight:650;text-align:left;cursor:pointer}
+.fr-arac-d:hover{background:color-mix(in srgb,#cb2f43 10%,transparent)}
+.fr-arac-d:focus-visible{outline:2px solid var(--focus);outline-offset:-2px}
+:root[data-theme=dark] .fr-arac-d,.fr-chat .fr-arac-d{color:#f58e84}
+.fr-chat .fr-arac>summary{color:var(--chat-soluk)}
+.fr-chat .fr-arac>summary:hover{background:rgba(255,255,255,.06);color:var(--chat-yazi)}
+.fr-chat .fr-arac>div{border-color:var(--chat-cizgi);background:var(--chat-panel)}
+.fr-chat .fr-benim .fr-arac>div{right:0}
+@media (pointer:coarse),(max-width:899px){.fr-arac>summary{width:44px;height:44px}}
