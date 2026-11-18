@@ -1,14 +1,14 @@
 {
- "olculen": 65,
+ "olculen": 67,
  "tur": {
   "haber": -3.8,
-  "son_gun": 2.6,
+  "son_gun": 2.8,
   "yeni": 3.8,
-  "buyuk": 4.0,
-  "kategori": 0.0,
-  "ilan": -6.0,
+  "buyuk": 4.1,
+  "kategori": 0.2,
+  "ilan": -6.7,
   "rehber": -0.6,
-  "ozet": -1.2
+  "ozet": 0.9
  },
  "muzik": {
   "afro-pop.mp3": 4.9,
@@ -17,20 +17,20 @@
   "synthwave.mp3": -2.7,
   "dance-club.mp3": -0.1,
   "funk-breakbeat.mp3": 1.8,
-  "hip-hop.mp3": 5.8,
+  "hip-hop.mp3": 5.9,
   "future-bass.mp3": 2.7,
-  "mixkit-158-happy-times.mp3": 2.0,
-  "mixkit-702-pop-09.mp3": -6.0,
-  "mixkit-443-serene-view.mp3": -1.2
+  "mixkit-158-happy-times.mp3": 2.2,
+  "mixkit-702-pop-09.mp3": -6.7,
+  "mixkit-443-serene-view.mp3": 0.9
  },
  "vakit": {
-  "aksam": -1.6,
-  "sabah": 3.2,
-  "ilan": -6.0
+  "aksam": -0.8,
+  "sabah": 3.4,
+  "ilan": -6.7
  },
  "palet": {
-  "kagit": -2.0,
-  "bordo": -5.0
+  "kagit": -0.4,
+  "bordo": -5.4
  },
  "soru": {},
  "seri": {},
@@ -42,9 +42,9 @@
    "yeni": 14,
    "buyuk": 2,
    "kategori": 6,
-   "ilan": 8,
+   "ilan": 9,
    "rehber": 1,
-   "ozet": 1
+   "ozet": 2
   },
   "muzik": {
    "afro-pop.mp3": 8,
@@ -56,17 +56,17 @@
    "hip-hop.mp3": 7,
    "future-bass.mp3": 7,
    "mixkit-158-happy-times.mp3": 6,
-   "mixkit-702-pop-09.mp3": 8,
-   "mixkit-443-serene-view.mp3": 1
+   "mixkit-702-pop-09.mp3": 9,
+   "mixkit-443-serene-view.mp3": 2
   },
   "vakit": {
-   "aksam": 33,
+   "aksam": 34,
    "sabah": 24,
-   "ilan": 8
+   "ilan": 9
   },
   "palet": {
-   "kagit": 7,
-   "bordo": 7
+   "kagit": 8,
+   "bordo": 8
   },
   "soru": {},
   "seri": {},
@@ -81,5 +81,5 @@
   "seri": {},
   "sure_bandi": {}
  },
- "guncelleme": "2026-11-18T21:10:53+03:00"
+ "guncelleme": "2026-11-19T02:37:31+03:00"
 }
