@@ -209,21 +209,41 @@ UYUMSUZ_BELGE_ALANLARI = ('kadro','sartlar','ozet','kadro_detay','basvuru_notu',
                           'belge_kopyasi','belge_sha256','belge_aciklamasi')
 
 
-def belge_uyumsuz(text, range_text):
-    """SBB satırına başka (eski) ilanın PDF'i bağlanmış mı? Belge açık tarihler veriyor ama listedeki dönemin ne başlangıcı ne
-    bitişi bunların arasında: 28 Ekim 2026 Milli Saraylar satırına 12–22 Ekim'deki 158 kişilik ilanın PDF'i bağlıydı."""
+def _belge_gunleri(text):
+    """Belgedeki (gün, ay) çiftleri: (hepsi, yalnız BAŞVURU bağlamında geçenler). Resmî Gazete/yönetmelik/yazı tarihleri ('13.10.2026 tarihli ve 33399
+    sayılı', '10/6/2004 tarihli') ve başvuruyla ilgisiz tarihler sayılmaz: iptal/düzeltme duyurularının ve duyuru tarihi dönemden
+    önce olan geçerli ilanların tarihleri yanlışlıkla 'uyumsuz' sayılmasın (18 Kasım 2026'da 26 kayıttan 25'i böyle yanlış işaretliydi)."""
+    kucuk = text.translate(str.maketrans({'I':'ı','İ':'i'})).lower()
+    adaylar = [(m.start(),m.end(),int(m.group(1)),int(m.group(2)))
+               for m in re.finditer(r'(?<![\d/.])(\d{1,2})\s*[./]\s*(\d{1,2})\s*[./]\s*20\d{2}(?!\d)',kucuk)]
+    adaylar += [(m.start(),m.end(),int(m.group(1)),MONTHS.index(m.group(2))+1)
+                for m in re.finditer(r'(?<![\d/.])(\d{1,2})\s+('+'|'.join(MONTHS)+r')\s+20\d{2}(?!\d)',kucuk)]
+    tum, basvuru = set(), set()
+    for bas,son,d,m in adaylar:
+        if re.match(r'\s*(?:tarihli|tarih\s+ve|tarihinde\s+yay)',kucuk[son:son+30]):
+            continue
+        tum.add((d,m))
+        # 'başvuru' sözcüğü tarihle AYNI cümlede olmalı (önceki cümlenin sonundaki 'başvuruları kabul edilmez' sayılmaz)
+        cumle = re.split(r'[.!?;]\s+',kucuk[max(0,bas-160):bas])[-1]
+        if re.search(r'ba[sş]vuru',cumle):
+            basvuru.add((d,m))
+    return tum, basvuru
+
+
+def belge_uyumsuz(text, range_text, bildirim=False):
+    """SBB satırına başka (eski) ilanın PDF'i bağlanmış mı? Belge BAŞVURU tarihleri veriyor ama listedeki dönemin ne başlangıcı ne
+    bitişi bunların arasında: 28 Ekim 2026 Milli Saraylar satırına 12–22 Ekim'deki 158 kişilik ilanın PDF'i bağlıydı.
+    İptal/düzeltme duyurusu (bildirim=True) hiç sınanmaz: metnindeki tarihler özgün ilanındır."""
+    if bildirim:
+        return False
     parts = re.findall(r'(\d{1,2})\s+('+'|'.join(MONTHS)+r')',(range_text or '').lower())
     if len(parts) != 2:
         return False
-    gunler = set()
-    for d,m,y in re.findall(r'(?<!\d)(\d{1,2})\s*[./]\s*(\d{1,2})\s*[./]\s*(20\d{2})(?!\d)',text):
-        gunler.add((int(d),int(m)))
-    for d,ay,y in re.findall(r'(?<!\d)(\d{1,2})\s+('+'|'.join(MONTHS)+r')\s+(20\d{2})',text.lower()):
-        gunler.add((int(d),MONTHS.index(ay)+1))
-    if not gunler:
+    tum, basvuru = _belge_gunleri(text)
+    if not basvuru:
         return False
     donem = {(int(p[0]),MONTHS.index(p[1])+1) for p in parts}
-    return not (gunler & donem)
+    return not (tum & donem)
 
 
 def sbb_rows(data):
@@ -292,7 +312,7 @@ def read_sbb(previous):
                 row['duyuru_turu']='İptal duyurusu' if 'iptal' in norm(row['baslik']) else 'Düzeltme / süre değişikliği'
             from sbb_detay import summarize
             ozet_alanlari=summarize(data,row)
-            if belge_uyumsuz(text,row['donem']):
+            if belge_uyumsuz(text,row['donem'],bildirim=bool(row.get('duyuru_turu'))):
                 # Yanlış belgeden okunan kadro/şart sitede yanıltır; Kariyer Kapısı kopyası varsa koşullar oradan gelir.
                 for alan in UYUMSUZ_BELGE_ALANLARI:
                     ozet_alanlari.pop(alan,None)
@@ -494,6 +514,8 @@ def merge_sources(records, previous):
                 for alan in UYUMSUZ_BELGE_ALANLARI:
                     if alan not in item:
                         merged.pop(alan,None)
+            elif item.get('kaynak_turu')=='sbb' and item.get('belge_sha256'):
+                merged.pop('belge_uyumsuz',None)   # belge sonradan uyumlu çıktı: eski işaret kalmasın
         else:
             merged={**result.get(ident,chosen)}
         prior=result.get(ident,{})

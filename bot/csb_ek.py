@@ -14,7 +14,7 @@ from siniflandir import ILLER
 W = '{http://schemas.openxmlformats.org/wordprocessingml/2006/main}'
 XML_SINIRI = 6_000_000
 SATIR_SINIRI = 40          # bundan çok satırlı tablo kadro tablosu sayılmaz
-SART_SINIRI = 6
+SART_SINIRI = SATIR_SINIRI   # her tablo satırı ayrı kadro kartı: 13 satırlık İETT ilanında 6'da kesmek kontenjanı 44 yerine 12 gösteriyordu
 NITELIK_SINIRI = 420
 ETIKET = {'lisans': 'Lisans', 'onlisans': 'Önlisans', 'ortaogretim': 'Ortaöğretim'}
 PT_DUZEY = {'P3': 'lisans', 'P93': 'onlisans', 'P94': 'ortaogretim'}
@@ -295,7 +295,34 @@ def docx_ek_bilgiler(veri):
             if re.search(r'posta ile veya diğer şekillerde[^.]*kabul edilmeyecektir', b4, re.I):
                 metin += ' (posta ve diğer yollarla başvuru kabul edilmez)'
             sonuc['basvuru'] = metin + '.'
+    sinav = _sinav_metni(tam)
+    if sinav:
+        sonuc['sinav'] = sinav
     return sonuc
+
+
+def _sinav_metni(tam):
+    """'SINAVIN YERİ, ZAMANI' bölümündeki açık sınav günleri: 'Sözlü ve uygulamalı sınav 28 Aralık 2026 saat 10.00.'; yoksa ''."""
+    bolum = re.split(r'SINAVIN\s+YERİ', tam, maxsplit=1)
+    if len(bolum) < 2:
+        return ''
+    bolum = re.split(r'\n\s*7\.', bolum[1], maxsplit=1)[0]
+    parcalar = []
+    for p in bolum.split('\n'):
+        g = re.search(r'(\d{1,2})[./](\d{1,2})[./](20\d{2})', p)
+        if not g or not re.search(r'sınav', p, re.I):
+            continue
+        k = p.lower()
+        tur = 'Sözlü ve uygulamalı sınav' if 'sözlü' in k and 'uygulamalı' in k else 'Sözlü sınav' if 'sözlü' in k else \
+              'Uygulamalı sınav' if 'uygulamalı' in k else 'Yazılı sınav' if 'yazılı' in k else 'Sınav'
+        if 'sözlü' in k and 'uygulamalı' in k and re.match(r'\s*(?:sözlü|uygulamalı) sınav\b', k):
+            tur = 'Sözlü sınav' if k.lstrip().startswith('sözlü') else 'Uygulamalı sınav'
+        saat = re.search(r'saat\s*:?\s*(\d{1,2})(?:[.:](\d{2}))?', p, re.I)
+        yazi = f'{tur} {_tarih_yaz(g.group(1), g.group(2), g.group(3))}'
+        if saat:
+            yazi += f' saat {int(saat.group(1)):02d}.{saat.group(2) or "00"}'
+        parcalar.append(yazi)
+    return '; '.join(dict.fromkeys(parcalar)) + '.' if parcalar else ''
 
 
 def belge_alanlari(adres, veri, baslik=''):
@@ -309,8 +336,8 @@ def belge_alanlari(adres, veri, baslik=''):
                 ek = {}
             if ek.get('sart'):
                 sonuc['sartlar'] = sonuc['sartlar'] + [{'kadro': 'Tüm kadrolar için', 'metin': ek['sart']}]
-            if ek.get('basvuru'):
-                sonuc['basvuru_notu'] = ek['basvuru']
+            if ek.get('basvuru') or ek.get('sinav'):
+                sonuc['basvuru_notu'] = ' '.join(x for x in (ek.get('basvuru'), ek.get('sinav')) if x)
         return sonuc
     return pdf_alanlari(veri, baslik)
 

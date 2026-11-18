@@ -45,6 +45,53 @@ if __name__ == '__main__':
     unittest.main()
 
 
+class CokPozisyonluSartlar(unittest.TestCase):
+    """Kariyer Kapısı sözleşmeli bilişim (gerçek ilan metinlerinden kısaltılmış): şart pozisyona özgüyse hepsine yazılmaz."""
+    ORTAK = [['GENEL ŞARTLAR', ['657 sayılı Devlet Memurları Kanunu’nun 48 inci maddesinde sayılan genel şartları haiz olması,',
+                                'Erkek adaylar için askerlik durumu itibariyle askerlikle ilgisi bulunmamak,']]]
+
+    def kadrolar(self, *maddeler):
+        return [{'unvan': f'Kadro {n}', 'maddeler': list(m)} for n, m in enumerate(maddeler, 1)]
+
+    def test_yalniz_bir_pozisyondaki_sertifika_bazi_kadrolarda_yazilir(self):
+        item = {'kadro_ortak': self.ORTAK, 'kadro_detay': self.kadrolar(['Siber güvenlik alanında sertifika sahibi olmak.'], ['Linux bilgisine sahip olmak.'])}
+        self.assertEqual(ib.sart_kelimeleri(item), ['Bazı kadrolarda sertifika'])
+
+    def test_her_pozisyonda_olan_sart_duz_yazilir(self):
+        item = {'kadro_detay': self.kadrolar(['CISSP sertifikası sahibi olmak.'], ['ISO 27001 sertifikası sahibi olmak.'])}
+        self.assertEqual(ib.sart_kelimeleri(item), ['Sertifika'])
+
+    def test_ortak_genel_sartlardaki_yas_tum_kadrolara_yazilir(self):
+        ortak = [['GENEL ŞARTLAR', ['Son başvuru tarihi itibarıyla 35 yaşını doldurmamış olmak.']]]
+        item = {'kadro_ortak': ortak, 'kadro_detay': self.kadrolar(['Linux bilgisi.'], ['Ağ bilgisi.'])}
+        self.assertEqual(ib.sart_kelimeleri(item), ['35 yaş altı'])
+
+    def test_erkek_adaylar_icin_askerlik_genel_sarti_yalniz_erkek_degildir(self):
+        item = {'kadro_ortak': self.ORTAK, 'kadro_detay': self.kadrolar(['Linux bilgisi.'], ['Ağ bilgisi.'])}
+        self.assertEqual(ib.sart_kelimeleri(item), [])
+
+    def test_pozisyonlara_gore_degisen_yas_ve_ehliyet_sinifi(self):
+        item = {'kadro_detay': self.kadrolar(['40 yaşını doldurmamış olmak.', 'B sınıfı sürücü belgesine sahip olmak.'],
+                                             ['35 yaşını doldurmamış olmak.', 'D sınıfı sürücü belgesine sahip olmak.'])}
+        self.assertEqual(ib.sart_kelimeleri(item), ['Kadroya göre yaş sınırı var', 'Kadroya göre sürücü belgesi'])
+
+    def test_bazi_pozisyonlarda_sinif_harfi_buyuk_kalir(self):
+        item = {'kadro_detay': self.kadrolar(['B sınıfı sürücü belgesine sahip olmak.'], ['Ağ bilgisi.'])}
+        self.assertEqual(ib.sart_kelimeleri(item), ['Bazı kadrolarda B sınıfı ehliyet'])
+
+    def test_ucret_tavanina_gore_3_ya_da_5_yil_tek_yila_indirgenmez(self):
+        # Burdur Mehmet Akif Ersoy Ü. (28 Ekim 2026): '3 yıllık, diğerleri için 5 yıllık' -> eskiden '5 yıl deneyim' yazılıyordu.
+        metin = ('Büyük ölçekli bilgi işlem merkezlerinde, ücret tavanı iki katını geçemeyecekler için en az 3 yıllık, '
+                 'diğerleri için en az 5 yıllık mesleki tecrübeye sahip bulunması')
+        item = {'kadro_ortak': [['GENEL ŞARTLAR', [metin]]], 'kadro_detay': self.kadrolar(['Linux bilgisi.'])}
+        self.assertEqual(ib.sart_kelimeleri(item), ['Kadroya göre 3–5 yıl deneyim'])
+
+    def test_ortakta_tek_yil_varsa_hepsi_icin_yazilir(self):
+        item = {'kadro_ortak': [['GENEL ŞARTLAR', ['En az 5 (beş) yıl mesleki tecrübeye sahip bulunmak.']]],
+                'kadro_detay': self.kadrolar(['Linux bilgisi.'], ['Ağ bilgisi.'])}
+        self.assertEqual(ib.sart_kelimeleri(item), ['5 yıl deneyim'])
+
+
 class CokPozisyonluDeneyim(unittest.TestCase):
     def test_tek_kadronun_yili_hepsine_yazilmaz(self):
         item = {'kadro_detay': [
