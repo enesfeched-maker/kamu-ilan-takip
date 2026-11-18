@@ -73,6 +73,7 @@ on:
       - 'bot/sosyal_ajan.py'
       - 'bot/sosyal_kalite.py'
       - 'bot/sosyal_motor.py'
+      - 'bot/haftalik.py'
       - 'bot/sosyal_paylasim.py'
       - 'bot/sosyal_tasarim.py'
       - 'bot/sosyal_yayinla.py'
