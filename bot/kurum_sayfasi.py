@@ -400,7 +400,7 @@ def _ilan_gorseli(k, kok):
     meslek = k.get('meslek') or []
     if not meslek or meslek[0].startswith('30-'):
         if k.get('logo'):
-            return f'<span class="ilan-foto logo-karo"><img src="{kok}{esc(k["logo"])}" alt="" loading="lazy" decoding="async"></span>', True
+            return f'<span class="ilan-foto logo-karo"><img src="{kok}{esc(k["logo"])}" alt="" width="52" height="52" loading="lazy" decoding="async"></span>', True
         return f'<span class="ilan-foto harf-karo" style="--h:{su._ton(k.get("kurum"))}" aria-hidden="true">{esc(su._bas_harfler(k.get("kurum")))}</span>', False
     return f'<img class="ilan-foto" src="{kok}assets/meslek/kucuk/{esc(meslek[0])}" alt="" width="52" height="52" loading="lazy" decoding="async">', False
 
@@ -623,7 +623,9 @@ def kurum_hub_sayfasi(girdiler, simdi=None):
     canonical = su.BASE + 'kurum/'
     icerik = (f'<section class="kp-hero"><div class="wrap"><nav class="crumbs" aria-label="Konum"><a href="{kok}">Ana sayfa</a><span aria-hidden="true">/</span><span>Kurumlar</span></nav>'
               f'<h1>Kurumlar</h1><p>{esc(giris)}</p></div></section><main id="icerik" class="wrap kp-main">{bolumler}</main>')
-    html = (su.sayfa_basi(baslik + ' | KPSS Tercihi', aciklama, esc(canonical), kok, ek_head=f'<meta property="og:url" content="{esc(canonical)}">')
+    import puan_sayfalari as ps
+    ek_head = f'<meta property="og:url" content="{esc(canonical)}">' + ps._kirinti_json(su.BASE, [('Ana sayfa', su.BASE), ('Kurumlar', canonical)])
+    html = (su.sayfa_basi(baslik + ' | KPSS Tercihi', aciklama, esc(canonical), kok, ek_head=ek_head)
             + f'<body class="kurum-page"><a class="skip" href="#icerik">İçeriğe geç</a>{su.ust_html(kok)}{icerik}{su.alt_html(kok)}</body></html>')
     return canonical, html
 
@@ -682,9 +684,11 @@ def kurum_gecmis_sayfasi(kan, ad, slug, docs):
     return su.sayfa_kabugu(baslik + ' | KPSS Tercihi', aciklama, canonical, icerik, 'kurum-page', baslik, ek_head)
 
 
-def kurum_sayfalarini_uret(ilanlar, docs, gorseller, simdi=None, kopyalar=None):
+def kurum_sayfalarini_uret(ilanlar, docs, gorseller, simdi=None, kopyalar=None, arsiv_yolu=None):
     """docs/kurum/ altını baştan yazar. (gruplar, slugler, sitemap adresleri, başarıyla yazılan grup anahtarları) döndürür;
-    bir grubun sayfası üretilemezse atlanır (klasörü silinir) ve başarılı kümeye girmez."""
+    bir grubun sayfası üretilemezse atlanır (klasörü silinir) ve başarılı kümeye girmez.
+    arsiv_yolu verilirse (denetim/kurum-arsivi.json) sayfası olmuş her kurumun adresi korunur: ilanı da yerleştirme geçmişi de kalmayan
+    kurum için noindex, reklamsız 'açık ilanı yok' sayfası yazılır; bu adresler haritaya ve /kurum/ listesine girmez."""
     su = _su()
     simdi = (simdi or datetime.now(TR)).astimezone(TR)
     kok = docs / 'kurum'
@@ -739,6 +743,18 @@ def kurum_sayfalarini_uret(ilanlar, docs, gorseller, simdi=None, kopyalar=None):
             hub_girdileri.append((ad, slug, 0, 0))
     except Exception as hata:
         print(f'Uyarı: kalıcı kurum sayfaları üretilemedi: {hata}')
+    if arsiv_yolu:
+        try:
+            import kurum_arsivi
+            eski = kurum_arsivi.oku(arsiv_yolu)
+            arsiv = kurum_arsivi.birlestir(eski, kurum_arsivi.kayitlardan(gruplar, slugler))
+            if arsiv != eski:
+                kurum_arsivi.yaz(arsiv, arsiv_yolu)
+            var = {p.parent.name for p in kok.glob('*/index.html')}
+            yazilan = kurum_arsivi.eksikleri_yaz(docs, arsiv, var)
+            print(f'Kurum arşivi: {len(arsiv)} adres, {len(yazilan)} tanesi ilansız arşiv sayfası olarak yazıldı.')
+        except Exception as hata:
+            print(f'Uyarı: kurum arşivi işlenemedi: {hata}')
     try:
         hub = kurum_hub_sayfasi(hub_girdileri, simdi)
         if hub:

@@ -44,7 +44,8 @@ class AnaSayfaTest(unittest.TestCase):
 
     def test_doldurur_idempotent_ve_kacirir(self):
         yeni = si.anasayfa_html(ANA, self.sec(), si.ozet_cumlesi(self.liste), 6)
-        self.assertIn('<a class="satir-link" href="ilan/b/">2 Zabıta Memuru</a>', yeni)
+        self.assertRegex(yeni, r'<a class="satir-link" href="ilan/b/"><span class="sr-only">[^<]+: </span>2 Zabıta Memuru</a>')   # kurum adı ekran okuyucu ve arama için başlıkta
+        self.assertIn('<h2 class="sr-only">Son başvurusu yaklaşan ilanlar</h2>', yeni)   # H1 → H2 → H3 sırası atlanmaz
         self.assertIn('Son başvuru: 5 Kasım 2026', yeni)
         self.assertIn('Ankara &lt;Belediyesi&gt;', yeni)
         self.assertNotIn('<Belediyesi>', yeni)
@@ -79,7 +80,8 @@ class AnaSayfaTest(unittest.TestCase):
             self.assertIn('109,00000', p)
             self.assertIn('2026/1 dönemi: 61 kadro', p)
             self.assertIn('href="../analiz/"', p)
-            self.assertEqual(p.count('statik-baglanti'), 1)
+            self.assertIn('href="../kpss-taban-puanlari/">Dönem dönem bütün taban puanları →</a>', p)
+            self.assertEqual(p.count('statik-baglanti'), 2)
             self.assertEqual(si.yaz(docs, self.liste, self.sayfali, {'noindex'}, SIMDI), [True, True])
             self.assertEqual((docs / 'puanlar' / 'index.html').read_text(encoding='utf-8'), p)   # idempotent
             self.assertEqual((docs / 'index.html').read_text(encoding='utf-8'), ana)

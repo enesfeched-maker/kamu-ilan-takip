@@ -21,9 +21,13 @@ _REKLAM = re.compile(r'<script async src="https://pagead2\.googlesyndication\.co
 
 
 def ana_kelime_sayisi(html):
-    """<main> içindeki görünür kelime sayısı (yoksa <body>)."""
+    """<main> içindeki görünür kelime sayısı (yoksa <body>); sayfa başı kutusundaki (kp-hero) başlık ve giriş paragrafı da
+    sayfanın kendi içeriğidir, sayılır (konum çubuğu hariç; SEO denetimi, 15 Kasım 2026)."""
     m = re.search(r'(?s)<main\b.*?</main>', html) or re.search(r'(?s)<body\b.*?</body>', html)
     govde = m.group(0) if m else html
+    bas = re.search(r'(?s)<section class="kp-hero">.*?</section>', html)
+    if m and bas:
+        govde = re.sub(r'(?s)<nav\b.*?</nav>', ' ', bas.group(0)) + ' ' + govde
     govde = re.sub(r'(?s)<(script|style)\b.*?</\1>', ' ', govde)
     metin = re.sub(r'<[^>]+>', ' ', govde)
     return len(metin.split())

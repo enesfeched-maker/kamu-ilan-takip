@@ -75,7 +75,7 @@ def satir_html(k):
     hue = sum(ord(c) for c in str(kurum)) % 360
     return (f'<li><article class="satir"><span class="satir-logo"><span class="harf" style="--h:{hue}" aria-hidden="true">{esc(_harf(kurum))}</span></span>'
             f'<div class="satir-govde"><p class="satir-kurum">{esc(kurum)}</p>'
-            f'<h3 class="satir-baslik"><a class="satir-link" href="ilan/{esc(k["key"])}/">{esc(k.get("manset") or "Kamu ilanı")}</a> '
+            f'<h3 class="satir-baslik"><a class="satir-link" href="ilan/{esc(k["key"])}/"><span class="sr-only">{esc(kurum)}: </span>{esc(k.get("manset") or "Kamu ilanı")}</a> '
             f'<span class="satir-tarih">(Son başvuru: {esc(_tarih_yazi(k["son_tarih"]))})</span></h3>'
             + (f'<p class="satir-alt">{esc(alt)}</p>' if alt else '') + '</div><div class="satir-sag"></div></article></li>')
 
@@ -92,7 +92,7 @@ def anasayfa_html(metin, satirlar, toplam_cumle, uygun_sayi):
         not_ = ''
         if uygun_sayi > len(satirlar):
             not_ = f'<p class="liste-ozet">Son başvuru tarihi en yakın {tam(len(satirlar))} ilan gösteriliyor.</p>'
-        icerik = '<section class="zg"><ul class="gun-liste">' + ''.join(satir_html(k) for k in satirlar) + '</ul></section>' + not_
+        icerik = '<section class="zg"><h2 class="sr-only">Son başvurusu yaklaşan ilanlar</h2><ul class="gun-liste">' + ''.join(satir_html(k) for k in satirlar) + '</ul></section>' + not_
     else:
         icerik = ''
     yeni = metin[:bas + len(CARDS_BAS)] + icerik + metin[son:]
@@ -136,13 +136,14 @@ def puan_html(metin, secim):
     """Tercih robotu sayfasının tablo gövdesini ve /analiz/ bağlantısını doldurur; işaret yoksa None."""
     govde = re.compile(r'(<tbody id="satirlar">).*?(</tbody>)', re.S)
     ozet = re.compile(r'(<span class="sayi" id="tablo-ozet">)[^<]*(</span>)')
-    giris = re.compile(r'(<section class="puan-intro"><h1>[^<]*</h1>)(?:<p class="statik-baglanti">.*?</p>)?(</section>)', re.S)
+    giris = re.compile(r'(<section class="puan-intro"><h1>[^<]*</h1>)(?:<p class="statik-baglanti">.*?</p>)*(</section>)', re.S)
     if not (govde.search(metin) and ozet.search(metin) and giris.search(metin)) or not secim:
         return None
     donem, satirlar, toplam = secim
     yeni = govde.sub(lambda m: m.group(1) + ''.join(puan_satiri(donem, r) for r in satirlar) + m.group(2), metin, count=1)
     yeni = ozet.sub(lambda m: m.group(1) + f'{esc(donem.replace("-", "/"))} dönemi: {tam(toplam)} kadro' + m.group(2), yeni, count=1)
-    baglanti = '<p class="statik-baglanti"><a href="../analiz/">Puan verilerinden analizler: değişim, il il karşılaştırma, kadro sıralaması →</a></p>'
+    baglanti = ('<p class="statik-baglanti"><a href="../kpss-taban-puanlari/">Dönem dönem bütün taban puanları →</a></p>'
+                '<p class="statik-baglanti"><a href="../analiz/">Puan verilerinden analizler: değişim, il il karşılaştırma, kadro sıralaması →</a></p>')
     return giris.sub(lambda m: m.group(1) + baglanti + m.group(2), yeni, count=1)
 
 

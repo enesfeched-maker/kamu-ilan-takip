@@ -435,7 +435,11 @@ def yaz(docs, base, ilanlar, simdi=None):
         hedef.parent.mkdir(parents=True, exist_ok=True)
         hedef.write_text(html, encoding='utf-8')
         adresler.append(canonical)
-    liste = ''.join(f'<li><a href="{esc(s["yol"])}">{esc(s["ad"])}</a> — {esc(s["ozet"])}</li>' for s in sayfalar if s.get('ozet'))
+    # her analizin öne çıkan ilk bulgusu da dizinde görünür: liste sayfası başlık sıralamasından ibaret kalmaz (SEO denetimi, 15 Kasım 2026)
+    def _ek_bulgular(s):   # özetle aynı olmayan ilk iki bulgu
+        return ''.join(f'<br><span class="muted">{esc(b)}</span>' for b in [b for b in s.get('bulgular') or [] if b != s['ozet']][:2])
+    liste = ''.join(f'<li><a href="{esc(s["yol"])}">{esc(s["ad"])}</a> — {esc(s["ozet"])}{_ek_bulgular(s)}</li>'
+                    for s in sayfalar if s.get('ozet'))
     giris = f'ÖSYM yerleştirme verilerinden ve sitenin derlediği ilanlardan hesaplanan {len(sayfalar)} analiz. Tüm sayılar veriden hesaplanır.'
     icerik = (_hero('../', '', 'Analizler', giris)
               + f'<main id="icerik" class="wrap kp-main"><section class="bolum"><div class="bolum-bas"><h2>Analizler</h2></div><ul>{liste}</ul>'

@@ -8,6 +8,7 @@ from pathlib import Path
 from eski_belgeler import isle as isle_eski_belgeler
 
 PATH = 'docs/ilanlar.json'
+ARSIV_PATH = 'denetim/kurum-arsivi.json'   # her sayfası olmuş kurumun adresi (bot/kurum_arsivi.py); yalnız büyür
 
 
 def merge_reminders(values, aliases):
@@ -128,7 +129,7 @@ def _uzak_json(yol):
         return {}
 
 
-def ek_dosyalari_birlestir():
+def ek_dosyalari_birlestir(state=None):
     """Gemini sonuçları (kayıt başına en yeni okuma) ve logo arşivi (kurum anahtarı birleşimi) uzak main ile birleştirilir;
     değişen yollar döner. 19 Ekim 2026: yapay zekâ adımı aynı tarama içinde çalışır, sonuçları bu commit'le kalıcı olur."""
     yollar = []
@@ -151,6 +152,16 @@ def ek_dosyalari_birlestir():
             birlesik = {**uzak, **yeni}   # eklenme sırası korunur
             manifest.write_text(json.dumps(birlesik, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
             yollar += [str(manifest)] + [f'{LOGO_DIR}/{v["dosya"]}' for v in yeni.values() if v.get('dosya')]
+    if state:   # kurum adresleri arşivi: kayıt silinse de kurum sayfasının adresi 404 vermesin (18 Kasım 2026)
+        try:
+            import kurum_arsivi
+            uzak = kurum_arsivi.birlestir(kurum_arsivi.coz(_uzak_json(ARSIV_PATH)))
+            birlesik = kurum_arsivi.birlestir(uzak, kurum_arsivi.oku(ARSIV_PATH), kurum_arsivi.ilanlardan(state.get('ilanlar') or []))
+            if birlesik != uzak:
+                kurum_arsivi.yaz(birlesik, ARSIV_PATH)
+                yollar.append(ARSIV_PATH)
+        except Exception as hata:   # arşiv tarama kaydını asla düşürmez
+            print(f'Uyarı: kurum arşivi güncellenemedi: {hata}')
     return yollar
 
 
@@ -163,7 +174,7 @@ def main():
         remote = json.loads(git('show', 'origin/main:'+PATH, capture=True).stdout)
         state = merge_registry(remote, state)
         write(state)
-        ekler = ek_dosyalari_birlestir()
+        ekler = ek_dosyalari_birlestir(state)
         if not commit_gerekli(remote, state) and not ekler:
             print('Yalnızca zaman damgaları değişti; commit atlanıyor.')
             return

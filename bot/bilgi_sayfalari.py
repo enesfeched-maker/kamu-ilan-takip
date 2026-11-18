@@ -67,6 +67,13 @@ SAYFALAR = {
 }
 
 
+# Arama sonucundaki başlık: tek kelimelik 'Hakkımızda — KPSS Tercihi' çok kısaydı (SEO denetimi, 15 Kasım 2026)
+ARAMA_BASLIGI = {
+    'hakkimizda': 'Hakkımızda: KPSS Tercihi Nedir, Kim Hazırlıyor?',
+    'iletisim': 'İletişim: Hatalı İlan Bildirimi ve Öneriler — KPSS Tercihi',
+}
+
+
 def _iletisim_bolumleri():
     bolumler = [('Telegram', 'Duyurular için kanalımız: @kpsstercihi')]
     if ILETISIM_EPOSTA:
@@ -105,7 +112,7 @@ def sayfa(ad, base):
     maddeler = ''.join(f'<section class="bolum"><h2>{su.esc(b[0])}</h2><p>{su.esc(b[1])}</p>{b[2] if len(b) > 2 else ""}</section>' for b in bolumler)
     maddeler += f'<p><a class="yazi-link" href="{ILETISIM}" target="_blank" rel="noopener">Telegram ↗</a></p>'
     maddeler += f'<p class="muted">Son güncelleme: {su.tarih_yazi(GUNCELLEME)}</p>'
-    html = (su.sayfa_basi(f'{baslik} — KPSS Tercihi', aciklama, su.esc(canonical), '../',
+    html = (su.sayfa_basi(ARAMA_BASLIGI.get(ad, f'{baslik} — KPSS Tercihi'), aciklama, su.esc(canonical), '../',
                           ek_head=f'<meta property="og:url" content="{su.esc(canonical)}">' + _sema(ad, base, canonical, baslik, aciklama))
             + f'<body class="kurum-page"><a class="skip" href="#icerik">İçeriğe geç</a>{su.ust_html("../")}'
             + '<section class="kp-hero"><div class="wrap"><nav class="crumbs" aria-label="Konum"><a href="../">Ana sayfa</a><span aria-hidden="true">/</span>'

@@ -45,7 +45,7 @@ class BaslikTests(unittest.TestCase):
                 'kurum': 'ADALET BAKANLIĞI', 'kadro': '150 İCRA MÜDÜR VE İCRA MÜDÜR YARDIMCISI ALACAK.', 'kaynak_turu': 'sbb',
                 'link': 'https://kamuilan.sbb.gov.tr/', 'son_tarih': None}
         html = detail_page(item, simdi=SIMDI)[1]
-        self.assertIn('<h1 id="dh-baslik">İcra Müdür ve İcra Müdür Yardımcısı</h1>', html)
+        self.assertIn('<h1 id="dh-baslik">İcra Müdür ve İcra Müdür Yardımcısı<span class="sr-only"> — ', html)
 
 
 class DonemTests(unittest.TestCase):
