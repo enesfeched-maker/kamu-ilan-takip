@@ -2,6 +2,7 @@
 import json
 import re
 import unittest
+from unittest import mock
 from datetime import date, datetime
 from pathlib import Path
 
@@ -147,6 +148,168 @@ class IsIlaniSemasiTesti(unittest.TestCase):
         self.assertEqual(_is_ilanlari(html), [])
         html = su.detail_page(self._ilan(son_tarih='2098-11-01'), kayit={'il': 'Van', 'iller': ['Van']}, simdi=simdi)[1]
         self.assertEqual(_is_ilanlari(html), [])
+
+
+class KurumArsiviTesti(unittest.TestCase):
+    def setUp(self):
+        import tempfile
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.kok = Path(self.tmp.name)
+
+    def test_birlestir_hicbir_kurumu_silmez_ve_ilanlari_tekillestirir(self):
+        import kurum_arsivi as ka
+        eski = {'a': {'ad': 'A', 'ilanlar': [['k1', 'Memur', '2026-01-01']]}, 'b': {'ad': 'B', 'ilanlar': []}}
+        yeni = {'a': {'ad': 'A Kurumu', 'ilanlar': [['k1', 'Memur', '2026-02-01'], ['k2', 'Hemşire', '2026-03-01']]}}
+        b = ka.birlestir(eski, yeni)
+        self.assertEqual(set(b), {'a', 'b'})
+        self.assertEqual(b['a']['ad'], 'A Kurumu')
+        self.assertEqual(b['a']['ilanlar'], [['k2', 'Hemşire', '2026-03-01'], ['k1', 'Memur', '2026-02-01']])
+        cok = {'x': {'ad': 'X', 'ilanlar': [[f'k{i:03d}', 'M', f'2026-01-{i % 28 + 1:02d}'] for i in range(100)]}}
+        self.assertEqual(len(ka.birlestir(cok)['x']['ilanlar']), ka.EN_COK_ILAN)
+
+    def test_yaz_oku_gidis_donus_ve_bozuk_dosya(self):
+        import kurum_arsivi as ka
+        yol = self.kok / 'denetim' / 'kurum-arsivi.json'
+        arsiv = {'b-kurumu': {'ad': 'B Kurumu', 'ilanlar': [['k', 'Zabıta Memuru', '2026-01-02']]}, 'a-kurumu': {'ad': 'A Kurumu', 'ilanlar': []}}
+        ka.yaz(arsiv, yol)
+        self.assertEqual(ka.oku(yol), arsiv)
+        self.assertLess(yol.read_text(encoding='utf-8').index('a-kurumu'), yol.read_text(encoding='utf-8').index('b-kurumu'))
+        yol.write_text('{bozuk', encoding='utf-8')
+        self.assertEqual(ka.oku(yol), {})
+        self.assertEqual(ka.coz({'kurumlar': {'../kotu': {'ad': 'X'}, 'iyi': {'ad': 'Y'}}}), {'iyi': {'ad': 'Y', 'ilanlar': []}})
+
+    def test_arsiv_sayfasi_noindex_reklamsiz_ve_kirintili(self):
+        import kurum_arsivi as ka
+        html = ka.arsiv_sayfasi('gazi-universitesi', 'Gazi Üniversitesi', [['k1', '3 Sürekli İşçi', '2026-11-20']])
+        self.assertIn('<meta name="robots" content="noindex,follow">', html)
+        self.assertNotIn('adsbygoogle', html)
+        self.assertIn('Bu kurumun şu an açık ilanı yok.', html)
+        self.assertIn('3 Sürekli İşçi', html)
+        self.assertIn('20 Kasım 2026', html)
+        self.assertIn('<a href="../">Tüm kurumlar →</a>', html)
+        self.assertIn('"@type":"BreadcrumbList"', html)
+        self.assertIn(su.BASE + 'kurum/gazi-universitesi/', html)
+
+    def test_site_uretimi_arsivdeki_eksik_adresi_yazar_haritaya_koymaz(self):
+        import kurum_arsivi as ka
+        import kurum_sayfasi as ks
+        docs = self.kok / 'docs'
+        (docs / 'puanlar').mkdir(parents=True)
+        yol = self.kok / 'denetim' / 'kurum-arsivi.json'
+        ka.yaz({'gazi-universitesi': {'ad': 'Gazi Üniversitesi', 'ilanlar': [['k1', '3 Sürekli İşçi', '2026-11-20']]}}, yol)
+        ilan = {'id': 'iskur-' + 'a' * 24, 'kurum': 'ÖRNEK BELEDİYE BAŞKANLIĞI', 'baslik': 'Örnek Belediyesi zabıta memuru alacak', 'kadro': '2 Zabıta Memuru',
+                'link': 'https://www.iskur.gov.tr/is-ilani/1', 'son_tarih': '2099-01-01', 'ilk_gorulme': '2098-12-01T10:00:00+03:00'}
+        with mock.patch.object(ks, 'kurum_dizinlenir', return_value=True):
+            gruplar, slugler, adresler, basarili = ks.kurum_sayfalarini_uret([ilan], docs, {}, datetime(2098, 12, 5, tzinfo=su.TR), None, yol)
+        arsiv_sayfa = docs / 'kurum' / 'gazi-universitesi' / 'index.html'
+        self.assertTrue(arsiv_sayfa.is_file())
+        self.assertIn('noindex', arsiv_sayfa.read_text(encoding='utf-8'))
+        self.assertNotIn(su.BASE + 'kurum/gazi-universitesi/', adresler)
+        self.assertNotIn('gazi-universitesi', (docs / 'kurum' / 'index.html').read_text(encoding='utf-8'))
+        sluglar = ka.oku(yol)
+        self.assertIn('gazi-universitesi', sluglar)
+        self.assertTrue(set(slugler.values()) <= set(sluglar))   # güncel kurumlar da arşive girdi
+        # kayıt silinse de (ilan listesi boş) adres yaşar
+        ks.kurum_sayfalarini_uret([], docs, {}, datetime(2098, 12, 5, tzinfo=su.TR), None, yol)
+        for slug in sluglar:
+            self.assertTrue((docs / 'kurum' / slug / 'index.html').is_file(), slug)
+
+    def test_depodaki_arsiv_gecerli_ve_elle_tohum_icinde(self):
+        import kurum_arsivi as ka
+        arsiv = ka.oku()
+        self.assertGreater(len(arsiv), 100)
+        for slug in ka.ELLE_TOHUM:
+            self.assertIn(slug, arsiv)
+        for slug, k in arsiv.items():
+            self.assertTrue(k['ad'], slug)
+
+
+class IlgiliSayfalarTesti(unittest.TestCase):
+    ILAN = {'id': 'iskur-' + 'b' * 24, 'kurum': 'ANKARA BÜYÜKŞEHİR BELEDİYE BAŞKANLIĞI', 'baslik': 'Ankara Büyükşehir Belediyesi zabıta memuru alacak', 'kadro': '5 Zabıta Memuru',
+            'ozet': 'Zabıta memuru alınacaktır.', 'link': 'https://www.iskur.gov.tr/is-ilani/9', 'son_tarih': '2099-01-01', 'ilk_gorulme': '2098-12-01T10:00:00+03:00'}
+    KAYIT = {'unvanlar': ['zabıta memuru'], 'il': 'Ankara', 'iller': ['Ankara']}
+
+    def harita(self, *yollar):
+        return {su.BASE + y for y in yollar}
+
+    def test_yalniz_haritada_olan_sayfalara_baglanir(self):
+        import ilgili_sayfalar as isf
+        gorsel = {'kurum_slug': 'ankara-buyuksehir-belediyesi'}
+        tam = self.harita('meslek/zabita-memuru/', 'il/ankara/', 'kurum/ankara-buyuksehir-belediyesi/')
+        bag = isf.baglantilar(self.ILAN, self.KAYIT, gorsel, KOK / 'docs', su.BASE, tam, 2098)
+        self.assertEqual(bag, [('../../meslek/zabita-memuru/', 'Zabıta Memuru alımı 2098'), ('../../il/ankara/', 'Ankara kamu ilanları'),
+                               ('../../kurum/ankara-buyuksehir-belediyesi/', 'Ankara Büyükşehir Belediye Başkanlığı ilanları')])
+        # kalkanla haritadan çıkan (noindex) sayfaya bağlanılmaz
+        self.assertEqual(isf.baglantilar(self.ILAN, self.KAYIT, gorsel, KOK / 'docs', su.BASE, self.harita('il/ankara/'), 2098), [('../../il/ankara/', 'Ankara kamu ilanları')])
+        self.assertEqual(isf.baglantilar(self.ILAN, self.KAYIT, gorsel, KOK / 'docs', su.BASE, set(), 2098), [])
+        self.assertEqual(isf.satir_html([]), '')
+
+    def test_eslesmeyen_unvana_meslek_baglantisi_yok(self):
+        import ilgili_sayfalar as isf
+        kayit = dict(self.KAYIT, unvanlar=['uzman yardımcısı'])
+        bag = isf.baglantilar(self.ILAN, kayit, {}, KOK / 'docs', su.BASE, self.harita('meslek/zabita-memuru/'), 2098)
+        self.assertEqual(bag, [])
+
+    def test_taban_puani_kadro_sayfasi_birebir_eslesmede(self):
+        import json as _json
+        import tempfile
+        import ilgili_sayfalar as isf
+        import puan_sayfalari as ps
+        with tempfile.TemporaryDirectory() as t:
+            docs = Path(t)
+            (docs / 'puanlar').mkdir()
+            satir = [{'kurum': 'X BELEDİYESİ', 'il': 'ANKARA', 'unvan': 'ZABITA MEMURU', 'kontenjan': 1, 'yerlesen': 1, 'min': 70.0 + i, 'max': 71.0 + i} for i in range(ps.MIN_SATIR + 1)]
+            (docs / 'puanlar' / 'lisans.json').write_text(_json.dumps({'donemler': {'2026-1': satir}}, ensure_ascii=False), encoding='utf-8')
+            item = dict(self.ILAN, ogrenim=['lisans'])
+            import ilan_taban
+            ilan_taban._veri.cache_clear()
+            es = ilan_taban.eslesmeler(item, docs)
+            self.assertTrue(es and es[0][3], es)
+            yol = f'{ps.KLASOR}/lisans/{es[0][3]}/'
+            bag = isf.baglantilar(item, self.KAYIT, {}, docs, su.BASE, self.harita(yol), 2098)
+            self.assertEqual(bag, [(f'../../{yol}', 'Zabıta Memuru taban puanları (Lisans)')])
+            ilan_taban._veri.cache_clear()
+
+    def test_satir_benzer_ilanlardan_once_ve_tek_sefer(self):
+        import ilgili_sayfalar as isf
+        satir = isf.satir_html([('../../il/ankara/', 'Ankara kamu ilanları')])
+        self.assertIn('<h2>İlgili sayfalar</h2><p><a class="yazi-link" href="../../il/ankara/">Ankara kamu ilanları</a></p>', satir)
+        sayfa = '<main><div class="d-ana"><section class="d-bolum">x</section><section class="benzer">b</section></div></main>'
+        yeni = isf.yerlestir(sayfa, satir)
+        self.assertLess(yeni.index('ilgili-sayfalar'), yeni.index('<section class="benzer">'))
+        self.assertEqual(isf.yerlestir(yeni, satir), yeni)
+        benzersiz = '<main><div class="d-ana">x</div></main>'
+        self.assertIn('ilgili-sayfalar', isf.yerlestir(benzersiz, satir))
+        self.assertEqual(isf.yerlestir('<p>yer yok</p>', satir), '<p>yer yok</p>')
+
+    def test_uygula_gercek_ilan_sayfasina_yazar(self):
+        import tempfile
+        import ilgili_sayfalar as isf
+        simdi = datetime(2098, 12, 5, tzinfo=su.TR)
+        with tempfile.TemporaryDirectory() as t:
+            docs = Path(t)
+            anahtar, html = su.detail_page(self.ILAN, {'kurum_slug': 'ankara-buyuksehir-belediyesi', 'kurum_sayisi': 1}, self.KAYIT, None, simdi)
+            (docs / 'ilan' / anahtar).mkdir(parents=True)
+            (docs / 'ilan' / anahtar / 'index.html').write_text(html, encoding='utf-8')
+            haritada = self.harita('meslek/zabita-memuru/', 'il/ankara/')
+            self.assertEqual(isf.uygula(docs, su.BASE, haritada, {anahtar: (self.ILAN, self.KAYIT, {})}, simdi), 1)
+            yeni = (docs / 'ilan' / anahtar / 'index.html').read_text(encoding='utf-8')
+            self.assertIn('href="../../meslek/zabita-memuru/">Zabıta Memuru alımı 2098</a>', yeni)
+            self.assertIn('href="../../il/ankara/">Ankara kamu ilanları</a>', yeni)
+            self.assertEqual(yeni.count('ilgili-sayfalar'), 1)
+            self.assertTrue(yeni.rstrip().endswith('</html>'))
+            self.assertEqual(isf.uygula(docs, su.BASE, haritada, {anahtar: (self.ILAN, self.KAYIT, {})}, simdi), 0)   # ikinci çalışma değişiklik yapmaz
+
+
+class KirintiTesti(unittest.TestCase):
+    def test_kurum_listesi_kirintisi(self):
+        import kurum_sayfasi as ks
+        _, html = ks.kurum_hub_sayfasi([('A Kurumu', 'a', 1, 2)])
+        veri = [json.loads(m) for m in re.findall(r'<script type="application/ld\+json">(.*?)</script>', html)]
+        kirinti = next(v for v in veri if v['@type'] == 'BreadcrumbList')
+        self.assertEqual([o['name'] for o in kirinti['itemListElement']], ['Ana sayfa', 'Kurumlar'])
+        self.assertEqual(kirinti['itemListElement'][1]['item'], su.BASE + 'kurum/')
 
 
 if __name__ == '__main__':

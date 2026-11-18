@@ -55,6 +55,9 @@ on:
       - 'bot/kopya.py'
       - 'bot/kosul_ayristir.py'
       - 'bot/kurum_zengin.py'
+      - 'bot/kurum_arsivi.py'
+      - 'bot/ilgili_sayfalar.py'
+      - 'denetim/kurum-arsivi.json'   # her sayfası olmuş kurumun adresi (404 vermesin)
       - 'bot/meslek_sayfalari.py'
       - 'bot/metin_onar.py'
       - 'bot/mudahale.py'

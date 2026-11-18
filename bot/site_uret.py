@@ -1369,7 +1369,7 @@ def main():
     kurum_adresleri = []
     try:
         import kurum_sayfasi
-        sonuc = kurum_sayfasi.kurum_sayfalarini_uret(data.get('ilanlar', []), docs, gorseller, datetime.now(TR), kopyalar)
+        sonuc = kurum_sayfasi.kurum_sayfalarini_uret(data.get('ilanlar', []), docs, gorseller, datetime.now(TR), kopyalar, ROOT / 'denetim' / 'kurum-arsivi.json')
         kurum_adresleri = sonuc[2]
         for anahtar, alan in kurum_sayfasi.kart_meta(data.get('ilanlar', []), sonuc[3], kopyalar).items():
             gorseller.setdefault(anahtar, {}).update(alan)
@@ -1387,6 +1387,7 @@ def main():
     kayit_haritasi = {k['key']: k for k in kayitlar + ((liste or {}).get('akademik') or [])}
     gorunen = [k for k in kayitlar if not k.get('kopya_of')]
     sayfa_anahtarlari, degisim, haritada_olmayan = set(), {}, set()
+    ilgili_bilgi = {}   # ilan anahtarı -> (kayıt, liste kaydı, görsel): 'İlgili sayfalar' satırı site haritası belli olunca eklenir
     for item in data.get('ilanlar', []):
         result = detail_page(item)
         if not result:
@@ -1424,6 +1425,7 @@ def main():
         folder.mkdir(parents=True, exist_ok=True)
         (folder / 'index.html').write_text(content, encoding='utf-8')
         sayfa_anahtarlari.add(key)
+        ilgili_bilgi[key] = (item, kayit, gorseller.get(key))
         if (sayfa_kopya or {}).get('rol') not in ('ikincil', 'duzeltme') and not dizinlenmez(item):   # kopya/düzeltme ve zayıf sayfa haritaya girmez
             urls.append(BASE + 'ilan/' + key + '/')
             degisim[urls[-1]] = max(str(item.get(a) or '')[:10] for a in ('ilk_gorulme', 'detay_guncelleme', 'guncelleme'))
@@ -1542,6 +1544,11 @@ def main():
         print(f'İnce sayfa kalkanı: {len(ince)} sayfa haritadan çıktı')
     except Exception as hata:
         print(f'Uyarı: ince sayfa kalkanı çalışmadı: {hata}')
+    try:   # ilan sayfalarından dizinlenen meslek / il / kurum / taban puanı sayfalarına tek satır bağlantı (ince sayfa kalkanından sonra: noindex sayfaya bağlanmaz)
+        import ilgili_sayfalar
+        print(f'İlgili sayfalar satırı: {ilgili_sayfalar.uygula(docs, BASE, set(urls), ilgili_bilgi, datetime.now(TR))} ilan sayfasına eklendi')
+    except Exception as hata:
+        print(f'Uyarı: ilgili sayfalar satırı eklenemedi: {hata}')
     try:   # dizinlenebilir forum sayfaları (yalnız FORUM_DIZINLE açıksa dolu); ince sayfa kalkanından sonra
         import forum_seo
         urls += forum_adresleri
