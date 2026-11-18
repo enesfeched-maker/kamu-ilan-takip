@@ -1,19 +1,21 @@
 name: Sosyal medya - hikâye ve kaydırmalı gönderi
 
-# Instagram hikâye (her gün son günü yaklaşanlar) ve kaydırmalı gönderi (çarşamba son gün, perşembe puan aralığı,
-# pazar haftanın kadro raporu). İçerik ve program bot/sosyal_gorsel.py'de; Reels akışından (sosyal.yml) ayrıdır.
+# Hikâye (her gün son günü yaklaşanlar) ve kaydırmalı gönderi (çarşamba son gün, perşembe puan aralığı, pazar haftanın
+# kadro raporu; saatte bir her yeni ilan). Instagram + Facebook sayfası + TikTok (yalnız karusel, Buffer).
+# İçerik ve program bot/sosyal_gorsel.py'de; Reels akışından (sosyal.yml) ayrıdır.
 on:
   schedule:
-    - cron: "0 8 * * *"     # ~11:00 TR (GitHub 5–15 dk gecikir)
+    - cron: "0 8 * * *"     # ~11:00 TR günlük program + yeni ilanlar (GitHub 5–15 dk gecikir)
+    - cron: "35 5-19 * * *" # ~08:35–22:35 TR saatte bir: yalnız yeni ilan karuselleri
   workflow_dispatch:
     inputs:
       tur:
         description: otomatik (bugünün programı) ya da tek tür
         type: choice
-        options: [otomatik, son-gun, kadro-raporu, puan-bandi]
+        options: [otomatik, yalniz-ilan, son-gun, kadro-raporu, puan-bandi]
         default: otomatik
       yayinla:
-        description: Instagram'a gönder (kapalıysa yalnız önizleme sürümü; geçmişe yazılmaz)
+        description: Instagram, Facebook ve TikTok'a gönder (kapalıysa yalnız önizleme sürümü; geçmişe yazılmaz)
         type: boolean
         default: false
 
@@ -40,7 +42,9 @@ jobs:
         id: uret
         run: |
           T="${{ inputs.tur }}"
-          if [ -n "$T" ] && [ "$T" != "otomatik" ]; then
+          if [ "${{ github.event.schedule }}" = "35 5-19 * * *" ] || [ "$T" = "yalniz-ilan" ]; then
+            python bot/sosyal_gorsel.py uret --cikti gorsel-cikti --yalniz-ilan
+          elif [ -n "$T" ] && [ "$T" != "otomatik" ]; then
             python bot/sosyal_gorsel.py uret --cikti gorsel-cikti --tur "$T"
           else
             python bot/sosyal_gorsel.py uret --cikti gorsel-cikti
@@ -56,14 +60,19 @@ jobs:
           python -c "import json;d=json.load(open('gorsel-cikti/is.json',encoding='utf-8'));open('notlar.md','w',encoding='utf-8').write('\n\n---\n\n'.join(i['tur']+' / '+i['bicim']+('\n\n'+i['aciklama'] if i.get('aciklama') else '') for i in d['isler']))"
           DOSYALAR=$(python -c "import json;d=json.load(open('gorsel-cikti/is.json',encoding='utf-8'));print(' '.join('gorsel-cikti/'+f for i in d['isler'] for f in i['dosyalar']))")
           gh release create "$ETIKET" $DOSYALAR gorsel-cikti/is.json --title "$ETIKET" --notes-file notlar.md --prerelease
-          # en yeni 14 görsel sürümü saklanır (Reels sürümleri "sosyal-" ile başlar, onlara dokunulmaz)
-          gh release list --limit 200 --json tagName -q '.[].tagName' | grep '^gorsel-' | sort -r | tail -n +15 \
+          # en yeni 40 görsel sürümü saklanır (Reels sürümleri "sosyal-" ile başlar, onlara dokunulmaz)
+          gh release list --limit 200 --json tagName -q '.[].tagName' | grep '^gorsel-' | sort -r | tail -n +41 \
             | xargs -r -n1 gh release delete --yes --cleanup-tag
-      - name: Instagram'da yayınla
+      - name: Instagram, Facebook ve TikTok'ta yayınla
         if: steps.uret.outputs.is != '0' && (github.event_name == 'schedule' || inputs.yayinla)
         env:
           IG_KULLANICI_ID: ${{ secrets.IG_KULLANICI_ID }}
           IG_ERISIM_ANAHTARI: ${{ secrets.IG_ERISIM_ANAHTARI }}
+          FB_SAYFA_ID: ${{ vars.FB_SAYFA_ID }}
+          FB_ERISIM_ANAHTARI: ${{ secrets.FB_ERISIM_ANAHTARI }}
+          BUFFER_API_ANAHTARI: ${{ secrets.BUFFER_API_ANAHTARI }}
+          BUFFER_TIKTOK_KANAL: ${{ vars.BUFFER_TIKTOK_KANAL }}
+          SOSYAL_KAPALI: ${{ vars.SOSYAL_KAPALI }}
         run: python bot/sosyal_gorsel.py yayinla --cikti gorsel-cikti --taban "https://github.com/${{ github.repository }}/releases/download/${{ steps.v.outputs.etiket }}"
       - name: Paylaşım geçmişini kaydet
         if: always() && steps.uret.outputs.is != '0' && (github.event_name == 'schedule' || inputs.yayinla)

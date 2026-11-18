@@ -8,7 +8,16 @@ Program (Türkiye saatiyle, günde bir çalışma ~11:00):
   çarşamba     son-gun      karusel
   perşembe     puan-bandi   hikâye + karusel (puan aralığı haftaya göre döner; verisi olmayan aralık atlanır)
   pazar        kadro-raporu hikâye + karusel (son 7 günün yeni ilanları)
+  saatte bir   ilan         karusel: son 48 saatte eklenen her açık ilan için bir gönderi (çalışma başına en çok
+                            ILAN_CALISMA; akademik, kurum içi ve iptal ilanlar paylaşılmaz; aynı ilan bir kez)
 Verisi yetmeyen tür o gün paylaşılmaz. Aynı gün aynı tür+biçim iki kez paylaşılmaz.
+
+Platformlar (SOSYAL_KAPALI=facebook,tiktok ile kapatılabilir; biri hata verirse diğerleri yine denenir):
+  Instagram  hikâye + karusel (Instagram Login API)
+  Facebook   hikâye (sayfa video_stories) + karusel (çok fotoğraflı sayfa gönderisi: photos published=false + feed)
+  TikTok     yalnız karusel, Buffer üzerinden fotoğraf gönderisi (TikTok'un hikâye API'si yok). Buffer ücretsiz planında
+             kanal başına 30 günde 1000 istek var; Reels ve panel de aynı kotayı kullandığı için TikTok'a günde en çok
+             TT_GUNLUK karusel gider (önce günlük türler, sonra en kalabalık alımlı ilanlar).
 
 Instagram Login API: hikâye = media_type STORIES + video_url; karusel = her slayt için image_url (JPEG zorunlu) +
 is_carousel_item, sonra media_type CAROUSEL + children + caption. Dosyalar önizleme sürümünden (GitHub Release) çekilir.
@@ -27,17 +36,25 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 GECMIS_YOLU = ROOT / 'sosyal' / 'gorsel-gecmis.json'
 TURLER = ('son-gun', 'kadro-raporu', 'puan-bandi')
-PALET = {'kadro-raporu': 'kagit', 'son-gun': 'bordo', 'puan-bandi': 'kagit'}
+PALET = {'kadro-raporu': 'kagit', 'son-gun': 'bordo', 'puan-bandi': 'kagit', 'ilan': 'kagit'}
+ILAN_TAZE_SAAT = 48      # ilan karuseli: ilanın siteye en çok kaç saat önce eklenmiş olabileceği
+ILAN_CALISMA = 3         # bir çalışmada en çok kaç ilan karuseli (saatlik çalışmalarla gün boyuna yayılır)
+TT_GUNLUK = 5            # TikTok'a günde en çok kaç karusel (Buffer kotası)
+PLATFORMLAR = ('instagram', 'facebook', 'tiktok')
+SITE = 'https://kpsstercihi.com'
 # Perşembe puan aralığı haftaya göre döner (ISO hafta numarası); verisi olmayan aralık atlanıp sıradaki denenir.
 PUAN_ARALIKLARI = (('lisans', 70, 75), ('onlisans', 70, 75), ('lisans', 75, 80), ('ortaogretim', 70, 75),
                    ('lisans', 65, 70), ('onlisans', 75, 80), ('lisans', 80, 85), ('ortaogretim', 75, 80))
-ETIKETLER = {'son-gun': ['#songün', '#kpss', '#kamuilanları', '#memuralımı'],
+ETIKETLER = {'ilan': ['#kpss', '#kamuilanları', '#yeniilan', '#memuralımı', '#işilanı'],
+             'son-gun': ['#songün', '#kpss', '#kamuilanları', '#memuralımı'],
              'kadro-raporu': ['#kpss', '#kamuilanları', '#kadro', '#haftanınözeti', '#memuralımı'],
              'puan-bandi': ['#kpss', '#tabanpuan', '#kpsstercih', '#atama']}
-TELEGRAM = {'son-gun': 'Yeni ilanlar ve son gün hatırlatmaları Telegram kanalımızda: @kpsstercihi (bağlantı profilde) 💛',
+TELEGRAM = {'ilan': 'Her yeni ilan ilk önce Telegram kanalımızda: @kpsstercihi (bağlantı profilde) 💛',
+            'son-gun': 'Yeni ilanlar ve son gün hatırlatmaları Telegram kanalımızda: @kpsstercihi (bağlantı profilde) 💛',
             'kadro-raporu': 'Her pazar haftanın özeti ve yeni ilanlar Telegram kanalımızda: @kpsstercihi (bağlantı profilde) 💛',
             'puan-bandi': 'Bütün taban puanları ve tercih robotu kpsstercihi.com\'da; yeni ilanlar Telegram\'da: @kpsstercihi 💛'}
-SORULAR = {'son-gun': 'Başvurunu yaptın mı, yoksa son güne mi bıraktın? 👇',
+SORULAR = {'ilan': 'Bu ilan sana uygun mu? Başvuracak birini etiketle 👇',
+           'son-gun': 'Başvurunu yaptın mı, yoksa son güne mi bıraktın? 👇',
            'kadro-raporu': 'Bu hafta senin için bir ilan çıktı mı? 👇',
            'puan-bandi': 'Senin puanın bu aralıkta mı? 👇'}
 JPEG_KALITE = 92
@@ -66,8 +83,22 @@ def gecmis_oku(yol=GECMIS_YOLU):
 
 def bugun_yapildi(gecmis, tur, bicim, simdi):
     gun = simdi.date().isoformat()
-    return any(g.get('tur') == tur and g.get('bicim') == bicim and str(g.get('zaman', ''))[:10] == gun and g.get('ig_id')
+    return any(g.get('tur') == tur and g.get('bicim') == bicim and str(g.get('zaman', ''))[:10] == gun and _yayinda(g)
                for g in gecmis)
+
+
+def _yayinda(g):
+    return any(g.get(f'{p}_id') for p in ('ig', 'fb', 'tt'))
+
+
+def ilan_adaylari(acik, simdi, gecmis, en_cok=ILAN_CALISMA):
+    """Karuseli yapılacak ilanlar: son ILAN_TAZE_SAAT saatte eklenmiş, daha önce karuseli paylaşılmamış; önce eskiler."""
+    from sosyal_motor import _zaman
+    yapilan = {g.get('ilan_id') for g in gecmis if g.get('tur') == 'ilan' and _yayinda(g)}
+    sinir = simdi - timedelta(hours=ILAN_TAZE_SAAT)
+    adaylar = [i for i in acik if i.get('id') and i['id'] not in yapilan and (_zaman(i.get('ilk_gorulme')) or sinir) > sinir]
+    adaylar.sort(key=lambda i: (_zaman(i.get('ilk_gorulme')), i['id']))
+    return adaylar[:en_cok]
 
 
 def puan_araliklari(simdi):
@@ -104,7 +135,15 @@ def _kurum(s):
 
 def aciklama(tur, veri):
     """Karusel açıklaması: ilk satır sayılı kanca, kısa liste, tek soru, Telegram satırı, en çok 5 etiket."""
-    if tur == 'son-gun':
+    if tur == 'ilan':
+        satirlar = [f'• {_sayi(n)} {ad}' if n else f'• {ad}' for ad, n in veri['kadrolar'][:6]]
+        kanca = (f'📢 {_kurum(veri["kurum"])} {_sayi(veri["toplam"])} personel alacak:' if veri['toplam']
+                 else f'📢 {_kurum(veri["kurum"])} personel alımı ilanı yayımladı:')
+        if veri.get('bitis'):
+            satirlar.append(f'\n🗓 Son başvuru: {_tarih(veri["bitis"])}')
+        if veri.get('adres'):
+            satirlar.append(f'Şartların tamamı ve başvuru bağlantısı: {veri["adres"]}')
+    elif tur == 'son-gun':
         satirlar = []
         for gun, ilanlar in veri['gunler'][:4]:
             adlar = ', '.join(f'{ad} ({_sayi(n)})' if n else ad for ad, n in ilanlar[:3])
@@ -158,8 +197,39 @@ def tur_uret(tur, simdi, klasor, acik, docs, logo):
     return veri
 
 
-def uret(cikti, simdi=None, turler=None, gecmis_yolu=GECMIS_YOLU, docs=ROOT / 'docs'):
-    """Bugünün planındaki işleri üretir; cikti/is.json: [{tür, biçim, dosyalar, açıklama}]. İş yoksa boş liste."""
+def _karusel_dosyalari(kaynak, cikti, onek):
+    dosyalar = []
+    for jpg in sorted(Path(kaynak).glob('karusel-*.jpg'))[:10]:   # Instagram karuseli en çok 10 öğe
+        ad = f'{onek}-{jpg.name}'
+        (cikti / ad).write_bytes(jpg.read_bytes())
+        dosyalar.append(ad)
+    return dosyalar
+
+
+def ilan_uret(ilan, simdi, klasor, logo):
+    """Tek ilanın karusel slaytları (JPEG) ve açıklama verisi; kadro yoksa None."""
+    import reels
+    import sosyal_ornek as so
+    from ilan_baglanti import ilan_sayfasi
+    reels.palet_sec(PALET['ilan'])
+    sonuc = so.ilan_karuseli(ilan, simdi, logo)
+    if not sonuc:
+        return None
+    slaytlar, veri = sonuc
+    klasor = Path(klasor)
+    klasor.mkdir(parents=True, exist_ok=True)
+    for n, im in enumerate(slaytlar, 1):
+        im.convert('RGB').save(klasor / f'karusel-{n:02d}.jpg', 'JPEG', quality=JPEG_KALITE, optimize=True)
+    try:
+        veri['adres'] = ilan_sayfasi(ilan, SITE)
+    except ValueError:
+        veri['adres'] = SITE
+    return veri
+
+
+def uret(cikti, simdi=None, turler=None, gecmis_yolu=GECMIS_YOLU, docs=ROOT / 'docs', ilan_sayisi=ILAN_CALISMA):
+    """Bugünün planındaki işleri (turler=[] ise hiçbiri) ve yeni ilan karuselerini (en çok ilan_sayisi) üretir.
+    cikti/is.json: [{tür, biçim, dosyalar, açıklama, ilan_id?, kadro?}]. İş yoksa boş liste."""
     import sosyal_motor as sm
     from kurum_gorseli import kurum_logosu
     from site_uret import TR
@@ -168,15 +238,20 @@ def uret(cikti, simdi=None, turler=None, gecmis_yolu=GECMIS_YOLU, docs=ROOT / 'd
     cikti.mkdir(parents=True, exist_ok=True)
     gecmis = gecmis_oku(gecmis_yolu)
     isler, acik = [], None
-    for tur, bicimler in (turler or plan(simdi)):
+
+    def acik_al():
+        nonlocal acik
+        if acik is None:
+            acik = sm.acik_ilanlar(sm.ilanlari_yukle(docs), simdi)
+        return acik
+
+    for tur, bicimler in (plan(simdi) if turler is None else turler):
         bicimler = [b for b in bicimler if not bugun_yapildi(gecmis, tur, b, simdi)]
         if not bicimler:
             print(f'{tur}: bugün zaten paylaşıldı.')
             continue
-        if acik is None and tur != 'puan-bandi':
-            acik = sm.acik_ilanlar(sm.ilanlari_yukle(docs), simdi)
         try:
-            veri = tur_uret(tur, simdi, cikti / tur, acik or [], docs, kurum_logosu)
+            veri = tur_uret(tur, simdi, cikti / tur, [] if tur == 'puan-bandi' else acik_al(), docs, kurum_logosu)
         except Exception as hata:   # bir türün hatası diğerlerini durdurmaz
             print(f'::warning::{tur} üretilemedi: {hata}')
             continue
@@ -189,14 +264,26 @@ def uret(cikti, simdi=None, turler=None, gecmis_yolu=GECMIS_YOLU, docs=ROOT / 'd
                 (cikti / dosyalar[0]).write_bytes((cikti / tur / 'hikaye.mp4').read_bytes())
                 isler.append({'tur': tur, 'bicim': 'hikaye', 'dosyalar': dosyalar})
             else:
-                dosyalar = []
-                for jpg in sorted((cikti / tur).glob('karusel-*.jpg'))[:10]:   # Instagram karuseli en çok 10 öğe
-                    ad = f'{tur}-{jpg.name}'
-                    (cikti / ad).write_bytes(jpg.read_bytes())
-                    dosyalar.append(ad)
+                dosyalar = _karusel_dosyalari(cikti / tur, cikti, tur)
                 if len(dosyalar) >= 2:
                     isler.append({'tur': tur, 'bicim': 'karusel', 'dosyalar': dosyalar, 'aciklama': aciklama(tur, veri)})
         print(f'{tur}: {", ".join(bicimler)} hazır ({veri["hikaye_kare"]} hikâye karesi, {veri["karusel_slayt"]} slayt)')
+
+    if ilan_sayisi:
+        for ilan in ilan_adaylari(acik_al(), simdi, gecmis, ilan_sayisi):
+            onek = 'ilan-' + ''.join(c if c.isalnum() else '-' for c in ilan['id'])[:40]
+            try:
+                veri = ilan_uret(ilan, simdi, cikti / onek, kurum_logosu)
+            except Exception as hata:
+                print(f'::warning::{ilan["id"]} karuseli üretilemedi: {hata}')
+                continue
+            if not veri:
+                continue
+            dosyalar = _karusel_dosyalari(cikti / onek, cikti, onek)
+            if len(dosyalar) >= 2:
+                isler.append({'tur': 'ilan', 'bicim': 'karusel', 'dosyalar': dosyalar, 'aciklama': aciklama('ilan', veri),
+                              'ilan_id': ilan['id'], 'kadro': veri['toplam'] or 0})
+                print(f'ilan: {ilan["id"]} karuseli hazır ({len(dosyalar)} slayt)')
     (cikti / 'is.json').write_text(json.dumps({'zaman': simdi.isoformat(timespec='seconds'), 'isler': isler},
                                               ensure_ascii=False, indent=1), encoding='utf-8')
     return isler
@@ -255,46 +342,170 @@ def instagram_karusel(resim_urller, metin, ortam=None, aralik=5):
     return {'id': yayin.get('id')}
 
 
-def yayinla(cikti, taban_url, ortam=None, aralik=5):
-    """is.json'daki işleri Instagram'da yayınlar; sonuc.json: [{tür, biçim, id | hata}]. Bir işin hatası diğerini durdurmaz."""
+# ---------------------------------------------------------------- Facebook sayfası
+def _facebook_ortam():
+    """(taban, sayfa, başlıklar) ya da anahtar yoksa None. Anahtarın seçili sayfaya ait olduğu her çalışmada doğrulanır."""
+    from sosyal_yayinla import FB_SURUM, YayinHatasi, _env, _facebook_istek
+    ortam = _env('FB_SAYFA_ID', 'FB_ERISIM_ANAHTARI')
+    if not ortam:
+        return None
+    sayfa, anahtar = ortam
+    if not sayfa.isdigit():
+        raise YayinHatasi('FB_SAYFA_ID sayısal olmalı')
+    taban, basliklar = f'https://graph.facebook.com/{FB_SURUM}', {'Authorization': f'Bearer {anahtar}'}
+    if str(_facebook_istek(f'{taban}/me?fields=id', basliklar=basliklar).get('id')) != sayfa:
+        raise YayinHatasi('Facebook anahtarı seçilen sayfaya ait değil; yayın durduruldu')
+    return taban, sayfa, basliklar
+
+
+def facebook_hikaye(video_url, fb):
+    """Sayfa hikâyesi: video_stories start → rupload (file_url) → finish."""
+    from sosyal_yayinla import YayinHatasi, _facebook_istek
+    taban, sayfa, b = fb
+    bas = _facebook_istek(f'{taban}/{sayfa}/video_stories', veri={'upload_phase': 'start'}, basliklar=b)
+    video_id, yukle = bas.get('video_id'), bas.get('upload_url')
+    if not video_id or not yukle or urllib.parse.urlsplit(yukle).netloc != 'rupload.facebook.com':
+        raise YayinHatasi('Facebook hikâye yükleme oturumu açılamadı')
+    tamam = _facebook_istek(yukle, yontem='POST', zaman_asimi=600,
+                            basliklar={'Authorization': b['Authorization'].replace('Bearer', 'OAuth'), 'file_url': video_url})
+    if not tamam.get('success'):
+        raise YayinHatasi('Facebook hikâye videosunu kabul etmedi')
+    son = _facebook_istek(f'{taban}/{sayfa}/video_stories', veri={'upload_phase': 'finish', 'video_id': video_id}, basliklar=b)
+    if not son.get('success'):
+        raise YayinHatasi('Facebook hikâyeyi yayınlamadı')
+    return {'id': str(son.get('post_id') or video_id)}
+
+
+def facebook_karusel(resim_urller, metin, fb):
+    """Çok fotoğraflı sayfa gönderisi: her görsel yayınlanmadan yüklenir, sonra tek gönderide birleştirilir."""
+    from sosyal_yayinla import YayinHatasi, _facebook_istek
+    taban, sayfa, b = fb
+    veri = {'message': metin, 'published': 'true'}
+    for n, url in enumerate(resim_urller):
+        foto = _facebook_istek(f'{taban}/{sayfa}/photos', veri={'url': url, 'published': 'false'}, basliklar=b, zaman_asimi=300)
+        if not foto.get('id'):
+            raise YayinHatasi('Facebook görseli yüklenemedi')
+        veri[f'attached_media[{n}]'] = json.dumps({'media_fbid': foto['id']})
+    yayin = _facebook_istek(f'{taban}/{sayfa}/feed', veri=veri, basliklar=b)
+    if not yayin.get('id'):
+        raise YayinHatasi('Facebook gönderiyi yayınlamadı')
+    return {'id': yayin['id']}
+
+
+# ---------------------------------------------------------------- TikTok (Buffer fotoğraf gönderisi)
+def tiktok_karusel(resim_urller, metin, baslik=''):
+    """Buffer ile TikTok fotoğraf (kaydırmalı) gönderisi; anahtar yoksa None. Kota için durum ayrıca sorulmaz."""
+    import os
+    from sosyal_yayinla import YayinHatasi, _buffer, buffer_kanal
+    anahtar = os.environ.get('BUFFER_API_ANAHTARI', '').strip()
+    if not anahtar:
+        return None
+    kanal = buffer_kanal(anahtar)
+    gorseller = ' '.join('{ image: { url: %s } }' % json.dumps(u) for u in resim_urller[:35])
+    meta = ' metadata: { tiktok: { title: %s } }' % json.dumps(baslik[:90], ensure_ascii=False) if baslik else ''
+    sorgu = ('mutation { createPost(input: { text: %s channelId: %s schedulingType: automatic mode: shareNow '
+             'assets: [%s]%s }) { ... on PostActionSuccess { post { id status } } ... on MutationError { message } } }'
+             % (json.dumps(metin[:2200], ensure_ascii=False), json.dumps(kanal), gorseller, meta))
+    yanit = _buffer(sorgu, anahtar).get('createPost') or {}
+    gonderi = yanit.get('post') or {}
+    if not gonderi.get('id'):
+        raise YayinHatasi(f"Buffer TikTok gönderisini kabul etmedi: {str(yanit.get('message'))[:200]}")
+    return {'id': gonderi['id']}
+
+
+# ---------------------------------------------------------------- yayın
+def _kapali():
+    import os
+    return {p.strip().lower() for p in os.environ.get('SOSYAL_KAPALI', '').split(',') if p.strip()}
+
+
+def _tiktok_bugun(gecmis_yolu, simdi):
+    gun = simdi.date().isoformat()
+    return sum(1 for g in gecmis_oku(gecmis_yolu) if g.get('tt_id') and str(g.get('zaman', ''))[:10] == gun)
+
+
+def _baslik(i):
+    return {'son-gun': 'Son günü yaklaşan kamu ilanları', 'kadro-raporu': 'Haftanın kadro raporu',
+            'puan-bandi': 'Bu puanla nereye atanıldı?'}.get(i['tur']) or (i.get('aciklama') or '').split('\n')[0][2:]
+
+
+def yayinla(cikti, taban_url, ortam=None, aralik=5, gecmis_yolu=GECMIS_YOLU, simdi=None):
+    """is.json'daki işleri Instagram, Facebook ve TikTok'ta yayınlar.
+    sonuc.json: [{tür, biçim, ilan_id?, instagram|facebook|tiktok: {id}|{hata}}]. Bir hata diğerlerini durdurmaz."""
     from sosyal_yayinla import YayinHatasi
+    from site_uret import TR
+    simdi = simdi or datetime.now(TR)
     cikti = Path(cikti)
     isler = json.loads((cikti / 'is.json').read_text(encoding='utf-8')).get('isler') or []
     taban_url = taban_url.rstrip('/')
-    sonuc = []
-    for i in isler:
-        adresler = [f'{taban_url}/{urllib.parse.quote(d)}' for d in i['dosyalar']]
+    kapali = _kapali()
+    fb = None
+    if 'facebook' not in kapali:
         try:
-            if i['bicim'] == 'hikaye':
-                r = instagram_hikaye(adresler[0], ortam, aralik)
-            else:
-                r = instagram_karusel(adresler, i['aciklama'], ortam, aralik)
+            fb = _facebook_ortam()
+        except Exception as hata:
+            fb = hata
+    # TikTok günlük sınırı: önce günlük türler, sonra en kalabalık alımlı ilanlar
+    tt_hak = max(0, TT_GUNLUK - _tiktok_bugun(gecmis_yolu, simdi)) if 'tiktok' not in kapali else 0
+    tt_sira = sorted((n for n, i in enumerate(isler) if i['bicim'] == 'karusel'),
+                     key=lambda n: (isler[n]['tur'] == 'ilan', -(isler[n].get('kadro') or 0), n))
+    tt_izin = set(tt_sira[:tt_hak])
+    sonuc = []
+    for n, i in enumerate(isler):
+        adresler = [f'{taban_url}/{urllib.parse.quote(d)}' for d in i['dosyalar']]
+        kayit = {'tur': i['tur'], 'bicim': i['bicim']}
+        if i.get('ilan_id'):
+            kayit['ilan_id'] = i['ilan_id']
+        hikaye = i['bicim'] == 'hikaye'
+
+        def calistir(ad):
+            if ad == 'instagram':
+                return instagram_hikaye(adresler[0], ortam, aralik) if hikaye else instagram_karusel(adresler, i['aciklama'], ortam, aralik)
+            if ad == 'facebook':
+                if isinstance(fb, Exception):
+                    raise fb
+                return facebook_hikaye(adresler[0], fb) if hikaye else facebook_karusel(adresler, i['aciklama'], fb)
+            return tiktok_karusel(adresler, i['aciklama'], _baslik(i))
+        platformlar = [p for p, acik in (('instagram', 'instagram' not in kapali), ('facebook', fb is not None),
+                                         ('tiktok', n in tt_izin)) if acik]
+        for ad in platformlar:
+            try:
+                r = calistir(ad)
+            except (YayinHatasi, OSError, ValueError) as hata:
+                kayit[ad] = {'hata': str(hata)[:300]}
+                print(f'::warning::{ad} {i["bicim"]} ({i["tur"]}) yayınlanamadı: {str(hata)[:300]}')
+                continue
             if r is None:
-                sonuc.append(dict(tur=i['tur'], bicim=i['bicim'], hata='Instagram anahtarı yok'))
-                print('Instagram anahtarı yok; yayın atlandı.')
-                break
-            sonuc.append(dict(tur=i['tur'], bicim=i['bicim'], id=r.get('id')))
-            print(f'Instagram {i["bicim"]} yayında: {i["tur"]} ({r.get("id")})')
-        except (YayinHatasi, OSError) as hata:
-            sonuc.append(dict(tur=i['tur'], bicim=i['bicim'], hata=str(hata)[:300]))
-            print(f'::warning::Instagram {i["bicim"]} ({i["tur"]}) yayınlanamadı: {str(hata)[:300]}')
+                continue   # anahtar tanımlı değil
+            kayit[ad] = {'id': r.get('id')}
+            print(f'{ad} {i["bicim"]} yayında: {i["tur"]} {i.get("ilan_id") or ""} ({r.get("id")})')
+        sonuc.append(kayit)
     (cikti / 'sonuc.json').write_text(json.dumps(sonuc, ensure_ascii=False, indent=1), encoding='utf-8')
     return sonuc
 
 
-def kaydet(cikti, gecmis_yolu=GECMIS_YOLU, en_cok=400):
-    """Başarılı paylaşımları sosyal/gorsel-gecmis.json'a ekler (yalnız büyür; en yeni en_cok kayıt). Eklenen sayı döner."""
+def _idler(s):
+    return {kisa + '_id': (s.get(ad) or {}).get('id') for ad, kisa in (('instagram', 'ig'), ('facebook', 'fb'), ('tiktok', 'tt'))
+            if (s.get(ad) or {}).get('id')}
+
+
+def kaydet(cikti, gecmis_yolu=GECMIS_YOLU, en_cok=1500):
+    """En az bir platformda yayınlanan işleri sosyal/gorsel-gecmis.json'a ekler (en yeni en_cok kayıt). Eklenen sayı döner."""
     cikti = Path(cikti)
     try:
         zaman = json.loads((cikti / 'is.json').read_text(encoding='utf-8'))['zaman']
         sonuc = json.loads((cikti / 'sonuc.json').read_text(encoding='utf-8'))
     except (OSError, ValueError, KeyError):
         return 0
-    gecmis = gecmis_oku(gecmis_yolu)
-    yeni = [{'zaman': zaman, 'tur': s['tur'], 'bicim': s['bicim'], 'ig_id': s['id']} for s in sonuc if s.get('id')]
+    yeni = []
+    for s in sonuc:
+        idler = _idler(s)
+        if idler:
+            yeni.append(dict({'zaman': zaman, 'tur': s['tur'], 'bicim': s['bicim']},
+                             **({'ilan_id': s['ilan_id']} if s.get('ilan_id') else {}), **idler))
     if not yeni:
         return 0
-    gecmis = (gecmis + yeni)[-en_cok:]
+    gecmis = (gecmis_oku(gecmis_yolu) + yeni)[-en_cok:]
     Path(gecmis_yolu).write_text(json.dumps(gecmis, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
     return len(yeni)
 
@@ -305,17 +516,19 @@ def main(argv=None):
     p.add_argument('--cikti', default='gorsel-cikti')
     p.add_argument('--tur', choices=TURLER)
     p.add_argument('--bicim', choices=('hikaye', 'karusel'), action='append')
+    p.add_argument('--yalniz-ilan', action='store_true', help='günlük programı atla, yalnız yeni ilan karuselleri')
+    p.add_argument('--ilan', type=int, default=ILAN_CALISMA, help='en çok kaç ilan karuseli (0: hiç)')
     p.add_argument('--taban')
     a = p.parse_args(argv)
     if a.islem == 'uret':
-        turler = [(a.tur, a.bicim or ['hikaye', 'karusel'])] if a.tur else None
-        isler = uret(a.cikti, turler=turler)
+        turler = [] if a.yalniz_ilan else [(a.tur, a.bicim or ['hikaye', 'karusel'])] if a.tur else None
+        isler = uret(a.cikti, turler=turler, ilan_sayisi=0 if a.tur else a.ilan)
         print(f'{len(isler)} iş hazır.')
     elif a.islem == 'yayinla':
         if not a.taban:
             sys.exit('--taban gerekli')
         sonuc = yayinla(a.cikti, a.taban)
-        if sonuc and all(s.get('hata') for s in sonuc):
+        if sonuc and not any(_idler(s) for s in sonuc):
             sys.exit('Hiçbir paylaşım yayınlanamadı.')
     else:
         print(f'{kaydet(a.cikti)} paylaşım geçmişe yazıldı.')

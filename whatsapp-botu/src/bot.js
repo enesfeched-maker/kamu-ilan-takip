@@ -113,10 +113,15 @@ const client = new wweb.Client({
     path.join(process.env.LOCALAPPDATA, 'BraveSoftware/Brave-Browser/Application/brave.exe')},
   webVersionCache: {type: 'local', path: path.join(VERI, 'web-onbellek')}
 });
-client.on('qr', async kod => { qr = await QRCode.toDataURL(kod); durumAdi = 'QR okutulması bekleniyor'; });
-client.on('authenticated', () => { qr = ''; durumAdi = 'Oturum açıldı, kanal yükleniyor'; });
-client.on('auth_failure', () => { hazir = false; durumAdi = 'Oturum doğrulanamadı'; });
-client.on('disconnected', () => { hazir = false; durumAdi = 'Bağlantı kesildi'; process.exitCode = 1; setTimeout(() => process.exit(1), 2000); });
+// Oturum düşerse günlüğe bir kez yazılır; tepsi paneli /durum'daki QR'ı görüp kırmızı yanar (QR'ın kendisi yazılmaz).
+let qrYazildi = false;
+client.on('qr', async kod => {
+  qr = await QRCode.toDataURL(kod); durumAdi = 'QR okutulması bekleniyor'; hazir = false;
+  if (!qrYazildi) { qrYazildi = true; bilgi('Oturum yok ya da düştü: panelden (127.0.0.1:8789) QR okutulması bekleniyor'); }
+});
+client.on('authenticated', () => { qr = ''; qrYazildi = false; durumAdi = 'Oturum açıldı, kanal yükleniyor'; bilgi('Oturum açıldı'); });
+client.on('auth_failure', () => { hazir = false; durumAdi = 'Oturum doğrulanamadı'; bilgi('Oturum doğrulanamadı'); });
+client.on('disconnected', neden => { bilgi('Bağlantı kesildi: ' + String(neden).slice(0, 80)); hazir = false; durumAdi = 'Bağlantı kesildi'; process.exitCode = 1; setTimeout(() => process.exit(1), 2000); });
 client.on('ready', async () => {
   try {
     const kanallar = await client.getChannels();

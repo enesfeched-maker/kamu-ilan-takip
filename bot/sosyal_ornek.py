@@ -471,6 +471,102 @@ def puan_bandi(docs, duzey, duzey_adi, alt, ust):
     return sahneler, sl, veri
 
 
+# ---------------------------------------------------------------- 4) Tek ilan (her yeni ilan bir karusel)
+def _kadro_kutusu(adet, ad, w, h, soluk=False):
+    R = reels.R
+    kutu = panel(w, h, yaricap=32)
+    d = ImageDraw.Draw(kutu)
+    x = 40
+    if adet:
+        d.text((x, h / 2), binlik(adet), font=F(64, True), fill=R.vurgu, anchor='lm')
+        x += round(d.textlength(binlik(adet), font=F(64, True))) + 30
+    s, yz = k.sigdir(d, ad, True, [44, 38, 34], w - x - 36, 2)
+    for m, satir in enumerate(s):
+        d.text((x, h / 2 + (m - (len(s) - 1) / 2) * yz.size * 1.15), satir, font=yz, fill=R.soluk if soluk else R.yazi, anchor='lm')
+    return kutu
+
+
+def ilan_karuseli(ilan, simdi, logo):
+    """Yeni ilan karuseli (1080x1350): kapak, kadrolar, kimler başvurabilir, son başvuru, Telegram. (slaytlar, veri)."""
+    R = reels.R
+    lg = logo(ilan)
+    v = k.veri(ilan, lg, simdi)
+    if not v['kadrolar']:
+        return None
+    satirlar = reels.kadro_satirlari(v, 7)
+    kosullar = reels.kosul_satirlari(v)
+    bitis, saatli = k._bitis(ilan)
+    toplam = 3 + (len(satirlar) > 1) + bool(kosullar)
+    sl, no = [], 1
+
+    # 1) kapak
+    o = [(hap('YENİ İLAN', R.vurgu, R.vurgu_ustu, 40), SOL, 180), (logo_rozeti(ilan, lg, 190), SOL, 280)]
+    ad = reels.sigan_yazi(reels.kisa_kurum(ilan), [64, 56, 48, 42], SAG - SOL - 230, 3)
+    o.append((ad, SOL + 230, 280 + max(0, (190 - ad.height) // 2)))
+    sayi, alt = reels.ne_alinacak(v)
+    if sayi:
+        o += iri_sayi(sayi, 'kişi alınacak', 540, 230)
+        ne = reels.kisa_ne(v).split(' · ', 1)[-1] if ' · ' in reels.kisa_ne(v) else ''
+        if ne:
+            o.append((yazi(ne, 50, R.yazi, genislik=SAG - SOL, satir=2), SOL, 830))
+    else:
+        o.append((reels.sigan_yazi(alt, [110, 92, 76, 64], SAG - SOL, 3, R.vurgu), SOL, 560))
+    if bitis:
+        o.append((yazi(f'Son başvuru: {bitis.day} {AYLAR[bitis.month - 1]} {reels.GUNLER[bitis.weekday()]}', 46, R.soluk,
+                       genislik=SAG - SOL, satir=1), SOL, 1030))
+        rozet = reels.kalan_hapi(v, 38)
+        if rozet:
+            o.append((rozet, SOL, 1110))
+    o += ileri_hapi('Kadrolar ve şartlar' if len(satirlar) > 1 else 'Şartlar ve tarih', 1215)
+    sl.append(slayt(o, no, toplam))
+
+    # 2) kadrolar (birden çoksa; tek kadro kapakta zaten yazıyor)
+    if len(satirlar) > 1:
+        no += 1
+        o = [(yazi('HANGİ KADROLAR?', 56, R.vurgu), SOL, 190)]
+        adim = 132 if len(satirlar) > 5 else 160
+        for n, (adet, kad) in enumerate(satirlar):
+            o.append((_kadro_kutusu(adet, kad, SAG - SOL, adim - 18, soluk=adet is None), SOL, 300 + n * adim))
+        sl.append(slayt(o, no, toplam))
+
+    # 3) kimler başvurabilir
+    if kosullar:
+        no += 1
+        o = [(yazi('KİMLER', 96, R.yazi), SOL, 190), (yazi('BAŞVURABİLİR?', 96, R.vurgu), SOL, 300)]
+        for n, (etiket, deger) in enumerate(kosullar):
+            kutu = panel(SAG - SOL, 230, yaricap=36)
+            d = ImageDraw.Draw(kutu)
+            d.text((44, 32), k.tr_buyuk(etiket), font=F(34, True), fill=R.soluk)
+            s, yz = k.sigdir(d, deger, True, [56, 48, 42, 36], kutu.width - 88, 2)
+            k.blok(d, 44, 92 if len(s) == 1 else 84, s, yz, R.yazi, aralik=round(yz.size * 1.12))
+            o.append((kutu, SOL, 470 + n * 256))
+        sl.append(slayt(o, no, toplam))
+
+    # 4) son başvuru + site
+    no += 1
+    o = [(yazi('SON BAŞVURU', 60, R.vurgu), SOL, 190)]
+    if bitis:
+        o.append((yazi(f'{bitis.day} {AYLAR[bitis.month - 1]}', 180, R.yazi), SOL, 290))
+        o.append((yazi(reels.GUNLER[bitis.weekday()] + (f' · {bitis:%H:%M}' if saatli else ''), 56, R.soluk), SOL, 520))
+        rozet = reels.kalan_hapi(v, 50)
+        if rozet:
+            o.append((rozet, SOL, 620))
+    kutu = panel(SAG - SOL, 300, R.vurgu, 44)
+    d = ImageDraw.Draw(kutu)
+    d.text((48, 44), 'Şartların tamamı ve başvuru bağlantısı', font=F(38, True), fill=R.vurgu_ustu)
+    d.text((48, 108), 'kpsstercihi.com', font=F(84, True), fill=R.vurgu_ustu)
+    d.text((48, 226), 'Bağlantı profilde', font=F(38, True), fill=R.vurgu_ustu)
+    o.append((kutu, SOL, 860))
+    sl.append(slayt(o, no, toplam))
+
+    # 5) Telegram
+    sl.append(cta_slayti(toplam, toplam))
+    veri = {'tur': 'ilan', 'id': ilan.get('id'), 'kurum': reels.kisa_kurum(ilan), 'toplam': v['toplam'],
+            'kadrolar': [(a, n) for n, a in satirlar], 'bitis': str(bitis.date()) if bitis else None,
+            'kosullar': kosullar, 'karusel_slayt': len(sl)}
+    return sl, veri
+
+
 # ---------------------------------------------------------------- yazma
 def yaz(sahneler, slaytlar, veri, klasor, muzik=True):
     klasor = Path(klasor)
