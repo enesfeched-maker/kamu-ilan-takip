@@ -1,0 +1,82 @@
+name: Sosyal medya - hikâye ve kaydırmalı gönderi
+
+# Instagram hikâye (her gün son günü yaklaşanlar) ve kaydırmalı gönderi (çarşamba son gün, perşembe puan aralığı,
+# pazar haftanın kadro raporu). İçerik ve program bot/sosyal_gorsel.py'de; Reels akışından (sosyal.yml) ayrıdır.
+on:
+  schedule:
+    - cron: "0 8 * * *"     # ~11:00 TR (GitHub 5–15 dk gecikir)
+  workflow_dispatch:
+    inputs:
+      tur:
+        description: otomatik (bugünün programı) ya da tek tür
+        type: choice
+        options: [otomatik, son-gun, kadro-raporu, puan-bandi]
+        default: otomatik
+      yayinla:
+        description: Instagram'a gönder (kapalıysa yalnız önizleme sürümü; geçmişe yazılmaz)
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sosyal-gorsel
+  cancel-in-progress: false
+
+jobs:
+  paylas:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install Pillow==11.3.0 beautifulsoup4==4.13.5 pypdf==6.0.0 pdfplumber==0.11.7 imageio-ffmpeg==0.6.0
+      - name: Etiket
+        id: v
+        run: echo "etiket=gorsel-$(TZ=Europe/Istanbul date +%Y%m%d)-${{ github.run_number }}" >> "$GITHUB_OUTPUT"
+      - name: İçerik üret
+        id: uret
+        run: |
+          T="${{ inputs.tur }}"
+          if [ -n "$T" ] && [ "$T" != "otomatik" ]; then
+            python bot/sosyal_gorsel.py uret --cikti gorsel-cikti --tur "$T"
+          else
+            python bot/sosyal_gorsel.py uret --cikti gorsel-cikti
+          fi
+          N=$(python -c "import json;print(len(json.load(open('gorsel-cikti/is.json',encoding='utf-8'))['isler']))")
+          echo "is=$N" >> "$GITHUB_OUTPUT"
+      - name: Önizleme sürümü
+        if: steps.uret.outputs.is != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ETIKET: ${{ steps.v.outputs.etiket }}
+        run: |
+          python -c "import json;d=json.load(open('gorsel-cikti/is.json',encoding='utf-8'));open('notlar.md','w',encoding='utf-8').write('\n\n---\n\n'.join(i['tur']+' / '+i['bicim']+('\n\n'+i['aciklama'] if i.get('aciklama') else '') for i in d['isler']))"
+          DOSYALAR=$(python -c "import json;d=json.load(open('gorsel-cikti/is.json',encoding='utf-8'));print(' '.join('gorsel-cikti/'+f for i in d['isler'] for f in i['dosyalar']))")
+          gh release create "$ETIKET" $DOSYALAR gorsel-cikti/is.json --title "$ETIKET" --notes-file notlar.md --prerelease
+          # en yeni 14 görsel sürümü saklanır (Reels sürümleri "sosyal-" ile başlar, onlara dokunulmaz)
+          gh release list --limit 200 --json tagName -q '.[].tagName' | grep '^gorsel-' | sort -r | tail -n +15 \
+            | xargs -r -n1 gh release delete --yes --cleanup-tag
+      - name: Instagram'da yayınla
+        if: steps.uret.outputs.is != '0' && (github.event_name == 'schedule' || inputs.yayinla)
+        env:
+          IG_KULLANICI_ID: ${{ secrets.IG_KULLANICI_ID }}
+          IG_ERISIM_ANAHTARI: ${{ secrets.IG_ERISIM_ANAHTARI }}
+        run: python bot/sosyal_gorsel.py yayinla --cikti gorsel-cikti --taban "https://github.com/${{ github.repository }}/releases/download/${{ steps.v.outputs.etiket }}"
+      - name: Paylaşım geçmişini kaydet
+        if: always() && steps.uret.outputs.is != '0' && (github.event_name == 'schedule' || inputs.yayinla)
+        run: |
+          python bot/sosyal_gorsel.py kaydet --cikti gorsel-cikti
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          [ -f sosyal/gorsel-gecmis.json ] || exit 0
+          git add sosyal/gorsel-gecmis.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Hikâye/karusel paylaşım geçmişi (${{ steps.v.outputs.etiket }}) [skip ci]"
+          for i in 1 2 3 4 5; do
+            git pull --rebase -q origin main && git push -q origin HEAD:main && exit 0
+            sleep 5
+          done
+          exit 1
