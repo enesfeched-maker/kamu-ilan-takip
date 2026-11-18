@@ -7,6 +7,7 @@ Konu adayları (puanı yüksek olan seçilir; aynı konu yakın zamanda paylaş�
   yeni      son 24 saatin yeni ilanları (akşam öne çıkar)
   kategori  şu an açık: lise mezunu / önlisans / KPSS'siz ilanlar
   rehber    ÖSYM taban puanlarından: en düşük puanla atanılan kadrolar, en çok kadro verilen meslekler
+  haftalik  pazar akşamı veri dizisi (haftalik.py): kurum sıralaması, öğrenim düzeyleri, en düşük taban puanlar
 Google Trends Türkiye'de günün aramalarından biri adayın konusuyla eşleşirse aday öne çıkar.
 
 Kullanım: python bot/sosyal_motor.py --vakit sabah --cikti sosyal-cikti [--video]"""
@@ -23,7 +24,7 @@ from xml.etree import ElementTree
 import sosyal_kalite
 import sosyal_tasarim as st
 from kart_tasarimlari import veri as kart_verisi
-from siniflandir import akademik_ilan, kucuk
+from siniflandir import akademik_ilan, kucuk, kurum_ici
 from site_uret import TR, _bitis
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -63,7 +64,7 @@ def _zaman(iso):
 def acik_ilanlar(ilanlar, simdi):
     sonuc = []
     for i in ilanlar:
-        if i.get('duyuru_turu') or i.get('iptal_edildi') or akademik_ilan(i):
+        if i.get('duyuru_turu') or i.get('iptal_edildi') or akademik_ilan(i) or kurum_ici(i):   # kurum içi ilan paylaşılmaz
             continue
         bitis = _bitis(i)
         if not bitis or bitis <= simdi or not kart_verisi(i, None, simdi)['kadrolar']:
@@ -374,9 +375,12 @@ def metin_olustur(konu, vakit, simdi):
                     'Bütün kamu ilanlarını tek yerde görmek için: kpsstercihi.com 💛'], f'{simdi.date()}{vakit}k')
     # Yorum ve paylaşım (DM) algoritmanın en güçlü sinyalleri: emir kipi yerine soru ve sıcak bir öneri.
     import sosyal_ajan   # ajan o tür için soru yazdıysa onlar, yoksa sabit liste
-    soru = _sec(sosyal_ajan.sorular(konu.get('tur')) or SORULAR.get(konu.get('tur'), SORULAR['genel']), f'{simdi.date()}{vakit}s')
+    soru = _sec(konu.get('sorular') or sosyal_ajan.sorular(konu.get('tur')) or SORULAR.get(konu.get('tur'), SORULAR['genel']),
+                f'{simdi.date()}{vakit}s')
     takip = 'Başvuracak bir arkadaşın varsa ona da gönderebilirsin; takipte kalırsan yeni ilanlar ilk senin önüne düşer.'
-    aciklama = '\n'.join(govde) + f'\n\n{soru}\n\n{kapanis}\n{takip}\n\n' + ' '.join(etiketler)
+    if konu.get('kapanis'):   # haftalık dizi: tek kapanış satırı (Telegram + profildeki bağlantı)
+        kapanis, takip = konu['kapanis'], ''
+    aciklama = '\n'.join(govde) + f'\n\n{soru}\n\n{kapanis}' + (f'\n{takip}' if takip else '') + '\n\n' + ' '.join(etiketler)
     baslik = konu['baslik']
     baslik = (baslik if len(baslik) <= 90 else baslik[:89].rstrip() + '…') + ' #shorts'
     return {'baslik': sosyal_kalite.temizle(baslik), 'aciklama': sosyal_kalite.aciklama_duzelt(aciklama)[:2150], 'etiketler': etiketler}
@@ -408,8 +412,8 @@ def sablon_uret(konu, vakit, cikti, simdi, gecmis, gecmis_yolu, video=True, agir
 
 def uret(vakit, cikti, simdi=None, cfg=None, docs=ROOT / 'docs', gecmis_yolu=GECMIS_YOLU, video=True, trend=True,
          istatistik_yolu=None, sablon=True):
-    """vakit: 'sabah' | 'aksam' | 'ilan'. Sabit video biçimi (reels.py) üretilir; sabah/akşam için o gün içerik yoksa
-    eski konu seçimine düşülür, 'ilan' için sıradaki yeni ilan yoksa hiçbir şey üretilmez (None)."""
+    """vakit: 'sabah' | 'aksam' | 'ilan' | 'haftalik'. Sabit video biçimi (reels.py) üretilir; sabah/akşam için o gün
+    içerik yoksa eski konu seçimine düşülür; 'ilan' ve 'haftalik' için içerik yoksa hiçbir şey üretilmez (None)."""
     simdi = (simdi or datetime.now(TR)).astimezone(TR)
     agirlik = istatistik_oku(istatistik_yolu or Path(gecmis_yolu).parent / 'istatistik.json')
     cfg = cfg if cfg is not None else json.loads((ROOT / 'config.json').read_text(encoding='utf-8'))
@@ -423,13 +427,17 @@ def uret(vakit, cikti, simdi=None, cfg=None, docs=ROOT / 'docs', gecmis_yolu=GEC
             from kurum_gorseli import kurum_logosu
             palet = reels.siradaki_palet(gecmis)
             reels.palet_sec(palet)   # sahne katmanları konu kurulurken çizilir; palet ondan önce seçilmeli
-            konu = reels.gunluk(vakit, acik, simdi, kurum_logosu, gecmis)
+            if vakit == 'haftalik':   # pazar akşamı veri dizisi (haftalik.py)
+                import haftalik
+                konu = haftalik.haftalik_konu(acik, simdi, gecmis, docs, kurum_logosu)
+            else:
+                konu = reels.gunluk(vakit, acik, simdi, kurum_logosu, gecmis)
             if konu:
                 return sablon_uret(konu, vakit, cikti, simdi, gecmis, gecmis_yolu, video, agirlik, palet)
         except Exception as hata:   # şablon hatası paylaşımı durdurmaz: sabah/akşam eski biçime düşer
             print(f'::warning::Video şablonu üretilemedi ({vakit}): {hata}')
-    if vakit == 'ilan':
-        print('Videosu yapılacak yeni ilan yok.')
+    if vakit in ('ilan', 'haftalik'):
+        print('Videosu yapılacak yeni ilan yok.' if vakit == 'ilan' else 'Bu hafta haftalık video yok.')
         return None
     son_paylasilan = {i for g in gecmis if (_zaman(g.get('zaman')) or simdi) > simdi - timedelta(days=3)
                       for i in g.get('ilanlar') or []}
@@ -462,7 +470,7 @@ def uret(vakit, cikti, simdi=None, cfg=None, docs=ROOT / 'docs', gecmis_yolu=GEC
 
 if __name__ == '__main__':
     p = argparse.ArgumentParser()
-    p.add_argument('--vakit', choices=('sabah', 'aksam', 'ilan'), required=True)
+    p.add_argument('--vakit', choices=('sabah', 'aksam', 'ilan', 'haftalik'), required=True)
     p.add_argument('--cikti', default='sosyal-cikti')
     p.add_argument('--videosuz', action='store_true')
     a = p.parse_args()
