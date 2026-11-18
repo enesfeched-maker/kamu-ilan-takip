@@ -631,24 +631,24 @@
   }
  },
  "csb-478573": {
-  "zaman": "2026-10-30T13:47:35+03:00",
+  "zaman": "2026-11-18T17:14:04+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "csb",
-  "imza": "0d6251287ebb981d",
+  "imza": "ad103560e53d4f69",
   "baslik": "BERGAMA BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE MEMUR ALIM İLANI",
   "farklar": [],
   "yz": {
    "kadrolar": [
     {
-     "unvan": "Memur (Ekonomi/İktisat/Maliye)",
+     "unvan": "Memur",
      "adet": 2,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 80,
      "il": "İzmir",
      "kosullar": [
-      "Ekonomi, iktisat veya maliye bölümlerinden birinden mezun olmak."
+      "Lisans düzeyinde eğitim veren kurumların ekonomi, iktisat, maliye bölümlerinin birinden mezun olmak."
      ]
     },
     {
@@ -659,7 +659,7 @@
      "en_dusuk_puan": 80,
      "il": "İzmir",
      "kosullar": [
-      "Uluslararası ilişkiler, maliye, halkla ilişkiler ve tanıtım bölümlerinden birinden mezun olmak."
+      "Lisans düzeyinde eğitim veren kurumların uluslararası ilişkiler, maliye, halkla ilişkiler ve tanıtım bölümlerinin birinden mezun olmak."
      ]
     }
    ],
@@ -672,11 +672,13 @@
     "İzmir"
    ],
    "ortak_kosullar": [
-    "2026 KPSS (B) grubu P3 puanından en az 80 puan almış olmak.",
-    "Başvuru e-posta (insankaynaklari@bergama.bel.tr), şahsen veya iadeli taahhütlü posta ile yapılır.",
-    "Sözlü sınav 21.12.2026."
+    "2026 yılı KPSS (B) grubu sınavına girmiş olmak ve unvan için belirtilen puan türünden en az 80 puan almak.",
+    "Başvuru: 9-11 Aralık 2026; insankaynaklari@bergama.bel.tr adresine elektronik ortamda, şahsen ya da iadeli taahhütlü postayla (mesai 09.00-16.30).",
+    "Sözlü sınav 21 Aralık 2026 saat 10:00'da Bergama Belediyesi İnsan Kaynakları ve Eğitim Müdürlüğünde yapılır.",
+    "Sınava çağrılacaklar 16 Aralık 2026'da bergama.bel.tr adresinde ilan edilir; kadro sayısının beş katı aday çağrılır.",
+    "Adaylar yalnızca bir kadroya başvurabilir."
    ],
-   "ozet": "Bergama Belediyesi 2 memur ve 2 evlendirme memuru alacak. Başvurular 9–11 Aralık 2026'da e-posta, şahsen veya posta ile yapılır.",
+   "ozet": "Bergama Belediyesi 2 memur ve 2 evlendirme memuru alacak (KPSS P3, en az 80 puan). Başvurular 9–11 Aralık 2026'da e-posta, şahsen veya posta ile yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
