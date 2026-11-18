@@ -87,6 +87,37 @@ def olcum_al(medya_id, anahtar):
     raise son_hata
 
 
+SURE_OLCUTU = 'ig_reels_avg_watch_time'   # ortalama izlenme süresi (ms); ayrı istenir, desteklenmezse ölçüm yine yazılır
+
+
+def izlenme_suresi_al(medya_id, anahtar):
+    """Reels ortalama izlenme süresi (ms) ya da None (ölçüt desteklenmiyor / izin yok)."""
+    try:
+        yanit = _istek(f'https://graph.instagram.com/{IG_SURUM}/{medya_id}/insights?metric={SURE_OLCUTU}'
+                       f'&access_token={urllib.parse.quote(anahtar)}')
+    except YayinHatasi:
+        return None
+    for m in yanit.get('data') or []:
+        if m.get('name') == SURE_OLCUTU:
+            deger = (m.get('values') or [{}])[0].get('value')
+            return deger if isinstance(deger, (int, float)) and not isinstance(deger, bool) else None
+    return None
+
+
+def tamamlama(g):
+    """Ortalama izlenme süresi / video süresi (en çok 1,5; döngülü videoda 1'i geçebilir); süre ya da ölçüm yoksa None."""
+    sure, ms = g.get('sure'), (g.get('ig') or {}).get('avg_watch_ms')
+    if not isinstance(sure, (int, float)) or sure <= 0 or not isinstance(ms, (int, float)):
+        return None
+    return round(min(1.5, ms / (sure * 1000)), 3)
+
+
+def sure_bandi(sure):
+    if not isinstance(sure, (int, float)) or sure <= 0:
+        return None
+    return 'kisa' if sure < 12 else 'orta' if sure <= 16 else 'uzun'
+
+
 def skor(olcum):
     """Yeni kitleye ulaşma (izlenme/erişim) esas; paylaşma ve kaydetme algoritmanın en güçlü sinyalleri."""
     if not olcum:
@@ -96,23 +127,39 @@ def skor(olcum):
             + 10 * (olcum.get('saved') or 0) + 15 * (olcum.get('shares') or 0))
 
 
+ALANLAR = ('tur', 'muzik', 'vakit', 'palet', 'soru', 'seri', 'sure_bandi')
+
+
 def agirliklar(gecmis):
-    """Her tür/müzik için: grubun medyan skoru / genel medyan. Az örnekli gruplar sıfıra çekilir (n/(n+2))."""
+    """Her tür/müzik/vakit/palet/soru cümlesi/haftalık dizi/süre bandı için: grubun medyan skoru / genel medyan.
+    Az örnekli gruplar sıfıra çekilir (n/(n+2)). 'adet' her grubun ölçüm sayısını, 'tamamlama' grubun medyan izlenme
+    oranını (ortalama izlenme süresi / video süresi) verir; haftalık ajan zayıf soru cümlelerini bu sayılarla değiştirir."""
     olculen = [(g, skor(g.get('ig'))) for g in gecmis]
     olculen = [(g, s) for g, s in olculen if s is not None]
-    sonuc = {'olculen': len(olculen), 'tur': {}, 'muzik': {}, 'vakit': {}, 'palet': {}}
+    sonuc = {'olculen': len(olculen), **{a: {} for a in ALANLAR}, 'adet': {a: {} for a in ALANLAR},
+             'tamamlama': {a: {} for a in ALANLAR}}
+    oranlar = [o for o in (tamamlama(g) for g, _ in olculen) if o is not None]
+    if oranlar:
+        sonuc['tamamlama_genel'] = round(statistics.median(oranlar), 3)
     if len(olculen) < EN_AZ_OLCUM:
         return sonuc
     genel = statistics.median(s for _, s in olculen) or 1
-    for alan in ('tur', 'muzik', 'vakit', 'palet'):
-        gruplar = {}
+    for alan in ALANLAR:
+        gruplar, tamam = {}, {}
         for g, s in olculen:
-            if g.get(alan):
-                gruplar.setdefault(g[alan], []).append(s)
+            deger = sure_bandi(g.get('sure')) if alan == 'sure_bandi' else g.get(alan)
+            if deger:
+                gruplar.setdefault(deger, []).append(s)
+                o = tamamlama(g)
+                if o is not None:
+                    tamam.setdefault(deger, []).append(o)
         for ad, skorlar in gruplar.items():
             oran = max(statistics.median(skorlar), 1) / genel
             etki = EN_BUYUK_ETKI * math.log2(oran) * len(skorlar) / (len(skorlar) + 2)
             sonuc[alan][ad] = round(max(-EN_BUYUK_ETKI, min(EN_BUYUK_ETKI, etki)), 1)
+            sonuc['adet'][alan][ad] = len(skorlar)
+        for ad, liste in tamam.items():
+            sonuc['tamamlama'][alan][ad] = round(statistics.median(liste), 3)
     return sonuc
 
 
@@ -127,14 +174,22 @@ def topla(simdi=None, ortam=None, gecmis_yolu=GECMIS_YOLU, istatistik_yolu=ISTAT
         kimlik_eslestir(gecmis, _medya_listesi(ig_id, anahtar))
     except YayinHatasi as hata:
         print(f'Uyarı: Instagram paylaşım listesi alınamadı: {hata}')
-    olculen, izinsiz, ust_uste = 0, None, 0
+    olculen, izinsiz, ust_uste, sure_destekli = 0, None, 0, None
     for g in gecmis:
         z = _zaman(g.get('zaman'))
         if not (g.get('ig_id') and z and EN_GENC <= simdi - z <= EN_YASLI):
             continue
         try:
+            eski_sure = (g.get('ig') or {}).get('avg_watch_ms')
             g['ig'] = dict(olcum_al(g['ig_id'], anahtar), olcum=simdi.isoformat(timespec='seconds'))
             olculen, ust_uste = olculen + 1, 0
+            ms = izlenme_suresi_al(g['ig_id'], anahtar) if sure_destekli is not False else None
+            if ms is not None:
+                sure_destekli = True
+            elif sure_destekli is None:
+                sure_destekli = False   # ilk denemede okunamadı: bu çalışmada bir daha sorulmaz (istek tasarrufu)
+            if ms is not None or eski_sure is not None:
+                g['ig']['avg_watch_ms'] = ms if ms is not None else eski_sure
         except YayinHatasi as hata:
             izinsiz, ust_uste = str(hata), ust_uste + 1
             if ust_uste >= 3:  # izin yoksa hepsi aynı hatayı verir
@@ -151,7 +206,10 @@ def topla(simdi=None, ortam=None, gecmis_yolu=GECMIS_YOLU, istatistik_yolu=ISTAT
     _yaz(istatistik_yolu, sonuc)
     if izinsiz:
         print(f'Uyarı: Instagram istatistikleri okunamadı (instagram_business_manage_insights izni gerekebilir): {izinsiz}')
-    print(f'{olculen} paylaşım ölçüldü; toplam {sonuc["olculen"]} ölçüm. Tür: {sonuc["tur"]} Müzik: {sonuc["muzik"]}')
+    if sure_destekli is False:
+        print(f'Not: {SURE_OLCUTU} ölçütü okunamadı; izlenme oranı bu çalışmada güncellenmedi.')
+    print(f'{olculen} paylaşım ölçüldü; toplam {sonuc["olculen"]} ölçüm. Tür: {sonuc["tur"]} Müzik: {sonuc["muzik"]} '
+          f'Soru: {len(sonuc["soru"])} cümle, medyan izlenme oranı: {sonuc.get("tamamlama_genel")}')
     return sonuc
 
 
