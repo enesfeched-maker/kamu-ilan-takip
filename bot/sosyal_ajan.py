@@ -217,20 +217,39 @@ def yorumlari_bildir(simdi=None, durum_yolu='sosyal-yorum-durum.json'):
     return gonderilen
 
 
+SORU_EN_AZ_OLCUM = 3   # bir soru cümlesi en az bu kadar ölçülmüş videoda kullanılmadan "zayıf" sayılmaz
+
+
+def soru_karnesi(gecmis, agirlik):
+    """Kullanılmış her soru cümlesi: hangi türde, kaç ölçüm, ağırlık, medyan izlenme oranı ve değiştirilmeye aday mı
+    (en az SORU_EN_AZ_OLCUM ölçüm ve eksi ağırlık). En zayıf önce."""
+    turler = {}
+    for g in gecmis:
+        if g.get('soru'):
+            turler.setdefault(g['soru'], set()).add(g.get('tur'))
+    a, n, t = (agirlik or {}).get('soru') or {}, ((agirlik or {}).get('adet') or {}).get('soru') or {}, \
+        ((agirlik or {}).get('tamamlama') or {}).get('soru') or {}
+    karne = [{'soru': s, 'turler': sorted(x for x in tr if x), 'olcum': n.get(s, 0), 'agirlik': a.get(s),
+              'izlenme_orani': t.get(s), 'degistir': n.get(s, 0) >= SORU_EN_AZ_OLCUM and (a.get(s) or 0) < 0}
+             for s, tr in turler.items()]
+    return sorted(karne, key=lambda k: (k['agirlik'] is None, k['agirlik'] if k['agirlik'] is not None else 0))
+
+
 # ---------------------------------------------------------------- Claude rutini: hazırla / kaydet
 def hazirla(simdi=None, klasor=None):
     from sosyal_motor import GECMIS_YOLU, gecmis_oku, istatistik_oku
     from site_uret import TR
     simdi = (simdi or datetime.now(TR)).astimezone(TR)
     gecmis = gecmis_oku()
-    son = [{k: g.get(k) for k in ('zaman', 'vakit', 'tur', 'muzik', 'palet', 'ig')} for g in gecmis
+    son = [{k: g.get(k) for k in ('zaman', 'vakit', 'tur', 'muzik', 'palet', 'soru', 'sure', 'seri', 'ig')} for g in gecmis
            if (_zaman(g.get('zaman')) or simdi) >= simdi - timedelta(days=30)]
+    agirlik = istatistik_oku(Path(GECMIS_YOLU).parent / 'istatistik.json')
     durum = {'zaman': simdi.isoformat(timespec='seconds'),
              'bu_hafta': {k: v for k, v in donem(gecmis, simdi - timedelta(days=7), simdi).items() if k != 'en_iyi'},
              'onceki_hafta': {k: v for k, v in donem(gecmis, simdi - timedelta(days=14), simdi - timedelta(days=7)).items() if k != 'en_iyi'},
-             'agirliklar': istatistik_oku(Path(GECMIS_YOLU).parent / 'istatistik.json'), 'gecerli_ayar': ayar_oku(),
+             'agirliklar': agirlik, 'gecerli_ayar': ayar_oku(),
              'ayar_sinirlari': {ad: {'varsayilan': v[0], 'en_az': v[1], 'en_cok': v[2]} for ad, v in AYAR_SINIR.items()},
-             'soru_turleri': list(SORU_TURLERI), 'son_30_gun': son}
+             'soru_turleri': list(SORU_TURLERI), 'soru_karnesi': soru_karnesi(gecmis, agirlik), 'son_30_gun': son}
     klasor = Path(klasor or IS_KLASORU)
     klasor.mkdir(parents=True, exist_ok=True)
     (klasor / 'durum.json').write_text(json.dumps(durum, ensure_ascii=False, indent=1), encoding='utf-8')

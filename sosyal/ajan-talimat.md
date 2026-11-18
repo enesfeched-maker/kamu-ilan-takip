@@ -44,6 +44,20 @@ Emin değilsen ayarı değiştirme: az veriyle karar vermek, hiç karar vermemek
   her biri en çok 90 karakter ve soru işaretli. Yalnız değiştirmek istediğin türü yaz; yazmadığın tür botun kendi
   listesini kullanır. `ayar` içinde yazmadığın sayısal alan varsayılana döner, o yüzden korumak istediğin değeri yaz.
 
+## Öğrenen döngü (soru cümleleri)
+
+Bot her paylaşımda hangi soru cümlesini, video süresini ve (haftalık videoda) diziyi kaydeder; istatistik bunları
+`agirliklar.soru`, `agirliklar.adet.soru` ve izlenme oranıyla (`agirliklar.tamamlama`) ölçer. Bot henüz ölçülmemiş
+cümleyi önce dener, ağırlığı -5'in altına düşeni seçmez; kalanlar arasında çoğunlukla en iyisini kullanır.
+`durum.json` içindeki `soru_karnesi` en zayıftan güçlüye sıralıdır.
+
+- Her hafta `degistir: true` olan cümlelerden **en zayıf en çok ikisini** bırak: o türün `sorular` listesine onları
+  yazma, yerlerine aynı türde **iki yeni** cümle yaz (ses profiline uygun, öncekilerden farklı açıdan: deneyim, puan,
+  arkadaşa gönderme, tercih). Tür listesinde zayıf olmayan cümleleri koru; listeyi tamamen boşaltma.
+- `degistir: true` olan cümle yoksa soru listelerine dokunma.
+- Notta hangi cümleyi neden bıraktığını (ölçüm sayısı ve ağırlıkla) ve yerine neyi koyduğunu yaz.
+- Soru cümlesi değişikliği "sayısal ayar" sayılmaz; aynı hafta bir sayısal ayar da değiştirebilirsin.
+
 ## Kurallar
 
 - Karar için en az **6 ölçülmüş video** gerekir (`bu_hafta.olculen` + `onceki_hafta.olculen`). Yoksa `ayar` olarak

@@ -86,7 +86,8 @@ class Kimlik(unittest.TestCase):
 
             with mock.patch.object(si, '_istek', sahte):
                 si.topla(SIMDI, ('IG', 'anahtar'), d / 'g.json', d / 'i.json')
-            self.assertEqual(istenen, ['O'])
+            self.assertEqual(set(istenen), {'O'})   # ölçüm + izlenme süresi; yalnız 2–30 günlük paylaşım
+            self.assertLessEqual(len(istenen), 2)
             self.assertEqual(json.loads((d / 'g.json').read_text(encoding='utf-8'))[1]['ig']['views'], 900)
             self.assertEqual(json.loads((d / 'i.json').read_text(encoding='utf-8'))['olculen'], 1)
 

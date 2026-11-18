@@ -366,7 +366,29 @@ def muzik_sec(gecmis, tohum, klasor=MUZIK_KLASORU, agirlik=None):
     return _sec(taze, tohum)
 
 
-def metin_olustur(konu, vakit, simdi):
+SORU_ZAYIF = -5      # ölçülüp bu ağırlığın altında kalan soru cümlesi seçilmez (müzikteki kuralla aynı)
+SORU_DENEME = 3      # her SORU_DENEME paylaşımdan biri en iyiyi değil sıradaki adayı dener (öğrenmeye devam etmek için)
+
+
+def soru_sec(adaylar, agirlik, tohum):
+    """Öğrenen soru seçimi (istatistik 'soru' ağırlıkları): henüz ölçülmemiş cümle önce denenir; ölçülenlerden zayıf
+    kalanlar (< SORU_ZAYIF) elenir; kalanların en iyisi seçilir, ama her SORU_DENEME paylaşımdan biri sıradakini dener.
+    Ağırlık yoksa eskisi gibi tohuma göre seçer."""
+    adaylar = list(dict.fromkeys(adaylar))
+    agirlik = agirlik or {}
+    if not agirlik:
+        return _sec(adaylar, tohum)
+    olculmemis = [s for s in adaylar if s not in agirlik]
+    if olculmemis:
+        return _sec(olculmemis, tohum)
+    kalan = [s for s in adaylar if agirlik[s] >= SORU_ZAYIF] or adaylar
+    sirali = sorted(kalan, key=lambda s: -agirlik[s])
+    if len(sirali) > 1 and int(hashlib.sha1((tohum + 'd').encode()).hexdigest(), 16) % SORU_DENEME == 0:
+        return _sec(sirali[1:], tohum)
+    return sirali[0]
+
+
+def metin_olustur(konu, vakit, simdi, agirlik=None):
     etiketler = _etiketler(konu['etiketler'], konu.get('trend'))
     govde = [konu['giris']] + konu['satirlar'][:6]
     if len(konu['satirlar']) > 6:
@@ -375,15 +397,16 @@ def metin_olustur(konu, vakit, simdi):
                     'Bütün kamu ilanlarını tek yerde görmek için: kpsstercihi.com 💛'], f'{simdi.date()}{vakit}k')
     # Yorum ve paylaşım (DM) algoritmanın en güçlü sinyalleri: emir kipi yerine soru ve sıcak bir öneri.
     import sosyal_ajan   # ajan o tür için soru yazdıysa onlar, yoksa sabit liste
-    soru = _sec(konu.get('sorular') or sosyal_ajan.sorular(konu.get('tur')) or SORULAR.get(konu.get('tur'), SORULAR['genel']),
-                f'{simdi.date()}{vakit}s')
+    soru = soru_sec(konu.get('sorular') or sosyal_ajan.sorular(konu.get('tur')) or SORULAR.get(konu.get('tur'), SORULAR['genel']),
+                    (agirlik or {}).get('soru'), f'{simdi.date()}{vakit}s')
     takip = 'Başvuracak bir arkadaşın varsa ona da gönderebilirsin; takipte kalırsan yeni ilanlar ilk senin önüne düşer.'
     if konu.get('kapanis'):   # haftalık dizi: tek kapanış satırı (Telegram + profildeki bağlantı)
         kapanis, takip = konu['kapanis'], ''
     aciklama = '\n'.join(govde) + f'\n\n{soru}\n\n{kapanis}' + (f'\n{takip}' if takip else '') + '\n\n' + ' '.join(etiketler)
     baslik = konu['baslik']
     baslik = (baslik if len(baslik) <= 90 else baslik[:89].rstrip() + '…') + ' #shorts'
-    return {'baslik': sosyal_kalite.temizle(baslik), 'aciklama': sosyal_kalite.aciklama_duzelt(aciklama)[:2150], 'etiketler': etiketler}
+    return {'baslik': sosyal_kalite.temizle(baslik), 'aciklama': sosyal_kalite.aciklama_duzelt(aciklama)[:2150], 'etiketler': etiketler,
+            'soru': soru}
 
 
 def sablon_uret(konu, vakit, cikti, simdi, gecmis, gecmis_yolu, video=True, agirlik=None, palet=None):
@@ -399,13 +422,18 @@ def sablon_uret(konu, vakit, cikti, simdi, gecmis, gecmis_yolu, video=True, agir
         muzik, bas = muzik_sec(gecmis, f'{simdi.date()}{vakit}m', agirlik=(agirlik or {}).get('muzik')), 0.0
     if video:
         reels.video_yaz(sahneler, cikti / 'reel.mp4', muzik, muzik_bas=bas)
-    metin = metin_olustur(konu, vakit, simdi)
+    metin = metin_olustur(konu, vakit, simdi, agirlik)
+    sure = round(reels.video_suresi(sahneler), 1)
     ozet = {'tur': konu['tur'], 'anahtar': konu['anahtar'], 'vakit': vakit, 'zaman': simdi.isoformat(timespec='seconds'),
             'kare': len(sahneler), 'sablon': True, 'palet': palet, 'trend': None, 'ilgili_trendler': [],
-            'muzik': muzik.name if muzik else None, **metin}
+            'muzik': muzik.name if muzik else None, 'sure': sure, **metin}
     (cikti / 'paylasim.json').write_text(json.dumps(ozet, ensure_ascii=False, indent=1), encoding='utf-8')
-    gecmis_yaz(gecmis, {'zaman': ozet['zaman'], 'vakit': vakit, 'tur': konu['tur'], 'anahtar': konu['anahtar'],
-                        'ilanlar': konu['ilanlar'], 'muzik': ozet['muzik'], 'palet': palet}, gecmis_yolu)
+    # Öğrenen döngü için: hangi soru cümlesi, video süresi ve (haftalıkta) hangi dizi kullanıldı
+    kayit = {'zaman': ozet['zaman'], 'vakit': vakit, 'tur': konu['tur'], 'anahtar': konu['anahtar'],
+             'ilanlar': konu['ilanlar'], 'muzik': ozet['muzik'], 'palet': palet, 'soru': metin['soru'], 'sure': sure}
+    if konu.get('seri'):
+        kayit['seri'] = konu['seri']
+    gecmis_yaz(gecmis, kayit, gecmis_yolu)
     print(f'Konu: {konu["anahtar"]} ({len(sahneler)} sahne, {reels.video_suresi(sahneler):.1f} sn)')
     return ozet
 
@@ -457,13 +485,13 @@ def uret(vakit, cikti, simdi=None, cfg=None, docs=ROOT / 'docs', gecmis_yolu=GEC
     muzik = muzik_sec(gecmis, f'{simdi.date()}{vakit}m', agirlik=agirlik.get('muzik'))
     if video:
         st.video_yaz(kareler, cikti / 'reel.mp4', muzik=muzik)
-    metin = metin_olustur(konu, vakit, simdi)
+    metin = metin_olustur(konu, vakit, simdi, agirlik)
     ozet = {'tur': konu['tur'], 'anahtar': konu['anahtar'], 'vakit': vakit, 'zaman': simdi.isoformat(timespec='seconds'),
             'kare': len(kareler), 'trend': konu.get('trend'), 'ilgili_trendler': tb[:10],
             'muzik': muzik.name if muzik else None, **metin}
     (cikti / 'paylasim.json').write_text(json.dumps(ozet, ensure_ascii=False, indent=1), encoding='utf-8')
     gecmis_yaz(gecmis, {'zaman': ozet['zaman'], 'vakit': vakit, 'tur': konu['tur'], 'anahtar': konu['anahtar'],
-                        'ilanlar': konu['ilanlar'], 'muzik': ozet['muzik']}, gecmis_yolu)
+                        'ilanlar': konu['ilanlar'], 'muzik': ozet['muzik'], 'soru': metin['soru']}, gecmis_yolu)
     print(f'Konu: {konu["anahtar"]} ({len(kareler)} kare)')
     return ozet
 
