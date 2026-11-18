@@ -1279,24 +1279,24 @@
   }
  },
  "csb-479031": {
-  "zaman": "2026-11-17T13:10:35+03:00",
+  "zaman": "2026-11-19T01:11:04+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "csb",
-  "imza": "f9102e60af607a58",
+  "imza": "6151cde4fb5598df",
   "baslik": "MUDURNU BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE SÖZLEŞMELİ PERSONEL ALIM İLANI",
   "farklar": [],
   "yz": {
    "kadrolar": [
     {
-     "unvan": "Mühendis (Harita)",
+     "unvan": "Mühendis (Harita/Jeodezi/Geomatik)",
      "adet": 1,
      "ogrenim": "lisans",
      "puan_turu": "P3",
      "en_dusuk_puan": 75,
      "il": "Bolu",
      "kosullar": [
-      "Harita mühendisliği, jeodezi ve fotogrametri mühendisliği veya geomatik mühendisliği programlarının birinden mezun olmak.",
+      "Harita mühendisliği, jeodezi ve fotogrametri mühendisliği ya da geomatik mühendisliği programlarından birinden mezun olmak.",
       "En az (B) sınıfı sürücü belgesine sahip olmak."
      ]
     }
@@ -1310,11 +1310,11 @@
     "Bolu"
    ],
    "ortak_kosullar": [
-    "2026 KPSS (B) grubu puanıyla başvurulur; KPSS puanına göre pozisyon sayısının 5 katı aday yazılı sınava çağrılır.",
-    "Başvuru 14-25 Aralık 2026'da mudurnu@mudurnu.bel.tr adresine elektronik ortamda ya da şahsen/iadeli taahhütlü postayla Mudurnu Belediyesi Yazı İşleri Müdürlüğü'ne yapılır.",
-    "Yazılı sınav 15 Ocak 2027 saat 15:00'te Mudurnu Belediyesi toplantı salonunda yapılır."
+    "2026 KPSS (B grubu) P3 puan türünden en az 75 puan almış olmak.",
+    "Başvuru 14–25 Aralık 2026'da e-posta (mudurnu@mudurnu.bel.tr), şahsen veya iadeli taahhütlü posta ile yapılır.",
+    "Yazılı sınav 15 Ocak 2027 saat 15:00'te Mudurnu Belediyesi'nde yapılır."
    ],
-   "ozet": "Mudurnu Belediyesi (Bolu) 1 harita mühendisi sözleşmeli personel alacak. Başvurular 14–25 Aralık 2026'da e-posta, şahsen veya posta ile yapılır.",
+   "ozet": "Mudurnu Belediyesi (Bolu) 1 sözleşmeli harita mühendisi alacak. Başvurular 14–25 Aralık 2026'da belediyeye yapılır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -2663,6 +2663,67 @@
    "iptal_veya_duzeltme": false,
    "duyuru_tipi": "yeni_ilan",
    "ortak_kosullar": []
+  }
+ },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=6a34cb10-0ac0-41e0-a094-3ec83e29a644": {
+  "zaman": "2026-11-19T01:11:04+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "d799488d3440bf28",
+  "baslik": "SOSYAL GÜVENLİK KURUMU BAŞKANLIĞI - MÜFETTİŞ YARDIMCILIĞI GİRİŞ SINAVI DUYURUSU 2026",
+  "farklar": [
+   [
+    "puan_turleri",
+    [
+     "P43",
+     "P48"
+    ],
+    [
+     "P43"
+    ],
+    false
+   ]
+  ],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Müfettiş Yardımcısı",
+     "adet": 50,
+     "ogrenim": "lisans",
+     "puan_turu": "P43",
+     "en_dusuk_puan": 80,
+     "il": "Ankara",
+     "kosullar": [
+      "Hukuk, siyasal bilgiler, iktisat, işletme, iktisadi ve idari bilimler fakülteleri ya da sosyal hizmetler, sağlık idaresi/yönetimi, aktüerya, bankacılık, sigortacılık bölümlerinden mezun olmak.",
+      "KPSSP43 veya KPSSP48 puan türlerinden herhangi birinden en az 80 puan almış olmak."
+     ]
+    }
+   ],
+   "toplam": 50,
+   "son_basvuru_tarihi": "2026-12-18",
+   "son_basvuru_saati": "23:59",
+   "baslangic_tarihi": "2026-12-07",
+   "kpss_gerekli": true,
+   "iller": [
+    "Ankara"
+   ],
+   "ortak_kosullar": [
+    "Sınavın yapıldığı 2027 yılı Ocak ayının 1'i itibarıyla 35 yaşını doldurmamış olmak.",
+    "2025 ve 2026 KPSS puanları birlikte değerlendirilir.",
+    "Yazılı sınava en yüksek puanlı 250 aday çağrılır (son sıradakiyle eşit puanlılar dahil)."
+   ],
+   "ozet": "Sosyal Güvenlik Kurumu Ankara'da 50 müfettiş yardımcısı alacak. Başvurular 7–18 Aralık 2026 arasındadır.",
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P43"
+   ]
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=6e7cd2e5-b3d8-4c95-916b-6e1ff234b0b0": {
@@ -7971,6 +8032,54 @@
    ],
    "puan_turleri": [
     "P3"
+   ]
+  }
+ },
+ "sbb-6fb367ee271dfcd5f58d9c5b": {
+  "zaman": "2026-11-19T01:11:04+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "pdf",
+  "imza": "c9652ff02c4778c5",
+  "baslik": "İÇİŞLERİ BAKANLIĞI - 60 KAYMAKAM ADAYI ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Kaymakam Adayı",
+     "adet": 60,
+     "ogrenim": "lisans",
+     "puan_turu": "P32",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "Uluslararası ilişkiler, siyaset bilimi, kamu yönetimi, iktisat, işletme, maliye, finans, ekonometri, çalışma ekonomisi ve endüstri ilişkileri ya da hukuk fakültelerinden mezun olmak.",
+      "Mühendislik, tarih, sosyoloji, halkla ilişkiler, psikoloji mezunları için ilgili alanlarda tezli lisansüstü eğitimi tamamlamış olmak."
+     ]
+    }
+   ],
+   "toplam": 60,
+   "son_basvuru_tarihi": "2026-12-07",
+   "son_basvuru_saati": null,
+   "baslangic_tarihi": "2026-12-01",
+   "kpss_gerekli": true,
+   "iller": [],
+   "ortak_kosullar": [
+    "1 Ocak 2027 itibarıyla 35 yaşını doldurmamış olmak (1 Ocak 1992 ve sonrası doğumlular).",
+    "2025 veya 2026 KPSS'de KPSSP32 puan türünden en az 70 puan almış olmak.",
+    "Ön başvuru 1–7 Aralık 2026'da ÖSYM (ais.osym.gov.tr) üzerinden yapılır; nihai başvuru 16–21 Aralık 2026 (geç başvuru 29 Aralık).",
+    "Yazılı sınav 31 Ocak 2027'de Ankara'da; en yüksek puanlı 240 aday mülakata çağrılır."
+   ],
+   "ozet": "İçişleri Bakanlığı 60 kaymakam adayı alacak. Ön başvurular 1–7 Aralık 2026'da ÖSYM üzerinden, nihai başvurular 16–21 Aralık 2026'da yapılır.",
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P32"
    ]
   }
  },
