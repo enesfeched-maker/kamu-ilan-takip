@@ -4859,6 +4859,51 @@
    ]
   }
  },
+ "iskur-19c82fb7005fa2f62fc3646b": {
+  "zaman": "2026-11-19T11:12:03+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "e81ebe71c89f63dd",
+  "baslik": "Bolu Mudurnu Belediyesi Sözleşmeli Personel Alım İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Mühendis",
+     "adet": 1,
+     "ogrenim": null,
+     "puan_turu": "P3",
+     "en_dusuk_puan": 75,
+     "il": "Bolu",
+     "kosullar": [
+      "En az (B) sınıfı sürücü belgesine sahip olmak."
+     ]
+    }
+   ],
+   "toplam": 1,
+   "son_basvuru_tarihi": "2026-12-25",
+   "son_basvuru_saati": null,
+   "baslangic_tarihi": "2026-12-14",
+   "kpss_gerekli": true,
+   "iller": [
+    "Bolu"
+   ],
+   "ortak_kosullar": [
+    "Başvuru 14–25 Aralık 2026'da e-posta (mudurnu@mudurnu.bel.tr), şahsen veya iadeli taahhütlü posta ile yapılır.",
+    "Şahsen başvuru Mudurnu Belediyesi Yazı İşleri Müdürlüğü'ne, mesai saatlerinde yapılır."
+   ],
+   "ozet": "Mudurnu Belediyesi 1 sözleşmeli mühendis alacak (KPSS P3, en az 75). Başvurular 14–25 Aralık 2026'da e-posta, şahsen veya posta ile yapılır.",
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [],
+   "puan_turleri": [
+    "P3"
+   ]
+  }
+ },
  "iskur-20df4e86aedf099d725ee262": {
   "zaman": "2026-10-30T23:13:31+03:00",
   "surum": 4,
@@ -5997,6 +6042,48 @@
    "puan_turleri": [
     "P3"
    ]
+  }
+ },
+ "iskur-bc6a2f1c69094431350d6242": {
+  "zaman": "2026-11-19T11:12:03+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "5dcf2bb5a7887b74",
+  "baslik": "Sosyal Güvenlik Kurumu Müfettiş Yardımcılığı Sınav İlanı",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Müfettiş Yardımcısı",
+     "adet": 50,
+     "ogrenim": null,
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "kosullar": []
+    }
+   ],
+   "toplam": 50,
+   "son_basvuru_tarihi": "2026-12-18",
+   "son_basvuru_saati": null,
+   "baslangic_tarihi": "2026-12-07",
+   "kpss_gerekli": true,
+   "iller": [
+    "Ankara"
+   ],
+   "ortak_kosullar": [
+    "Geçerli KPSS: 2025 ve 2026 yıllarında yapılan sınavlar.",
+    "Yazılı sınav 16-17 Ocak 2027'de üç oturumda yapılacak.",
+    "Başvuru e-Devlet'ten SGK/Kariyer Kapısı üzerinden yapılır."
+   ],
+   "ozet": "Sosyal Güvenlik Kurumu 50 müfettiş yardımcısı alacak. Başvurular 7–18 Aralık 2026'da Kariyer Kapısı üzerinden yapılır.",
+   "okunabilirlik": "kismi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [],
+   "puan_turleri": []
   }
  },
  "iskur-bcab8840c8ff5def180da4d0": {
