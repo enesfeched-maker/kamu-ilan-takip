@@ -54,6 +54,18 @@
   var mh = (marka && marka.getAttribute('href')) || '';
   var KOK = mh.charAt(0) === '#' ? '' : mh.replace(/[^\/]*$/, '');   // sayfanın site köküne göreli yolu ("", "../", "../../")
 
+  /* Telefonda forum menünün içinde kalıp görülmüyordu (Kasım 2026): üst çubukta Telegram hapının yanında her zaman görünen Forum girişi.
+     Masaüstünde gizli (menüde zaten vurgulu). Tek yerde eklenir, böylece elle yazılmış sayfalar dahil tüm sayfalarda çıkar. */
+  (function () {
+    var tg = document.querySelector('.tb-tg');
+    if (!tg || document.querySelector('.tb-forum') || /\/forum\//.test(location.pathname)) return;
+    var a = document.createElement('a');
+    a.className = 'tb-forum'; a.href = KOK + 'forum/';
+    a.setAttribute('data-a', 'menu'); a.setAttribute('data-a-x', 'Forum mobil');
+    a.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.9A8 8 0 1 1 21 12Z"/><path d="M9 11h.01M12.5 11h.01M16 11h.01"/></svg><span>Forum</span><i aria-hidden="true"></i>';
+    tg.parentNode.insertBefore(a, tg);
+  })();
+
   function oku(a) { try { return JSON.parse(localStorage.getItem(a)); } catch (e) { return null; } }
   function yaz(a, d) { try { if (d == null) localStorage.removeItem(a); else localStorage.setItem(a, JSON.stringify(d)); } catch (e) {} }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }

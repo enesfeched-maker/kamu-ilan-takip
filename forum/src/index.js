@@ -903,6 +903,8 @@ const ONCELIK = { takip: 0, yanit: 1, anma: 2, alinti: 3 };
 const kisalt = (s) => String(s || '').slice(0, 90);
 const BILDIRIM_SECIM = `SELECT y.id AS yanit_id, y.baslik_id, y.govde, y.olusma, b.baslik, b.kategori, u.rumuz, u.rol, u.avatar, u.foto_surum, CASE WHEN u.foto_surum IS NOT NULL THEN u.id END AS fu
   FROM yanitlar y JOIN basliklar b ON b.id = y.baslik_id JOIN uyeler u ON u.id = y.uye_id`;
+// Üyenin o başlıkta yazdığı son yanıttan önceki yanıtlar görülmüş sayılır (cevap verdiği yorum bildirim olmaz).
+const GORULMEMIS = 'AND y.id > COALESCE((SELECT MAX(m.id) FROM yanitlar m WHERE m.baslik_id = y.baslik_id AND m.uye_id = ?), 0)';
 async function benBildirimler(request, env, url) {
   const uye = await oturumUyesi(request, env);
   if (!uye) return hataYanit(401, 'Giriş yapmalısın.');
@@ -925,28 +927,28 @@ async function benBildirimler(request, env, url) {
   // alıntı: üyenin yanıtlarına ust_id ile bağlanan yanıtlar
   const a = await env.DB.prepare(
     `${BILDIRIM_SECIM} JOIN yanitlar p ON p.id = y.ust_id
-     WHERE p.uye_id = ? AND y.olusma > ? AND y.uye_id <> ? AND y.gizli = 0 AND b.gizli = 0 ORDER BY y.id DESC LIMIT 30`,
-  ).bind(uye.id, esik, uye.id).all();
+     WHERE p.uye_id = ? AND y.olusma > ? AND y.uye_id <> ? AND y.gizli = 0 AND b.gizli = 0 ${GORULMEMIS} ORDER BY y.id DESC LIMIT 30`,
+  ).bind(uye.id, esik, uye.id, uye.id).all();
   ekle('alinti', a.results);
   // yanıt: üyenin açtığı başlıklardaki yanıtlar
   const y = await env.DB.prepare(
-    `${BILDIRIM_SECIM} WHERE b.uye_id = ? AND y.olusma > ? AND y.uye_id <> ? AND y.gizli = 0 AND b.gizli = 0 ORDER BY y.id DESC LIMIT 30`,
-  ).bind(uye.id, esik, uye.id).all();
+    `${BILDIRIM_SECIM} WHERE b.uye_id = ? AND y.olusma > ? AND y.uye_id <> ? AND y.gizli = 0 AND b.gizli = 0 ${GORULMEMIS} ORDER BY y.id DESC LIMIT 30`,
+  ).bind(uye.id, esik, uye.id, uye.id).all();
   ekle('yanit', y.results);
   // anma: SQLite LIKE ASCII dışında büyük/küçük ayırır; üç yazım aranır, sonra JS'te Türkçe duyarlı doğrulanır
   const kacis = (s) => s.replace(/[\\%_]/g, '\\$&');
   const bicimler = [...new Set([uye.rumuz, trKucuk(uye.rumuz), trBuyuk(uye.rumuz)])].map((s) => `%@${kacis(s)}%`);
   const kosul = bicimler.map(() => "y.govde LIKE ? ESCAPE '\\'").join(' OR ');
   const n = await env.DB.prepare(
-    `${BILDIRIM_SECIM} WHERE y.olusma > ? AND y.uye_id <> ? AND y.gizli = 0 AND b.gizli = 0 AND (${kosul}) ORDER BY y.id DESC LIMIT 60`,
-  ).bind(esik, uye.id, ...bicimler).all();
+    `${BILDIRIM_SECIM} WHERE y.olusma > ? AND y.uye_id <> ? AND y.gizli = 0 AND b.gizli = 0 AND (${kosul}) ${GORULMEMIS} ORDER BY y.id DESC LIMIT 60`,
+  ).bind(esik, uye.id, ...bicimler, uye.id).all();
   const benim = trKucuk(uye.rumuz);
   ekle('anma', n.results.filter((r) => anmalariBul(r.govde).some((x) => trKucuk(x) === benim)));
   // takip: takip edilen başlıklardaki başkalarının yanıtları (en düşük öncelik)
   const tk = await env.DB.prepare(
     `${BILDIRIM_SECIM} JOIN takipler t ON t.baslik_id = y.baslik_id AND t.uye_id = ?
-     WHERE y.olusma > ? AND y.uye_id <> ? AND y.gizli = 0 AND b.gizli = 0 ORDER BY y.id DESC LIMIT 30`,
-  ).bind(uye.id, esik, uye.id).all();
+     WHERE y.olusma > ? AND y.olusma >= t.olusma AND y.uye_id <> ? AND y.gizli = 0 AND b.gizli = 0 ${GORULMEMIS} ORDER BY y.id DESC LIMIT 30`,
+  ).bind(uye.id, esik, uye.id, uye.id).all();
   ekle('takip', tk.results);
   const bildirimler = [...bulunan.values()]
     .sort((x, z) => z.r.yanit_id - x.r.yanit_id).slice(0, 30)
