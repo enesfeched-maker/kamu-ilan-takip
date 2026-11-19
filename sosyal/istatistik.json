@@ -1,36 +1,36 @@
 {
- "olculen": 69,
+ "olculen": 71,
  "tur": {
-  "haber": -3.8,
-  "son_gun": 3.3,
-  "yeni": 3.8,
-  "buyuk": 4.1,
-  "kategori": 0.5,
-  "ilan": -6.4,
-  "rehber": -0.3,
-  "ozet": 1.1
+  "haber": -3.7,
+  "son_gun": 3.5,
+  "yeni": 3.9,
+  "buyuk": 4.2,
+  "kategori": 1.0,
+  "ilan": -6.2,
+  "rehber": -0.2,
+  "ozet": 1.4
  },
  "muzik": {
-  "afro-pop.mp3": 5.2,
-  "latin-carnaval.mp3": 6.7,
-  "pop-dance.mp3": -0.6,
-  "synthwave.mp3": -2.7,
-  "dance-club.mp3": -0.1,
-  "funk-breakbeat.mp3": 1.8,
-  "hip-hop.mp3": 5.9,
-  "future-bass.mp3": 2.8,
-  "mixkit-158-happy-times.mp3": 2.7,
-  "mixkit-702-pop-09.mp3": -6.4,
-  "mixkit-443-serene-view.mp3": 1.1
+  "afro-pop.mp3": 5.5,
+  "latin-carnaval.mp3": 6.8,
+  "pop-dance.mp3": -0.5,
+  "synthwave.mp3": -2.6,
+  "dance-club.mp3": -0.4,
+  "funk-breakbeat.mp3": 1.9,
+  "hip-hop.mp3": 6.0,
+  "future-bass.mp3": 3.0,
+  "mixkit-158-happy-times.mp3": 3.0,
+  "mixkit-702-pop-09.mp3": -6.2,
+  "mixkit-443-serene-view.mp3": 1.4
  },
  "vakit": {
-  "aksam": -0.5,
-  "sabah": 3.5,
-  "ilan": -6.4
+  "aksam": -0.6,
+  "sabah": 3.9,
+  "ilan": -6.2
  },
  "palet": {
-  "kagit": -1.9,
-  "bordo": -4.7
+  "kagit": -3.0,
+  "bordo": -4.0
  },
  "soru": {},
  "seri": {},
@@ -38,11 +38,11 @@
  "adet": {
   "tur": {
    "haber": 1,
-   "son_gun": 33,
+   "son_gun": 34,
    "yeni": 14,
    "buyuk": 2,
    "kategori": 6,
-   "ilan": 10,
+   "ilan": 11,
    "rehber": 1,
    "ozet": 2
   },
@@ -51,21 +51,21 @@
    "latin-carnaval.mp3": 5,
    "pop-dance.mp3": 4,
    "synthwave.mp3": 4,
-   "dance-club.mp3": 7,
+   "dance-club.mp3": 8,
    "funk-breakbeat.mp3": 7,
    "hip-hop.mp3": 7,
    "future-bass.mp3": 7,
    "mixkit-158-happy-times.mp3": 7,
-   "mixkit-702-pop-09.mp3": 10,
+   "mixkit-702-pop-09.mp3": 11,
    "mixkit-443-serene-view.mp3": 2
   },
   "vakit": {
-   "aksam": 34,
+   "aksam": 35,
    "sabah": 25,
-   "ilan": 10
+   "ilan": 11
   },
   "palet": {
-   "kagit": 9,
+   "kagit": 10,
    "bordo": 9
   },
   "soru": {},
@@ -81,5 +81,5 @@
   "seri": {},
   "sure_bandi": {}
  },
- "guncelleme": "2026-11-19T21:22:57+03:00"
+ "guncelleme": "2026-11-20T02:55:09+03:00"
 }
