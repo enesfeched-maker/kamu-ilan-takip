@@ -1,9 +1,9 @@
 {
  "schema": 1,
- "guncelleme": "2026-11-19T06:36:41.926141+00:00",
+ "guncelleme": "2026-11-19T07:06:41.953863+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-11-19T06:36:52.857906+00:00",
+   "kontrol": "2026-11-19T07:06:50.489722+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -107,6 +107,50 @@
      ]
     },
     {
+     "id": "sbb-fc9c7bb516cd2e09b6cf93c0",
+     "baslik": "SOSYAL GÜVENLİK KURUMU BAŞKANLIĞI - 50 MÜFETTİŞ YARDIMCISI ALACAK",
+     "kurum": "SOSYAL GÜVENLİK KURUMU BAŞKANLIĞI",
+     "kadro": "50 MÜFETTİŞ YARDIMCISI ALACAK",
+     "ilan_turu": "Kamu Personeli",
+     "son_tarih": "2026-12-18",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 7 Aralık - 18 Aralık)",
+     "baslangic_zaman": "2026-12-07T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-11-19T10:06:43+03:00",
+     "belge_ozeti": "c5e60c8a485eb54167289fcf2ddbc2c523de9732058269d9fd399d02ffbb8f6a",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "50 MÜFETTİŞ YARDIMCISI alımı. Son başvuru: 18.12.2026. - Başvurular; e-Devlet kapısı üzerinde Sosyal Güvenlik Kurumu/Kariyer Kapısı- Kamu İşe Alım veya Kariyer Kapısı (isealimkariyerkapisi.cbiko.gov.tr ) adresinden 07.12.2026- 18.12.2026 tarihleri arasında yapılacaktır. Elektronik ortam dışında başvuru kabul edilmeyecektir. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "- Sınavın yapıldığı 2027 yılının Ocak ayının birinci günü itiba riyle 35 (otuzbeş) yaşını doldurmamış olmak,"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "- En az dört yıllık eğitim veren yüksek öğretim kurumlarının hu kuk, siyasal bilgiler, iktisat, işletme, iktisadî ve idarî bilimler fakültelerinden ve ya sosyal hizmetler, sağlık idaresi veya sağlık yönetimi, aktüerya, bankacılık, sigortacılık bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurt dışındaki yüksek öğretim kurumlarından mezun olmak,"
+      }
+     ],
+     "basvuru_notu": "Elektronik ortam dışında başvuru kabul edilmeyecektir. - Başvuruda yer alan bilgilerin doğruluğundan aday sorumlu tutulacaktır. - Adayın başvurusu tamamlandıktan sonra KPSS puanı ÖSYM üzerinden sistem tarafından kontrol edilecektir. - Giriş sınavına katılmaya hak kazanacak adayların tespiti, baş vuran adayların KPSS başarı puan sıralamasına göre yapılır. - Yazılı Giriş Sınavına Katılım: Başvurusu kabul edilen ve yazılı giriş sınavına katılım hakkı kazananların listesi Kurumun internet sitesinde (www.sgk.gov.tr) ve Kariyer Kapısı platformunda yayımlanacaktır.",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/c5e60c8a485eb54167289fcf2ddbc2c523de9732058269d9fd399d02ffbb8f6a.pdf",
+     "belge_sha256": "c5e60c8a485eb54167289fcf2ddbc2c523de9732058269d9fd399d02ffbb8f6a",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "puan_turleri": [
+      "P43",
+      "P48"
+     ],
+     "belge_ogrenim": [
+      "lisans"
+     ]
+    },
+    {
      "id": "sbb-1a5f89740a25a26626b74b10",
      "baslik": "BURDUR MEHMET AKİF ERSOY ÜNİVERSİTESİ - 60 ÖĞRETİM ÜYESİ ALACAK",
      "kurum": "BURDUR MEHMET AKİF ERSOY ÜNİVERSİTESİ",
@@ -118,7 +162,7 @@
      "donem": "( 18 Kasım - 2 Aralık)",
      "baslangic_zaman": "2026-11-18T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-19T09:36:43+03:00",
+     "detay_guncelleme": "2026-11-19T10:06:45+03:00",
      "belge_ozeti": "3b96d3f990e76841ffe4d5e6dee66e4dd087373ccb520703d568740de592dd01",
      "kaynaklar": [
       {
@@ -776,83 +820,6 @@
      ]
     },
     {
-     "id": "sbb-cccf6f2c733ccc37e2ab8e4b",
-     "baslik": "RECEP TAYYİP ERDOĞAN ÜNİVERSİTESİ - 2 ÖĞRETİM ÜYESİ ALACAK",
-     "kurum": "RECEP TAYYİP ERDOĞAN ÜNİVERSİTESİ",
-     "kadro": "2 ÖĞRETİM ÜYESİ ALACAK",
-     "ilan_turu": "Öğretim Üyesi",
-     "son_tarih": "2026-11-30",
-     "kaynak": "SBB Kamu İlan",
-     "kaynak_turu": "sbb",
-     "donem": "( 16 Kasım - 30 Kasım)",
-     "baslangic_zaman": "2026-11-16T00:00:00+03:00",
-     "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-19T02:06:47+03:00",
-     "belge_ozeti": "302408597bc394deb247b3e2febefab014944b086d0179c4e4bfd3018a237c5b",
-     "kaynaklar": [
-      {
-       "ad": "SBB Kamu İlan",
-       "link": "https://kamuilan.sbb.gov.tr/"
-      }
-     ],
-     "ozet": "2 ÖĞRETİM ÜYESİ alımı. Son başvuru: 30.11.2026. T.C. RECEP TAYYİP ERDOĞAN ÜNİVERSİTESİ REKTÖRLÜĞÜ ÖĞRETİM ÜYESİ ALIMI İLANI Genel Bilgiler Üniversitemizin aşağıda belirtilen birimlerine, 2547 sayılı Kanun ve Öğretim Üyeliğine Yükseltilme ve Atanma Yönetmeliği ile Recep Tayyip Erdoğan Üniversitesi Öğretim Üyeliğine Yükseltilme ve Atanma Yönergesi uyarınca Öğretim Üyesi alınacaktır. İlana ilişkin ayrıntılı bilgilere ve formlara erdogan.edu.tr ve personel.erdogan.edu.tr adreslerinden ulaşılabilir. Başvurular ilanın Resmî Gazete’de yayımlandığı tarihten itibaren 15 (on beş) gün içinde çevrim içi olarak basvuru.erdogan.edu.tr adresinden e-devlet üzerinden yapılacaktır. Şahsen veya posta ile yapılan başvurular geçerli kabul edilmeyecektir. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
-     "sartlar": [
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "HAREKET VE Hareket ve Antrenman Bilimleri veya Beden Eğitimi ve Spor Ana 2026/38 SPOR BİLİMLERİ ANTRENÖRLÜK ANTRENMAN DOKTOR 1 2 Bilim Dalında doktorasını yapmış olup Somatotip konusunda FAKÜLTESİ EĞİTİMİ BİLİMLERİ ANA BİLİM ÖĞRETİM ÜYESİ çalışmalar yapmış olmak. Tenis antrenörlük belgesine sahip DALI olmak."
-      }
-     ],
-     "basvuru_notu": "Islak imzalı sağlık kurulu raporu kabul edilmeyecektir. (Halen kurumumuzda görev yapan personel hariç)), Adli Sicil Kaydı, Vesikalık Fotoğraf, Hizmet Belgesi (Herhangi bir kamu kuruluşunda çalışanların (daha önce çalışıp ayrılsalar dahi) e-Devlet üzerinden alacakları onaylı “Hizmet Belgesini” başvurularına eklemeleri gerekmektedir). (Halen kurumumuzda görev yapan personel hariç)), Bilimsel Çalışma ve Yayınlar, Yönerge Ekinde yer alan EK-1 Puanlama Tablosu (başvuru otomasyon sisteminde yer alan form doldurulup her sayfası paraflanarak son sayfası imzalandıktan sonra pdf olarak sisteme yüklenecektir).",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/302408597bc394deb247b3e2febefab014944b086d0179c4e4bfd3018a237c5b.pdf",
-     "belge_sha256": "302408597bc394deb247b3e2febefab014944b086d0179c4e4bfd3018a237c5b",
-     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 6
-    },
-    {
-     "id": "sbb-d3da0f2fcf6d61bb8934ff37",
-     "baslik": "RECEP TAYYİP ERDOĞAN ÜNİVERSİTESİ - 3 ÖĞRETİM ELEMANI ALACAK",
-     "kurum": "RECEP TAYYİP ERDOĞAN ÜNİVERSİTESİ",
-     "kadro": "3 ÖĞRETİM ELEMANI ALACAK",
-     "ilan_turu": "Öğretim Elemanı",
-     "son_tarih": "2026-11-30",
-     "kaynak": "SBB Kamu İlan",
-     "kaynak_turu": "sbb",
-     "donem": "( 16 Kasım - 30 Kasım)",
-     "baslangic_zaman": "2026-11-16T00:00:00+03:00",
-     "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-19T02:06:48+03:00",
-     "belge_ozeti": "1d62c4752e97285cb16f08a98e71ee24d83b6246523280b591df5447e4ea74b2",
-     "kaynaklar": [
-      {
-       "ad": "SBB Kamu İlan",
-       "link": "https://kamuilan.sbb.gov.tr/"
-      }
-     ],
-     "ozet": "3 ÖĞRETİM ELEMANI alımı. Son başvuru: 30.11.2026. Genel Bilgiler 2547 sayılı Kanun ve Öğretim Üyesi Dışındaki Öğretim Elemanı Kadrolarına Yapılacak Atamalarda Uygulanacak Merkezi Sınav İle Giriş Sınavlarına İlişkin Usul ve Esaslar Hakkında Yönetmelik uyarınca Üniversitemizin aşağıda belirtilen birimine öğretim elemanı alımı yapılacaktır. Başvurular ilanın Resmî Gazete’de yayımlandığı tarihten itibaren 15 (on beş) gün içinde çevrim içi olarak basvuru.erdogan.edu.tr adresinden yapılacaktır. Şahsen veya posta ile yapılan başvurular geçerli kabul edilmeyecektir. İdare gerekli gördüğü takdirde ilanın her aşamasını iptal etme hakkına sahiptir. Başvuruda İstenen Belgeler Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
-     "sartlar": [
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "MÜHENDİSLİK BİLGİSAYAR BİLGİSAYAR ARAŞTIRMA Bilgisayar Mühendisliği lisans mezunu 2026/2 VE MİMARLIK MÜHENDİSLİĞİ BİLİMLERİ ANA GÖREVLİSİ 1 4 SAY/70 50 olup Bilgisayar Mühendisliği alanında FAKÜLTESİ BİLİM DALI yüksek lisans yapıyor olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "MÜHENDİSLİK BİLGİSAYAR BİLGİSAYAR ARAŞTIRMA Bilgisayar Mühendisliği lisans mezunu 2026/3 VE MİMARLIK MÜHENDİSLİĞİ YAZILIMI ANA GÖREVLİSİ 1 4 SAY/70 50 olup Bilgisayar Mühendisliği alanında FAKÜLTESİ BİLİM DALI yüksek lisans yapıyor olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "Spor Yöneticiliği Bölümü lisans SPOR SPOR SPOR YÖNETİM ARAŞTIRMA mezunu olup Spor Yönetimi veya 2026/4 BİLİMLERİ YÖNETİCİLİĞİ BİLİMLERİ GÖREVLİSİ 1 4 SAY/EA/SÖZ/70 50 Beden Eğitimi ve Spor Ana Bilim FAKÜLTESİ ANA BİLİM DALI Dalında tezli yüksek lisans yapıyor olmak."
-      }
-     ],
-     "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/1d62c4752e97285cb16f08a98e71ee24d83b6246523280b591df5447e4ea74b2.pdf",
-     "belge_sha256": "1d62c4752e97285cb16f08a98e71ee24d83b6246523280b591df5447e4ea74b2",
-     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 6,
-     "belge_ogrenim": [
-      "lisans"
-     ]
-    },
-    {
      "id": "sbb-c79981002e42d8ec75b1028e",
      "baslik": "SÜLEYMAN DEMİREL ÜNİVERSİTESİ - 23 ÖĞRETİM ÜYESİ ALACAK",
      "kurum": "SÜLEYMAN DEMİREL ÜNİVERSİTESİ",
@@ -947,6 +914,83 @@
      "belge_ogrenim": [
       "lisans",
       "onlisans"
+     ]
+    },
+    {
+     "id": "sbb-cccf6f2c733ccc37e2ab8e4b",
+     "baslik": "RECEP TAYYİP ERDOĞAN ÜNİVERSİTESİ - 2 ÖĞRETİM ÜYESİ ALACAK",
+     "kurum": "RECEP TAYYİP ERDOĞAN ÜNİVERSİTESİ",
+     "kadro": "2 ÖĞRETİM ÜYESİ ALACAK",
+     "ilan_turu": "Öğretim Üyesi",
+     "son_tarih": "2026-11-30",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 16 Kasım - 30 Kasım)",
+     "baslangic_zaman": "2026-11-16T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-11-19T02:06:47+03:00",
+     "belge_ozeti": "302408597bc394deb247b3e2febefab014944b086d0179c4e4bfd3018a237c5b",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "2 ÖĞRETİM ÜYESİ alımı. Son başvuru: 30.11.2026. T.C. RECEP TAYYİP ERDOĞAN ÜNİVERSİTESİ REKTÖRLÜĞÜ ÖĞRETİM ÜYESİ ALIMI İLANI Genel Bilgiler Üniversitemizin aşağıda belirtilen birimlerine, 2547 sayılı Kanun ve Öğretim Üyeliğine Yükseltilme ve Atanma Yönetmeliği ile Recep Tayyip Erdoğan Üniversitesi Öğretim Üyeliğine Yükseltilme ve Atanma Yönergesi uyarınca Öğretim Üyesi alınacaktır. İlana ilişkin ayrıntılı bilgilere ve formlara erdogan.edu.tr ve personel.erdogan.edu.tr adreslerinden ulaşılabilir. Başvurular ilanın Resmî Gazete’de yayımlandığı tarihten itibaren 15 (on beş) gün içinde çevrim içi olarak basvuru.erdogan.edu.tr adresinden e-devlet üzerinden yapılacaktır. Şahsen veya posta ile yapılan başvurular geçerli kabul edilmeyecektir. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "HAREKET VE Hareket ve Antrenman Bilimleri veya Beden Eğitimi ve Spor Ana 2026/38 SPOR BİLİMLERİ ANTRENÖRLÜK ANTRENMAN DOKTOR 1 2 Bilim Dalında doktorasını yapmış olup Somatotip konusunda FAKÜLTESİ EĞİTİMİ BİLİMLERİ ANA BİLİM ÖĞRETİM ÜYESİ çalışmalar yapmış olmak. Tenis antrenörlük belgesine sahip DALI olmak."
+      }
+     ],
+     "basvuru_notu": "Islak imzalı sağlık kurulu raporu kabul edilmeyecektir. (Halen kurumumuzda görev yapan personel hariç)), Adli Sicil Kaydı, Vesikalık Fotoğraf, Hizmet Belgesi (Herhangi bir kamu kuruluşunda çalışanların (daha önce çalışıp ayrılsalar dahi) e-Devlet üzerinden alacakları onaylı “Hizmet Belgesini” başvurularına eklemeleri gerekmektedir). (Halen kurumumuzda görev yapan personel hariç)), Bilimsel Çalışma ve Yayınlar, Yönerge Ekinde yer alan EK-1 Puanlama Tablosu (başvuru otomasyon sisteminde yer alan form doldurulup her sayfası paraflanarak son sayfası imzalandıktan sonra pdf olarak sisteme yüklenecektir).",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/302408597bc394deb247b3e2febefab014944b086d0179c4e4bfd3018a237c5b.pdf",
+     "belge_sha256": "302408597bc394deb247b3e2febefab014944b086d0179c4e4bfd3018a237c5b",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6
+    },
+    {
+     "id": "sbb-d3da0f2fcf6d61bb8934ff37",
+     "baslik": "RECEP TAYYİP ERDOĞAN ÜNİVERSİTESİ - 3 ÖĞRETİM ELEMANI ALACAK",
+     "kurum": "RECEP TAYYİP ERDOĞAN ÜNİVERSİTESİ",
+     "kadro": "3 ÖĞRETİM ELEMANI ALACAK",
+     "ilan_turu": "Öğretim Elemanı",
+     "son_tarih": "2026-11-30",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 16 Kasım - 30 Kasım)",
+     "baslangic_zaman": "2026-11-16T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-11-19T02:06:48+03:00",
+     "belge_ozeti": "1d62c4752e97285cb16f08a98e71ee24d83b6246523280b591df5447e4ea74b2",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "3 ÖĞRETİM ELEMANI alımı. Son başvuru: 30.11.2026. Genel Bilgiler 2547 sayılı Kanun ve Öğretim Üyesi Dışındaki Öğretim Elemanı Kadrolarına Yapılacak Atamalarda Uygulanacak Merkezi Sınav İle Giriş Sınavlarına İlişkin Usul ve Esaslar Hakkında Yönetmelik uyarınca Üniversitemizin aşağıda belirtilen birimine öğretim elemanı alımı yapılacaktır. Başvurular ilanın Resmî Gazete’de yayımlandığı tarihten itibaren 15 (on beş) gün içinde çevrim içi olarak basvuru.erdogan.edu.tr adresinden yapılacaktır. Şahsen veya posta ile yapılan başvurular geçerli kabul edilmeyecektir. İdare gerekli gördüğü takdirde ilanın her aşamasını iptal etme hakkına sahiptir. Başvuruda İstenen Belgeler Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "MÜHENDİSLİK BİLGİSAYAR BİLGİSAYAR ARAŞTIRMA Bilgisayar Mühendisliği lisans mezunu 2026/2 VE MİMARLIK MÜHENDİSLİĞİ BİLİMLERİ ANA GÖREVLİSİ 1 4 SAY/70 50 olup Bilgisayar Mühendisliği alanında FAKÜLTESİ BİLİM DALI yüksek lisans yapıyor olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "MÜHENDİSLİK BİLGİSAYAR BİLGİSAYAR ARAŞTIRMA Bilgisayar Mühendisliği lisans mezunu 2026/3 VE MİMARLIK MÜHENDİSLİĞİ YAZILIMI ANA GÖREVLİSİ 1 4 SAY/70 50 olup Bilgisayar Mühendisliği alanında FAKÜLTESİ BİLİM DALI yüksek lisans yapıyor olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "Spor Yöneticiliği Bölümü lisans SPOR SPOR SPOR YÖNETİM ARAŞTIRMA mezunu olup Spor Yönetimi veya 2026/4 BİLİMLERİ YÖNETİCİLİĞİ BİLİMLERİ GÖREVLİSİ 1 4 SAY/EA/SÖZ/70 50 Beden Eğitimi ve Spor Ana Bilim FAKÜLTESİ ANA BİLİM DALI Dalında tezli yüksek lisans yapıyor olmak."
+      }
+     ],
+     "basvuru_notu": "",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/1d62c4752e97285cb16f08a98e71ee24d83b6246523280b591df5447e4ea74b2.pdf",
+     "belge_sha256": "1d62c4752e97285cb16f08a98e71ee24d83b6246523280b591df5447e4ea74b2",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "belge_ogrenim": [
+      "lisans"
      ]
     },
     {
@@ -2504,7 +2548,7 @@
      "donem": "( 6 Kasım - 21 Kasım)",
      "baslangic_zaman": "2026-11-06T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-19T09:36:49+03:00",
+     "detay_guncelleme": "2026-11-19T10:06:49+03:00",
      "belge_ozeti": "c604b790d505e13e843e92f5a072164d58b79e3967923ad7d57bd1ae553171fe",
      "kaynaklar": [
       {
@@ -4405,7 +4449,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-11-19T06:36:53.828342+00:00",
+   "kontrol": "2026-11-19T07:06:51.651289+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
