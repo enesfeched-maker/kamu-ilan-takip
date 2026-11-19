@@ -1,5 +1,5 @@
 {
- "guncelleme": "2026-11-19T10:09:12+03:00",
+ "guncelleme": "2026-11-19T10:13:01+03:00",
  "ilanlar": [
   {
    "id": "https://kariyerkapisi.gov.tr/IlanDetay?i=9c82aab5-022e-43c8-b7f1-e6cf329d205b",
@@ -34870,58 +34870,6 @@
    ]
   },
   {
-   "id": "csb-479031",
-   "baslik": "MUDURNU BELEDİYE BAŞKANLIĞI - İLK DEFA ATANMAK ÜZERE SÖZLEŞMELİ PERSONEL ALIM İLANI",
-   "kurum": "MUDURNU BELEDİYE BAŞKANLIĞI",
-   "kadro": "1 Mühendis",
-   "ilan_turu": "Sözleşmeli Personel",
-   "son_tarih": "2026-12-25",
-   "kaynak": "ÇŞB Yerel Yönetimler",
-   "kaynak_turu": "csb",
-   "link": "https://yerelyonetimler.csb.gov.tr/mudurnu-belediye-baskanligina-ilk-defa-atanmak-uzere-sozlesmeli-personel-alim-ilani-duyuru-479031",
-   "kaynaklar": [
-    {
-     "ad": "ÇŞB Yerel Yönetimler",
-     "link": "https://yerelyonetimler.csb.gov.tr/mudurnu-belediye-baskanligina-ilk-defa-atanmak-uzere-sozlesmeli-personel-alim-ilani-duyuru-479031"
-    },
-    {
-     "ad": "SBB Kamu İlan",
-     "link": "https://kamuilan.sbb.gov.tr/"
-    }
-   ],
-   "yayim_tarihi": "2026-11-17",
-   "detay_guncelleme": "2026-11-19T00:06:56+03:00",
-   "csb_detay_surumu": 5,
-   "ozet": "Bolu ili Mudurnu Belediye Başkanlığı bünyesinde 5393 sayılı Belediye Kanununun 49 uncu maddesi ile Mahalli İdarelere İlk Defa Atanacaklara Dair Sınav ve Atama Yönetmeliği hükümlerine göre aşağıda unvanı, sınıfı, derecesi, adedi, nitelikleri, KPSS puan türü, KPSS taban puanı ve diğer şartları taşımak kaydıyla, belirtilen boş pozisyona tam zamanlı sözleşmeli personel alınacaktır. Son başvuru: 25.12.2026.",
-   "belgeler": [
-    {
-     "ad": "Mudurnu-Bel-Ilan-SON-2-20261117105923.docx",
-     "link": "https://webdosya.csb.gov.tr/v2/yerelyonetimler/2026/11/Mudurnu-Bel-Ilan-SON-2-20261117105923.docx"
-    }
-   ],
-   "sartlar": [
-    {
-     "kadro": "Mühendis · 1 pozisyon",
-     "metin": "KPSS P3 puan türünden en az 75 puan. Hizmet sınıfı TH, 5. derece. Öğrenim: Lisans mezunu. Lisans düzeyinde eğitim veren fakültelerin harita mühendisliği, jeodezi ve fotogrametri mühendisliği, geomatik mühendisliği programlarının birinden mezun olmak. En az (B) sınıfı sürücü belgesine sahip olmak."
-    }
-   ],
-   "basvuru_notu": "Başvuru 14 Aralık 2026 – 25 Aralık 2026 arasında; e-postayla (mudurnu@mudurnu.bel.tr) ya da şahsen/postayla.",
-   "ilk_gorulme": "2026-11-17T11:37:06+03:00",
-   "kaynak_kimlikleri": [
-    "csb-479031",
-    "sbb-a1f767cd28440f5670f9cbed"
-   ],
-   "ogrenim": [
-    "lisans"
-   ],
-   "kategori": "belediye",
-   "kpss": "kpss",
-   "eski_belgeler": [
-    "cbfeaebae6fff50296bde3d539a0235c0ff9b3f828f93bdb2dd60679f96accbd"
-   ],
-   "baslangic_zaman": "2026-12-14T00:00:00+03:00"
-  },
-  {
    "id": "iskur-19c82fb7005fa2f62fc3646b",
    "baslik": "Bolu Mudurnu Belediyesi Sözleşmeli Personel Alım İlanı",
    "kurum": "Bolu Mudurnu Belediyesi",
@@ -34936,6 +34884,14 @@
     {
      "ad": "İŞKUR",
      "link": "https://www.iskur.gov.tr/medya/xlknxj40/bolu-mudurnu-belediyesi-soezle%C5%9Fmeli-personel-al%C4%B1m-ilan%C4%B1-25122026.pdf"
+    },
+    {
+     "ad": "ÇŞB Yerel Yönetimler",
+     "link": "https://yerelyonetimler.csb.gov.tr/mudurnu-belediye-baskanligina-ilk-defa-atanmak-uzere-sozlesmeli-personel-alim-ilani-duyuru-479031"
+    },
+    {
+     "ad": "SBB Kamu İlan",
+     "link": "https://kamuilan.sbb.gov.tr/"
     }
    ],
    "detay_guncelleme": "2026-11-19T10:05:49+03:00",
@@ -34956,9 +34912,11 @@
    "iskur_belge_sha256": "342c231599da25d1c93a051133a43f50ea26b5fe61d9e5676f45ff24ed76cef0",
    "iskur_detay_guncelleme": "2026-11-19T10:08:24+03:00",
    "baslangic_zaman": "2026-12-14T00:00:00+03:00",
-   "ilk_gorulme": "2026-11-19T10:08:25+03:00",
+   "ilk_gorulme": "2026-11-17T11:37:06+03:00",
    "kaynak_kimlikleri": [
-    "iskur-19c82fb7005fa2f62fc3646b"
+    "csb-479031",
+    "iskur-19c82fb7005fa2f62fc3646b",
+    "sbb-a1f767cd28440f5670f9cbed"
    ],
    "ogrenim": [
     "lisans"
@@ -34967,7 +34925,10 @@
    "iller": [
     "Bolu"
    ],
-   "kpss": "kpss"
+   "kpss": "kpss",
+   "eski_belgeler": [
+    "cbfeaebae6fff50296bde3d539a0235c0ff9b3f828f93bdb2dd60679f96accbd"
+   ]
   },
   {
    "id": "iskur-2f9f8af77c3f0f5f7eba9633",
@@ -36698,6 +36659,7 @@
   "iskur-1297f2230bae0ab64bde59fd",
   "iskur-1447040f913261353bf46dd0",
   "iskur-14e23dc574a3dd31ec7cb2c1",
+  "iskur-19c82fb7005fa2f62fc3646b",
   "iskur-1c1015bfd1faeaea90028a12",
   "iskur-20df4e86aedf099d725ee262",
   "iskur-21dfba2eebd5c383d4996f2c",
@@ -36981,7 +36943,6 @@
   "sbb-ffbba5c3ef2b2c84c00bb8e2"
  ],
  "telegram_bekleyen": [
-  "iskur-19c82fb7005fa2f62fc3646b",
   "iskur-bc6a2f1c69094431350d6242",
   "sbb-1b5d1f3068575a269a3a23ad",
   "sbb-d899f32eaa9140b2a3b909d2",
@@ -37213,7 +37174,6 @@
   "csb-478688",
   "csb-478769",
   "csb-478820",
-  "csb-479031",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=069150d6-ad89-4973-9410-25ae1fa56d67",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=26f5b7a7-865c-483f-9045-2f77e5e7fb9d",
   "https://kariyerkapisi.gov.tr/IlanDetay?i=2b5ee2d8-3958-4fd1-a3cb-219bcb7b536d",
