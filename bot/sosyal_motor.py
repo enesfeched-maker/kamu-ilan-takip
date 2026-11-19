@@ -349,6 +349,9 @@ SORULAR = {
     'haber': ['Sen bu alımı bekleyenlerden misin? 👇', 'Hangi branşta kaç kadro açılmasını bekliyorsun? 👇'],
     'son_gun': ['Başvurunu yaptın mı, yoksa son güne mi bıraktın? 👇', 'Sen hangisine başvurdun? 👇'],
     'ilan': ['Başvurmayı düşünüyor musun? 👇', 'Bu kadrolardan sana uygun olan var mı? 👇'],
+    'kimler': ['Sen başvurabiliyor musun? 👇', 'Şartların hangisi sana uymuyor? 👇'],
+    'meslek': ['Hangi şehirdesin? 👇', 'Bu meslekte çalışan tanıdığın var mı? 👇'],
+    'duzey': ['Hangisine başvuracaksın? 👇', 'Mezuniyet bölümün ne? 👇'],
 }
 MUZIK_KLASORU = ROOT / 'sosyal' / 'muzik'
 
@@ -453,15 +456,15 @@ def uret(vakit, cikti, simdi=None, cfg=None, docs=ROOT / 'docs', gecmis_yolu=GEC
         try:
             import reels
             from kurum_gorseli import kurum_logosu
-            palet = reels.siradaki_palet(gecmis)
+            palet = reels.bicim_paleti(vakit, simdi) or reels.siradaki_palet(gecmis)
             reels.palet_sec(palet)   # sahne katmanları konu kurulurken çizilir; palet ondan önce seçilmeli
             if vakit == 'haftalik':   # pazar akşamı veri dizisi (haftalik.py)
                 import haftalik
                 konu = haftalik.haftalik_konu(acik, simdi, gecmis, docs, kurum_logosu)
             else:
                 konu = reels.gunluk(vakit, acik, simdi, kurum_logosu, gecmis)
-            if konu:
-                return sablon_uret(konu, vakit, cikti, simdi, gecmis, gecmis_yolu, video, agirlik, palet)
+            if konu:   # yeni biçim kurulamayıp eskisine düşüldüyse gunluk gerçek paleti konuda bildirir
+                return sablon_uret(konu, vakit, cikti, simdi, gecmis, gecmis_yolu, video, agirlik, konu.get('palet') or palet)
         except Exception as hata:   # şablon hatası paylaşımı durdurmaz: sabah/akşam eski biçime düşer
             print(f'::warning::Video şablonu üretilemedi ({vakit}): {hata}')
     if vakit in ('ilan', 'haftalik'):
