@@ -8170,6 +8170,296 @@
    ]
   }
  },
+ "sbb-7223db80b3b76a53c3af8c70": {
+  "zaman": "2026-11-20T01:11:41+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "pdf",
+  "imza": "2338cb256809d0ca",
+  "baslik": "ADLİ TIP KURUMU BAŞKANLIĞI - 181 SÖZLEŞMELİ PERSONEL ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Mühendis (Makine)",
+     "adet": 12,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "Makine Mühendisliği lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis (Kimya)",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "Kimya Mühendisliği lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Mühendis (Bilişim)",
+     "adet": 4,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "Bilgisayar, Elektronik, Elektronik ve Haberleşme, Yapay Zeka veya Yapay Zeka ve Veri Mühendisliğinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Diğer Teknik Hizmet Personeli (Kimyager)",
+     "adet": 18,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "Kimya veya Biyokimya lisans programlarının birinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Biolog",
+     "adet": 5,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "Biyoloji, Biyoteknoloji, Moleküler Biyoloji, Genetik, Tıbbi Biyoloji vb. lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Hemşire",
+     "adet": 3,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "Hemşirelik, Hemşirelik ve Sağlık Hizmetleri veya Sağlık Memurluğu lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Laborant",
+     "adet": 26,
+     "ogrenim": "onlisans",
+     "puan_turu": "P93",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "Sağlık/Tıbbi Laboratuvar veya Tıbbi Laboratuvar Teknikleri önlisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Tekniker (Elektrik)",
+     "adet": 4,
+     "ogrenim": "onlisans",
+     "puan_turu": "P93",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "Elektrik, Elektronik, Elektrik-Elektronik, Endüstriyel Elektronik vb. önlisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Tekniker (Sıhhi Tesisat)",
+     "adet": 5,
+     "ogrenim": "onlisans",
+     "puan_turu": "P93",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "Yapı, Sıhhi Tesisat, Tesisat, İklimlendirme-Soğutma, Doğalgaz vb. önlisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Tekniker (Silah Muayene)",
+     "adet": 1,
+     "ogrenim": "onlisans",
+     "puan_turu": "P93",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "Makine, İş Makineleri, Makine Yağları ve Yağlama Teknolojisi veya Silah Sanayi Teknikerliği önlisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Tekniker (Bilgisayar)",
+     "adet": 1,
+     "ogrenim": "onlisans",
+     "puan_turu": "P93",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "Bilgisayar Programcılığı, Bilgisayar Teknolojisi ve Programlama, Web Teknolojileri ve Programlama vb. önlisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Sağlık Teknikeri (Otopsi)",
+     "adet": 18,
+     "ogrenim": "onlisans",
+     "puan_turu": "P93",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "Adli Tıp Teknikerliği, Otopsi Yardımcılığı veya Adli Tıp önlisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Büro Personeli (İşletme-İktisat-Kamu Yönetimi)",
+     "adet": 5,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "İktisat, İşletme, Muhasebe-Finans, Kamu Yönetimi, Sağlık Yönetimi vb. lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Büro Personeli (Bilgi Belge Yönetimi)",
+     "adet": 5,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "Kütüphanecilik, Bilgi Belge Yönetimi veya Arşivcilik lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Büro Personeli (Tıbbi Sekreter)",
+     "adet": 5,
+     "ogrenim": "onlisans",
+     "puan_turu": "P93",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "Tıbbi Dokümantasyon ve Sekreterlik, Büro Yönetimi, Sekreterlik vb. önlisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Büro Personeli (İşletme-İktisat-Kamu Yönetimi-Bilgi Belge Yönetimi)",
+     "adet": 29,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "İktisat, İşletme, Kamu Yönetimi, Sağlık Yönetimi, Kütüphanecilik, Bilgi Belge Yönetimi veya Arşivcilik lisans programından mezun olmak."
+     ]
+    },
+    {
+     "unvan": "İnfaz ve Koruma Memuru (Erkek)",
+     "adet": 1,
+     "ogrenim": "ortaogretim",
+     "puan_turu": "P94",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "Cinsiyeti erkek olmak.",
+      "Lise ve dengi okul mezunu olmak.",
+      "01 Ocak 1996 ve sonrası doğumlu olmak.",
+      "En az 170 cm boyunda olmak; boyun son iki rakamı ile kilo farkı 13'ten fazla, 17'den az olmamak.",
+      "Sağlık kurulu raporu ve vardiyalı çalışmaya engel olmadığına dair imzalı beyan formunu sisteme yüklemek."
+     ]
+    },
+    {
+     "unvan": "Destek Personeli (Hizmetli)",
+     "adet": 26,
+     "ogrenim": "ortaogretim",
+     "puan_turu": "P94",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "Lise ve dengi okul mezunu olmak.",
+      "Temizlik işlerinde en az 6 ay sigortalı çalışmış olmak (barkodlu SGK dökümüyle belgelemek).",
+      "Yükseköğretimde aktif örgün öğrenci kaydı bulunmamak."
+     ]
+    },
+    {
+     "unvan": "Destek Personeli (Şoför)",
+     "adet": 10,
+     "ogrenim": "ortaogretim",
+     "puan_turu": "P94",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "Lise ve dengi okul mezunu olmak.",
+      "Eski tip E sınıfı veya yeni tip D ve C (birlikte) sınıfı sürücü belgesine sahip olmak."
+     ]
+    },
+    {
+     "unvan": "Destek Personeli (Aşçı)",
+     "adet": 2,
+     "ogrenim": "onlisans",
+     "puan_turu": "P93",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "Aşçılık, Hazır Yemek ve Aşçılık, Mutfak Yönetimi, Gastronomi ve Mutfak Sanatları vb. önlisans programından mezun olmak."
+     ]
+    }
+   ],
+   "toplam": 181,
+   "son_basvuru_tarihi": "2026-12-06",
+   "son_basvuru_saati": "23:59",
+   "baslangic_tarihi": "2026-11-30",
+   "kpss_gerekli": true,
+   "iller": [
+    "İstanbul",
+    "Adana",
+    "Ankara",
+    "Antalya",
+    "Ağrı",
+    "Artvin",
+    "Aydın",
+    "Bursa",
+    "Denizli",
+    "Diyarbakır",
+    "Erzurum",
+    "Gaziantep",
+    "Hatay",
+    "İzmir",
+    "Kayseri",
+    "Konya",
+    "Malatya",
+    "Muğla",
+    "Samsun",
+    "Şanlıurfa",
+    "Trabzon",
+    "Van"
+   ],
+   "ortak_kosullar": [
+    "2026 KPSS'den pozisyonun puan türünden (P3/P93/P94) en az 70 puan almış olmak.",
+    "Başvuru e-Devlet üzerinden Kariyer Kapısı (Adli Tıp Kurumu Başkanlığı ilanı) ile yapılır; şahsen/posta kabul edilmez.",
+    "Pozisyon sayısının 3 katı aday sözlü sınava çağrılır; sözlü sınav İstanbul Bahçelievler'deki merkez binada, tarihi sonra ilan edilecek.",
+    "Aday her pozisyon için yalnızca bir başvuru yapabilir."
+   ],
+   "ozet": "Adli Tıp Kurumu 181 sözleşmeli personel alacak (mühendis, hemşire, laborant, tekniker, büro, hizmetli, şoför vb.). Başvurular 30 Kasım–6 Aralık 2026 arasında Kariyer Kapısı'ndan yapılır.",
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans",
+    "onlisans",
+    "ortaogretim"
+   ],
+   "puan_turleri": [
+    "P3",
+    "P93",
+    "P94"
+   ]
+  }
+ },
  "sbb-7d8996f63d7c91f6768fd310": {
   "zaman": "2026-10-30T23:13:31+03:00",
   "surum": 4,
@@ -8437,6 +8727,55 @@
    ],
    "puan_turleri": [
     "P3"
+   ]
+  }
+ },
+ "sbb-8d546850a6546f5ecc31d3ee": {
+  "zaman": "2026-11-20T01:11:41+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "pdf",
+  "imza": "0663b0b31c7d59d7",
+  "baslik": "BARTIN ÜNİVERSİTESİ - 1 SÖZLEŞMELİ PERSONEL ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Büro Personeli (Erkek/Kadın)",
+     "adet": 1,
+     "ogrenim": "onlisans",
+     "puan_turu": "P93",
+     "en_dusuk_puan": 60,
+     "il": "Bartın",
+     "kosullar": [
+      "Herhangi bir ön lisans programından mezun olmak.",
+      "01 Ocak 1991 ve sonrası doğumlu olmak."
+     ]
+    }
+   ],
+   "toplam": 1,
+   "son_basvuru_tarihi": "2026-12-05",
+   "son_basvuru_saati": "13:00",
+   "baslangic_tarihi": "2026-11-20",
+   "kpss_gerekli": true,
+   "iller": [
+    "Bartın"
+   ],
+   "ortak_kosullar": [
+    "2026 KPSS (B) grubu sınavına girmiş olmak (ön lisans için P93 puanı).",
+    "Başvuru Kariyer Kapısı'ndan yapılır; Aday Başvuru Bilgileri belgesi en geç 8 Aralık 2026 17.30'a kadar üniversiteye şahsen veya noter vekaletiyle teslim edilir.",
+    "Yazılı/sözlü sınav yok; KPSS puan sırasına göre yerleştirme yapılır."
+   ],
+   "ozet": "Bartın Üniversitesi 1 ön lisans mezunu büro personeli (sözleşmeli) alacak. Başvurular 20 Kasım–5 Aralık 2026 arasında Kariyer Kapısı'ndan yapılır.",
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "onlisans"
+   ],
+   "puan_turleri": [
+    "P93"
    ]
   }
  },
