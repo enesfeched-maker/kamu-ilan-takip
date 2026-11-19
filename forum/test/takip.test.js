@@ -220,13 +220,13 @@ test('bildirimler: takip türü, oda bayrağı, öncelik (alıntı > anma > yan�
   const dize = hamBaslik('puan', 'Takip edilen konu', x.id), odaB = hamBaslik('oda', 'Takip edilen oda', 1);
   const kendi = hamBaslik('puan', 'Benim konum', ben.id), eski = hamBaslik('puan', 'Eski konu', x.id);
   [dize, odaB, kendi, eski].forEach(takipEt);
+  const benimY = hamYanit(dize, ben.id, 'benim yanıtım', t - 600);
   const y1 = hamYanit(dize, x.id, 'konuda ilk mesaj', t - 500);            // takip
   const y2 = hamYanit(odaB, z.id, 'odada mesaj', t - 400);                  // takip, oda
   const y3 = hamYanit(kendi, x.id, 'sana yanıt', t - 300);                  // yanıt (kendi başlığım) ve takip -> yanıt kazanır
   const y4 = hamYanit(dize, z.id, 'bak @Ben_B bu önemli', t - 200);         // anma kazanır
-  const benimY = hamYanit(dize, ben.id, 'benim yanıtım', t - 190);
   const y5 = hamYanit(dize, x.id, 'yanıtına alıntı', t - 100, benimY);      // alıntı kazanır
-  hamYanit(dize, ben.id, 'bir tane daha benim', t - 90);                    // kendi mesajı yok
+  hamYanit(eski, ben.id, 'bir tane daha benim', t - 90);                    // kendi mesajı yok
   hamYanit(eski, x.id, 'çok eski', t - 15 * 86400);                         // 14 gün dışı
   hamYanit(dize, x.id, 'gizli olan', t - 50);
   env.DB.ham.prepare("UPDATE yanitlar SET gizli = 1 WHERE govde = 'gizli olan'").run();
@@ -246,4 +246,25 @@ test('bildirimler: takip türü, oda bayrağı, öncelik (alıntı > anma > yan�
   takipEt(dize);
   const r3 = await cagir(env, 'GET', `/ben/bildirimler?sonra=${t - 250}`, { token: ben.token });
   assert.deepEqual(r3.json.bildirimler.map((b) => b.yanit_id), [y5, y4]);
+});
+
+test('bildirimler: cevap verdiğin yorum ve takipten önceki mesajlar bildirim olmaz, sonrakiler olur', async () => {
+  const env = ortam();
+  const ben = await uye(env, 'Ben_C'), x = await uye(env, 'Diger_Y');
+  const t = Math.floor(Date.now() / 1000);
+  const hamYanit = (baslik, uyeId, govde, olusma, ust = null) => Number(env.DB.ham.prepare('INSERT INTO yanitlar (baslik_id, uye_id, govde, olusma, ust_id) VALUES (?, ?, ?, ?, ?)').run(baslik, uyeId, govde, olusma, ust).lastInsertRowid);
+  const hamBaslik = (ad, uyeId) => Number(env.DB.ham.prepare("INSERT INTO basliklar (kategori, baslik, govde, uye_id, olusma, son_hareket) VALUES ('puan', ?, 'x', ?, 1, 1)").run(ad, uyeId).lastInsertRowid);
+  const konu = hamBaslik('Cevap verdiğim konu', x.id), izlenen = hamBaslik('Sonradan takip edilen', x.id);
+  const benimki = hamBaslik('Benim konum', ben.id);
+  const onceki = hamYanit(konu, x.id, 'ilk yorum', t - 500);
+  const benim = hamYanit(konu, ben.id, 'yoruma cevabım', t - 400, onceki);
+  env.DB.ham.prepare('INSERT INTO takipler (uye_id, baslik_id, olusma) VALUES (?, ?, ?)').run(ben.id, konu, t - 400);
+  const sonraki = hamYanit(konu, x.id, 'cevabına cevap', t - 300, benim);
+  hamYanit(izlenen, x.id, 'takipten önce', t - 250);
+  env.DB.ham.prepare('INSERT INTO takipler (uye_id, baslik_id, olusma) VALUES (?, ?, ?)').run(ben.id, izlenen, t - 200);
+  const takipSonra = hamYanit(izlenen, x.id, 'takipten sonra', t - 100);
+  hamYanit(benimki, x.id, 'konuma yorum', t - 90);
+  hamYanit(benimki, ben.id, 'yorumu cevapladım', t - 80);
+  const r = await cagir(env, 'GET', '/ben/bildirimler', { token: ben.token });
+  assert.deepEqual(r.json.bildirimler.map((b) => [b.yanit_id, b.tur]), [[takipSonra, 'takip'], [sonraki, 'alinti']]);
 });

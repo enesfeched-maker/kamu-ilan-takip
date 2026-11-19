@@ -157,3 +157,13 @@ img.fr-av,svg.fr-av{box-sizing:border-box;max-width:none;padding:0}
 .kt-hesap,.kt-profil-not{display:flex;align-items:center;gap:10px;margin:10px 0 0;color:var(--ink-2,#555);font-size:14px}
 .kt-hesap .fr-av,.kt-profil-not .fr-av{width:24px;height:24px;font-size:11px}
 .kt-profil-not{margin:0 0 12px;padding:10px 12px;border-radius:10px;background:var(--surface-2,#f1f1ec)}
+
+/* Telefonda her zaman görünen Forum girişi (hesap.js ekler, Kasım 2026): Telegram hapının yanında çerçeveli hap + lime nokta; masaüstünde gizli. */
+.tb-forum{display:none;position:relative;align-items:center;gap:6px;margin-left:auto;padding:7px 12px 7px 10px;border-radius:999px;border:1px solid var(--kb-lime);color:var(--kb-lime);font-weight:700;font-size:12.5px;letter-spacing:.01em;text-decoration:none;white-space:nowrap}
+.tb-forum svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tb-forum i{position:absolute;top:-2px;right:-2px;width:8px;height:8px;border-radius:50%;background:var(--kb-lime);box-shadow:0 0 0 2px var(--kb-zemin);animation:tb-forum-nabiz 2.4s ease-out infinite}
+.tb-forum:hover,.tb-forum:focus-visible{background:rgba(200,241,105,.12)}
+@keyframes tb-forum-nabiz{0%{box-shadow:0 0 0 2px var(--kb-zemin),0 0 0 2px rgba(200,241,105,.6)}70%{box-shadow:0 0 0 2px var(--kb-zemin),0 0 0 8px rgba(200,241,105,0)}100%{box-shadow:0 0 0 2px var(--kb-zemin),0 0 0 2px rgba(200,241,105,0)}}
+@media (max-width:1020px){.tb-forum{display:inline-flex}.tb-forum+.tb-tg{margin-left:8px}.tb-ac{flex:none}}
+@media (max-width:420px){.tb-ic{gap:8px}.tb-forum+.tb-tg{margin-left:0;margin-right:6px}.tb-ic:has(.tb-forum) .tb-marka span{display:none}}
+@media (prefers-reduced-motion:reduce){.tb-forum i{animation:none}}
