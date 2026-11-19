@@ -1,10 +1,10 @@
 {
  "schema": 1,
- "guncelleme": "2026-11-19T06:06:41.267730+00:00",
+ "guncelleme": "2026-11-19T06:36:41.926141+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-11-19T06:07:38.013311+00:00",
-   "hata_sayisi": 2,
+   "kontrol": "2026-11-19T06:36:52.857906+00:00",
+   "hata_sayisi": 0,
    "ilanlar": [
     {
      "id": "sbb-ba74307a8cd30207b4c4a8bb",
@@ -118,7 +118,7 @@
      "donem": "( 18 Kasım - 2 Aralık)",
      "baslangic_zaman": "2026-11-18T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-19T09:06:42+03:00",
+     "detay_guncelleme": "2026-11-19T09:36:43+03:00",
      "belge_ozeti": "3b96d3f990e76841ffe4d5e6dee66e4dd087373ccb520703d568740de592dd01",
      "kaynaklar": [
       {
@@ -1871,6 +1871,41 @@
      ]
     },
     {
+     "id": "sbb-bdb3b15039cccfcfd7a9e2d7",
+     "baslik": "KAHRAMANMARAŞ SÜTÇÜ İMAM ÜNİVERSİTESİ - İPTAL İLANI",
+     "kurum": "KAHRAMANMARAŞ SÜTÇÜ İMAM ÜNİVERSİTESİ",
+     "kadro": "İPTAL İLANI",
+     "ilan_turu": "Kamu Personeli",
+     "son_tarih": "2026-11-23",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 9 Kasım - 23 Kasım)",
+     "baslangic_zaman": "2026-11-09T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-11-19T09:36:46+03:00",
+     "belge_ozeti": "7ee7be4a08929768dbd0c11808e2778199e85a0f98b63ef71a51ac92dbe380be",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "duyuru_turu": "İptal duyurusu",
+     "ozet": "Kahramanmaraş Sütçü İmam Üniversitesi Rektörlüğünden: İPTAL İLANI 09.11.2026 tarihli ve 33425 sayılı Resmî Gazete yayımlanan akad emik personel alım ilanımızda aşağıda tabloda belir tilen Elbistan Meslek Yüksekoku lu Mülkiyet Koruma ve Güvenlik Bölümü, Sivil Savunma ve İtfaiyecilik Programı Öğretim Görevlisi (Ders Verecek) kadrosu ilanımız iptal edilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgedeki kadro koşullarından alıntı",
+       "metin": "ELBİSTAN MESLEK YÜKSEKOKULU Bölüm/Anabilim ALES Y.DİL Niteliği Dalı Ünvanı K/D Adet İş sağlığı ve güvenliği lisans mezunu olmak."
+      }
+     ],
+     "basvuru_notu": "",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/7ee7be4a08929768dbd0c11808e2778199e85a0f98b63ef71a51ac92dbe380be.pdf",
+     "belge_sha256": "7ee7be4a08929768dbd0c11808e2778199e85a0f98b63ef71a51ac92dbe380be",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "duyuru_cumlesi": "Kahramanmaraş Sütçü İmam Üniversitesi Rektörlüğünden: İPTAL İLANI 09.11.2026 tarihli ve 33425 sayılı Resmî Gazete yayımlanan akad emik personel alım ilanımızda aşağıda tabloda belir tilen Elbistan Meslek Yüksekoku lu Mülkiyet Koruma ve Güvenlik Bölümü, Sivil Savunma ve İtfaiyecilik Programı Öğretim Görevlisi (Ders Verecek) kadrosu ilanımız iptal edilmiştir."
+    },
+    {
      "id": "sbb-6975c78c3d45204d44f373ea",
      "baslik": "KAMU DENETÇİLİĞİ KURUMU - 10 KAMU DENETÇİLİĞİ UZMAN YARDIMCISI ALACAK",
      "kurum": "KAMU DENETÇİLİĞİ KURUMU",
@@ -2227,7 +2262,7 @@
      "donem": "( 6 Kasım - 20 Kasım)",
      "baslangic_zaman": "2026-11-06T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-18T21:07:05+03:00",
+     "detay_guncelleme": "2026-11-19T09:36:46+03:00",
      "belge_ozeti": "81fd966586ccb0722e44aeb4d56b1ca1ac0d49d86119e9b89efa123e263d01f9",
      "kaynaklar": [
       {
@@ -2266,7 +2301,7 @@
      "donem": "( 6 Kasım - 21 Kasım)",
      "baslangic_zaman": "2026-11-06T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-18T21:07:06+03:00",
+     "detay_guncelleme": "2026-11-19T09:36:47+03:00",
      "belge_ozeti": "f41f30b2b814a52dfe45bb56458b895404759abdaac56ab4372ebdc27d27e667",
      "kaynaklar": [
       {
@@ -2469,7 +2504,7 @@
      "donem": "( 6 Kasım - 21 Kasım)",
      "baslangic_zaman": "2026-11-06T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-19T08:36:46+03:00",
+     "detay_guncelleme": "2026-11-19T09:36:49+03:00",
      "belge_ozeti": "c604b790d505e13e843e92f5a072164d58b79e3967923ad7d57bd1ae553171fe",
      "kaynaklar": [
       {
@@ -2492,7 +2527,7 @@
      "donem": "( 21 Aralık - 23 Aralık)",
      "baslangic_zaman": "2026-12-21T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-18T20:36:53+03:00",
+     "detay_guncelleme": "2026-11-19T09:36:52+03:00",
      "belge_ozeti": "fefaa215937ce32a335626f3cd47f953474ad2e6edf7e6c9a75d9cca3bdc84e8",
      "kaynaklar": [
       {
@@ -4370,7 +4405,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-11-19T06:07:42.107069+00:00",
+   "kontrol": "2026-11-19T06:36:53.828342+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
