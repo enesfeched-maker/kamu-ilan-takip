@@ -22,11 +22,11 @@ GUNLUK_YOLU = ROOT / 'sosyal' / 'ajan-gunlugu.md'
 IS_KLASORU = ROOT / 'sosyal-is'
 # ad: (varsayılan, en az, en çok). ilan_gunluk üst sınırı YouTube yükleme kotasından gelir (günde ~6 video, 2'si sabah/akşam).
 AYAR_SINIR = {'ilan_gunluk': (3, 1, 4), 'son_gun_ufuk': (3, 1, 5), 'ozet_en_az': (2, 2, 4)}
-SORU_TURLERI = ('genel', 'son_gun', 'ilan', 'ozet')
+SORU_TURLERI = ('genel', 'son_gun', 'ilan', 'ozet', 'kimler', 'meslek', 'duzey')
 SORU_EN_COK, SORU_UZUNLUK = 3, 90
 YASAK = ('kaçırma', 'hemen', 'şok', 'müjde', 'garanti', 'kesin atan')   # sosyal/voice.md "Söylenmez"
 OLCUTLER = ('views', 'reach', 'likes', 'comments', 'saved', 'shares')
-TUR_ADI = {'son_gun': 'Son gün', 'ilan': 'Tek ilan', 'ozet': 'Akşam özeti', 'yeni': 'Yeni ilanlar', 'buyuk': 'Büyük alım',
+TUR_ADI = {'kimler': 'Kimler başvurabilir', 'meslek': 'Meslek alımları', 'duzey': 'Öğrenime göre ilanlar', 'son_gun': 'Son gün', 'ilan': 'Tek ilan', 'ozet': 'Akşam özeti', 'yeni': 'Yeni ilanlar', 'buyuk': 'Büyük alım',
            'kategori': 'Kategori', 'rehber': 'Rehber', 'haber': 'Haber'}
 
 
