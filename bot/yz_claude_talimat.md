@@ -56,6 +56,8 @@ doğru** yazmak. Hız değil doğruluk önemli. Belgede açıkça yazmayan hiçb
   (KPSS yoksa null). `en_dusuk_puan`: yazıyorsa sayı, yoksa null. `il`: görev yeri ili (yoksa null).
 - **kosullar:** o kadroya ÖZEL şartlar: bölüm/mezuniyet, sertifika, ehliyet, deneyim, cinsiyet, yaş (kadroya özelse).
   Her biri tek kısa cümle, en çok 140 karakter, "…mezun olmak" biçimi. En önemli 5 madde.
+  İSTİSNA: bölüm/mezuniyet maddesinde belgedeki bütün bölüm/program adlarını eksiksiz yaz; "vb.", "gibi",
+  "belirtilen" diye kısaltma (aday kendi bölümünü arar). Bu maddede karakter sınırı yok.
 - **ortak_kosullar:** tüm kadrolar için geçerli, en çok 5 madde: yaş sınırı, boy-kilo, KPSS yılı/grubu, başvuru yeri ve
   şekli, sınav usulü/tarihi. 657 sayılı Kanun 48. madde genel şartlarını (Türk vatandaşı olmak, kamu hakları, adli sicil,
   askerlik, sağlık), mevzuat numaralarını ve "belirtilmemiş" gibi dolgu maddelerini YAZMA.

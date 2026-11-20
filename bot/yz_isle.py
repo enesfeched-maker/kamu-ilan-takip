@@ -92,6 +92,12 @@ def _kisa(m, sinir=140):
     return m if len(m) <= sinir else m[:sinir - 1].rsplit(' ', 1)[0] + '…'
 
 
+def _kosul(m):
+    """Kadro koşulu. Mezuniyet maddesindeki bölüm listesi kesilmez (20 Kasım 2026: Adli Tıp ilanında bölümler
+    140 karakterde 'vb.' ile kısaltılmıştı; aday kendi bölümünü göremiyordu)."""
+    return _kisa(m, 1500 if re.search(r'mezun', str(m or ''), re.I) else 140)
+
+
 def alanlar(yz, item, simdi=None):
     """Gemini çıktısından kayda yazılacak alanlar. Mantıksız değer (geçmiş/uzak tarih, aşırı kişi sayısı) yazılmaz."""
     from site_uret import TR
@@ -117,7 +123,7 @@ def alanlar(yz, item, simdi=None):
         adet = k.get('adet') if isinstance(k.get('adet'), int) and 0 < k['adet'] < KADRO_SINIRI else None
         kadrolar.append({'unvan': unvan, 'adet': adet, 'ogrenim': k.get('ogrenim'),
                          'puan_turu': _puan_turu(k.get('puan_turu')) or None, 'en_dusuk_puan': k.get('en_dusuk_puan'),
-                         'il': _il(k.get('il')), 'kosullar': [m for m in map(_kisa, k.get('kosullar') or []) if m][:5]})
+                         'il': _il(k.get('il')), 'kosullar': [m for m in map(_kosul, k.get('kosullar') or []) if m][:5]})
     if kadrolar:
         sonuc['yz_kadrolar'] = kadrolar
         adetler = [k['adet'] for k in kadrolar]
