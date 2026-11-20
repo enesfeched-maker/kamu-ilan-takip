@@ -1,48 +1,52 @@
 {
- "olculen": 71,
+ "olculen": 73,
  "tur": {
   "haber": -3.7,
-  "son_gun": 3.5,
+  "son_gun": 3.6,
   "yeni": 3.9,
-  "buyuk": 4.2,
-  "kategori": 1.0,
-  "ilan": -6.2,
+  "buyuk": 4.4,
+  "kategori": 1.1,
+  "ilan": -5.4,
   "rehber": -0.2,
-  "ozet": 1.4
+  "ozet": 1.5
  },
  "muzik": {
-  "afro-pop.mp3": 5.5,
+  "afro-pop.mp3": 5.6,
   "latin-carnaval.mp3": 6.8,
   "pop-dance.mp3": -0.5,
   "synthwave.mp3": -2.6,
-  "dance-club.mp3": -0.4,
+  "dance-club.mp3": -0.1,
   "funk-breakbeat.mp3": 1.9,
   "hip-hop.mp3": 6.0,
   "future-bass.mp3": 3.0,
-  "mixkit-158-happy-times.mp3": 3.0,
-  "mixkit-702-pop-09.mp3": -6.2,
-  "mixkit-443-serene-view.mp3": 1.4
+  "mixkit-158-happy-times.mp3": 3.1,
+  "mixkit-702-pop-09.mp3": -5.4,
+  "mixkit-443-serene-view.mp3": 1.5
  },
  "vakit": {
-  "aksam": -0.6,
+  "aksam": -0.2,
   "sabah": 3.9,
-  "ilan": -6.2
+  "ilan": -5.4
  },
  "palet": {
-  "kagit": -3.0,
-  "bordo": -4.0
+  "kagit": -4.1,
+  "bordo": -4.3
  },
- "soru": {},
+ "soru": {
+  "Bu kadrolardan sana uygun olan var mı? 👇": -1.6
+ },
  "seri": {},
- "sure_bandi": {},
+ "sure_bandi": {
+  "kisa": -1.6
+ },
  "adet": {
   "tur": {
    "haber": 1,
-   "son_gun": 34,
+   "son_gun": 35,
    "yeni": 14,
    "buyuk": 2,
    "kategori": 6,
-   "ilan": 11,
+   "ilan": 12,
    "rehber": 1,
    "ozet": 2
   },
@@ -55,31 +59,48 @@
    "funk-breakbeat.mp3": 7,
    "hip-hop.mp3": 7,
    "future-bass.mp3": 7,
-   "mixkit-158-happy-times.mp3": 7,
-   "mixkit-702-pop-09.mp3": 11,
+   "mixkit-158-happy-times.mp3": 8,
+   "mixkit-702-pop-09.mp3": 12,
    "mixkit-443-serene-view.mp3": 2
   },
   "vakit": {
    "aksam": 35,
-   "sabah": 25,
-   "ilan": 11
+   "sabah": 26,
+   "ilan": 12
   },
   "palet": {
-   "kagit": 10,
-   "bordo": 9
+   "kagit": 11,
+   "bordo": 10
   },
-  "soru": {},
+  "soru": {
+   "Bu kadrolardan sana uygun olan var mı? 👇": 1
+  },
   "seri": {},
-  "sure_bandi": {}
+  "sure_bandi": {
+   "kisa": 1
+  }
  },
  "tamamlama": {
-  "tur": {},
-  "muzik": {},
-  "vakit": {},
-  "palet": {},
-  "soru": {},
+  "tur": {
+   "ilan": 0.25
+  },
+  "muzik": {
+   "mixkit-702-pop-09.mp3": 0.25
+  },
+  "vakit": {
+   "ilan": 0.25
+  },
+  "palet": {
+   "kagit": 0.25
+  },
+  "soru": {
+   "Bu kadrolardan sana uygun olan var mı? 👇": 0.25
+  },
   "seri": {},
-  "sure_bandi": {}
+  "sure_bandi": {
+   "kisa": 0.25
+  }
  },
- "guncelleme": "2026-11-20T02:55:09+03:00"
+ "tamamlama_genel": 0.25,
+ "guncelleme": "2026-11-20T20:53:01+03:00"
 }
