@@ -1,10 +1,10 @@
 {
  "schema": 1,
- "guncelleme": "2026-11-20T13:06:54.748463+00:00",
+ "guncelleme": "2026-11-20T13:36:52.004059+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-11-20T13:07:28.772040+00:00",
-   "hata_sayisi": 0,
+   "kontrol": "2026-11-20T13:37:39.888544+00:00",
+   "hata_sayisi": 1,
    "ilanlar": [
     {
      "id": "sbb-d963f33c3633f9c245f3f422",
@@ -892,7 +892,7 @@
      "donem": "( 18 Kasım - 2 Aralık)",
      "baslangic_zaman": "2026-11-18T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-20T16:06:58+03:00",
+     "detay_guncelleme": "2026-11-20T16:36:55+03:00",
      "belge_ozeti": "3b96d3f990e76841ffe4d5e6dee66e4dd087373ccb520703d568740de592dd01",
      "kaynaklar": [
       {
@@ -1645,7 +1645,7 @@
      "donem": "( 4 Aralık - 18 Aralık)",
      "baslangic_zaman": "2026-12-04T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-20T04:36:45+03:00",
+     "detay_guncelleme": "2026-11-20T16:37:28+03:00",
      "belge_ozeti": "a7d520698bbfe497e0854b624c41590e5532a4859a55a4422a78a64ccedf985a",
      "kaynaklar": [
       {
@@ -2787,7 +2787,7 @@
      "donem": "( 6 Kasım - 21 Kasım)",
      "baslangic_zaman": "2026-11-06T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-20T16:07:20+03:00",
+     "detay_guncelleme": "2026-11-20T16:37:33+03:00",
      "belge_ozeti": "c604b790d505e13e843e92f5a072164d58b79e3967923ad7d57bd1ae553171fe",
      "kaynaklar": [
       {
@@ -4863,7 +4863,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-11-20T13:07:30.463257+00:00",
+   "kontrol": "2026-11-20T13:37:42.677010+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -5166,7 +5166,7 @@
       }
      ],
      "yayim_tarihi": "2026-11-02",
-     "detay_guncelleme": "2026-11-20T04:36:50+03:00",
+     "detay_guncelleme": "2026-11-20T16:37:42+03:00",
      "csb_detay_surumu": 5,
      "ozet": "Ardahan İli Posof Belediyesinin 30.10.2026 tarihli ve 7982 sayılı yazısına istinaden ilk defa atanmak üzere sözleşmeli personel alım ilanı iptal edilmiştir",
      "belgeler": [],
