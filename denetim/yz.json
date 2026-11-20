@@ -1561,6 +1561,63 @@
    "puan_turleri": []
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=0dee67ed-656b-4fa2-9ffd-deb7672253b8": {
+  "zaman": "2026-11-20T11:13:21+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "d67c13d2ecd9a97f",
+  "baslik": "BARTIN ÜNİVERSİTESİ REKTÖRLÜĞÜ - SÖZLEŞMELİ PERSONEL ALIM İLANI (2026-4)",
+  "farklar": [
+   [
+    "son_tarih",
+    "2026-12-05",
+    "2026-12-08",
+    true
+   ]
+  ],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Büro Personeli",
+     "adet": 1,
+     "ogrenim": "onlisans",
+     "puan_turu": "P93",
+     "en_dusuk_puan": 60,
+     "il": "Bartın",
+     "kosullar": [
+      "Herhangi bir ön lisans programından mezun olmak.",
+      "2026 KPSS'den (P93) en az 60 puan almış olmak.",
+      "01 Ocak 1991 ve sonrası doğumlu olmak."
+     ]
+    }
+   ],
+   "toplam": 1,
+   "son_basvuru_tarihi": "2026-12-08",
+   "son_basvuru_saati": "17:30",
+   "baslangic_tarihi": null,
+   "kpss_gerekli": true,
+   "iller": [
+    "Bartın"
+   ],
+   "ortak_kosullar": [
+    "2026 KPSS'den (P93) en az 60 puan almış olmak.",
+    "01 Ocak 1991 ve sonrası doğumlu olmak.",
+    "Aday Başvuru Bilgileri Belgesi elden teslim edilir; son teslim 08 Aralık 2026 mesai bitimi (17.30)."
+   ],
+   "ozet": "Bartın Üniversitesi sözleşmeli 1 büro personeli alacak (ön lisans, KPSS P93 en az 60 puan). Aday Başvuru Bilgileri Belgesi 8 Aralık 2026 saat 17.30'a kadar elden teslim edilir.",
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "onlisans"
+   ],
+   "puan_turleri": [
+    "P93"
+   ]
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=11272843-b0f1-470e-af31-cc176fa0e5d4": {
   "zaman": "2026-10-30T18:05:06+03:00",
   "surum": 4,
