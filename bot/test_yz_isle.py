@@ -39,6 +39,15 @@ class Alanlar(unittest.TestCase):
         self.assertEqual(i['yz_kadrolar'][0]['kosullar'], ['Bilgisayar mühendisliği mezunu olmak.'])   # 657/48 atıldı
         self.assertIn('Kariyer Kapısı', i['ozet'])
 
+    def test_bolum_listesi_kesilmez(self):
+        bolumler = ', '.join(f'Bölüm {n}' for n in range(40)) + ' lisans programlarının birinden mezun olmak.'
+        uzun_diger = 'Deneyim ' * 40
+        a = yi.alanlar({'kadrolar': [{'unvan': 'Büro Personeli', 'adet': 1, 'kosullar': [bolumler, uzun_diger]}],
+                             'okunabilirlik': 'iyi'}, {})
+        kosullar = a['yz_kadrolar'][0]['kosullar']
+        self.assertEqual(kosullar[0], bolumler)
+        self.assertLessEqual(len(kosullar[1]), 140)
+
     def test_mantiksiz_deger_yazilmaz(self):
         yz = dict(YZ, son_basvuru_tarihi='2025-01-01', kadrolar=[{'unvan': 'Uzman', 'adet': 0, 'kosullar': []}])
         i = yi.uygula(ILAN, veri(yz), SIMDI)
