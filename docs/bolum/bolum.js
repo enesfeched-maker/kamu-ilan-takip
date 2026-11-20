@@ -41,7 +41,8 @@
   let veri = null;
   async function yukle() {
     if (veri) return veri;
-    const [i, l] = await Promise.allSettled([getJSON('../ilanlar.json'), getJSON('../liste.json')]);
+    // bolum-veri.json: okunmuş ve elle düzeltilmiş kadro koşullarıyla (yz_kadrolar) birleştirilmiş kayıtlar; yoksa ham veri.
+    const [i, l] = await Promise.allSettled([getJSON('../bolum-veri.json').catch(() => getJSON('../ilanlar.json')), getJSON('../liste.json')]);
     if (i.status !== 'fulfilled' || !i.value || !Array.isArray(i.value.ilanlar)) throw new Error('ilanlar');
     const kopya = new Map();
     const listeVar = l.status === 'fulfilled' && l.value && Array.isArray(l.value.ilanlar);

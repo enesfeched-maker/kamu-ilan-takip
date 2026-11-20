@@ -37,7 +37,29 @@ ISKUR_ISKUR = {"id": "iskur-83eb8530b668c43b12af5245", "kurum": "Türkiye İş K
                "ilk_gorulme": "2026-10-19T11:22:33+03:00", "yer": "Ankara"}
 
 
+ADLI_KK = {"id": "https://kariyerkapisi.gov.tr/IlanDetay?i=dc97ce1e-dce0-408a-a785-682c4656435e",
+           "link": "https://kariyerkapisi.gov.tr/IlanDetay?i=dc97ce1e-dce0-408a-a785-682c4656435e",
+           "kurum": "ADLİ TIP KURUMU BAŞKANLIĞI", "baslik": "ADLİ TIP KURUMU BAŞKANLIĞI - 2026/2 SÖZLEŞMELİ PERSONEL ALIM İLANI",
+           "kadro": "Toplam 181 kişi — 17 MÜHENDİS • 18 KİMYAGER • 5 BİOLOG", "son_tarih": "2026-12-06",
+           "ilan_turu": "Sözleşmeli Personel", "ilk_gorulme": "2026-11-20T09:00:00+03:00"}
+ADLI_ISKUR = {"id": "iskur-eff2c498c4b816ac6944fc4e", "kurum": "Adalet Bakanlığı", "yer": "Ankara",
+              "baslik": "Adalet Bakanlığı Adli Tıp Kurumu Başkanlığı Sözleşmeli Personel Alım İlanı",
+              "ilan_turu": "Sözleşmeli Personel", "son_tarih": "2026-12-06", "kaynak": "İŞKUR", "kaynak_turu": "iskur",
+              "link": "https://www.iskur.gov.tr/medya/udoo1jx0/adli-tip-06122026.pdf", "ilk_gorulme": "2026-11-20T09:07:31+03:00"}
+
+
+IKINCI = 'https://kariyerkapisi.gov.tr/IlanDetay?i=22222222-2222-4222-8222-222222222222'
+
+
 class KopyaTests(unittest.TestCase):
+    def test_iskur_ust_bakanlik_adi_ile_kopya_bulunur(self):
+        self.assertEqual(kopya.kopya_bul([dict(ADLI_KK), dict(ADLI_ISKUR)])['kopya_of'], {ADLI_ISKUR['id']: ADLI_KK['id']})
+        baska_gun = dict(ADLI_ISKUR, son_tarih='2026-12-20')
+        self.assertEqual(kopya.kopya_bul([dict(ADLI_KK), baska_gun])['kopya_of'], {})
+        ikinci = dict(ADLI_KK, id=IKINCI, link=IKINCI,
+                      kadro='3 HEMŞİRE')   # aynı gün birimin ikinci ilanı: hangisi olduğu belirsiz
+        self.assertNotIn(ADLI_ISKUR['id'], kopya.kopya_bul([dict(ADLI_KK), ikinci, dict(ADLI_ISKUR)])['kopya_of'])
+
     def test_iki_tarafta_unvan_yoksa_tekil_kurum_ilani_birlesir(self):
         self.assertEqual(len(kopya.kopya_bul([dict(ISKUR_SBB), dict(ISKUR_ISKUR)])['kopya_of']), 1)
         ikinci = dict(ISKUR_SBB, id='sbb-' + 'f' * 24, kadro='4 ALACAK', baslik='TÜRKİYE İŞ KURUMU GENEL MÜDÜRLÜĞÜ - 4 ALACAK')   # aynı gün ikinci SBB kaydı: hangisi olduğu belirsiz

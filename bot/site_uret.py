@@ -1566,6 +1566,11 @@ def main():
         (docs / 'rss.xml').write_text(rss_xml(gorunen, sayfa_anahtarlari, haritada_olmayan, datetime.now(TR)), encoding='utf-8')
     except Exception as hata:
         print(f'Uyarı: RSS akışı üretilemedi: {hata}')
+    try:   # 20 Kasım 2026: bölüm filtresi okunmuş/elle düzeltilmiş tam bölüm listelerini (yz_kadrolar) görsün
+        (docs / 'bolum-veri.json').write_text(json.dumps({'ilanlar': data.get('ilanlar', [])}, ensure_ascii=False,
+                                                         separators=(',', ':')), encoding='utf-8')
+    except Exception as hata:
+        print(f'Uyarı: bölüm verisi yazılamadı: {hata}')
     bot = bot_ilanlari(data.get('ilanlar', []))
     (docs / 'bot-ilanlar.json').write_text(json.dumps(bot, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
     try:
