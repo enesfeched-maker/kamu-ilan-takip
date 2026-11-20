@@ -455,8 +455,44 @@ def kopya_bul(ilanlar):
                     say[h] = say.get(h, 0) + 1
         return all(n == 1 for n in say.values())
 
+    def baslik_cekirdek(i):
+        if 'baslik_cekirdek' not in bilgi[i['id']]:
+            sahte = {'kurum': i.get('baslik') or ''}
+            bilgi[i['id']]['baslik_cekirdek'] = _kurum_cekirdek(sahte, ks.kurum_kanonik(sahte['kurum']))
+        return bilgi[i['id']]['baslik_cekirdek']
+
+    def ust_kurum(a, b):
+        """20 Kasım 2026: İŞKUR kurum alanına üst bakanlığı yazar ('Adalet Bakanlığı'), asıl birim başlıktadır ('Adalet
+        Bakanlığı Adli Tıp Kurumu Başkanlığı Sözleşmeli Personel Alım İlanı'); Kariyer Kapısı 'Adli Tıp Kurumu Başkanlığı'
+        der. Öteki kaydın kurum çekirdeği İŞKUR başlığında geçiyor, son tarih aynı, toplam çelişmiyor ve o gün o birimin
+        her kaynakta tek kaydı varsa aynı ilandır."""
+        for x, y in ((a, b), (b, a)):
+            bx, by = bilgi[x['id']], bilgi[y['id']]
+            if (not any('iskur.gov.tr' in h for h in bx['host']) or bx['host'] & by['host'] or not by['cekirdek']
+                    or by['kan'].endswith(' belediye') or bx['cekirdek'] == by['cekirdek'] or _isci(x) != _isci(y)):
+                continue
+            son = x.get('son_tarih')
+            if not son or son != y.get('son_tarih') or not _toplam_esit_ya_da_bilinmiyor(x, y):
+                continue
+            if not by['cekirdek'] <= baslik_cekirdek(x):
+                continue
+            say = {}
+            for c in aday:
+                bc = bilgi[c['id']]
+                if c.get('son_tarih') != son:
+                    continue
+                if bc['cekirdek'] == by['cekirdek'] or (any('iskur.gov.tr' in h for h in bc['host'])
+                                                        and by['cekirdek'] <= baslik_cekirdek(c)):
+                    for h in bc['host']:
+                        say[h] = say.get(h, 0) + 1
+            if all(n == 1 for n in say.values()):
+                return True
+        return False
+
     def guclu(a, b):
         if _takma_ad(a, b) or _ayni_ilan(a, b) and not (bilgi[a['id']]['host'] & bilgi[b['id']]['host']):
+            return True
+        if ust_kurum(a, b):
             return True
         return temel(a, b) and tarih_uyumlu(a, b) and (kadro_uyumlu(a, b) or detaysiz_tekil(a, b))
 
