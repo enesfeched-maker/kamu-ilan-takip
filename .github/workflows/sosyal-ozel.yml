@@ -1,24 +1,44 @@
 name: Sosyal medyada özel paylaşım
 
-# Hazır bir videoyu (ör. katiplik tanıtımı) Instagram/YouTube/TikTok'a bir kez gönderir; günlük sosyal.yml'e dokunmaz.
+# Hazır bir videoyu (ör. katiplik tanıtımı) Instagram/YouTube/TikTok/Facebook'a bir kez gönderir; günlük sosyal.yml'e dokunmaz.
 # Tanım: sosyal/ozel/<ad>.json -> {"video": "paylasim/x.mp4", "baslik": "...", "aciklama": "...", "etiketler": [...]}
+# Elle: tanim girdisiyle. Sıra: sosyal/ozel/sira.json -> [{"tanim": "sosyal/ozel/x.json", "zaman": "2026-11-22T18:00:00+03:00"}];
+# saatlik kontrol zamanı gelmiş, geçmişte (ozel:<ad>) kaydı olmayan ilk tanımı paylaşır (çalışma başına en çok bir video).
 on:
   workflow_dispatch:
     inputs:
       tanim:
-        description: "sosyal/ozel/ altındaki JSON tanımı"
-        required: true
+        description: "sosyal/ozel/ altındaki JSON tanımı (boşsa sıradaki)"
+        required: false
+  schedule:
+    - cron: "7 * * * *"
 
 permissions:
   contents: write
 
-concurrency:
-  group: sosyal
-  cancel-in-progress: false
-
 jobs:
-  paylas:
+  sec:
     runs-on: ubuntu-latest
+    outputs:
+      tanim: ${{ steps.s.outputs.tanim }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Sıradakini seç
+        id: s
+        env:
+          TANIM: ${{ inputs.tanim }}
+        run: |
+          if [ -n "$TANIM" ]; then echo "tanim=$TANIM" >> "$GITHUB_OUTPUT"; exit 0; fi
+          python bot/ozel_sira.py >> "$GITHUB_OUTPUT"
+
+  paylas:
+    needs: sec
+    if: needs.sec.outputs.tanim != ''
+    runs-on: ubuntu-latest
+    # Bekleyen iş yalnız bu adımda gruba girer: boş saatlik kontrol günlük sosyal işlerini sıradan düşürmez.
+    concurrency:
+      group: sosyal
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -28,7 +48,7 @@ jobs:
       - name: Hazırla
         id: h
         env:
-          TANIM: ${{ inputs.tanim }}
+          TANIM: ${{ needs.sec.outputs.tanim }}
         run: |
           mkdir sosyal-cikti
           # zaman: WhatsApp kanal botu paylaşımı geçmişteki aynı zamanlı kayıtla eşleştirir
@@ -64,7 +84,7 @@ jobs:
         run: python bot/sosyal_yayinla.py sosyal-cikti
       - name: Paylaşım geçmişini kaydet
         env:
-          TANIM: ${{ inputs.tanim }}
+          TANIM: ${{ needs.sec.outputs.tanim }}
         run: |
           # Hiçbir platformda paylaşılamadıysa geçmişe yazılmaz.
           python -c "import json,pathlib,sys;p=pathlib.Path('sosyal-cikti/sonuc.json');s=json.loads(p.read_text(encoding='utf-8')) if p.exists() else {};sys.exit(0 if s and any('hata' not in v for v in s.values()) else 1)" || { echo "Paylaşılamadı; geçmişe yazılmadı."; exit 0; }
