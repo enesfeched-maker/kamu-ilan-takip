@@ -82,6 +82,18 @@ class MeslekSayfalariTest(unittest.TestCase):
         self.assertIn('ilan/a3/', self.oku('muhendis'))
         self.assertIn('ilan/a2/', self.oku('tekniker'))
 
+    def test_kisa_cevaplar_en_ustte_ve_genel_sorular(self):
+        import re
+        h = self.oku('zabita-memuru')
+        main = h.split('<main', 1)[1]
+        self.assertEqual(re.search(r'<h2>([^<]+)', main).group(1), 'Kısa cevaplar')
+        self.assertLess(main.index('Kısa cevaplar'), main.index('ilan/a1/'))
+        self.assertIn('Zabıtada yaş sınırı kaç?', h)
+        self.assertIn('30 yaşını doldurmamış', h)
+        self.assertIn(f'Zabıta Memuru Alımı {SIMDI.year}: Açık İlanlar, Yaş Sınırı ve KPSS Puanı', h)
+        self.assertLess(h.index('Şu an açık zabıta memuru alımı var mı?'), h.index('Zabıtada yaş sınırı kaç?'))   # veriden gelen önce
+        self.assertNotIn('yaş sınırı', self.oku('muhendis'))   # genel soru yalnız tanımlı meslekte
+
     def test_taban_puani_veriden(self):
         h = self.oku('hemsire')
         self.assertIn(BASE + 'meslek/hemsire/', self.urls) if ms.MIN_PUAN_SATIR <= 2 else self.assertIn('noindex,follow', h)

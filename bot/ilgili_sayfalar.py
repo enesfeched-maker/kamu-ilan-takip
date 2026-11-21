@@ -25,7 +25,7 @@ def baglantilar(item, kayit, gorsel, docs, base, haritada, yil):
     unvanlar = (kayit or {}).get('unvanlar') or []
     eslesen = [(slug, ad) for slug, ad, desen in ms.MESLEKLER if any(ms.eslesir(desen, u) for u in unvanlar)]
     for slug, ad in [m for m in eslesen if base + f'{ms.KLASOR}/{m[0]}/' in haritada][:EN_COK_MESLEK]:
-        ekle(f'{ms.KLASOR}/{slug}/', f'{ad} alımı {yil}')
+        ekle(f'{ms.KLASOR}/{slug}/', f'{ad} alımı {yil}' + (': yaş sınırı ve KPSS puanı' if slug in ms.GENEL_SORULAR else ''))
     import il_sayfalari as ils
     iller = [(kayit or {}).get('il') or ''] + list((kayit or {}).get('iller') or [])
     gorulen = []
