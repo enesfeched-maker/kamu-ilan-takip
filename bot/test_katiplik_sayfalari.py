@@ -66,6 +66,7 @@ class KatiplikSayfalari(unittest.TestCase):
         govde = html.split('<main', 1)[1]
         self.assertEqual(re.search(r'<h2>([^<]+)</h2>', govde).group(1), 'Kısa cevaplar')
         self.assertIn('Katiplik klavye sınavının şartları neler?', html)
+        self.assertIn('<title>Zabıt Katipliği Klavye Sınavı: 3 Dakika, 90 Net, Şartlar</title>', html)   # 62 sınırında kesilmez
         self.assertEqual(html.count('<h2>Sık sorulanlar</h2>'), 0)   # sorular bir kez, üstte
         tipler = [g['@type'] for b in ld_bloklari(html) for g in b['@graph']]
         self.assertIn('FAQPage', tipler)

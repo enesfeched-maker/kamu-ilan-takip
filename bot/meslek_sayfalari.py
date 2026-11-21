@@ -251,7 +251,7 @@ def meslek_sayfasi(base, slug, ad, acik, gecmis, puanlar, simdi, sayfali=None, d
               f'<a href="{kok}">Tüm açık ilanlar</a></p>'
               '<p><a href="https://t.me/kpsstercihi" target="_blank" rel="noopener" data-a="telegram" data-a-x="meslek">'
               f'Yeni {esc(adk)} ilanlarını Telegram kanalında duyuruyoruz →</a></p></section>')
-    baslik = (f'{ad} Alımı {yil}: Açık İlanlar, Yaş Sınırı ve KPSS Puanı' if genel
+    baslik = (f'{ad} Alımı {yil}: Yaş Sınırı ve KPSS Puanı' if genel
               else f'{ad} Alımı {yil}: Açık İlanlar ve Başvuru Tarihleri')
     aciklama = f'{ad} alımı {yil}: ' + giris.replace(' İlanlar resmî kaynaklardan derlenir; yeni ilan çıktığında bu sayfaya eklenir.', '')
     if puanlar:

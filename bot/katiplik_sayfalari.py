@@ -262,7 +262,7 @@ def kriter_sayfasi(su, base):
 def rehber_sayfasi(su, base):
     kok = '../../'
     canonical = f'{base}katiplik/klavye-sinavi-rehberi/'
-    baslik = 'Zabıt Katipliği Klavye Sınavı Nasıl Yapılır? 3 Dakika, 90 Net, Şartlar ve Çalışma Planı | KPSS Tercihi'
+    baslik = 'Zabıt Katipliği Klavye Sınavı: 3 Dakika, 90 Net, Şartlar | KPSS Tercihi'
     aciklama = ('Zabıt katipliği klavye sınavı 3 dakika sürer, ilanlarda en az 90 net kelime aranır. Şartlar, sınavın işleyişi, '
                 'F mi Q klavye mi, 4 haftalık çalışma planı ve ücretsiz simülasyon.')
     # Search Console'daki uzun sorgulara (21 Kasım 2026) birebir cevap: sayfanın en üstünde durur.

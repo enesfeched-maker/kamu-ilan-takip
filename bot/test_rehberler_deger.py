@@ -186,6 +186,7 @@ class Sayfalar(unittest.TestCase):
         self.assertIn('KPSS ile iş başvurusu nasıl yapılır?', h)
         self.assertIn('"@type": "FAQPage"', h)
         self.assertIn('"@type": "Article"', h)
+        self.assertIn('<title>Kariyer Kapısı giriş ve KPSS ile iş başvurusu nasıl yapılır?', h)   # 62 sınırında kesilmez
         self.assertNotIn('Kısa cevaplar', oku('kpss-puan-turleri'))   # tanımsız yazıda bölüm yok
         for sorular in rehberler.KISA_CEVAPLAR.values():
             for s, c in sorular:
