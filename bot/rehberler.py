@@ -690,7 +690,7 @@ REHBERLER = [
      [('Kariyer Kapısı rehberi', 'rehber/kariyer-kapisi-basvuru/'), ('Nitelik kodları', 'rehber/kpss-nitelik-kodu-nasil-okunur/'),
       ('Açık ilanlar', '#ilanlar')]),
 
-    ('kariyer-kapisi-basvuru', 'Kariyer Kapısı ile kamu ilanına başvuru nasıl yapılır?',
+    ('kariyer-kapisi-basvuru', 'Kariyer Kapısı giriş ve başvuru: KPSS ile iş başvurusu nasıl yapılır?',
      'Kariyer Kapısı’nda kamu ilanı arama, e-Devlet ile giriş, başvuru, sonuç takibi ve ÖSYM ile İŞKUR’dan farkı.',
      'Kariyer Kapısı, kamu kurumlarının iş ilanlarını yayımladığı ve başvuruları e-Devlet şifresiyle aldığı Cumhurbaşkanlığı '
      'koordinasyonundaki bir platformdur. Birçok kurum ilanı burada yayımlar, ama memur yerleştirmesi ve işçi alımı farklı '
@@ -767,6 +767,28 @@ REHBERLER = [
       ('Açık ilanlar', '#ilanlar')]),
 ]
 
+# Sayfanın en üstünde duran kısa cevaplar + FAQPage. Sorular Search Console'da gösterimi yüksek, tıklaması düşük
+# uzun sorgulardan alındı (21 Kasım 2026). Kelime sayısı testine girmez.
+KISA_CEVAPLAR = {
+    'kariyer-kapisi-basvuru': [
+        ('KPSS ile iş başvurusu nasıl yapılır?',
+         'Üç ayrı yol var ve hangisinin geçerli olduğunu ilan metni söyler. Merkezi yerleştirmede tercihler ÖSYM Aday İşlemleri Sistemi’nden '
+         '(ais.osym.gov.tr) yapılır. Kurumların kendi ilanlarına (sözleşmeli, bilişim, uzman yardımcılığı gibi) çoğunlukla Kariyer Kapısı’ndan '
+         'e-Devlet şifresiyle başvurulur. Kamu işçi alımlarına İŞKUR üzerinden başvurulur.'),
+        ('e-Devlet’ten KPSS ile iş başvurusu nasıl yapılır?',
+         'Kurum ilanlarında e-Devlet şifresi giriş için kullanılır: kariyerkapisi.gov.tr adresinde e-Devlet ile giriş yap, ilanı aç ve başvuru '
+         'adımlarını sonuna kadar tamamla. Mezuniyet ve KPSS bilgilerin e-Devlet üzerinden kuruma iletilir; ayrıca evrak göndermen gerekmez.'),
+        ('ÖSYM üzerinden iş başvurusu nasıl yapılır?',
+         'ÖSYM yalnızca merkezi yerleştirmeyi yürütür. Tercih kılavuzu yayımlanınca ais.osym.gov.tr adresine giriş yapar, tercih ücretini öder '
+         've en fazla 30 kadro seçersin. Kurumların kendi ilanlarına ÖSYM’den başvurulmaz.'),
+        ('Kariyer Kapısı’na nasıl giriş yapılır?',
+         'kariyerkapisi.gov.tr adresine git, giriş bölümünden e-Devlet ile doğrulama yap. Ayrı bir üyelik açman gerekmez; platform ücretsizdir.'),
+        ('Önlisans ya da ortaöğretim mezunu KPSS ile nasıl başvurur?',
+         'Yol aynıdır, değişen puan türüdür: ortaöğretim mezunları P94, önlisans mezunları P93, lisans mezunları çoğunlukla P3 puanıyla başvurur. '
+         'İlanda hangi yılın KPSS sonucunun ve hangi puan türünün istendiğine bak.'),
+    ],
+}
+
 NOT = ('Bu yazı genel bilgi amaçlıdır; kurallar ilandan ilana ve zamanla değişebilir. Başvurmadan önce her zaman ilanın resmî '
        'metnini ve ilgili mevzuatı esas al.')
 
@@ -841,8 +863,16 @@ def sayfa(r, base, acik=None):
           'inLanguage': 'tr', 'datePublished': YAYIN, 'dateModified': GUNCELLEME, 'mainEntityOfPage': canonical,
           'author': {'@type': 'Organization', 'name': 'KPSS Tercihi', 'url': base},
           'publisher': {'@type': 'Organization', 'name': 'KPSS Tercihi', 'url': base}}
-    govde = ''.join(f'<section class="bolum"><h2>{su.esc(h)}</h2>' + ''.join(_paragraf(p, su.esc) for p in ps) + '</section>'
-                    for h, ps in bolumler)
+    kisa = KISA_CEVAPLAR.get(slug) or []
+    govde = ''
+    if kisa:
+        govde = ('<section class="bolum"><h2>Kısa cevaplar</h2>'
+                 + ''.join(f'<h3>{su.esc(s)}</h3><p>{su.esc(c)}</p>' for s, c in kisa) + '</section>')
+        faq = {'@type': 'FAQPage', 'mainEntity': [{'@type': 'Question', 'name': s, 'acceptedAnswer': {'@type': 'Answer', 'text': c}}
+                                                  for s, c in kisa]}
+        ld = {'@context': ld.pop('@context'), '@graph': [ld, faq]}
+    govde += ''.join(f'<section class="bolum"><h2>{su.esc(h)}</h2>' + ''.join(_paragraf(p, su.esc) for p in ps) + '</section>'
+                     for h, ps in bolumler)
     govde += acik_html(acik, su.esc)
     bag = ''.join(f'<li><a href="{kok}{su.esc(y)}">{su.esc(a)}</a></li>' for a, y in ilgili)
     govde += (f'<section class="bolum"><h2>İlgili sayfalar</h2><ul>{bag}<li><a href="../">Tüm rehberler</a></li></ul></section>'
