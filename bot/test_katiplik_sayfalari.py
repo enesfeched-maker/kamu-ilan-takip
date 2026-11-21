@@ -61,6 +61,15 @@ class KatiplikSayfalari(unittest.TestCase):
         tipler = [g['@type'] for b in ld_bloklari(html) for g in b['@graph']]
         self.assertIn('FAQPage', tipler)
 
+    def test_rehber_kisa_cevaplar_en_ustte(self):
+        _, html = katiplik_sayfalari.rehber_sayfasi(su, su.BASE)
+        govde = html.split('<main', 1)[1]
+        self.assertEqual(re.search(r'<h2>([^<]+)</h2>', govde).group(1), 'Kısa cevaplar')
+        self.assertIn('Katiplik klavye sınavının şartları neler?', html)
+        self.assertEqual(html.count('<h2>Sık sorulanlar</h2>'), 0)   # sorular bir kez, üstte
+        tipler = [g['@type'] for b in ld_bloklari(html) for g in b['@graph']]
+        self.assertIn('FAQPage', tipler)
+
     def test_ust_menu_yeni_rozeti_forumda_akademik_yok(self):
         ust = su.ust_html('../', 'katiplik')
         self.assertNotIn('Akademik', ust)

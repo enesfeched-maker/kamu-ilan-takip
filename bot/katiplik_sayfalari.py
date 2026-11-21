@@ -69,8 +69,8 @@ def _sss_ld(sorular):
     return {'@type': 'FAQPage', 'mainEntity': [{'@type': 'Question', 'name': s, 'acceptedAnswer': {'@type': 'Answer', 'text': c}} for s, c in sorular]}
 
 
-def _sss_html(esc, sorular):
-    return ('<section class="bolum"><h2>Sık sorulanlar</h2>'
+def _sss_html(esc, sorular, baslik='Sık sorulanlar'):
+    return (f'<section class="bolum"><h2>{esc(baslik)}</h2>'
             + ''.join(f'<h3>{esc(s)}</h3><p>{esc(c)}</p>' for s, c in sorular) + '</section>')
 
 
@@ -262,12 +262,21 @@ def kriter_sayfasi(su, base):
 def rehber_sayfasi(su, base):
     kok = '../../'
     canonical = f'{base}katiplik/klavye-sinavi-rehberi/'
-    baslik = 'Zabıt Katipliği Klavye Sınavı Nasıl Yapılır? Hazırlık Rehberi ve Çalışma Planı | KPSS Tercihi'
-    aciklama = ('Zabıt, icra ve CTE katipliği klavye (uygulama) sınavı nasıl yapılır, metinler nereden çıkar, F mi Q klavye mi, 90 nete nasıl '
-                'ulaşılır? 4 haftalık çalışma planı, sınav günü ipuçları ve ücretsiz simülasyon.')
+    baslik = 'Zabıt Katipliği Klavye Sınavı Nasıl Yapılır? 3 Dakika, 90 Net, Şartlar ve Çalışma Planı | KPSS Tercihi'
+    aciklama = ('Zabıt katipliği klavye sınavı 3 dakika sürer, ilanlarda en az 90 net kelime aranır. Şartlar, sınavın işleyişi, '
+                'F mi Q klavye mi, 4 haftalık çalışma planı ve ücretsiz simülasyon.')
+    # Search Console'daki uzun sorgulara (21 Kasım 2026) birebir cevap: sayfanın en üstünde durur.
     sorular = [
-        ('Zabıt katipliği klavye sınavı kaç dakika?', 'Uygulamalı sınav 3 dakikadır. Bu sürede verilen metni hatasız ve atlamadan yazmaya çalışırsın.'),
-        ('Klavye sınavında kaç net gerekir?', 'İlanlarda genellikle 3 dakikada en az 90 net kelime aranır. Baraj ilana göre değişebileceği için başvurduğun ilanın metnini kontrol et.'),
+        ('Zabıt katipliği klavye sınavı nasıl oluyor?',
+         'Bilgisayar başında, ekranda verilen küçük harfli ve noktalamasız metni 3 dakika boyunca yazarsın. Süre bitince yazdığın metin '
+         'kelime kelime incelenir, hatalı kelimeler düşülür ve net kelimen bulunur. Başarılı olanlar sözlü sınava çağrılır.'),
+        ('Zabıt katipliği klavye sınavı kaç dakika, kaç kelime?',
+         'Uygulamalı sınav 3 dakikadır. İlanlarda genellikle bu sürede en az 90 net kelime aranır; baraj ilana göre değişebileceği için başvurduğun ilanın metnini kontrol et.'),
+        ('Katiplik klavye sınavının şartları neler?',
+         'Sınava, ilandaki eğitim ve KPSS şartlarını taşıyıp başvurusu kabul edilen adaylar girer. Başarılı sayılmak için net kelimenin ilandaki barajı '
+         '(çoğunlukla 90) geçmesi, toplam atlamanın 22 kelimenin altında kalması ve hata oranının yüzde 25’i aşmaması gerekir.'),
+        ('Klavye sınavı ne zaman?',
+         'Tarih her alım için ayrı belirlenir ve Adalet Bakanlığı ile adalet komisyonlarının duyurularında ilan edilir. Kesin tarih için başvurduğun ilanın duyurularını izle.'),
         ('Sınavda çıkacak metin önceden belli mi?', 'Bakanlık uygulamalı sınav metinlerini sınavdan önce yayımlar ve sınavda bu metinlerden biri kurayla seçilir. Yayımlanan metinlerle önceden çalışmak büyük avantaj sağlar.'),
         ('F klavye mi Q klavye mi kullanmalıyım?', 'Hangi klavyeye alışkınsan onunla çalış. Sınavda kullanılabilecek klavye türü ilanda belirtilir; başvuru sırasında tercih istenip istenmediğini ilan metninden kontrol et.'),
         ('Klavye hızımı ne kadar sürede 90 nete çıkarabilirim?', 'Başlangıç seviyene bağlıdır. On parmak bilen biri düzenli günlük çalışmayla birkaç haftada belirgin artış görür; hiç bilmeyen biri önce 1–2 hafta temel dersleri tamamlamalıdır.'),
@@ -281,7 +290,8 @@ def rehber_sayfasi(su, base):
     plan_html = ''.join(f'<li><b>{su.esc(a)}:</b> {su.esc(b)} <a href="{kok}{c}">Araca git →</a></li>' for a, b, c in plan)
     govde = ('<div class="ks-cta"><a class="btn btn-ana btn-buyuk" href="../" data-a="katiplik" data-a-x="rehber-sinav">Ücretsiz deneme sınavına gir</a>'
              '<a class="btn btn-ikinci btn-buyuk" href="../sinav-metinleri/">2025 resmî metinler</a></div>'
-             '<section class="bolum"><h2>Klavye (uygulama) sınavı nasıl yapılır?</h2><p>Zabıt kâtipliği ve icra kâtipliği alımlarında adaylar önce uygulamalı '
+             + _sss_html(su.esc, sorular, 'Kısa cevaplar')
+             + '<section class="bolum"><h2>Klavye (uygulama) sınavı nasıl yapılır?</h2><p>Zabıt kâtipliği ve icra kâtipliği alımlarında adaylar önce uygulamalı '
              '(klavye) sınavına, başarılı olanlar sözlü sınava alınır. Uygulamalı sınavda bilgisayarda <b>3 dakika</b> boyunca ekranda verilen metni yazarsın. '
              'Metinler tamamen küçük harf ve noktalamasızdır. Süre bitince yazılan metin, Bakanlığın değerlendirme kriterlerine göre kelime kelime incelenir ve '
              '<b>net kelime</b> sayın bulunur.</p><p>Bakanlık, sınavda kullanılacak metinleri sınavdan önce internet sitesinde yayımlar; sınavda bu metinlerden '
@@ -297,8 +307,7 @@ def rehber_sayfasi(su, base):
              '<section class="bolum"><h2>En sık yapılan hatalar</h2><p>Sınav tutanaklarında en sık görülen hatalar <b>eksik vuruş</b> (özellikle uzun ve ekli kelimelerde), '
              '<b>Türkçe karakter karışması</b> (ı/i, ş/s, ğ/g) ve <b>kelime birleştirme</b>dir (boşluğa basmayı unutmak). Hepsinin nasıl sayıldığını '
              '<a href="../degerlendirme-kriterleri/">değerlendirme kriterleri</a> sayfasında örneklerle anlattık.</p></section>'
-             + _sss_html(su.esc, sorular)
-             + '<p class="kp-note">Bu yazı genel bilgi amaçlıdır. Sınav tarihi, baraj, klavye türü ve başvuru şartları her ilanda ayrıca belirtilir; başvurmadan önce '
+             '<p class="kp-note">Bu yazı genel bilgi amaçlıdır. Sınav tarihi, baraj, klavye türü ve başvuru şartları her ilanda ayrıca belirtilir; başvurmadan önce '
                'ilanın resmî metnini ve Adalet Bakanlığı duyurularını esas al.</p>' + _araclar(kok))
     ld = {'@context': 'https://schema.org', '@graph': [
         {'@type': 'Article', 'headline': 'Zabıt katipliği klavye sınavı nasıl yapılır? Hazırlık rehberi', 'description': aciklama, 'inLanguage': 'tr-TR',

@@ -178,6 +178,20 @@ class Sayfalar(unittest.TestCase):
         self.assertIn('"dateModified": "2026-11-01"', oku('belediye-memur-alimi'))
         self.assertIn('"datePublished": "2026-10-19"', oku('belediye-memur-alimi'))
 
+    def test_kisa_cevaplar_en_ustte(self):
+        _, oku = self.yaz()
+        h = oku('kariyer-kapisi-basvuru')
+        ilk_h2 = re.search(r'<h2>([^<]+)</h2>', h).group(1)
+        self.assertEqual(ilk_h2, 'Kısa cevaplar')
+        self.assertIn('KPSS ile iş başvurusu nasıl yapılır?', h)
+        self.assertIn('"@type": "FAQPage"', h)
+        self.assertIn('"@type": "Article"', h)
+        self.assertNotIn('Kısa cevaplar', oku('kpss-puan-turleri'))   # tanımsız yazıda bölüm yok
+        for sorular in rehberler.KISA_CEVAPLAR.values():
+            for s, c in sorular:
+                self.assertTrue(s.endswith('?'), s)
+                self.assertNotIn(' vb', c)
+
     def test_baslik_ve_ilgili_bolumu(self):
         _, oku = self.yaz()
         h = oku('kpss-puan-turleri')
