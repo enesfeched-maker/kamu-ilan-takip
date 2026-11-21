@@ -690,7 +690,7 @@ REHBERLER = [
      [('Kariyer Kapısı rehberi', 'rehber/kariyer-kapisi-basvuru/'), ('Nitelik kodları', 'rehber/kpss-nitelik-kodu-nasil-okunur/'),
       ('Açık ilanlar', '#ilanlar')]),
 
-    ('kariyer-kapisi-basvuru', 'Kariyer Kapısı giriş ve başvuru: KPSS ile iş başvurusu nasıl yapılır?',
+    ('kariyer-kapisi-basvuru', 'Kariyer Kapısı giriş ve KPSS ile iş başvurusu nasıl yapılır?',
      'Kariyer Kapısı’nda kamu ilanı arama, e-Devlet ile giriş, başvuru, sonuç takibi ve ÖSYM ile İŞKUR’dan farkı.',
      'Kariyer Kapısı, kamu kurumlarının iş ilanlarını yayımladığı ve başvuruları e-Devlet şifresiyle aldığı Cumhurbaşkanlığı '
      'koordinasyonundaki bir platformdur. Birçok kurum ilanı burada yayımlar, ama memur yerleştirmesi ve işçi alımı farklı '

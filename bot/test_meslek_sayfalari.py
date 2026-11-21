@@ -90,7 +90,7 @@ class MeslekSayfalariTest(unittest.TestCase):
         self.assertLess(main.index('Kısa cevaplar'), main.index('ilan/a1/'))
         self.assertIn('Zabıtada yaş sınırı kaç?', h)
         self.assertIn('30 yaşını doldurmamış', h)
-        self.assertIn(f'Zabıta Memuru Alımı {SIMDI.year}: Açık İlanlar, Yaş Sınırı ve KPSS Puanı', h)
+        self.assertIn(f'<title>Zabıta Memuru Alımı {SIMDI.year}: Yaş Sınırı ve KPSS Puanı', h)
         self.assertLess(h.index('Şu an açık zabıta memuru alımı var mı?'), h.index('Zabıtada yaş sınırı kaç?'))   # veriden gelen önce
         self.assertNotIn('yaş sınırı', self.oku('muhendis'))   # genel soru yalnız tanımlı meslekte
 
