@@ -16,6 +16,15 @@ class AnketTesti(unittest.TestCase):
         govde, _ = tek_paylasim.govde_hazirla({'foto': None}, '-1')
         self.assertNotIn(b'reply_markup', govde)
 
+class IkiliDugmeTesti(unittest.TestCase):
+    def test_tek_dugmeler_ikiser_yan_yana_site_dugmesi_tek(self):
+        d = [[['A', 'u']], [['B', 'u']], [['C', 'u']], [['🌐 Tüm kamu ilanları', 'u']]]
+        self.assertEqual([[x[0] for x in s] for s in tek_paylasim._ikili(d)], [['A', 'B'], ['C'], ['🌐 Tüm kamu ilanları']])
+
+    def test_cok_dugmeli_satir_bozulmaz(self):
+        d = [[['A', 'u']], [['B', 'u'], ['C', 'u']], [['D', 'u']], [['E', 'u']]]
+        self.assertEqual([[x[0] for x in s] for s in tek_paylasim._ikili(d)], [['A'], ['B', 'C'], ['D', 'E']])
+
 
 if __name__ == '__main__':
     unittest.main()

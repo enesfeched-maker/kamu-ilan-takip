@@ -27,8 +27,30 @@ def _dugme(d):
     return dugme
 
 
+def _ikili(satirlar):
+    """Tek düğmeli ardışık satırlar ikişer yan yana dizilir (alt alta çok yer kaplıyor, kullanıcı 21 Kasım 2026).
+    🌐 site düğmesi ve zaten çok düğmeli satırlar olduğu gibi tek başına kalır."""
+    sonuc, bekleyen = [], None
+    for satir in satirlar:
+        tek = len(satir) == 1 and not str(satir[0][0]).startswith('🌐')
+        if tek and bekleyen is not None:
+            sonuc.append(bekleyen + list(satir))
+            bekleyen = None
+            continue
+        if bekleyen is not None:
+            sonuc.append(bekleyen)
+            bekleyen = None
+        if tek:
+            bekleyen = list(satir)
+        else:
+            sonuc.append(list(satir))
+    if bekleyen is not None:
+        sonuc.append(bekleyen)
+    return sonuc
+
+
 def govde_hazirla(tanim, chat_id):
-    klavye = [[_dugme(d) for d in satir] for satir in tanim.get('dugmeler') or []]
+    klavye = [[_dugme(d) for d in satir] for satir in _ikili(tanim.get('dugmeler') or [])]
     alanlar = {'chat_id': chat_id}
     if klavye:
         alanlar['reply_markup'] = json.dumps({'inline_keyboard': klavye}, ensure_ascii=False)
@@ -51,7 +73,7 @@ def govde_hazirla(tanim, chat_id):
 
 def metin_govdesi(tanim, chat_id):
     """Görselsiz paylaşım (ör. düzeltme duyurusu): sendMessage, bağlantı önizlemesi kapalı."""
-    klavye = [[{'text': y, 'url': utm_ekle(u, SITE)} for y, u in satir] for satir in tanim['dugmeler']]
+    klavye = [[{'text': y, 'url': utm_ekle(u, SITE)} for y, u in satir] for satir in _ikili(tanim['dugmeler'])]
     return json.dumps({'chat_id': chat_id, 'text': tanim['metin'], 'parse_mode': 'HTML',
                        'link_preview_options': {'is_disabled': True},
                        'reply_markup': {'inline_keyboard': klavye}}, ensure_ascii=False).encode(), 'application/json'
