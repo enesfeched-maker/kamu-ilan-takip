@@ -31,7 +31,8 @@ jobs:
           TANIM: ${{ inputs.tanim }}
         run: |
           mkdir sosyal-cikti
-          python -c "import json,os,shutil;d=json.load(open(os.environ['TANIM'],encoding='utf-8'));shutil.copy(d['video'],'sosyal-cikti/reel.mp4');json.dump(d,open('sosyal-cikti/paylasim.json','w',encoding='utf-8'),ensure_ascii=False)"
+          # zaman: WhatsApp kanal botu paylaşımı geçmişteki aynı zamanlı kayıtla eşleştirir
+          python -c "import json,os,shutil,datetime as t;d=json.load(open(os.environ['TANIM'],encoding='utf-8'));d.setdefault('zaman',t.datetime.now(t.timezone(t.timedelta(hours=3))).isoformat(timespec='seconds'));shutil.copy(d['video'],'sosyal-cikti/reel.mp4');json.dump(d,open('sosyal-cikti/paylasim.json','w',encoding='utf-8'),ensure_ascii=False)"
           echo "etiket=sosyal-$(TZ=Europe/Istanbul date +%Y%m%d)-$(basename "$TANIM" .json)" >> "$GITHUB_OUTPUT"
       - name: Önizleme sürümü
         env:
@@ -61,3 +62,29 @@ jobs:
           SOSYAL_GH_ANAHTARI: ${{ secrets.SOSYAL_GH_ANAHTARI }}
           VIDEO_URL: https://github.com/${{ github.repository }}/releases/download/${{ steps.h.outputs.etiket }}/reel.mp4
         run: python bot/sosyal_yayinla.py sosyal-cikti
+      - name: Paylaşım geçmişini kaydet
+        env:
+          TANIM: ${{ inputs.tanim }}
+        run: |
+          # Hiçbir platformda paylaşılamadıysa geçmişe yazılmaz.
+          python -c "import json,pathlib,sys;p=pathlib.Path('sosyal-cikti/sonuc.json');s=json.loads(p.read_text(encoding='utf-8')) if p.exists() else {};sys.exit(0 if s and any('hata' not in v for v in s.values()) else 1)" || { echo "Paylaşılamadı; geçmişe yazılmadı."; exit 0; }
+          python - <<'PY'
+          import json, os, pathlib
+          d = json.loads(pathlib.Path('sosyal-cikti/paylasim.json').read_text(encoding='utf-8'))
+          yol = pathlib.Path('sosyal/gecmis.json')
+          g = json.loads(yol.read_text(encoding='utf-8'))
+          ad = pathlib.Path(os.environ['TANIM']).stem
+          g.append({'zaman': d['zaman'], 'vakit': 'ozel', 'tur': 'ozel', 'anahtar': f'ozel:{ad}'})
+          yol.write_text(json.dumps(g, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
+          PY
+          python bot/sosyal_istatistik.py sonuc sosyal-cikti || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sosyal/gecmis.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Sosyal paylaşım geçmişi (${{ steps.h.outputs.etiket }}) [skip ci]"
+          for i in 1 2 3 4 5; do
+            git pull --rebase -q origin main && git push -q origin HEAD:main && exit 0
+            sleep 5
+          done
+          exit 1
