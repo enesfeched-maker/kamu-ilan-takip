@@ -43,7 +43,33 @@ MESLEKLER = (
     ('sofor', 'Şoför', r'şoför'),
     ('hizmetli', 'Hizmetli', r'hizmetli'),
 )
-DIZIN = 'dizin.json'     # [[slug, ad]]: içeriği olan sayfalar; sitede sonuçsuz aramada öneri için (docs/portal.js meslekBul)
+# Mesleğe özgü sabit kısa cevaplar (veriden gelenlerin ardından, sayfanın en üstünde). Sorular Search Console'da gösterimi
+# yüksek, tıklaması düşük sorgulardan (21 Kasım 2026). Yaş ve puan cümleleri ilanlar.json'daki zabıta ilanlarıyla doğrulandı.
+GENEL_SORULAR = {
+    'zabita-memuru': (
+        ('Zabıta alımı başvurusu nasıl yapılır?',
+         'Zabıta memurlarını belediyeler kendisi alır; ÖSYM tercihiyle zabıta alımı yapılmaz. Başvuru yolu ilanda yazar: çoğu belediye '
+         'başvuruyu Kariyer Kapısı’ndan e-Devlet şifresiyle, bazıları şahsen ya da posta ile alır.'),
+        ('Zabıta alımları ne zaman yapılır?',
+         'Merkezi bir takvim yoktur. Her belediye kadro ihtiyacına göre yıl içinde ayrı ilan açar; başvurusu açık ilanlar bu sayfada listelenir.'),
+        ('Zabıtada yaş sınırı kaç?',
+         'Zabıta memuru ilanlarında “sınavın yapıldığı tarihte 30 yaşını doldurmamış olmak” şartı aranır. Yani yaş, başvuru tarihine göre değil '
+         'sınav tarihine göre hesaplanır.'),
+        ('Zabıta olmak için boy ve kilo şartı var mı?',
+         'Belediye Zabıta Yönetmeliği’ne göre boy erkeklerde 1,67 metre, kadınlarda 1,60 metreden kısa olmamalı; vücut kitle indeksi 25’ten '
+         'fazla, 18’den az olmamalıdır. İlanda farklı bir şart yazıyorsa ilan geçerlidir.'),
+        ('Zabıta alımında KPSS puanı kaç olmalı?',
+         'Puan türü öğrenim düzeyine göre değişir: lisans P3, önlisans P93, ortaöğretim P94. Asgari puanı belediye belirler; son ilanlarda '
+         'en az 60 ile 70 arasında puan istendi. Başvuranlar genellikle puan sırasıyla sınava çağrılır.'),
+        ('Önlisans KPSS ile zabıta olunur mu?',
+         'Evet. Önlisans kadrolarına P93 puanıyla başvurulur; ilanda hangi önlisans bölümlerinin kabul edildiği tek tek yazar.'),
+        ('60 KPSS puanıyla zabıta olunur mu?',
+         'Başvuru için yetebilir: son ilanların bir kısmı en az 60 puan istedi. Ama sınava puan sırasıyla çağrıldığı için 60 puanın yetip '
+         'yetmeyeceği o ilana başvuranların puanına bağlıdır.'),
+    ),
+}
+
+DIZIN = 'dizin.json'    # [[slug, ad]]: içeriği olan sayfalar; sitede sonuçsuz aramada öneri için (docs/portal.js meslekBul)
 
 
 def _sade(unvan):
@@ -191,7 +217,10 @@ def meslek_sayfasi(base, slug, ad, acik, gecmis, puanlar, simdi, sayfali=None, d
         if gecmis:
             giris += f' Son ilanın başvurusu {_tarih(gecmis[0]["son_tarih"])} tarihinde bitti.'
     giris += ' İlanlar resmî kaynaklardan derlenir; yeni ilan çıktığında bu sayfaya eklenir.'
-    govde = ''
+    # Kısa cevaplar en üstte: önce veriden gelenler, sonra mesleğe özgü sabit sorular.
+    sc = sorular(ad, acik, gecmis, puanlar, simdi)
+    genel = GENEL_SORULAR.get(slug, ())
+    govde = ps._soru_bolumu(sc[:2] + list(genel) + sc[2:])
     if acik:
         satir = []
         for k in acik:
@@ -200,8 +229,6 @@ def meslek_sayfasi(base, slug, ad, acik, gecmis, puanlar, simdi, sayfali=None, d
             satir.append([f'<a href="{kok}ilan/{esc(k["key"])}/">{esc(k.get("manset") or "Kamu ilanı")}</a>', esc(k.get('kurum') or '—'),
                           esc(', '.join((k.get('iller') or [])[:3]) or k.get('il') or '—'), esc(tarih)])
         govde += _bolum(f'Başvurusu açık {adk} ilanları', _tablo(['İlan', 'Kurum', 'İl', 'Başvuru'], satir), len(acik))
-    sc = sorular(ad, acik, gecmis, puanlar, simdi)
-    govde += ps._soru_bolumu(sc)
     if puanlar:
         satir = []
         for dslug, dad, son, rows in puanlar:
@@ -224,7 +251,8 @@ def meslek_sayfasi(base, slug, ad, acik, gecmis, puanlar, simdi, sayfali=None, d
               f'<a href="{kok}">Tüm açık ilanlar</a></p>'
               '<p><a href="https://t.me/kpsstercihi" target="_blank" rel="noopener" data-a="telegram" data-a-x="meslek">'
               f'Yeni {esc(adk)} ilanlarını Telegram kanalında duyuruyoruz →</a></p></section>')
-    baslik = f'{ad} Alımı {yil}: Açık İlanlar ve Başvuru Tarihleri'
+    baslik = (f'{ad} Alımı {yil}: Açık İlanlar, Yaş Sınırı ve KPSS Puanı' if genel
+              else f'{ad} Alımı {yil}: Açık İlanlar ve Başvuru Tarihleri')
     aciklama = f'{ad} alımı {yil}: ' + giris.replace(' İlanlar resmî kaynaklardan derlenir; yeni ilan çıktığında bu sayfaya eklenir.', '')
     if puanlar:
         aciklama += ' KPSS taban puanları ve başvurusu biten ilanlar.'

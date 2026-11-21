@@ -238,7 +238,7 @@ class IlgiliSayfalarTesti(unittest.TestCase):
         gorsel = {'kurum_slug': 'ankara-buyuksehir-belediyesi'}
         tam = self.harita('meslek/zabita-memuru/', 'il/ankara/', 'kurum/ankara-buyuksehir-belediyesi/')
         bag = isf.baglantilar(self.ILAN, self.KAYIT, gorsel, KOK / 'docs', su.BASE, tam, 2098)
-        self.assertEqual(bag, [('../../meslek/zabita-memuru/', 'Zabıta Memuru alımı 2098'), ('../../il/ankara/', 'Ankara kamu ilanları'),
+        self.assertEqual(bag, [('../../meslek/zabita-memuru/', 'Zabıta Memuru alımı 2098: yaş sınırı ve KPSS puanı'), ('../../il/ankara/', 'Ankara kamu ilanları'),
                                ('../../kurum/ankara-buyuksehir-belediyesi/', 'Ankara Büyükşehir Belediye Başkanlığı ilanları')])
         # kalkanla haritadan çıkan (noindex) sayfaya bağlanılmaz
         self.assertEqual(isf.baglantilar(self.ILAN, self.KAYIT, gorsel, KOK / 'docs', su.BASE, self.harita('il/ankara/'), 2098), [('../../il/ankara/', 'Ankara kamu ilanları')])
@@ -295,7 +295,7 @@ class IlgiliSayfalarTesti(unittest.TestCase):
             haritada = self.harita('meslek/zabita-memuru/', 'il/ankara/')
             self.assertEqual(isf.uygula(docs, su.BASE, haritada, {anahtar: (self.ILAN, self.KAYIT, {})}, simdi), 1)
             yeni = (docs / 'ilan' / anahtar / 'index.html').read_text(encoding='utf-8')
-            self.assertIn('href="../../meslek/zabita-memuru/">Zabıta Memuru alımı 2098</a>', yeni)
+            self.assertIn('href="../../meslek/zabita-memuru/">Zabıta Memuru alımı 2098: yaş sınırı ve KPSS puanı</a>', yeni)
             self.assertIn('href="../../il/ankara/">Ankara kamu ilanları</a>', yeni)
             self.assertEqual(yeni.count('ilgili-sayfalar'), 1)
             self.assertTrue(yeni.rstrip().endswith('</html>'))
