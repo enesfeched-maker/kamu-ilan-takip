@@ -87,9 +87,8 @@ def kk_ayrinti_bekliyor(item):
     """Kariyer Kapısı kaydının resmî ayrıntısı (kadrolar, koşullar) henüz inmedi mi? 16 Kasım 2026: Kariyer Kapısı yavaşken
     yapay zekâ yalnız başlığı okuyup ilanı 'okunamadı' saydı, ilanlar 4 saat bekledi. Ayrıntı inince okunur; hiç inmezse
     yayina_hazir'ın 4 saatlik sınırı geçerli (ilan botun verisiyle gider)."""
-    kimlik = str(item.get('id') or '')
-    return kimlik.startswith('https://kariyerkapisi.gov.tr/') and not item.get('kk_detay_surumu') \
-        and not item.get('kadro_detay') and not item.get('sartlar')
+    import yayin_tamlik
+    return yayin_tamlik.kk_ayrinti_bekliyor(item)
 
 
 def metin_al(item, sbb_pdf=None, csb_indir=None):

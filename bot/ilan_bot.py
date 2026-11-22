@@ -746,8 +746,12 @@ def yayina_hazir(gonderilecek, logo_bul=None, veri=None):
     """19 Ekim 2026: kanala yalnız Gemini'nin okuduğu ilan, Gemini'nin okuduğu bilgilerle (kadro, tarih, koşul) gider;
     logosu olmayan ilan gitmez. Duyurular etkilenmez. Gemini adımı hiç çalışmadıysa (anahtar yok) kapı kapalı kalır."""
     import yz_isle
+    from yayin_tamlik import eksik
     hazir = []
     for i in gonderilecek:
+        if eksik(i):   # 23 Kasım 2026: bilgisi tamamlanmamış ilan süre sınırı olmadan bekler (yayin_tamlik)
+            print(f"::warning::Kanala gönderilmedi (bilgiler eksik: {eksik(i)}): {i.get('kurum')} — {i['baslik']}")
+            continue
         tamam, neden = yz_isle.yayina_hazir(i, veri)
         if not tamam:
             print(f"::warning::Kanala gönderilmedi ({neden}): {i.get('kurum')} — {i['baslik']}")
