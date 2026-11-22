@@ -18,7 +18,7 @@ TR = timezone(timedelta(hours=3))
 KART_GENISLIK = 720
 LOGO_BOYUT = 128
 EN_COK_LOGO_INDIRME = 150
-CSS_SURUM = 24
+CSS_SURUM = 25
 LOGO_SURUM = 2
 ACIK_ZEMIN, KOYU_ZEMIN = '#F6F6F1', '#0D0E0C'
 FORUM_SURUM = 19   # docs/forum.js + docs/forum.css önbellek sürümü
@@ -84,6 +84,23 @@ def ust_html(kok, aktif=''):
 
 
 REKLAM_BETIGI = '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8335827974832277" crossorigin="anonymous"></script>'
+
+
+# Elle yerleştirilen AdSense birimleri (22 Kasım 2026): slot kimliği boşsa hiçbir reklam alanı basılmaz.
+# Yerleşim kuralı: yalnız içeriğin akış aralarında; başlık, Başvur düğmesi ve ilk ekranın çevresinde, sabit/yüzen alan yok.
+REKLAM_ISTEMCI = 'ca-pub-8335827974832277'
+REKLAM_SLOT_SAYFA = '3230210595'   # ilan ayrıntı sayfası alanları
+REKLAM_SLOT_AKIS = '2506874605'    # ana sayfa liste arası (docs/portal.js, #cards[data-rk-akis])
+
+
+def reklam_alani(slot, ad):
+    """Slot boşsa ''; doluysa etiketli, tek seferlik push yapan reklam birimi."""
+    if not slot:
+        return ''
+    return (f'<div class="rk" data-rk="{esc(ad)}"><p class="rk-et">Reklam</p>'
+            f'<ins class="adsbygoogle" style="display:block" data-ad-client="{REKLAM_ISTEMCI}" data-ad-slot="{esc(slot)}" '
+            f'data-ad-format="auto" data-full-width-responsive="true"></ins>'
+            f'<script>(adsbygoogle=window.adsbygoogle||[]).push({{}});</script></div>')
 
 
 # Sosyal hesaplar (12 Kasım 2026, kullanıcı onayıyla yayımlandı): alt bilgide bağlantı + Organization sameAs.
@@ -971,9 +988,12 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
     og_gorsel += yapisal_veri(item, canonical, end, alanlar, kayit, gorsel, simdi, is_ilani, ad=title.removesuffix(' | KPSS Tercihi'))
     if dizinlenmez(item, simdi) and not ikincil:   # kopya sayfa esas kayda canonical verir; noindex ile birlikte çelişkili sinyal olur
         og_gorsel += '<meta name="robots" content="noindex,follow">'
+    dizinli = 'noindex' not in og_gorsel   # reklam betiği yoksa alan da yok (sayfa_basi ile aynı ölçüt)
+    rk1 = reklam_alani(REKLAM_SLOT_SAYFA, 'kadro-alti') if dizinli else ''
+    rk2 = reklam_alani(REKLAM_SLOT_SAYFA, 'benzer-ustu') if dizinli and benzer_html else ''
     govde = (f'<main id="icerik" class="wrap"><article class="d-bas"><nav class="crumbs" aria-label="Konum"><a href="{kok}">Ana sayfa</a><span aria-hidden="true">/</span><a href="{kok}#ilanlar">İlanlar</a>{kurum_kirinti}</nav>'
              f'{hero_html(item, gorsel, kayit, simdi)}{kurum_ici_not}{duzeltme_kutusu}{kopya_ust}{cta}{kopya_alt}</article>'
-             f'<div class="d-ana"><section class="d-bolum">{sections}{bakis}</section><section class="d-bolum">{bolum}{diger}</section>{tartisma}{benzer_html}</div></main>')
+             f'<div class="d-ana"><section class="d-bolum">{sections}{bakis}</section><section class="d-bolum">{bolum}{diger}</section>{rk1}{tartisma}{rk2}{benzer_html}</div></main>')
     return key, (sayfa_basi(title, description, canonical, kok, 'article', og_gorsel, og_baslik=title)
                  + f'<body class="detail-page"><a class="skip" href="#icerik">İçeriğe geç</a>{ust_html(kok)}{govde}{alt_html(kok)}</body></html>')
 
