@@ -278,7 +278,8 @@
     var linkler = gezinti(b, son);
     var ray = E('aside', 'kf-ray'); ray.setAttribute('aria-label', 'Benzer ilanlar ve topluluk'); main.append(ray);
 
-    var kapali = !!d.querySelector('.dh-son.yok, .dh .pill.kapali');
+    // tarihsiz sayfa ("Resmî ilanda") kapalı sayılmaz: 23 Kasım 2026'da yeni ilan "başvurusu sona erdi" göründü
+    var kapali = !!d.querySelector('.dh-son.yok:not(.tarihsiz), .dh .pill.kapali');
     liste().then(function (ilanlar) {
       var bu = ilanlar.filter(function (i) { return i.key === key; })[0];
       var c = bu ? Object.assign({ baslikN: sayfadanOzellik().baslikN }, bu) : sayfadanOzellik();

@@ -676,7 +676,7 @@ def hero_html(item, gorsel, kayit, simdi, kok='../../'):
         son_html = (f'<div class="dh-son{" acil" if acil else " yok" if sinif in ("closed", "cancelled") else ""}"><dt>Son başvuru</dt>'
                     f'<dd>{tarih}<span class="dh-geri"{veri}>{geri}</span></dd></div>')
     else:
-        son_html = '<div class="dh-son yok"><dt>Son başvuru</dt><dd>Resmî ilanda<span class="dh-geri">Tarihi ilandan doğrula</span></dd></div>'
+        son_html = '<div class="dh-son yok tarihsiz"><dt>Son başvuru</dt><dd>Resmî ilanda<span class="dh-geri">Tarihi ilandan doğrula</span></dd></div>'
     ogr = [o for o in ((kayit or {}).get('ogrenim') or item.get('ogrenim') or []) if o in ks.LEVELS]
     pt = (kayit or {}).get('puan_turleri') or liste_verisi.puan_turleri(item)
     kpss = ', '.join(pt[:3]) if pt else 'Gerekli' if item.get('kpss') == 'kpss' else 'Gerekmez' if item.get('kpss') == 'kpsssiz' else ''
@@ -1361,7 +1361,13 @@ def elle_uygula(ilanlar):
         ilanlar = [yz_isle.uygula(i) for i in ilanlar]
     except Exception as hata:
         print(f'Uyarı: Gemini alanları uygulanamadı: {hata}')
-    return [dict(i, **alanlar.get(i.get('id'), {})) for i in ilanlar if i.get('id') not in gizle]
+    ilanlar = [dict(i, **alanlar.get(i.get('id'), {})) for i in ilanlar if i.get('id') not in gizle]
+    # 23 Kasım 2026: bilgisi tamamlanmamış ilan sitede yer almaz (yayin_tamlik); tamamlanınca kendiliğinden girer.
+    from yayin_tamlik import eksik
+    for i in ilanlar:
+        if eksik(i):
+            print(f"Sitede yayınlanmadı ({eksik(i)}): {i.get('baslik', '')}")
+    return [i for i in ilanlar if not eksik(i)]
 
 
 def main():

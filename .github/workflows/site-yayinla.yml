@@ -19,6 +19,7 @@ on:
       - 'docs/manifest.webmanifest'
       - 'bot/liste_verisi.py'
       - 'bot/site_uret.py'
+      - 'bot/yayin_tamlik.py'
       - 'bot/arama_indeksi.py'
       - 'bot/statik_icerik.py'
       - 'bot/analiz_sayfalari.py'
