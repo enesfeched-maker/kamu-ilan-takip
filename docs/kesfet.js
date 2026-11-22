@@ -363,7 +363,8 @@
   }
   function motorAl() {
     if (!_motor) _motor = w.BolumEsles ? Promise.resolve(w.BolumEsles) : new Promise(function (ok, hata) {
-      var s = E('script'); s.src = '/bolum/esles.js?v=3';   // kadroBazli için; sürüm bolum/index.html ile aynı s.onload = function () { ok(w.BolumEsles); }; s.onerror = hata; d.head.append(s);
+      // kadroBazli için; sürüm bolum/index.html ile aynı
+      var s = E('script'); s.src = '/bolum/esles.js?v=3'; s.onload = function () { ok(w.BolumEsles); }; s.onerror = hata; d.head.append(s);
     });
     return _motor;
   }
