@@ -218,6 +218,30 @@ class Uretim(unittest.TestCase):
                 self.assertEqual(isler, [])
             self.assertEqual(json.loads((t / 'c' / 'is.json').read_text(encoding='utf-8'))['isler'], [])
 
+    def test_ayni_onekli_ilan_kimlikleri_dosya_adinda_cakismaz(self):
+        # Kariyer Kapısı kimlikleri adrestir; ilk 40 karakterleri aynı olduğu için sürüm dosyaları çakışıyordu
+        ilanlar = [{'id': f'https://kariyerkapisi.gov.tr/IlanDetay?i={k}'} for k in ('0dee67ed-aaaa', 'dc97ce1e-bbbb')]
+
+        def sahte_uret(ilan, simdi, klasor, logo):
+            klasor.mkdir(parents=True, exist_ok=True)
+            for n in (1, 2):
+                (klasor / f'karusel-{n:02d}.jpg').write_bytes(ilan['id'].encode())
+            return {'toplam': 1}
+
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            with mock.patch('sosyal_motor.ilanlari_yukle', return_value=[]), \
+                    mock.patch('sosyal_motor.acik_ilanlar', return_value=[]), \
+                    mock.patch.object(sg, 'ilan_adaylari', return_value=ilanlar), \
+                    mock.patch.object(sg, 'ilan_uret', side_effect=sahte_uret), \
+                    mock.patch.object(sg, 'aciklama', return_value='a'):
+                isler = sg.uret(t / 'c', gun(2), turler=[], gecmis_yolu=t / 'g.json')
+            self.assertEqual(len(isler), 2)
+            dosyalar = [d for i in isler for d in i['dosyalar']]
+            self.assertEqual(len(dosyalar), len(set(dosyalar)))
+            for is_, ilan in zip(isler, ilanlar):
+                self.assertEqual((t / 'c' / is_['dosyalar'][0]).read_bytes(), ilan['id'].encode())
+
 
 if __name__ == '__main__':
     unittest.main()

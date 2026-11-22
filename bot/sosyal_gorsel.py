@@ -26,6 +26,7 @@ Kullanım: python bot/sosyal_gorsel.py uret --cikti gorsel-cikti [--tur son-gun 
           python bot/sosyal_gorsel.py yayinla --cikti gorsel-cikti --taban https://github.com/.../releases/download/ETIKET
           python bot/sosyal_gorsel.py kaydet --cikti gorsel-cikti"""
 import argparse
+import hashlib
 import json
 import sys
 import time
@@ -271,7 +272,9 @@ def uret(cikti, simdi=None, turler=None, gecmis_yolu=GECMIS_YOLU, docs=ROOT / 'd
 
     if ilan_sayisi:
         for ilan in ilan_adaylari(acik_al(), simdi, gecmis, ilan_sayisi):
-            onek = 'ilan-' + ''.join(c if c.isalnum() else '-' for c in ilan['id'])[:40]
+            # kimlik çoğu zaman uzun bir adres; ilk 40 karakteri bütün Kariyer Kapısı ilanlarında aynı olduğundan klasör
+            # ve sürüm dosya adları çakışıyordu (GitHub yüklemesi 404). Kimliğin özeti adı tekil tutar.
+            onek = 'ilan-' + hashlib.sha1(ilan['id'].encode('utf-8')).hexdigest()[:12]
             try:
                 veri = ilan_uret(ilan, simdi, cikti / onek, kurum_logosu)
             except Exception as hata:
