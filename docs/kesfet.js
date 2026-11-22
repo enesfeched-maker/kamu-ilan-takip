@@ -343,14 +343,6 @@
      Öğrenim düzeyi anında karşılaştırılır. Bölüm, /bolum/ sayfasının eşleştirme motoruyla (bolum/esles.js) bu ilanın
      şart metnine karşı denetlenir; şart metinleri ilanlar.json'da olduğu için o dosya yalnız bölüm girilince yüklenir. */
   var UYGUN = 'kit-bolum';   // /bolum/ sayfasıyla ortak: {d: düzey, b: bölüm}
-  var KADEME = {
-    kesin: ['evet', 'Bölümün şartlarda geçiyor.'],
-    muhtemel: ['belki', 'Bölümün şartlarda geçiyor olabilir; ilan metninden kontrol et.'],
-    serbest: ['evet', 'Bu ilan herhangi bir bölümden mezun olanları alıyor.'],
-    belirsiz: ['belki', 'Bölüm şartı tam okunamadı; ilan metnine bak.'],
-    eslesmiyor: ['hayir', 'Şartta sayılan bölümler arasında seninkini bulamadık. "Denk bölümler" ifadesi için belgeye bak.'],
-    haric: ['hayir', 'Bölümün bu ilanda hariç tutulmuş.']
-  };
   /* Bölüm uysa bile başvuruyu engelleyebilecek ek şartlar: yalnız varlığı söylenir, kişiye göre yorumlanmaz. */
   var EK_SART = [[/yaşını (doldurmamış|bitirmemiş)|yaşından gün almamış|yaş sınırı/i, 'yaş'], [/tecrübe|deneyim/i, 'deneyim'],
     [/sürücü belgesi|ehliyet/i, 'sürücü belgesi'], [/\bYDS\b|YÖKDİL|yabancı dil/i, 'yabancı dil'], [/sertifika/i, 'sertifika']];
@@ -371,86 +363,259 @@
   }
   function motorAl() {
     if (!_motor) _motor = w.BolumEsles ? Promise.resolve(w.BolumEsles) : new Promise(function (ok, hata) {
-      var s = E('script'); s.src = '/bolum/esles.js'; s.onload = function () { ok(w.BolumEsles); }; s.onerror = hata; d.head.append(s);
+      var s = E('script'); s.src = '/bolum/esles.js?v=3';   // kadroBazli için; sürüm bolum/index.html ile aynı s.onload = function () { ok(w.BolumEsles); }; s.onerror = hata; d.head.append(s);
     });
     return _motor;
   }
+  /* Bölüm seçici: aranabilir, çoklu seçimli liste; seçilenler listenin en üstünde durur. */
+  var ENCOK = 5;
+  var HARF = { 'ç': 'c', 'ğ': 'g', 'ı': 'i', 'ö': 'o', 'ş': 's', 'ü': 'u', 'â': 'a', 'î': 'i', 'û': 'u' };
+  function katla(s) { return String(s || '').replace(/İ/g, 'i').replace(/I/g, 'ı').toLocaleLowerCase('tr').replace(/[çğıöşüâîû]/g, function (x) { return HARF[x]; }).replace(/[^a-z0-9]+/g, ' ').trim(); }
+  function basHarf(s) { return String(s || '').replace(/\(\s+/g, '(').replace(/\s+\)/g, ')').replace(/\s+/g, ' ').trim().toLocaleLowerCase('tr')
+    .replace(/(^|[\s(\/-])([^\s(\/-])/g, function (m, x, y) { return x + y.toLocaleUpperCase('tr'); })
+    .replace(/ (Ve|Veya|İle|Ya Da) /g, function (m) { return m.toLocaleLowerCase('tr'); }); }
+  var _adlar = {};
+  function bolumAdlari(duzey) {
+    if (!_adlar[duzey]) _adlar[duzey] = fetch('/puanlar/' + duzey + '-bolum.json', { cache: 'default' }).then(function (r) { return r.json(); }).then(function (v) {
+      var adlar = {}; Object.keys((v && v.bolumler) || {}).forEach(function (kd) { var a = v.bolumler[kd]; if (typeof a === 'string' && a.length <= 120) adlar[basHarf(a)] = 1; });
+      return Object.keys(adlar).sort(function (a, b) { return a.localeCompare(b, 'tr'); }).map(function (a) { return { ad: a, k: katla(a) }; });
+    }).catch(function () { _adlar[duzey] = null; return []; });
+    return _adlar[duzey];
+  }
+  function bolumSecici(secili, degisti) {
+    var kok = E('div', 'kf-secici');
+    var ciplerS = E('div', 'kf-secili'); ciplerS.setAttribute('aria-label', 'Seçtiğin bölümler');
+    var kutu = E('div', 'kf-ara-kutu');
+    var giris = E('input'); giris.type = 'text'; giris.id = 'kf-bolum'; giris.autocomplete = 'off'; giris.setAttribute('role', 'combobox');
+    giris.setAttribute('aria-autocomplete', 'list'); giris.setAttribute('aria-expanded', 'false'); giris.setAttribute('aria-controls', 'kf-bolum-liste');
+    var etiket = E('label', 'sr-only', 'Bölümünü ara ve seç'); etiket.htmlFor = 'kf-bolum';
+    var ok = E('button', 'kf-ac', '▾'); ok.type = 'button'; ok.tabIndex = -1; ok.setAttribute('aria-label', 'Bölüm listesini aç');
+    var liste = E('ul', 'kf-liste'); liste.id = 'kf-bolum-liste'; liste.setAttribute('role', 'listbox'); liste.setAttribute('aria-multiselectable', 'true'); liste.hidden = true;
+    kutu.append(etiket, giris, ok); kok.append(ciplerS, kutu, liste);
+    var adlar = [], aktif = -1, secenekler = [];
+    function placeholder() { giris.placeholder = secili.length ? (secili.length >= ENCOK ? 'En fazla ' + ENCOK + ' bölüm' : 'Başka bölüm ekle') : 'Bölümünü ara (ör. Hukuk)'; }
+    function cipCiz() {
+      ciplerS.replaceChildren.apply(ciplerS, secili.map(function (a) {
+        var c = E('span', 'kf-sec-cip'); c.append(E('span', '', a));
+        var x = E('button', '', '×'); x.type = 'button'; x.setAttribute('aria-label', a + ' bölümünü çıkar');
+        x.addEventListener('click', function () { degis(a); giris.focus(); });
+        c.append(x); return c;
+      }));
+      ciplerS.hidden = !secili.length; placeholder();
+    }
+    function degis(a) {
+      var i = secili.indexOf(a);
+      if (i >= 0) secili.splice(i, 1); else if (secili.length < ENCOK) secili.push(a); else return;
+      giris.value = ''; cipCiz(); listeCiz(); degisti(secili.slice());
+    }
+    function secenek(ad, secildi, ek) {
+      var li = E('li', 'kf-sec' + (secildi ? ' secili' : '')); li.setAttribute('role', 'option'); li.setAttribute('aria-selected', String(!!secildi));
+      li.id = 'kf-sec-' + secenekler.length; li.append(E('span', 'kf-onay', secildi ? '✓' : ''), E('span', '', ek || ad));
+      li.addEventListener('mousedown', function (e) { e.preventDefault(); });
+      li.addEventListener('click', function () { degis(ad); });
+      secenekler.push({ li: li, ad: ad }); return li;
+    }
+    function listeCiz() {
+      var q = katla(giris.value), parca = []; secenekler = [];
+      if (secili.length) {
+        parca.push(E('li', 'kf-liste-baslik', 'Seçtiklerin'));
+        secili.forEach(function (a) { parca.push(secenek(a, true)); });
+      }
+      var bulunan = [];
+      if (q) {
+        var bas = [], soz = [], ic = [];
+        adlar.forEach(function (x) {
+          if (secili.indexOf(x.ad) >= 0) return;
+          var i = x.k.indexOf(q);
+          if (i === 0) bas.push(x); else if (i > 0 && x.k.charAt(i - 1) === ' ') soz.push(x); else if (i > 0) ic.push(x);
+        });
+        bulunan = bas.concat(soz, ic);
+      } else bulunan = adlar.filter(function (x) { return secili.indexOf(x.ad) < 0; });
+      if (secili.length >= ENCOK) parca.push(E('li', 'kf-liste-not', 'En fazla ' + ENCOK + ' bölüm seçebilirsin; birini çıkarıp yenisini ekle.'));
+      else {
+        var yazilan = giris.value.trim();
+        if (bulunan.length) {
+          parca.push(E('li', 'kf-liste-baslik', q ? 'Eşleşen bölümler' : 'Tüm bölümler'));
+          bulunan.slice(0, 120).forEach(function (x) { parca.push(secenek(x.ad, false)); });
+          if (bulunan.length > 120) parca.push(E('li', 'kf-liste-not', bulunan.length - 120 + ' bölüm daha; aramayı daralt.'));
+        } else if (q) parca.push(E('li', 'kf-liste-not', 'Listede bu adla bölüm yok.'));
+        else if (!adlar.length) parca.push(E('li', 'kf-liste-not', 'Bölüm listesi yükleniyor…'));
+        // listede olmayan ad da denenebilir (en sonda)
+        if (yazilan.length >= 3 && !adlar.some(function (x) { return x.k === q; }) && secili.indexOf(basHarf(yazilan)) < 0) parca.push(secenek(basHarf(yazilan), false, '“' + basHarf(yazilan) + '” adıyla dene'));
+      }
+      liste.replaceChildren.apply(liste, parca);
+      aktif = secenekler.length ? Math.min(Math.max(aktif, 0), secenekler.length - 1) : -1;
+      if (q && secenekler.length > secili.length) aktif = secili.length;   // aramada Enter ilk eşleşeni seçer
+      isaretle();
+    }
+    function isaretle() {
+      secenekler.forEach(function (s, i) { s.li.classList.toggle('aktif', i === aktif); });
+      if (aktif >= 0) { giris.setAttribute('aria-activedescendant', secenekler[aktif].li.id); secenekler[aktif].li.scrollIntoView({ block: 'nearest' }); }
+      else giris.removeAttribute('aria-activedescendant');
+    }
+    function ac() { if (!liste.hidden) return; liste.hidden = false; giris.setAttribute('aria-expanded', 'true'); kok.classList.add('acik'); aktif = -1; listeCiz(); }
+    function kapat() { liste.hidden = true; giris.value = '';giris.setAttribute('aria-expanded', 'false'); kok.classList.remove('acik'); }
+    giris.addEventListener('focus', ac);
+    giris.addEventListener('click', ac);
+    giris.addEventListener('input', function () { ac(); aktif = -1; listeCiz(); });
+    ok.addEventListener('mousedown', function (e) { e.preventDefault(); });
+    ok.addEventListener('click', function () { if (liste.hidden) { giris.focus(); ac(); } else kapat(); });
+    giris.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowDown') { e.preventDefault(); ac(); aktif = Math.min(aktif + 1, secenekler.length - 1); isaretle(); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); aktif = Math.max(aktif - 1, 0); isaretle(); }
+      else if (e.key === 'Enter') { e.preventDefault(); if (aktif >= 0 && secenekler[aktif]) degis(secenekler[aktif].ad); }
+      else if (e.key === 'Escape') { kapat(); }
+      else if (e.key === 'Backspace' && !giris.value && secili.length) degis(secili[secili.length - 1]);
+    });
+    giris.addEventListener('blur', function () { setTimeout(function () { if (!kok.contains(d.activeElement)) kapat(); }, 120); });
+    cipCiz();
+    return {
+      el: kok,
+      adlariYukle: function (duzey) { adlar = []; if (!liste.hidden) listeCiz(); bolumAdlari(duzey).then(function (l) { adlar = l || []; if (!liste.hidden) listeCiz(); }); }
+    };
+  }
+
+  var KISA = {   // kadrolara ayrılmamış ilanlar için tek cümlelik sonuç
+    uygun: ['evet', 'Bölümün şartlarda geçiyor.'],
+    kontrol: ['belki', 'Bölümün şartlarda geçiyor olabilir; ilan metninden kontrol et.'],
+    serbest: ['evet', 'Bu ilan herhangi bir bölümden mezun olanları alıyor.'],
+    bak: ['belki', 'Bölüm şartı tam okunamadı; ilan metnine bak.'],
+    haric: ['hayir', 'Bölümün bu ilanda hariç tutulmuş.'],
+    degil: ['hayir', 'Şartta sayılan bölümler arasında seninkini bulamadık. "Denk bölümler" ifadesi için belgeye bak.']
+  };
+  function kadroMetni(rec, ad) {
+    var f = katla(ad), l = [];
+    (rec.kadro_detay || []).concat(rec.yz_kadrolar || []).forEach(function (k) { if (k && katla(k.unvan) === f) l = l.concat(k.maddeler || k.kosullar || []); });
+    (rec.sartlar || []).forEach(function (s) { if (s && katla(s.kadro) === f) l.push(s.metin); });
+    return l.join(' ');
+  }
+  function kadroyaGit(ad) {
+    var f = katla(ad), hedef = null;
+    d.querySelectorAll('.kk').forEach(function (k) { var s = k.querySelector('.kk-bas strong'); if (!hedef && s && katla(s.textContent) === f) hedef = k; });
+    if (!hedef) { var kb = d.getElementById('kadrolar'); if (kb) kb.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+    hedef.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    hedef.classList.remove('kf-parla'); void hedef.offsetWidth; hedef.classList.add('kf-parla');
+  }
+
   function uygunKutu(key, c) {
     var ogr = (c.ogrenim || []).filter(function (o) { return OGRENIM_AD[o]; });
     if (!ogr.length) return;
     var kayitli = oku(UYGUN, {}) || {}, profil = oku('kit-profil', {}) || {};
     var po = profil.ogrenim, duzey = kayitli.d || (typeof po === 'string' ? po : Array.isArray(po) && po.length === 1 ? po[0] : '');
     if (!OGRENIM_AD[duzey]) duzey = '';
+    var secili = (Array.isArray(kayitli.bl) ? kayitli.bl : kayitli.b ? [kayitli.b] : [])
+      .filter(function (x) { return typeof x === 'string' && x.trim(); }).slice(0, ENCOK);
     var k = E('section', 'kf-uygun'); k.setAttribute('aria-label', 'Bu ilana başvurabilir misin');
     k.append(E('h2', '', 'Bu ilana başvurabilir misin?'));
     var cipler = E('div', 'kf-cipler'); cipler.setAttribute('role', 'group'); cipler.setAttribute('aria-label', 'Mezuniyetin');
     var sonuc = E('p', 'kf-uygun-sonuc'); sonuc.setAttribute('aria-live', 'polite');
-    var form = E('form', 'kf-bolum-form'); form.hidden = true;
-    var etiket = E('label', 'sr-only', 'Bölümün'); etiket.htmlFor = 'kf-bolum';
-    var giris = E('input'); giris.id = 'kf-bolum'; giris.type = 'text'; giris.placeholder = 'Bölümünü yaz (ör. Hukuk)'; giris.autocomplete = 'off';
-    giris.setAttribute('list', 'kf-bolum-liste'); giris.value = kayitli.b || '';
-    var dl = E('datalist'); dl.id = 'kf-bolum-liste';
-    var dugme = E('button', '', 'Kontrol et'); dugme.type = 'submit';
+    var secici = bolumSecici(secili, function (l) { secili = l; kaydet(); denetle(); iz('kesfet', { k: 'uygun_bolum_sec', h: String(l.length) }); });
+    var alan = E('div', 'kf-bolum-alan'); alan.hidden = true;
     var bolumSonuc = E('div', 'kf-bolum-sonuc'); bolumSonuc.setAttribute('aria-live', 'polite');
-    form.append(etiket, giris, dl, dugme);
+    alan.append(secici.el);
     ['lisans', 'onlisans', 'ortaogretim'].forEach(function (o) {
       var b = E('button', 'kf-cip', OGRENIM_AD[o]); b.type = 'button'; b.dataset.o = o;
-      b.addEventListener('click', function () { duzey = o; kaydet(); ciz(); iz('kesfet', { k: 'uygun_duzey', h: o }); });
+      b.addEventListener('click', function () { if (duzey !== o) { duzey = o; kaydet(); ciz(); } iz('kesfet', { k: 'uygun_duzey', h: o }); });
       cipler.append(b);
     });
-    function kaydet() { var v = oku(UYGUN, {}) || {}; v.d = duzey; v.b = giris.value.trim(); yaz(UYGUN, v); }
-    var listeYuklu = '';
+    function kaydet() { var v = oku(UYGUN, {}) || {}; v.d = duzey; v.bl = secili.slice(); v.b = secili[0] || ''; yaz(UYGUN, v); }
+    var adlarDuzey = '';
     function ciz(bekle) {
       cipler.querySelectorAll('.kf-cip').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.o === duzey)); });
       bolumSonuc.replaceChildren();
-      if (!duzey) { sonuc.textContent = 'Mezuniyetini seç, hemen söyleyelim.'; sonuc.className = 'kf-uygun-sonuc'; form.hidden = true; return; }
+      if (!duzey) { sonuc.textContent = 'Mezuniyetini seç, hemen söyleyelim.'; sonuc.className = 'kf-uygun-sonuc'; alan.hidden = true; return; }
       if (ogr.indexOf(duzey) < 0) {
         sonuc.className = 'kf-uygun-sonuc hayir';
         sonuc.textContent = 'Bu ilan yalnız ' + ogr.map(function (o) { return OGRENIM_AD[o]; }).join(' ve ') + ' mezunlarını alıyor.';
-        form.hidden = true; return;
+        alan.hidden = true; return;
       }
       sonuc.className = 'kf-uygun-sonuc evet';
-      sonuc.textContent = OGRENIM_AD[duzey] + ' mezunları başvurabilir. Bölümün uyuyor mu?';
-      form.hidden = false;
-      if (listeYuklu !== duzey) {
-        listeYuklu = duzey;
-        fetch('/puanlar/' + duzey + '-bolum.json', { cache: 'default' }).then(function (r) { return r.json(); }).then(function (v) {
-          var adlar = {}; Object.keys((v && v.bolumler) || {}).forEach(function (kd) { var a = v.bolumler[kd]; if (typeof a === 'string' && a.length <= 120) adlar[a.toLocaleLowerCase('tr').replace(/(^|[\s(\/-])(\S)/g, function (m, x, y) { return x + y.toLocaleUpperCase('tr'); })] = 1; });
-          dl.replaceChildren.apply(dl, Object.keys(adlar).sort(function (a, b) { return a.localeCompare(b, 'tr'); }).map(function (a) { var o = E('option'); o.value = a; return o; }));
-        }).catch(function () { /* öneri listesi isteğe bağlı */ });
-      }
-      if (giris.value.trim() && !bekle) denetle();
+      sonuc.textContent = OGRENIM_AD[duzey] + ' mezunları başvurabilir. ' + (duzey === 'ortaogretim' ? 'Alan şartı olan kadrolar için alanını seçebilirsin.' : 'Bölümünü seç; hangi kadrolara uyduğunu söyleyelim.');
+      alan.hidden = false;
+      if (adlarDuzey !== duzey) { adlarDuzey = duzey; secici.adlariYukle(duzey); }
+      if (!bekle) denetle();
     }
     function denetle() {
-      var ad = giris.value.trim(); if (!ad) return;
-      kaydet();
+      if (!duzey || ogr.indexOf(duzey) < 0) return;
+      if (!secili.length && duzey !== 'ortaogretim') { bolumSonuc.replaceChildren(); return; }
       bolumSonuc.replaceChildren(E('p', 'kf-bekle', 'Şartlar okunuyor…'));
+      var istek = secili.join('|') + '#' + duzey; denetle.son = istek;
       Promise.all([kayitAl(key), motorAl()]).then(function (s) {
+        if (denetle.son !== istek) return;   // bu arada seçim değişti
         var rec = s[0], M = s[1];
-        if (!rec || !M) throw new Error('yok');
-        var r = M.siniflandir(rec, M.bolumCoz(ad), duzey);
-        var haric = r.kademe === 'eslesmiyor' && /hariç/.test(r.neden || '');
-        var k2 = haric ? KADEME.haric : KADEME[r.kademe] || KADEME.belirsiz;
-        var p = E('p', 'kf-uygun-sonuc ' + k2[0], k2[1]); var parca = [p];
-        if (r.kanit && (haric || r.kademe === 'kesin' || r.kademe === 'muhtemel' || r.kademe === 'serbest')) {
-          parca.push(E('blockquote', 'kf-kanit', '“' + r.kanit + '”'));
-        }
-        var ek = r.kademe === 'eslesmiyor' ? [] : ekSartlar(rec);
-        if (ek.length) parca.push(E('p', 'kf-ek-sart', 'Bu ilanda ' + ek.join(', ') + ' şartı da var; Kadrolar bölümünden oku.'));
-        parca.push(E('p', 'kf-not', 'Son karar kurumun ilan metnine göre verilir.'));
-        var l = E('a', 'yazi-link', 'Bölümüne uygun tüm ilanlar →'); l.href = '/bolum/?b=' + encodeURIComponent(ad) + '&d=' + duzey; parca.push(l);
-        bolumSonuc.replaceChildren.apply(bolumSonuc, parca);
-        iz('kesfet', { k: 'uygun_bolum', h: r.kademe });
+        if (!rec || !M || !M.kadroBazli) throw new Error('yok');
+        goster(rec, M.kadroBazli(rec, secili, duzey));
       }).catch(function () { bolumSonuc.replaceChildren(E('p', 'kf-uygun-sonuc belki', 'Şu an kontrol edilemedi; şartları aşağıdaki Kadrolar bölümünden oku.')); });
     }
-    form.addEventListener('submit', function (e) { e.preventDefault(); denetle(); });
-    k.append(cipler, sonuc, form, bolumSonuc);
+    function kanitP(metin) { return E('blockquote', 'kf-kanit', '“' + metin + '”'); }
+    function goster(rec, r) {
+      var parca = [], cok = secili.length > 1;
+      if (r.genel) {
+        var g = r.kadrolar[0];
+        if (!g) { bolumSonuc.replaceChildren(); return; }
+        var m = KISA[g.durum] || KISA.bak;
+        parca.push(E('p', 'kf-uygun-sonuc ' + m[0], m[1] + (cok && g.bolum && /uygun|kontrol/.test(g.durum) ? ' (' + g.bolum + ')' : '')));
+        if (g.kanit && g.durum !== 'degil' && g.durum !== 'bak') parca.push(kanitP(g.kanit));
+        var ek0 = g.durum === 'degil' ? [] : ekSartlar(rec);
+        if (ek0.length) parca.push(E('p', 'kf-ek-sart', 'Bu ilanda ' + ek0.join(', ') + ' şartı da var; Kadrolar bölümünden oku.'));
+        iz('kesfet', { k: 'uygun_bolum', h: g.durum });
+      } else {
+        var grup = { uygun: [], serbest: [], kontrol: [], bak: [], haric: [], degil: [] };
+        r.kadrolar.forEach(function (x) { (grup[x.durum] || grup.bak).push(x); });
+        var evet = grup.uygun.concat(grup.serbest), belki = grup.kontrol.concat(grup.bak), toplam = r.kadrolar.length;
+        var bas;
+        if (!secili.length) {
+          bas = grup.serbest.length ? ['evet', grup.serbest.length + ' kadroda alan şartı yok; başvurabilirsin.'] : ['belki', 'Bu düzeydeki kadroların alan şartı var; alanını seç.'];
+          grup.bak = grup.bak.concat(grup.kontrol, grup.degil); grup.kontrol = []; grup.degil = []; grup.uygun = [];
+        } else if (evet.length) bas = ['evet', toplam === 1 ? 'Başvurabilirsin.' : evet.length === toplam ? 'Bu düzeydeki ' + toplam + ' kadronun hepsine başvurabilirsin.' : evet.length + ' kadroya başvurabilirsin.'];
+        else if (belki.length) bas = ['belki', 'Kesin söyleyemiyoruz; aşağıdaki kadroların şartını ilan metninden kontrol et.'];
+        else if (!toplam) bas = ['hayir', 'Bu ilanda ' + OGRENIM_AD[duzey].toLocaleLowerCase('tr') + ' düzeyinde kadro bulamadık.'];
+        else bas = ['hayir', grup.haric.length && !grup.degil.length ? 'Bölümün bu ilanda hariç tutulmuş.' : 'Bölümün bu ilandaki ' + OGRENIM_AD[duzey].toLocaleLowerCase('tr') + ' kadrolarının şartlarında geçmiyor.'];
+        parca.push(E('p', 'kf-uygun-sonuc ' + bas[0], bas[1]));
+        var ul = E('ul', 'kf-kadrolar');
+        function satirEkle(x, sinif, neden, kanit) {
+          var li = E('li', 'kf-kadro ' + sinif);
+          var ad = E('button', 'kf-kadro-ad', x.ad ? basHarf(x.ad) : 'İlan'); ad.type = 'button'; ad.title = 'Kadrolar bölümünde göster';
+          ad.addEventListener('click', function () { kadroyaGit(x.ad); });
+          li.append(ad, E('span', 'kf-kadro-neden', neden));
+          if (kanit) li.append(E('span', 'kf-kadro-kanit', '“' + kanit + '”'));
+          if (sinif !== 'hayir') {
+            var ek = EK_SART.filter(function (e) { return e[0].test(kadroMetni(rec, x.ad)); }).map(function (e) { return e[1]; });
+            if (ek.length) li.append(E('span', 'kf-kadro-ek', 'Ayrıca ' + ek.join(', ') + ' şartı var'));
+          }
+          ul.append(li);
+        }
+        grup.uygun.forEach(function (x) { satirEkle(x, 'evet', cok && x.bolum ? x.bolum + ' listede' : 'Bölümün listede',x.kanit && katla(x.kanit) !== katla(x.bolum) ? x.kanit : ''); });
+        grup.serbest.forEach(function (x) { satirEkle(x, 'evet', 'Bölüm şartı yok; yalnız öğrenim düzeyi aranıyor', ''); });
+        grup.kontrol.forEach(function (x) { satirEkle(x, 'belki', 'Şartı kontrol et' + (cok && x.bolum ? ' (' + x.bolum + ')' : ''), x.kanit); });
+        grup.bak.forEach(function (x) { satirEkle(x, 'belki', secili.length ? 'Şart metni tam okunamadı; ilan metnine bak' : 'Alan şartı var; alanını seç', ''); });
+        grup.haric.forEach(function (x) { satirEkle(x, 'hayir', 'Bölümün hariç tutulmuş', x.kanit); });
+        if (ul.children.length) parca.push(ul);
+        if (grup.degil.length) {
+          var det = E('details', 'kf-degil'); det.append(E('summary', '', 'Bölümünün geçmediği ' + grup.degil.length + ' kadro'));
+          var ul2 = E('ul', 'kf-kadrolar');
+          grup.degil.forEach(function (x) {
+            var li = E('li', 'kf-kadro hayir'), b = E('button', 'kf-kadro-ad', basHarf(x.ad)); b.type = 'button';
+            b.addEventListener('click', function () { kadroyaGit(x.ad); }); li.append(b); ul2.append(li);
+          });
+          det.append(ul2); parca.push(det);
+        }
+        if (r.digerDuzey) parca.push(E('p', 'kf-not', 'İlanda başka öğrenim düzeyleri için ' + r.digerDuzey + ' kadro daha var.'));
+        if (r.eksik) parca.push(E('p', 'kf-not', 'Bazı kadroların şartları siteye alınamadı; ilan belgesine de bak.'));
+        iz('kesfet', { k: 'uygun_bolum', h: bas[0] });
+      }
+      if (r.duzeltme) parca.push(E('p', 'kf-not', 'Bu ilan için düzeltme yayımlanmış; güncel şartları kurumdan kontrol et.'));
+      parca.push(E('p', 'kf-not', 'Son karar kurumun ilan metnine göre verilir.'));
+      if (secili.length) { var l = E('a', 'yazi-link', 'Bölümüne uygun tüm ilanlar →'); l.href = '/bolum/?b=' + encodeURIComponent(secili[0]) + '&d=' + duzey; parca.push(l); }
+      bolumSonuc.replaceChildren.apply(bolumSonuc, parca);
+    }
+    k.append(cipler, sonuc, alan, bolumSonuc);
     var bakis = d.querySelector('.d-ana .bakis'), ana = d.querySelector('.d-ana');
     if (bakis) bakis.after(k); else if (ana) ana.prepend(k);
-    // kayıtlı bölüm varsa sonucu kutu görünür olunca getir (ilanlar.json'u boşuna indirmemek için)
-    if (kayitli.b && 'IntersectionObserver' in w) {
+    // kayıtlı seçim varsa sonucu kutu görünür olunca getir (ilanlar.json'u boşuna indirmemek için)
+    if ((secili.length || duzey === 'ortaogretim') && 'IntersectionObserver' in w) {
       ciz(true);
-      var gor = new IntersectionObserver(function (e) { if (e[0].isIntersecting) { gor.disconnect(); if (!form.hidden) denetle(); } }); gor.observe(k);
+      var gor = new IntersectionObserver(function (e) { if (e[0].isIntersecting) { gor.disconnect(); denetle(); } }); gor.observe(k);
     } else ciz();
   }
 

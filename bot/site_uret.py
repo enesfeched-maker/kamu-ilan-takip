@@ -209,7 +209,7 @@ def sayfa_basi(baslik, aciklama, canonical, kok, og_tur='website', ek_head='', o
 # ve ilan bağlantılarının üzerine gelince önceden yüklenmesi (Speculation Rules; yalnız prefetch, reklam sayfası önceden çalışmaz).
 # Kasım 2026 yeni tasarım: "okuma masası" katmanı (docs/tasarim.css) ve keşif betiği (docs/kesfet.js; benzer ilanlar,
 # sıradaki ilan, topluluk şeridi). Kök göreli: site alan adının kökünde yayımlanır; her sayfada en son yüklenir.
-TASARIM_SURUM = 3
+TASARIM_SURUM = 4
 TASARIM_HEAD = (f'<link rel="stylesheet" href="/tasarim.css?v={TASARIM_SURUM}">'
                 f'<script src="/kesfet.js?v={TASARIM_SURUM}" defer></script>')
 ORTAK_HEAD = ('<meta name="referrer" content="strict-origin-when-cross-origin">'

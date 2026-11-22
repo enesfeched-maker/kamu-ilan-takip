@@ -169,4 +169,52 @@ test('hariç tutulan bölüm eşleşmiyor', () => {
   assert.strictEqual(sinif(sart('Lisans programlarından mezun olmak (Hukuk hariç).'), 'Hukuk'), 'eslesmiyor');
   assert.strictEqual(sinif(sart('Hukuk fakültesi mezunu olmak ve mesai saatleri dışında çalışmak.'), 'Hukuk'), 'kesin');
 });
+
+/* ---- kadro bazlı denetim (ilan sayfası "Bu ilana başvurabilir misin?") ---- */
+const kd = (unvan, ...maddeler) => ({ unvan, maddeler });
+const cokKadro = {
+  id: 'x', baslik: 'KURUM - 2026/2 SÖZLEŞMELİ PERSONEL ALIM İLANI', kurum: 'KURUM',
+  kadro_detay: [
+    kd('MÜHENDİS (MAKİNE)', 'Yaş şartlarını taşımak,', 'Makine Mühendisliği lisans programından mezun olmak.'),
+    kd('MÜHENDİS (KİMYA)', 'Kimya Mühendisliği lisans programından mezun olmak.'),
+    kd('KİMYAGER', 'Kimya veya Biyokimya lisans programlarının birinden mezun olmak.'),
+    kd('TIBBİ SEKRETER', 'Tıbbi Dokümantasyon ve Sekreterlik, Büro Yönetimi, Hukuk Büro Yönetimi ve Sekreterliği önlisans programlarının birinden mezun olmak.'),
+    kd('TEKNİKER (SİLAH)', 'Makine, İş Makineleri veya Silah Sanayi Teknikerliği önlisans programlarının birinden mezun olmak.'),
+    kd('HİZMETLİ', 'Lise ve dengi okul mezunu olmak.', 'Temizlik işlerinde en az 6 ay çalışmış olmak.'),
+  ],
+};
+const kb = (rec, b, d) => E.kadroBazli(rec, [].concat(b), d).kadrolar.filter((k) => k.durum === 'uygun' || k.durum === 'kontrol' || k.durum === 'serbest').map((k) => k.ad + '=' + k.durum).join(' | ');
+test('kadro bazlı: bölüm yalnız birebir listelendiği kadroya uyar', () => {
+  assert.strictEqual(kb(cokKadro, 'Makine Mühendisliği', 'lisans'), 'MÜHENDİS (MAKİNE)=uygun');
+  assert.strictEqual(kb(cokKadro, 'Kimya', 'lisans'), 'KİMYAGER=uygun');            // Kimya Mühendisliği kadrosu değil
+  assert.strictEqual(kb(cokKadro, 'Makine', 'onlisans'), 'TEKNİKER (SİLAH)=uygun');
+  assert.strictEqual(kb(cokKadro, 'Hukuk', 'lisans'), '');                          // "Hukuk Büro Yönetimi" Hukuk değildir
+});
+test('kadro bazlı: düzey ayrımı ve yalnız düzey isteyen kadro', () => {
+  const r = E.kadroBazli(cokKadro, ['Lise'], 'ortaogretim');
+  assert.strictEqual(r.kadrolar.map((k) => k.ad + '=' + k.durum).join(' | '), 'HİZMETLİ=serbest');
+  assert.strictEqual(r.digerDuzey, 5);
+});
+test('kadro bazlı: birden fazla bölüm', () => {
+  assert.strictEqual(kb(cokKadro, ['Kimya', 'Makine Mühendisliği'], 'lisans'), 'MÜHENDİS (MAKİNE)=uygun | KİMYAGER=uygun');
+});
+test('kadro bazlı: ortak baş sözcük ve baştaki kalıp', () => {
+  const rec = { id: 'y', baslik: 'K', kadro_detay: [kd('ÇÖZÜMLEYİCİ', 'En az dört yıllık bilgisayar, elektrik, haberleşme mühendislikleri ile fakültelerin matematik, istatistik bölümlerinin birinden mezun olmak,')] };
+  assert.strictEqual(kb(rec, 'Bilgisayar Mühendisliği', 'lisans'), 'ÇÖZÜMLEYİCİ=uygun');
+  assert.strictEqual(kb(rec, 'İstatistik', 'lisans'), 'ÇÖZÜMLEYİCİ=uygun');
+  assert.strictEqual(kb(rec, 'Hukuk', 'lisans'), '');
+  const afad = { id: 'z', baslik: 'K', kadro_detay: [kd('UZMAN YARDIMCISI', 'Üniversitelerin en az dört yıllık lisans eğitimi veren Hukuk öğrenim dalından mezun olmak.')] };
+  assert.strictEqual(kb(afad, 'Hukuk', 'lisans'), 'UZMAN YARDIMCISI=uygun');
+});
+test('kadro bazlı: belirsiz şart "uymuyor" denmez', () => {
+  const rec = { id: 'w', baslik: 'K', kadro_detay: [kd('EKONOMİST', 'En az dört yıllık yükseköğretim kurumlarının ilgili bölümlerinden mezun olmak, gerekir.')] };
+  assert.strictEqual(E.kadroBazli(rec, ['İktisat'], 'lisans').kadrolar[0].durum, 'bak');
+  const fen = { id: 'v', baslik: 'K', kadro_detay: [kd('ARŞ. GÖR.', 'Mühendislik veya Fen Fakültelerinin herhangi bir bölümünden lisans mezunu olmak.')] };
+  assert.strictEqual(E.kadroBazli(fen, ['Psikoloji'], 'lisans').kadrolar[0].durum, 'kontrol');
+});
+test('kadro bazlı: kadrosuz ilan /bolum/ sayfasıyla aynı sonucu verir', () => {
+  const r = E.kadroBazli(sart('Hukuk fakültesi mezunu olmak'), ['Hukuk'], 'lisans');
+  assert.strictEqual(r.genel, true);
+  assert.strictEqual(r.kadrolar[0].durum, 'uygun');
+});
 console.log(n + ' test geçti');
