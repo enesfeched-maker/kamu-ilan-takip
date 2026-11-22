@@ -32,7 +32,7 @@ FOTO_ESLEME = [
     (19, ('ogretmen',)),
     (20, ('kutuphane', 'muze', 'arsiv')),
     (21, ('avukat', 'hukuk')),
-    (23, ('mufettis', 'denetci', 'kontrolor')),
+    (23, ('mufettis', 'denetci', 'denetmen', 'kontrolor')),
     (28, ('muhasebe', 'mali ', 'gelir uzman')),
     (14, ('muhendis',)),
     (15, ('mimar', 'restorator')),
@@ -174,6 +174,7 @@ def meslek_no(label, kurum=''):
     """Kadro adından meslek fotoğrafının numarası (eşleşmezse 30: Genel Personel). Askerî kadroda kurum Jandarma ya da
     Sahil Güvenlik ise o kurumun üniformalı fotoğrafı."""
     s = ' ' + ' '.join(re.sub(r'[^a-z0-9]+', ' ', norm(label or '')).split()) + ' '
+    s = s.replace(' sosyal guvenlik ', ' ')   # "Sosyal Güvenlik Denetmen Yardımcısı" güvenlik görevlisi değildir
     for no, kokler in FOTO_ESLEME:
         for kok in kokler:
             if (' ' + kok if not kok.endswith(' ') else ' ' + kok) in s:

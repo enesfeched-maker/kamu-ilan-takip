@@ -43,6 +43,8 @@ class GorselTests(unittest.TestCase):
         self.assertEqual(meslek_no('Muvazzaf Subay','JANDARMA GENEL KOMUTANLIĞI'),33)
         self.assertEqual(meslek_no('Astsubay','Sahil Güvenlik Komutanlığı'),34)
         self.assertEqual(meslek_no('Bilişim Personeli','JANDARMA GENEL KOMUTANLIĞI'),1)
+        self.assertEqual(meslek_no('Sosyal Güvenlik Denetmen Yardımcısı'),23)   # güvenlik görevlisi fotoğrafı değil
+        self.assertEqual(meslek_no('Güvenlik Görevlisi'),6)
 
     def test_fotograf_daire_ve_yedek_cizim(self):
         from unittest import mock

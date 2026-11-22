@@ -163,4 +163,10 @@ if (fs.existsSync(yol)) {
     void find;
   });
 }
+test('hariç tutulan bölüm eşleşmiyor', () => {
+  assert.strictEqual(sinif(sart('Hukuk Fakültesi hariç herhangi bir lisans programından mezun olmak'), 'Hukuk'), 'eslesmiyor');
+  assert.strictEqual(sinif(sart('İnşaat mühendisliği dışındaki mühendislik bölümlerinden mezun olmak.'), 'İnşaat Mühendisliği'), 'eslesmiyor');
+  assert.strictEqual(sinif(sart('Lisans programlarından mezun olmak (Hukuk hariç).'), 'Hukuk'), 'eslesmiyor');
+  assert.strictEqual(sinif(sart('Hukuk fakültesi mezunu olmak ve mesai saatleri dışında çalışmak.'), 'Hukuk'), 'kesin');
+});
 console.log(n + ' test geçti');

@@ -60,6 +60,20 @@
   const CUMLE_AYIR = /[.;•]+/;
   const cumleler = (metin) => String(metin || '').replace(/[\n\r]+/g, ' ').split(CUMLE_AYIR).map((s) => s.trim()).filter(Boolean);
 
+  /* Hariç tutma: bölüm adından sonra 6 sözcük içinde "hariç/dışında" gelir ya da ad, hariç sözcüğü içeren parantezin içindedir. */
+  const HARIC_SOZ = /^(haric|harici|haricinde|haricindeki|disinda|disindaki)$/;
+  function haricMi(cum, cTok, b) {
+    const yer = [];
+    for (let i = 0; i < cTok.length; i++) if (b.some((t) => ayniKok(cTok[i], t))) yer.push(i);
+    for (const son of yer) for (let i = son + 1; i < cTok.length && i <= son + 6; i++) if (HARIC_SOZ.test(cTok[i])) return true;
+    const re = /\(([^)]*)\)/g;
+    let m;
+    while ((m = re.exec(cum))) {
+      const pt = tokens(m[1]);
+      if (pt.some((x) => HARIC_SOZ.test(x)) && (dizi(pt, b) || kismi(pt, b, 'mezun'))) return true;
+    }
+    return false;
+  }
   /* Bölüm listesi şartın başka yerinde (tablo/ek/"yukarıda sayılan"): bu cümleden "bölüm yok" sonucu çıkarılamaz. */
   const REFERANS = /\btablo\b|\bek ?\d|\bekte\b|\bekli\b|\bcetvel|asagida (sayilan|belirtilen|yer alan|gosterilen)|yukarida (sayilan|belirtilen|yer alan|gosterilen)|ilan metni(nde|ndeki)|ilanda belirtilen|ilan belgesi(nde)?|belgede belirtilen bolum|belirtilen (alan|bolum|program)|ayri olarak|veya mezun veya|mezun veya belirtilen/;
   /* Nitelik cümlesi: bölüm adının geçtiği yerin gerçekten bir mezuniyet/öğrenim şartı olduğunu gösterir. */
@@ -196,6 +210,7 @@
     let serbestVar = null;
     let listeVar = false;
     let sorun = '';
+    let haricKanit = '';
 
     for (const p of par) {
       const sart = p.kaynak === 'sart';
@@ -206,14 +221,15 @@
       for (const cum of cumleler(p.metin)) {
         const cTok = tokens(cum), cf = fold(cum);
         let tur = '';
+        let haricte = false;
         for (const b of bolum) {
-          if (dizi(cTok, b)) { tur = 'kesin'; break; }
+          if (dizi(cTok, b)) { if (haricMi(cum, cTok, b)) haricte = true; else { tur = 'kesin'; break; } }
         }
         if (!tur) for (const b of bolum) {
-          if (ortakBas(cTok, b)) { tur = 'muhtemel'; break; }
+          if (ortakBas(cTok, b) || kismi(cTok, b, cf)) { if (haricMi(cum, cTok, b)) { haricte = true; continue; } tur = 'muhtemel'; break; }
           if (grup(cTok, cf, b)) { tur = 'muhtemel'; break; }
-          if (kismi(cTok, b, cf)) { tur = 'muhtemel'; break; }
         }
+        if (!tur && haricte && !haricKanit) haricKanit = cum;
         // Sınav konusu gibi nitelik cümlesi olmayan geçişler ("Temel Hukuk") kesin sayılmaz.
         if (tur === 'kesin' && (sart || p.kaynak === 'ozet') && !NITELIK.test(cf)) tur = 'muhtemel';
         if (!tur && sorunlu(p.metin)) {
@@ -236,6 +252,7 @@
     let kademe, neden = '', kanit = '', kadro = '';
     if (en && en.kademe === 'kesin') { kademe = 'kesin'; neden = en.neden; kanit = en.kanit; }
     else if (en) { kademe = 'muhtemel'; neden = en.neden; kanit = en.kanit; }
+    else if (haricKanit) { kademe = 'eslesmiyor'; neden = 'Bölümün bu ilanda hariç tutulmuş'; kanit = kisalt(haricKanit, 260); }
     else if (serbestVar) { kademe = 'serbest'; neden = 'Şartta bölüm kısıtı olmadığı yazıyor'; kanit = kisalt(serbestVar.cum, 260); }
     else {
       const sartSayisi = par.filter((p) => p.kaynak === 'sart').length;
