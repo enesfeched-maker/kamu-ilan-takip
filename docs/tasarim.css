@@ -1,39 +1,44 @@
 /* KPSS Tercihi — "Okuma masası" tasarım katmanı (Kasım 2026).
    Bütün sayfalarda en son yüklenir; mevcut CSS'i silmeden belirteçleri ve okuma düzenini yeniler.
-   Renk: Sanzo Wada, A Dictionary of Color Combinations #33 (colors.elwyn.co) — Slate Color #34454c + Raw Sienna #bb7125;
-   zemin Ivory Buff #ebd3a2'nin çok açık tonu. Logo limesi (#C8F169) marka vurgusu olarak kalır.
+   Renk: Sanzo Wada, A Dictionary of Color Combinations #2 (colors.elwyn.co) — lacivert #12354e + kehribar #f99d1b,
+   açık vurgu #3'ün limon tonu #ffefae. Logo görseli değişmez.
    html:root seçicisi bilerek kullanıldı: sonra yüklenen dosyalardaki :root belirteçlerini de ezer. */
 
 html:root{
-  --bg:#F6F3EC;--surface:#FFFFFF;--surface-2:#F1ECE2;--surface-3:#E8E1D4;
-  --ink:#1D292E;--ink-2:#34454C;--muted:#5E6C70;--faint:#8D989A;
-  --line:#E6DFD2;--line-2:#D5CCBC;
-  --lime:#C8F169;--lime-2:#B7E44F;--lime-soft:#EEF6DA;--lime-ink:#3D5C05;
-  --alert:#9C5317;--alert-soft:#FAEBDA;
-  --btn:#1D292E;--btn-ink:#FFFFFF;--focus:#9C5317;
-  --shadow:0 1px 0 rgba(52,69,76,.04),0 8px 24px -16px rgba(52,69,76,.22);
-  --shadow-md:0 2px 6px rgba(52,69,76,.06),0 16px 36px -18px rgba(52,69,76,.28);
+  --bg:#F7F5EE;--surface:#FFFFFF;--surface-2:#F0EEE6;--surface-3:#E6E3D8;
+  --ink:#12354E;--ink-2:#2A4A60;--muted:#5A6B77;--faint:#8C99A2;
+  --line:#E3E0D5;--line-2:#D2CEC0;
+  --lime:#F99D1B;--lime-2:#E58C0C;--kb-lime:#F99D1B;--lime-soft:#FFEFAE;--lime-ink:#6B4306;--chip-lime:#FFF3C4;--chip-lime-ink:#6B4306;
+  --alert:#A85E08;--alert-soft:#FFEFAE;
+  --btn:#12354E;--btn-ink:#FFFFFF;--focus:#B86A0C;
+  --shadow:0 1px 0 rgba(18,53,78,.04),0 8px 24px -16px rgba(18,53,78,.22);
+  --shadow-md:0 2px 6px rgba(18,53,78,.06),0 16px 36px -18px rgba(18,53,78,.28);
   --r:18px;--r-sm:12px;
   /* kabuk */
-  --kb-zemin:#18252A;--kb-zemin-2:#22333A;--kb-cizgi:#2D4047;--kb-yazi:#EEF1EA;--kb-soluk:#A9B8B6;
+  --kb-zemin:#12354E;--kb-zemin-2:#1B4562;--kb-cizgi:#285573;--kb-yazi:#F3F1EA;--kb-soluk:#A9BCCB;
   /* ana sayfa zaman çizelgesi */
-  --tarih-yazi:#9C5317;--acil-zemin:#A9521A;--acil-yazi:#FFFFFF;--yakin-zemin:#FBEBD3;--yakin-yazi:#7A4310;--cizgi-vurgu:#9ED437;
+  --tarih-yazi:#A85E08;--acil-zemin:#F99D1B;--acil-yazi:#12354E;--yakin-zemin:#FFEFAE;--yakin-yazi:#6B4306;--cizgi-vurgu:#F99D1B;
   /* keşif katmanı */
-  --kf-sienna:#BB7125;--kf-slate:#34454C;--kf-kagit:#FBF8F2;
+  --kf-sienna:#F99D1B;--kf-slate:#12354E;--kf-kagit:#FBFAF4;
+  /* ana sayfa (portal.css) */
+  --petrol:#12354E;--petrol-2:#0D2A3F;--ana:#12354E;--primary:#12354E;--primary-hover:#1B4562;--on-primary:#FFFFFF;--link:#1B5A85;--tint:#FFF6D6;
 }
 html:root[data-theme=dark]{
-  --bg:#10181B;--surface:#162126;--surface-2:#1B282E;--surface-3:#223238;
-  --ink:#EEF1EA;--ink-2:#C9D2CF;--muted:#97A5A5;--faint:#6C7B7D;
-  --line:#22323A;--line-2:#2D4148;
-  --lime-soft:#1E2A14;--lime-ink:#C8F169;
-  --alert:#EBA567;--alert-soft:#38250F;
-  --btn:#C8F169;--btn-ink:#14201F;--focus:#C8F169;
+  --bg:#0B1E2C;--surface:#102838;--surface-2:#153042;--surface-3:#1B394D;
+  --ink:#F3F1EA;--ink-2:#CCD6DD;--muted:#9AABB7;--faint:#6F8494;
+  --line:#1E3A4E;--line-2:#28485F;
+  --lime-soft:#3A2A0E;--lime-ink:#F9B354;--chip-lime:#3A2A0E;--chip-lime-ink:#FFE08A;
+  --alert:#F9B354;--alert-soft:#3A2A0E;
+  --btn:#F99D1B;--btn-ink:#12354E;--focus:#F99D1B;
   --shadow:0 1px 0 rgba(0,0,0,.25),0 10px 28px -18px rgba(0,0,0,.6);
   --shadow-md:0 12px 32px -16px rgba(0,0,0,.65);
-  --kb-zemin:#0E1619;--kb-zemin-2:#18252A;--kb-cizgi:#22343B;
-  --tarih-yazi:#EBA567;--acil-zemin:#A9521A;--yakin-zemin:#38270F;--yakin-yazi:#F1C68E;
-  --kf-kagit:#141E22;
+  --kb-zemin:#081723;--kb-zemin-2:#0F2535;--kb-cizgi:#1B3A50;
+  --tarih-yazi:#F9B354;--acil-zemin:#F99D1B;--acil-yazi:#12354E;--yakin-zemin:#3A2A0E;--yakin-yazi:#FFE08A;
+  --kf-kagit:#0E2433;
 }
+html:root[data-theme=dark]{--petrol:#0D2A3F;--petrol-2:#081D2C;--primary:#F99D1B;--primary-hover:#FBB34F;--on-primary:#12354E;--link:#F9B354;--tint:#173246}
+@media (prefers-color-scheme:dark){html:root:not([data-theme=light]){--petrol:#0D2A3F;--petrol-2:#081D2C;--primary:#F99D1B;--primary-hover:#FBB34F;--on-primary:#12354E;--link:#F9B354;--tint:#173246}}
+html body .manset{background:radial-gradient(900px 340px at 88% -20%,rgba(249,157,27,.20),transparent 62%),linear-gradient(#12354E,#0D2A3F)}
 
 /* ---------- temel okuma ---------- */
 body{font-size:16px;line-height:1.6;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
