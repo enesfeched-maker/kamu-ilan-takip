@@ -315,5 +315,191 @@
     return [...sonuc.values()];
   }
 
-  return { fold, tokens, bolumCoz, siniflandir, gruplaVeSinifla, parcalar, sorunlu, SIRA };
+  /* ================= Kadro bazlı denetim (ilan sayfasındaki "Bu ilana başvurabilir misin?") =================
+   * Her kadronun şartındaki bölüm LİSTESİ maddelerine ayrılır ve seçilen bölüm her maddeyle BİREBİR karşılaştırılır:
+   * "Kimya Mühendisliği" maddesi Kimya mezununu, "Hukuk Büro Yönetimi ve Sekreterliği" Hukuk mezununu kapsamaz.
+   * Kadro durumu: uygun · kontrol · serbest · haric · degil · bak (okunamadı). */
+  const KUYRUK = new Set(['lisans', 'onlisans', 'programlarinin', 'programlarindan', 'programindan', 'programi', 'programlari', 'programlarinda',
+    'programlarina', 'programinin', 'bolumlerinin', 'bolumlerinden', 'bolumunden', 'bolumu', 'bolumleri', 'bolumlerine', 'bolumunun', 'fakultesinden',
+    'fakultesi', 'fakultelerinin', 'fakultelerinden', 'fakultelerin', 'alanlarinin', 'alanlarindan', 'alanindan', 'alani', 'alanlari', 'dallarinin',
+    'dallarindan', 'dalindan', 'dali', 'anabilim', 'mezun', 'mezunu', 'mezunlari', 'birinden', 'birinin', 'yuksekokulundan', 'yuksekokulu']);
+  const BAS_GURULTU = new Set(['universitelerin', 'universitenin', 'universite', 'yuksekogretim', 'kurumlarinin', 'kurumlarindan', 'ortaogretim', 'orta',
+    'ogretim', 'dort', 'yillik', 'iki', 'en', 'az', 'duzeyinde', 'meslek', 'mesleki', 'yuksekokullarinin', 'yuksekokullarindan', 'fakultelerin',
+    'fakultelerinin', 'ilgili', 'olan', 'olmak', 'uzere', 'egitim', 'veren']);
+  const BAS_SOZ = new Map([['muhendisligi', 'muhendisligi'], ['muhendislikleri', 'muhendisligi'], ['ogretmenligi', 'ogretmenligi'], ['ogretmenlikleri', 'ogretmenligi']]);
+  const AYIR = /\s*(?:,|;|\/|\bveya\b|\bya da\b|\byahut\b|\bile\b)\s*/;
+
+  function seviyeBul(metin) {
+    const t = tokens(metin), s = new Set();
+    for (let i = 0; i < t.length; i++) {
+      const o = t[i - 1];
+      if (t[i] === 'onlisans' || (t[i] === 'lisans' && o === 'on')) s.add('onlisans');
+      else if (t[i] === 'lisans' && o !== 'yuksek') s.add('lisans');
+      else if (t[i] === 'lise' || t[i] === 'ortaogretim' || (t[i] === 'ogretim' && o === 'orta') || t[i] === 'liseler') s.add('ortaogretim');
+    }
+    return [...s];
+  }
+  /* Bir cümleden bölüm maddeleri: [{ham, tok}]; yalnız düzey anlatan cümlede 'duzey'; liste değilse null. */
+  const DUZEY_SOZ = /^(lise|dengi|okul|okulu|ve|ortaogretim|lisans|onlisans|herhangi|bir|tum|her|turlu|kurumu|kurumlarindan|meslek|lisesi)$/;
+  function maddeler(cum) {
+    const cf = fold(cum);
+    if (!/mezun|program|bolum|fakulte|anabilim|ogrenim dal/.test(cf) || NEGATIF.test(cf)) return null;
+    const ham = cum.replace(/\([^)]*\)/g, ' ').split(AYIR).map((x) => x.trim()).filter(Boolean);
+    const out = [];
+    for (const h of ham) {
+      let t = tokens(h);
+      // baştaki kalıp ("Üniversitelerin en az dört yıllık lisans eğitimi veren ...") atılır, sonra kuyruk ("... lisans programından mezun") kesilir
+      const v = t.lastIndexOf('veren');
+      if (v >= 0 && v < t.length - 1) t = t.slice(v + 1);
+      while (t.length && (BAS_GURULTU.has(t[0]) || /^\d+$/.test(t[0]) || t[0] === 'lisans' || t[0] === 'onlisans' || t[0] === 'egitimi')) t = t.slice(1);
+      const k = t.findIndex((x, i) => KUYRUK.has(x) || (x === 'on' && t[i + 1] === 'lisans') || (x === 'ogrenim' && /^dal/.test(t[i + 1] || '')));
+      if (k >= 0) t = t.slice(0, k);
+      t = t.filter((x) => !GURULTU.has(x) || x === 've');
+      if (t.length) out.push({ ham: h.replace(/\s+/g, ' ').replace(/\s*(lisans|ön ?lisans|önlisans|öğrenim dal|program|bölüm|fakülte).*$/i, '').trim(), tok: t });
+    }
+    if (!out.length) return null;
+    // yalnız düzey anlatan cümle ("Lise ve dengi okul mezunu olmak") liste sayılmaz
+    if (out.every((m) => m.tok.every((x) => DUZEY_SOZ.test(x)))) return 'duzey';
+    if (!out.some((m) => m.tok.some((x) => BOLUM_ADI.test(x) || /lik$/.test(x)))) return null;
+    // "Bilgisayar, Yazılım veya Elektrik Mühendisliği/Mühendislikleri": baş sözcük, bir önceki baş sözcüklü maddeye
+    // kadar geriye doğru tek-iki sözcüklü maddelere de eklenir
+    let onceki = -1;
+    out.forEach((m, i) => {
+      const bas = BAS_SOZ.get(m.tok[m.tok.length - 1]);
+      if (!bas) return;
+      for (let j = onceki + 1; j < i; j++) if (out[j].tok.length <= 2 && !out[j].tok.some((x) => BAS_SOZ.has(x))) out[j].genis = out[j].tok.concat(bas);
+      onceki = i;
+    });
+    return out;
+  }
+  const esit = (a, b) => a.length === b.length && a.every((x, i) => x === b[i] || (b[i].length >= 6 && ayniKok(x, b[i]) && Math.abs(x.length - b[i].length) <= 3));
+  /* madde ↔ bölüm: 'tam' | 'genis' (ortak baş sözcükle) | 've' ("Kimya ve Biyokimya" içinde) | '' */
+  function maddeEsles(m, b) {
+    const t = m.tok.filter((x) => x !== 've');
+    if (esit(t, b)) return 'tam';
+    if (m.genis && esit(m.genis.filter((x) => x !== 've'), b)) return 'genis';
+    if (m.tok.includes('ve')) {
+      const parca = []; let cur = [];
+      for (const x of m.tok) { if (x === 've') { parca.push(cur); cur = []; } else cur.push(x); }
+      parca.push(cur);
+      if (parca.some((p) => esit(p, b))) return 've';
+    }
+    return '';
+  }
+
+  function kadroGruplari(rec) {
+    const ortak = [], gruplar = [];
+    const ekle = (ad, metinler) => { const m = metinler.filter((x) => x && String(x).trim()); if (ad || m.length) gruplar.push({ ad: String(ad || '').replace(/\s+/g, ' ').trim(), metinler: m.map(String) }); };
+    const kd = (Array.isArray(rec.kadro_detay) ? rec.kadro_detay : []).filter((k) => k && typeof k === 'object');
+    const yz = (Array.isArray(rec.yz_kadrolar) ? rec.yz_kadrolar : []).filter((k) => k && typeof k === 'object');
+    if (kd.length) kd.forEach((k) => ekle(k.unvan, (k.maddeler || []).concat(k.ogrenim ? [String(k.ogrenim)] : [])));
+    else if (yz.length) yz.forEach((k) => ekle(k.unvan, (k.kosullar || []).concat(k.ogrenim ? [String(k.ogrenim)] : [])));
+    const genelMi = (ad) => !ad || /^(belgede belirtilen|sinav puani|genel|ortak)/.test(fold(ad));
+    for (const s of Array.isArray(rec.sartlar) ? rec.sartlar : []) {
+      if (!s || typeof s !== 'object') continue;
+      if (genelMi(s.kadro)) ortak.push(String(s.metin || ''));
+      else if (!kd.length && !yz.length) {
+        const g = gruplar.find((x) => fold(x.ad) === fold(s.kadro));
+        if (g) g.metinler.push(String(s.metin || '')); else ekle(s.kadro, [s.metin]);
+      }
+    }
+    for (const b of Array.isArray(rec.kadro_ortak) ? rec.kadro_ortak : []) if (Array.isArray(b)) ortak.push(...(b[1] || []).map(String));
+    for (const m of Array.isArray(rec.yz_ortak) ? rec.yz_ortak : []) ortak.push(String(m));
+    return { gruplar, ortak };
+  }
+
+  /* Tek metin kümesi için bölüm sonucu. */
+  /* GÜVENLİK KURALI: "degil" yalnız temiz okunan bir bölüm listesinde bölüm gerçekten yoksa verilir. Liste tablo/ek
+     dökümüyse ya da bölüm adı listede geçip madde ayrımı şüpheliyse sonuç "kontrol" ya da "bak" olur. */
+  const GRUP_SINIRI = /(muhendislik|fen|edebiyat|saglik|iktisadi|egitim|hukuk|tip|ilahiyat|ziraat|mimarlik|iletisim|turizm|sanatlar|teknoloji)\w*\s+(\w+\s+)?(fakulte|yuksekokul)\w*\s+herhangi/;
+  function metinDenetle(metinler, cozumler) {
+    let en = null, listeVar = false, kirliListe = false, serbest = '', haric = '', bozuk = false, grupIz = '', duzey = '';
+    const yaz = (durum, bolum, kanit) => {
+      const s = { uygun: 0, kontrol: 1 };
+      if (!en || s[durum] < s[en.durum]) en = { durum, bolum, kanit: kisalt(kanit, 220) };
+    };
+    for (const metin of metinler) {
+      // yalnız öğrenim anlatan madde okunaksızsa önemlidir ("6 ay çalışmış olmak" gibi kısa maddeler bozuk sayılmaz)
+      if (sorunlu(metin) && /mezun|program|bolum|fakulte|ogrenim/.test(fold(metin))) bozuk = true;
+      for (const cum of cumleler(metin)) {
+        const cf = fold(cum), cTok = tokens(cum);
+        // "Mühendislik veya Fen Fakültelerinin herhangi bir bölümü" serbest değildir: fakülte grubu sınırı vardır
+        if (SERBEST.test(cf) && !serbest && !GRUP_SINIRI.test(cf)) serbest = cum;
+        else if (SERBEST.test(cf) && GRUP_SINIRI.test(cf) && !grupIz && cozumler.length) grupIz = cozumler[0].ad + '|' + cum;
+        const mz = maddeler(cum);
+        if (mz === 'duzey') { if (!duzey) duzey = cum; continue; }
+        const tablo = tabloMu(cf) || REFERANS.test(cf);
+        if (mz) {
+          if (tablo) kirliListe = true; else listeVar = true;
+          for (const c of cozumler) for (const b of c.b) {
+            let bulundu = false;
+            for (const m of mz) {
+              const e = maddeEsles(m, b);
+              if (!e) continue;
+              if (haricMi(cum, cTok, b)) { if (!haric) haric = cum; bulundu = true; continue; }
+              yaz(e === 've' || tablo ? 'kontrol' : 'uygun', c.ad, m.ham || cum); bulundu = true;
+            }
+            if (bulundu || !dizi(cTok, b) || haricMi(cum, cTok, b)) continue;
+            // bölüm adı cümlede geçiyor ama hiçbir maddeyle birebir değil: madde başka bir programsa
+            // ("Kimya Mühendisliği", "Hukuk Büro Yönetimi") eşleşme yok; ayrım şüpheliyse kontrol
+            const m = mz.find((x) => dizi(x.tok.filter((y) => y !== 've'), b));
+            const t = m ? m.tok.filter((y) => y !== 've') : [];
+            const sonra = m ? t.length - (t.findIndex((y, i) => b.every((z, j) => t[i + j] && ayniKok(t[i + j], z))) + b.length) : 0;
+            if (!m || tablo || t.length > 6 || sonra === 0) yaz('kontrol', c.ad, m ? m.ham : cum);
+          }
+        } else {
+          for (const c of cozumler) for (const b of c.b) {
+            if (dizi(cTok, b) && NITELIK.test(cf) && !haricMi(cum, cTok, b)) yaz('kontrol', c.ad, cum);
+          }
+        }
+        if (!en) for (const c of cozumler) for (const b of c.b) {
+          if (grup(cTok, cf, b) && !haricMi(cum, cTok, b) && !grupIz) grupIz = c.ad + '|' + cum;
+        }
+      }
+    }
+    if (en) return en;
+    if (haric) return { durum: 'haric', kanit: kisalt(haric, 220) };
+    if (serbest) return { durum: 'serbest', kanit: kisalt(serbest, 220) };
+    if (grupIz) { const i = grupIz.indexOf('|'); return { durum: 'kontrol', bolum: grupIz.slice(0, i), kanit: kisalt(grupIz.slice(i + 1), 220) }; }
+    if (bozuk || kirliListe) return { durum: 'bak' };
+    if (listeVar) return { durum: 'degil' };
+    return { durum: 'yok', duzey: duzey ? kisalt(duzey, 160) : '' };   // yok: metinde bölüm listesi hiç yok
+  }
+
+  /* rec: ilanlar.json kaydı; girdiler: seçilen bölüm adları; duzey: kullanıcının öğrenim düzeyi.
+     Dönüş: { kadrolar:[{ad, seviyeler, durum, bolum, kanit}], eksik, genel } */
+  const DURUM_SIRA = { uygun: 0, kontrol: 1, serbest: 2, bak: 3, haric: 4, degil: 5 };
+  function kadroBazli(rec, girdiler, duzey) {
+    const cozumler = (girdiler || []).map((ad) => ({ ad, b: bolumCoz(ad) })).filter((c) => c.b.length);
+    const { gruplar, ortak } = kadroGruplari(rec);
+    if (!gruplar.length) {
+      // kadrolara ayrılmamış ilan: /bolum/ sayfasının bütün-ilan denetimi kullanılır (iki sayfa aynı sonucu verir)
+      const ESLE = { kesin: 'uygun', muhtemel: 'kontrol', serbest: 'serbest', belirsiz: 'bak', eslesmiyor: 'degil' };
+      let en = null;
+      for (const c of cozumler) {
+        const r = siniflandir(rec, c.b, duzey);
+        const d = r.kademe === 'eslesmiyor' && /hariç/.test(r.neden || '') ? 'haric' : ESLE[r.kademe] || 'bak';
+        if (!en || DURUM_SIRA[d] < DURUM_SIRA[en.durum]) en = { ad: '', seviyeler: [], durum: d, bolum: c.ad, kanit: r.kanit || '', neden: r.neden || '' };
+      }
+      return { kadrolar: en ? [en] : [], digerDuzey: 0, eksik: false, genel: true, duzeltme: !!rec._duzeltme };
+    }
+    const ortakSonuc = metinDenetle(ortak, cozumler);
+    const ortakSeviye = seviyeBul(ortak.join(' '));
+    const liste = (gruplar.length ? gruplar : [{ ad: '', metinler: [] }]).map((g) => {
+      const seviyeler = seviyeBul([g.ad].concat(g.metinler).join(' '));
+      let s = metinDenetle(g.metinler, cozumler);
+      // kadronun kendi metninde bölüm listesi yoksa ortak şartlara bakılır; o da yoksa yalnız düzey aranıyor demektir
+      if (s.durum === 'yok') {
+        if (!/^(yok|bak)$/.test(ortakSonuc.durum)) s = ortakSonuc;
+        else if (s.duzey || ortakSonuc.duzey) s = { durum: 'serbest', kanit: s.duzey || ortakSonuc.duzey };   // "Lise ve dengi okul mezunu olmak"
+        else s = { durum: 'bak' };
+      }
+      return Object.assign({ ad: g.ad, seviyeler: seviyeler.length ? seviyeler : (gruplar.length ? [] : ortakSeviye) }, s);
+    });
+    const kadrolar = duzey ? liste.filter((k) => !k.seviyeler.length || k.seviyeler.includes(duzey)) : liste;
+    const eksik = !!(rec.sart_kadro_sayisi && gruplar.length && gruplar.length < rec.sart_kadro_sayisi);
+    return { kadrolar, digerDuzey: liste.length - kadrolar.length, eksik, genel: !gruplar.length, duzeltme: !!rec._duzeltme };
+  }
+
+  return { fold, tokens, bolumCoz, siniflandir, gruplaVeSinifla, parcalar, sorunlu, SIRA, kadroBazli, seviyeBul };
 });
