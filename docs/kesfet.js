@@ -1,6 +1,6 @@
 /* KPSS Tercihi — keşif katmanı (Kasım 2026).
    İlan sayfası: bölüm gezintisi + okuma ilerlemesi, yan rayda benzer ilanlar ve topluluk, kadroların ardından soru dürtüsü,
-   sayfa sonunda "Sıradaki ilan" + benzerler. Ana sayfa: "Kaldığın yerden" şeridi ve yan sütunda topluluk.
+   sayfa sonunda "Sıradaki ilan" + benzerler. Ana sayfa: yan sütunda topluluk.
    Veri: /liste.json (açık ilanlar) ve forumun herkese açık /son ucu. Okuma geçmişi yalnız bu tarayıcıda ('kit-okunan'). */
 (function () {
   'use strict';
@@ -623,19 +623,7 @@
   function anaSayfa() {
     var alan = d.getElementById('ilanlar'), yan = d.querySelector('aside.yan');
     if (!alan) return;
-    Promise.all([liste(), forumSon()]).then(function (s) {
-      var ilanlar = s[0], basliklar = s[1];
-      var harita = {}; ilanlar.forEach(function (i) { harita[i.key] = i; });
-      var son = gecmisAnahtarlar().map(function (k) { return harita[k]; }).filter(function (i) { return i && acik(i); }).slice(0, 6);
-      if (son.length) {
-        var k = E('section', 'kf-kaldigin'); k.setAttribute('aria-label', 'Kaldığın yerden');
-        var h = E('h2', '', 'Kaldığın yerden'), sil = E('button', '', 'Temizle'); sil.type = 'button';
-        sil.addEventListener('click', function () { yaz(GECMIS, []); k.remove(); iz('kesfet', { k: 'gecmis_sil' }); });
-        h.append(sil); k.append(h);
-        var y = E('div', 'kf-yatay'); son.forEach(function (i) { y.append(satir({ i: i, neden: null }, 'kaldigin')); }); k.append(y);
-        var bas = alan.querySelector('.liste-ozet') || alan.querySelector('.liste-bas');
-        if (bas) bas.after(k); else alan.prepend(k);
-      }
+    forumSon().then(function (basliklar) {
       if (yan) yan.append(toplulukBlok(basliklar, 4));
     });
   }
