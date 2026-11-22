@@ -82,6 +82,7 @@ def satir_html(k):
 
 def anasayfa_html(metin, satirlar, toplam_cumle, uygun_sayi):
     """Ana sayfa HTML'ini doldurur. İşaretlerden biri bulunamazsa None (dosya değişmez)."""
+    metin = re.sub(r'(<div class="zaman" id="cards") data-rk-akis="[^"]*">', r'\1>', metin, count=1)   # slot en sonda yeniden yazılır
     bas = metin.find(CARDS_BAS)
     if bas < 0:
         return None
@@ -104,6 +105,9 @@ def anasayfa_html(metin, satirlar, toplam_cumle, uygun_sayi):
     yeni = sayac.sub(lambda m: m.group(1) + (f'{tam(uygun_sayi)} ilan' if uygun_sayi else '') + m.group(2), yeni, count=1)
     yeni = ozet.sub(lambda m: m.group(1) + esc(toplam_cumle) + m.group(2), yeni, count=1)
     yeni = manset.sub(lambda m: m.group(1) + (f'Başvurusu açık {tam(uygun_sayi)} kamu ilanı aşağıda listeleniyor.' if uygun_sayi else 'İlanlar yükleniyor…') + m.group(2), yeni, count=1)
+    from site_uret import REKLAM_SLOT_AKIS
+    yeni = re.sub(r'<div class="zaman" id="cards"( data-rk-akis="[^"]*")?>',
+                  '<div class="zaman" id="cards"' + (f' data-rk-akis="{esc(REKLAM_SLOT_AKIS)}"' if REKLAM_SLOT_AKIS else '') + '>', yeni, count=1)
     return yeni
 
 

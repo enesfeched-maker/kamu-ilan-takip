@@ -317,8 +317,15 @@ function gunGrubu(d,rows,res){
 const s=E('section','zg'),t=E('h2','gun-tarih'),ul=E('ul','gun-liste');s.id='gun-'+(d||'tarihsiz');
 if(d){const [,m,g]=d.split('-').map(Number),f=days(d),et=f===0?'Bugün':f===-1?'Dün':gunAdi(d);t.append(E('strong','',String(g)),E('span','',AYU[m-1]),E('em',f===0||f===-1?'':'gunadi',et));t.setAttribute('aria-label',g+' '+AYU[m-1]+' '+et+': '+rows.length+' ilan eklendi');if(f===0)s.className='zg bugun';}
 else{t.append(E('strong','','—'),E('span','','Tarihsiz'));t.setAttribute('aria-label','Yayın tarihi bilinmeyen ilanlar');}
-for(const o of rows){const li=E('li');li.append(satirEl(o,res));ul.append(li);}
+for(const o of rows){const li=E('li');li.append(satirEl(o,res));ul.append(li);if(rkAra())ul.append(rkLi());}
 s.append(t,ul);return s;}
+/* Akış reklamı (AdSense, elle birim): her 8 ilan satırından sonra, sayfada en çok 3; yalnız betik yüklüyse ve #cards[data-rk-akis] doluysa.
+   Liste her çizildiğinde #cards baştan kurulur (reklamlar çoğalmaz); yeni ins'ler DOM'a girdikten sonra bir kez push edilir. */
+let rkSay=0,rkAdet=0;
+function rkSlot(){const c=$('cards');return c&&c.getAttribute('data-rk-akis')&&document.querySelector('script[src*="adsbygoogle.js"]')?c.getAttribute('data-rk-akis'):'';}
+function rkAra(){if(!rkSlot()||rkAdet>=3)return false;rkSay++;if(rkSay%8)return false;rkAdet++;return true;}
+function rkLi(){const li=E('li','rk-li'),d=E('div','rk'),p=E('p','rk-et','Reklam'),i=E('ins','adsbygoogle');d.setAttribute('data-rk','akis');i.style.display='block';i.setAttribute('data-ad-client','ca-pub-8335827974832277');i.setAttribute('data-ad-slot',rkSlot());i.setAttribute('data-ad-format','auto');i.setAttribute('data-full-width-responsive','true');d.append(p,i);li.append(d);return li;}
+function rkBaslat(){document.querySelectorAll('#cards ins.adsbygoogle:not([data-adsbygoogle-status])').forEach(()=>{try{(window.adsbygoogle=window.adsbygoogle||[]).push({});}catch(e){}});}
 /* ---------- İlanlar: süzgeç durumu, URL eşitleme, süzme ---------- */
 const OGR_SECENEK=[['lisans','Lisans'],['onlisans','Önlisans'],['ortaogretim','Ortaöğretim'],['bilinmiyor','Öğrenim belirtilmemiş']];
 const SB_SECENEK=[['2','Son 2 gün'],['3','Son 3 gün'],['7','Son 7 gün'],['14','Son 14 gün'],['yakinda','Yakında açılacak']];
@@ -556,12 +563,13 @@ else{const g=F.q.trim()&&!F.arsiv&&list.length&&loaded?filterIlan(ilanBase(Objec
 if(g>0){const b=E('button','yazi-link','Süresi geçmiş '+g+' ilanı da göster');b.type='button';b.onclick=()=>{A('tikla',{a:'arama_gecmis',x:normalize(F.q).slice(0,60),n:g});F.arsiv=true;ilanDegisti();};fs.replaceChildren(b);}
 else fs.replaceChildren();}}
 $('clear').hidden=!suzgecVar(F);
+rkSay=0;rkAdet=0;
 const nodes=zamanGruplari(vis).map(([d,rows])=>gunGrubu(d,rows,res));
 if(list.length>vis.length){
 const d=E('div','daha'),bar=E('div','bar'),fill=E('i'),b=E('button','btn btn-ikinci','Daha fazla göster');
 fill.style.width=Math.round(vis.length/list.length*100)+'%';bar.setAttribute('aria-hidden','true');bar.append(fill);b.type='button';b.onclick=()=>{A('tikla',{a:'daha_fazla',n:shown+PAGE_SIZE});shown+=PAGE_SIZE;renderIlanlar();};
 d.append(bar,E('small','',vis.length+' / '+list.length+' ilan gösteriliyor'),b);nodes.push(d);}
-$('cards').replaceChildren(...nodes);$('cards').hidden=!list.length;$('empty').hidden=!!list.length;
+$('cards').replaceChildren(...nodes);rkBaslat();$('cards').hidden=!list.length;$('empty').hidden=!!list.length;
 if(!list.length){
 const q=F.q.slice(0,60),kids=[E('h3','',q?'“'+q+'” için açık ilan bulunamadı.':'Bu filtrelerle ilan bulunamadı.')];
 if(suzgecVar(F)){
