@@ -367,7 +367,7 @@ const aramaTek=o=>{const f=fullOf(o);return ' '+satirMetni(o)+(f?' '+f.search:''
 const baslikMetni=o=>' '+aramaNorm([o.manset,o.kurum,o.il,...(o.iller||[])].join(' '));
 const aramaMetni=o=>(sec.get(o.key)||[]).reduce((t,k)=>{const r=lmap.get(k);return r?t+' '+aramaTek(r):t;},aramaTek(o));
 /* Eş anlamlılar (normalize edilmiş): sorgudaki ifade bir gruptan biriyse diğerleri de aranır. Analizde sonuçsuz kalan aramalardan derlendi. */
-const ES_ANLAM=[['fizyoterapist','fizyoterapi'],['diyetisyen','beslenme ve diyet','diyet uzmani'],['cocuk gelisimci','cocuk gelisimi','cocuk gelisim'],['sosyal calismaci','sosyal hizmet'],['psikolog','psikoloji'],['veteriner hekim','veteriner'],['rontgen','radyoloji','tibbi goruntuleme'],['tibbi laboratuvar','laboratuvar'],['avukat','hukuk musaviri','hukukcu'],['saglik bakanligi','hastane','saglik mudurlugu'],['bilgisayar muhendisi','bilgisayar muhendisligi','yazilim'],['zabita','zabita memuru'],['guvenlik gorevlisi','koruma ve guvenlik'],['sofor','soforluk','servis surucusu'],['iett','elektrik tramvay'],['sgk','sosyal guvenlik kurumu'],['meb','milli egitim'],['diyanet','din isleri'],['mimar','mimarlik'],['on lisans','onlisans'],['lise','ortaogretim'],['kpss siz','kpss sartsiz','kpsssiz'],['bekci','carsi ve mahalle bekcisi'],['itfaiye','itfaiye eri'],['temizlik','temizlik gorevlisi','destek personeli'],['asci','ascibasi'],['polis','pomem','emniyet'],['asker','subay','astsubay','uzman cavus','uzman erbas'],['infaz koruma','gardiyan'],['katip','zabit katibi','katiplik'],['mubasir','mubasirlik'],['hemsire','hemsirelik'],['ebe','ebelik'],['eczaci','eczacilik'],['doktor','hekim','tabip'],['ogretmen','ogretmenlik'],['tekniker','teknisyen']];
+const ES_ANLAM=[['fizyoterapist','fizyoterapi'],['diyetisyen','beslenme ve diyet','diyet uzmani'],['cocuk gelisimci','cocuk gelisimi','cocuk gelisim'],['sosyal calismaci','sosyal hizmet'],['psikolog','psikoloji'],['veteriner hekim','veteriner'],['rontgen','radyoloji','tibbi goruntuleme'],['tibbi laboratuvar','laboratuvar'],['avukat','avukatlik','hukuk musaviri','hukukcu'],['saglik bakanligi','hastane','saglik mudurlugu'],['bilgisayar muhendisi','bilgisayar muhendisligi','yazilim'],['zabita','zabita memuru'],['guvenlik gorevlisi','koruma ve guvenlik'],['sofor','soforluk','servis surucusu'],['iett','elektrik tramvay'],['sgk','sosyal guvenlik kurumu'],['meb','milli egitim'],['diyanet','din isleri'],['mimar','mimarlik'],['on lisans','onlisans'],['lise','ortaogretim'],['kpss siz','kpss sartsiz','kpsssiz'],['bekci','carsi ve mahalle bekcisi'],['itfaiye','itfaiye eri'],['temizlik','temizlik gorevlisi','destek personeli'],['asci','ascibasi'],['polis','pomem','emniyet'],['asker','subay','astsubay','uzman cavus','uzman erbas'],['infaz koruma','gardiyan'],['katip','zabit katibi','katiplik'],['mubasir','mubasirlik'],['hemsire','hemsirelik'],['ebe','ebelik'],['eczaci','eczacilik'],['doktor','hekim','tabip'],['ogretmen','ogretmenlik'],['tekniker','teknisyen'],['tcdd','devlet demiryollari','demiryollari'],['mgm','meteoroloji'],['kgm','karayollari'],['ogm','orman genel mudurlugu','orman'],['tkgm','tapu kadastro','tapu'],['afad','afet ve acil durum'],['ptt','posta ve telgraf'],['tuik','turkiye istatistik'],['osym','olcme secme'],['tmo','toprak mahsulleri'],['thy','turk hava yollari'],['bddk','bankacilik duzenleme'],['spk','sermaye piyasasi'],['tmsf','tasarruf mevduati'],['adli tip','adli tip kurumu'],['jandarma','jandarma genel komutanligi']];
 const ARAMA_DOLGU=new Set(['alim','alimi','alimlari','ilan','ilani','ilanlar','ilanlari','personel','personeli','kamu','icin','ve','veya','ile','basvuru','basvurusu']);
 const KELIME_EKI=/(larin|lerin|ndan|nden|lari|leri|sina|sine|nin|nun|dan|den|tan|ten|nda|nde|lar|ler|si|su|da|de|ta|te|in|un|i|u)$/;
 let belgeDizini={};
@@ -379,23 +379,52 @@ const v=new Set(n?[n]:[]);
 for(const g of ES_ANLAM)for(const p of g)if((' '+n+' ').includes(' '+p+' '))for(const r of g)if(r!==p)v.add((' '+n+' ').replace(' '+p+' ',' '+r+' ').trim());
 /* "zabıta alımı", "ankara ilanları" gibi sorgularda dolgu sözcüğü metinde olmayınca ilan düşmesin; tamamı dolguysa olduğu gibi aranır. */
 aramaOnb={q:n,v:[...v].map(s=>{const ws=s.split(' ').filter(Boolean),k=ws.filter(w=>!ARAMA_DOLGU.has(w));return k.length?k:ws;})};return aramaOnb.v;}
-/* En çok bir harf farkı (ekleme/silme/değiştirme). */
-function birHarf(a,b){
-if(Math.abs(a.length-b.length)>1)return false;let i=0,j=0,fark=0;
-while(i<a.length&&j<b.length){if(a[i]===b[j]){i++;j++;continue;}if(++fark>1)return false;if(a.length>b.length)i++;else if(b.length>a.length)j++;else{i++;j++;}}
-return fark+(a.length-i)+(b.length-j)<=1;}
-/* Yazım hatası toleransı (yalnız tam eşleşme yokken): 5+ harfli kelime bir metin kelimesinin başına bir harf farkla uyarsa
-   ya da 7+ harfli kelimenin son iki harfi atılmış kökü geçerse ("muhendisi" → "muhendis"). */
+/* Damerau-Levenshtein uzaklığı en çok m mi: ekleme, silme, değiştirme ve bitişik iki harfin yer değiştirmesi ("memru"↔"memur") birer hata sayılır. */
+function harfFark(a,b,m){
+if(Math.abs(a.length-b.length)>m)return false;
+let p2=null,p=[];for(let j=0;j<=b.length;j++)p.push(j);
+for(let i=1;i<=a.length;i++){const c=[i];let en=i;
+for(let j=1;j<=b.length;j++){let v=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));
+if(i>1&&j>1&&a[i-1]===b[j-2]&&a[i-2]===b[j-1])v=Math.min(v,p2[j-2]+1);
+c.push(v);if(v<en)en=v;}
+if(en>m)return false;p2=p;p=c;}
+return p[b.length]<=m;}
+const birHarf=(a,b)=>harfFark(a,b,1);
+/* Ardışık aynı harfleri teke indirir ("zabitta" → "zabita"). */
+const tekle=s=>s.replace(/(.)\1+/g,'$1');
+/* Türetme/iyelik ekli kelimenin olası kökleri: "memurluğu"→"memur", "bekçiliği"→"bekçi", "muhasebeci"→"muhasebe", "zabıtası"→"zabıta".
+   Kök 4 harften kısa olmaz; çekim eki 5+ harfli kökte, -cı/-ci yalnız bulanık aşamada ve kalan 5+ harfse atılır ("öğrenci" "öğrenim"e dönmesin) ("aşçı", "bekçi", "bursa" bozulmaz). */
+function kokler(w,gevsek){
+const s=new Set([w]);
+for(let tur=0;tur<2;tur++)for(const f of [...s]){
+const ek=f.replace(KELIME_EKI,'');if(ek!==f&&ek.length>=5)s.add(ek);
+/* -lığı/-liği/-luğu/-lüğü yumuşaması: "memurluğu" → "memurluk" */
+const lik=f.replace(/l([iu])g[iu]$/,'l$1k');if(lik!==f)s.add(lik);
+const kok=f.replace(/l[iu]k$/,'');if(kok!==f&&kok.length>=4)s.add(kok);
+if(gevsek){const ci=f.replace(/c[iu]$/,'');if(ci!==f&&ci.length>=5)s.add(ci);}}
+s.delete(w);return [...s].filter(k=>k.length>=4);}
+/* Yazım hatası toleransı (yalnız tam eşleşme yokken): kelime (ya da kökü) bir metin kelimesinin başına uyarsa; 5-8 harfte bir, 9+ harfte iki hata,
+   4 harfte yalnız harf yer değiştirmesi ("meb"/"sgk" gibi kısalar karışmaz). 7+ harfli kelimenin son iki harfi atılmış kökü geçerse ("muhendisi" → "muhendis").
+   Bitişik yazılmış kelimeler ("avukatburo") bölünüp iki yarısı ayrı aranır; çift harf ("zabitta") teke inince de bakılır. */
 function bulanikUyar(t,w){
-if(t.includes(w))return true;if(w.length<5)return false;
+if(t.includes(w)||kelimeUyar(t,w))return true;
+if(w.length<4)return false;
 if(w.length>=7&&t.includes(w.slice(0,-2)))return true;
-for(const tk of t.split(/[^a-z0-9]+/))if(tk.length>=w.length-1&&(birHarf(w,tk.slice(0,w.length))||birHarf(w,tk.slice(0,w.length+1))||birHarf(w,tk.slice(0,w.length-1))))return true;
+if(w.length>=7)for(let i=3;i<=w.length-3;i++)if(kelimeUyar(t,w.slice(0,i))&&kelimeUyar(t,w.slice(i)))return true;
+const tk=[...new Set(t.split(/[^a-z0-9]+/).filter(Boolean).flatMap(x=>[x,tekle(x)]))];
+for(const c of new Set([w,tekle(w),...kokler(w,true)])){
+if(c.length<4)continue;
+const m=c.length>=9?2:c.length>=5?1:0;
+for(const x of tk){if(x[0]!==c[0]&&x[1]!==c[1])continue;
+if(!m){if(x.length===4&&x!==c&&harfFark(c,x,1)&&[...c].sort().join('')===[...x].sort().join(''))return true;continue;}
+if(x.length<c.length-m)continue;
+for(let L=c.length-m;L<=c.length+m;L++)if(harfFark(c,x.slice(0,L),m))return true;}}
 return false;}
-/* Kelime başı eşleşmesi; 5+ harfte kelime içi de sayılır (PDF'te bitişik yazılmış "SözleşmeliMemur"). Çekim eki atılmış kök de aranır:
-   "zabıtası", "hemşireler", "ankarada". "lisans" önlisansı getirmesin. Kök 5 harften kısaysa aranmaz ("bursa" → "burs" olmasın). */
+/* Kelime başı eşleşmesi; 5+ harfte kelime içi de sayılır (PDF'te bitişik yazılmış "SözleşmeliMemur"). Çekim/türetme eki atılmış kök de aranır (kokler):
+   "zabıtası", "hemşireler", "ankarada", "memurluğu"→"memur". "lisans" önlisansı getirmesin. Kök 5 harften kısaysa çekim eki atılmaz ("bursa" → "burs" olmasın). */
 function kelimeUyar(t,w){
 if(t.includes(' '+w)||(w.length>=5&&w!=='lisans'&&t.includes(w)))return true;
-const kok=w.replace(KELIME_EKI,'');return kok!==w&&kok.length>=5&&t.includes(' '+kok);}
+return kokler(w).some(k=>t.includes(' '+k));}
 function aramaUyar(o,f,bulanik){
 const vs=sorguVaryant(f.q);if(!vs.length)return true;const t=aramaMetni(o);
 if(vs.some(ws=>ws.every(w=>bulanik?bulanikUyar(t,w):kelimeUyar(t,w))))return true;

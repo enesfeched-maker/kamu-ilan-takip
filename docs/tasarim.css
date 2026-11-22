@@ -155,13 +155,6 @@ body{font-size:16px;line-height:1.6;text-rendering:optimizeLegibility;-webkit-fo
 @media (max-width:560px){.kf-izgara .kf-kart:nth-child(n+5){display:none}}
 @media (prefers-reduced-motion:reduce){.kf-kart,.kf-sirada .kf-ok{transition:none}.kf-kart:hover{transform:none}}
 
-/* ana sayfa: kaldığın yerden */
-.kf-kaldigin{margin:0 0 18px;padding:14px 16px;border:1px solid var(--line);border-radius:18px;background:var(--surface);box-shadow:var(--shadow)}
-.kf-kaldigin h2{margin:0 0 8px;font-size:15px;font-weight:700;letter-spacing:-.01em;display:flex;justify-content:space-between;align-items:center}
-.kf-kaldigin h2 button{border:0;background:none;color:var(--muted);font:inherit;font-size:13px;font-weight:600;cursor:pointer;padding:4px 6px;border-radius:8px}
-.kf-kaldigin h2 button:hover{color:var(--ink);background:var(--surface-2)}
-.kf-yatay{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(220px,290px);gap:10px;overflow-x:auto;scrollbar-width:thin;padding-bottom:2px}
-.kf-yatay .kf-s{padding:10px;border:1px solid var(--line);border-radius:14px;background:var(--kf-kagit)}
 .yan .kf-blok{margin-top:14px}
 .kf-son .kf-mobil{margin-top:22px}
 @media (min-width:1100px){.kf-son .kf-mobil{display:none}}
