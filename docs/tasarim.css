@@ -1,0 +1,202 @@
+/* KPSS Tercihi — "Okuma masası" tasarım katmanı (Kasım 2026).
+   Bütün sayfalarda en son yüklenir; mevcut CSS'i silmeden belirteçleri ve okuma düzenini yeniler.
+   Renk: Sanzo Wada, A Dictionary of Color Combinations #2 (colors.elwyn.co) — lacivert #12354e + kehribar #f99d1b,
+   açık vurgu #3'ün limon tonu #ffefae. Logo görseli değişmez.
+   html:root seçicisi bilerek kullanıldı: sonra yüklenen dosyalardaki :root belirteçlerini de ezer. */
+
+html:root{
+  --bg:#F7F5EE;--surface:#FFFFFF;--surface-2:#F0EEE6;--surface-3:#E6E3D8;
+  --ink:#12354E;--ink-2:#2A4A60;--muted:#5A6B77;--faint:#8C99A2;
+  --line:#E3E0D5;--line-2:#D2CEC0;
+  --lime:#F99D1B;--lime-2:#E58C0C;--kb-lime:#F99D1B;--lime-soft:#FFEFAE;--lime-ink:#6B4306;--chip-lime:#FFF3C4;--chip-lime-ink:#6B4306;
+  --alert:#A85E08;--alert-soft:#FFEFAE;
+  --btn:#12354E;--btn-ink:#FFFFFF;--focus:#B86A0C;
+  --shadow:0 1px 0 rgba(18,53,78,.04),0 8px 24px -16px rgba(18,53,78,.22);
+  --shadow-md:0 2px 6px rgba(18,53,78,.06),0 16px 36px -18px rgba(18,53,78,.28);
+  --r:18px;--r-sm:12px;
+  /* kabuk */
+  --kb-zemin:#12354E;--kb-zemin-2:#1B4562;--kb-cizgi:#285573;--kb-yazi:#F3F1EA;--kb-soluk:#A9BCCB;
+  /* ana sayfa zaman çizelgesi */
+  --tarih-yazi:#A85E08;--acil-zemin:#F99D1B;--acil-yazi:#12354E;--yakin-zemin:#FFEFAE;--yakin-yazi:#6B4306;--cizgi-vurgu:#F99D1B;
+  /* keşif katmanı */
+  --kf-sienna:#F99D1B;--kf-slate:#12354E;--kf-kagit:#FBFAF4;
+  /* ana sayfa (portal.css) */
+  --petrol:#12354E;--petrol-2:#0D2A3F;--ana:#12354E;--primary:#12354E;--primary-hover:#1B4562;--on-primary:#FFFFFF;--link:#1B5A85;--tint:#FFF6D6;
+}
+html:root[data-theme=dark]{
+  --bg:#0B1E2C;--surface:#102838;--surface-2:#153042;--surface-3:#1B394D;
+  --ink:#F3F1EA;--ink-2:#CCD6DD;--muted:#9AABB7;--faint:#6F8494;
+  --line:#1E3A4E;--line-2:#28485F;
+  --lime-soft:#3A2A0E;--lime-ink:#F9B354;--chip-lime:#3A2A0E;--chip-lime-ink:#FFE08A;
+  --alert:#F9B354;--alert-soft:#3A2A0E;
+  --btn:#F99D1B;--btn-ink:#12354E;--focus:#F99D1B;
+  --shadow:0 1px 0 rgba(0,0,0,.25),0 10px 28px -18px rgba(0,0,0,.6);
+  --shadow-md:0 12px 32px -16px rgba(0,0,0,.65);
+  --kb-zemin:#081723;--kb-zemin-2:#0F2535;--kb-cizgi:#1B3A50;
+  --tarih-yazi:#F9B354;--acil-zemin:#F99D1B;--acil-yazi:#12354E;--yakin-zemin:#3A2A0E;--yakin-yazi:#FFE08A;
+  --kf-kagit:#0E2433;
+}
+html:root[data-theme=dark]{--petrol:#0D2A3F;--petrol-2:#081D2C;--primary:#F99D1B;--primary-hover:#FBB34F;--on-primary:#12354E;--link:#F9B354;--tint:#173246}
+@media (prefers-color-scheme:dark){html:root:not([data-theme=light]){--petrol:#0D2A3F;--petrol-2:#081D2C;--primary:#F99D1B;--primary-hover:#FBB34F;--on-primary:#12354E;--link:#F9B354;--tint:#173246}}
+html body .manset{background:radial-gradient(900px 340px at 88% -20%,rgba(249,157,27,.20),transparent 62%),linear-gradient(#12354E,#0D2A3F)}
+
+/* ---------- temel okuma ---------- */
+body{font-size:16px;line-height:1.6;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+::selection{background:#F3D9B4;color:#1D292E}
+
+/* ---------- üst çubuk: büyük harf + aralıklı yazı yerine sakin cümle düzeni ---------- */
+.tb{background:color-mix(in srgb,var(--kb-zemin) 94%,transparent);backdrop-filter:saturate(1.3) blur(10px);-webkit-backdrop-filter:saturate(1.3) blur(10px)}
+.tb-nav>a{font-size:14px;letter-spacing:0;text-transform:none;font-weight:550;padding:8px 12px}
+.tb-nav>a.aktif::after,.tb-nav>a[aria-current=page]::after{height:2px;bottom:-12px}
+/* Forum menüde vurgulu kalır ama nabız atmaz: okurken göz kenarda kıpırdayan bir şeye kaymasın */
+.tb-nav>a.tb-yeni{animation:none;box-shadow:none;border-radius:999px;padding:7px 12px 7px 14px}
+.tb-forum i{animation:none}
+.tb-rozet{letter-spacing:.02em;font-size:10px;text-transform:none}
+.tb-tg{box-shadow:none}
+.tb-tg:hover{box-shadow:none;transform:none;filter:brightness(1.05)}
+
+/* ---------- kartlar ve başlıklar ---------- */
+.d-bolum h2,.bolum-bas h2{font-size:21px;letter-spacing:-.022em;font-weight:680}
+.bakis h2{font-size:13px;letter-spacing:.01em;text-transform:none;color:var(--muted);font-weight:650}
+.dh,.bakis,.kk,.tablo-kap{border-color:var(--line);box-shadow:var(--shadow)}
+.dh{border-radius:24px}
+.dh h1{font-weight:720;letter-spacing:-.035em}
+.kk{border-radius:16px;padding:16px 18px}
+.kk-bas strong{font-size:16.5px;letter-spacing:-.01em}
+.kk li,.d-bolum p,.sb li{font-size:15.5px;line-height:1.68}
+.d-bolum p{max-width:68ch}
+.crumbs{font-size:13px}
+.btn{border-radius:12px}
+.btn-buyuk{height:48px;padding:0 20px;font-size:15px}
+.d-cta{gap:10px}
+
+/* ana sayfa ilan satırları: biraz daha nefes */
+.ilan{padding:18px 20px}
+.ilan h3{font-size:16.5px;line-height:1.4}
+.ilan:hover{background:var(--kf-kagit)}
+
+/* ---------- ilan sayfası: okuma sütunu + yapışkan yan ray ---------- */
+@media (min-width:1100px){
+  main#icerik.wrap:has(>.d-bas){display:grid;grid-template-columns:minmax(0,1fr) 312px;column-gap:44px;align-items:start}
+  main#icerik.wrap:has(>.d-bas)>*{grid-column:1;max-width:none}
+  main#icerik.wrap:has(>.d-bas)>.kf-ray{grid-column:2;grid-row:1/span 40;align-self:start;margin-top:62px}
+}
+@media (max-width:1099.98px){.kf-ray{display:none}}
+
+/* bölüm gezintisi + okuma ilerlemesi (kesfet.js) */
+.kf-gez{position:sticky;top:60px;z-index:30;margin:18px 0 0;display:flex;gap:6px;align-items:center;padding:8px;border:1px solid var(--line);border-radius:14px;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);overflow-x:auto;scrollbar-width:none}
+.kf-gez::-webkit-scrollbar{display:none}
+.kf-gez a{flex:none;padding:7px 13px;border-radius:9px;color:var(--muted);font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap}
+.kf-gez a:hover{color:var(--ink);background:var(--surface-2)}
+.kf-gez a.aktif{color:var(--ink);background:var(--surface-2)}
+.kf-gez a b{margin-left:6px;font-size:12px;font-weight:700;color:var(--kf-sienna)}
+.kf-gez .kf-bar{position:absolute;left:14px;right:14px;bottom:-1px;height:2px;border-radius:2px;background:var(--line);overflow:hidden;pointer-events:none}
+.kf-gez .kf-bar i{display:block;height:100%;width:100%;transform-origin:0 50%;transform:scaleX(0);background:var(--kf-sienna)}
+@media (max-width:1020px){.kf-gez{top:56px;border-radius:0;margin-left:-16px;margin-right:-16px;border-left:0;border-right:0}}
+
+/* yan ray blokları */
+.kf-ray{display:flex;flex-direction:column;gap:16px}
+.kf-blok{border:1px solid var(--line);border-radius:18px;background:var(--surface);box-shadow:var(--shadow);padding:16px}
+.kf-blok h2{margin:0 0 10px;font-size:15px;line-height:1.3;letter-spacing:-.01em;font-weight:700;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.kf-blok h2 a{font-size:13px;font-weight:600;color:var(--muted);text-decoration:none}
+.kf-blok h2 a:hover{color:var(--ink)}
+.kf-satirlar{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.kf-satirlar li+li{border-top:1px solid var(--line)}
+.kf-s{display:grid;grid-template-columns:36px minmax(0,1fr);gap:11px;align-items:center;padding:10px 2px;text-decoration:none;color:inherit;border-radius:10px}
+.kf-s:hover .kf-s-bas{text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+.kf-logo{width:36px;height:36px;border-radius:10px;background:var(--surface-2);border:1px solid var(--line);display:grid;place-items:center;overflow:hidden;font-size:12px;font-weight:700;color:var(--ink-2)}
+.kf-logo img{width:100%;height:100%;object-fit:contain;padding:3px;background:#fff}
+.kf-s-kurum{display:block;font-size:12px;line-height:1.35;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kf-s-bas{display:block;font-size:14.5px;line-height:1.35;font-weight:650;color:var(--ink)}
+.kf-s-alt{display:flex;gap:8px;align-items:center;margin-top:3px;font-size:12px;color:var(--muted)}
+.kf-kalan{font-weight:700;color:var(--muted)}
+.kf-kalan.acil{color:var(--kf-sienna)}
+:root[data-theme=dark] .kf-kalan.acil{color:var(--alert)}
+.kf-neden{display:inline-block;padding:1px 7px;border-radius:999px;background:var(--surface-2);color:var(--ink-2);font-size:11.5px;font-weight:600}
+
+/* topluluk (forum) */
+.kf-topluluk{border-top:3px solid var(--kf-sienna)}
+.kf-soru{display:block;padding:10px 0;border-top:1px solid var(--line);color:inherit;text-decoration:none}
+.kf-topluluk h2+.kf-soru{border-top:0;padding-top:2px}
+.kf-soru b{display:block;font-size:14px;line-height:1.38;font-weight:620;color:var(--ink)}
+.kf-soru small{display:block;margin-top:3px;font-size:12px;color:var(--muted)}
+.kf-soru:hover b{text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+.kf-katil{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;height:42px;border-radius:12px;background:var(--kf-slate);color:#fff;font-weight:700;font-size:14px;text-decoration:none}
+:root[data-theme=dark] .kf-katil{background:var(--lime);color:#14201F}
+.kf-katil:hover{filter:brightness(1.12)}
+.kf-bos{margin:0;font-size:13.5px;color:var(--muted)}
+
+/* soru sorma dürtüsü (kadroların ardından) */
+.kf-durt{display:flex;align-items:center;gap:16px;margin:28px 0 0;padding:16px 18px;border-radius:18px;background:var(--alert-soft);border:1px solid color-mix(in srgb,var(--kf-sienna) 28%,transparent)}
+.kf-durt-yazi{flex:1;min-width:0}
+.kf-durt b{display:block;font-size:16px;letter-spacing:-.01em}
+.kf-durt span{display:block;margin-top:2px;font-size:14px;color:var(--ink-2)}
+.kf-durt a{flex:none;display:inline-flex;align-items:center;height:42px;padding:0 16px;border-radius:12px;background:var(--btn);color:var(--btn-ink);font-weight:650;font-size:14px;text-decoration:none}
+@media (max-width:560px){.kf-durt{flex-direction:column;align-items:stretch;text-align:left}.kf-durt a{justify-content:center}}
+
+/* sayfa sonu: sıradaki ilan + benzerler */
+.kf-son{margin-top:44px}
+.kf-son>h2{margin:0 0 14px}
+.kf-sirada{position:relative;display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:18px;align-items:center;padding:20px 22px;border-radius:22px;background:var(--kf-slate);color:#EEF1EA;text-decoration:none;box-shadow:var(--shadow-md)}
+:root[data-theme=dark] .kf-sirada{background:#1B2A30;border:1px solid #2A3E45}
+.kf-sirada .kf-logo{width:64px;height:64px;border-radius:16px;border:0}
+.kf-sirada small{display:block;font-size:12.5px;font-weight:700;letter-spacing:.02em;color:var(--lime)}
+.kf-sirada strong{display:block;margin-top:4px;font-size:20px;line-height:1.25;letter-spacing:-.02em;color:#fff;text-wrap:balance}
+.kf-sirada span.kf-sk{display:block;margin-top:4px;font-size:13.5px;color:#C2CFCC}
+.kf-sirada .kf-ok{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:var(--lime);color:#14201F;font-size:20px;font-weight:800;transition:transform .2s}
+.kf-sirada:hover .kf-ok{transform:translateX(4px)}
+@media (max-width:560px){.kf-sirada{grid-template-columns:48px minmax(0,1fr);padding:16px}.kf-sirada .kf-logo{width:48px;height:48px}.kf-sirada strong{font-size:17px}.kf-sirada .kf-ok{display:none}}
+.kf-izgara{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-top:14px}
+.kf-kart{display:flex;flex-direction:column;gap:10px;padding:16px;border:1px solid var(--line);border-radius:18px;background:var(--surface);text-decoration:none;color:inherit;box-shadow:var(--shadow);transition:border-color .15s,transform .15s}
+.kf-kart:hover{border-color:var(--line-2);transform:translateY(-2px)}
+.kf-kart-ust{display:flex;align-items:center;gap:10px;min-width:0}
+.kf-kart .kf-s-bas{font-size:15.5px}
+.kf-kart-alt{margin-top:auto;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;font-size:12.5px;color:var(--muted)}
+@media (max-width:560px){.kf-izgara .kf-kart:nth-child(n+5){display:none}}
+@media (prefers-reduced-motion:reduce){.kf-kart,.kf-sirada .kf-ok{transition:none}.kf-kart:hover{transform:none}}
+
+/* ana sayfa: kaldığın yerden */
+.kf-kaldigin{margin:0 0 18px;padding:14px 16px;border:1px solid var(--line);border-radius:18px;background:var(--surface);box-shadow:var(--shadow)}
+.kf-kaldigin h2{margin:0 0 8px;font-size:15px;font-weight:700;letter-spacing:-.01em;display:flex;justify-content:space-between;align-items:center}
+.kf-kaldigin h2 button{border:0;background:none;color:var(--muted);font:inherit;font-size:13px;font-weight:600;cursor:pointer;padding:4px 6px;border-radius:8px}
+.kf-kaldigin h2 button:hover{color:var(--ink);background:var(--surface-2)}
+.kf-yatay{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(220px,290px);gap:10px;overflow-x:auto;scrollbar-width:thin;padding-bottom:2px}
+.kf-yatay .kf-s{padding:10px;border:1px solid var(--line);border-radius:14px;background:var(--kf-kagit)}
+.yan .kf-blok{margin-top:14px}
+.kf-son .kf-mobil{margin-top:22px}
+@media (min-width:1100px){.kf-son .kf-mobil{display:none}}
+
+/* süresi dolmuş ilan: açık benzerler en üstte */
+.kf-kapali{margin:18px 0 0;padding:16px 18px;border-radius:18px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--kf-sienna);box-shadow:var(--shadow)}
+.kf-kapali-bas b{display:block;font-size:16px;letter-spacing:-.01em}
+.kf-kapali-bas span{display:block;margin:2px 0 6px;font-size:14px;color:var(--ink-2)}
+.kf-kapali-tum{display:inline-block;margin-top:8px;font-size:14px;font-weight:650;color:var(--ink);text-underline-offset:3px}
+
+/* "Bu ilana başvurabilir misin?" */
+.kf-uygun{margin:22px 0 0;padding:16px 18px;border-radius:18px;background:var(--kf-kagit);border:1px solid var(--line)}
+:root[data-theme=dark] .kf-uygun{background:var(--surface)}
+.kf-uygun h2{margin:0 0 10px;font-size:16px;letter-spacing:-.01em}
+.kf-cipler{display:flex;flex-wrap:wrap;gap:8px}
+.kf-cip{height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--line-2,var(--line));background:var(--surface);color:var(--ink);font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.kf-cip[aria-pressed=true]{background:var(--kf-slate);border-color:var(--kf-slate);color:#fff}
+:root[data-theme=dark] .kf-cip[aria-pressed=true]{background:var(--lime);border-color:var(--lime);color:#14201F}
+.kf-uygun-sonuc{margin:10px 0 0;font-size:14.5px;color:var(--ink-2)}
+.kf-uygun-sonuc:empty{display:none}
+.kf-uygun-sonuc.evet::before,.kf-uygun-sonuc.hayir::before,.kf-uygun-sonuc.belki::before{display:inline-grid;place-items:center;width:20px;height:20px;margin-right:8px;border-radius:50%;font-size:12px;font-weight:800;vertical-align:1px}
+.kf-uygun-sonuc.evet{color:var(--ink)}
+.kf-uygun-sonuc.evet::before{content:'✓';background:var(--kf-slate);color:#fff}
+:root[data-theme=dark] .kf-uygun-sonuc.evet::before{background:var(--lime);color:#14201F}
+.kf-uygun-sonuc.hayir::before{content:'✕';background:var(--kf-sienna);color:#fff}
+.kf-uygun-sonuc.belki::before{content:'?';background:var(--surface-2);color:var(--ink)}
+.kf-bolum-form{display:flex;gap:8px;margin-top:10px}
+.kf-bolum-form input{flex:1;min-width:0;height:40px;padding:0 12px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:15px}
+.kf-bolum-form button{flex:none;height:40px;padding:0 16px;border-radius:12px;border:0;background:var(--btn);color:var(--btn-ink);font:inherit;font-size:14px;font-weight:650;cursor:pointer}
+.kf-bolum-sonuc .yazi-link{display:inline-block;margin-top:8px;font-size:14px}
+.kf-kanit{margin:8px 0 0;padding:8px 12px;border-left:3px solid var(--line);font-size:13.5px;color:var(--muted)}
+.kf-kanit b{color:var(--ink-2);font-weight:650}
+.kf-bekle{margin:10px 0 0;font-size:13.5px;color:var(--muted)}
+.kf-ek-sart{margin:10px 0 0;font-size:14px;color:var(--ink-2)}
+.kf-not{margin:8px 0 6px;font-size:12.5px;color:var(--muted)}
+
+/* forum sayfası ve diğerleri: kart köşeleri tutarlı */
+.fr-kart,.fr-baslik-kart{border-radius:18px}

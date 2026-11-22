@@ -207,9 +207,15 @@ def sayfa_basi(baslik, aciklama, canonical, kok, og_tur='website', ek_head='', o
 
 # 15 Kasım 2026 SEO denetimi: yönlendiren adres politikası (sunucu başlığı GitHub Pages'te verilemiyor), yeni ilan akışı
 # ve ilan bağlantılarının üzerine gelince önceden yüklenmesi (Speculation Rules; yalnız prefetch, reklam sayfası önceden çalışmaz).
+# Kasım 2026 yeni tasarım: "okuma masası" katmanı (docs/tasarim.css) ve keşif betiği (docs/kesfet.js; benzer ilanlar,
+# sıradaki ilan, topluluk şeridi). Kök göreli: site alan adının kökünde yayımlanır; her sayfada en son yüklenir.
+TASARIM_SURUM = 3
+TASARIM_HEAD = (f'<link rel="stylesheet" href="/tasarim.css?v={TASARIM_SURUM}">'
+                f'<script src="/kesfet.js?v={TASARIM_SURUM}" defer></script>')
 ORTAK_HEAD = ('<meta name="referrer" content="strict-origin-when-cross-origin">'
               '<link rel="alternate" type="application/rss+xml" title="KPSS Tercihi: yeni kamu ilanları" href="https://kpsstercihi.com/rss.xml">'
-              '<script type="speculationrules">{"prefetch":[{"source":"document","where":{"href_matches":"/ilan/*"},"eagerness":"moderate"}]}</script>')
+              '<script type="speculationrules">{"prefetch":[{"source":"document","where":{"href_matches":"/ilan/*"},"eagerness":"moderate"}]}</script>'
+              f'{TASARIM_HEAD}')
 
 
 def ilk_gorsel_hemen(html):
