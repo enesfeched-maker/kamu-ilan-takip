@@ -1,9 +1,9 @@
 {
  "schema": 1,
- "guncelleme": "2026-11-23T05:38:07.264004+00:00",
+ "guncelleme": "2026-11-23T06:16:56.019832+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-11-23T05:46:11.456649+00:00",
+   "kontrol": "2026-11-23T06:17:28.475006+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -1267,7 +1267,7 @@
      "donem": "( 18 Kasım - 2 Aralık)",
      "baslangic_zaman": "2026-11-18T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-23T08:45:48+03:00",
+     "detay_guncelleme": "2026-11-23T09:17:06+03:00",
      "belge_ozeti": "3b96d3f990e76841ffe4d5e6dee66e4dd087373ccb520703d568740de592dd01",
      "kaynaklar": [
       {
@@ -4417,7 +4417,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-11-23T05:46:14.684590+00:00",
+   "kontrol": "2026-11-23T06:17:32.433111+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -26012,6 +26012,98 @@
    ],
    "belge_ogrenim": [
     "onlisans"
+   ]
+  },
+  "https://kariyerkapisi.gov.tr/IlanDetay?i=a75fb51f-19e0-4d1e-95fe-1e52774310c2": {
+   "kurum_logo": "https://kariyerkapisi.gov.tr/UPS/9571e4b5-c0f9-4456-ad41-2ac95f38d3ba.png",
+   "son_tarih": "2026-12-07",
+   "son_zaman": "2026-12-07T13:00:00+03:00",
+   "baslangic_zaman": "2026-11-23T09:00:00+03:00",
+   "yer": "ANKARA",
+   "kadro": "1 SÖZLEŞMELİ BİLİŞİM PERSONELİ",
+   "ilan_turu": "Sözleşmeli Personel İlanları",
+   "ozet": "Üniversitemiz Bilgi İşlem Daire Başkanlığı’nda tam zamanlı olarak istihdam edilmek üzere, 31/12/2008 tarih ve 27097 sayılı Resmi Gazetede yayımlanan “Kamu Kurum ve Kuruluşlarının Büyük Ölçekli Bilgi İşlem Birimlerinde Sözleşmeli Bilişim Personeli İstihdamına İlişkin Esas ve Usuller Hakkında Yönetmelik” in 8 inci maddesi uyarınca, 1 (bir) adet Sözleşmeli Bilişim Personeli alınacaktır.",
+   "sartlar": [
+    {
+     "kadro": "SİSTEM UZMANI (1 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 3 Katına Kadar)",
+     "metin": "Fakültelerin dört yıllık bilgisayar mühendisliği, yazılım mühendisliği, elektrik mühendisliği, elektronik mühendisliği, elektrik-elektronik mühendisliği ve endüstri mühendisliği bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurt dışındaki yükseköğretim kurumlarından mezun olmak."
+    }
+   ],
+   "sart_kadro_sayisi": 1,
+   "basvuru_notu": "b) Bu duyuruda belirtilen esaslara uygun olmayan, posta yolu veya şahsen müracaat şeklinde yapılan başvurular kabul edilmeyecektir.",
+   "detay_guncelleme": "2026-11-23T09:17:34+03:00",
+   "kk_detay_surumu": 3,
+   "kadro_detay": [
+    {
+     "unvan": "SİSTEM UZMANI (1 Kişi - Tam Zamanlı - Aylık Brüt Sözleşme Ücret Tavanının 3 Katına Kadar)",
+     "adet": 1,
+     "iller": [
+      "ANKARA"
+     ],
+     "ogrenim": "",
+     "sinav": "",
+     "maddeler": [
+      "Fakültelerin dört yıllık bilgisayar mühendisliği, yazılım mühendisliği, elektrik mühendisliği, elektronik mühendisliği, elektrik-elektronik mühendisliği ve endüstri mühendisliği bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurt dışındaki yükseköğretim kurumlarından mezun olmak.",
+      "Kamu kurum ve kuruluşlarının büyük ölçekli bilgi işlem birimlerinde veya aynı niteliklere sahip özel sektör kuruluşlarında sistem yönetimi alanında en az 5 (beş) yıl tecrübe sahibi olduğunu belgelemek.",
+      "Windows Server 2016 ve üzeri sürümlerin kurulumu, yapılandırılması, bakımı ve izlenmesi konularında tecrübe sahibi olmak.",
+      "Microsoft Exchange Server 2016 ve üzeri sürümlerin (Exchange Server SE dâhil) kurulumu, yapılandırılması, sürüm geçişi, Database Availability Group (DAG) yönetimi ve sorun giderilmesi konularında tecrübe sahibi olmak.",
+      "Active Directory, DNS, DHCP, Group Policy, File Server ve RADIUS (NPS, FreeRADIUS vb.) hizmetlerinin kurulumu, yapılandırılması ve sorun giderilmesi konularında tecrübe sahibi olmak.",
+      "VMware vSphere sanallaştırma platformunun (vCenter, ESXi, HA/DRS cluster vb.) kurulumu, yapılandırılması ve yönetimi konularında tecrübe sahibi olmak.",
+      "Linux sunucularda (Ubuntu, Debian, RHEL tabanlı dağıtımlar vb.) kurulum, yapılandırma, sorun giderme, performans iyileştirme, güvenlik sıkılaştırma ve log inceleme konularında tecrübe sahibi olmak.",
+      "Yedekleme altyapılarının (Veeam vb.) kurulumu, yapılandırılması ve yönetimi ile yedekleme politikalarının oluşturulması, saklama sürelerinin yönetimi, uzak lokasyon (offsite) yedekleme ve geri dönüş testleri konularında tecrübe sahibi olmak.",
+      "Veri depolama sistemleri, SAN anahtarları ve Fibre Channel ile iSCSI tabanlı depolama ağlarının yapılandırılması ve yönetimi konularında tecrübe sahibi olmak.",
+      "Sunucu donanımları ve yapılandırması (disk, RAID, HBA, ağ kartı vb.) konularında bilgi ve tecrübe sahibi olmak.",
+      "Sunucu güvenliği kapsamında yama yönetimi, sıkılaştırma, antivirüs/uç nokta güvenlik yazılımları (Trend Micro vb.) ve sunucu üzerindeki güvenlik duvarı kuralları konularında tecrübe sahibi olmak.",
+      "PowerShell ile sistem yönetimi ve otomasyon betikleri hazırlama konusunda bilgi ve tecrübe sahibi olmak.",
+      "Failover Cluster yapılandırması ve yönetimi konusunda bilgi sahibi olmak.",
+      "Web ve uygulama sunucularının (IIS, Apache, Nginx, Tomcat vb.) ve web uygulama çalışma ortamlarının (PHP, Java vb.) kurulumu ve yönetimi konularında bilgi sahibi olmak.",
+      "Yük dengeleme (HAProxy vb.) çözümlerinin yapılandırılması ve yönetimi konusunda bilgi sahibi olmak.",
+      "E-posta ağ geçidi ve filtreleme sistemlerinin (Postfix, FortiMail, Proxmox Mail Gateway vb.) yapılandırılması ve yönetimi konusunda bilgi sahibi olmak.",
+      "Güvenlik duvarı, Web Application Firewall (WAF), saldırı tespit/önleme sistemleri, zafiyet tarama, sızma ve stres testleri, SIEM ve log korelasyonu ile şifreleme teknolojileri konularında bilgi sahibi olmak.",
+      "Sistem izleme araçlarının (Zabbix, Grafana, Prometheus vb.) kurulumu ve yönetimi konularında bilgi ve tecrübe sahibi olmak.",
+      "Replikasyon, iş sürekliliği ve felaketten kurtarma (DR) çözümlerinin tasarımı, kurulumu ve işletimi konularında tecrübe sahibi olmak.",
+      "Yürütülen sistemlere ilişkin teknik dokümantasyonu hazırlamak ve güncel tutmak.",
+      "Teknik şartname oluşturma konusunda bilgi sahibi olmak.",
+      "Microsoft’un Windows Server veya Azure altyapısına yönelik rol tabanlı sertifikalarından (Windows Server Hybrid Administrator Associate, Azure Administrator Associate vb.), bunların öncülü olan MCSA/MCSE sertifikalarından veya VMware Certified Professional (VCP) sertifikalarından en az birine sahip olmak."
+     ],
+     "bolumler": [
+      [
+       "Temel Nitelikler",
+       [
+        "Fakültelerin dört yıllık bilgisayar mühendisliği, yazılım mühendisliği, elektrik mühendisliği, elektronik mühendisliği, elektrik-elektronik mühendisliği ve endüstri mühendisliği bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurt dışındaki yükseköğretim kurumlarından mezun olmak.",
+        "Kamu kurum ve kuruluşlarının büyük ölçekli bilgi işlem birimlerinde veya aynı niteliklere sahip özel sektör kuruluşlarında sistem yönetimi alanında en az 5 (beş) yıl tecrübe sahibi olduğunu belgelemek.",
+        "Windows Server 2016 ve üzeri sürümlerin kurulumu, yapılandırılması, bakımı ve izlenmesi konularında tecrübe sahibi olmak.",
+        "Microsoft Exchange Server 2016 ve üzeri sürümlerin (Exchange Server SE dâhil) kurulumu, yapılandırılması, sürüm geçişi, Database Availability Group (DAG) yönetimi ve sorun giderilmesi konularında tecrübe sahibi olmak.",
+        "Active Directory, DNS, DHCP, Group Policy, File Server ve RADIUS (NPS, FreeRADIUS vb.) hizmetlerinin kurulumu, yapılandırılması ve sorun giderilmesi konularında tecrübe sahibi olmak.",
+        "VMware vSphere sanallaştırma platformunun (vCenter, ESXi, HA/DRS cluster vb.) kurulumu, yapılandırılması ve yönetimi konularında tecrübe sahibi olmak.",
+        "Linux sunucularda (Ubuntu, Debian, RHEL tabanlı dağıtımlar vb.) kurulum, yapılandırma, sorun giderme, performans iyileştirme, güvenlik sıkılaştırma ve log inceleme konularında tecrübe sahibi olmak.",
+        "Yedekleme altyapılarının (Veeam vb.) kurulumu, yapılandırılması ve yönetimi ile yedekleme politikalarının oluşturulması, saklama sürelerinin yönetimi, uzak lokasyon (offsite) yedekleme ve geri dönüş testleri konularında tecrübe sahibi olmak.",
+        "Veri depolama sistemleri, SAN anahtarları ve Fibre Channel ile iSCSI tabanlı depolama ağlarının yapılandırılması ve yönetimi konularında tecrübe sahibi olmak.",
+        "Sunucu donanımları ve yapılandırması (disk, RAID, HBA, ağ kartı vb.) konularında bilgi ve tecrübe sahibi olmak.",
+        "Sunucu güvenliği kapsamında yama yönetimi, sıkılaştırma, antivirüs/uç nokta güvenlik yazılımları (Trend Micro vb.) ve sunucu üzerindeki güvenlik duvarı kuralları konularında tecrübe sahibi olmak.",
+        "PowerShell ile sistem yönetimi ve otomasyon betikleri hazırlama konusunda bilgi ve tecrübe sahibi olmak.",
+        "Failover Cluster yapılandırması ve yönetimi konusunda bilgi sahibi olmak.",
+        "Web ve uygulama sunucularının (IIS, Apache, Nginx, Tomcat vb.) ve web uygulama çalışma ortamlarının (PHP, Java vb.) kurulumu ve yönetimi konularında bilgi sahibi olmak.",
+        "Yük dengeleme (HAProxy vb.) çözümlerinin yapılandırılması ve yönetimi konusunda bilgi sahibi olmak.",
+        "E-posta ağ geçidi ve filtreleme sistemlerinin (Postfix, FortiMail, Proxmox Mail Gateway vb.) yapılandırılması ve yönetimi konusunda bilgi sahibi olmak.",
+        "Güvenlik duvarı, Web Application Firewall (WAF), saldırı tespit/önleme sistemleri, zafiyet tarama, sızma ve stres testleri, SIEM ve log korelasyonu ile şifreleme teknolojileri konularında bilgi sahibi olmak.",
+        "Sistem izleme araçlarının (Zabbix, Grafana, Prometheus vb.) kurulumu ve yönetimi konularında bilgi ve tecrübe sahibi olmak.",
+        "Replikasyon, iş sürekliliği ve felaketten kurtarma (DR) çözümlerinin tasarımı, kurulumu ve işletimi konularında tecrübe sahibi olmak.",
+        "Yürütülen sistemlere ilişkin teknik dokümantasyonu hazırlamak ve güncel tutmak.",
+        "Teknik şartname oluşturma konusunda bilgi sahibi olmak."
+       ]
+      ],
+      [
+       "Tercih Sebepleri",
+       [
+        "Microsoft’un Windows Server veya Azure altyapısına yönelik rol tabanlı sertifikalarından (Windows Server Hybrid Administrator Associate, Azure Administrator Associate vb.), bunların öncülü olan MCSA/MCSE sertifikalarından veya VMware Certified Professional (VCP) sertifikalarından en az birine sahip olmak."
+       ]
+      ]
+     ]
+    }
+   ],
+   "belge_ogrenim": [
+    "lisans"
    ]
   }
  },
