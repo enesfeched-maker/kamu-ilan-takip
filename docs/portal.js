@@ -325,6 +325,11 @@ let rkSay=0,rkAdet=0;
 function rkSlot(){const c=$('cards');return c&&c.getAttribute('data-rk-akis')&&document.querySelector('script[src*="adsbygoogle.js"]')?c.getAttribute('data-rk-akis'):'';}
 function rkAra(){if(!rkSlot()||rkAdet>=3)return false;rkSay++;if(rkSay%8)return false;rkAdet++;return true;}
 function rkLi(){const li=E('li','rk-li'),d=E('div','rk'),p=E('p','rk-et','Reklam'),i=E('ins','adsbygoogle');d.setAttribute('data-rk','akis');i.style.display='block';i.setAttribute('data-ad-client','ca-pub-8335827974832277');i.setAttribute('data-ad-slot',rkSlot());i.setAttribute('data-ad-format','auto');i.setAttribute('data-full-width-responsive','true');d.append(p,i);li.append(d);return li;}
+/* Masaüstü sağ boşluk reklamı (yalnız ana sayfa, ≥1540px): .govde'nin sağında 160×600, kaydırırken yapışkan. Dar ekranda hiç oluşturulmaz. */
+let rkYanVar=false;
+function rkYan(){if(rkYanVar||!rkSlot()||!matchMedia('(min-width:1540px)').matches)return;const g=document.querySelector('.govde');if(!g)return;rkYanVar=true;
+const y=E('div','rk-yan'),d=E('div','rk-yan-ic'),i=E('ins','adsbygoogle');d.setAttribute('data-rk','yan');i.style.cssText='display:inline-block;width:160px;height:600px';i.setAttribute('data-ad-client','ca-pub-8335827974832277');i.setAttribute('data-ad-slot',rkSlot());d.append(E('p','rk-et','Reklam'),i);y.append(d);g.append(y);
+try{(window.adsbygoogle=window.adsbygoogle||[]).push({});}catch(e){}}
 function rkBaslat(){document.querySelectorAll('#cards ins.adsbygoogle:not([data-adsbygoogle-status])').forEach(()=>{try{(window.adsbygoogle=window.adsbygoogle||[]).push({});}catch(e){}});}
 /* ---------- İlanlar: süzgeç durumu, URL eşitleme, süzme ---------- */
 const OGR_SECENEK=[['lisans','Lisans'],['onlisans','Önlisans'],['ortaogretim','Ortaöğretim'],['bilinmiyor','Öğrenim belirtilmemiş']];
@@ -598,7 +603,7 @@ if(list.length>vis.length){
 const d=E('div','daha'),bar=E('div','bar'),fill=E('i'),b=E('button','btn btn-ikinci','Daha fazla göster');
 fill.style.width=Math.round(vis.length/list.length*100)+'%';bar.setAttribute('aria-hidden','true');bar.append(fill);b.type='button';b.onclick=()=>{A('tikla',{a:'daha_fazla',n:shown+PAGE_SIZE});shown+=PAGE_SIZE;renderIlanlar();};
 d.append(bar,E('small','',vis.length+' / '+list.length+' ilan gösteriliyor'),b);nodes.push(d);}
-$('cards').replaceChildren(...nodes);rkBaslat();$('cards').hidden=!list.length;$('empty').hidden=!!list.length;
+$('cards').replaceChildren(...nodes);rkBaslat();rkYan();$('cards').hidden=!list.length;$('empty').hidden=!!list.length;
 if(!list.length){
 const q=F.q.slice(0,60),kids=[E('h3','',q?'“'+q+'” için açık ilan bulunamadı.':'Bu filtrelerle ilan bulunamadı.')];
 if(suzgecVar(F)){
