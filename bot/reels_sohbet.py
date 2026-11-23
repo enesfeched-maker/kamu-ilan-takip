@@ -371,6 +371,49 @@ SENARYOLAR = {
                   ('o', 'Başvuru internetten mi?'),
                   ('ben', 'Hayır, şahsen. 7–11 Aralık arası Gaziosmanpaşa Kültür Merkezi\'ndeki Yazı İşleri Müdürlüğüne'),
                   ('o', 'Ehliyetim var, yaşım da tutuyor. Gidiyorum')]),
+    # 23 Kasım 2026: bilgiler Jandarma ve Sahil Güvenlik Akademisi uzman erbaş temin kılavuzundan (madde 1, 3, Tablo-1/5)
+    'jandarma': dict(
+        ilan='sbb-0996a6b012584af8116e902d', renk='zift', kisi='Burak', saat='21:40',
+        kanca=('“Askerlik yapmadım, olmaz”', 'DEDİ. 9.000 KİŞİ ALINIYOR.'),
+        kart=dict(kurum='JANDARMA GENEL KOMUTANLIĞI', alt='Uzman erbaş alımı (erkek)', sayi='9.000 KİŞİ', satir1='Lise · Önlisans · Lisans',
+                  satir2='Başvuru: 23 Kasım – 7 Aralık'),
+        kapanis='Lise, önlisans, lisans: her gün yeni kamu ilanı',
+        mesajlar=[('o', 'Jandarmaya girmek istiyorum ama askerliğimi yapmadım'), ('o', 'Önce askerlik lazım değil mi?'),
+                  ('ben', 'Değil. Jandarma 9.000 uzman erbaş alıyor, askerlik yapmış olma şartı yok'), ('ben', 'KART'),
+                  ('o', 'Hangi bölüm lazım?'),
+                  ('ben', 'Jandarma branşında bölüm şartı yok. Lise, önlisans, lisans; bütün bölümler başvurabiliyor'),
+                  ('ben', '9.000 kişinin 8.174\'ü bu branşta'),
+                  ('o', 'KPSS kaç lazım?'),
+                  ('ben', '2025 ya da 2026 KPSS\'den en az 60. Lise P94, önlisans P93, lisans P3'),
+                  ('ben', 'Lojistik branşında ilandaki mesleklerden ustalık, kalfalık ya da MYK belgen varsa KPSS\'siz başvuru da var'),
+                  ('o', 'Yaş ve boy?'),
+                  ('ben', '1 Ocak 1999 ile 1 Ocak 2007 arasında doğmuş olmak. Boy en az 167 cm'),
+                  ('o', '2001 doğumluyum, boyum 178. Tutuyor'),
+                  ('ben', 'Başvuru e-Devlet ile personeltemin.jandarma.gov.tr\'den. Son gün 7 Aralık 23.59'),
+                  ('o', 'Bu akşam başvuruyorum')]),
+    # 23 Kasım 2026: bilgiler İçişleri Bakanlığı 4/B sözleşmeli personel sözlü sınav duyurusundan (genel ve özel şartlar, başvuru)
+    'icisleri-1170': dict(
+        ilan='sbb-53a97ba8ac5d1f551782effd', renk='lacivert', kisi='Elif', saat='20:05',
+        kanca=('“60 puanla nereye girilir?”', 'İÇİŞLERİ 1.170 KİŞİ ALIYOR.'),
+        kart=dict(kurum='İÇİŞLERİ BAKANLIĞI', alt='4/B sözleşmeli personel', sayi='1.170 KİŞİ', satir1='Lise · Önlisans · Lisans',
+                  satir2='Başvuru: 7 – 11 Aralık'),
+        kapanis='Puanına ve bölümüne uygun ilanlar her gün',
+        mesajlar=[('o', 'KPSS\'den 61 aldım'), ('o', '60 puanla hiçbir yere girilmez artık'),
+                  ('ben', 'İçişleri Bakanlığı 1.170 sözleşmeli personel alıyor. En az 60 istiyor'), ('ben', 'KART'),
+                  ('o', 'Hepsi Ankara\'da mı?'),
+                  ('ben', '119\'u bakanlık merkezinde, 1.051\'i valilik ve ilçe birimlerinde'),
+                  ('o', 'Ben lise mezunuyum, bana var mı?'),
+                  ('ben', 'Var. Şoför, temizlik görevlisi ve bulaşıkçı için lise yeterli. Şoförde en az B sınıfı ehliyet isteniyor'),
+                  ('ben', 'Aşçı, garson, bahçıvan gibi kadrolarda ilgili alandan mezuniyet ya da 3 yıl deneyim gerekiyor. '
+                          'Meslek lisesi mezunlarına teknisyen, silahlı güvenlik kimliği olanlara koruma ve güvenlik kadrosu da var'),
+                  ('o', 'Önlisans ve lisansa ne var?'),
+                  ('ben', 'Lisansa avukat, arşiv uzmanı, programcı, mimar, mühendis, psikolog, grafiker, istatistikçi, büro personeli, '
+                          'çağrı karşılama. Önlisansa tekniker, büro personeli, çağrı karşılama'),
+                  ('ben', 'Bölüm şartı kadroya göre değişiyor. Sitede bölümünü seçince hangi kadroya uyduğunu gösteriyor'),
+                  ('o', 'Başvuru nasıl?'),
+                  ('ben', '7–11 Aralık\'ta e-Devlet\'ten, en fazla 30 tercih. Kadro sayısının 4 katı sözlü sınava çağrılıyor'),
+                  ('ben', 'Son gün 11 Aralık, saat 16.00\'da kapanıyor'),
+                  ('o', 'Tamam, tercihlerimi şimdiden yazıyorum')]),
 }
 
 
