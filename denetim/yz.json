@@ -2160,11 +2160,11 @@
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=3d77e559-3036-4ce5-8131-0d7adae39f48": {
-  "zaman": "2026-11-23T07:11:36+03:00",
+  "zaman": "2026-11-23T15:10:46+03:00",
   "surum": 4,
   "model": "claude",
   "kaynak": "metin",
-  "imza": "0fe4e2412646e34c",
+  "imza": "3851b5b3ecc5423d",
   "baslik": "TÜRK AKREDİTASYON KURUMU GENEL SEKRETERLİĞİ - TÜRK AKREDİTASYON KURUMU SÖZLEŞMELİ KORUMA VE GÜVENLİK GÖREVLİSİ GİRİŞ SINAVI DUYURUSU",
   "farklar": [],
   "yz": {
@@ -2173,33 +2173,32 @@
      "unvan": "Koruma ve Güvenlik Görevlisi",
      "adet": 3,
      "ogrenim": "onlisans",
-     "puan_turu": "P93",
+     "puan_turu": null,
      "en_dusuk_puan": 70,
      "il": "Ankara",
      "kosullar": [
-      "Güvenlik; Güvenlik Bilimleri, Güvenlik Hizmetleri; Güvenlik ve Koruma, Kamu Güvenlik ve Asayişin Sağlanması; Özel Güvenlik ve Koruma, Savunma ve Güvenlik ön lisans programlarının birinden mezun olmak.",
-      "2026 KPSS (B) P93 puan türünden en az 70 puan almış olmak.",
-      "Geçerlilik süresinin dolmasına en az 6 ay kalmış silahlı veya silahsız özel güvenlik görevlisi kimlik kartına sahip olmak.",
-      "Boy erkekte en az 170 cm, kadında en az 160 cm; kilo, (boy-100) değerinin en çok 17 eksiği ile 13 fazlası aralığında olmak.",
-      "24 saat vardiyalı (nöbet usulü) çalışmaya engel durumu bulunmamak."
+      "Özel Güvenlik ve Koruma, Güvenlik ve Koruma, İstihbarat, Güvenlik, Güvenlik Bilimleri, Güvenlik Hizmetleri, Kamu Güvenliği ve Asayişin Sağlanması veya Savunma ve Güvenlik programlarından mezun olmak.",
+      "Geçerlilik süresi dolmasına en az 6 ay kalmış silahlı veya silahsız özel güvenlik görevlisi kimlik kartına sahip olmak.",
+      "Boy erkeklerde en az 170 cm, kadınlarda en az 160 cm olmak; kilo (boy-100) değerinin 17 eksiğinden az, 13 fazlasından çok olmamak.",
+      "24 saat esaslı vardiyalı (nöbet usulü) çalışmaya engel durumu bulunmamak."
      ]
     }
    ],
    "toplam": 3,
    "son_basvuru_tarihi": "2026-12-07",
-   "son_basvuru_saati": "23:59",
+   "son_basvuru_saati": null,
    "baslangic_tarihi": "2026-11-23",
    "kpss_gerekli": true,
    "iller": [
     "Ankara"
    ],
    "ortak_kosullar": [
+    "2026 KPSS (B) Ön Lisans puanından en az 70 puan almış olmak.",
     "01.01.2026 itibarıyla 35 yaşını doldurmamış olmak (02.01.1991 ve sonrası doğumlu).",
-    "Başvuru: e-Devlet üzerinden Kariyer Kapısı'ndan, 23.11.2026–07.12.2026 (07.12.2026 saat 23:59'a kadar); şahsen veya posta ile başvuru kabul edilmez.",
-    "Sınav: sözlü; sözlü sınav 23.12.2026'da Ankara'da, sözlüye çağrılacak adaylar 11.12.2026'da açıklanır.",
-    "Pozisyon sayısının 4 katı (12 aday) sözlü sınava çağrılır; başarı puanı = KPSS %50 + sözlü %50."
+    "Sözlü giriş sınavı yapılır; pozisyon sayısının 4 katı aday sınava çağrılır.",
+    "Şahsen başvuru alınmaz; posta veya diğer yollarla yapılan başvurular kabul edilmez."
    ],
-   "ozet": "TÜRKAK, sözleşmeli 3 koruma ve güvenlik görevlisi alacak (ön lisans, KPSS P93 en az 70). Başvurular 23 Kasım–7 Aralık 2026 arasında Kariyer Kapısı'ndan yapılır.",
+   "ozet": "TÜRKAK Ankara'da 3 koruma ve güvenlik görevlisi (ön lisans) alacak. Başvurular 23 Kasım–7 Aralık 2026 arasında yapılır; sözlü sınav uygulanır.",
    "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
@@ -2207,9 +2206,7 @@
    "ogrenim": [
     "onlisans"
    ],
-   "puan_turleri": [
-    "P93"
-   ]
+   "puan_turleri": []
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=41353f9d-7dda-4b65-b2ba-de6bf8e72f54": {
