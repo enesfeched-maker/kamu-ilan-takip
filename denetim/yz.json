@@ -6952,6 +6952,161 @@
    ]
   }
  },
+ "sbb-0996a6b012584af8116e902d": {
+  "zaman": "2026-11-23T09:10:27+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "pdf",
+  "imza": "68e2396cce1094a6",
+  "baslik": "JANDARMA GENEL KOMUTANLIĞI - 9000 UZMAN ERBAŞ TEMİN EDİLECEKTİR.",
+  "farklar": [
+   [
+    "ogrenim",
+    [
+     "lisans",
+     "onlisans",
+     "ortaogretim"
+    ],
+    [
+     "lisans",
+     "ortaogretim"
+    ],
+    false
+   ]
+  ],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Uzman Erbaş — Jandarma",
+     "adet": 8174,
+     "ogrenim": "ortaogretim",
+     "puan_turu": null,
+     "en_dusuk_puan": 60,
+     "il": null,
+     "kosullar": [
+      "Bölüm/program şartı yok; tüm lise, ön lisans ve lisans mezunları başvurabilir.",
+      "2025-2026 KPSS P3 (lisans), P93 (ön lisans) veya P94 (lise) puanı en az 60 olmak."
+     ]
+    },
+    {
+     "unvan": "Uzman Erbaş — Muhabere",
+     "adet": 100,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": 60,
+     "il": null,
+     "kosullar": [
+      "Tablo-2, Tablo-3 ve Tablo-4'te muhabere için işaretli lisans, ön lisans veya lise programlarından mezun olmak.",
+      "2025-2026 KPSS puanı en az 60 olmak."
+     ]
+    },
+    {
+     "unvan": "Uzman Erbaş — Havacılık (Uçak/Helikopter Teknisyen Yrdc. 5, Havacılık İtfaiyecisi 5)",
+     "adet": 10,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": 60,
+     "il": null,
+     "kosullar": [
+      "Tablo-2, Tablo-3 ve Tablo-4'te havacılık için işaretli programlardan mezun olmak.",
+      "2025-2026 KPSS puanı en az 60 olmak."
+     ]
+    },
+    {
+     "unvan": "Uzman Erbaş — Sıhhiyeci",
+     "adet": 200,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": 60,
+     "il": null,
+     "kosullar": [
+      "Tablo-2, Tablo-3 ve Tablo-4'te sıhhiyeci için işaretli programlardan mezun olmak.",
+      "2025-2026 KPSS puanı en az 60 olmak."
+     ]
+    },
+    {
+     "unvan": "Uzman Erbaş — Lojistik (mesleki nitelikli)",
+     "adet": 500,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": 50,
+     "il": null,
+     "kosullar": [
+      "Tablo-2/3/4'te lojistik için işaretli bölümlerden mezun olmak; KPSS puanı en az 50.",
+      "Ustalık, kalfalık, MYK belgesi vb. (Tablo-5) ile KPSS puanı olmadan da başvurulabilir."
+     ]
+    },
+    {
+     "unvan": "Uzman Erbaş — Bando",
+     "adet": 5,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": 60,
+     "il": null,
+     "kosullar": [
+      "Tablo-2, Tablo-3 ve Tablo-4'te bando için işaretli programlardan mezun olmak.",
+      "2025-2026 KPSS puanı en az 60 olmak."
+     ]
+    },
+    {
+     "unvan": "Uzman Erbaş — At Bakıcısı",
+     "adet": 3,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": 60,
+     "il": null,
+     "kosullar": [
+      "Tablo-2, Tablo-3 ve Tablo-4'te at bakıcısı için işaretli programlardan mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Uzman Erbaş — Bot Serdümeni",
+     "adet": 3,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": 60,
+     "il": null,
+     "kosullar": [
+      "Tablo-2, Tablo-3 ve Tablo-4'te bot serdümeni için işaretli programlardan mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Uzman Erbaş — Kurbağa Adam",
+     "adet": 5,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": 60,
+     "il": null,
+     "kosullar": [
+      "Tablo-2 ve Tablo-3'te belirtilen lisans veya ön lisans bölümlerinden mezun olmak.",
+      "Birinci Sınıf Dalgıç Belgesi veya TSSF(CMAS) 3 Yıldız Dalıcı Belgesi gibi belgeler aranır; ayrıca \"Kurbağaadam Olur\" sağlık raporu gerekir."
+     ]
+    }
+   ],
+   "toplam": 9000,
+   "son_basvuru_tarihi": "2026-12-07",
+   "son_basvuru_saati": "23:59",
+   "baslangic_tarihi": "2026-11-23",
+   "kpss_gerekli": true,
+   "iller": [],
+   "ortak_kosullar": [
+    "Yalnız erkekler; 01.01.1999 – 01.01.2007 arasında doğmuş olmak (20 yaşından gün almış, 27 yaşını bitirmemiş).",
+    "Boy en az 167, en fazla 210 cm; kilo Tablo-7'deki boy-kilo oranlarında olmak; \"Uzman Erbaş Olur\" sağlık kurulu raporu.",
+    "Başvuru e-Devlet ile personeltemin.jandarma.gov.tr üzerinden 23 Kasım – 7 Aralık 2026 saat 23.59'a kadar.",
+    "Şehit/vazife malulü eş-çocukları için 180 kontenjan ayrılmıştır; KPSS'de en az %80 puan yeterlidir."
+   ],
+   "ozet": "Jandarma Genel Komutanlığı 9.000 erkek uzman erbaş alacak (8.174'ü jandarma). Başvurular 23 Kasım – 7 Aralık 2026 saat 23.59'a kadar personeltemin.jandarma.gov.tr üzerinden.",
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans",
+    "ortaogretim"
+   ],
+   "puan_turleri": []
+  }
+ },
  "sbb-0a0b1d327a7c5924b935242e": {
   "zaman": "2026-11-12T07:10:21+03:00",
   "surum": 4,
@@ -9679,6 +9834,59 @@
    ],
    "ozet": "Sorgun Belediyesi (Yozgat) 1 sözleşmeli veteriner hekim alacak. Başvurular 28–30 Eylül 2026'da yapılmıştı.",
    "okunabilirlik": "kismi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P3"
+   ]
+  }
+ },
+ "sbb-8c9367d32d873eb6560da72d": {
+  "zaman": "2026-11-23T09:10:27+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "pdf",
+  "imza": "2592f18f7ab8621d",
+  "baslik": "ANKARA YILDIRIM BEYAZIT ÜNİVERSİTESİ - 1 SÖZLEŞMELİ BİLİŞİM PERSONELİ ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Sözleşmeli Bilişim Personeli (Sistem Uzmanı)",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "kosullar": [
+      "Bilgisayar, yazılım, elektrik, elektronik, elektrik-elektronik veya endüstri mühendisliği bölümlerinden (4 yıllık fakülte) ya da denkliği kabul edilen yurt dışı okullardan mezun olmak.",
+      "Sistem yönetimi alanında en az 5 yıl tecrübe sahibi olduğunu belgelemek.",
+      "Windows Server 2016+, Exchange Server 2016+, Active Directory, VMware vSphere ve Linux sunucu konularında tecrübe sahibi olmak.",
+      "Yedekleme (Veeam vb.), depolama (SAN, FC, iSCSI) ve sunucu güvenliği konularında tecrübe sahibi olmak.",
+      "Tercih sebebi: Windows Server/Azure rol sertifikası, MCSA/MCSE veya VCP sertifikası."
+     ]
+    }
+   ],
+   "toplam": 1,
+   "son_basvuru_tarihi": "2026-12-07",
+   "son_basvuru_saati": "13:00",
+   "baslangic_tarihi": "2026-11-23",
+   "kpss_gerekli": true,
+   "iller": [
+    "Ankara"
+   ],
+   "ortak_kosullar": [
+    "Yazılım veya büyük ölçekli ağ sistemleri alanında en az 5 yıl mesleki tecrübe; en az iki güncel programlama dilini belgelemek.",
+    "Başvuru e-Devlet üzerinden Kariyer Kapısı'ndan yapılır; 23.11.2026 saat 09.00 – 07.12.2026 saat 13.00.",
+    "Sıralama: 2025 veya 2026 KPSS P3 puanının %70'i + son 5 yıl içindeki YDS (İngilizce) puanının %30'u; 10 katı aday sözlü/uygulamalı sınava çağrılır.",
+    "Sözlü/uygulamalı sınavdan 100 üzerinden en az 70 almak."
+   ],
+   "ozet": "Ankara Yıldırım Beyazıt Üniversitesi Bilgi İşlem Daire Başkanlığı'na 1 sözleşmeli bilişim personeli (sistem uzmanı) alacak. Başvuru Kariyer Kapısı'ndan 23 Kasım – 7 Aralık 2026 (saat 13.00) arasında.",
+   "okunabilirlik": "iyi",
    "akademik": false,
    "iptal_veya_duzeltme": false,
    "duyuru_tipi": "yeni_ilan",
