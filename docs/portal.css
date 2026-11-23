@@ -530,4 +530,10 @@ img.aside-kurum .detail-logo,.aside-kurum img.detail-logo{padding:3px;box-shadow
 .rk-et{font-size:11px;color:var(--muted);margin:0 0 4px}
 .rk-li{list-style:none;min-height:110px;margin:0}
 .rk-li .rk{min-height:110px;margin:16px 0}
+/* sağ boşluk reklamı (portal.js rkYan): ızgaranın dışında, sağ kenar boşluğunda */
+.govde{position:relative}
+.rk-yan{position:absolute;top:32px;bottom:0;left:100%;width:160px}
+.rk-yan-ic{position:sticky;top:88px}
+.rk-yan:has(ins[data-ad-status="unfilled"]){display:none}
+@media (max-width:1539px){.rk-yan{display:none}}
 .rk:has(ins[data-ad-status="unfilled"]),.rk-li:has(ins[data-ad-status="unfilled"]){display:none}
