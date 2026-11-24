@@ -21,6 +21,8 @@
   // sabit simgeler (yalnız bu dosyadaki sabit metin; kullanıcı verisi asla HTML olarak eklenmez)
   const OK_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
   const ZIL_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>';
+  const TIK_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
+  const TAKVIM_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>';
   const YILDIZ_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg>';
 
   const h = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
@@ -65,13 +67,21 @@
     // Promise.allSettled yerine (ES2017 hedefi): liste.json yüklenemese de ilanlar gösterilir
     const [i, l] = await Promise.all([getJSON('../bolum-veri.json').catch(() => getJSON('../ilanlar.json')).catch(() => null), getJSON('../liste.json').catch(() => null)]);
     if (!i || !Array.isArray(i.ilanlar)) throw new Error('ilanlar');
-    const kopya = new Map();
-    if (l && Array.isArray(l.ilanlar)) for (const o of l.ilanlar) if (o && o.kopya_of && o.key) kopya.set(o.key, o.kopya_of);
+    const kopya = new Map(), gorsel = new Map();
+    if (l && Array.isArray(l.ilanlar)) for (const o of l.ilanlar) {
+      if (!o || typeof o.key !== 'string') continue;
+      if (o.kopya_of) kopya.set(o.key, o.kopya_of);
+      // kurum logosu ve ilanın meslek görselleri (liste.json, site_uret.py üretir)
+      gorsel.set(o.key, {
+        logo: typeof o.logo === 'string' && /^ilan\/logo\/[\w.-]+$/.test(o.logo) ? '../' + o.logo : '',
+        meslek: Array.isArray(o.meslek) ? o.meslek.filter((m) => typeof m === 'string' && /^\d\d-[a-z-]+\.jpg$/.test(m)) : [],
+      });
+    }
     const tum = i.ilanlar.filter((r) => r && typeof r.id === 'string' && typeof r.baslik === 'string');
     const duzeltmeKurum = new Set(tum.filter((r) => r.duyuru_turu && /düzeltme/i.test(r.duyuru_turu) && r.kurum).map((r) => E.fold(r.kurum)));
     const ilanlar = tum.filter((r) => !r.duyuru_turu && !kapali(r) && r.kategori !== 'akademik' && !r.iptal_edildi);
     for (const r of ilanlar) r._duzeltme = (Array.isArray(r.duzeltmeler) && r.duzeltmeler.length > 0) || r.duzeltildi === true || (!!r.kurum && duzeltmeKurum.has(E.fold(r.kurum)));
-    ilanVeri = { ilanlar, kopya };
+    ilanVeri = { ilanlar, kopya, gorsel };
     return ilanVeri;
   }
   const onbellek = {};
@@ -145,42 +155,94 @@
     return b;
   }
 
-  /* ---------- çizim ---------- */
+  /* ---------- çizim ----------
+     Kart düzeni (25 Kasım 2026): üstte kurum logosu + kurum adı (en belirgin satır) ve ilan başlığı; ortada sana uyan
+     kadrolar, her biri meslek fotoğrafıyla ve "Hukuk mezunları bu kadroya P48 puanıyla başvurabilir" cümlesiyle; altta
+     tek satırda son gün + "Nasıl başvururum?" + Başvur. */
+  let aday = { bolum: '', duzey: 'lisans' };
+  // TAMAMI BÜYÜK HARF ad okunaklı yazılır ("ADLİ TIP KURUMU" → "Adli Tıp Kurumu"); kısaltmalar (SGK, TÜBİTAK) korunur
+  const KISALTMA = new Set(['TÜBİTAK', 'ASELSAN', 'BOTAŞ', 'TCDD', 'TOKİ', 'DSİ', 'AFAD', 'MEB', 'KOSGEB', 'İŞKUR', 'BDDK', 'EPDK', 'TMO', 'ÇAYKUR', 'TPAO',
+    'TEİAŞ', 'EÜAŞ', 'ÖSYM', 'YÖK', 'TÜİK', 'TİKA', 'MİT', 'TBMM', 'KKTC', 'TÜRKAK', 'TEDAŞ', 'TEMSAN', 'İTÜ', 'ODTÜ', 'TOBB', 'MTA', 'BİLGEM']);
+  const BAGLAC = new Set(['ve', 'ile', 'veya', 'için', 'ya', 'da', 'de']);
+  function okunakli(s) {
+    s = String(s || '');
+    if (!/[A-ZÇĞİÖŞÜ]{3}/.test(s) || /[a-zçğıöşü]/.test(s)) return s;
+    let ilk = true;
+    return s.split(/(\s+|[\/(),-])/).map((w) => {
+      if (!/[A-ZÇĞİÖŞÜ]/.test(w)) return w;
+      const k = w.toLocaleLowerCase('tr'), bas = ilk; ilk = false;
+      if (KISALTMA.has(w) || (/^[A-ZÇĞİÖŞÜ]{2,5}$/.test(w) && !/[AEIİOÖUÜ]/.test(w))) return w;
+      if (!bas && BAGLAC.has(k)) return k;
+      return w.charAt(0) + k.slice(1);
+    }).join('');
+  }
+  function turYaz(l) {
+    if (!l || !l.length) return 'KPSS puanıyla';
+    return l.length === 1 ? l[0] + ' puanıyla' : l.slice(0, 3).join('/') + (l.length > 3 ? '…' : '') + ' puanlarından biriyle';
+  }
+  function basHarf(kurum) {
+    const k = String(kurum || '').split(/\s+/).filter((w) => w.length > 2 && !/^(ve|ile|için)$/i.test(w));
+    return (k.slice(0, 2).map((w) => w.charAt(0).toLocaleUpperCase('tr')).join('') || 'K');
+  }
+  function logoKutu(r, logo) {
+    const s = h('span', 'ny-logo');
+    const harf = () => { s.classList.add('harf'); s.replaceChildren(document.createTextNode(basHarf(r.kurum))); };
+    if (logo) { const im = h('img'); im.src = logo; im.alt = ''; im.width = 44; im.height = 44; im.loading = 'lazy'; im.decoding = 'async'; im.onerror = harf; s.append(im); }
+    else harf();
+    return s;
+  }
+  function meslekFoto(dosya) {
+    const im = h('img', 'ny-foto'); im.src = '../assets/meslek/kucuk/' + dosya; im.alt = ''; im.width = 52; im.height = 52;
+    im.loading = 'lazy'; im.decoding = 'async'; im.onerror = () => { im.style.visibility = 'hidden'; };
+    return im;
+  }
+  function uygunCumle(k, kpsssiz, tek) {
+    const kim = (aday.bolum ? buyukHarf(aday.bolum) : 'Lise') + ' mezunları ' + (tek ? 'bu kadroya ' : '');
+    if (kpsssiz) return kim + 'KPSS puanı olmadan başvurabilir';
+    return kim + turYaz(k.turler) + ' başvurabilir' + (k.puan !== null ? ' · en az ' + puanYaz(k.puan) : '');
+  }
   function ilanKart(x, puan) {
     const r = x.rec, key = x.anahtar, g = kalanGun(r), yontem = C.basvuruSekli(r);
+    const gv = (ilanVeri && ilanVeri.gorsel.get(key)) || { logo: '', meslek: [] };
     const kap = h('article', 'ny-ilan' + (g !== null && g <= 3 ? ' acil' : ''));
     kap.dataset.anahtar = key;
-    const ust = h('div', 'ny-ust');
-    ust.append(h('span', 'ny-kurum', r.kurum || 'Kurum'));
-    if (baslamadi(r)) ust.append(h('span', 'ny-gun', 'Başvuru başlangıcı: ' + tarihYaz((r.baslangic_zaman || '').slice(0, 10))));
+    // 1) kim: logo + kurum + ilan başlığı + zaman rozeti
+    const ust = h('header', 'ny-ust'), kim = h('div', 'ny-kim');
+    kim.append(h('span', 'ny-kurum', okunakli(r.kurum) || 'Kurum'));
+    const t = h('h3'), a = h('a', '', okunakli(kisaBaslik(r))); a.href = ilanUrl(key); t.append(a); kim.append(t);
+    ust.append(logoKutu(r, gv.logo), kim);
+    if (baslamadi(r)) ust.append(h('span', 'ny-gun bekle', 'Açılış ' + tarihYaz((r.baslangic_zaman || '').slice(0, 10))));
     else if (g !== null) ust.append(h('span', 'ny-gun', g <= 0 ? 'Bugün son gün' : g === 1 ? 'Yarın son gün' : g + ' gün kaldı'));
     kap.append(ust);
-    const t = h('h3'), a = h('a', '', kisaBaslik(r)); a.href = ilanUrl(key); t.append(a); kap.append(t);
-    // sana uyan kadrolar (adlı kadro varsa)
-    const adli = x.kadrolar.filter((k) => k.ad);
-    if (adli.length) {
+    // 2) ne: sana uyan kadrolar (meslek fotoğrafı + ad + kişi + uygunluk cümlesi)
+    const adli = x.kadrolar.filter((k) => k.ad), uygun = x.grup === 'hemen';
+    const satirlar = adli.length ? adli.slice(0, 3) : x.kadrolar.slice(0, 1);
+    if (satirlar.length) {
       const ul = h('ul', 'ny-kadro');
-      for (const k of adli.slice(0, 3)) {
-        const li = h('li'); li.append(h('b', '', k.ad.length > 70 ? k.ad.slice(0, 69).replace(/\s+\S*$/, '') + '…' : k.ad));
-        const ek = [k.adet ? k.adet + ' kişi' : '', k.puan !== null ? 'en az ' + puanYaz(k.puan) + ' puan' : '', k.not || ''].filter(Boolean).join(' · ');
-        if (ek) li.append(h('span', '', ek));
-        ul.append(li);
+      ul.setAttribute('aria-label', uygun ? 'Sana uyan kadrolar' : 'Kadrolar');
+      for (const k of satirlar) {
+        const li = h('li'), ic = h('div', 'ny-kadro-ic');
+        const dosya = k.ad ? C.meslekDosya(k.ad, r.kurum) : gv.meslek[0] || '30-genel.jpg';
+        const n = k.ad ? k.adet : kisiSayisi(r);
+        const ad = k.ad ? okunakli(k.ad.length > 70 ? k.ad.slice(0, 69).replace(/\s+\S*$/, '') + '…' : k.ad) : 'İlandaki kadrolar';
+        const bas = h('p', 'ny-kadro-ad'); bas.append(h('b', '', ad));
+        if (n) bas.append(h('span', 'ny-adet', n + ' kişi'));
+        ic.append(bas);
+        if (uygun) { const u = h('p', 'ny-uygun'); u.insertAdjacentHTML('afterbegin', TIK_SVG); u.append(uygunCumle(k, x.kpsssiz, satirlar.length === 1)); ic.append(u); }
+        else if (k.puan !== null && !x.kpsssiz) ic.append(h('p', 'ny-kadro-alt', 'En az ' + puanYaz(k.puan) + ' ' + (k.turler && k.turler.length ? k.turler.slice(0, 3).join('/') + ' ' : '') + 'puan'));
+        if (k.not) ic.append(h('p', 'ny-kadro-alt uyari', k.not));
+        li.append(meslekFoto(dosya), ic); ul.append(li);
       }
-      if (adli.length > 3) ul.append(h('li', 'ny-kadro-ek', '+' + (adli.length - 3) + ' kadro daha'));
+      if (adli.length > 3) ul.append(h('li', 'ny-kadro-ek', '+' + (adli.length - 3) + ' kadro daha · ilanda'));
       kap.append(ul);
     }
-    const cip = h('div', 'ny-cipler'), n = kisiSayisi(r);
-    if (n && !adli.length) cip.append(h('span', '', n + ' kişi'));
-    if (x.kpsssiz) cip.append(h('span', 'iyi', 'KPSS şartı yok'));
-    else if (!adli.length && x.kadrolar[0] && x.kadrolar[0].puan !== null) {
-      const p = x.kadrolar[0].puan;
-      cip.append(h('span', x.grup === 'yetmiyor' ? 'kotu' : 'iyi', 'En az ' + puanYaz(p) + ' puan' + (x.grup !== 'yetmiyor' && puan !== null ? ' ✓' : '')));
-    }
-    if (!adli.length && x.kadrolar[0] && x.kadrolar[0].not) cip.append(h('span', 'uyari', x.kadrolar[0].not));
-    if (r.son_tarih) cip.append(h('span', '', 'Son gün ' + tarihYaz(r.son_tarih)));
+    if (x.neden && !uygun) kap.append(h('p', 'ny-neden', x.neden + '.'));
+    // 3) ne zaman / nasıl: tek satır
+    const alt = h('div', 'ny-alt-satir'), cip = h('div', 'ny-cipler');
+    if (r.son_tarih) { const s = h('span', 'ny-son-gun'); s.insertAdjacentHTML('afterbegin', TAKVIM_SVG); s.append('Son gün ', h('b', '', tarihYaz(r.son_tarih))); cip.append(s); }
     if (r._duzeltme) cip.append(h('span', 'uyari', 'Düzeltme yayımlanmış'));
-    if (cip.children.length) kap.append(cip);
-    if (x.neden && x.grup !== 'hemen') kap.append(h('p', 'ny-neden', x.neden + '.'));
+    alt.append(cip);
+    kap.append(alt);
     if (x.grup === 'yetmiyor') return kap;
     // tek büyük eylem: başvuru sayfası varsa oraya, yoksa ilanın tamamına
     const ey = h('div', 'ny-eylem'), bv = h('a', 'ny-basvur');
@@ -188,9 +250,12 @@
     else { bv.href = ilanUrl(key); bv.append('İlanı aç'); }
     bv.insertAdjacentHTML('beforeend', OK_SVG);
     bv.addEventListener('click', () => A('tikla', { a: 'nereye_basvur', x: r.kurum || '' }));
-    ey.append(bv); kap.append(ey);
+    const ac = h('button', 'ny-nasil-ac', 'Nasıl başvururum?'); ac.type = 'button'; ac.setAttribute('aria-expanded', 'false');
+    ey.append(ac, bv); alt.append(ey);
 
-    const d = h('details', 'ny-nasil'), sm = h('summary', '', 'Nasıl başvururum?'), ol = h('ol');
+    const d = h('div', 'ny-nasil'), ol = h('ol');
+    d.id = 'ny-n-' + Math.random().toString(36).slice(2, 9); d.hidden = true; ac.setAttribute('aria-controls', d.id);
+    ac.onclick = () => { const acik = d.hidden; d.hidden = !acik; ac.setAttribute('aria-expanded', String(acik)); if (acik) A('tikla', { a: 'nereye_nasil', x: r.kurum || '' }); };
     const l1 = h('li'); l1.append(h('b', '', 'Nereden: '), yontem.ad);
     if (yontem.link) { const la = h('a', '', 'Başvuru sayfası ↗'); la.href = yontem.link; la.target = '_blank'; la.rel = 'noopener'; l1.append(' ', la); }
     ol.append(l1);
@@ -208,8 +273,7 @@
     const dg = h('div', 'ny-dugmeler');
     const tk = takvimDugmesi(r, key), kd = kaydetDugmesi(r, x.uyeler);
     if (tk) dg.append(tk); if (kd) dg.append(kd);
-    d.append(sm, ol); if (dg.children.length) d.append(dg);
-    d.addEventListener('toggle', () => { if (d.open) A('tikla', { a: 'nereye_nasil', x: r.kurum || '' }); });
+    d.append(ol); if (dg.children.length) d.append(dg);
     kap.append(d);
     return kap;
   }
@@ -229,7 +293,7 @@
     if (puan === null) { s.append(h('p', 'ny-alt', 'Puanını yazarsan son tercih dönemlerinde (' + donem + ') puanınla yerleşilen kadroları gösteririz.')); return s; }
     if (m.bolumYok) { s.append(h('p', 'ny-bos', 'Bölüm adını listeden seçersen tercih kadrolarını da gösterebiliriz.')); return s; }
     const ozet = h('p', 'ny-buyuk');
-    ozet.append(h('b', '', String(m.uygun.length)), ' kadroya senin puanınla yerleşilmiş', h('small', '', ' · son ' + DONEM_SAYI + ' tercih dönemi (' + donem + ')' + (m.kontenjan ? ', ' + m.kontenjan + ' kontenjan' : '')));
+    ozet.append(h('b', '', String(m.uygun.length)), ' kadroya ' + C.DUZEY[d].tur + ' puanınla yerleşilmiş', h('small', '', ' · son ' + DONEM_SAYI + ' tercih dönemi (' + donem + ')' + (m.kontenjan ? ', ' + m.kontenjan + ' kontenjan' : '')));
     s.append(ozet);
     if (m.sinirda.length) s.append(h('p', 'ny-alt', '+' + SINIR + ' puanla ' + m.sinirda.length + ' kadro daha açılırdı.'));
     const liste = (kadrolar, baslik) => {
@@ -410,6 +474,7 @@
     const [pv, bv] = await Promise.all([json(duzey), json(duzey + '-bolum')]);
     const m = C.merkezi(pv, bv, bolumMetni, puan === null ? 0 : puan, DONEM_SAYI, SINIR);
     durum('');
+    aday = { bolum: bolumMetni, duzey };
 
     const gruplar = { hemen: [], kontrol: [], okunamadi: [], yetmiyor: [], degil: [] };
     for (const x of C.ilanlariDegerlendir(v.ilanlar, v.kopya, bolumMetni, duzey, puan)) gruplar[x.grup].push(x);
@@ -474,7 +539,6 @@
     if (!FORM[d]) return;
     duzey = d;
     document.querySelectorAll('#ny-duzey button').forEach((b) => { const on = b.dataset.d === d; b.classList.toggle('secili', on); b.setAttribute('aria-pressed', String(on)); });
-    $('ny-tur').textContent = C.DUZEY[d].tur;
     $('ny-bolum-et').textContent = FORM[d].bolumEt;
     $('ny-bolum').placeholder = FORM[d].ornek;
     $('ny-bolum-ipucu').hidden = d !== 'ortaogretim';
