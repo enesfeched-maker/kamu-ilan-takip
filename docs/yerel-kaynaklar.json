@@ -1,9 +1,9 @@
 {
  "schema": 1,
- "guncelleme": "2026-11-24T06:02:14.760483+00:00",
+ "guncelleme": "2026-11-24T06:33:53.341239+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-11-24T06:03:11.381692+00:00",
+   "kontrol": "2026-11-24T06:43:54.383172+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -70,6 +70,68 @@
      "belge_sha256": "002ad3ff59c7d83c557bedffafe966656910adc5a07d2cc1b3d34fb409019667",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
+     "belge_ogrenim": [
+      "lisans"
+     ]
+    },
+    {
+     "id": "sbb-1c5bc4a0aba88d5d88d0b677",
+     "baslik": "KÜLTÜR VE TURİZM BAKANLIĞI - 20 UZMAN YARDIMCISI ALACAK",
+     "kurum": "KÜLTÜR VE TURİZM BAKANLIĞI",
+     "kadro": "20 UZMAN YARDIMCISI ALACAK",
+     "ilan_turu": "Uzman",
+     "son_tarih": "2026-12-23",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 9 Aralık - 23 Aralık)",
+     "baslangic_zaman": "2026-12-09T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-11-24T09:34:02+03:00",
+     "belge_ozeti": "dc15d88bcd2e860278a8329cabc1b46f9fcc7cbcb16e55107abc6a6cfa4a0544",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "20 UZMAN YARDIMCISI alımı. Son başvuru: 23.12.2026. Başvurular elektronik ortamda 09.12.2026-23.12.2026 tarihleri arasında, e-Devlet üzerinden Kültür ve Turizm Bakanlığı veya Kariyer Kapısı https://kariyerkapisi.gov.tr/isealim üzerinden yapılabilecektir, Aranan şartlardan herhangi birini taşımadığı tespit edilen adayların başvurusu değerlendirmeye alınmayacaktır, Adaylar alıma ilişkin bilgileri Bakanlığımız internet sitesi ve Kariyer Kapısı üzerinden görüntüleyebilecektir. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "b) Sınavın yapılacağı yılın Ocak ayının ilk günü itibariyle 35 (otuz beş) yaşını doldurmamış olmak,"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "(01/01/1992 ve daha sonra doğanlar başvurabilecektir.) c) İlanda yer alan kadrolar çerçevesinde ilgisine göre en az 4 (dört) yıllık lisans eğitimi veren veya bunlara denkliği Yükseköğretim Kurulu tarafından kabul edilen yurt içi ndeki veya yurt dışındaki yüksek öğretim kurumlarının;"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "1. Mimarlık bölümünden mezunu olmak. 2. Şehir ve Bölge Planlama bölümünden mezun olmak. 3. Makine Mühendisliği bölümünden mezun olmak. 4. Çevre Mühendisliği bölümünden mezun olmak. 5. İktisat, İşletme bölümlerinden mezun olmak. 6. Kamu Yönetimi, Siyaset Bilimi ve Kamu Yönetimi bölümlerinden mezun olmak. 7. Uluslararası İlişkiler bölümünden mezun olmak. 8. Sanat Tarihi bölümünden mezun olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "KTU.YRD.1- Mimarlık bölümü mezunları için, a) KPSS P3 puan türünden en az 80 (seksen) puan almak Alınacak personel sayısı; 3 (üç)"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "KTU.YRD.2- Şehir ve Bölge Planlama bölümü mezunları için, a) KPSS P3 puan türünden en az 80 (seksen) puan almak, Alınacak personel sayısı; 3 (üç)"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "KTU.YRD.3- Makine Mühendisliği bölümü mezunları için, a) KPSS P3 puan türünden en az 80 (seksen) puan almak, Alınacak personel sayısı; 3 (üç)"
+      }
+     ],
+     "basvuru_notu": "",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/dc15d88bcd2e860278a8329cabc1b46f9fcc7cbcb16e55107abc6a6cfa4a0544.pdf",
+     "belge_sha256": "dc15d88bcd2e860278a8329cabc1b46f9fcc7cbcb16e55107abc6a6cfa4a0544",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "puan_turleri": [
+      "P3",
+      "P28",
+      "P29",
+      "P34"
+     ],
      "belge_ogrenim": [
       "lisans"
      ]
@@ -205,6 +267,69 @@
      "belge_kpss": "kpsssiz"
     },
     {
+     "id": "sbb-53a97ba8ac5d1f551782effd",
+     "baslik": "İÇİŞLERİ BAKANLIĞI - 1170 SÖZLEŞMELİ PERSONEL ALACAK",
+     "kurum": "İÇİŞLERİ BAKANLIĞI",
+     "kadro": "1170 SÖZLEŞMELİ PERSONEL ALACAK",
+     "ilan_turu": "Sözleşmeli Personel",
+     "son_tarih": "2026-12-11",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 7 Aralık - 11 Aralık)",
+     "baslangic_zaman": "2026-12-07T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-11-24T02:01:16+03:00",
+     "belge_ozeti": "86e6e6d9f99404d5766eec007484b876fe512f1c47db15c6649e9fbaa495a195",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "1170 SÖZLEŞMELİ PERSONEL alımı. Son başvuru: 11.12.2026. 1- Başvurular e-Devlet üzerinden yapılacaktır. Bu nedenle adayların www.turkiye.gov.tr hesabının ve e-Devlet şifresinin olması zorunludur. Söz konusu hesabın kullanılabilmesi için, adayların e-Devlet şifresi almaları gerekmektedir. Adaylar e-Devlet şifresini içeren zarfı, PTT Merkez Müdürlüklerinden, şahsen başvuru ile üzerinde T.C. Kimlik numarasının bulunduğu kimliğini ibraz ederek temin edebileceklerdir. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "c) Son başvuru tarihi (11.12.2026) itibarıyla 18 yaşını doldurmuş veya Türk Medeni Kanunu’nun 12 nci maddesine göre kazai rüşt kararı almış olmak,"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "2) ÖSYM tarafından 2026 yılında yapılan Kamu Personel Seçme Sınavı (B) grubundan; lisans mezunları için KPSSP3, ön lisans mezunları için KPSSP93 ve lise mezunları için KPSSP94 puan türünden en az 60 ve üzerinde KPSS puanı almış olmak kaydıyla başvuruda bulunanlardan, adayların yapmış oldukları tercih sıralamasına göre KPSS puan türü ve tercih edilen pozisyon ünvanı esas alınmak suretiyle yapılacak olan KPSS puan sıralamasına göre ilan edilen pozisyon sayısının 4 katı adayın içerisinde bulunmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "a) Bilgi ve Belge Yönetimi, Arşivcilik, Arşiv, Dokümantasyon ve Enformasyon, Dökümantasyon ve Enformasyon veya Kütüphanecilik lisans programından ya da programında Osmanlı Paleografyası, Arapça, Farsça derslerinden en az birine yer veren lisans bölümlerinden mezun olmak veya bunlara denkliği Yükseköğretim Kurulunca kabul edilen yurt içi veya yurt dışındaki öğrenim kurumlarından birisini bitirmiş olmak,"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "a) Hukuk Fakültesinden mezun olmak veya buna denkliği Yükseköğretim Kurulunca kabul edilen yurt içi veya yurt dışındaki öğrenim kurumlarından herhangi birisini bitirmiş olmak,"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "b) Yabancı Dil Seviye Tespit Sınavından en az (D) düzeyinde İngilizce YDS/e-YDS belgesine sahip olmak veya buna denk kabul edilen ve uluslararası geçerliliği bulunan bir belgeye sahip olmak,"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "a) Fakültelerin Mimarlık programından mezun olmak veya buna denkliği Yükseköğretim Kurulunca kabul edilen yurt içi veya yurt dışındaki öğrenim kurumlarından birisini bitirmiş olmak,"
+      }
+     ],
+     "basvuru_notu": "2- Başvurular 07-11 Aralık 2026 tarihleri arasında Bakanlığımızın www.icisleri.gov.tr adresli internet sitesindeki “Duyurular” bölümünde yayınlanacak olan “İçişleri Bakanlığı Aday Profil Bilgileri Düzenleme ve Sınav Başvuru” linki aracılığıyla e-Devlet üzerinden elektronik ortamda alınacaktır.",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/86e6e6d9f99404d5766eec007484b876fe512f1c47db15c6649e9fbaa495a195.pdf",
+     "belge_sha256": "86e6e6d9f99404d5766eec007484b876fe512f1c47db15c6649e9fbaa495a195",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "puan_turleri": [
+      "P3",
+      "P93",
+      "P94"
+     ],
+     "belge_ogrenim": [
+      "lisans",
+      "onlisans",
+      "ortaogretim"
+     ]
+    },
+    {
      "id": "sbb-9674f76798177bba3b9eecb8",
      "baslik": "KÜTAHYA DUMLUPINAR ÜNİVERSİTESİ - 21 ÖĞRETİM ÜYESİ ALACAK",
      "kurum": "KÜTAHYA DUMLUPINAR ÜNİVERSİTESİ",
@@ -321,69 +446,6 @@
      "belge_ogrenim": [
       "lisans",
       "onlisans"
-     ]
-    },
-    {
-     "id": "sbb-53a97ba8ac5d1f551782effd",
-     "baslik": "İÇİŞLERİ BAKANLIĞI - 1170 SÖZLEŞMELİ PERSONEL ALACAK",
-     "kurum": "İÇİŞLERİ BAKANLIĞI",
-     "kadro": "1170 SÖZLEŞMELİ PERSONEL ALACAK",
-     "ilan_turu": "Sözleşmeli Personel",
-     "son_tarih": "2026-12-11",
-     "kaynak": "SBB Kamu İlan",
-     "kaynak_turu": "sbb",
-     "donem": "( 7 Aralık - 11 Aralık)",
-     "baslangic_zaman": "2026-12-07T00:00:00+03:00",
-     "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-24T02:01:16+03:00",
-     "belge_ozeti": "86e6e6d9f99404d5766eec007484b876fe512f1c47db15c6649e9fbaa495a195",
-     "kaynaklar": [
-      {
-       "ad": "SBB Kamu İlan",
-       "link": "https://kamuilan.sbb.gov.tr/"
-      }
-     ],
-     "ozet": "1170 SÖZLEŞMELİ PERSONEL alımı. Son başvuru: 11.12.2026. 1- Başvurular e-Devlet üzerinden yapılacaktır. Bu nedenle adayların www.turkiye.gov.tr hesabının ve e-Devlet şifresinin olması zorunludur. Söz konusu hesabın kullanılabilmesi için, adayların e-Devlet şifresi almaları gerekmektedir. Adaylar e-Devlet şifresini içeren zarfı, PTT Merkez Müdürlüklerinden, şahsen başvuru ile üzerinde T.C. Kimlik numarasının bulunduğu kimliğini ibraz ederek temin edebileceklerdir. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
-     "sartlar": [
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "c) Son başvuru tarihi (11.12.2026) itibarıyla 18 yaşını doldurmuş veya Türk Medeni Kanunu’nun 12 nci maddesine göre kazai rüşt kararı almış olmak,"
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "2) ÖSYM tarafından 2026 yılında yapılan Kamu Personel Seçme Sınavı (B) grubundan; lisans mezunları için KPSSP3, ön lisans mezunları için KPSSP93 ve lise mezunları için KPSSP94 puan türünden en az 60 ve üzerinde KPSS puanı almış olmak kaydıyla başvuruda bulunanlardan, adayların yapmış oldukları tercih sıralamasına göre KPSS puan türü ve tercih edilen pozisyon ünvanı esas alınmak suretiyle yapılacak olan KPSS puan sıralamasına göre ilan edilen pozisyon sayısının 4 katı adayın içerisinde bulunmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "a) Bilgi ve Belge Yönetimi, Arşivcilik, Arşiv, Dokümantasyon ve Enformasyon, Dökümantasyon ve Enformasyon veya Kütüphanecilik lisans programından ya da programında Osmanlı Paleografyası, Arapça, Farsça derslerinden en az birine yer veren lisans bölümlerinden mezun olmak veya bunlara denkliği Yükseköğretim Kurulunca kabul edilen yurt içi veya yurt dışındaki öğrenim kurumlarından birisini bitirmiş olmak,"
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "a) Hukuk Fakültesinden mezun olmak veya buna denkliği Yükseköğretim Kurulunca kabul edilen yurt içi veya yurt dışındaki öğrenim kurumlarından herhangi birisini bitirmiş olmak,"
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "b) Yabancı Dil Seviye Tespit Sınavından en az (D) düzeyinde İngilizce YDS/e-YDS belgesine sahip olmak veya buna denk kabul edilen ve uluslararası geçerliliği bulunan bir belgeye sahip olmak,"
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "a) Fakültelerin Mimarlık programından mezun olmak veya buna denkliği Yükseköğretim Kurulunca kabul edilen yurt içi veya yurt dışındaki öğrenim kurumlarından birisini bitirmiş olmak,"
-      }
-     ],
-     "basvuru_notu": "2- Başvurular 07-11 Aralık 2026 tarihleri arasında Bakanlığımızın www.icisleri.gov.tr adresli internet sitesindeki “Duyurular” bölümünde yayınlanacak olan “İçişleri Bakanlığı Aday Profil Bilgileri Düzenleme ve Sınav Başvuru” linki aracılığıyla e-Devlet üzerinden elektronik ortamda alınacaktır.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/86e6e6d9f99404d5766eec007484b876fe512f1c47db15c6649e9fbaa495a195.pdf",
-     "belge_sha256": "86e6e6d9f99404d5766eec007484b876fe512f1c47db15c6649e9fbaa495a195",
-     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 6,
-     "puan_turleri": [
-      "P3",
-      "P93",
-      "P94"
-     ],
-     "belge_ogrenim": [
-      "lisans",
-      "onlisans",
-      "ortaogretim"
      ]
     },
     {
@@ -526,7 +588,7 @@
      "donem": "( 23 Kasım - 7 Aralık)",
      "baslangic_zaman": "2026-11-23T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-23T21:13:24+03:00",
+     "detay_guncelleme": "2026-11-24T09:37:17+03:00",
      "belge_ozeti": "38a9965a2cb7685daad458452e9cb8b7deb66838707565c0ea787175902d7ae3",
      "kaynaklar": [
       {
@@ -1571,7 +1633,7 @@
      "donem": "( 18 Kasım - 2 Aralık)",
      "baslangic_zaman": "2026-11-18T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-24T09:02:49+03:00",
+     "detay_guncelleme": "2026-11-24T09:43:33+03:00",
      "belge_ozeti": "3b96d3f990e76841ffe4d5e6dee66e4dd087373ccb520703d568740de592dd01",
      "kaynaklar": [
       {
@@ -3999,7 +4061,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-11-24T06:03:13.864906+00:00",
+   "kontrol": "2026-11-24T06:43:57.011030+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -25717,7 +25779,7 @@
    ],
    "sart_kadro_sayisi": 1,
    "basvuru_notu": "b) Bu duyuruda belirtilen esaslara uygun olmayan, posta yolu veya şahsen müracaat şeklinde yapılan başvurular kabul edilmeyecektir.",
-   "detay_guncelleme": "2026-11-23T21:19:23+03:00",
+   "detay_guncelleme": "2026-11-24T09:43:57+03:00",
    "kk_detay_surumu": 3,
    "kadro_detay": [
     {
