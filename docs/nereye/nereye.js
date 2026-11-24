@@ -208,8 +208,18 @@
     kap.dataset.anahtar = key;
     // 1) kim: logo + kurum + ilan başlığı + zaman rozeti
     const ust = h('header', 'ny-ust'), kim = h('div', 'ny-kim');
-    kim.append(h('span', 'ny-kurum', okunakli(r.kurum) || 'Kurum'));
-    const t = h('h3'), a = h('a', '', okunakli(kisaBaslik(r))); a.href = ilanUrl(key); t.append(a); kim.append(t);
+    // Tekrar yok (kullanıcı 25 Kasım 2026): "5 Müfettiş Yardımcısı Alacak" gibi başlık, altındaki kadro satırını
+    // tekrarlıyorsa yazılmaz; o zaman ilan sayfasına kurum adı bağlanır.
+    // karşılaştırma kelime köküyle (ilk 6 harf): "Müfettiş Yardımcılığı Giriş Sınavı" ≈ "Müfettiş Yardımcısı Alımı"
+    const kokler = (s) => E.fold(String(s).replace(/\([^)]*\)/g, ' ')).split(/[^a-z0-9]+/)
+      .filter((w) => w.length > 2 && !/^(alim|alimi|ilan|ilani|duyuru|duyurusu|sinav|sinavi|giris|ve|ile|icin)$/.test(w)).map((w) => w.slice(0, 6));
+    const baslik = okunakli(kisaBaslik(r)), bk = new Set(kokler(baslik)), adlar = x.kadrolar.filter((k) => k.ad).map((k) => kokler(k.ad));
+    const tekrar = /\balacak$/i.test(E.fold(baslik)) || (adlar.length > 0 && adlar.every((k) => k.length > 0 && k.every((w) => bk.has(w))));
+    if (tekrar) { const ka = h('a', 'ny-kurum', okunakli(r.kurum) || 'Kurum'); ka.href = ilanUrl(key); kim.append(ka); }
+    else {
+      kim.append(h('span', 'ny-kurum', okunakli(r.kurum) || 'Kurum'));
+      const t = h('h3'), a = h('a', '', baslik); a.href = ilanUrl(key); t.append(a); kim.append(t);
+    }
     ust.append(logoKutu(r, gv.logo), kim);
     if (baslamadi(r)) ust.append(h('span', 'ny-gun bekle', 'Açılış ' + tarihYaz((r.baslangic_zaman || '').slice(0, 10))));
     else if (g !== null) ust.append(h('span', 'ny-gun', g <= 0 ? 'Bugün son gün' : g === 1 ? 'Yarın son gün' : g + ' gün kaldı'));

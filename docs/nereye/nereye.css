@@ -100,6 +100,7 @@
 .ny-logo.harf{background:#12354E;color:#F99D1B;font-weight:800;font-size:1.05rem;letter-spacing:.02em;border:0}
 .ny-kim{min-width:0;flex:1;display:grid;gap:1px}
 .ny-kurum{font-size:1.06rem;font-weight:780;color:var(--ink);line-height:1.25;letter-spacing:-.01em}
+a.ny-kurum{text-decoration:none}a.ny-kurum:hover{text-decoration:underline}
 .ny-ilan h3{margin:0;font-size:.9rem;font-weight:550;line-height:1.35;color:var(--muted)}
 .ny-ilan h3 a{color:inherit;text-decoration:none}
 .ny-ilan h3 a:hover{color:var(--ink);text-decoration:underline}
