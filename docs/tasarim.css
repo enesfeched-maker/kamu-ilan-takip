@@ -240,3 +240,9 @@ html body .tb-nav>a.tb-cta{background:#F99D1B;color:#12354E;border-radius:999px;
 html body .tb-nav>a.tb-cta:hover{background:#FBB34F;color:#12354E}
 html body .tb-nav>a.tb-cta::after{display:none}
 @media (max-width:900px){html body .tb-nav>a.tb-cta{justify-content:center;text-align:center;margin:4px 0}}
+
+/* Telefonda menü kapalıyken de görünen "Bana Uygun İlanlar" şeridi (üst çubuğun altında). Wada #2 kehribar + lacivert. */
+.tb-uygun{display:none}
+@media (max-width:1020px){.tb .tb-uygun{display:flex;align-items:center;justify-content:center;gap:8px;background:#F99D1B;color:#12354E;font-weight:800;font-size:15px;letter-spacing:-.005em;text-decoration:none;min-height:42px;padding:0 16px}
+.tb .tb-uygun svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.tb .tb-uygun:active{background:#E58C0C}}

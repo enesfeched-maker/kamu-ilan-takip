@@ -53,6 +53,13 @@ MENU_BETIGI = ('<script>(function(){var h=document.getElementById("tb"),b=docume
                'b.setAttribute("aria-label",o?"Menüyü kapat":"Menüyü aç")}})()</script>')
 
 
+def uygun_serit(kok):
+    """Telefonda (menü kapalıyken) üst çubuğun altında tam genişlik "Bana Uygun İlanlar" şeridi; masaüstünde gizli (tasarim.css .tb-uygun).
+    24 Kasım 2026: kullanıcı aracın menüde gizli kalmamasını istedi."""
+    return (f'<a class="tb-uygun" href="{kok}nereye/" data-a="menu" data-a-x="Bana Uygun İlanlar (şerit)">Bana Uygun İlanlar'
+            '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>')
+
+
 def ust_html(kok, aktif=''):
     """Ana sayfayla aynı ince koyu üst bar (docs/index.html .tb, docs/kabuk.css); bağlantılar `kok` göreli."""
     # Menüde 'Tercih Robotu' /puanlar/ aracına gider; veri dizini /kpss-taban-puanlari/ alt bilgideki 'KPSS taban puanları' bağlantısından ve robot sayfasındaki bağlantıdan erişilir (18 Kasım 2026: iki giriş aynı niyeti hedefliyordu).
@@ -82,7 +89,7 @@ def ust_html(kok, aktif=''):
             f'<nav class="tb-nav" id="tb-nav" aria-label="Ana menü">{bagla}<span class="tb-ayrac" aria-hidden="true"></span>'
             f'<a class="tb-ikon" href="{kok}?profil=1" aria-label="Profil">{KISI_IKON}<span class="tb-etiket">Profil</span></a>'
             f'<span class="tb-tema"><span class="tb-tema-et">Tema</span><button type="button" class="anahtar" id="theme" aria-pressed="false" aria-label="Koyu temaya geç"><span class="bulut"></span><span class="yildiz y1"></span><span class="yildiz y2"></span><span class="yildiz y3"></span><span class="top"></span></button></span>'
-            f'</nav></div></header>{MENU_BETIGI}<script src="{kok}hesap.js?v={HESAP_SURUM}" data-f="{FORUM_SURUM}" defer></script>')
+            f'</nav></div>{"" if aktif == "nereye" else uygun_serit(kok)}</header>{MENU_BETIGI}<script src="{kok}hesap.js?v={HESAP_SURUM}" data-f="{FORUM_SURUM}" defer></script>')
 
 
 REKLAM_BETIGI = '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8335827974832277" crossorigin="anonymous"></script>'
@@ -212,7 +219,7 @@ def sayfa_basi(baslik, aciklama, canonical, kok, og_tur='website', ek_head='', o
 # ve ilan bağlantılarının üzerine gelince önceden yüklenmesi (Speculation Rules; yalnız prefetch, reklam sayfası önceden çalışmaz).
 # Kasım 2026 yeni tasarım: "okuma masası" katmanı (docs/tasarim.css) ve keşif betiği (docs/kesfet.js; benzer ilanlar,
 # sıradaki ilan, topluluk şeridi). Kök göreli: site alan adının kökünde yayımlanır; her sayfada en son yüklenir.
-TASARIM_SURUM = 7
+TASARIM_SURUM = 8
 TASARIM_HEAD = (f'<link rel="stylesheet" href="/tasarim.css?v={TASARIM_SURUM}">'
                 f'<script src="/kesfet.js?v={TASARIM_SURUM}" defer></script>')
 ORTAK_HEAD = ('<meta name="referrer" content="strict-origin-when-cross-origin">'
