@@ -233,3 +233,10 @@ body{font-size:16px;line-height:1.6;text-rendering:optimizeLegibility;-webkit-fo
 
 /* forum sayfası ve diğerleri: kart köşeleri tutarlı */
 .fr-kart,.fr-baslik-kart{border-radius:18px}
+
+/* Menüdeki "Bana Uygun İlanlar" (/nereye/): tek okumada anlaşılsın diye buton görünümü (24 Kasım 2026).
+   Wada #2 kehribar #F99D1B zemin + lacivert #12354E yazı. */
+html body .tb-nav>a.tb-cta{background:#F99D1B;color:#12354E;border-radius:999px;padding:8px 16px;font-weight:750;box-shadow:0 6px 16px -8px rgba(249,157,27,.9)}
+html body .tb-nav>a.tb-cta:hover{background:#FBB34F;color:#12354E}
+html body .tb-nav>a.tb-cta::after{display:none}
+@media (max-width:900px){html body .tb-nav>a.tb-cta{justify-content:center;text-align:center;margin:4px 0}}

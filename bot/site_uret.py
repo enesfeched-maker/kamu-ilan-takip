@@ -58,16 +58,16 @@ def ust_html(kok, aktif=''):
     # Menüde 'Tercih Robotu' /puanlar/ aracına gider; veri dizini /kpss-taban-puanlari/ alt bilgideki 'KPSS taban puanları' bağlantısından ve robot sayfasındaki bağlantıdan erişilir (18 Kasım 2026: iki giriş aynı niyeti hedefliyordu).
     # Akademik menüden çıktı (Kasım 2026): aramadan gelenler için /akademik/ sayfası ve alt bilgi bağlantısı var.
     # Forum yeni bölüm olarak vurgulu (tb-yeni) ve "Yeni" rozetli gösterilir (Kasım 2026'da Katiplik'ten taşındı).
-    # 'Nereye Başvururum' /nereye/ aracına gider: puan + bölüm → başvurulabilecek ilanlar (24 Kasım 2026).
+    # 'Bana Uygun İlanlar' /nereye/ aracına gider (puan + bölüm → başvurulabilecek ilanlar); menüde buton görünümlüdür (tb-cta).
+    # 24 Kasım 2026: kullanıcı 'Tercih Robotu'nu menüden kaldırdı; robot /nereye/ sonucundan, taban puanı sayfalarından ve alt bilgiden açılır.
     menu = [('İlanlar', f'{kok}#ilanlar', 'ilanlar'),
-            ('Nereye Başvururum', f'{kok}nereye/', 'nereye'),
-            ('Tercih Robotu', f'{kok}puanlar/', 'puanlar'),
+            ('Bana Uygun İlanlar', f'{kok}nereye/', 'nereye'),
             ('Katiplik', f'{kok}katiplik/', 'katiplik'),
             ('Forum', f'{kok}forum/', 'forum'),
             ('Kayıtlı', f'{kok}#kayitli', '')]
 
     def sinif(ad, a):
-        s = (['aktif'] if a and a == aktif else []) + (['tb-yeni'] if ad == 'Forum' else [])
+        s = (['aktif'] if a and a == aktif else []) + (['tb-yeni'] if ad == 'Forum' else []) + (['tb-cta'] if a == 'nereye' else [])
         return (f' class="{" ".join(s)}"' if s else '') + (' aria-current="page"' if a and a == aktif else '')
 
     def ek(ad):
@@ -212,7 +212,7 @@ def sayfa_basi(baslik, aciklama, canonical, kok, og_tur='website', ek_head='', o
 # ve ilan bağlantılarının üzerine gelince önceden yüklenmesi (Speculation Rules; yalnız prefetch, reklam sayfası önceden çalışmaz).
 # Kasım 2026 yeni tasarım: "okuma masası" katmanı (docs/tasarim.css) ve keşif betiği (docs/kesfet.js; benzer ilanlar,
 # sıradaki ilan, topluluk şeridi). Kök göreli: site alan adının kökünde yayımlanır; her sayfada en son yüklenir.
-TASARIM_SURUM = 6
+TASARIM_SURUM = 7
 TASARIM_HEAD = (f'<link rel="stylesheet" href="/tasarim.css?v={TASARIM_SURUM}">'
                 f'<script src="/kesfet.js?v={TASARIM_SURUM}" defer></script>')
 ORTAK_HEAD = ('<meta name="referrer" content="strict-origin-when-cross-origin">'
