@@ -23,7 +23,7 @@ jobs:
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg > /dev/null
           git clone --depth 1 https://github.com/OpenTalker/SadTalker.git ../SadTalker
-          python -m pip install -q --upgrade pip wheel setuptools
+          python -m pip install -q --upgrade pip wheel "setuptools<70"   # librosa 0.9 pkg_resources ister
           pip install -q torch==2.1.2+cpu torchvision==0.16.2+cpu torchaudio==2.1.2+cpu --extra-index-url https://download.pytorch.org/whl/cpu
           # yeni çekirdeklerde "cannot enable executable stack" hatasına karşı
           pip install -q patchelf
