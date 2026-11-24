@@ -1,0 +1,37 @@
+name: Anlatıcı videosu için ses ve görsel (Gemini)
+
+# yz-medya-* dalına gönderimde ya da elle çalışır; çıktılar "yz-medya" yapıtı olarak indirilir. Anahtar yazdırılmaz.
+on:
+  push:
+    branches: ['yz-medya-*']
+  workflow_dispatch:
+    inputs:
+      ses:
+        description: Gemini ses adları (virgülle)
+        default: Zephyr,Leda,Aoede
+      gorsel:
+        description: Kaç sunucu görseli
+        default: '2'
+
+permissions:
+  contents: read
+
+jobs:
+  uret:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Üret
+        env:
+          GEMINI_ANAHTARI: ${{ secrets.GEMINI_ANAHTARI }}
+        run: python bot/yz_medya.py --ses "${{ inputs.ses || 'Zephyr,Leda,Aoede' }}" --gorsel "${{ inputs.gorsel || '2' }}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: yz-medya
+          path: yz-medya/
+          retention-days: 7
