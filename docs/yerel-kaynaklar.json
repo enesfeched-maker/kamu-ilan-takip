@@ -1,9 +1,9 @@
 {
  "schema": 1,
- "guncelleme": "2026-11-24T13:09:41.887847+00:00",
+ "guncelleme": "2026-11-24T13:40:53.297654+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-11-24T13:10:13.803133+00:00",
+   "kontrol": "2026-11-24T13:41:36.270715+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -208,6 +208,126 @@
      "belge_sha256": "e022b7ef3f7e7c633491be30e5df00f4292902913a635c2f3dde0fc74c0e7ba8",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
+    },
+    {
+     "id": "sbb-36c8f8c88590701df76c3515",
+     "baslik": "REKABET KURUMU BAŞKANLIĞI - 55 REKABET UZMAN YARDIMCISI ALACAK",
+     "kurum": "REKABET KURUMU BAŞKANLIĞI",
+     "kadro": "55 REKABET UZMAN YARDIMCISI ALACAK",
+     "ilan_turu": "Uzman",
+     "son_tarih": "2026-12-21",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 7 Aralık - 21 Aralık)",
+     "baslangic_zaman": "2026-12-07T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-11-24T16:40:58+03:00",
+     "belge_ozeti": "39de6b0a77e39d057fec5e2e99df1027659de8e0b34ef4327e418c3a7cdcfd4d",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "55 REKABET UZMAN YARDIMCISI alımı. Son başvuru: 21.12.2026. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "1) (15 kişilik) Rekabet uzman yardımcılığı (genel) kadrosu için; iktisat, siyasal bilgiler, işletme, iktisadi ve idari bilimler fakültelerinden veya işletme mühendisliği ya da endüstri mühendisliği bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulu tarafından kabul edilen yurt içindeki veya yurt dışındaki öğretim kurumlarından mezun olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "2) (15 kişilik) Rekabet uzman yardımcılığı (iktisat) kadrosu için; iktisat, işletme, ekonometri, istatistik, istatistik ve bilgisayar, matematik ve bilgisayar, matematik mühendisliği bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulu tarafından kabul edilen yurt içindeki veya yurt dışındaki öğretim kurumlarından mezun olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "3) (15 kişilik) Rekabet uzman yardımcılığı (hukuk) kadrosu için; hukuk fakültelerinden ya da buna denkliği Yükseköğretim Kurulu tarafından kabul edilen yurt içindeki veya yurt dışındaki öğretim kurumlarından mezun olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "4) (10 kişilik) Rekabet uzman yardımcılığı (bilişim) kadrosu için; bilgisayar mühendisliği, adli bilişim mühendisliği, yazılım mühendisliği, yapay zekâ mühendisliği bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulu tarafından kabul edilen yurt içindeki veya yurt dışındaki öğretim kurumlarından mezun olmak. SINAVA KATILMA KOŞULLARI Sınava katılacak olan adayların;"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "3) Sınavın yapıldığı yılın Ocak ayının birinci günü itibarıyla 35 (otuz beş) yaşını doldurmamış olmaları,"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "a) Rekabet uzman yardımcılığı (genel) kadrosu için; KPSS P19, KPSS P24, KPSS P26, KPSS P27, KPSS P28, KPSS P33, KPSS P38 veya KPSS P41 puan türlerinin herhangi birinden en az 80 (seksen) puan almaları ve başvuruda bulunanlardan en yüksek puanlı 300 (üç yüz) kişi içerisinde bulunmaları,"
+      }
+     ],
+     "basvuru_notu": "",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/39de6b0a77e39d057fec5e2e99df1027659de8e0b34ef4327e418c3a7cdcfd4d.pdf",
+     "belge_sha256": "39de6b0a77e39d057fec5e2e99df1027659de8e0b34ef4327e418c3a7cdcfd4d",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "puan_turleri": [
+      "P1",
+      "P2",
+      "P4",
+      "P5",
+      "P6",
+      "P7",
+      "P12",
+      "P13",
+      "P14",
+      "P15",
+      "P16",
+      "P19",
+      "P24",
+      "P26",
+      "P27",
+      "P28",
+      "P33",
+      "P38",
+      "P41"
+     ],
+     "belge_ogrenim": [
+      "lisans"
+     ]
+    },
+    {
+     "id": "sbb-8c9367d32d873eb6560da72d",
+     "baslik": "ANKARA YILDIRIM BEYAZIT ÜNİVERSİTESİ - 1 SÖZLEŞMELİ BİLİŞİM PERSONELİ ALACAK",
+     "kurum": "ANKARA YILDIRIM BEYAZIT ÜNİVERSİTESİ",
+     "kadro": "1 SÖZLEŞMELİ BİLİŞİM PERSONELİ ALACAK",
+     "ilan_turu": "Bilişim Personeli",
+     "son_tarih": "2026-12-07",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 23 Kasım - 7 Aralık)",
+     "baslangic_zaman": "2026-11-23T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-11-24T09:02:33+03:00",
+     "belge_ozeti": "d7e3f79343ec9f09ad82be4bafc82c95114b42eb51ff9fb4e109331f9340dea9",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "1 SÖZLEŞMELİ BİLİŞİM PERSONELİ alımı. Son başvuru: 07.12.2026. b) Bu duyuruda belirtilen esaslara uygun olmayan, posta yolu veya şahsen müracaat şeklinde yapılan başvurular kabul edilmeyecektir. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "1- Fakültelerin dört yıllık bilgisayar mühendisliği, yazılım mühendisliği, elektrik mühendisliği, elektronik mühendisliği, elektrik-elektronik mühendisliği ve endüstri mühendisliği bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurt dışındaki yükseköğretim kurumlarından mezun olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "b) Mezuniyet bilgileri e-Devlet Kapısı üzerinden otomatik olarak gelmeyen ya da hatalı olarak gelen adayların, mezuniyet bilgilerini manuel olarak girmeleri ve onaylı diploma veya mezuniyet belgelerini pdf formatında sınav modülüne yüklemeleri gerekmektedir. Yurt içindeki veya yurt dışındaki öğretim kurumlarından mezun olup, ilanda aranılan öğrenim durumuna ilişkin denkliği olan adayların, diploma veya mezuniyet belgesi yerine Yüksek Öğretim Kurumlarından alınmış “Denklik Gösterir Belgelerini” pdf formatında sınav modülüne yüklemeleri gerekmektedir."
+      }
+     ],
+     "basvuru_notu": "a) Adaylar başvurularını e-Devlet Kapısı üzerinden Ankara Yıldırım Beyazıt Üniversitesi Rektörlüğü- Kariyer Kapısı - Kamu İşe Alım veya Kariyer Kapısı https://kariyerkapisi.gov.tr/ adresi üzerinden 23.11.2026 - 07.12.2026 tarihleri arasında yapacaklardır. Başvurular, başlangıç tarihinde saat 09.00 itibarıyla başlayıp bitiş tarihinde saat 13.00'te sona erecektir.",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/d7e3f79343ec9f09ad82be4bafc82c95114b42eb51ff9fb4e109331f9340dea9.pdf",
+     "belge_sha256": "d7e3f79343ec9f09ad82be4bafc82c95114b42eb51ff9fb4e109331f9340dea9",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "puan_turleri": [
+      "P3"
+     ],
+     "belge_ogrenim": [
+      "lisans"
+     ]
     },
     {
      "id": "sbb-dbff50b470a589318a5c38db",
@@ -492,49 +612,6 @@
      "belge_sha256": "c9482545452e237345814be195be703886b0b1d8460cdb92cd5296f73f817b34",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6
-    },
-    {
-     "id": "sbb-8c9367d32d873eb6560da72d",
-     "baslik": "ANKARA YILDIRIM BEYAZIT ÜNİVERSİTESİ - 1 SÖZLEŞMELİ BİLİŞİM PERSONELİ ALACAK",
-     "kurum": "ANKARA YILDIRIM BEYAZIT ÜNİVERSİTESİ",
-     "kadro": "1 SÖZLEŞMELİ BİLİŞİM PERSONELİ ALACAK",
-     "ilan_turu": "Bilişim Personeli",
-     "son_tarih": "2026-12-07",
-     "kaynak": "SBB Kamu İlan",
-     "kaynak_turu": "sbb",
-     "donem": "( 23 Kasım - 7 Aralık)",
-     "baslangic_zaman": "2026-11-23T00:00:00+03:00",
-     "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-24T09:02:33+03:00",
-     "belge_ozeti": "d7e3f79343ec9f09ad82be4bafc82c95114b42eb51ff9fb4e109331f9340dea9",
-     "kaynaklar": [
-      {
-       "ad": "SBB Kamu İlan",
-       "link": "https://kamuilan.sbb.gov.tr/"
-      }
-     ],
-     "ozet": "1 SÖZLEŞMELİ BİLİŞİM PERSONELİ alımı. Son başvuru: 07.12.2026. b) Bu duyuruda belirtilen esaslara uygun olmayan, posta yolu veya şahsen müracaat şeklinde yapılan başvurular kabul edilmeyecektir. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
-     "sartlar": [
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "1- Fakültelerin dört yıllık bilgisayar mühendisliği, yazılım mühendisliği, elektrik mühendisliği, elektronik mühendisliği, elektrik-elektronik mühendisliği ve endüstri mühendisliği bölümlerinden ya da bunlara denkliği Yükseköğretim Kurulunca kabul edilmiş yurt dışındaki yükseköğretim kurumlarından mezun olmak."
-      },
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "b) Mezuniyet bilgileri e-Devlet Kapısı üzerinden otomatik olarak gelmeyen ya da hatalı olarak gelen adayların, mezuniyet bilgilerini manuel olarak girmeleri ve onaylı diploma veya mezuniyet belgelerini pdf formatında sınav modülüne yüklemeleri gerekmektedir. Yurt içindeki veya yurt dışındaki öğretim kurumlarından mezun olup, ilanda aranılan öğrenim durumuna ilişkin denkliği olan adayların, diploma veya mezuniyet belgesi yerine Yüksek Öğretim Kurumlarından alınmış “Denklik Gösterir Belgelerini” pdf formatında sınav modülüne yüklemeleri gerekmektedir."
-      }
-     ],
-     "basvuru_notu": "a) Adaylar başvurularını e-Devlet Kapısı üzerinden Ankara Yıldırım Beyazıt Üniversitesi Rektörlüğü- Kariyer Kapısı - Kamu İşe Alım veya Kariyer Kapısı https://kariyerkapisi.gov.tr/ adresi üzerinden 23.11.2026 - 07.12.2026 tarihleri arasında yapacaklardır. Başvurular, başlangıç tarihinde saat 09.00 itibarıyla başlayıp bitiş tarihinde saat 13.00'te sona erecektir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/d7e3f79343ec9f09ad82be4bafc82c95114b42eb51ff9fb4e109331f9340dea9.pdf",
-     "belge_sha256": "d7e3f79343ec9f09ad82be4bafc82c95114b42eb51ff9fb4e109331f9340dea9",
-     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 6,
-     "puan_turleri": [
-      "P3"
-     ],
-     "belge_ogrenim": [
-      "lisans"
-     ]
     },
     {
      "id": "sbb-51de86948267af4fd33f9d21",
@@ -1633,7 +1710,7 @@
      "donem": "( 18 Kasım - 2 Aralık)",
      "baslangic_zaman": "2026-11-18T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-24T16:09:51+03:00",
+     "detay_guncelleme": "2026-11-24T16:41:13+03:00",
      "belge_ozeti": "3b96d3f990e76841ffe4d5e6dee66e4dd087373ccb520703d568740de592dd01",
      "kaynaklar": [
       {
@@ -4061,7 +4138,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-11-24T13:10:16.520133+00:00",
+   "kontrol": "2026-11-24T13:41:39.272242+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
