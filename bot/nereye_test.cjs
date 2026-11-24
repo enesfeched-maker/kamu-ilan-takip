@@ -46,7 +46,7 @@ test('kadro puanı: altında kalan "yetmiyor", eşit/üstü "hemen", puanı olma
   assert.strictEqual(C.degerlendir(r, 'Hemşirelik', 'lisans', 70).grup, 'hemen');
   const d = C.degerlendir(r, 'Hemşirelik', 'lisans', null);
   assert.strictEqual(d.grup, 'kontrol');
-  assert.match(d.neden, /KPSS puanı gerekiyor \(en az 70\)/);
+  assert.match(d.neden, /KPSS P3 puanı gerekiyor \(en az 70\)/);
 });
 
 test('denetim 1: kadronun kendi maddesindeki eşik, ilanın en düşük eşiğinden önce gelir', () => {
@@ -60,16 +60,36 @@ test('denetim 1: kadronun kendi maddesindeki eşik, ilanın en düşük eşiğin
   assert.strictEqual(C.degerlendir(r2, 'İşletme', 'lisans', 75).grup, 'kontrol');
 });
 
-test('denetim 2: çok değerli puan türü okunur; A grubu türü P3 adayına "hemen" değil', () => {
-  for (const t of ['P14,P15,P16', 'P14P15P16P17P18', 'KPSSP48']) {
+test('puan türü kadrodan gelir (25 Kasım 2026): yazılan puan kadronun istediği türdeki puan sayılır, tür kartta gösterilir', () => {
+  for (const [t, bek] of [['P14,P15,P16', ['P14', 'P15', 'P16']], ['P14P15P16P17P18', ['P14', 'P15', 'P16', 'P17', 'P18']], ['KPSSP48', ['P48']]]) {
     const r = ilan({ yz_kadrolar: [kadro('Uzman Yardımcısı', 'İktisat bölümünden mezun olmak.', { puan_turu: t })] });
-    assert.strictEqual(C.degerlendir(r, 'İktisat', 'lisans', 75).grup, 'kontrol', t);
+    const d = C.degerlendir(r, 'İktisat', 'lisans', 75);
+    assert.strictEqual(d.grup, 'hemen', t);
+    esit(d.kadrolar[0].turler, bek);
   }
   const r = ilan({ yz_kadrolar: [kadro('Uzman', 'İktisat bölümünden mezun olmak.', { puan_turu: 'P1,P2,P3' })] });
   assert.strictEqual(C.degerlendir(r, 'İktisat', 'lisans', 75).grup, 'hemen');
-  // tür okunmamış ama metinde yalnız A grubu türü yazıyor
+  // tür okunmamış, metinde yalnız A grubu türü ve eşiği yazıyor: eşik o türe uygulanır
   const r3 = ilan({ yz_ortak: ['KPSSP8, KPSSP9 puan türlerinden 70 ve üzeri puan almış olmak.'], yz_kadrolar: [kadro('Uzman Yardımcısı', 'İktisat bölümünden mezun olmak.', { puan_turu: null })] });
-  assert.strictEqual(C.degerlendir(r3, 'İktisat', 'lisans', 85).grup, 'kontrol');
+  const d3 = C.degerlendir(r3, 'İktisat', 'lisans', 85);
+  assert.strictEqual(d3.grup, 'hemen');
+  esit(d3.kadrolar[0].turler, ['P8', 'P9']);
+  assert.strictEqual(C.degerlendir(r3, 'İktisat', 'lisans', 65).grup, 'yetmiyor');
+  // ilan geneli P3/P93/P94 yazıyorsa adayın düzeyinin türü gösterilir
+  const r4 = ilan({ ozet: 'KPSS P3, P93 ve P94 puan türlerinden 60 ve üzeri puan almış olmak.', yz_kadrolar: [kadro('Hemşire', HEM, { puan_turu: null })] });
+  esit(C.degerlendir(r4, 'Hemşirelik', 'lisans', 80).kadrolar[0].turler, ['P3']);
+});
+
+test('meslek görseli bot/meslek_gorseli.py ile aynı', () => {
+  assert.strictEqual(C.meslekDosya('HEMŞİRE'), '02-hemsire.jpg');
+  assert.strictEqual(C.meslekDosya('Sağlık Teknikeri'), '02-hemsire.jpg');
+  assert.strictEqual(C.meslekDosya('Büro Personeli'), '22-buro.jpg');
+  assert.strictEqual(C.meslekDosya('Destek Personeli (Hizmetli)'), '13-temizlik.jpg');
+  assert.strictEqual(C.meslekDosya('Sosyal Güvenlik Denetmen Yardımcısı'), '23-mufettis.jpg');
+  assert.strictEqual(C.meslekDosya('Muvazzaf Subay', 'Jandarma Genel Komutanlığı'), '33-jandarma.jpg');
+  assert.strictEqual(C.meslekDosya('Avukat'), '21-avukat.jpg');
+  assert.strictEqual(C.meslekDosya('Ağ Yöneticisi'), '01-yazilimci.jpg');
+  assert.strictEqual(C.meslekDosya('Kaloriferci'), '30-genel.jpg');
 });
 
 test('denetim 4: YDS, sözlü sınav ve türe göre eşik', () => {
@@ -109,11 +129,14 @@ test('KPSS şartsız ilanda metindeki puan kalıbı aday puanını elemez', () =
   assert.strictEqual(C.degerlendir(r, 'Hemşirelik', 'lisans', 40).grup, 'hemen');
 });
 
-test('farklı puan türü (A grubu) hemen değil kontrol', () => {
-  const r = ilan({ yz_kadrolar: [kadro('Uzman Yardımcısı', 'Hukuk fakültesi mezunu olmak.', { puan_turu: 'P48' })] });
+test('alan sınavı türü (P48): puan yetiyorsa hemen, yetmiyorsa nedeninde tür yazar', () => {
+  const r = ilan({ yz_kadrolar: [kadro('Uzman Yardımcısı', 'Hukuk fakültesi mezunu olmak.', { puan_turu: 'P48', en_dusuk_puan: 75 })] });
   const d = C.degerlendir(r, 'Hukuk', 'lisans', 80);
-  assert.strictEqual(d.grup, 'kontrol');
-  assert.match(d.neden, /P48/);
+  assert.strictEqual(d.grup, 'hemen');
+  esit(d.kadrolar[0].turler, ['P48']);
+  const y = C.degerlendir(r, 'Hukuk', 'lisans', 70);
+  assert.strictEqual(y.grup, 'yetmiyor');
+  assert.match(y.neden, /P48 puanı istiyor/);
 });
 
 test('okunmuş kadro düzeyi tutmuyorsa gösterilmez (lisans adayına önlisans kadrosu)', () => {

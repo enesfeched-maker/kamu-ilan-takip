@@ -76,9 +76,10 @@
     }
     return out;
   }
-  /* Adayın puan türüne uyan eşikler: {esik, karisik}. Türü yazmayan eşik herkese uyar. */
+  /* Verilen puan türüne (ya da türlerinden birine) uyan eşikler: {esik, karisik}. Türü yazmayan eşik herkese uyar. */
   function esikBul(metin, tur) {
-    const l = puanSartlari(metin).filter((s) => !s.turler.length || s.turler.includes(tur));
+    const istenen = Array.isArray(tur) ? tur : [tur];
+    const l = puanSartlari(metin).filter((s) => !s.turler.length || s.turler.some((t) => istenen.includes(t)));
     if (!l.length) return { esik: null, karisik: false };
     const d = [...new Set(l.map((s) => s.v))];
     return { esik: Math.min(...d), karisik: d.length > 1 };
@@ -148,26 +149,30 @@
     if (sev.length && !sev.includes(duzey)) return { grup: 'degil', neden: 'İlan ' + duzeyAdi(sev) + ' mezunu arıyor' };
     // bölüm adıyla eşleşen kadroda düzey bölümden bellidir (bölüm listesi adayın düzeyinden gelir); serbest/genel şartta değil
     if (!sev.length && grup === 'hemen' && (durum !== 'uygun' || !bolumAdi)) { grup = 'kontrol'; neden = 'İlanda öğrenim düzeyi okunamadı; ' + DUZEY[duzey].ad.toLocaleLowerCase('tr') + ' mezunu kabul ediliyor mu bak'; }
-    if (kpsssiz) return { grup, neden, esik: null };
-    // 3) puan türü: okunmuş kadro türü > kadro metni > ilan metni
+    if (kpsssiz) return { grup, neden, esik: null, turler: [] };
+    // 3) puan türü KADRODAN gelir (kullanıcı 25 Kasım 2026): aday alan sınavına (P34, P48…) da girmiş olabilir; yazdığı
+    //    puan, kadronun istediği türdeki puanı sayılır ve kartta "Hukuk mezunları bu kadroya P48 puanıyla başvurabilir"
+    //    diye türüyle gösterilir. Sıra: okunmuş kadro türü > kadro metni > ilan metni.
     const kt = b && b.turler.length ? b.turler : turler(metin).length ? turler(metin) : turler(ilanMetin);
     const kesinTur = !!(b && b.turler.length) || turler(metin).length > 0;
-    if (kt.length && !kt.includes(tur) && (kesinTur || !/\bP\s?(3|93|94)\b/i.test(ilanMetin))) {
-      return { grup: grup === 'okunamadi' ? 'okunamadi' : 'kontrol', neden: 'Bu kadro ' + kt.slice(0, 3).join('/') + (kt.length > 3 ? '…' : '') + ' puanı istiyor; senin puan türün ' + tur, esik: null };
-    }
-    if (!kt.length && /\bA grubu\b|ilgili puan türü/i.test(metin + ' ' + ilanMetin) && grup === 'hemen') { grup = 'kontrol'; neden = 'Puan türünü ilandan kontrol et'; }
-    // 4) puan eşiği: okunmuş değer > kadro metni > ilan metni (ilan geneli yalnız tek eşik varsa)
+    // ilan geneli birden çok tür yazıyorsa (P3/P93/P94 gibi) ya da hiç tür yazmıyorsa adayın düzeyinin genel türü seçilir
+    const aGrubu = !kt.length && /\bA grubu\b|ilgili puan türü/i.test(metin + ' ' + ilanMetin);
+    const gosterTur = kt.length ? (kesinTur || !kt.includes(tur) ? kt : [tur]) : aGrubu ? [] : [tur];
+    if (aGrubu && grup === 'hemen') { grup = 'kontrol'; neden = 'Puan türünü ilandan kontrol et'; }
+    // 4) puan eşiği: okunmuş değer > kadro metni > ilan metni (ilan geneli yalnız tek eşik varsa); tür bilinmiyorsa düzeyin genel türü
+    const esikTur = gosterTur.length ? gosterTur : [tur];
     let esik = b && b.puan !== null ? b.puan : null, karisik = false;
-    if (esik === null) { const e = esikBul(metin, tur); esik = e.esik; karisik = e.karisik; }
-    if (esik === null) { const e = esikBul(ilanMetin, tur); esik = e.esik; karisik = e.karisik; }
+    if (esik === null) { const e = esikBul(metin, esikTur); esik = e.esik; karisik = e.karisik; }
+    if (esik === null) { const e = esikBul(ilanMetin, esikTur); esik = e.esik; karisik = e.karisik; }
+    const turAdi = gosterTur.length ? gosterTur.slice(0, 3).join('/') + ' ' : '';
     if (puan === null) {
       // puanı olmayan aday: KPSS şartı yoksa bile emin değiliz (ilan "KPSS şartı yok" demiyor)
-      if (grup === 'hemen') { grup = 'kontrol'; neden = 'KPSS puanı gerekiyor' + (esik !== null && !karisik ? ' (en az ' + puanYaz(esik) + ')' : ''); }
-      return { grup, neden, esik };
+      if (grup === 'hemen') { grup = 'kontrol'; neden = 'KPSS ' + turAdi + 'puanı gerekiyor' + (esik !== null && !karisik ? ' (en az ' + puanYaz(esik) + ')' : ''); }
+      return { grup, neden, esik, turler: gosterTur };
     }
-    if (karisik && grup === 'hemen') return { grup: 'kontrol', neden: 'Kadrolara göre farklı puan şartı var; bu kadronun puanını ilandan kontrol et', esik: null };
-    if (esik !== null && puan < esik && (grup === 'hemen' || grup === 'kontrol')) return { grup: 'yetmiyor', neden: 'En az ' + puanYaz(esik) + ' puan istiyor; seninki ' + puanYaz(puan), esik };
-    return { grup, neden, esik };
+    if (karisik && grup === 'hemen') return { grup: 'kontrol', neden: 'Kadrolara göre farklı puan şartı var; bu kadronun puanını ilandan kontrol et', esik: null, turler: gosterTur };
+    if (esik !== null && puan < esik && (grup === 'hemen' || grup === 'kontrol')) return { grup: 'yetmiyor', neden: 'En az ' + puanYaz(esik) + ' ' + turAdi + 'puanı istiyor; seninki ' + puanYaz(puan), esik, turler: gosterTur };
+    return { grup, neden, esik, turler: gosterTur };
   }
 
   function degerlendir(rec, bolumAdi, duzey, puan) {
@@ -181,12 +186,12 @@
     if (kb.genel) {
       const k = kb.kadrolar[0];
       const r = kadroKarari({ durum: k ? k.durum : 'bak', kanit: k && k.kanit, metin: ilanMetin + ' ' + kdMetin, seviyeler: [], b: null, rec, bolumAdi, duzey, puan, ilanMetin });
-      sonuc.push({ ad: '', grup: r.grup, adet: null, puan: r.esik === undefined ? null : r.esik, neden: r.neden, not: cinsiyetNotu(rec.baslik + ' ' + kdMetin) });
+      sonuc.push({ ad: '', grup: r.grup, adet: null, puan: r.esik === undefined ? null : r.esik, neden: r.neden, turler: r.turler || [], not: cinsiyetNotu(rec.baslik + ' ' + kdMetin) });
     } else {
       for (const k of kb.kadrolar) {
         const b = kadroBilgisi(rec, k.ad);
         const r = kadroKarari({ durum: k.durum, kanit: k.kanit, metin: b.metin, seviyeler: k.seviyeler, b, rec, bolumAdi, duzey, puan, ilanMetin });
-        sonuc.push({ ad: k.ad, grup: r.grup, adet: b.adet, puan: r.esik === undefined ? null : r.esik, neden: r.neden, not: cinsiyetNotu(b.metin) });
+        sonuc.push({ ad: k.ad, grup: r.grup, adet: b.adet, puan: r.esik === undefined ? null : r.esik, neden: r.neden, turler: r.turler || [], not: cinsiyetNotu(b.metin) });
       }
     }
     const gorunen = sonuc.filter((s) => s.grup !== 'degil');
@@ -282,5 +287,32 @@
       'END:VEVENT', 'END:VCALENDAR', ''].join('\r\n');
   }
 
-  return { DUZEY, GRUP_SIRA, anahtar, puanSarti, puanSartlari, esikBul, turler, basvuruSekli, kadroBilgisi, degerlendir, ilanlariDegerlendir, bolumKodlari, bolumUygun, merkezi, icsMetni, puanYaz };
+  /* ---------- meslek görseli: bot/meslek_gorseli.py meslek_no() ile aynı kural (docs/assets/meslek/kucuk/) ---------- */
+  const MESLEK_DOSYA = ['', 'yazilimci', 'hemsire', 'doktor', 'veteriner', 'eczaci', 'guvenlik', 'zabita', 'itfaiyeci', 'sofor', 'pilot', 'asci', 'garson',
+    'temizlik', 'muhendis', 'mimar', 'teknisyen', 'elektrikci', 'akademisyen', 'ogretmen', 'kutuphaneci', 'avukat', 'buro', 'mufettis', 'isci', 'bahcivan',
+    'orman', 'is-makinesi', 'muhasebeci', 'laborant', 'genel', 'asker', 'polis', 'jandarma', 'sahil-guvenlik'];
+  const MESLEK_ESLEME = [
+    [31, ['subay', 'astsubay', 'muvazzaf', 'uzman erbas', 'erbas', 'er adayi', 'sozlesmeli er ', 'harp okulu', 'askeri ogrenci', 'harbiye']],
+    [32, ['polis', 'komiser']], [4, ['veteriner']], [5, ['eczaci']], [3, ['hekim', 'doktor', 'tabip']], [2, ['hemsire', 'ebe ', 'saglik']],
+    [29, ['laborant', 'kimyager', 'biyolog']],
+    [1, ['yazilim', 'cozumleyici', 'bilgisayar', 'bilisim', 'sistem', 'ag ', 'siber', 'devops', 'veri tabani', 'veritabani', 'programci']],
+    [7, ['zabita']], [8, ['itfaiye']], [6, ['guvenlik', 'koruma', 'bekci']], [10, ['pilot']], [11, ['asci']], [12, ['garson']],
+    [27, ['operator', 'is makinesi']], [9, ['sofor', 'surucu']], [13, ['temizlik', 'destek personel', 'hizmetli']],
+    [18, ['ogretim uyesi', 'ogretim gorevlisi', 'ogretim elemani', 'arastirma gorevlisi', 'akadem', 'profesor', 'docent']],
+    [19, ['ogretmen']], [20, ['kutuphane', 'muze', 'arsiv']], [21, ['avukat', 'hukuk']], [23, ['mufettis', 'denetci', 'denetmen', 'kontrolor']],
+    [28, ['muhasebe', 'mali ', 'gelir uzman']], [14, ['muhendis']], [15, ['mimar', 'restorator']], [17, ['elektrik']],
+    [16, ['tekniker', 'teknisyen', 'teknik hizmet']], [25, ['bahcivan']], [26, ['orman']], [24, ['isci']],
+    [22, ['buro', 'memur', 'sekreter', 'veri hazirlama', 'vhki', 'uzman', 'analist', 'murakip', 'aktuer']],
+  ];
+  const sade = (s) => String(s || '').replace(/İ/g, 'i').toLowerCase().replace(/ı/g, 'i').replace(/ş/g, 's').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ö/g, 'o').replace(/ç/g, 'c');
+  /* Kadro adından meslek fotoğrafının dosya adı ("02-hemsire.jpg"); eşleşmezse genel personel (30). */
+  function meslekDosya(ad, kurum) {
+    const s = (' ' + sade(ad).replace(/[^a-z0-9]+/g, ' ').trim() + ' ').replace(' sosyal guvenlik ', ' ');
+    let no = 30;
+    for (const [n, kokler] of MESLEK_ESLEME) if (kokler.some((k) => s.includes(' ' + k))) { no = n; break; }
+    if (no === 31) { const k = sade(kurum); no = k.includes('sahil guvenlik') && !k.includes('akademi') ? 34 : k.includes('jandarma') ? 33 : 31; }
+    return String(no).padStart(2, '0') + '-' + MESLEK_DOSYA[no] + '.jpg';
+  }
+
+  return { DUZEY, GRUP_SIRA, anahtar, meslekDosya, puanSarti, puanSartlari, esikBul, turler, basvuruSekli, kadroBilgisi, degerlendir, ilanlariDegerlendir, bolumKodlari, bolumUygun, merkezi, icsMetni, puanYaz };
 });

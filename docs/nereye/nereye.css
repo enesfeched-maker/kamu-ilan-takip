@@ -88,37 +88,62 @@
 .ny-bos{color:var(--ink-2);background:var(--surface);border:2px dashed var(--line-2);border-radius:14px;padding:16px;margin:8px 0 0}
 .ny-liste{display:grid;gap:12px}
 
-.ny-ilan{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--line-2);border-radius:16px;padding:16px 16px 14px;display:grid;gap:10px;box-shadow:var(--shadow)}
-#ny-hemen .ny-ilan{border-left-color:#F99D1B}
-#ny-kontrol .ny-ilan{border-left-color:#FFD25A}
+/* İlan kartı — üç katman: KİM (logo + kurum), NE (meslek fotoğraflı kadro satırı + uygunluk cümlesi), NE ZAMAN/NASIL (tek satır).
+   Wada #2: lacivert #12354E + kehribar #F99D1B; uygunluk vurgusu #3 limon #FFEFAE. */
+.ny-ilan{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 18px;display:grid;gap:12px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.ny-ilan::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--line-2)}
+#ny-hemen .ny-ilan::before{background:#F99D1B}
+#ny-kontrol .ny-ilan::before{background:#FFD25A}
+.ny-ust{display:flex;align-items:center;gap:12px;min-width:0}
+.ny-logo{flex:none;width:52px;height:52px;border-radius:12px;background:#fff;border:1px solid var(--line);display:grid;place-items:center;overflow:hidden}
+.ny-logo img{width:44px;height:44px;object-fit:contain}
+.ny-logo.harf{background:#12354E;color:#F99D1B;font-weight:800;font-size:1.05rem;letter-spacing:.02em;border:0}
+.ny-kim{min-width:0;flex:1;display:grid;gap:1px}
+.ny-kurum{font-size:1.06rem;font-weight:780;color:var(--ink);line-height:1.25;letter-spacing:-.01em}
+.ny-ilan h3{margin:0;font-size:.9rem;font-weight:550;line-height:1.35;color:var(--muted)}
+.ny-ilan h3 a{color:inherit;text-decoration:none}
+.ny-ilan h3 a:hover{color:var(--ink);text-decoration:underline}
+.ny-gun{flex:none;align-self:flex-start;font-size:.8rem;font-weight:750;color:#12354E;background:#FFEFAE;border-radius:999px;padding:4px 10px;white-space:nowrap}
 .ny-ilan.acil .ny-gun{background:#A85E08;color:#fff}
-.ny-ust{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.ny-kurum{font-size:.82rem;font-weight:700;color:var(--muted);letter-spacing:.01em}
-.ny-gun{font-size:.85rem;font-weight:750;color:#12354E;background:#FFEFAE;border-radius:999px;padding:3px 10px;white-space:nowrap}
-.ny-ilan h3{margin:0;font-size:1.12rem;line-height:1.35}
-.ny-ilan h3 a{color:var(--ink);text-decoration:none}
-.ny-ilan h3 a:hover{text-decoration:underline}
-.ny-cipler{display:flex;flex-wrap:wrap;gap:6px}
-.ny-cipler span{font-size:.84rem;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--surface-2);color:var(--ink-2)}
-.ny-cipler .iyi{background:#FFEFAE;color:#6B4306}
-.ny-cipler .kotu,.ny-cipler .uyari{background:#A85E08;color:#fff}
-.ny-kadro{list-style:none;margin:0;padding:0;display:grid;gap:6px}
-.ny-kadro li{position:relative;padding-left:16px;font-size:.98rem}
-.ny-kadro li::before{content:"";position:absolute;left:0;top:.5em;width:8px;height:8px;border-radius:50%;background:#F99D1B}
-.ny-kadro li span{display:block;color:var(--muted);font-size:.86rem}
-.ny-kadro .ny-kadro-ek{color:var(--muted);font-size:.86rem}
-.ny-kadro .ny-kadro-ek::before{display:none}
-.ny-neden{margin:0;font-size:.94rem;color:var(--ink-2);background:var(--surface-2);border-radius:10px;padding:10px 12px}
-.ny-eylem{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.ny-basvur{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:0 18px;border-radius:12px;background:#12354E;color:#fff;font-weight:750;text-decoration:none}
-.ny-basvur svg{font-size:18px}
-:root[data-theme=dark] .ny-basvur{background:#F99D1B;color:#12354E}
-.ny-nasil{border-top:1px solid var(--line);padding-top:6px}
-.ny-nasil summary{cursor:pointer;font-weight:700;color:var(--ink);list-style:none;display:flex;align-items:center;gap:6px;min-height:40px}
-.ny-nasil summary::-webkit-details-marker{display:none}
-.ny-nasil summary::after{content:"";width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translateY(-2px);margin-left:4px}
-.ny-nasil[open] summary::after{transform:rotate(-135deg) translateY(-2px)}
-.ny-nasil ol{margin:6px 0 2px;padding-left:22px;display:grid;gap:10px;font-size:.96rem;color:var(--ink-2)}
+.ny-ust .ny-yeni-rozet{align-self:flex-start}
+
+.ny-kadro{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.ny-kadro li{display:flex;align-items:center;gap:12px;background:var(--surface-2);border-radius:14px;padding:10px 12px}
+.ny-foto{flex:none;width:64px;height:64px;border-radius:50%;object-fit:cover;object-position:50% 20%;background:var(--line);box-shadow:0 0 0 2px var(--surface)}
+.ny-kadro-ic{min-width:0;display:grid;gap:3px}
+.ny-kadro-ic p{margin:0}
+.ny-kadro-ad{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.ny-kadro-ad b{font-size:1.08rem;font-weight:750;color:var(--ink);line-height:1.3}
+.ny-adet{font-size:.84rem;font-weight:700;color:#12354E;background:#FFEFAE;border-radius:6px;padding:1px 7px;white-space:nowrap}
+.ny-uygun{display:flex;gap:6px;align-items:flex-start;font-size:.9rem;font-weight:600;color:var(--ink-2);line-height:1.4}
+.ny-uygun svg{font-size:16px;margin-top:2px;color:#fff;background:#F99D1B;border-radius:50%;padding:2px;stroke-width:3;box-sizing:content-box}
+.ny-kadro-alt{font-size:.86rem;color:var(--muted)}
+.ny-kadro-alt.uyari{color:#A85E08;font-weight:650}
+.ny-kadro .ny-kadro-ek{background:none;padding:0 4px;font-size:.86rem;color:var(--muted)}
+:root[data-theme=dark] .ny-adet{background:#3A2A0E;color:#FFE08A}
+:root[data-theme=dark] .ny-logo{background:#F3F1EA;border-color:transparent}
+:root[data-theme=dark] .ny-logo.harf{background:#F99D1B;color:#12354E}
+:root[data-theme=dark] .ny-kadro-alt.uyari{color:#FFB65C}
+
+.ny-alt-satir{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
+.ny-cipler{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.ny-cipler span{font-size:.84rem;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--surface-2);color:var(--ink-2);display:inline-flex;align-items:center;gap:6px}
+.ny-cipler .ny-son-gun{background:none;padding:0;font-size:.9rem;color:var(--muted)}
+.ny-cipler .ny-son-gun b{color:var(--ink);font-weight:750}
+.ny-cipler .ny-son-gun svg{font-size:16px}
+.ny-cipler .uyari{background:#A85E08;color:#fff}
+.ny-neden{margin:0;font-size:.92rem;color:var(--ink-2);background:var(--surface-2);border-radius:10px;padding:10px 12px}
+.ny-eylem{display:flex;gap:6px;align-items:center;margin-left:auto}
+.ny-basvur{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border-radius:12px;background:#F99D1B;color:#12354E;font-weight:780;text-decoration:none;transition:filter .15s}
+.ny-basvur:hover{filter:brightness(1.06)}
+.ny-basvur svg{font-size:18px;stroke-width:2.4}
+.ny-nasil-ac{font:inherit;font-size:.9rem;font-weight:650;min-height:44px;padding:0 12px;border:0;border-radius:12px;background:none;color:var(--ink-2);cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.ny-nasil-ac::after{content:"";width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translateY(-2px)}
+.ny-nasil-ac[aria-expanded=true]::after{transform:rotate(-135deg) translateY(-1px)}
+.ny-nasil-ac:hover{background:var(--surface-2);color:var(--ink)}
+.ny-nasil{border-top:1px solid var(--line);padding-top:10px}
+.ny-nasil[hidden]{display:none}
+.ny-nasil ol{margin:0 0 2px;padding-left:22px;display:grid;gap:10px;font-size:.96rem;color:var(--ink-2)}
 .ny-nasil a{color:var(--link,#1B5A85);font-weight:650}
 .ny-dikkat{margin:6px 0 0;padding-left:18px;display:grid;gap:4px;font-size:.92rem}
 .ny-dugmeler{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 2px}
@@ -175,5 +200,15 @@
   .ny-ozet{grid-template-columns:1fr}
   .ny-kutu{flex-direction:row;align-items:center;gap:14px;padding:14px 18px}
   .ny-kutu b{font-size:2.1rem;min-width:2ch}
+  .ny-ilan{padding:14px;gap:10px}
+  .ny-logo{width:42px;height:42px;border-radius:10px}
+  .ny-logo img{width:34px;height:34px}
+  .ny-ust{display:grid;grid-template-columns:42px 1fr;column-gap:10px;row-gap:6px;align-items:start}
+  .ny-ust .ny-gun,.ny-ust .ny-yeni-rozet{grid-column:2;justify-self:start}
+  .ny-kurum{font-size:1rem}
+  .ny-kadro li{padding:10px;gap:10px;align-items:flex-start}
+  .ny-foto{width:54px;height:54px}
+  .ny-eylem{width:100%;margin-left:0}
+  .ny-basvur{flex:1;justify-content:center}
 }
 .ny-bekle[hidden]{display:none}
