@@ -40,11 +40,68 @@ test('kadro bazlı: bölüm şartta geçen kadro hemen, geçmeyen kadro gösteri
   assert.strictEqual(C.degerlendir(r, 'Tarih', 'lisans', 75).grup, 'degil');
 });
 
-test('kadro puanı: altında kalan "yetmiyor", eşit/üstü "hemen", puansız aday puana takılmaz', () => {
+test('kadro puanı: altında kalan "yetmiyor", eşit/üstü "hemen", puanı olmayan aday KPSS\'li kadroda "kontrol"', () => {
   const r = ilan({ yz_kadrolar: [kadro('Hemşire', HEM, { en_dusuk_puan: 70 })] });
   assert.strictEqual(C.degerlendir(r, 'Hemşirelik', 'lisans', 69.99).grup, 'yetmiyor');
   assert.strictEqual(C.degerlendir(r, 'Hemşirelik', 'lisans', 70).grup, 'hemen');
-  assert.strictEqual(C.degerlendir(r, 'Hemşirelik', 'lisans', null).grup, 'hemen');
+  const d = C.degerlendir(r, 'Hemşirelik', 'lisans', null);
+  assert.strictEqual(d.grup, 'kontrol');
+  assert.match(d.neden, /KPSS puanı gerekiyor \(en az 70\)/);
+});
+
+test('denetim 1: kadronun kendi maddesindeki eşik, ilanın en düşük eşiğinden önce gelir', () => {
+  const r = ilan({ kadro_detay: [
+    { unvan: 'Uzman', adet: 3, maddeler: ['İşletme bölümünden mezun olmak,', 'KPSS P3 puan türünden 80 ve üzeri puan almış olmak.'] },
+    { unvan: 'Memur', adet: 1, maddeler: ['Hukuk fakültesinden mezun olmak,', 'KPSS P3 puan türünden 70 ve üzeri puan almış olmak.'] }] });
+  assert.strictEqual(C.degerlendir(r, 'İşletme', 'lisans', 75).grup, 'yetmiyor');
+  assert.strictEqual(C.degerlendir(r, 'Hukuk', 'lisans', 75).grup, 'hemen');
+  // kadroda eşik yok, ilanda farklı eşikler var → kontrol
+  const r2 = ilan({ ozet: 'KPSS P3 puan türünden 80 ve üzeri; bazı kadrolar için KPSS P3 70 ve üzeri puan.', yz_kadrolar: [kadro('Uzman', 'İşletme bölümünden mezun olmak.')] });
+  assert.strictEqual(C.degerlendir(r2, 'İşletme', 'lisans', 75).grup, 'kontrol');
+});
+
+test('denetim 2: çok değerli puan türü okunur; A grubu türü P3 adayına "hemen" değil', () => {
+  for (const t of ['P14,P15,P16', 'P14P15P16P17P18', 'KPSSP48']) {
+    const r = ilan({ yz_kadrolar: [kadro('Uzman Yardımcısı', 'İktisat bölümünden mezun olmak.', { puan_turu: t })] });
+    assert.strictEqual(C.degerlendir(r, 'İktisat', 'lisans', 75).grup, 'kontrol', t);
+  }
+  const r = ilan({ yz_kadrolar: [kadro('Uzman', 'İktisat bölümünden mezun olmak.', { puan_turu: 'P1,P2,P3' })] });
+  assert.strictEqual(C.degerlendir(r, 'İktisat', 'lisans', 75).grup, 'hemen');
+  // tür okunmamış ama metinde yalnız A grubu türü yazıyor
+  const r3 = ilan({ yz_ortak: ['KPSSP8, KPSSP9 puan türlerinden 70 ve üzeri puan almış olmak.'], yz_kadrolar: [kadro('Uzman Yardımcısı', 'İktisat bölümünden mezun olmak.', { puan_turu: null })] });
+  assert.strictEqual(C.degerlendir(r3, 'İktisat', 'lisans', 85).grup, 'kontrol');
+});
+
+test('denetim 4: YDS, sözlü sınav ve türe göre eşik', () => {
+  esit(C.puanSartlari('KPSS P3 puan türünden 80 ve üzeri puan almış olmak, YDS den en az 50 puan almış olmak.').map((s) => s.v), [80]);
+  esit(C.puanSartlari('Sözlü sınavda 100 tam puan üzerinden 60 ve üzeri puan alanlar başarılı sayılır.'), []);
+  assert.strictEqual(C.esikBul('KPSS P93 65 ve üzeri; KPSS P94 60 ve üzeri puan almış olmak.', 'P93').esik, 65);
+  assert.strictEqual(C.esikBul('KPSS P93 65 ve üzeri; KPSS P94 60 ve üzeri puan almış olmak.', 'P94').esik, 60);
+});
+
+test('denetim 5: genel lise adayı belirli alan isteyen kadroda "hemen" değil', () => {
+  for (const m of ['Lise ve dengi okulların Makine alanından mezun olmak.', 'Lise veya dengi okulların Bilgisayar alanından mezun olmak.']) {
+    const r = ilan({ yz_kadrolar: [kadro('Teknisyen', m, { ogrenim: 'ortaogretim', puan_turu: 'P94' })] });
+    assert.notStrictEqual(C.degerlendir(r, '', 'ortaogretim', 80).grup, 'hemen', m);
+  }
+});
+
+test('denetim 6: düzey yalnız ortak şartta yazıyorsa lisans adayına lise kadrosu gösterilmez', () => {
+  const r = ilan({ yz_ortak: ['Ortaöğretim (lise ve dengi) okul mezunu olmak.'], yz_kadrolar: [kadro('Güvenlik', 'Herhangi bir bölümden mezun olmak.', { ogrenim: null, puan_turu: null })] });
+  assert.strictEqual(C.degerlendir(r, 'İktisat', 'lisans', 80).grup, 'degil');
+});
+
+test('kopya: bir üyesi kurum içi olan grup düşer; birincili listede olmayan kopya kendi adresiyle kalır', () => {
+  const ana = ilan({ k: 'ana', baslik: 'KURUM - GÖREVDE YÜKSELME', yz_kadrolar: [kadro('Hemşire', HEM)] });
+  const kop = ilan({ k: 'kop', yz_kadrolar: [kadro('Hemşire', HEM)] });
+  assert.strictEqual(C.ilanlariDegerlendir([ana, kop], new Map([['kop', 'ana']]), 'Hemşirelik', 'lisans', 80)[0].grup, 'degil');
+  const yalniz = C.ilanlariDegerlendir([kop], new Map([['kop', 'yok']]), 'Hemşirelik', 'lisans', 80);
+  assert.strictEqual(yalniz[0].anahtar, 'kop');
+});
+
+test('cinsiyet şartı kadroda not olarak taşınır', () => {
+  const r = ilan({ yz_kadrolar: [kadro('İnfaz ve Koruma Memuru (ERKEK)', HEM)] });
+  assert.strictEqual(C.degerlendir(r, 'Hemşirelik', 'lisans', 80).kadrolar[0].not, 'Yalnız erkek adaylar');
 });
 
 test('KPSS şartsız ilanda metindeki puan kalıbı aday puanını elemez', () => {
@@ -129,7 +186,9 @@ test('takvim dosyası: tarih, bir gün sonrası bitiş, hatırlatma ve kaçış'
   assert.match(t, /DTEND;VALUE=DATE:20270101\r\n/);
   assert.match(t, /TRIGGER:-PT15H/);
   assert.ok(t.includes('SUMMARY:Son gün: A\\; B\\, C'));
-  assert.ok(t.split('\r\n').every((s) => s.length <= 75));
+  assert.ok(t.split('\r\n').every((s) => Buffer.byteLength(s, 'utf8') <= 75));
+  const uzun = C.icsMetni(ilan({ kurum: 'ÇĞİÖŞÜ'.repeat(30), son_tarih: '2026-12-31' }), 'x');
+  assert.ok(uzun.split('\r\n').every((s) => Buffer.byteLength(s, 'utf8') <= 75));
   assert.strictEqual(C.icsMetni({ son_tarih: '' }, 'x'), '');
 });
 

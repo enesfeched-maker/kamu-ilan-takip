@@ -185,7 +185,7 @@ class BolumSayfalariTest(unittest.TestCase):
         """donemler: {dönem: [(nit kodu, min), ...]} — her kadro ayrı, uzun kurum adıyla (ince sayfa kalkanı geçsin)."""
         veri = {'donemler': {d: [dict(satir('HEMŞİRE', m, kurum=f'Büyükşehir Belediyesi Sağlık Hizmetleri Müdürlüğü {i} ve Bağlı Kuruluşları', kont=3, yer=2),
                                    nit=[n]) for i, (n, m) in enumerate(rows)] for d, rows in donemler.items()}}
-        bolumler = bolumler or {'3204': 'HEMŞİRELİK', '3205': 'Hemşirelik', '3300': 'EBELİK', '3400': 'DİYETİSYENLİK'}
+        bolumler = bolumler or {'3204': 'HEMŞİRELİK', '3300': 'EBELİK', '3400': 'DİYETİSYENLİK'}
         (self.docs / 'puanlar' / 'lisans.json').write_text(json.dumps(veri, ensure_ascii=False), encoding='utf-8')
         (self.docs / 'puanlar' / 'lisans-bolum.json').write_text(json.dumps({'bolumler': bolumler, 'nitelikler': nitelikler}, ensure_ascii=False), encoding='utf-8')
         self.urls = ps.puan_sayfalarini_uret(self.docs, BASE)
@@ -196,7 +196,7 @@ class BolumSayfalariTest(unittest.TestCase):
 
     def test_ozel_acik_onek_ve_okunamayan(self):
         # 'ozel': tam kod; 'acik': '*'; 'onek': '3200-*' (3204/3205 ile eşleşmez, ön ek '3204-'), 'okun': '?'
-        nit = {'a': ['3204'], 'b': ['*'], 'c': ['3204-*', '3300'], 'd': ['?'], 'e': ['3205']}
+        nit = {'a': ['3204'], 'b': ['*'], 'c': ['3204-*', '3300'], 'd': ['?'], 'e': ['3205'], 'f': ['3204', '3205']}
         veri = {'donemler': {'2026-1': [satir('X', 70.0, kurum='K')]}}
         bolum = {'bolumler': {'3204': 'HEMŞİRELİK', '3204-1': 'HEMŞİRELİK (İÖ)', '3205': 'Hemşirelik', '3300': 'EBELİK'},
                  'nitelikler': {'2026-1': nit}}
@@ -204,7 +204,8 @@ class BolumSayfalariTest(unittest.TestCase):
         veri = {'donemler': {'2026-1': kadrolar}}
         ozel, acik, donemler = ps.bolum_satirlari(veri, bolum)
         hem = ps._kucuk('HEMŞİRELİK')
-        self.assertEqual(sorted(r['nit'][0] for _, r in ozel[hem]), ['a', 'e'])   # a: kod, e: aynı adlı 3205 (c yalnız '3204-1' koduna ön ekle bağlı)
+        # Hemşirelik'in iki kodu var (3204, 3205): yalnız ikisini birden kabul eden f sayılır; a ve e 'kismi' (puanlar.js)
+        self.assertEqual(sorted(r['nit'][0] for _, r in ozel[hem]), ['f'])
         self.assertEqual([r['nit'][0] for _, r in ozel[ps._kucuk('HEMŞİRELİK (İÖ)')]], ['c'])   # '3204-*' ön eki
         self.assertEqual(sorted(r['nit'][0] for _, r in ozel[ps._kucuk('EBELİK')]), ['c'])
         self.assertEqual([r['nit'][0] for _, r in acik], ['b'])                         # '*' özel sayılmaz, ayrı sayılır
@@ -236,10 +237,11 @@ class BolumSayfalariTest(unittest.TestCase):
                          ['2023-1', '2024-1', '2025-1', '2026-1'])
 
     def test_ayni_adli_kodlar_birlesir_ve_acik_cumlesi(self):
-        # 3204 ve 3205 aynı bölüm (büyük/küçük harf farkı); kadrolar ayrı kodlara bağlı → tek sayfada 10 kadro
-        nit = {'a': ['3204'], 'b': ['3205'], 'x': ['*']}
-        rows = [('a', 70.0 + i) for i in range(5)] + [('b', 80.0 + i) for i in range(5)] + [('x', 50.0)]
-        self.kur({'2026-1': rows}, {'2026-1': nit})
+        # 3204 ve 3205 aynı bölüm (büyük/küçük harf farkı) → tek sayfa. Kadro adın BÜTÜN kodlarını kabul ediyorsa
+        # sayılır; yalnız 3205'i kabul eden 'b' kadroları ('kismi', puanlar.js) sayılmaz → 10 kadro
+        nit = {'a': ['3204', '3205'], 'b': ['3205'], 'x': ['*']}
+        rows = [('a', 70.0 + i) for i in range(10)] + [('b', 80.0 + i) for i in range(5)] + [('x', 50.0)]
+        self.kur({'2026-1': rows}, {'2026-1': nit}, {'3204': 'HEMŞİRELİK', '3205': 'Hemşirelik', '3300': 'EBELİK', '3400': 'DİYETİSYENLİK'})
         h = self.sayfa('hemsirelik')
         self.assertIn('10 kadro vardı', h)
         self.assertIn('Ayrıca bu dönemlerde 1 kadro tüm lisans bölümlerine açıktı.', h)

@@ -550,6 +550,19 @@ def _liste_bolumleri(liste, kod_bolum, tum_kodlar):
     return bul
 
 
+def _liste_kodlari(liste, kod_bolum, tum_kodlar):
+    """_liste_bolumleri ile aynı kural; bölüm adı yerine kabul edilen kodları döndürür."""
+    bul = set()
+    for e in liste:
+        if e == '*' or e == '?':
+            continue
+        if e.endswith('-*'):
+            bul.update(k for k in tum_kodlar if k.startswith(e[:-1]))
+        elif e in kod_bolum:
+            bul.add(e)
+    return bul
+
+
 def bolum_satirlari(veri, bolum_veri):
     """Son BOLUM_DONEM dönemde her bölümü adıyla/koduyla arayan kadrolar.
     Dönüş: ({bölüm anahtarı: [(dönem, satır)]}, tüm bölümlere açık ('*') kadro satırları [(dönem, satır)], kullanılan dönemler)."""
@@ -563,15 +576,18 @@ def bolum_satirlari(veri, bolum_veri):
         listeler = nit.get(d) or {}
         onbellek = {}
         for r in veri['donemler'][d]:
-            bul, hepsi = set(), False
+            kodlar, hepsi = set(), False
             for n in r.get('nit') or []:
                 l = listeler.get(n) or []
                 if '*' in l:
                     hepsi = True
                 anahtar = tuple(l)
                 if anahtar not in onbellek:
-                    onbellek[anahtar] = _liste_bolumleri(l, kod_bolum, tum_kodlar)
-                bul |= onbellek[anahtar]
+                    onbellek[anahtar] = _liste_kodlari(l, kod_bolum, tum_kodlar)
+                kodlar |= onbellek[anahtar]
+            # bölüm, adını taşıyan BÜTÜN kodlar kabul ediliyorsa sayılır (puanlar.js 'uygun'; yalnız bir kısmı 'kismi'
+            # olur ve sayılmaz) — /nereye/ aracının merkezi atama listesiyle aynı sonuç
+            bul = {kod_bolum[k] for k in kodlar if gruplar[kod_bolum[k]]['kodlar'] <= kodlar}
             for b in bul:
                 ozel.setdefault(b, []).append((d, r))
             if hepsi and not bul:

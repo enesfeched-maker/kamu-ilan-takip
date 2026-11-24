@@ -54,11 +54,12 @@
   async function ilanlariYukle() {
     if (ilanVeri) return ilanVeri;
     // bolum-veri.json: okunmuş ve elle düzeltilmiş kadro koşullarıyla (yz_kadrolar) birleştirilmiş kayıtlar; yoksa ham veri.
-    const [i, l] = await Promise.allSettled([getJSON('../bolum-veri.json').catch(() => getJSON('../ilanlar.json')), getJSON('../liste.json')]);
-    if (i.status !== 'fulfilled' || !i.value || !Array.isArray(i.value.ilanlar)) throw new Error('ilanlar');
+    // Promise.allSettled yerine (ES2017 hedefi): liste.json yüklenemese de ilanlar gösterilir
+    const [i, l] = await Promise.all([getJSON('../bolum-veri.json').catch(() => getJSON('../ilanlar.json')).catch(() => null), getJSON('../liste.json').catch(() => null)]);
+    if (!i || !Array.isArray(i.ilanlar)) throw new Error('ilanlar');
     const kopya = new Map();
-    if (l.status === 'fulfilled' && l.value && Array.isArray(l.value.ilanlar)) for (const o of l.value.ilanlar) if (o && o.kopya_of && o.key) kopya.set(o.key, o.kopya_of);
-    const tum = i.value.ilanlar.filter((r) => r && typeof r.id === 'string' && typeof r.baslik === 'string');
+    if (l && Array.isArray(l.ilanlar)) for (const o of l.ilanlar) if (o && o.kopya_of && o.key) kopya.set(o.key, o.kopya_of);
+    const tum = i.ilanlar.filter((r) => r && typeof r.id === 'string' && typeof r.baslik === 'string');
     const duzeltmeKurum = new Set(tum.filter((r) => r.duyuru_turu && /düzeltme/i.test(r.duyuru_turu) && r.kurum).map((r) => E.fold(r.kurum)));
     const ilanlar = tum.filter((r) => !r.duyuru_turu && !kapali(r) && r.kategori !== 'akademik' && !r.iptal_edildi);
     for (const r of ilanlar) r._duzeltme = (Array.isArray(r.duzeltmeler) && r.duzeltmeler.length > 0) || r.duzeltildi === true || (!!r.kurum && duzeltmeKurum.has(E.fold(r.kurum)));
@@ -152,7 +153,7 @@
       const ul = h('ul', 'ny-kadro');
       for (const k of adli.slice(0, 3)) {
         const li = h('li'); li.append(h('b', '', k.ad.length > 70 ? k.ad.slice(0, 69).replace(/\s+\S*$/, '') + '…' : k.ad));
-        const ek = [k.adet ? k.adet + ' kişi' : '', k.puan !== null ? 'en az ' + puanYaz(k.puan) + ' puan' : ''].filter(Boolean).join(' · ');
+        const ek = [k.adet ? k.adet + ' kişi' : '', k.puan !== null ? 'en az ' + puanYaz(k.puan) + ' puan' : '', k.not || ''].filter(Boolean).join(' · ');
         if (ek) li.append(h('span', '', ek));
         ul.append(li);
       }
@@ -166,6 +167,7 @@
       const p = x.kadrolar[0].puan;
       cip.append(h('span', x.grup === 'yetmiyor' ? 'kotu' : 'iyi', 'En az ' + puanYaz(p) + ' puan' + (x.grup !== 'yetmiyor' && puan !== null ? ' ✓' : '')));
     }
+    if (!adli.length && x.kadrolar[0] && x.kadrolar[0].not) cip.append(h('span', 'uyari', x.kadrolar[0].not));
     if (r.son_tarih) cip.append(h('span', '', 'Son gün ' + tarihYaz(r.son_tarih)));
     if (r._duzeltme) cip.append(h('span', 'uyari', 'Düzeltme yayımlanmış'));
     if (cip.children.length) kap.append(cip);
@@ -328,7 +330,7 @@
     if (merkeziVar) ozet.append(kutu(m.uygun.length, 'tercih kadrosu puanına yetiyor', 'ny-merkezi', 'mavi'));
     kap.append(ozet);
 
-    kap.append(bolge('ny-hemen', 'Şimdi başvurabilirsin', 'Bölümün kadro şartında geçiyor' + (puan !== null ? ', puanın yetiyor' : '') + '. Son günü en yakın olan üstte.', gruplar.hemen,
+    kap.append(bolge('ny-hemen', 'Şimdi başvurabilirsin', 'Kadro şartı bölümünü ve düzeyini kabul ediyor' + (puan !== null ? ', puanın yetiyor' : '') + '. Diğer şartları (yaş, deneyim, belge) ilandan oku. Son günü en yakın olan üstte.', gruplar.hemen,
       'Şu an bölümüne açık ilan yok. Yeni ilan çıkınca Telegram kanalında duyuruyoruz.', puan));
     if (gruplar.kontrol.length) kap.append(bolge('ny-kontrol', 'Kontrol et', 'Uygun olabilirsin ama bir şartı ilandan okuman gerek.', gruplar.kontrol, '', puan));
     kap.append(merkeziBolge(m, puan, duzey, bolumMetni));

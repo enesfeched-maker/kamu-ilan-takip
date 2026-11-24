@@ -42,27 +42,49 @@
     return p.filter((x) => typeof x === 'string').join(' \n ');
   }
 
-  /* İlan metninden en düşük KPSS puan şartı: "60 (altmış) ve üzeri", "en az 55 puan", "70 ve üzerinde".
-     Birden çok kadro varsa en düşük eşik (adayın en az birine yetmesi yeter). %70 gibi yüzde ifadeleri sayılmaz. */
+  /* ---------- KPSS puan şartı ve puan türü ----------
+     "60 (altmış) ve üzeri", "en az 55 puan", "70 ve üzerinde". Yüzde ("%70"), YDS/ALES, sözlü/yazılı sınav ve "100 tam puan
+     üzerinden" puanları sayılmaz. Her eşik, aynı cümlede kendinden önce yazan puan türleriyle (P3, KPSSP93…) birlikte tutulur. */
   const PUAN_RX = [
     /(^|[^%\d.,])(\d{2}(?:[.,]\d+)?)\s*(?:\([^)]{0,30}\)\s*)?(?:ve|veya)\s+(?:üzeri|üstü|üzerinde|üzerindeki|daha fazla)/gi,
     /(en\s+az\s+)(\d{2}(?:[.,]\d+)?)\s*(?:\([^)]{0,30}\)\s*)?puan/gi,
   ];   // site JS'i ES2017: geriye bakan (lookbehind) düzenli ifade kullanılmaz; sayı 2. grupta
-  function puanSarti(r) {
-    const t = ilanMetni(r);
-    let en = null;
-    for (const rx of PUAN_RX) {
-      rx.lastIndex = 0;
-      let m;
-      while ((m = rx.exec(t))) {
-        const cevre = t.slice(Math.max(0, m.index - 160), m.index + 80);
-        if (!/kpss|puan/i.test(cevre) || /yds|yökdil|yabancı dil|ales|lys|tus|dus/i.test(cevre)) continue;
-        const v = Number(m[2].replace(',', '.'));
-        if (v >= 40 && v <= 100 && (en === null || v < en)) en = v;
+  const PUAN_DISI = /sözlü|mülakat|yazılı sınav|uygulamalı sınav|tam puan|üzerinden|yds|yökdil|yabancı dil|ales|lys|tus|dus|kpds|toefl|ielts|diploma notu|mezuniyet not/i;
+  const TUR_RX = /KPSS\s*-?\s*P\s?(\d{1,3})\b|\bP\s?(\d{1,3})\b/gi;
+  function turler(metin) {
+    const s = new Set(); let m; TUR_RX.lastIndex = 0;
+    while ((m = TUR_RX.exec(String(metin || '')))) s.add('P' + (m[1] || m[2]));
+    return [...s];
+  }
+  function cumleler(metin) { return String(metin || '').replace(/([.;!?])\s+/g, '$1\n').split('\n'); }
+  /* metin → [{v, turler}] */
+  function puanSartlari(metin) {
+    const out = [];
+    for (const c of cumleler(metin)) {
+      if (!/kpss|puan|P\s?\d/i.test(c)) continue;
+      for (const rx of PUAN_RX) {
+        rx.lastIndex = 0;
+        let m;
+        while ((m = rx.exec(c))) {
+          const bas = m.index + m[1].length;
+          if (PUAN_DISI.test(c.slice(Math.max(0, bas - 60), bas + 30))) continue;
+          const v = Number(m[2].replace(',', '.'));
+          if (!(v >= 40 && v <= 100)) continue;
+          out.push({ v, turler: turler(c.slice(Math.max(0, bas - 120), bas)) });
+        }
       }
     }
-    return en;
+    return out;
   }
+  /* Adayın puan türüne uyan eşikler: {esik, karisik}. Türü yazmayan eşik herkese uyar. */
+  function esikBul(metin, tur) {
+    const l = puanSartlari(metin).filter((s) => !s.turler.length || s.turler.includes(tur));
+    if (!l.length) return { esik: null, karisik: false };
+    const d = [...new Set(l.map((s) => s.v))];
+    return { esik: Math.min(...d), karisik: d.length > 1 };
+  }
+  /* Eski arayüz: ilan metnindeki en düşük eşik (türe bakmadan). */
+  function puanSarti(r) { const l = puanSartlari(ilanMetni(r)); return l.length ? Math.min(...l.map((s) => s.v)) : null; }
 
   /* Başvuru şekli: olumsuz cümleler ("posta ile yapılan başvurular kabul edilmeyecektir") atlanır. */
   function basvuruSekli(r) {
@@ -86,81 +108,110 @@
     const sayi = (x) => (typeof x === 'number' && isFinite(x) ? x : typeof x === 'string' && /^\d+([.,]\d+)?$/.test(x.trim()) ? Number(x.replace(',', '.')) : null);
     const adet = sayi(yz && yz.adet) || sayi(kd && kd.adet);
     const puan = sayi(yz && yz.en_dusuk_puan);
+    const metin = [ad].concat(yz && Array.isArray(yz.kosullar) ? yz.kosullar : [], kd && Array.isArray(kd.maddeler) ? kd.maddeler : [])
+      .filter((x) => typeof x === 'string').join(' \n ');
     return {
       adet: adet && adet > 0 && adet < 100000 ? adet : null,
       puan: puan && puan >= 1 && puan <= 100 ? puan : null,
-      tur: yz && typeof yz.puan_turu === 'string' && /^P\d{1,3}$/.test(yz.puan_turu) ? yz.puan_turu : null,
+      // "P3", "KPSSP3", "P14,P15,P16", "P14P15P16" → [P3] / [P14, P15, P16]
+      turler: yz && typeof yz.puan_turu === 'string' ? turler(yz.puan_turu.toUpperCase().replace(/KPSS/g, ' KPSS').replace(/P(\d+)(?=P)/g, 'P$1 ')) : [],
       ogrenim: (yz && typeof yz.ogrenim === 'string' && yz.ogrenim in RUTBE && yz.ogrenim) || (kd && typeof kd.ogrenim === 'string' && kd.ogrenim in RUTBE && kd.ogrenim) || null,
+      metin,
     };
   }
 
+  const ALAN_SARTI = /\b(?:alan[ıi]?(?:n|ndan|nda)?|alanlar[ıi]?(?:n|ndan)?|dal[ıi]?(?:n|ndan)?|dallar[ıi]?(?:n|ndan)?|bölüm(?:ü|ünden|lerinden|leri)?|program(?:ı|ından|larından)?)\b/i;
+  function cinsiyetNotu(metin) {
+    const e = /\berkek\b/i.test(metin), k = /\bkad[ıi]n\b/i.test(metin);
+    return e && !k ? 'Yalnız erkek adaylar' : k && !e ? 'Yalnız kadın adaylar' : '';
+  }
+  const duzeyAdi = (l) => l.map((x) => (DUZEY[x] ? DUZEY[x].ad.toLocaleLowerCase('tr') : x === 'yuksek_lisans' ? 'yüksek lisans' : x)).join('/');
+
   /* Tek kayıt → {grup, kadrolar:[{ad, grup, adet, puan, neden}], neden}. bolumAdi boşsa (genel lise) "Lise" aranır. */
+  /* Bir kadronun (ya da kadrolara ayrılmamış ilanın) kararı. Sıra: bölüm → düzey → puan türü → puan. Her adım yalnız
+     kötüleştirir; emin olunmayan durum "kontrol" olur. */
+  function kadroKarari(o) {
+    const { durum, kanit, metin, seviyeler, b, rec, bolumAdi, duzey, puan, ilanMetin } = o;
+    const tur = DUZEY[duzey].tur, kpsssiz = rec.kpss === 'kpsssiz';
+    let grup = DURUM_GRUP[durum] || 'okunamadi', neden = '';
+    // 1) bölüm
+    if (!bolumAdi && (durum === 'uygun' || durum === 'kontrol')) {
+      // genel lise: "lise" sözcüğü bir listede geçti; belirli alan/dal isteniyorsa kontrol, yoksa düzey şartı sayılır
+      grup = ALAN_SARTI.test(metin) ? 'kontrol' : 'hemen';
+      if (grup === 'kontrol') neden = 'Belirli lise alanları isteniyor olabilir' + (kanit ? ': “' + kisalt(kanit, 140) + '”' : '');
+    } else if (grup === 'kontrol') neden = 'Bölümün şartta tam adıyla geçmiyor' + (kanit ? ': “' + kisalt(kanit, 140) + '”' : '');
+    if (grup === 'okunamadi') neden = 'Bölüm şartı okunamadı';
+    if (grup === 'degil') return { grup, neden };
+    // 2) düzey: okunmuş kadro düzeyi > kadro metni > ilan düzeyi > ilan metni; hiç bilinmiyorsa kontrol
+    const recSev = (Array.isArray(rec.ogrenim) && rec.ogrenim.length ? rec.ogrenim : Array.isArray(rec.belge_ogrenim) ? rec.belge_ogrenim : []).filter((x) => x in RUTBE);
+    const sev = b && b.ogrenim ? [b.ogrenim] : seviyeler && seviyeler.length ? seviyeler : recSev.length ? recSev : E.seviyeBul(ilanMetin);
+    if (sev.length && !sev.includes(duzey)) return { grup: 'degil', neden: 'İlan ' + duzeyAdi(sev) + ' mezunu arıyor' };
+    // bölüm adıyla eşleşen kadroda düzey bölümden bellidir (bölüm listesi adayın düzeyinden gelir); serbest/genel şartta değil
+    if (!sev.length && grup === 'hemen' && (durum !== 'uygun' || !bolumAdi)) { grup = 'kontrol'; neden = 'İlanda öğrenim düzeyi okunamadı; ' + DUZEY[duzey].ad.toLocaleLowerCase('tr') + ' mezunu kabul ediliyor mu bak'; }
+    if (kpsssiz) return { grup, neden, esik: null };
+    // 3) puan türü: okunmuş kadro türü > kadro metni > ilan metni
+    const kt = b && b.turler.length ? b.turler : turler(metin).length ? turler(metin) : turler(ilanMetin);
+    const kesinTur = !!(b && b.turler.length) || turler(metin).length > 0;
+    if (kt.length && !kt.includes(tur) && (kesinTur || !/\bP\s?(3|93|94)\b/i.test(ilanMetin))) {
+      return { grup: grup === 'okunamadi' ? 'okunamadi' : 'kontrol', neden: 'Bu kadro ' + kt.slice(0, 3).join('/') + (kt.length > 3 ? '…' : '') + ' puanı istiyor; senin puan türün ' + tur, esik: null };
+    }
+    if (!kt.length && /\bA grubu\b|ilgili puan türü/i.test(metin + ' ' + ilanMetin) && grup === 'hemen') { grup = 'kontrol'; neden = 'Puan türünü ilandan kontrol et'; }
+    // 4) puan eşiği: okunmuş değer > kadro metni > ilan metni (ilan geneli yalnız tek eşik varsa)
+    let esik = b && b.puan !== null ? b.puan : null, karisik = false;
+    if (esik === null) { const e = esikBul(metin, tur); esik = e.esik; karisik = e.karisik; }
+    if (esik === null) { const e = esikBul(ilanMetin, tur); esik = e.esik; karisik = e.karisik; }
+    if (puan === null) {
+      // puanı olmayan aday: KPSS şartı yoksa bile emin değiliz (ilan "KPSS şartı yok" demiyor)
+      if (grup === 'hemen') { grup = 'kontrol'; neden = 'KPSS puanı gerekiyor' + (esik !== null && !karisik ? ' (en az ' + puanYaz(esik) + ')' : ''); }
+      return { grup, neden, esik };
+    }
+    if (karisik && grup === 'hemen') return { grup: 'kontrol', neden: 'Kadrolara göre farklı puan şartı var; bu kadronun puanını ilandan kontrol et', esik: null };
+    if (esik !== null && puan < esik && (grup === 'hemen' || grup === 'kontrol')) return { grup: 'yetmiyor', neden: 'En az ' + puanYaz(esik) + ' puan istiyor; seninki ' + puanYaz(puan), esik };
+    return { grup, neden, esik };
+  }
+
   function degerlendir(rec, bolumAdi, duzey, puan) {
     const kpsssiz = rec.kpss === 'kpsssiz';
-    const ilanPuan = kpsssiz ? null : puanSarti(rec);
+    const ilanMetin = ilanMetni(rec);
     const kdMetin = (Array.isArray(rec.kadro_detay) ? rec.kadro_detay : []).map((k) => (k && Array.isArray(k.maddeler) ? k.maddeler.join(' ') : '')).join(' ');
-    const kurumIci = KURUM_ICI.test(E.fold([rec.baslik, rec.ilan_turu].join(' '))) || KURUM_ICI_SART.test(E.fold(ilanMetni(rec) + ' ' + kdMetin));
-    if (kurumIci) return { grup: 'degil', kadrolar: [], neden: 'Kurum içi ilan', kpsssiz };
+    const kurumIci = KURUM_ICI.test(E.fold([rec.baslik, rec.ilan_turu].join(' '))) || KURUM_ICI_SART.test(E.fold(ilanMetin + ' ' + kdMetin));
+    if (kurumIci) return { grup: 'degil', kadrolar: [], neden: 'Kurum içi ilan', kpsssiz, kurumIci: true };
     const kb = E.kadroBazli(rec, [bolumAdi || 'Lise'], duzey);
     const sonuc = [];
     if (kb.genel) {
-      // kadrolara ayrılmamış ilan: düzey ilan düzeyinde denetlenir
-      const sev = (Array.isArray(rec.ogrenim) && rec.ogrenim.length ? rec.ogrenim : Array.isArray(rec.belge_ogrenim) ? rec.belge_ogrenim : []).filter((x) => x in RUTBE);
       const k = kb.kadrolar[0];
-      let grup = k ? DURUM_GRUP[k.durum] || 'okunamadi' : 'okunamadi';
-      let neden = k && k.neden ? k.neden : '';
-      if (sev.length && !sev.includes(duzey)) {
-        if (grup !== 'hemen' || k.durum !== 'uygun' || sev.every((x) => RUTBE[x] > RUTBE[duzey])) grup = 'degil';
-        else { grup = 'kontrol'; neden = 'İlan ' + sev.map((x) => (DUZEY[x] ? DUZEY[x].ad.toLocaleLowerCase('tr') : x)).join('/') + ' mezunu arıyor; senin düzeyini kabul ediyor mu bak'; }
-      }
-      if (grup === 'kontrol' && k && k.durum === 'kontrol' && !neden) neden = 'Bölümün şartta tam adıyla geçmiyor';
-      if (k && k.durum === 'kontrol' && k.kanit) neden = (bolumAdi ? 'Bölümün şartta tam adıyla geçmiyor' : 'Lise mezunlarını kabul edip etmediğine bak') + ': “' + kisalt(k.kanit, 140) + '”';
-      sonuc.push({ ad: '', grup, adet: null, puan: ilanPuan, tur: null, neden });
+      const r = kadroKarari({ durum: k ? k.durum : 'bak', kanit: k && k.kanit, metin: ilanMetin + ' ' + kdMetin, seviyeler: [], b: null, rec, bolumAdi, duzey, puan, ilanMetin });
+      sonuc.push({ ad: '', grup: r.grup, adet: null, puan: r.esik === undefined ? null : r.esik, neden: r.neden, not: cinsiyetNotu(rec.baslik + ' ' + kdMetin) });
     } else {
       for (const k of kb.kadrolar) {
         const b = kadroBilgisi(rec, k.ad);
-        let grup = DURUM_GRUP[k.durum] || 'okunamadi';
-        let neden = '';
-        if (b.ogrenim && b.ogrenim !== duzey && RUTBE[b.ogrenim] !== RUTBE[duzey]) grup = 'degil';   // okunmuş kadro düzeyi tutmuyor
-        // genel lise: "lise" sözcüğü şartta düzey olarak geçiyor; okunmuş kadro düzeyi lise ise bu bir bölüm belirsizliği değildir
-        if (grup === 'kontrol' && !bolumAdi && b.ogrenim === 'ortaogretim') grup = 'hemen';
-        if (grup === 'kontrol') neden = (bolumAdi ? 'Bölümün şartta tam adıyla geçmiyor' : 'Lise mezunlarını kabul edip etmediğine bak') + (k.kanit ? ': “' + kisalt(k.kanit, 140) + '”' : '');
-        if (grup === 'okunamadi') neden = 'Bu kadronun bölüm şartı okunamadı';
-        const esik = kpsssiz ? null : (b.puan !== null ? b.puan : ilanPuan);
-        if ((grup === 'hemen' || grup === 'kontrol') && b.tur && puan !== null && b.tur !== DUZEY[duzey].tur) {
-          grup = 'kontrol'; neden = 'Bu kadro ' + b.tur + ' puanı istiyor; girdiğin puan ' + DUZEY[duzey].tur;
-        } else if ((grup === 'hemen' || grup === 'kontrol') && esik !== null && puan !== null && puan < esik) {
-          grup = 'yetmiyor'; neden = 'En az ' + puanYaz(esik) + ' puan istiyor; seninki ' + puanYaz(puan);
-        }
-        sonuc.push({ ad: k.ad, grup, adet: b.adet, puan: esik, tur: b.tur, neden });
-      }
-    }
-    // yalnız ilan düzeyinde puan şartı varsa genel kadroda da puan denetlenir
-    for (const s of sonuc) {
-      if (!s.ad && (s.grup === 'hemen' || s.grup === 'kontrol') && s.puan !== null && puan !== null && puan < s.puan) {
-        s.grup = 'yetmiyor'; s.neden = 'En az ' + puanYaz(s.puan) + ' puan istiyor; seninki ' + puanYaz(puan);
+        const r = kadroKarari({ durum: k.durum, kanit: k.kanit, metin: b.metin, seviyeler: k.seviyeler, b, rec, bolumAdi, duzey, puan, ilanMetin });
+        sonuc.push({ ad: k.ad, grup: r.grup, adet: b.adet, puan: r.esik === undefined ? null : r.esik, neden: r.neden, not: cinsiyetNotu(b.metin) });
       }
     }
     const gorunen = sonuc.filter((s) => s.grup !== 'degil');
     const grup = gorunen.reduce((g, s) => (GRUP_SIRA[s.grup] < GRUP_SIRA[g] ? s.grup : g), 'degil');
-    return { grup, kadrolar: gorunen.filter((s) => s.grup === grup), neden: (gorunen.find((s) => s.grup === grup) || {}).neden || '', kpsssiz };
+    return { grup, kadrolar: gorunen.filter((s) => s.grup === grup), neden: (gorunen.find((s) => s.grup === grup) || {}).neden || '', kpsssiz, kurumIci: false };
   }
 
-  /* Kopyalar (aynı ilanın başka kaynaktaki kayıtları) tek satır: en iyi sonuç, birincil kaydın bağlantısıyla. */
+  /* Kopyalar (aynı ilanın başka kaynaktaki kayıtları) tek satır: en iyi sonuç, birincil kaydın bağlantısıyla.
+     Bir üye kurum içi çıkarsa grup bütünüyle düşer; birincil kayıt listede yoksa (kapanmış/iptal) kopya kendi adresiyle durur. */
   function ilanlariDegerlendir(kayitlar, kopya, bolumAdi, duzey, puan) {
+    const varolan = new Set(kayitlar.map(anahtar));
     const gruplar = new Map();
     for (const rec of kayitlar) {
-      const k = anahtar(rec), bas = (kopya && kopya.get(k)) || k;
+      const k = anahtar(rec), b0 = kopya && kopya.get(k), bas = b0 && varolan.has(b0) ? b0 : k;
       const d = degerlendir(rec, bolumAdi, duzey, puan);
       const g = gruplar.get(bas);
-      if (!g) gruplar.set(bas, Object.assign({ rec, anahtar: bas, uyeler: [rec] }, d));
+      if (!g) gruplar.set(bas, Object.assign({ rec, anahtar: bas, uyeler: [rec], veto: d.kurumIci }, d));
       else {
         g.uyeler.push(rec);
+        g.veto = g.veto || d.kurumIci;
         if (GRUP_SIRA[d.grup] < GRUP_SIRA[g.grup]) { const r = g.rec; Object.assign(g, d); g.rec = r; }
         if (k === bas) g.rec = rec;
       }
     }
-    return [...gruplar.values()];
+    return [...gruplar.values()].map((g) => (g.veto ? Object.assign(g, { grup: 'degil', kadrolar: [] }) : g));
   }
 
   /* ---------- merkezi atama (taban puanları) ---------- */
@@ -214,16 +265,22 @@
     const kac = (s) => String(s || '').replace(/[\\;,]/g, (c) => '\\' + c).replace(/\r?\n/g, ' ');
     const ertesi = new Date(Date.UTC(+g.slice(0, 4), +g.slice(4, 6) - 1, +g.slice(6, 8) + 1)).toISOString().slice(0, 10).replace(/-/g, '');
     const st = (simdi || new Date()).toISOString().replace(/[-:]/g, '').replace(/\.\d+/, '');
-    const satir = (s) => { const out = []; let x = s; while (x.length > 74) { out.push(x.slice(0, 74)); x = ' ' + x.slice(74); } out.push(x); return out.join('\r\n'); };
+    // RFC 5545: satır en çok 75 OKTET; Türkçe harf UTF-8'de 2 bayt olduğundan bayta göre katlanır
+    const bayt = (c) => (c.charCodeAt(0) < 0x80 ? 1 : c.charCodeAt(0) < 0x800 ? 2 : 3);
+    const satir = (s) => {
+      const out = []; let cur = '', n = 0;
+      for (const c of s) { const b = bayt(c); if (n + b > 74) { out.push(cur); cur = ' '; n = 1; } cur += c; n += b; }
+      out.push(cur); return out.join('\r\n');
+    };
     const saat = rec.son_zaman ? String(rec.son_zaman).slice(11, 16) : '';
     return ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//KPSS Tercihi//Nereye//TR', 'CALSCALE:GREGORIAN', 'BEGIN:VEVENT',
-      'UID:' + kac(anahtar(rec)) + '@kpsstercihi.com', 'DTSTAMP:' + st, 'DTSTART;VALUE=DATE:' + g, 'DTEND;VALUE=DATE:' + ertesi,
+      satir('UID:' + kac(anahtar(rec)) + '@kpsstercihi.com'), 'DTSTAMP:' + st, 'DTSTART;VALUE=DATE:' + g, 'DTEND;VALUE=DATE:' + ertesi,
       satir('SUMMARY:' + kac('Son gün: ' + (rec.kurum || 'Kamu ilanı'))),
       satir('DESCRIPTION:' + kac((rec.baslik || '') + (saat ? ' — başvuru ' + saat + "'de kapanır" : '') + ' — ' + siteUrl)),
       satir('URL:' + siteUrl),
-      'BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:' + kac('Yarın son gün: ' + (rec.kurum || '')), 'TRIGGER:-PT15H', 'END:VALARM',
+      'BEGIN:VALARM', 'ACTION:DISPLAY', satir('DESCRIPTION:' + kac('Yarın son gün: ' + (rec.kurum || ''))), 'TRIGGER:-PT15H', 'END:VALARM',
       'END:VEVENT', 'END:VCALENDAR', ''].join('\r\n');
   }
 
-  return { DUZEY, GRUP_SIRA, anahtar, puanSarti, basvuruSekli, kadroBilgisi, degerlendir, ilanlariDegerlendir, bolumKodlari, bolumUygun, merkezi, icsMetni, puanYaz };
+  return { DUZEY, GRUP_SIRA, anahtar, puanSarti, puanSartlari, esikBul, turler, basvuruSekli, kadroBilgisi, degerlendir, ilanlariDegerlendir, bolumKodlari, bolumUygun, merkezi, icsMetni, puanYaz };
 });
