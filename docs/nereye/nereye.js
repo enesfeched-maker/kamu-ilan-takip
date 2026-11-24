@@ -15,8 +15,8 @@
   const DONEM_SAYI = 4;     // merkezi atamada bakılan son tercih dönemi sayısı
   const SITE = 'https://kpsstercihi.com/';
   // Bildirim (Web Push): bildirim botu Worker'ı. VAPID_ACIK boşsa yalnız bu cihazda kayıt yapılır (bildirim kapalı).
-  const API = 'https://kamu-ilan-bildirim.kamuilan.workers.dev';
-  const VAPID_ACIK = '';
+  const API = 'https://bildirim.kpsstercihi.com';
+  const VAPID_ACIK = 'BI_V6nOUnzoI_Oa1kSsoXAxlVibe1gOzakkRibXwAs_GZv_rbKthDyn2666il66qq4TgKJpd6ElhCcngEJrs4J4';
   const KAYIT = 'kit-nereye-kayit', BILDIRIM = 'kit-nereye-bildirim';
   // sabit simgeler (yalnız bu dosyadaki sabit metin; kullanıcı verisi asla HTML olarak eklenmez)
   const OK_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
