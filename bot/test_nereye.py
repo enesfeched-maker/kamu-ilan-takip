@@ -20,12 +20,14 @@ KOK = Path(__file__).resolve().parent.parent
 class NereyeSayfaTesti(unittest.TestCase):
     def test_menude_nereye_baglantisi(self):
         import site_uret as su
-        self.assertIn('<a href="../nereye/" data-a="menu" data-a-x="Nereye Başvururum">Nereye Başvururum</a>', su.ust_html('../'))
+        ust = su.ust_html('../')
+        self.assertIn('<a href="../nereye/" data-a="menu" data-a-x="Bana Uygun İlanlar" class="tb-cta">Bana Uygun İlanlar</a>', ust)
+        self.assertNotIn('>Tercih Robotu</a>', ust)   # 24 Kasım 2026: kullanıcı menüden kaldırdı
 
     def test_elle_tutulan_sayfalarin_menusu(self):
         for yol in ('index.html', 'puanlar/index.html', 'bolum/index.html', 'katiplik/index.html', 'nereye/index.html'):
             metin = (KOK / 'docs' / yol).read_text(encoding='utf-8')
-            self.assertRegex(metin, r'<a href="(?:\.\./)*nereye/"[^>]*>Nereye Başvururum</a>', yol)
+            self.assertRegex(metin, r'<a href="(?:\.\./)*nereye/"[^>]*class="tb-cta">Bana Uygun İlanlar</a>', yol)
 
     def test_sayfa_betikleri_sirali_ve_var(self):
         metin = (KOK / 'docs' / 'nereye' / 'index.html').read_text(encoding='utf-8')
