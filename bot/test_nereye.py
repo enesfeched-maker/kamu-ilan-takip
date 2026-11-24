@@ -24,6 +24,16 @@ class NereyeSayfaTesti(unittest.TestCase):
         self.assertIn('<a href="../nereye/" data-a="menu" data-a-x="Bana Uygun İlanlar" class="tb-cta">Bana Uygun İlanlar</a>', ust)
         self.assertNotIn('>Tercih Robotu</a>', ust)   # 24 Kasım 2026: kullanıcı menüden kaldırdı
 
+    def test_telefon_seridi(self):
+        import site_uret as su
+        self.assertIn('class="tb-uygun" href="../nereye/"', su.ust_html('../'))
+        self.assertNotIn('tb-uygun', su.ust_html('../', 'nereye'))   # aracın kendi sayfasında şerit yok
+        for yol in ('index.html', 'puanlar/index.html', 'bolum/index.html', 'katiplik/index.html'):
+            metin = (KOK / 'docs' / yol).read_text(encoding='utf-8')
+            self.assertRegex(metin, r'class="tb-uygun" href="(?:\.\./)*nereye/"[^<]*Bana Uygun İlanlar', yol)
+            self.assertLess(metin.index('tb-uygun'), metin.index('</header>'), yol)
+        self.assertNotIn('tb-uygun', (KOK / 'docs' / 'nereye' / 'index.html').read_text(encoding='utf-8'))
+
     def test_elle_tutulan_sayfalarin_menusu(self):
         for yol in ('index.html', 'puanlar/index.html', 'bolum/index.html', 'katiplik/index.html', 'nereye/index.html'):
             metin = (KOK / 'docs' / yol).read_text(encoding='utf-8')
