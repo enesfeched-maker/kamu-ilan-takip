@@ -78,6 +78,22 @@ class SiteTests(unittest.TestCase):
         self.assertEqual(cikti[1]['sayfa'], 'https://ornek.example/x')
         self.assertEqual(len(cikti[1]['metin']), 1500)
 
+    def test_bot_ilanlari_en_az_puan(self):
+        simdi = datetime(2026, 5, 10, 12, 0, tzinfo=TR)
+        def kayit(kadrolar):
+            i = {'id': 'x', 'link': 'https://ornek.example/x', 'baslik': 'A', 'kpss': 'kpss'}
+            if kadrolar is not None:
+                i['yz_kadrolar'] = kadrolar
+            return bot_ilanlari([i], simdi)['ilanlar'][0]
+        self.assertEqual(kayit([{'en_dusuk_puan': 72.5}, {'en_dusuk_puan': 60}])['en_az_puan'], 60)
+        self.assertEqual(kayit([{'en_dusuk_puan': 72.5}, {'en_dusuk_puan': 60}])['kpss'], 'kpss')
+        self.assertIsNone(kayit([{'en_dusuk_puan': 72.5}, {'en_dusuk_puan': None}])['en_az_puan'])
+        self.assertIsNone(kayit([{'en_dusuk_puan': 72.5}, {'unvan': 'x'}])['en_az_puan'])
+        self.assertIsNone(kayit([{'en_dusuk_puan': 170}])['en_az_puan'])
+        self.assertIsNone(kayit([{'en_dusuk_puan': '70'}])['en_az_puan'])
+        self.assertIsNone(kayit([])['en_az_puan'])
+        self.assertIsNone(kayit(None)['en_az_puan'])
+
 
 class TemaBetigiTests(unittest.TestCase):
     def test_tema_kurali_isaretleri(self):

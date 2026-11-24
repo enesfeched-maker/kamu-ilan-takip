@@ -11,6 +11,7 @@ kadar en çok yz_isle.EN_COK_BEKLEME bekletir, sonra botun verisiyle gönderir."
 import argparse
 import hashlib
 import json
+import re
 import shutil
 import sys
 from datetime import datetime
@@ -74,6 +75,13 @@ def hazirla(en_cok=12, simdi=None, klasor=IS, ilan_yolu=ROOT / 'docs' / 'ilanlar
     return gorevler
 
 
+OGRENIMLER = ('ilkogretim', 'ortaogretim', 'onlisans', 'lisans', 'yuksek_lisans', 'doktora')
+# 24 Kasım 2026 ("Puanınla nereye başvurabilirsin?" aracı kadro kadro eşleştirir): bölüm listesi kısaltılmış ya da
+# mezuniyet maddesi olmayan kadro adayı yanlış yönlendirir; bu çıktılar reddedilir, rutin düzeltip yeniden kaydeder.
+KISALTMA = re.compile(r'(?:\bvb\b|\bv\.b\b|\bvs\b|\bvesaire\b|…|\.\.\.)', re.I)
+MEZUNIYET = re.compile(r'mezun|bölüm|program|fakülte|yüksekokul|alan(?:ın|lar)', re.I)
+
+
 def dogrula(yz):
     """Claude çıktısının en az biçimi; sorun listesi (boşsa geçerli)."""
     sorun = []
@@ -81,11 +89,28 @@ def dogrula(yz):
         return ['JSON nesnesi değil']
     if not isinstance(yz.get('kadrolar'), list):
         sorun.append('kadrolar listesi yok')
+    okunur = yz.get('okunabilirlik') != 'kotu'
     for k in yz.get('kadrolar') or []:
         if not isinstance(k, dict) or not str(k.get('unvan') or '').strip():
             sorun.append('unvansız kadro')
-        elif k.get('adet') is not None and not isinstance(k.get('adet'), int):
+            continue
+        if k.get('adet') is not None and not isinstance(k.get('adet'), int):
             sorun.append(f'{k["unvan"]}: adet sayı değil')
+        p = k.get('en_dusuk_puan')
+        if p is not None and (isinstance(p, bool) or not isinstance(p, (int, float)) or not 1 <= p <= 100):
+            sorun.append(f'{k["unvan"]}: en_dusuk_puan 1-100 arası sayı ya da null olmalı')
+        if k.get('puan_turu') is not None and not re.fullmatch(r'(?:KPSS ?)?P\d{1,3}', str(k['puan_turu']).strip(), re.I):
+            sorun.append(f'{k["unvan"]}: puan_turu P3/P93/P94 biçiminde ya da null olmalı')
+        if not okunur:
+            continue
+        if k.get('ogrenim') not in OGRENIMLER:
+            sorun.append(f'{k["unvan"]}: ogrenim yok ya da geçersiz ({"/".join(OGRENIMLER)})')
+        kosullar = [str(m) for m in k.get('kosullar') or [] if isinstance(m, str)]
+        mezuniyet = [m for m in kosullar if MEZUNIYET.search(m)]
+        if k.get('ogrenim') in ('onlisans', 'lisans', 'yuksek_lisans', 'doktora') and not mezuniyet:
+            sorun.append(f'{k["unvan"]}: bölüm/mezuniyet maddesi yok (bölüm şartı yoksa "Herhangi bir lisans programından mezun olmak." yaz)')
+        if any(KISALTMA.search(m) for m in mezuniyet):
+            sorun.append(f'{k["unvan"]}: bölüm listesi kısaltılmış (vb./…); belgedeki bütün bölümleri yaz')
     if yz.get('son_basvuru_tarihi') and not str(yz['son_basvuru_tarihi'])[:10].count('-') == 2:
         sorun.append('son_basvuru_tarihi YYYY-AA-GG değil')
     return sorun

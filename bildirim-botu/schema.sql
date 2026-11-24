@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS kullanicilar (
   hatirlatma   INTEGER NOT NULL DEFAULT 1,          -- son günden önce hatırlatma
   durum        TEXT,                                -- sohbet durumu, ör. 'kelime_bekleniyor'
   vip_bitis    TEXT,                                -- ISO tarih; şimdilik kullanılmıyor (VIP_ACIK bayrağı)
+  puan         REAL,                                -- KPSS puanı (1-100), boş olabilir; /puan ile girilir
   olusturma    TEXT    NOT NULL,
   guncelleme   TEXT    NOT NULL
 );

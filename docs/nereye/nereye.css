@@ -1,0 +1,122 @@
+/* Puanınla nereye başvurabilirsin? — sayfa.css belirteçlerini kullanır (açık/koyu tema oradan gelir). */
+.ny-main{max-width:760px;padding-top:28px;padding-bottom:56px}
+.ny-giris h1{font-size:clamp(1.6rem,5vw,2.3rem);line-height:1.15;letter-spacing:-.02em;margin:0 0 8px}
+.ny-giris p{color:var(--muted);font-size:1.05rem;margin:0 0 20px}
+
+.ny-form{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:22px;display:grid;gap:22px}
+.ny-soru{border:0;margin:0;padding:0;display:grid;gap:10px;min-width:0}
+.ny-soru legend,.ny-soru>label{display:flex;align-items:center;gap:10px;font-weight:600;font-size:1.08rem;padding:0;margin-bottom:10px}
+.ny-soru>label{margin-bottom:0}
+.ny-no{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--lime);color:#111310;font-size:.9rem;font-weight:700;flex:none}
+.ny-tur{font-weight:600;font-size:.8rem;color:var(--muted);background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:2px 8px}
+
+.ny-duzey{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.ny-duzey button{font:inherit;font-weight:600;font-size:1.02rem;min-height:58px;border-radius:var(--r-sm);border:1.5px solid var(--line-2);background:var(--surface);color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:6px}
+.ny-duzey button small{font-weight:500;font-size:.75rem;color:var(--muted)}
+.ny-duzey button:hover{border-color:var(--ink-2)}
+.ny-duzey button.secili{border-color:var(--ink);background:var(--ink);color:var(--bg)}
+.ny-duzey button.secili small{color:inherit;opacity:.75}
+
+.ny-form input[type=text]{font:inherit;font-size:1.1rem;width:100%;min-height:52px;padding:10px 14px;border-radius:var(--r-sm);border:1.5px solid var(--line-2);background:var(--surface);color:var(--ink);box-sizing:border-box}
+.ny-form input[type=text]:focus{outline:2px solid var(--focus);outline-offset:1px;border-color:transparent}
+.ny-form input:disabled{opacity:.45}
+.ny-ipucu{margin:0;color:var(--muted);font-size:.9rem}
+.ny-puansiz{display:flex;align-items:center;gap:8px;color:var(--ink-2);font-size:.95rem;cursor:pointer;width:max-content}
+.ny-puansiz input{width:18px;height:18px;accent-color:var(--ink)}
+
+.ny-oneri-kap{position:relative}
+.ny-oneri{position:absolute;z-index:20;left:0;right:0;top:calc(100% + 4px);margin:0;padding:6px;list-style:none;background:var(--surface);border:1px solid var(--line-2);border-radius:var(--r-sm);box-shadow:0 12px 32px -12px rgba(0,0,0,.25);max-height:320px;overflow:auto}
+.ny-oneri-oge{padding:11px 12px;border-radius:8px;cursor:pointer;font-size:1rem}
+.ny-oneri-oge:hover,.ny-oneri-oge.secili{background:var(--surface-2)}
+
+.ny-git{min-height:56px;font-size:1.1rem;width:100%}
+.ny-hata{margin:0;color:var(--alert);font-weight:500}
+
+/* sonuç */
+#ny-sonuc{scroll-margin-top:80px}
+.ny-ozet{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;margin:28px 0 8px}
+.ny-kutu{display:flex;flex-direction:column;gap:2px;padding:16px;border-radius:var(--r);text-decoration:none;color:var(--ink);border:1px solid var(--line);background:var(--surface)}
+.ny-kutu b{font-size:2.2rem;line-height:1;letter-spacing:-.03em}
+.ny-kutu span{font-size:.92rem;color:var(--ink-2)}
+.ny-kutu.yesil{background:var(--lime-soft);border-color:transparent}
+.ny-kutu.yesil b{color:var(--lime-ink)}
+.ny-kutu.sari{background:#FFF6DB;border-color:transparent}
+.ny-kutu.sari b{color:#8A5A00}
+.ny-kutu.mavi{background:#E9F1FB;border-color:transparent}
+.ny-kutu.mavi b{color:#1F4E8C}
+:root[data-theme=dark] .ny-kutu.sari{background:#2B2410}
+:root[data-theme=dark] .ny-kutu.sari b{color:#F5C84B}
+:root[data-theme=dark] .ny-kutu.mavi{background:#132033}
+:root[data-theme=dark] .ny-kutu.mavi b{color:#8DB8F2}
+
+.ny-bolge{margin-top:34px;scroll-margin-top:80px}
+.ny-bolge h2,.ny-yetmiyor summary{font-size:1.3rem;margin:0 0 4px;display:flex;align-items:center;gap:8px}
+.ny-sayi{font-size:.85rem;font-weight:600;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:1px 9px;color:var(--ink-2)}
+.ny-alt{color:var(--muted);margin:0 0 14px}
+.ny-bos{color:var(--muted);background:var(--surface);border:1px dashed var(--line-2);border-radius:var(--r-sm);padding:14px;margin:8px 0 0}
+.ny-liste{display:grid;gap:10px}
+
+.ny-ilan{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:8px}
+.ny-ilan.acil{border-color:var(--alert)}
+.ny-ust{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.ny-kurum{font-size:.8rem;font-weight:600;letter-spacing:.01em;color:var(--muted)}
+.ny-gun{font-size:.85rem;font-weight:600;color:var(--ink-2);white-space:nowrap}
+.ny-ilan.acil .ny-gun{color:var(--alert)}
+.ny-ilan h3{margin:0;font-size:1.08rem;line-height:1.35}
+.ny-ilan h3 a{color:var(--ink);text-decoration:none}
+.ny-ilan h3 a:hover{text-decoration:underline}
+.ny-cipler{display:flex;flex-wrap:wrap;gap:6px}
+.ny-cipler span{font-size:.82rem;font-weight:500;padding:3px 9px;border-radius:999px;background:var(--surface-2);color:var(--ink-2)}
+.ny-cipler .iyi{background:var(--lime-soft);color:var(--lime-ink)}
+.ny-cipler .kotu{background:var(--alert-soft);color:var(--alert)}
+.ny-cipler .uyari{background:var(--alert-soft);color:var(--alert)}
+.ny-kadro{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.ny-kadro li{position:relative;padding-left:14px;font-size:.95rem}
+.ny-kadro li::before{content:"";position:absolute;left:0;top:.55em;width:6px;height:6px;border-radius:50%;background:var(--lime-ink)}
+.ny-kadro li span{display:block;color:var(--muted);font-size:.85rem}
+.ny-kadro .ny-kadro-ek{color:var(--muted);font-size:.85rem}
+.ny-kadro .ny-kadro-ek::before{display:none}
+.ny-dikkat{margin:6px 0 0;padding-left:18px;display:grid;gap:4px;font-size:.9rem}
+.ny-dugmeler{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 2px}
+.ny-mini{font:inherit;font-size:.9rem;font-weight:600;min-height:40px;padding:6px 14px;border-radius:999px;border:1.5px solid var(--line-2);background:var(--surface);color:var(--ink);cursor:pointer}
+.ny-mini:hover{border-color:var(--ink-2)}
+.ny-mini[aria-pressed=true]{background:var(--lime-soft);border-color:transparent;color:var(--lime-ink)}
+.ny-neden{margin:0;font-size:.92rem;color:var(--ink-2);border-left:3px solid #E8B400;padding-left:10px}
+.ny-nasil{border-top:1px solid var(--line);padding-top:8px}
+.ny-nasil summary{cursor:pointer;font-weight:600;color:var(--ink);list-style:none;display:flex;align-items:center;gap:6px;min-height:36px}
+.ny-nasil summary::-webkit-details-marker{display:none}
+.ny-nasil summary::after{content:"";width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translateY(-2px);margin-left:4px}
+.ny-nasil[open] summary::after{transform:rotate(-135deg) translateY(-2px)}
+.ny-nasil ol{margin:6px 0 2px;padding-left:20px;display:grid;gap:8px;font-size:.95rem;color:var(--ink-2)}
+.ny-nasil a{color:var(--ink);font-weight:500}
+
+.ny-merkezi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.ny-buyuk{margin:6px 0 4px;font-size:1.05rem}
+.ny-buyuk b{font-size:1.9rem;letter-spacing:-.02em;margin-right:4px}
+.ny-buyuk small{color:var(--muted);font-size:.88rem}
+.ny-kadrolar{list-style:none;margin:12px 0 14px;padding:0;display:grid}
+.ny-kadrolar li{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+.ny-kadrolar li>div:first-child{display:grid;gap:2px;min-width:0}
+.ny-kadrolar li>div:first-child span{font-size:.85rem;color:var(--muted)}
+.ny-taban{text-align:right;display:grid;gap:2px;flex:none}
+.ny-taban span{font-size:.78rem;color:var(--muted)}
+.ny-robot{display:inline-flex}
+.ny-dip{color:var(--faint);font-size:.82rem;margin:10px 0 0}
+
+.ny-yetmiyor summary{cursor:pointer;color:var(--ink-2)}
+.ny-yetmiyor .ny-liste{margin-top:12px}
+.ny-yetmiyor .ny-ilan{opacity:.8}
+
+.ny-son{display:flex;flex-wrap:wrap;gap:10px;margin-top:36px}
+.ny-son .btn{flex:1 1 220px;justify-content:center}
+
+@media (max-width:520px){
+  .ny-main{padding-top:18px}
+  .ny-form{padding:16px;gap:18px}
+  .ny-duzey button{font-size:.95rem;min-height:54px}
+  .ny-ozet{grid-template-columns:1fr}
+  .ny-kutu{flex-direction:row;align-items:center;gap:14px;padding:12px 16px}
+  .ny-kutu b{font-size:1.8rem;min-width:2ch}
+  .ny-kutu span{font-size:.95rem}
+}
+.ny-ara{font-size:.95rem;margin:14px 0 0;color:var(--ink-2)}

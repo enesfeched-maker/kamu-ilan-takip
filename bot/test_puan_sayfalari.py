@@ -170,5 +170,123 @@ class PuanSayfalariTest(unittest.TestCase):
             self.assertNotIn('döneminde aynı aralıkta', h)   # önceki dönem yok
 
 
+class BolumSayfalariTest(unittest.TestCase):
+    """Üniversite bölümüne göre sayfalar (docs/kpss-taban-puanlari/<düzey>/bolumler/)."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.docs = Path(self.tmp.name)
+        (self.docs / 'puanlar').mkdir()
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def kur(self, donemler, nitelikler, bolumler=None):
+        """donemler: {dönem: [(nit kodu, min), ...]} — her kadro ayrı, uzun kurum adıyla (ince sayfa kalkanı geçsin)."""
+        veri = {'donemler': {d: [dict(satir('HEMŞİRE', m, kurum=f'Büyükşehir Belediyesi Sağlık Hizmetleri Müdürlüğü {i} ve Bağlı Kuruluşları', kont=3, yer=2),
+                                   nit=[n]) for i, (n, m) in enumerate(rows)] for d, rows in donemler.items()}}
+        bolumler = bolumler or {'3204': 'HEMŞİRELİK', '3205': 'Hemşirelik', '3300': 'EBELİK', '3400': 'DİYETİSYENLİK'}
+        (self.docs / 'puanlar' / 'lisans.json').write_text(json.dumps(veri, ensure_ascii=False), encoding='utf-8')
+        (self.docs / 'puanlar' / 'lisans-bolum.json').write_text(json.dumps({'bolumler': bolumler, 'nitelikler': nitelikler}, ensure_ascii=False), encoding='utf-8')
+        self.urls = ps.puan_sayfalarini_uret(self.docs, BASE)
+        self.k = self.docs / 'kpss-taban-puanlari' / 'lisans'
+
+    def sayfa(self, slug):
+        return (self.k / 'bolumler' / slug / 'index.html').read_text(encoding='utf-8')
+
+    def test_ozel_acik_onek_ve_okunamayan(self):
+        # 'ozel': tam kod; 'acik': '*'; 'onek': '3200-*' (3204/3205 ile eşleşmez, ön ek '3204-'), 'okun': '?'
+        nit = {'a': ['3204'], 'b': ['*'], 'c': ['3204-*', '3300'], 'd': ['?'], 'e': ['3205']}
+        veri = {'donemler': {'2026-1': [satir('X', 70.0, kurum='K')]}}
+        bolum = {'bolumler': {'3204': 'HEMŞİRELİK', '3204-1': 'HEMŞİRELİK (İÖ)', '3205': 'Hemşirelik', '3300': 'EBELİK'},
+                 'nitelikler': {'2026-1': nit}}
+        kadrolar = [dict(satir('X', 70.0), nit=[n]) for n in nit]
+        veri = {'donemler': {'2026-1': kadrolar}}
+        ozel, acik, donemler = ps.bolum_satirlari(veri, bolum)
+        hem = ps._kucuk('HEMŞİRELİK')
+        self.assertEqual(sorted(r['nit'][0] for _, r in ozel[hem]), ['a', 'e'])   # a: kod, e: aynı adlı 3205 (c yalnız '3204-1' koduna ön ekle bağlı)
+        self.assertEqual([r['nit'][0] for _, r in ozel[ps._kucuk('HEMŞİRELİK (İÖ)')]], ['c'])   # '3204-*' ön eki
+        self.assertEqual(sorted(r['nit'][0] for _, r in ozel[ps._kucuk('EBELİK')]), ['c'])
+        self.assertEqual([r['nit'][0] for _, r in acik], ['b'])                         # '*' özel sayılmaz, ayrı sayılır
+        self.assertNotIn('d', {r['nit'][0] for l in ozel.values() for _, r in l})       # '?' yok sayılır
+        self.assertEqual(donemler, ['2026-1'])
+        # '3204-*' ön eki '3204-1' koduna uyar ama '32041' gibi koda uymaz (puanlar.js ile aynı: kod ön ekle başlar)
+        self.assertEqual(ps._liste_bolumleri(['3204-*'], {'3204-1': 'a', '32041': 'b'}, ['3204-1', '32041']), {'a'})
+
+    def test_esik_9_satirda_sayfa_yok_10da_var(self):
+        for n, var in ((9, False), (10, True)):
+            with self.subTest(n=n):
+                self.kur({'2026-1': [('a', 70.0 + i) for i in range(n)]}, {'2026-1': {'a': ['3204']}})
+                self.assertEqual((self.k / 'bolumler' / 'hemsirelik' / 'index.html').exists(), var)
+                self.assertEqual((self.k / 'bolumler' / 'index.html').exists(), var)
+                self.assertEqual('Bölümüne göre bak' in (self.k / 'index.html').read_text(encoding='utf-8'), var)
+
+    def test_puansiz_satir_esige_sayilmaz(self):
+        self.kur({'2026-1': [('a', 70.0 + i) for i in range(9)] + [('a', None)]}, {'2026-1': {'a': ['3204']}})
+        self.assertFalse((self.k / 'bolumler' / 'hemsirelik').exists())
+
+    def test_son_dort_donem_penceresi(self):
+        # 5 dönemden en eski (2022-1) dışarıda kalır: yalnız o dönemdeki 10 kadro eşiği geçirmemeli
+        don = {'2022-1': [('a', 60.0 + i) for i in range(10)], '2023-1': [('z', 70.0)], '2024-1': [('z', 70.0)],
+               '2025-1': [('z', 70.0)], '2026-1': [('z', 70.0)]}
+        nit = {d: {'a': ['3204'], 'z': ['3300']} for d in don}
+        self.kur(don, nit)
+        self.assertFalse((self.k / 'bolumler' / 'hemsirelik').exists())
+        self.assertEqual(ps.bolum_satirlari({'donemler': {d: [dict(satir('X', 1.0), nit=['a'])] for d in don}}, {'bolumler': {'3204': 'H'}, 'nitelikler': nit})[2],
+                         ['2023-1', '2024-1', '2025-1', '2026-1'])
+
+    def test_ayni_adli_kodlar_birlesir_ve_acik_cumlesi(self):
+        # 3204 ve 3205 aynı bölüm (büyük/küçük harf farkı); kadrolar ayrı kodlara bağlı → tek sayfada 10 kadro
+        nit = {'a': ['3204'], 'b': ['3205'], 'x': ['*']}
+        rows = [('a', 70.0 + i) for i in range(5)] + [('b', 80.0 + i) for i in range(5)] + [('x', 50.0)]
+        self.kur({'2026-1': rows}, {'2026-1': nit})
+        h = self.sayfa('hemsirelik')
+        self.assertIn('10 kadro vardı', h)
+        self.assertIn('Ayrıca bu dönemlerde 1 kadro tüm lisans bölümlerine açıktı.', h)
+        self.assertIn('<h1>Hemşirelik mezunları KPSS ile hangi kadrolara atanır?</h1>', h)
+        self.assertEqual(sorted(p.name for p in (self.k / 'bolumler').iterdir() if p.is_dir()), ['hemsirelik'])   # ebelik eşik altında
+
+    def test_cta_baglantisi_kodlanir(self):
+        self.kur({'2026-1': [('a', 70.0 + i) for i in range(10)]}, {'2026-1': {'a': ['3204']}}, {'3204': 'AĞIZ VE DİŞ SAĞLIĞI & HİZMETLERİ'})
+        h = self.sayfa('agiz-ve-dis-sagligi-hizmetleri')
+        self.assertIn('href="../../../../nereye/?d=lisans&amp;b=A%C4%9F%C4%B1z%20ve%20Di%C5%9F%20Sa%C4%9Fl%C4%B1%C4%9F%C4%B1%20%26%20Hizmetleri"', h)
+        self.assertIn('Puanını gir, tercih robotunu dene →', h)
+        self.assertIn('Puanınla şu an hangi ilanlara başvurabileceğini gör →', h)
+
+    def test_dizin_duzey_sayfasi_ve_site_haritasi(self):
+        self.kur({'2026-1': [('a', 70.0 + i) for i in range(10)] + [('b', 50.0 + i) for i in range(10)]},
+                 {'2026-1': {'a': ['3204'], 'b': ['3400']}})
+        dizin = (self.k / 'bolumler' / 'index.html').read_text(encoding='utf-8')
+        self.assertIn('<a href="diyetisyenlik/">Diyetisyenlik</a>', dizin)
+        self.assertLess(dizin.index('Diyetisyenlik'), dizin.index('Hemşirelik'))   # alfabetik
+        self.assertIn('href="../">', dizin)
+        self.assertIn('<a href="bolumler/">', (self.k / 'index.html').read_text(encoding='utf-8'))
+        self.assertIn(BASE + 'kpss-taban-puanlari/lisans/bolumler/', self.urls)
+        self.assertIn(BASE + 'kpss-taban-puanlari/lisans/bolumler/hemsirelik/', self.urls)
+        self.assertIn(BASE + 'kpss-taban-puanlari/lisans/bolumler/diyetisyenlik/', self.urls)
+        self.assertIn('BreadcrumbList', self.sayfa('hemsirelik'))
+        self.assertIn('<a href="../">Bölümler</a>', self.sayfa('hemsirelik'))
+
+    def test_turkce_alfabe_sirasi(self):
+        self.assertEqual(sorted(['Zeytin', 'Çay', 'Cam', 'İnci', 'Irmak', 'Şeker', 'Sera', 'Ödev', 'Oda'], key=ps._tr_anahtar),
+                         ['Cam', 'Çay', 'Irmak', 'İnci', 'Oda', 'Ödev', 'Sera', 'Şeker', 'Zeytin'])
+
+    def test_kalkan_inceyi_haritaya_almaz_ve_eski_klasor_silinir(self):
+        import ince_sayfa
+        # kısa kurum adı: sayfa 250 kelimenin altında kalır → noindex, haritada yok
+        veri = {'donemler': {'2026-1': [dict(satir('X', 70.0 + i, kurum='K'), nit=['a']) for i in range(10)]}}
+        (self.docs / 'puanlar' / 'lisans.json').write_text(json.dumps(veri), encoding='utf-8')
+        (self.docs / 'puanlar' / 'lisans-bolum.json').write_text(json.dumps({'bolumler': {'3204': 'HEMŞİRELİK'}, 'nitelikler': {'2026-1': {'a': ['3204']}}}), encoding='utf-8')
+        urls = ps.puan_sayfalarini_uret(self.docs, BASE)
+        h = (self.docs / 'kpss-taban-puanlari' / 'lisans' / 'bolumler' / 'hemsirelik' / 'index.html').read_text(encoding='utf-8')
+        self.assertLess(ince_sayfa.ana_kelime_sayisi(h), ince_sayfa.MIN_KELIME)
+        self.assertIn('noindex', h)
+        self.assertNotIn(BASE + 'kpss-taban-puanlari/lisans/bolumler/hemsirelik/', urls)
+        # bölüm kalkınca klasörü de kalkar
+        (self.docs / 'puanlar' / 'lisans-bolum.json').write_text(json.dumps({'bolumler': {}, 'nitelikler': {}}), encoding='utf-8')
+        ps.puan_sayfalarini_uret(self.docs, BASE)
+        self.assertFalse((self.docs / 'kpss-taban-puanlari' / 'lisans' / 'bolumler').exists())
+
+
 if __name__ == '__main__':
     unittest.main()

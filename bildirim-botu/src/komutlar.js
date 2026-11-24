@@ -15,6 +15,8 @@ const YARDIM_METNI =
   '/start - Başlangıç ve kurulum\n' +
   '/ayarlar - Tercihlerini gör ve düzenle\n' +
   '/kelime - Anahtar kelime filtresi\n' +
+  '/puan - KPSS puanını kaydet\n' +
+  '/nereye - Puanına göre başvurabileceğin ilanlar\n' +
   '/durdur - Bildirimleri durdur\n' +
   '/devam - Bildirimleri sürdür\n' +
   '/sil - Tüm verilerimi sil\n' +
@@ -23,6 +25,8 @@ const YARDIM_METNI =
 const ONCE_START = 'Önce /start yazıp onay vermelisin.';
 const KELIME_SORUSU =
   'Anahtar kelimeleri virgülle yaz (ör. hukuk, bilgisayar). Silmek için \'yok\' yaz.';
+
+const PUAN_SORUSU = 'KPSS puanını yaz (ör. 72,5). Silmek için \'yok\' yaz.';
 
 export const varsayilanBagimliliklar = {
   async acikIlanOzeti(env, kullanici) {
@@ -46,9 +50,33 @@ export function tercihOzeti(k) {
     `İl: ${kacis(il)}\n` +
     `Kategori: ${kacis(kat)}\n` +
     `Anahtar kelime: ${kacis(kel)}\n` +
+    `KPSS puanı: ${puanYaz(k.puan)}\n` +
     `Bildirimler: ${k.aktif ? 'Açık' : 'Durduruldu'}\n` +
     `Son gün hatırlatması: ${k.hatirlatma ? 'Açık' : 'Kapalı'}`
   );
+}
+
+export const puanYaz = (p) => (typeof p === 'number' ? String(p).replace('.', ',') : '—');
+
+// 'yok' → null; 1–100 arası sayı (virgül ya da nokta) → sayı; geçersiz → undefined.
+export function puanAyikla(metin) {
+  const t = String(metin || '').trim().toLocaleLowerCase('tr');
+  if (t === 'yok') return null;
+  if (!/^\d{1,3}([.,]\d{1,3})?$/.test(t)) return undefined;
+  const n = Number(t.replace(',', '.'));
+  return n >= 1 && n <= 100 ? n : undefined;
+}
+
+// /nereye bağlantısı: yalnız bilinen değerler eklenir.
+export function nereyeUrl(env, k) {
+  const taban = (env.SITE_URL || '') + 'nereye/';
+  const q = [];
+  const duz = ((k && k.duzeyler) || []).filter((d) => DUZEYLER.some(([kod]) => kod === d));
+  if (duz.length === 1) q.push('d=' + encodeURIComponent(duz[0]));
+  const b = k && k.kelimeler && k.kelimeler[0];
+  if (b) q.push('b=' + encodeURIComponent(b));
+  if (k && typeof k.puan === 'number') q.push('p=' + encodeURIComponent(String(k.puan)));
+  return q.length ? taban + '?' + q.join('&') : taban;
 }
 
 export function kelimeAyikla(metin) {
@@ -138,6 +166,13 @@ export async function mesajIsle(env, mesaj, bag = varsayilanBagimliliklar) {
         kelimeler.length ? `Anahtar kelimeler kaydedildi: ${kacis(kelimeler.join(', '))}` : 'Anahtar kelime filtresi kaldırıldı.',
       );
     }
+    if (k && k.onay && k.durum === 'puan_bekleniyor') {
+      const puan = puanAyikla(metin);
+      if (puan === undefined) return yolla(env, chat_id, 'Puan 1 ile 100 arasında olmalı (ör. 72,5). Silmek için \'yok\' yaz.');
+      const g = await kullaniciGuncelle(env, chat_id, (u) => { u.puan = puan; u.durum = null; });
+      if (!g) return;
+      return yolla(env, chat_id, puan === null ? 'KPSS puanı silindi.' : `KPSS puanın kaydedildi: ${puanYaz(puan)}`);
+    }
     return yolla(env, chat_id, 'Komutları görmek için /yardim yaz.');
   }
 
@@ -185,6 +220,15 @@ export async function mesajIsle(env, mesaj, bag = varsayilanBagimliliklar) {
     case 'kelime':
       if (!onayli) return yolla(env, chat_id, ONCE_START);
       return kelimeSor(env, k, null, false);
+    case 'puan':
+      if (!onayli) return yolla(env, chat_id, ONCE_START);
+      await kullaniciGuncelle(env, chat_id, (u) => { u.durum = 'puan_bekleniyor'; });
+      return yolla(env, chat_id, PUAN_SORUSU);
+    case 'nereye':
+      return yolla(
+        env, chat_id, 'Puanına ve bölümüne göre başvurabileceğin ilanlar:',
+        { inline_keyboard: [[{ text: 'Başvurabileceğin ilanları gör', url: nereyeUrl(env, k) }]] },
+      );
     case 'durdur':
       if (!onayli) return yolla(env, chat_id, ONCE_START);
       await kullaniciGuncelle(env, chat_id, (u) => { u.aktif = 0; });

@@ -52,12 +52,17 @@ doğru** yazmak. Hız değil doğruluk önemli. Belgede açıkça yazmayan hiçb
 
 - **kadrolar:** belgedeki her kadro/pozisyon satırı bir kayıt. `adet` asil kişi sayısı (yedek sayılmaz). Aynı unvan
   kadın/erkek, öğrenim ya da bölüm farkıyla ayrı satırdaysa unvanı ayırt et ("Zabıta Memuru — Kadın",
-  "Mühendis (Makine)"). `ogrenim`: ortaogretim, onlisans, lisans, yuksek_lisans. `puan_turu`: P3, P93, P94 gibi
-  (KPSS yoksa null). `en_dusuk_puan`: yazıyorsa sayı, yoksa null. `il`: görev yeri ili (yoksa null).
+  "Mühendis (Makine)"). `ogrenim` HER kadroda zorunlu: ilkogretim, ortaogretim, onlisans, lisans, yuksek_lisans,
+  doktora ("en az lise" → ortaogretim). `puan_turu`: P3, P93, P94 gibi (KPSS yoksa null). `en_dusuk_puan`: o kadro
+  için istenen en düşük KPSS puanı yazıyorsa sayı (1–100), yoksa null; yüzde ("%70") ya da YDS puanı buraya yazılmaz.
+  `il`: görev yeri ili (yoksa null). Bu alanlar sitedeki "Puanınla nereye başvurabilirsin?" aracında adayın
+  kadroya uyup uymadığına kadro kadro karar verir; yanlış ya da eksik değer adayı yanlış ilana yönlendirir.
 - **kosullar:** o kadroya ÖZEL şartlar: bölüm/mezuniyet, sertifika, ehliyet, deneyim, cinsiyet, yaş (kadroya özelse).
   Her biri tek kısa cümle, en çok 140 karakter, "…mezun olmak" biçimi. En önemli 5 madde.
   İSTİSNA: bölüm/mezuniyet maddesinde belgedeki bütün bölüm/program adlarını eksiksiz yaz; "vb.", "gibi",
-  "belirtilen" diye kısaltma (aday kendi bölümünü arar). Bu maddede karakter sınırı yok.
+  "belirtilen" diye kısaltma (aday kendi bölümünü arar). Bu maddede karakter sınırı yok. Önlisans ve üstü her kadroda
+  bir mezuniyet maddesi bulunmalı; bölüm şartı yoksa "Herhangi bir lisans programından mezun olmak." gibi yaz.
+  `kaydet` bölüm listesi "vb."/"…" ile kısaltılmış ya da mezuniyet maddesi olmayan kadroyu reddeder ("Atlandı").
 - **ortak_kosullar:** tüm kadrolar için geçerli, en çok 5 madde: yaş sınırı, boy-kilo, KPSS yılı/grubu, başvuru yeri ve
   şekli, sınav usulü/tarihi. 657 sayılı Kanun 48. madde genel şartlarını (Türk vatandaşı olmak, kamu hakları, adli sicil,
   askerlik, sağlık), mevzuat numaralarını ve "belirtilmemiş" gibi dolgu maddelerini YAZMA.

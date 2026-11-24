@@ -307,3 +307,65 @@ test('/sil üç silmeyi tek batch ile yapar', async () => {
   assert.equal(env.DB.durum.batch, 1);
   assert.equal(await kullaniciGetir(env, 1), null);
 });
+
+test('/puan: kaydeder (virgül ve nokta), geçersizi reddeder, yok siler', async () => {
+  await gonder(cb(1, 'onay'));
+  await gonder(mesaj(1, '/puan'));
+  assert.equal(metinler().at(-1), "KPSS puanını yaz (ör. 72,5). Silmek için 'yok' yaz.");
+  assert.equal((await kullaniciGetir(env, 1)).durum, 'puan_bekleniyor');
+  await gonder(mesaj(1, '72,5'));
+  let k = await kullaniciGetir(env, 1);
+  assert.equal(k.puan, 72.5);
+  assert.equal(k.durum, null);
+  await gonder(mesaj(1, '/puan'));
+  await gonder(mesaj(1, '80.25'));
+  assert.equal((await kullaniciGetir(env, 1)).puan, 80.25);
+  for (const kotu of ['abc', '0', '101', '-5', '1e2', '72,5,1', '']) {
+    await gonder(mesaj(1, '/puan'));
+    if (kotu) await gonder(mesaj(1, kotu));
+    assert.equal((await kullaniciGetir(env, 1)).puan, 80.25, kotu);
+  }
+  await gonder(mesaj(1, '/puan'));
+  await gonder(mesaj(1, 'abc'));
+  assert.equal((await kullaniciGetir(env, 1)).durum, 'puan_bekleniyor');
+  assert.match(metinler().at(-1), /1 ile 100/);
+  await gonder(mesaj(1, 'YOK'));
+  k = await kullaniciGetir(env, 1);
+  assert.equal(k.puan, null);
+  assert.equal(k.durum, null);
+});
+
+test('/puan onaysız kullanıcıya önce /start der; /yardim ve /ayarlar puanı gösterir', async () => {
+  await gonder(mesaj(1, '/puan'));
+  assert.equal(metinler().at(-1), 'Önce /start yazıp onay vermelisin.');
+  await gonder(cb(1, 'onay'));
+  await gonder(mesaj(1, '/ayarlar'));
+  assert.match(metinler().at(-1), /KPSS puanı: —/);
+  await gonder(mesaj(1, '/puan'));
+  await gonder(mesaj(1, '72,5'));
+  await gonder(mesaj(1, '/ayarlar'));
+  assert.match(metinler().at(-1), /KPSS puanı: 72,5/);
+  await gonder(mesaj(1, '/yardim'));
+  assert.match(metinler().at(-1), /\/puan[\s\S]*\/nereye/);
+});
+
+test('/nereye: bağlantı yalnız bilinen değerlerle kurulur ve doğru kodlanır', async () => {
+  const dugme = () => butonlar(tgs.son('sendMessage'))[0];
+  await gonder(mesaj(1, '/nereye')); // kayıtsız kullanıcı
+  assert.equal(tgs.son('sendMessage').params.text, 'Puanına ve bölümüne göre başvurabileceğin ilanlar:');
+  assert.equal(dugme().text, 'Başvurabileceğin ilanları gör');
+  assert.equal(dugme().url, 'https://ornek.test/nereye/');
+  await gonder(cb(1, 'onay'));
+  await gonder(mesaj(1, '/nereye'));
+  assert.equal(dugme().url, 'https://ornek.test/nereye/');
+  await gonder(cb(1, 'd:e:lisans'));
+  await gonder(mesaj(1, '/kelime'));
+  await gonder(mesaj(1, 'Bilgisayar Mühendisliği & Yazılım, hukuk'));
+  await gonder(mesaj(1, '/puan'));
+  await gonder(mesaj(1, '72,5'));
+  await gonder(mesaj(1, '/nereye'));
+  assert.equal(dugme().url, 'https://ornek.test/nereye/?d=lisans&b=bilgisayar%20m%C3%BChendisli%C4%9Fi%20%26%20yaz%C4%B1l%C4%B1m&p=72.5');
+  await gonder(cb(1, 'd:e:onlisans')); // iki düzey: d yazılmaz
+  await gonder(mesaj(1, '/nereye'));
+  assert.equal(dugme().url, 'https://ornek.test/nereye/?b=bilgisayar%20m%C3%BChendisli%C4%9Fi%20%26%20yaz%C4%B1l%C4%B1m&p=72.5');
+});

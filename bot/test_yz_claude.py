@@ -89,6 +89,41 @@ class Akis(unittest.TestCase):
         self.assertIn('yz_kadrolar', yz_isle.uygula(ILAN, veri, SIMDI))
 
 
+class Dogrulama(unittest.TestCase):
+    """24 Kasım 2026: kadro kadro eşleştirme (nereye aracı) için zorunlu alanlar."""
+    def _kadro(self, **ek):
+        k = {'unvan': 'Hemşire', 'adet': 2, 'ogrenim': 'lisans', 'puan_turu': 'P3', 'en_dusuk_puan': 60,
+             'kosullar': ['Hemşirelik lisans programından mezun olmak.']}
+        k.update(ek)
+        return {'kadrolar': [k], 'okunabilirlik': 'iyi'}
+
+    def test_ornek_cikti_gecerli(self):
+        self.assertEqual(yc.dogrula(CIKTI), [])
+        self.assertEqual(yc.dogrula(self._kadro()), [])
+        self.assertEqual(yc.dogrula(self._kadro(ogrenim='ortaogretim', kosullar=['B sınıfı sürücü belgesi.'])), [])   # lisede bölüm maddesi şart değil
+
+    def test_kisaltilmis_bolum_listesi_reddedilir(self):
+        for m in ('Bilgisayar, Elektrik vb. mühendislik bölümlerinden mezun olmak.',
+                  'Hemşirelik, Ebelik… bölümlerinden mezun olmak.', 'Fizik, Kimya vs. programlarından mezun olmak.'):
+            self.assertTrue(any('kısaltılmış' in s for s in yc.dogrula(self._kadro(kosullar=[m]))), m)
+
+    def test_mezuniyet_maddesi_ve_ogrenim_zorunlu(self):
+        self.assertTrue(any('mezuniyet maddesi yok' in s for s in yc.dogrula(self._kadro(kosullar=['B sınıfı sürücü belgesi.']))))
+        self.assertTrue(any('ogrenim' in s for s in yc.dogrula(self._kadro(ogrenim=None))))
+        self.assertTrue(any('ogrenim' in s for s in yc.dogrula(self._kadro(ogrenim='universite'))))
+
+    def test_puan_alanlari(self):
+        self.assertTrue(any('en_dusuk_puan' in s for s in yc.dogrula(self._kadro(en_dusuk_puan=170))))
+        self.assertTrue(any('en_dusuk_puan' in s for s in yc.dogrula(self._kadro(en_dusuk_puan='70'))))
+        self.assertTrue(any('puan_turu' in s for s in yc.dogrula(self._kadro(puan_turu='yüzde 70'))))
+        self.assertEqual(yc.dogrula(self._kadro(en_dusuk_puan=None, puan_turu=None)), [])
+        self.assertEqual(yc.dogrula(self._kadro(puan_turu='KPSSP3')), [])
+
+    def test_okunamayan_belgede_zorunlu_alan_aranmaz(self):
+        self.assertEqual(yc.dogrula({'kadrolar': [], 'okunabilirlik': 'kotu'}), [])
+        self.assertEqual(yc.dogrula({'kadrolar': [{'unvan': 'X'}], 'okunabilirlik': 'kotu'}), [])
+
+
 class Bekleme(unittest.TestCase):
     def test_claude_okuyana_kadar_4_saat_beklenir(self):
         self.assertEqual(yz_isle.yayina_hazir(ILAN, {}, SIMDI.replace(hour=16))[0], False)   # 3,5 saat
