@@ -6,14 +6,22 @@
   const $ = (id) => document.getElementById(id);
   const AY = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
   const FORM = {
-    ortaogretim: { bolumEt: 'Alanın / dalın', ornek: 'ör. Muhasebe ve Finansman' },
-    onlisans: { bolumEt: 'Bölümün', ornek: 'ör. Tıbbi Dokümantasyon ve Sekreterlik' },
-    lisans: { bolumEt: 'Bölümün', ornek: 'ör. Hemşirelik' },
+    ortaogretim: { bolumEt: 'Lisedeki alanın ne?', ornek: 'ör. Muhasebe ve Finansman' },
+    onlisans: { bolumEt: 'Bölümün ne?', ornek: 'ör. Tıbbi Dokümantasyon ve Sekreterlik' },
+    lisans: { bolumEt: 'Bölümün ne?', ornek: 'ör. Hemşirelik' },
   };
   const SINIR = 2;          // merkezi atamada "sınırda" sayılan puan farkı
   const MERKEZI_ILK = 8;
   const DONEM_SAYI = 4;     // merkezi atamada bakılan son tercih dönemi sayısı
   const SITE = 'https://kpsstercihi.com/';
+  // Bildirim (Web Push): bildirim botu Worker'ı. VAPID_ACIK boşsa yalnız bu cihazda kayıt yapılır (bildirim kapalı).
+  const API = 'https://kamu-ilan-bildirim.kamuilan.workers.dev';
+  const VAPID_ACIK = '';
+  const KAYIT = 'kit-nereye-kayit', BILDIRIM = 'kit-nereye-bildirim';
+  // sabit simgeler (yalnız bu dosyadaki sabit metin; kullanıcı verisi asla HTML olarak eklenmez)
+  const OK_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  const ZIL_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>';
+  const YILDIZ_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg>';
 
   const h = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
   const A = (t, p) => { try { if (window.kpssA) window.kpssA(t, p); } catch (e) { /* analiz yok */ } };
@@ -141,6 +149,7 @@
   function ilanKart(x, puan) {
     const r = x.rec, key = x.anahtar, g = kalanGun(r), yontem = C.basvuruSekli(r);
     const kap = h('article', 'ny-ilan' + (g !== null && g <= 3 ? ' acil' : ''));
+    kap.dataset.anahtar = key;
     const ust = h('div', 'ny-ust');
     ust.append(h('span', 'ny-kurum', r.kurum || 'Kurum'));
     if (baslamadi(r)) ust.append(h('span', 'ny-gun', 'Başvuru başlangıcı: ' + tarihYaz((r.baslangic_zaman || '').slice(0, 10))));
@@ -173,6 +182,13 @@
     if (cip.children.length) kap.append(cip);
     if (x.neden && x.grup !== 'hemen') kap.append(h('p', 'ny-neden', x.neden + '.'));
     if (x.grup === 'yetmiyor') return kap;
+    // tek büyük eylem: başvuru sayfası varsa oraya, yoksa ilanın tamamına
+    const ey = h('div', 'ny-eylem'), bv = h('a', 'ny-basvur');
+    if (yontem.link) { bv.href = yontem.link; bv.target = '_blank'; bv.rel = 'noopener'; bv.append('Başvur'); }
+    else { bv.href = ilanUrl(key); bv.append('İlanı aç'); }
+    bv.insertAdjacentHTML('beforeend', OK_SVG);
+    bv.addEventListener('click', () => A('tikla', { a: 'nereye_basvur', x: r.kurum || '' }));
+    ey.append(bv); kap.append(ey);
 
     const d = h('details', 'ny-nasil'), sm = h('summary', '', 'Nasıl başvururum?'), ol = h('ol');
     const l1 = h('li'); l1.append(h('b', '', 'Nereden: '), yontem.ad);
@@ -293,6 +309,85 @@
     return son;
   }
 
+  /* ---------- aramayı kaydet + bildirim ---------- */
+  function kayitOku() { const k = oku(KAYIT); return k && typeof k === 'object' && FORM[k.d] ? k : null; }
+  function ayniArama(k, d, b, p) {
+    return !!k && k.d === d && E.fold(k.b || '') === E.fold(b || '') && (k.p == null ? null : Number(k.p)) === (p == null ? null : p);
+  }
+  function b64u(s) {
+    const t = atob(s.replace(/-/g, '+').replace(/_/g, '/') + '==='.slice((s.length + 3) % 4));
+    const u = new Uint8Array(t.length); for (let i = 0; i < t.length; i++) u[i] = t.charCodeAt(i); return u;
+  }
+  function pushDestek() { return 'serviceWorker' in navigator && 'PushManager' in window && typeof Notification !== 'undefined'; }
+  async function bildirimAc(d, b, p) {
+    if (!VAPID_ACIK) return 'yerel';
+    if (!pushDestek()) return 'desteksiz';
+    const izin = await Notification.requestPermission();
+    if (izin !== 'granted') return 'izinyok';
+    const reg = await navigator.serviceWorker.register('/sw.js', { scope: '/' });
+    await navigator.serviceWorker.ready;
+    const sub = (await reg.pushManager.getSubscription()) || (await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64u(VAPID_ACIK) }));
+    const r = await fetch(API + '/web/abone', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ abonelik: sub.toJSON(), duzey: d, bolum: b, puan: p }) });
+    if (!r.ok) throw new Error(String(r.status));
+    yaz(BILDIRIM, { endpoint: sub.endpoint });
+    return 'acik';
+  }
+  async function bildirimKapat() {
+    const kb = oku(BILDIRIM);
+    try { localStorage.removeItem(BILDIRIM); } catch (e) { /* depolama kapalı */ }
+    if (!kb || !pushDestek()) return;
+    try {
+      const reg = await navigator.serviceWorker.getRegistration('/');
+      const sub = reg && (await reg.pushManager.getSubscription());
+      if (sub) await sub.unsubscribe();
+      await fetch(API + '/web/sil', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ endpoint: kb.endpoint }) });
+    } catch (e) { /* sunucu silinemedi: sonraki gönderimde 410 ile düşer */ }
+  }
+  const DURUM_YAZI = {
+    acik: 'Tamam! Bölümüne uygun yeni ilan çıkınca telefonuna bildirim gelecek.',
+    yerel: 'Aramanı kaydettik. Siteye her girdiğinde yeni ilanları en üstte göreceksin.',
+    desteksiz: 'Aramanı kaydettik. Bu tarayıcı bildirim göstermiyor; telefonda siteyi ana ekrana ekleyince bildirim de gelir.',
+    izinyok: 'Bildirime izin verilmedi; aramanı yine de kaydettik.',
+    hata: 'Bildirim şu an açılamadı; aramanı kaydettik, sonra tekrar dene.',
+  };
+  function kaydetBolumu(d, b, p, gorunur) {
+    const s = h('section', 'ny-kaydet'); s.id = 'ny-kaydet';
+    const bas = h('div', 'ny-kaydet-bas'); bas.insertAdjacentHTML('afterbegin', ZIL_SVG);
+    const aciklama = h('p');
+    const bm = h('div'); bm.append(h('h2', '', 'Yeni ilan çıkınca haber verelim'), aciklama);
+    bas.append(bm);
+    const dg = h('button', 'ny-git'); dg.type = 'button';
+    const not = h('p', 'ny-kaydet-not'); not.setAttribute('role', 'status');
+    const sil = h('button', 'ny-kaydet-dur', 'Kaydı sil'); sil.type = 'button';
+    const ciz = () => {
+      const kayitli = ayniArama(kayitOku(), d, b, p);
+      dg.textContent = kayitli ? 'Kaydedildi ✓' : (VAPID_ACIK ? 'Kaydet ve bildirim al' : 'Aramayı kaydet');
+      dg.setAttribute('aria-pressed', String(kayitli));
+      sil.hidden = !kayitli;
+      aciklama.textContent = kayitli
+        ? (oku(BILDIRIM) ? 'Bu arama kayıtlı. Yeni ilan çıkınca bildirim gelecek.' : 'Bu arama kayıtlı. Siteye her girdiğinde yeni ilanlar en üstte.')
+        : 'Bu aramayı kaydet; bölümüne uygun yeni ilan gelince sana bildirelim.';
+    };
+    dg.onclick = async () => {
+      if (ayniArama(kayitOku(), d, b, p)) return;
+      yaz(KAYIT, { d, b, p, gorulen: gorunur.slice(0, 300), t: bugun() });
+      ciz(); dg.disabled = true;
+      let sonuc;
+      try { sonuc = await bildirimAc(d, b, p); } catch (e) { sonuc = 'hata'; }
+      dg.disabled = false; not.textContent = DURUM_YAZI[sonuc];
+      A('tikla', { a: 'nereye_kaydet', x: sonuc });
+    };
+    sil.onclick = async () => {
+      try { localStorage.removeItem(KAYIT); } catch (e) { /* depolama kapalı */ }
+      await bildirimKapat();
+      ciz(); not.textContent = 'Kayıt silindi.';
+      A('tikla', { a: 'nereye_kayit_sil', x: d });
+    };
+    ciz();
+    s.append(bas, dg, not, sil);
+    return s;
+  }
+
   function hata(m) { const e = $('ny-hata'); e.textContent = m || ''; e.hidden = !m; }
   function durum(m) { const e = $('ny-durum'); e.textContent = m || ''; e.hidden = !m; }
 
@@ -330,7 +425,7 @@
     if (merkeziVar) ozet.append(kutu(m.uygun.length, 'tercih kadrosu puanına yetiyor', 'ny-merkezi', 'mavi'));
     kap.append(ozet);
 
-    kap.append(bolge('ny-hemen', 'Şimdi başvurabilirsin', 'Kadro şartı bölümünü ve düzeyini kabul ediyor' + (puan !== null ? ', puanın yetiyor' : '') + '. Diğer şartları (yaş, deneyim, belge) ilandan oku. Son günü en yakın olan üstte.', gruplar.hemen,
+    kap.append(bolge('ny-hemen', 'Şimdi başvurabilirsin', 'Bölümün' + (puan !== null ? ' ve puanın' : '') + ' tutuyor. Yaş, deneyim gibi şartlara ilanda bak.', gruplar.hemen,
       'Şu an bölümüne açık ilan yok. Yeni ilan çıkınca Telegram kanalında duyuruyoruz.', puan));
     if (gruplar.kontrol.length) kap.append(bolge('ny-kontrol', 'Kontrol et', 'Uygun olabilirsin ama bir şartı ilandan okuman gerek.', gruplar.kontrol, '', puan));
     kap.append(merkeziBolge(m, puan, duzey, bolumMetni));
@@ -345,6 +440,23 @@
     };
     kapaliListe(gruplar.okunamadi, 'Şartı okunamayan ilanlar', 'Bölüm şartını siteye alamadık; seni kapsıyor olabilir. Belgesine bakmak gerek.');
     kapaliListe(gruplar.yetmiyor, 'Puanın yetmeyen ilanlar');
+    // kayıtlı aramada son bakıştan beri gelen ilanlar en üstte duyurulur; görülenler güncellenir
+    const gorunur = gruplar.hemen.concat(gruplar.kontrol).map((x) => x.anahtar);
+    const kayit = kayitOku();
+    if (ayniArama(kayit, duzey, bolumMetni, puan)) {
+      const eski = new Set(kayit.gorulen || []);
+      const yeniler = gruplar.hemen.concat(gruplar.kontrol).filter((x) => !eski.has(x.anahtar));
+      if (yeniler.length) {
+        const y = h('p', 'ny-yeni'); y.insertAdjacentHTML('afterbegin', YILDIZ_SVG);
+        y.append('Son bakışından beri ' + yeniler.length + ' yeni ilan var');
+        kap.insertBefore(y, ozet);
+        for (const x of yeniler) { const el = kap.querySelector('[data-anahtar="' + CSS.escape(x.anahtar) + '"] .ny-ust'); if (el) el.append(h('span', 'ny-yeni-rozet', 'YENİ')); }
+      }
+      yaz(KAYIT, Object.assign({}, kayit, { gorulen: gorunur.slice(0, 300), t: bugun() }));
+    }
+    // kaydet/bildirim kutusu özetin hemen altında: aşağı kaydırmadan görülsün
+    kap.insertBefore(kaydetBolumu(duzey, bolumMetni, puan, gorunur), ozet.nextSibling);
+    $('ny-bekle').hidden = true;
     kap.append(paylasDugmeleri({ sayi: gruplar.hemen.length, merkezi: merkeziVar ? m.uygun.length : null, duzey: C.DUZEY[duzey].ad, duzeyKod: duzey, bolum: bolumMetni ? buyukHarf(bolumMetni) : '', puan }));
 
     /* Profil: ana sayfa ve Tercih Robotu aynı bilgiyi kullanır (iller ve diğer alanlar korunur). */
@@ -380,7 +492,15 @@
     $('ny-puansiz').addEventListener('change', (e) => { $('ny-puan').disabled = e.target.checked; if (e.target.checked) $('ny-puan').value = ''; });
     $('ny-form').addEventListener('submit', (e) => { e.preventDefault(); calistir(); });
 
-    const q = new URLSearchParams(location.search), pr = oku('kit-profil');
+    const q = new URLSearchParams(location.search), pr = oku('kit-profil'), kayit = kayitOku();
+    // kayıtlı arama varsa ve adreste başka arama yoksa sayfa onunla açılır (yeni ilanlar üstte gösterilir)
+    if (!q.get('d') && kayit) {
+      duzeySec(kayit.d);
+      inp.value = String(kayit.b || '').slice(0, 120);
+      if (kayit.p == null) { $('ny-puansiz').checked = true; $('ny-puan').disabled = true; } else $('ny-puan').value = String(kayit.p).replace('.', ',');
+      calistir();
+      return;
+    }
     const prOk = pr && typeof pr === 'object' && pr.atlandi !== true && FORM[pr.ogrenim];
     const d0 = FORM[q.get('d')] ? q.get('d') : prOk ? pr.ogrenim : 'lisans';
     duzeySec(d0);

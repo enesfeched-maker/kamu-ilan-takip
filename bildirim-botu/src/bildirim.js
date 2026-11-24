@@ -3,6 +3,7 @@ import { tg as gercekTg } from './telegram.js';
 import { uygunMu, bugunIstanbul, sureDoldu, kelimelerKucult } from './eslestir.js';
 import { sponsorlariOku, sponsorSec } from './sponsor.js';
 import { sosyalIsle, sosyalZamaniGeldi } from './sosyal.js';
+import { webAcik, webIsle } from './web.js';
 
 const GERCEK_BEKLE = (ms) => new Promise((r) => setTimeout(r, ms));
 const SQL_BUTCE = 40; // çağrı başına D1 ifadesi
@@ -307,6 +308,18 @@ export async function cronCalistir(env, simdi = new Date(), bagimliliklar = {}) 
       if (ilanlar) await tara(ilanlar);
     }
 
+    // 4) Web Push aboneleri (VAPID anahtarları yoksa hiçbir şey yapmaz; Telegram akışını asla bozmaz) ----
+    if (webAcik(env) && meta.web_ilanlari) {
+      try {
+        await webIsle({
+          env, simdi, meta, metaYaz, tum, calis, kalanSql: kalan,
+          kalanIstek: () => ISTEK_BUTCE - sonuc.istek,
+          ilanCek: () => ilanlariCek(env, fetchSay),
+          fetch: (u, o) => { sonuc.istek++; return fetchGercek(u, o); },
+        });
+      } catch { sonuc.hata++; }
+    }
+
     async function tara(ilanlar) {
       const bitir = async () => {
         await calis("DELETE FROM meta WHERE anahtar IN ('tarama_imleci', 'tarama_ilanlari', 'ilk_ofset')");
@@ -383,7 +396,14 @@ export async function cronCalistir(env, simdi = new Date(), bagimliliklar = {}) 
         await bilinenYaz(eklenecek);
         sonuc.yeni = yeniler.length;
         if (!yeniler.length) { await metaYaz([['son_tarama', zaman]]); return; }
-        await metaYaz([['tarama_ilanlari', JSON.stringify(yeniler.map((y) => y.ana))], ['tarama_imleci', '0']]);
+        const metaCiftleri = [['tarama_ilanlari', JSON.stringify(yeniler.map((y) => y.ana))], ['tarama_imleci', '0']];
+        if (webAcik(env)) { // web aboneleri için ayrı iş (kendi imleci var; Telegram taramasından bağımsız ilerler)
+          let onceki = [];
+          try { onceki = JSON.parse(meta.web_ilanlari || '[]'); } catch { onceki = []; }
+          meta.web_ilanlari = JSON.stringify([...new Set([...onceki, ...yeniler.map((y) => y.ana)])].slice(-50));
+          metaCiftleri.push(['web_ilanlari', meta.web_ilanlari]);
+        }
+        await metaYaz(metaCiftleri);
       }
 
       // Süresi dolmuş yeni ilanlar hiç değerlendirilmez (ilan başına bir kez).

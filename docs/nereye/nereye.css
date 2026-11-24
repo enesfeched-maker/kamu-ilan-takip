@@ -1,122 +1,179 @@
-/* Puanınla nereye başvurabilirsin? — sayfa.css belirteçlerini kullanır (açık/koyu tema oradan gelir). */
-.ny-main{max-width:760px;padding-top:28px;padding-bottom:56px}
-.ny-giris h1{font-size:clamp(1.6rem,5vw,2.3rem);line-height:1.15;letter-spacing:-.02em;margin:0 0 8px}
-.ny-giris p{color:var(--muted);font-size:1.05rem;margin:0 0 20px}
+/* Puanınla nereye başvurabilirsin? — sitenin "okuma masası" temasının (docs/tasarim.css) belirteçlerini kullanır.
+   Renk: Sanzo Wada, A Dictionary of Color Combinations #2 (colors.elwyn.co) — lacivert #12354E + kehribar #F99D1B,
+   açık vurgu #3'ün limon tonu #FFEFAE. Koyu temada tasarim.css belirteçleri kendiliğinden değişir.
+   İlke: okumadan anlaşılsın — büyük numaralı adımlar, simgeler, tek büyük düğme, sonuç yeri baştan belli. */
+.ny-main{padding:0 0 64px}
+.ny-main svg{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
 
-.ny-form{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:22px;display:grid;gap:22px}
-.ny-soru{border:0;margin:0;padding:0;display:grid;gap:10px;min-width:0}
-.ny-soru legend,.ny-soru>label{display:flex;align-items:center;gap:10px;font-weight:600;font-size:1.08rem;padding:0;margin-bottom:10px}
+/* ---------- üst bant ---------- */
+.ny-hero{background:radial-gradient(700px 260px at 90% -30%,rgba(249,157,27,.28),transparent 65%),linear-gradient(#12354E,#0D2A3F);color:#F3F1EA;padding:34px 0 92px}
+.ny-hero h1{margin:0;font-size:clamp(1.75rem,6vw,2.7rem);line-height:1.12;letter-spacing:-.025em;font-weight:760;color:#fff}
+.ny-hero h1 span{display:block;color:#F99D1B}
+.ny-adimlar{list-style:none;margin:22px 0 0;padding:0;display:flex;align-items:center;gap:6px;flex-wrap:wrap;counter-reset:a}
+.ny-adimlar li{display:flex;align-items:center;gap:8px;font-weight:600;font-size:.95rem;color:#DCE4EA}
+.ny-adimlar li i{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.1);color:#FFEFAE;font-size:20px}
+.ny-adimlar li.son i{background:#F99D1B;color:#12354E}
+.ny-adimlar li+li::before{content:"";width:18px;height:2px;background:rgba(255,239,174,.45);margin-right:2px;border-radius:2px}
+
+/* ---------- form ---------- */
+.ny-govde{max-width:760px;margin:-64px auto 0;position:relative}
+.ny-form{background:var(--surface);border-radius:22px;box-shadow:0 20px 50px -24px rgba(18,53,78,.45),0 2px 0 rgba(18,53,78,.04);padding:24px;display:grid;gap:26px;border:1px solid var(--line)}
+.ny-soru{border:0;margin:0;padding:0;display:grid;gap:12px;min-width:0}
+.ny-soru legend,.ny-soru>label{display:flex;align-items:center;gap:12px;font-weight:720;font-size:1.2rem;color:var(--ink);padding:0;margin-bottom:12px;letter-spacing:-.01em}
 .ny-soru>label{margin-bottom:0}
-.ny-no{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--lime);color:#111310;font-size:.9rem;font-weight:700;flex:none}
-.ny-tur{font-weight:600;font-size:.8rem;color:var(--muted);background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:2px 8px}
+.ny-no{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#12354E;color:#F99D1B;font-size:1rem;font-weight:800;flex:none}
+:root[data-theme=dark] .ny-no{background:#F99D1B;color:#12354E}
 
-.ny-duzey{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.ny-duzey button{font:inherit;font-weight:600;font-size:1.02rem;min-height:58px;border-radius:var(--r-sm);border:1.5px solid var(--line-2);background:var(--surface);color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:6px}
-.ny-duzey button small{font-weight:500;font-size:.75rem;color:var(--muted)}
-.ny-duzey button:hover{border-color:var(--ink-2)}
-.ny-duzey button.secili{border-color:var(--ink);background:var(--ink);color:var(--bg)}
-.ny-duzey button.secili small{color:inherit;opacity:.75}
+.ny-duzey{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.ny-duzey button{font:inherit;min-height:92px;border-radius:16px;border:2px solid var(--line-2);background:var(--surface);color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:10px 6px;transition:border-color .15s,background .15s,transform .1s}
+.ny-duzey button svg{font-size:28px;color:var(--muted)}
+.ny-duzey button b{font-size:1.06rem;font-weight:720}
+.ny-duzey button small{font-weight:500;font-size:.78rem;color:var(--muted)}
+.ny-duzey button:hover{border-color:#F99D1B}
+.ny-duzey button:active{transform:scale(.98)}
+.ny-duzey button.secili{border-color:#F99D1B;background:#FFEFAE;color:#12354E;box-shadow:inset 0 0 0 1px #F99D1B}
+.ny-duzey button.secili svg{color:#12354E}
+.ny-duzey button.secili small{color:#6B4306}
+:root[data-theme=dark] .ny-duzey button.secili{background:#3A2A0E;color:#FFEFAE}
+:root[data-theme=dark] .ny-duzey button.secili svg,:root[data-theme=dark] .ny-duzey button.secili small{color:#FFE08A}
 
-.ny-form input[type=text]{font:inherit;font-size:1.1rem;width:100%;min-height:52px;padding:10px 14px;border-radius:var(--r-sm);border:1.5px solid var(--line-2);background:var(--surface);color:var(--ink);box-sizing:border-box}
-.ny-form input[type=text]:focus{outline:2px solid var(--focus);outline-offset:1px;border-color:transparent}
+.ny-girdi{position:relative;display:flex;align-items:center}
+.ny-girdi>svg{position:absolute;left:16px;font-size:20px;color:var(--muted);pointer-events:none}
+.ny-form input[type=text]{font:inherit;font-size:1.2rem;font-weight:600;width:100%;min-height:60px;padding:12px 16px;border-radius:14px;border:2px solid var(--line-2);background:var(--surface);color:var(--ink);box-sizing:border-box}
+.ny-form .ny-girdi>svg+input{padding-left:48px}
+.ny-form input[type=text]::placeholder{color:var(--faint);font-weight:500}
+.ny-form input[type=text]:focus{outline:none;border-color:#F99D1B;box-shadow:0 0 0 4px rgba(249,157,27,.22)}
 .ny-form input:disabled{opacity:.45}
-.ny-ipucu{margin:0;color:var(--muted);font-size:.9rem}
-.ny-puansiz{display:flex;align-items:center;gap:8px;color:var(--ink-2);font-size:.95rem;cursor:pointer;width:max-content}
-.ny-puansiz input{width:18px;height:18px;accent-color:var(--ink)}
+.ny-form .ny-puan-kap input{padding-right:72px}
+.ny-tur{position:absolute;right:12px;font-weight:750;font-size:.9rem;color:#12354E;background:#FFEFAE;border-radius:10px;padding:6px 10px}
+.ny-ipucu{margin:0;color:var(--muted);font-size:.92rem}
+.ny-puansiz{display:flex;align-items:center;gap:10px;color:var(--ink-2);font-size:.98rem;cursor:pointer;width:max-content;min-height:36px}
+.ny-puansiz input{width:20px;height:20px;accent-color:#F99D1B}
 
-.ny-oneri-kap{position:relative}
-.ny-oneri{position:absolute;z-index:20;left:0;right:0;top:calc(100% + 4px);margin:0;padding:6px;list-style:none;background:var(--surface);border:1px solid var(--line-2);border-radius:var(--r-sm);box-shadow:0 12px 32px -12px rgba(0,0,0,.25);max-height:320px;overflow:auto}
-.ny-oneri-oge{padding:11px 12px;border-radius:8px;cursor:pointer;font-size:1rem}
-.ny-oneri-oge:hover,.ny-oneri-oge.secili{background:var(--surface-2)}
+.ny-oneri{position:absolute;z-index:20;left:0;right:0;top:calc(100% + 6px);margin:0;padding:6px;list-style:none;background:var(--surface);border:1px solid var(--line-2);border-radius:14px;box-shadow:0 16px 40px -14px rgba(18,53,78,.4);max-height:320px;overflow:auto}
+.ny-oneri-oge{padding:12px 14px;border-radius:10px;cursor:pointer;font-size:1.02rem;font-weight:550}
+.ny-oneri-oge:hover,.ny-oneri-oge.secili{background:#FFEFAE;color:#12354E}
 
-.ny-git{min-height:56px;font-size:1.1rem;width:100%}
-.ny-hata{margin:0;color:var(--alert);font-weight:500}
+.ny-git{font:inherit;font-size:1.2rem;font-weight:780;min-height:64px;width:100%;border:0;border-radius:16px;background:#F99D1B;color:#12354E;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 10px 24px -12px rgba(249,157,27,.9);transition:filter .15s,transform .1s}
+.ny-git svg{font-size:24px;stroke-width:2.6}
+.ny-git:hover{filter:brightness(1.05)}
+.ny-git:active{transform:translateY(1px)}
+.ny-hata{margin:0;color:#fff;background:#A85E08;border-radius:12px;padding:12px 14px;font-weight:600}
 
-/* sonuç */
-#ny-sonuc{scroll-margin-top:80px}
-.ny-ozet{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;margin:28px 0 8px}
-.ny-kutu{display:flex;flex-direction:column;gap:2px;padding:16px;border-radius:var(--r);text-decoration:none;color:var(--ink);border:1px solid var(--line);background:var(--surface)}
-.ny-kutu b{font-size:2.2rem;line-height:1;letter-spacing:-.03em}
-.ny-kutu span{font-size:.92rem;color:var(--ink-2)}
-.ny-kutu.yesil{background:var(--lime-soft);border-color:transparent}
-.ny-kutu.yesil b{color:var(--lime-ink)}
-.ny-kutu.sari{background:#FFF6DB;border-color:transparent}
-.ny-kutu.sari b{color:#8A5A00}
-.ny-kutu.mavi{background:#E9F1FB;border-color:transparent}
-.ny-kutu.mavi b{color:#1F4E8C}
-:root[data-theme=dark] .ny-kutu.sari{background:#2B2410}
-:root[data-theme=dark] .ny-kutu.sari b{color:#F5C84B}
-:root[data-theme=dark] .ny-kutu.mavi{background:#132033}
-:root[data-theme=dark] .ny-kutu.mavi b{color:#8DB8F2}
+/* ---------- sonuç yeri (doldurmadan önce) ---------- */
+.ny-bekle{margin-top:20px;border:2px dashed var(--line-2);border-radius:18px;padding:22px;display:grid;justify-items:center;gap:4px;text-align:center;color:var(--muted)}
+.ny-bekle svg{font-size:30px;color:#F99D1B;animation:ny-in 1.6s ease-in-out infinite}
+.ny-bekle b{color:var(--ink);font-size:1.08rem}
+@keyframes ny-in{50%{transform:translateY(5px)}}
+@media (prefers-reduced-motion:reduce){.ny-bekle svg{animation:none}}
 
-.ny-bolge{margin-top:34px;scroll-margin-top:80px}
-.ny-bolge h2,.ny-yetmiyor summary{font-size:1.3rem;margin:0 0 4px;display:flex;align-items:center;gap:8px}
-.ny-sayi{font-size:.85rem;font-weight:600;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:1px 9px;color:var(--ink-2)}
+/* ---------- sonuç ---------- */
+#ny-sonuc{scroll-margin-top:76px}
+.ny-ozet{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:28px 0 6px}
+.ny-kutu{display:flex;flex-direction:column;gap:4px;padding:18px;border-radius:18px;text-decoration:none;color:#12354E;border:2px solid transparent}
+.ny-kutu b{font-size:2.6rem;line-height:1;letter-spacing:-.03em;font-weight:800}
+.ny-kutu span{font-size:.98rem;font-weight:650}
+.ny-kutu.yesil{background:#F99D1B}
+.ny-kutu.sari{background:#FFEFAE}
+.ny-kutu.mavi{background:var(--surface);border-color:#12354E;color:var(--ink)}
+:root[data-theme=dark] .ny-kutu.sari{background:#3A2A0E;color:#FFE08A}
+:root[data-theme=dark] .ny-kutu.mavi{border-color:#F99D1B}
+
+.ny-bolge{margin-top:34px;scroll-margin-top:76px}
+.ny-bolge h2,.ny-yetmiyor summary{font-size:1.35rem;margin:0 0 4px;display:flex;align-items:center;gap:10px;letter-spacing:-.015em;color:var(--ink)}
+.ny-bolge h2 svg{font-size:26px;color:#F99D1B}
+.ny-sayi{font-size:.9rem;font-weight:750;background:#12354E;color:#fff;border-radius:999px;padding:2px 10px}
+:root[data-theme=dark] .ny-sayi{background:#F99D1B;color:#12354E}
 .ny-alt{color:var(--muted);margin:0 0 14px}
-.ny-bos{color:var(--muted);background:var(--surface);border:1px dashed var(--line-2);border-radius:var(--r-sm);padding:14px;margin:8px 0 0}
-.ny-liste{display:grid;gap:10px}
+.ny-bos{color:var(--ink-2);background:var(--surface);border:2px dashed var(--line-2);border-radius:14px;padding:16px;margin:8px 0 0}
+.ny-liste{display:grid;gap:12px}
 
-.ny-ilan{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:8px}
-.ny-ilan.acil{border-color:var(--alert)}
-.ny-ust{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
-.ny-kurum{font-size:.8rem;font-weight:600;letter-spacing:.01em;color:var(--muted)}
-.ny-gun{font-size:.85rem;font-weight:600;color:var(--ink-2);white-space:nowrap}
-.ny-ilan.acil .ny-gun{color:var(--alert)}
-.ny-ilan h3{margin:0;font-size:1.08rem;line-height:1.35}
+.ny-ilan{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--line-2);border-radius:16px;padding:16px 16px 14px;display:grid;gap:10px;box-shadow:var(--shadow)}
+#ny-hemen .ny-ilan{border-left-color:#F99D1B}
+#ny-kontrol .ny-ilan{border-left-color:#FFD25A}
+.ny-ilan.acil .ny-gun{background:#A85E08;color:#fff}
+.ny-ust{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.ny-kurum{font-size:.82rem;font-weight:700;color:var(--muted);letter-spacing:.01em}
+.ny-gun{font-size:.85rem;font-weight:750;color:#12354E;background:#FFEFAE;border-radius:999px;padding:3px 10px;white-space:nowrap}
+.ny-ilan h3{margin:0;font-size:1.12rem;line-height:1.35}
 .ny-ilan h3 a{color:var(--ink);text-decoration:none}
 .ny-ilan h3 a:hover{text-decoration:underline}
 .ny-cipler{display:flex;flex-wrap:wrap;gap:6px}
-.ny-cipler span{font-size:.82rem;font-weight:500;padding:3px 9px;border-radius:999px;background:var(--surface-2);color:var(--ink-2)}
-.ny-cipler .iyi{background:var(--lime-soft);color:var(--lime-ink)}
-.ny-cipler .kotu{background:var(--alert-soft);color:var(--alert)}
-.ny-cipler .uyari{background:var(--alert-soft);color:var(--alert)}
-.ny-kadro{list-style:none;margin:0;padding:0;display:grid;gap:4px}
-.ny-kadro li{position:relative;padding-left:14px;font-size:.95rem}
-.ny-kadro li::before{content:"";position:absolute;left:0;top:.55em;width:6px;height:6px;border-radius:50%;background:var(--lime-ink)}
-.ny-kadro li span{display:block;color:var(--muted);font-size:.85rem}
-.ny-kadro .ny-kadro-ek{color:var(--muted);font-size:.85rem}
+.ny-cipler span{font-size:.84rem;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--surface-2);color:var(--ink-2)}
+.ny-cipler .iyi{background:#FFEFAE;color:#6B4306}
+.ny-cipler .kotu,.ny-cipler .uyari{background:#A85E08;color:#fff}
+.ny-kadro{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.ny-kadro li{position:relative;padding-left:16px;font-size:.98rem}
+.ny-kadro li::before{content:"";position:absolute;left:0;top:.5em;width:8px;height:8px;border-radius:50%;background:#F99D1B}
+.ny-kadro li span{display:block;color:var(--muted);font-size:.86rem}
+.ny-kadro .ny-kadro-ek{color:var(--muted);font-size:.86rem}
 .ny-kadro .ny-kadro-ek::before{display:none}
-.ny-dikkat{margin:6px 0 0;padding-left:18px;display:grid;gap:4px;font-size:.9rem}
-.ny-dugmeler{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 2px}
-.ny-mini{font:inherit;font-size:.9rem;font-weight:600;min-height:40px;padding:6px 14px;border-radius:999px;border:1.5px solid var(--line-2);background:var(--surface);color:var(--ink);cursor:pointer}
-.ny-mini:hover{border-color:var(--ink-2)}
-.ny-mini[aria-pressed=true]{background:var(--lime-soft);border-color:transparent;color:var(--lime-ink)}
-.ny-neden{margin:0;font-size:.92rem;color:var(--ink-2);border-left:3px solid #E8B400;padding-left:10px}
-.ny-nasil{border-top:1px solid var(--line);padding-top:8px}
-.ny-nasil summary{cursor:pointer;font-weight:600;color:var(--ink);list-style:none;display:flex;align-items:center;gap:6px;min-height:36px}
+.ny-neden{margin:0;font-size:.94rem;color:var(--ink-2);background:var(--surface-2);border-radius:10px;padding:10px 12px}
+.ny-eylem{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ny-basvur{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:0 18px;border-radius:12px;background:#12354E;color:#fff;font-weight:750;text-decoration:none}
+.ny-basvur svg{font-size:18px}
+:root[data-theme=dark] .ny-basvur{background:#F99D1B;color:#12354E}
+.ny-nasil{border-top:1px solid var(--line);padding-top:6px}
+.ny-nasil summary{cursor:pointer;font-weight:700;color:var(--ink);list-style:none;display:flex;align-items:center;gap:6px;min-height:40px}
 .ny-nasil summary::-webkit-details-marker{display:none}
 .ny-nasil summary::after{content:"";width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translateY(-2px);margin-left:4px}
 .ny-nasil[open] summary::after{transform:rotate(-135deg) translateY(-2px)}
-.ny-nasil ol{margin:6px 0 2px;padding-left:20px;display:grid;gap:8px;font-size:.95rem;color:var(--ink-2)}
-.ny-nasil a{color:var(--ink);font-weight:500}
+.ny-nasil ol{margin:6px 0 2px;padding-left:22px;display:grid;gap:10px;font-size:.96rem;color:var(--ink-2)}
+.ny-nasil a{color:var(--link,#1B5A85);font-weight:650}
+.ny-dikkat{margin:6px 0 0;padding-left:18px;display:grid;gap:4px;font-size:.92rem}
+.ny-dugmeler{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 2px}
+.ny-mini{font:inherit;font-size:.92rem;font-weight:700;min-height:42px;padding:6px 14px;border-radius:999px;border:2px solid var(--line-2);background:var(--surface);color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.ny-mini svg{font-size:16px}
+.ny-mini:hover{border-color:#F99D1B}
+.ny-mini[aria-pressed=true]{background:#FFEFAE;border-color:#F99D1B;color:#12354E}
 
-.ny-merkezi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.ny-merkezi{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow)}
 .ny-buyuk{margin:6px 0 4px;font-size:1.05rem}
-.ny-buyuk b{font-size:1.9rem;letter-spacing:-.02em;margin-right:4px}
+.ny-buyuk b{font-size:2rem;letter-spacing:-.02em;margin-right:4px;color:var(--ink)}
 .ny-buyuk small{color:var(--muted);font-size:.88rem}
+.ny-ara{font-size:.98rem;margin:14px 0 0;color:var(--ink-2)}
 .ny-kadrolar{list-style:none;margin:12px 0 14px;padding:0;display:grid}
-.ny-kadrolar li{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+.ny-kadrolar li{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-top:1px solid var(--line)}
 .ny-kadrolar li>div:first-child{display:grid;gap:2px;min-width:0}
-.ny-kadrolar li>div:first-child span{font-size:.85rem;color:var(--muted)}
+.ny-kadrolar li>div:first-child span{font-size:.86rem;color:var(--muted)}
 .ny-taban{text-align:right;display:grid;gap:2px;flex:none}
+.ny-taban b{color:var(--ink)}
 .ny-taban span{font-size:.78rem;color:var(--muted)}
 .ny-robot{display:inline-flex}
-.ny-dip{color:var(--faint);font-size:.82rem;margin:10px 0 0}
-
+.ny-dip{color:var(--faint);font-size:.84rem;margin:10px 0 0}
 .ny-yetmiyor summary{cursor:pointer;color:var(--ink-2)}
 .ny-yetmiyor .ny-liste{margin-top:12px}
-.ny-yetmiyor .ny-ilan{opacity:.8}
+.ny-yetmiyor .ny-ilan{opacity:.85}
 
-.ny-son{display:flex;flex-wrap:wrap;gap:10px;margin-top:36px}
-.ny-son .btn{flex:1 1 220px;justify-content:center}
+/* ---------- kaydet ve bildirim ---------- */
+.ny-kaydet{margin-top:36px;border-radius:20px;padding:22px;background:linear-gradient(#12354E,#0D2A3F);color:#F3F1EA;display:grid;gap:14px}
+.ny-kaydet-bas{display:flex;gap:14px;align-items:flex-start}
+.ny-kaydet-bas>svg{font-size:30px;color:#F99D1B;margin-top:2px}
+.ny-kaydet h2{margin:0;font-size:1.3rem;color:#fff;letter-spacing:-.01em}
+.ny-kaydet p{margin:4px 0 0;color:#C9D6E0;font-size:.98rem}
+.ny-kaydet .ny-git{min-height:56px;font-size:1.08rem}
+.ny-kaydet .ny-git[aria-pressed=true]{background:#FFEFAE}
+.ny-kaydet-not{font-size:.88rem;color:#A9BCCB}
+.ny-kaydet-dur{font:inherit;background:none;border:0;color:#FFEFAE;text-decoration:underline;cursor:pointer;padding:0;font-size:.9rem;justify-self:start}
+.ny-yeni{background:#FFEFAE;color:#12354E;border-radius:14px;padding:12px 14px;font-weight:650;margin:18px 0 0;display:flex;gap:10px;align-items:center}
+.ny-yeni svg{font-size:20px;color:#A85E08}
+.ny-ilan .ny-yeni-rozet{font-size:.75rem;font-weight:800;background:#F99D1B;color:#12354E;border-radius:6px;padding:2px 7px}
 
-@media (max-width:520px){
-  .ny-main{padding-top:18px}
-  .ny-form{padding:16px;gap:18px}
-  .ny-duzey button{font-size:.95rem;min-height:54px}
+.ny-son{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.ny-son .btn{flex:1 1 220px;justify-content:center;min-height:52px}
+
+@media (max-width:560px){
+  .ny-hero{padding:24px 0 84px}
+  .ny-adimlar{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:18px}
+  .ny-adimlar li{flex-direction:column;gap:6px;font-size:.8rem;text-align:center}
+  .ny-adimlar li i{width:40px;height:40px;font-size:19px}
+  .ny-adimlar li+li::before{display:none}
+  .ny-govde{margin-top:-60px}
+  .ny-form{padding:18px;gap:22px;border-radius:20px}
+  .ny-duzey{gap:8px}
+  .ny-duzey button{min-height:84px}
   .ny-ozet{grid-template-columns:1fr}
-  .ny-kutu{flex-direction:row;align-items:center;gap:14px;padding:12px 16px}
-  .ny-kutu b{font-size:1.8rem;min-width:2ch}
-  .ny-kutu span{font-size:.95rem}
+  .ny-kutu{flex-direction:row;align-items:center;gap:14px;padding:14px 18px}
+  .ny-kutu b{font-size:2.1rem;min-width:2ch}
 }
-.ny-ara{font-size:.95rem;margin:14px 0 0;color:var(--ink-2)}
+.ny-bekle[hidden]{display:none}

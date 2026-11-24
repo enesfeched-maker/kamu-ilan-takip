@@ -66,5 +66,26 @@ CREATE TABLE IF NOT EXISTS sponsorlar (
   aktif        INTEGER NOT NULL DEFAULT 1
 );
 
+-- Web Push (tarayıcı bildirimi) aboneleri: /nereye/ sayfasındaki kayıtlı arama. Bkz. migrations/002_web.sql.
+CREATE TABLE IF NOT EXISTS web_aboneler (
+  endpoint     TEXT PRIMARY KEY,
+  p256dh       TEXT,
+  auth         TEXT,
+  duzey        TEXT,
+  bolum        TEXT,
+  puan         REAL,
+  olusturma    TEXT,
+  aktif        INTEGER DEFAULT 1
+);
+CREATE TABLE IF NOT EXISTS web_bekleyen (
+  endpoint     TEXT,
+  ilan_id      TEXT,
+  baslik       TEXT,
+  kurum        TEXT,
+  url          TEXT,
+  zaman        TEXT,
+  PRIMARY KEY (endpoint, ilan_id)
+);
+
 CREATE INDEX IF NOT EXISTS gonderilen_ilan ON gonderilen (ilan_id, hatirlatildi);
 CREATE INDEX IF NOT EXISTS bilinen_son_tarih ON bilinen_ilanlar (son_tarih);

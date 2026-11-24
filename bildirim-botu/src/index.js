@@ -1,5 +1,6 @@
 import { updateIsle } from './komutlar.js';
 import { yoneticiTani } from './sosyal.js';
+import { webIstek } from './web.js';
 
 // Sabit süreli karşılaştırma (uzunluk farkında da tüm baytlar dolaşılır).
 function esit(a, b) {
@@ -14,6 +15,7 @@ function esit(a, b) {
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+    if (url.pathname.startsWith('/web/')) return webIstek(request, env);
     if (request.method === 'GET' && url.pathname === '/') return new Response('ok');
     if (request.method !== 'POST' || url.pathname !== '/webhook') return new Response('bulunamadı', { status: 404 });
     if (!env.WEBHOOK_SECRET || !esit(request.headers.get('X-Telegram-Bot-Api-Secret-Token') ?? '', env.WEBHOOK_SECRET)) {
