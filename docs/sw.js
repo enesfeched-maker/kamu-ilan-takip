@@ -1,5 +1,5 @@
 // KPSS Tercihi servis çalışanı: yalnız Web Push bildirimi. Önbellek/fetch yakalama YOK (site davranışı değişmez).
-const API = 'https://kamu-ilan-bildirim.kamuilan.workers.dev';
+const API = 'https://bildirim.kpsstercihi.com';
 const IKON = '/assets/logo-192.png';
 const GENEL_URL = '/nereye/';
 

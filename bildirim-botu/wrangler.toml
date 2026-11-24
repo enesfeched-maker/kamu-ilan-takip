@@ -18,7 +18,7 @@ SITE_URL = "https://kpsstercihi.com/"
 VIP_ACIK = "0"
 # Web Push (VAPID) acik anahtari: `node vapid-uret.mjs` ciktisindaki "VAPID_ACIK" degerini TIRNAKLARIN ICINE yaz.
 # Bos kalirsa web push kapali kalir. Ozel anahtar VAPID_OZEL gizli ayardir (asagida).
-VAPID_ACIK = ""
+VAPID_ACIK = "BI_V6nOUnzoI_Oa1kSsoXAxlVibe1gOzakkRibXwAs_GZv_rbKthDyn2666il66qq4TgKJpd6ElhCcngEJrs4J4"
 # Istege bagli: VAPID_IRTIBAT = "ornek@alanadi.com" (JWT 'sub' = mailto:...; yoksa https://kpsstercihi.com)
 
 # Sirlar (degerleri buraya YAZILMAZ; `wrangler secret put <AD>` ile eklenir):
@@ -26,3 +26,8 @@ VAPID_ACIK = ""
 #   WEBHOOK_SECRET  -> setWebhook'ta secret_token olarak verilen rastgele metin
 #   VAPID_OZEL      -> vapid-uret.mjs'in verdigi ham ozel deger (32 bayt, base64url; PKCS8 base64url de kabul edilir)
 # YONETICI_KULLANICI gizli ayar olarak tutulur (repoya yazılmaz): wrangler secret put YONETICI_KULLANICI --config wrangler.toml
+
+# Site bu adresi kullanir: *.workers.dev Turkiye'den erisilemiyor (24 Kasim 2026). Telegram webhook workers.dev'de kalir.
+[[routes]]
+pattern = "bildirim.kpsstercihi.com"
+custom_domain = true
