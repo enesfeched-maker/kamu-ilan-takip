@@ -16,8 +16,13 @@ database_id = "cb1fc32e-001d-45e6-b4aa-51ea3b274af8"
 ILAN_URL = "https://kpsstercihi.com/bot-ilanlar.json"
 SITE_URL = "https://kpsstercihi.com/"
 VIP_ACIK = "0"
+# Web Push (VAPID) acik anahtari: `node vapid-uret.mjs` ciktisindaki "VAPID_ACIK" degerini TIRNAKLARIN ICINE yaz.
+# Bos kalirsa web push kapali kalir. Ozel anahtar VAPID_OZEL gizli ayardir (asagida).
+VAPID_ACIK = ""
+# Istege bagli: VAPID_IRTIBAT = "ornek@alanadi.com" (JWT 'sub' = mailto:...; yoksa https://kpsstercihi.com)
 
 # Sirlar (degerleri buraya YAZILMAZ; `wrangler secret put <AD>` ile eklenir):
 #   BOT_TOKEN       -> BotFather'dan alinan bot anahtari
 #   WEBHOOK_SECRET  -> setWebhook'ta secret_token olarak verilen rastgele metin
+#   VAPID_OZEL      -> vapid-uret.mjs'in verdigi ham ozel deger (32 bayt, base64url; PKCS8 base64url de kabul edilir)
 # YONETICI_KULLANICI gizli ayar olarak tutulur (repoya yazılmaz): wrangler secret put YONETICI_KULLANICI --config wrangler.toml
