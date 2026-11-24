@@ -89,8 +89,9 @@ REKLAM_BETIGI = '<script async src="https://pagead2.googlesyndication.com/pagead
 # Elle yerleştirilen AdSense birimleri (22 Kasım 2026): slot kimliği boşsa hiçbir reklam alanı basılmaz.
 # Yerleşim kuralı: yalnız içeriğin akış aralarında; başlık, Başvur düğmesi ve ilk ekranın çevresinde, sabit/yüzen alan yok.
 REKLAM_ISTEMCI = 'ca-pub-8335827974832277'
-REKLAM_SLOT_SAYFA = '3230210595'   # ilan ayrıntı sayfası alanları
-REKLAM_SLOT_AKIS = '2506874605'    # ana sayfa liste arası (docs/portal.js, #cards[data-rk-akis])
+# 24 Kasım 2026: otomatik reklamlara dönüldü (elle birimlerde görünürlük %13, Sayfa RPM ₺27→₺21); eski kimlikler: sayfa 3230210595, akış 2506874605.
+REKLAM_SLOT_SAYFA = ''   # ilan ayrıntı sayfası alanları
+REKLAM_SLOT_AKIS = ''    # ana sayfa liste arası (docs/portal.js, #cards[data-rk-akis])
 
 
 def reklam_alani(slot, ad):
