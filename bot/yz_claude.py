@@ -11,6 +11,7 @@ kadar en çok yz_isle.EN_COK_BEKLEME bekletir, sonra botun verisiyle gönderir."
 import argparse
 import hashlib
 import json
+import re
 import shutil
 import sys
 from datetime import datetime
@@ -74,8 +75,16 @@ def hazirla(en_cok=12, simdi=None, klasor=IS, ilan_yolu=ROOT / 'docs' / 'ilanlar
     return gorevler
 
 
+OGRENIMLER = ('okuryazar', 'ilkogretim', 'ortaogretim', 'onlisans', 'lisans', 'yuksek_lisans', 'doktora')
+# 24 Kasım 2026 ("Puanınla nereye başvurabilirsin?" aracı kadro kadro eşleştirir). Bu denetim UYARI verir, kaydı
+# reddetmez: belge kendisi "vb." yazıyor olabilir ya da tek kadro yüzünden bütün ilan okunmamış kalırdı (denetimde
+# mevcut Claude okumalarının %32'si reddediliyordu). Uyarılar kaydet çıktısında yazılır; rutin belge izin veriyorsa düzeltir.
+KISALTMA = re.compile(r'(?<![\w.])(?:vb|v\.b|vs)\.(?!\s*net)|\bvesaire\b|…|\.\.\.', re.I)
+MEZUNIYET = re.compile(r'mezun|bölüm|program|fakülte|yüksekokul|alan(?:ın|lar)|diploma|lisans|öğrenim|eğitim|doktor|tıp', re.I)
+
+
 def dogrula(yz):
-    """Claude çıktısının en az biçimi; sorun listesi (boşsa geçerli)."""
+    """Claude çıktısının en az biçimi; sorun listesi (boşsa geçerli). Yalnız kaydı bozacak biçim hataları."""
     sorun = []
     if not isinstance(yz, dict):
         return ['JSON nesnesi değil']
@@ -89,6 +98,30 @@ def dogrula(yz):
     if yz.get('son_basvuru_tarihi') and not str(yz['son_basvuru_tarihi'])[:10].count('-') == 2:
         sorun.append('son_basvuru_tarihi YYYY-AA-GG değil')
     return sorun
+
+
+def uyarilar(yz):
+    """Kadro kadro eşleştirme için eksikler (kaydı durdurmaz): öğrenim, puan alanları, mezuniyet maddesi, kısaltılmış liste."""
+    out = []
+    if not isinstance(yz, dict) or yz.get('okunabilirlik') == 'kotu':
+        return out
+    for k in yz.get('kadrolar') or []:
+        if not isinstance(k, dict) or not str(k.get('unvan') or '').strip():
+            continue
+        u = k['unvan']
+        p = k.get('en_dusuk_puan')
+        if p is not None and (isinstance(p, bool) or not isinstance(p, (int, float)) or not 1 <= p <= 100):
+            out.append(f'{u}: en_dusuk_puan 1-100 arası sayı ya da null olmalı')
+        if k.get('puan_turu') is not None and not re.search(r'P\s?\d{1,3}', str(k['puan_turu']), re.I):
+            out.append(f'{u}: puan_turu P3/P93/P94 gibi olmalı (birden çoksa "P1,P2,P3")')
+        if k.get('ogrenim') not in OGRENIMLER:
+            out.append(f'{u}: ogrenim yok ya da geçersiz ({"/".join(OGRENIMLER)})')
+        mezuniyet = [str(m) for m in k.get('kosullar') or [] if isinstance(m, str) and MEZUNIYET.search(m)]
+        if k.get('ogrenim') in ('onlisans', 'lisans', 'yuksek_lisans', 'doktora') and not mezuniyet:
+            out.append(f'{u}: bölüm/mezuniyet maddesi yok (bölüm şartı yoksa "Herhangi bir lisans programından mezun olmak." yaz)')
+        if any(re.search(r'mezun', m, re.I) and KISALTMA.search(m) for m in mezuniyet):
+            out.append(f'{u}: bölüm listesi kısaltılmış görünüyor (vb./…); belge izin veriyorsa bütün bölümleri yaz')
+    return out
 
 
 def kaydet(simdi=None, klasor=IS, ilan_yolu=ROOT / 'docs' / 'ilanlar.json', yz_yolu=YZ):
@@ -114,6 +147,8 @@ def kaydet(simdi=None, klasor=IS, ilan_yolu=ROOT / 'docs' / 'ilanlar.json', yz_y
         yeni[item['id']]['model'] = MODEL
         print(f'Kaydedildi: {g.get("kurum")} — {str(g.get("baslik"))[:60]}'
               + (f' · botla fark: {yeni[item["id"]]["farklar"]}' if yeni[item['id']]['farklar'] else ''))
+        for u in uyarilar(cikti):
+            print(f'  Uyarı: {u}')
     if yeni:
         Path(yz_yolu).parent.mkdir(parents=True, exist_ok=True)
         Path(yz_yolu).write_text(json.dumps(yz_yerel.birlestir(_oku_json(yz_yolu, {}), yeni), ensure_ascii=False,

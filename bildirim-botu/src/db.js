@@ -36,6 +36,7 @@ export async function kullaniciKaydet(env, k) {
     hatirlatma: k.hatirlatma === 0 || k.hatirlatma === false ? 0 : 1,
     durum: k.durum ?? null,
     vip_bitis: k.vip_bitis ?? null,
+    puan: typeof k.puan === 'number' ? k.puan : null,
     olusturma: k.olusturma || simdi,
     guncelleme: simdi,
   };
@@ -62,7 +63,7 @@ export async function aktifKullanicilar(env) {
 }
 // Oku-değiştir-yaz: tek UPDATE, guncelleme zaman damgası kontrolüyle. Çakışmada (0 satır) bir kez daha dener.
 // fn(kullanici) nesneyi yerinde değiştirir. Kullanıcı yoksa null döner.
-const GUNCELLENEBILIR = ['onay', 'duzeyler', 'iller', 'kategoriler', 'akademik', 'kelimeler', 'aktif', 'hatirlatma', 'durum', 'vip_bitis'];
+const GUNCELLENEBILIR = ['onay', 'duzeyler', 'iller', 'kategoriler', 'akademik', 'kelimeler', 'aktif', 'hatirlatma', 'durum', 'vip_bitis', 'puan'];
 
 export async function kullaniciGuncelle(env, chat_id, fn) {
   for (let deneme = 0; deneme < 2; deneme++) {
@@ -72,7 +73,7 @@ export async function kullaniciGuncelle(env, chat_id, fn) {
     fn(k);
     let yeniZaman = new Date().toISOString();
     if (yeniZaman === s.guncelleme) yeniZaman = new Date(Date.now() + 1).toISOString();
-    const deger = (a) => (JSON_ALANLAR.includes(a) ? JSON.stringify(k[a] || []) : a === 'durum' || a === 'vip_bitis' ? k[a] ?? null : k[a] ? 1 : 0);
+    const deger = (a) => (JSON_ALANLAR.includes(a) ? JSON.stringify(k[a] || []) : a === 'durum' || a === 'vip_bitis' ? k[a] ?? null : a === 'puan' ? (typeof k[a] === 'number' ? k[a] : null) : k[a] ? 1 : 0);
     const r = await env.DB.prepare(
       'UPDATE kullanicilar SET ' + GUNCELLENEBILIR.map((a) => a + ' = ?').join(', ') +
       ', guncelleme = ? WHERE chat_id = ? AND guncelleme = ?',

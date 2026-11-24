@@ -220,3 +220,14 @@ html{scroll-padding-top:76px}
   .satir-logo img{width:21px;height:21px}
   .satir-sag{padding-top:2px}
 }
+
+/* "Puanınla nereye başvurabilirsin?" giriş kutusu (/nereye/) */
+.ny-davet{display:flex;align-items:center;gap:14px;padding:16px 18px;margin:0 0 18px;border-radius:var(--r,16px);background:var(--ink);color:var(--bg);text-decoration:none;box-shadow:var(--shadow)}
+.ny-davet:hover{transform:translateY(-1px)}
+.ny-davet-ikon{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--lime);color:#111310}
+.ny-davet-ikon svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2}
+.ny-davet-metin{display:grid;gap:2px;flex:1;min-width:0}
+.ny-davet-metin b{font-size:1.08rem;line-height:1.25}
+.ny-davet-metin small{font-size:.9rem;opacity:.75}
+.ny-davet-ok{font-size:1.4rem;font-weight:600;color:var(--lime)}
+:root[data-theme=dark] .ny-davet{background:var(--surface-3);color:var(--ink)}.ny-davet-kap{margin-top:16px}.ny-davet-kap .ny-davet{margin:0}

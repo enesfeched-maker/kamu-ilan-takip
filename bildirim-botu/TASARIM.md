@@ -24,7 +24,7 @@ ilanlar özelden gelir, son başvuru gününden önce hatırlatılır.
 | `src/sponsor.js` | `sponsorSec(env, kullanici, ilan)` → `{metin, link}` ya da `null` | İşçi C |
 | `test/sahte.js` | Sahte D1 (`prepare().bind().all()/first()/run()`, basit SQL'i destekleyen bellek içi) + sahte `fetch` | İşçi B yazar, C kullanır |
 
-`kullanici` nesnesi: `{chat_id, onay, duzeyler:[], iller:[], kategoriler:[], kelimeler:[], aktif, hatirlatma, durum, vip_bitis}`.
+`kullanici` nesnesi: `{chat_id, onay, duzeyler:[], iller:[], kategoriler:[], kelimeler:[], aktif, hatirlatma, durum, vip_bitis, puan}`. `puan`: boş olabilen KPSS puanı (REAL, 1–100).
 
 ## Eşleştirme kuralı (`uygunMu`)
 - Kullanıcı `aktif=1` ve `onay=1` değilse: false.
@@ -33,6 +33,7 @@ ilanlar özelden gelir, son başvuru gününden önce hatırlatılır.
 - Düzey: `duzeyler` boşsa geçer. İlanın `ogrenim` listesi boş/yoksa GEÇER (belirsiz ilan kaçırılmaz). Doluysa kesişim gerekir.
 - İl: `iller` boşsa geçer. İlanın `iller` listesi boş/yoksa GEÇER (çok ilde/merkezi). Doluysa kesişim.
 - Kategori: `kategoriler` boşsa geçer; doluysa `ilan.kategori` listede olmalı (kategorisiz ilan geçer).
+- KPSS puanı: kullanıcının `puan`ı VE ilanın sayısal `en_az_puan`ı varsa, `ilan.kpss !== 'kpsssiz'` iken `puan < en_az_puan` ise false (eşitse geçer). Eksik veri asla eleme nedeni olmaz. `en_az_puan` = `yz_kadrolar`ın en düşük `en_dusuk_puan`ı; yalnız her kadroda 1–100 arası sayı varsa yazılır, yoksa null.
 - Kelime: `kelimeler` boşsa geçer; doluysa en az biri `ilanMetni(ilan)` içinde (Türkçe küçük harf, `toLocaleLowerCase('tr')`) geçmeli.
 
 ## Bildirim (`cronCalistir`)
@@ -50,6 +51,8 @@ HTML parse_mode; tüm ilan metinleri kaçışlanır (`&<>`). Başlık (kalın), 
 - `/start`: tanıtım + onay metni ("Uygun ilanları sana özelden göndereceğim. İletilerde zaman zaman 'Sponsorlu' etiketli içerik bulunabilir. Tercihlerini istediğin an /sil ile tamamen silebilirsin.") + [Kabul ediyorum] düğmesi. Kabul → kurulum sihirbazı: düzey → il → kategori → (isteğe bağlı) kelime → özet + `acikIlanOzeti`.
 - `/ayarlar`: mevcut tercihler + düzenleme düğmeleri.
 - `/kelime`: "Anahtar kelimeleri virgülle yaz (ör. hukuk, bilgisayar). Silmek için 'yok' yaz." → `durum='kelime_bekleniyor'`.
+- `/puan`: "KPSS puanını yaz (ör. 72,5). Silmek için 'yok' yaz." → `durum='puan_bekleniyor'`; 1–100 arası, virgül/nokta; /ayarlar'da "KPSS puanı" satırı. Veritabanı: `ALTER TABLE kullanicilar ADD COLUMN puan REAL;` (`migrations/001_puan.sql`).
+- `/nereye`: "Puanına ve bölümüne göre başvurabileceğin ilanlar:" + URL düğmesi `SITE_URL/nereye/?d=&b=&p=` (d: tek düzey varsa; b: ilk anahtar kelime; p: puan; bilinmeyen yazılmaz).
 - `/durdur`, `/devam`: `aktif` 0/1. `/sil`: kullanıcının tüm satırlarını (kullanicilar + gonderilen) siler.
 - `/yardim`. `/vip`: `VIP_ACIK!=="1"` ise "Yakında" yanıtı.
 - Klavyeler: düzey çoklu seçim (✓ işaretli), il seçimi sayfalı (81 il, 3 sütun, sayfa başına 24, "Tüm Türkiye"), kategori çoklu seçim (akademik anahtarı yok). `callback_data` ≤ 64 bayt.

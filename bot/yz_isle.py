@@ -79,6 +79,11 @@ def _puan_turu(p):
     return p[4:] if re.fullmatch(r'KPSSP\d+', p) else p
 
 
+def _puan_turleri(p):
+    """'P1,P2,P3', 'KPSSP14-P15', 'P14P15' -> ['P1', 'P2', 'P3'] …; tek tür 'P3' -> ['P3']."""
+    return [f'P{n}' for n in re.findall(r'P\s?(\d{1,3})', str(p or '').upper())]
+
+
 def _il(ad):
     from siniflandir import ILLER, kucuk
     a = kucuk(re.split(r'[/(,-]', str(ad or ''))[0].strip())
@@ -141,7 +146,8 @@ def alanlar(yz, item, simdi=None):
         sonuc['kpss'] = 'kpss'
     elif yz.get('kpss_gerekli') is False:
         sonuc['kpss'] = 'kpsssiz'
-    puanlar = sorted({_puan_turu(p) for p in yz.get('puan_turleri') or [] if _puan_turu(p)})
+    # "P1,P2,P3" / "P14P15P16" gibi çok türlü değerler tek tek türlere ayrılır (profil eşleştirmesi tür tür bakar)
+    puanlar = sorted({t for p in yz.get('puan_turleri') or [] for t in _puan_turleri(p)})
     if puanlar:
         sonuc['puan_turleri'] = puanlar
     iller = sorted({i for i in map(_il, yz.get('iller') or []) if i})

@@ -89,6 +89,53 @@ class Akis(unittest.TestCase):
         self.assertIn('yz_kadrolar', yz_isle.uygula(ILAN, veri, SIMDI))
 
 
+class Uyarilar(unittest.TestCase):
+    """24 Kasım 2026: kadro kadro eşleştirme (nereye aracı) için eksikler UYARI olur; kayıt reddedilmez."""
+    def _kadro(self, **ek):
+        k = {'unvan': 'Hemşire', 'adet': 2, 'ogrenim': 'lisans', 'puan_turu': 'P3', 'en_dusuk_puan': 60,
+             'kosullar': ['Hemşirelik lisans programından mezun olmak.']}
+        k.update(ek)
+        return {'kadrolar': [k], 'okunabilirlik': 'iyi'}
+
+    def test_ornek_cikti_temiz(self):
+        self.assertEqual(yc.uyarilar(CIKTI), [])
+        self.assertEqual(yc.uyarilar(self._kadro()), [])
+        self.assertEqual(yc.uyarilar(self._kadro(ogrenim='ortaogretim', kosullar=['B sınıfı sürücü belgesi.'])), [])   # lisede bölüm maddesi şart değil
+
+    def test_uyarilar_kaydi_durdurmaz(self):
+        kotu = self._kadro(ogrenim=None, puan_turu='yüzde 70', en_dusuk_puan='70', kosullar=['Fizik, Kimya vb. bölümlerinden mezun olmak.'])
+        self.assertEqual(yc.dogrula(kotu), [])
+        self.assertEqual(len(yc.uyarilar(kotu)), 4)
+
+    def test_kisaltilmis_bolum_listesi(self):
+        for m in ('Bilgisayar, Elektrik vb. mühendislik bölümlerinden mezun olmak.',
+                  'Hemşirelik, Ebelik… bölümlerinden mezun olmak.', 'Fizik, Kimya vs. programlarından mezun olmak.'):
+            self.assertTrue(any('kısaltılmış' in s for s in yc.uyarilar(self._kadro(kosullar=[m]))), m)
+        # VB.NET ve deneyim maddesindeki "vb." bölüm listesi değildir
+        for m in ('Bilgisayar mühendisliğinden mezun olmak; VB.NET programlama bilmek.', 'Strateji vb. alanlarda 5 yıl çalışmış olmak.'):
+            self.assertFalse(any('kısaltılmış' in s for s in yc.uyarilar(self._kadro(kosullar=['Hemşirelik bölümünden mezun olmak.', m]))), m)
+
+    def test_mezuniyet_maddesi_taninir(self):
+        for m in ('Hemşirelik lisans diplomasına sahip olmak.', 'Lisans eğitimini tamamlamış olmak.', 'Tıp doktoru olmak.'):
+            self.assertEqual(yc.uyarilar(self._kadro(kosullar=[m])), [], m)
+        self.assertTrue(any('mezuniyet maddesi yok' in s for s in yc.uyarilar(self._kadro(kosullar=['B sınıfı sürücü belgesi.']))))
+
+    def test_puan_turu_listesi_gecerli(self):
+        for t in ('P1,P2,P3', 'P14-P15-P16-P17-P18', 'P12-P40 (bölüme göre)', 'KPSSP3', None):
+            self.assertEqual(yc.uyarilar(self._kadro(puan_turu=t)), [], t)
+        self.assertEqual(yz_isle._puan_turleri('P14P15P16'), ['P14', 'P15', 'P16'])
+        self.assertEqual(yz_isle._puan_turleri('KPSSP3'), ['P3'])
+
+    def test_okunamayan_belgede_uyari_yok(self):
+        self.assertEqual(yc.uyarilar({'kadrolar': [{'unvan': 'X'}], 'okunabilirlik': 'kotu'}), [])
+
+    def test_mevcut_claude_okumalari_reddedilmez(self):
+        """Yayındaki Claude okumaları yeni kurallarla da kaydedilebilir olmalı (denetim: %32'si reddediliyordu)."""
+        veri = json.loads((Path(__file__).resolve().parent.parent / 'denetim' / 'yz.json').read_text(encoding='utf-8'))
+        red = [k for k, v in veri.items() if isinstance(v, dict) and v.get('model') == 'claude' and isinstance(v.get('yz'), dict) and yc.dogrula(v['yz'])]
+        self.assertEqual(red, [])
+
+
 class Bekleme(unittest.TestCase):
     def test_claude_okuyana_kadar_4_saat_beklenir(self):
         self.assertEqual(yz_isle.yayina_hazir(ILAN, {}, SIMDI.replace(hour=16))[0], False)   # 3,5 saat

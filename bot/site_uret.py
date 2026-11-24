@@ -58,7 +58,9 @@ def ust_html(kok, aktif=''):
     # Menüde 'Tercih Robotu' /puanlar/ aracına gider; veri dizini /kpss-taban-puanlari/ alt bilgideki 'KPSS taban puanları' bağlantısından ve robot sayfasındaki bağlantıdan erişilir (18 Kasım 2026: iki giriş aynı niyeti hedefliyordu).
     # Akademik menüden çıktı (Kasım 2026): aramadan gelenler için /akademik/ sayfası ve alt bilgi bağlantısı var.
     # Forum yeni bölüm olarak vurgulu (tb-yeni) ve "Yeni" rozetli gösterilir (Kasım 2026'da Katiplik'ten taşındı).
+    # 'Nereye Başvururum' /nereye/ aracına gider: puan + bölüm → başvurulabilecek ilanlar (24 Kasım 2026).
     menu = [('İlanlar', f'{kok}#ilanlar', 'ilanlar'),
+            ('Nereye Başvururum', f'{kok}nereye/', 'nereye'),
             ('Tercih Robotu', f'{kok}puanlar/', 'puanlar'),
             ('Katiplik', f'{kok}katiplik/', 'katiplik'),
             ('Forum', f'{kok}forum/', 'forum'),
@@ -1113,6 +1115,20 @@ def _bitis(item):
     return end
 
 
+def _en_az_puan(item):
+    """Kadroların en düşük taban puanı; her kadroda 1-100 arası sayı yoksa None (kimse dışlanamaz)."""
+    kadrolar = item.get('yz_kadrolar')
+    if not isinstance(kadrolar, list) or not kadrolar:
+        return None
+    puanlar = []
+    for k in kadrolar:
+        p = k.get('en_dusuk_puan') if isinstance(k, dict) else None
+        if isinstance(p, bool) or not isinstance(p, (int, float)) or not 1 <= p <= 100:
+            return None
+        puanlar.append(p)
+    return min(puanlar)
+
+
 def bot_ilani(item):
     """Kişisel bildirim botu için ilanın kısa kaydı."""
     from siniflandir import kucuk
@@ -1122,12 +1138,14 @@ def bot_ilani(item):
     parcalar = [item.get('baslik'), item.get('kurum'), item.get('kadro'), item.get('ozet'), item.get('duyuru_cumlesi')]
     parcalar +=[str(s.get(alan) or '') for s in item.get('sartlar', []) for alan in ('kadro', 'metin')]
     metin = kucuk(' '.join(str(p) for p in parcalar if p))[:1500]
+    en_az = _en_az_puan(item)
     return {
         'id': kimlik, 'kimlikler': kimlikler, 'baslik': item.get('baslik'), 'kurum': item.get('kurum'),
         'son_tarih': item.get('son_tarih'), 'son_zaman': item.get('son_zaman'),
         'ogrenim': item.get('ogrenim', []), 'iller': item.get('iller', []),
         'kategori': item.get('kategori'), 'kpss': item.get('kpss'), 'duyuru_turu': item.get('duyuru_turu'),
         'sayfa': BASE + 'ilan/' + sayfa[0] + '/' if sayfa else item.get('link'), 'metin': metin,
+        'en_az_puan': en_az,
     }
 
 

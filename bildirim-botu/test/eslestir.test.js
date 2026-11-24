@@ -62,3 +62,19 @@ test('bugunIstanbul gece yarısı sonrası İstanbul gününü verir', () => {
   assert.equal(bugunIstanbul(new Date('2026-09-30T21:30:00Z')), '2026-10-01');
   assert.equal(bugunIstanbul(new Date('2026-09-30T20:59:00Z')), '2026-09-30');
 });
+
+test('KPSS puanı: altı elenir, eşit ve üstü geçer', () => {
+  const ilan = i({ en_az_puan: 70, kpss: 'kpss' });
+  assert.equal(uygunMu(ilan, k({ puan: 69.9 }), BUGUN), false);
+  assert.equal(uygunMu(ilan, k({ puan: 70 }), BUGUN), true);
+  assert.equal(uygunMu(ilan, k({ puan: 85 }), BUGUN), true);
+});
+
+test('KPSS puanı: eksik veri ve kpsssiz ilan asla elemez', () => {
+  assert.equal(uygunMu(i({ en_az_puan: 70 }), k({ puan: null }), BUGUN), true);
+  assert.equal(uygunMu(i({ en_az_puan: 70 }), k(), BUGUN), true);
+  assert.equal(uygunMu(i({ en_az_puan: null }), k({ puan: 10 }), BUGUN), true);
+  assert.equal(uygunMu(i(), k({ puan: 10 }), BUGUN), true);
+  assert.equal(uygunMu(i({ en_az_puan: 70, kpss: 'kpsssiz' }), k({ puan: 10 }), BUGUN), true);
+  assert.equal(uygunMu(i({ en_az_puan: 70, kpss: null }), k({ puan: 10 }), BUGUN), false);
+});

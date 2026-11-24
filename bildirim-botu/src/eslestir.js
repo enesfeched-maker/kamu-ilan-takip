@@ -48,6 +48,11 @@ export function uygunMu(ilan, kullanici, bugun = bugunIstanbul(), simdi = null, 
   const ilanIller = liste(ilan.iller);
   if (iller.length && ilanIller.length && !ilanIller.some((i) => iller.includes(i))) return false;
 
+  // KPSS puanı: yalnız hem kullanıcıda hem ilanda sayı varsa ve ilan KPSS'liyse eler (eksik veri asla eleme nedeni değil).
+  const puan = kullanici.puan;
+  const enAz = ilan.en_az_puan;
+  if (typeof puan === 'number' && typeof enAz === 'number' && ilan.kpss !== 'kpsssiz' && puan < enAz) return false;
+
   const kategoriler = liste(kullanici.kategoriler);
   if (kategoriler.length && ilan.kategori && !kategoriler.includes(ilan.kategori)) return false;
 
