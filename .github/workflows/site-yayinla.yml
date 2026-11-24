@@ -6,6 +6,8 @@ on:
     paths:
       - 'docs/puanlar/**'
       - 'docs/bolum/**'
+      - 'docs/nereye/**'   # 24 Kasım 2026: /nereye/ aracı değişince yayına çıkmıyordu
+      - 'docs/sw.js'
       - 'docs/index.html'
       - 'docs/portal.js'
       - 'docs/portal.css'
