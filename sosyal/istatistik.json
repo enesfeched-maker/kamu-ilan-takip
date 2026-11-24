@@ -1,68 +1,68 @@
 {
- "olculen": 89,
+ "olculen": 92,
  "tur": {
-  "haber": -6.3,
-  "son_gun": 0.5,
-  "yeni": -3.0,
-  "buyuk": 0.6,
-  "kategori": -1.9,
+  "haber": -6.8,
+  "son_gun": -1.0,
+  "yeni": -4.3,
+  "buyuk": 6.2,
+  "kategori": -2.8,
   "ilan": -4.7,
-  "rehber": -0.9,
-  "ozet": 3.2,
+  "rehber": 0.4,
+  "ozet": 2.9,
   "ozel": 20
  },
  "muzik": {
-  "afro-pop.mp3": 1.0,
-  "latin-carnaval.mp3": 2.4,
-  "pop-dance.mp3": -5.7,
-  "synthwave.mp3": -6.9,
-  "dance-club.mp3": -5.4,
-  "funk-breakbeat.mp3": -4.2,
-  "hip-hop.mp3": 2.2,
-  "future-bass.mp3": -2.7,
-  "mixkit-158-happy-times.mp3": 1.4,
+  "afro-pop.mp3": 0.6,
+  "latin-carnaval.mp3": 2.5,
+  "pop-dance.mp3": -6.7,
+  "synthwave.mp3": -6.8,
+  "dance-club.mp3": -6.3,
+  "funk-breakbeat.mp3": -5.4,
+  "hip-hop.mp3": 2.3,
+  "future-bass.mp3": -3.8,
+  "mixkit-158-happy-times.mp3": 1.2,
   "mixkit-702-pop-09.mp3": -4.7,
-  "mixkit-443-serene-view.mp3": 3.2
+  "mixkit-443-serene-view.mp3": 2.9
  },
  "vakit": {
-  "aksam": -2.6,
-  "sabah": 0.6,
+  "aksam": -1.0,
+  "sabah": 0.0,
   "ilan": -4.7,
   "ozel": 20
  },
  "palet": {
-  "kagit": -0.5,
-  "bordo": 1.2
+  "kagit": -0.7,
+  "bordo": 1.4
  },
  "soru": {
   "Bu kadrolardan sana uygun olan var mı? 👇": 3.9,
   "Başvurunu yaptın mı, yoksa son güne mi bıraktın? 👇": 3.3,
-  "Başvurmayı düşünüyor musun? 👇": 1.5,
-  "Bu ilanlardan sana uygun olan var mı? 👇": 1.7,
-  "Sen hangisine başvurmayı düşünüyorsun? 👇": 3.2,
-  "Sen hangisine başvurdun? 👇": 8.1
+  "Başvurmayı düşünüyor musun? 👇": 1.6,
+  "Bu ilanlardan sana uygun olan var mı? 👇": 1.6,
+  "Sen hangisine başvurmayı düşünüyorsun? 👇": 8.7,
+  "Sen hangisine başvurdun? 👇": 8.5
  },
  "seri": {},
  "sure_bandi": {
-  "kisa": 2.9,
-  "uzun": 6.9,
-  "orta": 7.4
+  "kisa": 2.7,
+  "uzun": 7.0,
+  "orta": 7.2
  },
  "adet": {
   "tur": {
    "haber": 1,
    "son_gun": 41,
    "yeni": 14,
-   "buyuk": 2,
+   "buyuk": 3,
    "kategori": 6,
    "ilan": 17,
    "rehber": 1,
    "ozet": 4,
-   "ozel": 3
+   "ozel": 5
   },
   "muzik": {
    "afro-pop.mp3": 8,
-   "latin-carnaval.mp3": 6,
+   "latin-carnaval.mp3": 7,
    "pop-dance.mp3": 4,
    "synthwave.mp3": 4,
    "dance-club.mp3": 8,
@@ -74,10 +74,10 @@
    "mixkit-443-serene-view.mp3": 4
   },
   "vakit": {
-   "aksam": 39,
+   "aksam": 40,
    "sabah": 30,
    "ilan": 17,
-   "ozel": 3
+   "ozel": 5
   },
   "palet": {
    "kagit": 16,
@@ -88,7 +88,7 @@
    "Başvurunu yaptın mı, yoksa son güne mi bıraktın? 👇": 3,
    "Başvurmayı düşünüyor musun? 👇": 3,
    "Bu ilanlardan sana uygun olan var mı? 👇": 1,
-   "Sen hangisine başvurmayı düşünüyorsun? 👇": 1,
+   "Sen hangisine başvurmayı düşünüyorsun? 👇": 2,
    "Sen hangisine başvurdun? 👇": 3
   },
   "seri": {},
@@ -100,39 +100,39 @@
  },
  "tamamlama": {
   "tur": {
-   "ilan": 0.358,
-   "son_gun": 0.27,
-   "ozet": 0.45
+   "ilan": 0.352,
+   "son_gun": 0.266,
+   "ozet": 0.449
   },
   "muzik": {
-   "mixkit-702-pop-09.mp3": 0.358,
-   "mixkit-158-happy-times.mp3": 0.27,
-   "mixkit-443-serene-view.mp3": 0.45
+   "mixkit-702-pop-09.mp3": 0.352,
+   "mixkit-158-happy-times.mp3": 0.266,
+   "mixkit-443-serene-view.mp3": 0.449
   },
   "vakit": {
-   "ilan": 0.358,
-   "sabah": 0.27,
-   "aksam": 0.45
+   "ilan": 0.352,
+   "sabah": 0.266,
+   "aksam": 0.449
   },
   "palet": {
-   "kagit": 0.281,
-   "bordo": 0.367
+   "kagit": 0.275,
+   "bordo": 0.362
   },
   "soru": {
-   "Bu kadrolardan sana uygun olan var mı? 👇": 0.327,
-   "Başvurmayı düşünüyor musun? 👇": 0.388,
-   "Başvurunu yaptın mı, yoksa son güne mi bıraktın? 👇": 0.27,
-   "Bu ilanlardan sana uygun olan var mı? 👇": 0.46,
-   "Sen hangisine başvurmayı düşünüyorsun? 👇": 0.44,
-   "Sen hangisine başvurdun? 👇": 0.286
+   "Bu kadrolardan sana uygun olan var mı? 👇": 0.322,
+   "Başvurmayı düşünüyor musun? 👇": 0.381,
+   "Başvurunu yaptın mı, yoksa son güne mi bıraktın? 👇": 0.264,
+   "Bu ilanlardan sana uygun olan var mı? 👇": 0.449,
+   "Sen hangisine başvurmayı düşünüyorsun? 👇": 0.449,
+   "Sen hangisine başvurdun? 👇": 0.287
   },
   "seri": {},
   "sure_bandi": {
-   "kisa": 0.391,
-   "uzun": 0.27,
-   "orta": 0.374
+   "kisa": 0.389,
+   "uzun": 0.266,
+   "orta": 0.367
   }
  },
- "tamamlama_genel": 0.337,
- "guncelleme": "2026-11-24T06:29:40+03:00"
+ "tamamlama_genel": 0.333,
+ "guncelleme": "2026-11-24T23:13:55+03:00"
 }
