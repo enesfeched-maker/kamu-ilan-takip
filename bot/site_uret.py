@@ -1495,6 +1495,11 @@ def main():
         yonlendirmeleri_yaz(docs, data.get('ilanlar', []), sayfa_anahtarlari)
     except Exception as hata:
         print(f'Uyarı: eski ilan bağlantıları yönlendirilemedi: {hata}')
+    try:   # sosyal medya profillerindeki kısa adresler (kpsstercihi.com/ig/ ...): hangi platformdan gelindiği ölçülür
+        import sosyal_baglanti
+        sosyal_baglanti.bio_sayfalari_yaz(docs)
+    except Exception as hata:
+        print(f'Uyarı: profil yönlendirmeleri yazılamadı: {hata}')
     try:
         import eski_belgeler   # eski SBB belge adresleri: docs/404.html ilan sayfasına yönlendirir
         eski_belgeler.yaz(docs, data.get('ilanlar', []), _sayfa_anahtari, sayfa_anahtarlari)

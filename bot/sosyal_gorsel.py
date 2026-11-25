@@ -379,6 +379,13 @@ def facebook_hikaye(video_url, fb):
     return {'id': str(son.get('post_id') or video_id)}
 
 
+def _fb_aciklama(i):
+    """Facebook açıklamasına UTM'li bağlantı bloğu ekler (IG/TikTok'ta bağlantı tıklanmaz)."""
+    import sosyal_baglanti
+    return sosyal_baglanti.aciklama_baglantili(
+        {'aciklama': i['aciklama'], 'tur': i['tur'], 'zaman': datetime.now().isoformat()}, 'facebook')
+
+
 def facebook_karusel(resim_urller, metin, fb):
     """Çok fotoğraflı sayfa gönderisi: her görsel yayınlanmadan yüklenir, sonra tek gönderide birleştirilir."""
     from sosyal_yayinla import YayinHatasi, _facebook_istek
@@ -467,7 +474,7 @@ def yayinla(cikti, taban_url, ortam=None, aralik=5, gecmis_yolu=GECMIS_YOLU, sim
             if ad == 'facebook':
                 if isinstance(fb, Exception):
                     raise fb
-                return facebook_hikaye(adresler[0], fb) if hikaye else facebook_karusel(adresler, i['aciklama'], fb)
+                return facebook_hikaye(adresler[0], fb) if hikaye else facebook_karusel(adresler, _fb_aciklama(i), fb)
             return tiktok_karusel(adresler, i['aciklama'], _baslik(i))
         platformlar = [p for p, acik in (('instagram', 'instagram' not in kapali), ('facebook', fb is not None),
                                          ('tiktok', n in tt_izin)) if acik]
