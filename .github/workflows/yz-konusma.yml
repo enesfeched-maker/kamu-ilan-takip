@@ -1,7 +1,8 @@
 name: Anlatıcı sunucuyu konuştur (SadTalker)
 
-# yz-konusma-* dalına gönderimde çalışır: yz-medya/girdi/sunucu.png + anlatim.wav → dudak senkronlu video (yapıt: yz-konusma).
-# SadTalker (OpenTalker, Apache-2.0) CPU'da çalışır; ağır kurulum yerel bilgisayar yerine burada yapılır.
+# yz-konusma-* dalına gönderimde çalışır: yz-medya/girdi/sunucu.png + parca/pNN.wav → dudak senkronlu video (yapıt: yz-konusma).
+# SadTalker (OpenTalker, Apache-2.0) CPU'da kare başına ~37 sn sürer; tek işte 5 saat sınırına takıldığı için
+# ses 40 ms katı parçalara bölünür, parçalar paralel işlenir ve sonda art arda eklenir.
 on:
   push:
     branches: ['yz-konusma-*']
@@ -11,9 +12,24 @@ permissions:
   contents: read
 
 jobs:
-  konustur:
+  parcalar:
     runs-on: ubuntu-latest
-    timeout-minutes: 300
+    outputs:
+      liste: ${{ steps.l.outputs.liste }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: l
+        run: echo "liste=$(ls yz-medya/girdi/parca/*.wav | xargs -n1 basename | sed 's/\.wav$//' | jq -R . | jq -sc .)" >> "$GITHUB_OUTPUT"
+
+  konustur:
+    needs: parcalar
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix:
+        parca: ${{ fromJSON(needs.parcalar.outputs.liste) }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -40,17 +56,40 @@ jobs:
           curl -sSL --retry 5 -o gfpgan/weights/detection_Resnet50_Final.pth https://github.com/xinntao/facexlib/releases/download/v0.1.0/detection_Resnet50_Final.pth
           curl -sSL --retry 5 -o gfpgan/weights/GFPGANv1.4.pth https://github.com/TencentARC/GFPGAN/releases/download/v1.3.0/GFPGANv1.4.pth
           curl -sSL --retry 5 -o gfpgan/weights/parsing_parsenet.pth https://github.com/xinntao/facexlib/releases/download/v0.2.2/parsing_parsenet.pth
-          ls -la checkpoints gfpgan/weights
           python -c "import torch, torchvision, basicsr, gfpgan, face_alignment, librosa; print('torch', torch.__version__)"
       - name: Konuştur
         run: |
           cd ../SadTalker
-          python inference.py --driven_audio "$GITHUB_WORKSPACE/yz-medya/girdi/anlatim.wav" \
-            --source_image "$GITHUB_WORKSPACE/yz-medya/girdi/sunucu.png" --result_dir "$GITHUB_WORKSPACE/yz-konusma" \
+          python inference.py --driven_audio "$GITHUB_WORKSPACE/yz-medya/girdi/parca/${{ matrix.parca }}.wav" \
+            --source_image "$GITHUB_WORKSPACE/yz-medya/girdi/sunucu.png" --result_dir "$GITHUB_WORKSPACE/sonuc" \
             --still --preprocess full --size 512 --expression_scale 1.1 --cpu
-          ls -laR "$GITHUB_WORKSPACE/yz-konusma"
+          mkdir -p "$GITHUB_WORKSPACE/yz-konusma"
+          mv "$(ls -t "$GITHUB_WORKSPACE"/sonuc/*.mp4 | head -1)" "$GITHUB_WORKSPACE/yz-konusma/${{ matrix.parca }}.mp4"
+          ls -la "$GITHUB_WORKSPACE/yz-konusma"
       - uses: actions/upload-artifact@v4
-        if: always()
+        with:
+          name: yz-konusma-${{ matrix.parca }}
+          path: yz-konusma/
+          retention-days: 3
+
+  birlestir:
+    needs: konustur
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: yz-konusma-p*
+          path: parca
+          merge-multiple: true
+      - name: Art arda ekle
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg > /dev/null
+          ls parca/*.mp4 | sort | sed "s/^/file '/;s/$/'/" > liste.txt
+          cat liste.txt
+          mkdir -p yz-konusma
+          ffmpeg -y -loglevel error -f concat -safe 0 -i liste.txt -an -c:v libx264 -preset slow -crf 16 -pix_fmt yuv420p -r 25 yz-konusma/sunucu-konusan.mp4
+          ffprobe -v error -show_entries format=duration -of csv=p=0 yz-konusma/sunucu-konusan.mp4
+      - uses: actions/upload-artifact@v4
         with:
           name: yz-konusma
           path: yz-konusma/
