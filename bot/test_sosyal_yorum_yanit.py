@@ -129,6 +129,23 @@ class AkisTest(unittest.TestCase):
         self.assertEqual(tg, [])
         self.assertEqual(s.yanitlar, [])
 
+    def test_silinmis_video_digerlerini_durdurmaz(self):
+        s = Sahte([yorum(1, 'Hangi ilanlar açık?')])
+        asil = s.__call__
+
+        def istek(url, *a, **k):
+            if 'SILINEN/comments?' in url:
+                raise sy.YayinHatasi('HTTP 400: {"error":{"message":"Unsupported get request. Object with ID \'SILINEN\' does not exist","code":100,"error_subcode":33}}')
+            return asil(url, *a, **k)
+        telegram = []
+        with tempfile.TemporaryDirectory() as d, mock.patch.dict(os.environ, {'IG_KULLANICI_ID': '1', 'IG_ERISIM_ANAHTARI': 't', 'ASISTAN_ANAHTAR': 'gizli'}), \
+                mock.patch.object(sy, '_istek', istek), \
+                mock.patch('sosyal_motor.gecmis_oku', return_value=[{'ig_id': 'SILINEN', 'zaman': SIMDI.isoformat()}, {'ig_id': 'M1', 'zaman': SIMDI.isoformat()}]), \
+                mock.patch.object(sa, '_telegram', lambda m: telegram.append(m) or True), mock.patch.object(sa, '_uyku', lambda x: None):
+            sa.yorumlari_bildir(SIMDI, str(Path(d) / 'd.json'))
+        self.assertEqual(len(s.yanitlar), 1)
+        self.assertFalse([m for m in telegram if 'okunamadı' in m])
+
     def test_gorulen_tekrar_islenmez(self):
         s = Sahte([yorum(1, 'Hangi ilanlar açık?')])
         with tempfile.TemporaryDirectory() as d, mock.patch.dict(os.environ, {'IG_KULLANICI_ID': '1', 'IG_ERISIM_ANAHTARI': 't', 'ASISTAN_ANAHTAR': 'gizli'}), \

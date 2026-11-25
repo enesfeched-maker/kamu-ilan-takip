@@ -352,6 +352,10 @@ def yorumlari_bildir(simdi=None, durum_yolu='sosyal-yorum-durum.json'):
         try:
             yanit = _istek(f'https://graph.instagram.com/{IG_SURUM}/{medya}/comments?fields=id,text,username,timestamp&access_token={anahtar}')
         except YayinHatasi as hata:
+            m = str(hata)
+            if '"error_subcode":33' in m or 'does not exist' in m:   # silinmiş/kaldırılmış video: atla, diğerlerine devam
+                print(f'Uyarı: {medya} artık yok, atlandı.')
+                continue
             if not durum.get('izin_uyarisi'):   # izin yoksa her medya aynı hatayı verir: bir kez haber ver, dur
                 _telegram('Instagram yorumları okunamadı. Uygulamaya yorum yönetimi izni (instagram_business_manage_comments) '
                           f'verilmemiş olabilir.\n{str(hata)[:200]}')
