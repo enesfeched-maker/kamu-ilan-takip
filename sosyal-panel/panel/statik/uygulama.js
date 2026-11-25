@@ -9,7 +9,7 @@ const OLCUT_ADI = {
   interactions: 'Toplam etkileşim',
 };
 const KAYNAK_ADI = {
-  gecmis: 'Bot geçmişi', bulut: 'Bulut toplayıcı', youtube_api: 'YouTube Data API', buffer: 'Buffer',
+  gecmis: 'Bot geçmişi', bulut: 'Bulut toplayıcı', youtube_api: 'YouTube Data API', buffer: 'Buffer', asistan: 'Asistan kayıtları',
 };
 const DURUM_ADI = { hazir: 'hazır', kismi: 'kısmi', bekliyor: 'anahtar bekleniyor', hata: 'hata', kapali: 'bağlı değil' };
 
@@ -48,7 +48,11 @@ async function yukle() {
   $('#ornek-seridi').hidden = !durum.ornek;
   toplamaDurumu();
   kenarCiz();
-  if (d.gorunum === 'akis') akisCiz(); else analizCiz();
+  gorunumuCiz();
+}
+
+function gorunumuCiz() {
+  if (d.gorunum === 'akis') akisCiz(); else if (d.gorunum === 'analiz') analizCiz(); else sorularCiz();
 }
 
 function toplamaDurumu() {
@@ -265,10 +269,11 @@ function gorunumSec(g) {
   $$('.sekmeler button').forEach((b) => b.classList.toggle('secili', b.dataset.gorunum === g));
   $('#akis').hidden = g !== 'akis';
   $('#analiz').hidden = g !== 'analiz';
-  if (g === 'akis') akisCiz(); else analizCiz();
+  $('#sorular').hidden = g !== 'sorular';
+  gorunumuCiz();
 }
 
-function yenidenCiz() { kenarCiz(); if (d.gorunum === 'akis') akisCiz(); else analizCiz(); }
+function yenidenCiz() { kenarCiz(); gorunumuCiz(); }
 
 function git(id) {
   const g = d.gonderiler.find((x) => x.id === id);
@@ -340,7 +345,7 @@ $('#tablo').addEventListener('dblclick', (e) => { if (e.target.closest('#satirla
 
 document.addEventListener('keydown', (e) => {
   if (e.ctrlKey || e.metaKey || e.altKey) return;
-  const yazi = e.target.matches('input, textarea');
+  const yazi = e.target.matches('input, textarea, select');
   if (e.key === 'Escape') {
     if (yazi) e.target.blur();
     d.ara = ''; $('#ara').value = ''; d.sablon = ''; d.platform = ''; yenidenCiz(); return;
@@ -354,6 +359,7 @@ document.addEventListener('keydown', (e) => {
     case 'Enter': case 'o': if (d.gorunum === 'akis') ac(); break;
     case '/': e.preventDefault(); $('#ara').focus(); break;
     case 'a': gorunumSec(d.gorunum === 'akis' ? 'analiz' : 'akis'); break;
+    case 's': gorunumSec('sorular'); break;
     case 'r': yenile(); break;
     case 't': temaDegistir(); break;
     case '?': $('#yardim').showModal(); break;

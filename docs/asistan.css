@@ -57,6 +57,12 @@ a.as-ilan:hover{border-color:var(--line-2,#D2CEC0);background:var(--kf-kagit,#FB
 .as-cip:disabled{opacity:.55;cursor:default}
 .as-panel a:focus-visible,.as-cip:focus-visible,.as-gonder:focus-visible{outline:2px solid var(--focus,#B86A0C);outline-offset:2px}
 
+/* "İşine yaradı mı?" satırı: sakin, küçük, cevabın altında */
+.as-geri{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-top:-2px;font-size:13px;line-height:1.4;color:var(--muted,#5A6B77)}
+.as-geri-d{font:inherit;font-size:13px;font-weight:600;min-height:32px;padding:3px 12px;border-radius:999px;background:transparent;border:1.5px solid var(--line-2,#D2CEC0);color:var(--ink,#12354E);cursor:pointer;transition:border-color .15s,background .15s}
+.as-geri-d:hover{border-color:#F99D1B;background:var(--tint,#FFF6D6)}
+.as-geri-d:focus-visible{outline:2px solid var(--focus,#B86A0C);outline-offset:2px}
+
 /* yazıyor göstergesi */
 .as-yaziyor{display:inline-flex;gap:5px;align-items:center;padding:14px 16px}
 .as-yaziyor i{width:7px;height:7px;border-radius:50%;background:var(--muted,#5A6B77);animation:as-zipla 1.2s infinite ease-in-out}
@@ -87,7 +93,7 @@ a.as-ilan:hover{border-color:var(--line-2,#D2CEC0);background:var(--kf-kagit,#FB
 @media (max-width:640px){html.as-kilit{overflow:hidden}}
 
 @media (prefers-reduced-motion:reduce){
-  .as-panel,.as-perde,.as-cip,.as-gonder,.as-form{transition:none}
+  .as-panel,.as-perde,.as-cip,.as-geri-d,.as-gonder,.as-form{transition:none}
   .as-panel{transform:none}
   .as-yaziyor i{animation:none;opacity:.7}
 }

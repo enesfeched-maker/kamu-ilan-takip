@@ -1,0 +1,49 @@
+name: Instagram yorumlarına yanıt
+
+# Her 2 saatte bir (Cloudflare zamanlayıcı tetikler, bu cron yedek): Instagram'daki yeni yorumları okur, site asistanıyla
+# yanıtlanabilenleri yanıtlar, hepsini yöneticiye Telegram'dan bildirir (bot/sosyal_ajan.py yorum).
+# Durum dosyası ve cache anahtarı sosyal-ajan.yml ile aynıdır; ikisi aynı concurrency grubunda sıraya girer,
+# böylece aynı yorum iki kez işlenmez.
+on:
+  schedule:
+    - cron: "25 */2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sosyal-ajan
+  cancel-in-progress: false
+
+jobs:
+  yorum:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install Pillow==11.3.0 beautifulsoup4==4.13.5
+      - name: Yorum durumunu geri yükle
+        uses: actions/cache/restore@v4
+        with:
+          path: sosyal-yorum-durum.json
+          key: sosyal-yorum-geri-yukle
+          restore-keys: sosyal-yorum-
+      - name: Yorumları işle
+        continue-on-error: true
+        env:
+          IG_KULLANICI_ID: ${{ secrets.IG_KULLANICI_ID }}
+          IG_ERISIM_ANAHTARI: ${{ secrets.IG_ERISIM_ANAHTARI }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_YONETICI_ID: ${{ secrets.TELEGRAM_YONETICI_ID }}
+          ASISTAN_ANAHTAR: ${{ secrets.ASISTAN_ANAHTAR }}
+        run: python bot/sosyal_ajan.py yorum
+      - name: Yorum durumunu kaydet
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: sosyal-yorum-durum.json
+          key: sosyal-yorum-${{ github.run_id }}

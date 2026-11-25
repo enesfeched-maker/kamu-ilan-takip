@@ -3,6 +3,7 @@ import threading
 import traceback
 from datetime import datetime, timedelta, timezone
 
+from . import asistan
 from . import kaynaklar as k
 from .siniflandir import KartTasarimi
 
@@ -75,6 +76,11 @@ def _topla(depo, bulut_tetikle, gh_anahtari):
     kart = KartTasarimi(k.site_ilanlari())
     adet, hata = _dene(depo, 'telegram', lambda: k.telegram_topla(depo, kart=kart), gunluk)
     depo.durum_yaz('telegram', 'hata' if hata else 'hazir', hata or f't.me/s önizlemesi: {adet} mesaj tarandı', adet)
+
+    # 4b) Asistan kayıtları (site + Instagram yorumları); anahtar dosyası yoksa sessizce atlanır
+    _, hata = _dene(depo, 'asistan', lambda: asistan.topla(depo), gunluk)
+    if hata:
+        depo.durum_yaz('asistan', 'hata', hata)
 
     # 5) Platform özetleri
     if ig_durum and ig_durum[0] == 'hazir':

@@ -37,5 +37,12 @@ export default {
   async scheduled(event, env, ctx) {
     const { cronCalistir } = await import('./bildirim.js');
     ctx.waitUntil(cronCalistir(env));
+    // Asistan kayıtlarının 120 gün saklama temizliği: günde bir kez (UTC 00:xx = 03:xx İstanbul), hatası bota dokunmaz.
+    // Cron her dakika çalışır, bellek bekçisi isolate başınadır: yalnız 00:00–00:09 UTC denenir (günde en çok ~10 DELETE).
+    const zamanT = new Date(event?.scheduledTime ?? Date.now());
+    if (zamanT.getUTCHours() === 0 && zamanT.getUTCMinutes() < 10) {
+      const { eskiKayitlariSil } = await import('./asistan-kayit.js');
+      ctx.waitUntil(eskiKayitlariSil(env, event?.scheduledTime ?? Date.now()));
+    }
   },
 };

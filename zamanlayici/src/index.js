@@ -9,6 +9,7 @@ const DEPO = 'enesfeched-maker/kamu-ilan-takip';
 export const ISLER = {
   '*/30 * * * *': ['ilan.yml'],   // tarama: her saat :00 ve :30
   '7,37 * * * *': ['bekci.yml'],  // bekçi: taramadan 7 dk sonra
+  '25 */2 * * *': ['sosyal-yorum.yml'], // Instagram yorumlarına asistan yanıtı: 2 saatte bir
 };
 
 export async function baslat(env, isAkisi, fetchImpl = fetch) {
