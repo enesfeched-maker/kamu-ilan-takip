@@ -180,7 +180,7 @@ class Yayin(unittest.TestCase):
                 mock.patch.dict(os.environ, {'VIDEO_URL': ''}):
             self.klasor(t)
             sonuc = y.instagram(Path(t) / 'reel.mp4', {'aciklama': 'A'}, ortam=('42', 'anahtar'))
-        self.assertEqual(sonuc, {'id': 'p1'})
+        self.assertEqual(sonuc, {'id': 'p1', 'yorum': 'tamam'})
         self.assertTrue(any('rupload.facebook.com' in c and c.endswith('/k1') for c in cagrilar))
 
     def test_instagram_video_adresiyle(self):
@@ -196,7 +196,8 @@ class Yayin(unittest.TestCase):
         with tempfile.TemporaryDirectory() as t, mock.patch.object(y, '_istek', side_effect=sahte), \
                 mock.patch.dict(os.environ, {'VIDEO_URL': 'https://ornek/reel.mp4'}):
             self.klasor(t)
-            self.assertEqual(y.instagram(Path(t) / 'reel.mp4', {'aciklama': 'A'}, ortam=('42', 'x')), {'id': 'p1'})
+            self.assertEqual(y.instagram(Path(t) / 'reel.mp4', {'aciklama': 'A'}, ortam=('42', 'x')),
+                             {'id': 'p1', 'yorum': 'tamam'})
         self.assertEqual(alanlar['video_url'], 'https://ornek/reel.mp4')
         self.assertFalse(any('rupload' in c for c in cagrilar))
 
