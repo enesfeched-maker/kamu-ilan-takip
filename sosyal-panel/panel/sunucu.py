@@ -7,11 +7,12 @@ import threading
 import time
 import traceback
 import urllib.parse
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 from . import analiz as an
+from . import asistan, sorular
 from .db import Depo
 from .topla import PLATFORMLAR, hepsini_topla
 
@@ -38,6 +39,22 @@ class Uygulama:
             durumlar = {d['kaynak']: d for d in self.depo.durumlar()}
             toplama = self.depo.ayar('toplama')
         return {'ornek': self.ornek, 'platformlar': PLATFORMLAR, 'kaynaklar': durumlar, 'toplama': toplama}
+
+    def sorular(self, gun=None, en_cok=20000):
+        """'İnsanlar ne soruyor' görünümü: çözümleme + dönemin kayıtları (yeniden eskiye, en çok 20 000)."""
+        simdi = datetime.now(timezone.utc)
+        with self._kilit:
+            hepsi = self.depo.asistan_kayitlari()
+            meslekler = (self.depo.ayar('asistan_meslekler') or {}).get('liste')
+            durum = self.depo.db.execute("SELECT * FROM kaynak_durum WHERE kaynak='asistan'").fetchone()
+        sorular.zenginlestir(hepsi, meslekler)
+        sonuc = sorular.analiz(hepsi, gun=gun or None, simdi=simdi)
+        sinir = (simdi - timedelta(days=int(gun))).isoformat() if gun else None
+        donem = [k for k in hepsi if not sinir or (k.get('zaman') or '') >= sinir]
+        sonuc.update(kayitlar=donem[:en_cok], kesildi=len(donem) > en_cok, ornek=self.ornek,
+                     anahtar_var=bool(asistan.anahtar_oku()), anahtar_yolu=str(asistan.anahtar_yolu()),
+                     durum=dict(durum) if durum else None)
+        return sonuc
 
     def yenile(self, bulut=False):
         if self.ornek or not self.topla_acik:
@@ -73,6 +90,9 @@ def isleyici(uyg):
                     return self._json({'seri': uyg.depo.seri(q.get('id', ''))})
             if adres.path == '/api/analiz':
                 return self._json(an.analiz(uyg.gonderiler(), q.get('platform') or None, q.get('gun') or None))
+            if adres.path == '/api/sorular':
+                gun = q.get('gun') or ''
+                return self._json(uyg.sorular(gun if gun.isdigit() else None))
             return self._statik(adres.path)
 
         def do_POST(self):
@@ -116,6 +136,9 @@ def calistir(port=8765, ornek=False, tarayici=True, topla=True, veri=None):
         if ornek and not depo.gonderiler():
             from .ornek import doldur
             doldur(depo)
+        if ornek and not depo.asistan_son_id():
+            from .ornek import asistan_doldur
+            asistan_doldur(depo)
         uyg = Uygulama(depo, ornek=ornek, topla=topla)
         sunucu = DayanikliSunucu(('127.0.0.1', port), isleyici(uyg))
         sunucu.gunluk_dosyasi = gunluk_dosyasi

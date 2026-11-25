@@ -4,8 +4,9 @@ import isci, { ISLER, baslat } from '../src/index.js';
 
 test('cron ifadeleri wrangler.toml ile aynı ve doğru iş akışlarını başlatır', async () => {
   const toml = await import('node:fs').then(fs => fs.readFileSync(new URL('../wrangler.toml', import.meta.url), 'utf8'));
-  const cronlar = [...toml.matchAll(/"([^"]+ \* \* \* \*)"/g)].map(m => m[1]);
+  const cronlar = [...toml.matchAll(/"([^"]+ \* \* \* \*|[^"]+ \*\/2 \* \* \*)"/g)].map(m => m[1]);
   assert.deepEqual(cronlar.sort(), Object.keys(ISLER).sort());
+  assert.deepEqual(ISLER['25 */2 * * *'], ['sosyal-yorum.yml']);
   assert.deepEqual(ISLER['*/30 * * * *'], ['ilan.yml']);
   assert.deepEqual(ISLER['7,37 * * * *'], ['bekci.yml']);
 });

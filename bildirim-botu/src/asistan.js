@@ -1,8 +1,9 @@
 // Site asistanı: kpsstercihi.com'daki soru-cevap kutusunun arka ucu (POST /asistan/sor).
 // Cevaplar yalnız sitenin bilgi dosyasından (asistan/bilgi.json) ve açık ilan listesinden (bot-ilanlar.json) üretilir;
-// D1'e dokunulmaz, soru metni saklanmaz ya da loglanmaz. Workers AI yalnızca şablon cümleyi daha doğal yazmak için
+// sorular ve cevaplar asistan-kayit.js ile D1'e yazılır (IP/UA yok, kişisel veri gizlenir, 120 gün). Workers AI yalnızca şablon cümleyi daha doğal yazmak için
 // kullanılır; çıktısı sıkı doğrulanır, geçemezse şablon cevap gider. Bağlantılar ve ilanlar her zaman koddan gelir.
 import { bugunIstanbul, sureDoldu } from './eslestir.js';
+import { kayitSifirla, kayitEkle, geriYaz, durumYaz, kayitlariListele, yetkiDurumu, DURUMLAR } from './asistan-kayit.js';
 
 const IZINLI_ORIGINLER = /^(https:\/\/(www\.)?kpsstercihi\.com|http:\/\/(localhost|127\.0\.0\.1)(:\d{1,5})?)$/;
 const VARSAYILAN_SITE = 'https://kpsstercihi.com/';
@@ -544,6 +545,7 @@ export function testSifirla() {
   bellek.ilan = null;
   bellek.bilgi = null;
   hiz.clear();
+  kayitSifirla();
 }
 
 async function jsonCek(url) {
@@ -584,7 +586,7 @@ export async function veriYukle(env) {
 // ---------------------------------------------------------------- HTTP
 
 function corsBasliklari(origin) {
-  const h = { 'Access-Control-Allow-Methods': 'POST, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type', 'Access-Control-Max-Age': '86400', Vary: 'Origin' };
+  const h = { 'Access-Control-Allow-Methods': 'POST, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type, X-Asistan-Anahtar', 'Access-Control-Max-Age': '86400', Vary: 'Origin' };
   if (origin && IZINLI_ORIGINLER.test(origin)) h['Access-Control-Allow-Origin'] = origin;
   return h;
 }
@@ -626,27 +628,101 @@ async function sinirliOku(request, sinir) {
 
 const temizle = (s) => String(s).replace(/[\u0000-\u001f\u007f-\u009f\u200b-\u200f\u2028-\u202e\ufeff]/g, ' ').replace(/\s+/g, ' ').trim();
 
+const YOLLAR = new Set(['/asistan/sor', '/asistan/geri', '/asistan/durum', '/asistan/kayitlar']);
+const KAYIT_BEKLEME_MS = 1500;
+
+// Gövdeyi sınırlı okuyup JSON çözer; olmazsa null.
+async function govdeCoz(request) {
+  try {
+    // Gövde, JSON çözümlenmeden ve tamamı belleğe alınmadan önce sınırlanır (Content-Length yalan/eksik olabilir).
+    if (Number(request.headers.get('Content-Length') || 0) > GOVDE_MAX) return { uzun: true };
+    const ham = await sinirliOku(request, GOVDE_MAX);
+    if (ham === null) return { uzun: true };
+    return { govde: JSON.parse(ham) };
+  } catch {
+    return {};
+  }
+}
+
+// Kayıt yazımı en çok KAYIT_BEKLEME_MS bekler; geçerse kid null (cevap gecikmesin).
+async function kayitliKid(env, ctx, girdi) {
+  let zamanlayici;
+  const yaz = kayitEkle(env, girdi);
+  // Süre dolsa da yazım yarıda kesilmesin (cevap kid: null ile döner, satır yine yazılır).
+  try { ctx?.waitUntil?.(yaz); } catch { /* sessiz */ }
+  try {
+    return await Promise.race([yaz, new Promise((coz) => { zamanlayici = setTimeout(() => coz(null), KAYIT_BEKLEME_MS); })]);
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(zamanlayici);
+  }
+}
+
+async function geriIstegi(request, env, origin) {
+  const ip = request.headers.get('CF-Connecting-IP') || 'bilinmiyor';
+  if (hizAsildi(`geri:${ip}`, Date.now())) return yanit({ ok: false }, 429, origin);
+  const { govde } = await govdeCoz(request);
+  const kid = govde && Number(govde.kid);
+  const deger = govde && Number(govde.deger);
+  if (!Number.isInteger(kid) || kid <= 0 || (deger !== 1 && deger !== -1)) return yanit({ ok: false }, 400, origin);
+  if (!env.DB) return yanit({ ok: false }, 200, origin);
+  try {
+    return yanit({ ok: await geriYaz(env, kid, deger) }, 200, origin);
+  } catch {
+    return yanit({ ok: false }, 200, origin);
+  }
+}
+
+async function durumIstegi(request, env, origin) {
+  const { govde } = await govdeCoz(request);
+  const kid = govde && Number(govde.kid);
+  if (!Number.isInteger(kid) || kid <= 0 || !DURUMLAR.includes(govde.durum)) return yanit({ ok: false }, 400, origin);
+  if (govde.gonderilen !== undefined && govde.gonderilen !== null && (typeof govde.gonderilen !== 'string' || govde.gonderilen.length > 1000)) {
+    return yanit({ ok: false }, 400, origin);
+  }
+  try {
+    return yanit({ ok: await durumYaz(env, kid, govde.durum, govde.gonderilen) }, 200, origin);
+  } catch {
+    return yanit({ ok: false }, 500, origin);
+  }
+}
+
+async function kayitlarIstegi(url, env, origin) {
+  const sonra = Math.max(0, Number.parseInt(url.searchParams.get('sonra') || '0', 10) || 0);
+  const limit = Math.min(1000, Math.max(1, Number.parseInt(url.searchParams.get('limit') || '200', 10) || 200));
+  try {
+    return yanit(await kayitlariListele(env, sonra, limit), 200, origin);
+  } catch {
+    return yanit({ kayitlar: [], son: sonra, hata: true }, 500, origin);
+  }
+}
+
 export async function asistanIstek(request, env, ctx) {
   const origin = request.headers.get('Origin');
   const url = new URL(request.url);
-  if (url.pathname !== '/asistan/sor') return yanit({ metin: 'bulunamadı' }, 404, origin);
+  if (!YOLLAR.has(url.pathname)) return yanit({ metin: 'bulunamadı' }, 404, origin);
   if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: corsBasliklari(origin) });
-  if (request.method !== 'POST') return yanit({ metin: 'yöntem desteklenmiyor' }, 405, origin);
+  const yetkili = url.pathname === '/asistan/durum' || url.pathname === '/asistan/kayitlar';
+  const beklenen = url.pathname === '/asistan/kayitlar' ? 'GET' : 'POST';
+  if (request.method !== beklenen) return yanit({ metin: 'yöntem desteklenmiyor' }, 405, origin);
   if (origin && !IZINLI_ORIGINLER.test(origin)) return yanit({ metin: 'köken izinli değil' }, 403, origin);
 
-  const ip = request.headers.get('CF-Connecting-IP') || 'bilinmiyor';
-  if (hizAsildi(ip, Date.now())) return yanit({ metin: 'Biraz hızlı gittik, bir dakika sonra tekrar sorabilirsin.' }, 429, origin);
-
-  let govde;
-  try {
-    // Gövde, JSON çözümlenmeden ve tamamı belleğe alınmadan önce sınırlanır (Content-Length yalan/eksik olabilir).
-    if (Number(request.headers.get('Content-Length') || 0) > GOVDE_MAX) return yanit({ metin: 'Soru çok uzun.' }, 400, origin);
-    const ham = await sinirliOku(request, GOVDE_MAX);
-    if (ham === null) return yanit({ metin: 'Soru çok uzun.' }, 400, origin);
-    govde = JSON.parse(ham);
-  } catch {
-    return yanit({ metin: 'Soruyu okuyamadım.' }, 400, origin);
+  const anahtar = yetkiDurumu(request, env);
+  if (yetkili) {
+    if (anahtar === 'yok') return yanit({ metin: 'yapılandırılmadı' }, 503, origin);
+    if (anahtar !== 'gecerli') return yanit({ metin: 'yetkisiz' }, 401, origin);
+    if (!env.DB) return yanit({ metin: 'veritabanı yok' }, 503, origin);
+    return url.pathname === '/asistan/durum' ? durumIstegi(request, env, origin) : kayitlarIstegi(url, env, origin);
   }
+  if (url.pathname === '/asistan/geri') return geriIstegi(request, env, origin);
+
+  const ip = request.headers.get('CF-Connecting-IP') || 'bilinmiyor';
+  // Geçerli anahtar (Instagram yanıtlayıcı) IP hız sınırına takılmaz.
+  if (anahtar !== 'gecerli' && hizAsildi(ip, Date.now())) return yanit({ metin: 'Biraz hızlı gittik, bir dakika sonra tekrar sorabilirsin.' }, 429, origin);
+
+  const { govde, uzun } = await govdeCoz(request);
+  if (uzun) return yanit({ metin: 'Soru çok uzun.' }, 400, origin);
   if (!govde || typeof govde !== 'object' || typeof govde.soru !== 'string') return yanit({ metin: 'Soruyu okuyamadım.' }, 400, origin);
   const soru = temizle(govde.soru);
   if (!soru) return yanit({ metin: 'Bir şey yazmadın, ne öğrenmek istersin?' }, 400, origin);
@@ -658,8 +734,12 @@ export async function asistanIstek(request, env, ctx) {
     const veri = await veriYukle(env);
     const c = cevapla(kisa, veri, new Date(), sayfa);
     const cilali = await yzCilala(env, kisa, c);
-    const { tur, ...disari } = c; // eslint-disable-line no-unused-vars
-    return yanit({ ...disari, metin: cilali || c.metin }, 200, origin);
+    const metin = cilali || c.metin;
+    // kanal/meta yalnız geçerli anahtarla kabul edilir; yoksa site sorusu sayılır.
+    const yetkiliSor = anahtar === 'gecerli';
+    const kanal = yetkiliSor && govde.kanal === 'instagram' ? 'instagram' : 'site';
+    const kid = await kayitliKid(env, ctx, { kanal, soru: kisa, cevap: { ...c, metin }, sayfa, meta: yetkiliSor ? govde.meta : null });
+    return yanit({ ...c, metin, kid }, 200, origin);
   } catch {
     return yanit({ metin: 'Şu an cevap veremiyorum; biraz sonra tekrar dener misin?', baglantilar: [], ilanlar: [], oneriler: [] }, 500, origin);
   }

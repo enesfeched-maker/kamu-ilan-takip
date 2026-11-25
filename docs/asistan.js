@@ -1,6 +1,7 @@
 /* KPSS Tercihi — site asistanı (Kasım 2026).
    Sayfa açılışında yalnız sağ alttaki "Soru sor" düğmesi çizilir (stili bu dosyada, ~1 KB). Panel ve docs/asistan.css ilk açılışta yüklenir.
-   Sunucu: bildirim-botu Worker'ı, POST /asistan/sor {soru, sayfa} -> {metin, baglantilar, ilanlar, oneriler}.
+   Sunucu: bildirim-botu Worker'ı, POST /asistan/sor {soru, sayfa} -> {metin, baglantilar, ilanlar, oneriler, kid};
+   kid varsa cevabın altında "İşine yaradı mı?" sorulur ve POST /asistan/geri {kid, deger: 1|-1} gider.
    Güvenlik: sunucudan gelen her şey textContent ile yazılır; bağlantılar yalnız https://kpsstercihi.com/ ve https://t.me/ ile başlıyorsa çizilir.
    Konuşma sessionStorage'da tutulur (sayfalar arasında sürer, sekme kapanınca biter).
    Renk: Sanzo Wada #2 (lacivert #12354E + kehribar #F99D1B), docs/tasarim.css belirteçleri. */
@@ -59,10 +60,12 @@
       if (o && Array.isArray(o.m)) return { m: o.m.filter(function (x) { return x && (x.r === 'k' || x.r === 'a') && typeof x.t === 'string'; }).map(function (x) {
         if (x.r === 'k') return { r: 'k', t: yazi(x.t, SINIR) };
         /* kayıtlı cevap da sunucu cevabı gibi yeniden süzülür (bozuk/elle değiştirilmiş depo çizimi bozmasın, bağlantı izni atlanmasın) */
-        return temizle({ metin: x.t,
+        var c = temizle({ metin: x.t, kid: x.k,
           ilanlar: dizi(x.i).map(function (y) { y = y || {}; return { baslik: y.b, kurum: y.k, son_tarih: y.s, iller: y.il, url: y.u }; }),
           baglantilar: dizi(x.b).map(function (y) { y = y || {}; return { ad: y.a, url: y.u }; }),
           oneriler: x.o });
+        if (x.g === 'e' || x.g === 'h') c.g = x.g;   /* geri bildirim verildi: tekrar sorulmaz */
+        return c;
       }) };
     } catch (e) { /* yok ya da kapalı */ }
     return { m: [] };
@@ -94,6 +97,7 @@
     return {
       r: 'a',
       t: yazi(j.metin, 1500),
+      k: typeof j.kid === 'number' && j.kid > 0 && j.kid % 1 === 0 ? j.kid : 0,
       i: dizi(j.ilanlar).slice(0, 5).map(function (x) {
         x = x || {};
         return { b: yazi(x.baslik, 200), k: yazi(x.kurum, 160), s: yazi(x.son_tarih, 10),
@@ -231,9 +235,18 @@
       buton.hidden = true;
       d.documentElement.classList.add('as-kilit');
       akis.scrollTop = akis.scrollHeight;
-      if (mobil()) panel.focus(); else alan.focus();
+      if (mobil()) panel.focus(); else odakla();
       d.addEventListener('keydown', tus, true);
     });
+  }
+  /* Yazma alanına odak: düğme gizlenirken ve panel görünürken ilk deneme boşa gidebilir; kısa aralıklarla yeniden denenir. */
+  function odakla() {
+    var n = 0;
+    (function dene() {
+      if (!acik || d.activeElement === alan) return;
+      try { alan.focus({ preventScroll: true }); } catch (e) { alan.focus(); }
+      if (d.activeElement !== alan && n++ < 3) setTimeout(dene, 60);
+    })();
   }
   function kapat() {
     if (!acik) return;
@@ -296,6 +309,7 @@
       });
       kap.appendChild(lk);
     }
+    if (m.r === 'a' && m.k && !m.h && !m.g) kap.appendChild(geriSatiri(m));
     var cipler = sonMu ? (m.yeniden ? [{ a: 'Tekrar dene', s: m.yeniden }] : dizi(m.o).map(function (s) { return { a: s, s: s }; })) : [];
     if (cipler.length) {
       var cp = el('div', 'as-cipler');
@@ -309,6 +323,34 @@
       kap.appendChild(cp);
     }
     return kap;
+  }
+  /* "İşine yaradı mı?" satırı: cevabın kayıt numarası (kid) varsa; tıklanınca tek istek atılır ve satır teşekküre dönüşür. */
+  function geriAdres() { return adres().replace(/\/sor$/, '/geri'); }
+  function geriGonder(kid, deger) {
+    try {
+      if (typeof fetch === 'function') {
+        fetch(geriAdres(), { method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'omit', cache: 'no-store',
+          keepalive: true, body: JSON.stringify({ kid: kid, deger: deger }) }).catch(function () { /* sessiz */ });
+      }
+    } catch (e) { /* sessiz */ }
+  }
+  function geriSatiri(m) {
+    var s = el('div', 'as-geri');
+    s.appendChild(el('span', 'as-geri-y', 'İşine yaradı mı?'));
+    [['Evet', 1], ['Hayır', -1]].forEach(function (c) {
+      var b = el('button', 'as-geri-d', c[0]);
+      b.type = 'button';
+      b.addEventListener('click', function () {
+        m.g = c[1] === 1 ? 'e' : 'h';
+        kaydet();
+        geriGonder(m.k, c[1]);
+        olc('asistan_geri', c[1] === 1 ? 'evet' : 'hayir');
+        var t = el('div', 'as-geri as-geri-t', c[1] === 1 ? 'Teşekkürler.' : 'Teşekkürler, bunu geliştireceğiz.');
+        s.replaceWith(t);
+      });
+      s.appendChild(b);
+    });
+    return s;
   }
   function selam() { return { r: 'a', t: SELAM, o: durum.m.length ? [] : ILK_CIPLER }; }
   function hepsiniCiz() {

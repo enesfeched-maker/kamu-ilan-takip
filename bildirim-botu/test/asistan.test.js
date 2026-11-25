@@ -298,13 +298,15 @@ async function sor(soru, env = ENV, ek = {}) {
   return { r, j: await r.json() };
 }
 
-test('HTTP: 200 cevap sözleşmeye uyar, "tur" dışarı sızmaz', async () => {
+test('HTTP: 200 cevap sözleşmeye uyar (tur ve kid dahil)', async () => {
   testSifirla(); sahteFetch();
   const { r, j } = await sor('ankarada zabıta alımı varmı', ENV, { origin: 'https://kpsstercihi.com' });
   assert.equal(r.status, 200);
   assert.equal(r.headers.get('Access-Control-Allow-Origin'), 'https://kpsstercihi.com');
   assert.equal(r.headers.get('Vary'), 'Origin');
-  assert.deepEqual(Object.keys(j).sort(), ['baglantilar', 'ilanlar', 'metin', 'oneriler']);
+  assert.deepEqual(Object.keys(j).sort(), ['baglantilar', 'ilanlar', 'kid', 'metin', 'oneriler', 'tur']);
+  assert.equal(j.kid, null); // DB yok: kayıt yazılmaz, cevap yine gelir
+  assert.equal(j.tur, 'ilan');
   assert.deepEqual(j.ilanlar.map((i) => i.url), [`${SITE}ilan/a1/`]);
   assert.deepEqual(Object.keys(j.ilanlar[0]).sort(), ['baslik', 'iller', 'kurum', 'son_tarih', 'url']);
   globalThis.fetch = gercekFetch;

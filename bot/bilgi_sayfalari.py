@@ -4,7 +4,7 @@ Metin docs/portal.js 'bilgi/gizlilik' ve 'bilgi/hakkimizda' ile aynı tutulur.""
 
 ILETISIM = 'https://t.me/kpsstercihi'
 ILETISIM_EPOSTA = 'iletisim@kpsstercihi.com'   # Cloudflare Email Routing ile yönlenir; boşsa /iletisim/ sayfasında E-posta bölümü çıkmaz
-GUNCELLEME = '2026-11-16'   # sayfa metinleri değişince elle artırılır; sayfada "Son güncelleme" olarak görünür
+GUNCELLEME = '2026-11-25'   # sayfa metinleri değişince elle artırılır; sayfada "Son güncelleme" olarak görünür
 SEMA_TURU = {'hakkimizda': 'AboutPage', 'iletisim': 'ContactPage'}
 
 SAYFALAR = {
@@ -18,6 +18,7 @@ SAYFALAR = {
         ('Ziyaret istatistikleri', 'Hangi sayfaların ve özelliklerin kullanıldığını anlamak için anonim ve çerezsiz ziyaret istatistikleri toplanır; '
          'IP adresin saklanmaz, kişisel veri toplanmaz ve seni sonraki günlerde tanıyacak bir kimlik tutulmaz. Tarayıcında “Do Not Track” ya da '
          'Global Privacy Control (GPC) açıksa hiç ölçüm yapılmaz. Bu ölçüm verisi üçüncü taraflarla paylaşılmaz.'),
+        ('Site asistanı', 'Site asistanına yazdığın sorular ve verilen cevaplar, hizmeti geliştirmek için kimlik bilgisi (IP adresi gibi) olmadan en çok 120 gün saklanır; e-posta, telefon ve kimlik numarası gibi bilgiler kaydedilmeden önce gizlenir.'),
         ('Reklamlar ve çerezler', 'Sitede Google AdSense reklamları gösterilir. Google dahil üçüncü taraf sağlayıcılar, bu siteye ve internetteki '
          'başka sitelere yaptığın önceki ziyaretlere dayanarak reklam sunmak için çerez kullanır. Google’ın reklam çerezlerini kullanması, Google ve iş '
          'ortaklarının bu siteye ve/veya internetteki diğer sitelere yaptığın ziyaretlere göre reklam göstermesini sağlar. Kişiselleştirilmiş reklamları '

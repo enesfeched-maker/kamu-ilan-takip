@@ -40,7 +40,24 @@ CREATE TABLE IF NOT EXISTS kaynak_durum (
   son_deneme TEXT, son_basari TEXT, adet INTEGER
 );
 CREATE TABLE IF NOT EXISTS ayar (ad TEXT PRIMARY KEY, deger TEXT);
+CREATE TABLE IF NOT EXISTS asistan_kayit (
+  id INTEGER PRIMARY KEY,     -- bildirim-botu D1 asistan_kayit.id
+  zaman TEXT,                 -- ISO 8601, UTC
+  kanal TEXT, soru TEXT, tur TEXT, metin TEXT,
+  ilan_sayisi INTEGER,
+  baglantilar TEXT,           -- JSON dizi
+  sayfa TEXT,
+  geri INTEGER,               -- 1 | -1 | NULL
+  durum TEXT,                 -- NULL | yanitlandi | atlandi | hata (Instagram)
+  meta TEXT,                  -- JSON nesne (kullanici, medya, yorum_id, gonderilen...)
+  gonderilen TEXT,            -- Instagram'a giden yanıt (varsa)
+  ornek INTEGER NOT NULL DEFAULT 0,
+  ilk_gorulme TEXT, son_gorulme TEXT
+);
+CREATE INDEX IF NOT EXISTS asistan_kayit_zaman ON asistan_kayit(zaman);
 """
+ASISTAN_ALANLARI = ('zaman', 'kanal', 'soru', 'tur', 'metin', 'ilan_sayisi', 'baglantilar', 'sayfa', 'geri', 'durum',
+                    'meta', 'gonderilen')
 
 
 def simdi():
@@ -150,6 +167,100 @@ class Depo:
     def seri(self, gonderi_id):
         return [dict(r) for r in self.db.execute(
             f'SELECT zaman, kaynak, {", ".join(OLCUTLER)} FROM olcum WHERE gonderi_id=? ORDER BY zaman', (gonderi_id,))]
+
+    # ------------------------------------------------------------ asistan kayıtları
+    def asistan_yaz(self, kayitlar, ornek=0):
+        """Asistan kayıtlarını id'ye göre ekler ya da günceller (geri/durum sonradan değişebilir).
+        (yeni, degisen) sayısını döner; aynı kalan satıra dokunulmaz."""
+        yeni = degisen = 0
+        an = simdi()
+        for k in kayitlar or ():
+            try:
+                kid = int(k['id'])
+            except (KeyError, TypeError, ValueError):
+                continue
+            satir = _asistan_satiri(k)
+            eski = self.db.execute(f'SELECT {", ".join(ASISTAN_ALANLARI)} FROM asistan_kayit WHERE id=?', (kid,)).fetchone()
+            if eski is None:
+                self.db.execute(f'INSERT INTO asistan_kayit (id, {", ".join(ASISTAN_ALANLARI)}, ornek, ilk_gorulme, son_gorulme) '
+                                f'VALUES (?, {", ".join("?" * len(ASISTAN_ALANLARI))}, ?, ?, ?)',
+                                (kid, *(satir[a] for a in ASISTAN_ALANLARI), int(bool(ornek)), an, an))
+                yeni += 1
+            elif any(eski[a] != satir[a] for a in ASISTAN_ALANLARI):
+                atama = ', '.join(f'{a}=?' for a in ASISTAN_ALANLARI)
+                self.db.execute(f'UPDATE asistan_kayit SET {atama}, son_gorulme=? WHERE id=?',
+                                (*(satir[a] for a in ASISTAN_ALANLARI), an, kid))
+                degisen += 1
+        self.db.commit()
+        return yeni, degisen
+
+    def asistan_son_id(self):
+        return self.db.execute('SELECT COALESCE(MAX(id), 0) n FROM asistan_kayit').fetchone()['n']
+
+    def asistan_ilk_id_sonra(self, zaman):
+        """Verilen zamandan sonraki ilk kaydın id'si (yoksa None): son iki günü yeniden çekmek için."""
+        return self.db.execute('SELECT MIN(id) n FROM asistan_kayit WHERE zaman >= ?', (utc(zaman),)).fetchone()['n']
+
+    def asistan_kayitlari(self, sonra=None):
+        """Kayıtlar (yeniden eskiye); baglantilar ve meta çözülmüş olarak."""
+        if sonra:
+            imlec = self.db.execute('SELECT * FROM asistan_kayit WHERE zaman >= ? ORDER BY zaman DESC, id DESC', (utc(sonra),))
+        else:
+            imlec = self.db.execute('SELECT * FROM asistan_kayit ORDER BY zaman DESC, id DESC')
+        cikti = []
+        for r in imlec:
+            s = dict(r)
+            s['baglantilar'] = _json_coz(s['baglantilar'], [])
+            s['meta'] = _json_coz(s['meta'], None)
+            cikti.append(s)
+        return cikti
+
+
+def _json_coz(metin, varsayilan):
+    if metin is None:
+        return varsayilan
+    try:
+        return json.loads(metin)
+    except (TypeError, ValueError):
+        return varsayilan
+
+
+def _asistan_satiri(k):
+    """Uçtan gelen satırı tabloya uygun biçime getirir (JSON alanları metin, sayılar tamsayı)."""
+    def sayi(v):
+        try:
+            return int(v) if v is not None and v != '' else None
+        except (TypeError, ValueError):
+            return None
+
+    def json_metni(v):
+        if v is None or v == '':
+            return None
+        if isinstance(v, str):   # uç JSON'u metin olarak da gönderebilir
+            v = _json_coz(v, v)
+        return json.dumps(v, ensure_ascii=False, sort_keys=True)
+
+    def metin(v):
+        return None if v is None else str(v)
+
+    meta = k.get('meta')
+    if isinstance(meta, str):
+        meta = _json_coz(meta, None)
+    gonderilen = k.get('gonderilen')
+    if gonderilen is None and isinstance(meta, dict):
+        gonderilen = meta.get('gonderilen')
+    return {
+        'zaman': utc(k.get('zaman')) or metin(k.get('zaman')),
+        'kanal': metin(k.get('kanal')) or 'site',
+        'soru': metin(k.get('soru')), 'tur': metin(k.get('tur')), 'metin': metin(k.get('metin')),
+        'ilan_sayisi': sayi(k.get('ilan_sayisi')),
+        'baglantilar': json_metni(k.get('baglantilar')),
+        'sayfa': metin(k.get('sayfa')),
+        'geri': sayi(k.get('geri')),
+        'durum': metin(k.get('durum')),
+        'meta': json_metni(meta),
+        'gonderilen': metin(gonderilen),
+    }
 
 
 def _birlesik_son(liste):

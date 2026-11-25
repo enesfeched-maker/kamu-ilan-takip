@@ -46,6 +46,7 @@ jobs:
           IG_ERISIM_ANAHTARI: ${{ secrets.IG_ERISIM_ANAHTARI }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_YONETICI_ID: ${{ secrets.TELEGRAM_YONETICI_ID }}
+          ASISTAN_ANAHTAR: ${{ secrets.ASISTAN_ANAHTAR }}
         run: python bot/sosyal_ajan.py yorum
       - name: Yorum durumunu kaydet
         if: always()

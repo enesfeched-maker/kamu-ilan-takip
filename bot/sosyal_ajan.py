@@ -10,8 +10,10 @@ Paylaşımı bot yapar (sosyal_motor / reels); ajan yalnız takip eder ve dar bi
 Ayar sınırları AYAR_SINIR'dadır; sınır dışı ya da tanınmayan değer yok sayılır, bot varsayılanla çalışır."""
 import json
 import os
+import re
 import statistics
 import sys
+import time
 import urllib.parse
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -169,7 +171,154 @@ def yeni_yorumlar(yorumlar, gorulen, simdi):
 
 def yorum_mesaji(y):
     return (f'Instagram\'da yeni yorum\n@{y.get("username") or "?"}: {(y.get("text") or "").strip()[:500]}\n'
-            + (f'Video: {y["baglanti"]}' if y.get('baglanti') else ''))
+            + (f'Video: {y["baglanti"]}' if y.get('baglanti') else '')
+            + (f'\n{y["sonuc_notu"]}' if y.get('sonuc_notu') else ''))
+
+
+# ---------------------------------------------------------------- yorumlara otomatik yanıt (site asistanı)
+ASISTAN_ADRES = 'https://bildirim.kpsstercihi.com/asistan'
+YANITLANAN_TURLER = {'ilan', 'puan', 'sss', 'selam', 'tesekkur', 'kimlik'}
+YANIT_UST_SINIR = 10          # bir çalışmada en çok bu kadar yanıt
+YANIT_ARA_SN = 20
+YANIT_UZUNLUK = 450
+# Yöneticiye bırakılacak yorumlar: şikâyet, hakaret, sponsor/iş teklifi (küçük, bilerek kısa liste)
+YANITSIZ_KELIMELER = ('şikayet', 'şikâyet', 'sikayet', 'rezalet', 'dolandırıcı', 'dolandirici', 'yalan', 'sponsor', 'işbirliği',
+                      'isbirligi', 'iş birliği', 'reklam', 'iletişim', 'iletisim', 'dm', 'fiyat', 'ücret', 'ucret',
+                      'küfür', 'salak', 'aptal', 'gerizekalı')
+_EPOSTA = re.compile(r'[\w.+-]+@[\w-]+\.[\w.-]+')
+_TELEFON = re.compile(r'(?<!\d)(?:\+?90[\s-]?)?0?\s?5\d{2}[\s.-]?\d{3}[\s.-]?\d{2}[\s.-]?\d{2}(?!\d)')
+_AY = ['', 'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık']
+_uyku = time.sleep
+
+
+class YorumIzinHatasi(Exception):
+    pass
+
+
+def yanitsiz_neden(metin):
+    """Yorum otomatik yanıta uygun değilse nedenini, uygunsa '' döndürür."""
+    kucuk = (metin or '').lower().replace('İ', 'i').replace('I', 'ı')
+    if _EPOSTA.search(metin or '') or _TELEFON.search(metin or ''):
+        return 'telefon/e-posta içeriyor'
+    kelimeler = set(re.findall(r'[\wçğıöşü]+', kucuk))
+    for k in YANITSIZ_KELIMELER:
+        if (k in kelimeler) if len(k) <= 3 else (k in kucuk):
+            return f'anahtar kelime: {k.strip()}'
+    return ''
+
+
+def _gun_yaz(tarih):
+    try:
+        d = datetime.strptime(str(tarih)[:10], '%Y-%m-%d')
+    except ValueError:
+        return ''
+    return f'{d.day} {_AY[d.month]}'
+
+
+def yanit_metni(sonuc):
+    """/asistan/sor cevabından Instagram yanıt metni: ≤450 karakter, yalnız düz alan adı, emoji/etiket yok."""
+    metin = sonuc.get('metin') or ''
+    metin = re.sub(r'https?://\S+|www\.\S+', '', metin)
+    # çıplak alan adı/yol da (t.me/..., kpsstercihi.com/nereye/) bağlantı sayılır; yalnız sondaki düz alan adı kalır
+    metin = re.sub(r'\b[\w-]+(?:\.[\w-]+)*\.(?:com|net|org|me|tr|io|ly)\b(?:/\S*)?', '', metin, flags=re.I)
+    metin = re.sub(r'#\w+', '', metin)
+    metin = ''.join(c for c in metin if ord(c) < 0x10000 and c not in '‍️' and not 0x2600 <= ord(c) <= 0x27BF)
+    metin = re.sub(r'[ \t]+', ' ', metin).strip()
+    satirlar = []
+    for i in (sonuc.get('ilanlar') or [])[:3]:
+        kurum = re.sub(r'\s+', ' ', str(i.get('kurum') or '')).strip()[:40]
+        gun = _gun_yaz(i.get('son_tarih'))
+        if kurum and gun:
+            satirlar.append(f'• {kurum} – son gün {gun}')
+    son = " Ayrıntılar kpsstercihi.com'da." if (satirlar or sonuc.get('baglantilar')) else ''
+    ek = ('\n' + '\n'.join(satirlar) if satirlar else '') + son
+    pay = YANIT_UZUNLUK - len(ek)
+    if len(metin) > pay:
+        metin = metin[:max(pay - 1, 0)].rsplit(' ', 1)[0].rstrip(' ,;:') + '…'
+    return (metin + ek).strip()
+
+
+def _asistan_istek(yol, govde, anahtar):
+    from sosyal_yayinla import _istek
+    return _istek(f'{ASISTAN_ADRES}/{yol}', json_veri=govde, basliklar={'X-Asistan-Anahtar': anahtar, 'User-Agent': 'kpsstercihi-sosyal-ajan'},
+                  zaman_asimi=30)
+
+
+def _durum_bildir(anahtar, kid, durum, gonderilen=''):
+    if not (anahtar and kid):
+        return
+    try:
+        _asistan_istek('durum', {'kid': kid, 'durum': durum, 'gonderilen': (gonderilen or '')[:1000]}, anahtar)
+    except Exception as hata:  # kayıt yardımcıdır; akışı bozmaz
+        print(f'Uyarı: asistan durumu bildirilemedi: {str(hata)[:120]}')
+
+
+def _zaten_yanitlandi(yorum_id, ig_anahtar, kullanici_adi):
+    """Yorumun altında hesabımızın yanıtı var mı? (durum dosyası kaybolsa da aynı yoruma ikinci kez yazılmasın.)
+    Kontrol edilemezse True döner: emin olunamayan yoruma yanıt verilmez."""
+    from sosyal_yayinla import IG_SURUM, _istek
+    if not kullanici_adi:
+        return True
+    try:
+        r = _istek(f'https://graph.instagram.com/{IG_SURUM}/{yorum_id}/replies?fields=username&access_token={ig_anahtar}')
+    except Exception as hata:
+        print(f'Uyarı: yorum yanıtları okunamadı: {str(hata)[:120]}')
+        return True
+    return any((x.get('username') or '').lower() == kullanici_adi for x in (r.get('data') or []))
+
+
+def _yanit_gonder(yorum_id, mesaj, ig_anahtar):
+    from sosyal_yayinla import IG_SURUM, YayinHatasi, _istek
+    try:
+        # ig_anahtar URL için kodlanmış gelir; form gövdesinde ikinci kez kodlanmasın
+        _istek(f'https://graph.instagram.com/{IG_SURUM}/{yorum_id}/replies',
+               veri={'message': mesaj, 'access_token': urllib.parse.unquote(ig_anahtar)}, yontem='POST')
+    except YayinHatasi as hata:
+        m = str(hata)
+        if m.startswith(('HTTP 401', 'HTTP 403')) or 'ermission' in m or '(#10)' in m or '(#200)' in m:
+            raise YorumIzinHatasi(m[:200]) from None
+        raise
+
+
+def yorumu_isle(y, medya, anahtar, ig_anahtar, kullanici_adi, yanit_acik):
+    """Bir yorum için karar ver (+ yanıtla). (not_metni, yanit_gitti_mi) döndürür; izin hatasında YorumIzinHatasi."""
+    neden = yanitsiz_neden(y.get('text'))
+    if neden:
+        return f'Yanıtlanmadı ({neden}) — sana bırakıldı.', False
+    try:
+        sonuc = _asistan_istek('sor', {'soru': (y.get('text') or '').strip()[:300], 'kanal': 'instagram',
+                                       'meta': {'kullanici': y.get('username') or '', 'medya': medya, 'yorum_id': y.get('id')}}, anahtar)
+    except Exception as hata:
+        print(f'Uyarı: asistan cevap vermedi: {str(hata)[:120]}')
+        return 'Yanıtlanmadı (asistana ulaşılamadı) — sana bırakıldı.', False
+    kid, tur = sonuc.get('kid'), sonuc.get('tur')
+    if tur not in YANITLANAN_TURLER:
+        _durum_bildir(anahtar, kid, 'atlandi', f'tür: {tur}')
+        return f'Yanıtlanmadı (asistan emin değil: {tur}) — sana bırakıldı.', False
+    mesaj = yanit_metni(sonuc)
+    if not mesaj:
+        _durum_bildir(anahtar, kid, 'atlandi', 'boş cevap')
+        return 'Yanıtlanmadı (boş cevap) — sana bırakıldı.', False
+    if re.search(r'(?<![\d.,])0 (?:açık|ilan)', mesaj):
+        # ilan listesi boş/okunamamış olabilir: herkese açık "0 açık ilan" yazılmaz
+        _durum_bildir(anahtar, kid, 'atlandi', 'ilan sayısı 0')
+        return 'Yanıtlanmadı (ilan listesi boş görünüyor) — sana bırakıldı.', False
+    if not yanit_acik:
+        _durum_bildir(anahtar, kid, 'atlandi', 'yanıt sınırı/kapalı')
+        return 'Yanıtlanmadı (bu çalışmada yanıt sınırına varıldı) — sana bırakıldı.', False
+    if _zaten_yanitlandi(y['id'], ig_anahtar, kullanici_adi):
+        _durum_bildir(anahtar, kid, 'atlandi', 'zaten yanıtlanmış ya da denetlenemedi')
+        return 'Yanıtlanmadı (yorumun altında zaten yanıtımız var ya da denetlenemedi) — sana bırakıldı.', False
+    try:
+        _yanit_gonder(y['id'], mesaj, ig_anahtar)
+    except YorumIzinHatasi:
+        _durum_bildir(anahtar, kid, 'hata', 'yanıt izni yok')
+        raise
+    except Exception as hata:
+        _durum_bildir(anahtar, kid, 'hata', str(hata)[:200])
+        return f'Yanıtlanmadı (gönderilemedi: {str(hata)[:80]}) — sana bırakıldı.', False
+    _durum_bildir(anahtar, kid, 'yanitlandi', mesaj)
+    return f'Yanıtlandı: {mesaj}', True
 
 
 def yorumlari_bildir(simdi=None, durum_yolu='sosyal-yorum-durum.json'):
@@ -181,14 +330,24 @@ def yorumlari_bildir(simdi=None, durum_yolu='sosyal-yorum-durum.json'):
         print('Instagram anahtarı tanımlı değil; yorumlar atlandı.')
         return 0
     anahtar = urllib.parse.quote(kimlik[1])
+    asistan_anahtar = os.environ.get('ASISTAN_ANAHTAR', '').strip()
+    yanit_acik = bool(asistan_anahtar) and os.environ.get('IG_YORUM_YANIT', '1').strip() != '0'
     simdi = (simdi or datetime.now(TR)).astimezone(TR)
     try:
         durum = json.loads(Path(durum_yolu).read_text(encoding='utf-8'))
     except (OSError, ValueError):
         durum = {}
     gorulen = set(durum.get('gorulen') or [])
+    kullanici_adi = ''
+    if yanit_acik:
+        try:
+            kullanici_adi = (_istek(f'https://graph.instagram.com/{IG_SURUM}/me?fields=username&access_token={anahtar}').get('username') or '').lower()
+        except YayinHatasi as hata:
+            print(f'Uyarı: hesap adı alınamadı, yanıt verilmeyecek: {hata}')
+            yanit_acik = False
     medyalar = [g['ig_id'] for g in gecmis_oku() if g.get('ig_id') and (_zaman(g.get('zaman')) or simdi) >= simdi - timedelta(days=YORUM_MEDYA_GUN)]
-    gonderilen = 0
+    gonderilen = yanit_sayisi = 0
+    izin_yok = False
     for medya in medyalar:
         try:
             yanit = _istek(f'https://graph.instagram.com/{IG_SURUM}/{medya}/comments?fields=id,text,username,timestamp&access_token={anahtar}')
@@ -208,12 +367,39 @@ def yorumlari_bildir(simdi=None, durum_yolu='sosyal-yorum-durum.json'):
             except YayinHatasi:
                 pass
         for y in yeni:
-            if _telegram(yorum_mesaji(dict(y, baglanti=baglanti))):
+            not_ = ''
+            if y.get('parent_id') or (kullanici_adi and (y.get('username') or '').lower() == kullanici_adi):
+                continue   # kendi yorumumuz ya da zaten bir konunun yanıtı
+            if yanit_acik and not izin_yok:
+                if yanit_sayisi >= YANIT_UST_SINIR:
+                    not_ = 'Yanıtlanmadı (bu çalışmada en çok 10 yanıt) — sana bırakıldı.'
+                else:
+                    try:
+                        not_, gitti = yorumu_isle(y, medya, asistan_anahtar, anahtar, kullanici_adi, True)
+                    except YorumIzinHatasi as hata:
+                        izin_yok = True
+                        not_ = 'Yanıtlanmadı (yanıt izni yok) — sana bırakıldı.'
+                        if not durum.get('yanit_izin_uyarisi'):
+                            _telegram('Instagram yorumlarına yanıt verilemedi: yorum yönetimi izni (instagram_business_manage_comments) '
+                                      f'eksik olabilir. Bu çalışmada otomatik yanıt durduruldu.\n{str(hata)[:200]}')
+                            durum['yanit_izin_uyarisi'] = simdi.isoformat(timespec='seconds')
+                    else:
+                        if gitti:
+                            yanit_sayisi += 1
+                            durum.pop('yanit_izin_uyarisi', None)
+                            # yanıt gider gitmez kaydedilir: çalışma sonra yarıda kalsa da aynı yoruma ikinci yanıt gitmez
+                            gorulen.add(y['id'])
+                            durum['gorulen'] = sorted(gorulen)[-2000:]
+                            Path(durum_yolu).write_text(json.dumps(durum), encoding='utf-8')
+                            _uyku(YANIT_ARA_SN)
+            elif yanit_acik and izin_yok:
+                not_ = 'Yanıtlanmadı (yanıt izni yok) — sana bırakıldı.'
+            if _telegram(yorum_mesaji(dict(y, baglanti=baglanti, sonuc_notu=not_))):
                 gonderilen += 1
         gorulen.update(y['id'] for y in (yanit.get('data') or []) if y.get('id'))
     durum['gorulen'] = sorted(gorulen)[-2000:]
     Path(durum_yolu).write_text(json.dumps(durum), encoding='utf-8')
-    print(f'{len(medyalar)} video tarandı, {gonderilen} yeni yorum bildirildi.')
+    print(f'{len(medyalar)} video tarandı, {gonderilen} yeni yorum bildirildi, {yanit_sayisi} yanıtlandı.')
     return gonderilen
 
 
