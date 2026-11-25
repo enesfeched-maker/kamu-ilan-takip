@@ -1,13 +1,16 @@
-"""Anlatıcı biçimi (24 Kasım 2026): çizgi kadın sunucu + üstte defter sayfasında hareketli grafikler + kelime kelime altyazı.
+"""Anlatıcı biçimi (24 Kasım 2026): 3B kadın sunucu (altta) + üstte defter sayfasında hareketli grafikler + kelime kelime altyazı.
 
 Rakip kalıbı: "60 aldın, atanamazsın diyenler yalan söyledi; liste yaz, DM'den göndereyim". Bizde DM yok: izleyici
-kpsstercihi.com'a yönlendirilir. Ses edge-tts tr-TR-EmelNeural (ücretsiz); kelime zamanları hem altyazıyı hem grafiklerin
-giriş anını belirler, ağız açıklığı ses zarfından okunur. İlk kare kapaktır (60 rozeti + "atanamazsın" kartı hazır durur).
+kpsstercihi.com'a yönlendirilir. Müzik yok (kullanıcı kararı); yalnız ses + kısa efektler.
+Girdiler: Gemini TTS seslendirmesi (bot/yz_medya.py, Actions), sunucu görselinden SadTalker ile üretilmiş dudak senkronlu
+video (yz-konusma.yml) ve sesin faster-whisper kelime zamanları. Kelime zamanları altyazıyı ve grafik girişlerini sürer.
+İlk kare kapaktır (60 rozeti + "atanamazsın" kartı hazır durur).
 Örnek ilanların her bilgisi sitedeki ilan kaydının şart metninden elle alınmıştır (24 Kasım 2026'da açık ilanlar).
 
-Kullanım: python bot/reels_anlatici.py [--cikti klasör]"""
+Kullanım: python bot/reels_anlatici.py --ses anlatim.wav --kelimeler kelime.json --sunucu sunucu.mp4 [--cikti klasör]"""
 import argparse
-import asyncio
+import difflib
+import json
 import math
 import re
 import subprocess
@@ -18,21 +21,18 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 W, H, FPS = 1080, 1920, 30
-SES = 'tr-TR-EmelNeural'
-HIZ = '+14%'
 ORNEK_HIZI = 48000
+SUNUCU_Y = 1001          # sunucu videosunun üst kenarı (defter sayfası biraz üstüne biner)
+ALTYAZI_Y = 1098         # sunucunun başı üstünde: ağzı kapatmasın
 
 # Renkler (elwyn.co "Midnight + Marigold" ailesi: lacivert zemin, krem kâğıt, turuncu/sarı vurgu; yeşil yok)
 LACI, LACI2, GECE = '#13233f', '#1d3157', '#0b1529'
 KREM, KAGIT_CIZGI, KENAR = '#fdf6e7', '#d9e3f2', '#e8b4a8'
 TURUNCU, SARI, KIRMIZI, MAVI = '#f7931e', '#ffd23f', '#e63946', '#2f6fdd'
 YAZI, SOLUK = '#1b2236', '#6b7280'
-TEN, TEN2, SAC, KAZAK = '#f6c9a4', '#e9b089', '#3b2219', '#e85d4a'
 SITE_LACI, SITE_LACI2, SITE_TURUNCU, SITE_K = '#0c1d2a', '#132b3d', '#f89c1c', '#c6f432'
 
 BX0, BY0, BX1, BY1 = 44, 318, 1036, 1040        # defter sayfası
-KX, KY = 160, 1078                              # sunucu tuvalinin sol üstü (760x700)
-MASA_Y = 1772
 
 
 # ---------------------------------------------------------------- yazı tipleri
@@ -160,20 +160,21 @@ class Oge:
 
 
 # ---------------------------------------------------------------- senaryo
-# soz: seslendirilen metin. goster: altyazıda birleştirilecek söz grupları (seste yazıyla okunan sayı/adres).
+# Altyazıda görünen metin; seslendirme bot/yz_medya.py METIN'dir (sayılar orada yazıyla). Bölümler grafik sahneleridir.
 SEGMENTLER = [
-    dict(ad='kanca', soz="KPSS'den 60 aldın diye, atanamazsın diyenler sana yanlış söylemiş."),
-    dict(ad='moral', soz='Çoğu kişi puanını görünce morali bozuluyor, ilanlara bakmıyor bile.'),
-    dict(ad='liste', soz='Oysa şu an en az 60 isteyen açık ilanlar var. Biz her gün hepsini tek tek okuyoruz.'),
-    dict(ad='ornek', soz='Mesela İçişleri Bakanlığı bin yüz yetmiş sözleşmeli personel alıyor; lise, önlisans, lisans. '
-                         'Eyyübiye Belediyesi dokuz zabıta memuru alıyor. Bartın Üniversitesi önlisans mezunu büro personeli arıyor. '
-                         'Üçünde de şart: en az 60.'),
-    dict(ad='site', soz="Hepsini videoya sığdıramam. DM'ye yazmana da gerek yok. KPSS Tercihi nokta com'a gir, arama kutusuna "
-                        'kadronu ya da bölümünü yaz. Sana uyan ilanlar karşına çıksın.'),
-    dict(ad='paylas', soz="Atanmak isteyen, KPSS'ye hazırlanan bir arkadaşına bu videoyu gönder. O da bilsin."),
+    dict(ad='kanca', yazi="KPSS'den 60 aldın diye, “atanamazsın” diyenler sana yanlış söylemiş."),
+    dict(ad='moral', yazi='Çoğu kişi puanını görünce morali bozuluyor, ilanlara bakmıyor bile.'),
+    dict(ad='liste', yazi='Oysa şu an en az 60 isteyen açık ilanlar var. Biz her gün hepsini tek tek okuyoruz.'),
+    dict(ad='ornek', yazi='Mesela İçişleri Bakanlığı 1.170 sözleşmeli personel alıyor; lise, önlisans, lisans. '
+                          'Eyyübiye Belediyesi 9 zabıta memuru alıyor. Bartın Üniversitesi önlisans mezunu büro personeli arıyor. '
+                          'Üçünde de şart: en az 60.'),
+    dict(ad='site', yazi="Hepsini videoya sığdıramam. DM'ye yazmana da gerek yok. kpsstercihi.com'a gir, arama kutusuna "
+                         'kadronu ya da bölümünü yaz. Sana uyan ilanlar karşına çıksın.'),
+    dict(ad='paylas', yazi="Atanmak isteyen, KPSS'ye hazırlanan bir arkadaşına bu videoyu gönder. O da bilsin."),
 ]
-GOSTER = [('bin yüz yetmiş', '1.170'), ('dokuz', '9'), ("KPSS Tercihi nokta com'a", "kpsstercihi.com'a")]
-ARA_SURE, SON_SURE = 0.25, 2.2
+SON_SURE = 2.2
+# Sesin okunuşu ile altyazı yazımı farklı olan sözcükler (hizalama için)
+ESDEGER = {'60': 'altmış', '1170': 'binyüzyetmiş', '9': 'dokuz'}
 
 ORNEKLER = [  # sitedeki ilan kayıtlarından (24 Kasım 2026)
     dict(no='1', kurum='İÇİŞLERİ BAKANLIĞI', ne='1.170 sözleşmeli personel', cip=('Lise · Önlisans · Lisans', 'Başvuru 7–11 Aralık')),
@@ -192,82 +193,60 @@ def nrm(s):
     return re.sub(r"[^0-9a-zçğıöşüâî]", '', s)
 
 
-# ---------------------------------------------------------------- ses
-async def _seslendir(metin, yol):
-    import edge_tts
-    c = edge_tts.Communicate(metin, SES, rate=HIZ, boundary='WordBoundary')
-    kelimeler = []
-    with open(yol, 'wb') as f:
-        async for p in c.stream():
-            if p['type'] == 'audio':
-                f.write(p['data'])
-            elif p['type'] == 'WordBoundary':
-                kelimeler.append([p['offset'] / 1e7, (p['offset'] + p['duration']) / 1e7, p['text']])
-    return kelimeler
-
-
+# ---------------------------------------------------------------- ses ve kelime zamanları
 def ffmpeg_yolu():
     import imageio_ffmpeg
     return imageio_ffmpeg.get_ffmpeg_exe()
 
 
-def wav_oku(yol, ss=0.0, sure=None):
-    """Herhangi bir ses dosyasını 48 kHz mono float diziye çevirir (-ss girişten SONRA: bu makinedeki ffmpeg 7.1 notu)."""
-    ek = ['-ss', f'{ss:.2f}'] if ss else []
-    ek += ['-t', f'{sure:.2f}'] if sure else []
-    p = subprocess.run([ffmpeg_yolu(), '-loglevel', 'error', '-i', str(yol), *ek, '-f', 's16le', '-ac', '1', '-ar', str(ORNEK_HIZI), '-'],
+def wav_oku(yol):
+    """Ses dosyasını 48 kHz mono float diziye çevirir."""
+    p = subprocess.run([ffmpeg_yolu(), '-loglevel', 'error', '-i', str(yol), '-f', 's16le', '-ac', '1', '-ar', str(ORNEK_HIZI), '-'],
                        capture_output=True, check=True)
     return np.frombuffer(p.stdout, dtype=np.int16).astype(np.float32) / 32768
 
 
-def birlestir_kelimeler(kel):
-    """GOSTER gruplarını tek altyazı sözcüğüne indirir."""
-    kel = [list(k) for k in kel]
-    for soz, goster in GOSTER:
-        parca = [nrm(x) for x in soz.split()]
-        i = 0
-        while i <= len(kel) - len(parca):
-            if [nrm(k[2]) for k in kel[i:i + len(parca)]] == parca:
-                kel[i:i + len(parca)] = [[kel[i][0], kel[i + len(parca) - 1][1], goster]]
-            i += 1
-    return kel
+def _kok(s):
+    n = nrm(s)
+    return ESDEGER.get(n, n)
 
 
-def ses_hazirla(klasor):
-    """Her bölümü ayrı seslendirir; bölümleri ardışık yerleştirir. Dönüş: (ses dizisi, kelimeler, bölüm başlangıçları, toplam)."""
-    klasor.mkdir(parents=True, exist_ok=True)
-    parcalar, kelimeler, baslar, an = [], [], [], 0.0
-    for sg in SEGMENTLER:
-        mp3 = klasor / f"ses-{sg['ad']}.mp3"
-        kel = asyncio.run(_seslendir(sg['soz'], mp3))
-        dizi = wav_oku(mp3)
-        # sondaki sessizliği kırp (kelime bitişinden 0,15 sn sonra)
-        son = min(len(dizi), int((kel[-1][1] + 0.15) * ORNEK_HIZI))
-        dizi = dizi[:son]
-        baslar.append(an)
-        for b, e, x in birlestir_kelimeler(kel):
-            kelimeler.append(dict(bas=an + b, son=an + e, yazi=x, bolum=sg['ad']))
-        parcalar.append(dizi)
-        an += len(dizi) / ORNEK_HIZI + ARA_SURE
-        parcalar.append(np.zeros(int(ARA_SURE * ORNEK_HIZI), dtype=np.float32))
-    toplam = an - ARA_SURE + SON_SURE
-    ses = np.concatenate(parcalar)
-    ses = np.pad(ses, (0, max(0, int(toplam * ORNEK_HIZI) - len(ses))))
-    return ses, kelimeler, baslar, toplam
-
-
-def zarf(ses, toplam):
-    """Kare başına 0–1 konuşma şiddeti (ağız için)."""
-    n = int(math.ceil(toplam * FPS))
-    adim = ORNEK_HIZI // FPS
-    z = np.array([np.sqrt(np.mean(ses[i * adim:(i + 1) * adim] ** 2)) if i * adim < len(ses) else 0.0 for i in range(n)])
-    ust = np.percentile(z[z > 0.005], 92) if np.any(z > 0.005) else 1.0
-    z = np.clip((z / ust - 0.12) / 0.88, 0, 1)
-    out, v = np.zeros_like(z), 0.0
-    for i, x in enumerate(z):
-        v = v + (x - v) * (0.75 if x > v else 0.45)
-        out[i] = v
-    return out
+def kelimeleri_hizala(duyulan):
+    """Altyazı sözcüklerine (SEGMENTLER) whisper'ın duyduğu sözcüklerin zamanını verir. Harf düzeyinde hizalar: whisper bir
+    sözcüğü ikiye bölse ya da yanlış duysa da zamanlar doğru yere düşer. duyulan: [[bas, son, söz], ...]"""
+    hedef = [(sg['ad'], k) for sg in SEGMENTLER for k in sg['yazi'].split()]
+    # her iki tarafı harf dizisine aç; her harf sahibinin sırasını taşır
+    h_harf, h_sahip = [], []
+    for i, (_, k) in enumerate(hedef):
+        for c in _kok(k):
+            h_harf.append(c)
+            h_sahip.append(i)
+    d_harf, d_zaman = [], []
+    for b, e, k in duyulan:
+        kk = _kok(k)
+        for j, c in enumerate(kk):
+            d_harf.append(c)
+            d_zaman.append(b + (e - b) * j / max(1, len(kk)))
+    bas = [None] * len(hedef)
+    son = [None] * len(hedef)
+    sm = difflib.SequenceMatcher(None, h_harf, d_harf, autojunk=False)
+    for a, b, n in sm.get_matching_blocks():
+        for x in range(n):
+            i, t = h_sahip[a + x], d_zaman[b + x]
+            bas[i] = t if bas[i] is None else min(bas[i], t)
+            son[i] = t if son[i] is None else max(son[i], t)
+    # eşleşmeyenleri komşulardan doldur
+    bilinen = [i for i in range(len(hedef)) if bas[i] is not None]
+    for i in range(len(hedef)):
+        if bas[i] is None:
+            onceki = max((j for j in bilinen if j < i), default=None)
+            sonraki = min((j for j in bilinen if j > i), default=None)
+            t0 = son[onceki] if onceki is not None else 0.0
+            t1 = bas[sonraki] if sonraki is not None else t0 + 0.4
+            bas[i], son[i] = t0 + (t1 - t0) * 0.2, t0 + (t1 - t0) * 0.8
+    for i in range(len(hedef)):
+        son[i] = max(son[i] + 0.08, bas[i] + 0.12)
+    return [dict(bas=bas[i], son=son[i], yazi=k, bolum=ad) for i, (ad, k) in enumerate(hedef)]
 
 
 def efekt(tur):
@@ -284,26 +263,18 @@ def efekt(tur):
     return 0.5 * g * np.sin(np.pi * t / t[-1]) ** 2
 
 
-def karistir(ses, efektler, toplam, muzik):
+def karistir(ses, efektler, toplam):
+    """Ses + kısa efektler; müzik yok. Konuşma -16 dBFS civarına getirilir, tepeler yumuşak kırpılır."""
     n = int(toplam * ORNEK_HIZI)
     ses = ses[:n] if len(ses) >= n else np.pad(ses, (0, n - len(ses)))
     rms = np.sqrt(np.mean(ses[np.abs(ses) > 0.01] ** 2))
     karisim = ses * (0.16 / max(rms, 1e-4))
     for an, tur in efektler:
-        e = efekt(tur) * 0.5
+        e = efekt(tur) * 0.35
         i = int(an * ORNEK_HIZI)
         if i < n:
             karisim[i:i + len(e)] += e[:n - i]
-    if muzik is not None:
-        yol, bas = muzik
-        m = wav_oku(yol, ss=bas, sure=toplam + 0.5)[:n]
-        m = np.pad(m, (0, n - len(m)))
-        mr = np.sqrt(np.mean(m ** 2)) or 1
-        m = m * (0.028 / mr)
-        m[:int(0.3 * ORNEK_HIZI)] *= np.linspace(0, 1, int(0.3 * ORNEK_HIZI))
-        m[-ORNEK_HIZI:] *= np.linspace(1, 0, ORNEK_HIZI)
-        karisim += m
-    return np.tanh(karisim * 1.6) / np.tanh(1.6) * 0.92
+    return np.tanh(karisim * 1.4) / np.tanh(1.4) * 0.92
 
 
 def wav_yaz(dizi, yol):
@@ -312,6 +283,22 @@ def wav_yaz(dizi, yol):
         w.setsampwidth(2)
         w.setframerate(ORNEK_HIZI)
         w.writeframes((np.clip(dizi, -1, 1) * 32767).astype(np.int16).tobytes())
+
+
+def sunucu_kareleri(yol, toplam):
+    """Sunucu videosunu 30 fps, 1080 genişliğe ölçeklenmiş RGB karelere açar; video bitince son kare tutulur."""
+    import imageio_ffmpeg
+    oku = imageio_ffmpeg.read_frames(str(yol), output_params=['-vf', f'fps={FPS},scale={W}:-2'], pix_fmt='rgb24')
+    meta = next(oku)
+    w, h = meta['size']
+    son = None
+    for _ in range(int(math.ceil(toplam * FPS)) + 1):
+        try:
+            veri = next(oku)
+            son = Image.frombuffer('RGB', (w, h), veri, 'raw', 'RGB', 0, 1).copy()
+        except StopIteration:
+            pass
+        yield son
 
 
 # ---------------------------------------------------------------- sabit zemin
@@ -323,30 +310,6 @@ def zemin():
     for y in range(H):
         p = y / H
         d.line((0, y, W, y), fill=tuple(int(v) for v in ust * (1 - p) + alt * p))
-    # ahşap çıta duvar
-    for x in range(0, W, 40):
-        d.rectangle((x, 1150, x + 30, MASA_Y), fill=(36, 54, 92))
-        d.rectangle((x + 30, 1150, x + 39, MASA_Y), fill=(24, 38, 68))
-    # sıcak led ışığı
-    isik = Image.new('RGBA', (W, 260), (0, 0, 0, 0))
-    di = ImageDraw.Draw(isik)
-    for i in range(260):
-        di.line((0, i, W, i), fill=(247, 147, 30, int(110 * (1 - i / 260) ** 2.2)))
-    im.paste(isik, (0, 1150), isik)
-    d.rectangle((0, 1144, W, 1152), fill=(255, 190, 110))
-    # sağ raf: kitaplar ve saksı (kil)
-    d.rectangle((838, 1478, 1080, 1494), fill=(120, 78, 48))
-    x = 850
-    for w_, h_, c in ((26, 120, '#f2e3c6'), (34, 140, '#e63946'), (22, 104, '#ffd23f'), (30, 132, '#2f6fdd'), (28, 112, '#f7931e')):
-        d.rounded_rectangle((x, 1478 - h_, x + w_, 1478), 4, fill=c)
-        x += w_ + 6
-    d.polygon([(1012, 1478), (1050, 1478), (1044, 1420), (1018, 1420)], fill='#c8643c')
-    # sol raf: kupa ve kitaplar
-    d.rectangle((0, 1398, 220, 1414), fill=(120, 78, 48))
-    for i, (h_, c) in enumerate(((96, '#f2e3c6'), (116, '#2f6fdd'), (88, '#f7931e'))):
-        d.rounded_rectangle((24 + i * 34, 1398 - h_, 52 + i * 34, 1398), 4, fill=c)
-    d.rounded_rectangle((150, 1340, 196, 1398), 8, fill='#fdf6e7')
-    d.arc((184, 1352, 214, 1384), -90, 90, fill='#fdf6e7', width=8)
     # defter sayfası
     sayfa, pay = kutu(BX1 - BX0, BY1 - BY0, KREM, 40)
     ds = ImageDraw.Draw(sayfa)
@@ -382,127 +345,6 @@ def _baslik(im):
     d.text((pay + 22 + w_hala / 2, pay + 56), 'HÂLÂ', font=f2, fill='#ffffff', anchor='mm')
     d.text((pay + 22 + w_hala, pay + 56), ' ATANABİLİRSİN!', font=f2, fill=LACI, anchor='lm')
     ortala_rgb(im, hap, W / 2, 226)
-
-
-def masa():
-    k = Image.new('RGBA', (W, H - MASA_Y + 10), (0, 0, 0, 0))
-    d = ImageDraw.Draw(k)
-    d.rectangle((0, 10, W, H), fill='#a86b3c')
-    d.rectangle((0, 10, W, 34), fill='#c4844d')
-    for y in range(60, H - MASA_Y, 34):
-        d.line((0, y, W, y + 6), fill='#9a6035', width=3)
-    # isim levhası
-    d.polygon([(640, 120), (1000, 120), (980, 44), (660, 44)], fill=SITE_LACI)
-    d.rounded_rectangle((676, 58, 716, 98), 9, fill='#000000')
-    d.text((696, 78), 'K', font=KALIN(30), fill=SITE_K, anchor='mm')
-    d.text((732, 79), 'kpsstercihi.com', font=YARI(32), fill=SITE_TURUNCU, anchor='lm')
-    return k
-
-
-# ---------------------------------------------------------------- sunucu (çizgi kadın)
-S = 2   # çizim ölçeği (kenar yumuşatma için)
-
-
-def _P(*xy):
-    return [v * S for v in xy]
-
-
-def sunucu(t, a, kas, goz_kirp, bakis, kol):
-    """t: sn, a: konuşma şiddeti 0–1, kas: kaş kalkışı 0–1, goz_kirp: 0–1, bakis: göz bebeği dikey kayma, kol: 0–1 işaret eli."""
-    cw, ch = 760, 700
-    aci = 2.2 * math.sin(2 * math.pi * t / 3.9) + 1.6 * a * math.sin(2 * math.pi * t * 1.4)
-    dy = 3.5 * math.sin(2 * math.pi * t / 2.7) - 2.5 * a
-    nefes = 2.5 * math.sin(2 * math.pi * t / 3.3)
-    pivot = (380 * S, 420 * S)
-
-    # arka saç (başla döner)
-    sac = Image.new('RGBA', (cw * S, ch * S), (0, 0, 0, 0))
-    d = ImageDraw.Draw(sac)
-    d.rounded_rectangle(_P(262, 170, 498, 560), 110 * S, fill=SAC)
-    d.ellipse(_P(250, 120, 510, 380), fill=SAC)
-    sac = sac.rotate(aci, resample=Image.Resampling.BICUBIC, center=pivot, translate=(0, dy * S))
-
-    gov = Image.new('RGBA', (cw * S, ch * S), (0, 0, 0, 0))
-    gov.alpha_composite(sac)
-    d = ImageDraw.Draw(gov)
-    # boyun + gövde
-    d.rounded_rectangle(_P(346, 380, 414, 500), 24 * S, fill=TEN2)
-    d.rounded_rectangle(_P(150, 468 + nefes, 610, 900), 150 * S, fill=KAZAK)
-    d.polygon(_P(318, 468 + nefes, 442, 468 + nefes, 380, 548 + nefes), fill=TEN2)
-    d.polygon(_P(300, 468 + nefes, 330, 468 + nefes, 380, 560 + nefes, 380, 590 + nefes), fill='#ffffff')
-    d.polygon(_P(460, 468 + nefes, 430, 468 + nefes, 380, 560 + nefes, 380, 590 + nefes), fill='#ffffff')
-    d.ellipse(_P(372, 600 + nefes, 388, 616 + nefes), fill='#ffd23f')
-    # dinlenen kol (sol): omuzdan masaya
-    d.line(_P(214, 540 + nefes, 196, 676, 318, 708), fill='#d24e3d', width=74 * S, joint='curve')
-    d.ellipse(_P(300, 678, 366, 728), fill=TEN)
-    # sağ kol: dinlenirken masada, konuşurken işaret eder
-    omuz = (548, 540 + nefes)
-    dirsek = (566 + 10 * kol, 676 - 40 * kol)
-    q = yumusak(kol)
-    el = (444 * (1 - q) + 640 * q, 708 * (1 - q) + 420 * q)
-    d.line(_P(*omuz, *dirsek, *el), fill='#d24e3d', width=74 * S, joint='curve')
-    if kol > 0.35:
-        d.rounded_rectangle(_P(el[0] - 12, el[1] - 92, el[0] + 8, el[1] - 20), 10 * S, fill=TEN)   # işaret parmağı
-        d.ellipse(_P(el[0] - 34, el[1] - 40, el[0] + 30, el[1] + 26), fill=TEN)
-    else:
-        d.ellipse(_P(el[0] - 32, el[1] - 28, el[0] + 34, el[1] + 22), fill=TEN)
-
-    # baş katmanı
-    bas = Image.new('RGBA', (cw * S, ch * S), (0, 0, 0, 0))
-    d = ImageDraw.Draw(bas)
-    d.ellipse(_P(266, 268, 298, 328), fill=TEN2)                        # kulaklar
-    d.ellipse(_P(462, 268, 494, 328), fill=TEN2)
-    d.ellipse(_P(274, 326, 290, 342), fill='#ffd23f')                    # küpeler
-    d.ellipse(_P(470, 326, 486, 342), fill='#ffd23f')
-    d.ellipse(_P(282, 168, 478, 410), fill=TEN)                          # yüz
-    # ön saç: kafa üstü (alnı kavisli açık bırakır) + ortadan ayrılmış perde perçem
-    maske = Image.new('L', bas.size, 0)
-    m = ImageDraw.Draw(maske)
-    m.ellipse(_P(264, 124, 496, 344), fill=255)
-    m.ellipse(_P(300, 204, 460, 440), fill=0)
-    m.polygon(_P(380, 176, 344, 186, 314, 214, 298, 256, 294, 318, 306, 262, 326, 226, 356, 204, 380, 196), fill=255)
-    m.polygon(_P(380, 176, 416, 186, 446, 214, 462, 256, 466, 318, 454, 262, 434, 226, 404, 204, 380, 196), fill=255)
-    bas.paste(Image.new('RGBA', bas.size, SAC), (0, 0), maske)
-    d = ImageDraw.Draw(bas)
-    # kaşlar
-    k = 7 * kas
-    d.line(_P(316, 262 - k, 334, 252 - k, 354, 256 - k), fill='#4a2a1e', width=6 * S, joint='curve')
-    d.line(_P(406, 256 - k, 426, 252 - k, 444, 262 - k), fill='#4a2a1e', width=6 * S, joint='curve')
-    # gözler
-    for gx in (336, 424):
-        yuk = 17 * (1 - goz_kirp)
-        dis = 1 if gx > 380 else -1
-        if yuk > 4:
-            d.ellipse(_P(gx - 17, 298 - yuk, gx + 17, 298 + yuk), fill='#ffffff')
-            ib = min(yuk, 13)
-            d.ellipse(_P(gx - 12, 298 - ib + bakis, gx + 12, 298 + ib + bakis), fill='#3a2318')
-            d.ellipse(_P(gx - 6, 298 - min(ib, 7) + bakis, gx + 6, 298 + min(ib, 7) + bakis), fill='#140a06')
-            d.ellipse(_P(gx - 1, 290 + bakis, gx + 6, 297 + bakis), fill='#ffffff')
-            d.arc(_P(gx - 18, 298 - yuk, gx + 18, 298 + yuk), 195, 345, fill='#2a1a14', width=3 * S)
-            d.line(_P(gx + dis * 15, 298 - yuk * 0.7, gx + dis * 23, 298 - yuk * 0.7 - 7), fill='#2a1a14', width=3 * S)
-        else:
-            d.arc(_P(gx - 17, 286, gx + 17, 304), 20, 160, fill='#2a1a14', width=3 * S)
-    # yanak (ayrı katmanda yarı saydam), burun
-    yanak = Image.new('RGBA', bas.size, (0, 0, 0, 0))
-    dy_ = ImageDraw.Draw(yanak)
-    for bx in (316, 444):
-        dy_.ellipse(_P(bx - 20, 336, bx + 20, 354), fill=(240, 120, 120, 70))
-    bas.alpha_composite(yanak)
-    d = ImageDraw.Draw(bas)
-    d.line(_P(380, 318, 374, 340, 386, 344), fill=TEN2, width=5 * S, joint='curve')
-    # ağız
-    if a < 0.07:
-        d.arc(_P(352, 350, 408, 384), 20, 160, fill='#b5374a', width=6 * S)
-    else:
-        aw = 22 + 6 * math.sin(t * 19) * a + 4 * a
-        ah = 4 + 20 * a
-        d.ellipse(_P(380 - aw, 372 - ah * 0.45, 380 + aw, 372 + ah), fill='#7a2630')
-        d.rectangle(_P(380 - aw * 0.7, 372 - ah * 0.45, 380 + aw * 0.7, 372 - ah * 0.45 + max(3, ah * 0.25)), fill='#ffffff')
-        if ah > 10:
-            d.ellipse(_P(380 - aw * 0.55, 372 + ah * 0.35, 380 + aw * 0.55, 372 + ah * 0.95), fill='#e86a7a')
-    bas = bas.rotate(aci, resample=Image.Resampling.BICUBIC, center=pivot, translate=(0, dy * S))
-    gov.alpha_composite(bas)
-    return gov.resize((cw, ch), Image.Resampling.LANCZOS)
 
 
 # ---------------------------------------------------------------- grafikler
@@ -913,7 +755,7 @@ def altyazi_ciz(im, parcalar, t):
             q = yumusak((t - bas) / 0.1)
             x = W / 2 - tw / 2
             d = ImageDraw.Draw(im)
-            y = 1112 + 10 * (1 - q)
+            y = ALTYAZI_Y + 10 * (1 - q)
             for x_, w_ in zip(p, ws):
                 etkin = x_['bas'] <= t < max(x_['son'], x_['bas'] + 0.15) or (x_ is p[-1] and t >= x_['bas'])
                 d.text((x, y), x_['g'], font=f, fill=SARI if etkin else '#ffffff', anchor='lm', stroke_width=8, stroke_fill='#000000')
@@ -922,61 +764,68 @@ def altyazi_ciz(im, parcalar, t):
 
 
 # ---------------------------------------------------------------- üretim
-def uret(cikti, muzikli=True, onizleme=False):
+def kurgu_hazirla(ses_yolu, kelime_yolu):
+    ses = wav_oku(ses_yolu)
+    kel = kelimeleri_hizala(json.loads(Path(kelime_yolu).read_text(encoding='utf-8')))
+    baslar = []
+    for sg in SEGMENTLER:
+        ilk = next(k for k in kel if k['bolum'] == sg['ad'])
+        baslar.append(0.0 if not baslar else max(0.0, ilk['bas'] - 0.12))
+    toplam = len(ses) / ORNEK_HIZI + SON_SURE
+    return ses, kel, baslar, toplam
+
+
+def uret(cikti, ses_yolu, kelime_yolu, sunucu_yolu, onizleme=False):
     cikti = Path(cikti)
     gecici = cikti / 'gecici'
-    ses, kel, baslar, toplam = ses_hazirla(gecici)
+    gecici.mkdir(parents=True, exist_ok=True)
+    ses, kel, baslar, toplam = kurgu_hazirla(ses_yolu, kelime_yolu)
     kurgu = Kurgu(kel, baslar, toplam).kur()
-    z = zarf(ses, toplam)
     parcalar = altyazi_parcalari(kel)
-    taban, masa_kat = zemin(), masa()
+    taban = zemin()
+    # defter sayfası ve başlık sunucunun üstüne biner: o bölgeyi ayrı katman olarak tut
+    ust = taban.crop((0, 0, W, BY1 + 2)).convert('RGBA')
+    maske = Image.new('L', ust.size, 0)
+    dm = ImageDraw.Draw(maske)
+    dm.rectangle((0, 0, W, SUNUCU_Y), fill=255)
+    dm.rounded_rectangle((BX0, BY0, BX1, BY1), 40, fill=255)
+    ust.putalpha(maske)
+    sunucu = list(sunucu_kareleri(sunucu_yolu, toplam)) if not onizleme else None
 
-    rng = np.random.default_rng(11)
-    kirpma, t_ = [], 1.4
-    while t_ < toplam:
-        kirpma.append(t_)
-        t_ += 2.6 + rng.random() * 2.2
+    def sunucu_karesi(i):
+        if sunucu is not None:
+            return sunucu[min(i, len(sunucu) - 1)]
+        return next(sunucu_kareleri(sunucu_yolu, 0.1))
 
-    def jest_degeri(t):
-        v = 0.0
-        for a, b in kurgu.jest:
-            v = max(v, yumusak((t - a) / 0.25) * (1 - yumusak((t - b) / 0.3)))
-        return v
-
-    def kare(i):
+    def kare(i, sk=None):
         t = i / FPS
-        im = taban.copy().convert('RGBA')
+        im = taban.copy()
+        im.paste(sk or sunucu_karesi(i), (0, SUNUCU_Y))
+        # sunucunun üstüne hafif koyu geçiş: defter sayfasının gölgesi
+        im = im.convert('RGBA')
+        im.alpha_composite(GECIS, (0, SUNUCU_Y))
+        im.alpha_composite(ALT_KARARMA, (0, H - ALT_KARARMA.height))
+        im.alpha_composite(ust, (0, 0))
         for o in kurgu.ogeler:
-            if o is getattr(kurgu, 'buyutec', None):
-                if t >= o.t0:
-                    p = yumusak((t - o.t0) / 1.4)
-                    o.cy = 520 + p * 420
+            if o is getattr(kurgu, 'buyutec', None) and t >= o.t0:
+                o.cy = 520 + yumusak((t - o.t0) / 1.4) * 420
             o.ciz(im, t)
-        a = float(z[min(i, len(z) - 1)])
-        kas = max([1 - yumusak(abs(t - k - 0.25) / 0.5) for k in kurgu.kas_anlari] + [0])
-        gk = max([1 - abs(t - k) / 0.07 for k in kirpma] + [0])
-        bakis = -4 if any(a_ <= t < b_ for a_, b_ in kurgu.bakis) else 1.5 * math.sin(t * 0.7)
-        kisi = sunucu(t, a, kas, kis(gk), bakis, jest_degeri(t))
-        im.alpha_composite(kisi, (KX, KY))
-        im.alpha_composite(masa_kat, (0, MASA_Y - 10))
         rgb = im.convert('RGB')
         altyazi_ciz(rgb, parcalar, t)
         return rgb
 
     n = int(math.ceil(toplam * FPS))
-    kare(0).save(cikti / 'anlatici-kapak.png')
-    for t in (2.6, 6.0, 10.5, 17.0, 24.0, 29.5, 33.0, toplam - 0.3):
-        if t < toplam:
-            kare(int(t * FPS)).save(cikti / f'anlatici-{t:04.1f}.png')
+    ilk = next(sunucu_kareleri(sunucu_yolu, 0.1))
+    kare(0, ilk).save(cikti / 'anlatici-kapak.png')
     if onizleme:
         for o in kurgu.ogeler:      # her öğenin girişinden 0,6 sn sonrası
             t = min(o.t0 + 0.6, toplam - 0.05)
-            kare(int(t * FPS)).save(cikti / f'oge-{t:05.2f}.png')
+            kare(int(t * FPS), ilk).save(cikti / f'oge-{t:05.2f}.png')
         return None
 
     sessiz = gecici / 'sessiz.mp4'
     p = subprocess.Popen([ffmpeg_yolu(), '-y', '-loglevel', 'error', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-s', f'{W}x{H}', '-r', str(FPS),
-                          '-i', '-', '-c:v', 'libx264', '-preset', 'medium', '-crf', '19', '-pix_fmt', 'yuv420p', str(sessiz)],
+                          '-i', '-', '-c:v', 'libx264', '-preset', 'slow', '-crf', '18', '-pix_fmt', 'yuv420p', str(sessiz)],
                          stdin=subprocess.PIPE)
     try:
         for i in range(n):
@@ -985,29 +834,40 @@ def uret(cikti, muzikli=True, onizleme=False):
         p.stdin.close()
     if p.wait() != 0:
         raise RuntimeError('ffmpeg video yazamadı')
-
-    muzik = None
-    if muzikli:
-        import reels
-        yol, bas = reels.muzik_yolu('ilan')
-        muzik = (yol, bas) if yol else None
-    karisim = karistir(ses, kurgu.efektler(), toplam, muzik)
+    karisim = karistir(ses, kurgu.efektler(), toplam)
     wav = gecici / 'ses.wav'
     wav_yaz(karisim, wav)
     son = cikti / 'anlatici-60-puan.mp4'
     subprocess.run([ffmpeg_yolu(), '-y', '-loglevel', 'error', '-i', str(sessiz), '-i', str(wav), '-map', '0:v', '-map', '1:a', '-c:v', 'copy',
-                    '-c:a', 'aac', '-b:a', '160k', '-ar', '48000', '-t', f'{toplam:.2f}', '-movflags', '+faststart', str(son)], check=True)
+                    '-c:a', 'aac', '-b:a', '192k', '-ar', '48000', '-t', f'{toplam:.2f}', '-movflags', '+faststart', str(son)], check=True)
     print(f'{son}: {toplam:.1f} sn, {n} kare')
     return son
 
 
+def _gecisler():
+    g = Image.new('RGBA', (W, 70), (0, 0, 0, 0))
+    d = ImageDraw.Draw(g)
+    for y in range(70):
+        d.line((0, y, W, y), fill=(11, 21, 41, int(200 * (1 - y / 70) ** 1.6)))
+    a = Image.new('RGBA', (W, 420), (0, 0, 0, 0))
+    d = ImageDraw.Draw(a)
+    for y in range(420):
+        d.line((0, y, W, y), fill=(0, 0, 0, int(150 * (y / 420) ** 1.8)))
+    return g, a
+
+
+GECIS, ALT_KARARMA = _gecisler()
+
+
 def main():
     a = argparse.ArgumentParser()
+    a.add_argument('--ses', required=True, help='seslendirme (wav)')
+    a.add_argument('--kelimeler', required=True, help='faster-whisper kelime zamanları (json)')
+    a.add_argument('--sunucu', required=True, help='dudak senkronlu sunucu videosu (mp4)')
     a.add_argument('--cikti', default='reels-cikti')
-    a.add_argument('--muziksiz', action='store_true')
     a.add_argument('--onizleme', action='store_true', help='yalnız denetim kareleri')
     s = a.parse_args()
-    uret(s.cikti, not s.muziksiz, s.onizleme)
+    uret(s.cikti, s.ses, s.kelimeler, s.sunucu, s.onizleme)
 
 
 if __name__ == '__main__':
