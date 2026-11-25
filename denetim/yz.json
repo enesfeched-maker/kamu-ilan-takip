@@ -1618,6 +1618,54 @@
    ]
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=0e649e12-a1b8-4d2f-a855-540f983ac98e": {
+  "zaman": "2026-11-26T01:10:37+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "7f72aa56637e873a",
+  "baslik": "TÜRKİYE SU ENSTİTÜSÜ BAŞKANLIĞI - SÖZLEŞMELİ PERSONEL ALIM İLANI - BİLGİSAYAR MÜHENDİSİ (İSTANBUL)",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Bilgisayar Mühendisi",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "il": "İstanbul",
+     "kosullar": [
+      "Üniversitelerin Bilgisayar Mühendisliği lisans programından mezun olmak.",
+      "KPSS (P3) puan türünden en az 70 puan almış olmak.",
+      "İngilizce YDS/e-YDS veya denk sınavdan en az 60 puan almış olmak."
+     ]
+    }
+   ],
+   "toplam": 1,
+   "son_basvuru_tarihi": "2026-12-25",
+   "son_basvuru_saati": "23:59",
+   "baslangic_tarihi": "2026-11-26",
+   "kpss_gerekli": true,
+   "iller": [
+    "İstanbul"
+   ],
+   "ortak_kosullar": [
+    "Başvuru yalnızca elektronik ortamda, e-Devlet veya Kariyer Kapısı üzerinden yapılır."
+   ],
+   "ozet": "Türkiye Su Enstitüsü 1 bilgisayar mühendisi sözleşmeli personel alacak. Başvurular 26 Kasım–25 Aralık 2026 arasında e-Devlet/Kariyer Kapısı üzerinden yapılır.",
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P3"
+   ]
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=11272843-b0f1-470e-af31-cc176fa0e5d4": {
   "zaman": "2026-10-30T18:05:06+03:00",
   "surum": 4,
@@ -2832,6 +2880,55 @@
    "puan_turleri": [
     "P19,P24,P26,P27,P28,P33,P38,P41"
    ]
+  }
+ },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=6119f52b-afb3-478d-aeb0-23fda9009aa5": {
+  "zaman": "2026-11-26T01:10:37+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "bf18a4be0eb9731a",
+  "baslik": "MERSİN ÜNİVERSİTESİ REKTÖRLÜĞÜ - 1 ADET SÖZLEŞMELİ BİLİŞİM PERSONEL ALIM İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Sistem Yöneticisi (Sözleşmeli Bilişim Personeli)",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "il": "Mersin",
+     "kosullar": [
+      "Yönetmeliğin 6. maddesinin (b) fıkrasında sayılan bölümlerden mezun olmak.",
+      "Sistem yönetimi alanında en az 5 yıl mesleki deneyime sahip olduğunu belgelemek.",
+      "Linux ve Windows Server yönetiminde fiilen görev aldığını belgelemek.",
+      "Sanallaştırma (VMware, Hyper-V, Proxmox vb.) kurulum ve yönetiminde fiilen görev aldığını belgelemek.",
+      "Docker, Kubernetes ve PostgreSQL konularında ileri seviye tecrübeye sahip olmak."
+     ]
+    }
+   ],
+   "toplam": 1,
+   "son_basvuru_tarihi": "2026-12-10",
+   "son_basvuru_saati": "23:59",
+   "baslangic_tarihi": "2026-11-26",
+   "kpss_gerekli": false,
+   "iller": [
+    "Mersin"
+   ],
+   "ortak_kosullar": [
+    "Başvuru son günü itibarıyla 45 yaşından gün almamış olmak.",
+    "Başvuru yalnızca e-Devlet üzerinden Kariyer Kapısı İşe Alım Platformu'ndan elektronik ortamda yapılır."
+   ],
+   "ozet": "Mersin Üniversitesi 1 sistem yöneticisi sözleşmeli bilişim personeli alacak. Başvurular 26 Kasım–10 Aralık 2026 arasında Kariyer Kapısı üzerinden yapılır.",
+   "okunabilirlik": "kismi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": []
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=667b7787-181b-4063-af99-0f8f07ba1293": {
@@ -11741,6 +11838,28 @@
    "puan_turleri": [
     "P93"
    ]
+  }
+ },
+ "sbb-d3210c806ccacfc845ea36d8": {
+  "zaman": "2026-11-26T01:10:37+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "31bb41faabb04498",
+  "baslik": "ÖZBURUN BELEDİYE BAŞKANLIĞI - 2 SüREKLİ (OPERATÖR) İŞÇİ ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [],
+   "toplam": null,
+   "son_basvuru_tarihi": null,
+   "kpss_gerekli": null,
+   "iller": [],
+   "ortak_kosullar": [],
+   "ozet": "",
+   "okunabilirlik": "kotu",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan"
   }
  },
  "sbb-d568ee9cba7f99929eb258d5": {
