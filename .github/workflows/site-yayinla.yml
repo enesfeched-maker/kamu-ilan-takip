@@ -75,6 +75,7 @@ on:
       - 'bot/site_paketi.py'
       - 'bot/sonuc_takip.py'
       - 'bot/sosyal_ajan.py'
+      - 'bot/sosyal_baglanti.py'
       - 'bot/sosyal_kalite.py'
       - 'bot/sosyal_motor.py'
       - 'bot/haftalik.py'

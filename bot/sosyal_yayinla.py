@@ -13,6 +13,9 @@ Her platform yalnız anahtarları GitHub sırlarında tanımlıysa çalışır; 
 Yenilenen anahtarlar (Instagram haftada bir, TikTok her seferinde dönebilir) SOSYAL_GH_ANAHTARI tanımlıysa
 GitHub sırrına geri yazılır; tanımlı değilse yalnız uyarı verilir. Anahtarlar hiçbir zaman yazdırılmaz.
 
+YouTube/Facebook açıklamalarına UTM'li bağlantı eklenir; yayından sonra hesabımızdan ilk yorum atılır (başarısızlık yayını bozmaz,
+sonuçta 'yorum' alanı; SOSYAL_ILK_YORUM=kapali ile kapanır).
+
 Kullanım: python bot/sosyal_yayinla.py sosyal-cikti [--instagram-yenile]"""
 import json
 import os
@@ -24,12 +27,29 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
+import sosyal_baglanti
+
 IG_SURUM = 'v23.0'
 ZAMAN_ASIMI = 120
 
 
 class YayinHatasi(Exception):
     pass
+
+
+def _yorum_yaz(metin, platform, gonder):
+    """İlk yorumu gonder(yorum_metni) ile atar; ASLA hata fırlatmaz. Dönüş: 'tamam' | 'hata: ...' | None (kapalı/yok)."""
+    if os.environ.get('SOSYAL_ILK_YORUM', '').strip().lower() == 'kapali':
+        return None
+    try:
+        yorum = sosyal_baglanti.ilk_yorum(metin, platform)
+        if not yorum:
+            return None
+        gonder(yorum)
+        return 'tamam'
+    except Exception as hata:
+        print(f'::warning::{platform} ilk yorumu atılamadı: {str(hata)[:150]}')
+        return f'hata: {str(hata)[:150]}'
 
 
 def _istek(url, veri=None, json_veri=None, basliklar=None, yontem=None, zaman_asimi=ZAMAN_ASIMI, ham=False):
@@ -102,7 +122,12 @@ def instagram(video, metin, ortam=None):
     else:
         raise YayinHatasi('Instagram video işleme zaman aşımı')
     yayin = _istek(f'{taban}/{ig_id}/media_publish', veri={'creation_id': kap_id, 'access_token': anahtar})
-    return {'id': yayin.get('id')}
+    sonuc = {'id': yayin.get('id')}
+    yorum = _yorum_yaz(metin, 'instagram', lambda t: _istek(
+        f'{taban}/{yayin.get("id")}/comments', veri={'message': t, 'access_token': anahtar}))
+    if yorum:
+        sonuc['yorum'] = yorum
+    return sonuc
 
 
 def instagram_yenile():
@@ -140,7 +165,7 @@ def youtube(video, metin, ortam=None):
             raise YayinHatasi(f'Anahtar "{beklenen}" kanalına ait değil ({", ".join(adlar) or "kanal yok"}); yüklenmedi.')
     veri = Path(video).read_bytes()
     govde = {
-        'snippet': {'title': metin['baslik'][:100], 'description': metin['aciklama'][:4900],
+        'snippet': {'title': metin['baslik'][:100], 'description': sosyal_baglanti.aciklama_baglantili(metin, 'youtube')[:4900],
                     'tags': [e.lstrip('#') for e in metin.get('etiketler', [])] + ['kpss', 'kamu ilanları', 'memur alımı'],
                     'categoryId': '27', 'defaultLanguage': 'tr', 'defaultAudioLanguage': 'tr'},
         'status': {'privacyStatus': os.environ.get('YT_GORUNURLUK', 'public'), 'selfDeclaredMadeForKids': False},
@@ -154,8 +179,15 @@ def youtube(video, metin, ortam=None):
         raise YayinHatasi('YouTube yükleme adresi alınamadı')
     sonuc = _istek(yer, veri=veri, yontem='PUT', zaman_asimi=600,
                    basliklar={'Authorization': f'Bearer {erisim}', 'Content-Type': 'video/mp4'})
-    return {'id': sonuc.get('id'), 'kanal': (sonuc.get('snippet') or {}).get('channelTitle'),
-            'gorunurluk': (sonuc.get('status') or {}).get('privacyStatus')}
+    cikti = {'id': sonuc.get('id'), 'kanal': (sonuc.get('snippet') or {}).get('channelTitle'),
+             'gorunurluk': (sonuc.get('status') or {}).get('privacyStatus')}
+    yorum = _yorum_yaz(metin, 'youtube', lambda t: _istek(
+        'https://www.googleapis.com/youtube/v3/commentThreads?part=snippet',
+        json_veri={'snippet': {'videoId': sonuc.get('id'), 'topLevelComment': {'snippet': {'textOriginal': t}}}},
+        basliklar={'Authorization': f'Bearer {erisim}'}))
+    if yorum:
+        cikti['yorum'] = yorum
+    return cikti
 
 
 def youtube_kontrol():
@@ -282,7 +314,7 @@ def facebook(video, metin):
         raise YayinHatasi('Facebook video yüklemesini onaylamadı')
     yayin = _facebook_istek(f'{taban}/{sayfa}/video_reels', veri={
         'upload_phase': 'finish', 'video_id': video_id, 'video_state': 'PUBLISHED',
-        'description': metin['aciklama'], 'title': metin.get('baslik', '')[:255]}, basliklar=basliklar)
+        'description': sosyal_baglanti.aciklama_baglantili(metin, 'facebook'), 'title': metin.get('baslik', '')[:255]}, basliklar=basliklar)
     if not yayin.get('success'):
         raise YayinHatasi('Facebook yayın isteğini onaylamadı')
     # Kabulü yayın tamamlandı diye göstermeyiz; bekleyen video otomatik tekrar yüklenmez.
@@ -290,8 +322,13 @@ def facebook(video, metin):
     if durum.get('video_status') == 'error':
         raise YayinHatasi(f'Facebook videoyu işleyemedi (video: {video_id})')
     tamam = (durum.get('publishing_phase') or {}).get('status') == 'complete'
-    return {'id': str(video_id), 'durum': 'published' if tamam else 'processing',
-            'baglanti': f'https://www.facebook.com/reel/{video_id}'}
+    sonuc = {'id': str(video_id), 'durum': 'published' if tamam else 'processing',
+             'baglanti': f'https://www.facebook.com/reel/{video_id}'}
+    yorum = _yorum_yaz(metin, 'facebook', lambda t: _facebook_istek(
+        f'{taban}/{video_id}/comments', veri={'message': t}, basliklar=basliklar))
+    if yorum:
+        sonuc['yorum'] = yorum
+    return sonuc
 
 
 # ---------------------------------------------------------------- TikTok
