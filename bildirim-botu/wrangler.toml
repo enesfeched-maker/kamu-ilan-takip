@@ -20,6 +20,9 @@ binding = "AI"
 ILAN_URL = "https://kpsstercihi.com/bot-ilanlar.json"
 SITE_URL = "https://kpsstercihi.com/"
 VIP_ACIK = "0"
+# Asistan YZ cilasi KAPALI (25 Kasim 2026): canlida model sorudaki "zabita" kelimesini cevaba ekleyip
+# olmayan ilani var gibi yazdi. Sablon cevaplar zaten dogal; acmak icin "1" yap ve once gercek veride dene.
+ASISTAN_YZ = "0"
 # Web Push (VAPID) acik anahtari: `node vapid-uret.mjs` ciktisindaki "VAPID_ACIK" degerini TIRNAKLARIN ICINE yaz.
 # Bos kalirsa web push kapali kalir. Ozel anahtar VAPID_OZEL gizli ayardir (asagida).
 VAPID_ACIK = "BI_V6nOUnzoI_Oa1kSsoXAxlVibe1gOzakkRibXwAs_GZv_rbKthDyn2666il66qq4TgKJpd6ElhCcngEJrs4J4"
