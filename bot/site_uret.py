@@ -224,6 +224,7 @@ TASARIM_SURUM = 8
 TASARIM_HEAD = (f'<link rel="stylesheet" href="/tasarim.css?v={TASARIM_SURUM}">'
                 f'<script src="/kesfet.js?v={TASARIM_SURUM}" defer></script>')
 ORTAK_HEAD = ('<meta name="referrer" content="strict-origin-when-cross-origin">'
+              '<meta name="p:domain_verify" content="9d3e3e64658ae8d07868c092d85eb947">'   # Pinterest alan adı doğrulaması (25 Kasım 2026)
               '<link rel="alternate" type="application/rss+xml" title="KPSS Tercihi: yeni kamu ilanları" href="https://kpsstercihi.com/rss.xml">'
               '<script type="speculationrules">{"prefetch":[{"source":"document","where":{"href_matches":"/ilan/*"},"eagerness":"moderate"}]}</script>'
               f'{TASARIM_HEAD}')
