@@ -59,6 +59,8 @@ class ForumKabugu(unittest.TestCase):
             h = su.ust_html(kok)
             self.assertIn(f'<script src="{kok}hesap.js?v={su.HESAP_SURUM}" data-f="{su.FORUM_SURUM}" defer></script>', h)
             self.assertIn('class="tb-ikon"', h)   # Profil girişsiz kullanıcı için durur; hesap.js girişliyken gizler
+            # sağ alttaki 'Soru sor' asistanı da her sayfada ertelenmiş yüklenir (docs/asistan.js)
+            self.assertIn(f'<script src="{kok}asistan.js?v={su.ASISTAN_SURUM}" defer></script>', h)
 
 
 if __name__ == '__main__':
