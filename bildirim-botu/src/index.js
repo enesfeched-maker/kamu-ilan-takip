@@ -1,6 +1,7 @@
 import { updateIsle } from './komutlar.js';
 import { yoneticiTani } from './sosyal.js';
 import { webIstek } from './web.js';
+import { asistanIstek } from './asistan.js';
 
 // Sabit süreli karşılaştırma (uzunluk farkında da tüm baytlar dolaşılır).
 function esit(a, b) {
@@ -15,6 +16,7 @@ function esit(a, b) {
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+    if (url.pathname.startsWith('/asistan/')) return asistanIstek(request, env, ctx);
     if (url.pathname.startsWith('/web/')) return webIstek(request, env);
     if (request.method === 'GET' && url.pathname === '/') return new Response('ok');
     if (request.method !== 'POST' || url.pathname !== '/webhook') return new Response('bulunamadı', { status: 404 });
