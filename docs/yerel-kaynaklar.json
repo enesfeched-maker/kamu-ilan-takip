@@ -1,9 +1,9 @@
 {
  "schema": 1,
- "guncelleme": "2026-11-26T19:07:05.141688+00:00",
+ "guncelleme": "2026-11-26T19:38:36.774016+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-11-26T19:08:03.359416+00:00",
+   "kontrol": "2026-11-26T19:39:55.865666+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -149,7 +149,7 @@
      "donem": "( 26 Kasım - 10 Aralık)",
      "baslangic_zaman": "2026-11-26T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-26T10:09:24+03:00",
+     "detay_guncelleme": "2026-11-26T22:38:44+03:00",
      "belge_ozeti": "d5e2ccac617c49c547fae9d0cbf1f2507341838483307ea27c85ca910b0a6845",
      "kaynaklar": [
       {
@@ -234,7 +234,7 @@
      "donem": "( 26 Kasım - 7 Aralık)",
      "baslangic_zaman": "2026-11-26T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-26T10:09:32+03:00",
+     "detay_guncelleme": "2026-11-26T22:38:53+03:00",
      "belge_ozeti": "76f435cf6a80df22c22a2af2a00088f4f9f555afd7d9c48ba3553cd73e5ca819",
      "kaynaklar": [
       {
@@ -264,7 +264,7 @@
      "donem": "( 26 Kasım - 30 Kasım)",
      "baslangic_zaman": "2026-12-03T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-26T22:07:13+03:00",
+     "detay_guncelleme": "2026-11-26T22:38:58+03:00",
      "belge_ozeti": "5a42bf32213335e8a69ce170315acaabfc544d38092f76d32de9691b50199ced",
      "kaynaklar": [
       {
@@ -274,6 +274,65 @@
      ],
      "sbb_detay_surumu": 6,
      "belge_uyumsuz": true
+    },
+    {
+     "id": "sbb-9b33421497a4939f94440240",
+     "baslik": "TÜRKİYE SU ENSTİTÜSÜ - 1 ALACAK",
+     "kurum": "TÜRKİYE SU ENSTİTÜSÜ",
+     "kadro": "1 ALACAK",
+     "ilan_turu": "Sözleşmeli Personel",
+     "son_tarih": "2026-12-25",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 26 Kasım - 25 Aralık)",
+     "baslangic_zaman": "2026-11-26T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-11-26T22:39:16+03:00",
+     "belge_ozeti": "9999e2238782059a35bdcb23d0fc2784d95c949013f2de3b8aa5c285a9005ab7",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "1 alımı. Son başvuru: 25.12.2026. Adaylar, ilanın Resmî Gazete’de yayımlandığı tarihten itibaren 30 gün içerisinde e-Devlet Kapısı üzerinden “Türkiye Su Enstitüsü – Kariyer Kapısı Kamu İşe Alım” hizmeti veya Kariyer Kapısı (https://kariyerkapisi.gov.tr/isealim) platformu üzerinden başvuru yapabileceklerdir. Başvurular yalnızca elektronik ortamda alınacak olup, posta yolu veya şahsen yapılan müracaatlar kabul edilmeyecektir. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "b) Başvuru tarihi itibarıyla 18 yaşını tamamlamış olmak,"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "1) Üniversitelerin Bilgisayar Mühendisliği lisans programından mezun olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "2) KPSS (P3) puan türünden geçerli sonuç belgesi ile en az 70 puan almış olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "3) İngilizce dilinden YDS/e-YDS veya ÖSYM tarafından denk kabul edilen uluslararası geçerliliği bulunan yabancı dil sınavlarının geçerli sonuç belgesinden en az 60 puan almış olmak."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "3) İngilizce dilinden YDS/e-YDS veya ÖSYM tarafından denk kabul edilen uluslararası geçerliliği bulunan yabancı dil sınavlarının geçerli sonuç belgesinden en az 60 puan almış olmak. III. BAŞVURU TARİHİ, YERİ VE ŞEKLİ Adaylar, ilanın Resmî Gazete’de yayımlandığı tarihten itibaren 30 gün içerisinde e-Devlet Kapısı üzerinden “Türkiye Su Enstitüsü – Kariyer Kapısı Kamu İşe Alım” hizmeti veya Kariyer Kapısı (https://kariyerkapisi.gov.tr/isealim) platformu üzerinden başvuru yapabileceklerdir. Başvurular yalnızca elektronik ortamda alınacak olup, posta yolu veya şahsen yapılan müracaatlar kabul edilmeyecektir."
+      },
+      {
+       "kadro": "Sınav puanı koşulu · kadroya göre muafiyetler için belgeyi inceleyin",
+       "metin": "2) KPSS (P3) puan türünden geçerli sonuç belgesi ile en az 70 puan almış olmak."
+      }
+     ],
+     "basvuru_notu": "5) Fotoğraflı detaylı özgeçmiş (başvuru sırasında e-Devlet üzerinden yüklenecektir).",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/9999e2238782059a35bdcb23d0fc2784d95c949013f2de3b8aa5c285a9005ab7.pdf",
+     "belge_sha256": "9999e2238782059a35bdcb23d0fc2784d95c949013f2de3b8aa5c285a9005ab7",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "puan_turleri": [
+      "P3"
+     ],
+     "belge_ogrenim": [
+      "lisans"
+     ]
     },
     {
      "id": "sbb-0a41bc140972c6d218fae6c7",
@@ -1056,46 +1115,6 @@
      ]
     },
     {
-     "id": "sbb-51de86948267af4fd33f9d21",
-     "baslik": "TARSUS ÜNİVERSİTESİ - 3 ÖĞRETİM ELEMANI ALACAK",
-     "kurum": "TARSUS ÜNİVERSİTESİ",
-     "kadro": "3 ÖĞRETİM ELEMANI ALACAK",
-     "ilan_turu": "Öğretim Elemanı",
-     "son_tarih": "2026-12-07",
-     "kaynak": "SBB Kamu İlan",
-     "kaynak_turu": "sbb",
-     "donem": "( 23 Kasım - 7 Aralık)",
-     "baslangic_zaman": "2026-11-23T00:00:00+03:00",
-     "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-26T16:06:42+03:00",
-     "belge_ozeti": "98f9393fe738392659a60bbcb7ff5a4a939a81a36ba53d5cf3bc77a18d5ae7fd",
-     "kaynaklar": [
-      {
-       "ad": "SBB Kamu İlan",
-       "link": "https://kamuilan.sbb.gov.tr/"
-      }
-     ],
-     "ozet": "3 ÖĞRETİM ELEMANI alımı. Son başvuru: 07.12.2026. 1) Başvurular, şahsen veya posta yoluyla ilan metninde belirtilen başvuru yerlerine yapılacaktır. İlan edilen kadrolardan sadece birine müracaat edilecektir. Birden fazla kadroya başvuru yapanların başvurusu geçersiz sayılacaktır. Eksik belgeli başvurular ile posta yoluyla yapılan başvurularda 07.12.2026 tarihi mesai bitiminden sonra Üniversitemize ulaşacak başvurular dikkate alınmayacaktır. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
-     "sartlar": [
-      {
-       "kadro": "Belgedeki kadro koşullarından alıntı",
-       "metin": "ANA BİLİM BİRİMİ BÖLÜMÜ DALI / KADRO UNVANI AÇIKLAMALAR BAŞVURU YERİ PROGRAM İngilizce Öğretmenliği, İngilizce Mütercim ve Tercümanlık, İngiliz Dili ve Edebiyatı, Çeviribilim Tarsus Üniversitesi (İngilizce), Amerikan Kültürü ve Edebiyatı, İngiliz Dil Yabancı Diller Yabancı Diller Yabancı Diller Yabancı Diller Öğretim Görevlisi Bilimi lisans mezunu olmak."
-      },
-      {
-       "kadro": "Belgedeki kadro koşullarından alıntı",
-       "metin": "Tarsus / MERSİN Mersin Tarsus Metalürji ve Malzeme Mühendisliği, Makine Tarsus Üniversitesi Mersin Tarsus Organize Organize Sanayi Makine ve Kaynak Öğretim Görevlisi Mühendisliği, İmalat Mühendisliği, Makine ve Metal Sanayi Bölgesi Teknik Bölgesi Teknik Metal 6 2 70 MUAF Teknolojisi Öğretmenliği, Metal İşleri Öğretmenliği, Bilimler Meslek Bilimler Meslek Teknolojileri Teknolojisi (Ders Verecek) Metal Eğitimi lisans bölümlerinin birinden mezun olmak."
-      }
-     ],
-     "basvuru_notu": "Belge üzerindeki geçerlilik tarihi varsa bu tarih esas alınacaktır.) 9) Herhangi bir adli sicil kaydı olmadığına dair belge (e-Devlet üzerinden alınan belge) NOT: 1) Başvurular, şahsen veya posta yoluyla ilan metninde belirtilen başvuru yerlerine yapılacaktır.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/98f9393fe738392659a60bbcb7ff5a4a939a81a36ba53d5cf3bc77a18d5ae7fd.pdf",
-     "belge_sha256": "98f9393fe738392659a60bbcb7ff5a4a939a81a36ba53d5cf3bc77a18d5ae7fd",
-     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 6,
-     "belge_ogrenim": [
-      "onlisans"
-     ]
-    },
-    {
      "id": "sbb-0996a6b012584af8116e902d",
      "baslik": "JANDARMA GENEL KOMUTANLIĞI - 9000 UZMAN ERBAŞ TEMİN EDİLECEKTİR.",
      "kurum": "JANDARMA GENEL KOMUTANLIĞI",
@@ -1229,6 +1248,46 @@
      "puan_turleri": [
       "P93"
      ],
+     "belge_ogrenim": [
+      "onlisans"
+     ]
+    },
+    {
+     "id": "sbb-51de86948267af4fd33f9d21",
+     "baslik": "TARSUS ÜNİVERSİTESİ - 3 ÖĞRETİM ELEMANI ALACAK",
+     "kurum": "TARSUS ÜNİVERSİTESİ",
+     "kadro": "3 ÖĞRETİM ELEMANI ALACAK",
+     "ilan_turu": "Öğretim Elemanı",
+     "son_tarih": "2026-12-07",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 23 Kasım - 7 Aralık)",
+     "baslangic_zaman": "2026-11-23T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-11-26T16:06:42+03:00",
+     "belge_ozeti": "98f9393fe738392659a60bbcb7ff5a4a939a81a36ba53d5cf3bc77a18d5ae7fd",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "3 ÖĞRETİM ELEMANI alımı. Son başvuru: 07.12.2026. 1) Başvurular, şahsen veya posta yoluyla ilan metninde belirtilen başvuru yerlerine yapılacaktır. İlan edilen kadrolardan sadece birine müracaat edilecektir. Birden fazla kadroya başvuru yapanların başvurusu geçersiz sayılacaktır. Eksik belgeli başvurular ile posta yoluyla yapılan başvurularda 07.12.2026 tarihi mesai bitiminden sonra Üniversitemize ulaşacak başvurular dikkate alınmayacaktır. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgedeki kadro koşullarından alıntı",
+       "metin": "ANA BİLİM BİRİMİ BÖLÜMÜ DALI / KADRO UNVANI AÇIKLAMALAR BAŞVURU YERİ PROGRAM İngilizce Öğretmenliği, İngilizce Mütercim ve Tercümanlık, İngiliz Dili ve Edebiyatı, Çeviribilim Tarsus Üniversitesi (İngilizce), Amerikan Kültürü ve Edebiyatı, İngiliz Dil Yabancı Diller Yabancı Diller Yabancı Diller Yabancı Diller Öğretim Görevlisi Bilimi lisans mezunu olmak."
+      },
+      {
+       "kadro": "Belgedeki kadro koşullarından alıntı",
+       "metin": "Tarsus / MERSİN Mersin Tarsus Metalürji ve Malzeme Mühendisliği, Makine Tarsus Üniversitesi Mersin Tarsus Organize Organize Sanayi Makine ve Kaynak Öğretim Görevlisi Mühendisliği, İmalat Mühendisliği, Makine ve Metal Sanayi Bölgesi Teknik Bölgesi Teknik Metal 6 2 70 MUAF Teknolojisi Öğretmenliği, Metal İşleri Öğretmenliği, Bilimler Meslek Bilimler Meslek Teknolojileri Teknolojisi (Ders Verecek) Metal Eğitimi lisans bölümlerinin birinden mezun olmak."
+      }
+     ],
+     "basvuru_notu": "Belge üzerindeki geçerlilik tarihi varsa bu tarih esas alınacaktır.) 9) Herhangi bir adli sicil kaydı olmadığına dair belge (e-Devlet üzerinden alınan belge) NOT: 1) Başvurular, şahsen veya posta yoluyla ilan metninde belirtilen başvuru yerlerine yapılacaktır.",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/98f9393fe738392659a60bbcb7ff5a4a939a81a36ba53d5cf3bc77a18d5ae7fd.pdf",
+     "belge_sha256": "98f9393fe738392659a60bbcb7ff5a4a939a81a36ba53d5cf3bc77a18d5ae7fd",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
      "belge_ogrenim": [
       "onlisans"
      ]
@@ -1959,7 +2018,7 @@
      "donem": "( 18 Kasım - 2 Aralık)",
      "baslangic_zaman": "2026-11-18T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-26T22:07:40+03:00",
+     "detay_guncelleme": "2026-11-26T22:39:31+03:00",
      "belge_ozeti": "3b96d3f990e76841ffe4d5e6dee66e4dd087373ccb520703d568740de592dd01",
      "kaynaklar": [
       {
@@ -3555,6 +3614,42 @@
      ]
     },
     {
+     "id": "sbb-e09e5fcd529740e02614f931",
+     "baslik": "ELAZIĞ İL ÖZEL İDARESİ - 3 SÖZLEŞMELİ PERSONEL ALACAK",
+     "kurum": "ELAZIĞ İL ÖZEL İDARESİ",
+     "kadro": "3 SÖZLEŞMELİ PERSONEL ALACAK",
+     "ilan_turu": "Sözleşmeli Personel",
+     "son_tarih": "2026-12-09",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 30 Kasım - 9 Aralık)",
+     "baslangic_zaman": "2026-11-30T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-11-26T16:42:15+03:00",
+     "belge_ozeti": "d0a8ee940de0d6b02daf6e53d398f9e98b33c371d4e123a9d3e8f918b6261329",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "3 SÖZLEŞMELİ PERSONEL alımı. Son başvuru: 09.12.2026. a) Elektronik ortamda başvurular, 30/11/2026 – 09/12/2026 tarihleri arasında istenilen belgeler eklenmek suretiyle Elazığ İl Özel İdaresine ait ozelidare@elazig.gov.tr mail adresine yapılacaktır. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "• İlan edilen unvanlar için mezun olunan okul itibari ile öğren im şartını taşımak ve bu öğrenimle ilgili olarak 2026 yılı Kamu Personeli Seçme Sınavından (KPSS) alım yapılacak unvanların karşısında belirtilen puan türlerinden, belirtilen asgari KPSS puanını almış olmak."
+      }
+     ],
+     "basvuru_notu": "b) Şahsen veya iadeli taahhütlü posta yolu ile yapılacak başvurular, yukarıdaki başvuru tarihleri arasında mesai bitimine kadar (mesai saatleri 08:00-1 7:00 içinde) başvuru formu eksiksiz ve doğru şekilde doldurularak ve başvuru esnasında istenilen diğer belgeler eklenmek suretiyle ile (Elazığ İl Özel İdaresi İnsan Kaynakları ve Eğitim Müdürlüğüne) yapabilecektir.",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/d0a8ee940de0d6b02daf6e53d398f9e98b33c371d4e123a9d3e8f918b6261329.pdf",
+     "belge_sha256": "d0a8ee940de0d6b02daf6e53d398f9e98b33c371d4e123a9d3e8f918b6261329",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "belge_ogrenim": [
+      "lisans"
+     ]
+    },
+    {
      "id": "sbb-94d1ab01adeb72d82f5c9df5",
      "baslik": "EYYÜBİYE BELEDİYE BAŞKANLIĞI - 9 MEMUR ALACAK",
      "kurum": "EYYÜBİYE BELEDİYE BAŞKANLIĞI",
@@ -3610,42 +3705,6 @@
      "puan_turleri": [
       "P3"
      ],
-     "belge_ogrenim": [
-      "lisans"
-     ]
-    },
-    {
-     "id": "sbb-e09e5fcd529740e02614f931",
-     "baslik": "ELAZIĞ İL ÖZEL İDARESİ - 3 SÖZLEŞMELİ PERSONEL ALACAK",
-     "kurum": "ELAZIĞ İL ÖZEL İDARESİ",
-     "kadro": "3 SÖZLEŞMELİ PERSONEL ALACAK",
-     "ilan_turu": "Sözleşmeli Personel",
-     "son_tarih": "2026-12-09",
-     "kaynak": "SBB Kamu İlan",
-     "kaynak_turu": "sbb",
-     "donem": "( 30 Kasım - 9 Aralık)",
-     "baslangic_zaman": "2026-11-30T00:00:00+03:00",
-     "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-26T16:42:15+03:00",
-     "belge_ozeti": "d0a8ee940de0d6b02daf6e53d398f9e98b33c371d4e123a9d3e8f918b6261329",
-     "kaynaklar": [
-      {
-       "ad": "SBB Kamu İlan",
-       "link": "https://kamuilan.sbb.gov.tr/"
-      }
-     ],
-     "ozet": "3 SÖZLEŞMELİ PERSONEL alımı. Son başvuru: 09.12.2026. a) Elektronik ortamda başvurular, 30/11/2026 – 09/12/2026 tarihleri arasında istenilen belgeler eklenmek suretiyle Elazığ İl Özel İdaresine ait ozelidare@elazig.gov.tr mail adresine yapılacaktır. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
-     "sartlar": [
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "• İlan edilen unvanlar için mezun olunan okul itibari ile öğren im şartını taşımak ve bu öğrenimle ilgili olarak 2026 yılı Kamu Personeli Seçme Sınavından (KPSS) alım yapılacak unvanların karşısında belirtilen puan türlerinden, belirtilen asgari KPSS puanını almış olmak."
-      }
-     ],
-     "basvuru_notu": "b) Şahsen veya iadeli taahhütlü posta yolu ile yapılacak başvurular, yukarıdaki başvuru tarihleri arasında mesai bitimine kadar (mesai saatleri 08:00-1 7:00 içinde) başvuru formu eksiksiz ve doğru şekilde doldurularak ve başvuru esnasında istenilen diğer belgeler eklenmek suretiyle ile (Elazığ İl Özel İdaresi İnsan Kaynakları ve Eğitim Müdürlüğüne) yapabilecektir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/d0a8ee940de0d6b02daf6e53d398f9e98b33c371d4e123a9d3e8f918b6261329.pdf",
-     "belge_sha256": "d0a8ee940de0d6b02daf6e53d398f9e98b33c371d4e123a9d3e8f918b6261329",
-     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 6,
      "belge_ogrenim": [
       "lisans"
      ]
@@ -4343,7 +4402,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-11-26T19:08:06.098344+00:00",
+   "kontrol": "2026-11-26T19:39:58.579855+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
