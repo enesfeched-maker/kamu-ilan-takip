@@ -1788,6 +1788,70 @@
    ]
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=20b04c08-a1a3-4c86-93e3-f6876db3a74f": {
+  "zaman": "2026-11-27T01:10:50+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "f6e516ab3cb41b4f",
+  "baslik": "SELÇUK ÜNİVERSİTESİ REKTÖRLÜĞÜ - SELÇUK ÜNİVERSİTESİ SÖZLEŞMELİ BİLİŞİM PERSONELİ ALIM İLANI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Sözleşmeli Bilişim Personeli (01 — Yazılım/Frontend)",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "il": "Konya",
+     "kosullar": [
+      "Yönetmeliğin 6. maddesinin (b) bendindeki (3 katı ücretli pozisyon) ya da (b) veya (c) bendindeki (2 katı ücretli pozisyon) alanlardan birinden mezun olmak.",
+      "Belgelendirmek kaydıyla, lisans mezuniyetinden sonra bilişim alanında en az 5 yıl frontend, backend, mobil uygulama geliştirme veya Yazılım Mühendisliği alanlarında mesleki tecrübeye sahip olmak.",
+      "Vue.js, React, Next.js veya Angular'dan en az birinde ürün geliştirme deneyimine sahip olmak.",
+      "C# ve ASP.NET Core veya Python (Flask/Django) ile backend geliştirme tecrübesine sahip olmak."
+     ]
+    },
+    {
+     "unvan": "Sözleşmeli Bilişim Personeli (02 — Yapay Zeka)",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "il": "Konya",
+     "kosullar": [
+      "Yönetmeliğin 6. maddesinin (b) bendindeki (3 katı ücretli pozisyon) ya da (b) veya (c) bendindeki (2 katı ücretli pozisyon) alanlardan birinden mezun olmak.",
+      "Belgelendirmek kaydıyla, lisans mezuniyetinden sonra en az 5 yıl yapay zeka veya Yazılım Mühendisliği alanında mesleki tecrübeye sahip olmak.",
+      "Bilgisayarlı görü, anomali tespiti ve zaman serisi alanlarından en az ikisinde üretim ortamında yapay zeka deneyimi olmak.",
+      "Python'u ileri seviyede bilmek; PyTorch, TensorFlow, Keras ve Scikit-learn ile model geliştirmiş olmak."
+     ]
+    }
+   ],
+   "toplam": 2,
+   "son_basvuru_tarihi": "2026-12-14",
+   "son_basvuru_saati": "23:59",
+   "baslangic_tarihi": "2026-11-27",
+   "kpss_gerekli": false,
+   "iller": [
+    "Konya"
+   ],
+   "ortak_kosullar": [
+    "Başvuru: 27.11.2026–14.12.2026, saat 23:59'a kadar e-Devlet üzerinden Kariyer Kapısı'ndan.",
+    "Yalnız bir pozisyona başvurulabilir.",
+    "Sıralama: KPSS P3'ün %70'i + yabancı dil puanının %30'u; sonra sözlü/uygulamalı sınav (28.12.2026).",
+    "KPSS puanı olmayan adayın KPSS puanı 70 sayılır."
+   ],
+   "ozet": "Selçuk Üniversitesi 2 sözleşmeli bilişim personeli alacak (1 yazılım/frontend, 1 yapay zeka). Başvurular 27 Kasım–14 Aralık 2026'da e-Devlet/Kariyer Kapısı üzerinden yapılır.",
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": []
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=26f5b7a7-865c-483f-9045-2f77e5e7fb9d": {
   "zaman": "2026-11-07T11:12:30+03:00",
   "surum": 4,
@@ -8038,6 +8102,78 @@
    "ortak_kosullar": []
   }
  },
+ "sbb-364fe435910d2bbdb233dec1": {
+  "zaman": "2026-11-27T01:10:50+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "pdf",
+  "imza": "99ecbb25a5dde3f9",
+  "baslik": "AVRUPA BİRLİĞİ BAŞKANLIĞI - 5 SÖZLEŞMELİ DESTEK PERSONELİ (ŞOFÖR) ALACAK",
+  "farklar": [
+   [
+    "ogrenim",
+    [
+     "onlisans",
+     "ortaogretim"
+    ],
+    [
+     "ortaogretim"
+    ],
+    false
+   ],
+   [
+    "puan_turleri",
+    [
+     "P93",
+     "P94"
+    ],
+    [
+     "P94,P93"
+    ],
+    false
+   ]
+  ],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Sözleşmeli Destek Personeli (Şoför)",
+     "adet": 5,
+     "ogrenim": "ortaogretim",
+     "puan_turu": "P94,P93",
+     "en_dusuk_puan": 70,
+     "il": "Ankara",
+     "kosullar": [
+      "Ortaöğretim veya ön lisans mezunu olmak.",
+      "2026 KPSS'de ortaöğretim için P94, ön lisans için P93 puan türünden en az 70 puan almış olmak.",
+      "En az B sınıfı sürücü belgesine son başvuru tarihi itibarıyla 3 yıldır sahip olmak.",
+      "7/24 esasına göre vardiyalı çalışmaya ve yurdun her yerinde görev yapmaya engel durumu olmamak."
+     ]
+    }
+   ],
+   "toplam": 5,
+   "son_basvuru_tarihi": "2026-12-14",
+   "baslangic_tarihi": "2026-11-27",
+   "kpss_gerekli": true,
+   "iller": [
+    "Ankara"
+   ],
+   "ortak_kosullar": [
+    "Başvuru: 27.11.2026–14.12.2026 arası e-Devlet/Kariyer Kapısı üzerinden.",
+    "Yazılı/sözlü sınav yok; KPSS puan üstünlüğüne göre asıl ve yedek aday belirlenir."
+   ],
+   "ozet": "Avrupa Birliği Başkanlığı Ankara'da çalışmak üzere 5 sözleşmeli destek personeli (şoför) alacak. Başvurular 27 Kasım–14 Aralık 2026'da Kariyer Kapısı'ndan yapılır.",
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "ortaogretim"
+   ],
+   "puan_turleri": [
+    "P94,P93"
+   ]
+  }
+ },
  "sbb-390fd0065a5a1473b643ad5b": {
   "zaman": "2026-11-02T20:20:39+03:00",
   "surum": 4,
@@ -10836,6 +10972,70 @@
    "iptal_veya_duzeltme": false,
    "duyuru_tipi": "yeni_ilan",
    "ortak_kosullar": []
+  }
+ },
+ "sbb-a1e9c2a47a76d9580bda26a6": {
+  "zaman": "2026-11-27T01:10:50+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "pdf",
+  "imza": "1696a01436e51f9a",
+  "baslik": "SELÇUK ÜNİVERSİTESİ - 2 ALACAK",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Sözleşmeli Bilişim Personeli (01 — Yazılım/Frontend)",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "il": "Konya",
+     "kosullar": [
+      "Yönetmeliğin 6. maddesinin (b) bendindeki (3 katı ücretli pozisyon) ya da (b) veya (c) bendindeki (2 katı ücretli pozisyon) alanlardan birinden mezun olmak.",
+      "Belgelendirmek kaydıyla, lisans mezuniyetinden sonra bilişim alanında en az 5 yıl frontend, backend, mobil uygulama geliştirme veya Yazılım Mühendisliği alanlarında mesleki tecrübeye sahip olmak.",
+      "Vue.js, React, Next.js veya Angular'dan en az birinde ürün geliştirme deneyimine sahip olmak.",
+      "C# ve ASP.NET Core veya Python (Flask/Django) ile backend geliştirme tecrübesine sahip olmak."
+     ]
+    },
+    {
+     "unvan": "Sözleşmeli Bilişim Personeli (02 — Yapay Zeka)",
+     "adet": 1,
+     "ogrenim": "lisans",
+     "puan_turu": null,
+     "en_dusuk_puan": null,
+     "il": "Konya",
+     "kosullar": [
+      "Yönetmeliğin 6. maddesinin (b) bendindeki (3 katı ücretli pozisyon) ya da (b) veya (c) bendindeki (2 katı ücretli pozisyon) alanlardan birinden mezun olmak.",
+      "Belgelendirmek kaydıyla, lisans mezuniyetinden sonra en az 5 yıl yapay zeka veya Yazılım Mühendisliği alanında mesleki tecrübeye sahip olmak.",
+      "Bilgisayarlı görü, anomali tespiti ve zaman serisi alanlarından en az ikisinde üretim ortamında yapay zeka deneyimi olmak.",
+      "Python'u ileri seviyede bilmek; PyTorch, TensorFlow, Keras ve Scikit-learn ile model geliştirmiş olmak."
+     ]
+    }
+   ],
+   "toplam": 2,
+   "son_basvuru_tarihi": "2026-12-14",
+   "son_basvuru_saati": "23:59",
+   "baslangic_tarihi": "2026-11-27",
+   "kpss_gerekli": false,
+   "iller": [
+    "Konya"
+   ],
+   "ortak_kosullar": [
+    "Başvuru: 27.11.2026–14.12.2026, saat 23:59'a kadar e-Devlet üzerinden Kariyer Kapısı'ndan.",
+    "Yalnız bir pozisyona başvurulabilir.",
+    "Sıralama: KPSS P3'ün %70'i + yabancı dil puanının %30'u; sonra sözlü/uygulamalı sınav (28.12.2026).",
+    "KPSS puanı olmayan adayın KPSS puanı 70 sayılır."
+   ],
+   "ozet": "Selçuk Üniversitesi 2 sözleşmeli bilişim personeli alacak (1 yazılım/frontend, 1 yapay zeka). Başvurular 27 Kasım–14 Aralık 2026'da e-Devlet/Kariyer Kapısı üzerinden yapılır.",
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": []
   }
  },
  "sbb-a4d91901160ee37475b9a885": {
