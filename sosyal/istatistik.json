@@ -1,60 +1,61 @@
 {
- "olculen": 97,
+ "olculen": 99,
  "tur": {
-  "haber": -7.3,
-  "son_gun": -1.3,
-  "yeni": -5.6,
-  "buyuk": 5.2,
-  "kategori": -4.0,
-  "ilan": -3.0,
-  "rehber": 1.8,
-  "ozet": 3.8,
+  "haber": -7.7,
+  "son_gun": -2.0,
+  "yeni": -6.6,
+  "buyuk": 4.6,
+  "kategori": -4.8,
+  "ilan": -2.1,
+  "rehber": 1.6,
+  "ozet": 4.0,
   "ozel": 20,
-  "haftalik": 9.9,
-  "duzey": 6.9
+  "haftalik": 10.0,
+  "duzey": 12.7
  },
  "muzik": {
-  "afro-pop.mp3": -0.5,
-  "latin-carnaval.mp3": 1.2,
-  "pop-dance.mp3": -7.8,
-  "synthwave.mp3": -6.0,
-  "dance-club.mp3": -7.6,
-  "funk-breakbeat.mp3": -6.6,
-  "hip-hop.mp3": 1.6,
-  "future-bass.mp3": -5.1,
-  "mixkit-158-happy-times.mp3": 6.0,
-  "mixkit-702-pop-09.mp3": -3.0,
-  "mixkit-443-serene-view.mp3": 3.8
+  "afro-pop.mp3": -1.4,
+  "latin-carnaval.mp3": 0.4,
+  "pop-dance.mp3": -8.5,
+  "synthwave.mp3": -5.9,
+  "dance-club.mp3": -8.5,
+  "funk-breakbeat.mp3": -7.5,
+  "hip-hop.mp3": 0.7,
+  "future-bass.mp3": -5.9,
+  "mixkit-158-happy-times.mp3": 7.3,
+  "mixkit-702-pop-09.mp3": -2.1,
+  "mixkit-443-serene-view.mp3": 4.0
  },
  "vakit": {
-  "aksam": -2.5,
-  "sabah": 0.0,
-  "ilan": -3.0,
+  "aksam": -3.3,
+  "sabah": 0.6,
+  "ilan": -2.1,
   "ozel": 20,
-  "haftalik": 9.9
+  "haftalik": 10.0
  },
  "palet": {
-  "kagit": 1.5,
-  "bordo": 3.1,
-  "karmin": 6.9
+  "kagit": 2.0,
+  "bordo": 3.4,
+  "karmin": 12.7
  },
  "soru": {
-  "Bu kadrolardan sana uygun olan var mı? 👇": 5.0,
-  "Başvurunu yaptın mı, yoksa son güne mi bıraktın? 👇": 5.3,
-  "Başvurmayı düşünüyor musun? 👇": 5.5,
-  "Bu ilanlardan sana uygun olan var mı? 👇": 2.0,
+  "Bu kadrolardan sana uygun olan var mı? 👇": 5.1,
+  "Başvurunu yaptın mı, yoksa son güne mi bıraktın? 👇": 5.6,
+  "Başvurmayı düşünüyor musun? 👇": 6.5,
+  "Bu ilanlardan sana uygun olan var mı? 👇": 2.1,
   "Sen hangisine başvurmayı düşünüyorsun? 👇": 9.5,
-  "Sen hangisine başvurdun? 👇": 9.8,
-  "Bu hafta senin için bir ilan çıktı mı? 👇": 9.9,
-  "Mezuniyet bölümün ne? 👇": 6.9
+  "Sen hangisine başvurdun? 👇": 9.7,
+  "Bu hafta senin için bir ilan çıktı mı? 👇": 10.0,
+  "Mezuniyet bölümün ne? 👇": 6.9,
+  "Hangisine başvuracaksın? 👇": 9.8
  },
  "seri": {
-  "kurum": 9.9
+  "kurum": 10.0
  },
  "sure_bandi": {
-  "kisa": 7.2,
+  "kisa": 9.2,
   "uzun": 7.7,
-  "orta": 12.4
+  "orta": 12.5
  },
  "adet": {
   "tur": {
@@ -66,9 +67,9 @@
    "ilan": 17,
    "rehber": 1,
    "ozet": 4,
-   "ozel": 8,
+   "ozel": 9,
    "haftalik": 1,
-   "duzey": 1
+   "duzey": 2
   },
   "muzik": {
    "afro-pop.mp3": 8,
@@ -79,21 +80,21 @@
    "funk-breakbeat.mp3": 7,
    "hip-hop.mp3": 8,
    "future-bass.mp3": 7,
-   "mixkit-158-happy-times.mp3": 14,
+   "mixkit-158-happy-times.mp3": 15,
    "mixkit-702-pop-09.mp3": 17,
    "mixkit-443-serene-view.mp3": 4
   },
   "vakit": {
    "aksam": 40,
-   "sabah": 31,
+   "sabah": 32,
    "ilan": 17,
-   "ozel": 8,
+   "ozel": 9,
    "haftalik": 1
   },
   "palet": {
    "kagit": 17,
    "bordo": 16,
-   "karmin": 1
+   "karmin": 2
   },
   "soru": {
    "Bu kadrolardan sana uygun olan var mı? 👇": 3,
@@ -103,60 +104,62 @@
    "Sen hangisine başvurmayı düşünüyorsun? 👇": 2,
    "Sen hangisine başvurdun? 👇": 3,
    "Bu hafta senin için bir ilan çıktı mı? 👇": 1,
-   "Mezuniyet bölümün ne? 👇": 1
+   "Mezuniyet bölümün ne? 👇": 1,
+   "Hangisine başvuracaksın? 👇": 1
   },
   "seri": {
    "kurum": 1
   },
   "sure_bandi": {
-   "kisa": 7,
+   "kisa": 8,
    "uzun": 4,
    "orta": 3
   }
  },
  "tamamlama": {
   "tur": {
-   "ilan": 0.356,
-   "son_gun": 0.262,
-   "ozet": 0.443,
-   "haftalik": 0.525,
-   "duzey": 0.321
+   "ilan": 0.355,
+   "son_gun": 0.259,
+   "ozet": 0.44,
+   "haftalik": 0.523,
+   "duzey": 0.447
   },
   "muzik": {
-   "mixkit-702-pop-09.mp3": 0.356,
-   "mixkit-158-happy-times.mp3": 0.306,
-   "mixkit-443-serene-view.mp3": 0.443
+   "mixkit-702-pop-09.mp3": 0.355,
+   "mixkit-158-happy-times.mp3": 0.316,
+   "mixkit-443-serene-view.mp3": 0.44
   },
   "vakit": {
-   "ilan": 0.356,
-   "sabah": 0.291,
-   "aksam": 0.443,
-   "haftalik": 0.525
+   "ilan": 0.355,
+   "sabah": 0.302,
+   "aksam": 0.44,
+   "haftalik": 0.523
   },
   "palet": {
-   "kagit": 0.291,
-   "bordo": 0.367,
-   "karmin": 0.321
+   "kagit": 0.289,
+   "bordo": 0.365,
+   "karmin": 0.447
   },
   "soru": {
-   "Bu kadrolardan sana uygun olan var mı? 👇": 0.321,
-   "Başvurmayı düşünüyor musun? 👇": 0.39,
-   "Başvurunu yaptın mı, yoksa son güne mi bıraktın? 👇": 0.262,
-   "Bu ilanlardan sana uygun olan var mı? 👇": 0.446,
-   "Sen hangisine başvurmayı düşünüyorsun? 👇": 0.439,
-   "Sen hangisine başvurdun? 👇": 0.285,
-   "Bu hafta senin için bir ilan çıktı mı? 👇": 0.525,
-   "Mezuniyet bölümün ne? 👇": 0.321
+   "Bu kadrolardan sana uygun olan var mı? 👇": 0.318,
+   "Başvurmayı düşünüyor musun? 👇": 0.404,
+   "Başvurunu yaptın mı, yoksa son güne mi bıraktın? 👇": 0.259,
+   "Bu ilanlardan sana uygun olan var mı? 👇": 0.439,
+   "Sen hangisine başvurmayı düşünüyorsun? 👇": 0.441,
+   "Sen hangisine başvurdun? 👇": 0.284,
+   "Bu hafta senin için bir ilan çıktı mı? 👇": 0.523,
+   "Mezuniyet bölümün ne? 👇": 0.316,
+   "Hangisine başvuracaksın? 👇": 0.577
   },
   "seri": {
-   "kurum": 0.525
+   "kurum": 0.523
   },
   "sure_bandi": {
-   "kisa": 0.407,
-   "uzun": 0.262,
-   "orta": 0.321
+   "kisa": 0.423,
+   "uzun": 0.259,
+   "orta": 0.318
   }
  },
- "tamamlama_genel": 0.333,
- "guncelleme": "2026-11-26T04:11:38+03:00"
+ "tamamlama_genel": 0.338,
+ "guncelleme": "2026-11-26T22:07:58+03:00"
 }
