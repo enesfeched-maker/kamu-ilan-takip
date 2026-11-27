@@ -1,9 +1,9 @@
 {
  "schema": 1,
- "guncelleme": "2026-11-27T07:06:25.126644+00:00",
+ "guncelleme": "2026-11-27T07:38:06.230217+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-11-27T07:07:30.164112+00:00",
+   "kontrol": "2026-11-27T07:39:02.947007+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -134,6 +134,36 @@
       "lisans",
       "onlisans"
      ]
+    },
+    {
+     "id": "sbb-6c4d53f5b2822b549c82a334",
+     "baslik": "BOZKÖY BELEDİYE BAŞKANLIĞI - İPTAL İLANI",
+     "kurum": "BOZKÖY BELEDİYE BAŞKANLIĞI",
+     "kadro": "İPTAL İLANI",
+     "ilan_turu": "Kamu Personeli",
+     "son_tarih": "2026-12-07",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 27 Kasım - 7 Aralık)",
+     "baslangic_zaman": "2026-11-27T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-11-27T10:38:11+03:00",
+     "belge_ozeti": "0770304ccade3dce5022bfedad6ba63bbd470ed3fc0b2a58f4aca5fadc76060d",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "duyuru_turu": "İptal duyurusu",
+     "ozet": "İPTAL İLANI. Son başvuru: 07.12.2026. Özel şartlar aşağıdaki ilan belgesinde yer alıyor.",
+     "sartlar": [],
+     "basvuru_notu": "",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/0770304ccade3dce5022bfedad6ba63bbd470ed3fc0b2a58f4aca5fadc76060d.pdf",
+     "belge_sha256": "0770304ccade3dce5022bfedad6ba63bbd470ed3fc0b2a58f4aca5fadc76060d",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "duyuru_cumlesi": ""
     },
     {
      "id": "sbb-66b6297333eb11d7fbb59ae0",
@@ -310,7 +340,7 @@
      "donem": "( 26 Kasım - 10 Aralık)",
      "baslangic_zaman": "2026-11-26T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-26T22:07:29+03:00",
+     "detay_guncelleme": "2026-11-27T10:38:13+03:00",
      "belge_ozeti": "00e98051a8d5fde50963f211d82f71be6f4f94f1e2456e0b2b2f6087a10d276e",
      "kaynaklar": [
       {
@@ -475,7 +505,7 @@
      "donem": "( 26 Kasım - 30 Kasım)",
      "baslangic_zaman": "2026-12-03T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-27T10:06:45+03:00",
+     "detay_guncelleme": "2026-11-27T10:38:22+03:00",
      "belge_ozeti": "5a42bf32213335e8a69ce170315acaabfc544d38092f76d32de9691b50199ced",
      "kaynaklar": [
       {
@@ -2277,7 +2307,7 @@
      "donem": "( 18 Kasım - 2 Aralık)",
      "baslangic_zaman": "2026-11-18T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-27T10:07:08+03:00",
+     "detay_guncelleme": "2026-11-27T10:38:41+03:00",
      "belge_ozeti": "3b96d3f990e76841ffe4d5e6dee66e4dd087373ccb520703d568740de592dd01",
      "kaynaklar": [
       {
@@ -3188,6 +3218,43 @@
      ]
     },
     {
+     "id": "sbb-b5a1bedd2fcef5d2e3feaa48",
+     "baslik": "SAHİL GÜVENLİK KOMUTANLIĞI - 10 MEMUR ALACAK",
+     "kurum": "SAHİL GÜVENLİK KOMUTANLIĞI",
+     "kadro": "10 MEMUR ALACAK",
+     "ilan_turu": "Memur",
+     "son_tarih": "2026-11-27",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 16 Kasım - 27 Kasım)",
+     "baslangic_zaman": "2026-11-16T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-11-27T04:41:05+03:00",
+     "belge_ozeti": "111ca4a8e376f609376a706863890d2d1bbbcddec1503c51586ece7c266ef202",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "10 MEMUR alımı. Son başvuru: 27.11.2026. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgedeki kadro koşullarından alıntı",
+       "metin": "Sahil Güvenlik Komutanlığı 2026 Yılı Devlet Memuru Temini Bilgilendirme Kılavuzu’nda ilan edilen unvanlar için mezun olunan okul itibarıyla öğrenim şartını taşımak ve bu öğrenimle ilgili olarak 2026 yılı KPSS’ye girmiş olmak."
+      }
+     ],
+     "basvuru_notu": "",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/111ca4a8e376f609376a706863890d2d1bbbcddec1503c51586ece7c266ef202.pdf",
+     "belge_sha256": "111ca4a8e376f609376a706863890d2d1bbbcddec1503c51586ece7c266ef202",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "puan_turleri": [
+      "P03",
+      "P9"
+     ]
+    },
+    {
      "id": "sbb-c26204054fdce06faa1d55cf",
      "baslik": "HAZİNE VE MALİYE BAKANLIĞI - 10 STAJYER HAZİNE KONTROLÖRÜ ALACAK",
      "kurum": "HAZİNE VE MALİYE BAKANLIĞI",
@@ -3231,43 +3298,6 @@
       "P28",
       "P47",
       "P48"
-     ]
-    },
-    {
-     "id": "sbb-b5a1bedd2fcef5d2e3feaa48",
-     "baslik": "SAHİL GÜVENLİK KOMUTANLIĞI - 10 MEMUR ALACAK",
-     "kurum": "SAHİL GÜVENLİK KOMUTANLIĞI",
-     "kadro": "10 MEMUR ALACAK",
-     "ilan_turu": "Memur",
-     "son_tarih": "2026-11-27",
-     "kaynak": "SBB Kamu İlan",
-     "kaynak_turu": "sbb",
-     "donem": "( 16 Kasım - 27 Kasım)",
-     "baslangic_zaman": "2026-11-16T00:00:00+03:00",
-     "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-27T04:41:05+03:00",
-     "belge_ozeti": "111ca4a8e376f609376a706863890d2d1bbbcddec1503c51586ece7c266ef202",
-     "kaynaklar": [
-      {
-       "ad": "SBB Kamu İlan",
-       "link": "https://kamuilan.sbb.gov.tr/"
-      }
-     ],
-     "ozet": "10 MEMUR alımı. Son başvuru: 27.11.2026. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
-     "sartlar": [
-      {
-       "kadro": "Belgedeki kadro koşullarından alıntı",
-       "metin": "Sahil Güvenlik Komutanlığı 2026 Yılı Devlet Memuru Temini Bilgilendirme Kılavuzu’nda ilan edilen unvanlar için mezun olunan okul itibarıyla öğrenim şartını taşımak ve bu öğrenimle ilgili olarak 2026 yılı KPSS’ye girmiş olmak."
-      }
-     ],
-     "basvuru_notu": "",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/111ca4a8e376f609376a706863890d2d1bbbcddec1503c51586ece7c266ef202.pdf",
-     "belge_sha256": "111ca4a8e376f609376a706863890d2d1bbbcddec1503c51586ece7c266ef202",
-     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 6,
-     "puan_turleri": [
-      "P03",
-      "P9"
      ]
     },
     {
@@ -3586,58 +3616,6 @@
      ]
     },
     {
-     "id": "sbb-eb8dea7cc58424c3458a0297",
-     "baslik": "TANOBA BELEDİYE BAŞKANLIĞI - 1 MEMUR ALACAK",
-     "kurum": "TANOBA BELEDİYE BAŞKANLIĞI",
-     "kadro": "1 Memur",
-     "ilan_turu": "Memur",
-     "son_tarih": "2026-12-18",
-     "kaynak": "SBB Kamu İlan",
-     "kaynak_turu": "sbb",
-     "donem": "( 16 Aralık - 18 Aralık)",
-     "baslangic_zaman": "2026-12-16T00:00:00+03:00",
-     "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-27T04:42:05+03:00",
-     "belge_ozeti": "dba5b1314e03c26ff835ee238d4b543e5728bc215203f7cda97878200c053729",
-     "kaynaklar": [
-      {
-       "ad": "SBB Kamu İlan",
-       "link": "https://kamuilan.sbb.gov.tr/"
-      }
-     ],
-     "ozet": "1 Memur. Son başvuru: 18.12.2026. Belirtilen başvuru tarihlerinde elektronik ortamda veya posta yoluyla yapılan başvurularda fotokopisi gönderilen belgelerin aslının sınav tarihine kadar Kurumumuza ibraz edilmesi gerekmektedir. (Aslı ibraz edilmek kaydıyla suretleri Belediyemizce tasdik edilecektir.) Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
-     "sartlar": [
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "Sıra Kadro Hizmet Kadro Kadro KPSS KPSS No Unvanı Sınıfı Derecesi Adedi Niteliği Cinsiyeti Puan Taban Türü Puanı -Herhangi bir önlisans En az programından mezun Erkek/ P93 60 1 Memur GİH 9 1 olmak, Kadın puan -En az (B) sınıfı sürücü belgesine sahip olmak,"
-      },
-      {
-       "kadro": "İlan no 2918 · kadro ve özel şartlar",
-       "metin": "yapılacak unvanın karşısında belirtilen puan türünden yukarıda tabloda belirtilen asgari KPSS puanını almış olmak, b) 13/10/1983 tarihli ve 2918 sayılı Karayolları Trafik Kanunu hükümlerince verilen ve tablonun nitelik kısmında belirtilen en az (B) sınıfı sürücü belgesine sahip olmak,"
-      },
-      {
-       "kadro": "Sınav puanı koşulu · kadroya göre muafiyetler için belgeyi inceleyin",
-       "metin": "Sıra Kadro Hizmet Kadro Kadro KPSS KPSS No Unvanı Sınıfı Derecesi Adedi Niteliği Cinsiyeti Puan Taban Türü Puanı -Herhangi bir önlisans En az programından mezun Erkek/ P93 60 1 Memur GİH 9 1 olmak, Kadın puan -En az (B) sınıfı sürücü belgesine sahip olmak, BAŞVURU GENEL VE ÖZEL ŞARTLARI Belediyemizin yukarıda belirtilen boş memur kadrosu için yapılacak başvurularda aranan genel ve özel şartlar aşağıdadır."
-      },
-      {
-       "kadro": "Sınav puanı koşulu · kadroya göre muafiyetler için belgeyi inceleyin",
-       "metin": "Sınavda başarılı sayılmak için sınav kurulu üyelerince verilen puanların aritmetik ortalamasının en az 60 olması şarttır. b) Adayların atamaya esas başvuru puanı; belediye tarafından yapılan sözlü puanı ile KPSS puanının aritmetik ortalaması alınmak suretiyle belirlenecek ve belediyenin internet sitesinden ilan edilecektir. c) Adayların atamaya esas başarı puanlarının aynı olması halinde KPSS puanı yüksek olana öncelik tanınır."
-      }
-     ],
-     "basvuru_notu": "a) Elektronik ortamda başvurular, 16/12/2026-18/12/2026 tarihleri arasında istenilen belgeler eklenmek suretiyle Belediyemizin bilgi@tanoba.bel.tr mail adresine yapılacaktır.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/dba5b1314e03c26ff835ee238d4b543e5728bc215203f7cda97878200c053729.pdf",
-     "belge_sha256": "dba5b1314e03c26ff835ee238d4b543e5728bc215203f7cda97878200c053729",
-     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 6,
-     "yer": "Tokat",
-     "puan_turleri": [
-      "P93"
-     ],
-     "belge_ogrenim": [
-      "onlisans"
-     ]
-    },
-    {
      "id": "sbb-b3e21e8a4a58a97015a20788",
      "baslik": "ULA BELEDİYE BAŞKANLIĞI - 4 ZABITA MEMURU ALACAK",
      "kurum": "ULA BELEDİYE BAŞKANLIĞI",
@@ -3682,6 +3660,58 @@
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "yer": "Muğla",
+     "puan_turleri": [
+      "P93"
+     ],
+     "belge_ogrenim": [
+      "onlisans"
+     ]
+    },
+    {
+     "id": "sbb-eb8dea7cc58424c3458a0297",
+     "baslik": "TANOBA BELEDİYE BAŞKANLIĞI - 1 MEMUR ALACAK",
+     "kurum": "TANOBA BELEDİYE BAŞKANLIĞI",
+     "kadro": "1 Memur",
+     "ilan_turu": "Memur",
+     "son_tarih": "2026-12-18",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 16 Aralık - 18 Aralık)",
+     "baslangic_zaman": "2026-12-16T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-11-27T04:42:05+03:00",
+     "belge_ozeti": "dba5b1314e03c26ff835ee238d4b543e5728bc215203f7cda97878200c053729",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "1 Memur. Son başvuru: 18.12.2026. Belirtilen başvuru tarihlerinde elektronik ortamda veya posta yoluyla yapılan başvurularda fotokopisi gönderilen belgelerin aslının sınav tarihine kadar Kurumumuza ibraz edilmesi gerekmektedir. (Aslı ibraz edilmek kaydıyla suretleri Belediyemizce tasdik edilecektir.) Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "Sıra Kadro Hizmet Kadro Kadro KPSS KPSS No Unvanı Sınıfı Derecesi Adedi Niteliği Cinsiyeti Puan Taban Türü Puanı -Herhangi bir önlisans En az programından mezun Erkek/ P93 60 1 Memur GİH 9 1 olmak, Kadın puan -En az (B) sınıfı sürücü belgesine sahip olmak,"
+      },
+      {
+       "kadro": "İlan no 2918 · kadro ve özel şartlar",
+       "metin": "yapılacak unvanın karşısında belirtilen puan türünden yukarıda tabloda belirtilen asgari KPSS puanını almış olmak, b) 13/10/1983 tarihli ve 2918 sayılı Karayolları Trafik Kanunu hükümlerince verilen ve tablonun nitelik kısmında belirtilen en az (B) sınıfı sürücü belgesine sahip olmak,"
+      },
+      {
+       "kadro": "Sınav puanı koşulu · kadroya göre muafiyetler için belgeyi inceleyin",
+       "metin": "Sıra Kadro Hizmet Kadro Kadro KPSS KPSS No Unvanı Sınıfı Derecesi Adedi Niteliği Cinsiyeti Puan Taban Türü Puanı -Herhangi bir önlisans En az programından mezun Erkek/ P93 60 1 Memur GİH 9 1 olmak, Kadın puan -En az (B) sınıfı sürücü belgesine sahip olmak, BAŞVURU GENEL VE ÖZEL ŞARTLARI Belediyemizin yukarıda belirtilen boş memur kadrosu için yapılacak başvurularda aranan genel ve özel şartlar aşağıdadır."
+      },
+      {
+       "kadro": "Sınav puanı koşulu · kadroya göre muafiyetler için belgeyi inceleyin",
+       "metin": "Sınavda başarılı sayılmak için sınav kurulu üyelerince verilen puanların aritmetik ortalamasının en az 60 olması şarttır. b) Adayların atamaya esas başvuru puanı; belediye tarafından yapılan sözlü puanı ile KPSS puanının aritmetik ortalaması alınmak suretiyle belirlenecek ve belediyenin internet sitesinden ilan edilecektir. c) Adayların atamaya esas başarı puanlarının aynı olması halinde KPSS puanı yüksek olana öncelik tanınır."
+      }
+     ],
+     "basvuru_notu": "a) Elektronik ortamda başvurular, 16/12/2026-18/12/2026 tarihleri arasında istenilen belgeler eklenmek suretiyle Belediyemizin bilgi@tanoba.bel.tr mail adresine yapılacaktır.",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/dba5b1314e03c26ff835ee238d4b543e5728bc215203f7cda97878200c053729.pdf",
+     "belge_sha256": "dba5b1314e03c26ff835ee238d4b543e5728bc215203f7cda97878200c053729",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "yer": "Tokat",
      "puan_turleri": [
       "P93"
      ],
@@ -3873,42 +3903,6 @@
      ]
     },
     {
-     "id": "sbb-e09e5fcd529740e02614f931",
-     "baslik": "ELAZIĞ İL ÖZEL İDARESİ - 3 SÖZLEŞMELİ PERSONEL ALACAK",
-     "kurum": "ELAZIĞ İL ÖZEL İDARESİ",
-     "kadro": "3 SÖZLEŞMELİ PERSONEL ALACAK",
-     "ilan_turu": "Sözleşmeli Personel",
-     "son_tarih": "2026-12-09",
-     "kaynak": "SBB Kamu İlan",
-     "kaynak_turu": "sbb",
-     "donem": "( 30 Kasım - 9 Aralık)",
-     "baslangic_zaman": "2026-11-30T00:00:00+03:00",
-     "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-27T04:42:55+03:00",
-     "belge_ozeti": "d0a8ee940de0d6b02daf6e53d398f9e98b33c371d4e123a9d3e8f918b6261329",
-     "kaynaklar": [
-      {
-       "ad": "SBB Kamu İlan",
-       "link": "https://kamuilan.sbb.gov.tr/"
-      }
-     ],
-     "ozet": "3 SÖZLEŞMELİ PERSONEL alımı. Son başvuru: 09.12.2026. a) Elektronik ortamda başvurular, 30/11/2026 – 09/12/2026 tarihleri arasında istenilen belgeler eklenmek suretiyle Elazığ İl Özel İdaresine ait ozelidare@elazig.gov.tr mail adresine yapılacaktır. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
-     "sartlar": [
-      {
-       "kadro": "Belgede belirtilen koşullar",
-       "metin": "• İlan edilen unvanlar için mezun olunan okul itibari ile öğren im şartını taşımak ve bu öğrenimle ilgili olarak 2026 yılı Kamu Personeli Seçme Sınavından (KPSS) alım yapılacak unvanların karşısında belirtilen puan türlerinden, belirtilen asgari KPSS puanını almış olmak."
-      }
-     ],
-     "basvuru_notu": "b) Şahsen veya iadeli taahhütlü posta yolu ile yapılacak başvurular, yukarıdaki başvuru tarihleri arasında mesai bitimine kadar (mesai saatleri 08:00-1 7:00 içinde) başvuru formu eksiksiz ve doğru şekilde doldurularak ve başvuru esnasında istenilen diğer belgeler eklenmek suretiyle ile (Elazığ İl Özel İdaresi İnsan Kaynakları ve Eğitim Müdürlüğüne) yapabilecektir.",
-     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/d0a8ee940de0d6b02daf6e53d398f9e98b33c371d4e123a9d3e8f918b6261329.pdf",
-     "belge_sha256": "d0a8ee940de0d6b02daf6e53d398f9e98b33c371d4e123a9d3e8f918b6261329",
-     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
-     "sbb_detay_surumu": 6,
-     "belge_ogrenim": [
-      "lisans"
-     ]
-    },
-    {
      "id": "sbb-94d1ab01adeb72d82f5c9df5",
      "baslik": "EYYÜBİYE BELEDİYE BAŞKANLIĞI - 9 MEMUR ALACAK",
      "kurum": "EYYÜBİYE BELEDİYE BAŞKANLIĞI",
@@ -3964,6 +3958,42 @@
      "puan_turleri": [
       "P3"
      ],
+     "belge_ogrenim": [
+      "lisans"
+     ]
+    },
+    {
+     "id": "sbb-e09e5fcd529740e02614f931",
+     "baslik": "ELAZIĞ İL ÖZEL İDARESİ - 3 SÖZLEŞMELİ PERSONEL ALACAK",
+     "kurum": "ELAZIĞ İL ÖZEL İDARESİ",
+     "kadro": "3 SÖZLEŞMELİ PERSONEL ALACAK",
+     "ilan_turu": "Sözleşmeli Personel",
+     "son_tarih": "2026-12-09",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 30 Kasım - 9 Aralık)",
+     "baslangic_zaman": "2026-11-30T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-11-27T04:42:55+03:00",
+     "belge_ozeti": "d0a8ee940de0d6b02daf6e53d398f9e98b33c371d4e123a9d3e8f918b6261329",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "3 SÖZLEŞMELİ PERSONEL alımı. Son başvuru: 09.12.2026. a) Elektronik ortamda başvurular, 30/11/2026 – 09/12/2026 tarihleri arasında istenilen belgeler eklenmek suretiyle Elazığ İl Özel İdaresine ait ozelidare@elazig.gov.tr mail adresine yapılacaktır. Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "• İlan edilen unvanlar için mezun olunan okul itibari ile öğren im şartını taşımak ve bu öğrenimle ilgili olarak 2026 yılı Kamu Personeli Seçme Sınavından (KPSS) alım yapılacak unvanların karşısında belirtilen puan türlerinden, belirtilen asgari KPSS puanını almış olmak."
+      }
+     ],
+     "basvuru_notu": "b) Şahsen veya iadeli taahhütlü posta yolu ile yapılacak başvurular, yukarıdaki başvuru tarihleri arasında mesai bitimine kadar (mesai saatleri 08:00-1 7:00 içinde) başvuru formu eksiksiz ve doğru şekilde doldurularak ve başvuru esnasında istenilen diğer belgeler eklenmek suretiyle ile (Elazığ İl Özel İdaresi İnsan Kaynakları ve Eğitim Müdürlüğüne) yapabilecektir.",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/d0a8ee940de0d6b02daf6e53d398f9e98b33c371d4e123a9d3e8f918b6261329.pdf",
+     "belge_sha256": "d0a8ee940de0d6b02daf6e53d398f9e98b33c371d4e123a9d3e8f918b6261329",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
      "belge_ogrenim": [
       "lisans"
      ]
@@ -4661,7 +4691,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-11-27T07:07:32.991587+00:00",
+   "kontrol": "2026-11-27T07:39:05.525232+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
