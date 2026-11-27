@@ -625,7 +625,12 @@
     var alan = d.getElementById('ilanlar'), yan = d.querySelector('aside.yan');
     if (!alan) return;
     forumSon().then(function (basliklar) {
-      if (yan) yan.append(toplulukBlok(basliklar, 4));
+      var blok = toplulukBlok(basliklar, 4);
+      // telefonda yan sütun listenin üstüne düşer: topluluk ilanları itmesin, listenin altına girsin
+      var dar = w.matchMedia ? w.matchMedia('(max-width:900px)') : null;
+      function yerlestir() { if ((dar && dar.matches) || !yan) alan.after(blok); else yan.append(blok); }
+      yerlestir();
+      if (dar) { if (dar.addEventListener) dar.addEventListener('change', yerlestir); else if (dar.addListener) dar.addListener(yerlestir); }
     });
   }
 
