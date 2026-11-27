@@ -620,9 +620,12 @@ def bolum_sayfasi(base, duzey_slug, duzey_ad, bolum_ad, slug, satirlar, acik_say
     en_unvan = sorted(unvanlar, key=lambda u: (-len(unvanlar[u]), _kucuk(u)))
     ilk_d, son_d = donem_yaz(donemler[0]), donem_yaz(donemler[-1])
     baslik_h1 = f'{ad} mezunları KPSS ile hangi kadrolara atanır?'
-    baslik = f'{baslik_h1} ({duzey_ad})'
-    if len(baslik) > _su().TITLE_SINIRI:
-        baslik = baslik_h1
+    # uzun bölüm adında soru yarıda kesilmesin ("…hangi kadrolara"): sığan ilk kalıp seçilir
+    sinir = _su().TITLE_SINIRI
+    adaylar = [f'{baslik_h1} ({duzey_ad})', baslik_h1,
+               f'{ad} mezunları KPSS kadroları ({duzey_ad})', f'{ad} mezunları KPSS kadroları',
+               f'{ad} KPSS kadroları']
+    baslik = next((b for b in adaylar if len(b) <= sinir), adaylar[-1])
     kisa = (f'{ilk_d}–{son_d} KPSS {dz} yerleştirmelerinde {ad} mezunlarının başvurabildiği {tam(len(satirlar))} kadro vardı; toplam kontenjan {tam(kont)}. '
             f'Yerleşilen kadrolarda en düşük taban puan {_p(min(mins))}, en yüksek {_p(max(mins))} oldu. '
             f'En çok kadro açılan unvan {baslik_hali(en_unvan[0])} ({tam(len(unvanlar[en_unvan[0]]))} kadro).')
