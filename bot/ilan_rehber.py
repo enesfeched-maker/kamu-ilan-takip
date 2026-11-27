@@ -107,17 +107,96 @@ def basvuru_kanali(item):
     return None
 
 
-def bolum_html(item, kok='../../'):
+def _saat_notu(son):
+    return f' saat {son:%H.%M}' if son and (son.hour, son.minute) not in ((23, 59), (0, 0)) else ''
+
+
+def sorular(item, ad, toplam=None, simdi=None):
+    """Aranan biçimde soru-cevap listesi [(soru, cevap)]; yalnız ilanın kendi verisinden, verisi olmayan soru yazılmaz."""
+    from zoneinfo import ZoneInfo
+    simdi = (simdi or datetime.now(ZoneInfo('Europe/Istanbul')))
+    if simdi.tzinfo is None:
+        simdi = simdi.replace(tzinfo=ZoneInfo('Europe/Istanbul'))
+    sonuc = []
+    bas, son = _zaman(item.get('baslangic_zaman')), _zaman(item.get('son_zaman'))
+    if son is None and item.get('son_tarih'):
+        try:
+            son = datetime.fromisoformat(str(item['son_tarih'])[:10])
+            son = son.replace(hour=23, minute=59)
+        except ValueError:
+            son = None
+    if son is not None:
+        if son.tzinfo is None:
+            son = son.replace(tzinfo=simdi.tzinfo)
+        if bas and bas.tzinfo is None:
+            bas = bas.replace(tzinfo=simdi.tzinfo)
+        if son < simdi:
+            cevap = f'Başvurular {_tarih(son)} tarihinde sona erdi.'
+        elif bas and son >= bas:
+            aralik = (f'{bas.day} – {_tarih(son)}' if (bas.year, bas.month) == (son.year, son.month)
+                      else f'{_tarih(bas)} – {_tarih(son)}')
+            cevap = f'Başvurular {aralik}; son gün {_tarih(son)}{_saat_notu(son)}.'
+        else:
+            cevap = f'Son başvuru günü {_tarih(son)}{_saat_notu(son)}.'
+        sonuc.append((f'{ad} başvurusu ne zaman?', cevap))
+    if isinstance(toplam, int) and not isinstance(toplam, bool) and toplam > 0:
+        sonuc.append((f'{ad} için kaç kişi alınacak?', f'İlanda toplam {toplam:,}'.replace(',', '.') + ' kadro var.'))
+    if item.get('kpss') == 'kpsssiz':
+        sonuc.append((f'{ad} için KPSS şartı var mı?', 'Hayır, bu ilanda KPSS şartı aranmıyor.'))
+    elif item.get('kpss') == 'kpss':
+        pt = [str(p) for p in item.get('puan_turleri') or []][:4]
+        sonuc.append((f'{ad} için KPSS şartı var mı?',
+                      f'Evet. İstenen puan türü: {", ".join(pt)}.' if pt
+                      else 'Evet, KPSS puanı isteniyor; puan türü ilan metninde.'))
+    duzeyler = [DUZEY[d] for d in item.get('ogrenim') or [] if d in DUZEY]
+    try:
+        import ilan_bakis
+        # yabancı dil etiketi kadro/birim adlarından da düşebiliyor: soru-cevaba yalnız güçlü eleyici şartlar girer
+        sartlar = [s for s in ilan_bakis.sart_kelimeleri(item) if 'dil' not in s.lower()]
+    except Exception:
+        sartlar = []
+    if duzeyler or sartlar:
+        parca = []
+        if duzeyler:
+            parca.append(f'{", ".join(duzeyler)} mezunları.')
+        if sartlar:
+            parca.append(f'Öne çıkan şartlar: {", ".join(sartlar[:4])}.')
+        sonuc.append((f'{ad} için kimler başvurabilir?', ' '.join(parca)))
+    kanal = basvuru_kanali(item)
+    if kanal == 'iskur':
+        sonuc.append((f'{ad} başvurusu nereden yapılır?', 'İŞKUR üzerinden (İŞKUR hesabı ya da hizmet merkezleri).'))
+    elif kanal == 'kariyer':
+        sonuc.append((f'{ad} başvurusu nereden yapılır?', 'e-Devlet şifresiyle Kariyer Kapısı üzerinden.'))
+    return sonuc
+
+
+def faq_jsonld(sorular):
+    import json
+    veri = {'@context': 'https://schema.org', '@type': 'FAQPage',
+            'mainEntity': [{'@type': 'Question', 'name': s,
+                            'acceptedAnswer': {'@type': 'Answer', 'text': c}} for s, c in sorular]}
+    return ('<script type="application/ld+json">'
+            + json.dumps(veri, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/') + '</script>')
+
+
+def bolum_html(item, kok='../../', ad=None, toplam=None, simdi=None):
     if item.get('duyuru_turu') or item.get('iptal_edildi'):
         return ''
-    satirlar = maddeler(item)
+    qa = sorular(item, ad, toplam, simdi) if ad else []
+    satirlar = [] if len(qa) >= 2 else maddeler(item)
     aciklama, slug = tur_bilgisi(item)
-    if len(satirlar) < 2 and not aciklama:
+    if len(qa) < 2 and len(satirlar) < 2 and not aciklama:
         return ''
     rehberler = [s for s in (slug, 'kariyer-kapisi-basvuru' if basvuru_kanali(item) == 'kariyer' else None,
                              'basvuru-belgeleri-ve-hatalar') if s]
     baglantilar = ' · '.join(f'<a class="yazi-link" href="{kok}rehber/{s}/">{esc(REHBER_ADI[s])}</a>'
                              for s in dict.fromkeys(rehberler))
+    if len(qa) >= 2:
+        return ('<section class="ilan-rehber ilan-sss"><h2>Sık sorulan sorular</h2>'
+                + ''.join(f'<h3>{esc(s)}</h3><p>{esc(c)}</p>' for s, c in qa)
+                + (f'<p>{esc(aciklama)}</p>' if aciklama else '')
+                + '<p class="muted">Kesin şartlar ve değerlendirme usulü resmî ilan metnindedir.</p>'
+                + f'<p>İlgili rehber: {baglantilar}</p></section>')
     return ('<section class="ilan-rehber"><h2>Başvuru hakkında ayrıntılar</h2>'
             + (f'<ul>{"".join(f"<li>{esc(m)}</li>" for m in satirlar)}</ul>' if satirlar else '')
             + (f'<p>{esc(aciklama)}</p>' if aciklama else '')
