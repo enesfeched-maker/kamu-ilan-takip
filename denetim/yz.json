@@ -4059,6 +4059,79 @@
    ]
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=add4bb83-a310-4b00-9f8b-6771300863f5": {
+  "zaman": "2026-11-27T13:10:37+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "46ef387affd16a37",
+  "baslik": "AVRUPA BİRLİĞİ BAŞKANLIĞI - SÖZLEŞMELİ DESTEK PERSONELİ (ŞOFÖR) İLANI",
+  "farklar": [
+   [
+    "ogrenim",
+    [
+     "onlisans",
+     "ortaogretim"
+    ],
+    [
+     "ortaogretim"
+    ],
+    false
+   ],
+   [
+    "puan_turleri",
+    [
+     "P93",
+     "P94"
+    ],
+    [
+     "P94,P93"
+    ],
+    false
+   ]
+  ],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Sözleşmeli Destek Personeli (Şoför)",
+     "adet": 5,
+     "ogrenim": "ortaogretim",
+     "puan_turu": "P94,P93",
+     "en_dusuk_puan": 70,
+     "il": "Ankara",
+     "kosullar": [
+      "Ortaöğretim veya ön lisans mezunu olmak.",
+      "En az B sınıfı sürücü belgesine son başvuru tarihi itibarıyla 3 yıldır sahip olmak.",
+      "Yurdun her yerinde ve her iklim koşulunda görev yapmaya, seyahate elverişli olmak.",
+      "7/24 vardiyalı, kapalı ve açık alanlarda çalışmaya engel durumu olmamak."
+     ]
+    }
+   ],
+   "toplam": 5,
+   "son_basvuru_tarihi": "2026-12-14",
+   "son_basvuru_saati": "23:59",
+   "baslangic_tarihi": "2026-11-27",
+   "kpss_gerekli": true,
+   "iller": [
+    "Ankara"
+   ],
+   "ortak_kosullar": [
+    "2026 KPSS'den ortaöğretim için P94, ön lisans için P93 puan türünden en az 70 puan almış olmak.",
+    "Başvuru 27 Kasım–14 Aralık 2026 arasında Kariyer Kapısı (kariyerkapisi.gov.tr/isealim) üzerinden elektronik ortamda yapılır; posta başvurusu kabul edilmez."
+   ],
+   "ozet": "Avrupa Birliği Başkanlığı Ankara'da 5 sözleşmeli şoför (destek personeli) alacak. Başvurular 27 Kasım–14 Aralık 2026'da Kariyer Kapısı'ndan yapılır.",
+   "okunabilirlik": "iyi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "ortaogretim"
+   ],
+   "puan_turleri": [
+    "P94,P93"
+   ]
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=af46c544-8728-4ab2-beed-937fe050035c": {
   "zaman": "2026-10-30T13:47:35+03:00",
   "surum": 4,
