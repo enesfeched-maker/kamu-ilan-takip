@@ -442,7 +442,7 @@ def sablon_uret(konu, vakit, cikti, simdi, gecmis, gecmis_yolu, video=True, agir
 
 
 def uret(vakit, cikti, simdi=None, cfg=None, docs=ROOT / 'docs', gecmis_yolu=GECMIS_YOLU, video=True, trend=True,
-         istatistik_yolu=None, sablon=True):
+         istatistik_yolu=None, sablon=True, kanca_acik=True):
     """vakit: 'sabah' | 'aksam' | 'ilan' | 'haftalik'. Sabit video biçimi (reels.py) üretilir; sabah/akşam için o gün
     içerik yoksa eski konu seçimine düşülür; 'ilan' ve 'haftalik' için içerik yoksa hiçbir şey üretilmez (None)."""
     simdi = (simdi or datetime.now(TR)).astimezone(TR)
@@ -461,6 +461,14 @@ def uret(vakit, cikti, simdi=None, cfg=None, docs=ROOT / 'docs', gecmis_yolu=GEC
             if vakit == 'haftalik':   # pazar akşamı veri dizisi (haftalik.py)
                 import haftalik
                 konu = haftalik.haftalik_konu(acik, simdi, gecmis, docs, kurum_logosu)
+            elif vakit in ('sabah', 'aksam') and kanca_acik:
+                # 27 Kasım 2026: öğle ve akşamın ana videosu puan kancalı (kanca.py); verisi yoksa eski biçim
+                import kanca
+                konu = kanca.konu(vakit, acik, simdi, gecmis, docs)
+                if konu:
+                    return sablon_uret(konu, vakit, cikti, simdi, gecmis, gecmis_yolu, video, agirlik, konu['palet'])
+                reels.palet_sec(palet)
+                konu = reels.gunluk(vakit, acik, simdi, kurum_logosu, gecmis)
             else:
                 konu = reels.gunluk(vakit, acik, simdi, kurum_logosu, gecmis)
             if konu:   # yeni biçim kurulamayıp eskisine düşüldüyse gunluk gerçek paleti konuda bildirir

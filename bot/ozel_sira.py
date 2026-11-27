@@ -10,7 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 TR = timezone(timedelta(hours=3))
-GEC_KALMA = timedelta(hours=20)   # zamanından bu kadar geç kalan sıra öğesi atlanır (gece yarısı paylaşım olmasın)
+GEC_KALMA = timedelta(hours=4)    # zamanından bu kadar geç kalan öğe o gün atlanır (27 Kas 2026: 20 saat gece paylaşımına yol açıyordu)
 
 
 def siradaki(sira, gecmis, simdi):

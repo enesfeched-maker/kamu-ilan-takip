@@ -932,6 +932,43 @@ def calisma_limiti(cfg, bekleyen_sayisi):
     return limit
 
 
+# 27 Kasım 2026 kullanıcı kararı: kanalda gece ilan paylaşılmaz; ilanlar hep birden değil gün boyuna aralıklı gider
+# (insanlar gün içinde kanala ve siteye tekrar tekrar girsin). Sabah ve akşam özet kartları bu kurala girmez.
+GECE = (23, 8)                       # [23:00, 08:00) arası ilan/duyuru gönderilmez, sırada bekler
+YOGUN_SAATLER = ((12, 14), (19, 23))  # en kalabalık saatler: aralık kısalır
+ARALIK_DK = {'yogun': 30, 'normal': 60, 'birikme': 25}   # iki ilan mesajı arasında en az dakika
+BIRIKME_SINIRI = 10                  # sırada bundan çok ilan varsa aralık 'birikme'ye iner
+
+
+def gece_mi(cfg, zaman):
+    bas, bit = (cfg.get('telegram_gece') or GECE)[:2]
+    return zaman.hour >= bas or zaman.hour < bit
+
+
+def ilan_hakki(cfg, zaman, son_ilan, bekleyen_sayisi):
+    """Bu taramada kanala en çok kaç ilan/duyuru gidebilir (0 ya da 1). Gece 0; son ilan mesajından bu yana vaktin
+    aralığı (yoğun saat / normal / birikme) dolmadıysa 0."""
+    if gece_mi(cfg, zaman):
+        return 0
+    aralik = dict(ARALIK_DK, **(cfg.get('telegram_aralik_dk') or {}))
+    if bekleyen_sayisi > BIRIKME_SINIRI:
+        dk = aralik['birikme']
+    elif any(a <= zaman.hour < b for a, b in YOGUN_SAATLER):
+        dk = aralik['yogun']
+    else:
+        dk = aralik['normal']
+    try:
+        son = datetime.fromisoformat(son_ilan) if son_ilan else None
+    except (TypeError, ValueError):
+        son = None
+    if son is not None:
+        if son.tzinfo is None:
+            son = son.replace(tzinfo=TR)
+        if zaman - son < timedelta(minutes=dk - 3):   # tarama saatleri birkaç dakika kayabilir
+            return 0
+    return 1
+
+
 def metinsiz_mi(cfg, zaman):
     """19 Ekim 2026 kullanıcı denemesi: config 'telegram_metinsiz_bitis' (ISO) gelene kadar ilan gönderileri yalnız kart
     görseli ve düğmelerle gider (altında metin yok). Akşam/sabah kartları ve duyuru yanıtları etkilenmez.
@@ -1728,6 +1765,12 @@ def _ana():
               f"{len(gonderilecek)} ilan sırada bekliyor.")
         kuyruk = []
     limit = calisma_limiti(cfg, len(gonderilecek))
+    son_ilan = veri.get('telegram_son_ilan')
+    aralikli = cfg.get('telegram_aralikli') is True   # config.json; kapalıysa eski düzen (tarama başına limit kadar)
+    hak = ilan_hakki(cfg, simdi(), son_ilan, len(gonderilecek)) if aralikli else limit
+    if aralikli and gece_mi(cfg, simdi()) and gonderilecek:
+        print(f'Gece saatleri: {len(gonderilecek)} ilan/duyuru sabah 08:00 sonrasına bekliyor.')
+    giden_ilan = 0
     if not a.prepare and not a.dry_run:
         _ACIL.update(cikti=cikti, surum=yayin_surumu, gonderilen=gonderilen, bekleyen=bekleyen, mesajlar=mesajlar, yanitlar=yanitlar)
     site_url = cfg.get('site_url', '')
@@ -1740,7 +1783,10 @@ def _ana():
         if isinstance(mid, int) and not isinstance(mid, bool):
             mesajlar[kimlik] = mid
 
-    for tur, i in ([] if a.prepare else kuyruk[:limit]):
+    # aralıklı düzende özet kartları ilan hakkından düşmez; eski düzende tarama başına toplam limit
+    for tur, i in ([] if a.prepare else kuyruk if aralikli else kuyruk[:limit]):
+        if aralikli and tur not in ('sabah', 'aksam') and giden_ilan >= hak:
+            break   # bu taramanın ilan hakkı doldu; kalanlar sırada (telegram_bekleyen) bekler
         if tur == 'sabah':
             yeni_l, son_gun_l, acik = i
             metin = sabah_mesaj(yeni_l, son_gun_l, acik, site_url, simdi(), haftalik_aranan(cfg, gelen, simdi()))
@@ -1838,6 +1884,8 @@ def _ana():
             bekleyen.discard(i['id'])
             mesaj_kaydet(i['id'], mid)
             yanit_kaydet(yanitlar, karar, i, simdi().date().isoformat())
+            giden_ilan += 1
+            son_ilan = simdi().isoformat(timespec='seconds')
             if orijinal is not None and duyuru_turu_iptal_mi(i) and karar['tam']:
                 orijinal['iptal_edildi'] = i['id']  # kısmi (tek kadro) iptallerde ilan açık kalır
             adet += 1
@@ -1878,6 +1926,8 @@ def _ana():
         bekleyen.discard(i['id'])
         mesaj_kaydet(i['id'], mid)
         adet += 1
+        giden_ilan += 1
+        son_ilan = simdi().isoformat(timespec='seconds')
         print(f"Telegram'a ilan gönderildi: {i['baslik']}")
         time.sleep(3.2)
     if ilk_calisma and not a.duyur_mevcut:
@@ -1895,6 +1945,7 @@ def _ana():
         "ilanlar": sorted(temizle(list(mevcut.values())), key=lambda x: x["son_tarih"] or "9999"),
         "telegram_gonderilen": sorted(gonderilen),
         "telegram_bekleyen": sorted(bekleyen - gonderilen),
+        "telegram_son_ilan": son_ilan,
         "telegram_hatirlatilan": sorted(hatirlatilan),
         "telegram_mesajlari": dict(sorted(mesajlar.items())),
         # 'm:' (düz metin) kayıtları 30 gün sonra budanır; 'o:' (orijinale yanıt) kayıtları kalıcıdır.

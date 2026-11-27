@@ -10,6 +10,10 @@ on:
       tanim:
         description: "sosyal/ozel/ altındaki JSON tanımı (boşsa sıradaki)"
         required: false
+      kaynak:
+        description: "Tetikleyen (zamanlayici = Cloudflare; elle başlatınca dokunma)"
+        required: false
+        default: elle
   schedule:
     - cron: "7 * * * *"
 
@@ -29,6 +33,10 @@ jobs:
           TANIM: ${{ inputs.tanim }}
         run: |
           if [ -n "$TANIM" ]; then echo "tanim=$TANIM" >> "$GITHUB_OUTPUT"; exit 0; fi
+          # saat kapısı: gece paylaşım yok (Cloudflare 18:00'de tetikler; saatlik GitHub cron'u yedek)
+          ELLE=""
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.kaynak }}" != "zamanlayici" ]; then ELLE="--elle"; fi
+          if [ "$(python bot/yayin_kapisi.py ozel $ELLE)" != "izin=1" ]; then exit 0; fi
           python bot/ozel_sira.py >> "$GITHUB_OUTPUT"
 
   paylas:
