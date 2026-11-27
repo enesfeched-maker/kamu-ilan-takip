@@ -1,9 +1,9 @@
 {
  "schema": 1,
- "guncelleme": "2026-11-27T12:32:22.686205+00:00",
+ "guncelleme": "2026-11-27T13:04:28.214021+00:00",
  "kaynaklar": {
   "sbb": {
-   "kontrol": "2026-11-27T12:33:43.454311+00:00",
+   "kontrol": "2026-11-27T13:05:25.229366+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -205,6 +205,65 @@
      "basvuru_notu": "Başvuru formunun doldurulmasına ilişkin açıklamalar internet sitesinde yer almaktadır. - Adaylar ilanda belirtilen görev yerlerinden en fazla 5 (beş) yer için tercihte bulunabilirler. - Adayların elektronik ortamda meydana gelebilecek veya oluşabilecek diğer aksaklıkları göz önüne alarak, başvurularını son güne bırakmamaları uygun olacaktır.",
      "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/3294cb14a3ba97b8147baac1303568e9c1a1e5d40b56e244cc744175421810f1.pdf",
      "belge_sha256": "3294cb14a3ba97b8147baac1303568e9c1a1e5d40b56e244cc744175421810f1",
+     "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
+     "sbb_detay_surumu": 6,
+     "puan_turleri": [
+      "P93"
+     ],
+     "belge_ogrenim": [
+      "onlisans"
+     ]
+    },
+    {
+     "id": "sbb-a44ddab9b2167e2ee0c4a40b",
+     "baslik": "GELİR İDARESİ BAŞKANLIĞI - 23 SÖZLEŞMELİ TEKNİKER ALACAK",
+     "kurum": "GELİR İDARESİ BAŞKANLIĞI",
+     "kadro": "23 SÖZLEŞMELİ TEKNİKER ALACAK",
+     "ilan_turu": "Sözleşmeli Personel",
+     "son_tarih": "2026-12-09",
+     "kaynak": "SBB Kamu İlan",
+     "kaynak_turu": "sbb",
+     "donem": "( 2 Aralık - 9 Aralık)",
+     "baslangic_zaman": "2026-12-02T00:00:00+03:00",
+     "link": "https://kamuilan.sbb.gov.tr/",
+     "detay_guncelleme": "2026-11-27T16:04:35+03:00",
+     "belge_ozeti": "42228216a1f8250e194c532432f42a482001b3a1dd6efa060f2b0d6ca36d5f0f",
+     "kaynaklar": [
+      {
+       "ad": "SBB Kamu İlan",
+       "link": "https://kamuilan.sbb.gov.tr/"
+      }
+     ],
+     "ozet": "23 SÖZLEŞMELİ TEKNİKER alımı. Son başvuru: 09.12.2026. - Adayların elektronik ortamda meydana gelebilecek veya oluşabilecek diğer aksaklıkları göz önüne alarak, başvurularını son güne bırakmamaları uygun olacaktır. 2/3 Kadroya göre değişen eğitim ve deneyim koşulları aşağıda ayrı olarak gösterilmiştir.",
+     "sartlar": [
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "Sözlü sınava katılma şartlarını taşıyan ve usulüne uygun olarak başvuranların; tercih ettiği görev yeri pozisyon sayısının 3 (üç) katından fazla olması halinde, tercih ettikleri görev yeri dikkate alınarak, KPSS P93 puan türünden en yüksek puan almış olan adaydan başlamak üzere 3 (üç) katı aday sözlü sınava çağrılacaktır. KPSS P93 puan türünden eşit puan almış olmaları nedeniyle son sıradaki aday sayısının birden fazla olması halinde ise bu adayların tümü sınava çağrılacaktır."
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "- 01.01.2026 tarihi itibarıyla 35 (otuz beş) yaşını doldurmamış olmak (01.01.1991 tarih ve sonraki doğumlular başvurabilecektir.),"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "- ÖSYM tarafından 2026 yılında yapılan Kamu Personeli Seçme Sınavına (KPSS Ön Lisans) katılmış ve KPSS P93 puan türünden en az 70 puan almış olmak,"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "- Tekniker (Elektrik) pozisyonu için; Elektrik, Elektrik-Elektronik Teknolojisi, Endüstriyel Otomasyon Teknolojileri, Endüstriyel Elektronik ön lisans programlarının birinden mezun olmak,"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "- Tekniker (İnşaat) pozisyonu için; İnşaat, İnşaat Teknikerliği, İnşaat Teknolojisi ön lisans programlarının birinden mezun olmak,"
+      },
+      {
+       "kadro": "Belgede belirtilen koşullar",
+       "metin": "- Tekniker (İklimlendirme) pozisyonu için; İklimlendirme-Soğutma, Soğutma Tesisatçılığı, Soğutma Tesisatı, Soğutma ve Havalandırma, İklimlendirme Teknolojisi, İklimlendirme ve Soğutma Teknolojisi ön lisans programlarının birinden mezun olmak,"
+      }
+     ],
+     "basvuru_notu": "Başvuru formunun doldurulmasına ilişkin açıklamalar internet sitesinde yer almaktadır. - Adaylar ilanda belirtilen görev yerlerinden en fazla 5 (beş) yer için tercihte bulunabilirler. - Adayların elektronik ortamda meydana gelebilecek veya oluşabilecek diğer aksaklıkları göz önüne alarak, başvurularını son güne bırakmamaları uygun olacaktır.",
+     "belge_kopyasi": "https://kpsstercihi.com/belgeler/sbb/42228216a1f8250e194c532432f42a482001b3a1dd6efa060f2b0d6ca36d5f0f.pdf",
+     "belge_sha256": "42228216a1f8250e194c532432f42a482001b3a1dd6efa060f2b0d6ca36d5f0f",
      "belge_aciklamasi": "SBB’den alınan ilan belgesinin değiştirilmemiş kopyasıdır. Sonradan yayımlanan düzeltmeleri kurumun duyurularından kontrol edin.",
      "sbb_detay_surumu": 6,
      "puan_turleri": [
@@ -713,7 +772,7 @@
      "donem": "( 26 Kasım - 30 Kasım)",
      "baslangic_zaman": "2026-12-03T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-27T15:33:02+03:00",
+     "detay_guncelleme": "2026-11-27T16:04:44+03:00",
      "belge_ozeti": "5a42bf32213335e8a69ce170315acaabfc544d38092f76d32de9691b50199ced",
      "kaynaklar": [
       {
@@ -2515,7 +2574,7 @@
      "donem": "( 18 Kasım - 2 Aralık)",
      "baslangic_zaman": "2026-11-18T00:00:00+03:00",
      "link": "https://kamuilan.sbb.gov.tr/",
-     "detay_guncelleme": "2026-11-27T15:33:22+03:00",
+     "detay_guncelleme": "2026-11-27T16:05:04+03:00",
      "belge_ozeti": "3b96d3f990e76841ffe4d5e6dee66e4dd087373ccb520703d568740de592dd01",
      "kaynaklar": [
       {
@@ -4899,7 +4958,7 @@
    ]
   },
   "csb": {
-   "kontrol": "2026-11-27T12:33:46.124234+00:00",
+   "kontrol": "2026-11-27T13:05:28.062202+00:00",
    "hata_sayisi": 0,
    "ilanlar": [
     {
@@ -26739,7 +26798,7 @@
    ],
    "sart_kadro_sayisi": 4,
    "basvuru_notu": "Adaylar, e-Devlet şifresi içeren zarfı PTT Merkez Müdürlüklerinden, şahsen başvuru ile T.C. Kimlik Numarasının bulunduğu kimliğini ibraz ederek temin edebilirler.",
-   "detay_guncelleme": "2026-11-27T03:34:00+03:00",
+   "detay_guncelleme": "2026-11-27T16:05:29+03:00",
    "kk_detay_surumu": 3,
    "kadro_ortak": [
     [
