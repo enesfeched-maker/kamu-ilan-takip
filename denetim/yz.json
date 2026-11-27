@@ -1327,6 +1327,78 @@
    ]
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=01a31fb6-9c44-4e45-9d17-f47f7ed2e8bd": {
+  "zaman": "2026-11-27T21:10:44+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "2ae9cb81ff86b88f",
+  "baslik": "GELİR İDARESİ BAŞKANLIĞI - SÖZLEŞMELİ DESTEK PERSONELİ (HİZMETLİ)",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Sözleşmeli Destek Personeli (Hizmetli)",
+     "adet": 45,
+     "ogrenim": "ortaogretim",
+     "puan_turu": "P94",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "Ortaöğretim kurumlarının herhangi bir alanından mezun olmak."
+     ]
+    }
+   ],
+   "toplam": 45,
+   "iller": [
+    "Adana",
+    "Ankara",
+    "Ardahan",
+    "Ağrı",
+    "Balıkesir",
+    "Bayburt",
+    "Bolu",
+    "Bursa",
+    "Isparta",
+    "Karaman",
+    "Kayseri",
+    "Konya",
+    "Malatya",
+    "Manisa",
+    "Mardin",
+    "Muş",
+    "Nevşehir",
+    "Niğde",
+    "Ordu",
+    "Samsun",
+    "Sinop",
+    "Trabzon",
+    "Tunceli",
+    "Yalova",
+    "İstanbul",
+    "İzmir",
+    "Şanlıurfa"
+   ],
+   "ozet": "Gelir İdaresi Başkanlığı 45 sözleşmeli destek personeli (hizmetli) alacak. Ortaöğretim mezunu olup KPSS P94'ten en az 70 puan gerekir; başvurular 2–9 Aralık 2026'dadır.",
+   "son_basvuru_tarihi": "2026-12-09",
+   "son_basvuru_saati": "17:00",
+   "baslangic_tarihi": "2026-12-02",
+   "kpss_gerekli": true,
+   "okunabilirlik": "iyi",
+   "ortak_kosullar": [
+    "01.01.2026 itibarıyla 35 yaşını doldurmamış olmak (01.01.1991 ve sonrası doğumlular)."
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "ortaogretim"
+   ],
+   "puan_turleri": [
+    "P94"
+   ]
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=01e546b7-c1d0-4364-b010-7eea088f49cd": {
   "zaman": "2026-11-02T11:23:59+03:00",
   "surum": 4,
@@ -1850,6 +1922,69 @@
     "lisans"
    ],
    "puan_turleri": []
+  }
+ },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=26bdd65d-ebb3-4070-b9d4-2b8e46fa4fa4": {
+  "zaman": "2026-11-27T21:10:44+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "3fa3434b87b47b23",
+  "baslik": "GELİR İDARESİ BAŞKANLIĞI - SÖZLEŞMELİ DESTEK PERSONELİ (ŞOFÖR) GİRİŞ SINAVI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Sözleşmeli Destek Personeli (Şoför)",
+     "adet": 27,
+     "ogrenim": "onlisans",
+     "puan_turu": "P93",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "Otobüs Şoförlüğü (Kaptanlık), Otobüs Şoförlüğü, Otobüs Kaptanlığı ön lisans programlarının herhangi birinden mezun olmak.",
+      "Geçerlilik süresi dolmamış D sınıfı sürücü belgesine sahip olmak."
+     ]
+    }
+   ],
+   "toplam": 27,
+   "iller": [
+    "Afyonkarahisar",
+    "Ankara",
+    "Bayburt",
+    "Bursa",
+    "Eskişehir",
+    "Gaziantep",
+    "Kırşehir",
+    "Kocaeli",
+    "Mersin",
+    "Muğla",
+    "Nevşehir",
+    "Sinop",
+    "Siirt",
+    "Yozgat",
+    "İstanbul",
+    "İzmir",
+    "Şanlıurfa"
+   ],
+   "ozet": "Gelir İdaresi Başkanlığı 27 sözleşmeli şoför alacak. Otobüs şoförlüğü ön lisans mezunu, D sınıfı ehliyetli ve KPSS P93'ten en az 70 puanlı adaylar başvurabilir; başvurular 2–9 Aralık 2026'dadır.",
+   "son_basvuru_tarihi": "2026-12-09",
+   "son_basvuru_saati": "17:00",
+   "baslangic_tarihi": "2026-12-02",
+   "kpss_gerekli": true,
+   "okunabilirlik": "iyi",
+   "ortak_kosullar": [
+    "01.01.2026 itibarıyla 35 yaşını doldurmamış olmak (01.01.1991 ve sonrası doğumlular)."
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "onlisans"
+   ],
+   "puan_turleri": [
+    "P93"
+   ]
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=26f5b7a7-865c-483f-9045-2f77e5e7fb9d": {
@@ -3967,6 +4102,65 @@
    "puan_turleri": []
   }
  },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=a72d5bb6-a2c6-4ba9-b937-0057ef8fc0ea": {
+  "zaman": "2026-11-27T21:10:44+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "3e90f13a52d9ca60",
+  "baslik": "GELİR İDARESİ BAŞKANLIĞI - SÖZLEŞMELİ KORUMA VE GÜVENLİK GÖREVLİSİ",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Sözleşmeli Koruma ve Güvenlik Görevlisi",
+     "adet": 21,
+     "ogrenim": "onlisans",
+     "puan_turu": "P93",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "Özel Güvenlik ve Koruma, Savunma ve Güvenlik, Güvenlik ön lisans programlarının herhangi birinden mezun olmak.",
+      "Geçerlilik süresi dolmamış özel güvenlik görevlisi kimlik kartına sahip olmak."
+     ]
+    }
+   ],
+   "toplam": 21,
+   "iller": [
+    "Adana",
+    "Ankara",
+    "Antalya",
+    "Bolu",
+    "Düzce",
+    "Kayseri",
+    "Mardin",
+    "Mersin",
+    "Samsun",
+    "Tunceli",
+    "Zonguldak",
+    "İstanbul",
+    "İzmir"
+   ],
+   "ozet": "Gelir İdaresi Başkanlığı 21 sözleşmeli koruma ve güvenlik görevlisi alacak. Güvenlik ön lisans mezunu, özel güvenlik kimlik kartlı ve KPSS P93'ten en az 70 puanlı adaylar başvurabilir; başvurular 2–9 Aralık 2026'dadır.",
+   "son_basvuru_tarihi": "2026-12-09",
+   "son_basvuru_saati": "17:00",
+   "baslangic_tarihi": "2026-12-02",
+   "kpss_gerekli": true,
+   "okunabilirlik": "iyi",
+   "ortak_kosullar": [
+    "01.01.2026 itibarıyla 35 yaşını doldurmamış olmak (01.01.1991 ve sonrası doğumlular)."
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "onlisans"
+   ],
+   "puan_turleri": [
+    "P93"
+   ]
+  }
+ },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=a75fb51f-19e0-4d1e-95fe-1e52774310c2": {
   "zaman": "2026-11-23T11:10:16+03:00",
   "surum": 4,
@@ -4526,6 +4720,61 @@
     "lisans"
    ],
    "puan_turleri": []
+  }
+ },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=d6665f54-0008-46c3-b9c5-a8eb809e7c42": {
+  "zaman": "2026-11-27T21:10:44+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "aa75bc1e768d3dac",
+  "baslik": "GELİR İDARESİ BAŞKANLIĞI - Sözleşmeli Avukat",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Sözleşmeli Avukat",
+     "adet": 22,
+     "ogrenim": "lisans",
+     "puan_turu": "P3",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "En az dört yıllık lisans eğitimi veren bir hukuk fakültesini bitirmiş olmak.",
+      "Başvuru tarihinin son günü itibarıyla avukatlık ruhsatnamesine sahip olmak."
+     ]
+    }
+   ],
+   "toplam": 22,
+   "iller": [
+    "Ankara",
+    "Bursa",
+    "Denizli",
+    "Erzurum",
+    "Malatya",
+    "Samsun",
+    "İstanbul",
+    "İzmir",
+    "Şanlıurfa"
+   ],
+   "ozet": "Gelir İdaresi Başkanlığı 22 sözleşmeli avukat alacak. Hukuk fakültesi mezunu, avukatlık ruhsatlı ve KPSS P3'ten en az 70 puanlı adaylar başvurabilir; başvurular 2–9 Aralık 2026'dadır.",
+   "son_basvuru_tarihi": "2026-12-09",
+   "son_basvuru_saati": "17:00",
+   "baslangic_tarihi": "2026-12-02",
+   "kpss_gerekli": true,
+   "okunabilirlik": "iyi",
+   "ortak_kosullar": [
+    "01.01.2026 itibarıyla 35 yaşını doldurmamış olmak (01.01.1991 ve sonrası doğumlular)."
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "lisans"
+   ],
+   "puan_turleri": [
+    "P3"
+   ]
   }
  },
  "https://kariyerkapisi.gov.tr/IlanDetay?i=d72bc5ed-a952-4452-9fea-b05616038765": {
@@ -5353,6 +5602,109 @@
    "puan_turleri": [
     "P13",
     "P3"
+   ]
+  }
+ },
+ "https://kariyerkapisi.gov.tr/IlanDetay?i=fbe6dbe7-e178-4680-8509-e91d11d9e505": {
+  "zaman": "2026-11-27T21:10:44+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "4b26c98703db0682",
+  "baslik": "GELİR İDARESİ BAŞKANLIĞI - SÖZLEŞMELİ TEKNİKER GİRİŞ SINAVI",
+  "farklar": [],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Sözleşmeli Tekniker (Elektrik)",
+     "adet": 5,
+     "ogrenim": "onlisans",
+     "puan_turu": "P93",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "Elektrik, Elektrik-Elektronik Teknolojisi, Endüstriyel Otomasyon Teknolojileri, Endüstriyel Elektronik ön lisans programlarının birinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Sözleşmeli Tekniker (İnşaat)",
+     "adet": 5,
+     "ogrenim": "onlisans",
+     "puan_turu": "P93",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "İnşaat, İnşaat Teknikerliği, İnşaat Teknolojisi ön lisans programlarının birinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Sözleşmeli Tekniker (İklimlendirme)",
+     "adet": 3,
+     "ogrenim": "onlisans",
+     "puan_turu": "P93",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "İklimlendirme-Soğutma, Soğutma Tesisatçılığı, Soğutma Tesisatı, Soğutma ve Havalandırma, İklimlendirme Teknolojisi, İklimlendirme ve Soğutma Teknolojisi ön lisans programlarının birinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Sözleşmeli Tekniker (Tesisat)",
+     "adet": 2,
+     "ogrenim": "onlisans",
+     "puan_turu": "P93",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "Doğalgaz, Isıtma ve Sıhhi Tesisat Teknolojisi, Sıhhi Tesisat, Sıhhi Tesisat ve Doğalgaz, Doğalgaz ve Isıtma, Tesisat Teknolojisi, Yapı Tesisat Teknolojisi ön lisans programlarının birinden mezun olmak."
+     ]
+    },
+    {
+     "unvan": "Sözleşmeli Tekniker (Bilgisayar)",
+     "adet": 8,
+     "ogrenim": "onlisans",
+     "puan_turu": "P93",
+     "en_dusuk_puan": 70,
+     "il": null,
+     "kosullar": [
+      "Bilgisayar Programcılığı, Bilgisayar Teknolojisi, Bilgisayar Destekli Tasarım ve Animasyon, Bilgisayar Operatörlüğü ön lisans programlarının birinden mezun olmak."
+     ]
+    }
+   ],
+   "toplam": 23,
+   "iller": [
+    "Adana",
+    "Ankara",
+    "Antalya",
+    "Ağrı",
+    "Gaziantep",
+    "Kırşehir",
+    "Konya",
+    "Ordu",
+    "Samsun",
+    "Sinop",
+    "Van",
+    "Zonguldak",
+    "İstanbul",
+    "İzmir"
+   ],
+   "ozet": "Gelir İdaresi Başkanlığı 23 sözleşmeli tekniker alacak (elektrik, inşaat, iklimlendirme, tesisat, bilgisayar). KPSS P93'ten en az 70 puan gerekir; başvurular 2–9 Aralık 2026'dadır.",
+   "son_basvuru_tarihi": "2026-12-09",
+   "son_basvuru_saati": "17:00",
+   "baslangic_tarihi": "2026-12-02",
+   "kpss_gerekli": true,
+   "okunabilirlik": "iyi",
+   "ortak_kosullar": [
+    "01.01.2026 itibarıyla 35 yaşını doldurmamış olmak (01.01.1991 ve sonrası doğumlular)."
+   ],
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "onlisans"
+   ],
+   "puan_turleri": [
+    "P93"
    ]
   }
  },
