@@ -937,9 +937,16 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
         bolum += ilan_taban.bolum_html(item, ROOT / 'docs')
     except Exception as hata:
         print(f'Uyarı: taban puanı bölümü üretilemedi ({item.get("id")}): {hata}')
+    rehber_sorular = []
     try:   # ilanın verisinden başvuru özeti + türüne göre açıklama ve rehber bağlantısı
         import ilan_rehber
-        bolum += ilan_rehber.bolum_html(item)
+        rehber_ad = re.sub(r' 20\d\d$', '', _arama_metinleri(item, alanlar, end, kayit, title)[0].removesuffix(' | KPSS Tercihi'))
+        if not rehber_ad.endswith(' Alımı'):   # ham başlık ("…Açıktan Devlet Alım") soruda bozuk okunur: kurum adıyla sorulur
+            import kurum_sayfasi as _ks
+            rehber_ad = f'{_ks.kurum_adi(item.get("kurum"))} ilanı' if (item.get('kurum') or '').strip() else 'Bu ilan'
+        rehber_toplam = alanlar.get('toplam')
+        rehber_sorular = ilan_rehber.sorular(item, rehber_ad, rehber_toplam, simdi) if not (item.get('duyuru_turu') or item.get('iptal_edildi')) else []
+        bolum += ilan_rehber.bolum_html(item, ad=rehber_ad, toplam=rehber_toplam, simdi=simdi)
     except Exception as hata:
         print(f'Uyarı: rehber bölümü üretilemedi ({item.get("id")}): {hata}')
     diger = ''
@@ -1006,6 +1013,8 @@ def detail_page(item, gorsel=None, kayit=None, benzer=None, simdi=None, kopya=No
     og_gorsel += yapisal_veri(item, canonical, end, alanlar, kayit, gorsel, simdi, is_ilani, ad=title.removesuffix(' | KPSS Tercihi'))
     if dizinlenmez(item, simdi) and not ikincil:   # kopya sayfa esas kayda canonical verir; noindex ile birlikte çelişkili sinyal olur
         og_gorsel += '<meta name="robots" content="noindex,follow">'
+    if len(rehber_sorular) >= 2 and not ikincil and not dizinlenmez(item, simdi):
+        og_gorsel += ilan_rehber.faq_jsonld(rehber_sorular)
     dizinli = 'noindex' not in og_gorsel   # reklam betiği yoksa alan da yok (sayfa_basi ile aynı ölçüt)
     rk1 = reklam_alani(REKLAM_SLOT_SAYFA, 'kadro-alti') if dizinli else ''
     rk2 = reklam_alani(REKLAM_SLOT_SAYFA, 'benzer-ustu') if dizinli and benzer_html else ''

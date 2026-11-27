@@ -47,7 +47,8 @@ def _etiketler(m):
         s['ehliyet'] = 'Sürücü belgesi'
     if re.search(r'\bboy\b|beden kitle', m):
         s['boy'] = 'Boy-kilo şartı'
-    if re.search(r'\byds\b|yökdil|yabancı dil', m):
+    # 'yabancı dil şartı aranmaz' ve 'Yabancı Diller Yüksekokulu/Eğitimi' gibi birim adları şart değildir (27 Kasım 2026)
+    if re.search(r'\byds\b|yökdil|yabancı dil', re.sub(r'yabancı dil[^.;]{0,40}?aranmaz|yabancı diller\w*|yabancı dil öğretmen\w*', ' ', m)):
         s['dil'] = 'Yabancı dil'
     if re.search(r'\bengelli\b', m):
         s['engelli'] = 'Engelli kadrosu'
