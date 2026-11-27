@@ -18,6 +18,10 @@ on:
         description: Instagram, Facebook ve TikTok'a gönder (kapalıysa yalnız önizleme sürümü; geçmişe yazılmaz)
         type: boolean
         default: false
+      kaynak:
+        description: "Tetikleyen (zamanlayici = Cloudflare; elle başlatınca dokunma)"
+        required: false
+        default: elle
 
 permissions:
   contents: write
@@ -27,7 +31,22 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  kapi:
+    runs-on: ubuntu-latest
+    outputs:
+      izin: ${{ steps.k.outputs.izin }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Saat kapısı
+        id: k
+        run: |
+          ELLE=""
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.kaynak }}" != "zamanlayici" ]; then ELLE="--elle"; fi
+          python bot/yayin_kapisi.py gorsel $ELLE >> "$GITHUB_OUTPUT"
+
   paylas:
+    needs: kapi
+    if: needs.kapi.outputs.izin == '1'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -72,7 +91,8 @@ jobs:
           FB_ERISIM_ANAHTARI: ${{ secrets.FB_ERISIM_ANAHTARI }}
           BUFFER_API_ANAHTARI: ${{ secrets.BUFFER_API_ANAHTARI }}
           BUFFER_TIKTOK_KANAL: ${{ vars.BUFFER_TIKTOK_KANAL }}
-          SOSYAL_KAPALI: ${{ vars.SOSYAL_KAPALI }}
+          # 27 Kas 2026: TikTok'a karusel gitmez (yalnız günün videoları)
+          SOSYAL_KAPALI: ${{ vars.SOSYAL_KAPALI }},tiktok
         run: python bot/sosyal_gorsel.py yayinla --cikti gorsel-cikti --taban "https://github.com/${{ github.repository }}/releases/download/${{ steps.v.outputs.etiket }}"
       - name: Paylaşım geçmişini kaydet
         if: always() && steps.uret.outputs.is != '0' && (github.event_name == 'schedule' || inputs.yayinla)

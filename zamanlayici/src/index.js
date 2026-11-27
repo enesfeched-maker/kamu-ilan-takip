@@ -12,7 +12,29 @@ export const ISLER = {
   '25 */2 * * *': ['sosyal-yorum.yml'], // Instagram yorumlarına asistan yanıtı: 2 saatte bir
 };
 
-export async function baslat(env, isAkisi, fetchImpl = fetch) {
+// 27 Kasım 2026: sosyal paylaşımlar da GitHub cron'una bırakılmaz (öğle videosu 04:00–06:30'a kayıyordu).
+// Ücretsiz planda cron sayısı sınırlı olduğundan ayrı cron açılmaz: her yarım saatlik tetikte UTC saatine bakılır.
+// Anahtar 'HH:MM' (UTC; Türkiye = UTC+3) ya da haftanın günüyle 'G HH:MM' (0 = pazar).
+// Değer: [iş akışı, girdiler]. Girdilerde kaynak=zamanlayici: iş akışının saat kapısı (bot/yayin_kapisi.py) uygulanır.
+const Z = { kaynak: 'zamanlayici' };
+export const SAATLI = {
+  '08:00': [['sosyal-gorsel.yml', { tur: 'otomatik', yayinla: 'true', ...Z }]],   // 11:00 TR hikâye + günlük karusel
+  '09:30': [['sosyal.yml', { vakit: 'sabah', yayinla: 'true', ...Z }]],           // 12:30 TR öğle videosu (kancalı)
+  '11:00': [['sosyal-gorsel.yml', { tur: 'yalniz-ilan', yayinla: 'true', ...Z }]], // 14:00 TR yeni ilan karuseli
+  '13:30': [['sosyal-gorsel.yml', { tur: 'yalniz-ilan', yayinla: 'true', ...Z }]], // 16:30 TR
+  '15:00': [['sosyal-ozel.yml', { ...Z }], ['sosyal-ilan.yml', { yayinla: 'true', ...Z }]], // 18:00 TR özel video ya da yeni ilan videosu
+  '16:30': [['sosyal-gorsel.yml', { tur: 'yalniz-ilan', yayinla: 'true', ...Z }]], // 19:30 TR
+  '18:00': [['sosyal.yml', { vakit: 'aksam', yayinla: 'true', ...Z }]],           // 21:00 TR akşam videosu (kancalı)
+  '0 16:00': [['sosyal.yml', { vakit: 'haftalik', yayinla: 'true', ...Z }]],      // pazar 19:00 TR haftalık dizi
+};
+
+export function saatliIsler(zaman) {
+  const d = new Date(zaman);
+  const hhmm = `${String(d.getUTCHours()).padStart(2, '0')}:${String(d.getUTCMinutes()).padStart(2, '0')}`;
+  return [...(SAATLI[hhmm] || []), ...(SAATLI[`${d.getUTCDay()} ${hhmm}`] || [])];
+}
+
+export async function baslat(env, isAkisi, fetchImpl = fetch, girdiler = null) {
   const yanit = await fetchImpl(`https://api.github.com/repos/${DEPO}/actions/workflows/${isAkisi}/dispatches`, {
     method: 'POST',
     headers: {
@@ -22,7 +44,7 @@ export async function baslat(env, isAkisi, fetchImpl = fetch) {
       'User-Agent': 'kpsstercihi-zamanlayici',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ ref: 'main' }),
+    body: JSON.stringify(girdiler ? { ref: 'main', inputs: girdiler } : { ref: 'main' }),
   });
   if (yanit.status !== 204) {
     // Anahtar asla yazılmaz; yalnız durum kodu ve GitHub'ın kısa mesajı.
@@ -40,6 +62,10 @@ export default {
       return;
     }
     for (const isAkisi of ISLER[olay.cron] || []) ctx.waitUntil(baslat(env, isAkisi));
+    if (olay.cron === '*/30 * * * *') {
+      // cron dakikası dakikasına gelir; scheduledTime saniyeleri sıfırdır
+      for (const [isAkisi, girdiler] of saatliIsler(olay.scheduledTime ?? Date.now())) ctx.waitUntil(baslat(env, isAkisi, fetch, girdiler));
+    }
   },
   async fetch() {
     return new Response('KPSS Tercihi zamanlayıcı çalışıyor.', { headers: { 'content-type': 'text/plain; charset=utf-8' } });

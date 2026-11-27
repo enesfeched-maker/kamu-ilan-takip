@@ -39,8 +39,10 @@ GECMIS_YOLU = ROOT / 'sosyal' / 'gorsel-gecmis.json'
 TURLER = ('son-gun', 'kadro-raporu', 'puan-bandi')
 PALET = {'kadro-raporu': 'kagit', 'son-gun': 'bordo', 'puan-bandi': 'kagit', 'ilan': 'kagit'}
 ILAN_TAZE_SAAT = 48      # ilan karuseli: ilanın siteye en çok kaç saat önce eklenmiş olabileceği
-ILAN_CALISMA = 3         # bir çalışmada en çok kaç ilan karuseli (saatlik çalışmalarla gün boyuna yayılır)
-TT_GUNLUK = 5            # TikTok'a günde en çok kaç karusel (Buffer kotası)
+ILAN_CALISMA = 1         # bir çalışmada en çok kaç ilan karuseli (saatlik çalışmalarla gün boyuna yayılır)
+ILAN_GUNLUK = 3          # günde en çok kaç ilan karuseli (27 Kas 2026: gece 03:40'ta art arda 3 karusel çıkıyordu)
+TT_GUNLUK = 5            # TikTok'a günde en çok kaç karusel (Buffer kotası). 27 Kas 2026'dan beri iş akışı
+                         # TikTok karuselini kapatır (SOSYAL_KAPALI'ye tiktok eklenir): ~100 izlenmede kalıyordu.
 PLATFORMLAR = ('instagram', 'facebook', 'tiktok')
 SITE = 'https://kpsstercihi.com'
 # Perşembe puan aralığı haftaya göre döner (ISO hafta numarası); verisi olmayan aralık atlanıp sıradaki denenir.
@@ -96,6 +98,10 @@ def ilan_adaylari(acik, simdi, gecmis, en_cok=ILAN_CALISMA):
     """Karuseli yapılacak ilanlar: son ILAN_TAZE_SAAT saatte eklenmiş, daha önce karuseli paylaşılmamış; önce eskiler."""
     from sosyal_motor import _zaman
     yapilan = {g.get('ilan_id') for g in gecmis if g.get('tur') == 'ilan' and _yayinda(g)}
+    bugun = sum(1 for g in gecmis if g.get('tur') == 'ilan' and _yayinda(g) and str(g.get('zaman', ''))[:10] == simdi.date().isoformat())
+    en_cok = min(en_cok, max(0, ILAN_GUNLUK - bugun))
+    if not en_cok:
+        return []
     sinir = simdi - timedelta(hours=ILAN_TAZE_SAAT)
     adaylar = [i for i in acik if i.get('id') and i['id'] not in yapilan and (_zaman(i.get('ilk_gorulme')) or sinir) > sinir]
     adaylar.sort(key=lambda i: (_zaman(i.get('ilk_gorulme')), i['id']))

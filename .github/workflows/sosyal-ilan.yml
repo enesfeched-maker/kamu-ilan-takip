@@ -1,18 +1,21 @@
 name: Sosyal medya - yeni ilan videosu
 
-# Günde en çok 3 kez: son 48 saatte eklenen, videosu henüz yapılmamış en kalabalık alımlı ilan için tek ilan videosu
+# 27 Kasım 2026: günde bir kez 18:00 (sosyal/ayar.json ilan_gunluk); o saatte sırada özel video varsa o paylaşılır.
+# Eski not — günde en çok 3 kez: son 48 saatte eklenen, videosu henüz yapılmamış en kalabalık alımlı ilan için tek ilan videosu
 # (bot/reels.py ilan_videosu). Yeni ilan yoksa hiçbir şey paylaşılmaz. Sabah ve akşam videoları sosyal.yml'dedir.
 on:
   schedule:
-    - cron: "0 7 * * *"     # ~10:00 TR
-    - cron: "0 12 * * *"    # ~15:00 TR
-    - cron: "30 15 * * *"   # ~18:30 TR
+    - cron: "0 15 * * *"    # ~18:00 TR yedek; asıl tetik Cloudflare zamanlayıcısı 18:00 (saat kapısı: 17–20)
   workflow_dispatch:
     inputs:
       yayinla:
         description: Platformlara gönder (kapalıysa yalnız önizleme sürümü; geçmişe yazılmaz)
         type: boolean
         default: false
+      kaynak:
+        description: "Tetikleyen (zamanlayici = Cloudflare; elle başlatınca dokunma)"
+        required: false
+        default: elle
 
 permissions:
   contents: write
@@ -22,7 +25,25 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  kapi:
+    runs-on: ubuntu-latest
+    outputs:
+      izin: ${{ steps.k.outputs.izin }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Saat kapısı
+        id: k
+        run: |
+          ELLE=""
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.kaynak }}" != "zamanlayici" ]; then ELLE="--elle"; fi
+          K=$(python bot/yayin_kapisi.py ilan $ELLE)
+          # sırada zamanı gelmiş özel video varsa bu saat onundur (sosyal-ozel.yml)
+          if [ "$K" = "izin=1" ] && [ -n "$(python bot/ozel_sira.py)" ]; then K="izin=0"; echo "Sırada özel video var." >&2; fi
+          echo "$K" >> "$GITHUB_OUTPUT"
+
   paylas:
+    needs: kapi
+    if: needs.kapi.outputs.izin == '1'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

@@ -40,15 +40,27 @@ fayda + reklam/sponsor geliri. Sohbet dili Türkçe; kod adları Türkçe.
   ve SBB'ye erişemiyor → bunlar yerel tarayıcıdan ya da elle yüklenen dosyalardan gelmeli.
 - Kariyer Kapısı ayrıntı servisi ara sıra erişilemez; ilan bekletilir, iş başarısız sayılmaz.
 
-## Yol haritası (sırayla)
-1. [PR #2 açık] Öğrenim düzeyi filtresi + Telegram etiketleri.
-2. [Taban puanları 3 düzey 2022–2026 hazır; kaynak PDF'ler: C:\Users\Feched\Desktop\kamu-ilan\111lisans|111önlisans|111ortaöğretim. bölüm eşleştirme hazır] KPSS taban puanları (2022–2026 öncelikli; kullanıcının klasörü:
-   `C:\Users\Feched\Desktop\codex-ws\KPSS_Lisans_2010_2026`) → aranabilir tablo + tercih robotu.
-   Sonra önlisans ve ortaöğretim.
-3. [Kod hazır: `bildirim-botu/` — Cloudflare Worker + D1, @kamuilanibot; tasarım ve ücretsiz plan sınırları bildirim-botu/TASARIM.md] Kişisel bildirim botu.
-4. ÇŞB yerel yönetimler kaynağı (İŞKUR'da olmayan belediye ilanları + iptal duyuruları) yerel tarayıcıya.
-5. Sonra: domain, AdSense (kullanıcı açacak), Instagram/X hesapları + otomatik paylaşım,
-   Telegram sponsorlu gönderi / VIP kanal.
+## Yol haritası (27 Kasım 2026'da güncellendi)
+Hedef (12 Kasım 2026, kullanıcı): 12 ay sonunda aylık 20–40 bin TL net; reklam + sponsor; harcama yalnız kazançtan.
+Ölçü: ayda ~300 bin sayfa görüntüleme (13 Kasım: ~90 bin) ve 10 bin Telegram abonesi (12 Kasım: 1,23 bin).
+
+Biten temel: ilan toplama (SBB, KK, ÇŞB, İŞKUR) + kanal + site (kpsstercihi.com), taban puanları ve tercih robotu,
+il/kurum/meslek/puan aralığı sayfaları, /nereye/ aracı, site asistanı, AdSense (16 Kasım onay), sosyal otomasyon
+(IG/YT/TikTok/FB), Cloudflare zamanlayıcısı + bekçi.
+
+Şimdi (sırayla):
+1. **Tercih haftası 2026/2 (kılavuz ~17 Aralık, tercihler ~17–24 Aralık)** — yılın trafik zirvesi.
+   - Kılavuz çıkınca: kadro tablolarını oku → /kpss-taban-puanlari/ ve /nereye/ sayfalarına "2026/2'de açılan kadro" işle.
+   - Sosyal: kancalı videolar (bot/kanca.py: puanla / atanan / aralik) tercih haftasında her gün 2 kez; kılavuz
+     verisiyle "X puanla bu dönem nereye yazılır" dizisi eklenecek.
+   - Kanalda sabit tercih gönderisi (metin göndermeden önce kullanıcıya gösterilir).
+2. **Sosyal büyüme**: günde 3 video (12:30 kanca, 18:00 yeni ilan/özel, 21:00 kanca), gece paylaşım yok
+   (bot/yayin_kapisi.py). Kancalı biçimin izlenmesi 2 haftada ölçülür (≈11 Aralık); tutmazsa dizi/kanca metni değişir.
+3. **Telegram**: gece 23–08 ilan yok, ilanlar gün boyu aralıklı (config telegram_aralikli). Abone büyümesi izlenir.
+4. **Gelir ölçümü**: ≈8 Aralık otomatik reklam karşılaştırması (17–21 Kasım: RPM ₺26,9, görünürlük %35–40).
+5. Sonra: sponsor (5 bin aboneden önce teklif yok), mobil uygulama (#277, mağaza ücreti gelirden), yerel analiz.
+
+Bakım takvimi: tarayıcı GitHub anahtarı ~30 Aralık 2026 yenilenir; zamanlayıcının GH_TOKEN'ı süresi dolmadan yenilenir.
 
 ## Kararlar
 - Kanalı şimdilik BÖLME (az abone); etiketler + kişisel bot. Binlerce aboneden sonra düzeye göre kanallar.

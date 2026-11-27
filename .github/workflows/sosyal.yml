@@ -1,5 +1,7 @@
 name: Sosyal medya paylaşımı
 
+# Asıl tetik Cloudflare zamanlayıcısı (12:30 öğle, 21:00 akşam, pazar 19:00); aşağıdaki GitHub cron'ları yedektir,
+# gecikip gece çalışırsa saat kapısı (bot/yayin_kapisi.py) paylaşımı durdurur.
 # Günde iki paylaşım (öğle ~12:30, akşam ~21:00) ve pazar ~19:00 haftalık veri dizisi: Instagram Reels, YouTube Shorts, TikTok. İçerik bot/sosyal_motor.py, yayın bot/sosyal_yayinla.py.
 # Her çıktı (kareler, video, açıklama) "sosyal-..." sürümü olarak saklanır: telefondan önizleme için.
 on:
@@ -18,6 +20,10 @@ on:
         description: Platformlara gönder (kapalıysa yalnız önizleme sürümü; geçmişe yazılmaz)
         type: boolean
         default: true
+      kaynak:
+        description: "Tetikleyen (zamanlayici = Cloudflare; elle başlatınca dokunma)"
+        required: false
+        default: elle
 
 permissions:
   contents: write
@@ -27,7 +33,28 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  kapi:
+    runs-on: ubuntu-latest
+    outputs:
+      izin: ${{ steps.k.outputs.izin }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Saat kapısı
+        id: k
+        run: |
+          V="${{ inputs.vakit }}"
+          if [ "${{ github.event.schedule }}" = "0 16 * * 0" ]; then V=haftalik; fi
+          if [ -z "$V" ] || [ "$V" = "otomatik" ]; then
+            H=$(TZ=Europe/Istanbul date +%H); if [ "$H" -lt 17 ]; then V=sabah; else V=aksam; fi
+            if [ "$(TZ=Europe/Istanbul date +%u)" = "7" ] && [ "$H" -ge 18 ] && [ "$H" -lt 20 ]; then V=haftalik; fi
+          fi
+          ELLE=""
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.kaynak }}" != "zamanlayici" ]; then ELLE="--elle"; fi
+          python bot/yayin_kapisi.py "$V" $ELLE >> "$GITHUB_OUTPUT"
+
   paylas:
+    needs: kapi
+    if: needs.kapi.outputs.izin == '1'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -41,7 +68,8 @@ jobs:
           V="${{ inputs.vakit }}"
           if [ "${{ github.event.schedule }}" = "0 16 * * 0" ]; then V=haftalik; fi
           if [ -z "$V" ] || [ "$V" = "otomatik" ]; then
-            if [ "$(TZ=Europe/Istanbul date +%H)" -lt 14 ]; then V=sabah; else V=aksam; fi
+            H=$(TZ=Europe/Istanbul date +%H); if [ "$H" -lt 17 ]; then V=sabah; else V=aksam; fi
+            if [ "$(TZ=Europe/Istanbul date +%u)" = "7" ] && [ "$H" -ge 18 ] && [ "$H" -lt 20 ]; then V=haftalik; fi
           fi
           echo "vakit=$V" >> "$GITHUB_OUTPUT"
           echo "etiket=sosyal-$(TZ=Europe/Istanbul date +%Y%m%d)-$V" >> "$GITHUB_OUTPUT"
