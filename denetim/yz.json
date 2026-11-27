@@ -5714,6 +5714,64 @@
    ]
   }
  },
+ "iskur-1ca8da1f856af5c4ebc75c5b": {
+  "zaman": "2026-11-27T11:10:25+03:00",
+  "surum": 4,
+  "model": "claude",
+  "kaynak": "metin",
+  "imza": "3e11e3ec7c556be4",
+  "baslik": "Dışişleri Bakanlığı Avrupa Birliği Başkanlığı 4B Sözleşmeli Destek Personeli Şoför Alım İlanı",
+  "farklar": [
+   [
+    "ogrenim",
+    [
+     "onlisans",
+     "ortaogretim"
+    ],
+    [
+     "ortaogretim"
+    ],
+    false
+   ]
+  ],
+  "yz": {
+   "kadrolar": [
+    {
+     "unvan": "Şoför (4/B Sözleşmeli Destek Personeli)",
+     "adet": 5,
+     "ogrenim": "ortaogretim",
+     "puan_turu": "P94",
+     "en_dusuk_puan": null,
+     "il": "Ankara",
+     "kosullar": [
+      "En az ortaöğretim veya ön lisans mezunu olmak.",
+      "Son başvuru tarihi itibarıyla en az 3 yıldır B sınıfı sürücü belgesine sahip olmak."
+     ]
+    }
+   ],
+   "toplam": 5,
+   "son_basvuru_tarihi": "2026-12-14",
+   "baslangic_tarihi": "2026-11-27",
+   "kpss_gerekli": true,
+   "iller": [
+    "Ankara"
+   ],
+   "ortak_kosullar": [
+    "Başvurular Kariyer Kapısı (kariyerkapisi.gov.tr/isealim) üzerinden elektronik ortamda yapılır."
+   ],
+   "ozet": "Dışişleri Bakanlığı Avrupa Birliği Başkanlığı 5 sözleşmeli destek personeli (şoför) alacak. Başvurular 27 Kasım–14 Aralık 2026'da Kariyer Kapısı üzerinden yapılır.",
+   "okunabilirlik": "kismi",
+   "akademik": false,
+   "iptal_veya_duzeltme": false,
+   "duyuru_tipi": "yeni_ilan",
+   "ogrenim": [
+    "ortaogretim"
+   ],
+   "puan_turleri": [
+    "P94"
+   ]
+  }
+ },
  "iskur-20df4e86aedf099d725ee262": {
   "zaman": "2026-10-30T23:13:31+03:00",
   "surum": 4,
